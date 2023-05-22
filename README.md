@@ -1,3 +1,7 @@
+# inventory-management-system
+
+Inventory Management System - user interface for inventory management
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
