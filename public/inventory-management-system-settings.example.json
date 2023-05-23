@@ -1,0 +1,12 @@
+{
+  "facilityName": "Generic",
+  "routes": [
+    {
+      "section": "Homepage",
+      "link": "/inventory-management-system",
+      "displayName": "Inventory Management System",
+      "order": 0
+    }
+  ],
+  "pluginHost": "http://localhost:3000"
+}

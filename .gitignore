@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# development
+.vscode
+
 # production
 /build
 
@@ -21,3 +24,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+**/public/*settings*.json
+!**/public/*settings.example.json
