@@ -43,6 +43,8 @@ jobs:
       - name: Upload unit test coverage
         if: success()
         uses: codecov/codecov-action@894ff025c7b54547a9a2a1e9f228beae737ad3c2 # v3
+      - name: Run e2e tests
+        run: yarn e2e
       - name: Upload Cypress screenshots
         if: failure()
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
