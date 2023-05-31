@@ -4884,6 +4884,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"body-parser@npm:1.20.0":
+  version: 1.20.0
+  resolution: "body-parser@npm:1.20.0"
+  dependencies:
+    bytes: 3.1.2
+    content-type: ~1.0.4
+    debug: 2.6.9
+    depd: 2.0.0
+    destroy: 1.2.0
+    http-errors: 2.0.0
+    iconv-lite: 0.4.24
+    on-finished: 2.4.1
+    qs: 6.10.3
+    raw-body: 2.5.1
+    type-is: ~1.6.18
+    unpipe: 1.0.0
+  checksum: 12fffdeac82fe20dddcab7074215d5156e7d02a69ae90cbe9fee1ca3efa2f28ef52097cbea76685ee0a1509c71d85abd0056a08e612c09077cad6277a644cf88
+  languageName: node
+  linkType: hard
+
 "body-parser@npm:1.20.1":
   version: 1.20.1
   resolution: "body-parser@npm:1.20.1"
@@ -5196,7 +5216,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^2.0.0, chalk@npm:^2.4.1":
+"chalk@npm:^2.0.0, chalk@npm:^2.3.0, chalk@npm:^2.4.1":
   version: 2.4.2
   resolution: "chalk@npm:2.4.2"
   dependencies:
@@ -5784,7 +5804,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
+"cross-env@npm:7.0.3":
+  version: 7.0.3
+  resolution: "cross-env@npm:7.0.3"
+  dependencies:
+    cross-spawn: ^7.0.1
+  bin:
+    cross-env: src/bin/cross-env.js
+    cross-env-shell: src/bin/cross-env-shell.js
+  checksum: 26f2f3ea2ab32617f57effb70d329c2070d2f5630adc800985d8b30b56e8bf7f5f439dd3a0358b79cee6f930afc23cf8e23515f17ccfb30092c6b62c6b630a79
+  languageName: node
+  linkType: hard
+
+"cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.1, cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
   dependencies:
@@ -6077,6 +6109,16 @@ __metadata:
   version: 3.1.2
   resolution: "csstype@npm:3.1.2"
   checksum: e1a52e6c25c1314d6beef5168da704ab29c5186b877c07d822bd0806717d9a265e8493a2e35ca7e68d0f5d472d43fac1cdce70fd79fd0853dff81f3028d857b5
+  languageName: node
+  linkType: hard
+
+"cypress-failed-log@npm:2.10.0":
+  version: 2.10.0
+  resolution: "cypress-failed-log@npm:2.10.0"
+  dependencies:
+    debug: 4.3.4
+    logdown: 3.3.1
+  checksum: 05fb09ac19c5f3ee8b1883102efea3fa3f73e2710fe6254fb2a2cba9cd33d45bb9ee454ded31d18d008c84bd1cf00a1b65a0b581a408e1d2d2a311a62817f8ff
   languageName: node
   linkType: hard
 
@@ -7426,6 +7468,45 @@ __metadata:
   languageName: node
   linkType: hard
 
+"express@npm:4.18.1":
+  version: 4.18.1
+  resolution: "express@npm:4.18.1"
+  dependencies:
+    accepts: ~1.3.8
+    array-flatten: 1.1.1
+    body-parser: 1.20.0
+    content-disposition: 0.5.4
+    content-type: ~1.0.4
+    cookie: 0.5.0
+    cookie-signature: 1.0.6
+    debug: 2.6.9
+    depd: 2.0.0
+    encodeurl: ~1.0.2
+    escape-html: ~1.0.3
+    etag: ~1.8.1
+    finalhandler: 1.2.0
+    fresh: 0.5.2
+    http-errors: 2.0.0
+    merge-descriptors: 1.0.1
+    methods: ~1.1.2
+    on-finished: 2.4.1
+    parseurl: ~1.3.3
+    path-to-regexp: 0.1.7
+    proxy-addr: ~2.0.7
+    qs: 6.10.3
+    range-parser: ~1.2.1
+    safe-buffer: 5.2.1
+    send: 0.18.0
+    serve-static: 1.15.0
+    setprototypeof: 1.2.0
+    statuses: 2.0.1
+    type-is: ~1.6.18
+    utils-merge: 1.0.1
+    vary: ~1.1.2
+  checksum: c3d44c92e48226ef32ec978becfedb0ecf0ca21316bfd33674b3c5d20459840584f2325726a4f17f33d9c99f769636f728982d1c5433a5b6fe6eb95b8cf0c854
+  languageName: node
+  linkType: hard
+
 "express@npm:^4.17.3":
   version: 4.18.2
   resolution: "express@npm:4.18.2"
@@ -8772,22 +8853,27 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.59.6
     "@typescript-eslint/parser": ^5.59.6
     axios: ^1.4.0
+    cross-env: 7.0.3
     cypress: ^12.12.0
+    cypress-failed-log: 2.10.0
     eslint: ^8.41.0
     eslint-config-prettier: ^8.8.0
     eslint-config-react-app: ^7.0.1
     eslint-plugin-cypress: ^2.13.3
     eslint-plugin-prettier: ^4.2.1
+    express: 4.18.1
     history: ^5.3.0
     loglevel: ^1.8.1
     msw: ^1.2.1
     prettier: ^2.8.8
     react: ^18.2.0
+    react-beautiful-dnd-test-utils: 4.1.1
     react-dom: ^18.2.0
     react-redux: ^8.0.5
     react-router-dom: ^6.11.2
     react-scripts: 5.0.1
     serve: ^14.2.0
+    serve-static: 1.15.0
     single-spa-react: ^5.0.1
     start-server-and-test: ^2.0.0
     typescript: ^4.4.2
@@ -10419,6 +10505,15 @@ __metadata:
     slice-ansi: ^4.0.0
     wrap-ansi: ^6.2.0
   checksum: ae2f85bbabc1906034154fb7d4c4477c79b3e703d22d78adee8b3862fa913942772e7fa11713e3d96fb46de4e3cabefbf5d0a544344f03b58d3c4bff52aa9eb2
+  languageName: node
+  linkType: hard
+
+"logdown@npm:3.3.1":
+  version: 3.3.1
+  resolution: "logdown@npm:3.3.1"
+  dependencies:
+    chalk: ^2.3.0
+  checksum: 381e7be208f168fd6664ddfe6980ed4ff16ef73e1b9828795df22154e18b47f16737fec1c38f035dd12d10af947a9aded2d753f1b0ade190800e3a28e868a619
   languageName: node
   linkType: hard
 
@@ -12623,6 +12718,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"qs@npm:6.10.3":
+  version: 6.10.3
+  resolution: "qs@npm:6.10.3"
+  dependencies:
+    side-channel: ^1.0.4
+  checksum: 0fac5e6c7191d0295a96d0e83c851aeb015df7e990e4d3b093897d3ac6c94e555dbd0a599739c84d7fa46d7fee282d94ba76943983935cf33bba6769539b8019
+  languageName: node
+  linkType: hard
+
 "qs@npm:6.11.0":
   version: 6.11.0
   resolution: "qs@npm:6.11.0"
@@ -12724,6 +12828,18 @@ __metadata:
     regenerator-runtime: ^0.13.9
     whatwg-fetch: ^3.6.2
   checksum: 1bb031080af15397d6eb9c69a0c2e93799991f7197a086e4409ba719398f1256b542a3d6c9a34673d516c684eef3e8226c99b335982593851f58f65f6e43571b
+  languageName: node
+  linkType: hard
+
+"react-beautiful-dnd-test-utils@npm:4.1.1":
+  version: 4.1.1
+  resolution: "react-beautiful-dnd-test-utils@npm:4.1.1"
+  peerDependencies:
+    "@testing-library/jest-dom": ">=5"
+    "@testing-library/react": ">=11"
+    "@testing-library/user-event": ">=13"
+    jest: ">=26"
+  checksum: 6ab2d598643d865689329f36bb3138a57ab7ed0d810e780c9b38f7d0b5e2e8b0abc249c9a594f3f94e7003415a0633a9c9b5e44d4f2dbf5d7d2d584784ec4685
   languageName: node
   linkType: hard
 

@@ -163,6 +163,12 @@ export const fetchSettings =
       });
   };
 
+function prepare() {
+  return import("./mocks/browser").then(({ worker }) => {
+    return worker.start();
+  });
+}
+
 const settings = fetchSettings();
 setSettings(settings);
 
@@ -170,7 +176,7 @@ if (
   process.env.NODE_ENV === "development" ||
   process.env.REACT_APP_E2E_TESTING
 ) {
-  render();
+  prepare().then(() => render());
   log.setDefaultLevel(log.levels.DEBUG);
 } else {
   log.setDefaultLevel(log.levels.ERROR);
