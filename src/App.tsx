@@ -2,7 +2,6 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { MicroFrontendId } from "./app.types";
 import { requestPluginRerender } from "./state/scigateway.actions";
 import Preloader from "./preloader/preloader.component";
@@ -61,8 +60,6 @@ const App: React.FunctionComponent = () => {
               </a>
             </header>
           </React.Suspense>
-
-          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </IMSThemeProvider>
     </div>

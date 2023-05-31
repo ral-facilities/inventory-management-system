@@ -30,8 +30,9 @@
     "start": "craco start",
     "build": "craco build",
     "serve:build": "yarn build && serve -l 5001 build",
-    "test": "craco test --env=jsdom --watch",
-    "eject": "react-scripts eject"
+    "test": "craco test --env=jsdom --coverage --watchAll=false",
+    "eject": "react-scripts eject",
+    "lint:js": "eslint --max-warnings=0 --ext=tsx --ext=ts --ext=js --ext=jsx --fix ./src"
   },
   "eslintConfig": {
     "extends": [
