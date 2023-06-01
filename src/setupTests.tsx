@@ -7,7 +7,6 @@ import { server } from './mocks/server';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RenderOptions, render } from '@testing-library/react';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
-import { History } from 'history';
 
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
