@@ -13,7 +13,7 @@ app.get('/inventory-management-system-settings.json', function (req, res) {
     path.resolve(
       isCiEnv
         ? './server/e2e-settings.json'
-        : './public/operationsgateway-settings.json'
+        : './public/inventory-management-system-settings.json'
     )
   );
 });
