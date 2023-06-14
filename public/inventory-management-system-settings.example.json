@@ -1,5 +1,5 @@
 {
-  "facilityName": "Generic",
+  "apiUrl": "",
   "routes": [
     {
       "section": "Homepage",
