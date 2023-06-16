@@ -39,8 +39,6 @@ jobs:
           npm config set scripts-prepend-node-path true
           sudo apt-get install libgconf-2-4
           yarn --frozen-lockfile
-        with:
-          directory: ./inventory-management-system/
 
       - name: Run linting
         run: yarn lint:js
