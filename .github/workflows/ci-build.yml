@@ -19,11 +19,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16.x'
+          node-version: "16.x"
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
+        with:
+          directory: ./inventory-management-system/
 
       - name: Cache yarn dependencies
         uses: actions/cache@v2
@@ -32,27 +34,37 @@ jobs:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-
+          directory: ./inventory-management-system/
 
       - name: Install dependencies
         run: |
           npm config set scripts-prepend-node-path true
           sudo apt-get install libgconf-2-4
           yarn --frozen-lockfile
+        with:
+          directory: ./inventory-management-system/
 
       - name: Run linting
         run: yarn lint:js
+        with:
+          directory: ./inventory-management-system/
 
       - name: Run unit tests
         run: yarn test
+        with:
+          directory: ./inventory-management-system/
 
       - name: Upload coverage reports to Codecov
         if: success()
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./inventory-management-system/
 
       - name: Run e2e tests
         run: yarn e2e
+        with:
+          directory: ./inventory-management-system/
 
       - name: Upload Cypress screenshots
         if: failure()
@@ -60,3 +72,4 @@ jobs:
         with:
           name: OperationsGateway Screenshots
           path: cypress/screenshots
+          directory: ./inventory-management-system/
