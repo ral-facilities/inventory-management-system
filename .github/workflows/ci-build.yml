@@ -24,8 +24,6 @@ jobs:
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-        with:
-          directory: ./inventory-management-system/
 
       - name: Cache yarn dependencies
         uses: actions/cache@v2
