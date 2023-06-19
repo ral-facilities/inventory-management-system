@@ -1,0 +1,91 @@
+{
+  "name": "inventory-management-system",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.11.16",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@tanstack/react-query": "^4.29.7",
+    "@tanstack/react-query-devtools": "^4.29.7",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.4",
+    "axios": "^1.4.0",
+    "history": "^5.3.0",
+    "loglevel": "^1.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.11.2",
+    "react-scripts": "5.0.1",
+    "single-spa-react": "5.0.1",
+    "typescript": "^4.4.2",
+    "web-vitals": "^2.1.0"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "serve:build": "yarn build && serve -l 5001 build",
+    "test": "craco test --env=jsdom --coverage --watchAll=false",
+    "eject": "react-scripts eject",
+    "lint:js": "eslint --max-warnings=0 --ext=tsx --ext=ts --ext=js --ext=jsx --fix ./src",
+    "build:e2e": "cross-env REACT_APP_E2E_TESTING=true GENERATE_SOURCEMAP=false craco build",
+    "e2e:serve": "yarn build:e2e && node ./server/e2e-test-server.js",
+    "e2e:interactive": "start-server-and-test e2e:serve http://localhost:3000 cy:open",
+    "e2e": "start-server-and-test e2e:serve http://localhost:3000 cy:run",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "packageManager": "yarn@3.5.0",
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.21.8",
+    "@craco/craco": "^7.1.0",
+    "@testing-library/dom": "^9.3.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/testing-library__jest-dom": "^5.14.5",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "cross-env": "7.0.3",
+    "cypress": "^12.12.0",
+    "cypress-failed-log": "2.10.0",
+    "eslint": "^8.41.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-cypress": "^2.13.3",
+    "eslint-plugin-prettier": "^4.2.1",
+    "express": "4.18.1",
+    "msw": "^1.2.1",
+    "prettier": "^2.8.8",
+    "serve": "^14.2.0",
+    "serve-static": "1.15.0",
+    "start-server-and-test": "^2.0.0"
+  },
+  "msw": {
+    "workerDirectory": "public"
+  }
+}

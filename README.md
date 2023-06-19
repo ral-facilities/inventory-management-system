@@ -1,50 +1,82 @@
-# inventory-management-system
+# Inventory Management System
 
-Inventory Management System - user interface for inventory management
+The Inventory Management System is a [ReactJs](https://reactjs.org/)-based web application. It is a [micro-frontend](https://micro-frontends.org/) that can be integrated with the parent web application [SciGateway](https://github.com/ral-facilities/scigateway).
 
-# Getting Started with Create React App
+The Inventory Management System uses Yarn workspaces to manage it's monorepo structure, so please use [Yarn](https://yarnpkg.com/lang/en/docs/install/) instead of npm for package management.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The SciGateway application offers features such as authentication and authorisation functionality, notifications, cookies management.
 
-## Available Scripts
+For more details about the project's architecture, development guidelines and installation procedures, visit the [SciGateway documentation](https://github.com/ral-facilities/scigateway/wiki).
+
+## Code structure
+
+The project is structured as a monorepo. This means that the actual code packages are located under `inventory-management-system`
+
+### Available Scripts
 
 In the project directory, you can run:
 
-### `yarn start`
+### `yarn install`
 
-Runs the app in the development mode.\
+This will install all the project dependencies. Running `yarn install` at the top
+level initialises all the packages, and you will be ready to start development in any of them!
+
+### `yarn inventory-management-system`
+
+Runs the `inventory-management-system` `start` script, which runs the app in development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
 ### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Runs unit tests for all packages
 
-### `yarn build`
+### `yarn e2e`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Runs e2e tests for all packages
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `yarn lint`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Lints all packages
 
-### `yarn eject`
+## How to run
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Docker Setup
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Prerequisites
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Docker installed (if you want to run the microservice inside Docker)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Ensure that Docker is installed and running on your machine.
+2. Clone the repository and navigate to the project directory:
+   ```bash
+   git clone git@github.com:ral-facilities/inventory-management-system.git
+   cd inventory-management-system
+   ```
+3. Build and start the Docker containers:
+   ```bash
+   docker-compose up
+   ```
+   The website should now be running inside Docker at http://localhost:3000.
 
-## Learn More
+### Local Setup
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Prerequisites
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Node.js (https://nodejs.org/en/) - (LTS version at the time of writing is 16.17.0)
+- NPM (comes with the node.js installation)
+- An IDE for developing with JavaScript (VS Code is a good cross-platform suggestion)
+- [Yarn 3.5.0](https://yarnpkg.com/lang/en/docs/install/)
+
+1. Clone the repository and navigate to the project directory:
+   ```bash
+   git clone git@github.com:ral-facilities/inventory-management-system.git
+   cd inventory-management-system
+   ```
+2. Run install all the dependancies
+   ```bash
+   yarn install
+   ```
+3. Start the website
+   ```bash
+   yarn inventory-management-system
+   ```
