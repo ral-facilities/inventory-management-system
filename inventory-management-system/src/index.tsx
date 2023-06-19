@@ -1,16 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import * as log from "loglevel";
-import singleSpaReact from "single-spa-react";
-import axios from "axios";
-import { MicroFrontendId } from "./app.types";
-import { PluginRoute, RegisterRouteType } from "./state/actions/actions.types";
-import { InventoryManagementSystemSettings, setSettings } from "./settings";
-import ReactDOMClient from "react-dom/client";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import * as log from 'loglevel';
+import singleSpaReact from 'single-spa-react';
+import axios from 'axios';
+import { MicroFrontendId } from './app.types';
+import { PluginRoute, RegisterRouteType } from './state/actions/actions.types';
+import { InventoryManagementSystemSettings, setSettings } from './settings';
+import ReactDOMClient from 'react-dom/client';
 
-export const pluginName = "inventory-management-system";
+export const pluginName = 'inventory-management-system';
 
 const render = (): void => {
   const el = document.getElementById(pluginName);
@@ -23,7 +23,7 @@ function domElementGetter(): HTMLElement {
   // Make sure there is a div for us to render into
   let el = document.getElementById(pluginName);
   if (!el) {
-    el = document.createElement("div");
+    el = document.createElement('div');
   }
 
   return el;
@@ -102,43 +102,43 @@ export const fetchSettings =
     const settingsPath = process.env
       .REACT_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY
       ? process.env.REACT_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY +
-        "inventory-management-system-settings.json"
-      : "/inventory-management-system-settings.json";
+        'inventory-management-system-settings.json'
+      : '/inventory-management-system-settings.json';
     return axios
       .get<InventoryManagementSystemSettings>(settingsPath)
       .then((res) => {
         const settings = res.data;
 
         // invalid settings.json
-        if (typeof settings !== "object") {
-          throw Error("Invalid format");
+        if (typeof settings !== 'object') {
+          throw Error('Invalid format');
         }
 
         // Ensure the facility name exists.
-        if (!("facilityName" in settings)) {
-          throw new Error("facilityName is undefined in settings");
+        if (!('facilityName' in settings)) {
+          throw new Error('facilityName is undefined in settings');
         }
 
-        if (Array.isArray(settings["routes"]) && settings["routes"].length) {
-          settings["routes"].forEach((route: PluginRoute, index: number) => {
+        if (Array.isArray(settings['routes']) && settings['routes'].length) {
+          settings['routes'].forEach((route: PluginRoute, index: number) => {
             if (
-              "section" in route &&
-              "link" in route &&
-              "displayName" in route
+              'section' in route &&
+              'link' in route &&
+              'displayName' in route
             ) {
               const registerRouteAction = {
                 type: RegisterRouteType,
                 payload: {
-                  section: route["section"],
-                  link: route["link"],
-                  plugin: "inventory-management-system",
-                  displayName: route["displayName"],
-                  order: route["order"] ?? 0,
-                  hideFromMenu: route["hideFromMenu"] ?? false,
-                  admin: route["admin"] ?? false,
+                  section: route['section'],
+                  link: route['link'],
+                  plugin: 'inventory-management-system',
+                  displayName: route['displayName'],
+                  order: route['order'] ?? 0,
+                  hideFromMenu: route['hideFromMenu'] ?? false,
+                  admin: route['admin'] ?? false,
                   helpSteps:
-                    index === 0 && "helpSteps" in settings
-                      ? settings["helpSteps"]
+                    index === 0 && 'helpSteps' in settings
+                      ? settings['helpSteps']
                       : [],
                 },
               };
@@ -149,12 +149,12 @@ export const fetchSettings =
               );
             } else {
               throw new Error(
-                "Route provided does not have all the required entries (section, link, displayName)"
+                'Route provided does not have all the required entries (section, link, displayName)'
               );
             }
           });
         } else {
-          throw new Error("No routes provided in the settings");
+          throw new Error('No routes provided in the settings');
         }
         return settings;
       })
@@ -164,7 +164,7 @@ export const fetchSettings =
   };
 
 function prepare() {
-  return import("./mocks/browser").then(({ worker }) => {
+  return import('./mocks/browser').then(({ worker }) => {
     return worker.start();
   });
 }
@@ -173,7 +173,7 @@ const settings = fetchSettings();
 setSettings(settings);
 
 if (
-  process.env.NODE_ENV === "development" ||
+  process.env.NODE_ENV === 'development' ||
   process.env.REACT_APP_E2E_TESTING
 ) {
   prepare().then(() => render());
