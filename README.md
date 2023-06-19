@@ -52,13 +52,7 @@ Lints all packages
    git clone git@github.com:ral-facilities/inventory-management-system.git
    cd inventory-management-system
    ```
-3. Create a `.env` file.
-
-   ```bash
-   cp .env.example .env
-   ```
-
-4. Build and start the Docker containers:
+3. Build and start the Docker containers:
    ```bash
    docker-compose up
    ```
