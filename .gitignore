@@ -2,12 +2,14 @@
 
 # dependencies
 inventory-management-system/node_modules
+node_modules
 inventory-management-system/.pnp
 inventory-management-system/.pnp.js
 
 # testing
 **/cypress/logs/
 inventory-management-system/coverage
+inventory-management-system/cypress/screenshots/
 
 # development
 .vscode

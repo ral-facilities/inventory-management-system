@@ -1,0 +1,16 @@
+{
+  "name": "inventory-management-system-root",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "inventory-management-system"
+  ],
+  "scripts": {
+    "inventory-management-system": "yarn workspace inventory-management-system start",
+    "build": "yarn workspace inventory-management-system build",
+    "test": "yarn workspace inventory-management-system test",
+    "e2e": "yarn workspace inventory-management-system e2e",
+    "lint": "yarn workspace inventory-management-system lint:js"
+  },
+  "packageManager": "yarn@3.5.0"
+}
