@@ -1,0 +1,14 @@
+/.github
+/cypress
+.yarn
+/node_modules
+.git
+.gitignore
+codecov.yml
+yarn.lock
+README.md
+Dockerfile
+.prettierrc
+renovate.json
+cypress.config.ts
+build
