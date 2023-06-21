@@ -82,7 +82,11 @@ To learn React, check out the [React documentation](https://reactjs.org/).
    git clone git@github.com:ral-facilities/inventory-management-system.git
    cd inventory-management-system
    ```
-3. Build and start the Docker containers:
+3. Create a inventory-management-system-settings.json file
+   ```bash
+   cp public/inventory-management-system-settings.example.json public/inventory-management-system-settings.json
+   ```
+4. Build and start the Docker containers:
    ```bash
    docker-compose up
    ```
@@ -106,7 +110,11 @@ To learn React, check out the [React documentation](https://reactjs.org/).
    ```bash
    yarn install
    ```
-3. Start the website
+3. Create a inventory-management-system-settings.json file
+   ```bash
+   cp public/inventory-management-system-settings.example.json public/inventory-management-system-settings.json
+   ```
+4. Start the website
    ```bash
    yarn inventory-management-system
    ```

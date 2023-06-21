@@ -1,11 +1,11 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MicroFrontendId } from "./app.types";
-import { requestPluginRerender } from "./state/scigateway.actions";
-import Preloader from "./preloader/preloader.component";
-import IMSThemeProvider from "./imsThemeProvider.component";
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MicroFrontendId } from './app.types';
+import { requestPluginRerender } from './state/scigateway.actions';
+import Preloader from './preloader/preloader.component';
+import IMSThemeProvider from './imsThemeProvider.component';
 
 const queryClient = new QueryClient({
   defaultOptions: {
