@@ -11,3 +11,5 @@ renovate.json
 cypress.config.ts
 build
 docker-compose.yml
+.yarn/*
+!.yarn/releases
