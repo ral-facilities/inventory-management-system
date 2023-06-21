@@ -114,9 +114,9 @@ export const fetchSettings =
           throw Error('Invalid format');
         }
 
-        // Ensure the facility name exists.
-        if (!('facilityName' in settings)) {
-          throw new Error('facilityName is undefined in settings');
+        // Ensure the apiUrl name exists.
+        if (!('apiUrl' in settings)) {
+          throw new Error('apiUrl is undefined in settings');
         }
 
         if (Array.isArray(settings['routes']) && settings['routes'].length) {

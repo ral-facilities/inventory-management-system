@@ -1,14 +1,11 @@
 # Specify a base image
-FROM node:alpine
+FROM node:16.14-alpine3.15
 
 # Set the working directory
 WORKDIR /inventory-management-system-run
 
 # Copy the application files
 COPY . .
-
-# Set the version of Yarn
-RUN yarn set version 3.5.0
 
 # Install dependencies
 RUN yarn install
