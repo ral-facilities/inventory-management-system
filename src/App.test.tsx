@@ -1,9 +1,22 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { act } from "@testing-library/react";
+import App from "./App";
+import { createRoot } from "react-dom/client";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+jest.mock("loglevel");
+
+describe("App", () => {
+  it("renders without crashing", async () => {
+    const el = document.createElement("div");
+    const root = createRoot(el);
+
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(async () => {
+      root.render(
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      );
+    });
+  });
 });
