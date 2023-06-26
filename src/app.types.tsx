@@ -1,1 +1,3 @@
-export const MicroFrontendId = "scigateway";
+export const MicroFrontendId = 'scigateway';
+
+export type TabValue = 'Systems' | 'Catalogue' | 'Manufacturer';

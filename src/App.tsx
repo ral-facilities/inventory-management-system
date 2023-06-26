@@ -1,11 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MicroFrontendId } from './app.types';
 import { requestPluginRerender } from './state/scigateway.actions';
 import Preloader from './preloader/preloader.component';
 import IMSThemeProvider from './imsThemeProvider.component';
+
+import { BrowserRouter } from 'react-router-dom';
+import ViewTabs from './view/viewTabs.component';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,20 +47,9 @@ const App: React.FunctionComponent = () => {
           <React.Suspense
             fallback={<Preloader loading={true}>Finished loading</Preloader>}
           >
-            <header className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
-              <p>
-                Edit <code>src/App.tsx</code> and save to reload.
-              </p>
-              <a
-                className="App-link"
-                href="https://reactjs.org"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Learn React
-              </a>
-            </header>
+            <BrowserRouter>
+              <ViewTabs />
+            </BrowserRouter>
           </React.Suspense>
         </QueryClientProvider>
       </IMSThemeProvider>
