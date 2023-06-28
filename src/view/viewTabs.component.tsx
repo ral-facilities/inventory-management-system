@@ -13,7 +13,7 @@ import { Paper } from '@mui/material';
 
 export const paths = {
   home: '/',
-  catalogue: '/catalogue',
+  catalogue: '/catalogue/*',
   systems: '/systems',
   manufacturer: '/manufacturer',
 };
@@ -36,13 +36,20 @@ function ViewTabs() {
   const navigate = useNavigate();
   const location = useLocation();
   React.useEffect(() => {
-    const tabValue =
-      location.pathname.charAt(1).toUpperCase() +
-      location.pathname.substring(2);
+    const tabValue = (
+      location.pathname.charAt(1).toUpperCase() + location.pathname.substring(2)
+    ).split('/')[0];
     if (tabValue !== value && tabValue !== '') {
       setValue(tabValue as TabValue);
     }
   }, [location.pathname, value]);
+
+  React.useEffect(() => {
+    if (location.pathname === '/') {
+      navigate('/catalogue');
+    }
+  }, [location.pathname, navigate]);
+
   const handleChange = (event: React.SyntheticEvent, newValue: TabValue) => {
     setValue(newValue);
     navigate(`/${newValue.toLowerCase()}`);

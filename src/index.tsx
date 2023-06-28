@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as log from 'loglevel';
@@ -14,9 +13,14 @@ export const pluginName = 'inventory-management-system';
 
 const render = (): void => {
   const el = document.getElementById(pluginName);
-  if (el) {
-    ReactDOM.render(<App />, document.getElementById(pluginName));
-  }
+  if (!el) throw new Error(`${pluginName} div missing in index.html`);
+
+  const root = ReactDOMClient.createRoot(el);
+  root.render(
+    // <React.StrictMode>
+    <App />
+    // </React.StrictMode>
+  );
 };
 
 function domElementGetter(): HTMLElement {

@@ -1,7 +1,9 @@
-import { PluginRoute } from "./state/actions/actions.types";
+import { PluginRoute } from './state/actions/actions.types';
 
 export interface InventoryManagementSystemSettings {
+  apiUrl: string;
   routes: PluginRoute[];
+  pluginHost?: string;
 }
 
 export let settings: Promise<InventoryManagementSystemSettings | void>;

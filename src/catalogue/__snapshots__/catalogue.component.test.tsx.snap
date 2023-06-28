@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Catalogue renders text correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-1902l77"
+  >
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-wtqo72-MuiButtonBase-root-MuiButton-root"
+      data-testid="home-button-catalogue"
+      tabindex="0"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+        data-testid="HomeIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+        />
+      </svg>
+      <span
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+      />
+    </button>
+    <div
+      class="MuiBox-root css-1d92c1"
+    >
+      <div
+        class="MuiBox-root css-0"
+      >
+        <nav
+          aria-label="breadcrumb"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-h1b7t3-MuiTypography-root-MuiBreadcrumbs-root"
+        >
+          <ol
+            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+          >
+            <li
+              class="MuiBreadcrumbs-li"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+              />
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <svg
+      aria-hidden="true"
+      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1nq2t50-MuiSvgIcon-root"
+      data-testid="NavigateNextIcon"
+      focusable="false"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+      />
+    </svg>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-wtqo72-MuiButtonBase-root-MuiButton-root"
+      data-testid="add-button-catalogue"
+      tabindex="0"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+        data-testid="AddIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+        />
+      </svg>
+      <span
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+      />
+    </button>
+  </div>
+</DocumentFragment>
+`;

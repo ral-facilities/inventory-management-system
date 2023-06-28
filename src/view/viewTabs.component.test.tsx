@@ -17,7 +17,10 @@ describe('View Tabs', () => {
     expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
       'Catalogue'
     );
-    expect(screen.getByText('Catalogue Page')).toBeInTheDocument();
+    const catalogueHomeButton = await screen.findByTestId(
+      'home-button-catalogue'
+    );
+    expect(catalogueHomeButton).toBeInTheDocument();
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[0]
     ).toHaveTextContent('Systems');
