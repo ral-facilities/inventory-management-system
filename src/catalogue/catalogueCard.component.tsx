@@ -15,8 +15,6 @@ function CatalogueCard(props: CatalogueCardProps) {
       relative="path"
       sx={{
         display: 'flex',
-        // NOTE: This is the maximum width for the card (it will only use this even if you set the mainWidth to a greater value).
-        // maxWidth: '300px',
         backgroundColor: 'background.paper',
         width: '100%',
         margin: '1px',
