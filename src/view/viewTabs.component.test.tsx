@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderComponentWithMemoryRouter } from '../setupTests';
 import ViewTabs from './viewTabs.component';
-import { screen, within } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 describe('View Tabs', () => {
@@ -17,7 +17,9 @@ describe('View Tabs', () => {
     expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
       'Catalogue'
     );
-    expect(screen.getByText('Catalogue Page')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+    });
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[0]
     ).toHaveTextContent('Systems');
