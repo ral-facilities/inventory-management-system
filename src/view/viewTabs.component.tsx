@@ -54,6 +54,12 @@ function ViewTabs() {
     setValue(newValue);
     navigate(`/${newValue.toLowerCase()}`);
   };
+
+  React.useEffect(() => {
+    if (location.pathname === '/') {
+      navigate('/catalogue');
+    }
+  }, [location.pathname, navigate]);
   return (
     <Paper>
       <Box sx={{ width: '100%' }}>

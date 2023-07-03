@@ -1,37 +1,45 @@
 import React from 'react';
-import {
-  renderComponentWithBrowserRouter,
-  renderComponentWithMemoryRouter,
-} from '../setupTests';
+import { renderComponentWithMemoryRouter } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import Catalogue from './catalogue.component';
 import userEvent from '@testing-library/user-event';
 
 describe('Catalogue', () => {
   let user;
-  const createView = () => {
-    return renderComponentWithBrowserRouter(<Catalogue />);
+  const createView = (path: string) => {
+    return renderComponentWithMemoryRouter(<Catalogue />, path);
   };
 
   beforeEach(() => {
     user = userEvent.setup();
   });
 
-  it('renders text correctly', () => {
-    createView();
-    const view = createView();
+  it('renders text correctly', async () => {
+    createView('/');
 
-    expect(view.asFragment()).toMatchSnapshot();
+    await waitFor(() => {
+      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Motion')).toBeInTheDocument();
+    expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
   });
   it('navigates back to the root directory', async () => {
-    createView();
+    createView('/motion');
+
+    await waitFor(() => {
+      expect(screen.getByText('Actuators')).toBeInTheDocument();
+    });
 
     const homeButton = await screen.findByTestId('home-button-catalogue');
     await user.click(homeButton);
-    expect(window.location.pathname).toBe('/catalogue');
+    await waitFor(() => {
+      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Motion')).toBeInTheDocument();
+    expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
   });
   it('opens the add catalogue category dialog', async () => {
-    createView();
+    createView('/');
 
     const addButton = await screen.findByTestId('add-button-catalogue');
     await user.click(addButton);
@@ -47,10 +55,7 @@ describe('Catalogue', () => {
     });
   });
   it('renders the breadcumbs and navigate to another directory', async () => {
-    renderComponentWithMemoryRouter(
-      <Catalogue />,
-      '/catalogue/motion/actuators'
-    );
+    createView('/catalogue/motion/actuators');
 
     await waitFor(() => {
       expect(screen.getByRole('link', { name: 'motion' })).toBeInTheDocument();
@@ -62,5 +67,22 @@ describe('Catalogue', () => {
         screen.queryByRole('link', { name: 'motion' })
       ).not.toBeInTheDocument();
     });
+  });
+
+  it('updates the cards when a card button is clicked', async () => {
+    createView('/');
+    await waitFor(() => {
+      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Motion')).toBeInTheDocument();
+    expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
+
+    const beamButton = screen.getByText('Beam Characterization');
+    user.click(beamButton);
+    await waitFor(() => {
+      expect(screen.getByText('Cameras')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Energy Meters')).toBeInTheDocument();
+    expect(screen.getByText('Wavefront Sensors')).toBeInTheDocument();
   });
 });
