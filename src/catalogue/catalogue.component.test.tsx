@@ -10,29 +10,29 @@ describe('Catalogue', () => {
   };
 
   it('renders text correctly', async () => {
-    const user = userEvent.setup();
     createView('/');
 
     await waitFor(() => {
       expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
-      expect(screen.getByText('Motion')).toBeInTheDocument();
-      expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
     });
+    expect(screen.getByText('Motion')).toBeInTheDocument();
+    expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
   });
   it('updates the cards when a card button is clicked', async () => {
+    const user = userEvent.setup();
     createView('/');
     await waitFor(() => {
       expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
-      expect(screen.getByText('Motion')).toBeInTheDocument();
-      expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
     });
+    expect(screen.getByText('Motion')).toBeInTheDocument();
+    expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
 
     const beamButton = screen.getByText('Beam Characterization');
-    userEvent.click(beamButton);
+    user.click(beamButton);
     await waitFor(() => {
       expect(screen.getByText('Cameras')).toBeInTheDocument();
-      expect(screen.getByText('Energy Meters')).toBeInTheDocument();
-      expect(screen.getByText('Wavefront Sensors')).toBeInTheDocument();
     });
+    expect(screen.getByText('Energy Meters')).toBeInTheDocument();
+    expect(screen.getByText('Wavefront Sensors')).toBeInTheDocument();
   });
 });
