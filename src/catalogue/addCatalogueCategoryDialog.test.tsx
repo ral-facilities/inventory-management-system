@@ -8,6 +8,7 @@ import { renderComponentWithBrowserRouter } from '../setupTests';
 describe('Add Catalogue Category Dialog', () => {
   const onClose = jest.fn();
   const onChangeLeaf = jest.fn();
+  const refetchData = jest.fn;
   let props: AddCatalogueCategoryDialogProps;
   let user;
   const createView = () => {
@@ -22,6 +23,7 @@ describe('Add Catalogue Category Dialog', () => {
       parentId: '',
       onChangeLeaf: onChangeLeaf,
       isLeaf: false,
+      refetchData: refetchData,
     };
     user = userEvent.setup();
   });

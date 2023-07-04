@@ -30,10 +30,11 @@ function Catalogue() {
 
   const catalogueLocation = location.pathname.replace('/catalogue', '');
 
-  const { data: catalogueCategoryData } = useCatalogueCategory(
-    undefined,
-    catalogueLocation === '' ? '/' : catalogueLocation
-  );
+  const { data: catalogueCategoryData, refetch: catalogueCategoryDataRefetch } =
+    useCatalogueCategory(
+      undefined,
+      catalogueLocation === '' ? '/' : catalogueLocation
+    );
 
   const { data: catalogueCategoryDetail } = useCatalogueCategory(
     catalogueLocation === '' ? '/' : catalogueLocation,
@@ -51,7 +52,11 @@ function Catalogue() {
       setParentId(parentInfo.id);
       setIsLeaf(parentInfo.is_leaf);
     }
-  }, [parentInfo]);
+
+    if (catalogueLocation === '') {
+      setParentId('');
+    }
+  }, [catalogueLocation, parentInfo]);
 
   return (
     <Grid container>
@@ -94,6 +99,7 @@ function Catalogue() {
           parentId={parentId}
           onChangeLeaf={setIsLeaf}
           isLeaf={isLeaf}
+          refetchData={() => catalogueCategoryDataRefetch()}
         />
       </Grid>
       {catalogueCategoryData && (

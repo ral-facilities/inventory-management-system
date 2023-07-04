@@ -24,10 +24,11 @@ export interface AddCatalogueCategoryDialogProps {
   parentId: string;
   onChangeLeaf: (isLeaf: boolean) => void;
   isLeaf: boolean;
+  refetchData: () => void;
 }
 
 function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
-  const { open, onClose, parentId, isLeaf, onChangeLeaf } = props;
+  const { open, onClose, parentId, isLeaf, onChangeLeaf, refetchData } = props;
 
   const [error, setError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
@@ -43,7 +44,8 @@ function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
     setError(false);
     setErrorMessage(undefined);
     setCatalogueCategoryName(undefined);
-  }, [onClose]);
+    refetchData();
+  }, [onClose, refetchData]);
 
   const handleCatalogueCategory = React.useCallback(() => {
     let catalogueCategory: AddCatalogueCategory;
