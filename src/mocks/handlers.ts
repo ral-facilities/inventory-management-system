@@ -34,7 +34,8 @@ export const handlers = [
       })
     );
   }),
-  rest.get('/catalogueCategory', (req, res, ctx) => {
+
+  rest.get('/v1/catalogue-categories/', (req, res, ctx) => {
     const catalogueCategoryParams = req.url.searchParams;
     const path = catalogueCategoryParams.get('path');
     const parentPath = catalogueCategoryParams.get('parent_path');
