@@ -8,21 +8,28 @@ import {
   Divider,
   Box,
   TextField,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { CatalogueCategory } from '../app.types';
+import { AddCatalogueCategory } from '../app.types';
 import { useAddCatalogueCategory } from '../api/catalogueCategory';
 
 export interface AddCatalogueCategoryDialogProps {
   open: boolean;
   onClose: () => void;
   parentId: string;
+  onChangeLeaf: (isLeaf: boolean) => void;
+  isLeaf: boolean;
 }
 
 function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
-  const { open, onClose, parentId } = props;
+  const { open, onClose, parentId, isLeaf, onChangeLeaf } = props;
 
-  const [nameError, setError] = React.useState(false);
+  const [error, setError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
     undefined
   );
@@ -39,9 +46,10 @@ function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
   }, [onClose]);
 
   const handleCatalogueCategory = React.useCallback(() => {
-    let catalogueCategory: CatalogueCategory;
+    let catalogueCategory: AddCatalogueCategory;
     catalogueCategory = {
       name: catalogueCategoryName,
+      is_leaf: isLeaf,
     };
 
     if (parentId !== '') {
@@ -66,8 +74,13 @@ function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
           );
         }
       });
-  }, [addCatalogueCategory, catalogueCategoryName, handleClose, parentId]);
-
+  }, [
+    addCatalogueCategory,
+    catalogueCategoryName,
+    handleClose,
+    isLeaf,
+    parentId,
+  ]);
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
       <DialogContent>
@@ -75,8 +88,8 @@ function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
           label="Name*"
           sx={{ marginLeft: '4px' }} // Adjusted the width and margin
           value={catalogueCategoryName}
-          error={nameError}
-          helperText={nameError && errorMessage}
+          error={error}
+          helperText={error && errorMessage}
           onChange={(event) => {
             setCatalogueCategoryName(
               event.target.value ? event.target.value : undefined
@@ -86,13 +99,42 @@ function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
           }}
           fullWidth
         />
+        <FormControl sx={{ margin: '8px' }}>
+          <FormLabel id="controlled-radio-buttons-group">
+            Catalogue Directory Content
+          </FormLabel>
+          <RadioGroup
+            aria-labelledby="controlled-radio-buttons-group"
+            name="controlled-radio-buttons-group"
+            value={isLeaf}
+            onChange={(event, value) => {
+              onChangeLeaf(value === 'true' ? true : false);
+            }}
+          >
+            <FormControlLabel
+              value="false"
+              control={<Radio />}
+              label="Catalogue Categories"
+            />
+            <FormControlLabel
+              value="true"
+              control={<Radio />}
+              label="Catalogue Items"
+            />
+          </RadioGroup>
+        </FormControl>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column' }}>
         <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
           <Box sx={{ flexGrow: 1 }}>
             <Divider />
           </Box>
-          <Button variant="outlined" sx={{ alignSelf: 'center' }}>
+          <Button
+            variant="outlined"
+            sx={{ alignSelf: 'center' }}
+            disabled={!isLeaf}
+            data-testid="add-fields-button"
+          >
             <AddIcon />
           </Button>
           <Box sx={{ flexGrow: 1 }}>

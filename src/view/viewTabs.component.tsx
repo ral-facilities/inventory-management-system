@@ -82,7 +82,12 @@ function ViewTabs() {
             />
           </Tabs>
         </Box>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box
+          sx={{
+            borderBottom: 1,
+            borderColor: 'divider',
+          }}
+        >
           <Routes location={location}>
             <Route path="/" element={<Catalogue />}></Route>
             <Route path={paths.catalogue} element={<Catalogue />}></Route>

@@ -54,10 +54,10 @@ describe('catalogue category api functions', () => {
           {
             code: 'actuators',
             id: '8',
-            isLeaf: false,
+            is_leaf: false,
             name: 'Actuators',
-            parentId: '2',
-            parentPath: '/motion',
+            parent_id: '2',
+            parent_path: '/motion',
             path: '/motion/actuators',
           },
         ]);
@@ -79,10 +79,10 @@ describe('catalogue category api functions', () => {
           {
             code: 'motion',
             id: '2',
-            isLeaf: false,
+            is_leaf: false,
             name: 'Motion',
-            parentId: '',
-            parentPath: '/',
+            parent_id: '',
+            parent_path: '/',
             path: '/motion',
           },
         ]);

@@ -6,8 +6,8 @@ import {
   UseQueryResult,
 } from '@tanstack/react-query';
 import {
-  CatalogueCategoryResponse,
-  CatalogueCategory,
+  AddCatalogueCategoryResponse,
+  AddCatalogueCategory,
   ViewCatalogueCategoryResponse,
 } from '../app.types';
 import { readSciGatewayToken } from '../parseTokens';
@@ -60,8 +60,8 @@ export const useCatalogueCategory = (
 };
 
 const addCatalogueCategory = async (
-  catalogueCategory: CatalogueCategory
-): Promise<CatalogueCategoryResponse> => {
+  catalogueCategory: AddCatalogueCategory
+): Promise<AddCatalogueCategoryResponse> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -70,7 +70,7 @@ const addCatalogueCategory = async (
   }
 
   return axios
-    .post<CatalogueCategoryResponse>(
+    .post<AddCatalogueCategoryResponse>(
       `${apiUrl}/v1/catalogue-categories`,
       catalogueCategory,
       {
@@ -83,12 +83,12 @@ const addCatalogueCategory = async (
 };
 
 export const useAddCatalogueCategory = (): UseMutationResult<
-  CatalogueCategoryResponse,
+  AddCatalogueCategoryResponse,
   AxiosError,
-  CatalogueCategory
+  AddCatalogueCategory
 > => {
   return useMutation(
-    (catalogueCategory: CatalogueCategory) =>
+    (catalogueCategory: AddCatalogueCategory) =>
       addCatalogueCategory(catalogueCategory),
     {
       onError: (error) => {

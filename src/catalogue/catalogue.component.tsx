@@ -1,6 +1,6 @@
 import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { Button, Box, Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
@@ -20,7 +20,7 @@ function Catalogue() {
     },
     [navigate]
   );
-  const [parentId] = React.useState<string>('');
+
   React.useEffect(() => {
     setCurrNode(location.pathname.replace('/catalogue', ''));
   }, [location.pathname]);
@@ -35,13 +35,33 @@ function Catalogue() {
     catalogueLocation === '' ? '/' : catalogueLocation
   );
 
+  const { data: catalogueCategoryDetail } = useCatalogueCategory(
+    catalogueLocation === '' ? '/' : catalogueLocation,
+    undefined
+  );
+
+  const [parentId, setParentId] = React.useState<string>('');
+  const [isLeaf, setIsLeaf] = React.useState<boolean>(false);
+  const parentInfo = catalogueCategoryDetail?.[0];
+
+  const disableButton = parentInfo ? parentInfo.is_leaf : false;
+
+  React.useEffect(() => {
+    if (parentInfo) {
+      setParentId(parentInfo.id);
+      setIsLeaf(parentInfo.is_leaf);
+    }
+  }, [parentInfo]);
+
   return (
-    <Box>
-      <Box
+    <Grid container>
+      <Grid
+        item
         sx={{
           display: 'flex',
-          marginLeft: 'auto',
+          marginLeft: 0,
           alignItems: 'center', // Align items vertically at the center
+          height: '100%',
         }}
       >
         <Button
@@ -54,9 +74,7 @@ function Catalogue() {
         >
           <HomeIcon />
         </Button>
-        <Box sx={{ alignContent: 'left' }}>
-          <Breadcrumbs currNode={currNode} onChangeNode={onChangeNode} />
-        </Box>
+        <Breadcrumbs currNode={currNode} onChangeNode={onChangeNode} />
         <NavigateNext
           fontSize="medium"
           sx={{ color: 'rgba(0, 0, 0, 0.6)', margin: '4px' }}
@@ -66,6 +84,7 @@ function Catalogue() {
           sx={{ alignContent: 'left', margin: '4px' }}
           onClick={() => setCatalogueCategoryDialogOpen(true)}
           data-testid="add-button-catalogue"
+          disabled={disableButton}
         >
           <AddIcon />
         </Button>
@@ -73,17 +92,20 @@ function Catalogue() {
           open={catalogueCategoryDialogOpen}
           onClose={() => setCatalogueCategoryDialogOpen(false)}
           parentId={parentId}
+          onChangeLeaf={setIsLeaf}
+          isLeaf={isLeaf}
         />
-      </Box>
-      <Grid container spacing={2}>
-        {catalogueCategoryData &&
-          catalogueCategoryData.map((item, index) => (
+      </Grid>
+      {catalogueCategoryData && (
+        <Grid container spacing={2}>
+          {catalogueCategoryData.map((item, index) => (
             <Grid item key={index} xs={12} sm={6} md={4}>
               <CatalogueCard {...item} />
             </Grid>
           ))}
-      </Grid>
-    </Box>
+        </Grid>
+      )}
+    </Grid>
   );
 }
 

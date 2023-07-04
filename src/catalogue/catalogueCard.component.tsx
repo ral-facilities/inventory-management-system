@@ -24,13 +24,11 @@ function CatalogueCard(props: CatalogueCardProps) {
     >
       <Card sx={{ width: '100%' }}>
         <CardContent sx={{ width: '100%', minWidth: 0 }}>
-          <Box>
-            <div aria-label="main-content" ref={mainContentRef}>
-              <Typography aria-label="card-name" noWrap>
-                {props.name}
-              </Typography>
-            </div>
-          </Box>
+          <div aria-label="main-content" ref={mainContentRef}>
+            <Typography aria-label="card-name" noWrap>
+              {props.name}
+            </Typography>
+          </div>
         </CardContent>
       </Card>
     </Button>
