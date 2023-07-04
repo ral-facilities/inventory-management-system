@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Card, CardContent, Button } from '@mui/material';
+import { Typography, Card, CardContent, Button } from '@mui/material';
 import { ViewCatalogueCategoryResponse } from '../app.types';
 import { Link } from 'react-router-dom';
 
