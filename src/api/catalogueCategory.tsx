@@ -31,7 +31,7 @@ const fetchCatalogueCategory = async (
     queryParams.append('parent_path', parentPath);
   }
   return axios
-    .get(`${apiUrl}/catalogueCategory`, {
+    .get(`${apiUrl}/v1/catalogue-categories/`, {
       params: queryParams,
       headers: {
         Authorization: `Bearer ${readSciGatewayToken()}`,
