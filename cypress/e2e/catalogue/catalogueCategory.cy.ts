@@ -56,7 +56,9 @@ describe('Catalogue Category', () => {
     }).should((patchRequests) => {
       expect(patchRequests.length).equal(2);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal('{"name":"test"}');
+      expect(JSON.stringify(request.body)).equal(
+        '{"name":"test","is_leaf":false}'
+      );
     });
   });
 });
