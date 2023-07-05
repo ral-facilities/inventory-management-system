@@ -3,14 +3,15 @@ import {
   useAddCatalogueCategory,
   useCatalogueCategory,
 } from './catalogueCategory';
-import { CatalogueCategory } from '../app.types';
+import { AddCatalogueCategory } from '../app.types';
 import { hooksWrapperWithProviders } from '../setupTests';
 
 describe('catalogue category api functions', () => {
-  let mockData: CatalogueCategory;
+  let mockData: AddCatalogueCategory;
   beforeEach(() => {
     mockData = {
       name: 'test',
+      is_leaf: false,
     };
   });
   afterEach(() => {
@@ -34,6 +35,7 @@ describe('catalogue category api functions', () => {
         code: 'test',
         path: 'test',
         parent_path: '',
+        is_leaf: false,
       });
     });
 
