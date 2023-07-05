@@ -8,7 +8,7 @@ export interface ViewCatalogueCategoryResponse {
   name: string;
   parent_path: string;
   path: string;
-  parent_id: string;
+  parent_id: string | null;
   code: string;
   is_leaf: boolean;
 }
