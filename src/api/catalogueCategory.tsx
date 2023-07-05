@@ -10,7 +10,6 @@ import {
   AddCatalogueCategory,
   ViewCatalogueCategoryResponse,
 } from '../app.types';
-import { readSciGatewayToken } from '../parseTokens';
 import { settings } from '../settings';
 
 const fetchCatalogueCategory = async (
@@ -69,12 +68,7 @@ const addCatalogueCategory = async (
   return axios
     .post<AddCatalogueCategoryResponse>(
       `${apiUrl}/v1/catalogue-categories`,
-      catalogueCategory,
-      {
-        headers: {
-          Authorization: `Bearer ${readSciGatewayToken()}`,
-        },
-      }
+      catalogueCategory
     )
     .then((response) => response.data);
 };
