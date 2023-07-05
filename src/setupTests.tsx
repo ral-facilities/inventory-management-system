@@ -89,3 +89,13 @@ export function renderComponentWithMemoryRouter(
     ...render(ui, { wrapper: Wrapper, ...renderOptions }),
   };
 }
+
+export const hooksWrapperWithProviders = (queryClient?: QueryClient) => {
+  const testQueryClient = queryClient ?? createTestQueryClient();
+  const wrapper = ({ children }) => (
+    <QueryClientProvider client={testQueryClient}>
+      {children}
+    </QueryClientProvider>
+  );
+  return wrapper;
+};
