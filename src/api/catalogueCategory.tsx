@@ -24,9 +24,6 @@ const fetchCatalogueCategory = async (
   return axios
     .get(`${apiUrl}/v1/catalogue-categories/`, {
       params: queryParams,
-      headers: {
-        Authorization: `Bearer ${readSciGatewayToken()}`,
-      },
     })
     .then((response) => {
       return response.data;
