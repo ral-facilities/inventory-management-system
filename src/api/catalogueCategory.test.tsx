@@ -7,7 +7,7 @@ describe('catalogue category api functions', () => {
     jest.clearAllMocks();
   });
 
-  describe('useExperiment', () => {
+  describe('useCatalogueCategory', () => {
     it('sends request to fetch catalogue catagory data and returns successful response', async () => {
       const { result } = renderHook(
         () => useCatalogueCategory(undefined, '/motion'),
