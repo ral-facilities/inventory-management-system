@@ -29,7 +29,7 @@ describe('Catalogue Category', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Please enter a name. Request failed with status code 422');
+        cy.contains('Please enter a name.');
       });
     cy.findByLabelText('Name*').type('test_dup');
     cy.findByRole('button', { name: 'Save' }).click();
@@ -37,7 +37,7 @@ describe('Catalogue Category', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'A catalogue category with the same name already exists within the parent catalogue category. Request failed with status code 409'
+          'A catalogue category with the same name already exists within the parent catalogue category.'
         );
       });
   });
