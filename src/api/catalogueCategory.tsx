@@ -1,6 +1,5 @@
 import axios, { AxiosError } from 'axios';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { readSciGatewayToken } from '../parseTokens';
 import { settings } from '../settings';
 import { ViewCatalogueCategoryResponse } from '../app.types';
 
