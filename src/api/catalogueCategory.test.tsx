@@ -33,8 +33,8 @@ describe('catalogue category api functions', () => {
         parent_id: null,
         id: '1',
         code: 'test',
-        path: 'test',
-        parent_path: '',
+        path: '/test',
+        parent_path: '/',
         is_leaf: false,
       });
     });
@@ -83,7 +83,7 @@ describe('catalogue category api functions', () => {
             id: '2',
             is_leaf: false,
             name: 'Motion',
-            parent_id: '',
+            parent_id: null,
             parent_path: '/',
             path: '/motion',
           },

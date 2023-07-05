@@ -21,7 +21,7 @@ import { useAddCatalogueCategory } from '../api/catalogueCategory';
 export interface AddCatalogueCategoryDialogProps {
   open: boolean;
   onClose: () => void;
-  parentId: string;
+  parentId: string | null;
   onChangeLeaf: (isLeaf: boolean) => void;
   isLeaf: boolean;
   refetchData: () => void;
@@ -54,7 +54,7 @@ function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
       is_leaf: isLeaf,
     };
 
-    if (parentId !== '') {
+    if (parentId !== null) {
       catalogueCategory = {
         ...catalogueCategory,
         parent_id: parentId,
@@ -64,15 +64,12 @@ function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
         setError(true);
-        const errorMessages = [
-          'Request failed with status code 422',
-          'Request failed with status code 409',
-        ];
-        if (error.message === errorMessages[0]) {
-          setErrorMessage(`Please enter a name. ${errorMessages[0]}`);
-        } else if (error.message === errorMessages[1]) {
+
+        if (error.response?.status === 422) {
+          setErrorMessage('Please enter a name.');
+        } else if (error.response?.status === 409) {
           setErrorMessage(
-            `A catalogue category with the same name already exists within the parent catalogue category. ${errorMessages[1]}`
+            'A catalogue category with the same name already exists within the parent catalogue category.'
           );
         }
       });

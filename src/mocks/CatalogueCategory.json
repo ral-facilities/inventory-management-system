@@ -2,7 +2,7 @@
   {
     "id": "",
     "name": "",
-    "parent_id": "",
+    "parent_id": null,
     "code": "",
     "is_leaf": false,
     "parent_path": "",
@@ -11,7 +11,7 @@
   {
     "id": "1",
     "name": "Beam Characterization",
-    "parent_id": "",
+    "parent_id": null,
     "code": "beam-characterization",
     "is_leaf": false,
     "parent_path": "/",
@@ -20,7 +20,7 @@
   {
     "id": "2",
     "name": "Motion",
-    "parent_id": "",
+    "parent_id": null,
     "code": "motion",
     "is_leaf": false,
     "parent_path": "/",
@@ -29,7 +29,7 @@
   {
     "id": "3",
     "name": "Vacuum Technology",
-    "parent_id": "",
+    "parent_id": null,
     "code": "vacuum-technology",
     "is_leaf": false,
     "parent_path": "/",

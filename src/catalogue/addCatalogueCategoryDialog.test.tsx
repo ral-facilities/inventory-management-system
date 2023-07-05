@@ -20,7 +20,7 @@ describe('Add Catalogue Category Dialog', () => {
     props = {
       open: true,
       onClose: onClose,
-      parentId: '',
+      parentId: null,
       onChangeLeaf: onChangeLeaf,
       isLeaf: false,
       refetchData: refetchData,
@@ -42,9 +42,7 @@ describe('Add Catalogue Category Dialog', () => {
     createView();
     const saveButton = screen.getByRole('button', { name: 'Save' });
     await user.click(saveButton);
-    const helperTexts = screen.getByText(
-      'Please enter a name. Request failed with status code 422'
-    );
+    const helperTexts = screen.getByText('Please enter a name.');
     expect(helperTexts).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
   });
@@ -63,7 +61,7 @@ describe('Add Catalogue Category Dialog', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'A catalogue category with the same name already exists within the parent catalogue category. Request failed with status code 409'
+          'A catalogue category with the same name already exists within the parent catalogue category.'
         )
       ).toBeInTheDocument();
     });

@@ -20,8 +20,8 @@ export const handlers = [
         parent_id: null,
         id: '1',
         code: 'test',
-        path: 'test',
-        parent_path: '',
+        path: '/test',
+        parent_path: '/',
         is_leaf: false,
       })
     );

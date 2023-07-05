@@ -41,7 +41,7 @@ function Catalogue() {
     undefined
   );
 
-  const [parentId, setParentId] = React.useState<string>('');
+  const [parentId, setParentId] = React.useState<string | null>(null);
   const [isLeaf, setIsLeaf] = React.useState<boolean>(false);
   const parentInfo = catalogueCategoryDetail?.[0];
 
@@ -54,7 +54,7 @@ function Catalogue() {
     }
 
     if (catalogueLocation === '') {
-      setParentId('');
+      setParentId(null);
     }
   }, [catalogueLocation, parentInfo]);
 
