@@ -61,4 +61,21 @@ describe('Catalogue Category', () => {
       );
     });
   });
+
+  it('delete a catalogue category', () => {
+    cy.findAllByTestId('delete-catalogue-category-button').first().click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/catalogue-categories/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(request.url.toString()).to.contain('1');
+    });
+  });
 });

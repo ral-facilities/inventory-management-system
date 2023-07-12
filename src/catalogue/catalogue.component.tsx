@@ -8,6 +8,8 @@ import { NavigateNext } from '@mui/icons-material';
 import AddCatalogueCategoryDialog from './addCatalogueCategoryDialog.component';
 import CatalogueCard from './catalogueCard.component';
 import { useCatalogueCategory } from '../api/catalogueCategory';
+import { ViewCatalogueCategoryResponse } from '../app.types';
+import DeleteCatalogueCategoryDialog from './deleteCatalogueCategoryDialog.component';
 
 function Catalogue() {
   const [currNode, setCurrNode] = React.useState('/');
@@ -46,6 +48,19 @@ function Catalogue() {
   const parentInfo = catalogueCategoryDetail?.[0];
 
   const disableButton = parentInfo ? parentInfo.is_leaf : false;
+
+  const [deleteDialogOpen, setDeleteDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [deleteCatalogueCategoryData, setDeleteCatalogueCategoryData] =
+    React.useState<ViewCatalogueCategoryResponse | undefined>(undefined);
+
+  const onChangeOpenDeleteDialog = (
+    catalogueCategory: ViewCatalogueCategoryResponse
+  ) => {
+    setDeleteDialogOpen(true);
+    setDeleteCatalogueCategoryData(catalogueCategory);
+  };
 
   React.useEffect(() => {
     if (parentInfo) {
@@ -106,9 +121,19 @@ function Catalogue() {
         <Grid container spacing={2}>
           {catalogueCategoryData.map((item, index) => (
             <Grid item key={index} xs={12} sm={6} md={4}>
-              <CatalogueCard {...item} />
+              <CatalogueCard
+                {...item}
+                onChangeOpenDeleteDialog={onChangeOpenDeleteDialog}
+              />
             </Grid>
           ))}
+
+          <DeleteCatalogueCategoryDialog
+            open={deleteDialogOpen}
+            onClose={() => setDeleteDialogOpen(false)}
+            catalogueCategory={deleteCatalogueCategoryData}
+            refetchData={() => catalogueCategoryDataRefetch()}
+          />
         </Grid>
       )}
     </Grid>
