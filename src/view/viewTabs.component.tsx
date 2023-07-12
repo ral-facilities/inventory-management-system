@@ -43,6 +43,13 @@ function ViewTabs() {
       setValue(tabValue as TabValue);
     }
   }, [location.pathname, value]);
+
+  React.useEffect(() => {
+    if (location.pathname === '/') {
+      navigate('/catalogue');
+    }
+  }, [location.pathname, navigate]);
+
   const handleChange = (event: React.SyntheticEvent, newValue: TabValue) => {
     setValue(newValue);
     navigate(`/${newValue.toLowerCase()}`);
@@ -75,7 +82,12 @@ function ViewTabs() {
             />
           </Tabs>
         </Box>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box
+          sx={{
+            borderBottom: 1,
+            borderColor: 'divider',
+          }}
+        >
           <Routes location={location}>
             <Route path="/" element={<Catalogue />}></Route>
             <Route path={paths.catalogue} element={<Catalogue />}></Route>

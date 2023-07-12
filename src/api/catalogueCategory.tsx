@@ -1,7 +1,16 @@
 import axios, { AxiosError } from 'axios';
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  UseQueryResult,
+} from '@tanstack/react-query';
+import {
+  AddCatalogueCategoryResponse,
+  AddCatalogueCategory,
+  ViewCatalogueCategoryResponse,
+} from '../app.types';
 import { settings } from '../settings';
-import { ViewCatalogueCategoryResponse } from '../app.types';
 
 const fetchCatalogueCategory = async (
   path?: string,
@@ -38,6 +47,40 @@ export const useCatalogueCategory = (
     (params) => {
       return fetchCatalogueCategory(path, parent_path);
     },
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+    }
+  );
+};
+
+const addCatalogueCategory = async (
+  catalogueCategory: AddCatalogueCategory
+): Promise<AddCatalogueCategoryResponse> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+
+  return axios
+    .post<AddCatalogueCategoryResponse>(
+      `${apiUrl}/v1/catalogue-categories`,
+      catalogueCategory
+    )
+    .then((response) => response.data);
+};
+
+export const useAddCatalogueCategory = (): UseMutationResult<
+  AddCatalogueCategoryResponse,
+  AxiosError,
+  AddCatalogueCategory
+> => {
+  return useMutation(
+    (catalogueCategory: AddCatalogueCategory) =>
+      addCatalogueCategory(catalogueCategory),
     {
       onError: (error) => {
         console.log('Got error ' + error.message);

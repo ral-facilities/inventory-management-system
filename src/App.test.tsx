@@ -1,13 +1,13 @@
-import React from "react";
-import { act } from "@testing-library/react";
-import App from "./App";
-import { createRoot } from "react-dom/client";
+import React from 'react';
+import { act } from '@testing-library/react';
+import App from './App';
+import { createRoot } from 'react-dom/client';
 
-jest.mock("loglevel");
+jest.mock('loglevel');
 
-describe("App", () => {
-  it("renders without crashing", async () => {
-    const el = document.createElement("div");
+describe('App', () => {
+  it('renders without crashing', async () => {
+    const el = document.createElement('div');
     const root = createRoot(el);
 
     // eslint-disable-next-line testing-library/no-unnecessary-act
