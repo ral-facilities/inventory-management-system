@@ -6,16 +6,16 @@ import {
   UseQueryResult,
 } from '@tanstack/react-query';
 import {
-  AddCatalogueCategoryResponse,
   AddCatalogueCategory,
-  ViewCatalogueCategoryResponse,
+  CatalogueCategory,
+  EditCatalogueCategory,
 } from '../app.types';
 import { settings } from '../settings';
 
 const fetchCatalogueCategory = async (
   path?: string,
   parentPath?: string
-): Promise<ViewCatalogueCategoryResponse[]> => {
+): Promise<CatalogueCategory[]> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -41,8 +41,8 @@ const fetchCatalogueCategory = async (
 export const useCatalogueCategory = (
   path?: string,
   parent_path?: string
-): UseQueryResult<ViewCatalogueCategoryResponse[], AxiosError> => {
-  return useQuery<ViewCatalogueCategoryResponse[], AxiosError>(
+): UseQueryResult<CatalogueCategory[], AxiosError> => {
+  return useQuery<CatalogueCategory[], AxiosError>(
     ['CatalogueCategory', path, parent_path],
     (params) => {
       return fetchCatalogueCategory(path, parent_path);
@@ -57,7 +57,7 @@ export const useCatalogueCategory = (
 
 const addCatalogueCategory = async (
   catalogueCategory: AddCatalogueCategory
-): Promise<AddCatalogueCategoryResponse> => {
+): Promise<CatalogueCategory> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -66,7 +66,7 @@ const addCatalogueCategory = async (
   }
 
   return axios
-    .post<AddCatalogueCategoryResponse>(
+    .post<CatalogueCategory>(
       `${apiUrl}/v1/catalogue-categories`,
       catalogueCategory
     )
@@ -74,7 +74,7 @@ const addCatalogueCategory = async (
 };
 
 export const useAddCatalogueCategory = (): UseMutationResult<
-  AddCatalogueCategoryResponse,
+  CatalogueCategory,
   AxiosError,
   AddCatalogueCategory
 > => {
@@ -89,8 +89,42 @@ export const useAddCatalogueCategory = (): UseMutationResult<
   );
 };
 
+const editCatalogueCategory = async (
+  catalogueCategory: EditCatalogueCategory
+): Promise<CatalogueCategory> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+  const { id, ...updatedCategory } = catalogueCategory;
+  return axios
+    .patch<CatalogueCategory>(
+      `${apiUrl}/v1/catalogue-categories/${id}`,
+      updatedCategory
+    )
+    .then((response) => response.data);
+};
+
+export const useEditCatalogueCategory = (): UseMutationResult<
+  CatalogueCategory,
+  AxiosError,
+  EditCatalogueCategory
+> => {
+  return useMutation(
+    (catalogueCategory: EditCatalogueCategory) =>
+      editCatalogueCategory(catalogueCategory),
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+    }
+  );
+};
+
 const deleteCatalogueCategory = async (
-  session: ViewCatalogueCategoryResponse
+  session: CatalogueCategory
 ): Promise<void> => {
   let apiUrl: string;
   apiUrl = '';
@@ -106,11 +140,10 @@ const deleteCatalogueCategory = async (
 export const useDeleteCatalogueCategory = (): UseMutationResult<
   void,
   AxiosError,
-  ViewCatalogueCategoryResponse
+  CatalogueCategory
 > => {
   return useMutation(
-    (session: ViewCatalogueCategoryResponse) =>
-      deleteCatalogueCategory(session),
+    (session: CatalogueCategory) => deleteCatalogueCategory(session),
     {
       onError: (error) => {
         console.log('Got error ' + error.message);

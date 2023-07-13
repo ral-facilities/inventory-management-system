@@ -8,17 +8,21 @@ import {
   IconButton,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { ViewCatalogueCategoryResponse } from '../app.types';
+import EditIcon from '@mui/icons-material/Edit';
+import { CatalogueCategory } from '../app.types';
 import { Link } from 'react-router-dom';
 
-export interface CatalogueCardProps extends ViewCatalogueCategoryResponse {
-  onChangeOpenDeleteDialog: (
-    catalogueCategory: ViewCatalogueCategoryResponse
-  ) => void;
+export interface CatalogueCardProps extends CatalogueCategory {
+  onChangeOpenDeleteDialog: (catalogueCategory: CatalogueCategory) => void;
+  onChangeOpenEditDialog: (catalogueCategory: CatalogueCategory) => void;
 }
 function CatalogueCard(props: CatalogueCardProps) {
   const mainContentRef = React.useRef<HTMLParagraphElement>(null);
-  const { onChangeOpenDeleteDialog, ...catalogueCategory } = props;
+  const {
+    onChangeOpenDeleteDialog,
+    onChangeOpenEditDialog,
+    ...catalogueCategory
+  } = props;
   return (
     <Button
       component={Link}
@@ -43,6 +47,15 @@ function CatalogueCard(props: CatalogueCardProps) {
           </div>
         </CardContent>
         <CardActions>
+          <IconButton
+            onClick={(event) => {
+              event.preventDefault();
+              onChangeOpenEditDialog(catalogueCategory);
+            }}
+            data-testid="edit-catalogue-category-button"
+          >
+            <EditIcon />
+          </IconButton>
           <IconButton
             onClick={(event) => {
               event.preventDefault();

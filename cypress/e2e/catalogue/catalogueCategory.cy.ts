@@ -54,7 +54,7 @@ describe('Catalogue Category', () => {
       method: 'POST',
       url: '/v1/catalogue-categories',
     }).should((patchRequests) => {
-      expect(patchRequests.length).equal(2);
+      expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
         '{"name":"test","is_leaf":false}'
@@ -75,6 +75,26 @@ describe('Catalogue Category', () => {
     }).should((patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
+      expect(request.url.toString()).to.contain('1');
+    });
+  });
+
+  it('edits a catalogue category', () => {
+    cy.findAllByTestId('edit-catalogue-category-button').first().click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-categories/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"name":"Beam Characterization"}'
+      );
       expect(request.url.toString()).to.contain('1');
     });
   });

@@ -9,6 +9,7 @@ describe('Catalogue Card', () => {
   let user;
 
   const onChangeOpenDeleteDialog = jest.fn();
+  const onChangeOpenEditDialog = jest.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(<CatalogueCard {...props} />);
   };
@@ -23,6 +24,7 @@ describe('Catalogue Card', () => {
       parent_path: '/',
       path: '/beam-characterization',
       onChangeOpenDeleteDialog: onChangeOpenDeleteDialog,
+      onChangeOpenEditDialog: onChangeOpenEditDialog,
     };
     user = userEvent.setup();
   });
@@ -38,5 +40,13 @@ describe('Catalogue Card', () => {
     await user.click(deleteButton);
 
     expect(onChangeOpenDeleteDialog).toHaveBeenCalled();
+  });
+
+  it('opens the edit dialog', async () => {
+    createView();
+    const editButton = screen.getByTestId('edit-catalogue-category-button');
+    await user.click(editButton);
+
+    expect(onChangeOpenEditDialog).toHaveBeenCalled();
   });
 });

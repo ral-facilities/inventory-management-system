@@ -15,39 +15,60 @@ import {
   Radio,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { AddCatalogueCategory } from '../app.types';
-import { useAddCatalogueCategory } from '../api/catalogueCategory';
+import {
+  AddCatalogueCategory,
+  CatalogueCategory,
+  EditCatalogueCategory,
+} from '../app.types';
+import {
+  useAddCatalogueCategory,
+  useEditCatalogueCategory,
+} from '../api/catalogueCategory';
 
-export interface AddCatalogueCategoryDialogProps {
+export interface CatalogueCategoryDialogProps {
   open: boolean;
   onClose: () => void;
   parentId: string | null;
+  onChangeCatalogueCategoryName: (name: string | undefined) => void;
+  catalogueCategoryName: string | undefined;
   onChangeLeaf: (isLeaf: boolean) => void;
   isLeaf: boolean;
   refetchData: () => void;
+  type: 'add' | 'edit';
+  selectedCatalogueCategory?: CatalogueCategory;
 }
 
-function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
-  const { open, onClose, parentId, isLeaf, onChangeLeaf, refetchData } = props;
+function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
+  const {
+    open,
+    onClose,
+    parentId,
+    isLeaf,
+    onChangeLeaf,
+    refetchData,
+    type,
+    onChangeCatalogueCategoryName,
+    catalogueCategoryName,
+    selectedCatalogueCategory,
+  } = props;
 
   const [error, setError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
     undefined
   );
+
   const { mutateAsync: addCatalogueCategory } = useAddCatalogueCategory();
-  const [catalogueCategoryName, setCatalogueCategoryName] = React.useState<
-    string | undefined
-  >(undefined);
+  const { mutateAsync: editCatalogueCategory } = useEditCatalogueCategory();
 
   const handleClose = React.useCallback(() => {
     onClose();
     setError(false);
     setErrorMessage(undefined);
-    setCatalogueCategoryName(undefined);
+    onChangeCatalogueCategoryName(undefined);
     refetchData();
-  }, [onClose, refetchData]);
+  }, [onChangeCatalogueCategoryName, onClose, refetchData]);
 
-  const handleCatalogueCategory = React.useCallback(() => {
+  const handleAddCatalogueCategory = React.useCallback(() => {
     let catalogueCategory: AddCatalogueCategory;
     catalogueCategory = {
       name: catalogueCategoryName,
@@ -80,6 +101,35 @@ function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
     isLeaf,
     parentId,
   ]);
+
+  const handleEditCatalogueCategory = React.useCallback(() => {
+    let catalogueCategory: EditCatalogueCategory;
+    if (selectedCatalogueCategory) {
+      catalogueCategory = {
+        id: selectedCatalogueCategory.id,
+        name: catalogueCategoryName,
+      };
+
+      editCatalogueCategory(catalogueCategory)
+        .then((response) => handleClose())
+        .catch((error: AxiosError) => {
+          setError(true);
+
+          if (error.response?.status === 422) {
+            setErrorMessage('Please enter a name.');
+          } else if (error.response?.status === 409) {
+            setErrorMessage(
+              'A catalogue category with the same name already exists within the parent catalogue category.'
+            );
+          }
+        });
+    }
+  }, [
+    catalogueCategoryName,
+    editCatalogueCategory,
+    handleClose,
+    selectedCatalogueCategory,
+  ]);
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
       <DialogContent>
@@ -90,7 +140,7 @@ function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
           error={error}
           helperText={error && errorMessage}
           onChange={(event) => {
-            setCatalogueCategoryName(
+            onChangeCatalogueCategoryName(
               event.target.value ? event.target.value : undefined
             );
             setError(false);
@@ -98,7 +148,10 @@ function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
           }}
           fullWidth
         />
-        <FormControl sx={{ margin: '8px' }}>
+        <FormControl
+          sx={{ margin: '8px' }}
+          disabled={type === 'edit' ? true : false}
+        >
           <FormLabel id="controlled-radio-buttons-group">
             Catalogue Directory Content
           </FormLabel>
@@ -158,7 +211,11 @@ function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={handleCatalogueCategory}
+            onClick={
+              type === 'add'
+                ? handleAddCatalogueCategory
+                : handleEditCatalogueCategory
+            }
           >
             Save
           </Button>
@@ -168,4 +225,4 @@ function AddCatalogueCategoryDialog(props: AddCatalogueCategoryDialogProps) {
   );
 }
 
-export default AddCatalogueCategoryDialog;
+export default CatalogueCategoryDialog;

@@ -26,6 +26,28 @@ export const handlers = [
       })
     );
   }),
+  rest.patch('/v1/catalogue-categories/:id', async (req, res, ctx) => {
+    const body = await req.text();
+    if (body === '{}') {
+      return res(ctx.status(422), ctx.json(''));
+    } else if (body === '{"name":"test_dup"}') {
+      return res(ctx.status(409), ctx.json(''));
+    } else if (body === '{"name":"test_dup"}') {
+      return res(ctx.status(409), ctx.json(''));
+    }
+    return res(
+      ctx.status(200),
+      ctx.json({
+        name: 'test',
+        parent_id: null,
+        id: '1',
+        code: 'test',
+        path: '/test',
+        parent_path: '/',
+        is_leaf: false,
+      })
+    );
+  }),
   rest.get('/v1/catalogue-categories/', (req, res, ctx) => {
     const catalogueCategoryParams = req.url.searchParams;
     const path = catalogueCategoryParams.get('path');

@@ -5,10 +5,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import { NavigateNext } from '@mui/icons-material';
-import AddCatalogueCategoryDialog from './addCatalogueCategoryDialog.component';
+import AddCatalogueCategoryDialog from './catalogueCategoryDialog.component';
 import CatalogueCard from './catalogueCard.component';
 import { useCatalogueCategory } from '../api/catalogueCategory';
-import { ViewCatalogueCategoryResponse } from '../app.types';
+import { CatalogueCategory } from '../app.types';
 import DeleteCatalogueCategoryDialog from './deleteCatalogueCategoryDialog.component';
 
 function Catalogue() {
@@ -52,14 +52,25 @@ function Catalogue() {
   const [deleteDialogOpen, setDeleteDialogOpen] =
     React.useState<boolean>(false);
 
-  const [deleteCatalogueCategoryData, setDeleteCatalogueCategoryData] =
-    React.useState<ViewCatalogueCategoryResponse | undefined>(undefined);
+  const [editDialogOpen, setEditDialogOpen] = React.useState<boolean>(false);
 
-  const onChangeOpenDeleteDialog = (
-    catalogueCategory: ViewCatalogueCategoryResponse
-  ) => {
+  const [selectedCatalogueCategory, setSelectedCatalogueCategory] =
+    React.useState<CatalogueCategory | undefined>(undefined);
+
+  const [catalogueCategoryName, setCatalogueCategoryName] = React.useState<
+    string | undefined
+  >(undefined);
+
+  const onChangeOpenDeleteDialog = (catalogueCategory: CatalogueCategory) => {
     setDeleteDialogOpen(true);
-    setDeleteCatalogueCategoryData(catalogueCategory);
+    setSelectedCatalogueCategory(catalogueCategory);
+  };
+
+  const onChangeOpenEditDialog = (catalogueCategory: CatalogueCategory) => {
+    setEditDialogOpen(true);
+    setSelectedCatalogueCategory(catalogueCategory);
+    setCatalogueCategoryName(catalogueCategory.name);
+    setIsLeaf(catalogueCategory.is_leaf);
   };
 
   React.useEffect(() => {
@@ -108,14 +119,6 @@ function Catalogue() {
         >
           <AddIcon />
         </Button>
-        <AddCatalogueCategoryDialog
-          open={catalogueCategoryDialogOpen}
-          onClose={() => setCatalogueCategoryDialogOpen(false)}
-          parentId={parentId}
-          onChangeLeaf={setIsLeaf}
-          isLeaf={isLeaf}
-          refetchData={() => catalogueCategoryDataRefetch()}
-        />
       </Grid>
       {catalogueCategoryData && (
         <Grid container spacing={2}>
@@ -124,14 +127,37 @@ function Catalogue() {
               <CatalogueCard
                 {...item}
                 onChangeOpenDeleteDialog={onChangeOpenDeleteDialog}
+                onChangeOpenEditDialog={onChangeOpenEditDialog}
               />
             </Grid>
           ))}
-
+          <AddCatalogueCategoryDialog
+            open={catalogueCategoryDialogOpen}
+            onClose={() => setCatalogueCategoryDialogOpen(false)}
+            parentId={parentId}
+            onChangeCatalogueCategoryName={setCatalogueCategoryName}
+            catalogueCategoryName={catalogueCategoryName}
+            onChangeLeaf={setIsLeaf}
+            isLeaf={isLeaf}
+            refetchData={() => catalogueCategoryDataRefetch()}
+            type="add"
+          />
+          <AddCatalogueCategoryDialog
+            open={editDialogOpen}
+            onClose={() => setEditDialogOpen(false)}
+            parentId={parentId}
+            onChangeCatalogueCategoryName={setCatalogueCategoryName}
+            catalogueCategoryName={catalogueCategoryName}
+            onChangeLeaf={setIsLeaf}
+            isLeaf={isLeaf}
+            refetchData={() => catalogueCategoryDataRefetch()}
+            type="edit"
+            selectedCatalogueCategory={selectedCatalogueCategory}
+          />
           <DeleteCatalogueCategoryDialog
             open={deleteDialogOpen}
             onClose={() => setDeleteDialogOpen(false)}
-            catalogueCategory={deleteCatalogueCategoryData}
+            catalogueCategory={selectedCatalogueCategory}
             refetchData={() => catalogueCategoryDataRefetch()}
           />
         </Grid>

@@ -77,6 +77,30 @@ describe('Catalogue', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
+
+  it('opens the edit catalogue category dialog', async () => {
+    createView('/');
+
+    await waitFor(() => {
+      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+    });
+
+    const deleteButtons = screen.getAllByTestId(
+      'edit-catalogue-category-button'
+    );
+    await user.click(deleteButtons[0]);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+    await user.click(saveButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('renders the breadcumbs and navigate to another directory', async () => {
     createView('/catalogue/motion/actuators');
 

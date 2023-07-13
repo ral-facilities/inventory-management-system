@@ -9,12 +9,12 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useDeleteCatalogueCategory } from '../api/catalogueCategory';
-import { ViewCatalogueCategoryResponse } from '../app.types';
+import { CatalogueCategory } from '../app.types';
 
 export interface DeleteCatalogueCategorDialogProps {
   open: boolean;
   onClose: () => void;
-  catalogueCategory: ViewCatalogueCategoryResponse | undefined;
+  catalogueCategory: CatalogueCategory | undefined;
   refetchData: () => void;
 }
 

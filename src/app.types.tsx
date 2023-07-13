@@ -9,16 +9,12 @@ export interface AddCatalogueCategory {
   is_leaf: boolean;
 }
 
-export interface AddCatalogueCategoryResponse {
-  name: string;
-  code: string;
-  path: string;
-  parent_path: string;
-  parent_id: string | null;
-  is_leaf: boolean;
+export interface EditCatalogueCategory {
+  name?: string;
+  id: string;
 }
 
-export interface ViewCatalogueCategoryResponse {
+export interface CatalogueCategory {
   id: string;
   name: string;
   parent_path: string;
