@@ -5,10 +5,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import { NavigateNext } from '@mui/icons-material';
-import AddCatalogueCategoryDialog from './catalogueCategoryDialog.component';
+import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 import CatalogueCard from './catalogueCard.component';
 import { useCatalogueCategory } from '../api/catalogueCategory';
-import { CatalogueCategory } from '../app.types';
+import { CatalogueCategoryFormData, CatalogueCategory } from '../app.types';
 import DeleteCatalogueCategoryDialog from './deleteCatalogueCategoryDialog.component';
 
 function Catalogue() {
@@ -71,7 +71,11 @@ function Catalogue() {
     setSelectedCatalogueCategory(catalogueCategory);
     setCatalogueCategoryName(catalogueCategory.name);
     setIsLeaf(catalogueCategory.is_leaf);
+    setFormFields(catalogueCategory.catalogue_item_properties ?? null);
   };
+  const [formFields, setFormFields] = React.useState<
+    CatalogueCategoryFormData[] | null
+  >(null);
 
   React.useEffect(() => {
     if (parentInfo) {
@@ -114,7 +118,6 @@ function Catalogue() {
           variant="outlined"
           sx={{ alignContent: 'left', margin: '4px' }}
           onClick={() => setCatalogueCategoryDialogOpen(true)}
-          data-testid="add-button-catalogue"
           disabled={disableButton}
         >
           <AddIcon />
@@ -131,7 +134,7 @@ function Catalogue() {
               />
             </Grid>
           ))}
-          <AddCatalogueCategoryDialog
+          <CatalogueCategoryDialog
             open={catalogueCategoryDialogOpen}
             onClose={() => setCatalogueCategoryDialogOpen(false)}
             parentId={parentId}
@@ -141,8 +144,10 @@ function Catalogue() {
             isLeaf={isLeaf}
             refetchData={() => catalogueCategoryDataRefetch()}
             type="add"
+            formFields={formFields}
+            onChangeFormFields={setFormFields}
           />
-          <AddCatalogueCategoryDialog
+          <CatalogueCategoryDialog
             open={editDialogOpen}
             onClose={() => setEditDialogOpen(false)}
             parentId={parentId}
@@ -153,6 +158,8 @@ function Catalogue() {
             refetchData={() => catalogueCategoryDataRefetch()}
             type="edit"
             selectedCatalogueCategory={selectedCatalogueCategory}
+            formFields={formFields}
+            onChangeFormFields={setFormFields}
           />
           <DeleteCatalogueCategoryDialog
             open={deleteDialogOpen}

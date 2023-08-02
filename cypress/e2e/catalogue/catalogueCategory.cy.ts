@@ -2,6 +2,9 @@ describe('Catalogue Category', () => {
   beforeEach(() => {
     cy.visit('/catalogue');
   });
+  afterEach(() => {
+    cy.clearMocks();
+  });
   it('should create the breadcrumbs from the url', () => {
     cy.visit('/catalogue/motion/actuators');
     cy.findByRole('link', { name: 'motion' }).should('be.visible');
@@ -24,14 +27,14 @@ describe('Catalogue Category', () => {
   });
 
   it('display error message when there is no name when adding a catalogue category', () => {
-    cy.findByTestId('add-button-catalogue').click();
+    cy.findByTestId('AddIcon').click();
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
         cy.contains('Please enter a name.');
       });
-    cy.findByLabelText('Name*').type('test_dup');
+    cy.findByLabelText('Name *').type('test_dup');
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog')
       .should('be.visible')
@@ -42,9 +45,9 @@ describe('Catalogue Category', () => {
       });
   });
 
-  it('adds a catalogue category', () => {
-    cy.findByTestId('add-button-catalogue').click();
-    cy.findByLabelText('Name*').type('test');
+  it('adds a catalogue category where isLeaf is false', () => {
+    cy.findByTestId('AddIcon').click();
+    cy.findByLabelText('Name *').type('test');
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -76,6 +79,44 @@ describe('Catalogue Category', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(request.url.toString()).to.contain('1');
+    });
+  });
+
+  it('adds a catalogue category where isLeaf is true', () => {
+    cy.findByTestId('AddIcon').click();
+    cy.findByLabelText('Name *').type('test');
+
+    cy.findByLabelText('Catalogue Items').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('dialog').findByTestId('AddIcon').click();
+    cy.findByLabelText('Property Name *').type('Updated Field');
+    cy.findByLabelText('Select Type *').click();
+    cy.findByText('Boolean').click();
+
+    cy.findByRole('dialog').findByTestId('AddIcon').click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Property Name is required').should('exist');
+    cy.findByText('Select Type is required').should('exist');
+
+    cy.findAllByLabelText('Property Name *').last().type('Updated Field');
+    cy.findAllByLabelText('Select Type *').last().click();
+    cy.findByText('Number').click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-categories',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"name":"test","is_leaf":true,"catalogue_item_properties":[{"name":"Updated Field","type":"boolean","mandatory":false},{"name":"Updated Field","type":"number","unit":"","mandatory":false}]}'
+      );
     });
   });
 

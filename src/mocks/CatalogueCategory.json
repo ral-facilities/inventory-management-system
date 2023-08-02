@@ -42,7 +42,26 @@
     "code": "cameras",
     "is_leaf": true,
     "parent_path": "/beam-characterization",
-    "path": "/beam-characterization/cameras"
+    "path": "/beam-characterization/cameras",
+    "catalogue_item_properties": [
+      {
+        "name": "Resolution",
+        "type": "number",
+        "unit": "megapixels",
+        "mandatory": true
+      },
+      {
+        "name": "Frame Rate",
+        "type": "number",
+        "unit": "fps",
+        "mandatory": true
+      },
+      {
+        "name": "Sensor Type",
+        "type": "string",
+        "mandatory": true
+      }
+    ]
   },
   {
     "id": "5",
@@ -51,7 +70,20 @@
     "code": "energy-meters",
     "is_leaf": true,
     "parent_path": "/beam-characterization",
-    "path": "/beam-characterization/energy-meters"
+    "path": "/beam-characterization/energy-meters",
+    "catalogue_item_properties": [
+      {
+        "name": "Measurement Range",
+        "type": "number",
+        "unit": "Joules",
+        "mandatory": true
+      },
+      {
+        "name": "Accuracy",
+        "type": "string",
+        "mandatory": true
+      }
+    ]
   },
   {
     "id": "6",
@@ -60,7 +92,20 @@
     "code": "wavefront-sensors",
     "is_leaf": true,
     "parent_path": "/beam-characterization",
-    "path": "/beam-characterization/wavefront-sensors"
+    "path": "/beam-characterization/wavefront-sensors",
+    "catalogue_item_properties": [
+      {
+        "name": "Wavefront Measurement Range",
+        "type": "string",
+        "mandatory": true
+      },
+      {
+        "name": "Spatial Resolution",
+        "type": "number",
+        "unit": "micrometers",
+        "mandatory": true
+      }
+    ]
   },
   {
     "id": "8",
@@ -78,7 +123,21 @@
     "code": "motorized-actuators",
     "is_leaf": true,
     "parent_path": "/motion/actuators",
-    "path": "/motion/actuators/motorized-actuators"
+    "path": "/motion/actuators/motorized-actuators",
+    "catalogue_item_properties": [
+      {
+        "name": "Travel Range",
+        "type": "number",
+        "unit": "millimeters",
+        "mandatory": true
+      },
+      {
+        "name": "Load Capacity",
+        "type": "number",
+        "unit": "kilograms",
+        "mandatory": true
+      }
+    ]
   },
   {
     "id": "10",
@@ -96,7 +155,20 @@
     "code": "cryopumps",
     "is_leaf": true,
     "parent_path": "/vacuum-technology/vacuum-pumps",
-    "path": "/vacuum-technology/vacuum-pumps/cryopumps"
+    "path": "/vacuum-technology/vacuum-pumps/cryopumps",
+    "catalogue_item_properties": [
+      {
+        "name": "Cooldown Time",
+        "type": "string",
+        "mandatory": true
+      },
+      {
+        "name": "Pumping Speed",
+        "type": "number",
+        "unit": "liters per second",
+        "mandatory": true
+      }
+    ]
   },
   {
     "id": "12",
@@ -105,7 +177,21 @@
     "code": "dry-vacuum-pumps",
     "is_leaf": true,
     "parent_path": "/vacuum-technology/vacuum-pumps",
-    "path": "/vacuum-technology/vacuum-pumps/dry-vacuum-pumps"
+    "path": "/vacuum-technology/vacuum-pumps/dry-vacuum-pumps",
+    "catalogue_item_properties": [
+      {
+        "name": "Pumping Speed",
+        "type": "number",
+        "unit": "liters per second",
+        "mandatory": true
+      },
+      {
+        "name": "Ultimate Pressure",
+        "type": "number",
+        "unit": "millibar",
+        "mandatory": true
+      }
+    ]
   },
   {
     "id": "13",
@@ -114,15 +200,42 @@
     "code": "turbomolecular-pumps",
     "is_leaf": true,
     "parent_path": "/vacuum-technology/vacuum-pumps",
-    "path": "/vacuum-technology/vacuum-pumps/turbomolecular-pumps"
+    "path": "/vacuum-technology/vacuum-pumps/turbomolecular-pumps",
+    "catalogue_item_properties": [
+      {
+        "name": "Pumping Speed",
+        "type": "number",
+        "unit": "liters per second",
+        "mandatory": true
+      },
+      {
+        "name": "Compression Ratio",
+        "type": "number",
+        "mandatory": true
+      }
+    ]
   },
   {
     "id": "14",
     "name": "Turbo Pumps",
     "parent_id": "10",
     "code": "turbo-pumps",
-    "is_leaf": false,
+    "is_leaf": true,
     "parent_path": "/vacuum-technology/vacuum-pumps",
-    "path": "/vacuum-technology/vacuum-pumps/turbo-pumps"
+    "path": "/vacuum-technology/vacuum-pumps/turbo-pumps",
+    "catalogue_item_properties": [
+      {
+        "name": "Pumping Speed",
+        "type": "number",
+        "unit": "liters per second",
+        "mandatory": true
+      },
+      {
+        "name": "Backing Pressure",
+        "type": "number",
+        "unit": "millibar",
+        "mandatory": true
+      }
+    ]
   }
 ]

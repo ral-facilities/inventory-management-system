@@ -7,6 +7,7 @@ export interface AddCatalogueCategory {
   name?: string;
   parent_id?: string;
   is_leaf: boolean;
+  catalogue_item_properties?: CatalogueCategoryFormData[];
 }
 
 export interface EditCatalogueCategory {
@@ -22,4 +23,12 @@ export interface CatalogueCategory {
   parent_id: string | null;
   code: string;
   is_leaf: boolean;
+  catalogue_item_properties?: CatalogueCategoryFormData[];
+}
+
+export interface CatalogueCategoryFormData {
+  name: string;
+  type: string;
+  unit?: string;
+  mandatory: boolean | null;
 }
