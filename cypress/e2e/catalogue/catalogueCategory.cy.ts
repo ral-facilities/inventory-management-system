@@ -78,8 +78,10 @@ describe('Catalogue Category', () => {
     }).should((patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(request.url.toString()).to.contain('1');})
-      
+      expect(request.url.toString()).to.contain('1');
+    });
+  });
+
   it('adds a catalogue category where isLeaf is true', () => {
     cy.findByTestId('AddIcon').click();
     cy.findByLabelText('Name *').type('test');
