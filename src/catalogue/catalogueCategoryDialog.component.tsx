@@ -66,16 +66,21 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
   const { mutateAsync: addCatalogueCategory } = useAddCatalogueCategory();
   const { mutateAsync: editCatalogueCategory } = useEditCatalogueCategory();
 
-  const [nameFields, setNameFields] = React.useState<string[]>(
-    formFields ? formFields.map((field) => field.name) : []
-  );
+  const [nameFields, setNameFields] = React.useState<string[]>([]);
 
-  const [typeFields, setTypeFields] = React.useState<string[]>(
-    formFields ? formFields.map((field) => field.type) : []
-  );
+  const [typeFields, setTypeFields] = React.useState<string[]>([]);
 
   const [errorFields, setErrorFields] = React.useState<number[]>([]);
 
+  React.useEffect(() => {
+    // When the catalogueCategoryName changes, update the nameFields and typeFields.
+    if (formFields) {
+      const newNames = formFields.map((field) => field.name);
+      const newTypes = formFields.map((field) => field.type);
+      setNameFields(newNames);
+      setTypeFields(newTypes);
+    }
+  }, [catalogueCategoryName, formFields]);
   const handleClose = React.useCallback(() => {
     onClose();
     setNameError(false);
@@ -95,12 +100,7 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
     refetchData,
   ]);
 
-  const handleAddCatalogueCategory = React.useCallback(() => {
-    let catalogueCategory: AddCatalogueCategory;
-    catalogueCategory = {
-      name: catalogueCategoryName === '' ? undefined : catalogueCategoryName,
-      is_leaf: isLeaf,
-    };
+  const validateFormFields = React.useCallback(() => {
     const errorIndexes = [];
 
     // Check if each form field has a name and type
@@ -112,14 +112,26 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
       }
     }
 
-    // Set the error state after clicking the add button
     setErrorFields(errorIndexes);
+    return errorIndexes;
+  }, [formFields, nameFields, typeFields]);
 
+  const clearFormFields = React.useCallback(() => {
+    setErrorFields([]);
+    setNameFields([...nameFields, '']);
+    setTypeFields([...typeFields, '']);
+  }, [nameFields, typeFields]);
+
+  const handleAddCatalogueCategory = React.useCallback(() => {
+    let catalogueCategory: AddCatalogueCategory;
+    catalogueCategory = {
+      name: catalogueCategoryName === '' ? undefined : catalogueCategoryName,
+      is_leaf: isLeaf,
+    };
+
+    const errorIndexes = validateFormFields();
     if (errorIndexes.length === 0) {
-      // Clear the error state and add a new field
-      setErrorFields([]);
-      setNameFields([...nameFields, '']);
-      setTypeFields([...typeFields, '']);
+      clearFormFields();
 
       if (parentId !== null) {
         catalogueCategory = {
@@ -151,12 +163,12 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
   }, [
     addCatalogueCategory,
     catalogueCategoryName,
+    clearFormFields,
     formFields,
     handleClose,
     isLeaf,
-    nameFields,
     parentId,
-    typeFields,
+    validateFormFields,
   ]);
 
   const handleEditCatalogueCategory = React.useCallback(() => {
@@ -167,25 +179,34 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
         name: catalogueCategoryName,
       };
 
-      editCatalogueCategory(catalogueCategory)
-        .then((response) => handleClose())
-        .catch((error: AxiosError) => {
-          if (error.response?.status === 422) {
-            setNameError(true);
-            setNameErrorMessage('Please enter a name.');
-          } else if (error.response?.status === 409) {
-            setNameError(true);
-            setNameErrorMessage(
-              'A catalogue category with the same name already exists within the parent catalogue category.'
-            );
-          }
-        });
+      const errorIndexes = validateFormFields();
+
+      if (errorIndexes.length === 0) {
+        // Clear the error state and add a new field
+        clearFormFields();
+
+        editCatalogueCategory(catalogueCategory)
+          .then((response) => handleClose())
+          .catch((error: AxiosError) => {
+            if (error.response?.status === 422) {
+              setNameError(true);
+              setNameErrorMessage('Please enter a name.');
+            } else if (error.response?.status === 409) {
+              setNameError(true);
+              setNameErrorMessage(
+                'A catalogue category with the same name already exists within the parent catalogue category.'
+              );
+            }
+          });
+      }
     }
   }, [
     catalogueCategoryName,
+    clearFormFields,
     editCatalogueCategory,
     handleClose,
     selectedCatalogueCategory,
+    validateFormFields,
   ]);
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>

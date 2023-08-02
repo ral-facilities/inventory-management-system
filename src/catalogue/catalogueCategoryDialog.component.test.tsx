@@ -298,5 +298,39 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).toHaveBeenCalled();
       expect(refetchData).toHaveBeenCalled();
     });
+
+    it('displays an error message when the type or name field are not filled', async () => {
+      props = {
+        ...props,
+        isLeaf: true,
+        formFields: [
+          { name: '', type: 'number', unit: 'mm', mandatory: true },
+          { name: 'raduis', type: '', unit: 'mm', mandatory: true },
+          { name: '', type: '', unit: 'mm', mandatory: true },
+        ],
+      };
+      createView();
+
+      const nameInput = screen.getByLabelText('Name *');
+      user.type(nameInput, 'test');
+      await waitFor(() => {
+        expect(screen.getByDisplayValue('test')).toBeInTheDocument();
+      });
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      const nameHelperTexts = screen.queryAllByText('Select Type is required');
+      const typeHelperTexts = screen.queryAllByText(
+        'Property Name is required'
+      );
+
+      expect(nameHelperTexts.length).toBe(2);
+      expect(typeHelperTexts.length).toBe(2);
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
   });
 });
