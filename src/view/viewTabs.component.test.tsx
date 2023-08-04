@@ -59,7 +59,7 @@ describe('View Tabs', () => {
   });
 
   it('updates the tab value when url is not default Tab', async () => {
-    createView('/systems');
+    createView('/inventory-management-system/systems');
 
     const viewTabs = within(screen.getByRole('tablist', { name: 'view tabs' }));
 
