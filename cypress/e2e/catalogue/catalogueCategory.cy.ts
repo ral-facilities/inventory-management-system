@@ -1,12 +1,12 @@
 describe('Catalogue Category', () => {
   beforeEach(() => {
-    cy.visit('/catalogue');
+    cy.visit('/inventory-management-system/catalogue');
   });
   afterEach(() => {
     cy.clearMocks();
   });
   it('should create the breadcrumbs from the url', () => {
-    cy.visit('/catalogue/motion/actuators');
+    cy.visit('/inventory-management-system/catalogue/motion/actuators');
     cy.findByRole('link', { name: 'motion' }).should('be.visible');
     cy.findByText('actuators').should('be.visible');
 
@@ -18,7 +18,7 @@ describe('Catalogue Category', () => {
   });
 
   it('should navigate back to the root directory when the home button is pressed', () => {
-    cy.visit('/catalogue/motion/actuators');
+    cy.visit('/inventory-management-system/catalogue/motion/actuators');
     cy.findByRole('link', { name: 'motion' }).should('exist');
     cy.findByText('actuators').should('exist');
     cy.findByTestId('home-button-catalogue').click();
