@@ -31,9 +31,7 @@ function CatalogueCard(props: CatalogueCardProps) {
       relative="path"
       sx={{
         display: 'flex',
-        backgroundColor: 'background.paper',
         width: '100%',
-        margin: '1px',
         textDecoration: 'none',
         color: 'inherit',
       }}

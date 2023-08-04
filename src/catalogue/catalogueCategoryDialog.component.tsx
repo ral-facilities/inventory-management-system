@@ -263,7 +263,7 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
         {isLeaf === true && (
           <Box sx={{ alignItems: 'center', width: '100%' }}>
             <Box>
-              <Divider sx={{ minWidth: '700px' }} />
+              <Divider />
             </Box>
             <Box sx={{ paddingLeft: '8px', paddingTop: '24px' }}>
               <Typography variant="h6">Catalogue Item Fields</Typography>
