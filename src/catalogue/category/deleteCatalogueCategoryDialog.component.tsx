@@ -8,8 +8,8 @@ import {
   FormHelperText,
 } from '@mui/material';
 import React from 'react';
-import { useDeleteCatalogueCategory } from '../api/catalogueCategory';
-import { CatalogueCategory } from '../app.types';
+import { useDeleteCatalogueCategory } from '../../api/catalogueCategory';
+import { CatalogueCategory } from '../../app.types';
 
 export interface DeleteCatalogueCategorDialogProps {
   open: boolean;

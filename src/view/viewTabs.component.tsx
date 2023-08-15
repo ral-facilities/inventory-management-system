@@ -61,7 +61,10 @@ function ViewTabs() {
   };
 
   React.useEffect(() => {
-    if (location.pathname === '/inventory-management-system') {
+    if (
+      location.pathname === '/inventory-management-system' ||
+      location.pathname === '/'
+    ) {
       navigate('/inventory-management-system/catalogue');
     }
   }, [location.pathname, navigate]);

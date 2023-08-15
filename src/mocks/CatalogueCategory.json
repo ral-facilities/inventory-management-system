@@ -54,7 +54,7 @@
         "name": "Frame Rate",
         "type": "number",
         "unit": "fps",
-        "mandatory": true
+        "mandatory": false
       },
       {
         "name": "Sensor Type",
@@ -81,7 +81,7 @@
       {
         "name": "Accuracy",
         "type": "string",
-        "mandatory": true
+        "mandatory": false
       }
     ]
   },
@@ -103,7 +103,7 @@
         "name": "Spatial Resolution",
         "type": "number",
         "unit": "micrometers",
-        "mandatory": true
+        "mandatory": false
       }
     ]
   },
@@ -166,7 +166,7 @@
         "name": "Pumping Speed",
         "type": "number",
         "unit": "liters per second",
-        "mandatory": true
+        "mandatory": false
       }
     ]
   },
@@ -211,7 +211,7 @@
       {
         "name": "Compression Ratio",
         "type": "number",
-        "mandatory": true
+        "mandatory": false
       }
     ]
   },

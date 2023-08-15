@@ -14,17 +14,18 @@ import {
   FormControlLabel,
   Radio,
   Typography,
+  DialogTitle,
 } from '@mui/material';
 import {
   AddCatalogueCategory,
   CatalogueCategory,
   EditCatalogueCategory,
   CatalogueCategoryFormData,
-} from '../app.types';
+} from '../../app.types';
 import {
   useAddCatalogueCategory,
   useEditCatalogueCategory,
-} from '../api/catalogueCategory';
+} from '../../api/catalogueCategory';
 import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 
 export interface CatalogueCategoryDialogProps {
@@ -209,12 +210,15 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
     validateFormFields,
   ]);
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
+    <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
+      <DialogTitle>{`${
+        type === 'add' ? 'Add' : 'Edit'
+      } Catalogue Category`}</DialogTitle>
       <DialogContent>
         <TextField
           label="Name"
           required={true}
-          sx={{ marginLeft: '4px' }} // Adjusted the width and margin
+          sx={{ marginLeft: '4px', marginTop: '8px' }} // Adjusted the width and margin
           value={catalogueCategoryName}
           error={nameError}
           helperText={nameError && nameErrorMessage}

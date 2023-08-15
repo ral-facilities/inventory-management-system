@@ -1,15 +1,23 @@
 import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, IconButton } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import { NavigateNext } from '@mui/icons-material';
-import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
-import CatalogueCard from './catalogueCard.component';
+import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
+import CatalogueCard from './category/catalogueCard.component';
 import { useCatalogueCategory } from '../api/catalogueCategory';
-import { CatalogueCategoryFormData, CatalogueCategory } from '../app.types';
-import DeleteCatalogueCategoryDialog from './deleteCatalogueCategoryDialog.component';
+import {
+  CatalogueCategoryFormData,
+  CatalogueCategory,
+  CatalogueItemDetails,
+  CatalogueItemManufacturer,
+  CatalogueItemProperty,
+} from '../app.types';
+import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
+import CatalogueItemsTable from './items/catalogueItemsTable.component';
+import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
 
 function Catalogue() {
   const [currNode, setCurrNode] = React.useState('/');
@@ -29,8 +37,28 @@ function Catalogue() {
     );
   }, [location.pathname]);
 
-  const [catalogueCategoryDialogOpen, setCatalogueCategoryDialogOpen] =
+  const [addCategoryDialogOpen, setAddCategoryDialogOpen] =
     React.useState<boolean>(false);
+
+  const [addItemDialogOpen, setAddItemDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [catalogueItemDetails, setCatalogueItemDetails] =
+    React.useState<CatalogueItemDetails>({
+      name: undefined,
+      description: '',
+    });
+
+  const [catalogueItemManufacturer, setCatalogueItemManufacturer] =
+    React.useState<CatalogueItemManufacturer>({
+      manufacturer: undefined,
+      manufacturerNumber: undefined,
+      manufacturerUrl: undefined,
+    });
+
+  const [catalogueItemProperties, setCatalogueItemProperties] = React.useState<
+    CatalogueItemProperty[] | null
+  >(null);
 
   const catalogueLocation = location.pathname.replace(
     '/inventory-management-system/catalogue',
@@ -54,10 +82,11 @@ function Catalogue() {
 
   const disableButton = parentInfo ? parentInfo.is_leaf : false;
 
-  const [deleteDialogOpen, setDeleteDialogOpen] =
+  const [deleteCategoryDialogOpen, setDeleteCategoryDialogOpen] =
     React.useState<boolean>(false);
 
-  const [editDialogOpen, setEditDialogOpen] = React.useState<boolean>(false);
+  const [editCategoryDialogOpen, setEditCategoryDialogOpen] =
+    React.useState<boolean>(false);
 
   const [selectedCatalogueCategory, setSelectedCatalogueCategory] =
     React.useState<CatalogueCategory | undefined>(undefined);
@@ -66,13 +95,17 @@ function Catalogue() {
     string | undefined
   >(undefined);
 
-  const onChangeOpenDeleteDialog = (catalogueCategory: CatalogueCategory) => {
-    setDeleteDialogOpen(true);
+  const onChangeOpenDeleteCategoryDialog = (
+    catalogueCategory: CatalogueCategory
+  ) => {
+    setDeleteCategoryDialogOpen(true);
     setSelectedCatalogueCategory(catalogueCategory);
   };
 
-  const onChangeOpenEditDialog = (catalogueCategory: CatalogueCategory) => {
-    setEditDialogOpen(true);
+  const onChangeOpenEditCategoryDialog = (
+    catalogueCategory: CatalogueCategory
+  ) => {
+    setEditCategoryDialogOpen(true);
     setSelectedCatalogueCategory(catalogueCategory);
     setCatalogueCategoryName(catalogueCategory.name);
     setIsLeaf(catalogueCategory.is_leaf);
@@ -83,98 +116,138 @@ function Catalogue() {
   >(null);
 
   React.useEffect(() => {
-    if (parentInfo) {
-      setParentId(parentInfo.id);
-      setIsLeaf(parentInfo.is_leaf);
-    }
+    setParentId(parentInfo ? parentInfo.id : null);
+    setIsLeaf(parentInfo ? parentInfo.is_leaf : false);
+    const convertedProperties: CatalogueItemProperty[] =
+      parentInfo?.catalogue_item_properties?.map((property) => {
+        let value: string | number | boolean | null = null;
 
-    if (catalogueLocation === '') {
-      setParentId(null);
-    }
+        if (property.type === 'number' || property.type === 'string') {
+          value = null;
+        } else if (property.type === 'boolean') {
+          value = false;
+        }
+
+        return {
+          name: property.name,
+          value,
+        };
+      }) ?? [];
+
+    setCatalogueItemProperties(convertedProperties);
+
+    // console.log(convertedProperties);
   }, [catalogueLocation, parentInfo]);
 
   return (
     <Grid container>
-      <Grid
-        item
-        sx={{
-          display: 'flex',
-          marginLeft: 0,
-          alignItems: 'center', // Align items vertically at the center
-          height: '100%',
-          width: '100%',
-        }}
-      >
-        <Button
-          sx={{ alignContent: 'left', margin: '4px' }}
-          onClick={() => {
-            navigate('/inventory-management-system/catalogue');
+      <Grid container>
+        <Grid
+          item
+          container
+          alignItems="center"
+          justifyContent="space-between" // Align items and distribute space along the main axis
+          sx={{
+            display: 'flex',
+            height: '100%',
+            width: '100%',
+            padding: '4px', // Add some padding for spacing
           }}
-          variant="outlined"
-          data-testid="home-button-catalogue"
         >
-          <HomeIcon />
-        </Button>
-        <Breadcrumbs currNode={currNode} onChangeNode={onChangeNode} />
-        <NavigateNext
-          fontSize="medium"
-          sx={{ color: 'rgba(0, 0, 0, 0.6)', margin: '4px' }}
-        />
-        <Button
-          variant="outlined"
-          sx={{ alignContent: 'left', margin: '4px' }}
-          onClick={() => setCatalogueCategoryDialogOpen(true)}
-          disabled={disableButton}
-        >
-          <AddIcon />
-        </Button>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <IconButton
+              sx={{ margin: '4px' }}
+              onClick={() => {
+                navigate('/inventory-management-system/catalogue');
+              }}
+              data-testid="home-button-catalogue"
+            >
+              <HomeIcon />
+            </IconButton>
+            <Breadcrumbs currNode={currNode} onChangeNode={onChangeNode} />
+            <NavigateNext
+              fontSize="medium"
+              sx={{ color: 'rgba(0, 0, 0, 0.6)', margin: '4px' }}
+            />
+            <IconButton
+              sx={{ margin: '4px' }}
+              onClick={() => setAddCategoryDialogOpen(true)}
+              disabled={disableButton}
+            >
+              <AddIcon />
+            </IconButton>
+          </div>
+
+          <Button
+            variant="outlined"
+            disabled={!disableButton}
+            onClick={() => setAddItemDialogOpen(true)}
+          >
+            Add Catalogue Item
+          </Button>
+        </Grid>
       </Grid>
-      {catalogueCategoryData && (
+      {catalogueCategoryData && !parentInfo?.is_leaf && (
         <Grid container spacing={2}>
           {catalogueCategoryData.map((item, index) => (
             <Grid item key={index} xs={12} sm={6} md={4}>
               <CatalogueCard
                 {...item}
-                onChangeOpenDeleteDialog={onChangeOpenDeleteDialog}
-                onChangeOpenEditDialog={onChangeOpenEditDialog}
+                onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
+                onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
               />
             </Grid>
           ))}
-          <CatalogueCategoryDialog
-            open={catalogueCategoryDialogOpen}
-            onClose={() => setCatalogueCategoryDialogOpen(false)}
-            parentId={parentId}
-            onChangeCatalogueCategoryName={setCatalogueCategoryName}
-            catalogueCategoryName={catalogueCategoryName}
-            onChangeLeaf={setIsLeaf}
-            isLeaf={isLeaf}
-            refetchData={() => catalogueCategoryDataRefetch()}
-            type="add"
-            formFields={formFields}
-            onChangeFormFields={setFormFields}
-          />
-          <CatalogueCategoryDialog
-            open={editDialogOpen}
-            onClose={() => setEditDialogOpen(false)}
-            parentId={parentId}
-            onChangeCatalogueCategoryName={setCatalogueCategoryName}
-            catalogueCategoryName={catalogueCategoryName}
-            onChangeLeaf={setIsLeaf}
-            isLeaf={isLeaf}
-            refetchData={() => catalogueCategoryDataRefetch()}
-            type="edit"
-            selectedCatalogueCategory={selectedCatalogueCategory}
-            formFields={formFields}
-            onChangeFormFields={setFormFields}
-          />
-          <DeleteCatalogueCategoryDialog
-            open={deleteDialogOpen}
-            onClose={() => setDeleteDialogOpen(false)}
-            catalogueCategory={selectedCatalogueCategory}
-            refetchData={() => catalogueCategoryDataRefetch()}
-          />
         </Grid>
       )}
+      {parentInfo?.is_leaf && <CatalogueItemsTable />}
+      <CatalogueCategoryDialog
+        open={addCategoryDialogOpen}
+        onClose={() => setAddCategoryDialogOpen(false)}
+        parentId={parentId}
+        onChangeCatalogueCategoryName={setCatalogueCategoryName}
+        catalogueCategoryName={catalogueCategoryName}
+        onChangeLeaf={setIsLeaf}
+        isLeaf={isLeaf}
+        refetchData={() => catalogueCategoryDataRefetch()}
+        type="add"
+        formFields={formFields}
+        onChangeFormFields={setFormFields}
+      />
+      <CatalogueCategoryDialog
+        open={editCategoryDialogOpen}
+        onClose={() => setEditCategoryDialogOpen(false)}
+        parentId={parentId}
+        onChangeCatalogueCategoryName={setCatalogueCategoryName}
+        catalogueCategoryName={catalogueCategoryName}
+        onChangeLeaf={setIsLeaf}
+        isLeaf={isLeaf}
+        refetchData={() => catalogueCategoryDataRefetch()}
+        type="edit"
+        selectedCatalogueCategory={selectedCatalogueCategory}
+        formFields={formFields}
+        onChangeFormFields={setFormFields}
+      />
+      <DeleteCatalogueCategoryDialog
+        open={deleteCategoryDialogOpen}
+        onClose={() => setDeleteCategoryDialogOpen(false)}
+        catalogueCategory={selectedCatalogueCategory}
+        refetchData={() => catalogueCategoryDataRefetch()}
+      />
+      <CatalogueItemsDialog
+        open={addItemDialogOpen}
+        onClose={() => setAddItemDialogOpen(false)}
+        parentId={parentId}
+        catalogueItemDetails={catalogueItemDetails}
+        onChangeCatalogueItemDetails={setCatalogueItemDetails}
+        catalogueItemManufacturer={catalogueItemManufacturer}
+        onChangeCatalogueItemManufacturer={setCatalogueItemManufacturer}
+        catalogueItemPropertiesForm={
+          parentInfo?.catalogue_item_properties ?? []
+        }
+        catalogueItemProperties={catalogueItemProperties}
+        onChangeCatalogueItemProperties={setCatalogueItemProperties}
+      />
     </Grid>
   );
 }

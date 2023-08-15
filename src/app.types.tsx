@@ -32,3 +32,39 @@ export interface CatalogueCategoryFormData {
   unit?: string;
   mandatory: boolean | null;
 }
+
+export interface CatalogueItemDetails {
+  name: string | undefined;
+  description: string;
+}
+
+export interface CatalogueItemManufacturer {
+  manufacturer: string | undefined;
+  manufacturerNumber: string | undefined;
+  manufacturerUrl: string | undefined;
+}
+
+export interface CatalogueItemProperty {
+  name: string;
+  value: string | number | boolean | null;
+}
+
+export interface CatalogueItemPropertyResponse {
+  name: string;
+  value: string | number | boolean | null;
+  unit: string;
+}
+
+export interface CatalogueItem {
+  catalogue_category_id: string;
+  name: string | undefined;
+  description: string;
+  properties: CatalogueItemPropertyResponse[];
+  id: string;
+}
+export interface AddCatalogueItem {
+  catalogue_category_id: string;
+  name: string | undefined;
+  description: string;
+  properties: CatalogueItemProperty[];
+}
