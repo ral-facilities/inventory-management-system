@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import DeleteCatalogueCategoryDialog, {
   DeleteCatalogueCategorDialogProps,
 } from './deleteCatalogueCategoryDialog.component';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithBrowserRouter } from '../../setupTests';
 
 describe('delete Catalogue Category dialogue', () => {
   let props: DeleteCatalogueCategorDialogProps;
