@@ -19,6 +19,28 @@ import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDia
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
 
+export function convertProperties(
+  catalogueItemProperties?: CatalogueCategoryFormData[]
+): CatalogueItemProperty[] {
+  const convertedProperties: CatalogueItemProperty[] = (
+    catalogueItemProperties ?? []
+  ).map((property) => {
+    let value: string | number | boolean | null = null;
+
+    if (property.type === 'number' || property.type === 'string') {
+      value = null;
+    } else if (property.type === 'boolean') {
+      value = '';
+    }
+
+    return {
+      name: property.name,
+      value,
+    };
+  });
+
+  return convertedProperties;
+}
 function Catalogue() {
   const [currNode, setCurrNode] = React.useState('/');
   const navigate = useNavigate();
@@ -116,27 +138,11 @@ function Catalogue() {
   >(null);
 
   React.useEffect(() => {
-    setParentId(parentInfo ? parentInfo.id : null);
+    setParentId(parentInfo ? (!!parentInfo.id ? parentInfo.id : null) : null);
     setIsLeaf(parentInfo ? parentInfo.is_leaf : false);
-    const convertedProperties: CatalogueItemProperty[] =
-      parentInfo?.catalogue_item_properties?.map((property) => {
-        let value: string | number | boolean | null = null;
-
-        if (property.type === 'number' || property.type === 'string') {
-          value = null;
-        } else if (property.type === 'boolean') {
-          value = false;
-        }
-
-        return {
-          name: property.name,
-          value,
-        };
-      }) ?? [];
-
-    setCatalogueItemProperties(convertedProperties);
-
-    // console.log(convertedProperties);
+    setCatalogueItemProperties(
+      convertProperties(parentInfo?.catalogue_item_properties)
+    );
   }, [catalogueLocation, parentInfo]);
 
   return (

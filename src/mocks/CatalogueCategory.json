@@ -60,6 +60,21 @@
         "name": "Sensor Type",
         "type": "string",
         "mandatory": true
+      },
+      {
+        "name": "Sensor brand",
+        "type": "string",
+        "mandatory": false
+      },
+      {
+        "name": "Broken",
+        "type": "boolean",
+        "mandatory": true
+      },
+      {
+        "name": "Older than five years",
+        "type": "boolean",
+        "mandatory": false
       }
     ]
   },

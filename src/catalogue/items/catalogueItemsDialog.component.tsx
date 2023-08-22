@@ -122,9 +122,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       updatedProperty.value =
         newValue === 'true' ? true : newValue === 'false' ? false : '';
     } else if (propertyType === 'number') {
-      if (newValue === null) {
-        updatedProperty.value = null;
-      } else {
+      if (newValue !== null) {
         const parsedValue = Number(newValue);
         updatedProperty.value = isNaN(parsedValue) ? null : parsedValue;
       }
@@ -143,8 +141,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   };
 
   const { mutateAsync: addCatalogueItem } = useAddCatalogueItem();
-
-  // console.log(catalogueItemProperties);
 
   const handleAddCatalogueItem = React.useCallback(() => {
     let hasErrors = false;
@@ -173,6 +169,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         }
 
         if (
+          propertyValues[index] !== undefined &&
           property.type === 'number' &&
           isNaN(Number(propertyValues[index]))
         ) {
@@ -181,19 +178,23 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         }
 
         if (!propertyValues[index]) {
-          return null; // Use null instead of undefined to indicate a property to be removed
+          if (property.type === 'boolean') {
+            if (
+              propertyValues[index] === '' ||
+              propertyValues[index] === undefined
+            ) {
+              return null;
+            }
+          } else {
+            return null;
+          }
         }
 
         let typedValue: string | number | boolean | null =
           propertyValues[index]; // Assume it's a string by default
 
         if (property.type === 'boolean') {
-          typedValue =
-            propertyValues[index] === 'true'
-              ? true
-              : propertyValues[index] === 'false'
-              ? false
-              : '';
+          typedValue = propertyValues[index];
         } else if (property.type === 'number') {
           typedValue = Number(propertyValues[index]);
         }
@@ -218,7 +219,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     const catalogueItem: AddCatalogueItem = {
       catalogue_category_id: parentId ?? '',
       name: catalogueItemDetails.name ?? undefined,
-      description: catalogueItemDetails.description,
+      description: catalogueItemDetails.description ?? '',
       properties: filteredProperties,
     };
 
@@ -229,7 +230,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         if (error.response?.status === 409) {
           setNameError(true);
           setNameErrorMessage(
-            'A catalogue item with the same name already exists within the parent catalogue category.'
+            'A catalogue item with the same name already exists within the parent catalogue category'
           );
         }
       });
@@ -243,7 +244,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     propertyErrors,
     propertyValues,
   ]);
-  // console.log(propertyErrors);
+
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
       <DialogTitle>Add Catalogue Item</DialogTitle>
@@ -273,12 +274,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           sx={{ marginLeft: '4px', marginTop: '16px' }} // Adjusted the width and margin
           value={catalogueItemDetails.description}
           onChange={(event) => {
+            const newDescription = event.target.value ? event.target.value : '';
             onChangeCatalogueItemDetails({
               ...catalogueItemDetails,
-              description: event.target.value ? event.target.value : '',
+              description: newDescription,
             });
           }}
           fullWidth
+          multiline
         />
 
         {catalogueItemPropertiesForm.length >= 1 && (
@@ -307,13 +310,21 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       <InputLabel
                         required={property.mandatory ?? false}
                         error={propertyErrors[index]}
+                        id={`catalogue-item-property-${property.name.replace(
+                          /\s+/g,
+                          '-'
+                        )}`}
                       >
                         {property.name}
                       </InputLabel>
                       <Select
-                        value={propertyValues[index] || null}
+                        value={(propertyValues[index] as string) || ''}
                         required={property.mandatory ?? false}
                         error={propertyErrors[index]}
+                        labelId={`catalogue-item-property-${property.name.replace(
+                          /\s+/g,
+                          '-'
+                        )}`}
                         onChange={(event) =>
                           handlePropertyChange(
                             index,
@@ -327,13 +338,13 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         label={property.name}
                         fullWidth
                       >
-                        <MenuItem value="">Undefined</MenuItem>
+                        <MenuItem value="">None</MenuItem>
                         <MenuItem value="true">True</MenuItem>
                         <MenuItem value="false">False</MenuItem>
                       </Select>
                       {propertyErrors[index] && (
                         <FormHelperText error>
-                          Please select either True or False.
+                          Please select either True or False
                         </FormHelperText>
                       )}
                     </FormControl>

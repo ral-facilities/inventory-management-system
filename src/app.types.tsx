@@ -35,7 +35,7 @@ export interface CatalogueCategoryFormData {
 
 export interface CatalogueItemDetails {
   name: string | undefined;
-  description: string;
+  description: string | undefined;
 }
 
 export interface CatalogueItemManufacturer {
