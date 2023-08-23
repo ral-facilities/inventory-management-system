@@ -87,8 +87,6 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       (updatedFormFields[index][field] as boolean | string | null) = value;
       if (field === 'name') {
         updatedNameFields[index] = value as string; // Update nameFields
-      } else if (field === 'type') {
-        updatedTypeFields[index] = value as string; // Update typeFields
       }
     }
 
