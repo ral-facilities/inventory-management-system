@@ -22,7 +22,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
-    "single-spa-react": "5.0.1",
+    "single-spa-react": "5.1.4",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },
@@ -64,7 +64,7 @@
       "node_modules/(?!axios)"
     ]
   },
-  "packageManager": "yarn@3.5.0",
+  "packageManager": "yarn@3.6.1",
   "devDependencies": {
     "@babel/eslint-parser": "^7.21.8",
     "@craco/craco": "^7.1.0",
