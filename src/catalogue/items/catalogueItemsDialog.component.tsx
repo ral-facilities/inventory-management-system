@@ -193,7 +193,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           propertyValues[index]; // Assume it's a string by default
 
         if (property.type === 'boolean') {
-          typedValue = propertyValues[index];
+          typedValue =
+            propertyValues[index] === 'true'
+              ? true
+              : propertyValues[index] === 'false'
+              ? false
+              : '';
         } else if (property.type === 'number') {
           typedValue = Number(propertyValues[index]);
         }
