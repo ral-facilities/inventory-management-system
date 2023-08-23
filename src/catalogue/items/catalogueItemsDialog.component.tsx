@@ -194,11 +194,13 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
         if (property.type === 'boolean') {
           typedValue =
-            propertyValues[index] === 'true'
-              ? true
-              : propertyValues[index] === 'false'
-              ? false
-              : '';
+            typeof propertyValues[index] !== 'boolean'
+              ? propertyValues[index] === 'true'
+                ? true
+                : propertyValues[index] === 'false'
+                ? false
+                : ''
+              : propertyValues[index];
         } else if (property.type === 'number') {
           typedValue = Number(propertyValues[index]);
         }
