@@ -47,7 +47,11 @@ export const handlers = [
       (value) => value.id === id
     );
     if (validCatelogueCategory) {
-      return res(ctx.status(200), ctx.json(''));
+      if (id === '2') {
+        return res(ctx.status(409), ctx.json(''));
+      } else {
+        return res(ctx.status(200), ctx.json(''));
+      }
     } else {
       return res(ctx.status(400), ctx.json(''));
     }

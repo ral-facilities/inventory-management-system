@@ -10,6 +10,7 @@ import {
 import React from 'react';
 import { useDeleteCatalogueCategory } from '../api/catalogueCategory';
 import { ViewCatalogueCategoryResponse } from '../app.types';
+import { AxiosError } from 'axios';
 
 export interface DeleteCatalogueCategorDialogProps {
   open: boolean;
@@ -42,9 +43,13 @@ const DeleteCatalogueCategoryDialog = (
           refetchData();
           onClose();
         })
-        .catch((error) => {
-          setError(true);
-          setErrorMessage(error.message);
+        .catch((error: AxiosError) => {
+          if (error.response?.status === 409) {
+            setError(true);
+            setErrorMessage(
+              'Catalogue category has children elements and cannot be deleted, Please delete the children elements first'
+            );
+          }
         });
     } else {
       setError(true);
@@ -63,12 +68,24 @@ const DeleteCatalogueCategoryDialog = (
         ?
       </DialogContent>
       <DialogActions>
-        <Box>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleDeleteCatalogueCategory}>Continue</Button>
-          {error && <FormHelperText error>{errorMessage}</FormHelperText>}
-        </Box>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleDeleteCatalogueCategory}>Continue</Button>
       </DialogActions>
+      {error && (
+        <Box
+          sx={{
+            mx: '24px',
+            marginBottom: '24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+            {errorMessage}
+          </FormHelperText>
+        </Box>
+      )}
     </Dialog>
   );
 };

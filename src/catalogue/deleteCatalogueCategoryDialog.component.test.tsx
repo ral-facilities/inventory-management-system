@@ -5,28 +5,31 @@ import DeleteCatalogueCategoryDialog, {
   DeleteCatalogueCategorDialogProps,
 } from './deleteCatalogueCategoryDialog.component';
 import { renderComponentWithBrowserRouter } from '../setupTests';
+import { ViewCatalogueCategoryResponse } from '../app.types';
 
 describe('delete Catalogue Category dialogue', () => {
   let props: DeleteCatalogueCategorDialogProps;
   let user;
   const onClose = jest.fn();
   const refetchData = jest.fn();
+  let catalogueCategory: ViewCatalogueCategoryResponse;
 
   const createView = (): RenderResult => {
     return renderComponentWithBrowserRouter(
       <DeleteCatalogueCategoryDialog {...props} />
     );
   };
-  const catalogueCategory = {
-    name: 'test',
-    parent_id: null,
-    id: '1',
-    code: 'test',
-    path: '/test',
-    parent_path: '/',
-    is_leaf: false,
-  };
+
   beforeEach(() => {
+    catalogueCategory = {
+      name: 'test',
+      parent_id: null,
+      id: '1',
+      code: 'test',
+      path: '/test',
+      parent_path: '/',
+      is_leaf: false,
+    };
     props = {
       open: true,
       onClose: onClose,
@@ -80,5 +83,20 @@ describe('delete Catalogue Category dialogue', () => {
       expect(onClose).toHaveBeenCalled();
     });
     expect(refetchData).toHaveBeenCalled();
+  });
+
+  it('displays error message when user trys to delete a catalogue category that has children elements', async () => {
+    catalogueCategory.id = '2';
+    createView();
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    user.click(continueButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'Catalogue category has children elements and cannot be deleted, Please delete the children elements first'
+        )
+      ).toBeInTheDocument();
+    });
   });
 });
