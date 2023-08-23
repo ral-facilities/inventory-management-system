@@ -79,7 +79,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       manufacturerNumber: undefined,
       manufacturerUrl: undefined,
     });
-    onChangeCatalogueItemProperties(null);
     setPropertyValues([]);
     setPropertyErrors(
       new Array(catalogueItemPropertiesForm.length).fill(false)
@@ -90,7 +89,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     catalogueItemPropertiesForm.length,
     onChangeCatalogueItemDetails,
     onChangeCatalogueItemManufacturer,
-    onChangeCatalogueItemProperties,
     onClose,
   ]);
 
@@ -159,6 +157,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
     // Check properties
     const updatedPropertyErrors = [...propertyErrors];
+
     const updatedProperties = catalogueItemPropertiesForm.map(
       (property, index) => {
         if (property.mandatory && !propertyValues[index]) {
