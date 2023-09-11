@@ -1,5 +1,3 @@
-import { cyan } from '@mui/material/colors';
-
 describe('Catalogue Category', () => {
   beforeEach(() => {
     cy.visit(
@@ -34,7 +32,7 @@ describe('Catalogue Category', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"catalogue_category_id":"4","name":"test","description":"test Description","properties":[{"name":"Resolution","value":18},{"name":"Frame Rate","value":60},{"name":"Sensor Type","value":"IO"},{"name":"Sensor brand","value":"pixel"},{"name":"Broken","value":"true"},{"name":"Older than five years","value":"false"}]}'
+        '{"catalogue_category_id":"4","name":"test","description":"test Description","properties":[{"name":"Resolution","value":18},{"name":"Frame Rate","value":60},{"name":"Sensor Type","value":"IO"},{"name":"Sensor brand","value":"pixel"},{"name":"Broken","value":true},{"name":"Older than five years","value":false}]}'
       );
     });
   });
@@ -64,7 +62,7 @@ describe('Catalogue Category', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"catalogue_category_id":"4","name":"test_dup","description":"test Description","properties":[{"name":"Resolution","value":18},{"name":"Frame Rate","value":60},{"name":"Sensor Type","value":"IO"},{"name":"Sensor brand","value":"pixel"},{"name":"Broken","value":"true"},{"name":"Older than five years","value":"false"}]}'
+        '{"catalogue_category_id":"4","name":"test_dup","description":"test Description","properties":[{"name":"Resolution","value":18},{"name":"Frame Rate","value":60},{"name":"Sensor Type","value":"IO"},{"name":"Sensor brand","value":"pixel"},{"name":"Broken","value":true},{"name":"Older than five years","value":false}]}'
       );
     });
     cy.findByText(
@@ -96,7 +94,7 @@ describe('Catalogue Category', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"catalogue_category_id":"4","name":"test","description":"","properties":[{"name":"Resolution","value":18},{"name":"Sensor Type","value":"IO"},{"name":"Broken","value":"true"}]}'
+        '{"catalogue_category_id":"4","name":"test","description":"","properties":[{"name":"Resolution","value":18},{"name":"Sensor Type","value":"IO"},{"name":"Broken","value":true}]}'
       );
     });
   });
