@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
+import CatalogueItemJSON from './CatalogueItems.json';
 import { AddCatalogueCategory, CatalogueItem } from '../app.types';
 
 export const handlers = [
@@ -89,5 +90,18 @@ export const handlers = [
         id: '1',
       })
     );
+  }),
+
+  rest.get('/v1/catalogue-items', (req, res, ctx) => {
+    const catalogueItemsParams = req.url.searchParams;
+    const id = catalogueItemsParams.get('catalogue_category_id');
+
+    if (id) {
+      const CatalogueItemData = CatalogueItemJSON.filter(
+        (catalogueitem) => catalogueitem.catalogue_category_id === id
+      );
+
+      return res(ctx.status(200), ctx.json(CatalogueItemData));
+    }
   }),
 ];

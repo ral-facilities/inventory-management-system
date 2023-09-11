@@ -1,0 +1,1310 @@
+[
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 12,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 30,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ],
+    "id": "1"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 16,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 60,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Sony",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "2"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 20,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 120,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Canon",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ],
+    "id": "3"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 24,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Nikon",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "4"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 28,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 120,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Panasonic",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ],
+    "id": "24"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 32,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Olympus",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "25"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 36,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 360,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Fujifilm",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ],
+    "id": "26"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 40,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 480,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "27"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 48,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 600,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Pentax",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ],
+    "id": "28"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 52,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 720,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Sigma",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "29"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 56,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 840,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ],
+    "id": "30"
+  },
+
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 60,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 960,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Red",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "31"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 64,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1080,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "32"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 68,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1440,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "33"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 72,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1800,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "34"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 76,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2160,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "35"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 80,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2520,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "36"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 84,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2880,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "37"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 88,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "38"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 92,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3600,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "39"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 96,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3960,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "40"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 100,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 4320,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "41"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 104,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 4680,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "42"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 108,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 5040,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "43"
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras",
+    "description": "High-resolution cameras for beam characterization.",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 112,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 5400,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "44"
+  },
+  {
+    "catalogue_category_id": "5",
+    "name": "Energy Meters",
+    "description": "Precision energy meters for accurate measurements.",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 1000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.5%",
+        "unit": ""
+      }
+    ],
+    "id": "5"
+  },
+  {
+    "catalogue_category_id": "5",
+    "name": "Energy Meters",
+    "description": "Precision energy meters for accurate measurements.",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 2000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.2%",
+        "unit": ""
+      }
+    ],
+    "id": "6"
+  },
+  {
+    "catalogue_category_id": "5",
+    "name": "Energy Meters",
+    "description": "Precision energy meters for accurate measurements.",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 5000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.1%",
+        "unit": ""
+      }
+    ],
+    "id": "7"
+  },
+  {
+    "catalogue_category_id": "5",
+    "name": "Energy Meters",
+    "description": "Precision energy meters for accurate measurements.",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 10000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.05%",
+        "unit": ""
+      }
+    ],
+    "id": "8"
+  },
+  {
+    "catalogue_category_id": "6",
+    "name": "Wavefront Sensors",
+    "description": "Wavefront sensors for precise optical measurements.",
+    "properties": [
+      {
+        "name": "Wavefront Measurement Range",
+        "value": "0-10 micrometers",
+        "unit": ""
+      },
+      {
+        "name": "Spatial Resolution",
+        "value": 5,
+        "unit": "micrometers"
+      }
+    ],
+    "id": "9"
+  },
+  {
+    "catalogue_category_id": "6",
+    "name": "Wavefront Sensors",
+    "description": "Wavefront sensors for precise optical measurements.",
+    "properties": [
+      {
+        "name": "Wavefront Measurement Range",
+        "value": "0-20 micrometers",
+        "unit": ""
+      },
+      {
+        "name": "Spatial Resolution",
+        "value": 10,
+        "unit": "micrometers"
+      }
+    ],
+    "id": "10"
+  },
+  {
+    "catalogue_category_id": "9",
+    "name": "Motorized Actuators",
+    "description": "Motorized actuators for controlled motion.",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 100,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 10,
+        "unit": "kilograms"
+      }
+    ],
+    "id": "11"
+  },
+  {
+    "catalogue_category_id": "9",
+    "name": "Motorized Actuators",
+    "description": "Motorized actuators for controlled motion.",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 200,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 20,
+        "unit": "kilograms"
+      }
+    ],
+    "id": "12"
+  },
+  {
+    "catalogue_category_id": "9",
+    "name": "Motorized Actuators",
+    "description": "Motorized actuators for controlled motion.",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 300,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 30,
+        "unit": "kilograms"
+      }
+    ],
+    "id": "13"
+  },
+  {
+    "catalogue_category_id": "9",
+    "name": "Motorized Actuators",
+    "description": "Motorized actuators for controlled motion.",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 400,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 40,
+        "unit": "kilograms"
+      }
+    ],
+    "id": "14"
+  },
+  {
+    "catalogue_category_id": "11",
+    "name": "Cryo Pumps",
+    "description": "Cryo pumps for maintaining low temperatures.",
+    "properties": [
+      {
+        "name": "Cooldown Time",
+        "value": "2 hours",
+        "unit": ""
+      },
+      {
+        "name": "Pumping Speed",
+        "value": 50,
+        "unit": "liters per second"
+      }
+    ],
+    "id": "15"
+  },
+  {
+    "catalogue_category_id": "11",
+    "name": "Cryo Pumps",
+    "description": "Cryo pumps for maintaining low temperatures.",
+    "properties": [
+      {
+        "name": "Cooldown Time",
+        "value": "3 hours",
+        "unit": ""
+      },
+      {
+        "name": "Pumping Speed",
+        "value": 60,
+        "unit": "liters per second"
+      }
+    ],
+    "id": "16"
+  },
+
+  {
+    "catalogue_category_id": "12",
+    "name": "Dry Vacuum Pumps",
+    "description": "Dry vacuum pumps for creating vacuum environments.",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 300,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.1,
+        "unit": "millibar"
+      }
+    ],
+    "id": "17"
+  },
+  {
+    "catalogue_category_id": "12",
+    "name": "Dry Vacuum Pumps",
+    "description": "Dry vacuum pumps for creating vacuum environments.",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 400,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.05,
+        "unit": "millibar"
+      }
+    ],
+    "id": "18"
+  },
+  {
+    "catalogue_category_id": "12",
+    "name": "Dry Vacuum Pumps",
+    "description": "Dry vacuum pumps for creating vacuum environments.",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 500,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.01,
+        "unit": "millibar"
+      }
+    ],
+    "id": "19"
+  },
+  {
+    "catalogue_category_id": "12",
+    "name": "Dry Vacuum Pumps",
+    "description": "Dry vacuum pumps for creating vacuum environments.",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 300,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.1,
+        "unit": "millibar"
+      }
+    ],
+    "id": "17"
+  },
+
+  {
+    "catalogue_category_id": "13",
+    "name": "Turbomolecular Pumps",
+    "description": "Turbomolecular pumps for high-speed vacuum applications.",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 700,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Compression Ratio",
+        "value": 100,
+        "unit": ""
+      }
+    ],
+    "id": "20"
+  },
+  {
+    "catalogue_category_id": "13",
+    "name": "Turbomolecular Pumps",
+    "description": "Turbomolecular pumps for high-speed vacuum applications.",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 800,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Compression Ratio",
+        "value": 120,
+        "unit": ""
+      }
+    ],
+    "id": "21"
+  },
+  {
+    "catalogue_category_id": "14",
+    "name": "Turbo Pumps",
+    "description": "Turbo pumps for efficient vacuum pumping.",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 500,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Backing Pressure",
+        "value": 0.2,
+        "unit": "millibar"
+      }
+    ],
+    "id": "22"
+  },
+  {
+    "catalogue_category_id": "14",
+    "name": "Turbo Pumps",
+    "description": "Turbo pumps for efficient vacuum pumping.",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 600,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Backing Pressure",
+        "value": 0.3,
+        "unit": "millibar"
+      }
+    ],
+    "id": "23"
+  }
+]
