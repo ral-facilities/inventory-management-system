@@ -41,7 +41,9 @@ describe('Catalogue', () => {
       expect(screen.getByText('Actuators')).toBeInTheDocument();
     });
 
-    const homeButton = await screen.findByTestId('home-button-catalogue');
+    const homeButton = screen.getByRole('button', {
+      name: 'navigate to catalogue home',
+    });
     await user.click(homeButton);
     await waitFor(() => {
       expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
@@ -52,7 +54,9 @@ describe('Catalogue', () => {
   it('opens the add catalogue category dialog', async () => {
     createView('/inventory-management-system/catalogue');
 
-    const addButton = await screen.findByTestId('AddIcon');
+    const addButton = screen.getByRole('button', {
+      name: 'add catalogue category',
+    });
     await user.click(addButton);
 
     await waitFor(() => {
@@ -73,10 +77,10 @@ describe('Catalogue', () => {
       expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
     });
 
-    const deleteButtons = screen.getAllByTestId(
-      'delete-catalogue-category-button'
-    );
-    await user.click(deleteButtons[0]);
+    const deleteButton = screen.getByRole('button', {
+      name: 'delete Beam Characterization catalogue category button',
+    });
+    await user.click(deleteButton);
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -96,10 +100,10 @@ describe('Catalogue', () => {
       expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
     });
 
-    const deleteButtons = screen.getAllByTestId(
-      'edit-catalogue-category-button'
-    );
-    await user.click(deleteButtons[0]);
+    const editButton = screen.getByRole('button', {
+      name: 'edit Beam Characterization catalogue category button',
+    });
+    await user.click(editButton);
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
@@ -112,7 +116,7 @@ describe('Catalogue', () => {
     });
   });
 
-  it('renders the breadcumbs and navigate to another directory', async () => {
+  it('renders the breadcrumbs and navigate to another directory', async () => {
     createView('/inventory-management-system/catalogue/motion/actuators');
 
     await waitFor(() => {
@@ -144,7 +148,7 @@ describe('Catalogue', () => {
     expect(screen.getByText('Wavefront Sensors')).toBeInTheDocument();
   });
 
-  it('opens add catelogue item dialog and can closes the dialog', async () => {
+  it('opens add catalogue item dialog and can closes the dialog', async () => {
     createView(
       '/inventory-management-system/catalogue/beam-characterization/cameras'
     );

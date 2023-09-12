@@ -72,7 +72,7 @@ describe('Catalogue Items Table', () => {
     props.data = catalogueItemData('5');
     createView();
 
-    const row = screen.getByText('Energy Meters 26').closest('tr');
+    const row = screen.getByRole('row', { name: 'Energy Meters 26 row' });
 
     await user.hover(row);
 
@@ -81,9 +81,9 @@ describe('Catalogue Items Table', () => {
     await user.unhover(row);
 
     await waitFor(() => {
-      expect(screen.getByText('Energy Meters 26').closest('tr')).toHaveStyle(
-        'background-color: inherit'
-      );
+      expect(
+        screen.getByRole('row', { name: 'Energy Meters 26 row' })
+      ).toHaveStyle('background-color: inherit');
     });
   });
 });

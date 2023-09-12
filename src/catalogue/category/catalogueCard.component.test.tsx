@@ -36,7 +36,9 @@ describe('Catalogue Card', () => {
 
   it('opens the delete dialog', async () => {
     createView();
-    const deleteButton = screen.getByTestId('delete-catalogue-category-button');
+    const deleteButton = screen.getByRole('button', {
+      name: 'delete Beam Characterization catalogue category button',
+    });
     await user.click(deleteButton);
 
     expect(onChangeOpenDeleteDialog).toHaveBeenCalled();
@@ -44,7 +46,9 @@ describe('Catalogue Card', () => {
 
   it('opens the edit dialog', async () => {
     createView();
-    const editButton = screen.getByTestId('edit-catalogue-category-button');
+    const editButton = screen.getByRole('button', {
+      name: 'edit Beam Characterization catalogue category button',
+    });
     await user.click(editButton);
 
     expect(onChangeOpenEditDialog).toHaveBeenCalled();

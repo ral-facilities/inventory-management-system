@@ -99,6 +99,7 @@ const CatalogueItemsTable: React.FC<CatalogueItemsTableProps> = (props) => {
                       : 'inherit',
                 }}
                 key={item.id}
+                aria-label={`${item.name} row`}
               >
                 <TableCell
                   sx={{

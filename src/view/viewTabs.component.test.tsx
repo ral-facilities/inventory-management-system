@@ -17,9 +17,9 @@ describe('View Tabs', () => {
     expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
       'Catalogue'
     );
-    const catalogueHomeButton = await screen.findByTestId(
-      'home-button-catalogue'
-    );
+    const catalogueHomeButton = await screen.findByRole('button', {
+      name: 'navigate to catalogue home',
+    });
     expect(catalogueHomeButton).toBeInTheDocument();
     await waitFor(() => {
       expect(screen.getByText('Beam Characterization')).toBeInTheDocument();

@@ -172,7 +172,7 @@ function Catalogue() {
               onClick={() => {
                 navigate('/inventory-management-system/catalogue');
               }}
-              data-testid="home-button-catalogue"
+              aria-label="navigate to catalogue home"
             >
               <HomeIcon />
             </IconButton>
@@ -185,6 +185,7 @@ function Catalogue() {
               sx={{ margin: '4px' }}
               onClick={() => setAddCategoryDialogOpen(true)}
               disabled={disableButton}
+              aria-label="add catalogue category"
             >
               <AddIcon />
             </IconButton>
