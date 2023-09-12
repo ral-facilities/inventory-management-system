@@ -1,33 +1,19 @@
 import React from 'react';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
+import {
+  renderComponentWithBrowserRouter,
+  getCatalogueItemsPropertiesById,
+} from '../../setupTests';
 import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
 import { convertProperties } from '../catalogue.component';
-import catalogueCategoryJson from '../../mocks/CatalogueCategory.json';
-import { CatalogueCategoryFormData } from '../../app.types';
 import { useAddCatalogueItem } from '../../api/catalogueItem';
 
 jest.mock('../../api/catalogueItem', () => ({
   useAddCatalogueItem: jest.fn(),
 }));
-
-function getCatalogueItemsPropertiesById(
-  id: string
-): CatalogueCategoryFormData[] {
-  const filteredCategories = catalogueCategoryJson.filter(
-    (catalogueCategory) => catalogueCategory.id === id
-  );
-
-  if (filteredCategories.length === 0) {
-    return [];
-  }
-
-  const properties = filteredCategories[0].catalogue_item_properties ?? [];
-  return properties;
-}
 
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;

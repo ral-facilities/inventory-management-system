@@ -19,7 +19,7 @@ import { CatalogueCategoryFormData, CatalogueItem } from '../../app.types';
 
 export interface CatalogueItemsTableProps {
   tableHeight: string;
-  data: CatalogueItem[];
+  data: CatalogueItem[] | undefined;
   catalogueItemProperties: CatalogueCategoryFormData[];
 }
 
@@ -87,91 +87,95 @@ const CatalogueItemsTable: React.FC<CatalogueItemsTableProps> = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((item, index) => (
-            <TableRow
-              onMouseEnter={() => setHoveredRow(index)}
-              onMouseLeave={() => setHoveredRow(null)}
-              style={{
-                backgroundColor:
-                  hoveredRow === index ? theme.palette.action.hover : 'inherit',
-              }}
-              key={item.id}
-            >
-              <TableCell
-                sx={{
-                  px: '8px',
-                  paddingTop: '0px',
-                  paddingBottom: '0px',
-                  borderRight: '1px solid #e0e0e0',
+          {data &&
+            data.map((item, index) => (
+              <TableRow
+                onMouseEnter={() => setHoveredRow(index)}
+                onMouseLeave={() => setHoveredRow(null)}
+                style={{
+                  backgroundColor:
+                    hoveredRow === index
+                      ? theme.palette.action.hover
+                      : 'inherit',
                 }}
+                key={item.id}
               >
-                {item.name}
-              </TableCell>
-              <TableCell
-                sx={{
-                  px: '8px',
-                  paddingTop: '0px',
-                  paddingBottom: '0px',
-                  borderRight: '1px solid #e0e0e0',
-                  width: '100px',
-                }}
-              >
-                {item.description !== '' && (
-                  <Tooltip
-                    title={item.description}
-                    placement="top"
-                    enterTouchDelay={0}
-                    arrow
-                  >
-                    <InfoOutlinedIcon />
-                  </Tooltip>
-                )}
-              </TableCell>
-              {catalogueItemProperties &&
-                catalogueItemProperties.length >= 1 &&
-                catalogueItemProperties.map((property, index) => (
-                  <TableCell
-                    sx={{
-                      px: '8px',
-                      paddingTop: '0px',
-                      paddingBottom: '0px',
-                      borderRight: '1px solid #e0e0e0',
-                    }}
-                    key={index}
-                  >
-                    {item.properties
-                      ? String(
-                          item.properties.find(
-                            (prop) => prop.name === property.name
-                          )?.value !== undefined
-                            ? item.properties.find(
-                                (prop) => prop.name === property.name
-                              )?.value
-                            : ''
-                        )
-                      : ''}
-                  </TableCell>
-                ))}
-              <TableCell
-                sx={{ borderRight: '1px solid #e0e0e0', width: '100px' }}
-              >
-                <Box sx={{ display: 'flex' }}>
-                  <IconButton
-                    size="small"
-                    aria-label={`Edit ${item.name} catalogue item`}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    aria-label={`Delete ${item.name} catalogue item`}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Box>
-              </TableCell>
-            </TableRow>
-          ))}
+                <TableCell
+                  sx={{
+                    px: '8px',
+                    paddingTop: '0px',
+                    paddingBottom: '0px',
+                    borderRight: '1px solid #e0e0e0',
+                  }}
+                >
+                  {item.name}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    px: '8px',
+                    paddingTop: '0px',
+                    paddingBottom: '0px',
+                    borderRight: '1px solid #e0e0e0',
+                    width: '100px',
+                  }}
+                >
+                  {item.description !== '' && (
+                    <Tooltip
+                      title={item.description}
+                      placement="top"
+                      enterTouchDelay={0}
+                      arrow
+                      aria-label={`Catalogue item description: ${item.description}`}
+                    >
+                      <InfoOutlinedIcon />
+                    </Tooltip>
+                  )}
+                </TableCell>
+                {catalogueItemProperties &&
+                  catalogueItemProperties.length >= 1 &&
+                  catalogueItemProperties.map((property, index) => (
+                    <TableCell
+                      sx={{
+                        px: '8px',
+                        paddingTop: '0px',
+                        paddingBottom: '0px',
+                        borderRight: '1px solid #e0e0e0',
+                      }}
+                      key={index}
+                    >
+                      {item.properties
+                        ? String(
+                            item.properties.find(
+                              (prop) => prop.name === property.name
+                            )?.value !== undefined
+                              ? item.properties.find(
+                                  (prop) => prop.name === property.name
+                                )?.value
+                              : ''
+                          )
+                        : ''}
+                    </TableCell>
+                  ))}
+                <TableCell
+                  sx={{ borderRight: '1px solid #e0e0e0', width: '100px' }}
+                >
+                  <Box sx={{ display: 'flex' }}>
+                    <IconButton
+                      size="small"
+                      aria-label={`Edit ${item.name} catalogue item`}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      aria-label={`Delete ${item.name} catalogue item`}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </TableContainer>

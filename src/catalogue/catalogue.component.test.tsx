@@ -30,7 +30,7 @@ describe('Catalogue', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Catalogue Items table')).toBeInTheDocument();
+      expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
     });
   });
 

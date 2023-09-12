@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { useAddCatalogueItem } from './catalogueItem';
-import { hooksWrapperWithProviders } from '../setupTests';
+import { useAddCatalogueItem, useCatalogueItems } from './catalogueItem';
+import { catalogueItemData, hooksWrapperWithProviders } from '../setupTests';
 import { AddCatalogueItem } from '../app.types';
 
 describe('catalogue items api functions', () => {
@@ -46,6 +46,24 @@ describe('catalogue items api functions', () => {
 
     it.todo(
       'sends axios request to fetch records and throws an appropriate error on failure'
+    );
+  });
+
+  describe('useCatalogueItems', () => {
+    it('sends request to fetch catalogue catagory data and returns successful response', async () => {
+      const { result } = renderHook(() => useCatalogueItems('5'), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toEqual(catalogueItemData('5'));
+    });
+
+    it.todo(
+      'sends axios request to fetch catalogue items and throws an appropriate error on failure'
     );
   });
 });

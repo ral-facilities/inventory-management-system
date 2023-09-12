@@ -132,4 +132,11 @@ describe('Catalogue Category', () => {
 
     cy.findAllByText('Please enter a valid number').should('have.length', 0);
   });
+
+  it('displays the table view correctly', () => {
+    cy.findByText('Cameras 1').should('exist');
+    cy.findByText('Cameras 2').should('exist');
+    cy.findByText('Cameras 3').should('exist');
+    cy.findByText('Cameras 4').should('exist');
+  });
 });

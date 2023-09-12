@@ -199,7 +199,7 @@ function Catalogue() {
           </Button>
         </Grid>
       </Grid>
-      {catalogueCategoryData && !parentInfo?.is_leaf && (
+      {catalogueCategoryData && parentInfo && !parentInfo.is_leaf && (
         <Grid container spacing={2}>
           {catalogueCategoryData.map((item, index) => (
             <Grid item key={index} xs={12} sm={6} md={4}>
@@ -215,7 +215,7 @@ function Catalogue() {
       {parentInfo && parentInfo.is_leaf && (
         <CatalogueItemsTable
           tableHeight={tableHeight}
-          data={catalogueItemsData ?? []}
+          data={catalogueItemsData}
           catalogueItemProperties={parentInfo.catalogue_item_properties ?? []}
         />
       )}

@@ -1,8 +1,8 @@
 [
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 1",
+    "description": "High-resolution cameras for beam characterization. 1",
     "properties": [
       {
         "name": "Resolution",
@@ -34,8 +34,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 2",
+    "description": "High-resolution cameras for beam characterization. 2",
     "properties": [
       {
         "name": "Resolution",
@@ -72,8 +72,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 3",
+    "description": "High-resolution cameras for beam characterization. 3",
     "properties": [
       {
         "name": "Resolution",
@@ -110,8 +110,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 4",
+    "description": "High-resolution cameras for beam characterization. 4",
     "properties": [
       {
         "name": "Resolution",
@@ -148,8 +148,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 5",
+    "description": "High-resolution cameras for beam characterization. 5",
     "properties": [
       {
         "name": "Resolution",
@@ -186,8 +186,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 6",
+    "description": "High-resolution cameras for beam characterization. 6",
     "properties": [
       {
         "name": "Resolution",
@@ -224,8 +224,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 7",
+    "description": "High-resolution cameras for beam characterization. 7",
     "properties": [
       {
         "name": "Resolution",
@@ -262,8 +262,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 8",
+    "description": "High-resolution cameras for beam characterization. 8",
     "properties": [
       {
         "name": "Resolution",
@@ -300,8 +300,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 9",
+    "description": "High-resolution cameras for beam characterization. 9",
     "properties": [
       {
         "name": "Resolution",
@@ -338,8 +338,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 10",
+    "description": "High-resolution cameras for beam characterization. 10",
     "properties": [
       {
         "name": "Resolution",
@@ -376,8 +376,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 11",
+    "description": "High-resolution cameras for beam characterization. 11",
     "properties": [
       {
         "name": "Resolution",
@@ -412,11 +412,10 @@
     ],
     "id": "30"
   },
-
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 12",
+    "description": "High-resolution cameras for beam characterization. 12",
     "properties": [
       {
         "name": "Resolution",
@@ -453,8 +452,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 13",
+    "description": "High-resolution cameras for beam characterization. 13",
     "properties": [
       {
         "name": "Resolution",
@@ -491,8 +490,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 14",
+    "description": "High-resolution cameras for beam characterization. 14",
     "properties": [
       {
         "name": "Resolution",
@@ -529,8 +528,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 15",
+    "description": "High-resolution cameras for beam characterization. 15",
     "properties": [
       {
         "name": "Resolution",
@@ -567,8 +566,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 16",
+    "description": "High-resolution cameras for beam characterization. 16",
     "properties": [
       {
         "name": "Resolution",
@@ -605,8 +604,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 17",
+    "description": "High-resolution cameras for beam characterization. 17",
     "properties": [
       {
         "name": "Resolution",
@@ -643,8 +642,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 18",
+    "description": "High-resolution cameras for beam characterization. 18",
     "properties": [
       {
         "name": "Resolution",
@@ -681,8 +680,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 19",
+    "description": "High-resolution cameras for beam characterization. 19",
     "properties": [
       {
         "name": "Resolution",
@@ -719,8 +718,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 20",
+    "description": "High-resolution cameras for beam characterization. 20",
     "properties": [
       {
         "name": "Resolution",
@@ -757,8 +756,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 21",
+    "description": "High-resolution cameras for beam characterization. 21",
     "properties": [
       {
         "name": "Resolution",
@@ -795,8 +794,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 22",
+    "description": "High-resolution cameras for beam characterization. 22",
     "properties": [
       {
         "name": "Resolution",
@@ -833,8 +832,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 23",
+    "description": "High-resolution cameras for beam characterization. 23",
     "properties": [
       {
         "name": "Resolution",
@@ -871,8 +870,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 24",
+    "description": "High-resolution cameras for beam characterization. 24",
     "properties": [
       {
         "name": "Resolution",
@@ -909,8 +908,8 @@
   },
   {
     "catalogue_category_id": "4",
-    "name": "Cameras",
-    "description": "High-resolution cameras for beam characterization.",
+    "name": "Cameras 25",
+    "description": "High-resolution cameras for beam characterization. 25",
     "properties": [
       {
         "name": "Resolution",
@@ -947,8 +946,8 @@
   },
   {
     "catalogue_category_id": "5",
-    "name": "Energy Meters",
-    "description": "Precision energy meters for accurate measurements.",
+    "name": "Energy Meters 26",
+    "description": "Precision energy meters for accurate measurements. 26",
     "properties": [
       {
         "name": "Measurement Range",
@@ -965,8 +964,8 @@
   },
   {
     "catalogue_category_id": "5",
-    "name": "Energy Meters",
-    "description": "Precision energy meters for accurate measurements.",
+    "name": "Energy Meters 27",
+    "description": "Precision energy meters for accurate measurements. 27",
     "properties": [
       {
         "name": "Measurement Range",
@@ -983,8 +982,8 @@
   },
   {
     "catalogue_category_id": "5",
-    "name": "Energy Meters",
-    "description": "Precision energy meters for accurate measurements.",
+    "name": "Energy Meters 28",
+    "description": "Precision energy meters for accurate measurements. 28",
     "properties": [
       {
         "name": "Measurement Range",
@@ -1001,8 +1000,8 @@
   },
   {
     "catalogue_category_id": "5",
-    "name": "Energy Meters",
-    "description": "Precision energy meters for accurate measurements.",
+    "name": "Energy Meters 29",
+    "description": "Precision energy meters for accurate measurements. 29",
     "properties": [
       {
         "name": "Measurement Range",
@@ -1019,8 +1018,8 @@
   },
   {
     "catalogue_category_id": "6",
-    "name": "Wavefront Sensors",
-    "description": "Wavefront sensors for precise optical measurements.",
+    "name": "Wavefront Sensors 30",
+    "description": "Wavefront sensors for precise optical measurements. 30",
     "properties": [
       {
         "name": "Wavefront Measurement Range",
@@ -1037,8 +1036,8 @@
   },
   {
     "catalogue_category_id": "6",
-    "name": "Wavefront Sensors",
-    "description": "Wavefront sensors for precise optical measurements.",
+    "name": "Wavefront Sensors 31",
+    "description": "Wavefront sensors for precise optical measurements. 31",
     "properties": [
       {
         "name": "Wavefront Measurement Range",
@@ -1055,8 +1054,8 @@
   },
   {
     "catalogue_category_id": "9",
-    "name": "Motorized Actuators",
-    "description": "Motorized actuators for controlled motion.",
+    "name": "Motorized Actuators 32",
+    "description": "Motorized actuators for controlled motion. 32",
     "properties": [
       {
         "name": "Travel Range",
@@ -1073,8 +1072,8 @@
   },
   {
     "catalogue_category_id": "9",
-    "name": "Motorized Actuators",
-    "description": "Motorized actuators for controlled motion.",
+    "name": "Motorized Actuators 33",
+    "description": "Motorized actuators for controlled motion. 33",
     "properties": [
       {
         "name": "Travel Range",
@@ -1091,8 +1090,8 @@
   },
   {
     "catalogue_category_id": "9",
-    "name": "Motorized Actuators",
-    "description": "Motorized actuators for controlled motion.",
+    "name": "Motorized Actuators 34",
+    "description": "Motorized actuators for controlled motion. 34",
     "properties": [
       {
         "name": "Travel Range",
@@ -1109,8 +1108,8 @@
   },
   {
     "catalogue_category_id": "9",
-    "name": "Motorized Actuators",
-    "description": "Motorized actuators for controlled motion.",
+    "name": "Motorized Actuators 35",
+    "description": "Motorized actuators for controlled motion. 35",
     "properties": [
       {
         "name": "Travel Range",
@@ -1127,8 +1126,8 @@
   },
   {
     "catalogue_category_id": "11",
-    "name": "Cryo Pumps",
-    "description": "Cryo pumps for maintaining low temperatures.",
+    "name": "Cryo Pumps 36",
+    "description": "Cryo pumps for maintaining low temperatures. 36",
     "properties": [
       {
         "name": "Cooldown Time",
@@ -1145,8 +1144,8 @@
   },
   {
     "catalogue_category_id": "11",
-    "name": "Cryo Pumps",
-    "description": "Cryo pumps for maintaining low temperatures.",
+    "name": "Cryo Pumps 37",
+    "description": "Cryo pumps for maintaining low temperatures. 37",
     "properties": [
       {
         "name": "Cooldown Time",
@@ -1161,11 +1160,10 @@
     ],
     "id": "16"
   },
-
   {
     "catalogue_category_id": "12",
-    "name": "Dry Vacuum Pumps",
-    "description": "Dry vacuum pumps for creating vacuum environments.",
+    "name": "Dry Vacuum Pumps 38",
+    "description": "Dry vacuum pumps for creating vacuum environments. 38",
     "properties": [
       {
         "name": "Pumping Speed",
@@ -1182,8 +1180,8 @@
   },
   {
     "catalogue_category_id": "12",
-    "name": "Dry Vacuum Pumps",
-    "description": "Dry vacuum pumps for creating vacuum environments.",
+    "name": "Dry Vacuum Pumps 39",
+    "description": "Dry vacuum pumps for creating vacuum environments. 39",
     "properties": [
       {
         "name": "Pumping Speed",
@@ -1200,8 +1198,8 @@
   },
   {
     "catalogue_category_id": "12",
-    "name": "Dry Vacuum Pumps",
-    "description": "Dry vacuum pumps for creating vacuum environments.",
+    "name": "Dry Vacuum Pumps 40",
+    "description": "Dry vacuum pumps for creating vacuum environments. 40",
     "properties": [
       {
         "name": "Pumping Speed",
@@ -1218,8 +1216,8 @@
   },
   {
     "catalogue_category_id": "12",
-    "name": "Dry Vacuum Pumps",
-    "description": "Dry vacuum pumps for creating vacuum environments.",
+    "name": "Dry Vacuum Pumps 41",
+    "description": "Dry vacuum pumps for creating vacuum environments. 41",
     "properties": [
       {
         "name": "Pumping Speed",
@@ -1234,11 +1232,10 @@
     ],
     "id": "17"
   },
-
   {
     "catalogue_category_id": "13",
-    "name": "Turbomolecular Pumps",
-    "description": "Turbomolecular pumps for high-speed vacuum applications.",
+    "name": "Turbomolecular Pumps 42",
+    "description": "Turbomolecular pumps for high-speed vacuum applications. 42",
     "properties": [
       {
         "name": "Pumping Speed",
@@ -1255,8 +1252,8 @@
   },
   {
     "catalogue_category_id": "13",
-    "name": "Turbomolecular Pumps",
-    "description": "Turbomolecular pumps for high-speed vacuum applications.",
+    "name": "Turbomolecular Pumps 43",
+    "description": "Turbomolecular pumps for high-speed vacuum applications. 43",
     "properties": [
       {
         "name": "Pumping Speed",
@@ -1273,8 +1270,8 @@
   },
   {
     "catalogue_category_id": "14",
-    "name": "Turbo Pumps",
-    "description": "Turbo pumps for efficient vacuum pumping.",
+    "name": "Turbo Pumps 44",
+    "description": "Turbo pumps for efficient vacuum pumping. 44",
     "properties": [
       {
         "name": "Pumping Speed",
@@ -1291,8 +1288,8 @@
   },
   {
     "catalogue_category_id": "14",
-    "name": "Turbo Pumps",
-    "description": "Turbo pumps for efficient vacuum pumping.",
+    "name": "Turbo Pumps 45",
+    "description": "Turbo pumps for efficient vacuum pumping. 45",
     "properties": [
       {
         "name": "Pumping Speed",
