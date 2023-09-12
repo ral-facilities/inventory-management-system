@@ -78,6 +78,7 @@ export const useCatalogueItems = (
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
+      enabled: catalogueCategoryId !== null,
     }
   );
 };

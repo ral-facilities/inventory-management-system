@@ -102,6 +102,8 @@ export const handlers = [
       );
 
       return res(ctx.status(200), ctx.json(CatalogueItemData));
+    } else {
+      return res(ctx.status(422), ctx.json(''));
     }
   }),
 ];

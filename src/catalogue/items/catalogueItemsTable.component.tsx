@@ -23,7 +23,7 @@ export interface CatalogueItemsTableProps {
   catalogueItemProperties: CatalogueCategoryFormData[];
 }
 
-const CatalogueItemsTable: React.FC<CatalogueItemsTableProps> = (props) => {
+const CatalogueItemsTable = React.memo((props: CatalogueItemsTableProps) => {
   const { tableHeight, data, catalogueItemProperties } = props;
 
   const theme = useTheme();
@@ -42,6 +42,14 @@ const CatalogueItemsTable: React.FC<CatalogueItemsTableProps> = (props) => {
               zIndex: 2, // Add z-index to keep headers above action buttons
             }}
           >
+            <TableCell
+              sx={{
+                borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
+                borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
+              }}
+            >
+              <Typography sx={{ fontWeight: 'bold' }}>Actions</Typography>
+            </TableCell>
             <TableCell
               sx={{
                 borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
@@ -76,14 +84,6 @@ const CatalogueItemsTable: React.FC<CatalogueItemsTableProps> = (props) => {
                   </Typography>
                 </TableCell>
               ))}
-            <TableCell
-              sx={{
-                borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
-                borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
-              }}
-            >
-              <Typography sx={{ fontWeight: 'bold' }}>Actions</Typography>
-            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -101,6 +101,24 @@ const CatalogueItemsTable: React.FC<CatalogueItemsTableProps> = (props) => {
                 key={item.id}
                 aria-label={`${item.name} row`}
               >
+                <TableCell
+                  sx={{ borderRight: '1px solid #e0e0e0', width: '100px' }}
+                >
+                  <Box sx={{ display: 'flex' }}>
+                    <IconButton
+                      size="small"
+                      aria-label={`Edit ${item.name} catalogue item`}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      aria-label={`Delete ${item.name} catalogue item`}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Box>
+                </TableCell>
                 <TableCell
                   sx={{
                     px: '8px',
@@ -157,30 +175,12 @@ const CatalogueItemsTable: React.FC<CatalogueItemsTableProps> = (props) => {
                         : ''}
                     </TableCell>
                   ))}
-                <TableCell
-                  sx={{ borderRight: '1px solid #e0e0e0', width: '100px' }}
-                >
-                  <Box sx={{ display: 'flex' }}>
-                    <IconButton
-                      size="small"
-                      aria-label={`Edit ${item.name} catalogue item`}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      size="small"
-                      aria-label={`Delete ${item.name} catalogue item`}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Box>
-                </TableCell>
               </TableRow>
             ))}
         </TableBody>
       </Table>
     </TableContainer>
   );
-};
+});
 
 export default CatalogueItemsTable;

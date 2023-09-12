@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import {
   renderComponentWithBrowserRouter,
   getCatalogueItemsPropertiesById,
@@ -9,15 +10,11 @@ import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
 import { convertProperties } from '../catalogue.component';
-import { useAddCatalogueItem } from '../../api/catalogueItem';
-
-jest.mock('../../api/catalogueItem', () => ({
-  useAddCatalogueItem: jest.fn(),
-}));
 
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
   let user;
+  let axiosPostSpy;
   const onClose = jest.fn();
   const onChangeCatalogueItemDetails = jest.fn();
   const onChangeCatalogueItemManufacturer = jest.fn();
@@ -48,10 +45,7 @@ describe('Catalogue Items Dialog', () => {
     };
 
     user = userEvent.setup();
-
-    useAddCatalogueItem.mockReturnValue({
-      mutateAsync: jest.fn().mockResolvedValue({}),
-    });
+    axiosPostSpy = jest.spyOn(axios, 'post');
   });
   afterEach(() => {
     jest.clearAllMocks();
@@ -109,8 +103,7 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(saveButton);
 
-    expect(useAddCatalogueItem().mutateAsync).toHaveBeenCalledTimes(1);
-    expect(useAddCatalogueItem().mutateAsync).toHaveBeenCalledWith({
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
       catalogue_category_id: '1',
       description: '',
       name: 'test',
@@ -165,8 +158,7 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(saveButton);
 
-    expect(useAddCatalogueItem().mutateAsync).toHaveBeenCalledTimes(1);
-    expect(useAddCatalogueItem().mutateAsync).toHaveBeenCalledWith({
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
       catalogue_category_id: '1',
       description: '',
       name: 'test',
@@ -178,7 +170,7 @@ describe('Catalogue Items Dialog', () => {
     });
   });
 
-  it('display error message when mandtory field is not filled in', async () => {
+  it('display error message when mandatory field is not filled in', async () => {
     props = {
       ...props,
       parentId: '1',
@@ -285,7 +277,7 @@ describe('Catalogue Items Dialog', () => {
     );
   });
 
-  it('displays dupilcate name error message', async () => {
+  it('displays duplicate name error message', async () => {
     props = {
       ...props,
       parentId: '1',
@@ -318,9 +310,6 @@ describe('Catalogue Items Dialog', () => {
         },
       ],
     };
-    useAddCatalogueItem.mockReturnValue({
-      mutateAsync: jest.fn().mockRejectedValue({ response: { status: 409 } }),
-    });
 
     createView();
 
