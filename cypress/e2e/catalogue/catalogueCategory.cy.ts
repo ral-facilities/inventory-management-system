@@ -21,7 +21,7 @@ describe('Catalogue Category', () => {
     cy.visit('/inventory-management-system/catalogue/motion/actuators');
     cy.findByRole('link', { name: 'motion' }).should('exist');
     cy.findByText('actuators').should('exist');
-    cy.findByTestId('home-button-catalogue').click();
+    cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
     cy.findByRole('link', { name: 'motion' }).should('not.exist');
     cy.findByText('actuators').should('not.exist');
   });
@@ -46,7 +46,7 @@ describe('Catalogue Category', () => {
   });
 
   it('adds a catalogue category where isLeaf is false', () => {
-    cy.findByTestId('AddIcon').click();
+    cy.findByRole('button', { name: 'add catalogue category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.startSnoopingBrowserMockedRequest();
@@ -66,7 +66,9 @@ describe('Catalogue Category', () => {
   });
 
   it('delete a catalogue category', () => {
-    cy.findAllByTestId('delete-catalogue-category-button').first().click();
+    cy.findByRole('button', {
+      name: 'delete Beam Characterization catalogue category button',
+    }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -83,7 +85,7 @@ describe('Catalogue Category', () => {
   });
 
   it('adds a catalogue category where isLeaf is true', () => {
-    cy.findByTestId('AddIcon').click();
+    cy.findByRole('button', { name: 'add catalogue category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.findByLabelText('Catalogue Items').click();
@@ -121,7 +123,9 @@ describe('Catalogue Category', () => {
   });
 
   it('edits a catalogue category', () => {
-    cy.findAllByTestId('edit-catalogue-category-button').first().click();
+    cy.findByRole('button', {
+      name: 'edit Beam Characterization catalogue category button',
+    }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
