@@ -38,7 +38,6 @@ export interface CatalogueCategoryDialogProps {
   isLeaf: boolean;
   formFields: CatalogueCategoryFormData[] | null;
   onChangeFormFields: (formFields: CatalogueCategoryFormData[] | null) => void;
-  refetchData: () => void;
   type: 'add' | 'edit';
   selectedCatalogueCategory?: CatalogueCategory;
 }
@@ -50,7 +49,6 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
     parentId,
     isLeaf,
     onChangeLeaf,
-    refetchData,
     type,
     onChangeCatalogueCategoryName,
     catalogueCategoryName,
@@ -92,13 +90,11 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
     setErrorFields([]);
     setNameFields([]);
     setTypeFields([]);
-    refetchData();
   }, [
     onChangeCatalogueCategoryName,
     onChangeFormFields,
     onChangeLeaf,
     onClose,
-    refetchData,
   ]);
 
   const validateFormFields = React.useCallback(() => {

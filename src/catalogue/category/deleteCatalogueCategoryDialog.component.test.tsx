@@ -2,15 +2,14 @@ import React from 'react';
 import { screen, RenderResult, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DeleteCatalogueCategoryDialog, {
-  DeleteCatalogueCategorDialogProps,
+  DeleteCatalogueCategoryDialogProps,
 } from './deleteCatalogueCategoryDialog.component';
 import { renderComponentWithBrowserRouter } from '../../setupTests';
 
 describe('delete Catalogue Category dialogue', () => {
-  let props: DeleteCatalogueCategorDialogProps;
+  let props: DeleteCatalogueCategoryDialogProps;
   let user;
   const onClose = jest.fn();
-  const refetchData = jest.fn();
 
   const createView = (): RenderResult => {
     return renderComponentWithBrowserRouter(
@@ -30,7 +29,6 @@ describe('delete Catalogue Category dialogue', () => {
     props = {
       open: true,
       onClose: onClose,
-      refetchData: refetchData,
       catalogueCategory: catalogueCategory,
     };
     user = userEvent; // Assigning userEvent to 'user'
@@ -79,6 +77,5 @@ describe('delete Catalogue Category dialogue', () => {
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
     });
-    expect(refetchData).toHaveBeenCalled();
   });
 });

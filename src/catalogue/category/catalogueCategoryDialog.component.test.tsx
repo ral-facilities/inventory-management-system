@@ -10,7 +10,6 @@ describe('Catalogue Category Dialog', () => {
   const onClose = jest.fn();
   const onChangeLeaf = jest.fn();
   const onChangeCatalogueCategoryName = jest.fn();
-  const refetchData = jest.fn();
   const onChangeFormFields = jest.fn();
   let props: CatalogueCategoryDialogProps;
   let user;
@@ -29,7 +28,6 @@ describe('Catalogue Category Dialog', () => {
         catalogueCategoryName: undefined,
         onChangeLeaf: onChangeLeaf,
         isLeaf: false,
-        refetchData: refetchData,
         type: 'add',
         onChangeFormFields: onChangeFormFields,
         formFields: null,
@@ -130,7 +128,7 @@ describe('Catalogue Category Dialog', () => {
         isLeaf: true,
         catalogueCategoryName: 'test',
         formFields: [
-          { name: 'raduis', type: 'number', unit: 'mm', mandatory: true },
+          { name: 'radius', type: 'number', unit: 'mm', mandatory: true },
         ],
       };
       createView();
@@ -150,7 +148,7 @@ describe('Catalogue Category Dialog', () => {
         isLeaf: true,
         formFields: [
           { name: '', type: 'number', unit: 'mm', mandatory: true },
-          { name: 'raduis', type: '', unit: 'mm', mandatory: true },
+          { name: 'radius', type: '', unit: 'mm', mandatory: true },
           { name: '', type: '', unit: 'mm', mandatory: true },
         ],
       };
@@ -183,7 +181,7 @@ describe('Catalogue Category Dialog', () => {
         ...props,
         isLeaf: true,
         formFields: [
-          { name: 'raduis', type: 'number', unit: 'mm', mandatory: true },
+          { name: 'radius', type: 'number', unit: 'mm', mandatory: true },
         ],
       };
       createView();
@@ -216,7 +214,6 @@ describe('Catalogue Category Dialog', () => {
         catalogueCategoryName: undefined,
         onChangeLeaf: onChangeLeaf,
         isLeaf: false,
-        refetchData: refetchData,
         type: 'edit',
         selectedCatalogueCategory: mockData,
         onChangeFormFields: onChangeFormFields,
@@ -268,7 +265,6 @@ describe('Catalogue Category Dialog', () => {
       await user.click(saveButton);
 
       expect(onClose).toHaveBeenCalled();
-      expect(refetchData).toHaveBeenCalled();
     });
 
     it('updates the of a catalogue category', async () => {
@@ -296,7 +292,6 @@ describe('Catalogue Category Dialog', () => {
       await user.click(saveButton);
 
       expect(onClose).toHaveBeenCalled();
-      expect(refetchData).toHaveBeenCalled();
     });
 
     it('displays an error message when the type or name field are not filled', async () => {
@@ -305,7 +300,7 @@ describe('Catalogue Category Dialog', () => {
         isLeaf: true,
         formFields: [
           { name: '', type: 'number', unit: 'mm', mandatory: true },
-          { name: 'raduis', type: '', unit: 'mm', mandatory: true },
+          { name: 'radius', type: '', unit: 'mm', mandatory: true },
           { name: '', type: '', unit: 'mm', mandatory: true },
         ],
       };
