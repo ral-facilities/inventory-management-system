@@ -15,12 +15,14 @@ import {
   Radio,
   Typography,
   DialogTitle,
+  FormHelperText,
 } from '@mui/material';
 import {
   AddCatalogueCategory,
   CatalogueCategory,
   EditCatalogueCategory,
   CatalogueCategoryFormData,
+  ErrorParsing,
 } from '../../app.types';
 import {
   useAddCatalogueCategory,
@@ -63,6 +65,8 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
     string | undefined
   >(undefined);
+
+  const [catchAllError, setCatchAllError] = React.useState(false);
 
   const { mutateAsync: addCatalogueCategory } = useAddCatalogueCategory();
   const { mutateAsync: editCatalogueCategory } = useEditCatalogueCategory();
@@ -124,9 +128,15 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
   }, [nameFields, typeFields]);
 
   const handleAddCatalogueCategory = React.useCallback(() => {
+    // Check if catalogueCategoryName is undefined or an empty string
+    if (!catalogueCategoryName || catalogueCategoryName.trim() === '') {
+      setNameError(true);
+      setNameErrorMessage('Please enter a name.');
+      return; // Stop further execution if the name is invalid
+    }
     let catalogueCategory: AddCatalogueCategory;
     catalogueCategory = {
-      name: catalogueCategoryName === '' ? undefined : catalogueCategoryName,
+      name: catalogueCategoryName,
       is_leaf: isLeaf,
     };
 
@@ -150,15 +160,14 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
       addCatalogueCategory(catalogueCategory)
         .then((response) => handleClose())
         .catch((error: AxiosError) => {
-          if (error.response?.status === 422 && !catalogueCategoryName) {
+          const response = error.response?.data as ErrorParsing;
+          console.log(error);
+          if (response && error.response?.status === 409) {
             setNameError(true);
-            setNameErrorMessage('Please enter a name.');
-          } else if (error.response?.status === 409) {
-            setNameError(true);
-            setNameErrorMessage(
-              'A catalogue category with the same name already exists within the parent catalogue category.'
-            );
+            setNameErrorMessage(response.detail);
+            return;
           }
+          setCatchAllError(true);
         });
     }
   }, [
@@ -174,11 +183,26 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
 
   const handleEditCatalogueCategory = React.useCallback(() => {
     let catalogueCategory: EditCatalogueCategory;
+
+    // Check if catalogueCategoryName is undefined or an empty string
+    if (!catalogueCategoryName || catalogueCategoryName.trim() === '') {
+      setNameError(true);
+      setNameErrorMessage('Please enter a name.');
+      return; // Stop further execution if the name is invalid
+    }
     if (selectedCatalogueCategory) {
       catalogueCategory = {
         id: selectedCatalogueCategory.id,
         name: catalogueCategoryName,
+        is_leaf: isLeaf,
       };
+
+      if (isLeaf) {
+        catalogueCategory = {
+          ...catalogueCategory,
+          catalogue_item_properties: formFields ?? [],
+        };
+      }
 
       const errorIndexes = validateFormFields();
 
@@ -189,15 +213,14 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
         editCatalogueCategory(catalogueCategory)
           .then((response) => handleClose())
           .catch((error: AxiosError) => {
-            if (error.response?.status === 422) {
+            console.log(error.response);
+            const response = error.response?.data as ErrorParsing;
+            if (response && error.response?.status === 409) {
               setNameError(true);
-              setNameErrorMessage('Please enter a name.');
-            } else if (error.response?.status === 409) {
-              setNameError(true);
-              setNameErrorMessage(
-                'A catalogue category with the same name already exists within the parent catalogue category.'
-              );
+              setNameErrorMessage(response.detail);
+              return;
             }
+            setCatchAllError(true);
           });
       }
     }
@@ -205,7 +228,9 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
     catalogueCategoryName,
     clearFormFields,
     editCatalogueCategory,
+    formFields,
     handleClose,
+    isLeaf,
     selectedCatalogueCategory,
     validateFormFields,
   ]);
@@ -231,10 +256,7 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
           }}
           fullWidth
         />
-        <FormControl
-          sx={{ margin: '8px' }}
-          disabled={type === 'edit' ? true : false}
-        >
+        <FormControl sx={{ margin: '8px' }}>
           <FormLabel id="controlled-radio-buttons-group">
             Catalogue Directory Content
           </FormLabel>
@@ -316,6 +338,11 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
             Save
           </Button>
         </Box>
+        {catchAllError && (
+          <FormHelperText sx={{ marginBottom: '16px' }} error>
+            {'Please refresh and try again'}
+          </FormHelperText>
+        )}
       </DialogActions>
     </Dialog>
   );
