@@ -9,10 +9,10 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useDeleteCatalogueCategory } from '../api/catalogueCategory';
-import { ViewCatalogueCategoryResponse } from '../app.types';
+import { ErrorParsing, ViewCatalogueCategoryResponse } from '../app.types';
 import { AxiosError } from 'axios';
 
-export interface DeleteCatalogueCategorDialogProps {
+export interface DeleteCatalogueCategoryDialogProps {
   open: boolean;
   onClose: () => void;
   catalogueCategory: ViewCatalogueCategoryResponse | undefined;
@@ -20,7 +20,7 @@ export interface DeleteCatalogueCategorDialogProps {
 }
 
 const DeleteCatalogueCategoryDialog = (
-  props: DeleteCatalogueCategorDialogProps
+  props: DeleteCatalogueCategoryDialogProps
 ) => {
   const { open, onClose, catalogueCategory, refetchData } = props;
 
@@ -44,12 +44,16 @@ const DeleteCatalogueCategoryDialog = (
           onClose();
         })
         .catch((error: AxiosError) => {
-          if (error.response?.status === 409) {
+          const response = error.response?.data as ErrorParsing;
+          if (response && error.response?.status === 409) {
             setError(true);
             setErrorMessage(
-              'Catalogue category has children elements and cannot be deleted, Please delete the children elements first'
+              `${response.detail}, please delete the children elements first`
             );
+            return;
           }
+          setError(true);
+          setErrorMessage('Please refresh and try again');
         });
     } else {
       setError(true);
