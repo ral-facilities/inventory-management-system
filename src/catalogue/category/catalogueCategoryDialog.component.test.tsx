@@ -72,8 +72,26 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'A catalogue category with the same name already exists within the parent catalogue category.'
+            'A catalogue category with the same name already exists within the parent catalogue category'
           )
+        ).toBeInTheDocument();
+      });
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays warning message when an unknown error occurs', async () => {
+      props = {
+        ...props,
+        catalogueCategoryName: 'Error 500',
+      };
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('Please refresh and try again')
         ).toBeInTheDocument();
       });
       expect(onClose).not.toHaveBeenCalled();
@@ -170,6 +188,7 @@ describe('Catalogue Category Dialog', () => {
       props = {
         ...props,
         isLeaf: true,
+        catalogueCategoryName: 'test',
         formFields: [
           { name: '', type: 'number', unit: 'mm', mandatory: true },
           { name: 'radius', type: '', unit: 'mm', mandatory: true },
@@ -273,8 +292,26 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'A catalogue category with the same name already exists within the parent catalogue category.'
+            'A catalogue category with the same name already exists within the parent catalogue category'
           )
+        ).toBeInTheDocument();
+      });
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays warning message when an unknown error occurs', async () => {
+      props = {
+        ...props,
+        catalogueCategoryName: 'Error 500',
+      };
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('Please refresh and try again')
         ).toBeInTheDocument();
       });
       expect(onClose).not.toHaveBeenCalled();
@@ -292,6 +329,7 @@ describe('Catalogue Category Dialog', () => {
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/1', {
         name: 'test',
+        is_leaf: false,
       });
 
       expect(onClose).toHaveBeenCalled();
@@ -322,6 +360,7 @@ describe('Catalogue Category Dialog', () => {
       await user.click(saveButton);
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/1', {
         name: 'test',
+        is_leaf: false,
       });
 
       expect(onClose).toHaveBeenCalled();
@@ -331,6 +370,7 @@ describe('Catalogue Category Dialog', () => {
       props = {
         ...props,
         isLeaf: true,
+        catalogueCategoryName: 'test',
         formFields: [
           { name: '', type: 'number', unit: 'mm', mandatory: true },
           { name: 'radius', type: '', unit: 'mm', mandatory: true },

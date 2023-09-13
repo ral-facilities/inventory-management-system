@@ -4,15 +4,17 @@ export const MicroFrontendToken = `${MicroFrontendId}:token`;
 export type TabValue = 'Systems' | 'Catalogue' | 'Manufacturer';
 
 export interface AddCatalogueCategory {
-  name?: string;
+  name: string;
   parent_id?: string;
   is_leaf: boolean;
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }
 
 export interface EditCatalogueCategory {
-  name?: string;
+  name: string;
   id: string;
+  catalogue_item_properties?: CatalogueCategoryFormData[];
+  is_leaf: boolean;
 }
 
 export interface CatalogueCategory {
@@ -67,4 +69,7 @@ export interface AddCatalogueItem {
   name: string | undefined;
   description: string;
   properties: CatalogueItemProperty[];
+}
+export interface ErrorParsing {
+  detail: string;
 }

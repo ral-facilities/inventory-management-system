@@ -9,7 +9,8 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useDeleteCatalogueCategory } from '../../api/catalogueCategory';
-import { CatalogueCategory } from '../../app.types';
+import { CatalogueCategory, ErrorParsing } from '../../app.types';
+import { AxiosError } from 'axios';
 
 export interface DeleteCatalogueCategoryDialogProps {
   open: boolean;
@@ -40,9 +41,17 @@ const DeleteCatalogueCategoryDialog = (
         .then((response) => {
           onClose();
         })
-        .catch((error) => {
+        .catch((error: AxiosError) => {
+          const response = error.response?.data as ErrorParsing;
+          if (response && error.response?.status === 409) {
+            setError(true);
+            setErrorMessage(
+              `${response.detail}, please delete the children elements first`
+            );
+            return;
+          }
           setError(true);
-          setErrorMessage(error.message);
+          setErrorMessage('Please refresh and try again');
         });
     } else {
       setError(true);
@@ -61,12 +70,24 @@ const DeleteCatalogueCategoryDialog = (
         ?
       </DialogContent>
       <DialogActions>
-        <Box>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleDeleteCatalogueCategory}>Continue</Button>
-          {error && <FormHelperText error>{errorMessage}</FormHelperText>}
-        </Box>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={handleDeleteCatalogueCategory}>Continue</Button>
       </DialogActions>
+      {error && (
+        <Box
+          sx={{
+            mx: '24px',
+            marginBottom: '24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+            {errorMessage}
+          </FormHelperText>
+        </Box>
+      )}
     </Dialog>
   );
 };

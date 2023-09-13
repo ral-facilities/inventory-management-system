@@ -1,16 +1,28 @@
 import { rest } from 'msw';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
 import CatalogueItemJSON from './CatalogueItems.json';
-import { AddCatalogueCategory, CatalogueItem } from '../app.types';
+import {
+  AddCatalogueCategory,
+  CatalogueItem,
+  EditCatalogueCategory,
+} from '../app.types';
 
 export const handlers = [
   rest.post('/v1/catalogue-categories', async (req, res, ctx) => {
     const body = (await req.json()) as AddCatalogueCategory;
 
-    if (!body.name) {
-      return res(ctx.status(422), ctx.json(''));
-    } else if (body.name === 'test_dup') {
-      return res(ctx.status(409), ctx.json(''));
+    if (body.name === 'test_dup') {
+      return res(
+        ctx.status(409),
+        ctx.json({
+          detail:
+            'A catalogue category with the same name already exists within the parent catalogue category',
+        })
+      );
+    }
+
+    if (body.name === 'Error 500') {
+      return res(ctx.status(500), ctx.json(''));
     }
     return res(
       ctx.status(200),
@@ -26,13 +38,19 @@ export const handlers = [
     );
   }),
   rest.patch('/v1/catalogue-categories/:id', async (req, res, ctx) => {
-    const body = await req.text();
-    if (body === '{}') {
-      return res(ctx.status(422), ctx.json(''));
-    } else if (body === '{"name":"test_dup"}') {
-      return res(ctx.status(409), ctx.json(''));
-    } else if (body === '{"name":"test_dup"}') {
-      return res(ctx.status(409), ctx.json(''));
+    const body = (await req.json()) as EditCatalogueCategory;
+    if (body.name === 'test_dup') {
+      return res(
+        ctx.status(409),
+        ctx.json({
+          detail:
+            'A catalogue category with the same name already exists within the parent catalogue category',
+        })
+      );
+    }
+
+    if (body.name === 'Error 500') {
+      return res(ctx.status(500), ctx.json(''));
     }
     return res(
       ctx.status(200),
@@ -66,11 +84,21 @@ export const handlers = [
 
   rest.delete('/v1/catalogue-categories/:id', (req, res, ctx) => {
     const { id } = req.params;
-    const validCatelogueCategory = CatalogueCategoryJSON.find(
+    const validCatalogueCategory = CatalogueCategoryJSON.find(
       (value) => value.id === id
     );
-    if (validCatelogueCategory) {
-      return res(ctx.status(200), ctx.json(''));
+    if (validCatalogueCategory) {
+      if (id === '2') {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail:
+              'Catalogue category has children elements and cannot be deleted',
+          })
+        );
+      } else {
+        return res(ctx.status(200), ctx.json(''));
+      }
     } else {
       return res(ctx.status(400), ctx.json(''));
     }

@@ -5,27 +5,30 @@ import DeleteCatalogueCategoryDialog, {
   DeleteCatalogueCategoryDialogProps,
 } from './deleteCatalogueCategoryDialog.component';
 import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { CatalogueCategory } from '../../app.types';
 
 describe('delete Catalogue Category dialogue', () => {
   let props: DeleteCatalogueCategoryDialogProps;
   let user;
   const onClose = jest.fn();
+  let catalogueCategory: CatalogueCategory;
 
   const createView = (): RenderResult => {
     return renderComponentWithBrowserRouter(
       <DeleteCatalogueCategoryDialog {...props} />
     );
   };
-  const catalogueCategory = {
-    name: 'test',
-    parent_id: null,
-    id: '1',
-    code: 'test',
-    path: '/test',
-    parent_path: '/',
-    is_leaf: false,
-  };
+
   beforeEach(() => {
+    catalogueCategory = {
+      name: 'test',
+      parent_id: null,
+      id: '1',
+      code: 'test',
+      path: '/test',
+      parent_path: '/',
+      is_leaf: false,
+    };
     props = {
       open: true,
       onClose: onClose,
@@ -76,6 +79,34 @@ describe('delete Catalogue Category dialogue', () => {
 
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
+    });
+  });
+
+  it('displays error message when user tries to delete a catalogue category that has children elements', async () => {
+    catalogueCategory.id = '2';
+    createView();
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    user.click(continueButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'Catalogue category has children elements and cannot be deleted, please delete the children elements first'
+        )
+      ).toBeInTheDocument();
+    });
+  });
+
+  it('displays error message if an unknown error occurs', async () => {
+    catalogueCategory.id = '1190';
+    createView();
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    user.click(continueButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Please refresh and try again')
+      ).toBeInTheDocument();
     });
   });
 });
