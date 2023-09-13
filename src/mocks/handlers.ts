@@ -65,11 +65,21 @@ export const handlers = [
 
   rest.delete('/v1/catalogue-categories/:id', (req, res, ctx) => {
     const { id } = req.params;
-    const validCatelogueCategory = CatalogueCategoryJSON.find(
+    const validCatalogueCategory = CatalogueCategoryJSON.find(
       (value) => value.id === id
     );
-    if (validCatelogueCategory) {
-      return res(ctx.status(200), ctx.json(''));
+    if (validCatalogueCategory) {
+      if (id === '2') {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail:
+              'Catalogue category has children elements and cannot be deleted',
+          })
+        );
+      } else {
+        return res(ctx.status(200), ctx.json(''));
+      }
     } else {
       return res(ctx.status(400), ctx.json(''));
     }

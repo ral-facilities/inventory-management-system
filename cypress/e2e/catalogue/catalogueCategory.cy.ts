@@ -65,6 +65,20 @@ describe('Catalogue Category', () => {
     });
   });
 
+  it('displays error message when user tries to delete a catalogue category that has children elements', () => {
+    cy.findAllByTestId('delete-catalogue-category-button').eq(1).click();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains(
+          'Catalogue category has children elements and cannot be deleted, please delete the children elements first'
+        );
+      });
+  });
+
   it('delete a catalogue category', () => {
     cy.findAllByTestId('delete-catalogue-category-button').first().click();
 
