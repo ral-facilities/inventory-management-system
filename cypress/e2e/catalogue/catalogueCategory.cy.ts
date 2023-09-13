@@ -40,7 +40,7 @@ describe('Catalogue Category', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'A catalogue category with the same name already exists within the parent catalogue category.'
+          'A catalogue category with the same name already exists within the parent catalogue category'
         );
       });
   });
@@ -63,6 +63,20 @@ describe('Catalogue Category', () => {
         '{"name":"test","is_leaf":false}'
       );
     });
+  });
+
+  it('displays error message when user tries to delete a catalogue category that has children elements', () => {
+    cy.findAllByTestId('delete-catalogue-category-button').eq(1).click();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains(
+          'Catalogue category has children elements and cannot be deleted, please delete the children elements first'
+        );
+      });
   });
 
   it('delete a catalogue category', () => {
@@ -134,7 +148,39 @@ describe('Catalogue Category', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"Beam Characterization"}'
+        '{"name":"Beam Characterization","is_leaf":false}'
+      );
+      expect(request.url.toString()).to.contain('1');
+    });
+  });
+  it('edits a catalogue category with catalogue properties', () => {
+    cy.findAllByTestId('edit-catalogue-category-button').first().click();
+
+    cy.findByLabelText('Catalogue Items').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('dialog').findByTestId('AddIcon').click();
+    cy.findByLabelText('Property Name *').type('Updated Field');
+    cy.findByLabelText('Select Type *').click();
+    cy.findByText('Boolean').click();
+
+    cy.findByRole('dialog').findByTestId('AddIcon').click();
+
+    cy.findAllByLabelText('Property Name *').last().type('Updated Field');
+    cy.findAllByLabelText('Select Type *').last().click();
+    cy.findByText('Number').click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-categories/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"name":"Beam Characterization","is_leaf":true,"catalogue_item_properties":[{"name":"Updated Field","type":"boolean","mandatory":false},{"name":"Updated Field","type":"number","unit":"","mandatory":false}]}'
       );
       expect(request.url.toString()).to.contain('1');
     });

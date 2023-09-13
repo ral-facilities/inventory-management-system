@@ -69,8 +69,26 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'A catalogue category with the same name already exists within the parent catalogue category.'
+            'A catalogue category with the same name already exists within the parent catalogue category'
           )
+        ).toBeInTheDocument();
+      });
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays warning message when an unknown error occurs', async () => {
+      props = {
+        ...props,
+        catalogueCategoryName: 'Error 500',
+      };
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('Please refresh and try again')
         ).toBeInTheDocument();
       });
       expect(onClose).not.toHaveBeenCalled();
@@ -130,7 +148,7 @@ describe('Catalogue Category Dialog', () => {
         isLeaf: true,
         catalogueCategoryName: 'test',
         formFields: [
-          { name: 'raduis', type: 'number', unit: 'mm', mandatory: true },
+          { name: 'radius', type: 'number', unit: 'mm', mandatory: true },
         ],
       };
       createView();
@@ -148,9 +166,10 @@ describe('Catalogue Category Dialog', () => {
       props = {
         ...props,
         isLeaf: true,
+        catalogueCategoryName: 'test',
         formFields: [
           { name: '', type: 'number', unit: 'mm', mandatory: true },
-          { name: 'raduis', type: '', unit: 'mm', mandatory: true },
+          { name: 'radius', type: '', unit: 'mm', mandatory: true },
           { name: '', type: '', unit: 'mm', mandatory: true },
         ],
       };
@@ -183,7 +202,7 @@ describe('Catalogue Category Dialog', () => {
         ...props,
         isLeaf: true,
         formFields: [
-          { name: 'raduis', type: 'number', unit: 'mm', mandatory: true },
+          { name: 'radius', type: 'number', unit: 'mm', mandatory: true },
         ],
       };
       createView();
@@ -250,8 +269,26 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'A catalogue category with the same name already exists within the parent catalogue category.'
+            'A catalogue category with the same name already exists within the parent catalogue category'
           )
+        ).toBeInTheDocument();
+      });
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays warning message when an unknown error occurs', async () => {
+      props = {
+        ...props,
+        catalogueCategoryName: 'Error 500',
+      };
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('Please refresh and try again')
         ).toBeInTheDocument();
       });
       expect(onClose).not.toHaveBeenCalled();
@@ -303,9 +340,10 @@ describe('Catalogue Category Dialog', () => {
       props = {
         ...props,
         isLeaf: true,
+        catalogueCategoryName: 'test',
         formFields: [
           { name: '', type: 'number', unit: 'mm', mandatory: true },
-          { name: 'raduis', type: '', unit: 'mm', mandatory: true },
+          { name: 'radius', type: '', unit: 'mm', mandatory: true },
           { name: '', type: '', unit: 'mm', mandatory: true },
         ],
       };
