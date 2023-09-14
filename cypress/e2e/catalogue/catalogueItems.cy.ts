@@ -66,11 +66,11 @@ describe('Catalogue Category', () => {
       );
     });
     cy.findByText(
-      'A catalogue item with the same name already exists within the parent catalogue category'
+      'A catalogue item with the same name already exists within the catalogue category'
     ).should('exist');
     cy.findByLabelText('Name *').clear();
     cy.findByText(
-      'A catalogue item with the same name already exists within the parent catalogue category'
+      'A catalogue item with the same name already exists within the catalogue category'
     ).should('not.exist');
   });
 
