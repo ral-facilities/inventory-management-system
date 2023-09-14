@@ -320,10 +320,56 @@ describe('Catalogue Items Dialog', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'A catalogue item with the same name already exists within the parent catalogue category'
+          'A catalogue item with the same name already exists within the catalogue category'
         )
       ).toBeInTheDocument();
     });
+  });
+
+  it('displays warning message when an unknown error occurs', async () => {
+    props = {
+      ...props,
+      parentId: '1',
+      catalogueItemDetails: { name: 'Error 500', description: '' },
+      catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+      catalogueItemProperties: [
+        {
+          name: 'Resolution',
+          value: 12,
+        },
+        {
+          name: 'Frame Rate',
+          value: 60,
+        },
+        {
+          name: 'Sensor Type',
+          value: 'IO',
+        },
+        {
+          name: 'Sensor brand',
+          value: 'pixel',
+        },
+        {
+          name: 'Broken',
+          value: true,
+        },
+        {
+          name: 'Old than 5 years',
+          value: false,
+        },
+      ],
+    };
+    createView();
+
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+    await user.click(saveButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Please refresh and try again')
+      ).toBeInTheDocument();
+    });
+    expect(onClose).not.toHaveBeenCalled();
   });
 
   it('initialize  catalogueItemProperties list object if not defined', async () => {

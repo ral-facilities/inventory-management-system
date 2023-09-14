@@ -23,6 +23,7 @@ import {
   CatalogueItemDetails,
   CatalogueItemManufacturer,
   CatalogueItemProperty,
+  ErrorParsing,
 } from '../../app.types';
 import { useAddCatalogueItem } from '../../api/catalogueItem';
 import { AxiosError } from 'axios';
@@ -67,6 +68,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
     string | undefined
   >();
+
+  const [catchAllError, setCatchAllError] = React.useState(false);
 
   const [propertyErrors, setPropertyErrors] = React.useState(
     new Array(catalogueItemPropertiesForm.length).fill(false)
@@ -232,13 +235,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     addCatalogueItem(catalogueItem)
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
+        const response = error.response?.data as ErrorParsing;
         console.log(error);
-        if (error.response?.status === 409) {
+        if (response && error.response?.status === 409) {
           setNameError(true);
-          setNameErrorMessage(
-            'A catalogue item with the same name already exists within the parent catalogue category'
-          );
+          setNameErrorMessage(response.detail);
+          return;
         }
+        setCatchAllError(true);
       });
   }, [
     addCatalogueItem,
@@ -483,6 +487,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             Save
           </Button>
         </Box>
+        {catchAllError && (
+          <FormHelperText sx={{ marginBottom: '16px' }} error>
+            {'Please refresh and try again'}
+          </FormHelperText>
+        )}
       </DialogActions>
     </Dialog>
   );
