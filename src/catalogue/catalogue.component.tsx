@@ -1,17 +1,10 @@
 import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import {
-  Box,
-  Button,
-  Grid,
-  IconButton,
-  Typography,
-  cardActionAreaClasses,
-} from '@mui/material';
+import { Box, Button, Grid, IconButton, Typography } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
-import { NavigateNext, UndoRounded } from '@mui/icons-material';
+import { NavigateNext } from '@mui/icons-material';
 import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
 import CatalogueCard from './category/catalogueCard.component';
 import { useCatalogueCategory } from '../api/catalogueCategory';
@@ -26,7 +19,6 @@ import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDia
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
 import { useCatalogueItems } from '../api/catalogueItem';
-import { data } from 'cypress/types/jquery';
 
 export function convertProperties(
   catalogueItemProperties?: CatalogueCategoryFormData[]
