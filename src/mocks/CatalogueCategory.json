@@ -1,14 +1,5 @@
 [
   {
-    "id": "",
-    "name": "",
-    "parent_id": null,
-    "code": "",
-    "is_leaf": false,
-    "parent_path": "",
-    "path": "/"
-  },
-  {
     "id": "1",
     "name": "Beam Characterization",
     "parent_id": null,
@@ -16,6 +7,34 @@
     "is_leaf": false,
     "parent_path": "/",
     "path": "/beam-characterization"
+  },
+  {
+    "id": "50",
+    "name": "mock",
+    "parent_id": null,
+    "code": "mock",
+    "is_leaf": false,
+    "parent_path": "/",
+    "path": "/mock"
+  },
+  {
+    "id": "49",
+    "name": "empty",
+    "parent_id": null,
+    "code": "empty",
+    "is_leaf": false,
+    "parent_path": "/",
+    "path": "/empty"
+  },
+  {
+    "id": "51",
+    "name": "mock-empty",
+    "parent_id": "50",
+    "code": "mock-empty",
+    "is_leaf": true,
+    "parent_path": "/mock",
+    "path": "/mock/mock-empty",
+    "catalogue_item_properties": []
   },
   {
     "id": "2",

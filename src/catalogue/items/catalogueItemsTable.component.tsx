@@ -21,10 +21,11 @@ export interface CatalogueItemsTableProps {
   tableHeight: string;
   data: CatalogueItem[] | undefined;
   catalogueItemProperties: CatalogueCategoryFormData[];
+  isLoadingData: boolean;
 }
 
 const CatalogueItemsTable = React.memo((props: CatalogueItemsTableProps) => {
-  const { tableHeight, data, catalogueItemProperties } = props;
+  const { tableHeight, data, catalogueItemProperties, isLoadingData } = props;
 
   const theme = useTheme();
 
@@ -179,6 +180,21 @@ const CatalogueItemsTable = React.memo((props: CatalogueItemsTableProps) => {
             ))}
         </TableBody>
       </Table>
+      {!data?.length && !isLoadingData && (
+        <Box
+          sx={{
+            width: '100%',
+            justifyContent: 'center',
+            marginTop: '8px',
+          }}
+        >
+          <Typography sx={{ fontWeight: 'bold' }}>No results found</Typography>
+          <Typography>
+            There are no items. Try adding an item by using the Add Catalogue
+            Item button in the top right of your screen
+          </Typography>
+        </Box>
+      )}
     </TableContainer>
   );
 });

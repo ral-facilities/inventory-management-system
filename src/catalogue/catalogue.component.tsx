@@ -1,10 +1,17 @@
 import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { Button, Grid, IconButton } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Typography,
+  cardActionAreaClasses,
+} from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
-import { NavigateNext } from '@mui/icons-material';
+import { NavigateNext, UndoRounded } from '@mui/icons-material';
 import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
 import CatalogueCard from './category/catalogueCard.component';
 import { useCatalogueCategory } from '../api/catalogueCategory';
@@ -19,6 +26,7 @@ import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDia
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
 import { useCatalogueItems } from '../api/catalogueItem';
+import { data } from 'cypress/types/jquery';
 
 export function convertProperties(
   catalogueItemProperties?: CatalogueCategoryFormData[]
@@ -88,7 +96,10 @@ function Catalogue() {
     ''
   );
 
-  const { data: catalogueCategoryData } = useCatalogueCategory(
+  const {
+    data: catalogueCategoryData,
+    isLoading: catalogueCategoryDataLoading,
+  } = useCatalogueCategory(
     undefined,
     catalogueLocation === '' ? '/' : catalogueLocation
   );
@@ -102,7 +113,8 @@ function Catalogue() {
   const [isLeaf, setIsLeaf] = React.useState<boolean>(false);
   const parentInfo = catalogueCategoryDetail?.[0];
 
-  const { data: catalogueItemsData } = useCatalogueItems(parentId);
+  const { data: catalogueItemsData, isLoading: catalogueItemsDataLoading } =
+    useCatalogueItems(parentId);
 
   // SG header + SG footer + tabs #add breadcrumbs
   const tableHeight = `calc(100vh - (64px + 36px + 50px)`;
@@ -149,6 +161,24 @@ function Catalogue() {
       convertProperties(parentInfo?.catalogue_item_properties)
     );
   }, [catalogueLocation, parentInfo]);
+
+  const noCatalogueData: boolean =
+    (!catalogueCategoryData || !catalogueCategoryData.length) &&
+    !catalogueCategoryDataLoading;
+
+  const noItemData: boolean =
+    (!catalogueItemsData || !catalogueItemsData.length) &&
+    (!catalogueItemsDataLoading ||
+      (parentInfo?.is_leaf ?? false) ||
+      !parentInfo);
+
+  const noCat =
+    'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen';
+  const noResultMesg = catalogueLocation
+    ? parentId === null
+      ? 'The category you searched for does not exist. Try searching for a different category or use the add button to add the category.'
+      : noCat
+    : noCat;
 
   return (
     <Grid container>
@@ -199,6 +229,19 @@ function Catalogue() {
           </Button>
         </Grid>
       </Grid>
+
+      {noCatalogueData && noItemData && !parentInfo?.is_leaf && (
+        <Box
+          sx={{
+            width: '100%',
+            justifyContent: 'center',
+          }}
+        >
+          <Typography sx={{ fontWeight: 'bold' }}>No results found</Typography>
+          <Typography>{noResultMesg}</Typography>
+        </Box>
+      )}
+
       {catalogueCategoryData && !parentInfo?.is_leaf && (
         <Grid container spacing={2}>
           {catalogueCategoryData.map((item, index) => (
@@ -217,8 +260,10 @@ function Catalogue() {
           tableHeight={tableHeight}
           data={catalogueItemsData}
           catalogueItemProperties={parentInfo.catalogue_item_properties ?? []}
+          isLoadingData={catalogueItemsDataLoading}
         />
       )}
+
       <CatalogueCategoryDialog
         open={addCategoryDialogOpen}
         onClose={() => setAddCategoryDialogOpen(false)}

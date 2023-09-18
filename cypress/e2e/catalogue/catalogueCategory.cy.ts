@@ -193,4 +193,41 @@ describe('Catalogue Category', () => {
       expect(request.url.toString()).to.contain('1');
     });
   });
+
+  it('category with no data displays no results found', () => {
+    cy.visit('/inventory-management-system/catalogue/empty');
+    cy.findByText(
+      'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
+    ).should('exist');
+  });
+
+  it('category with no items displays no items found message', () => {
+    cy.visit('/inventory-management-system/catalogue/mock/mock-empty');
+    cy.findByText(
+      'There are no items. Try adding an item by using the Add Catalogue Item button in the top right of your screen'
+    ).should('exist');
+  });
+
+  it('expired url displays search not found message', () => {
+    cy.visit('/inventory-management-system/catalogue/not-exist');
+    cy.findByText(
+      'The category you searched for does not exist. Try searching for a different category or use the add button to add the category.'
+    ).should('exist');
+  });
+
+  it('when root has no data it displays no catagories error message', () => {
+    cy.window().then(async (window) => {
+      // Reference global instances set in "src/mocks/browser.js".
+
+      const { worker, rest } = window.msw;
+      worker.use(
+        rest.get('/v1/catalogue-categories/', (req, res, ctx) => {
+          return res(ctx.status(200), ctx.json([]));
+        })
+      );
+    });
+    cy.findByText(
+      'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
+    ).should('exist');
+  });
 });
