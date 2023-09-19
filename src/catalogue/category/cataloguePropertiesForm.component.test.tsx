@@ -13,6 +13,7 @@ describe('Catalogue Properties Form', () => {
   const onChangeNameFields = jest.fn();
   const onChangeTypeFields = jest.fn();
   const onChangeErrorFields = jest.fn();
+  const resetFormError = jest.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(
       <CataloguePropertiesForm {...props} />
@@ -29,6 +30,7 @@ describe('Catalogue Properties Form', () => {
       onChangeTypeFields: onChangeTypeFields,
       errorFields: [],
       onChangeErrorFields: onChangeErrorFields,
+      resetFormError: resetFormError,
     };
     user = userEvent.setup();
   });
