@@ -56,7 +56,7 @@ describe('catalogue category api functions', () => {
     beforeEach(() => {
       mockDataEdit = {
         name: 'test',
-        id: '1',
+        id: '4',
       };
     });
     it('posts a request to add a user session and returns successful response', async () => {

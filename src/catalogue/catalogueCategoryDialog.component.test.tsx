@@ -326,28 +326,22 @@ describe('Catalogue Category Dialog', () => {
 
     it('displays error message if no form fields have been edited', async () => {
       mockData = {
-        id: '4',
-        name: 'Cameras',
+        id: '15',
+        name: 'Voltage Meters',
         parent_id: '1',
-        code: 'cameras',
+        code: 'voltage-meters',
         is_leaf: true,
         parent_path: '/beam-characterization',
-        path: '/beam-characterization/cameras',
+        path: '/beam-characterization/voltage-meters',
         catalogue_item_properties: [
           {
-            name: 'Resolution',
+            name: 'Measurement Range',
             type: 'number',
-            unit: 'megapixels',
+            unit: 'volts',
             mandatory: true,
           },
           {
-            name: 'Frame Rate',
-            type: 'number',
-            unit: 'fps',
-            mandatory: true,
-          },
-          {
-            name: 'Sensor Type',
+            name: 'Accuracy',
             type: 'string',
             mandatory: true,
           },
@@ -356,7 +350,7 @@ describe('Catalogue Category Dialog', () => {
 
       props = {
         ...props,
-        catalogueCategoryName: 'Cameras',
+        catalogueCategoryName: mockData.name,
         isLeaf: true,
         formFields: mockData.catalogue_item_properties ?? null,
         selectedCatalogueCategory: mockData,
