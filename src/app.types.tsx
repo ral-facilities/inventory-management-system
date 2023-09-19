@@ -11,10 +11,10 @@ export interface AddCatalogueCategory {
 }
 
 export interface EditCatalogueCategory {
-  name: string;
+  name?: string;
   id: string;
   catalogue_item_properties?: CatalogueCategoryFormData[];
-  is_leaf: boolean;
+  is_leaf?: boolean;
 }
 
 export interface CatalogueCategory {

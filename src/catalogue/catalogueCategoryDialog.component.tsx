@@ -25,6 +25,7 @@ import {
 } from '../app.types';
 import {
   useAddCatalogueCategory,
+  useCatalogueCategoryById,
   useEditCatalogueCategory,
 } from '../api/catalogueCategory';
 import CataloguePropertiesForm from './cataloguePropertiesForm.component';
@@ -42,9 +43,10 @@ export interface CatalogueCategoryDialogProps {
   refetchData: () => void;
   type: 'add' | 'edit';
   selectedCatalogueCategory?: CatalogueCategory;
+  resetSelectedCatalogueCategory: () => void;
 }
 
-function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
+const CatalogueCategoryDialog = (props: CatalogueCategoryDialogProps) => {
   const {
     open,
     onClose,
@@ -58,10 +60,16 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
     selectedCatalogueCategory,
     onChangeFormFields,
     formFields,
+    resetSelectedCatalogueCategory,
   } = props;
 
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
+    string | undefined
+  >(undefined);
+
+  const [formError, setFormError] = React.useState(false);
+  const [formErrorMessage, setFormErrorMessage] = React.useState<
     string | undefined
   >(undefined);
 
@@ -75,6 +83,10 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
   const [typeFields, setTypeFields] = React.useState<string[]>([]);
 
   const [errorFields, setErrorFields] = React.useState<number[]>([]);
+
+  const { data: selectedCatalogueCategoryData } = useCatalogueCategoryById(
+    selectedCatalogueCategory?.id
+  );
 
   React.useEffect(() => {
     // When the catalogueCategoryName changes, update the nameFields and typeFields.
@@ -96,12 +108,15 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
     setNameFields([]);
     setTypeFields([]);
     refetchData();
+    setFormError(false);
+    resetSelectedCatalogueCategory();
   }, [
     onChangeCatalogueCategoryName,
     onChangeFormFields,
     onChangeLeaf,
     onClose,
     refetchData,
+    resetSelectedCatalogueCategory,
   ]);
 
   const validateFormFields = React.useCallback(() => {
@@ -189,14 +204,37 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
       setNameErrorMessage('Please enter a name.');
       return; // Stop further execution if the name is invalid
     }
-    if (selectedCatalogueCategory) {
+
+    if (selectedCatalogueCategory && selectedCatalogueCategoryData) {
       catalogueCategory = {
         id: selectedCatalogueCategory.id,
-        name: catalogueCategoryName,
-        is_leaf: isLeaf,
       };
 
-      if (isLeaf) {
+      const isNameUpdated =
+        catalogueCategoryName !== selectedCatalogueCategoryData?.name;
+
+      const isIsLeafUpdated = isLeaf !== selectedCatalogueCategoryData?.is_leaf;
+      const isCatalogueItemPropertiesUpdated =
+        JSON.stringify(formFields) !==
+        JSON.stringify(
+          selectedCatalogueCategoryData?.catalogue_item_properties ?? null
+        );
+
+      if (isNameUpdated) {
+        catalogueCategory = {
+          ...catalogueCategory,
+          name: catalogueCategoryName,
+        };
+      }
+
+      if (isIsLeafUpdated) {
+        catalogueCategory = {
+          ...catalogueCategory,
+          is_leaf: isLeaf,
+        };
+      }
+
+      if (isLeaf && isCatalogueItemPropertiesUpdated) {
         catalogueCategory = {
           ...catalogueCategory,
           catalogue_item_properties: formFields ?? [],
@@ -209,18 +247,36 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
         // Clear the error state and add a new field
         clearFormFields();
 
-        editCatalogueCategory(catalogueCategory)
-          .then((response) => handleClose())
-          .catch((error: AxiosError) => {
-            console.log(error.response);
-            const response = error.response?.data as ErrorParsing;
-            if (response && error.response?.status === 409) {
-              setNameError(true);
-              setNameErrorMessage(response.detail);
-              return;
-            }
-            setCatchAllError(true);
-          });
+        if (
+          catalogueCategory.id && // Check if id is present
+          (isNameUpdated || isCatalogueItemPropertiesUpdated || isIsLeafUpdated) // Check if any of these properties have been updated
+        ) {
+          // Only call editCatalogueCategory if id is present and at least one of the properties has been updated
+          editCatalogueCategory(catalogueCategory)
+            .then((response) => {
+              resetSelectedCatalogueCategory();
+              handleClose();
+            })
+            .catch((error: AxiosError) => {
+              console.log(error.response);
+              const response = error.response?.data as ErrorParsing;
+              if (response && error.response?.status === 409) {
+                if (response.detail.includes('children elements')) {
+                  setFormError(true);
+                  setFormErrorMessage(response.detail);
+                } else {
+                  setNameError(true);
+                  setNameErrorMessage(response.detail);
+                }
+
+                return;
+              }
+              setCatchAllError(true);
+            });
+        } else {
+          setFormError(true);
+          setFormErrorMessage('Please edit a form entry before clicking save');
+        }
       }
     }
   }, [
@@ -230,7 +286,9 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
     formFields,
     handleClose,
     isLeaf,
+    resetSelectedCatalogueCategory,
     selectedCatalogueCategory,
+    selectedCatalogueCategoryData,
     validateFormFields,
   ]);
   return (
@@ -249,6 +307,7 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
             );
             setNameError(false);
             setNameErrorMessage(undefined);
+            setFormError(false);
           }}
           fullWidth
         />
@@ -262,6 +321,7 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
             value={isLeaf}
             onChange={(event, value) => {
               onChangeLeaf(value === 'true' ? true : false);
+              setFormError(false);
               if (value === 'false') {
                 onChangeFormFields(null);
                 setErrorFields([]);
@@ -298,6 +358,7 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
                 onChangeTypeFields={setTypeFields}
                 errorFields={errorFields}
                 onChangeErrorFields={setErrorFields}
+                resetFormError={() => setFormError(false)}
               />
             </Box>
           </Box>
@@ -334,6 +395,11 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
             Save
           </Button>
         </Box>
+        {formError && (
+          <FormHelperText sx={{ marginBottom: '16px' }} error>
+            {formErrorMessage}
+          </FormHelperText>
+        )}
         {catchAllError && (
           <FormHelperText sx={{ marginBottom: '16px' }} error>
             {'Please refresh and try again'}
@@ -342,6 +408,5 @@ function CatalogueCategoryDialog(props: CatalogueCategoryDialogProps) {
       </DialogActions>
     </Dialog>
   );
-}
-
+};
 export default CatalogueCategoryDialog;

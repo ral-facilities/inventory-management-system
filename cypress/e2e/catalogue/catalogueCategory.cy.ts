@@ -134,8 +134,10 @@ describe('Catalogue Category', () => {
     });
   });
 
-  it('edits a catalogue category', () => {
+  it('edits a catalogue category (non leaf node)', () => {
+    cy.visit('/catalogue/beam-characterization');
     cy.findAllByTestId('edit-catalogue-category-button').first().click();
+    cy.findByLabelText('Name *').type('1');
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -147,29 +149,47 @@ describe('Catalogue Category', () => {
     }).should((patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
-        '{"name":"Beam Characterization","is_leaf":false}'
-      );
+      expect(JSON.stringify(request.body)).equal('{"name":"Cameras1"}');
       expect(request.url.toString()).to.contain('1');
     });
   });
-  it('edits a catalogue category with catalogue properties', () => {
+
+  it('displays error message if none of the fields have changed', () => {
     cy.findAllByTestId('edit-catalogue-category-button').first().click();
 
-    cy.findByLabelText('Catalogue Items').click();
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please edit a form entry before clicking save');
+      });
+  });
+
+  it('displays error message if it received an unknown error from the spi', () => {
+    cy.visit('/catalogue/beam-characterization');
+    cy.findAllByTestId('edit-catalogue-category-button').first().click();
+    cy.findByLabelText('Name *').clear();
+    cy.findByLabelText('Name *').type('Error 500');
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please refresh and try again');
+      });
+  });
+  it('edits a catalogue category with catalogue properties', () => {
+    cy.visit('/catalogue/beam-characterization');
+    cy.findAllByTestId('edit-catalogue-category-button').first().click();
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('dialog').findByTestId('AddIcon').click();
-    cy.findByLabelText('Property Name *').type('Updated Field');
-    cy.findByLabelText('Select Type *').click();
+    cy.findAllByLabelText('Property Name *').first().clear();
+    cy.findAllByLabelText('Property Name *').first().type('Updated Field');
+    cy.findAllByLabelText('Select Type *').first().click();
     cy.findByText('Boolean').click();
-
-    cy.findByRole('dialog').findByTestId('AddIcon').click();
-
-    cy.findAllByLabelText('Property Name *').last().type('Updated Field');
-    cy.findAllByLabelText('Select Type *').last().click();
-    cy.findByText('Number').click();
 
     cy.findByRole('button', { name: 'Save' }).click();
 
@@ -180,7 +200,7 @@ describe('Catalogue Category', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"Beam Characterization","is_leaf":true,"catalogue_item_properties":[{"name":"Updated Field","type":"boolean","mandatory":false},{"name":"Updated Field","type":"number","unit":"","mandatory":false}]}'
+        '{"catalogue_item_properties":[{"name":"Updated Field","type":"boolean","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":true},{"name":"Sensor Type","type":"string","mandatory":true}]}'
       );
       expect(request.url.toString()).to.contain('1');
     });
