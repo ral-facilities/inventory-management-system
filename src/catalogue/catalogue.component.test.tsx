@@ -94,14 +94,14 @@ describe('Catalogue', () => {
   });
 
   it('opens the edit catalogue category dialog', async () => {
-    createView('/inventory-management-system/catalogue');
+    createView('/inventory-management-system/catalogue/beam-characterization');
 
     await waitFor(() => {
-      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+      expect(screen.getByText('Amp Meters')).toBeInTheDocument();
     });
 
     const editButton = screen.getByRole('button', {
-      name: 'edit Beam Characterization catalogue category button',
+      name: 'edit Amp Meters catalogue category button',
     });
     await user.click(editButton);
 
@@ -110,6 +110,8 @@ describe('Catalogue', () => {
     });
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
+
+    await user.type(screen.getByLabelText('Name *'), '1');
     await user.click(saveButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();

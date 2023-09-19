@@ -1,17 +1,19 @@
 import axios from 'axios';
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
 import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { CatalogueCategory } from '../../app.types';
 
 describe('Catalogue Category Dialog', () => {
   const onClose = jest.fn();
   const onChangeLeaf = jest.fn();
   const onChangeCatalogueCategoryName = jest.fn();
   const onChangeFormFields = jest.fn();
+  const resetSelectedCatalogueCategory = jest.fn();
   let props: CatalogueCategoryDialogProps;
   let user;
   const createView = () => {
@@ -33,6 +35,7 @@ describe('Catalogue Category Dialog', () => {
         type: 'add',
         onChangeFormFields: onChangeFormFields,
         formFields: null,
+        resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
       };
       user = userEvent.setup();
 
@@ -239,7 +242,7 @@ describe('Catalogue Category Dialog', () => {
 
   describe('Edit Catalogue Category Dialog', () => {
     let axiosPatchSpy;
-    const mockData = {
+    let mockData: CatalogueCategory = {
       name: 'test',
       parent_id: null,
       id: '1',
@@ -262,6 +265,7 @@ describe('Catalogue Category Dialog', () => {
         selectedCatalogueCategory: mockData,
         onChangeFormFields: onChangeFormFields,
         formFields: null,
+        resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
       };
       user = userEvent.setup();
       axiosPatchSpy = jest.spyOn(axios, 'patch');
@@ -299,10 +303,36 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
+    it('displays children elements warning message', async () => {
+      props = {
+        ...props,
+        catalogueCategoryName: 'test',
+      };
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'Catalogue category has children elements and cannot be updated'
+          )
+        ).toBeInTheDocument();
+      });
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
     it('displays warning message when an unknown error occurs', async () => {
+      mockData = {
+        ...mockData,
+        id: '4',
+      };
+
       props = {
         ...props,
         catalogueCategoryName: 'Error 500',
+        selectedCatalogueCategory: mockData,
       };
       createView();
 
@@ -317,17 +347,80 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
-    it('edits a new catalogue category at root level ("/catalogue")', async () => {
+    it('displays error message if no form fields have been edited', async () => {
+      mockData = {
+        id: '15',
+        name: 'Voltage Meters',
+        parent_id: '1',
+        code: 'voltage-meters',
+        is_leaf: true,
+        parent_path: '/beam-characterization',
+        path: '/beam-characterization/voltage-meters',
+        catalogue_item_properties: [
+          {
+            name: 'Measurement Range',
+            type: 'number',
+            unit: 'volts',
+            mandatory: true,
+          },
+          {
+            name: 'Accuracy',
+            type: 'string',
+            mandatory: true,
+          },
+        ],
+      };
+
       props = {
         ...props,
-        catalogueCategoryName: 'test',
+        catalogueCategoryName: mockData.name,
+        isLeaf: true,
+        formFields: mockData.catalogue_item_properties ?? null,
+        selectedCatalogueCategory: mockData,
       };
       createView();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/1', {
+      await waitFor(() => {
+        expect(
+          screen.getByText('Please edit a form entry before clicking save')
+        ).toBeInTheDocument();
+      });
+      expect(onClose).not.toHaveBeenCalled();
+
+      const formName = screen.getAllByLabelText('Property Name *');
+
+      // Modify the name field using userEvent
+      fireEvent.change(formName[0], {
+        target: { value: 'Updated Field' },
+      });
+
+      await waitFor(() => {
+        expect(
+          screen.queryByText('Please edit a form entry before clicking save')
+        ).not.toBeInTheDocument();
+      });
+    });
+
+    it('edits a new catalogue category at root level ("/catalogue")', async () => {
+      mockData = {
+        ...mockData,
+        id: '4',
+      };
+
+      props = {
+        ...props,
+        catalogueCategoryName: 'test',
+        selectedCatalogueCategory: mockData,
+      };
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
         name: 'test',
         is_leaf: false,
       });
@@ -358,7 +451,7 @@ describe('Catalogue Category Dialog', () => {
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/1', {
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
         name: 'test',
         is_leaf: false,
       });

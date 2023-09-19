@@ -230,6 +230,9 @@ function Catalogue() {
         type="add"
         formFields={formFields}
         onChangeFormFields={setFormFields}
+        resetSelectedCatalogueCategory={() =>
+          setSelectedCatalogueCategory(undefined)
+        }
       />
       <CatalogueCategoryDialog
         open={editCategoryDialogOpen}
@@ -243,6 +246,9 @@ function Catalogue() {
         selectedCatalogueCategory={selectedCatalogueCategory}
         formFields={formFields}
         onChangeFormFields={setFormFields}
+        resetSelectedCatalogueCategory={() =>
+          setSelectedCatalogueCategory(undefined)
+        }
       />
       <DeleteCatalogueCategoryDialog
         open={deleteCategoryDialogOpen}
