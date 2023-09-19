@@ -24,7 +24,8 @@ describe('Catalogue', () => {
     });
     expect(screen.getByText('Motion')).toBeInTheDocument();
     expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
-    expect(screen.getByText('mock')).toBeInTheDocument();
+    expect(screen.getByText('High Power Lasers')).toBeInTheDocument();
+    expect(screen.getByText('X-RAY Beams')).toBeInTheDocument();
   });
 
   it('renders catalogue items table correctly', async () => {
@@ -53,7 +54,8 @@ describe('Catalogue', () => {
     });
     expect(screen.getByText('Motion')).toBeInTheDocument();
     expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
-    expect(screen.getByText('mock')).toBeInTheDocument();
+    expect(screen.getByText('High Power Lasers')).toBeInTheDocument();
+    expect(screen.getByText('X-RAY Beams')).toBeInTheDocument();
   });
   it('opens the add catalogue category dialog', async () => {
     createView('/inventory-management-system/catalogue');
@@ -74,8 +76,8 @@ describe('Catalogue', () => {
     });
   });
 
-  it('no results found page after empty opened', async () => {
-    createView('/inventory-management-system/catalogue/empty');
+  it('no results found page after X-rays opened', async () => {
+    createView('/inventory-management-system/catalogue/X-RAY-Beams');
 
     await waitFor(() => {
       expect(
@@ -86,8 +88,10 @@ describe('Catalogue', () => {
     });
   });
 
-  it('no items found after empty mock opened', async () => {
-    createView('/inventory-management-system/catalogue/mock/mock-empty');
+  it('no items found after empty category opened', async () => {
+    createView(
+      '/inventory-management-system/catalogue/High-Power-Lasers/Frequency'
+    );
 
     await waitFor(() => {
       expect(

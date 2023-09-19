@@ -96,7 +96,10 @@ function Catalogue() {
     catalogueLocation === '' ? '/' : catalogueLocation
   );
 
-  const { data: catalogueCategoryDetail } = useCatalogueCategory(
+  const {
+    data: catalogueCategoryDetail,
+    isLoading: catalogueCategoryDetailLoading,
+  } = useCatalogueCategory(
     catalogueLocation === '' ? '/' : catalogueLocation,
     undefined
   );
@@ -153,16 +156,6 @@ function Catalogue() {
       convertProperties(parentInfo?.catalogue_item_properties)
     );
   }, [catalogueLocation, parentInfo]);
-
-  const noCatalogueData: boolean =
-    (!catalogueCategoryData || !catalogueCategoryData.length) &&
-    !catalogueCategoryDataLoading;
-
-  const noItemData: boolean =
-    (!catalogueItemsData || !catalogueItemsData.length) &&
-    (!catalogueItemsDataLoading ||
-      (parentInfo?.is_leaf ?? false) ||
-      !parentInfo);
 
   const noCat =
     'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen';
@@ -222,17 +215,23 @@ function Catalogue() {
         </Grid>
       </Grid>
 
-      {noCatalogueData && noItemData && !parentInfo?.is_leaf && (
-        <Box
-          sx={{
-            width: '100%',
-            justifyContent: 'center',
-          }}
-        >
-          <Typography sx={{ fontWeight: 'bold' }}>No results found</Typography>
-          <Typography>{noResultMesg}</Typography>
-        </Box>
-      )}
+      {!catalogueCategoryData?.length &&
+        !catalogueItemsData?.length &&
+        !catalogueCategoryDataLoading &&
+        !parentInfo?.is_leaf &&
+        !catalogueCategoryDetailLoading && (
+          <Box
+            sx={{
+              width: '100%',
+              justifyContent: 'center',
+            }}
+          >
+            <Typography sx={{ fontWeight: 'bold' }}>
+              No results found
+            </Typography>
+            <Typography>{noResultMesg}</Typography>
+          </Box>
+        )}
 
       {catalogueCategoryData && !parentInfo?.is_leaf && (
         <Grid container spacing={2}>

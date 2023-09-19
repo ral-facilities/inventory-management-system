@@ -195,14 +195,16 @@ describe('Catalogue Category', () => {
   });
 
   it('category with no data displays no results found', () => {
-    cy.visit('/inventory-management-system/catalogue/empty');
+    cy.visit('/inventory-management-system/catalogue/X-RAY-Beams');
     cy.findByText(
       'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
     ).should('exist');
   });
 
   it('category with no items displays no items found message', () => {
-    cy.visit('/inventory-management-system/catalogue/mock/mock-empty');
+    cy.visit(
+      '/inventory-management-system/catalogue/High-Power-Lasers/Frequency'
+    );
     cy.findByText(
       'There are no items. Try adding an item by using the Add Catalogue Item button in the top right of your screen'
     ).should('exist');

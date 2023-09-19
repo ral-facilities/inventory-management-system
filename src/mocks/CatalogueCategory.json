@@ -9,34 +9,6 @@
     "path": "/beam-characterization"
   },
   {
-    "id": "50",
-    "name": "mock",
-    "parent_id": null,
-    "code": "mock",
-    "is_leaf": false,
-    "parent_path": "/",
-    "path": "/mock"
-  },
-  {
-    "id": "49",
-    "name": "empty",
-    "parent_id": null,
-    "code": "empty",
-    "is_leaf": false,
-    "parent_path": "/",
-    "path": "/empty"
-  },
-  {
-    "id": "51",
-    "name": "mock-empty",
-    "parent_id": "50",
-    "code": "mock-empty",
-    "is_leaf": true,
-    "parent_path": "/mock",
-    "path": "/mock/mock-empty",
-    "catalogue_item_properties": []
-  },
-  {
     "id": "2",
     "name": "Motion",
     "parent_id": null,
@@ -271,5 +243,33 @@
         "mandatory": true
       }
     ]
+  },
+  {
+    "id": "15",
+    "name": "High Power Lasers",
+    "parent_id": null,
+    "code": "High-Power-Lasers",
+    "is_leaf": false,
+    "parent_path": "/",
+    "path": "/High-Power-Lasers"
+  },
+  {
+    "id": "16",
+    "name": "X-RAY Beams",
+    "parent_id": null,
+    "code": "X-RAY-Beams",
+    "is_leaf": false,
+    "parent_path": "/",
+    "path": "/X-RAY-Beams"
+  },
+  {
+    "id": "17",
+    "name": "Frequency",
+    "parent_id": "15",
+    "code": "Frequency",
+    "is_leaf": true,
+    "parent_path": "/High-Power-Lasers",
+    "path": "/High-Power-Lasers/Frequency",
+    "catalogue_item_properties": []
   }
 ]
