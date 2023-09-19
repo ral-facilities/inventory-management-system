@@ -79,29 +79,31 @@ describe('Catalogue', () => {
   });
 
   it('opens the edit catalogue category dialog', async () => {
-    createView('/');
+    createView('/beam-characterization');
 
     await waitFor(() => {
-      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+      expect(screen.getByText('Amp Meters')).toBeInTheDocument();
     });
 
     const deleteButtons = screen.getAllByTestId(
       'edit-catalogue-category-button'
     );
-    await user.click(deleteButtons[0]);
+    await user.click(deleteButtons[4]);
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
+
+    await user.type(screen.getByLabelText('Name *'), '1');
     await user.click(saveButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
 
-  it('renders the breadcumbs and navigate to another directory', async () => {
+  it('renders the breadcrumbs and navigate to another directory', async () => {
     createView('/catalogue/motion/actuators');
 
     await waitFor(() => {
