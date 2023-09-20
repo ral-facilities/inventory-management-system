@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  renderComponentWithBrowserRouter,
-  catalogueItemData,
-  getCatalogueItemsPropertiesById,
-} from '../../setupTests';
+import { renderComponentWithBrowserRouter } from '../../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
