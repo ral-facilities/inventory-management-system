@@ -18,7 +18,6 @@ import {
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
-import { useCatalogueItems } from '../api/catalogueItem';
 
 export function convertProperties(
   catalogueItemProperties?: CatalogueCategoryFormData[]
@@ -100,12 +99,10 @@ function Catalogue() {
 
   const [parentId, setParentId] = React.useState<string | null>(null);
   const [isLeaf, setIsLeaf] = React.useState<boolean>(false);
-  const parentInfo = catalogueCategoryDetail?.[0];
-
-  const { data: catalogueItemsData } = useCatalogueItems(parentId);
-
-  // SG header + SG footer + tabs #add breadcrumbs
-  const tableHeight = `calc(100vh - (64px + 36px + 50px)`;
+  const parentInfo = React.useMemo(
+    () => catalogueCategoryDetail?.[0],
+    [catalogueCategoryDetail]
+  );
 
   const disableButton = parentInfo ? parentInfo.is_leaf : false;
 
@@ -213,11 +210,7 @@ function Catalogue() {
         </Grid>
       )}
       {parentInfo && parentInfo.is_leaf && (
-        <CatalogueItemsTable
-          tableHeight={tableHeight}
-          data={catalogueItemsData}
-          catalogueItemProperties={parentInfo.catalogue_item_properties ?? []}
-        />
+        <CatalogueItemsTable parentInfo={parentInfo} />
       )}
       <CatalogueCategoryDialog
         open={addCategoryDialogOpen}

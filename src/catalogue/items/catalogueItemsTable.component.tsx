@@ -15,16 +15,21 @@ import {
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { CatalogueCategoryFormData, CatalogueItem } from '../../app.types';
+import { CatalogueCategory } from '../../app.types';
+import { useCatalogueItems } from '../../api/catalogueItem';
 
 export interface CatalogueItemsTableProps {
-  tableHeight: string;
-  data: CatalogueItem[] | undefined;
-  catalogueItemProperties: CatalogueCategoryFormData[];
+  parentInfo: CatalogueCategory;
 }
 
-const CatalogueItemsTable = React.memo((props: CatalogueItemsTableProps) => {
-  const { tableHeight, data, catalogueItemProperties } = props;
+const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
+  const { parentInfo } = props;
+  // SG header + SG footer + tabs #add breadcrumbs
+  const tableHeight = `calc(100vh - (64px + 36px + 50px)`;
+
+  const catalogueItemProperties = parentInfo.catalogue_item_properties ?? [];
+
+  const { data } = useCatalogueItems(parentInfo.id);
 
   const theme = useTheme();
 
@@ -181,6 +186,6 @@ const CatalogueItemsTable = React.memo((props: CatalogueItemsTableProps) => {
       </Table>
     </TableContainer>
   );
-});
+};
 
 export default CatalogueItemsTable;

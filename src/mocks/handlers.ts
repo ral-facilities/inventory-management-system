@@ -128,7 +128,7 @@ export const handlers = [
       return res(ctx.status(400), ctx.json(''));
     }
   }),
-  rest.post('/v1/catalogue-items', async (req, res, ctx) => {
+  rest.post('/v1/catalogue-items/', async (req, res, ctx) => {
     const body = (await req.json()) as CatalogueItem;
 
     if (body.name === 'test_dup') {
@@ -152,18 +152,17 @@ export const handlers = [
     );
   }),
 
-  rest.get('/v1/catalogue-items', (req, res, ctx) => {
+  rest.get('/v1/catalogue-items/', async (req, res, ctx) => {
     const catalogueItemsParams = req.url.searchParams;
     const id = catalogueItemsParams.get('catalogue_category_id');
 
     if (id) {
       const CatalogueItemData = CatalogueItemJSON.filter(
-        (catalogueitem) => catalogueitem.catalogue_category_id === id
+        (catalogueItem) => catalogueItem.catalogue_category_id === id
       );
 
       return res(ctx.status(200), ctx.json(CatalogueItemData));
-    } else {
-      return res(ctx.status(422), ctx.json(''));
     }
+    return res(ctx.status(422), ctx.json({}));
   }),
 ];
