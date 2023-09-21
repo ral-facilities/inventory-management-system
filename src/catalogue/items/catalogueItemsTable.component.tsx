@@ -17,6 +17,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { CatalogueCategory } from '../../app.types';
 import { useCatalogueItems } from '../../api/catalogueItem';
+import { Link } from 'react-router-dom';
 
 export interface CatalogueItemsTableProps {
   parentInfo: CatalogueCategory;
@@ -34,7 +35,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const theme = useTheme();
 
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
-
   return (
     <TableContainer style={{ height: tableHeight }}>
       <Table stickyHeader>
@@ -92,7 +92,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data &&
+          {Array.isArray(data) &&
             data.map((item, index) => (
               <TableRow
                 onMouseEnter={() => setHoveredRow(index)}
@@ -132,7 +132,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                     borderRight: '1px solid #e0e0e0',
                   }}
                 >
-                  {item.name}
+                  <Link to={`items/${item.id}`}>{item.name}</Link>
                 </TableCell>
                 <TableCell
                   sx={{

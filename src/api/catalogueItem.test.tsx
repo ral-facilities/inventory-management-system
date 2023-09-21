@@ -1,5 +1,9 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { useAddCatalogueItem, useCatalogueItems } from './catalogueItem';
+import {
+  useAddCatalogueItem,
+  useCatalogueItem,
+  useCatalogueItems,
+} from './catalogueItem';
 import { catalogueItemData, hooksWrapperWithProviders } from '../setupTests';
 import { AddCatalogueItem } from '../app.types';
 
@@ -50,7 +54,7 @@ describe('catalogue items api functions', () => {
   });
 
   describe('useCatalogueItems', () => {
-    it('sends request to fetch catalogue catagory data and returns successful response', async () => {
+    it('sends request to fetch catalogue items data and returns successful response', async () => {
       const { result } = renderHook(() => useCatalogueItems('5'), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -64,6 +68,36 @@ describe('catalogue items api functions', () => {
 
     it.todo(
       'sends axios request to fetch catalogue items and throws an appropriate error on failure'
+    );
+  });
+
+  describe('useCatalogueItem', () => {
+    it('sends request to fetch catalogue items data and returns successful response', async () => {
+      const { result } = renderHook(() => useCatalogueItem('1'), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toEqual({
+        catalogue_category_id: '4',
+        description: 'High-resolution cameras for beam characterization. 1',
+        id: '1',
+        name: 'Cameras 1',
+        properties: [
+          { name: 'Resolution', unit: 'megapixels', value: 12 },
+          { name: 'Frame Rate', unit: 'fps', value: 30 },
+          { name: 'Sensor Type', unit: '', value: 'CMOS' },
+          { name: 'Broken', unit: '', value: true },
+          { name: 'Older than five years', unit: '', value: false },
+        ],
+      });
+    });
+
+    it.todo(
+      'sends axios request to fetch catalogue item and throws an appropriate error on failure'
     );
   });
 });

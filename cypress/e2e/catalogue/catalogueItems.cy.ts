@@ -1,4 +1,4 @@
-describe('Catalogue Category', () => {
+describe('Catalogue items', () => {
   beforeEach(() => {
     cy.visit(
       '/inventory-management-system/catalogue/beam-characterization/cameras'
@@ -134,6 +134,26 @@ describe('Catalogue Category', () => {
   });
 
   it('displays the table view correctly', () => {
+    cy.findByText('Cameras 1').should('exist');
+    cy.findByText('Cameras 2').should('exist');
+    cy.findByText('Cameras 3').should('exist');
+    cy.findByText('Cameras 4').should('exist');
+  });
+
+  it('navigates to the landing page, toggles the properties and navigates back to the table view', () => {
+    cy.findByText('Cameras 1').click();
+    cy.findByText(
+      'High-resolution cameras for beam characterization. 1'
+    ).should('exist');
+    cy.findByLabelText('Close catalogue item properties').should('exist');
+
+    cy.findByLabelText('Close catalogue item properties').click();
+
+    cy.findByLabelText('Close catalogue item properties').should('not.exist');
+    cy.findByLabelText('Show catalogue item properties').should('exist');
+
+    cy.findByRole('link', { name: 'Back to TableView' }).click();
+
     cy.findByText('Cameras 1').should('exist');
     cy.findByText('Cameras 2').should('exist');
     cy.findByText('Cameras 3').should('exist');
