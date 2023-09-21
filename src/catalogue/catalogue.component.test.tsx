@@ -103,14 +103,25 @@ describe('Catalogue', () => {
   });
 
   it('expired url opens no results page', async () => {
-    createView('/inventory-management-system/catalogue/not-cat');
+    createView('/inventory-management-system/catalogue/not-category');
 
     await waitFor(() => {
       expect(
         screen.getByText(
-          'The category you searched for does not exist. Try searching for a different category or use the add button to add the category.'
+          'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
         )
       ).toBeInTheDocument();
+    });
+  });
+
+  it('add button disabled when expired url is used', async () => {
+    createView('/inventory-management-system/catalogue/not-category');
+
+    const addButton = screen.getByRole('button', {
+      name: 'add catalogue category',
+    });
+    await waitFor(() => {
+      expect(addButton).toBeDisabled();
     });
   });
 
@@ -156,14 +167,14 @@ describe('Catalogue', () => {
   });
 
   it('opens the edit catalogue category dialog', async () => {
-    createView('/inventory-management-system/catalogue');
+    createView('/inventory-management-system/catalogue/beam-characterization');
 
     await waitFor(() => {
-      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+      expect(screen.getByText('Amp Meters')).toBeInTheDocument();
     });
 
     const editButton = screen.getByRole('button', {
-      name: 'edit Beam Characterization catalogue category button',
+      name: 'edit Amp Meters catalogue category button',
     });
     await user.click(editButton);
 
@@ -172,6 +183,8 @@ describe('Catalogue', () => {
     });
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
+
+    await user.type(screen.getByLabelText('Name *'), '1');
     await user.click(saveButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();

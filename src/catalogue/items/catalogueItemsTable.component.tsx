@@ -15,17 +15,21 @@ import {
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { CatalogueCategoryFormData, CatalogueItem } from '../../app.types';
+import { CatalogueCategory } from '../../app.types';
+import { useCatalogueItems } from '../../api/catalogueItem';
 
 export interface CatalogueItemsTableProps {
-  tableHeight: string;
-  data: CatalogueItem[] | undefined;
-  catalogueItemProperties: CatalogueCategoryFormData[];
-  isLoadingData: boolean;
+  parentInfo: CatalogueCategory;
 }
 
-const CatalogueItemsTable = React.memo((props: CatalogueItemsTableProps) => {
-  const { tableHeight, data, catalogueItemProperties, isLoadingData } = props;
+const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
+  const { parentInfo } = props;
+  // SG header + SG footer + tabs #add breadcrumbs
+  const tableHeight = `calc(100vh - (64px + 36px + 50px)`;
+
+  const catalogueItemProperties = parentInfo.catalogue_item_properties ?? [];
+
+  const { data } = useCatalogueItems(parentInfo.id);
 
   const theme = useTheme();
 
@@ -180,7 +184,7 @@ const CatalogueItemsTable = React.memo((props: CatalogueItemsTableProps) => {
             ))}
         </TableBody>
       </Table>
-      {!data?.length && !isLoadingData && (
+      {!data?.length && (
         <Box
           sx={{
             width: '100%',
@@ -197,6 +201,6 @@ const CatalogueItemsTable = React.memo((props: CatalogueItemsTableProps) => {
       )}
     </TableContainer>
   );
-});
+};
 
 export default CatalogueItemsTable;

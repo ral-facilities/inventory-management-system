@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  renderComponentWithBrowserRouter,
-  catalogueItemData,
-  getCatalogueItemsPropertiesById,
-} from '../../setupTests';
+import { renderComponentWithBrowserRouter } from '../../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
@@ -20,16 +16,29 @@ describe('Catalogue Items Table', () => {
 
   beforeEach(() => {
     props = {
-      tableHeight: 'calc(100vh - (64px + 36px + 50px)',
-      data: [],
-      catalogueItemProperties: [],
+      parentInfo: {
+        id: '5',
+        name: 'Energy Meters',
+        parent_id: '1',
+        code: 'energy-meters',
+        is_leaf: true,
+        parent_path: '/beam-characterization',
+        path: '/beam-characterization/energy-meters',
+        catalogue_item_properties: [
+          {
+            name: 'Measurement Range',
+            type: 'number',
+            unit: 'Joules',
+            mandatory: true,
+          },
+          { name: 'Accuracy', type: 'string', mandatory: false },
+        ],
+      },
     };
     user = userEvent.setup();
   });
 
   it('renders text correctly', async () => {
-    props.catalogueItemProperties = getCatalogueItemsPropertiesById('5');
-    props.data = catalogueItemData('5');
     createView();
     expect(screen.getByText('Name')).toBeInTheDocument();
     expect(screen.getByText('Description')).toBeInTheDocument();
@@ -38,9 +47,15 @@ describe('Catalogue Items Table', () => {
   });
 
   it('displays descriptions tooltip on hover', async () => {
-    props.catalogueItemProperties = getCatalogueItemsPropertiesById('5');
-    props.data = catalogueItemData('5');
     createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText(
+          'Catalogue item description: Precision energy meters for accurate measurements. 26'
+        )
+      ).toBeInTheDocument();
+    });
 
     const infoIcon = screen.getByLabelText(
       'Catalogue item description: Precision energy meters for accurate measurements. 26'
@@ -68,9 +83,13 @@ describe('Catalogue Items Table', () => {
   });
 
   it('highlights the row on hover', async () => {
-    props.catalogueItemProperties = getCatalogueItemsPropertiesById('5');
-    props.data = catalogueItemData('5');
     createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('row', { name: 'Energy Meters 26 row' })
+      ).toBeInTheDocument();
+    });
 
     const row = screen.getByRole('row', { name: 'Energy Meters 26 row' });
 

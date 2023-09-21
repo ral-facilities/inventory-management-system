@@ -22,6 +22,7 @@ export interface CataloguePropertiesFormProps {
   onChangeTypeFields: (typeFields: string[]) => void;
   errorFields: number[];
   onChangeErrorFields: (errorFields: number[]) => void;
+  resetFormError: () => void;
 }
 
 function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
@@ -34,6 +35,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangeTypeFields,
     errorFields,
     onChangeErrorFields,
+    resetFormError,
   } = props;
 
   const handleAddField = () => {
@@ -44,6 +46,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     ]);
     onChangeNameFields([...nameFields, '']);
     onChangeTypeFields([...typeFields, '']);
+    resetFormError();
   };
 
   const handleDeleteField = (index: number) => {
@@ -61,6 +64,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangeFormFields(updatedFormFields);
     onChangeNameFields(updatedNameFields);
     onChangeTypeFields(updatedTypeFields);
+    resetFormError();
   };
 
   const handleChange = (
@@ -93,6 +97,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangeFormFields(updatedFormFields);
     onChangeNameFields(updatedNameFields);
     onChangeTypeFields(updatedTypeFields);
+    resetFormError();
   };
 
   return (

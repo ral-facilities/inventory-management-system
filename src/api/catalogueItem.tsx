@@ -20,7 +20,7 @@ const addCatalogueItem = async (
   }
 
   return axios
-    .post<CatalogueItem>(`${apiUrl}/v1/catalogue-items`, catalogueCategory)
+    .post<CatalogueItem>(`${apiUrl}/v1/catalogue-items/`, catalogueCategory)
     .then((response) => response.data);
 };
 
@@ -58,7 +58,7 @@ const fetchCatalogueItems = async (
     queryParams.append('catalogue_category_id', catalogueCategoryId);
 
   return axios
-    .get(`${apiUrl}/v1/catalogue-items`, {
+    .get(`${apiUrl}/v1/catalogue-items/`, {
       params: queryParams,
     })
     .then((response) => {
@@ -78,7 +78,6 @@ export const useCatalogueItems = (
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
-      enabled: catalogueCategoryId !== null,
     }
   );
 };

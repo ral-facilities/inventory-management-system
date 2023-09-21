@@ -103,7 +103,7 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(saveButton);
 
-    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '1',
       description: '',
       name: 'test',
@@ -158,7 +158,7 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(saveButton);
 
-    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '1',
       description: '',
       name: 'test',

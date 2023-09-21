@@ -18,7 +18,6 @@ import {
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
-import { useCatalogueItems } from '../api/catalogueItem';
 
 export function convertProperties(
   catalogueItemProperties?: CatalogueCategoryFormData[]
@@ -88,10 +87,7 @@ function Catalogue() {
     ''
   );
 
-  const {
-    data: catalogueCategoryData,
-    isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategory(
+  const { data: catalogueCategoryData } = useCatalogueCategory(
     undefined,
     catalogueLocation === '' ? '/' : catalogueLocation
   );
@@ -106,13 +102,10 @@ function Catalogue() {
 
   const [parentId, setParentId] = React.useState<string | null>(null);
   const [isLeaf, setIsLeaf] = React.useState<boolean>(false);
-  const parentInfo = catalogueCategoryDetail?.[0];
-
-  const { data: catalogueItemsData, isLoading: catalogueItemsDataLoading } =
-    useCatalogueItems(parentId);
-
-  // SG header + SG footer + tabs #add breadcrumbs
-  const tableHeight = `calc(100vh - (64px + 36px + 50px)`;
+  const parentInfo = React.useMemo(
+    () => catalogueCategoryDetail?.[0],
+    [catalogueCategoryDetail]
+  );
 
   const disableButton = parentInfo ? parentInfo.is_leaf : false;
 
@@ -157,14 +150,6 @@ function Catalogue() {
     );
   }, [catalogueLocation, parentInfo]);
 
-  const noCat =
-    'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen';
-  const noResultMesg = catalogueLocation
-    ? parentId === null
-      ? 'The category you searched for does not exist. Try searching for a different category or use the add button to add the category.'
-      : noCat
-    : noCat;
-
   return (
     <Grid container>
       <Grid container>
@@ -198,7 +183,9 @@ function Catalogue() {
             <IconButton
               sx={{ margin: '4px' }}
               onClick={() => setAddCategoryDialogOpen(true)}
-              disabled={disableButton}
+              disabled={
+                disableButton || (!parentInfo && catalogueLocation !== '')
+              }
               aria-label="add catalogue category"
             >
               <AddIcon />
@@ -215,9 +202,7 @@ function Catalogue() {
         </Grid>
       </Grid>
 
-      {!catalogueCategoryData?.length &&
-        !catalogueItemsData?.length &&
-        !catalogueCategoryDataLoading &&
+      {!catalogueCategoryData?.length && //logic for no results page
         !parentInfo?.is_leaf &&
         !catalogueCategoryDetailLoading && (
           <Box
@@ -229,7 +214,11 @@ function Catalogue() {
             <Typography sx={{ fontWeight: 'bold' }}>
               No results found
             </Typography>
-            <Typography>{noResultMesg}</Typography>
+            <Typography>
+              {parentId === null && catalogueLocation
+                ? 'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
+                : 'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'}
+            </Typography>
           </Box>
         )}
 
@@ -247,12 +236,7 @@ function Catalogue() {
         </Grid>
       )}
       {parentInfo && parentInfo.is_leaf && (
-        <CatalogueItemsTable
-          tableHeight={tableHeight}
-          data={catalogueItemsData}
-          catalogueItemProperties={parentInfo.catalogue_item_properties ?? []}
-          isLoadingData={catalogueItemsDataLoading}
-        />
+        <CatalogueItemsTable parentInfo={parentInfo} />
       )}
 
       <CatalogueCategoryDialog
@@ -266,6 +250,9 @@ function Catalogue() {
         type="add"
         formFields={formFields}
         onChangeFormFields={setFormFields}
+        resetSelectedCatalogueCategory={() =>
+          setSelectedCatalogueCategory(undefined)
+        }
       />
       <CatalogueCategoryDialog
         open={editCategoryDialogOpen}
@@ -279,6 +266,9 @@ function Catalogue() {
         selectedCatalogueCategory={selectedCatalogueCategory}
         formFields={formFields}
         onChangeFormFields={setFormFields}
+        resetSelectedCatalogueCategory={() =>
+          setSelectedCatalogueCategory(undefined)
+        }
       />
       <DeleteCatalogueCategoryDialog
         open={deleteCategoryDialogOpen}

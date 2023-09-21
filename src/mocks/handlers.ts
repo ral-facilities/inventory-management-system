@@ -38,6 +38,10 @@ export const handlers = [
     );
   }),
   rest.patch('/v1/catalogue-categories/:id', async (req, res, ctx) => {
+    const { id } = req.params;
+    const data = CatalogueCategoryJSON.filter(
+      (catalogueCategory) => catalogueCategory.parent_id === id
+    );
     const body = (await req.json()) as EditCatalogueCategory;
     if (body.name === 'test_dup') {
       return res(
@@ -45,6 +49,16 @@ export const handlers = [
         ctx.json({
           detail:
             'A catalogue category with the same name already exists within the parent catalogue category',
+        })
+      );
+    }
+
+    if (data.length > 0) {
+      return res(
+        ctx.status(409),
+        ctx.json({
+          detail:
+            'Catalogue category has children elements and cannot be updated',
         })
       );
     }
@@ -65,6 +79,17 @@ export const handlers = [
       })
     );
   }),
+
+  rest.get('/v1/catalogue-categories/:id', (req, res, ctx) => {
+    const { id } = req.params;
+
+    const data = CatalogueCategoryJSON.find(
+      (catalogueCategory) => catalogueCategory.id === id
+    );
+
+    return res(ctx.status(200), ctx.json(data));
+  }),
+
   rest.get('/v1/catalogue-categories/', (req, res, ctx) => {
     const catalogueCategoryParams = req.url.searchParams;
     const path = catalogueCategoryParams.get('path');
@@ -103,7 +128,7 @@ export const handlers = [
       return res(ctx.status(400), ctx.json(''));
     }
   }),
-  rest.post('/v1/catalogue-items', async (req, res, ctx) => {
+  rest.post('/v1/catalogue-items/', async (req, res, ctx) => {
     const body = (await req.json()) as CatalogueItem;
 
     if (body.name === 'test_dup') {
@@ -127,18 +152,17 @@ export const handlers = [
     );
   }),
 
-  rest.get('/v1/catalogue-items', (req, res, ctx) => {
+  rest.get('/v1/catalogue-items/', async (req, res, ctx) => {
     const catalogueItemsParams = req.url.searchParams;
     const id = catalogueItemsParams.get('catalogue_category_id');
 
     if (id) {
       const CatalogueItemData = CatalogueItemJSON.filter(
-        (catalogueitem) => catalogueitem.catalogue_category_id === id
+        (catalogueItem) => catalogueItem.catalogue_category_id === id
       );
 
       return res(ctx.status(200), ctx.json(CatalogueItemData));
-    } else {
-      return res(ctx.status(422), ctx.json(''));
     }
+    return res(ctx.status(422), ctx.json({}));
   }),
 ];
