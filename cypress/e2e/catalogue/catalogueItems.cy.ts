@@ -152,11 +152,23 @@ describe('Catalogue items', () => {
     cy.findByLabelText('Close catalogue item properties').should('not.exist');
     cy.findByLabelText('Show catalogue item properties').should('exist');
 
-    cy.findByRole('link', { name: 'Back to TableView' }).click();
+    cy.findByRole('link', { name: 'Back to Cameras table view' }).click();
 
     cy.findByText('Cameras 1').should('exist');
     cy.findByText('Cameras 2').should('exist');
     cy.findByText('Cameras 3').should('exist');
     cy.findByText('Cameras 4').should('exist');
+  });
+
+  it('displays the expired landing page message and navigates back to the catalogue home', () => {
+    cy.visit('/inventory-management-system/catalogue/items/1fds');
+
+    cy.findByText(
+      `This item doesn't exist. Please click the Home button to navigate to the catalogue home`
+    ).should('exist');
+
+    cy.findByRole('link', { name: 'Home' }).click();
+
+    cy.findByText('Motion').should('exist');
   });
 });

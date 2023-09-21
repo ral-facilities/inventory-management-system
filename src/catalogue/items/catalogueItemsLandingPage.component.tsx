@@ -18,7 +18,8 @@ function CatalogueItemsLandingPage() {
     ''
   );
 
-  const { data: catalogueItemIdData } = useCatalogueItem(catalogueItemId);
+  const { data: catalogueItemIdData, isLoading: catalogueItemIdDataLoading } =
+    useCatalogueItem(catalogueItemId);
 
   const { data: catalogueCategoryData } = useCatalogueCategoryById(
     catalogueItemIdData?.catalogue_category_id
@@ -41,9 +42,15 @@ function CatalogueItemsLandingPage() {
           sx={{ margin: '8px' }}
           variant="outlined"
         >
-          Back to TableView
+          {catalogueItemIdData
+            ? `Back to ${catalogueCategoryData?.name} table view`
+            : 'Home'}
         </Button>
-        <Button sx={{ margin: '8px' }} variant="outlined">
+        <Button
+          disabled={!catalogueItemIdData}
+          sx={{ margin: '8px' }}
+          variant="outlined"
+        >
           Edit
         </Button>
       </Grid>
@@ -117,6 +124,21 @@ function CatalogueItemsLandingPage() {
             </Collapse>
           </Box>
         </Grid>
+      )}
+      {!catalogueItemIdData && !catalogueItemIdDataLoading && (
+        <Box
+          sx={{
+            width: '100%',
+            justifyContent: 'center',
+            marginTop: '8px',
+          }}
+        >
+          <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
+          <Typography>
+            This item doesn't exist. Please click the Home button to navigate to
+            the catalogue home
+          </Typography>
+        </Box>
       )}
     </Grid>
   );

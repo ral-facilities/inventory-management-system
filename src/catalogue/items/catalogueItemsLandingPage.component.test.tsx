@@ -16,8 +16,17 @@ describe('Catalogue Items Landing Page', () => {
 
   it('renders text correctly', async () => {
     createView('/inventory-management-system/catalogue/items/1');
+
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', {
+          name: 'Back to Cameras table view',
+        })
+      ).toBeInTheDocument();
     });
 
     expect(screen.getByText('Description:')).toBeInTheDocument();
@@ -26,6 +35,21 @@ describe('Catalogue Items Landing Page', () => {
     ).toBeInTheDocument();
 
     expect(screen.getByText('Resolution')).toBeInTheDocument();
+  });
+
+  it('renders no item page correctly', async () => {
+    createView('/inventory-management-system/catalogue/items/1fds');
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          `This item doesn't exist. Please click the Home button to navigate to the catalogue home`
+        )
+      ).toBeInTheDocument();
+    });
+    const editButton = screen.getByRole('button', { name: 'Edit' });
+    expect(editButton).toBeDisabled();
+    const homeButton = screen.getByRole('link', { name: 'Home' });
+    expect(homeButton).toBeInTheDocument();
   });
 
   it('toggles the properties so it is either visible or hidden', async () => {

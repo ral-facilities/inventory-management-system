@@ -188,7 +188,11 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           </Button>
         </Stack>
       ))}
-      <Button sx={{ margin: '8px' }} onClick={handleAddField}>
+      <Button
+        sx={{ margin: '8px' }}
+        onClick={handleAddField}
+        aria-label={'Add catalogue category field entry'}
+      >
         <AddIcon />
       </Button>
     </div>
