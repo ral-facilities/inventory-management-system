@@ -184,6 +184,21 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             ))}
         </TableBody>
       </Table>
+      {!data?.length && (
+        <Box
+          sx={{
+            width: '100%',
+            justifyContent: 'center',
+            marginTop: '8px',
+          }}
+        >
+          <Typography sx={{ fontWeight: 'bold' }}>No results found</Typography>
+          <Typography>
+            There are no items. Try adding an item by using the Add Catalogue
+            Item button in the top right of your screen
+          </Typography>
+        </Box>
+      )}
     </TableContainer>
   );
 };

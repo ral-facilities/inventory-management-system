@@ -349,7 +349,7 @@ describe('Catalogue Category Dialog', () => {
 
     it('displays error message if no form fields have been edited', async () => {
       mockData = {
-        id: '15',
+        id: '18',
         name: 'Voltage Meters',
         parent_id: '1',
         code: 'voltage-meters',

@@ -3,6 +3,8 @@ import { renderComponentWithMemoryRouter } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import Catalogue from './catalogue.component';
 import userEvent from '@testing-library/user-event';
+import { rest } from 'msw';
+import { server } from '../mocks/server';
 
 describe('Catalogue', () => {
   let user;
@@ -22,6 +24,8 @@ describe('Catalogue', () => {
     });
     expect(screen.getByText('Motion')).toBeInTheDocument();
     expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
+    expect(screen.getByText('High Power Lasers')).toBeInTheDocument();
+    expect(screen.getByText('X-RAY Beams')).toBeInTheDocument();
   });
 
   it('renders catalogue items table correctly', async () => {
@@ -50,6 +54,8 @@ describe('Catalogue', () => {
     });
     expect(screen.getByText('Motion')).toBeInTheDocument();
     expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
+    expect(screen.getByText('High Power Lasers')).toBeInTheDocument();
+    expect(screen.getByText('X-RAY Beams')).toBeInTheDocument();
   });
   it('opens the add catalogue category dialog', async () => {
     createView('/inventory-management-system/catalogue');
@@ -67,6 +73,73 @@ describe('Catalogue', () => {
     await user.click(closeButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('no results found page after X-rays opened', async () => {
+    createView('/inventory-management-system/catalogue/X-RAY-Beams');
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
+        )
+      ).toBeInTheDocument();
+    });
+  });
+
+  it('no items found after empty category opened', async () => {
+    createView(
+      '/inventory-management-system/catalogue/High-Power-Lasers/Frequency'
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'There are no items. Try adding an item by using the Add Catalogue Item button in the top right of your screen'
+        )
+      ).toBeInTheDocument();
+    });
+  });
+
+  it('expired url opens no results page', async () => {
+    createView('/inventory-management-system/catalogue/not-category');
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
+        )
+      ).toBeInTheDocument();
+    });
+  });
+
+  it('add button disabled when expired url is used', async () => {
+    createView('/inventory-management-system/catalogue/not-category');
+
+    const addButton = screen.getByRole('button', {
+      name: 'add catalogue category',
+    });
+    await waitFor(() => {
+      expect(addButton).toBeDisabled();
+    });
+  });
+
+  it('root has no categories so there is no results page', async () => {
+    server.use(
+      rest.get('/v1/catalogue-categories/', (req, res, ctx) => {
+        return res(ctx.status(200), ctx.json([]));
+      })
+    );
+
+    createView('/inventory-management-system/catalogue');
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
+        )
+      ).toBeInTheDocument();
     });
   });
 
