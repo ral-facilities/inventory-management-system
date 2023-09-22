@@ -87,7 +87,10 @@ function Catalogue() {
     ''
   );
 
-  const { data: catalogueCategoryData } = useCatalogueCategory(
+  const {
+    data: catalogueCategoryData,
+    isLoading: catalogueCategoryDataLoading,
+  } = useCatalogueCategory(
     undefined,
     catalogueLocation === '' ? '/' : catalogueLocation
   );
@@ -204,7 +207,8 @@ function Catalogue() {
 
       {!catalogueCategoryData?.length && //logic for no results page
         !parentInfo?.is_leaf &&
-        !catalogueCategoryDetailLoading && (
+        !catalogueCategoryDetailLoading &&
+        !catalogueCategoryDataLoading && (
           <Box
             sx={{
               width: '100%',
@@ -215,7 +219,7 @@ function Catalogue() {
               No results found
             </Typography>
             <Typography>
-              {parentId === null && catalogueLocation
+              {!parentInfo && catalogueLocation !== ''
                 ? 'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
                 : 'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'}
             </Typography>

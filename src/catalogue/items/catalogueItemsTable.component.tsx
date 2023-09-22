@@ -30,7 +30,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const catalogueItemProperties = parentInfo.catalogue_item_properties ?? [];
 
-  const { data } = useCatalogueItems(parentInfo.id);
+  const { data, isLoading } = useCatalogueItems(parentInfo.id);
 
   const theme = useTheme();
 
@@ -184,7 +184,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             ))}
         </TableBody>
       </Table>
-      {!data?.length && (
+      {!data?.length && !isLoading && (
         <Box
           sx={{
             width: '100%',
