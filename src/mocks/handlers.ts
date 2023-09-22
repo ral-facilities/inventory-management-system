@@ -176,4 +176,25 @@ export const handlers = [
     }
     return res(ctx.status(422), ctx.json({}));
   }),
+  rest.delete('/v1/catalogue-items/:id', (req, res, ctx) => {
+    const { id } = req.params;
+    const validCatalogueItem = CatalogueItemJSON.find(
+      (value) => value.id === id
+    );
+    if (validCatalogueItem) {
+      if (id === '6') {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail:
+              'Catalogue category has children elements and cannot be deleted',
+          })
+        );
+      } else {
+        return res(ctx.status(200), ctx.json(''));
+      }
+    } else {
+      return res(ctx.status(400), ctx.json(''));
+    }
+  }),
 ];

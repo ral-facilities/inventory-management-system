@@ -171,4 +171,45 @@ describe('Catalogue items', () => {
 
     cy.findByText('Motion').should('exist');
   });
+
+  it('displays error message when user tries to delete a catalogue item that has children elements', () => {
+    cy.visit(
+      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
+    );
+    cy.findByRole('button', {
+      name: 'Delete Energy Meters 27 catalogue item',
+    }).click();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains(
+          'Catalogue category has children elements and cannot be deleted, please delete the children elements first'
+        );
+      });
+  });
+
+  it('delete a catalogue item', () => {
+    cy.visit(
+      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
+    );
+    cy.findByRole('button', {
+      name: 'Delete Energy Meters 26 catalogue item',
+    }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/catalogue-items/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(request.url.toString()).to.contain('89');
+    });
+  });
 });

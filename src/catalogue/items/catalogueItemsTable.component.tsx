@@ -15,9 +15,10 @@ import {
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { CatalogueCategory } from '../../app.types';
+import { CatalogueItem, CatalogueCategory } from '../../app.types';
 import { useCatalogueItems } from '../../api/catalogueItem';
 import { Link } from 'react-router-dom';
+import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 
 export interface CatalogueItemsTableProps {
   parentInfo: CatalogueCategory;
@@ -35,6 +36,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const theme = useTheme();
 
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
+
+  const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [selectedCatalogueItem, setSelectedCatalogueItem] = React.useState<
+    CatalogueItem | undefined
+  >(undefined);
   return (
     <TableContainer style={{ height: tableHeight }}>
       <Table stickyHeader>
@@ -119,6 +127,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                     <IconButton
                       size="small"
                       aria-label={`Delete ${item.name} catalogue item`}
+                      onClick={() => {
+                        setDeleteItemDialogOpen(true);
+                        setSelectedCatalogueItem(item);
+                      }}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -199,6 +211,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           </Typography>
         </Box>
       )}
+      <DeleteCatalogueItemsDialog
+        open={deleteItemDialogOpen}
+        onClose={() => setDeleteItemDialogOpen(false)}
+        catalogueItem={selectedCatalogueItem}
+      />
     </TableContainer>
   );
 };

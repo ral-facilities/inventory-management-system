@@ -105,4 +105,31 @@ describe('Catalogue Items Table', () => {
       ).toHaveStyle('background-color: inherit');
     });
   });
+
+  it('opens the delete catalogue item dialog', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText(
+          'Catalogue item description: Precision energy meters for accurate measurements. 26'
+        )
+      ).toBeInTheDocument();
+    });
+
+    const deleteButton = screen.getByRole('button', {
+      name: 'Delete Energy Meters 26 catalogue item',
+    });
+    await user.click(deleteButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
 });
