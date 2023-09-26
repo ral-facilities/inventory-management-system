@@ -88,3 +88,33 @@ export const useAddCatalogueCategory = (): UseMutationResult<
     }
   );
 };
+
+const deleteCatalogueCategory = async (
+  session: ViewCatalogueCategoryResponse
+): Promise<void> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+  return axios
+    .delete(`${apiUrl}/v1/catalogue-categories/${session.id}`, {})
+    .then((response) => response.data);
+};
+
+export const useDeleteCatalogueCategory = (): UseMutationResult<
+  void,
+  AxiosError,
+  ViewCatalogueCategoryResponse
+> => {
+  return useMutation(
+    (session: ViewCatalogueCategoryResponse) =>
+      deleteCatalogueCategory(session),
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+    }
+  );
+};

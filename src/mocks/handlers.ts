@@ -24,7 +24,6 @@ export const handlers = [
       })
     );
   }),
-
   rest.get('/v1/catalogue-categories/', (req, res, ctx) => {
     const catalogueCategoryParams = req.url.searchParams;
     const path = catalogueCategoryParams.get('path');
@@ -40,5 +39,27 @@ export const handlers = [
       );
     }
     return res(ctx.status(200), ctx.json(data));
+  }),
+
+  rest.delete('/v1/catalogue-categories/:id', (req, res, ctx) => {
+    const { id } = req.params;
+    const validCatalogueCategory = CatalogueCategoryJSON.find(
+      (value) => value.id === id
+    );
+    if (validCatalogueCategory) {
+      if (id === '2') {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail:
+              'Catalogue category has children elements and cannot be deleted',
+          })
+        );
+      } else {
+        return res(ctx.status(200), ctx.json(''));
+      }
+    } else {
+      return res(ctx.status(400), ctx.json(''));
+    }
   }),
 ];

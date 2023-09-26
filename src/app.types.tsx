@@ -35,3 +35,7 @@ export interface CatalogueCategoryFormData {
   unit?: string;
   mandatory: boolean;
 }
+
+export interface ErrorParsing {
+  detail: string;
+}
