@@ -1,16 +1,14 @@
 import { rest } from 'msw';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
+import { AddCatalogueCategory } from '../app.types';
 
 export const handlers = [
   rest.post('/v1/catalogue-categories', async (req, res, ctx) => {
-    const body = await req.text();
-    if (body === '{"is_leaf":false}') {
+    const body = (await req.json()) as AddCatalogueCategory;
+
+    if (!body.name) {
       return res(ctx.status(422), ctx.json(''));
-    } else if (body === '{"is_leaf":true}') {
-      return res(ctx.status(422), ctx.json(''));
-    } else if (body === '{"name":"test_dup","is_leaf":false}') {
-      return res(ctx.status(409), ctx.json(''));
-    } else if (body === '{"name":"test_dup","is_leaf":true}') {
+    } else if (body.name === 'test_dup') {
       return res(ctx.status(409), ctx.json(''));
     }
     return res(

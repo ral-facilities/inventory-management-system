@@ -8,6 +8,7 @@ import { NavigateNext } from '@mui/icons-material';
 import AddCatalogueCategoryDialog from './addCatalogueCategoryDialog.component';
 import CatalogueCard from './catalogueCard.component';
 import { useCatalogueCategory } from '../api/catalogueCategory';
+import { CatalogueCategoryFormData } from '../app.types';
 
 function Catalogue() {
   const [currNode, setCurrNode] = React.useState('/');
@@ -46,6 +47,10 @@ function Catalogue() {
   const parentInfo = catalogueCategoryDetail?.[0];
 
   const disableButton = parentInfo ? parentInfo.is_leaf : false;
+
+  const [formFields, setFormFields] = React.useState<
+    CatalogueCategoryFormData[] | null
+  >(null);
 
   React.useEffect(() => {
     if (parentInfo) {
@@ -88,7 +93,6 @@ function Catalogue() {
           variant="outlined"
           sx={{ alignContent: 'left', margin: '4px' }}
           onClick={() => setCatalogueCategoryDialogOpen(true)}
-          data-testid="add-button-catalogue"
           disabled={disableButton}
         >
           <AddIcon />
@@ -99,6 +103,8 @@ function Catalogue() {
           parentId={parentId}
           onChangeLeaf={setIsLeaf}
           isLeaf={isLeaf}
+          formFields={formFields}
+          onChangeFormFields={setFormFields}
           refetchData={() => catalogueCategoryDataRefetch()}
         />
       </Grid>

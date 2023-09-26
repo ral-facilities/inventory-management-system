@@ -41,7 +41,7 @@ describe('Catalogue', () => {
   it('opens the add catalogue category dialog', async () => {
     createView('/');
 
-    const addButton = await screen.findByTestId('add-button-catalogue');
+    const addButton = await screen.findByTestId('AddIcon');
     await user.click(addButton);
 
     await waitFor(() => {
