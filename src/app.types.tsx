@@ -33,5 +33,5 @@ export interface CatalogueCategoryFormData {
   name: string;
   type: string;
   unit?: string;
-  mandatory: boolean | null;
+  mandatory: boolean;
 }
