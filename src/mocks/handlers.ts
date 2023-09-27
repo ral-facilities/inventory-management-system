@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
+import ManufacturerJSON from './manufacturer.json';
 
 export const handlers = [
   rest.post('/v1/catalogue-categories', async (req, res, ctx) => {
@@ -42,5 +43,9 @@ export const handlers = [
       );
     }
     return res(ctx.status(200), ctx.json(data));
+  }),
+
+  rest.get('/v1/manufacturer', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(ManufacturerJSON));
   }),
 ];

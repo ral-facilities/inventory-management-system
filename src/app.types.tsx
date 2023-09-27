@@ -27,3 +27,10 @@ export interface ViewCatalogueCategoryResponse {
   code: string;
   is_leaf: boolean;
 }
+
+export interface ViewManufacturerResponse {
+  name: string;
+  url: string;
+  address: string;
+  id: string;
+}
