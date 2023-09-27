@@ -4,7 +4,6 @@ import { screen, waitFor } from '@testing-library/react';
 import Manufacturer from './manufacturer.component';
 
 describe('Manufacturer', () => {
-  // let user;
   const createView = () => {
     return renderComponentWithBrowserRouter(<Manufacturer />);
   };
@@ -36,13 +35,12 @@ describe('Manufacturer', () => {
     expect(screen.getByText('12 My Street')).toBeInTheDocument();
   });
 
-  // it('clicking on manufacturer url opens page in new tab', async () => {
-  //   createView();
-  //   await waitFor(() => {
-  //     expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
-  //   })
-  //   const url = await screen.findByText('example.com')
-  //   await user.click(url).should("not-disbaled")
-
-  // });
+  it('manufacturer url has a href so therefore links to new webpage', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
+    });
+    const url = await screen.findByText('example.com');
+    expect(url).toHaveAttribute('href', 'http://example.com');
+  });
 });

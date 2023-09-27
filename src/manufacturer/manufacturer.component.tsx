@@ -19,8 +19,6 @@ import { useManufacturers } from '../api/manufacturer';
 function Manufacturer() {
   const { data: ManufacturerData } = useManufacturers();
 
-  console.log(ManufacturerData);
-
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
   const tableHeight = `calc(100vh)-(64px + 36px +50px)`;
   const theme = useTheme();

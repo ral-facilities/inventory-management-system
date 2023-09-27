@@ -24,4 +24,18 @@ describe('Manufacturer', () => {
     cy.findByText('11 My Street').should('be.visible');
     cy.findByText('12 My Street').should('be.visible');
   });
+
+  it('manufacturer url is correct and opens new webpage', () => {
+    cy.visit('/manufacturer');
+    const url = cy.findByText('example.com');
+
+    url
+      .should('be.visible')
+      .then((url) => {
+        expect(url).to.have.attr('target', '_blank');
+        url.attr('target', '_self');
+      })
+      .click();
+    cy.url().should('include', 'example.com');
+  });
 });
