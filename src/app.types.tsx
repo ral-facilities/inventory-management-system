@@ -34,3 +34,13 @@ export interface ViewManufacturerResponse {
   address: string;
   id: string;
 }
+export interface CatalogueCategoryFormData {
+  name: string;
+  type: string;
+  unit?: string;
+  mandatory: boolean;
+}
+
+export interface ErrorParsing {
+  detail: string;
+}

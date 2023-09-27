@@ -1,6 +1,7 @@
 import { rest } from 'msw';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
 import ManufacturerJSON from './manufacturer.json';
+// import { AddCatalogueCategory } from '../app.types';
 
 export const handlers = [
   rest.post('/v1/catalogue-categories', async (req, res, ctx) => {
@@ -47,5 +48,27 @@ export const handlers = [
 
   rest.get('/v1/manufacturer', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(ManufacturerJSON));
+  }),
+
+  rest.delete('/v1/catalogue-categories/:id', (req, res, ctx) => {
+    const { id } = req.params;
+    const validCatalogueCategory = CatalogueCategoryJSON.find(
+      (value) => value.id === id
+    );
+    if (validCatalogueCategory) {
+      if (id === '2') {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail:
+              'Catalogue category has children elements and cannot be deleted',
+          })
+        );
+      } else {
+        return res(ctx.status(200), ctx.json(''));
+      }
+    } else {
+      return res(ctx.status(400), ctx.json(''));
+    }
   }),
 ];
