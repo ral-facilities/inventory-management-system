@@ -3,6 +3,7 @@ import {
   useMutation,
   UseMutationResult,
   useQuery,
+  useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
 import {
@@ -78,12 +79,16 @@ export const useAddCatalogueCategory = (): UseMutationResult<
   AxiosError,
   AddCatalogueCategory
 > => {
+  const queryClient = useQueryClient();
   return useMutation(
     (catalogueCategory: AddCatalogueCategory) =>
       addCatalogueCategory(catalogueCategory),
     {
       onError: (error) => {
         console.log('Got error ' + error.message);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
       },
     }
   );
@@ -112,12 +117,17 @@ export const useEditCatalogueCategory = (): UseMutationResult<
   AxiosError,
   EditCatalogueCategory
 > => {
+  const queryClient = useQueryClient();
   return useMutation(
     (catalogueCategory: EditCatalogueCategory) =>
       editCatalogueCategory(catalogueCategory),
     {
       onError: (error) => {
         console.log('Got error ' + error.message);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategoryByID'] });
       },
     }
   );
@@ -142,12 +152,17 @@ export const useDeleteCatalogueCategory = (): UseMutationResult<
   AxiosError,
   CatalogueCategory
 > => {
+  const queryClient = useQueryClient();
   return useMutation(
     (catalogueCategory: CatalogueCategory) =>
       deleteCatalogueCategory(catalogueCategory),
     {
       onError: (error) => {
         console.log('Got error ' + error.message);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategoryByID'] });
       },
     }
   );

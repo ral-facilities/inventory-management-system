@@ -5,14 +5,13 @@ import DeleteCatalogueCategoryDialog, {
   DeleteCatalogueCategoryDialogProps,
 } from './deleteCatalogueCategoryDialog.component';
 import { renderComponentWithBrowserRouter } from '../setupTests';
-import { ViewCatalogueCategoryResponse } from '../app.types';
+import { CatalogueCategory } from '../app.types';
 
 describe('delete Catalogue Category dialogue', () => {
   let props: DeleteCatalogueCategoryDialogProps;
   let user;
   const onClose = jest.fn();
-  const refetchData = jest.fn();
-  let catalogueCategory: ViewCatalogueCategoryResponse;
+  let catalogueCategory: CatalogueCategory;
 
   const createView = (): RenderResult => {
     return renderComponentWithBrowserRouter(
@@ -33,7 +32,6 @@ describe('delete Catalogue Category dialogue', () => {
     props = {
       open: true,
       onClose: onClose,
-      refetchData: refetchData,
       catalogueCategory: catalogueCategory,
     };
     user = userEvent; // Assigning userEvent to 'user'
@@ -82,7 +80,6 @@ describe('delete Catalogue Category dialogue', () => {
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
     });
-    expect(refetchData).toHaveBeenCalled();
   });
 
   it('displays error message when user tries to delete a catalogue category that has children elements', async () => {
