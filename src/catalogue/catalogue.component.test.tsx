@@ -41,7 +41,7 @@ describe('Catalogue', () => {
   it('opens the add catalogue category dialog', async () => {
     createView('/');
 
-    const addButton = await screen.findByTestId('add-button-catalogue');
+    const addButton = await screen.findByTestId('AddIcon');
     await user.click(addButton);
 
     await waitFor(() => {
@@ -50,6 +50,29 @@ describe('Catalogue', () => {
 
     const closeButton = screen.getByRole('button', { name: 'Cancel' });
     await user.click(closeButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens the delete catalogue category dialog', async () => {
+    createView('/');
+
+    await waitFor(() => {
+      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+    });
+
+    const deleteButtons = screen.getAllByTestId(
+      'delete-catalogue-category-button'
+    );
+    await user.click(deleteButtons[0]);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });

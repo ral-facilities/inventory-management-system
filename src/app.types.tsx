@@ -7,6 +7,7 @@ export interface AddCatalogueCategory {
   name?: string;
   parent_id?: string;
   is_leaf: boolean;
+  catalogue_item_properties?: CatalogueCategoryFormData[];
 }
 
 export interface AddCatalogueCategoryResponse {
@@ -34,6 +35,7 @@ export interface ViewManufacturerResponse {
   address: string;
   id: string;
 }
+
 export interface CatalogueCategoryFormData {
   name: string;
   type: string;
