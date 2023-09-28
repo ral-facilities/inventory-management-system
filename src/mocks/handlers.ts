@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
 import ManufacturerJSON from './manufacturer.json';
-import { AddCatalogueCategory } from '../app.types';
+import { AddCatalogueCategory, AddManufacturer } from '../app.types';
 
 export const handlers = [
   rest.post('/v1/catalogue-categories', async (req, res, ctx) => {
@@ -47,6 +47,18 @@ export const handlers = [
   }),
 
   rest.post('/v1/manufacturer', async (req, res, ctx) => {
+    const body = (await req.json()) as AddManufacturer;
+
+    if (!body.name) {
+      return res(ctx.status(422), ctx.json(''));
+    } else if (!body.url) {
+      return res(ctx.status(422), ctx.json(''));
+    } else if (!body.address) {
+      return res(ctx.status(422), ctx.json(''));
+    } else if (body.name === 'Manufacturer A') {
+      return res(ctx.status(409), ctx.json(''));
+    }
+
     return res(
       ctx.status(200),
       ctx.json({
