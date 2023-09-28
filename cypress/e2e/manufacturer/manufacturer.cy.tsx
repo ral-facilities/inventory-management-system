@@ -29,7 +29,12 @@ describe('Manufacturer', () => {
     cy.visit('/manufacturer');
     const url = cy.findByText('http://example.com');
 
-    url.should('be.visible').click();
+    url
+      .should('be.visible')
+      .then(($url) => {
+        $url.attr('target', '_self');
+      })
+      .click();
     cy.url().should('include', 'http://example.com');
   });
 });
