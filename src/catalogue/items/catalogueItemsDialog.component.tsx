@@ -20,12 +20,18 @@ import React from 'react';
 import {
   AddCatalogueItem,
   CatalogueCategoryFormData,
+  CatalogueItem,
   CatalogueItemDetails,
   CatalogueItemManufacturer,
   CatalogueItemProperty,
+  EditCatalogueItem,
   ErrorParsing,
 } from '../../app.types';
-import { useAddCatalogueItem } from '../../api/catalogueItem';
+import {
+  useAddCatalogueItem,
+  useCatalogueItem,
+  useEditCatalogueItem,
+} from '../../api/catalogueItem';
 import { AxiosError } from 'axios';
 
 export interface CatalogueItemsDialogProps {
@@ -45,6 +51,38 @@ export interface CatalogueItemsDialogProps {
   onChangeCatalogueItemProperties: (
     catalogueItemProperties: CatalogueItemProperty[] | null
   ) => void;
+  selectedCatalogueItem?: CatalogueItem;
+  type: 'edit' | 'create';
+}
+
+function matchCatalogueItemProperties(
+  form: CatalogueCategoryFormData[],
+  items: CatalogueItemProperty[]
+): (string | number | boolean | null)[] {
+  const result: (string | number | boolean | null)[] = [];
+
+  for (const property of form) {
+    const matchingItem = items.find((item) => item.name === property.name);
+    if (matchingItem) {
+      // Type check and assign the value
+      if (property.type === 'number') {
+        result.push(matchingItem.value ? Number(matchingItem.value) : null);
+      } else if (property.type === 'boolean') {
+        result.push(
+          typeof matchingItem.value === 'boolean'
+            ? String(Boolean(matchingItem.value))
+            : ''
+        );
+      } else {
+        result.push(matchingItem.value ? String(matchingItem.value) : null);
+      }
+    } else {
+      // If there is no matching item, push null
+      result.push(null);
+    }
+  }
+
+  return result;
 }
 
 function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
@@ -59,15 +97,35 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     catalogueItemPropertiesForm,
     catalogueItemProperties,
     onChangeCatalogueItemProperties,
+    selectedCatalogueItem,
+    type,
   } = props;
 
-  const [propertyValues, setPropertyValues] = React.useState(
-    catalogueItemProperties?.map((property) => property.value) || []
-  );
+  const [propertyValues, setPropertyValues] = React.useState<
+    (string | number | boolean | null)[]
+  >(catalogueItemProperties?.map((property) => property.value) || []);
+
+  React.useEffect(() => {
+    if (type === 'edit') {
+      setPropertyValues(
+        matchCatalogueItemProperties(
+          catalogueItemPropertiesForm,
+          catalogueItemProperties ?? []
+        )
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
     string | undefined
   >();
+
+  const [formError, setFormError] = React.useState(false);
+  const [formErrorMessage, setFormErrorMessage] = React.useState<
+    string | undefined
+  >(undefined);
 
   const [catchAllError, setCatchAllError] = React.useState(false);
 
@@ -87,11 +145,16 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       new Array(catalogueItemPropertiesForm.length).fill(false)
     );
     setNameError(false);
+    setNameErrorMessage(undefined);
+    onChangeCatalogueItemProperties([]);
+    setFormError(false);
+    setFormErrorMessage(undefined);
     onClose();
   }, [
     catalogueItemPropertiesForm.length,
     onChangeCatalogueItemDetails,
     onChangeCatalogueItemManufacturer,
+    onChangeCatalogueItemProperties,
     onClose,
   ]);
 
@@ -100,6 +163,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     name: string,
     newValue: string | boolean | null
   ) => {
+    setFormError(false);
+    setFormErrorMessage(undefined);
     const updatedPropertyValues = [...propertyValues];
     updatedPropertyValues[index] = newValue;
     setPropertyValues(updatedPropertyValues);
@@ -142,6 +207,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   };
 
   const { mutateAsync: addCatalogueItem } = useAddCatalogueItem();
+  const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
+  const { data: selectedCatalogueItemData } = useCatalogueItem(
+    selectedCatalogueItem?.id
+  );
 
   const handleAddCatalogueItem = React.useCallback(() => {
     let hasErrors = false;
@@ -235,13 +304,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     addCatalogueItem(catalogueItem)
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
-        const response = error.response?.data as ErrorParsing;
         console.log(error);
-        if (response && error.response?.status === 409) {
-          setNameError(true);
-          setNameErrorMessage(response.detail);
-          return;
-        }
         setCatchAllError(true);
       });
   }, [
@@ -255,9 +318,164 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     propertyValues,
   ]);
 
+  const handleEditCatalogueItem = React.useCallback(() => {
+    if (selectedCatalogueItem && selectedCatalogueItemData) {
+      let hasErrors = false;
+
+      // Check name
+      if (
+        catalogueItemDetails.name === undefined ||
+        catalogueItemDetails.name === ''
+      ) {
+        setNameError(true);
+        setNameErrorMessage('Please enter name');
+        hasErrors = true;
+      } else {
+        setNameError(false);
+      }
+
+      // Check properties
+      const updatedPropertyErrors = [...propertyErrors];
+
+      const updatedProperties = catalogueItemPropertiesForm.map(
+        (property, index) => {
+          if (property.mandatory && !propertyValues[index]) {
+            updatedPropertyErrors[index] = true;
+            hasErrors = true;
+          } else {
+            updatedPropertyErrors[index] = false;
+          }
+
+          if (
+            propertyValues[index] !== undefined &&
+            property.type === 'number' &&
+            isNaN(Number(propertyValues[index]))
+          ) {
+            updatedPropertyErrors[index] = true;
+            hasErrors = true;
+          }
+
+          if (!propertyValues[index]) {
+            if (property.type === 'boolean') {
+              if (
+                propertyValues[index] === '' ||
+                propertyValues[index] === undefined
+              ) {
+                return null;
+              }
+            } else {
+              return null;
+            }
+          }
+
+          let typedValue: string | number | boolean | null =
+            propertyValues[index]; // Assume it's a string by default
+
+          if (property.type === 'boolean') {
+            typedValue =
+              typeof propertyValues[index] !== 'boolean'
+                ? propertyValues[index] === 'true'
+                  ? true
+                  : propertyValues[index] === 'false'
+                  ? false
+                  : ''
+                : propertyValues[index];
+          } else if (property.type === 'number') {
+            typedValue = Number(propertyValues[index]);
+          }
+
+          return {
+            name: property.name,
+            value: typedValue,
+          };
+        }
+      );
+
+      setPropertyErrors(updatedPropertyErrors);
+
+      if (hasErrors) {
+        return; // Do not proceed with saving if there are errors
+      }
+
+      const filteredProperties = updatedProperties.filter(
+        (property) => property !== null
+      ) as CatalogueItemProperty[];
+
+      const isNameUpdated =
+        catalogueItemDetails.name !== selectedCatalogueItemData.name;
+
+      const isDescriptionUpdated =
+        catalogueItemDetails.description !==
+        selectedCatalogueItemData.description;
+
+      const isCatalogueItemPropertiesUpdated =
+        JSON.stringify(filteredProperties) !==
+        JSON.stringify(
+          selectedCatalogueItemData.properties.map(
+            ({ unit, ...rest }) => rest
+          ) ?? null
+        );
+
+      let catalogueItem: EditCatalogueItem = {
+        id: selectedCatalogueItem.id,
+      };
+
+      if (isNameUpdated) {
+        catalogueItem = { ...catalogueItem, name: catalogueItemDetails.name };
+      }
+
+      if (isDescriptionUpdated) {
+        catalogueItem = {
+          ...catalogueItem,
+          description: catalogueItemDetails.description,
+        };
+      }
+
+      if (isCatalogueItemPropertiesUpdated) {
+        catalogueItem = { ...catalogueItem, properties: filteredProperties };
+      }
+
+      if (
+        catalogueItem.id &&
+        (isNameUpdated ||
+          isDescriptionUpdated ||
+          isCatalogueItemPropertiesUpdated)
+      ) {
+        editCatalogueItem(catalogueItem)
+          .then((response) => handleClose())
+          .catch((error: AxiosError) => {
+            const response = error.response?.data as ErrorParsing;
+            console.log(error);
+            if (response && error.response?.status === 409) {
+              if (response.detail.includes('children elements')) {
+                setFormError(true);
+                setFormErrorMessage(response.detail);
+              }
+              return;
+            }
+            setCatchAllError(true);
+          });
+      } else {
+        setFormError(true);
+        setFormErrorMessage('Please edit a form entry before clicking save');
+      }
+    }
+  }, [
+    catalogueItemDetails,
+    catalogueItemPropertiesForm,
+    editCatalogueItem,
+    handleClose,
+    propertyErrors,
+    propertyValues,
+    selectedCatalogueItem,
+    selectedCatalogueItemData,
+  ]);
+
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
-      <DialogTitle>Add Catalogue Item</DialogTitle>
+      <DialogTitle>{`${
+        type === 'create' ? 'Add' : 'Edit'
+      } Catalogue Item`}</DialogTitle>
       <DialogContent>
         <Typography variant="h6">Details</Typography>
         <TextField
@@ -273,6 +491,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             });
             setNameError(false); // Clear the error when user types in the name field
             setNameErrorMessage(undefined);
+            setFormError(false);
+            setFormErrorMessage(undefined);
           }}
           fullWidth
           error={nameError} // Set error state based on the nameError state
@@ -289,6 +509,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               ...catalogueItemDetails,
               description: newDescription,
             });
+            setFormError(false);
+            setFormErrorMessage(undefined);
           }}
           fullWidth
           multiline
@@ -428,6 +650,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               ...catalogueItemManufacturer,
               manufacturer: event.target.value,
             });
+            setFormError(false);
+            setFormErrorMessage(undefined);
           }}
           fullWidth
         />
@@ -442,6 +666,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               ...catalogueItemManufacturer,
               manufacturerNumber: event.target.value,
             });
+            setFormError(false);
+            setFormErrorMessage(undefined);
           }}
           fullWidth
         />
@@ -456,6 +682,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               ...catalogueItemManufacturer,
               manufacturerUrl: event.target.value,
             });
+            setFormError(false);
+            setFormErrorMessage(undefined);
           }}
           fullWidth
         />
@@ -482,11 +710,20 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={handleAddCatalogueItem}
+            onClick={
+              type === 'create'
+                ? handleAddCatalogueItem
+                : handleEditCatalogueItem
+            }
           >
             Save
           </Button>
         </Box>
+        {formError && (
+          <FormHelperText sx={{ marginBottom: '16px' }} error>
+            {formErrorMessage}
+          </FormHelperText>
+        )}
         {catchAllError && (
           <FormHelperText sx={{ marginBottom: '16px' }} error>
             {'Please refresh and try again'}

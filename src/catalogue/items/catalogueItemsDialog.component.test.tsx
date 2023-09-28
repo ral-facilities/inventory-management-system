@@ -42,6 +42,7 @@ describe('Catalogue Items Dialog', () => {
       catalogueItemPropertiesForm: [],
       catalogueItemProperties: [],
       onChangeCatalogueItemProperties: onChangeCatalogueItemProperties,
+      type: 'create',
     };
 
     user = userEvent.setup();
@@ -91,7 +92,7 @@ describe('Catalogue Items Dialog', () => {
           value: true,
         },
         {
-          name: 'Old than 5 years',
+          name: 'Older than five years',
           value: false,
         },
       ],
@@ -146,7 +147,7 @@ describe('Catalogue Items Dialog', () => {
           value: true,
         },
         {
-          name: 'Old than 5 years',
+          name: 'Older than five years',
           value: '',
         },
       ],
@@ -198,7 +199,7 @@ describe('Catalogue Items Dialog', () => {
           value: '',
         },
         {
-          name: 'Old than 5 years',
+          name: 'Older than five years',
           value: '',
         },
       ],
@@ -255,7 +256,7 @@ describe('Catalogue Items Dialog', () => {
           value: false,
         },
         {
-          name: 'Old than 5 years',
+          name: 'Older than five years',
           value: '',
         },
       ],
@@ -277,11 +278,14 @@ describe('Catalogue Items Dialog', () => {
     );
   });
 
-  it('displays duplicate name error message', async () => {
+  it('displays has children elements error message', async () => {
     props = {
       ...props,
       parentId: '1',
-      catalogueItemDetails: { name: 'test_dup', description: '' },
+      catalogueItemDetails: {
+        name: 'test_has_children_elements',
+        description: '',
+      },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
       catalogueItemProperties: [
         {
@@ -305,7 +309,7 @@ describe('Catalogue Items Dialog', () => {
           value: true,
         },
         {
-          name: 'Old than 5 years',
+          name: 'Older than five years',
           value: false,
         },
       ],
@@ -320,7 +324,7 @@ describe('Catalogue Items Dialog', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'A catalogue item with the same name already exists within the catalogue category'
+          'Catalogue item has children elements and cannot be deleted'
         )
       ).toBeInTheDocument();
     });
@@ -354,7 +358,7 @@ describe('Catalogue Items Dialog', () => {
           value: true,
         },
         {
-          name: 'Old than 5 years',
+          name: 'Older than five years',
           value: false,
         },
       ],
@@ -376,7 +380,7 @@ describe('Catalogue Items Dialog', () => {
     props = {
       ...props,
       parentId: '1',
-      catalogueItemDetails: { name: 'test_dup', description: '' },
+      catalogueItemDetails: { name: 'test', description: '' },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
       catalogueItemProperties: [],
     };
@@ -396,6 +400,612 @@ describe('Catalogue Items Dialog', () => {
         }),
       ])
     );
+  });
+  describe('Edit a catalogue item', () => {
+    let axiosPatchSpy;
+    beforeEach(() => {
+      props = {
+        ...props,
+        type: 'edit',
+      };
+
+      axiosPatchSpy = jest.spyOn(axios, 'patch');
+    });
+
+    it('Edit a catalogue item (catalogue detail)', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+        catalogueItemDetails: { name: 'test', description: '' },
+        selectedCatalogueItem: {
+          catalogue_category_id: '4',
+          name: 'Cameras 4',
+          description: 'High-resolution cameras for beam characterization. 4',
+          properties: [
+            { name: 'Resolution', value: 24, unit: 'megapixels' },
+            { name: 'Frame Rate', value: 240, unit: 'fps' },
+            { name: 'Sensor Type', value: 'CCD', unit: '' },
+            { name: 'Sensor brand', value: 'Nikon', unit: '' },
+            { name: 'Broken', value: false, unit: '' },
+            { name: 'Older than five years', value: true, unit: '' },
+          ],
+          id: '4',
+        },
+        catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+        catalogueItemProperties: [
+          {
+            name: 'Resolution',
+            value: 24,
+          },
+          {
+            name: 'Frame Rate',
+            value: 240,
+          },
+          {
+            name: 'Sensor Type',
+            value: 'CCD',
+          },
+          {
+            name: 'Sensor brand',
+            value: 'Nikon',
+          },
+          {
+            name: 'Broken',
+            value: false,
+          },
+          {
+            name: 'Older than five years',
+            value: true,
+          },
+        ],
+      };
+
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/4', {
+        description: '',
+        name: 'test',
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    });
+
+    it('display error message when invalid number format', async () => {
+      props = {
+        ...props,
+        parentId: '4',
+        catalogueItemDetails: { name: 'test', description: '' },
+        catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+        selectedCatalogueItem: {
+          catalogue_category_id: '4',
+          name: 'Cameras 4',
+          description: 'High-resolution cameras for beam characterization. 4',
+          properties: [
+            { name: 'Resolution', value: 24, unit: 'megapixels' },
+            { name: 'Frame Rate', value: 240, unit: 'fps' },
+            { name: 'Sensor Type', value: 'CCD', unit: '' },
+            { name: 'Sensor brand', value: 'Nikon', unit: '' },
+            { name: 'Broken', value: false, unit: '' },
+            { name: 'Older than five years', value: true, unit: '' },
+          ],
+          id: '4',
+        },
+        catalogueItemProperties: [
+          {
+            name: 'Resolution',
+            value: '12',
+          },
+          {
+            name: 'Frame Rate',
+            value: '21',
+          },
+          {
+            name: 'Sensor Type',
+            value: 'pixel',
+          },
+          {
+            name: 'Sensor brand',
+            value: null,
+          },
+          {
+            name: 'Broken',
+            value: false,
+          },
+          {
+            name: 'Older than five years',
+            value: '',
+          },
+        ],
+      };
+
+      createView();
+
+      await user.type(screen.getByLabelText('Resolution (megapixels) *'), 'a');
+      await user.type(screen.getByLabelText('Frame Rate (fps)'), 'a');
+
+      await waitFor(() => {
+        expect(screen.getByLabelText('Frame Rate (fps)')).toHaveValue('21a');
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      const validNumberHelperText = screen.getAllByText(
+        'Please enter a valid number'
+      );
+
+      expect(validNumberHelperText.length).toBe(2);
+      expect(validNumberHelperText[0]).toHaveTextContent(
+        'Please enter a valid number'
+      );
+    });
+
+    it('display error message when mandatory field is not filled in', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+        catalogueItemDetails: {
+          name: '',
+          description: 'High-resolution cameras for beam characterization. 4',
+        },
+        selectedCatalogueItem: {
+          catalogue_category_id: '4',
+          name: 'Cameras 4',
+          description: 'High-resolution cameras for beam characterization. 4',
+          properties: [
+            { name: 'Resolution', value: 24, unit: 'megapixels' },
+            { name: 'Frame Rate', value: 240, unit: 'fps' },
+            { name: 'Sensor Type', value: 'CCD', unit: '' },
+            { name: 'Sensor brand', value: 'Nikon', unit: '' },
+            { name: 'Broken', value: false, unit: '' },
+            { name: 'Older than five years', value: true, unit: '' },
+          ],
+          id: '4',
+        },
+        catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+        catalogueItemProperties: [
+          {
+            name: 'Resolution',
+            value: 24,
+          },
+          {
+            name: 'Frame Rate',
+            value: 240,
+          },
+          {
+            name: 'Sensor Type',
+            value: 'CCD',
+          },
+          {
+            name: 'Sensor brand',
+            value: 'Nikon',
+          },
+          {
+            name: 'Broken',
+            value: true,
+          },
+          {
+            name: 'Older than five years',
+            value: true,
+          },
+        ],
+      };
+
+      createView();
+
+      await user.clear(screen.getByLabelText('Resolution (megapixels) *'));
+      await user.click(screen.getByLabelText('Broken *'));
+      await user.click(screen.getByText('None'));
+      await user.clear(screen.getByLabelText('Sensor Type *'));
+
+      await waitFor(() => {
+        expect(screen.getByLabelText('Sensor Type *')).toHaveValue('');
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      const mandatoryFieldHelperText = screen.getAllByText(
+        'This field is mandatory'
+      );
+
+      const mandatoryFieldBooleanHelperText = screen.getByText(
+        'Please select either True or False'
+      );
+
+      const nameHelperText = screen.getByText('Please enter name');
+
+      expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
+      expect(nameHelperText).toBeInTheDocument();
+      expect(mandatoryFieldHelperText.length).toBe(2);
+      expect(mandatoryFieldHelperText[0]).toHaveTextContent(
+        'This field is mandatory'
+      );
+    });
+
+    it('Edit a catalogue item (catalogue properties)', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+        catalogueItemDetails: {
+          name: 'Cameras 4',
+          description: 'High-resolution cameras for beam characterization. 4',
+        },
+        selectedCatalogueItem: {
+          catalogue_category_id: '4',
+          name: 'Cameras 4',
+          description: 'High-resolution cameras for beam characterization. 4',
+          properties: [
+            { name: 'Resolution', value: 24, unit: 'megapixels' },
+            { name: 'Frame Rate', value: 240, unit: 'fps' },
+            { name: 'Sensor Type', value: 'CCD', unit: '' },
+            { name: 'Sensor brand', value: 'Nikon', unit: '' },
+            { name: 'Broken', value: false, unit: '' },
+            { name: 'Older than five years', value: true, unit: '' },
+          ],
+          id: '4',
+        },
+        catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+        catalogueItemProperties: [
+          {
+            name: 'Resolution',
+            value: 24,
+          },
+          {
+            name: 'Frame Rate',
+            value: 240,
+          },
+          {
+            name: 'Sensor Type',
+            value: 'CCD',
+          },
+          {
+            name: 'Sensor brand',
+            value: 'Nikon',
+          },
+          {
+            name: 'Broken',
+            value: true,
+          },
+          {
+            name: 'Older than five years',
+            value: true,
+          },
+        ],
+      };
+
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/4', {
+        properties: [
+          { name: 'Resolution', value: 24 },
+          { name: 'Frame Rate', value: 240 },
+          { name: 'Sensor Type', value: 'CCD' },
+          { name: 'Sensor brand', value: 'Nikon' },
+          { name: 'Broken', value: true },
+          { name: 'Older than five years', value: true },
+        ],
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    });
+
+    it('displays error message if no values have been changed', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+        catalogueItemDetails: {
+          name: 'Cameras 4',
+          description: 'High-resolution cameras for beam characterization. 4',
+        },
+        selectedCatalogueItem: {
+          catalogue_category_id: '4',
+          name: 'Cameras 4',
+          description: 'High-resolution cameras for beam characterization. 4',
+          properties: [
+            { name: 'Resolution', value: 24, unit: 'megapixels' },
+            { name: 'Frame Rate', value: 240, unit: 'fps' },
+            { name: 'Sensor Type', value: 'CCD', unit: '' },
+            { name: 'Sensor brand', value: 'Nikon', unit: '' },
+            { name: 'Broken', value: false, unit: '' },
+            { name: 'Older than five years', value: true, unit: '' },
+          ],
+          id: '4',
+        },
+        catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+        catalogueItemProperties: [
+          {
+            name: 'Resolution',
+            value: 24,
+          },
+          {
+            name: 'Frame Rate',
+            value: 240,
+          },
+          {
+            name: 'Sensor Type',
+            value: 'CCD',
+          },
+          {
+            name: 'Sensor brand',
+            value: 'Nikon',
+          },
+          {
+            name: 'Broken',
+            value: false,
+          },
+          {
+            name: 'Older than five years',
+            value: true,
+          },
+        ],
+      };
+
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+      expect(axiosPatchSpy).not.toHaveBeenCalled();
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('Please edit a form entry before clicking save')
+        ).toBeInTheDocument();
+      });
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('fills in all fields with the current values', async () => {
+      props = {
+        ...props,
+        parentId: '4',
+        catalogueItemDetails: {
+          name: 'Cameras 1',
+          description: 'High-resolution cameras for beam characterization. 1',
+        },
+        catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+        catalogueItemProperties: [
+          {
+            name: 'Resolution',
+            value: 12,
+          },
+          {
+            name: 'Frame Rate',
+            value: 30,
+          },
+          {
+            name: 'Sensor Type',
+            value: 'CMOS',
+          },
+          {
+            name: 'Broken',
+            value: true,
+          },
+          {
+            name: 'Older than five years',
+            value: false,
+          },
+        ],
+      };
+
+      createView();
+      expect(screen.getByLabelText('Name *')).toHaveValue('Cameras 1');
+      expect(screen.getByLabelText('Description')).toHaveValue(
+        'High-resolution cameras for beam characterization. 1'
+      );
+      await waitFor(() => {
+        expect(
+          screen.getByLabelText('Resolution (megapixels) *')
+        ).toBeInTheDocument();
+      });
+      expect(screen.getByLabelText('Resolution (megapixels) *')).toHaveValue(
+        '12'
+      );
+      expect(screen.getByLabelText('Frame Rate (fps)')).toHaveValue('30');
+      expect(screen.getByLabelText('Sensor Type *')).toHaveValue('CMOS');
+      expect(screen.getByLabelText('Sensor brand')).toHaveValue('');
+
+      expect(screen.getByLabelText('Broken *')).toHaveTextContent('True');
+
+      expect(screen.getByLabelText('Older than five years')).toHaveTextContent(
+        'False'
+      );
+    });
+
+    it('displays error message if no form fields have been changed', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+        catalogueItemDetails: { name: 'test', description: '' },
+        catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+        catalogueItemProperties: [
+          {
+            name: 'Resolution',
+            value: 12,
+          },
+          {
+            name: 'Frame Rate',
+            value: 60,
+          },
+          {
+            name: 'Sensor Type',
+            value: 'IO',
+          },
+          {
+            name: 'Sensor brand',
+            value: 'pixel',
+          },
+          {
+            name: 'Broken',
+            value: true,
+          },
+          {
+            name: 'Older than five years',
+            value: false,
+          },
+        ],
+      };
+
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      await waitFor(() => {
+        expect(
+          screen.queryByText('Please edit a form entry before clicking save')
+        ).not.toBeInTheDocument();
+      });
+    });
+
+    it('displays error message if catalogue item has children elements', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+        catalogueItemDetails: {
+          name: 'test_has_children_elements',
+          description: '',
+        },
+        selectedCatalogueItem: {
+          catalogue_category_id: '4',
+          name: 'Cameras 4',
+          description: 'High-resolution cameras for beam characterization. 4',
+          properties: [
+            { name: 'Resolution', value: 24, unit: 'megapixels' },
+            { name: 'Frame Rate', value: 240, unit: 'fps' },
+            { name: 'Sensor Type', value: 'CCD', unit: '' },
+            { name: 'Sensor brand', value: 'Nikon', unit: '' },
+            { name: 'Broken', value: false, unit: '' },
+            { name: 'Older than five years', value: true, unit: '' },
+          ],
+          id: '4',
+        },
+        catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+        catalogueItemProperties: [
+          {
+            name: 'Resolution',
+            value: 24,
+          },
+          {
+            name: 'Frame Rate',
+            value: 240,
+          },
+          {
+            name: 'Sensor Type',
+            value: 'CCD',
+          },
+          {
+            name: 'Sensor brand',
+            value: 'NIkon',
+          },
+          {
+            name: 'Broken',
+            value: false,
+          },
+          {
+            name: 'Older than five years',
+            value: true,
+          },
+        ],
+      };
+
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/4', {
+        description: '',
+        name: 'test_has_children_elements',
+        properties: [
+          { name: 'Resolution', value: 24 },
+          { name: 'Frame Rate', value: 240 },
+          { name: 'Sensor Type', value: 'CCD' },
+          { name: 'Sensor brand', value: 'NIkon' },
+          { name: 'Broken', value: false },
+          { name: 'Older than five years', value: true },
+        ],
+      });
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'Catalogue item has children elements and cannot be deleted'
+          )
+        ).toBeInTheDocument();
+      });
+    });
+
+    it('displays warning message when an unknown error occurs', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+        catalogueItemDetails: { name: 'Error 500', description: '' },
+        catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+        selectedCatalogueItem: {
+          catalogue_category_id: '4',
+          name: 'Cameras 4',
+          description: 'High-resolution cameras for beam characterization. 4',
+          properties: [
+            { name: 'Resolution', value: 24, unit: 'megapixels' },
+            { name: 'Frame Rate', value: 240, unit: 'fps' },
+            { name: 'Sensor Type', value: 'CCD', unit: '' },
+            { name: 'Sensor brand', value: 'Nikon', unit: '' },
+            { name: 'Broken', value: false, unit: '' },
+            { name: 'Older than five years', value: true, unit: '' },
+          ],
+          id: '4',
+        },
+        catalogueItemProperties: [
+          {
+            name: 'Resolution',
+            value: 12,
+          },
+          {
+            name: 'Frame Rate',
+            value: 60,
+          },
+          {
+            name: 'Sensor Type',
+            value: 'IO',
+          },
+          {
+            name: 'Sensor brand',
+            value: 'pixel',
+          },
+          {
+            name: 'Broken',
+            value: true,
+          },
+          {
+            name: 'Older than five years',
+            value: false,
+          },
+        ],
+      };
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('Please refresh and try again')
+        ).toBeInTheDocument();
+      });
+      expect(onClose).not.toHaveBeenCalled();
+    });
   });
 
   describe('Catalogue Items Details', () => {

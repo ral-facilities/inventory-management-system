@@ -315,7 +315,7 @@ const CatalogueCategoryDialog = React.memo(
           <TextField
             label="Name"
             required={true}
-            sx={{ marginLeft: '4px' }} // Adjusted the width and margin
+            sx={{ marginLeft: '4px', marginTop: '8px' }} // Adjusted the width and margin
             value={catalogueCategoryName}
             error={nameError}
             helperText={nameError && nameErrorMessage}

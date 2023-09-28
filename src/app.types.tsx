@@ -70,6 +70,13 @@ export interface AddCatalogueItem {
   description: string;
   properties: CatalogueItemProperty[];
 }
+
+export interface EditCatalogueItem {
+  name?: string | undefined;
+  description?: string;
+  properties?: CatalogueItemProperty[];
+  id: string;
+}
 export interface ErrorParsing {
   detail: string;
 }

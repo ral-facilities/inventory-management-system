@@ -37,43 +37,6 @@ describe('Catalogue items', () => {
     });
   });
 
-  it('displays duplicate name error message', () => {
-    cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
-
-    cy.findByLabelText('Name *').type('test_dup');
-    cy.findByLabelText('Description').type('test Description');
-    cy.findByLabelText('Resolution (megapixels) *').type(18);
-    cy.findByLabelText('Frame Rate (fps)').type(60);
-    cy.findByLabelText('Sensor Type *').type('IO');
-    cy.findByLabelText('Sensor brand').type('pixel');
-    cy.findByLabelText('Broken *').click();
-    cy.findByText('True').click();
-    cy.findByLabelText('Older than five years').click();
-    cy.findByText('False').click();
-
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findByRole('button', { name: 'Save' }).click();
-
-    cy.findBrowserMockedRequests({
-      method: 'POST',
-      url: '/v1/catalogue-items',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
-        '{"catalogue_category_id":"4","name":"test_dup","description":"test Description","properties":[{"name":"Resolution","value":18},{"name":"Frame Rate","value":60},{"name":"Sensor Type","value":"IO"},{"name":"Sensor brand","value":"pixel"},{"name":"Broken","value":true},{"name":"Older than five years","value":false}]}'
-      );
-    });
-    cy.findByText(
-      'A catalogue item with the same name already exists within the catalogue category'
-    ).should('exist');
-    cy.findByLabelText('Name *').clear();
-    cy.findByText(
-      'A catalogue item with the same name already exists within the catalogue category'
-    ).should('not.exist');
-  });
-
   it('adds a catalogue item only mandatory fields', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
 
@@ -186,7 +149,7 @@ describe('Catalogue items', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'Catalogue category has children elements and cannot be deleted, please delete the children elements first'
+          'Catalogue item has children elements and cannot be deleted, please delete the children elements first'
         );
       });
   });
@@ -210,6 +173,95 @@ describe('Catalogue items', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(request.url.toString()).to.contain('89');
+    });
+  });
+
+  it('displays error message if not of the field have been edited', () => {
+    cy.visit(
+      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
+    );
+    cy.findByRole('button', {
+      name: 'Edit Energy Meters 27 catalogue item',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+  });
+
+  it('displays error message if catalogue item has children elements', () => {
+    cy.visit(
+      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
+    );
+    cy.findByRole('button', {
+      name: 'Edit Energy Meters 27 catalogue item',
+    }).click();
+
+    cy.findByLabelText('Name *').clear();
+    cy.findByLabelText('Name *').type('test_has_children_elements');
+
+    cy.findByLabelText('Measurement Range (Joules) *').type('0');
+
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains(
+          'Catalogue item has children elements and cannot be edited, please delete the children elements first'
+        );
+      });
+  });
+
+  it('edit a catalogue item (name and desc)', () => {
+    cy.visit(
+      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
+    );
+    cy.findByRole('button', {
+      name: 'Edit Energy Meters 27 catalogue item',
+    }).click();
+
+    cy.findByLabelText('Name *').clear();
+    cy.findByLabelText('Name *').type('test');
+
+    cy.findByLabelText('Description').clear();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-items/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"name":"test","description":""}'
+      );
+    });
+  });
+
+  it('edit a catalogue item (properties)', () => {
+    cy.visit(
+      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
+    );
+    cy.findByRole('button', {
+      name: 'Edit Energy Meters 27 catalogue item',
+    }).click();
+
+    cy.findByLabelText('Measurement Range (Joules) *').type('0');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-items/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"properties":[{"name":"Measurement Range","value":20000},{"name":"Accuracy","value":"±0.2%"}]}'
+      );
     });
   });
 });

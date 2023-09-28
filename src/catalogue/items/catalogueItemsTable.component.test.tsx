@@ -9,6 +9,9 @@ import userEvent from '@testing-library/user-event';
 describe('Catalogue Items Table', () => {
   let props: CatalogueItemsTableProps;
   let user;
+  const onChangeCatalogueItemDetails = jest.fn();
+  const onChangeCatalogueItemManufacturer = jest.fn();
+  const onChangeCatalogueItemProperties = jest.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(<CatalogueItemsTable {...props} />);
@@ -16,6 +19,16 @@ describe('Catalogue Items Table', () => {
 
   beforeEach(() => {
     props = {
+      catalogueItemDetails: { name: undefined, description: '' },
+      onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
+      catalogueItemManufacturer: {
+        manufacturer: undefined,
+        manufacturerNumber: undefined,
+        manufacturerUrl: undefined,
+      },
+      onChangeCatalogueItemManufacturer: onChangeCatalogueItemManufacturer,
+      catalogueItemProperties: [],
+      onChangeCatalogueItemProperties: onChangeCatalogueItemProperties,
       parentInfo: {
         id: '5',
         name: 'Energy Meters',
@@ -40,7 +53,9 @@ describe('Catalogue Items Table', () => {
 
   it('renders text correctly', async () => {
     createView();
-    expect(screen.getByText('Name')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
     expect(screen.getByText('Description')).toBeInTheDocument();
     expect(screen.getByText('Measurement Range (Joules)')).toBeInTheDocument();
     expect(screen.getByText('Accuracy')).toBeInTheDocument();
@@ -128,6 +143,33 @@ describe('Catalogue Items Table', () => {
 
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens the edit catalogue item dialog', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText(
+          'Catalogue item description: Precision energy meters for accurate measurements. 26'
+        )
+      ).toBeInTheDocument();
+    });
+
+    const editButton = screen.getByRole('button', {
+      name: 'Edit Energy Meters 26 catalogue item',
+    });
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });

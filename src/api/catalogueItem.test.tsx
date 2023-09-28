@@ -4,9 +4,14 @@ import {
   useCatalogueItem,
   useCatalogueItems,
   useDeleteCatalogueItem,
+  useEditCatalogueItem,
 } from './catalogueItem';
 import { catalogueItemData, hooksWrapperWithProviders } from '../setupTests';
-import { AddCatalogueItem, CatalogueItem } from '../app.types';
+import {
+  AddCatalogueItem,
+  CatalogueItem,
+  EditCatalogueItem,
+} from '../app.types';
 
 describe('catalogue items api functions', () => {
   afterEach(() => {
@@ -127,6 +132,44 @@ describe('catalogue items api functions', () => {
 
     it.todo(
       'sends axios request to delete a catalogue Item and throws an appropriate error on failure'
+    );
+  });
+
+  describe('useEditCatalogueItem', () => {
+    let mockDataEdit: EditCatalogueItem;
+    beforeEach(() => {
+      mockDataEdit = {
+        name: 'test',
+        id: '4',
+      };
+    });
+    it('posts a request to edit a catalogue item and returns successful response', async () => {
+      const { result } = renderHook(() => useEditCatalogueItem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate(mockDataEdit);
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual({
+        catalogue_category_id: '4',
+        name: 'test',
+        description: 'High-resolution cameras for beam characterization. 4',
+        properties: [
+          { name: 'Resolution', value: 24, unit: 'megapixels' },
+          { name: 'Frame Rate', value: 240, unit: 'fps' },
+          { name: 'Sensor Type', value: 'CCD', unit: '' },
+          { name: 'Sensor brand', value: 'Nikon', unit: '' },
+          { name: 'Broken', value: false, unit: '' },
+          { name: 'Older than five years', value: true, unit: '' },
+        ],
+        id: '4',
+      });
+    });
+
+    it.todo(
+      'sends axios request to edit a catalogue item and throws an appropriate error on failure'
     );
   });
 });

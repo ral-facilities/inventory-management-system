@@ -6,7 +6,11 @@ import {
   UseQueryResult,
   useQueryClient,
 } from '@tanstack/react-query';
-import { AddCatalogueItem, CatalogueItem } from '../app.types';
+import {
+  AddCatalogueItem,
+  CatalogueItem,
+  EditCatalogueItem,
+} from '../app.types';
 import { settings } from '../settings';
 
 const addCatalogueItem = async (
@@ -83,7 +87,7 @@ export const useCatalogueItems = (
 };
 
 const fetchCatalogueItem = async (
-  catalogueCategoryId: string | null
+  catalogueCategoryId: string | undefined
 ): Promise<CatalogueItem> => {
   let apiUrl: string;
   apiUrl = '';
@@ -94,7 +98,7 @@ const fetchCatalogueItem = async (
   const queryParams = new URLSearchParams();
 
   return axios
-    .get(`${apiUrl}/v1/catalogue-items/${catalogueCategoryId}`, {
+    .get(`${apiUrl}/v1/catalogue-items/${catalogueCategoryId ?? ''}`, {
       params: queryParams,
     })
     .then((response) => {
@@ -103,7 +107,7 @@ const fetchCatalogueItem = async (
 };
 
 export const useCatalogueItem = (
-  catalogueCategoryId: string
+  catalogueCategoryId: string | undefined
 ): UseQueryResult<CatalogueItem, AxiosError> => {
   return useQuery<CatalogueItem, AxiosError>(
     ['CatalogueItem', catalogueCategoryId],
@@ -114,6 +118,7 @@ export const useCatalogueItem = (
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
+      enabled: catalogueCategoryId !== undefined,
     }
   );
 };
@@ -140,6 +145,41 @@ export const useDeleteCatalogueItem = (): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation(
     (catalogueItem: CatalogueItem) => deleteCatalogueItem(catalogueItem),
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['CatalogueItems'] });
+        queryClient.invalidateQueries({ queryKey: ['CatalogueItem'] });
+      },
+    }
+  );
+};
+
+const editCatalogueItem = async (
+  catalogueItem: EditCatalogueItem
+): Promise<CatalogueItem> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+  const { id, ...updatedItem } = catalogueItem;
+  return axios
+    .patch<CatalogueItem>(`${apiUrl}/v1/catalogue-items/${id}`, updatedItem)
+    .then((response) => response.data);
+};
+
+export const useEditCatalogueItem = (): UseMutationResult<
+  CatalogueItem,
+  AxiosError,
+  EditCatalogueItem
+> => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (catalogueItem: EditCatalogueItem) => editCatalogueItem(catalogueItem),
     {
       onError: (error) => {
         console.log('Got error ' + error.message);

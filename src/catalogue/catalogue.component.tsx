@@ -226,21 +226,31 @@ function Catalogue() {
           </Box>
         )}
 
-      {catalogueCategoryData && !parentInfo?.is_leaf && (
-        <Grid container spacing={2}>
-          {catalogueCategoryData.map((item, index) => (
-            <Grid item key={index} xs={12} sm={6} md={4}>
-              <CatalogueCard
-                {...item}
-                onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
-                onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      )}
+      {catalogueCategoryData &&
+        !parentInfo?.is_leaf &&
+        !catalogueCategoryDetailLoading && (
+          <Grid container spacing={2}>
+            {catalogueCategoryData.map((item, index) => (
+              <Grid item key={index} xs={12} sm={6} md={4}>
+                <CatalogueCard
+                  {...item}
+                  onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
+                  onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        )}
       {parentInfo && parentInfo.is_leaf && (
-        <CatalogueItemsTable parentInfo={parentInfo} />
+        <CatalogueItemsTable
+          parentInfo={parentInfo}
+          catalogueItemDetails={catalogueItemDetails}
+          onChangeCatalogueItemDetails={setCatalogueItemDetails}
+          catalogueItemManufacturer={catalogueItemManufacturer}
+          onChangeCatalogueItemManufacturer={setCatalogueItemManufacturer}
+          catalogueItemProperties={catalogueItemProperties}
+          onChangeCatalogueItemProperties={setCatalogueItemProperties}
+        />
       )}
 
       <CatalogueCategoryDialog
@@ -292,6 +302,7 @@ function Catalogue() {
         }
         catalogueItemProperties={catalogueItemProperties}
         onChangeCatalogueItemProperties={setCatalogueItemProperties}
+        type="create"
       />
     </Grid>
   );
