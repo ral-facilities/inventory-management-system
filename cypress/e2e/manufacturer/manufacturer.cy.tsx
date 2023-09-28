@@ -30,6 +30,6 @@ describe('Manufacturer', () => {
     const url = cy.findByText('http://example.com');
 
     url.should('be.visible').click();
-    cy.url().should('include', 'example.com');
+    cy.url().should('include', 'http://example.com');
   });
 });
