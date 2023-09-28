@@ -34,9 +34,9 @@ describe('Catalogue Items Dialog', () => {
       catalogueItemDetails: { name: undefined, description: '' },
       onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
       catalogueItemManufacturer: {
-        manufacturer: undefined,
-        manufacturerNumber: undefined,
-        manufacturerUrl: undefined,
+        name: '',
+        web_url: '',
+        address: '',
       },
       onChangeCatalogueItemManufacturer: onChangeCatalogueItemManufacturer,
       catalogueItemPropertiesForm: [],
@@ -95,6 +95,11 @@ describe('Catalogue Items Dialog', () => {
           value: false,
         },
       ],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
     };
 
     createView();
@@ -107,6 +112,11 @@ describe('Catalogue Items Dialog', () => {
       catalogue_category_id: '1',
       description: '',
       name: 'test',
+      manufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
       properties: [
         { name: 'Resolution', value: 12 },
         { name: 'Frame Rate', value: 60 },
@@ -150,6 +160,11 @@ describe('Catalogue Items Dialog', () => {
           value: '',
         },
       ],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
     };
 
     createView();
@@ -162,6 +177,11 @@ describe('Catalogue Items Dialog', () => {
       catalogue_category_id: '1',
       description: '',
       name: 'test',
+      manufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
       properties: [
         { name: 'Resolution', value: 12 },
         { name: 'Sensor Type', value: 'IO' },
@@ -226,6 +246,18 @@ describe('Catalogue Items Dialog', () => {
     expect(mandatoryFieldHelperText[0]).toHaveTextContent(
       'This field is mandatory'
     );
+
+    expect(
+      screen.getByText('Please enter Manufacturer Name')
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText('Please enter Manufacturer URL')
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText('Please enter Manufacturer Address')
+    ).toBeInTheDocument();
   });
   it('display error message when invalid number format', async () => {
     props = {
@@ -309,6 +341,11 @@ describe('Catalogue Items Dialog', () => {
           value: false,
         },
       ],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
     };
 
     createView();
@@ -358,6 +395,11 @@ describe('Catalogue Items Dialog', () => {
           value: false,
         },
       ],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
     };
     createView();
 
@@ -509,27 +551,33 @@ describe('Catalogue Items Dialog', () => {
       const manufacturerNameInput = screen.getByLabelText(
         'Manufacturer Name *'
       );
-      await user.type(manufacturerNameInput, newManufacturerName);
+
+      fireEvent.change(manufacturerNameInput, {
+        target: { value: newManufacturerName },
+      });
 
       expect(onChangeCatalogueItemManufacturer).toHaveBeenCalledWith({
         ...props.catalogueItemManufacturer,
-        manufacturer: newManufacturerName,
+        name: newManufacturerName,
       });
     });
 
-    it('handles manufacturer number input correctly', async () => {
-      const newManufacturerNumber = '123456789';
+    it('handles manufacturer address input correctly', async () => {
+      const newManufacturerAddress = '123456789';
 
       createView();
 
-      const manufacturerNumberInput = screen.getByLabelText(
-        'Manufacturer Number *'
+      const manufacturerAddressInput = screen.getByLabelText(
+        'Manufacturer Address *'
       );
-      await user.type(manufacturerNumberInput, newManufacturerNumber);
+
+      fireEvent.change(manufacturerAddressInput, {
+        target: { value: newManufacturerAddress },
+      });
 
       expect(onChangeCatalogueItemManufacturer).toHaveBeenCalledWith({
         ...props.catalogueItemManufacturer,
-        manufacturerNumber: newManufacturerNumber,
+        address: newManufacturerAddress,
       });
     });
 
@@ -538,12 +586,14 @@ describe('Catalogue Items Dialog', () => {
 
       createView();
 
-      const manufacturerUrlInput = screen.getByLabelText('Manufacturer Url *');
-      await user.type(manufacturerUrlInput, newManufacturerUrl);
+      const manufacturerUrlInput = screen.getByLabelText('Manufacturer URL *');
+      fireEvent.change(manufacturerUrlInput, {
+        target: { value: newManufacturerUrl },
+      });
 
       expect(onChangeCatalogueItemManufacturer).toHaveBeenCalledWith({
         ...props.catalogueItemManufacturer,
-        manufacturerUrl: newManufacturerUrl,
+        web_url: newManufacturerUrl,
       });
     });
   });
