@@ -638,7 +638,7 @@ exports[`Catalogue Items Dialog renders text correctly 1`] = `
               for=":re:"
               id=":re:-label"
             >
-              Manufacturer Number
+              Manufacturer URL
               <span
                 aria-hidden="true"
                 class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
@@ -666,7 +666,7 @@ exports[`Catalogue Items Dialog renders text correctly 1`] = `
                   class="css-yjsfm1"
                 >
                   <span>
-                    Manufacturer Number
+                    Manufacturer URL
                      
                     *
                   </span>
@@ -683,7 +683,7 @@ exports[`Catalogue Items Dialog renders text correctly 1`] = `
               for=":rf:"
               id=":rf:-label"
             >
-              Manufacturer Url
+              Manufacturer Address
               <span
                 aria-hidden="true"
                 class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
@@ -711,7 +711,7 @@ exports[`Catalogue Items Dialog renders text correctly 1`] = `
                   class="css-yjsfm1"
                 >
                   <span>
-                    Manufacturer Url
+                    Manufacturer Address
                      
                     *
                   </span>

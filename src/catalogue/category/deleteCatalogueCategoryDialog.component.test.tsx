@@ -12,7 +12,6 @@ describe('delete Catalogue Category dialogue', () => {
   let user;
   const onClose = jest.fn();
   let catalogueCategory: CatalogueCategory;
-
   const createView = (): RenderResult => {
     return renderComponentWithBrowserRouter(
       <DeleteCatalogueCategoryDialog {...props} />

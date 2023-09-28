@@ -266,4 +266,28 @@ describe('Catalogue Category', () => {
       'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
     ).should('exist');
   });
+  it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
+    cy.visit('/inventory-management-system/catalogue/beam-characterization');
+    cy.findByRole('button', {
+      name: 'edit Cameras catalogue category button',
+    }).click();
+    cy.findByLabelText('Catalogue Categories').click();
+    cy.findByLabelText('Name *').type('1');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-categories/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"name":"Cameras1","is_leaf":false}'
+      );
+      expect(request.url.toString()).to.contain('1');
+    });
+  });
 });
