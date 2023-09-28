@@ -16,13 +16,12 @@ export interface DeleteCatalogueCategoryDialogProps {
   open: boolean;
   onClose: () => void;
   catalogueCategory: CatalogueCategory | undefined;
-  refetchData: () => void;
 }
 
 const DeleteCatalogueCategoryDialog = (
   props: DeleteCatalogueCategoryDialogProps
 ) => {
-  const { open, onClose, catalogueCategory, refetchData } = props;
+  const { open, onClose, catalogueCategory } = props;
 
   const [error, setError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
@@ -40,7 +39,6 @@ const DeleteCatalogueCategoryDialog = (
     if (catalogueCategory) {
       deleteCatalogueCategory(catalogueCategory)
         .then((response) => {
-          refetchData();
           onClose();
         })
         .catch((error: AxiosError) => {
@@ -59,7 +57,7 @@ const DeleteCatalogueCategoryDialog = (
       setError(true);
       setErrorMessage('No data provided, Please refresh and try again');
     }
-  }, [catalogueCategory, deleteCatalogueCategory, onClose, refetchData]);
+  }, [catalogueCategory, deleteCatalogueCategory, onClose]);
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">

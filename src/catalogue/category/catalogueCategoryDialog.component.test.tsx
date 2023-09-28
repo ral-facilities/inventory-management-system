@@ -11,7 +11,6 @@ describe('Catalogue Category Dialog', () => {
   const onClose = jest.fn();
   const onChangeLeaf = jest.fn();
   const onChangeCatalogueCategoryName = jest.fn();
-  const refetchData = jest.fn();
   const onChangeFormFields = jest.fn();
   const resetSelectedCatalogueCategory = jest.fn();
   let props: CatalogueCategoryDialogProps;
@@ -31,7 +30,6 @@ describe('Catalogue Category Dialog', () => {
         catalogueCategoryName: undefined,
         onChangeLeaf: onChangeLeaf,
         isLeaf: false,
-        refetchData: refetchData,
         type: 'add',
         onChangeFormFields: onChangeFormFields,
         formFields: null,
@@ -238,7 +236,6 @@ describe('Catalogue Category Dialog', () => {
         catalogueCategoryName: undefined,
         onChangeLeaf: onChangeLeaf,
         isLeaf: false,
-        refetchData: refetchData,
         type: 'edit',
         selectedCatalogueCategory: mockData,
         onChangeFormFields: onChangeFormFields,
@@ -398,7 +395,6 @@ describe('Catalogue Category Dialog', () => {
       await user.click(saveButton);
 
       expect(onClose).toHaveBeenCalled();
-      expect(refetchData).toHaveBeenCalled();
     });
 
     it('updates the of a catalogue category', async () => {
@@ -426,7 +422,6 @@ describe('Catalogue Category Dialog', () => {
       await user.click(saveButton);
 
       expect(onClose).toHaveBeenCalled();
-      expect(refetchData).toHaveBeenCalled();
     });
 
     it('displays an error message when the type or name field are not filled', async () => {

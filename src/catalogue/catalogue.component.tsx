@@ -87,11 +87,10 @@ function Catalogue() {
     ''
   );
 
-  const { data: catalogueCategoryData, refetch: catalogueCategoryDataRefetch } =
-    useCatalogueCategory(
-      undefined,
-      catalogueLocation === '' ? '/' : catalogueLocation
-    );
+  const { data: catalogueCategoryData } = useCatalogueCategory(
+    undefined,
+    catalogueLocation === '' ? '/' : catalogueLocation
+  );
 
   const { data: catalogueCategoryDetail } = useCatalogueCategory(
     catalogueLocation === '' ? '/' : catalogueLocation,
@@ -215,7 +214,6 @@ function Catalogue() {
         catalogueCategoryName={catalogueCategoryName}
         onChangeLeaf={setIsLeaf}
         isLeaf={isLeaf}
-        refetchData={() => catalogueCategoryDataRefetch()}
         type="add"
         formFields={formFields}
         onChangeFormFields={setFormFields}
@@ -231,7 +229,6 @@ function Catalogue() {
         catalogueCategoryName={catalogueCategoryName}
         onChangeLeaf={setIsLeaf}
         isLeaf={isLeaf}
-        refetchData={() => catalogueCategoryDataRefetch()}
         type="edit"
         selectedCatalogueCategory={selectedCatalogueCategory}
         formFields={formFields}
@@ -244,7 +241,6 @@ function Catalogue() {
         open={deleteCategoryDialogOpen}
         onClose={() => setDeleteCategoryDialogOpen(false)}
         catalogueCategory={selectedCatalogueCategory}
-        refetchData={() => catalogueCategoryDataRefetch()}
       />
       <CatalogueItemsDialog
         open={addItemDialogOpen}
