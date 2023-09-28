@@ -118,7 +118,7 @@ function Manufacturer() {
                     borderRight: '1px solid #e0e0e0',
                   }}
                 >
-                  <Link underline="hover" color={'primary'} href={item.url}>
+                  <Link underline="hover" target="_blank" href={item.url}>
                     {item.url}
                   </Link>
                 </TableCell>
