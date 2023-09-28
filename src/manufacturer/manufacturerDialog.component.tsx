@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogTitle,
   TextField,
 } from '@mui/material';
 
@@ -17,6 +18,14 @@ export interface AddManufacturerDialogProps {
   open: boolean;
   onClose: () => void;
   refetchData: () => void;
+}
+function isValidUrl(url: string) {
+  try {
+    new URL(url);
+    return true;
+  } catch (error) {
+    return false;
+  }
 }
 
 function AddManufacturerDialog(props: AddManufacturerDialogProps) {
@@ -60,37 +69,49 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
   }, [onClose, refetchData]);
 
   const handleManufacturer = React.useCallback(() => {
+    let hasErrors = false;
     let manufacturer: AddManufacturer;
     manufacturer = {
       name: manufacturerName,
       url: manufacturerURL,
       address: manufacturerAddress,
     };
+    //check url is valid
+    if (!manufacturer.url?.trim() || !isValidUrl(manufacturer.url)) {
+      hasErrors = true;
+      setURLError(true);
+      setURLErrorMessage(
+        !manufacturer.url?.trim()
+          ? 'Please enter a URL.'
+          : 'Please enter a valid URL'
+      );
+    }
+
+    if (!manufacturerName || manufacturerName?.trim().length === 0) {
+      hasErrors = true;
+      setNameError(true);
+      setNameErrorMessage('Please enter a name.');
+    }
+    if (!manufacturerURL || manufacturerURL?.trim().length === 0) {
+      hasErrors = true;
+      setURLError(true);
+      setURLErrorMessage('Please enter a URL.');
+    }
+    if (!manufacturerAddress || manufacturerAddress?.trim().length === 0) {
+      hasErrors = true;
+      setAddressError(true);
+      setAddressErrorMessage('Please enter an address.');
+    }
+    if (hasErrors) {
+      return;
+    }
 
     addManufacturer(manufacturer)
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
         console.log(error.response?.status, manufacturerName);
 
-        if (
-          (error.response?.status === 422 && !manufacturerName) ||
-          manufacturerName?.trim().length === 0
-        ) {
-          setNameError(true);
-          setNameErrorMessage('Please enter a name.');
-        } else if (
-          (error.response?.status === 422 && !manufacturerURL) ||
-          manufacturerURL?.trim().length === 0
-        ) {
-          setURLError(true);
-          setURLErrorMessage('Please enter a URL.');
-        } else if (
-          (error.response?.status === 422 && !manufacturerAddress) ||
-          manufacturerAddress?.trim().length === 0
-        ) {
-          setAddressError(true);
-          setAddressErrorMessage('Please enter an address.');
-        } else if (error.response?.status === 409) {
+        if (error.response?.status === 409) {
           setNameError(true);
           setNameErrorMessage(
             'A manufacturer with the same name already exists.'
@@ -107,6 +128,7 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
+      <DialogTitle>Add Manufacturer</DialogTitle>
       <DialogContent>
         <TextField
           label="Name"

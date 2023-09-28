@@ -32,4 +32,68 @@ describe('Manufacturer', () => {
     url.should('be.visible').click();
     cy.url().should('include', 'http://example.com');
   });
+
+  it('render new manufacturer when added', async () => {
+    cy.findByTestId('Add Manufacturer').click();
+    cy.findByLabelText('Name *').type('Manufacturer D');
+    cy.findByLabelText('URL *').type('http://test.co.uk');
+    cy.findByLabelText('Address *').type('13 My Street');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/manufacturer',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"name":"Manufacturer D","url":"http://test.co.uk", "address":"13 My Street"}'
+      );
+    });
+  });
+
+  it('render error messages if fields are not filled', async () => {
+    cy.findByTestId('Add Manufacturer').click();
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please enter a name.');
+      });
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please enter a url.');
+      });
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please enter an address.');
+      });
+  });
+  it('displays error message when duplicate name entered', async () => {
+    cy.findByTestId('Add Manufacturer').click();
+    cy.findByLabelText('Name *').type('Manufacturer A');
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('A manufacturer with the same name already exists.');
+      });
+  });
+  it('invalid url displays correct error message', async () => {
+    cy.findByTestId('Add Manufacturer').click();
+    cy.findByLabelText('Name *').type('Manufacturer D');
+    cy.findByLabelText('URL *').type('test.co.uk');
+    cy.findByLabelText('Address *').type('13 My Street');
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please enter a valid url.');
+      });
+  });
 });

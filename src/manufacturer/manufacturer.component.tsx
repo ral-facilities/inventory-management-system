@@ -10,7 +10,6 @@ import {
   useTheme,
   Box,
   Link,
-  Grid,
   Button,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -31,11 +30,17 @@ function Manufacturer() {
   const theme = useTheme();
 
   return (
-    <Grid>
-      <div>
+    <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'right',
+          padding: '9.75px', //px to match wdith of catalogue page
+          margin: '4px',
+        }}
+      >
         <Button
           variant="outlined"
-          sx={{ display: 'flex', alignContent: 'right', margin: '4px' }}
           onClick={() => setManufacturerDialogOpen(true)}
         >
           Add Manufacturer
@@ -45,7 +50,7 @@ function Manufacturer() {
           onClose={() => setManufacturerDialogOpen(false)}
           refetchData={() => manufacturerDataRefetch()}
         />
-      </div>
+      </Box>
       <TableContainer style={{ height: tableHeight }}>
         <Table stickyHeader>
           <TableHead>
@@ -159,7 +164,7 @@ function Manufacturer() {
           </TableBody>
         </Table>
       </TableContainer>
-    </Grid>
+    </Box>
   );
 }
 
