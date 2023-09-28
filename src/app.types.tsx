@@ -36,6 +36,20 @@ export interface ViewManufacturerResponse {
   id: string;
 }
 
+export interface AddManufacturer {
+  name: string | undefined;
+  url: string | undefined;
+  address: string | undefined;
+}
+
+export interface AddManufacturerResponse {
+  name: string;
+  code: string;
+  url: string;
+  address: string;
+  id: string;
+}
+
 export interface CatalogueCategoryFormData {
   name: string;
   type: string;

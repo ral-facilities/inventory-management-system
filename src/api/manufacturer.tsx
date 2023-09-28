@@ -1,8 +1,17 @@
 import axios, { AxiosError } from 'axios';
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  UseQueryResult,
+} from '@tanstack/react-query';
 import { settings } from '../settings';
 
-import { ViewManufacturerResponse } from '../app.types';
+import {
+  AddManufacturer,
+  AddManufacturerResponse,
+  ViewManufacturerResponse,
+} from '../app.types';
 
 const getAllManufacturers = async (): Promise<ViewManufacturerResponse[]> => {
   let apiUrl: string;
@@ -26,6 +35,35 @@ export const useManufacturers = (): UseQueryResult<
     (params) => {
       return getAllManufacturers();
     },
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+    }
+  );
+};
+
+const addManufacturer = async (
+  manufacturer: AddManufacturer
+): Promise<AddManufacturerResponse> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+  return axios
+    .post<AddManufacturerResponse>(`${apiUrl}/v1/manufacturer`, manufacturer)
+    .then((response) => response.data);
+};
+
+export const useAddManufacturer = (): UseMutationResult<
+  AddManufacturerResponse,
+  AxiosError,
+  AddManufacturer
+> => {
+  return useMutation(
+    (manufacturer: AddManufacturer) => addManufacturer(manufacturer),
     {
       onError: (error) => {
         console.log('Got error ' + error.message);

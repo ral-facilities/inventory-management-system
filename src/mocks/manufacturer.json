@@ -3,21 +3,21 @@
     "id": "1",
     "name": "Manufacturer A",
     "code": "manufacturer-a",
-    "url": "example.com",
+    "url": "http://example.com",
     "address": "10 My Street"
   },
   {
     "id": "2",
     "name": "Manufacturer B",
     "code": "manufacturer-b",
-    "url": "test.co.uk",
+    "url": "http://test.co.uk",
     "address": "11 My Street"
   },
   {
     "id": "3",
     "name": "Manufacturer C",
     "code": "manufacturer-c",
-    "url": "123test.com",
+    "url": "http://123test.com",
     "address": "12 My Street"
   }
 ]

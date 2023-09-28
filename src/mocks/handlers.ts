@@ -46,6 +46,19 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(ManufacturerJSON));
   }),
 
+  rest.post('/v1/manufacturer', async (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        name: 'Manufacturer D',
+        code: 'manufacturer-d',
+        url: 'http://test.co.uk',
+        address: '13 My Street',
+        id: '4',
+      })
+    );
+  }),
+
   rest.delete('/v1/catalogue-categories/:id', (req, res, ctx) => {
     const { id } = req.params;
     const validCatalogueCategory = CatalogueCategoryJSON.find(
