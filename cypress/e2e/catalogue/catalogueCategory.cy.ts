@@ -206,7 +206,7 @@ describe('Catalogue Category', () => {
     });
   });
   it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
-    cy.visit('/catalogue/beam-characterization');
+    cy.visit('/inventory-management-system/catalogue/beam-characterization');
     cy.findAllByTestId('edit-catalogue-category-button').first().click();
     cy.findByLabelText('Catalogue Categories').click();
     cy.findByLabelText('Name *').type('1');
