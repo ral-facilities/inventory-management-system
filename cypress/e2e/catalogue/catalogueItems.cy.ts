@@ -1,4 +1,4 @@
-describe('Catalogue Category', () => {
+describe('Catalogue Item', () => {
   beforeEach(() => {
     cy.visit(
       '/inventory-management-system/catalogue/beam-characterization/cameras'
@@ -111,7 +111,7 @@ describe('Catalogue Category', () => {
     });
   });
 
-  it.only('displays the error messages and clears when values are changed', () => {
+  it('displays the error messages and clears when values are changed', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
     cy.findByRole('button', { name: 'Save' }).click();
 
@@ -146,16 +146,27 @@ describe('Catalogue Category', () => {
 
     cy.findAllByText('Please enter a valid number').should('have.length', 0);
 
-    cy.findByText('Please enter Manufacturer Name').should('exist');
-    cy.findByText('Please enter Manufacturer URL').should('exist');
-    cy.findByText('Please enter Manufacturer Address').should('exist');
+    cy.findByText('Please enter a Manufacturer Name').should('exist');
+    cy.findByText('Please enter a Manufacturer URL').should('exist');
+    cy.findByText('Please enter a Manufacturer Address').should('exist');
 
     cy.findByLabelText('Manufacturer Name *').type('test');
-    cy.findByLabelText('Manufacturer URL *').type('https://test.co.uk');
+    cy.findByLabelText('Manufacturer URL *').type('test.co.uk');
     cy.findByLabelText('Manufacturer Address *').type('1 house test TX3 6TY');
 
-    cy.findByText('Please enter Manufacturer Name').should('not.exist');
-    cy.findByText('Please enter Manufacturer URL').should('not.exist');
-    cy.findByText('Please enter Manufacturer Address').should('not.exist');
+    cy.findByText('Please enter a Manufacturer Name').should('not.exist');
+    cy.findByText('Please enter a Manufacturer URL').should('not.exist');
+    cy.findByText('Please enter a Manufacturer Address').should('not.exist');
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText(
+      'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+    ).should('exist');
+    cy.findByLabelText('Manufacturer URL *').clear();
+    cy.findByLabelText('Manufacturer URL *').type('https://test.co.uk');
+
+    cy.findByText(
+      'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+    ).should('not.exist');
   });
 });

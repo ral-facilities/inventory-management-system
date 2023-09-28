@@ -270,15 +270,15 @@ describe('Catalogue Items Dialog', () => {
     );
 
     expect(
-      screen.getByText('Please enter Manufacturer Name')
+      screen.getByText('Please enter a Manufacturer Name')
     ).toBeInTheDocument();
 
     expect(
-      screen.getByText('Please enter Manufacturer URL')
+      screen.getByText('Please enter a Manufacturer URL')
     ).toBeInTheDocument();
 
     expect(
-      screen.getByText('Please enter Manufacturer Address')
+      screen.getByText('Please enter a Manufacturer Address')
     ).toBeInTheDocument();
   });
   it('display error message when invalid number format', async () => {
@@ -313,6 +313,11 @@ describe('Catalogue Items Dialog', () => {
           value: '',
         },
       ],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'sony.com',
+        address: '1 venus street UY6 9OP',
+      },
     };
 
     createView();
@@ -329,6 +334,12 @@ describe('Catalogue Items Dialog', () => {
     expect(validNumberHelperText[0]).toHaveTextContent(
       'Please enter a valid number'
     );
+
+    expect(
+      screen.getByText(
+        'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+      )
+    ).toBeInTheDocument();
   });
 
   it('displays duplicate name error message', async () => {

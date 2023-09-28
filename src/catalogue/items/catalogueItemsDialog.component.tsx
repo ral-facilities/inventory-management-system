@@ -46,6 +46,15 @@ export interface CatalogueItemsDialogProps {
   ) => void;
 }
 
+function isValidUrl(url: string) {
+  try {
+    const parsedUrl = new URL(url);
+    return parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:';
+  } catch (error) {
+    return false;
+  }
+}
+
 function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const {
     open,
@@ -76,6 +85,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const [propertyErrors, setPropertyErrors] = React.useState(
     new Array(catalogueItemPropertiesForm.length).fill(false)
   );
+
+  const [manufacturerWebUrlErrorMessage, setManufacturerWebUrlErrorMessage] =
+    React.useState<string>('');
 
   const handleClose = React.useCallback(() => {
     onChangeCatalogueItemDetails({ name: undefined, description: '' });
@@ -154,42 +166,41 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     // Check name
     if (
       catalogueItemDetails.name === undefined ||
-      catalogueItemDetails.name === ''
+      catalogueItemDetails.name.trim() === ''
     ) {
       setNameError(true);
       setNameErrorMessage('Please enter name');
       hasErrors = true;
-    } else {
-      setNameError(false);
     }
 
     // Check Manufacturer Name
 
     if (
       catalogueItemManufacturer.name === undefined ||
-      catalogueItemManufacturer.name === ''
+      catalogueItemManufacturer.name.trim() === ''
     ) {
       setManufacturerNameError(true);
       hasErrors = true;
-    } else {
-      setManufacturerNameError(false);
     }
 
     // Check Manufacturer URL
     if (
-      catalogueItemManufacturer.web_url === undefined ||
-      catalogueItemManufacturer.web_url === ''
+      !catalogueItemManufacturer.web_url.trim() ||
+      !isValidUrl(catalogueItemManufacturer.web_url)
     ) {
       setManufacturerWebUrlError(true);
+      setManufacturerWebUrlErrorMessage(
+        !catalogueItemManufacturer.web_url.trim()
+          ? 'Please enter a Manufacturer URL'
+          : 'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+      );
       hasErrors = true;
-    } else {
-      setManufacturerWebUrlError(false);
     }
 
     // Check Manufacturer Address
     if (
       catalogueItemManufacturer.address === undefined ||
-      catalogueItemManufacturer.address === ''
+      catalogueItemManufacturer.address.trim() === ''
     ) {
       setManufacturerAddressError(true);
       hasErrors = true;
@@ -470,7 +481,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           }}
           error={manufacturerNameError}
           helperText={
-            manufacturerNameError ? 'Please enter Manufacturer Name' : ''
+            manufacturerNameError ? 'Please enter a Manufacturer Name' : ''
           }
           fullWidth
         />
@@ -489,7 +500,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           }}
           error={manufacturerWebUrlError} // Set error state based on the nameError state
           helperText={
-            manufacturerWebUrlError ? 'Please enter Manufacturer URL' : ''
+            manufacturerWebUrlError ? manufacturerWebUrlErrorMessage : ''
           }
           fullWidth
         />
@@ -508,7 +519,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           }}
           error={manufacturerAddressError} // Set error state based on the nameError state
           helperText={
-            manufacturerAddressError ? 'Please enter Manufacturer Address' : ''
+            manufacturerAddressError
+              ? 'Please enter a Manufacturer Address'
+              : ''
           }
           fullWidth
         />
