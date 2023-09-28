@@ -3,8 +3,8 @@ import {
   useMutation,
   UseMutationResult,
   useQuery,
-  UseQueryResult,
   useQueryClient,
+  UseQueryResult,
 } from '@tanstack/react-query';
 import {
   AddCatalogueCategory,
@@ -127,6 +127,7 @@ export const useEditCatalogueCategory = (): UseMutationResult<
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategoryByID'] });
       },
     }
   );
@@ -161,6 +162,7 @@ export const useDeleteCatalogueCategory = (): UseMutationResult<
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategoryByID'] });
       },
     }
   );
