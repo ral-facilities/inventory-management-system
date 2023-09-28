@@ -40,7 +40,6 @@ export interface CatalogueCategoryDialogProps {
   isLeaf: boolean;
   formFields: CatalogueCategoryFormData[] | null;
   onChangeFormFields: (formFields: CatalogueCategoryFormData[] | null) => void;
-  refetchData: () => void;
   type: 'add' | 'edit';
   selectedCatalogueCategory?: CatalogueCategory;
   resetSelectedCatalogueCategory: () => void;
@@ -54,7 +53,6 @@ const CatalogueCategoryDialog = React.memo(
       parentId,
       isLeaf,
       onChangeLeaf,
-      refetchData,
       type,
       onChangeCatalogueCategoryName,
       catalogueCategoryName,
@@ -108,7 +106,6 @@ const CatalogueCategoryDialog = React.memo(
       setErrorFields([]);
       setNameFields([]);
       setTypeFields([]);
-      refetchData();
       setFormError(false);
       resetSelectedCatalogueCategory();
     }, [
@@ -116,7 +113,6 @@ const CatalogueCategoryDialog = React.memo(
       onChangeFormFields,
       onChangeLeaf,
       onClose,
-      refetchData,
       resetSelectedCatalogueCategory,
     ]);
 
@@ -165,10 +161,10 @@ const CatalogueCategoryDialog = React.memo(
             parent_id: parentId,
           };
         }
-        if (isLeaf) {
+        if (!!formFields) {
           catalogueCategory = {
             ...catalogueCategory,
-            catalogue_item_properties: formFields ?? [],
+            catalogue_item_properties: formFields,
           };
         }
 
@@ -236,10 +232,10 @@ const CatalogueCategoryDialog = React.memo(
           };
         }
 
-        if (isLeaf && isCatalogueItemPropertiesUpdated) {
+        if (!!formFields && isCatalogueItemPropertiesUpdated) {
           catalogueCategory = {
             ...catalogueCategory,
-            catalogue_item_properties: formFields ?? [],
+            catalogue_item_properties: formFields,
           };
         }
 
@@ -252,7 +248,7 @@ const CatalogueCategoryDialog = React.memo(
           if (
             catalogueCategory.id && // Check if id is present
             (isNameUpdated ||
-              isCatalogueItemPropertiesUpdated ||
+              (!!formFields && isCatalogueItemPropertiesUpdated) ||
               isIsLeafUpdated) // Check if any of these properties have been updated
           ) {
             // Only call editCatalogueCategory if id is present and at least one of the properties has been updated
