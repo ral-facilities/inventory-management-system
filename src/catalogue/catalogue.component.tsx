@@ -73,9 +73,9 @@ function Catalogue() {
 
   const [catalogueItemManufacturer, setCatalogueItemManufacturer] =
     React.useState<CatalogueItemManufacturer>({
-      manufacturer: undefined,
-      manufacturerNumber: undefined,
-      manufacturerUrl: undefined,
+      name: '',
+      address: '',
+      web_url: '',
     });
 
   const [catalogueItemProperties, setCatalogueItemProperties] = React.useState<
