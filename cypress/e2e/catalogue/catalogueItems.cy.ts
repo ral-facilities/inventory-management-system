@@ -1,4 +1,4 @@
-describe('Catalogue Category', () => {
+describe('Catalogue Item', () => {
   beforeEach(() => {
     cy.visit(
       '/inventory-management-system/catalogue/beam-characterization/cameras'
