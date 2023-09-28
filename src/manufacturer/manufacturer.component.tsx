@@ -118,13 +118,7 @@ function Manufacturer() {
                     borderRight: '1px solid #e0e0e0',
                   }}
                 >
-                  <Link
-                    underline="hover"
-                    color={'primary'}
-                    href={'http://' + item.url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
+                  <Link underline="hover" color={'primary'} href={item.url}>
                     {item.url}
                   </Link>
                 </TableCell>

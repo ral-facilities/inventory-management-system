@@ -17,9 +17,9 @@ describe('Manufacturer', () => {
     cy.findByText('Manufacturer A').should('be.visible');
     cy.findByText('Manufacturer B').should('be.visible');
     cy.findByText('Manufacturer C').should('be.visible');
-    cy.findByText('example.com').should('be.visible');
-    cy.findByText('test.co.uk').should('be.visible');
-    cy.findByText('123test.com').should('be.visible');
+    cy.findByText('http://example.com').should('be.visible');
+    cy.findByText('http://test.co.uk').should('be.visible');
+    cy.findByText('http://123test.com').should('be.visible');
     cy.findByText('10 My Street').should('be.visible');
     cy.findByText('11 My Street').should('be.visible');
     cy.findByText('12 My Street').should('be.visible');
@@ -27,15 +27,9 @@ describe('Manufacturer', () => {
 
   it('manufacturer url is correct and opens new webpage', () => {
     cy.visit('/manufacturer');
-    const url = cy.findByText('example.com');
+    const url = cy.findByText('http://example.com');
 
-    url
-      .should('be.visible')
-      .then((url) => {
-        expect(url).to.have.attr('target', '_blank');
-        url.attr('target', '_self');
-      })
-      .click();
-    cy.url().should('include', 'example.com');
+    url.should('be.visible').click();
+    cy.url().should('include', 'http://example.com');
   });
 });
