@@ -178,7 +178,7 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 4').should('exist');
   });
 
-  it('navigates to the landing page, toggles the properties and navigates back to the table view', () => {
+  it.only('navigates to the landing page, toggles the properties and navigates back to the table view', () => {
     cy.findByText('Cameras 1').click();
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'
@@ -189,6 +189,19 @@ describe('Catalogue Items', () => {
 
     cy.findByLabelText('Close catalogue item properties').should('not.exist');
     cy.findByLabelText('Show catalogue item properties').should('exist');
+
+    cy.findByLabelText('Close catalogue item manufacturer details').should(
+      'exist'
+    );
+
+    cy.findByLabelText('Close catalogue item manufacturer details').click();
+
+    cy.findByLabelText('Close catalogue item manufacturer details').should(
+      'not.exist'
+    );
+    cy.findByLabelText('Show catalogue item manufacturer details').should(
+      'exist'
+    );
 
     cy.findByRole('link', { name: 'Back to Cameras table view' }).click();
 
