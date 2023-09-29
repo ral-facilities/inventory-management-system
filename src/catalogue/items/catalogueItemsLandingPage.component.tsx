@@ -7,7 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { Box, Button, Collapse } from '@mui/material';
+import { Box, Button, Collapse, Link as MuiLink } from '@mui/material';
 import { useCatalogueCategoryById } from '../../api/catalogueCategory';
 
 function CatalogueItemsLandingPage() {
@@ -29,6 +29,12 @@ function CatalogueItemsLandingPage() {
 
   const toggleProperties = () => {
     setShowProperties(!showProperties);
+  };
+
+  const [showManufacturer, setShowManufacturer] = useState(true);
+
+  const toggleManufacturer = () => {
+    setShowManufacturer(!showManufacturer);
   };
 
   return (
@@ -104,7 +110,7 @@ function CatalogueItemsLandingPage() {
               <Grid container spacing={1}>
                 {catalogueItemIdData.properties &&
                   catalogueItemIdData.properties.map((property, index) => (
-                    <Grid item xs={6} key={index}>
+                    <Grid item xs={12} sm={6} md={4} key={index}>
                       <ListItem
                         style={{
                           justifyContent: 'flex-start',
@@ -120,6 +126,88 @@ function CatalogueItemsLandingPage() {
                       </ListItem>
                     </Grid>
                   ))}
+              </Grid>
+            </Collapse>
+            <Box
+              onClick={toggleManufacturer}
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                cursor: 'pointer',
+                margin: '8px',
+              }}
+              aria-label={`${
+                showManufacturer ? 'Close' : 'Show'
+              } catalogue item manufacturer details`}
+            >
+              {showManufacturer ? (
+                <>
+                  <Typography variant="h6">Manufacturer</Typography>
+                  <ExpandLessIcon />
+                </>
+              ) : (
+                <>
+                  <Typography variant="h6">Manufacturer</Typography>
+                  <ExpandMoreIcon />
+                </>
+              )}
+            </Box>
+            <Collapse in={showManufacturer}>
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={6} md={4}>
+                  <ListItem
+                    style={{
+                      justifyContent: 'flex-start',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <ListItemText
+                      primary={'Manufacturer Name'}
+                      secondary={catalogueItemIdData.manufacturer.name}
+                    />
+                  </ListItem>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <ListItem
+                    style={{
+                      justifyContent: 'flex-start',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <ListItemText
+                      primary={'Manufacturer URL'}
+                      secondary={
+                        <MuiLink
+                          underline="hover"
+                          target="_blank"
+                          href={catalogueItemIdData.manufacturer.web_url}
+                        >
+                          {catalogueItemIdData.manufacturer.web_url}
+                        </MuiLink>
+                      }
+                    />
+                  </ListItem>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <ListItem
+                    style={{
+                      justifyContent: 'flex-start',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <ListItemText
+                      primary={'Manufacturer Address'}
+                      secondary={catalogueItemIdData.manufacturer.address}
+                    />
+                  </ListItem>
+                </Grid>
               </Grid>
             </Collapse>
           </Box>

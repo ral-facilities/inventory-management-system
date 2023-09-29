@@ -87,6 +87,11 @@ describe('catalogue items api functions', () => {
         description: 'High-resolution cameras for beam characterization. 1',
         id: '1',
         name: 'Cameras 1',
+        manufacturer: {
+          address: '10 My Street',
+          name: 'Manufacturer A',
+          web_url: 'http://example.com',
+        },
         properties: [
           { name: 'Resolution', unit: 'megapixels', value: 12 },
           { name: 'Frame Rate', unit: 'fps', value: 30 },
