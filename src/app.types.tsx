@@ -4,22 +4,20 @@ export const MicroFrontendToken = `${MicroFrontendId}:token`;
 export type TabValue = 'Systems' | 'Catalogue' | 'Manufacturer';
 
 export interface AddCatalogueCategory {
-  name?: string;
+  name: string;
   parent_id?: string;
   is_leaf: boolean;
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }
 
-export interface AddCatalogueCategoryResponse {
-  name: string;
-  code: string;
-  path: string;
-  parent_path: string;
-  parent_id: string | null;
-  is_leaf: boolean;
+export interface EditCatalogueCategory {
+  name?: string;
+  id: string;
+  catalogue_item_properties?: CatalogueCategoryFormData[];
+  is_leaf?: boolean;
 }
 
-export interface ViewCatalogueCategoryResponse {
+export interface CatalogueCategory {
   id: string;
   name: string;
   parent_path: string;
@@ -27,6 +25,7 @@ export interface ViewCatalogueCategoryResponse {
   parent_id: string | null;
   code: string;
   is_leaf: boolean;
+  catalogue_item_properties?: CatalogueCategoryFormData[];
 }
 
 export interface CatalogueCategoryFormData {

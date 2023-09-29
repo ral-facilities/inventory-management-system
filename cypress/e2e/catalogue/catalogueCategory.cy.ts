@@ -40,7 +40,7 @@ describe('Catalogue Category', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'A catalogue category with the same name already exists within the parent catalogue category.'
+          'A catalogue category with the same name already exists within the parent catalogue category'
         );
       });
   });
@@ -131,6 +131,100 @@ describe('Catalogue Category', () => {
       expect(JSON.stringify(request.body)).equal(
         '{"name":"test","is_leaf":true,"catalogue_item_properties":[{"name":"Updated Field","type":"boolean","mandatory":false},{"name":"Updated Field","type":"number","unit":"","mandatory":false}]}'
       );
+    });
+  });
+
+  it('edits a catalogue category (non leaf node)', () => {
+    cy.visit('/catalogue/beam-characterization');
+    cy.findAllByTestId('edit-catalogue-category-button').first().click();
+    cy.findByLabelText('Name *').type('1');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-categories/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal('{"name":"Cameras1"}');
+      expect(request.url.toString()).to.contain('1');
+    });
+  });
+
+  it('displays error message if none of the fields have changed', () => {
+    cy.findAllByTestId('edit-catalogue-category-button').first().click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please edit a form entry before clicking save');
+      });
+  });
+
+  it('displays error message if it received an unknown error from the spi', () => {
+    cy.visit('/catalogue/beam-characterization');
+    cy.findAllByTestId('edit-catalogue-category-button').first().click();
+    cy.findByLabelText('Name *').clear();
+    cy.findByLabelText('Name *').type('Error 500');
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please refresh and try again');
+      });
+  });
+  it('edits a catalogue category with catalogue properties', () => {
+    cy.visit('/catalogue/beam-characterization');
+    cy.findAllByTestId('edit-catalogue-category-button').first().click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findAllByLabelText('Property Name *').first().clear();
+    cy.findAllByLabelText('Property Name *').first().type('Updated Field');
+    cy.findAllByLabelText('Select Type *').first().click();
+    cy.findByText('Boolean').click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-categories/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"catalogue_item_properties":[{"name":"Updated Field","type":"boolean","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":true},{"name":"Sensor Type","type":"string","mandatory":true}]}'
+      );
+      expect(request.url.toString()).to.contain('1');
+    });
+  });
+  it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
+    cy.visit('/catalogue/beam-characterization');
+    cy.findAllByTestId('edit-catalogue-category-button').first().click();
+    cy.findByLabelText('Catalogue Categories').click();
+    cy.findByLabelText('Name *').type('1');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-categories/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"name":"Cameras1","is_leaf":false}'
+      );
+      expect(request.url.toString()).to.contain('1');
     });
   });
 });

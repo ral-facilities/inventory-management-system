@@ -1,14 +1,5 @@
 [
   {
-    "id": "",
-    "name": "",
-    "parent_id": null,
-    "code": "",
-    "is_leaf": false,
-    "parent_path": "",
-    "path": "/"
-  },
-  {
     "id": "1",
     "name": "Beam Characterization",
     "parent_id": null,
@@ -237,5 +228,36 @@
         "mandatory": true
       }
     ]
+  },
+  {
+    "id": "15",
+    "name": "Voltage Meters",
+    "parent_id": "1",
+    "code": "voltage-meters",
+    "is_leaf": true,
+    "parent_path": "/beam-characterization",
+    "path": "/beam-characterization/voltage-meters",
+    "catalogue_item_properties": [
+      {
+        "name": "Measurement Range",
+        "type": "number",
+        "unit": "volts",
+        "mandatory": true
+      },
+      {
+        "name": "Accuracy",
+        "type": "string",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "16",
+    "name": "Amp Meters",
+    "parent_id": "1",
+    "code": "amp-meters",
+    "is_leaf": false,
+    "parent_path": "/beam-characterization",
+    "path": "/beam-characterization/amp-meters"
   }
 ]

@@ -9,20 +9,19 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useDeleteCatalogueCategory } from '../api/catalogueCategory';
-import { ErrorParsing, ViewCatalogueCategoryResponse } from '../app.types';
+import { CatalogueCategory, ErrorParsing } from '../app.types';
 import { AxiosError } from 'axios';
 
 export interface DeleteCatalogueCategoryDialogProps {
   open: boolean;
   onClose: () => void;
-  catalogueCategory: ViewCatalogueCategoryResponse | undefined;
-  refetchData: () => void;
+  catalogueCategory: CatalogueCategory | undefined;
 }
 
 const DeleteCatalogueCategoryDialog = (
   props: DeleteCatalogueCategoryDialogProps
 ) => {
-  const { open, onClose, catalogueCategory, refetchData } = props;
+  const { open, onClose, catalogueCategory } = props;
 
   const [error, setError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
@@ -40,7 +39,6 @@ const DeleteCatalogueCategoryDialog = (
     if (catalogueCategory) {
       deleteCatalogueCategory(catalogueCategory)
         .then((response) => {
-          refetchData();
           onClose();
         })
         .catch((error: AxiosError) => {
@@ -59,7 +57,7 @@ const DeleteCatalogueCategoryDialog = (
       setError(true);
       setErrorMessage('No data provided, Please refresh and try again');
     }
-  }, [catalogueCategory, deleteCatalogueCategory, onClose, refetchData]);
+  }, [catalogueCategory, deleteCatalogueCategory, onClose]);
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">

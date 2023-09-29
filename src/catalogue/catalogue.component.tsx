@@ -5,13 +5,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import { NavigateNext } from '@mui/icons-material';
-import AddCatalogueCategoryDialog from './addCatalogueCategoryDialog.component';
+import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 import CatalogueCard from './catalogueCard.component';
 import { useCatalogueCategory } from '../api/catalogueCategory';
-import {
-  ViewCatalogueCategoryResponse,
-  CatalogueCategoryFormData,
-} from '../app.types';
+import { CatalogueCategoryFormData, CatalogueCategory } from '../app.types';
 import DeleteCatalogueCategoryDialog from './deleteCatalogueCategoryDialog.component';
 
 function Catalogue() {
@@ -35,11 +32,10 @@ function Catalogue() {
 
   const catalogueLocation = location.pathname.replace('/catalogue', '');
 
-  const { data: catalogueCategoryData, refetch: catalogueCategoryDataRefetch } =
-    useCatalogueCategory(
-      undefined,
-      catalogueLocation === '' ? '/' : catalogueLocation
-    );
+  const { data: catalogueCategoryData } = useCatalogueCategory(
+    undefined,
+    catalogueLocation === '' ? '/' : catalogueLocation
+  );
 
   const { data: catalogueCategoryDetail } = useCatalogueCategory(
     catalogueLocation === '' ? '/' : catalogueLocation,
@@ -55,14 +51,26 @@ function Catalogue() {
   const [deleteDialogOpen, setDeleteDialogOpen] =
     React.useState<boolean>(false);
 
-  const [deleteCatalogueCategoryData, setDeleteCatalogueCategoryData] =
-    React.useState<ViewCatalogueCategoryResponse | undefined>(undefined);
+  const [editDialogOpen, setEditDialogOpen] = React.useState<boolean>(false);
 
-  const onChangeOpenDeleteDialog = (
-    catalogueCategory: ViewCatalogueCategoryResponse
-  ) => {
+  const [selectedCatalogueCategory, setSelectedCatalogueCategory] =
+    React.useState<CatalogueCategory | undefined>(undefined);
+
+  const [catalogueCategoryName, setCatalogueCategoryName] = React.useState<
+    string | undefined
+  >(undefined);
+
+  const onChangeOpenDeleteDialog = (catalogueCategory: CatalogueCategory) => {
     setDeleteDialogOpen(true);
-    setDeleteCatalogueCategoryData(catalogueCategory);
+    setSelectedCatalogueCategory(catalogueCategory);
+  };
+
+  const onChangeOpenEditDialog = (catalogueCategory: CatalogueCategory) => {
+    setEditDialogOpen(true);
+    setSelectedCatalogueCategory(catalogueCategory);
+    setCatalogueCategoryName(catalogueCategory.name);
+    setIsLeaf(catalogueCategory.is_leaf);
+    setFormFields(catalogueCategory.catalogue_item_properties ?? null);
   };
   const [formFields, setFormFields] = React.useState<
     CatalogueCategoryFormData[] | null
@@ -113,16 +121,6 @@ function Catalogue() {
         >
           <AddIcon />
         </Button>
-        <AddCatalogueCategoryDialog
-          open={catalogueCategoryDialogOpen}
-          onClose={() => setCatalogueCategoryDialogOpen(false)}
-          parentId={parentId}
-          onChangeLeaf={setIsLeaf}
-          isLeaf={isLeaf}
-          formFields={formFields}
-          onChangeFormFields={setFormFields}
-          refetchData={() => catalogueCategoryDataRefetch()}
-        />
       </Grid>
       {catalogueCategoryData && (
         <Grid container spacing={2}>
@@ -131,15 +129,45 @@ function Catalogue() {
               <CatalogueCard
                 {...item}
                 onChangeOpenDeleteDialog={onChangeOpenDeleteDialog}
+                onChangeOpenEditDialog={onChangeOpenEditDialog}
               />
             </Grid>
           ))}
-
+          <CatalogueCategoryDialog
+            open={catalogueCategoryDialogOpen}
+            onClose={() => setCatalogueCategoryDialogOpen(false)}
+            parentId={parentId}
+            onChangeCatalogueCategoryName={setCatalogueCategoryName}
+            catalogueCategoryName={catalogueCategoryName}
+            onChangeLeaf={setIsLeaf}
+            isLeaf={isLeaf}
+            type="add"
+            formFields={formFields}
+            onChangeFormFields={setFormFields}
+            resetSelectedCatalogueCategory={() =>
+              setSelectedCatalogueCategory(undefined)
+            }
+          />
+          <CatalogueCategoryDialog
+            open={editDialogOpen}
+            onClose={() => setEditDialogOpen(false)}
+            parentId={parentId}
+            onChangeCatalogueCategoryName={setCatalogueCategoryName}
+            catalogueCategoryName={catalogueCategoryName}
+            onChangeLeaf={setIsLeaf}
+            isLeaf={isLeaf}
+            type="edit"
+            selectedCatalogueCategory={selectedCatalogueCategory}
+            resetSelectedCatalogueCategory={() =>
+              setSelectedCatalogueCategory(undefined)
+            }
+            formFields={formFields}
+            onChangeFormFields={setFormFields}
+          />
           <DeleteCatalogueCategoryDialog
             open={deleteDialogOpen}
             onClose={() => setDeleteDialogOpen(false)}
-            catalogueCategory={deleteCatalogueCategoryData}
-            refetchData={() => catalogueCategoryDataRefetch()}
+            catalogueCategory={selectedCatalogueCategory}
           />
         </Grid>
       )}
