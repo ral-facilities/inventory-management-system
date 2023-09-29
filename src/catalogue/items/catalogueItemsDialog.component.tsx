@@ -370,8 +370,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   ]);
 
   const handleEditCatalogueItem = React.useCallback(() => {
-    console.log('selectedCatalogueItem', selectedCatalogueItem);
-    console.log('selectedCatalogueItemData', selectedCatalogueItemData);
     if (selectedCatalogueItem && selectedCatalogueItemData) {
       let hasErrors = false;
 
@@ -415,7 +413,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         catalogueItemManufacturer.address.trim() === ''
       ) {
         setManufacturerAddressError(true);
-        console.log('4');
         hasErrors = true;
       }
 
@@ -438,7 +435,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             isNaN(Number(propertyValues[index]))
           ) {
             updatedPropertyErrors[index] = true;
-            console.log('fghjlgjk');
             hasErrors = true;
           }
 
@@ -506,8 +502,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       const isManufacturerUpdated =
         JSON.stringify(catalogueItemManufacturer) !==
         JSON.stringify(selectedCatalogueItemData.manufacturer);
-      console.log(JSON.stringify(catalogueItemManufacturer));
-      console.log(JSON.stringify(selectedCatalogueItemData.manufacturer));
       let catalogueItem: EditCatalogueItem = {
         id: selectedCatalogueItem.id,
       };

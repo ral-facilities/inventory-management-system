@@ -9,6 +9,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { Box, Button, Collapse, Link as MuiLink } from '@mui/material';
 import { useCatalogueCategoryById } from '../../api/catalogueCategory';
+import CatalogueItemsDialog from './catalogueItemsDialog.component';
+import {
+  CatalogueItemDetails,
+  CatalogueItemManufacturer,
+  CatalogueItemProperty,
+} from '../../app.types';
 
 function CatalogueItemsLandingPage() {
   const location = useLocation();
@@ -37,6 +43,26 @@ function CatalogueItemsLandingPage() {
     setShowManufacturer(!showManufacturer);
   };
 
+  const [editItemDialogOpen, setEditItemDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [catalogueItemDetails, setCatalogueItemDetails] =
+    React.useState<CatalogueItemDetails>({
+      name: undefined,
+      description: '',
+    });
+
+  const [catalogueItemManufacturer, setCatalogueItemManufacturer] =
+    React.useState<CatalogueItemManufacturer>({
+      name: '',
+      address: '',
+      web_url: '',
+    });
+
+  const [catalogueItemProperties, setCatalogueItemProperties] = React.useState<
+    CatalogueItemProperty[] | null
+  >(null);
+
   return (
     <Grid container>
       <Grid sx={{ padding: '8px' }} item>
@@ -56,6 +82,20 @@ function CatalogueItemsLandingPage() {
           disabled={!catalogueItemIdData}
           sx={{ margin: '8px' }}
           variant="outlined"
+          onClick={() => {
+            setEditItemDialogOpen(true);
+
+            if (catalogueItemIdData) {
+              setCatalogueItemDetails({
+                name: catalogueItemIdData.name,
+                description: catalogueItemIdData.description,
+              });
+              setCatalogueItemProperties(
+                catalogueItemIdData.properties.map(({ unit, ...rest }) => rest)
+              );
+              setCatalogueItemManufacturer(catalogueItemIdData.manufacturer);
+            }
+          }}
         >
           Edit
         </Button>
@@ -228,6 +268,23 @@ function CatalogueItemsLandingPage() {
           </Typography>
         </Box>
       )}
+
+      <CatalogueItemsDialog
+        open={editItemDialogOpen}
+        onClose={() => setEditItemDialogOpen(false)}
+        parentId={catalogueCategoryData?.id ?? null}
+        catalogueItemDetails={catalogueItemDetails}
+        onChangeCatalogueItemDetails={setCatalogueItemDetails}
+        catalogueItemManufacturer={catalogueItemManufacturer}
+        onChangeCatalogueItemManufacturer={setCatalogueItemManufacturer}
+        catalogueItemPropertiesForm={
+          catalogueCategoryData?.catalogue_item_properties ?? []
+        }
+        catalogueItemProperties={catalogueItemProperties}
+        onChangeCatalogueItemProperties={setCatalogueItemProperties}
+        selectedCatalogueItem={catalogueItemIdData}
+        type="edit"
+      />
     </Grid>
   );
 }

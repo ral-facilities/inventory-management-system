@@ -170,6 +170,23 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 4').should('exist');
   });
 
+  it('navigates to the landing page, and opens the edit dialog and closes', () => {
+    cy.findByText('Cameras 1').click();
+    cy.findByText(
+      'High-resolution cameras for beam characterization. 1'
+    ).should('exist');
+    cy.findByRole('button', { name: 'Edit' }).click();
+    cy.findByLabelText('Name *').should('have.value', 'Cameras 1');
+    cy.findByLabelText('Description').should(
+      'have.value',
+      'High-resolution cameras for beam characterization. 1'
+    );
+    cy.findByLabelText('Resolution (megapixels) *').should('have.value', '12');
+    cy.findByLabelText('Frame Rate (fps)').should('have.value', '30');
+    cy.findByLabelText('Sensor Type *').should('have.value', 'CMOS');
+    cy.findByRole('button', { name: 'Cancel' }).click();
+  });
+
   it('displays the expired landing page message and navigates back to the catalogue home', () => {
     cy.visit('/inventory-management-system/catalogue/items/1fds');
 
