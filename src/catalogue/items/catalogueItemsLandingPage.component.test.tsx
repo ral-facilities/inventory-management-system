@@ -73,4 +73,25 @@ describe('Catalogue Items Landing Page', () => {
       ).toBeInTheDocument();
     });
   });
+  it('toggles the manufacturer so it is either visible or hidden', async () => {
+    createView('/inventory-management-system/catalogue/items/1');
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByLabelText('Close catalogue item manufacturer details')
+    ).toBeInTheDocument();
+
+    const toggleButton = screen.getByLabelText(
+      'Close catalogue item manufacturer details'
+    );
+
+    await user.click(toggleButton);
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText('Show catalogue item manufacturer details')
+      ).toBeInTheDocument();
+    });
+  });
 });

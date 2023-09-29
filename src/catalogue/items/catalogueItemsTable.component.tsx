@@ -11,6 +11,7 @@ import {
   useTheme,
   Box,
   Tooltip,
+  Link as MuiLink,
 } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -130,6 +131,36 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                     </Typography>
                   </TableCell>
                 ))}
+              <TableCell
+                sx={{
+                  borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
+                  borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  Manufacturer Name
+                </Typography>
+              </TableCell>
+              <TableCell
+                sx={{
+                  borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
+                  borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  Manufacturer URL
+                </Typography>
+              </TableCell>
+              <TableCell
+                sx={{
+                  borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
+                  borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  Manufacturer Address
+                </Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -164,6 +195,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                             item.properties.map(({ unit, ...rest }) => rest)
                           );
                           setSelectedCatalogueItem(item);
+                          onChangeCatalogueItemManufacturer(item.manufacturer);
                         }}
                       >
                         <EditIcon />
@@ -188,7 +220,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
-                    <Link to={`items/${item.id}`}>{item.name}</Link>
+                    <MuiLink
+                      underline="hover"
+                      component={Link}
+                      to={`items/${item.id}`}
+                    >
+                      {item.name}
+                    </MuiLink>
                   </TableCell>
                   <TableCell
                     sx={{
@@ -236,6 +274,42 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                           : ''}
                       </TableCell>
                     ))}
+                  <TableCell
+                    sx={{
+                      px: '8px',
+                      paddingTop: '0px',
+                      paddingBottom: '0px',
+                      borderRight: '1px solid #e0e0e0',
+                    }}
+                  >
+                    {item.manufacturer.name}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      px: '8px',
+                      paddingTop: '0px',
+                      paddingBottom: '0px',
+                      borderRight: '1px solid #e0e0e0',
+                    }}
+                  >
+                    <MuiLink
+                      underline="hover"
+                      target="_blank"
+                      href={item.manufacturer.web_url}
+                    >
+                      {item.manufacturer.web_url}
+                    </MuiLink>
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      px: '8px',
+                      paddingTop: '0px',
+                      paddingBottom: '0px',
+                      borderRight: '1px solid #e0e0e0',
+                    }}
+                  >
+                    {item.manufacturer.address}
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>

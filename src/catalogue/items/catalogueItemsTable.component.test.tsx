@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderComponentWithBrowserRouter } from '../../setupTests';
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, within } from '@testing-library/react';
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';
@@ -59,6 +59,9 @@ describe('Catalogue Items Table', () => {
     expect(screen.getByText('Description')).toBeInTheDocument();
     expect(screen.getByText('Measurement Range (Joules)')).toBeInTheDocument();
     expect(screen.getByText('Accuracy')).toBeInTheDocument();
+    expect(screen.getByText('Manufacturer Name')).toBeInTheDocument();
+    expect(screen.getByText('Manufacturer URL')).toBeInTheDocument();
+    expect(screen.getByText('Manufacturer Address')).toBeInTheDocument();
   });
 
   it('displays descriptions tooltip on hover', async () => {
@@ -173,5 +176,17 @@ describe('Catalogue Items Table', () => {
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
+  });
+  it('navigates to the manufacturer url', async () => {
+    createView();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('row', { name: 'Energy Meters 26 row' })
+      ).toBeInTheDocument();
+    });
+
+    const row = screen.getByRole('row', { name: 'Energy Meters 26 row' });
+    const url = await within(row).findByText('http://example.com');
+    expect(url).toHaveAttribute('href', 'http://example.com');
   });
 });

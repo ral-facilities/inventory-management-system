@@ -92,6 +92,11 @@ describe('catalogue items api functions', () => {
         description: 'High-resolution cameras for beam characterization. 1',
         id: '1',
         name: 'Cameras 1',
+        manufacturer: {
+          address: '10 My Street',
+          name: 'Manufacturer A',
+          web_url: 'http://example.com',
+        },
         properties: [
           { name: 'Resolution', unit: 'megapixels', value: 12 },
           { name: 'Frame Rate', unit: 'fps', value: 30 },
@@ -140,7 +145,7 @@ describe('catalogue items api functions', () => {
     beforeEach(() => {
       mockDataEdit = {
         name: 'test',
-        id: '4',
+        id: '90',
       };
     });
     it('posts a request to edit a catalogue item and returns successful response', async () => {
@@ -164,7 +169,7 @@ describe('catalogue items api functions', () => {
           { name: 'Broken', value: false, unit: '' },
           { name: 'Older than five years', value: true, unit: '' },
         ],
-        id: '4',
+        id: '90',
       });
     });
 

@@ -172,10 +172,10 @@ const CatalogueCategoryDialog = React.memo(
             parent_id: parentId,
           };
         }
-        if (isLeaf) {
+        if (!!formFields) {
           catalogueCategory = {
             ...catalogueCategory,
-            catalogue_item_properties: formFields ?? [],
+            catalogue_item_properties: formFields,
           };
         }
 
@@ -243,10 +243,10 @@ const CatalogueCategoryDialog = React.memo(
           };
         }
 
-        if (isLeaf && isCatalogueItemPropertiesUpdated) {
+        if (!!formFields && isCatalogueItemPropertiesUpdated) {
           catalogueCategory = {
             ...catalogueCategory,
-            catalogue_item_properties: formFields ?? [],
+            catalogue_item_properties: formFields,
           };
         }
 
@@ -259,7 +259,7 @@ const CatalogueCategoryDialog = React.memo(
           if (
             catalogueCategory.id && // Check if id is present
             (isNameUpdated ||
-              isCatalogueItemPropertiesUpdated ||
+              (!!formFields && isCatalogueItemPropertiesUpdated) ||
               isIsLeafUpdated) // Check if any of these properties have been updated
           ) {
             // Only call editCatalogueCategory if id is present and at least one of the properties has been updated

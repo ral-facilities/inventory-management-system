@@ -34,9 +34,9 @@ describe('Catalogue Items Dialog', () => {
       catalogueItemDetails: { name: undefined, description: '' },
       onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
       catalogueItemManufacturer: {
-        manufacturer: undefined,
-        manufacturerNumber: undefined,
-        manufacturerUrl: undefined,
+        name: '',
+        web_url: '',
+        address: '',
       },
       onChangeCatalogueItemManufacturer: onChangeCatalogueItemManufacturer,
       catalogueItemPropertiesForm: [],
@@ -96,6 +96,11 @@ describe('Catalogue Items Dialog', () => {
           value: false,
         },
       ],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
     };
 
     createView();
@@ -108,6 +113,11 @@ describe('Catalogue Items Dialog', () => {
       catalogue_category_id: '1',
       description: '',
       name: 'test',
+      manufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
       properties: [
         { name: 'Resolution', value: 12 },
         { name: 'Frame Rate', value: 60 },
@@ -151,6 +161,11 @@ describe('Catalogue Items Dialog', () => {
           value: '',
         },
       ],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
     };
 
     createView();
@@ -163,6 +178,11 @@ describe('Catalogue Items Dialog', () => {
       catalogue_category_id: '1',
       description: '',
       name: 'test',
+      manufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
       properties: [
         { name: 'Resolution', value: 12 },
         { name: 'Sensor Type', value: 'IO' },
@@ -227,6 +247,18 @@ describe('Catalogue Items Dialog', () => {
     expect(mandatoryFieldHelperText[0]).toHaveTextContent(
       'This field is mandatory'
     );
+
+    expect(
+      screen.getByText('Please enter a Manufacturer Name')
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText('Please enter a Manufacturer URL')
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText('Please enter a Manufacturer Address')
+    ).toBeInTheDocument();
   });
   it('display error message when invalid number format', async () => {
     props = {
@@ -260,6 +292,11 @@ describe('Catalogue Items Dialog', () => {
           value: '',
         },
       ],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'sony.com',
+        address: '1 venus street UY6 9OP',
+      },
     };
 
     createView();
@@ -276,58 +313,12 @@ describe('Catalogue Items Dialog', () => {
     expect(validNumberHelperText[0]).toHaveTextContent(
       'Please enter a valid number'
     );
-  });
 
-  it('displays has children elements error message', async () => {
-    props = {
-      ...props,
-      parentId: '1',
-      catalogueItemDetails: {
-        name: 'test_has_children_elements',
-        description: '',
-      },
-      catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      catalogueItemProperties: [
-        {
-          name: 'Resolution',
-          value: 12,
-        },
-        {
-          name: 'Frame Rate',
-          value: 60,
-        },
-        {
-          name: 'Sensor Type',
-          value: 'IO',
-        },
-        {
-          name: 'Sensor brand',
-          value: 'pixel',
-        },
-        {
-          name: 'Broken',
-          value: true,
-        },
-        {
-          name: 'Older than five years',
-          value: false,
-        },
-      ],
-    };
-
-    createView();
-
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-
-    await user.click(saveButton);
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          'Catalogue item has children elements and cannot be deleted'
-        )
-      ).toBeInTheDocument();
-    });
+    expect(
+      screen.getByText(
+        'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+      )
+    ).toBeInTheDocument();
   });
 
   it('displays warning message when an unknown error occurs', async () => {
@@ -362,6 +353,11 @@ describe('Catalogue Items Dialog', () => {
           value: false,
         },
       ],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
     };
     createView();
 
@@ -429,7 +425,12 @@ describe('Catalogue Items Dialog', () => {
             { name: 'Broken', value: false, unit: '' },
             { name: 'Older than five years', value: true, unit: '' },
           ],
-          id: '4',
+          id: '90',
+          manufacturer: {
+            name: 'Manufacturer A',
+            web_url: 'http://example.com',
+            address: '10 My Street',
+          },
         },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
         catalogueItemProperties: [
@@ -458,6 +459,11 @@ describe('Catalogue Items Dialog', () => {
             value: true,
           },
         ],
+        catalogueItemManufacturer: {
+          name: 'Manufacturer A',
+          web_url: 'http://example.com',
+          address: '10 My Street',
+        },
       };
 
       createView();
@@ -465,7 +471,8 @@ describe('Catalogue Items Dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
       await user.click(saveButton);
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/4', {
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/90', {
         description: '',
         name: 'test',
       });
@@ -491,7 +498,12 @@ describe('Catalogue Items Dialog', () => {
             { name: 'Broken', value: false, unit: '' },
             { name: 'Older than five years', value: true, unit: '' },
           ],
-          id: '4',
+          id: '90',
+          manufacturer: {
+            name: 'Manufacturer A',
+            web_url: 'http://example.com',
+            address: '10 My Street',
+          },
         },
         catalogueItemProperties: [
           {
@@ -519,6 +531,11 @@ describe('Catalogue Items Dialog', () => {
             value: '',
           },
         ],
+        catalogueItemManufacturer: {
+          name: 'Manufacturer A',
+          web_url: 'example.com',
+          address: '10 My Street',
+        },
       };
 
       createView();
@@ -542,12 +559,18 @@ describe('Catalogue Items Dialog', () => {
       expect(validNumberHelperText[0]).toHaveTextContent(
         'Please enter a valid number'
       );
+
+      expect(
+        screen.getByText(
+          'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+        )
+      ).toBeInTheDocument();
     });
 
     it('display error message when mandatory field is not filled in', async () => {
       props = {
         ...props,
-        parentId: '1',
+        parentId: '4',
         catalogueItemDetails: {
           name: '',
           description: 'High-resolution cameras for beam characterization. 4',
@@ -564,7 +587,12 @@ describe('Catalogue Items Dialog', () => {
             { name: 'Broken', value: false, unit: '' },
             { name: 'Older than five years', value: true, unit: '' },
           ],
-          id: '4',
+          id: '90',
+          manufacturer: {
+            name: 'Manufacturer A',
+            web_url: 'http://example.com',
+            address: '10 My Street',
+          },
         },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
         catalogueItemProperties: [
@@ -593,6 +621,11 @@ describe('Catalogue Items Dialog', () => {
             value: true,
           },
         ],
+        catalogueItemManufacturer: {
+          name: '',
+          web_url: '',
+          address: '',
+        },
       };
 
       createView();
@@ -626,6 +659,16 @@ describe('Catalogue Items Dialog', () => {
       expect(mandatoryFieldHelperText[0]).toHaveTextContent(
         'This field is mandatory'
       );
+
+      expect(
+        screen.getByText('Please enter a Manufacturer Name')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Please enter a Manufacturer URL')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Please enter a Manufacturer Address')
+      ).toBeInTheDocument();
     });
 
     it('Edit a catalogue item (catalogue properties)', async () => {
@@ -648,7 +691,12 @@ describe('Catalogue Items Dialog', () => {
             { name: 'Broken', value: false, unit: '' },
             { name: 'Older than five years', value: true, unit: '' },
           ],
-          id: '4',
+          id: '90',
+          manufacturer: {
+            name: 'Manufacturer A',
+            web_url: 'http://example.com',
+            address: '10 My Street',
+          },
         },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
         catalogueItemProperties: [
@@ -677,6 +725,11 @@ describe('Catalogue Items Dialog', () => {
             value: true,
           },
         ],
+        catalogueItemManufacturer: {
+          name: 'Manufacturer A',
+          web_url: 'http://example.com',
+          address: '10 My Street',
+        },
       };
 
       createView();
@@ -684,7 +737,7 @@ describe('Catalogue Items Dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
       await user.click(saveButton);
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/4', {
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/90', {
         properties: [
           { name: 'Resolution', value: 24 },
           { name: 'Frame Rate', value: 240 },
@@ -698,7 +751,7 @@ describe('Catalogue Items Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
-    it('displays error message if no values have been changed', async () => {
+    it('Edit a catalogue item (manufacturer)', async () => {
       props = {
         ...props,
         parentId: '1',
@@ -718,7 +771,12 @@ describe('Catalogue Items Dialog', () => {
             { name: 'Broken', value: false, unit: '' },
             { name: 'Older than five years', value: true, unit: '' },
           ],
-          id: '4',
+          id: '90',
+          manufacturer: {
+            name: 'Manufacturer A',
+            web_url: 'http://example.com',
+            address: '10 My Street',
+          },
         },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
         catalogueItemProperties: [
@@ -747,6 +805,88 @@ describe('Catalogue Items Dialog', () => {
             value: true,
           },
         ],
+        catalogueItemManufacturer: {
+          name: 'Sony1',
+          web_url: 'https://sony.com',
+          address: '12 venus street UY6 9OP',
+        },
+      };
+
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/90', {
+        manufacturer: {
+          name: 'Sony1',
+          web_url: 'https://sony.com',
+          address: '12 venus street UY6 9OP',
+        },
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    });
+
+    it('displays error message if no values have been changed', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+        catalogueItemDetails: {
+          name: 'Cameras 4',
+          description: 'High-resolution cameras for beam characterization. 4',
+        },
+        selectedCatalogueItem: {
+          catalogue_category_id: '4',
+          name: 'Cameras 4',
+          description: 'High-resolution cameras for beam characterization. 4',
+          properties: [
+            { name: 'Resolution', value: 24, unit: 'megapixels' },
+            { name: 'Frame Rate', value: 240, unit: 'fps' },
+            { name: 'Sensor Type', value: 'CCD', unit: '' },
+            { name: 'Sensor brand', value: 'Nikon', unit: '' },
+            { name: 'Broken', value: false, unit: '' },
+            { name: 'Older than five years', value: true, unit: '' },
+          ],
+          id: '90',
+          manufacturer: {
+            name: 'Manufacturer A',
+            web_url: 'http://example.com',
+            address: '10 My Street',
+          },
+        },
+        catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+        catalogueItemProperties: [
+          {
+            name: 'Resolution',
+            value: 24,
+          },
+          {
+            name: 'Frame Rate',
+            value: 240,
+          },
+          {
+            name: 'Sensor Type',
+            value: 'CCD',
+          },
+          {
+            name: 'Sensor brand',
+            value: 'Nikon',
+          },
+          {
+            name: 'Broken',
+            value: false,
+          },
+          {
+            name: 'Older than five years',
+            value: true,
+          },
+        ],
+        catalogueItemManufacturer: {
+          name: 'Manufacturer A',
+          web_url: 'http://example.com',
+          address: '10 My Street',
+        },
       };
 
       createView();
@@ -889,7 +1029,12 @@ describe('Catalogue Items Dialog', () => {
             { name: 'Broken', value: false, unit: '' },
             { name: 'Older than five years', value: true, unit: '' },
           ],
-          id: '4',
+          id: '90',
+          manufacturer: {
+            name: 'Manufacturer A',
+            web_url: 'http://example.com',
+            address: '10 My Street',
+          },
         },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
         catalogueItemProperties: [
@@ -918,6 +1063,11 @@ describe('Catalogue Items Dialog', () => {
             value: true,
           },
         ],
+        catalogueItemManufacturer: {
+          name: 'Manufacturer A',
+          web_url: 'http://example.com',
+          address: '10 My Street',
+        },
       };
 
       createView();
@@ -925,7 +1075,7 @@ describe('Catalogue Items Dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
       await user.click(saveButton);
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/4', {
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/90', {
         description: '',
         name: 'test_has_children_elements',
         properties: [
@@ -941,7 +1091,7 @@ describe('Catalogue Items Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Catalogue item has children elements and cannot be deleted'
+            'Catalogue item has children elements and cannot be edited, please delete the children elements first'
           )
         ).toBeInTheDocument();
       });
@@ -965,7 +1115,12 @@ describe('Catalogue Items Dialog', () => {
             { name: 'Broken', value: false, unit: '' },
             { name: 'Older than five years', value: true, unit: '' },
           ],
-          id: '4',
+          id: '90',
+          manufacturer: {
+            name: 'Manufacturer A',
+            web_url: 'http://example.com',
+            address: '10 My Street',
+          },
         },
         catalogueItemProperties: [
           {
@@ -993,6 +1148,11 @@ describe('Catalogue Items Dialog', () => {
             value: false,
           },
         ],
+        catalogueItemManufacturer: {
+          name: 'Manufacturer A',
+          web_url: 'http://example.com',
+          address: '10 My Street',
+        },
       };
       createView();
 
@@ -1119,27 +1279,33 @@ describe('Catalogue Items Dialog', () => {
       const manufacturerNameInput = screen.getByLabelText(
         'Manufacturer Name *'
       );
-      await user.type(manufacturerNameInput, newManufacturerName);
+
+      fireEvent.change(manufacturerNameInput, {
+        target: { value: newManufacturerName },
+      });
 
       expect(onChangeCatalogueItemManufacturer).toHaveBeenCalledWith({
         ...props.catalogueItemManufacturer,
-        manufacturer: newManufacturerName,
+        name: newManufacturerName,
       });
     });
 
-    it('handles manufacturer number input correctly', async () => {
-      const newManufacturerNumber = '123456789';
+    it('handles manufacturer address input correctly', async () => {
+      const newManufacturerAddress = '123456789';
 
       createView();
 
-      const manufacturerNumberInput = screen.getByLabelText(
-        'Manufacturer Number *'
+      const manufacturerAddressInput = screen.getByLabelText(
+        'Manufacturer Address *'
       );
-      await user.type(manufacturerNumberInput, newManufacturerNumber);
+
+      fireEvent.change(manufacturerAddressInput, {
+        target: { value: newManufacturerAddress },
+      });
 
       expect(onChangeCatalogueItemManufacturer).toHaveBeenCalledWith({
         ...props.catalogueItemManufacturer,
-        manufacturerNumber: newManufacturerNumber,
+        address: newManufacturerAddress,
       });
     });
 
@@ -1148,12 +1314,14 @@ describe('Catalogue Items Dialog', () => {
 
       createView();
 
-      const manufacturerUrlInput = screen.getByLabelText('Manufacturer Url *');
-      await user.type(manufacturerUrlInput, newManufacturerUrl);
+      const manufacturerUrlInput = screen.getByLabelText('Manufacturer URL *');
+      fireEvent.change(manufacturerUrlInput, {
+        target: { value: newManufacturerUrl },
+      });
 
       expect(onChangeCatalogueItemManufacturer).toHaveBeenCalledWith({
         ...props.catalogueItemManufacturer,
-        manufacturerUrl: newManufacturerUrl,
+        web_url: newManufacturerUrl,
       });
     });
   });

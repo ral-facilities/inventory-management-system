@@ -41,9 +41,9 @@ export interface CatalogueItemDetails {
 }
 
 export interface CatalogueItemManufacturer {
-  manufacturer: string | undefined;
-  manufacturerNumber: string | undefined;
-  manufacturerUrl: string | undefined;
+  name: string;
+  address: string;
+  web_url: string;
 }
 
 export interface CatalogueItemProperty {
@@ -62,6 +62,7 @@ export interface CatalogueItem {
   name: string | undefined;
   description: string;
   properties: CatalogueItemPropertyResponse[];
+  manufacturer: CatalogueItemManufacturer;
   id: string;
 }
 export interface AddCatalogueItem {
@@ -69,12 +70,14 @@ export interface AddCatalogueItem {
   name: string | undefined;
   description: string;
   properties: CatalogueItemProperty[];
+  manufacturer: CatalogueItemManufacturer;
 }
 
 export interface EditCatalogueItem {
   name?: string | undefined;
   description?: string;
   properties?: CatalogueItemProperty[];
+  manufacturer?: CatalogueItemManufacturer;
   id: string;
 }
 export interface ErrorParsing {
