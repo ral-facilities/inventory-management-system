@@ -25,7 +25,6 @@ import {
   CatalogueItemProperty,
 } from '../../app.types';
 import { useAddCatalogueItem } from '../../api/catalogueItem';
-import { AxiosError } from 'axios';
 
 export interface CatalogueItemsDialogProps {
   open: boolean;

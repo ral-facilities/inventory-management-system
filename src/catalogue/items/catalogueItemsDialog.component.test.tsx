@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderComponentWithBrowserRouter } from '../../setupTests';
-import { act, fireEvent, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
