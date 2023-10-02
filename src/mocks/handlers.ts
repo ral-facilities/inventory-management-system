@@ -131,15 +131,6 @@ export const handlers = [
   rest.post('/v1/catalogue-items/', async (req, res, ctx) => {
     const body = (await req.json()) as CatalogueItem;
 
-    if (body.name === 'test_dup') {
-      return res(
-        ctx.status(409),
-        ctx.json({
-          detail:
-            'A catalogue item with the same name already exists within the catalogue category',
-        })
-      );
-    }
     if (body.name === 'Error 500') {
       return res(ctx.status(500), ctx.json(''));
     }
