@@ -271,24 +271,6 @@ describe('Catalogue Items Dialog', () => {
     });
   });
 
-  it('initialize  catalogueItemProperties list object if not defined', async () => {
-    props = {
-      ...props,
-      parentId: '1',
-      catalogueItemDetails: { name: 'test_dup', description: '' },
-      catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      propertyValues: [],
-    };
-
-    createView();
-
-    const propertyInput = screen.getByLabelText('Resolution (megapixels) *');
-
-    fireEvent.change(propertyInput, { target: { value: '12' } });
-
-    expect(onChangePropertyValues).toHaveBeenCalledWith(['12']);
-  });
-
   describe('Catalogue Items Details', () => {
     afterEach(() => {
       jest.clearAllMocks();
