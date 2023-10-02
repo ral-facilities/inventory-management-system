@@ -239,38 +239,6 @@ describe('Catalogue Items Dialog', () => {
     ).toBeInTheDocument();
   });
 
-  it('displays duplicate name error message', async () => {
-    props = {
-      ...props,
-      parentId: '1',
-      catalogueItemDetails: { name: 'test_dup', description: '' },
-      catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      propertyValues: [12, 60, 'IO', 'pixel', true, false],
-      catalogueItemManufacturer: {
-        name: 'Sony',
-        web_url: 'https://sony.com',
-        address: '1 venus street UY6 9OP',
-      },
-    };
-    useAddCatalogueItem.mockReturnValue({
-      mutateAsync: jest.fn().mockRejectedValue({ response: { status: 409 } }),
-    });
-
-    createView();
-
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-
-    await user.click(saveButton);
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          'A catalogue item with the same name already exists within the parent catalogue category'
-        )
-      ).toBeInTheDocument();
-    });
-  });
-
   describe('Catalogue Items Details', () => {
     afterEach(() => {
       jest.clearAllMocks();

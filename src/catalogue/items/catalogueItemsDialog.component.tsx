@@ -276,17 +276,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       manufacturer: catalogueItemManufacturer,
     };
 
-    addCatalogueItem(catalogueItem)
-      .then((response) => handleClose())
-      .catch((error: AxiosError) => {
-        console.log(error);
-        if (error.response?.status === 409) {
-          setNameError(true);
-          setNameErrorMessage(
-            'A catalogue item with the same name already exists within the parent catalogue category'
-          );
-        }
-      });
+    addCatalogueItem(catalogueItem).then((response) => handleClose());
   }, [
     addCatalogueItem,
     catalogueItemDetails,

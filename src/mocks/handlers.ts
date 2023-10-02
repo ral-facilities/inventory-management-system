@@ -130,11 +130,6 @@ export const handlers = [
   rest.post('/v1/catalogue-items', async (req, res, ctx) => {
     const body = (await req.json()) as CatalogueItem;
 
-    if (!body.name) {
-      return res(ctx.status(422), ctx.json(''));
-    } else if (body.name === 'test_dup') {
-      return res(ctx.status(409), ctx.json(''));
-    }
     return res(
       ctx.status(200),
       ctx.json({
