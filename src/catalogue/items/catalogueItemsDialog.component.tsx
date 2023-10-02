@@ -40,9 +40,9 @@ export interface CatalogueItemsDialogProps {
     catalogueItemManufacturer: CatalogueItemManufacturer
   ) => void;
   catalogueItemPropertiesForm: CatalogueCategoryFormData[];
-  catalogueItemProperties: CatalogueItemProperty[] | null;
-  onChangeCatalogueItemProperties: (
-    catalogueItemProperties: CatalogueItemProperty[] | null
+  propertyValues: (string | number | boolean | null)[];
+  onChangePropertyValues: (
+    propertyValues: (string | number | boolean | null)[]
   ) => void;
 }
 
@@ -65,13 +65,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     catalogueItemManufacturer,
     onChangeCatalogueItemManufacturer,
     catalogueItemPropertiesForm,
-    catalogueItemProperties,
-    onChangeCatalogueItemProperties,
+    propertyValues,
+    onChangePropertyValues,
   } = props;
 
-  const [propertyValues, setPropertyValues] = React.useState(
-    catalogueItemProperties?.map((property) => property.value) || []
-  );
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
     string | undefined
@@ -96,7 +93,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       address: '',
       web_url: '',
     });
-    setPropertyValues([]);
+    onChangePropertyValues([]);
     setPropertyErrors(
       new Array(catalogueItemPropertiesForm.length).fill(false)
     );
@@ -109,6 +106,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     catalogueItemPropertiesForm.length,
     onChangeCatalogueItemDetails,
     onChangeCatalogueItemManufacturer,
+    onChangePropertyValues,
     onClose,
   ]);
 
@@ -119,11 +117,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   ) => {
     const updatedPropertyValues = [...propertyValues];
     updatedPropertyValues[index] = newValue;
-    setPropertyValues(updatedPropertyValues);
+    onChangePropertyValues(updatedPropertyValues);
 
-    const updatedProperties = catalogueItemProperties
-      ? [...catalogueItemProperties]
-      : [];
+    const updatedProperties: CatalogueItemProperty[] = [];
     const propertyType = catalogueItemPropertiesForm[index]?.type || 'string';
 
     if (!updatedProperties[index]) {
@@ -149,8 +145,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     }
 
     updatedProperties[index] = updatedProperty;
-
-    onChangeCatalogueItemProperties(updatedProperties);
 
     // Clear the error state for the changed property
     const updatedPropertyErrors = [...propertyErrors];
