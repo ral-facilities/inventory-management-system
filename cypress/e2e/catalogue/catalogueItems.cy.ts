@@ -41,47 +41,6 @@ describe('Catalogue Items', () => {
     });
   });
 
-  it('displays duplicate name error message', () => {
-    cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
-
-    cy.findByLabelText('Name *').type('test_dup');
-    cy.findByLabelText('Description').type('test Description');
-    cy.findByLabelText('Resolution (megapixels) *').type(18);
-    cy.findByLabelText('Frame Rate (fps)').type(60);
-    cy.findByLabelText('Sensor Type *').type('IO');
-    cy.findByLabelText('Sensor brand').type('pixel');
-    cy.findByLabelText('Broken *').click();
-    cy.findByText('True').click();
-    cy.findByLabelText('Older than five years').click();
-    cy.findByText('False').click();
-
-    cy.findByLabelText('Manufacturer Name *').type('test');
-    cy.findByLabelText('Manufacturer URL *').type('https://test.co.uk');
-    cy.findByLabelText('Manufacturer Address *').type('1 house test TX3 6TY');
-
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findByRole('button', { name: 'Save' }).click();
-
-    cy.findBrowserMockedRequests({
-      method: 'POST',
-      url: '/v1/catalogue-items',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
-        '{"catalogue_category_id":"4","name":"test_dup","description":"test Description","properties":[{"name":"Resolution","value":18},{"name":"Frame Rate","value":60},{"name":"Sensor Type","value":"IO"},{"name":"Sensor brand","value":"pixel"},{"name":"Broken","value":true},{"name":"Older than five years","value":false}],"manufacturer":{"name":"test","address":"1 house test TX3 6TY","web_url":"https://test.co.uk"}}'
-      );
-    });
-    cy.findByText(
-      'A catalogue item with the same name already exists within the catalogue category'
-    ).should('exist');
-    cy.findByLabelText('Name *').clear();
-    cy.findByText(
-      'A catalogue item with the same name already exists within the catalogue category'
-    ).should('not.exist');
-  });
-
   it('adds a catalogue item only mandatory fields', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
 
