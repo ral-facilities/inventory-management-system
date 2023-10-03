@@ -23,7 +23,6 @@ import {
   CatalogueItemDetails,
   CatalogueItemManufacturer,
   CatalogueItemProperty,
-  ErrorParsing,
 } from '../../app.types';
 import { useAddCatalogueItem } from '../../api/catalogueItem';
 import { AxiosError } from 'axios';
