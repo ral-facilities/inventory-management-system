@@ -81,7 +81,7 @@ describe('Catalogue Category', () => {
       });
   });
 
-  it.only('delete a catalogue category', () => {
+  it('delete a catalogue category', () => {
     cy.findByRole('button', {
       name: 'delete Beam Characterization catalogue category button',
     }).click();
