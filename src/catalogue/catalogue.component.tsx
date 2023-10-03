@@ -13,34 +13,11 @@ import {
   CatalogueCategory,
   CatalogueItemDetails,
   CatalogueItemManufacturer,
-  CatalogueItemProperty,
 } from '../app.types';
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
 
-export function convertProperties(
-  catalogueItemProperties?: CatalogueCategoryFormData[]
-): CatalogueItemProperty[] {
-  const convertedProperties: CatalogueItemProperty[] = (
-    catalogueItemProperties ?? []
-  ).map((property) => {
-    let value: string | number | boolean | null = null;
-
-    if (property.type === 'number' || property.type === 'string') {
-      value = null;
-    } else if (property.type === 'boolean') {
-      value = '';
-    }
-
-    return {
-      name: property.name,
-      value,
-    };
-  });
-
-  return convertedProperties;
-}
 function Catalogue() {
   const [currNode, setCurrNode] = React.useState('/');
   const navigate = useNavigate();
@@ -73,14 +50,13 @@ function Catalogue() {
 
   const [catalogueItemManufacturer, setCatalogueItemManufacturer] =
     React.useState<CatalogueItemManufacturer>({
-      manufacturer: undefined,
-      manufacturerNumber: undefined,
-      manufacturerUrl: undefined,
+      name: '',
+      address: '',
+      web_url: '',
     });
 
-  const [catalogueItemProperties, setCatalogueItemProperties] = React.useState<
-    CatalogueItemProperty[] | null
-  >(null);
+  const [catalogueItemPropertyValues, setCatalogueItemPropertyValues] =
+    React.useState<(string | number | boolean | null)[]>([]);
 
   const catalogueLocation = location.pathname.replace(
     '/inventory-management-system/catalogue',
@@ -148,9 +124,6 @@ function Catalogue() {
   React.useEffect(() => {
     setParentId(parentInfo ? (!!parentInfo.id ? parentInfo.id : null) : null);
     setIsLeaf(parentInfo ? parentInfo.is_leaf : false);
-    setCatalogueItemProperties(
-      convertProperties(parentInfo?.catalogue_item_properties)
-    );
   }, [catalogueLocation, parentInfo]);
 
   return (
@@ -290,8 +263,8 @@ function Catalogue() {
         catalogueItemPropertiesForm={
           parentInfo?.catalogue_item_properties ?? []
         }
-        catalogueItemProperties={catalogueItemProperties}
-        onChangeCatalogueItemProperties={setCatalogueItemProperties}
+        propertyValues={catalogueItemPropertyValues}
+        onChangePropertyValues={setCatalogueItemPropertyValues}
       />
     </Grid>
   );

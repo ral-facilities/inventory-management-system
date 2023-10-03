@@ -9,7 +9,6 @@ import userEvent from '@testing-library/user-event';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
-import { convertProperties } from '../catalogue.component';
 
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
@@ -18,7 +17,7 @@ describe('Catalogue Items Dialog', () => {
   const onClose = jest.fn();
   const onChangeCatalogueItemDetails = jest.fn();
   const onChangeCatalogueItemManufacturer = jest.fn();
-  const onChangeCatalogueItemProperties = jest.fn();
+  const onChangePropertyValues = jest.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(
@@ -34,14 +33,14 @@ describe('Catalogue Items Dialog', () => {
       catalogueItemDetails: { name: undefined, description: '' },
       onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
       catalogueItemManufacturer: {
-        manufacturer: undefined,
-        manufacturerNumber: undefined,
-        manufacturerUrl: undefined,
+        name: '',
+        web_url: '',
+        address: '',
       },
       onChangeCatalogueItemManufacturer: onChangeCatalogueItemManufacturer,
       catalogueItemPropertiesForm: [],
-      catalogueItemProperties: [],
-      onChangeCatalogueItemProperties: onChangeCatalogueItemProperties,
+      propertyValues: [],
+      onChangePropertyValues: onChangePropertyValues,
     };
 
     user = userEvent.setup();
@@ -53,9 +52,7 @@ describe('Catalogue Items Dialog', () => {
 
   it('renders text correctly', async () => {
     props.catalogueItemPropertiesForm = getCatalogueItemsPropertiesById('4');
-    props.catalogueItemProperties = convertProperties(
-      getCatalogueItemsPropertiesById('4')
-    );
+
     let baseElement;
     await act(async () => {
       baseElement = createView().baseElement;
@@ -69,32 +66,12 @@ describe('Catalogue Items Dialog', () => {
       parentId: '1',
       catalogueItemDetails: { name: 'test', description: '' },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      catalogueItemProperties: [
-        {
-          name: 'Resolution',
-          value: 12,
-        },
-        {
-          name: 'Frame Rate',
-          value: 60,
-        },
-        {
-          name: 'Sensor Type',
-          value: 'IO',
-        },
-        {
-          name: 'Sensor brand',
-          value: 'pixel',
-        },
-        {
-          name: 'Broken',
-          value: true,
-        },
-        {
-          name: 'Old than 5 years',
-          value: false,
-        },
-      ],
+      propertyValues: [12, 60, 'IO', 'pixel', true, false],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
     };
 
     createView();
@@ -107,6 +84,11 @@ describe('Catalogue Items Dialog', () => {
       catalogue_category_id: '1',
       description: '',
       name: 'test',
+      manufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
       properties: [
         { name: 'Resolution', value: 12 },
         { name: 'Frame Rate', value: 60 },
@@ -124,32 +106,12 @@ describe('Catalogue Items Dialog', () => {
       parentId: '1',
       catalogueItemDetails: { name: 'test', description: '' },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      catalogueItemProperties: [
-        {
-          name: 'Resolution',
-          value: 12,
-        },
-        {
-          name: 'Frame Rate',
-          value: null,
-        },
-        {
-          name: 'Sensor Type',
-          value: 'IO',
-        },
-        {
-          name: 'Sensor brand',
-          value: null,
-        },
-        {
-          name: 'Broken',
-          value: true,
-        },
-        {
-          name: 'Old than 5 years',
-          value: '',
-        },
-      ],
+      propertyValues: [12, null, 'IO', null, true, ''],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
     };
 
     createView();
@@ -162,6 +124,11 @@ describe('Catalogue Items Dialog', () => {
       catalogue_category_id: '1',
       description: '',
       name: 'test',
+      manufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
       properties: [
         { name: 'Resolution', value: 12 },
         { name: 'Sensor Type', value: 'IO' },
@@ -176,32 +143,7 @@ describe('Catalogue Items Dialog', () => {
       parentId: '1',
       catalogueItemDetails: { name: '', description: '' },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      catalogueItemProperties: [
-        {
-          name: 'Resolution',
-          value: null,
-        },
-        {
-          name: 'Frame Rate',
-          value: null,
-        },
-        {
-          name: 'Sensor Type',
-          value: null,
-        },
-        {
-          name: 'Sensor brand',
-          value: null,
-        },
-        {
-          name: 'Broken',
-          value: '',
-        },
-        {
-          name: 'Old than 5 years',
-          value: '',
-        },
-      ],
+      propertyValues: [null, null, null, null, '', ''],
     };
 
     createView();
@@ -226,6 +168,18 @@ describe('Catalogue Items Dialog', () => {
     expect(mandatoryFieldHelperText[0]).toHaveTextContent(
       'This field is mandatory'
     );
+
+    expect(
+      screen.getByText('Please enter a Manufacturer Name')
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText('Please enter a Manufacturer URL')
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByText('Please enter a Manufacturer Address')
+    ).toBeInTheDocument();
   });
   it('display error message when invalid number format', async () => {
     props = {
@@ -233,32 +187,12 @@ describe('Catalogue Items Dialog', () => {
       parentId: '1',
       catalogueItemDetails: { name: '', description: '' },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      catalogueItemProperties: [
-        {
-          name: 'Resolution',
-          value: 'rsdf',
-        },
-        {
-          name: 'Frame Rate',
-          value: 'fsdf',
-        },
-        {
-          name: 'Sensor Type',
-          value: 'pixel',
-        },
-        {
-          name: 'Sensor brand',
-          value: null,
-        },
-        {
-          name: 'Broken',
-          value: false,
-        },
-        {
-          name: 'Old than 5 years',
-          value: '',
-        },
-      ],
+      propertyValues: ['rsdf', 'fsdf', 'pixel', null, false, ''],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'sony.com',
+        address: '1 venus street UY6 9OP',
+      },
     };
 
     createView();
@@ -275,55 +209,12 @@ describe('Catalogue Items Dialog', () => {
     expect(validNumberHelperText[0]).toHaveTextContent(
       'Please enter a valid number'
     );
-  });
 
-  it('displays duplicate name error message', async () => {
-    props = {
-      ...props,
-      parentId: '1',
-      catalogueItemDetails: { name: 'test_dup', description: '' },
-      catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      catalogueItemProperties: [
-        {
-          name: 'Resolution',
-          value: 12,
-        },
-        {
-          name: 'Frame Rate',
-          value: 60,
-        },
-        {
-          name: 'Sensor Type',
-          value: 'IO',
-        },
-        {
-          name: 'Sensor brand',
-          value: 'pixel',
-        },
-        {
-          name: 'Broken',
-          value: true,
-        },
-        {
-          name: 'Old than 5 years',
-          value: false,
-        },
-      ],
-    };
-
-    createView();
-
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-
-    await user.click(saveButton);
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          'A catalogue item with the same name already exists within the catalogue category'
-        )
-      ).toBeInTheDocument();
-    });
+    expect(
+      screen.getByText(
+        'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+      )
+    ).toBeInTheDocument();
   });
 
   it('displays warning message when an unknown error occurs', async () => {
@@ -332,32 +223,12 @@ describe('Catalogue Items Dialog', () => {
       parentId: '1',
       catalogueItemDetails: { name: 'Error 500', description: '' },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      catalogueItemProperties: [
-        {
-          name: 'Resolution',
-          value: 12,
-        },
-        {
-          name: 'Frame Rate',
-          value: 60,
-        },
-        {
-          name: 'Sensor Type',
-          value: 'IO',
-        },
-        {
-          name: 'Sensor brand',
-          value: 'pixel',
-        },
-        {
-          name: 'Broken',
-          value: true,
-        },
-        {
-          name: 'Old than 5 years',
-          value: false,
-        },
-      ],
+      propertyValues: [12, null, 'IO', null, true, ''],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
     };
     createView();
 
@@ -370,32 +241,6 @@ describe('Catalogue Items Dialog', () => {
       ).toBeInTheDocument();
     });
     expect(onClose).not.toHaveBeenCalled();
-  });
-
-  it('initialize  catalogueItemProperties list object if not defined', async () => {
-    props = {
-      ...props,
-      parentId: '1',
-      catalogueItemDetails: { name: 'test_dup', description: '' },
-      catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      catalogueItemProperties: [],
-    };
-
-    createView();
-
-    const propertyInput = screen.getByLabelText('Resolution (megapixels) *');
-
-    await user.clear(propertyInput);
-    await user.type(propertyInput, '12');
-
-    expect(onChangeCatalogueItemProperties).toHaveBeenCalledWith(
-      expect.arrayContaining([
-        expect.objectContaining({
-          name: 'Resolution',
-          value: 12, // Expecting a parsed number
-        }),
-      ])
-    );
   });
 
   describe('Catalogue Items Details', () => {
@@ -430,12 +275,9 @@ describe('Catalogue Items Dialog', () => {
       });
     });
   });
-  describe('Catalogue Items Properties', () => {
+  describe('Catalogue Items Property values', () => {
     beforeEach(() => {
       props.catalogueItemPropertiesForm = getCatalogueItemsPropertiesById('4');
-      props.catalogueItemProperties = convertProperties(
-        getCatalogueItemsPropertiesById('4')
-      );
     });
     afterEach(() => {
       jest.clearAllMocks();
@@ -448,17 +290,9 @@ describe('Catalogue Items Dialog', () => {
 
       const propertyInput = screen.getByLabelText('Resolution (megapixels) *');
 
-      await user.clear(propertyInput);
-      await user.type(propertyInput, newValue);
+      fireEvent.change(propertyInput, { target: { value: newValue } });
 
-      expect(onChangeCatalogueItemProperties).toHaveBeenCalledWith(
-        expect.arrayContaining([
-          expect.objectContaining({
-            name: 'Resolution',
-            value: 12, // Expecting a parsed number
-          }),
-        ])
-      );
+      expect(onChangePropertyValues).toHaveBeenCalledWith(['12']);
     });
 
     it('handles string property input correctly', async () => {
@@ -468,16 +302,14 @@ describe('Catalogue Items Dialog', () => {
 
       const propertyInput = screen.getByLabelText('Sensor Type *');
 
-      await user.type(propertyInput, newValue);
+      fireEvent.change(propertyInput, { target: { value: newValue } });
 
-      expect(onChangeCatalogueItemProperties).toHaveBeenCalledWith(
-        expect.arrayContaining([
-          expect.objectContaining({
-            name: 'Sensor Type',
-            value: newValue,
-          }),
-        ])
-      );
+      // eslint-disable-next-line no-sparse-arrays
+      expect(onChangePropertyValues).toHaveBeenCalledWith([
+        ,
+        ,
+        'Sensor Type Value',
+      ]);
     });
 
     it('handles boolean property input correctly', async () => {
@@ -489,14 +321,8 @@ describe('Catalogue Items Dialog', () => {
 
       await user.click(screen.getByText('True'));
 
-      expect(onChangeCatalogueItemProperties).toHaveBeenCalledWith(
-        expect.arrayContaining([
-          expect.objectContaining({
-            name: 'Broken',
-            value: true,
-          }),
-        ])
-      );
+      // eslint-disable-next-line no-sparse-arrays
+      expect(onChangePropertyValues).toHaveBeenCalledWith([, , , , 'true']);
     });
   });
 
@@ -509,27 +335,33 @@ describe('Catalogue Items Dialog', () => {
       const manufacturerNameInput = screen.getByLabelText(
         'Manufacturer Name *'
       );
-      await user.type(manufacturerNameInput, newManufacturerName);
+
+      fireEvent.change(manufacturerNameInput, {
+        target: { value: newManufacturerName },
+      });
 
       expect(onChangeCatalogueItemManufacturer).toHaveBeenCalledWith({
         ...props.catalogueItemManufacturer,
-        manufacturer: newManufacturerName,
+        name: newManufacturerName,
       });
     });
 
-    it('handles manufacturer number input correctly', async () => {
-      const newManufacturerNumber = '123456789';
+    it('handles manufacturer address input correctly', async () => {
+      const newManufacturerAddress = '123456789';
 
       createView();
 
-      const manufacturerNumberInput = screen.getByLabelText(
-        'Manufacturer Number *'
+      const manufacturerAddressInput = screen.getByLabelText(
+        'Manufacturer Address *'
       );
-      await user.type(manufacturerNumberInput, newManufacturerNumber);
+
+      fireEvent.change(manufacturerAddressInput, {
+        target: { value: newManufacturerAddress },
+      });
 
       expect(onChangeCatalogueItemManufacturer).toHaveBeenCalledWith({
         ...props.catalogueItemManufacturer,
-        manufacturerNumber: newManufacturerNumber,
+        address: newManufacturerAddress,
       });
     });
 
@@ -538,12 +370,14 @@ describe('Catalogue Items Dialog', () => {
 
       createView();
 
-      const manufacturerUrlInput = screen.getByLabelText('Manufacturer Url *');
-      await user.type(manufacturerUrlInput, newManufacturerUrl);
+      const manufacturerUrlInput = screen.getByLabelText('Manufacturer URL *');
+      fireEvent.change(manufacturerUrlInput, {
+        target: { value: newManufacturerUrl },
+      });
 
       expect(onChangeCatalogueItemManufacturer).toHaveBeenCalledWith({
         ...props.catalogueItemManufacturer,
-        manufacturerUrl: newManufacturerUrl,
+        web_url: newManufacturerUrl,
       });
     });
   });

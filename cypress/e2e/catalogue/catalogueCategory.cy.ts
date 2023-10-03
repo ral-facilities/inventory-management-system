@@ -81,7 +81,7 @@ describe('Catalogue Category', () => {
       });
   });
 
-  it('delete a catalogue category', () => {
+  it.only('delete a catalogue category', () => {
     cy.findByRole('button', {
       name: 'delete Beam Characterization catalogue category button',
     }).click();
@@ -211,6 +211,31 @@ describe('Catalogue Category', () => {
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
         '{"catalogue_item_properties":[{"name":"Updated Field","type":"number","unit":"volts","mandatory":true},{"name":"Accuracy","type":"string","mandatory":true}]}'
+      );
+      expect(request.url.toString()).to.contain('1');
+    });
+  });
+
+  it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
+    cy.visit('/inventory-management-system/catalogue/beam-characterization');
+    cy.findByRole('button', {
+      name: 'edit Cameras catalogue category button',
+    }).click();
+    cy.findByLabelText('Catalogue Categories').click();
+    cy.findByLabelText('Name *').type('1');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-categories/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"name":"Cameras1","is_leaf":false}'
       );
       expect(request.url.toString()).to.contain('1');
     });

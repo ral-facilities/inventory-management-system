@@ -23,7 +23,6 @@ import {
   CatalogueItemDetails,
   CatalogueItemManufacturer,
   CatalogueItemProperty,
-  ErrorParsing,
 } from '../../app.types';
 import { useAddCatalogueItem } from '../../api/catalogueItem';
 import { AxiosError } from 'axios';
@@ -41,10 +40,19 @@ export interface CatalogueItemsDialogProps {
     catalogueItemManufacturer: CatalogueItemManufacturer
   ) => void;
   catalogueItemPropertiesForm: CatalogueCategoryFormData[];
-  catalogueItemProperties: CatalogueItemProperty[] | null;
-  onChangeCatalogueItemProperties: (
-    catalogueItemProperties: CatalogueItemProperty[] | null
+  propertyValues: (string | number | boolean | null)[];
+  onChangePropertyValues: (
+    propertyValues: (string | number | boolean | null)[]
   ) => void;
+}
+
+function isValidUrl(url: string) {
+  try {
+    const parsedUrl = new URL(url);
+    return parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:';
+  } catch (error) {
+    return false;
+  }
 }
 
 function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
@@ -57,13 +65,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     catalogueItemManufacturer,
     onChangeCatalogueItemManufacturer,
     catalogueItemPropertiesForm,
-    catalogueItemProperties,
-    onChangeCatalogueItemProperties,
+    propertyValues,
+    onChangePropertyValues,
   } = props;
 
-  const [propertyValues, setPropertyValues] = React.useState(
-    catalogueItemProperties?.map((property) => property.value) || []
-  );
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
     string | undefined
@@ -71,6 +76,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const [catchAllError, setCatchAllError] = React.useState(false);
 
+  const [manufacturerNameError, setManufacturerNameError] =
+    React.useState(false);
+  const [manufacturerWebUrlError, setManufacturerWebUrlError] =
+    React.useState(false);
+  const [manufacturerWebUrlErrorMessage, setManufacturerWebUrlErrorMessage] =
+    React.useState<string>('');
+  const [manufacturerAddressError, setManufacturerAddressError] =
+    React.useState(false);
   const [propertyErrors, setPropertyErrors] = React.useState(
     new Array(catalogueItemPropertiesForm.length).fill(false)
   );
@@ -78,20 +91,24 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const handleClose = React.useCallback(() => {
     onChangeCatalogueItemDetails({ name: undefined, description: '' });
     onChangeCatalogueItemManufacturer({
-      manufacturer: undefined,
-      manufacturerNumber: undefined,
-      manufacturerUrl: undefined,
+      name: '',
+      address: '',
+      web_url: '',
     });
-    setPropertyValues([]);
+    onChangePropertyValues([]);
     setPropertyErrors(
       new Array(catalogueItemPropertiesForm.length).fill(false)
     );
     setNameError(false);
+    setManufacturerAddressError(false);
+    setManufacturerNameError(false);
+    setManufacturerWebUrlError(false);
     onClose();
   }, [
     catalogueItemPropertiesForm.length,
     onChangeCatalogueItemDetails,
     onChangeCatalogueItemManufacturer,
+    onChangePropertyValues,
     onClose,
   ]);
 
@@ -102,11 +119,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   ) => {
     const updatedPropertyValues = [...propertyValues];
     updatedPropertyValues[index] = newValue;
-    setPropertyValues(updatedPropertyValues);
+    onChangePropertyValues(updatedPropertyValues);
 
-    const updatedProperties = catalogueItemProperties
-      ? [...catalogueItemProperties]
-      : [];
+    const updatedProperties: CatalogueItemProperty[] = [];
     const propertyType = catalogueItemPropertiesForm[index]?.type || 'string';
 
     if (!updatedProperties[index]) {
@@ -133,8 +148,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
     updatedProperties[index] = updatedProperty;
 
-    onChangeCatalogueItemProperties(updatedProperties);
-
     // Clear the error state for the changed property
     const updatedPropertyErrors = [...propertyErrors];
     updatedPropertyErrors[index] = false;
@@ -149,15 +162,47 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     // Check name
     if (
       catalogueItemDetails.name === undefined ||
-      catalogueItemDetails.name === ''
+      catalogueItemDetails.name.trim() === ''
     ) {
       setNameError(true);
       setNameErrorMessage('Please enter name');
       hasErrors = true;
-    } else {
-      setNameError(false);
     }
 
+    // Check Manufacturer Name
+
+    if (
+      catalogueItemManufacturer.name === undefined ||
+      catalogueItemManufacturer.name.trim() === ''
+    ) {
+      setManufacturerNameError(true);
+      hasErrors = true;
+    }
+
+    // Check Manufacturer URL
+    if (
+      !catalogueItemManufacturer.web_url.trim() ||
+      !isValidUrl(catalogueItemManufacturer.web_url)
+    ) {
+      setManufacturerWebUrlError(true);
+      setManufacturerWebUrlErrorMessage(
+        !catalogueItemManufacturer.web_url.trim()
+          ? 'Please enter a Manufacturer URL'
+          : 'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+      );
+      hasErrors = true;
+    }
+
+    // Check Manufacturer Address
+    if (
+      catalogueItemManufacturer.address === undefined ||
+      catalogueItemManufacturer.address.trim() === ''
+    ) {
+      setManufacturerAddressError(true);
+      hasErrors = true;
+    } else {
+      setManufacturerAddressError(false);
+    }
     // Check properties
     const updatedPropertyErrors = [...propertyErrors];
 
@@ -230,24 +275,19 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       name: catalogueItemDetails.name ?? undefined,
       description: catalogueItemDetails.description ?? '',
       properties: filteredProperties,
+      manufacturer: catalogueItemManufacturer,
     };
 
     addCatalogueItem(catalogueItem)
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
-        const response = error.response?.data as ErrorParsing;
         console.log(error);
-        if (response && error.response?.status === 409) {
-          setNameError(true);
-          setNameErrorMessage(response.detail);
-          return;
-        }
         setCatchAllError(true);
       });
   }, [
     addCatalogueItem,
-    catalogueItemDetails.description,
-    catalogueItemDetails.name,
+    catalogueItemDetails,
+    catalogueItemManufacturer,
     catalogueItemPropertiesForm,
     handleClose,
     parentId,
@@ -422,41 +462,60 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           label="Manufacturer Name"
           required={true}
           sx={{ marginLeft: '4px', marginTop: '16px' }}
-          value={catalogueItemManufacturer.manufacturer}
+          value={catalogueItemManufacturer.name}
           onChange={(event) => {
             onChangeCatalogueItemManufacturer({
               ...catalogueItemManufacturer,
-              manufacturer: event.target.value,
+              name: event.target.value,
             });
+            setManufacturerNameError(false);
           }}
+          error={manufacturerNameError}
+          helperText={
+            manufacturerNameError ? 'Please enter a Manufacturer Name' : ''
+          }
           fullWidth
         />
 
         <TextField
-          label="Manufacturer Number"
+          label="Manufacturer URL"
           required={true}
           sx={{ marginLeft: '4px', marginTop: '16px' }}
-          value={catalogueItemManufacturer.manufacturerNumber}
+          value={catalogueItemManufacturer.web_url}
           onChange={(event) => {
             onChangeCatalogueItemManufacturer({
               ...catalogueItemManufacturer,
-              manufacturerNumber: event.target.value,
+              web_url: event.target.value,
             });
+
+            setManufacturerWebUrlError(false);
+            setManufacturerWebUrlErrorMessage('');
           }}
+          error={manufacturerWebUrlError} // Set error state based on the nameError state
+          helperText={
+            manufacturerWebUrlError ? manufacturerWebUrlErrorMessage : ''
+          }
           fullWidth
         />
 
         <TextField
-          label="Manufacturer Url"
+          label="Manufacturer Address"
           required={true}
           sx={{ marginLeft: '4px', marginTop: '16px' }}
-          value={catalogueItemManufacturer.manufacturerUrl}
+          value={catalogueItemManufacturer.address}
           onChange={(event) => {
             onChangeCatalogueItemManufacturer({
               ...catalogueItemManufacturer,
-              manufacturerUrl: event.target.value,
+              address: event.target.value,
             });
+            setManufacturerAddressError(false);
           }}
+          error={manufacturerAddressError} // Set error state based on the nameError state
+          helperText={
+            manufacturerAddressError
+              ? 'Please enter a Manufacturer Address'
+              : ''
+          }
           fullWidth
         />
       </DialogContent>
