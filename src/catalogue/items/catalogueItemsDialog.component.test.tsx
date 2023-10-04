@@ -9,7 +9,6 @@ import userEvent from '@testing-library/user-event';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
-import { convertProperties } from '../catalogue.component';
 
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
@@ -18,7 +17,7 @@ describe('Catalogue Items Dialog', () => {
   const onClose = jest.fn();
   const onChangeCatalogueItemDetails = jest.fn();
   const onChangeCatalogueItemManufacturer = jest.fn();
-  const onChangeCatalogueItemProperties = jest.fn();
+  const onChangePropertyValues = jest.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(
@@ -40,9 +39,9 @@ describe('Catalogue Items Dialog', () => {
       },
       onChangeCatalogueItemManufacturer: onChangeCatalogueItemManufacturer,
       catalogueItemPropertiesForm: [],
-      catalogueItemProperties: [],
-      onChangeCatalogueItemProperties: onChangeCatalogueItemProperties,
       type: 'create',
+      propertyValues: [],
+      onChangePropertyValues: onChangePropertyValues,
     };
 
     user = userEvent.setup();
@@ -54,9 +53,7 @@ describe('Catalogue Items Dialog', () => {
 
   it('renders text correctly', async () => {
     props.catalogueItemPropertiesForm = getCatalogueItemsPropertiesById('4');
-    props.catalogueItemProperties = convertProperties(
-      getCatalogueItemsPropertiesById('4')
-    );
+
     let baseElement;
     await act(async () => {
       baseElement = createView().baseElement;
@@ -70,32 +67,7 @@ describe('Catalogue Items Dialog', () => {
       parentId: '1',
       catalogueItemDetails: { name: 'test', description: '' },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      catalogueItemProperties: [
-        {
-          name: 'Resolution',
-          value: 12,
-        },
-        {
-          name: 'Frame Rate',
-          value: 60,
-        },
-        {
-          name: 'Sensor Type',
-          value: 'IO',
-        },
-        {
-          name: 'Sensor brand',
-          value: 'pixel',
-        },
-        {
-          name: 'Broken',
-          value: true,
-        },
-        {
-          name: 'Older than five years',
-          value: false,
-        },
-      ],
+      propertyValues: [12, 60, 'IO', 'pixel', true, false],
       catalogueItemManufacturer: {
         name: 'Sony',
         web_url: 'https://sony.com',
@@ -135,32 +107,7 @@ describe('Catalogue Items Dialog', () => {
       parentId: '1',
       catalogueItemDetails: { name: 'test', description: '' },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      catalogueItemProperties: [
-        {
-          name: 'Resolution',
-          value: 12,
-        },
-        {
-          name: 'Frame Rate',
-          value: null,
-        },
-        {
-          name: 'Sensor Type',
-          value: 'IO',
-        },
-        {
-          name: 'Sensor brand',
-          value: null,
-        },
-        {
-          name: 'Broken',
-          value: true,
-        },
-        {
-          name: 'Older than five years',
-          value: '',
-        },
-      ],
+      propertyValues: [12, null, 'IO', null, true, ''],
       catalogueItemManufacturer: {
         name: 'Sony',
         web_url: 'https://sony.com',
@@ -197,32 +144,7 @@ describe('Catalogue Items Dialog', () => {
       parentId: '1',
       catalogueItemDetails: { name: '', description: '' },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      catalogueItemProperties: [
-        {
-          name: 'Resolution',
-          value: null,
-        },
-        {
-          name: 'Frame Rate',
-          value: null,
-        },
-        {
-          name: 'Sensor Type',
-          value: null,
-        },
-        {
-          name: 'Sensor brand',
-          value: null,
-        },
-        {
-          name: 'Broken',
-          value: '',
-        },
-        {
-          name: 'Older than five years',
-          value: '',
-        },
-      ],
+      propertyValues: [null, null, null, null, '', ''],
     };
 
     createView();
@@ -266,32 +188,7 @@ describe('Catalogue Items Dialog', () => {
       parentId: '1',
       catalogueItemDetails: { name: '', description: '' },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      catalogueItemProperties: [
-        {
-          name: 'Resolution',
-          value: 'rsdf',
-        },
-        {
-          name: 'Frame Rate',
-          value: 'fsdf',
-        },
-        {
-          name: 'Sensor Type',
-          value: 'pixel',
-        },
-        {
-          name: 'Sensor brand',
-          value: null,
-        },
-        {
-          name: 'Broken',
-          value: false,
-        },
-        {
-          name: 'Older than five years',
-          value: '',
-        },
-      ],
+      propertyValues: ['rsdf', 'fsdf', 'pixel', null, false, ''],
       catalogueItemManufacturer: {
         name: 'Sony',
         web_url: 'sony.com',
@@ -327,32 +224,7 @@ describe('Catalogue Items Dialog', () => {
       parentId: '1',
       catalogueItemDetails: { name: 'Error 500', description: '' },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      catalogueItemProperties: [
-        {
-          name: 'Resolution',
-          value: 12,
-        },
-        {
-          name: 'Frame Rate',
-          value: 60,
-        },
-        {
-          name: 'Sensor Type',
-          value: 'IO',
-        },
-        {
-          name: 'Sensor brand',
-          value: 'pixel',
-        },
-        {
-          name: 'Broken',
-          value: true,
-        },
-        {
-          name: 'Older than five years',
-          value: false,
-        },
-      ],
+      propertyValues: [12, null, 'IO', null, true, ''],
       catalogueItemManufacturer: {
         name: 'Sony',
         web_url: 'https://sony.com',
@@ -372,31 +244,6 @@ describe('Catalogue Items Dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
-  it('initialize  catalogueItemProperties list object if not defined', async () => {
-    props = {
-      ...props,
-      parentId: '1',
-      catalogueItemDetails: { name: 'test', description: '' },
-      catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-      catalogueItemProperties: [],
-    };
-
-    createView();
-
-    const propertyInput = screen.getByLabelText('Resolution (megapixels) *');
-
-    await user.clear(propertyInput);
-    await user.type(propertyInput, '12');
-
-    expect(onChangeCatalogueItemProperties).toHaveBeenCalledWith(
-      expect.arrayContaining([
-        expect.objectContaining({
-          name: 'Resolution',
-          value: 12, // Expecting a parsed number
-        }),
-      ])
-    );
-  });
   describe('Edit a catalogue item', () => {
     let axiosPatchSpy;
     beforeEach(() => {
@@ -411,7 +258,7 @@ describe('Catalogue Items Dialog', () => {
     it('Edit a catalogue item (catalogue detail)', async () => {
       props = {
         ...props,
-        parentId: '1',
+        parentId: '4',
         catalogueItemDetails: { name: 'test', description: '' },
         selectedCatalogueItem: {
           catalogue_category_id: '4',
@@ -433,32 +280,7 @@ describe('Catalogue Items Dialog', () => {
           },
         },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        catalogueItemProperties: [
-          {
-            name: 'Resolution',
-            value: 24,
-          },
-          {
-            name: 'Frame Rate',
-            value: 240,
-          },
-          {
-            name: 'Sensor Type',
-            value: 'CCD',
-          },
-          {
-            name: 'Sensor brand',
-            value: 'Nikon',
-          },
-          {
-            name: 'Broken',
-            value: false,
-          },
-          {
-            name: 'Older than five years',
-            value: true,
-          },
-        ],
+        propertyValues: [24, 240, 'CCD', 'Nikon', false, true],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
           web_url: 'http://example.com',
@@ -505,32 +327,7 @@ describe('Catalogue Items Dialog', () => {
             address: '10 My Street',
           },
         },
-        catalogueItemProperties: [
-          {
-            name: 'Resolution',
-            value: '12',
-          },
-          {
-            name: 'Frame Rate',
-            value: '21',
-          },
-          {
-            name: 'Sensor Type',
-            value: 'pixel',
-          },
-          {
-            name: 'Sensor brand',
-            value: null,
-          },
-          {
-            name: 'Broken',
-            value: false,
-          },
-          {
-            name: 'Older than five years',
-            value: '',
-          },
-        ],
+        propertyValues: ['12a', '21a', 'pixel', null, false, ''],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
           web_url: 'example.com',
@@ -539,13 +336,6 @@ describe('Catalogue Items Dialog', () => {
       };
 
       createView();
-
-      await user.type(screen.getByLabelText('Resolution (megapixels) *'), 'a');
-      await user.type(screen.getByLabelText('Frame Rate (fps)'), 'a');
-
-      await waitFor(() => {
-        expect(screen.getByLabelText('Frame Rate (fps)')).toHaveValue('21a');
-      });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -595,32 +385,7 @@ describe('Catalogue Items Dialog', () => {
           },
         },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        catalogueItemProperties: [
-          {
-            name: 'Resolution',
-            value: 24,
-          },
-          {
-            name: 'Frame Rate',
-            value: 240,
-          },
-          {
-            name: 'Sensor Type',
-            value: 'CCD',
-          },
-          {
-            name: 'Sensor brand',
-            value: 'Nikon',
-          },
-          {
-            name: 'Broken',
-            value: true,
-          },
-          {
-            name: 'Older than five years',
-            value: true,
-          },
-        ],
+        propertyValues: [null, 240, null, 'Nikon', '', true],
         catalogueItemManufacturer: {
           name: '',
           web_url: '',
@@ -629,15 +394,6 @@ describe('Catalogue Items Dialog', () => {
       };
 
       createView();
-
-      await user.clear(screen.getByLabelText('Resolution (megapixels) *'));
-      await user.click(screen.getByLabelText('Broken *'));
-      await user.click(screen.getByText('None'));
-      await user.clear(screen.getByLabelText('Sensor Type *'));
-
-      await waitFor(() => {
-        expect(screen.getByLabelText('Sensor Type *')).toHaveValue('');
-      });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -699,32 +455,7 @@ describe('Catalogue Items Dialog', () => {
           },
         },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        catalogueItemProperties: [
-          {
-            name: 'Resolution',
-            value: 24,
-          },
-          {
-            name: 'Frame Rate',
-            value: 240,
-          },
-          {
-            name: 'Sensor Type',
-            value: 'CCD',
-          },
-          {
-            name: 'Sensor brand',
-            value: 'Nikon',
-          },
-          {
-            name: 'Broken',
-            value: true,
-          },
-          {
-            name: 'Older than five years',
-            value: true,
-          },
-        ],
+        propertyValues: [24, 240, 'CCD', 'Nikon', true, true],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
           web_url: 'http://example.com',
@@ -779,32 +510,7 @@ describe('Catalogue Items Dialog', () => {
           },
         },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        catalogueItemProperties: [
-          {
-            name: 'Resolution',
-            value: 24,
-          },
-          {
-            name: 'Frame Rate',
-            value: 240,
-          },
-          {
-            name: 'Sensor Type',
-            value: 'CCD',
-          },
-          {
-            name: 'Sensor brand',
-            value: 'Nikon',
-          },
-          {
-            name: 'Broken',
-            value: false,
-          },
-          {
-            name: 'Older than five years',
-            value: true,
-          },
-        ],
+        propertyValues: [24, 240, 'CCD', 'Nikon', false, true],
         catalogueItemManufacturer: {
           name: 'Sony1',
           web_url: 'https://sony.com',
@@ -856,32 +562,7 @@ describe('Catalogue Items Dialog', () => {
           },
         },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        catalogueItemProperties: [
-          {
-            name: 'Resolution',
-            value: 24,
-          },
-          {
-            name: 'Frame Rate',
-            value: 240,
-          },
-          {
-            name: 'Sensor Type',
-            value: 'CCD',
-          },
-          {
-            name: 'Sensor brand',
-            value: 'Nikon',
-          },
-          {
-            name: 'Broken',
-            value: false,
-          },
-          {
-            name: 'Older than five years',
-            value: true,
-          },
-        ],
+        propertyValues: [24, 240, 'CCD', 'Nikon', false, true],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
           web_url: 'http://example.com',
@@ -914,28 +595,7 @@ describe('Catalogue Items Dialog', () => {
           description: 'High-resolution cameras for beam characterization. 1',
         },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        catalogueItemProperties: [
-          {
-            name: 'Resolution',
-            value: 12,
-          },
-          {
-            name: 'Frame Rate',
-            value: 30,
-          },
-          {
-            name: 'Sensor Type',
-            value: 'CMOS',
-          },
-          {
-            name: 'Broken',
-            value: true,
-          },
-          {
-            name: 'Older than five years',
-            value: false,
-          },
-        ],
+        propertyValues: [12, 30, 'CMOS', null, true, false],
       };
 
       createView();
@@ -968,32 +628,7 @@ describe('Catalogue Items Dialog', () => {
         parentId: '1',
         catalogueItemDetails: { name: 'test', description: '' },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        catalogueItemProperties: [
-          {
-            name: 'Resolution',
-            value: 12,
-          },
-          {
-            name: 'Frame Rate',
-            value: 60,
-          },
-          {
-            name: 'Sensor Type',
-            value: 'IO',
-          },
-          {
-            name: 'Sensor brand',
-            value: 'pixel',
-          },
-          {
-            name: 'Broken',
-            value: true,
-          },
-          {
-            name: 'Older than five years',
-            value: false,
-          },
-        ],
+        propertyValues: [12, 60, 'IO', 'pixel', true, false],
       };
 
       createView();
@@ -1037,32 +672,7 @@ describe('Catalogue Items Dialog', () => {
           },
         },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        catalogueItemProperties: [
-          {
-            name: 'Resolution',
-            value: 24,
-          },
-          {
-            name: 'Frame Rate',
-            value: 240,
-          },
-          {
-            name: 'Sensor Type',
-            value: 'CCD',
-          },
-          {
-            name: 'Sensor brand',
-            value: 'NIkon',
-          },
-          {
-            name: 'Broken',
-            value: false,
-          },
-          {
-            name: 'Older than five years',
-            value: true,
-          },
-        ],
+        propertyValues: [24, 240, 'CCD', 'NIkon', false, true],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
           web_url: 'http://example.com',
@@ -1122,32 +732,7 @@ describe('Catalogue Items Dialog', () => {
             address: '10 My Street',
           },
         },
-        catalogueItemProperties: [
-          {
-            name: 'Resolution',
-            value: 12,
-          },
-          {
-            name: 'Frame Rate',
-            value: 60,
-          },
-          {
-            name: 'Sensor Type',
-            value: 'IO',
-          },
-          {
-            name: 'Sensor brand',
-            value: 'pixel',
-          },
-          {
-            name: 'Broken',
-            value: true,
-          },
-          {
-            name: 'Older than five years',
-            value: false,
-          },
-        ],
+        propertyValues: [12, 60, 'IO', 'pixel', true, false],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
           web_url: 'http://example.com',
@@ -1200,12 +785,9 @@ describe('Catalogue Items Dialog', () => {
       });
     });
   });
-  describe('Catalogue Items Properties', () => {
+  describe('Catalogue Items Property values', () => {
     beforeEach(() => {
       props.catalogueItemPropertiesForm = getCatalogueItemsPropertiesById('4');
-      props.catalogueItemProperties = convertProperties(
-        getCatalogueItemsPropertiesById('4')
-      );
     });
     afterEach(() => {
       jest.clearAllMocks();
@@ -1218,17 +800,9 @@ describe('Catalogue Items Dialog', () => {
 
       const propertyInput = screen.getByLabelText('Resolution (megapixels) *');
 
-      await user.clear(propertyInput);
-      await user.type(propertyInput, newValue);
+      fireEvent.change(propertyInput, { target: { value: newValue } });
 
-      expect(onChangeCatalogueItemProperties).toHaveBeenCalledWith(
-        expect.arrayContaining([
-          expect.objectContaining({
-            name: 'Resolution',
-            value: 12, // Expecting a parsed number
-          }),
-        ])
-      );
+      expect(onChangePropertyValues).toHaveBeenCalledWith(['12']);
     });
 
     it('handles string property input correctly', async () => {
@@ -1238,16 +812,14 @@ describe('Catalogue Items Dialog', () => {
 
       const propertyInput = screen.getByLabelText('Sensor Type *');
 
-      await user.type(propertyInput, newValue);
+      fireEvent.change(propertyInput, { target: { value: newValue } });
 
-      expect(onChangeCatalogueItemProperties).toHaveBeenCalledWith(
-        expect.arrayContaining([
-          expect.objectContaining({
-            name: 'Sensor Type',
-            value: newValue,
-          }),
-        ])
-      );
+      // eslint-disable-next-line no-sparse-arrays
+      expect(onChangePropertyValues).toHaveBeenCalledWith([
+        ,
+        ,
+        'Sensor Type Value',
+      ]);
     });
 
     it('handles boolean property input correctly', async () => {
@@ -1259,14 +831,8 @@ describe('Catalogue Items Dialog', () => {
 
       await user.click(screen.getByText('True'));
 
-      expect(onChangeCatalogueItemProperties).toHaveBeenCalledWith(
-        expect.arrayContaining([
-          expect.objectContaining({
-            name: 'Broken',
-            value: true,
-          }),
-        ])
-      );
+      // eslint-disable-next-line no-sparse-arrays
+      expect(onChangePropertyValues).toHaveBeenCalledWith([, , , , 'true']);
     });
   });
 

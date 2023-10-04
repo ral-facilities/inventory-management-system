@@ -47,42 +47,12 @@ export interface CatalogueItemsDialogProps {
     catalogueItemManufacturer: CatalogueItemManufacturer
   ) => void;
   catalogueItemPropertiesForm: CatalogueCategoryFormData[];
-  catalogueItemProperties: CatalogueItemProperty[] | null;
-  onChangeCatalogueItemProperties: (
-    catalogueItemProperties: CatalogueItemProperty[] | null
+  propertyValues: (string | number | boolean | null)[];
+  onChangePropertyValues: (
+    propertyValues: (string | number | boolean | null)[]
   ) => void;
   selectedCatalogueItem?: CatalogueItem;
   type: 'edit' | 'create';
-}
-
-function matchCatalogueItemProperties(
-  form: CatalogueCategoryFormData[],
-  items: CatalogueItemProperty[]
-): (string | number | boolean | null)[] {
-  const result: (string | number | boolean | null)[] = [];
-
-  for (const property of form) {
-    const matchingItem = items.find((item) => item.name === property.name);
-    if (matchingItem) {
-      // Type check and assign the value
-      if (property.type === 'number') {
-        result.push(matchingItem.value ? Number(matchingItem.value) : null);
-      } else if (property.type === 'boolean') {
-        result.push(
-          typeof matchingItem.value === 'boolean'
-            ? String(Boolean(matchingItem.value))
-            : ''
-        );
-      } else {
-        result.push(matchingItem.value ? String(matchingItem.value) : null);
-      }
-    } else {
-      // If there is no matching item, push null
-      result.push(null);
-    }
-  }
-
-  return result;
 }
 
 function isValidUrl(url: string) {
@@ -104,27 +74,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     catalogueItemManufacturer,
     onChangeCatalogueItemManufacturer,
     catalogueItemPropertiesForm,
-    catalogueItemProperties,
-    onChangeCatalogueItemProperties,
+    propertyValues,
+    onChangePropertyValues,
     selectedCatalogueItem,
     type,
   } = props;
-
-  const [propertyValues, setPropertyValues] = React.useState<
-    (string | number | boolean | null)[]
-  >(catalogueItemProperties?.map((property) => property.value) || []);
-
-  React.useEffect(() => {
-    if (type === 'edit') {
-      setPropertyValues(
-        matchCatalogueItemProperties(
-          catalogueItemPropertiesForm,
-          catalogueItemProperties ?? []
-        )
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
 
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
@@ -157,13 +111,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       address: '',
       web_url: '',
     });
-    setPropertyValues([]);
+    onChangePropertyValues([]);
     setPropertyErrors(
       new Array(catalogueItemPropertiesForm.length).fill(false)
     );
     setNameError(false);
     setNameErrorMessage(undefined);
-    onChangeCatalogueItemProperties([]);
     setFormError(false);
     setFormErrorMessage(undefined);
     setManufacturerAddressError(false);
@@ -174,7 +127,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     catalogueItemPropertiesForm.length,
     onChangeCatalogueItemDetails,
     onChangeCatalogueItemManufacturer,
-    onChangeCatalogueItemProperties,
+    onChangePropertyValues,
     onClose,
   ]);
 
@@ -187,11 +140,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     setFormErrorMessage(undefined);
     const updatedPropertyValues = [...propertyValues];
     updatedPropertyValues[index] = newValue;
-    setPropertyValues(updatedPropertyValues);
+    onChangePropertyValues(updatedPropertyValues);
 
-    const updatedProperties = catalogueItemProperties
-      ? [...catalogueItemProperties]
-      : [];
+    const updatedProperties: CatalogueItemProperty[] = [];
     const propertyType = catalogueItemPropertiesForm[index]?.type || 'string';
 
     if (!updatedProperties[index]) {
@@ -217,8 +168,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     }
 
     updatedProperties[index] = updatedProperty;
-
-    onChangeCatalogueItemProperties(updatedProperties);
 
     // Clear the error state for the changed property
     const updatedPropertyErrors = [...propertyErrors];
@@ -421,7 +370,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
       const updatedProperties = catalogueItemPropertiesForm.map(
         (property, index) => {
-          if (property.mandatory && !propertyValues[index]) {
+          if (
+            property.mandatory &&
+            !propertyValues[index] &&
+            typeof propertyValues[index] !== 'boolean'
+          ) {
             updatedPropertyErrors[index] = true;
 
             hasErrors = true;
@@ -645,7 +598,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         {property.name}
                       </InputLabel>
                       <Select
-                        value={(propertyValues[index] as string) || ''}
+                        value={(propertyValues[index] as string) ?? ''}
                         required={property.mandatory ?? false}
                         error={propertyErrors[index]}
                         labelId={`catalogue-item-property-${property.name.replace(

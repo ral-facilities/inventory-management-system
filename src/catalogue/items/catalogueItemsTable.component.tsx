@@ -21,12 +21,12 @@ import {
   CatalogueCategory,
   CatalogueItemDetails,
   CatalogueItemManufacturer,
-  CatalogueItemProperty,
 } from '../../app.types';
 import { useCatalogueItems } from '../../api/catalogueItem';
 import { Link } from 'react-router-dom';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
+import { matchCatalogueItemProperties } from '../catalogue.component';
 
 export interface CatalogueItemsTableProps {
   parentInfo: CatalogueCategory;
@@ -38,9 +38,9 @@ export interface CatalogueItemsTableProps {
   onChangeCatalogueItemManufacturer: (
     catalogueItemManufacturer: CatalogueItemManufacturer
   ) => void;
-  catalogueItemProperties: CatalogueItemProperty[] | null;
-  onChangeCatalogueItemProperties: (
-    catalogueItemProperties: CatalogueItemProperty[] | null
+  catalogueItemPropertyValues: (string | number | boolean | null)[];
+  onChangeCatalogueItemPropertyValues: (
+    propertyValues: (string | number | boolean | null)[]
   ) => void;
 }
 
@@ -51,8 +51,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     onChangeCatalogueItemDetails,
     catalogueItemManufacturer,
     onChangeCatalogueItemManufacturer,
-    catalogueItemProperties,
-    onChangeCatalogueItemProperties,
+    catalogueItemPropertyValues,
+    onChangeCatalogueItemPropertyValues,
   } = props;
   // SG header + SG footer + tabs #add breadcrumbs
   const tableHeight = `calc(100vh - (64px + 36px + 50px)`;
@@ -191,8 +191,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                             name: item.name,
                             description: item.description,
                           });
-                          onChangeCatalogueItemProperties(
-                            item.properties.map(({ unit, ...rest }) => rest)
+                          onChangeCatalogueItemPropertyValues(
+                            matchCatalogueItemProperties(
+                              parentInfo?.catalogue_item_properties ?? [],
+                              item.properties ?? []
+                            )
                           );
                           setSelectedCatalogueItem(item);
                           onChangeCatalogueItemManufacturer(item.manufacturer);
@@ -346,8 +349,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         catalogueItemPropertiesForm={
           parentInfo?.catalogue_item_properties ?? []
         }
-        catalogueItemProperties={catalogueItemProperties}
-        onChangeCatalogueItemProperties={onChangeCatalogueItemProperties}
+        propertyValues={catalogueItemPropertyValues}
+        onChangePropertyValues={onChangeCatalogueItemPropertyValues}
         selectedCatalogueItem={selectedCatalogueItem}
         type="edit"
       />

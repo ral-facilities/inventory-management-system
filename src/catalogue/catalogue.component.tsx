@@ -19,28 +19,36 @@ import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDia
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
 
-export function convertProperties(
-  catalogueItemProperties?: CatalogueCategoryFormData[]
-): CatalogueItemProperty[] {
-  const convertedProperties: CatalogueItemProperty[] = (
-    catalogueItemProperties ?? []
-  ).map((property) => {
-    let value: string | number | boolean | null = null;
+export function matchCatalogueItemProperties(
+  form: CatalogueCategoryFormData[],
+  items: CatalogueItemProperty[]
+): (string | number | boolean | null)[] {
+  const result: (string | number | boolean | null)[] = [];
 
-    if (property.type === 'number' || property.type === 'string') {
-      value = null;
-    } else if (property.type === 'boolean') {
-      value = '';
+  for (const property of form) {
+    const matchingItem = items.find((item) => item.name === property.name);
+    if (matchingItem) {
+      // Type check and assign the value
+      if (property.type === 'number') {
+        result.push(matchingItem.value ? Number(matchingItem.value) : null);
+      } else if (property.type === 'boolean') {
+        result.push(
+          typeof matchingItem.value === 'boolean'
+            ? String(Boolean(matchingItem.value))
+            : ''
+        );
+      } else {
+        result.push(matchingItem.value ? String(matchingItem.value) : null);
+      }
+    } else {
+      // If there is no matching item, push null
+      result.push(null);
     }
+  }
 
-    return {
-      name: property.name,
-      value,
-    };
-  });
-
-  return convertedProperties;
+  return result;
 }
+
 function Catalogue() {
   const [currNode, setCurrNode] = React.useState('/');
   const navigate = useNavigate();
@@ -78,9 +86,8 @@ function Catalogue() {
       web_url: '',
     });
 
-  const [catalogueItemProperties, setCatalogueItemProperties] = React.useState<
-    CatalogueItemProperty[] | null
-  >(null);
+  const [catalogueItemPropertyValues, setCatalogueItemPropertyValues] =
+    React.useState<(string | number | boolean | null)[]>([]);
 
   const catalogueLocation = location.pathname.replace(
     '/inventory-management-system/catalogue',
@@ -148,9 +155,6 @@ function Catalogue() {
   React.useEffect(() => {
     setParentId(parentInfo ? (!!parentInfo.id ? parentInfo.id : null) : null);
     setIsLeaf(parentInfo ? parentInfo.is_leaf : false);
-    setCatalogueItemProperties(
-      convertProperties(parentInfo?.catalogue_item_properties)
-    );
   }, [catalogueLocation, parentInfo]);
 
   return (
@@ -248,8 +252,8 @@ function Catalogue() {
           onChangeCatalogueItemDetails={setCatalogueItemDetails}
           catalogueItemManufacturer={catalogueItemManufacturer}
           onChangeCatalogueItemManufacturer={setCatalogueItemManufacturer}
-          catalogueItemProperties={catalogueItemProperties}
-          onChangeCatalogueItemProperties={setCatalogueItemProperties}
+          catalogueItemPropertyValues={catalogueItemPropertyValues}
+          onChangeCatalogueItemPropertyValues={setCatalogueItemPropertyValues}
         />
       )}
 
@@ -300,9 +304,9 @@ function Catalogue() {
         catalogueItemPropertiesForm={
           parentInfo?.catalogue_item_properties ?? []
         }
-        catalogueItemProperties={catalogueItemProperties}
-        onChangeCatalogueItemProperties={setCatalogueItemProperties}
         type="create"
+        propertyValues={catalogueItemPropertyValues}
+        onChangePropertyValues={setCatalogueItemPropertyValues}
       />
     </Grid>
   );

@@ -13,8 +13,8 @@ import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import {
   CatalogueItemDetails,
   CatalogueItemManufacturer,
-  CatalogueItemProperty,
 } from '../../app.types';
+import { matchCatalogueItemProperties } from '../catalogue.component';
 
 function CatalogueItemsLandingPage() {
   const location = useLocation();
@@ -59,9 +59,8 @@ function CatalogueItemsLandingPage() {
       web_url: '',
     });
 
-  const [catalogueItemProperties, setCatalogueItemProperties] = React.useState<
-    CatalogueItemProperty[] | null
-  >(null);
+  const [catalogueItemPropertyValues, setCatalogueItemPropertyValues] =
+    React.useState<(string | number | boolean | null)[]>([]);
 
   return (
     <Grid container>
@@ -90,8 +89,11 @@ function CatalogueItemsLandingPage() {
                 name: catalogueItemIdData.name,
                 description: catalogueItemIdData.description,
               });
-              setCatalogueItemProperties(
-                catalogueItemIdData.properties.map(({ unit, ...rest }) => rest)
+              setCatalogueItemPropertyValues(
+                matchCatalogueItemProperties(
+                  catalogueCategoryData?.catalogue_item_properties ?? [],
+                  catalogueItemIdData.properties ?? []
+                )
               );
               setCatalogueItemManufacturer(catalogueItemIdData.manufacturer);
             }
@@ -280,8 +282,8 @@ function CatalogueItemsLandingPage() {
         catalogueItemPropertiesForm={
           catalogueCategoryData?.catalogue_item_properties ?? []
         }
-        catalogueItemProperties={catalogueItemProperties}
-        onChangeCatalogueItemProperties={setCatalogueItemProperties}
+        propertyValues={catalogueItemPropertyValues}
+        onChangePropertyValues={setCatalogueItemPropertyValues}
         selectedCatalogueItem={catalogueItemIdData}
         type="edit"
       />

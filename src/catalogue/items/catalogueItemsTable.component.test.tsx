@@ -11,7 +11,7 @@ describe('Catalogue Items Table', () => {
   let user;
   const onChangeCatalogueItemDetails = jest.fn();
   const onChangeCatalogueItemManufacturer = jest.fn();
-  const onChangeCatalogueItemProperties = jest.fn();
+  const onChangeCatalogueItemPropertyValues = jest.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(<CatalogueItemsTable {...props} />);
@@ -22,13 +22,13 @@ describe('Catalogue Items Table', () => {
       catalogueItemDetails: { name: undefined, description: '' },
       onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
       catalogueItemManufacturer: {
-        manufacturer: undefined,
-        manufacturerNumber: undefined,
-        manufacturerUrl: undefined,
+        name: '',
+        web_url: '',
+        address: '',
       },
       onChangeCatalogueItemManufacturer: onChangeCatalogueItemManufacturer,
-      catalogueItemProperties: [],
-      onChangeCatalogueItemProperties: onChangeCatalogueItemProperties,
+      catalogueItemPropertyValues: [],
+      onChangeCatalogueItemPropertyValues: onChangeCatalogueItemPropertyValues,
       parentInfo: {
         id: '5',
         name: 'Energy Meters',

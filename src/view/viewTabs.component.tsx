@@ -83,14 +83,6 @@ function ViewTabs() {
     navigate(`/inventory-management-system/${newValue.toLowerCase()}`);
   };
 
-  React.useEffect(() => {
-    if (
-      location.pathname === '/inventory-management-system' ||
-      location.pathname === '/'
-    ) {
-      navigate('/inventory-management-system/catalogue');
-    }
-  }, [location.pathname, navigate]);
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
