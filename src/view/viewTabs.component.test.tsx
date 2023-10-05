@@ -58,8 +58,24 @@ describe('View Tabs', () => {
     ).toHaveTextContent('Systems');
   });
 
+  it('navigates to catalogue if the url is /inventory-management-system/', async () => {
+    createView('/inventory-management-system/');
+    const viewTabs = within(screen.getByRole('tablist', { name: 'view tabs' }));
+
+    expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
+      'Catalogue'
+    );
+    const catalogueHomeButton = await screen.findByTestId(
+      'home-button-catalogue'
+    );
+    expect(catalogueHomeButton).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+    });
+  });
+
   it('updates the tab value when url is not default Tab', async () => {
-    createView('/systems');
+    createView('/inventory-management-system/systems');
 
     const viewTabs = within(screen.getByRole('tablist', { name: 'view tabs' }));
 

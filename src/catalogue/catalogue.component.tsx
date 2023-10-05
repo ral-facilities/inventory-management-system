@@ -18,19 +18,24 @@ function Catalogue() {
   const onChangeNode = React.useCallback(
     (newNode: string) => {
       setCurrNode(newNode);
-      navigate(`/catalogue${newNode}`);
+      navigate(`/inventory-management-system/catalogue${newNode}`);
     },
     [navigate]
   );
 
   React.useEffect(() => {
-    setCurrNode(location.pathname.replace('/catalogue', ''));
+    setCurrNode(
+      location.pathname.replace('/inventory-management-system/catalogue', '')
+    );
   }, [location.pathname]);
 
   const [catalogueCategoryDialogOpen, setCatalogueCategoryDialogOpen] =
     React.useState<boolean>(false);
 
-  const catalogueLocation = location.pathname.replace('/catalogue', '');
+  const catalogueLocation = location.pathname.replace(
+    '/inventory-management-system/catalogue',
+    ''
+  );
 
   const { data: catalogueCategoryData } = useCatalogueCategory(
     undefined,
@@ -96,12 +101,13 @@ function Catalogue() {
           marginLeft: 0,
           alignItems: 'center', // Align items vertically at the center
           height: '100%',
+          width: '100%',
         }}
       >
         <Button
           sx={{ alignContent: 'left', margin: '4px' }}
           onClick={() => {
-            navigate('/catalogue');
+            navigate('/inventory-management-system/catalogue');
           }}
           variant="outlined"
           data-testid="home-button-catalogue"

@@ -1,12 +1,12 @@
 describe('Catalogue Category', () => {
   beforeEach(() => {
-    cy.visit('/catalogue');
+    cy.visit('/inventory-management-system/catalogue');
   });
   afterEach(() => {
     cy.clearMocks();
   });
   it('should create the breadcrumbs from the url', () => {
-    cy.visit('/catalogue/motion/actuators');
+    cy.visit('/inventory-management-system/catalogue/motion/actuators');
     cy.findByRole('link', { name: 'motion' }).should('be.visible');
     cy.findByText('actuators').should('be.visible');
 
@@ -18,7 +18,7 @@ describe('Catalogue Category', () => {
   });
 
   it('should navigate back to the root directory when the home button is pressed', () => {
-    cy.visit('/catalogue/motion/actuators');
+    cy.visit('/inventory-management-system/catalogue/motion/actuators');
     cy.findByRole('link', { name: 'motion' }).should('exist');
     cy.findByText('actuators').should('exist');
     cy.findByTestId('home-button-catalogue').click();
@@ -135,7 +135,7 @@ describe('Catalogue Category', () => {
   });
 
   it('edits a catalogue category (non leaf node)', () => {
-    cy.visit('/catalogue/beam-characterization');
+    cy.visit('/inventory-management-system/catalogue/beam-characterization');
     cy.findAllByTestId('edit-catalogue-category-button').first().click();
     cy.findByLabelText('Name *').type('1');
 
@@ -167,7 +167,7 @@ describe('Catalogue Category', () => {
   });
 
   it('displays error message if it received an unknown error from the spi', () => {
-    cy.visit('/catalogue/beam-characterization');
+    cy.visit('/inventory-management-system/catalogue/beam-characterization');
     cy.findAllByTestId('edit-catalogue-category-button').first().click();
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('Error 500');
@@ -181,7 +181,7 @@ describe('Catalogue Category', () => {
       });
   });
   it('edits a catalogue category with catalogue properties', () => {
-    cy.visit('/catalogue/beam-characterization');
+    cy.visit('/inventory-management-system/catalogue/beam-characterization');
     cy.findAllByTestId('edit-catalogue-category-button').first().click();
 
     cy.startSnoopingBrowserMockedRequest();
@@ -206,7 +206,7 @@ describe('Catalogue Category', () => {
     });
   });
   it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
-    cy.visit('/catalogue/beam-characterization');
+    cy.visit('/inventory-management-system/catalogue/beam-characterization');
     cy.findAllByTestId('edit-catalogue-category-button').first().click();
     cy.findByLabelText('Catalogue Categories').click();
     cy.findByLabelText('Name *').type('1');
