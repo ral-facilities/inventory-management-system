@@ -1,36 +1,19 @@
 import React from 'react';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
-import { act, fireEvent, screen } from '@testing-library/react';
+import axios from 'axios';
+import {
+  renderComponentWithBrowserRouter,
+  getCatalogueItemsPropertiesById,
+} from '../../setupTests';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
-import catalogueCategoryJson from '../../mocks/CatalogueCategory.json';
-import { CatalogueCategoryFormData } from '../../app.types';
-import { useAddCatalogueItem } from '../../api/catalogueItem';
-
-jest.mock('../../api/catalogueItem', () => ({
-  useAddCatalogueItem: jest.fn(),
-}));
-
-function getCatalogueItemsPropertiesById(
-  id: string
-): CatalogueCategoryFormData[] {
-  const filteredCategories = catalogueCategoryJson.filter(
-    (catalogueCategory) => catalogueCategory.id === id
-  );
-
-  if (filteredCategories.length === 0) {
-    return [];
-  }
-
-  const properties = filteredCategories[0].catalogue_item_properties ?? [];
-  return properties;
-}
 
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
   let user;
+  let axiosPostSpy;
   const onClose = jest.fn();
   const onChangeCatalogueItemDetails = jest.fn();
   const onChangeCatalogueItemManufacturer = jest.fn();
@@ -61,10 +44,7 @@ describe('Catalogue Items Dialog', () => {
     };
 
     user = userEvent.setup();
-
-    useAddCatalogueItem.mockReturnValue({
-      mutateAsync: jest.fn().mockResolvedValue({}),
-    });
+    axiosPostSpy = jest.spyOn(axios, 'post');
   });
   afterEach(() => {
     jest.clearAllMocks();
@@ -100,8 +80,7 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(saveButton);
 
-    expect(useAddCatalogueItem().mutateAsync).toHaveBeenCalledTimes(1);
-    expect(useAddCatalogueItem().mutateAsync).toHaveBeenCalledWith({
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '1',
       description: '',
       name: 'test',
@@ -141,8 +120,7 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(saveButton);
 
-    expect(useAddCatalogueItem().mutateAsync).toHaveBeenCalledTimes(1);
-    expect(useAddCatalogueItem().mutateAsync).toHaveBeenCalledWith({
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '1',
       description: '',
       name: 'test',
@@ -178,8 +156,8 @@ describe('Catalogue Items Dialog', () => {
     const saveButton = screen.getByRole('button', { name: 'Save' });
 
     await user.click(saveButton);
-    expect(useAddCatalogueItem().mutateAsync).toHaveBeenCalledTimes(1);
-    expect(useAddCatalogueItem().mutateAsync).toHaveBeenCalledWith({
+
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '1',
       description: '',
       name: 'test',
@@ -284,6 +262,32 @@ describe('Catalogue Items Dialog', () => {
     rerender(<CatalogueItemsDialog {...props} />);
 
     expect(screen.queryByText('Please enter a valid number')).toBeNull();
+  });
+
+  it('displays warning message when an unknown error occurs', async () => {
+    props = {
+      ...props,
+      parentId: '1',
+      catalogueItemDetails: { name: 'Error 500', description: '' },
+      catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+      propertyValues: [12, null, 'IO', null, true, ''],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
+    };
+    createView();
+
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+    await user.click(saveButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Please refresh and try again')
+      ).toBeInTheDocument();
+    });
+    expect(onClose).not.toHaveBeenCalled();
   });
 
   describe('Catalogue Items Details', () => {

@@ -62,6 +62,7 @@ export interface CatalogueItem {
   name: string | undefined;
   description: string;
   properties: CatalogueItemPropertyResponse[];
+  manufacturer: CatalogueItemManufacturer;
   id: string;
 }
 export interface AddCatalogueItem {

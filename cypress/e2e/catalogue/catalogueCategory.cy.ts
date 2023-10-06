@@ -21,7 +21,7 @@ describe('Catalogue Category', () => {
     cy.visit('/inventory-management-system/catalogue/motion/actuators');
     cy.findByRole('link', { name: 'motion' }).should('exist');
     cy.findByText('actuators').should('exist');
-    cy.findByTestId('home-button-catalogue').click();
+    cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
     cy.findByRole('link', { name: 'motion' }).should('not.exist');
     cy.findByText('actuators').should('not.exist');
   });
@@ -46,7 +46,7 @@ describe('Catalogue Category', () => {
   });
 
   it('adds a catalogue category where isLeaf is false', () => {
-    cy.findByTestId('AddIcon').click();
+    cy.findByRole('button', { name: 'add catalogue category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.startSnoopingBrowserMockedRequest();
@@ -66,7 +66,9 @@ describe('Catalogue Category', () => {
   });
 
   it('displays error message when user tries to delete a catalogue category that has children elements', () => {
-    cy.findAllByTestId('delete-catalogue-category-button').eq(1).click();
+    cy.findByRole('button', {
+      name: 'delete Motion catalogue category button',
+    }).click();
 
     cy.findByRole('button', { name: 'Continue' }).click();
 
@@ -80,7 +82,9 @@ describe('Catalogue Category', () => {
   });
 
   it('delete a catalogue category', () => {
-    cy.findAllByTestId('delete-catalogue-category-button').first().click();
+    cy.findByRole('button', {
+      name: 'delete Beam Characterization catalogue category button',
+    }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -97,7 +101,7 @@ describe('Catalogue Category', () => {
   });
 
   it('adds a catalogue category where isLeaf is true', () => {
-    cy.findByTestId('AddIcon').click();
+    cy.findByRole('button', { name: 'add catalogue category' }).click();
     cy.findByLabelText('Name *').type('test');
 
     cy.findByLabelText('Catalogue Items').click();
@@ -136,7 +140,9 @@ describe('Catalogue Category', () => {
 
   it('edits a catalogue category (non leaf node)', () => {
     cy.visit('/inventory-management-system/catalogue/beam-characterization');
-    cy.findAllByTestId('edit-catalogue-category-button').first().click();
+    cy.findByRole('button', {
+      name: 'edit Amp Meters catalogue category button',
+    }).click();
     cy.findByLabelText('Name *').type('1');
 
     cy.startSnoopingBrowserMockedRequest();
@@ -149,13 +155,15 @@ describe('Catalogue Category', () => {
     }).should((patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal('{"name":"Cameras1"}');
+      expect(JSON.stringify(request.body)).equal('{"name":"Amp Meters1"}');
       expect(request.url.toString()).to.contain('1');
     });
   });
 
   it('displays error message if none of the fields have changed', () => {
-    cy.findAllByTestId('edit-catalogue-category-button').first().click();
+    cy.findByRole('button', {
+      name: 'edit Beam Characterization catalogue category button',
+    }).click();
 
     cy.findByRole('button', { name: 'Save' }).click();
 
@@ -166,9 +174,11 @@ describe('Catalogue Category', () => {
       });
   });
 
-  it('displays error message if it received an unknown error from the spi', () => {
+  it('displays error message if it received an unknown error from the api', () => {
     cy.visit('/inventory-management-system/catalogue/beam-characterization');
-    cy.findAllByTestId('edit-catalogue-category-button').first().click();
+    cy.findByRole('button', {
+      name: 'edit Cameras catalogue category button',
+    }).click();
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('Error 500');
 
@@ -182,7 +192,9 @@ describe('Catalogue Category', () => {
   });
   it('edits a catalogue category with catalogue properties', () => {
     cy.visit('/inventory-management-system/catalogue/beam-characterization');
-    cy.findAllByTestId('edit-catalogue-category-button').first().click();
+    cy.findByRole('button', {
+      name: 'edit Voltage Meters catalogue category button',
+    }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -198,14 +210,16 @@ describe('Catalogue Category', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"catalogue_item_properties":[{"name":"Updated Field","type":"number","unit":"megapixels","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":false},{"name":"Sensor Type","type":"string","mandatory":true},{"name":"Sensor brand","type":"string","mandatory":false},{"name":"Broken","type":"boolean","mandatory":true},{"name":"Older than five years","type":"boolean","mandatory":false}]}'
+        '{"catalogue_item_properties":[{"name":"Updated Field","type":"number","unit":"volts","mandatory":true},{"name":"Accuracy","type":"string","mandatory":true}]}'
       );
       expect(request.url.toString()).to.contain('1');
     });
   });
   it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
     cy.visit('/inventory-management-system/catalogue/beam-characterization');
-    cy.findAllByTestId('edit-catalogue-category-button').first().click();
+    cy.findByRole('button', {
+      name: 'edit Cameras catalogue category button',
+    }).click();
     cy.findByLabelText('Catalogue Categories').click();
     cy.findByLabelText('Name *').type('1');
 

@@ -51,7 +51,7 @@ function CatalogueCard(props: CatalogueCardProps) {
               event.preventDefault();
               onChangeOpenEditDialog(catalogueCategory);
             }}
-            data-testid="edit-catalogue-category-button"
+            aria-label={`edit ${catalogueCategory.name} catalogue category button`}
           >
             <EditIcon />
           </IconButton>
@@ -60,7 +60,7 @@ function CatalogueCard(props: CatalogueCardProps) {
               event.preventDefault();
               onChangeOpenDeleteDialog(catalogueCategory);
             }}
-            data-testid="delete-catalogue-category-button"
+            aria-label={`delete ${catalogueCategory.name} catalogue category button`}
           >
             <DeleteIcon />
           </IconButton>

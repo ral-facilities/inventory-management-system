@@ -75,7 +75,10 @@ function Catalogue() {
 
   const [parentId, setParentId] = React.useState<string | null>(null);
   const [isLeaf, setIsLeaf] = React.useState<boolean>(false);
-  const parentInfo = catalogueCategoryDetail?.[0];
+  const parentInfo = React.useMemo(
+    () => catalogueCategoryDetail?.[0],
+    [catalogueCategoryDetail]
+  );
 
   const disableButton = parentInfo ? parentInfo.is_leaf : false;
 
@@ -138,7 +141,7 @@ function Catalogue() {
               onClick={() => {
                 navigate('/inventory-management-system/catalogue');
               }}
-              data-testid="home-button-catalogue"
+              aria-label="navigate to catalogue home"
             >
               <HomeIcon />
             </IconButton>
@@ -151,6 +154,7 @@ function Catalogue() {
               sx={{ margin: '4px' }}
               onClick={() => setAddCategoryDialogOpen(true)}
               disabled={disableButton}
+              aria-label="add catalogue category"
             >
               <AddIcon />
             </IconButton>
@@ -178,7 +182,9 @@ function Catalogue() {
           ))}
         </Grid>
       )}
-      {parentInfo?.is_leaf && <CatalogueItemsTable />}
+      {parentInfo && parentInfo.is_leaf && (
+        <CatalogueItemsTable parentInfo={parentInfo} />
+      )}
       <CatalogueCategoryDialog
         open={addCategoryDialogOpen}
         onClose={() => setAddCategoryDialogOpen(false)}

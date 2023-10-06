@@ -116,6 +116,7 @@ describe('Catalogue Item', () => {
     cy.findByText('Please enter a Manufacturer Name').should('not.exist');
     cy.findByText('Please enter a Manufacturer URL').should('not.exist');
     cy.findByText('Please enter a Manufacturer Address').should('not.exist');
+
     cy.findByRole('button', { name: 'Save' }).click();
 
     cy.findByText(
@@ -127,5 +128,28 @@ describe('Catalogue Item', () => {
     cy.findByText(
       'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
     ).should('not.exist');
+  });
+
+  it('displays the table view correctly', () => {
+    cy.findByText('Cameras 1').should('exist');
+    cy.findByText('Cameras 2').should('exist');
+    cy.findByText('Cameras 3').should('exist');
+    cy.findByText('Cameras 4').should('exist');
+  });
+
+  it('checks the href property of the manufacturer link', () => {
+    // Find the element containing the link
+    const row = cy.findByRole('row', { name: 'Cameras 1 row' });
+
+    row.within(() => {
+      // Find the link element
+      cy.findByText('http://example.com')
+        .should('have.attr', 'href')
+        .should('include', 'http://example.com'); // Check href attribute value
+
+      cy.findByText('http://example.com')
+        .should('have.attr', 'target')
+        .should('include', '_blank'); // Check target attribute value
+    });
   });
 });

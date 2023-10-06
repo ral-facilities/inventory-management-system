@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
+import CatalogueItemJSON from './CatalogueItems.json';
 import {
   AddCatalogueCategory,
   CatalogueItem,
@@ -127,9 +128,12 @@ export const handlers = [
       return res(ctx.status(400), ctx.json(''));
     }
   }),
-  rest.post('/v1/catalogue-items', async (req, res, ctx) => {
+  rest.post('/v1/catalogue-items/', async (req, res, ctx) => {
     const body = (await req.json()) as CatalogueItem;
 
+    if (body.name === 'Error 500') {
+      return res(ctx.status(500), ctx.json(''));
+    }
     return res(
       ctx.status(200),
       ctx.json({
@@ -137,5 +141,19 @@ export const handlers = [
         id: '1',
       })
     );
+  }),
+
+  rest.get('/v1/catalogue-items/', async (req, res, ctx) => {
+    const catalogueItemsParams = req.url.searchParams;
+    const id = catalogueItemsParams.get('catalogue_category_id');
+
+    if (id) {
+      const CatalogueItemData = CatalogueItemJSON.filter(
+        (catalogueItem) => catalogueItem.catalogue_category_id === id
+      );
+
+      return res(ctx.status(200), ctx.json(CatalogueItemData));
+    }
+    return res(ctx.status(422), ctx.json({}));
   }),
 ];

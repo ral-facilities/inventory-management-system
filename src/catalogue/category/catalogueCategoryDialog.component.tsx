@@ -82,6 +82,16 @@ const CatalogueCategoryDialog = React.memo(
 
     const [typeFields, setTypeFields] = React.useState<string[]>([]);
 
+    React.useEffect(() => {
+      // When the catalogueCategoryName changes, update the nameFields and typeFields.
+      if (formFields) {
+        const newNames = formFields.map((field) => field.name);
+        const newTypes = formFields.map((field) => field.type);
+        setNameFields(newNames);
+        setTypeFields(newTypes);
+      }
+    }, [catalogueCategoryName, formFields]);
+
     const [errorFields, setErrorFields] = React.useState<number[]>([]);
 
     const { data: selectedCatalogueCategoryData } = useCatalogueCategoryById(

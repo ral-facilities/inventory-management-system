@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -21,6 +22,7 @@ describe('Catalogue Category Dialog', () => {
     );
   };
   describe('Add Catalogue Category Dialog', () => {
+    let axiosPostSpy;
     beforeEach(() => {
       props = {
         open: true,
@@ -36,10 +38,13 @@ describe('Catalogue Category Dialog', () => {
         resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
       };
       user = userEvent.setup();
+
+      axiosPostSpy = jest.spyOn(axios, 'post');
     });
 
     afterEach(() => {
       jest.clearAllMocks();
+      axiosPostSpy.mockRestore();
     });
     it('renders text correctly', async () => {
       createView();
@@ -106,6 +111,11 @@ describe('Catalogue Category Dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        is_leaf: false,
+        name: 'test',
+      });
+
       expect(onClose).toHaveBeenCalled();
     });
 
@@ -120,6 +130,12 @@ describe('Catalogue Category Dialog', () => {
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        is_leaf: false,
+        name: 'test',
+        parent_id: '1',
+      });
 
       expect(onClose).toHaveBeenCalled();
     });
@@ -159,6 +175,14 @@ describe('Catalogue Category Dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
       await user.click(saveButton);
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        catalogue_item_properties: [
+          { mandatory: true, name: 'radius', type: 'number', unit: 'mm' },
+        ],
+        is_leaf: true,
+        name: 'test',
+      });
 
       expect(onClose).toHaveBeenCalled();
     });
@@ -217,6 +241,7 @@ describe('Catalogue Category Dialog', () => {
   });
 
   describe('Edit Catalogue Category Dialog', () => {
+    let axiosPatchSpy;
     let mockData: CatalogueCategory = {
       name: 'test',
       parent_id: null,
@@ -243,6 +268,7 @@ describe('Catalogue Category Dialog', () => {
         resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
       };
       user = userEvent.setup();
+      axiosPatchSpy = jest.spyOn(axios, 'patch');
     });
 
     afterEach(() => {
@@ -394,10 +420,15 @@ describe('Catalogue Category Dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
+        name: 'test',
+        is_leaf: false,
+      });
+
       expect(onClose).toHaveBeenCalled();
     });
 
-    it('updates the of a catalogue category', async () => {
+    it('updates the name of a catalogue category', async () => {
       createView();
 
       const nameInput = screen.getByLabelText('Name *') as HTMLInputElement;
@@ -420,6 +451,10 @@ describe('Catalogue Category Dialog', () => {
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
+        name: 'test',
+        is_leaf: false,
+      });
 
       expect(onClose).toHaveBeenCalled();
     });

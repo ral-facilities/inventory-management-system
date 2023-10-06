@@ -17,6 +17,27 @@ export const paths = {
   manufacturer: '/inventory-management-system/manufacturer',
 };
 
+interface TabPanelProps {
+  children?: React.ReactNode;
+  value: TabValue;
+  label: TabValue;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, label, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== label}
+      id={`${label}-tabpanel`}
+      aria-labelledby={`${label}-tab`}
+      {...other}
+    >
+      {value === label && <Box>{children}</Box>}
+    </div>
+  );
+}
 function a11yProps(label: TabValue) {
   return {
     id: `${label}-tab`,
@@ -90,12 +111,14 @@ function ViewTabs() {
           borderColor: 'divider',
         }}
       >
-        <Routes location={location}>
-          <Route path="/" element={<Catalogue />}></Route>
-          <Route path={paths.catalogue} element={<Catalogue />}></Route>
-          <Route path={paths.systems} element={<Systems />}></Route>
-          <Route path={paths.manufacturer} element={<Manufacturer />}></Route>
-        </Routes>
+        <TabPanel value={value} label={value}>
+          <Routes location={location}>
+            <Route path="/" element={<Catalogue />}></Route>
+            <Route path={paths.catalogue} element={<Catalogue />}></Route>
+            <Route path={paths.systems} element={<Systems />}></Route>
+            <Route path={paths.manufacturer} element={<Manufacturer />}></Route>
+          </Routes>
+        </TabPanel>
       </Box>
     </Box>
   );

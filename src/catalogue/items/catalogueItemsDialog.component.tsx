@@ -25,6 +25,7 @@ import {
   CatalogueItemProperty,
 } from '../../app.types';
 import { useAddCatalogueItem } from '../../api/catalogueItem';
+import { AxiosError } from 'axios';
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
@@ -72,18 +73,20 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
     string | undefined
   >();
+
+  const [catchAllError, setCatchAllError] = React.useState(false);
+
   const [manufacturerNameError, setManufacturerNameError] =
     React.useState(false);
   const [manufacturerWebUrlError, setManufacturerWebUrlError] =
     React.useState(false);
+  const [manufacturerWebUrlErrorMessage, setManufacturerWebUrlErrorMessage] =
+    React.useState<string>('');
   const [manufacturerAddressError, setManufacturerAddressError] =
     React.useState(false);
   const [propertyErrors, setPropertyErrors] = React.useState(
     new Array(catalogueItemPropertiesForm.length).fill(false)
   );
-
-  const [manufacturerWebUrlErrorMessage, setManufacturerWebUrlErrorMessage] =
-    React.useState<string>('');
 
   const handleClose = React.useCallback(() => {
     onChangeCatalogueItemDetails({ name: undefined, description: '' });
@@ -278,7 +281,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       manufacturer: catalogueItemManufacturer,
     };
 
-    addCatalogueItem(catalogueItem).then((response) => handleClose());
+    addCatalogueItem(catalogueItem)
+      .then((response) => handleClose())
+      .catch((error: AxiosError) => {
+        console.log(error);
+        setCatchAllError(true);
+      });
   }, [
     addCatalogueItem,
     catalogueItemDetails,
@@ -488,7 +496,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               ...catalogueItemManufacturer,
               web_url: event.target.value,
             });
+
             setManufacturerWebUrlError(false);
+            setManufacturerWebUrlErrorMessage('');
           }}
           error={manufacturerWebUrlError} // Set error state based on the nameError state
           helperText={
@@ -545,6 +555,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             Save
           </Button>
         </Box>
+        {catchAllError && (
+          <FormHelperText sx={{ marginBottom: '16px' }} error>
+            {'Please refresh and try again'}
+          </FormHelperText>
+        )}
       </DialogActions>
     </Dialog>
   );
