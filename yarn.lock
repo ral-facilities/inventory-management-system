@@ -3608,10 +3608,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.18.39, @types/node@npm:^16.7.13":
+"@types/node@npm:^16.18.39":
   version: 16.18.39
   resolution: "@types/node@npm:16.18.39"
   checksum: eac9b202b76013256cb517ca8d3e3f61df206edb1615ca8d8df4c80616e92879fe4d3f8570a11d60f4216a82724a3265d5888b24c6994c80b057a0423c9ff1d2
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^18.0.0":
+  version: 18.18.3
+  resolution: "@types/node@npm:18.18.3"
+  checksum: ed97a832179e0cfbb93738021fe16d0bc5c0f34bea35269c23c9dd5f0ecc8be93dbe5efd51630189a099b31786a47c1bde115508831a7245613a55c3ad1a7d6b
   languageName: node
   linkType: hard
 
@@ -9126,7 +9133,7 @@ __metadata:
     "@testing-library/react": ^14.0.0
     "@testing-library/user-event": ^14.4.3
     "@types/jest": ^29.0.0
-    "@types/node": ^16.7.13
+    "@types/node": ^18.0.0
     "@types/react": ^18.0.0
     "@types/react-dom": ^18.0.4
     "@types/react-router-dom": ^5.3.3
