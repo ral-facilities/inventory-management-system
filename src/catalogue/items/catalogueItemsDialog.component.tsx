@@ -240,15 +240,18 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         let typedValue: string | number | boolean | null =
           propertyValues[index]; // Assume it's a string by default
 
+        // Check if the type of the 'property' is boolean
         if (property.type === 'boolean') {
+          // If the type is boolean, then check the type of 'propertyValues[index]'
           typedValue =
             typeof propertyValues[index] !== 'boolean'
-              ? propertyValues[index] === 'true'
+              ? // If 'propertyValues[index]' is not a boolean, convert it based on string values 'true' or 'false',
+                // otherwise, assign 'propertyValues[index]' directly to 'typedValue'
+                propertyValues[index] === 'true'
                 ? true
-                : propertyValues[index] === 'false'
-                ? false
-                : ''
-              : propertyValues[index];
+                : false
+              : // If 'propertyValues[index]' is already a boolean, assign it directly to 'typedValue'
+                propertyValues[index];
         } else if (property.type === 'number') {
           typedValue = Number(propertyValues[index]);
         }
@@ -420,14 +423,20 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       fullWidth
                       error={propertyErrors[index]}
                       helperText={
+                        // Check if 'propertyErrors[index]' exists and evaluate its value
                         propertyErrors[index]
-                          ? property.mandatory && !propertyValues[index]
-                            ? 'This field is mandatory'
+                          ? // If 'propertyErrors[index]' is truthy, perform the following checks:
+                            property.mandatory && !propertyValues[index]
+                            ? // If 'property' is mandatory and 'propertyValues[index]' is empty, return a mandatory field error message
+                              'This field is mandatory'
                             : property.type === 'number' &&
                               isNaN(Number(propertyValues[index]))
-                            ? 'Please enter a valid number'
-                            : ''
-                          : ''
+                            ? // If 'property' is of type 'number' and 'propertyValues[index]' is not a valid number, return an invalid number error message
+                              'Please enter a valid number'
+                            : // If none of the above conditions are met, return an empty string (no error)
+                              ''
+                          : // If 'propertyErrors[index]' is falsy, return an empty string (no error)
+                            ''
                       }
                     />
                   )}
