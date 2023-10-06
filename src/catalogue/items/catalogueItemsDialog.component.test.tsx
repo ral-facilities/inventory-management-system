@@ -529,6 +529,61 @@ describe('Catalogue Items Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
+    it('Edit a catalogue item (catalogue properties with string boolean values )', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+        catalogueItemDetails: {
+          name: 'Cameras 4',
+          description: 'High-resolution cameras for beam characterization. 4',
+        },
+        selectedCatalogueItem: {
+          catalogue_category_id: '4',
+          name: 'Cameras 4',
+          description: 'High-resolution cameras for beam characterization. 4',
+          properties: [
+            { name: 'Resolution', value: 24, unit: 'megapixels' },
+            { name: 'Frame Rate', value: 240, unit: 'fps' },
+            { name: 'Sensor Type', value: 'CCD', unit: '' },
+            { name: 'Sensor brand', value: 'Nikon', unit: '' },
+            { name: 'Broken', value: false, unit: '' },
+            { name: 'Older than five years', value: true, unit: '' },
+          ],
+          id: '90',
+          manufacturer: {
+            name: 'Manufacturer A',
+            web_url: 'http://example.com',
+            address: '10 My Street',
+          },
+        },
+        catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+        propertyValues: [24, 240, 'CCD', 'Nikon', 'true', 'false'],
+        catalogueItemManufacturer: {
+          name: 'Manufacturer A',
+          web_url: 'http://example.com',
+          address: '10 My Street',
+        },
+      };
+
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/90', {
+        properties: [
+          { name: 'Resolution', value: 24 },
+          { name: 'Frame Rate', value: 240 },
+          { name: 'Sensor Type', value: 'CCD' },
+          { name: 'Sensor brand', value: 'Nikon' },
+          { name: 'Broken', value: true },
+          { name: 'Older than five years', value: false },
+        ],
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    });
+
     it('Edit a catalogue item (manufacturer)', async () => {
       props = {
         ...props,

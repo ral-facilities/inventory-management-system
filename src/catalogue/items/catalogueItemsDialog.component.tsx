@@ -410,15 +410,18 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           let typedValue: string | number | boolean | null =
             propertyValues[index]; // Assume it's a string by default
 
+          // Check if the type of the 'property' is boolean
           if (property.type === 'boolean') {
+            // If the type is boolean, then check the type of 'propertyValues[index]'
             typedValue =
               typeof propertyValues[index] !== 'boolean'
-                ? propertyValues[index] === 'true'
+                ? // If 'propertyValues[index]' is not a boolean, convert it based on string values 'true' or 'false',
+                  // otherwise, assign 'propertyValues[index]' directly to 'typedValue'
+                  propertyValues[index] === 'true'
                   ? true
-                  : propertyValues[index] === 'false'
-                  ? false
-                  : ''
-                : propertyValues[index];
+                  : false
+                : // If 'propertyValues[index]' is already a boolean, assign it directly to 'typedValue'
+                  propertyValues[index];
           } else if (property.type === 'number') {
             typedValue = Number(propertyValues[index]);
           }
