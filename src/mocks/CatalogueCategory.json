@@ -45,12 +45,27 @@
         "name": "Frame Rate",
         "type": "number",
         "unit": "fps",
-        "mandatory": true
+        "mandatory": false
       },
       {
         "name": "Sensor Type",
         "type": "string",
         "mandatory": true
+      },
+      {
+        "name": "Sensor brand",
+        "type": "string",
+        "mandatory": false
+      },
+      {
+        "name": "Broken",
+        "type": "boolean",
+        "mandatory": true
+      },
+      {
+        "name": "Older than five years",
+        "type": "boolean",
+        "mandatory": false
       }
     ]
   },
@@ -72,7 +87,7 @@
       {
         "name": "Accuracy",
         "type": "string",
-        "mandatory": true
+        "mandatory": false
       }
     ]
   },
@@ -94,7 +109,7 @@
         "name": "Spatial Resolution",
         "type": "number",
         "unit": "micrometers",
-        "mandatory": true
+        "mandatory": false
       }
     ]
   },
@@ -157,7 +172,7 @@
         "name": "Pumping Speed",
         "type": "number",
         "unit": "liters per second",
-        "mandatory": true
+        "mandatory": false
       }
     ]
   },
@@ -202,7 +217,7 @@
       {
         "name": "Compression Ratio",
         "type": "number",
-        "mandatory": true
+        "mandatory": false
       }
     ]
   },

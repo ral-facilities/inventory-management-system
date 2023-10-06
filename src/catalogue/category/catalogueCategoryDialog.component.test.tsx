@@ -4,8 +4,8 @@ import userEvent from '@testing-library/user-event';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
-import { renderComponentWithBrowserRouter } from '../setupTests';
-import { CatalogueCategory } from '../app.types';
+import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { CatalogueCategory } from '../../app.types';
 
 describe('Catalogue Category Dialog', () => {
   const onClose = jest.fn();

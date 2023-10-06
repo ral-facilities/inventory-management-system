@@ -14,8 +14,8 @@ describe('Catalogue', () => {
     user = userEvent.setup();
   });
 
-  it('renders text correctly', async () => {
-    createView('/');
+  it('renders catalogue category card view correctly', async () => {
+    createView('/inventory-management-system/catalogue');
 
     await waitFor(() => {
       expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
@@ -23,8 +23,19 @@ describe('Catalogue', () => {
     expect(screen.getByText('Motion')).toBeInTheDocument();
     expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
   });
+
+  it('renders catalogue items table correctly', async () => {
+    createView(
+      '/inventory-management-system/catalogue/beam-characterization/cameras'
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Catalogue Items table')).toBeInTheDocument();
+    });
+  });
+
   it('navigates back to the root directory', async () => {
-    createView('/motion');
+    createView('/inventory-management-system/catalogue/motion');
 
     await waitFor(() => {
       expect(screen.getByText('Actuators')).toBeInTheDocument();
@@ -39,7 +50,7 @@ describe('Catalogue', () => {
     expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
   });
   it('opens the add catalogue category dialog', async () => {
-    createView('/');
+    createView('/inventory-management-system/catalogue');
 
     const addButton = await screen.findByTestId('AddIcon');
     await user.click(addButton);
@@ -56,7 +67,7 @@ describe('Catalogue', () => {
   });
 
   it('opens the delete catalogue category dialog', async () => {
-    createView('/');
+    createView('/inventory-management-system/catalogue');
 
     await waitFor(() => {
       expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
@@ -79,7 +90,7 @@ describe('Catalogue', () => {
   });
 
   it('opens the edit catalogue category dialog', async () => {
-    createView('/beam-characterization');
+    createView('/inventory-management-system/catalogue/beam-characterization');
 
     await waitFor(() => {
       expect(screen.getByText('Amp Meters')).toBeInTheDocument();
@@ -104,7 +115,7 @@ describe('Catalogue', () => {
   });
 
   it('renders the breadcrumbs and navigate to another directory', async () => {
-    createView('/catalogue/motion/actuators');
+    createView('/inventory-management-system/catalogue/motion/actuators');
 
     await waitFor(() => {
       expect(screen.getByRole('link', { name: 'motion' })).toBeInTheDocument();
@@ -119,7 +130,7 @@ describe('Catalogue', () => {
   });
 
   it('updates the cards when a card button is clicked', async () => {
-    createView('/');
+    createView('/inventory-management-system/catalogue');
     await waitFor(() => {
       expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
     });
@@ -133,5 +144,30 @@ describe('Catalogue', () => {
     });
     expect(screen.getByText('Energy Meters')).toBeInTheDocument();
     expect(screen.getByText('Wavefront Sensors')).toBeInTheDocument();
+  });
+
+  it('opens add catelogue item dialog and can closes the dialog', async () => {
+    createView(
+      '/inventory-management-system/catalogue/beam-characterization/cameras'
+    );
+
+    const addCatalogueItemButton = screen.getByRole('button', {
+      name: 'Add Catalogue Item',
+    });
+    await waitFor(() => {
+      expect(addCatalogueItemButton).not.toBeDisabled();
+    });
+
+    await user.click(addCatalogueItemButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
   });
 });

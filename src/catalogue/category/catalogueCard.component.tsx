@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { CatalogueCategory } from '../app.types';
+import { CatalogueCategory } from '../../app.types';
 import { Link } from 'react-router-dom';
 
 export interface CatalogueCardProps extends CatalogueCategory {
@@ -23,10 +23,11 @@ function CatalogueCard(props: CatalogueCardProps) {
     onChangeOpenEditDialog,
     ...catalogueCategory
   } = props;
+
   return (
     <Button
       component={Link}
-      to={catalogueCategory.code}
+      to={`${catalogueCategory.code}`}
       fullWidth
       relative="path"
       sx={{

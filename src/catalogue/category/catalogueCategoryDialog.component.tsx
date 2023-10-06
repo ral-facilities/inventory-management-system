@@ -14,6 +14,7 @@ import {
   FormControlLabel,
   Radio,
   Typography,
+  DialogTitle,
   FormHelperText,
 } from '@mui/material';
 import {
@@ -22,12 +23,12 @@ import {
   EditCatalogueCategory,
   CatalogueCategoryFormData,
   ErrorParsing,
-} from '../app.types';
+} from '../../app.types';
 import {
   useAddCatalogueCategory,
   useCatalogueCategoryById,
   useEditCatalogueCategory,
-} from '../api/catalogueCategory';
+} from '../../api/catalogueCategory';
 import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 
 export interface CatalogueCategoryDialogProps {
@@ -295,6 +296,11 @@ const CatalogueCategoryDialog = React.memo(
     ]);
     return (
       <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
+        <DialogTitle>
+          {type === 'edit'
+            ? 'Edit Catalogue Category'
+            : 'Add Catalogue Category'}
+        </DialogTitle>
         <DialogContent>
           <TextField
             label="Name"

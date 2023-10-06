@@ -1,6 +1,10 @@
 import { rest } from 'msw';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
-import { AddCatalogueCategory, EditCatalogueCategory } from '../app.types';
+import {
+  AddCatalogueCategory,
+  CatalogueItem,
+  EditCatalogueCategory,
+} from '../app.types';
 
 export const handlers = [
   rest.post('/v1/catalogue-categories', async (req, res, ctx) => {
@@ -122,5 +126,16 @@ export const handlers = [
     } else {
       return res(ctx.status(400), ctx.json(''));
     }
+  }),
+  rest.post('/v1/catalogue-items', async (req, res, ctx) => {
+    const body = (await req.json()) as CatalogueItem;
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        ...body,
+        id: '1',
+      })
+    );
   }),
 ];

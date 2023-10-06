@@ -162,7 +162,6 @@ export const useDeleteCatalogueCategory = (): UseMutationResult<
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategoryByID'] });
       },
     }
   );

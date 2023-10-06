@@ -188,8 +188,6 @@ describe('Catalogue Category', () => {
 
     cy.findAllByLabelText('Property Name *').first().clear();
     cy.findAllByLabelText('Property Name *').first().type('Updated Field');
-    cy.findAllByLabelText('Select Type *').first().click();
-    cy.findByText('Boolean').click();
 
     cy.findByRole('button', { name: 'Save' }).click();
 
@@ -200,7 +198,7 @@ describe('Catalogue Category', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"catalogue_item_properties":[{"name":"Updated Field","type":"boolean","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":true},{"name":"Sensor Type","type":"string","mandatory":true}]}'
+        '{"catalogue_item_properties":[{"name":"Updated Field","type":"number","unit":"megapixels","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":false},{"name":"Sensor Type","type":"string","mandatory":true},{"name":"Sensor brand","type":"string","mandatory":false},{"name":"Broken","type":"boolean","mandatory":true},{"name":"Older than five years","type":"boolean","mandatory":false}]}'
       );
       expect(request.url.toString()).to.contain('1');
     });
