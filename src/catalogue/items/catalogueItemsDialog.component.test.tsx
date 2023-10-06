@@ -138,6 +138,47 @@ describe('Catalogue Items Dialog', () => {
     });
   });
 
+  it('adds a catalogue item (string booleans instead of boolean)', async () => {
+    props = {
+      ...props,
+      parentId: '1',
+      catalogueItemDetails: { name: 'test', description: '' },
+      catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+      propertyValues: [12, null, 'IO', null, 'true', 'false'],
+      catalogueItemManufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
+    };
+
+    createView();
+
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+
+    await user.click(saveButton);
+
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
+      catalogue_category_id: '1',
+      description: '',
+      name: 'test',
+      manufacturer: {
+        name: 'Sony',
+        web_url: 'https://sony.com',
+        address: '1 venus street UY6 9OP',
+      },
+      properties: [
+        { name: 'Resolution', value: 12 },
+        { name: 'Sensor Type', value: 'IO' },
+        { name: 'Broken', value: true },
+        {
+          name: 'Older than five years',
+          value: false,
+        },
+      ],
+    });
+  });
+
   it('display error message when mandatory field is not filled in', async () => {
     props = {
       ...props,
@@ -196,7 +237,7 @@ describe('Catalogue Items Dialog', () => {
       },
     };
 
-    createView();
+    const { rerender } = createView();
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -216,6 +257,12 @@ describe('Catalogue Items Dialog', () => {
         'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
       )
     ).toBeInTheDocument();
+
+    props.propertyValues = [12, 12, 'pixel', null, false, ''];
+
+    rerender(<CatalogueItemsDialog {...props} />);
+
+    expect(screen.queryByText('Please enter a valid number')).toBeNull();
   });
 
   it('displays warning message when an unknown error occurs', async () => {
@@ -833,6 +880,13 @@ describe('Catalogue Items Dialog', () => {
 
       // eslint-disable-next-line no-sparse-arrays
       expect(onChangePropertyValues).toHaveBeenCalledWith([, , , , 'true']);
+
+      await user.click(propertySelect);
+
+      await user.click(screen.getByText('False'));
+
+      // eslint-disable-next-line no-sparse-arrays
+      expect(onChangePropertyValues).toHaveBeenCalledWith([, , , , 'false']);
     });
   });
 
