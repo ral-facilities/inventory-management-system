@@ -156,8 +156,8 @@ describe('Catalogue Items Dialog', () => {
     const saveButton = screen.getByRole('button', { name: 'Save' });
 
     await user.click(saveButton);
-    expect(useAddCatalogueItem().mutateAsync).toHaveBeenCalledTimes(1);
-    expect(useAddCatalogueItem().mutateAsync).toHaveBeenCalledWith({
+
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '1',
       description: '',
       name: 'test',
