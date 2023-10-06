@@ -246,9 +246,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 // otherwise, assign 'propertyValues[index]' directly to 'typedValue'
                 propertyValues[index] === 'true'
                 ? true
-                : propertyValues[index] === 'false'
-                ? false
-                : ''
+                : false
               : // If 'propertyValues[index]' is already a boolean, assign it directly to 'typedValue'
                 propertyValues[index];
         } else if (property.type === 'number') {
