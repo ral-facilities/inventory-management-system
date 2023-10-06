@@ -214,6 +214,7 @@ function Catalogue() {
         open={deleteCategoryDialogOpen}
         onClose={() => setDeleteCategoryDialogOpen(false)}
         catalogueCategory={selectedCatalogueCategory}
+        onChangeCatalogueCategory={setSelectedCatalogueCategory}
       />
       <CatalogueItemsDialog
         open={addItemDialogOpen}
