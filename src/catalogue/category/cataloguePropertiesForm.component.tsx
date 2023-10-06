@@ -170,9 +170,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               Select is mandatory?
             </InputLabel>
             <Select
-              value={
-                field.mandatory !== null ? (field.mandatory ? 'yes' : 'no') : ''
-              }
+              value={field.mandatory ? 'yes' : 'no'}
               onChange={(e) =>
                 handleChange(index, 'mandatory', e.target.value === 'yes')
               }
