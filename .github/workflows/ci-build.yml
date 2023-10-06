@@ -47,7 +47,7 @@ jobs:
 
       - name: Upload coverage reports to Codecov
         if: success()
-        uses: codecov/codecov-action@f32b3a3741e1053eb607407145bc9619351dc93b # v2
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
