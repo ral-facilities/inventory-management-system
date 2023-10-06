@@ -16,10 +16,11 @@ export interface DeleteCatalogueItemDialogProps {
   open: boolean;
   onClose: () => void;
   catalogueItem: CatalogueItem | undefined;
+  onChangeCatalogueItem: (catalogueItem: CatalogueItem | undefined) => void;
 }
 
 const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
-  const { open, onClose, catalogueItem } = props;
+  const { open, onClose, catalogueItem, onChangeCatalogueItem } = props;
 
   const [error, setError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
@@ -37,6 +38,7 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
     if (catalogueItem) {
       deleteCatalogueItem(catalogueItem)
         .then((response) => {
+          onChangeCatalogueItem(undefined);
           onClose();
         })
         .catch((error: AxiosError) => {
@@ -53,7 +55,7 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
       setError(true);
       setErrorMessage('No data provided, Please refresh and try again');
     }
-  }, [catalogueItem, deleteCatalogueItem, onClose]);
+  }, [catalogueItem, deleteCatalogueItem, onChangeCatalogueItem, onClose]);
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">

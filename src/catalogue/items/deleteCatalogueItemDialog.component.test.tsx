@@ -11,6 +11,7 @@ describe('delete Catalogue Category dialogue', () => {
   let props: DeleteCatalogueItemDialogProps;
   let user;
   const onClose = jest.fn();
+  const onChangeCatalogueItem = jest.fn();
   let catalogueItem: CatalogueItem;
 
   const createView = (): RenderResult => {
@@ -31,6 +32,7 @@ describe('delete Catalogue Category dialogue', () => {
       open: true,
       onClose: onClose,
       catalogueItem: catalogueItem,
+      onChangeCatalogueItem: onChangeCatalogueItem,
     };
     user = userEvent; // Assigning userEvent to 'user'
   });

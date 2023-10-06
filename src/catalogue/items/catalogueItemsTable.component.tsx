@@ -337,6 +337,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         open={deleteItemDialogOpen}
         onClose={() => setDeleteItemDialogOpen(false)}
         catalogueItem={selectedCatalogueItem}
+        onChangeCatalogueItem={setSelectedCatalogueItem}
       />
       <CatalogueItemsDialog
         open={editItemDialogOpen}
