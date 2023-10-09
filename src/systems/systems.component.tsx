@@ -3,6 +3,7 @@ import AddIcon from '@mui/icons-material/Add';
 import HomeIcon from '@mui/icons-material/Home';
 import {
   Box,
+  Divider,
   Grid,
   IconButton,
   List,
@@ -72,14 +73,8 @@ function Systems() {
           />
         </div>
       </Grid>
-      <Grid container margin={1} direction="row" alignItems="stretch">
-        <Grid
-          item
-          xs={2}
-          textAlign="left"
-          margin={1}
-          sx={{ borderBottom: 1, borderColor: 'divider' }}
-        >
+      <Grid container margin={0} direction="row" alignItems="stretch">
+        <Grid item xs={2} textAlign="left" padding={1}>
           <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
             <Typography variant="h6">
               {systemsLocation === '' ? 'Root systems' : 'Subsystems'}
@@ -88,31 +83,7 @@ function Systems() {
               <AddIcon />
             </IconButton>
           </Box>
-        </Grid>
-        <Grid
-          item
-          xs={8}
-          textAlign="left"
-          margin={1}
-          sx={{
-            display: 'flex',
-            borderBottom: 1,
-            borderColor: 'divider',
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              margin: 1,
-            }}
-          >
-            <Typography variant="h6">No system selected</Typography>
-          </Box>
-        </Grid>
-      </Grid>
-      <Grid container margin={1} direction="row" alignItems="stretch">
-        <Grid item xs={2} textAlign="left" margin={1}>
+          <Divider role="presentation" />
           <List sx={{ padding: 0 }}>
             {subsystemsData?.map((item, index) => (
               <ListItem key={index} sx={{ padding: 0 }}>
@@ -123,19 +94,21 @@ function Systems() {
             ))}
           </List>
         </Grid>
-        <Grid
-          item
-          xs={8}
-          textAlign="center"
-          margin={1}
-          sx={{
-            display: 'flex',
-          }}
-        >
+        <Grid item xs={10} textAlign="left" padding={1}>
           <Box
             sx={{
               display: 'flex',
               alignItems: 'center',
+              margin: 1.5,
+            }}
+          >
+            <Typography variant="h6">No system selected</Typography>
+          </Box>
+          <Divider role="presentation" />
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
               margin: 1,
             }}
           >
