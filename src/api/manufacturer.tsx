@@ -22,7 +22,7 @@ const getAllManufacturers = async (): Promise<ViewManufacturerResponse[]> => {
   }
 
   return axios
-    .get(`${apiUrl}/v1/manufacturer`, {})
+    .get(`${apiUrl}/v1/manufacturers`, {})
     .then((response) => response.data);
 };
 
@@ -53,7 +53,7 @@ const addManufacturer = async (
     apiUrl = settingsResult['apiUrl'];
   }
   return axios
-    .post<AddManufacturerResponse>(`${apiUrl}/v1/manufacturer`, manufacturer)
+    .post<AddManufacturerResponse>(`${apiUrl}/v1/manufacturers`, manufacturer)
     .then((response) => response.data);
 };
 

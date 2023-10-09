@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
+  Typography,
 } from '@mui/material';
 
 import React from 'react';
@@ -13,6 +14,8 @@ import React from 'react';
 import { AddManufacturer } from '../app.types';
 import { useAddManufacturer } from '../api/manufacturer';
 import { AxiosError } from 'axios';
+import { Address } from 'cluster';
+import { Integer } from 'type-fest';
 
 export interface AddManufacturerDialogProps {
   open: boolean;
@@ -41,10 +44,21 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
     string | undefined
   >(undefined);
 
-  const [addressError, setAddressError] = React.useState(false);
-  const [AddressErrorMessage, setAddressErrorMessage] = React.useState<
-    string | undefined
-  >(undefined);
+  const [addressBuildingNumberError, setAddressBuildingNumberError] =
+    React.useState(false);
+  const [
+    addressBuildingNumberErrorMessage,
+    setAddressBuildingNumberErrorMessage,
+  ] = React.useState<string | undefined>(undefined);
+
+  const [addressStreetNameError, setAddressStreetNameError] =
+    React.useState(false);
+  const [addressStreetNameErrorMessage, setaddressStreetNameErrorMessage] =
+    React.useState<string | undefined>(undefined);
+
+  const [addressPostCodeError, setAddressPostCodeError] = React.useState(false);
+  const [AddressPostCodeErrorMessage, setAddressPostCodeErrorMessage] =
+    React.useState<string | undefined>(undefined);
 
   const { mutateAsync: addManufacturer } = useAddManufacturer();
 
@@ -54,7 +68,22 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
   const [manufacturerURL, setManufacturerURL] = React.useState<
     string | undefined
   >(undefined);
-  const [manufacturerAddress, setManufacturerAddress] = React.useState<
+
+  const [
+    manufacturerAddressBuildingNumber,
+    setManufacturerAddressBuildingNumber,
+  ] = React.useState<string | undefined>(undefined);
+  const [manufacturerAddressStreetName, setManufacturerAddressStreetName] =
+    React.useState<string | undefined>(undefined);
+  const [manufacturerAddressTown, setManufacturerAddressTown] = React.useState<
+    string | undefined
+  >(undefined);
+  const [manufacturerAddressCounty, setManufacturerAddressCounty] =
+    React.useState<string | undefined>(undefined);
+  const [manufacturerAddressPostCode, setManufacturerAddressPostCode] =
+    React.useState<string | undefined>(undefined);
+
+  const [manufacturerTelephone, setManufacturerTelephone] = React.useState<
     string | undefined
   >(undefined);
 
@@ -64,7 +93,12 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
     setNameErrorMessage(undefined);
     setManufacturerName(undefined);
     setManufacturerURL(undefined);
-    setManufacturerAddress(undefined);
+    setManufacturerAddressBuildingNumber(undefined);
+    setManufacturerAddressStreetName(undefined);
+    setManufacturerAddressTown(undefined);
+    setManufacturerAddressCounty(undefined);
+    setManufacturerAddressPostCode(undefined);
+    setManufacturerTelephone(undefined);
     refetchData();
   }, [onClose, refetchData]);
 
@@ -74,17 +108,22 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
     manufacturer = {
       name: manufacturerName,
       url: manufacturerURL,
-      address: manufacturerAddress,
+      address: {
+        building_number: manufacturerAddressBuildingNumber,
+        street_name: manufacturerAddressStreetName,
+        town: manufacturerAddressTown,
+        county: manufacturerAddressCounty,
+        postCode: manufacturerAddressPostCode,
+      },
+      telephone: manufacturerTelephone,
     };
     //check url is valid
-    if (!manufacturer.url?.trim() || !isValidUrl(manufacturer.url)) {
-      hasErrors = true;
-      setURLError(true);
-      setURLErrorMessage(
-        !manufacturer.url?.trim()
-          ? 'Please enter a URL.'
-          : 'Please enter a valid URL'
-      );
+    if (manufacturer.url) {
+      if (!isValidUrl(manufacturer.url)) {
+        hasErrors = true;
+        setURLError(true);
+        setURLErrorMessage('Please enter a valid URL');
+      }
     }
 
     if (!manufacturerName || manufacturerName?.trim().length === 0) {
@@ -92,16 +131,32 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
       setNameError(true);
       setNameErrorMessage('Please enter a name.');
     }
-    if (!manufacturerURL || manufacturerURL?.trim().length === 0) {
+
+    if (
+      !manufacturerAddressBuildingNumber ||
+      manufacturerAddressBuildingNumber.trim().length === 0
+    ) {
       hasErrors = true;
-      setURLError(true);
-      setURLErrorMessage('Please enter a URL.');
+      setAddressBuildingNumberError(true);
+      setAddressBuildingNumberErrorMessage('Please enter a building number.');
     }
-    if (!manufacturerAddress || manufacturerAddress?.trim().length === 0) {
+    if (
+      !manufacturerAddressStreetName ||
+      manufacturerAddressStreetName?.trim().length === 0
+    ) {
       hasErrors = true;
-      setAddressError(true);
-      setAddressErrorMessage('Please enter an address.');
+      setAddressStreetNameError(true);
+      setaddressStreetNameErrorMessage('Please enter a street name.');
     }
+    if (
+      !manufacturerAddressPostCode ||
+      manufacturerAddressPostCode?.trim().length === 0
+    ) {
+      hasErrors = true;
+      setAddressPostCodeError(true);
+      setAddressPostCodeErrorMessage('Please enter a post code or zip code.');
+    }
+
     if (hasErrors) {
       return;
     }
@@ -119,10 +174,15 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
         }
       });
   }, [
-    addManufacturer,
     manufacturerName,
     manufacturerURL,
-    manufacturerAddress,
+    manufacturerAddressBuildingNumber,
+    manufacturerAddressStreetName,
+    manufacturerAddressTown,
+    manufacturerAddressCounty,
+    manufacturerAddressPostCode,
+    manufacturerTelephone,
+    addManufacturer,
     handleClose,
   ]);
 
@@ -146,7 +206,7 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
         />
         <TextField
           label="URL"
-          required={true}
+          required={false}
           sx={{ marginLeft: '4px', padding: '8px' }} // Adjusted the width and margin
           value={manufacturerURL}
           error={URlerror}
@@ -158,19 +218,90 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
           }}
           fullWidth
         />
+        <Typography>Address</Typography>
         <TextField
-          label="Address"
+          label="Building number"
           required={true}
           sx={{ marginLeft: '4px', padding: '8px' }} // Adjusted the width and margin
-          value={manufacturerAddress}
-          error={addressError}
-          helperText={addressError && AddressErrorMessage}
+          value={manufacturerAddressBuildingNumber}
+          error={addressBuildingNumberError}
+          helperText={
+            addressBuildingNumberError && addressBuildingNumberErrorMessage
+          }
           onChange={(event) => {
-            setManufacturerAddress(
+            setManufacturerAddressBuildingNumber(
               event.target.value ? event.target.value : ''
             );
-            setAddressError(false);
-            setAddressErrorMessage(undefined);
+            setAddressBuildingNumberError(false);
+            setAddressBuildingNumberErrorMessage(undefined);
+          }}
+          fullWidth
+        />
+        <TextField
+          label="Street name"
+          required={true}
+          sx={{ marginLeft: '4px', padding: '8px' }} // Adjusted the width and margin
+          value={manufacturerAddressStreetName}
+          error={addressStreetNameError}
+          helperText={addressStreetNameError && addressStreetNameErrorMessage}
+          onChange={(event) => {
+            setManufacturerAddressStreetName(
+              event.target.value ? event.target.value : ''
+            );
+            setAddressStreetNameError(false);
+            setaddressStreetNameErrorMessage(undefined);
+          }}
+          fullWidth
+        />
+        <TextField
+          label="Town"
+          required={false}
+          sx={{ marginLeft: '4px', padding: '8px' }} // Adjusted the width and margin
+          value={manufacturerAddressTown}
+          onChange={(event) => {
+            setManufacturerAddressTown(
+              event.target.value ? event.target.value : ''
+            );
+          }}
+          fullWidth
+        />
+        <TextField
+          label="County"
+          required={false}
+          sx={{ marginLeft: '4px', padding: '8px' }} // Adjusted the width and margin
+          value={manufacturerAddressCounty}
+          onChange={(event) => {
+            setManufacturerAddressCounty(
+              event.target.value ? event.target.value : ''
+            );
+          }}
+          fullWidth
+        />
+        <TextField
+          label="Post/Zip code"
+          required={true}
+          sx={{ marginLeft: '4px', padding: '8px' }} // Adjusted the width and margin
+          value={manufacturerAddressPostCode}
+          error={addressPostCodeError}
+          helperText={addressPostCodeError && AddressPostCodeErrorMessage}
+          onChange={(event) => {
+            setManufacturerAddressPostCode(
+              event.target.value ? event.target.value : ''
+            );
+            setAddressPostCodeError(false);
+            setAddressPostCodeErrorMessage(undefined);
+          }}
+          fullWidth
+        />
+        <TextField
+          label="Telephone number"
+          required={false}
+          sx={{ marginLeft: '4px', padding: '8px' }} // Adjusted the width and margin
+          value={manufacturerTelephone}
+          onChange={(event) => {
+            setManufacturerTelephone(
+              event.target.value ? event.target.value : ''
+            );
           }}
           fullWidth
         />

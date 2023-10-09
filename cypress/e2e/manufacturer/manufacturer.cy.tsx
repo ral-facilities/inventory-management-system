@@ -33,8 +33,8 @@ describe('Manufacturer', () => {
     cy.url().should('include', 'http://example.com');
   });
 
-  it('render new manufacturer when added', async () => {
-    cy.findByTestId('Add Manufacturer').click();
+  it.only('render new manufacturer when added', async () => {
+    cy.findByRole('button', { name: 'Add Manufacturer' }).click();
     cy.findByLabelText('Name *').type('Manufacturer D');
     cy.findByLabelText('URL *').type('http://test.co.uk');
     cy.findByLabelText('Address *').type('13 My Street');

@@ -95,6 +95,14 @@ function Manufacturer() {
               >
                 <Typography sx={{ fontWeight: 'bold' }}>Address</Typography>
               </TableCell>
+              <TableCell
+                sx={{
+                  borderRight: '1px solid #e0e0e0',
+                  borderTop: '1px solid #e0e0e0',
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold' }}>Telephone</Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -157,7 +165,25 @@ function Manufacturer() {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
-                    {item.address}
+                    {item.address.building_number +
+                      ' \n' +
+                      item.address.street_name +
+                      ' \n' +
+                      item.address.town +
+                      ' \n' +
+                      item.address.county +
+                      ' \n' +
+                      item.address.postCode}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      px: '8px',
+                      paddingTop: '0px',
+                      paddingBottom: '0px',
+                      borderRight: '1px solid #e0e0e0',
+                    }}
+                  >
+                    {item.telephone}
                   </TableCell>
                 </TableRow>
               ))}

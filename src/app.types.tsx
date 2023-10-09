@@ -32,21 +32,24 @@ export interface ViewCatalogueCategoryResponse {
 export interface ViewManufacturerResponse {
   name: string;
   url: string;
-  address: string;
+  address: Address;
+  telephone: string;
   id: string;
 }
 
 export interface AddManufacturer {
   name: string | undefined;
   url: string | undefined;
-  address: string | undefined;
+  address: Address | undefined;
+  telephone: string | undefined;
 }
 
 export interface AddManufacturerResponse {
   name: string;
   code: string;
   url: string;
-  address: string;
+  address: Address;
+  telephone: string;
   id: string;
 }
 
@@ -59,4 +62,12 @@ export interface CatalogueCategoryFormData {
 
 export interface ErrorParsing {
   detail: string;
+}
+
+interface Address {
+  building_number: string | undefined;
+  street_name: string | undefined;
+  town: string | undefined;
+  county: string | undefined;
+  postCode: string | undefined;
 }
