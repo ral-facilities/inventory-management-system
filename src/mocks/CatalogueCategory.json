@@ -246,6 +246,34 @@
   },
   {
     "id": "15",
+    "name": "High Power Lasers",
+    "parent_id": null,
+    "code": "High-Power-Lasers",
+    "is_leaf": false,
+    "parent_path": "/",
+    "path": "/High-Power-Lasers"
+  },
+  {
+    "id": "16",
+    "name": "X-RAY Beams",
+    "parent_id": null,
+    "code": "X-RAY-Beams",
+    "is_leaf": false,
+    "parent_path": "/",
+    "path": "/X-RAY-Beams"
+  },
+  {
+    "id": "17",
+    "name": "Frequency",
+    "parent_id": "15",
+    "code": "Frequency",
+    "is_leaf": true,
+    "parent_path": "/High-Power-Lasers",
+    "path": "/High-Power-Lasers/Frequency",
+    "catalogue_item_properties": []
+  },
+  {
+    "id": "18",
     "name": "Voltage Meters",
     "parent_id": "1",
     "code": "voltage-meters",
@@ -267,7 +295,7 @@
     ]
   },
   {
-    "id": "16",
+    "id": "19",
     "name": "Amp Meters",
     "parent_id": "1",
     "code": "amp-meters",

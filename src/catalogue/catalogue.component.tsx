@@ -1,6 +1,6 @@
 import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { Button, Grid, IconButton } from '@mui/material';
+import { Box, Button, Grid, IconButton, Typography } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
@@ -63,12 +63,18 @@ function Catalogue() {
     ''
   );
 
-  const { data: catalogueCategoryData } = useCatalogueCategory(
+  const {
+    data: catalogueCategoryData,
+    isLoading: catalogueCategoryDataLoading,
+  } = useCatalogueCategory(
     undefined,
     catalogueLocation === '' ? '/' : catalogueLocation
   );
 
-  const { data: catalogueCategoryDetail } = useCatalogueCategory(
+  const {
+    data: catalogueCategoryDetail,
+    isLoading: catalogueCategoryDetailLoading,
+  } = useCatalogueCategory(
     catalogueLocation === '' ? '/' : catalogueLocation,
     undefined
   );
@@ -153,7 +159,9 @@ function Catalogue() {
             <IconButton
               sx={{ margin: '4px' }}
               onClick={() => setAddCategoryDialogOpen(true)}
-              disabled={disableButton}
+              disabled={
+                disableButton || (!parentInfo && catalogueLocation !== '')
+              }
               aria-label="add catalogue category"
             >
               <AddIcon />
@@ -169,6 +177,28 @@ function Catalogue() {
           </Button>
         </Grid>
       </Grid>
+
+      {!catalogueCategoryData?.length && //logic for no results page
+        !parentInfo?.is_leaf &&
+        !catalogueCategoryDetailLoading &&
+        !catalogueCategoryDataLoading && (
+          <Box
+            sx={{
+              width: '100%',
+              justifyContent: 'center',
+            }}
+          >
+            <Typography sx={{ fontWeight: 'bold' }}>
+              No results found
+            </Typography>
+            <Typography>
+              {parentId === null && catalogueLocation !== ''
+                ? 'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
+                : 'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'}
+            </Typography>
+          </Box>
+        )}
+
       {catalogueCategoryData && !parentInfo?.is_leaf && (
         <Grid container spacing={2}>
           {catalogueCategoryData.map((item, index) => (
@@ -185,6 +215,7 @@ function Catalogue() {
       {parentInfo && parentInfo.is_leaf && (
         <CatalogueItemsTable parentInfo={parentInfo} />
       )}
+
       <CatalogueCategoryDialog
         open={addCategoryDialogOpen}
         onClose={() => setAddCategoryDialogOpen(false)}

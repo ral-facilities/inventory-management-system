@@ -30,7 +30,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const catalogueItemProperties = parentInfo.catalogue_item_properties ?? [];
 
-  const { data } = useCatalogueItems(parentInfo.id);
+  const { data, isLoading } = useCatalogueItems(parentInfo.id);
 
   const theme = useTheme();
 
@@ -251,6 +251,21 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             ))}
         </TableBody>
       </Table>
+      {!data?.length && !isLoading && (
+        <Box
+          sx={{
+            width: '100%',
+            justifyContent: 'center',
+            marginTop: '8px',
+          }}
+        >
+          <Typography sx={{ fontWeight: 'bold' }}>No results found</Typography>
+          <Typography>
+            There are no items. Try adding an item by using the Add Catalogue
+            Item button in the top right of your screen
+          </Typography>
+        </Box>
+      )}
     </TableContainer>
   );
 };
