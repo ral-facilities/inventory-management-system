@@ -17,6 +17,7 @@ import {
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
+import Preloader from '../preloader/preloader.component';
 
 function Catalogue() {
   const [currNode, setCurrNode] = React.useState('/');
@@ -177,6 +178,15 @@ function Catalogue() {
           </Button>
         </Grid>
       </Grid>
+
+      {catalogueCategoryDataLoading && ( //logic for prloader
+        <Box>
+          <Preloader
+            loading={true}
+            children={<div>Loading data</div>}
+          ></Preloader>
+        </Box>
+      )}
 
       {!catalogueCategoryData?.length && //logic for no results page
         !parentInfo?.is_leaf &&
