@@ -62,7 +62,7 @@ function Systems() {
             onClick={() => {
               navigate('/inventory-management-system/systems');
             }}
-            aria-label="navigate to catalogue home"
+            aria-label="navigate to systems home"
           >
             <HomeIcon />
           </IconButton>
@@ -87,7 +87,7 @@ function Systems() {
           <List sx={{ padding: 0 }}>
             {subsystemsData?.map((item, index) => (
               <ListItem key={index} sx={{ padding: 0 }}>
-                <ListItemButton>
+                <ListItemButton sx={{ padding: 1 }}>
                   <ListItemText>{item.name}</ListItemText>
                 </ListItemButton>
               </ListItem>
