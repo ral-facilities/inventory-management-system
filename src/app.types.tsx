@@ -75,3 +75,21 @@ export interface AddCatalogueItem {
 export interface ErrorParsing {
   detail: string;
 }
+
+export enum SystemImportanceType {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+}
+
+export interface System {
+  id: string;
+  name: string;
+  location: string;
+  owner: string;
+  importance: SystemImportanceType;
+  parent_id: string | null;
+  parent_path: string;
+  code: string;
+  path: string;
+}
