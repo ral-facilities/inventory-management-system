@@ -42,11 +42,11 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(data));
   }),
 
-  rest.get('/v1/manufacturer', (req, res, ctx) => {
+  rest.get('/v1/manufacturers', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(ManufacturerJSON));
   }),
 
-  rest.post('/v1/manufacturer', async (req, res, ctx) => {
+  rest.post('/v1/manufacturers', async (req, res, ctx) => {
     const body = (await req.json()) as AddManufacturer;
 
     if (!body.name) {
@@ -64,8 +64,15 @@ export const handlers = [
       ctx.json({
         name: 'Manufacturer D',
         code: 'manufacturer-d',
-        url: 'http://test.co.uk',
-        address: '13 My Street',
+        url: 'http://test.co.uk' || null,
+        address: {
+          building_number: '1',
+          street_name: 'Example Street',
+          town: 'Oxford' || null,
+          county: 'Oxfordshire' || null,
+          postCode: 'OX1 2AB',
+        },
+        telephone: '07349612203' || null,
         id: '4',
       })
     );

@@ -14,8 +14,6 @@ import React from 'react';
 import { AddManufacturer } from '../app.types';
 import { useAddManufacturer } from '../api/manufacturer';
 import { AxiosError } from 'axios';
-import { Address } from 'cluster';
-import { Integer } from 'type-fest';
 
 export interface AddManufacturerDialogProps {
   open: boolean;
@@ -66,7 +64,7 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
     string | undefined
   >(undefined);
   const [manufacturerURL, setManufacturerURL] = React.useState<
-    string | undefined
+    string | undefined | null
   >(undefined);
 
   const [
@@ -76,15 +74,15 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
   const [manufacturerAddressStreetName, setManufacturerAddressStreetName] =
     React.useState<string | undefined>(undefined);
   const [manufacturerAddressTown, setManufacturerAddressTown] = React.useState<
-    string | undefined
+    string | undefined | null
   >(undefined);
   const [manufacturerAddressCounty, setManufacturerAddressCounty] =
-    React.useState<string | undefined>(undefined);
+    React.useState<string | undefined | null>(undefined);
   const [manufacturerAddressPostCode, setManufacturerAddressPostCode] =
     React.useState<string | undefined>(undefined);
 
   const [manufacturerTelephone, setManufacturerTelephone] = React.useState<
-    string | undefined
+    string | undefined | null
   >(undefined);
 
   const handleClose = React.useCallback(() => {
@@ -107,15 +105,15 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
     let manufacturer: AddManufacturer;
     manufacturer = {
       name: manufacturerName,
-      url: manufacturerURL,
+      url: manufacturerURL ? manufacturerURL : null,
       address: {
         building_number: manufacturerAddressBuildingNumber,
         street_name: manufacturerAddressStreetName,
-        town: manufacturerAddressTown,
-        county: manufacturerAddressCounty,
+        town: manufacturerAddressTown ? manufacturerAddressTown : null,
+        county: manufacturerAddressCounty ? manufacturerAddressCounty : null,
         postCode: manufacturerAddressPostCode,
       },
-      telephone: manufacturerTelephone,
+      telephone: manufacturerTelephone ? manufacturerTelephone : null,
     };
     //check url is valid
     if (manufacturer.url) {
