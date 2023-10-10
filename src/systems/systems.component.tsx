@@ -40,8 +40,6 @@ function Systems() {
     systemsLocation === '' ? '/' : systemsLocation
   );
 
-  console.log(subsystemsData);
-
   return systemsDataLoading && subsystemsData !== undefined ? null : (
     <Grid container>
       <Grid
