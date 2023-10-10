@@ -24,7 +24,6 @@ import {
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
-import Preloader from '../preloader/preloader.component';
 
 function Catalogue() {
   const [currNode, setCurrNode] = React.useState('/');
