@@ -9,6 +9,7 @@ describe('Manufacturer', () => {
     cy.findByText('Name').should('be.visible');
     cy.findByText('URL').should('be.visible');
     cy.findByText('Address').should('be.visible');
+    cy.findByText('Telephone').should('be.visible');
   });
 
   it('should render manufacturer data', () => {
@@ -18,11 +19,17 @@ describe('Manufacturer', () => {
     cy.findByText('Manufacturer B').should('be.visible');
     cy.findByText('Manufacturer C').should('be.visible');
     cy.findByText('http://example.com').should('be.visible');
+    cy.findByText('http://test.com').should('be.visible');
     cy.findByText('http://test.co.uk').should('be.visible');
-    cy.findByText('http://123test.com').should('be.visible');
-    cy.findByText('10 My Street').should('be.visible');
-    cy.findByText('11 My Street').should('be.visible');
-    cy.findByText('12 My Street').should('be.visible');
+    cy.findByText('1 Example Street Oxford Oxfordshire OX1 2AB').should(
+      'be.visible'
+    );
+    cy.findByText('2 Example Street Oxford Oxfordshire OX1 2AB').should(
+      'be.visible'
+    );
+    cy.findByText('3 Example Street Oxford Oxfordshire OX1 2AB').should(
+      'be.visible'
+    );
   });
 
   it('manufacturer url is correct and opens new webpage', () => {
@@ -33,11 +40,16 @@ describe('Manufacturer', () => {
     cy.url().should('include', 'http://example.com');
   });
 
-  it.only('render new manufacturer when added', async () => {
+  it('render new manufacturer when added', async () => {
     cy.findByRole('button', { name: 'Add Manufacturer' }).click();
     cy.findByLabelText('Name *').type('Manufacturer D');
-    cy.findByLabelText('URL *').type('http://test.co.uk');
-    cy.findByLabelText('Address *').type('13 My Street');
+    cy.findByLabelText('URL').type('http://test.co.uk');
+    cy.findByLabelText('Building number *').type('1');
+    cy.findByLabelText('Street name *').type('Example Street');
+    cy.findByLabelText('Town').type('Oxford');
+    cy.findByLabelText('County').type('Oxfordshire');
+    cy.findByLabelText('Post/Zip code *').type('OX1 2AB');
+    cy.findByLabelText('Telephone number').type('07349612203');
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -45,12 +57,12 @@ describe('Manufacturer', () => {
 
     cy.findBrowserMockedRequests({
       method: 'POST',
-      url: '/v1/manufacturer',
+      url: '/v1/manufacturers',
     }).should((patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"Manufacturer D","url":"http://test.co.uk", "address":"13 My Street"}'
+        '{"name":"Manufacturer D","url":"http://test.co.uk", "address": {building_number: "1", "street_name": "Example Street", "town": "Oxford", "county": "Oxfordshire", "postCode": "OX1 2AB",}, "telephone": "07349612203"}'
       );
     });
   });
@@ -66,17 +78,26 @@ describe('Manufacturer', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Please enter a url.');
+        cy.contains('Please enter a building number.');
       });
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Please enter an address.');
+        cy.contains('Please enter a street name.');
+      });
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please enter a post code or zip code.');
       });
   });
   it('displays error message when duplicate name entered', async () => {
     cy.findByTestId('Add Manufacturer').click();
     cy.findByLabelText('Name *').type('Manufacturer A');
+    cy.findByLabelText('Building number *').type('1');
+    cy.findByLabelText('Street name *').type('Example Street');
+    cy.findByLabelText('Post/Zip code *').type('OX1 2AB');
+
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog')
       .should('be.visible')
@@ -86,9 +107,9 @@ describe('Manufacturer', () => {
   });
   it('invalid url displays correct error message', async () => {
     cy.findByTestId('Add Manufacturer').click();
-    cy.findByLabelText('Name *').type('Manufacturer D');
-    cy.findByLabelText('URL *').type('test.co.uk');
-    cy.findByLabelText('Address *').type('13 My Street');
+
+    cy.findByLabelText('URL').type('test.co.uk');
+
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog')
       .should('be.visible')
