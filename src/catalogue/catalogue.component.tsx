@@ -1,6 +1,13 @@
 import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { Box, Button, Grid, IconButton, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  LinearProgress,
+  Typography,
+} from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
@@ -179,12 +186,9 @@ function Catalogue() {
         </Grid>
       </Grid>
 
-      {catalogueCategoryDataLoading && ( //logic for prloader
-        <Box>
-          <Preloader
-            loading={true}
-            children={<div>Loading data</div>}
-          ></Preloader>
+      {catalogueCategoryDataLoading && catalogueCategoryDetailLoading && (
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress />
         </Box>
       )}
 
