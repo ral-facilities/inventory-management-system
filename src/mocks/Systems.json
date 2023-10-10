@@ -17,7 +17,7 @@
     "owner": "Joel Davies",
     "importance": "high",
     "description": "Part of the very large laser",
-    "parent_id": null,
+    "parent_id": "6523d136773c1b5ca8c73b56",
     "id": "6525168e96d51781bbf2b159",
     "code": "smaller-laser",
     "path": "/giant-laser/smaller-laser",
