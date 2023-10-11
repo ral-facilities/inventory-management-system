@@ -27,7 +27,7 @@ describe('Catalogue Category', () => {
   });
 
   it('display error message when there is no name when adding a catalogue category', () => {
-    cy.findByTestId('AddIcon').click();
+    cy.findByRole('button', { name: 'add catalogue category' }).click();
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog')
       .should('be.visible')
@@ -108,12 +108,16 @@ describe('Catalogue Category', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('dialog').findByTestId('AddIcon').click();
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
     cy.findByLabelText('Property Name *').type('Updated Field');
     cy.findByLabelText('Select Type *').click();
     cy.findByText('Boolean').click();
 
-    cy.findByRole('dialog').findByTestId('AddIcon').click();
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
 
     cy.findByRole('button', { name: 'Save' }).click();
 

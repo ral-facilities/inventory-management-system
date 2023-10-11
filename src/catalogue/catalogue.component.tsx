@@ -192,7 +192,7 @@ function Catalogue() {
               No results found
             </Typography>
             <Typography>
-              {parentId === null && catalogueLocation !== ''
+              {!parentInfo && catalogueLocation !== ''
                 ? 'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
                 : 'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'}
             </Typography>

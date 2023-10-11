@@ -153,6 +153,17 @@ export const handlers = [
       );
 
       return res(ctx.status(200), ctx.json(CatalogueItemData));
+    } else {
+      return res(ctx.status(422), ctx.json(''));
+    }
+  }),
+  rest.get('/v1/catalogue-items/:id', (req, res, ctx) => {
+    const { id } = req.params;
+    if (id) {
+      const CatalogueItemData = CatalogueItemJSON.find(
+        (catalogueItem) => catalogueItem.id === id
+      );
+      return res(ctx.status(200), ctx.json(CatalogueItemData));
     }
     return res(ctx.status(422), ctx.json({}));
   }),

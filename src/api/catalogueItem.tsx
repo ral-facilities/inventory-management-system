@@ -81,3 +81,39 @@ export const useCatalogueItems = (
     }
   );
 };
+
+const fetchCatalogueItem = async (
+  catalogueCategoryId: string | null
+): Promise<CatalogueItem> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+  const queryParams = new URLSearchParams();
+
+  return axios
+    .get(`${apiUrl}/v1/catalogue-items/${catalogueCategoryId}`, {
+      params: queryParams,
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
+
+export const useCatalogueItem = (
+  catalogueCategoryId: string
+): UseQueryResult<CatalogueItem, AxiosError> => {
+  return useQuery<CatalogueItem, AxiosError>(
+    ['CatalogueItems', catalogueCategoryId],
+    (params) => {
+      return fetchCatalogueItem(catalogueCategoryId);
+    },
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+    }
+  );
+};
