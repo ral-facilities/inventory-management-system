@@ -27,7 +27,7 @@ describe('Catalogue Items Table', () => {
         address: '',
       },
       onChangeCatalogueItemManufacturer: onChangeCatalogueItemManufacturer,
-      catalogueItemPropertyValues: [],
+      catalogueItemPropertyValues: [12, '23'],
       onChangeCatalogueItemPropertyValues: onChangeCatalogueItemPropertyValues,
       parentInfo: {
         id: '5',
