@@ -111,7 +111,7 @@ function Systems() {
             }}
           >
             <Typography variant="h3">
-              Select some system first, please
+              Please select a system
             </Typography>
           </Box>
         </Grid>
