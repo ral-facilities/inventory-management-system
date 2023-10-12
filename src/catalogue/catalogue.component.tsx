@@ -2,12 +2,15 @@ import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { Box, Button, Grid, IconButton, Typography } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import { NavigateNext } from '@mui/icons-material';
 import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
 import CatalogueCard from './category/catalogueCard.component';
-import { useCatalogueCategory } from '../api/catalogueCategory';
+import {
+  useCatalogueBreadcrumbs,
+  useCatalogueCategory,
+  useCatalogueCategoryById,
+} from '../api/catalogueCategory';
 import {
   CatalogueCategoryFormData,
   CatalogueCategory,
@@ -50,22 +53,14 @@ export function matchCatalogueItemProperties(
 }
 
 function Catalogue() {
-  const [currNode, setCurrNode] = React.useState('/');
   const navigate = useNavigate();
   const location = useLocation();
   const onChangeNode = React.useCallback(
-    (newNode: string) => {
-      setCurrNode(newNode);
-      navigate(`/inventory-management-system/catalogue${newNode}`);
+    (newId: string) => {
+      navigate(`/inventory-management-system/catalogue/${newId}`);
     },
     [navigate]
   );
-
-  React.useEffect(() => {
-    setCurrNode(
-      location.pathname.replace('/inventory-management-system/catalogue', '')
-    );
-  }, [location.pathname]);
 
   const [addCategoryDialogOpen, setAddCategoryDialogOpen] =
     React.useState<boolean>(false);
@@ -89,7 +84,7 @@ function Catalogue() {
   const [catalogueItemPropertyValues, setCatalogueItemPropertyValues] =
     React.useState<(string | number | boolean | null)[]>([]);
 
-  const catalogueLocation = location.pathname.replace(
+  const catalogueId = location.pathname.replace(
     '/inventory-management-system/catalogue',
     ''
   );
@@ -98,22 +93,21 @@ function Catalogue() {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
   } = useCatalogueCategory(
-    undefined,
-    catalogueLocation === '' ? '/' : catalogueLocation
+    !catalogueId ? 'null' : catalogueId.replace('/', '')
   );
-
   const {
     data: catalogueCategoryDetail,
     isLoading: catalogueCategoryDetailLoading,
-  } = useCatalogueCategory(
-    catalogueLocation === '' ? '/' : catalogueLocation,
-    undefined
+  } = useCatalogueCategoryById(catalogueId.replace('/', ''));
+
+  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
+    catalogueId.replace('/', '')
   );
 
   const [parentId, setParentId] = React.useState<string | null>(null);
   const [isLeaf, setIsLeaf] = React.useState<boolean>(false);
   const parentInfo = React.useMemo(
-    () => catalogueCategoryDetail?.[0],
+    () => catalogueCategoryDetail,
     [catalogueCategoryDetail]
   );
 
@@ -155,7 +149,7 @@ function Catalogue() {
   React.useEffect(() => {
     setParentId(parentInfo ? (!!parentInfo.id ? parentInfo.id : null) : null);
     setIsLeaf(parentInfo ? parentInfo.is_leaf : false);
-  }, [catalogueLocation, parentInfo]);
+  }, [catalogueId, parentInfo]);
 
   return (
     <Grid container>
@@ -173,26 +167,21 @@ function Catalogue() {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton
-              sx={{ margin: '4px' }}
-              onClick={() => {
+            <Breadcrumbs
+              onChangeNode={onChangeNode}
+              breadcrumbsInfo={catalogueBreadcrumbs}
+              onChangeNavigateHome={() => {
                 navigate('/inventory-management-system/catalogue');
               }}
-              aria-label="navigate to catalogue home"
-            >
-              <HomeIcon />
-            </IconButton>
-            <Breadcrumbs currNode={currNode} onChangeNode={onChangeNode} />
+            />
             <NavigateNext
               fontSize="medium"
-              sx={{ color: 'rgba(0, 0, 0, 0.6)', margin: '4px' }}
+              sx={{ color: 'rgba(0, 0, 0, 0.6)', mx: '4px', my: '8px' }}
             />
             <IconButton
-              sx={{ margin: '4px' }}
+              sx={{ mx: '4px', my: '8px' }}
               onClick={() => setAddCategoryDialogOpen(true)}
-              disabled={
-                disableButton || (!parentInfo && catalogueLocation !== '')
-              }
+              disabled={disableButton || (!parentInfo && catalogueId !== '')}
               aria-label="add catalogue category"
             >
               <AddIcon />
@@ -223,7 +212,7 @@ function Catalogue() {
               No results found
             </Typography>
             <Typography>
-              {!parentInfo && catalogueLocation !== ''
+              {!parentInfo && catalogueId !== ''
                 ? 'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
                 : 'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'}
             </Typography>

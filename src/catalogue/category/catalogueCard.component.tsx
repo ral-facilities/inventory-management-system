@@ -27,9 +27,8 @@ function CatalogueCard(props: CatalogueCardProps) {
   return (
     <Button
       component={Link}
-      to={`${catalogueCategory.code}`}
+      to={`${catalogueCategory.id}`}
       fullWidth
-      relative="path"
       sx={{
         display: 'flex',
         width: '100%',

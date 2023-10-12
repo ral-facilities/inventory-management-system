@@ -8,14 +8,14 @@ import {
 } from '@tanstack/react-query';
 import {
   AddCatalogueCategory,
+  BreadcrumbsInfo,
   CatalogueCategory,
   EditCatalogueCategory,
 } from '../app.types';
 import { settings } from '../settings';
 
 const fetchCatalogueCategory = async (
-  path?: string,
-  parentPath?: string
+  parent_id?: string
 ): Promise<CatalogueCategory[]> => {
   let apiUrl: string;
   apiUrl = '';
@@ -24,11 +24,8 @@ const fetchCatalogueCategory = async (
     apiUrl = settingsResult['apiUrl'];
   }
   const queryParams = new URLSearchParams();
-  if (path) {
-    queryParams.append('path', path);
-  }
-  if (parentPath) {
-    queryParams.append('parent_path', parentPath);
+  if (parent_id) {
+    queryParams.append('parent_id', parent_id);
   }
   return axios
     .get(`${apiUrl}/v1/catalogue-categories/`, {
@@ -40,18 +37,52 @@ const fetchCatalogueCategory = async (
 };
 
 export const useCatalogueCategory = (
-  path?: string,
-  parent_path?: string
+  id?: string,
+  parent_id?: string
 ): UseQueryResult<CatalogueCategory[], AxiosError> => {
   return useQuery<CatalogueCategory[], AxiosError>(
-    ['CatalogueCategory', path, parent_path],
+    ['CatalogueCategory', id, parent_id],
     (params) => {
-      return fetchCatalogueCategory(path, parent_path);
+      return fetchCatalogueCategory(id);
     },
     {
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
+    }
+  );
+};
+
+const fetchCatalogueBreadcrumbs = async (
+  id: string
+): Promise<BreadcrumbsInfo> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+
+  return axios
+    .get(`${apiUrl}/v1/catalogue-categories/${id}/breadcrumbs`, {})
+    .then((response) => {
+      return response.data;
+    });
+};
+
+export const useCatalogueBreadcrumbs = (
+  id: string
+): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
+  return useQuery<BreadcrumbsInfo, AxiosError>(
+    ['CatalogueBreadcrumbs', id],
+    (params) => {
+      return fetchCatalogueBreadcrumbs(id);
+    },
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+      enabled: id !== '',
     }
   );
 };

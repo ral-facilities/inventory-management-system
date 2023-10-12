@@ -1,8 +1,6 @@
 describe('Catalogue Items', () => {
   beforeEach(() => {
-    cy.visit(
-      '/inventory-management-system/catalogue/beam-characterization/cameras'
-    );
+    cy.visit('/inventory-management-system/catalogue/4');
   });
   afterEach(() => {
     cy.clearMocks();
@@ -200,9 +198,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays error message when user tries to delete a catalogue item that has children elements', () => {
-    cy.visit(
-      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
-    );
+    cy.visit('/inventory-management-system/catalogue/5');
     cy.findByRole('button', {
       name: 'Delete Energy Meters 27 catalogue item',
     }).click();
@@ -219,9 +215,7 @@ describe('Catalogue Items', () => {
   });
 
   it('delete a catalogue item', () => {
-    cy.visit(
-      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
-    );
+    cy.visit('/inventory-management-system/catalogue/5');
     cy.findByRole('button', {
       name: 'Delete Energy Meters 26 catalogue item',
     }).click();
@@ -241,9 +235,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays error message if not of the field have been edited', () => {
-    cy.visit(
-      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
-    );
+    cy.visit('/inventory-management-system/catalogue/5');
     cy.findByRole('button', {
       name: 'Edit Energy Meters 27 catalogue item',
     }).click();
@@ -252,9 +244,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays error message if catalogue item has children elements', () => {
-    cy.visit(
-      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
-    );
+    cy.visit('/inventory-management-system/catalogue/5');
     cy.findByRole('button', {
       name: 'Edit Energy Meters 27 catalogue item',
     }).click();
@@ -275,9 +265,7 @@ describe('Catalogue Items', () => {
   });
 
   it('edit a catalogue item (name and desc)', () => {
-    cy.visit(
-      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
-    );
+    cy.visit('/inventory-management-system/catalogue/5');
     cy.findByRole('button', {
       name: 'Edit Energy Meters 27 catalogue item',
     }).click();
@@ -304,9 +292,7 @@ describe('Catalogue Items', () => {
   });
 
   it('edit a catalogue item (properties)', () => {
-    cy.visit(
-      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
-    );
+    cy.visit('/inventory-management-system/catalogue/5');
     cy.findByRole('button', {
       name: 'Edit Energy Meters 27 catalogue item',
     }).click();
@@ -324,7 +310,7 @@ describe('Catalogue Items', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"properties":[{"name":"Measurement Range","value":20000},{"name":"Accuracy","value":"±0.2%"}]}'
+        '{"properties":[{"name":"Measurement Range","value":20000}]}'
       );
     });
   });

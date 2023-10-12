@@ -1,6 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import {
   useAddCatalogueCategory,
+  useCatalogueBreadcrumbs,
   useCatalogueCategory,
   useCatalogueCategoryById,
   useDeleteCatalogueCategory,
@@ -40,8 +41,6 @@ describe('catalogue category api functions', () => {
         parent_id: null,
         id: '1',
         code: 'test',
-        path: '/test',
-        parent_path: '/',
         is_leaf: false,
       });
     });
@@ -73,8 +72,6 @@ describe('catalogue category api functions', () => {
         parent_id: null,
         id: '1',
         code: 'test',
-        path: '/test',
-        parent_path: '/',
         is_leaf: false,
       });
     });
@@ -92,8 +89,6 @@ describe('catalogue category api functions', () => {
         parent_id: null,
         id: '1',
         code: 'test',
-        path: '/test',
-        parent_path: '/',
         is_leaf: false,
       };
     });
@@ -115,13 +110,10 @@ describe('catalogue category api functions', () => {
   });
 
   describe('useCatalogueCategory', () => {
-    it('sends request to fetch catalogue category data and returns successful response', async () => {
-      const { result } = renderHook(
-        () => useCatalogueCategory(undefined, '/motion'),
-        {
-          wrapper: hooksWrapperWithProviders(),
-        }
-      );
+    it('sends request to fetch parent catalogue category data and returns successful response', async () => {
+      const { result } = renderHook(() => useCatalogueCategory('2'), {
+        wrapper: hooksWrapperWithProviders(),
+      });
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
@@ -134,39 +126,34 @@ describe('catalogue category api functions', () => {
           is_leaf: false,
           name: 'Actuators',
           parent_id: '2',
-          parent_path: '/motion',
-          path: '/motion/actuators',
-        },
-      ]);
-    });
-
-    it('sends request to fetch parent catalogue category data and returns successful response', async () => {
-      const { result } = renderHook(
-        () => useCatalogueCategory('/motion', undefined),
-        {
-          wrapper: hooksWrapperWithProviders(),
-        }
-      );
-
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBeTruthy();
-      });
-
-      expect(result.current.data).toEqual([
-        {
-          code: 'motion',
-          id: '2',
-          is_leaf: false,
-          name: 'Motion',
-          parent_id: null,
-          parent_path: '/',
-          path: '/motion',
         },
       ]);
     });
 
     it.todo(
-      'sends axios request to fetch records and throws an appropriate error on failure'
+      'sends axios request to fetch parent catalogue category data and throws an appropriate error on failure'
+    );
+  });
+
+  describe('useCatalogueBreadcrumbs', () => {
+    it('sends request to fetch catalogue breadcrumbs data and returns successful response', async () => {
+      const { result } = renderHook(() => useCatalogueBreadcrumbs('2'), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toEqual({
+        full_trail: true,
+        id: '2',
+        trail: [['motion', '2']],
+      });
+    });
+
+    it.todo(
+      'sends axios request to fetch catalogue breadcrumbs data and throws an appropriate error on failure'
     );
   });
 
@@ -186,8 +173,6 @@ describe('catalogue category api functions', () => {
         is_leaf: false,
         name: 'Beam Characterization',
         parent_id: null,
-        parent_path: '/',
-        path: '/beam-characterization',
       });
     });
 
