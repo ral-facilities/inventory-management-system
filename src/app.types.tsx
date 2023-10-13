@@ -88,6 +88,7 @@ export interface System {
   location: string;
   owner: string;
   importance: SystemImportanceType;
+  description: string;
   parent_id: string | null;
   parent_path: string;
   code: string;
