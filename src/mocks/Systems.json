@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Giant laser",
+    "location": "Big building",
+    "owner": "Joel Davies",
+    "importance": "high",
+    "description": "Very large laser",
+    "parent_id": null,
+    "id": "6523d136773c1b5ca8c73b56",
+    "code": "giant-laser",
+    "path": "/giant-laser",
+    "parent_path": "/"
+  },
+  {
+    "name": "Smaller laser",
+    "location": "Big building",
+    "owner": "Joel Davies",
+    "importance": "high",
+    "description": "Part of the very large laser",
+    "parent_id": "6523d136773c1b5ca8c73b56",
+    "id": "6525168e96d51781bbf2b159",
+    "code": "smaller-laser",
+    "path": "/giant-laser/smaller-laser",
+    "parent_path": "/giant-laser"
+  }
+]
