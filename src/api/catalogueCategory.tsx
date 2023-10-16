@@ -10,12 +10,16 @@ import {
   AddCatalogueCategory,
   BreadcrumbsInfo,
   CatalogueCategory,
+  CatalogueCategoryTransferState,
   EditCatalogueCategory,
+  ErrorParsing,
+  MoveToCatalogueCategory,
 } from '../app.types';
 import { settings } from '../settings';
 
 const fetchCatalogueCategory = async (
-  parent_id?: string
+  parent_id: string,
+  is_leaf?: boolean
 ): Promise<CatalogueCategory[]> => {
   let apiUrl: string;
   apiUrl = '';
@@ -24,8 +28,11 @@ const fetchCatalogueCategory = async (
     apiUrl = settingsResult['apiUrl'];
   }
   const queryParams = new URLSearchParams();
-  if (parent_id) {
-    queryParams.append('parent_id', parent_id);
+
+  queryParams.append('parent_id', parent_id);
+
+  if (typeof is_leaf === 'boolean' && is_leaf !== undefined) {
+    queryParams.append('is_leaf', String(is_leaf));
   }
   return axios
     .get(`${apiUrl}/v1/catalogue-categories/`, {
@@ -37,13 +44,13 @@ const fetchCatalogueCategory = async (
 };
 
 export const useCatalogueCategory = (
-  id?: string,
-  parent_id?: string
+  parent_id: string,
+  is_leaf?: boolean
 ): UseQueryResult<CatalogueCategory[], AxiosError> => {
   return useQuery<CatalogueCategory[], AxiosError>(
-    ['CatalogueCategory', id, parent_id],
+    ['CatalogueCategory', parent_id, is_leaf],
     (params) => {
-      return fetchCatalogueCategory(id);
+      return fetchCatalogueCategory(parent_id, is_leaf);
     },
     {
       onError: (error) => {
@@ -164,6 +171,74 @@ export const useEditCatalogueCategory = (): UseMutationResult<
   );
 };
 
+export const useMoveToCatalogueCategory = (): UseMutationResult<
+  CatalogueCategoryTransferState[],
+  AxiosError,
+  MoveToCatalogueCategory
+> => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    async (moveToCatalogueCategory: MoveToCatalogueCategory) => {
+      const transferStates: CatalogueCategoryTransferState[] = [];
+      let hasSuccessfulEdit = false;
+
+      const promises = moveToCatalogueCategory.catalogueCategory.map(
+        async (category: EditCatalogueCategory) => {
+          const { name, ...categoryWithoutName } = category;
+
+          if (category.id === category.parent_id) {
+            const errorTransferState: CatalogueCategoryTransferState = {
+              name: category.name ?? '',
+              message:
+                'The destination cannot be the same as the catalogue category itself',
+              state: 'error',
+            };
+            transferStates.push(errorTransferState);
+
+            return;
+          }
+          return editCatalogueCategory(categoryWithoutName)
+            .then((result) => {
+              const successTransferState: CatalogueCategoryTransferState = {
+                name: result.name ?? '',
+                message: 'Done',
+                state: 'success',
+              };
+              transferStates.push(successTransferState);
+              hasSuccessfulEdit = true;
+            })
+            .catch((error) => {
+              const response = error.response?.data as ErrorParsing;
+
+              const selectedCategory =
+                moveToCatalogueCategory.selectedCategories.find(
+                  (selectedCategory) => selectedCategory.id === category.id
+                );
+              const errorTransferState: CatalogueCategoryTransferState = {
+                name: selectedCategory?.name ?? '',
+                message: response.detail,
+                state: 'error',
+              };
+              transferStates.push(errorTransferState);
+            });
+        }
+      );
+
+      await Promise.all(promises);
+
+      if (hasSuccessfulEdit) {
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+      }
+
+      return transferStates;
+    },
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+    }
+  );
+};
 const deleteCatalogueCategory = async (
   catalogueCategory: CatalogueCategory
 ): Promise<void> => {

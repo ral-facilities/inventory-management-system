@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Typography,
   Card,
@@ -6,6 +6,8 @@ import {
   Button,
   CardActions,
   IconButton,
+  Checkbox,
+  Box,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -15,14 +17,24 @@ import { Link } from 'react-router-dom';
 export interface CatalogueCardProps extends CatalogueCategory {
   onChangeOpenDeleteDialog: (catalogueCategory: CatalogueCategory) => void;
   onChangeOpenEditDialog: (catalogueCategory: CatalogueCategory) => void;
+  onToggleSelect: (catalogueCategory: CatalogueCategory) => void;
+  isSelected: boolean;
 }
+
 function CatalogueCard(props: CatalogueCardProps) {
-  const mainContentRef = React.useRef<HTMLParagraphElement>(null);
+  const [hovered, setHovered] = useState(false);
+
   const {
     onChangeOpenDeleteDialog,
     onChangeOpenEditDialog,
+    onToggleSelect,
+    isSelected,
     ...catalogueCategory
   } = props;
+
+  const handleCheckboxClick = () => {
+    onToggleSelect(catalogueCategory);
+  };
 
   return (
     <Button
@@ -34,11 +46,42 @@ function CatalogueCard(props: CatalogueCardProps) {
         width: '100%',
         textDecoration: 'none',
         color: 'inherit',
+        position: 'relative', // Make the parent container relative
       }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <Card sx={{ width: '100%', display: 'flex' }}>
+      <Card
+        sx={{
+          width: '100%',
+          display: 'flex',
+        }}
+      >
+        <Box
+          onTouchEnd={(event) => {
+            event.preventDefault(); // Prevent the default touch behavior
+            handleCheckboxClick();
+          }}
+          sx={{ display: 'flex' }}
+          aria-label={`${catalogueCategory.name} checkbox area`}
+        >
+          <Checkbox
+            onClick={(event) => {
+              event.preventDefault();
+              handleCheckboxClick();
+            }}
+            checked={isSelected}
+            inputProps={{
+              'aria-label': 'controlled',
+            }}
+            aria-label={`${catalogueCategory.name} checkbox`}
+            sx={{
+              visibility: isSelected || hovered ? 'visible' : 'hidden', // Show Checkbox when selected or on hover
+            }}
+          />
+        </Box>
         <CardContent sx={{ width: '100%', minWidth: 0 }}>
-          <div aria-label="main-content" ref={mainContentRef}>
+          <div aria-label="main-content">
             <Typography aria-label="card-name" noWrap>
               {catalogueCategory.name}
             </Typography>

@@ -40,11 +40,17 @@ export const handlers = [
   }),
   rest.patch('/v1/catalogue-categories/:id', async (req, res, ctx) => {
     const { id } = req.params;
-    const data = CatalogueCategoryJSON.filter(
-      (catalogueCategory) => catalogueCategory.parent_id === id
+    // const data = CatalogueCategoryJSON.filter(
+    //   (catalogueCategory) => catalogueCategory.parent_id === id
+    // );
+
+    const obj = CatalogueCategoryJSON.find(
+      (catalogueCategory) => catalogueCategory.id === id
     );
     const body = (await req.json()) as EditCatalogueCategory;
-    if (body.name === 'test_dup') {
+
+    const fullBody = { ...obj, ...body };
+    if (fullBody.name === 'test_dup') {
       return res(
         ctx.status(409),
         ctx.json({
@@ -54,29 +60,20 @@ export const handlers = [
       );
     }
 
-    if (data.length > 0) {
-      return res(
-        ctx.status(409),
-        ctx.json({
-          detail:
-            'Catalogue category has children elements and cannot be updated',
-        })
-      );
-    }
+    // if (data.length > 0) {
+    //   return res(
+    //     ctx.status(409),
+    //     ctx.json({
+    //       detail:
+    //         'Catalogue category has children elements and cannot be updated',
+    //     })
+    //   );
+    // }
 
-    if (body.name === 'Error 500') {
+    if (fullBody.name === 'Error 500') {
       return res(ctx.status(500), ctx.json(''));
     }
-    return res(
-      ctx.status(200),
-      ctx.json({
-        name: 'test',
-        parent_id: null,
-        id: '1',
-        code: 'test',
-        is_leaf: false,
-      })
-    );
+    return res(ctx.status(200), ctx.json(fullBody));
   }),
 
   rest.get('/v1/catalogue-categories/:id', (req, res, ctx) => {
@@ -92,6 +89,7 @@ export const handlers = [
   rest.get('/v1/catalogue-categories/', (req, res, ctx) => {
     const catalogueCategoryParams = req.url.searchParams;
     const parentId = catalogueCategoryParams.get('parent_id');
+    const isLeaf = catalogueCategoryParams.get('is_leaf');
     let data;
 
     if (parentId) {
@@ -104,6 +102,18 @@ export const handlers = [
           (catalogueCategory) => catalogueCategory.parent_id === parentId
         );
       }
+    }
+    console.log(isLeaf);
+    if (isLeaf === 'true') {
+      data = data?.filter(
+        (catalogueCategory) => catalogueCategory.is_leaf === true
+      );
+    }
+
+    if (isLeaf === 'false') {
+      data = data?.filter(
+        (catalogueCategory) => catalogueCategory.is_leaf === false
+      );
     }
     return res(ctx.status(200), ctx.json(data));
   }),

@@ -15,6 +15,12 @@ export interface EditCatalogueCategory {
   id: string;
   catalogue_item_properties?: CatalogueCategoryFormData[];
   is_leaf?: boolean;
+  parent_id?: string | null;
+}
+
+export interface MoveToCatalogueCategory {
+  catalogueCategory: EditCatalogueCategory[];
+  selectedCategories: CatalogueCategory[];
 }
 
 export interface CatalogueCategory {
@@ -82,6 +88,11 @@ export interface ErrorParsing {
   detail: string;
 }
 
+export interface CatalogueCategoryTransferState {
+  name: string;
+  message: string;
+  state: 'success' | 'error';
+}
 export interface BreadcrumbsInfo {
   trail: [id: string, name: string][];
   full_trail: boolean;
