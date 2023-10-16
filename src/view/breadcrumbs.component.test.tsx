@@ -17,6 +17,7 @@ describe('Channel Breadcrumbs', () => {
       onChangeNode: onChangeNode,
       onChangeNavigateHome: onChangeNavigateHome,
       breadcrumbsInfo: { trail: [], full_trail: true },
+      navigateHomeAriaLabel: 'navigate to catalogue home',
     };
   });
 
@@ -85,8 +86,8 @@ describe('Channel Breadcrumbs', () => {
       ...props,
       breadcrumbsInfo: {
         trail: [
-          ['test', '1'],
-          ['path', '2'],
+          ['1', 'test'],
+          ['2', 'path'],
         ],
         full_trail: true,
       },

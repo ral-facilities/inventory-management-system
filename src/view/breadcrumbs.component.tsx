@@ -16,6 +16,7 @@ export interface BreadcrumbsProps {
   onChangeNode: (newId: string) => void;
   breadcrumbsInfo: BreadcrumbsInfo | undefined;
   onChangeNavigateHome: () => void;
+  navigateHomeAriaLabel: string;
 }
 
 const StyledBreadcrumbs = styled(MuiBreadcrumbs)(({ theme }) => ({
@@ -23,19 +24,24 @@ const StyledBreadcrumbs = styled(MuiBreadcrumbs)(({ theme }) => ({
 }));
 
 const Breadcrumbs = (props: BreadcrumbsProps) => {
-  const { onChangeNode, breadcrumbsInfo, onChangeNavigateHome } = props;
+  const {
+    onChangeNode,
+    breadcrumbsInfo,
+    onChangeNavigateHome,
+    navigateHomeAriaLabel,
+  } = props;
 
   const emptyElement = ['', ''];
 
   const trailPrefix =
     breadcrumbsInfo && !breadcrumbsInfo.full_trail
-      ? [emptyElement, [<MoreHorizIcon />, '']]
+      ? [emptyElement, ['', <MoreHorizIcon />]]
       : [emptyElement];
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <IconButton
         onClick={onChangeNavigateHome}
-        aria-label="navigate to catalogue home"
+        aria-label={navigateHomeAriaLabel}
       >
         <HomeIcon />
       </IconButton>

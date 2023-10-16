@@ -173,6 +173,7 @@ function Catalogue() {
               onChangeNavigateHome={() => {
                 navigate('/inventory-management-system/catalogue');
               }}
+              navigateHomeAriaLabel={'navigate to catalogue home'}
             />
             <NavigateNext
               fontSize="medium"
