@@ -78,6 +78,26 @@ export const handlers = [
     );
   }),
 
+  rest.delete('/v1/manufacturers/:id', (req, res, ctx) => {
+    const { id } = req.params;
+    const validManufacturer = ManufacturerJSON.find((value) => value.id === id);
+    if (validManufacturer) {
+      if (id === '2') {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail:
+              'The manufacturer is a part of a Catalogue Item, Please delete the Catalogue Item first',
+          })
+        );
+      } else {
+        return res(ctx.status(200), ctx.json(''));
+      }
+    } else {
+      return res(ctx.status(400), ctx.json(''));
+    }
+  }),
+
   rest.delete('/v1/catalogue-categories/:id', (req, res, ctx) => {
     const { id } = req.params;
     const validCatalogueCategory = CatalogueCategoryJSON.find(

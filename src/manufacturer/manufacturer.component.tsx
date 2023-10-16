@@ -17,6 +17,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { useManufacturers } from '../api/manufacturer';
 import AddManufacturerDialog from './manufacturerDialog.component';
+import { ViewManufacturerResponse } from '../app.types';
+import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 
 function Manufacturer() {
   const [manufacturerDialogOpen, setManufacturerDialogOpen] =
@@ -24,6 +26,13 @@ function Manufacturer() {
 
   const { data: ManufacturerData, refetch: manufacturerDataRefetch } =
     useManufacturers();
+
+  const [deleteManufacturerDialog, setDeleteManufacturerDialog] =
+    React.useState<boolean>(false);
+
+  const [selectedManufacturer, setSelectedManufacturer] = React.useState<
+    ViewManufacturerResponse | undefined
+  >(undefined);
 
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
   const tableHeight = `calc(100vh)-(64px + 36px +50px)`;
@@ -133,6 +142,10 @@ function Manufacturer() {
                       <IconButton
                         size="small"
                         aria-label={`Delete ${item.name} manufacturer`}
+                        onClick={() => {
+                          setDeleteManufacturerDialog(true);
+                          setSelectedManufacturer(item);
+                        }}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -190,6 +203,12 @@ function Manufacturer() {
           </TableBody>
         </Table>
       </TableContainer>
+      <DeleteManufacturerDialog
+        open={deleteManufacturerDialog}
+        onClose={() => setDeleteManufacturerDialog(false)}
+        manufacturer={selectedManufacturer}
+        refetchData={() => manufacturerDataRefetch()}
+      />
     </Box>
   );
 }

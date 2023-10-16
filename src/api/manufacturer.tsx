@@ -71,3 +71,32 @@ export const useAddManufacturer = (): UseMutationResult<
     }
   );
 };
+
+const deleteManufacturer = async (
+  session: ViewManufacturerResponse
+): Promise<void> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+  return axios
+    .delete(`${apiUrl}/v1/manufacturers/${session.id}`, {})
+    .then((response) => response.data);
+};
+
+export const useDeleteManufacturer = (): UseMutationResult<
+  void,
+  AxiosError,
+  ViewManufacturerResponse
+> => {
+  return useMutation(
+    (session: ViewManufacturerResponse) => deleteManufacturer(session),
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+    }
+  );
+};
