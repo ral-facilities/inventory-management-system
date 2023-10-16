@@ -33,7 +33,6 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
     onClose();
     setError(false);
     setErrorMessage(undefined);
-    console.log('closing');
   }, [onClose]);
 
   const handleDeleteManufacturer = React.useCallback(() => {

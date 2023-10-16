@@ -3,7 +3,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AddManufacturerDialog, {
   AddManufacturerDialogProps,
-} from './manufacturerDialog.component';
+} from './addManufacturerDialog.component';
 import { renderComponentWithBrowserRouter } from '../setupTests';
 
 describe('Add manufacturer dialog', () => {

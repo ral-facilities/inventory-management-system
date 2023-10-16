@@ -16,7 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { useManufacturers } from '../api/manufacturer';
-import AddManufacturerDialog from './manufacturerDialog.component';
+import AddManufacturerDialog from './addManufacturerDialog.component';
 import { ViewManufacturerResponse } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 
