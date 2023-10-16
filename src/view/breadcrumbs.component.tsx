@@ -45,8 +45,8 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
       >
         {breadcrumbsInfo &&
           trailPrefix.concat(breadcrumbsInfo.trail).map((value, currIndex) => {
-            const name = value[0];
-            const id = value[1];
+            const name = value[1];
+            const id = value[0];
 
             // final node, render as non-"link"
             if (

@@ -83,6 +83,6 @@ export interface ErrorParsing {
 }
 
 export interface BreadcrumbsInfo {
-  trail: [name: string, id: string][];
+  trail: [id: string, name: string][];
   full_trail: boolean;
 }
