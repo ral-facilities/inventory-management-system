@@ -91,6 +91,7 @@ describe('Manufacturer', () => {
         cy.contains('Please enter a post code or zip code.');
       });
   });
+
   it('displays error message when duplicate name entered', async () => {
     cy.findByTestId('Add Manufacturer').click();
     cy.findByLabelText('Name *').type('Manufacturer A');
@@ -105,6 +106,7 @@ describe('Manufacturer', () => {
         cy.contains('A manufacturer with the same name already exists.');
       });
   });
+
   it('invalid url displays correct error message', async () => {
     cy.findByTestId('Add Manufacturer').click();
 
@@ -115,6 +117,37 @@ describe('Manufacturer', () => {
       .should('be.visible')
       .within(() => {
         cy.contains('Please enter a valid url.');
+      });
+  });
+
+  it('delete a manufacturer', () => {
+    cy.findAllByTestId('DeleteIcon').first().click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/manufacturers/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(request.url.toString()).to.contain('1');
+    });
+  });
+
+  it('shows error when trying to delete manufacturer that is part of Catalogue Item', async () => {
+    cy.findAllByTestId('DeleteIcon').eq(1).click();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains(
+          'The manufacturer is a part of a Catalogue Item, Please delete the Catalogue Item first Please delete the Catalogue Item first'
+        );
       });
   });
 });
