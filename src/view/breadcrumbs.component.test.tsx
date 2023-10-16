@@ -25,8 +25,8 @@ describe('Channel Breadcrumbs', () => {
       ...props,
       breadcrumbsInfo: {
         trail: [
-          ['test', '1'],
-          ['path', '2'],
+          ['1', 'test'],
+          ['2', 'path'],
         ],
         full_trail: true,
       },
@@ -41,11 +41,11 @@ describe('Channel Breadcrumbs', () => {
       ...props,
       breadcrumbsInfo: {
         trail: [
-          ['test', '1'],
-          ['path', '2'],
-          ['test', '3'],
-          ['path', '4'],
-          ['test', '5'],
+          ['1', 'test'],
+          ['2', 'path'],
+          ['3', 'test'],
+          ['4', 'path'],
+          ['5', 'test'],
         ],
         full_trail: false,
       },
@@ -67,8 +67,8 @@ describe('Channel Breadcrumbs', () => {
       ...props,
       breadcrumbsInfo: {
         trail: [
-          ['test', '1'],
-          ['path', '2'],
+          ['1', 'test'],
+          ['2', 'path'],
         ],
         full_trail: true,
       },
