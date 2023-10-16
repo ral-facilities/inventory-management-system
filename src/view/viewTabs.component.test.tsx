@@ -36,7 +36,7 @@ describe('View Tabs', () => {
     expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
       'Systems'
     );
-    expect(screen.getByText('Systems Page')).toBeInTheDocument();
+    expect(screen.getByText('Root systems')).toBeInTheDocument();
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[0]
     ).toHaveTextContent('Catalogue');

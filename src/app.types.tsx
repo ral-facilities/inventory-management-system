@@ -83,3 +83,22 @@ export interface EditCatalogueItem {
 export interface ErrorParsing {
   detail: string;
 }
+
+export enum SystemImportanceType {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+}
+
+export interface System {
+  id: string;
+  name: string;
+  location: string;
+  owner: string;
+  importance: SystemImportanceType;
+  description: string;
+  parent_id: string | null;
+  parent_path: string;
+  code: string;
+  path: string;
+}

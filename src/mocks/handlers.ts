@@ -1,6 +1,7 @@
 import { rest } from 'msw';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
 import CatalogueItemJSON from './CatalogueItems.json';
+import SystemsJSON from './Systems.json';
 import {
   AddCatalogueCategory,
   CatalogueItem,
@@ -225,5 +226,20 @@ export const handlers = [
         id: id,
       })
     );
+  }),
+
+  rest.get('/v1/systems/', (req, res, ctx) => {
+    const systemsParams = req.url.searchParams;
+    const path = systemsParams.get('path');
+    const parentPath = systemsParams.get('parent_path');
+    let data;
+    if (path) {
+      data = SystemsJSON.filter((systems) => systems.path === path);
+    } else if (parentPath) {
+      data = SystemsJSON.filter(
+        (systems) => systems.parent_path === parentPath
+      );
+    }
+    return res(ctx.status(200), ctx.json(data));
   }),
 ];

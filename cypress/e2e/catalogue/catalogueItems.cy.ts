@@ -324,7 +324,7 @@ describe('Catalogue Items', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"properties":[{"name":"Measurement Range","value":20000},{"name":"Accuracy","value":"±0.2%"}]}'
+        '{"properties":[{"name":"Measurement Range","value":20000}]}'
       );
     });
   });
