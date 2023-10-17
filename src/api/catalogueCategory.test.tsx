@@ -287,32 +287,20 @@ describe('catalogue category api functions', () => {
       });
       expect(result.current.data).toEqual([
         {
-          message: 'Successfully moved to',
+          message: 'Successfully moved to Root',
           name: 'Wavefront Sensors',
           state: 'success',
-          targetLocationInfo: {
-            name: targetLocation.name,
-            id: targetLocation.id,
-          },
         },
         {
-          message: 'Successfully moved to',
+          message: 'Successfully moved to Root',
           name: 'Energy Meters',
           state: 'success',
-          targetLocationInfo: {
-            name: targetLocation.name,
-            id: targetLocation.id,
-          },
         },
         {
           message:
             'A catalogue category with the same name already exists within the parent catalogue category',
           name: 'test_dup',
           state: 'error',
-          targetLocationInfo: {
-            name: targetLocation.name,
-            id: targetLocation.id,
-          },
         },
       ]);
     });
@@ -375,7 +363,6 @@ describe('catalogue category api functions', () => {
             'The destination cannot be the same as the catalogue category itself',
           name: 'Energy Meters',
           state: 'error',
-          targetLocationInfo: { id: '1', name: 'Beam Characterization' },
         },
       ]);
     });

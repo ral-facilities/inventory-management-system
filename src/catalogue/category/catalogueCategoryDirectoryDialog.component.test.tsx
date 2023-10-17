@@ -146,7 +146,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
     await user.click(screen.getByLabelText('navigate to catalogue home'));
 
-    expect(onChangeCatalogueCurrDirId).toBeCalledWith('');
+    expect(onChangeCatalogueCurrDirId).toBeCalledWith(null);
   });
 
   it('navigates through the directory table', async () => {

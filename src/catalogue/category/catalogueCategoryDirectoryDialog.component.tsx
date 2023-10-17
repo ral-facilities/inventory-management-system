@@ -67,7 +67,7 @@ const CatalogueCategoryDirectoryDialog = (
   const { mutateAsync: moveToCatalogueCategory } = useMoveToCatalogueCategory();
 
   const { data: targetLocationCatalogueCategory } = useCatalogueCategoryById(
-    catalogueCurrDirId ?? ''
+    catalogueCurrDirId ?? undefined
   );
   const handleMoveToCatalogueCategory = React.useCallback(() => {
     const currId = catalogueCurrDirId === '' ? null : catalogueCurrDirId;
@@ -143,7 +143,7 @@ const CatalogueCategoryDirectoryDialog = (
             alignItems: 'center',
             position: 'sticky',
             top: 0, // Adjust this value as needed to control the distance from the top
-            backgroundColor: theme.palette.background.default, // Set the background color for the sticky element
+            backgroundColor: theme.palette.background.paper, // Set the background color for the sticky element
             zIndex: theme.zIndex.appBar + 1, // Ensure it's above other elements on the page
           }}
         >
@@ -151,7 +151,7 @@ const CatalogueCategoryDirectoryDialog = (
             onChangeNode={onChangeNode}
             breadcrumbsInfo={catalogueBreadcrumbs}
             onChangeNavigateHome={() => {
-              onChangeCatalogueCurrDirId('');
+              onChangeCatalogueCurrDirId(null);
             }}
             navigateHomeAriaLabel="navigate to catalogue home"
           />
@@ -219,7 +219,16 @@ const CatalogueCategoryDirectoryDialog = (
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleMoveToCatalogueCategory}>Move here</Button>
+        <Button
+          disabled={
+            selectedCategories.length > 0
+              ? catalogueCurrDirId === selectedCategories[0].parent_id
+              : false
+          }
+          onClick={handleMoveToCatalogueCategory}
+        >
+          Move here
+        </Button>
       </DialogActions>
     </Dialog>
   );

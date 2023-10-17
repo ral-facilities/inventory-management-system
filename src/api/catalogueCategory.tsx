@@ -200,7 +200,6 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
               message:
                 'The destination cannot be the same as the catalogue category itself',
               state: 'error',
-              targetLocationInfo: targetLocationInfo,
             };
             transferStates.push(errorTransferState);
 
@@ -210,9 +209,8 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
             .then((result) => {
               const successTransferState: CatalogueCategoryTransferState = {
                 name: result.name ?? '',
-                message: 'Successfully moved to',
+                message: `Successfully moved to ${targetLocationInfo.name}`,
                 state: 'success',
-                targetLocationInfo: targetLocationInfo,
               };
               transferStates.push(successTransferState);
               hasSuccessfulEdit = true;
@@ -228,7 +226,6 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
                 name: selectedCategory?.name ?? '',
                 message: response.detail,
                 state: 'error',
-                targetLocationInfo: targetLocationInfo,
               };
               transferStates.push(errorTransferState);
             });

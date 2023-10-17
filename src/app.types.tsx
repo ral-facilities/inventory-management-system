@@ -93,7 +93,6 @@ export interface CatalogueCategoryTransferState {
   name: string;
   message: string;
   state: 'success' | 'error';
-  targetLocationInfo: { name: string; id: string };
 }
 export interface BreadcrumbsInfo {
   trail: [id: string, name: string][];
