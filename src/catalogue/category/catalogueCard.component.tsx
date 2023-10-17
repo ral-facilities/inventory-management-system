@@ -7,7 +7,6 @@ import {
   CardActions,
   IconButton,
   Checkbox,
-  Box,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -55,9 +54,10 @@ function CatalogueCard(props: CatalogueCardProps) {
         sx={{
           width: '100%',
           display: 'flex',
+          height: '100px', // Set a fixed height for all cards
         }}
       >
-        <Box
+        <CardActions
           onTouchEnd={(event) => {
             event.preventDefault(); // Prevent the default touch behavior
             handleCheckboxClick();
@@ -79,10 +79,18 @@ function CatalogueCard(props: CatalogueCardProps) {
               visibility: isSelected || hovered ? 'visible' : 'hidden', // Show Checkbox when selected or on hover
             }}
           />
-        </Box>
-        <CardContent sx={{ width: '100%', minWidth: 0 }}>
+        </CardActions>
+        <CardContent
+          sx={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minWidth: 0,
+          }}
+        >
           <div aria-label="main-content">
-            <Typography aria-label="card-name" noWrap>
+            <Typography aria-label="card-name">
               {catalogueCategory.name}
             </Typography>
           </div>

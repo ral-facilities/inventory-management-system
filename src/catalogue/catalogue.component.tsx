@@ -184,6 +184,10 @@ function Catalogue() {
     setSelectedCategories([]);
   }, [parentId]);
 
+  const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
+    string | null
+  >(null);
+
   return (
     <Grid container>
       <Grid container>
@@ -236,7 +240,10 @@ function Catalogue() {
                 sx={{ mx: '4px' }}
                 variant="outlined"
                 startIcon={<DriveFileMoveOutlinedIcon />}
-                onClick={() => setMoveToCategoryDialogOpen(true)}
+                onClick={() => {
+                  setCatalogueCurrDirId(parentId ?? null);
+                  setMoveToCategoryDialogOpen(true);
+                }}
               >
                 Move to
               </Button>
@@ -364,6 +371,8 @@ function Catalogue() {
         onClose={() => setMoveToCategoryDialogOpen(false)}
         selectedCategories={selectedCategories}
         onChangeSelectedCategories={setSelectedCategories}
+        catalogueCurrDirId={catalogueCurrDirId}
+        onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
       />
     </Grid>
   );

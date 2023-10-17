@@ -264,6 +264,14 @@ describe('catalogue category api functions', () => {
           name: 'Energy Meters',
         },
       ];
+
+      const targetLocation = {
+        name: 'Root',
+        id: '',
+        parent_id: null,
+        is_leaf: false,
+        code: '',
+      };
       const { result } = renderHook(() => useMoveToCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -272,18 +280,102 @@ describe('catalogue category api functions', () => {
       result.current.mutate({
         catalogueCategory: catalogueCategories,
         selectedCategories: selectedCatalogueCategories,
+        targetLocationCatalogueCategory: targetLocation,
       });
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
       expect(result.current.data).toEqual([
-        { message: 'Done', name: 'Wavefront Sensors', state: 'success' },
-        { message: 'Done', name: 'Energy Meters', state: 'success' },
+        {
+          message: 'Successfully moved to',
+          name: 'Wavefront Sensors',
+          state: 'success',
+          targetLocationInfo: {
+            name: targetLocation.name,
+            id: targetLocation.id,
+          },
+        },
+        {
+          message: 'Successfully moved to',
+          name: 'Energy Meters',
+          state: 'success',
+          targetLocationInfo: {
+            name: targetLocation.name,
+            id: targetLocation.id,
+          },
+        },
         {
           message:
             'A catalogue category with the same name already exists within the parent catalogue category',
           name: 'test_dup',
           state: 'error',
+          targetLocationInfo: {
+            name: targetLocation.name,
+            id: targetLocation.id,
+          },
+        },
+      ]);
+    });
+
+    it('sends requests to move a single catalogue category data and returns unsuccessful response as the category parent_id has not changed', async () => {
+      const selectedCatalogueCategories = [
+        {
+          id: '5',
+          name: 'Energy Meters',
+          parent_id: '1',
+          code: 'energy-meters',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Measurement Range',
+              type: 'number',
+              unit: 'Joules',
+              mandatory: true,
+            },
+            {
+              name: 'Accuracy',
+              type: 'string',
+              mandatory: false,
+            },
+          ],
+        },
+      ];
+
+      const catalogueCategories = [
+        {
+          id: '5',
+          parent_id: '1',
+          name: 'Energy Meters',
+        },
+      ];
+
+      const targetLocation = {
+        id: '1',
+        name: 'Beam Characterization',
+        parent_id: null,
+        code: 'beam-characterization',
+        is_leaf: false,
+      };
+      const { result } = renderHook(() => useMoveToCatalogueCategory(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate({
+        catalogueCategory: catalogueCategories,
+        selectedCategories: selectedCatalogueCategories,
+        targetLocationCatalogueCategory: targetLocation,
+      });
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual([
+        {
+          message:
+            'The destination cannot be the same as the catalogue category itself',
+          name: 'Energy Meters',
+          state: 'error',
+          targetLocationInfo: { id: '1', name: 'Beam Characterization' },
         },
       ]);
     });

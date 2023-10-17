@@ -182,16 +182,25 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
       const transferStates: CatalogueCategoryTransferState[] = [];
       let hasSuccessfulEdit = false;
 
+      const targetLocationInfo = {
+        name: moveToCatalogueCategory.targetLocationCatalogueCategory.name,
+        id: moveToCatalogueCategory.targetLocationCatalogueCategory.id,
+      };
+
       const promises = moveToCatalogueCategory.catalogueCategory.map(
-        async (category: EditCatalogueCategory) => {
+        async (category: EditCatalogueCategory, index) => {
           const { name, ...categoryWithoutName } = category;
 
-          if (category.id === category.parent_id) {
+          if (
+            moveToCatalogueCategory.selectedCategories[index].parent_id ===
+            category.parent_id
+          ) {
             const errorTransferState: CatalogueCategoryTransferState = {
               name: category.name ?? '',
               message:
                 'The destination cannot be the same as the catalogue category itself',
               state: 'error',
+              targetLocationInfo: targetLocationInfo,
             };
             transferStates.push(errorTransferState);
 
@@ -201,8 +210,9 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
             .then((result) => {
               const successTransferState: CatalogueCategoryTransferState = {
                 name: result.name ?? '',
-                message: 'Done',
+                message: 'Successfully moved to',
                 state: 'success',
+                targetLocationInfo: targetLocationInfo,
               };
               transferStates.push(successTransferState);
               hasSuccessfulEdit = true;
@@ -218,6 +228,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
                 name: selectedCategory?.name ?? '',
                 message: response.detail,
                 state: 'error',
+                targetLocationInfo: targetLocationInfo,
               };
               transferStates.push(errorTransferState);
             });

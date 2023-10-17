@@ -292,11 +292,16 @@ describe('Catalogue', () => {
   it('opens add catalogue item dialog and can closes the dialog', async () => {
     createView('/inventory-management-system/catalogue/4');
 
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', {
+          name: 'Add Catalogue Item',
+        })
+      ).toBeInTheDocument();
+    });
+
     const addCatalogueItemButton = screen.getByRole('button', {
       name: 'Add Catalogue Item',
-    });
-    await waitFor(() => {
-      expect(addCatalogueItemButton).not.toBeDisabled();
     });
 
     await user.click(addCatalogueItemButton);
@@ -309,6 +314,86 @@ describe('Catalogue', () => {
 
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+  it('opens move catalogue category dialog and can closes the dialog', async () => {
+    createView('/inventory-management-system/catalogue/1');
+
+    await waitFor(() => {
+      expect(screen.getByText('Cameras')).toBeInTheDocument();
+    });
+
+    const camerasCheckbox = screen.getByLabelText('Cameras checkbox');
+
+    await user.click(camerasCheckbox);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Move to' })
+      ).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Move to' }));
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+  it('selects and deselects catalogue categories', async () => {
+    createView('/inventory-management-system/catalogue/1');
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters')).toBeInTheDocument();
+    });
+
+    const energyMetersCheckbox = screen.getByLabelText(
+      'Energy Meters checkbox'
+    );
+
+    await user.click(energyMetersCheckbox);
+
+    const camerasCheckbox = screen.getByLabelText('Cameras checkbox');
+
+    await user.click(camerasCheckbox);
+
+    await user.click(energyMetersCheckbox);
+    await user.click(camerasCheckbox);
+
+    await waitFor(() => {
+      expect(
+        screen.queryByRole('button', { name: 'Move to' })
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it('selects and deselects all catalogue categories', async () => {
+    createView('/inventory-management-system/catalogue/1');
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters')).toBeInTheDocument();
+    });
+
+    const energyMetersCheckbox = screen.getByLabelText(
+      'Energy Meters checkbox'
+    );
+
+    await user.click(energyMetersCheckbox);
+
+    const camerasCheckbox = screen.getByLabelText('Cameras checkbox');
+
+    await user.click(camerasCheckbox);
+
+    const clearSelected = screen.queryByRole('button', { name: '2 selected' });
+
+    await user.click(clearSelected);
+
+    await waitFor(() => {
+      expect(
+        screen.queryByRole('button', { name: 'Move to' })
+      ).not.toBeInTheDocument();
     });
   });
 });

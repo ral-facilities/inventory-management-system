@@ -13,6 +13,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   let axiosPatchSpy;
   const onChangeSelectedCategories = jest.fn();
   const onClose = jest.fn();
+  const onChangeCatalogueCurrDirId = jest.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(
       <CatalogueCategoryDirectoryDialog {...props} />
@@ -25,6 +26,8 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       onClose: onClose,
       selectedCategories: [],
       onChangeSelectedCategories: onChangeSelectedCategories,
+      onChangeCatalogueCurrDirId: onChangeCatalogueCurrDirId,
+      catalogueCurrDirId: null,
     };
 
     user = userEvent.setup();
@@ -34,6 +37,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+    axiosPatchSpy.mockRestore();
   });
 
   it('renders dialog correctly with multiple selected categories', async () => {
@@ -129,35 +133,91 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       },
     ];
 
+    props.catalogueCurrDirId = '8';
+
     createView();
-
-    await waitFor(() => {
-      expect(screen.getByText('Motion')).toBeInTheDocument();
-    });
-
-    await user.click(screen.getByText('Motion'));
-
-    await waitFor(() => {
-      expect(screen.getByText('Actuators')).toBeInTheDocument();
-    });
-
-    await user.click(screen.getByText('Actuators'));
 
     await waitFor(() => {
       expect(screen.getByRole('link', { name: 'motion' })).toBeInTheDocument();
     });
     await user.click(screen.getByRole('link', { name: 'motion' }));
 
-    await waitFor(() => {
-      expect(
-        screen.queryByRole('link', { name: 'motion' })
-      ).not.toBeInTheDocument();
-    });
+    expect(onChangeCatalogueCurrDirId).toBeCalledWith('2');
 
     await user.click(screen.getByLabelText('navigate to catalogue home'));
+
+    expect(onChangeCatalogueCurrDirId).toBeCalledWith('');
+  });
+
+  it('navigates through the directory table', async () => {
+    props.selectedCategories = [
+      {
+        id: '1',
+        name: 'Beam Characterization',
+        parent_id: null,
+        code: 'beam-characterization',
+        is_leaf: false,
+      },
+      {
+        id: '2',
+        name: 'Motion',
+        parent_id: null,
+        code: 'motion',
+        is_leaf: false,
+      },
+    ];
+
+    props.catalogueCurrDirId = null;
+
+    createView();
 
     await waitFor(() => {
       expect(screen.getByText('Motion')).toBeInTheDocument();
     });
+
+    await waitFor(() => {
+      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Vacuum Technology'));
+
+    expect(onChangeCatalogueCurrDirId).toBeCalledWith('3');
+  });
+
+  it('moves multiple catalogue categories', async () => {
+    props.selectedCategories = [
+      {
+        id: '1',
+        name: 'Beam Characterization',
+        parent_id: null,
+        code: 'beam-characterization',
+        is_leaf: false,
+      },
+      {
+        id: '2',
+        name: 'Motion',
+        parent_id: null,
+        code: 'motion',
+        is_leaf: false,
+      },
+    ];
+
+    props.catalogueCurrDirId = '3';
+    createView();
+
+    const moveButton = screen.getByRole('button', { name: 'Move here' });
+    await user.click(moveButton);
+
+    expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/1', {
+      parent_id: '3',
+    });
+    expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/2', {
+      parent_id: '3',
+    });
+    expect(onClose).toBeCalled();
   });
 });

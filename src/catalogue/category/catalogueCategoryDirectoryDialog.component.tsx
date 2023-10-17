@@ -23,6 +23,7 @@ import Breadcrumbs from '../../view/breadcrumbs.component';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
+  useCatalogueCategoryById,
   useMoveToCatalogueCategory,
 } from '../../api/catalogueCategory';
 import handleTransferState from './handleTransferState';
@@ -32,31 +33,44 @@ export interface CatalogueCategoryDirectoryDialogProps {
   onClose: () => void;
   selectedCategories: CatalogueCategory[];
   onChangeSelectedCategories: (selectedCategories: CatalogueCategory[]) => void;
+  catalogueCurrDirId: string | null;
+  onChangeCatalogueCurrDirId: (catalogueCurrDirId: string | null) => void;
 }
 
 const CatalogueCategoryDirectoryDialog = (
   props: CatalogueCategoryDirectoryDialogProps
 ) => {
-  const { open, onClose, selectedCategories, onChangeSelectedCategories } =
-    props;
-  const theme = useTheme();
+  const {
+    open,
+    onClose,
+    selectedCategories,
+    onChangeSelectedCategories,
 
-  const [currDirId, setCurrDirId] = React.useState<string>('');
+    catalogueCurrDirId,
+    onChangeCatalogueCurrDirId,
+  } = props;
+  const theme = useTheme();
 
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategory(!currDirId ? 'null' : currDirId, false);
+  } = useCatalogueCategory(
+    !catalogueCurrDirId ? 'null' : catalogueCurrDirId,
+    false
+  );
   const handleClose = React.useCallback(() => {
     onClose();
     onChangeSelectedCategories([]);
-    setCurrDirId('');
-  }, [onChangeSelectedCategories, onClose]);
+    onChangeCatalogueCurrDirId('');
+  }, [onChangeCatalogueCurrDirId, onChangeSelectedCategories, onClose]);
 
   const { mutateAsync: moveToCatalogueCategory } = useMoveToCatalogueCategory();
-  console.log(selectedCategories);
+
+  const { data: targetLocationCatalogueCategory } = useCatalogueCategoryById(
+    catalogueCurrDirId ?? ''
+  );
   const handleMoveToCatalogueCategory = React.useCallback(() => {
-    const currId = currDirId === '' ? null : currDirId;
+    const currId = catalogueCurrDirId === '' ? null : catalogueCurrDirId;
 
     const catalogueCategory: EditCatalogueCategory[] = selectedCategories.map(
       (category) => ({
@@ -69,6 +83,13 @@ const CatalogueCategoryDirectoryDialog = (
     moveToCatalogueCategory({
       catalogueCategory: catalogueCategory,
       selectedCategories: selectedCategories,
+      targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? {
+        name: 'Root',
+        id: '',
+        parent_id: null,
+        is_leaf: false,
+        code: '',
+      },
     })
       .then((response) => {
         console.log(response);
@@ -78,15 +99,28 @@ const CatalogueCategoryDirectoryDialog = (
       .catch((error: AxiosError) => {
         console.log(error);
       });
-  }, [currDirId, handleClose, moveToCatalogueCategory, selectedCategories]);
+  }, [
+    catalogueCurrDirId,
+    handleClose,
+    moveToCatalogueCategory,
+    selectedCategories,
+    targetLocationCatalogueCategory,
+  ]);
 
   const onChangeNode = (newId: string): void => {
-    setCurrDirId(newId);
+    onChangeCatalogueCurrDirId(newId);
   };
 
-  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(currDirId);
+  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
+    catalogueCurrDirId ?? 'null'
+  );
 
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
+
+  const selectedCatalogueCategoryIds: (string | null)[] =
+    selectedCategories.map((category) => {
+      return category.id;
+    });
 
   return (
     <Dialog
@@ -117,11 +151,12 @@ const CatalogueCategoryDirectoryDialog = (
             onChangeNode={onChangeNode}
             breadcrumbsInfo={catalogueBreadcrumbs}
             onChangeNavigateHome={() => {
-              setCurrDirId('');
+              onChangeCatalogueCurrDirId('');
             }}
             navigateHomeAriaLabel="navigate to catalogue home"
           />
         </Box>
+
         {catalogueCategoryDataLoading ? (
           <CircularProgress />
         ) : catalogueCategoryData && catalogueCategoryData.length > 0 ? (
@@ -138,7 +173,11 @@ const CatalogueCategoryDirectoryDialog = (
                 {catalogueCategoryData.map((category, index) => (
                   <TableRow
                     key={category.id}
-                    onClick={() => setCurrDirId(category.id)}
+                    onClick={() => {
+                      if (!selectedCatalogueCategoryIds.includes(category.id)) {
+                        onChangeCatalogueCurrDirId(category.id);
+                      }
+                    }}
                     onMouseEnter={() => setHoveredRow(index)}
                     onMouseLeave={() => setHoveredRow(null)}
                     style={{
@@ -146,11 +185,23 @@ const CatalogueCategoryDirectoryDialog = (
                         hoveredRow === index
                           ? theme.palette.action.hover
                           : 'inherit',
-                      cursor: 'pointer',
+                      cursor: selectedCatalogueCategoryIds.includes(category.id)
+                        ? 'not-allowed'
+                        : 'pointer',
                     }}
                     aria-label={`${category.name} row`}
                   >
-                    <TableCell>{category.name}</TableCell>
+                    <TableCell
+                      sx={{
+                        color: selectedCatalogueCategoryIds.includes(
+                          category.id
+                        )
+                          ? theme.palette.action.disabled
+                          : 'inherit',
+                      }}
+                    >
+                      {category.name}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -168,7 +219,7 @@ const CatalogueCategoryDirectoryDialog = (
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleMoveToCatalogueCategory}>Move to</Button>
+        <Button onClick={handleMoveToCatalogueCategory}>Move here</Button>
       </DialogActions>
     </Dialog>
   );
