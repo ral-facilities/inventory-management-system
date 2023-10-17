@@ -45,18 +45,6 @@ describe('Catalogue Card', () => {
     expect(onChangeOpenDeleteDialog).toHaveBeenCalled();
   });
 
-  it('checks the checkbox (touchscreen)', async () => {
-    createView();
-
-    const checkbox1 = screen.getByLabelText(
-      'Beam Characterization checkbox area'
-    );
-
-    await fireEvent.touchEnd(checkbox1);
-
-    expect(onToggleSelect).toHaveBeenCalled();
-  });
-
   it('checks the checkbox', async () => {
     createView();
     const checkbox = screen.getByLabelText('Beam Characterization checkbox');
@@ -64,24 +52,6 @@ describe('Catalogue Card', () => {
     await user.click(checkbox);
 
     expect(onToggleSelect).toHaveBeenCalled();
-  });
-
-  it('highlights the card on hover', async () => {
-    createView();
-
-    const card = screen.getByText('Beam Characterization');
-
-    const checkbox = screen.getByLabelText('Beam Characterization checkbox');
-
-    expect(checkbox).not.toBeVisible();
-
-    await user.hover(card);
-
-    expect(checkbox).toBeVisible();
-
-    await user.unhover(card);
-
-    expect(checkbox).not.toBeVisible();
   });
 
   it('opens the edit dialog', async () => {

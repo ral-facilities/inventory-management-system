@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Typography,
   Card,
@@ -21,8 +21,6 @@ export interface CatalogueCardProps extends CatalogueCategory {
 }
 
 function CatalogueCard(props: CatalogueCardProps) {
-  const [hovered, setHovered] = useState(false);
-
   const {
     onChangeOpenDeleteDialog,
     onChangeOpenEditDialog,
@@ -47,8 +45,6 @@ function CatalogueCard(props: CatalogueCardProps) {
         color: 'inherit',
         position: 'relative', // Make the parent container relative
       }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
     >
       <Card
         sx={{
@@ -57,14 +53,7 @@ function CatalogueCard(props: CatalogueCardProps) {
           height: '100px', // Set a fixed height for all cards
         }}
       >
-        <CardActions
-          onTouchEnd={(event) => {
-            event.preventDefault(); // Prevent the default touch behavior
-            handleCheckboxClick();
-          }}
-          sx={{ display: 'flex' }}
-          aria-label={`${catalogueCategory.name} checkbox area`}
-        >
+        <CardActions>
           <Checkbox
             onClick={(event) => {
               event.preventDefault();
@@ -75,9 +64,6 @@ function CatalogueCard(props: CatalogueCardProps) {
               'aria-label': 'controlled',
             }}
             aria-label={`${catalogueCategory.name} checkbox`}
-            sx={{
-              visibility: isSelected || hovered ? 'visible' : 'hidden', // Show Checkbox when selected or on hover
-            }}
           />
         </CardActions>
         <CardContent
