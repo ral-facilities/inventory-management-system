@@ -7,7 +7,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { Box, Button, Collapse, Link as MuiLink } from '@mui/material';
+import {
+  Box,
+  Button,
+  Collapse,
+  LinearProgress,
+  Link as MuiLink,
+} from '@mui/material';
 import { useCatalogueCategoryById } from '../../api/catalogueCategory';
 
 function CatalogueItemsLandingPage() {
@@ -213,19 +219,25 @@ function CatalogueItemsLandingPage() {
           </Box>
         </Grid>
       )}
-      {!catalogueItemIdData && !catalogueItemIdDataLoading && (
-        <Box
-          sx={{
-            width: '100%',
-            justifyContent: 'center',
-            marginTop: '8px',
-          }}
-        >
-          <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
-          <Typography>
-            This item doesn't exist. Please click the Home button to navigate to
-            the catalogue home
-          </Typography>
+      {!catalogueItemIdDataLoading ? (
+        !catalogueItemIdData && (
+          <Box
+            sx={{
+              width: '100%',
+              justifyContent: 'center',
+              marginTop: '8px',
+            }}
+          >
+            <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
+            <Typography>
+              This item doesn't exist. Please click the Home button to navigate
+              to the catalogue home
+            </Typography>
+          </Box>
+        )
+      ) : (
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress />
         </Box>
       )}
     </Grid>

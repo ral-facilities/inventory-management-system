@@ -146,6 +146,7 @@ export const useDeleteCatalogueItem = (): UseMutationResult<
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['CatalogueItems'] });
+        queryClient.removeQueries({ queryKey: ['CatalogueItem'] });
       },
     }
   );
