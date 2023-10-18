@@ -21,8 +21,6 @@ describe('Catalogue Card', () => {
       parent_id: '',
       code: 'beam-characterization',
       is_leaf: false,
-      parent_path: '/',
-      path: '/beam-characterization',
       onChangeOpenDeleteDialog: onChangeOpenDeleteDialog,
       onChangeOpenEditDialog: onChangeOpenEditDialog,
     };

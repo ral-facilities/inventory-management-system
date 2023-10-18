@@ -93,7 +93,8 @@ function Catalogue() {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
   } = useCatalogueCategory(
-    !catalogueId ? 'null' : catalogueId.replace('/', '')
+    !catalogueId ? 'null' : catalogueId.replace('/', ''),
+    undefined
   );
   const {
     data: catalogueCategoryDetail,
