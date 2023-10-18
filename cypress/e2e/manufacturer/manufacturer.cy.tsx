@@ -1,10 +1,10 @@
 describe('Manufacturer', () => {
   beforeEach(() => {
-    cy.visit('/manufacturer');
+    cy.visit('/inventory-management-system/manufacturer');
   });
 
   it('should render in table headers', () => {
-    cy.visit('/manufacturer');
+    cy.visit('/inventory-management-system/manufacturer');
     cy.findByText('Actions').should('be.visible');
     cy.findByText('Name').should('be.visible');
     cy.findByText('URL').should('be.visible');
@@ -12,7 +12,7 @@ describe('Manufacturer', () => {
   });
 
   it('should render manufacturer data', () => {
-    cy.visit('/manufacturer');
+    cy.visit('/inventory-management-system/manufacturer');
 
     cy.findByText('Manufacturer A').should('be.visible');
     cy.findByText('Manufacturer B').should('be.visible');
@@ -26,7 +26,7 @@ describe('Manufacturer', () => {
   });
 
   it('manufacturer url is correct and opens new webpage', () => {
-    cy.visit('/manufacturer');
+    cy.visit('/inventory-management-system/manufacturer');
     const url = cy.findByText('http://example.com');
 
     url
