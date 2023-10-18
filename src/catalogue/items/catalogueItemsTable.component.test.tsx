@@ -123,6 +123,7 @@ describe('Catalogue Items Table', () => {
     const deleteButton = screen.getByRole('button', {
       name: 'Delete Energy Meters 26 catalogue item',
     });
+
     await user.click(deleteButton);
 
     await waitFor(() => {
