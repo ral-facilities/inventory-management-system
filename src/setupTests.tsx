@@ -7,6 +7,9 @@ import { server } from './mocks/server';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RenderOptions, render } from '@testing-library/react';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { CatalogueCategoryFormData, CatalogueItem } from './app.types';
+import catalogueCategoryJson from './mocks/CatalogueCategory.json';
+import CatalogueItemJSON from './mocks/CatalogueItems.json';
 
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
@@ -98,4 +101,25 @@ export const hooksWrapperWithProviders = (queryClient?: QueryClient) => {
     </QueryClientProvider>
   );
   return wrapper;
+};
+
+export const getCatalogueItemsPropertiesById = (
+  id: string
+): CatalogueCategoryFormData[] => {
+  const filteredCategories = catalogueCategoryJson.filter(
+    (catalogueCategory) => catalogueCategory.id === id
+  );
+
+  if (filteredCategories.length === 0) {
+    return [];
+  }
+
+  const properties = filteredCategories[0].catalogue_item_properties ?? [];
+  return properties;
+};
+
+export const catalogueItemData = (id: string): CatalogueItem[] => {
+  return CatalogueItemJSON.filter(
+    (catalogueitem) => catalogueitem.catalogue_category_id === id
+  );
 };

@@ -1,0 +1,1532 @@
+[
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 1",
+    "description": "High-resolution cameras for beam characterization. 1",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 12,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 30,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ],
+    "id": "1",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 2",
+    "description": "High-resolution cameras for beam characterization. 2",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 16,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 60,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Sony",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "2",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 3",
+    "description": "High-resolution cameras for beam characterization. 3",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 20,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 120,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Canon",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ],
+    "id": "3",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 4",
+    "description": "High-resolution cameras for beam characterization. 4",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 24,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Nikon",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "90",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 5",
+    "description": "High-resolution cameras for beam characterization. 5",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 28,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 120,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Panasonic",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ],
+    "id": "24",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 6",
+    "description": "High-resolution cameras for beam characterization. 6",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 32,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Olympus",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "25",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 7",
+    "description": "High-resolution cameras for beam characterization. 7",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 36,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 360,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Fujifilm",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ],
+    "id": "26",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 8",
+    "description": "High-resolution cameras for beam characterization. 8",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 40,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 480,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "27",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 9",
+    "description": "High-resolution cameras for beam characterization. 9",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 48,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 600,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Pentax",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ],
+    "id": "28",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 10",
+    "description": "High-resolution cameras for beam characterization. 10",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 52,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 720,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Sigma",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "29",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 11",
+    "description": "High-resolution cameras for beam characterization. 11",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 56,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 840,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ],
+    "id": "30",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 12",
+    "description": "High-resolution cameras for beam characterization. 12",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 60,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 960,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Red",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "31",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 13",
+    "description": "High-resolution cameras for beam characterization. 13",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 64,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1080,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "32",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 14",
+    "description": "High-resolution cameras for beam characterization. 14",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 68,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1440,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "33",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 15",
+    "description": "High-resolution cameras for beam characterization. 15",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 72,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1800,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "34",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 16",
+    "description": "High-resolution cameras for beam characterization. 16",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 76,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2160,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "35",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 17",
+    "description": "High-resolution cameras for beam characterization. 17",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 80,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2520,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "36",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 18",
+    "description": "High-resolution cameras for beam characterization. 18",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 84,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2880,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "37",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 19",
+    "description": "High-resolution cameras for beam characterization. 19",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 88,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "38",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 20",
+    "description": "High-resolution cameras for beam characterization. 20",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 92,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3600,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "39",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 21",
+    "description": "High-resolution cameras for beam characterization. 21",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 96,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3960,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "40",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 22",
+    "description": "High-resolution cameras for beam characterization. 22",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 100,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 4320,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "41",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 23",
+    "description": "High-resolution cameras for beam characterization. 23",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 104,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 4680,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "42",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 24",
+    "description": "High-resolution cameras for beam characterization. 24",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 108,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 5040,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "43",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "4",
+    "name": "Cameras 25",
+    "description": "High-resolution cameras for beam characterization. 25",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 112,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 5400,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ],
+    "id": "44",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "5",
+    "name": "Energy Meters 26",
+    "description": "Precision energy meters for accurate measurements. 26",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 1000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.5%",
+        "unit": ""
+      }
+    ],
+    "id": "89",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "5",
+    "name": "Energy Meters 27",
+    "description": "Precision energy meters for accurate measurements. 27",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 2000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.2%",
+        "unit": ""
+      }
+    ],
+    "id": "6",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "5",
+    "name": "Energy Meters 28",
+    "description": "Precision energy meters for accurate measurements. 28",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 5000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.1%",
+        "unit": ""
+      }
+    ],
+    "id": "7",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "5",
+    "name": "Energy Meters 29",
+    "description": "Precision energy meters for accurate measurements. 29",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 10000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.05%",
+        "unit": ""
+      }
+    ],
+    "id": "8",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "6",
+    "name": "Wavefront Sensors 30",
+    "description": "Wavefront sensors for precise optical measurements. 30",
+    "properties": [
+      {
+        "name": "Wavefront Measurement Range",
+        "value": "0-10 micrometers",
+        "unit": ""
+      },
+      {
+        "name": "Spatial Resolution",
+        "value": 5,
+        "unit": "micrometers"
+      }
+    ],
+    "id": "9",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "6",
+    "name": "Wavefront Sensors 31",
+    "description": "Wavefront sensors for precise optical measurements. 31",
+    "properties": [
+      {
+        "name": "Wavefront Measurement Range",
+        "value": "0-20 micrometers",
+        "unit": ""
+      },
+      {
+        "name": "Spatial Resolution",
+        "value": 10,
+        "unit": "micrometers"
+      }
+    ],
+    "id": "10",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "9",
+    "name": "Motorized Actuators 32",
+    "description": "Motorized actuators for controlled motion. 32",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 100,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 10,
+        "unit": "kilograms"
+      }
+    ],
+    "id": "11",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "9",
+    "name": "Motorized Actuators 33",
+    "description": "Motorized actuators for controlled motion. 33",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 200,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 20,
+        "unit": "kilograms"
+      }
+    ],
+    "id": "12",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "9",
+    "name": "Motorized Actuators 34",
+    "description": "Motorized actuators for controlled motion. 34",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 300,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 30,
+        "unit": "kilograms"
+      }
+    ],
+    "id": "13",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "9",
+    "name": "Motorized Actuators 35",
+    "description": "Motorized actuators for controlled motion. 35",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 400,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 40,
+        "unit": "kilograms"
+      }
+    ],
+    "id": "14",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "11",
+    "name": "Cryo Pumps 36",
+    "description": "Cryo pumps for maintaining low temperatures. 36",
+    "properties": [
+      {
+        "name": "Cooldown Time",
+        "value": "2 hours",
+        "unit": ""
+      },
+      {
+        "name": "Pumping Speed",
+        "value": 50,
+        "unit": "liters per second"
+      }
+    ],
+    "id": "15",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "11",
+    "name": "Cryo Pumps 37",
+    "description": "Cryo pumps for maintaining low temperatures. 37",
+    "properties": [
+      {
+        "name": "Cooldown Time",
+        "value": "3 hours",
+        "unit": ""
+      },
+      {
+        "name": "Pumping Speed",
+        "value": 60,
+        "unit": "liters per second"
+      }
+    ],
+    "id": "16",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "12",
+    "name": "Dry Vacuum Pumps 38",
+    "description": "Dry vacuum pumps for creating vacuum environments. 38",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 300,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.1,
+        "unit": "millibar"
+      }
+    ],
+    "id": "17",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "12",
+    "name": "Dry Vacuum Pumps 39",
+    "description": "Dry vacuum pumps for creating vacuum environments. 39",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 400,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.05,
+        "unit": "millibar"
+      }
+    ],
+    "id": "18",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "12",
+    "name": "Dry Vacuum Pumps 40",
+    "description": "Dry vacuum pumps for creating vacuum environments. 40",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 500,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.01,
+        "unit": "millibar"
+      }
+    ],
+    "id": "19",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "12",
+    "name": "Dry Vacuum Pumps 41",
+    "description": "Dry vacuum pumps for creating vacuum environments. 41",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 300,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.1,
+        "unit": "millibar"
+      }
+    ],
+    "id": "17",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "13",
+    "name": "Turbomolecular Pumps 42",
+    "description": "Turbomolecular pumps for high-speed vacuum applications. 42",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 700,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Compression Ratio",
+        "value": 100,
+        "unit": ""
+      }
+    ],
+    "id": "20",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "13",
+    "name": "Turbomolecular Pumps 43",
+    "description": "Turbomolecular pumps for high-speed vacuum applications. 43",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 800,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Compression Ratio",
+        "value": 120,
+        "unit": ""
+      }
+    ],
+    "id": "21",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "14",
+    "name": "Turbo Pumps 44",
+    "description": "Turbo pumps for efficient vacuum pumping. 44",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 500,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Backing Pressure",
+        "value": 0.2,
+        "unit": "millibar"
+      }
+    ],
+    "id": "22",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  },
+  {
+    "catalogue_category_id": "14",
+    "name": "Turbo Pumps 45",
+    "description": "Turbo pumps for efficient vacuum pumping. 45",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 600,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Backing Pressure",
+        "value": 0.3,
+        "unit": "millibar"
+      }
+    ],
+    "id": "23",
+    "manufacturer": {
+      "name": "Manufacturer A",
+      "web_url": "http://example.com",
+      "address": "10 My Street"
+    }
+  }
+]

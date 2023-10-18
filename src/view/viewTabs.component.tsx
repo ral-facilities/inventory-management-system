@@ -9,15 +9,37 @@ import { Routes, Route } from 'react-router-dom';
 import Catalogue from '../catalogue/catalogue.component';
 import Systems from '../systems/systems.component';
 import Manufacturer from '../manufacturer/manufacturer.component';
-import { Paper } from '@mui/material';
+import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingPage.component';
 
 export const paths = {
-  home: '/',
-  catalogue: '/catalogue/*',
-  systems: '/systems',
-  manufacturer: '/manufacturer',
+  home: '/inventory-management-system/',
+  catalogue: '/inventory-management-system/catalogue/*',
+  systems: '/inventory-management-system/systems',
+  manufacturer: '/inventory-management-system/manufacturer',
+  catalogueItems: '/inventory-management-system/catalogue/items/:id',
 };
 
+interface TabPanelProps {
+  children?: React.ReactNode;
+  value: TabValue;
+  label: TabValue;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, label, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== label}
+      id={`${label}-tabpanel`}
+      aria-labelledby={`${label}-tab`}
+      {...other}
+    >
+      {value === label && <Box>{children}</Box>}
+    </div>
+  );
+}
 function a11yProps(label: TabValue) {
   return {
     id: `${label}-tab`,
@@ -36,67 +58,75 @@ function ViewTabs() {
   const navigate = useNavigate();
   const location = useLocation();
   React.useEffect(() => {
-    const tabValue = (
-      location.pathname.charAt(1).toUpperCase() + location.pathname.substring(2)
-    ).split('/')[0];
+    const prefixIndex = location.pathname.indexOf(paths.home);
+    let tabValue =
+      prefixIndex !== -1
+        ? location.pathname
+            .substring(prefixIndex + paths.home.length)
+            .split('/')[0]
+        : '';
+
     if (tabValue !== value && tabValue !== '') {
+      tabValue = tabValue.charAt(0).toUpperCase() + tabValue.slice(1);
       setValue(tabValue as TabValue);
     }
   }, [location.pathname, value]);
 
   React.useEffect(() => {
-    if (location.pathname === '/') {
-      navigate('/catalogue');
+    if (
+      location.pathname === '/inventory-management-system/' ||
+      location.pathname === '/'
+    ) {
+      navigate('/inventory-management-system/catalogue');
     }
   }, [location.pathname, navigate]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: TabValue) => {
     setValue(newValue);
-    navigate(`/${newValue.toLowerCase()}`);
+    navigate(`/inventory-management-system/${newValue.toLowerCase()}`);
   };
 
-  React.useEffect(() => {
-    if (location.pathname === '/') {
-      navigate('/catalogue');
-    }
-  }, [location.pathname, navigate]);
   return (
-    <Paper>
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} aria-label="view tabs">
-            <StyledTab
-              value="Catalogue"
-              label="Catalogue"
-              {...a11yProps('Catalogue')}
-            />
-            <StyledTab
-              value="Systems"
-              label="Systems"
-              {...a11yProps('Systems')}
-            />
-            <StyledTab
-              value="Manufacturer"
-              label="Manufacturer"
-              {...a11yProps('Manufacturer')}
-            />
-          </Tabs>
-        </Box>
-        <Box
-          sx={{
-            borderBottom: 1,
-            borderColor: 'divider',
-          }}
-        >
+    <Box sx={{ width: '100%' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={value} onChange={handleChange} aria-label="view tabs">
+          <StyledTab
+            value="Catalogue"
+            label="Catalogue"
+            {...a11yProps('Catalogue')}
+          />
+          <StyledTab
+            value="Systems"
+            label="Systems"
+            {...a11yProps('Systems')}
+          />
+          <StyledTab
+            value="Manufacturer"
+            label="Manufacturer"
+            {...a11yProps('Manufacturer')}
+          />
+        </Tabs>
+      </Box>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: 'divider',
+        }}
+      >
+        <TabPanel value={value} label={value}>
           <Routes location={location}>
             <Route path="/" element={<Catalogue />}></Route>
             <Route path={paths.catalogue} element={<Catalogue />}></Route>
+            <Route
+              path={paths.catalogueItems}
+              element={<CatalogueItemsLandingPage />}
+            ></Route>
             <Route path={paths.systems} element={<Systems />}></Route>
             <Route path={paths.manufacturer} element={<Manufacturer />}></Route>
           </Routes>
-        </Box>
+        </TabPanel>
       </Box>
-    </Paper>
+    </Box>
   );
 }
 
