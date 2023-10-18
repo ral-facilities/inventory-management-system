@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderComponentWithBrowserRouter } from '../../setupTests';
-import { fireEvent, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import CatalogueCard, { CatalogueCardProps } from './catalogueCard.component';
 import userEvent from '@testing-library/user-event';
 
