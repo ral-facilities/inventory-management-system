@@ -57,7 +57,9 @@ describe('Catalogue Properties Form', () => {
     createView();
 
     // Click on the add button
-    user.click(screen.getByTestId('AddIcon'));
+    user.click(
+      screen.getByRole('button', { name: 'Add catalogue category field entry' })
+    );
 
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([

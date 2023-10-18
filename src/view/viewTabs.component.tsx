@@ -9,12 +9,14 @@ import { Routes, Route } from 'react-router-dom';
 import Catalogue from '../catalogue/catalogue.component';
 import Systems from '../systems/systems.component';
 import Manufacturer from '../manufacturer/manufacturer.component';
+import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingPage.component';
 
 export const paths = {
   home: '/inventory-management-system/',
   catalogue: '/inventory-management-system/catalogue/*',
   systems: '/inventory-management-system/systems',
   manufacturer: '/inventory-management-system/manufacturer',
+  catalogueItems: '/inventory-management-system/catalogue/items/:id',
 };
 
 interface TabPanelProps {
@@ -115,6 +117,10 @@ function ViewTabs() {
           <Routes location={location}>
             <Route path="/" element={<Catalogue />}></Route>
             <Route path={paths.catalogue} element={<Catalogue />}></Route>
+            <Route
+              path={paths.catalogueItems}
+              element={<CatalogueItemsLandingPage />}
+            ></Route>
             <Route path={paths.systems} element={<Systems />}></Route>
             <Route path={paths.manufacturer} element={<Manufacturer />}></Route>
           </Routes>

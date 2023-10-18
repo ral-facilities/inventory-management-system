@@ -1,4 +1,4 @@
-describe('Catalogue Item', () => {
+describe('Catalogue Items', () => {
   beforeEach(() => {
     cy.visit(
       '/inventory-management-system/catalogue/beam-characterization/cameras'
@@ -137,6 +137,50 @@ describe('Catalogue Item', () => {
     cy.findByText('Cameras 4').should('exist');
   });
 
+  it.only('navigates to the landing page, toggles the properties and navigates back to the table view', () => {
+    cy.findByText('Cameras 1').click();
+    cy.findByText(
+      'High-resolution cameras for beam characterization. 1'
+    ).should('exist');
+    cy.findByLabelText('Close catalogue item properties').should('exist');
+
+    cy.findByLabelText('Close catalogue item properties').click();
+
+    cy.findByLabelText('Close catalogue item properties').should('not.exist');
+    cy.findByLabelText('Show catalogue item properties').should('exist');
+
+    cy.findByLabelText('Close catalogue item manufacturer details').should(
+      'exist'
+    );
+
+    cy.findByLabelText('Close catalogue item manufacturer details').click();
+
+    cy.findByLabelText('Close catalogue item manufacturer details').should(
+      'not.exist'
+    );
+    cy.findByLabelText('Show catalogue item manufacturer details').should(
+      'exist'
+    );
+
+    cy.findByRole('link', { name: 'Back to Cameras table view' }).click();
+
+    cy.findByText('Cameras 1').should('exist');
+    cy.findByText('Cameras 2').should('exist');
+    cy.findByText('Cameras 3').should('exist');
+    cy.findByText('Cameras 4').should('exist');
+  });
+
+  it('displays the expired landing page message and navigates back to the catalogue home', () => {
+    cy.visit('/inventory-management-system/catalogue/items/1fds');
+
+    cy.findByText(
+      `This item doesn't exist. Please click the Home button to navigate to the catalogue home`
+    ).should('exist');
+
+    cy.findByRole('link', { name: 'Home' }).click();
+
+    cy.findByText('Motion').should('exist');
+  });
   it('checks the href property of the manufacturer link', () => {
     // Find the element containing the link
     const row = cy.findByRole('row', { name: 'Cameras 1 row' });
