@@ -109,7 +109,7 @@ describe('Catalogue Items Table', () => {
     });
   });
 
-  it('opens the delete catalogue item dialog', async () => {
+  it('opens the delete catalogue item dialog and can delete an item', async () => {
     createView();
 
     await waitFor(() => {
