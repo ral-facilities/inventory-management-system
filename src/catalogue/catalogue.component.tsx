@@ -71,17 +71,10 @@ function Catalogue() {
   );
 
   const {
-    data: catalogueCategoryData,
-    isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategory(
-    undefined,
-    catalogueLocation === '' ? '/' : catalogueLocation
-  );
-
-  const {
     data: catalogueCategoryDetail,
     isLoading: catalogueCategoryDetailLoading,
   } = useCatalogueCategory(
+    false,
     catalogueLocation === '' ? '/' : catalogueLocation,
     undefined
   );
@@ -91,6 +84,15 @@ function Catalogue() {
   const parentInfo = React.useMemo(
     () => catalogueCategoryDetail?.[0],
     [catalogueCategoryDetail]
+  );
+
+  const {
+    data: catalogueCategoryData,
+    isLoading: catalogueCategoryDataLoading,
+  } = useCatalogueCategory(
+    catalogueCategoryDetailLoading ? true : !!parentInfo && parentInfo.is_leaf,
+    undefined,
+    catalogueLocation === '' ? '/' : catalogueLocation
   );
 
   const disableButton = parentInfo ? parentInfo.is_leaf : false;
@@ -185,11 +187,13 @@ function Catalogue() {
         </Grid>
       </Grid>
 
-      {catalogueCategoryDataLoading && catalogueCategoryDetailLoading && (
-        <Box sx={{ width: '100%' }}>
-          <LinearProgress />
-        </Box>
-      )}
+      {catalogueCategoryDataLoading &&
+        !catalogueCategoryDetailLoading &&
+        !parentInfo?.is_leaf && (
+          <Box sx={{ width: '100%' }}>
+            <LinearProgress />
+          </Box>
+        )}
 
       {!catalogueCategoryData?.length && //logic for no results page
         !parentInfo?.is_leaf &&

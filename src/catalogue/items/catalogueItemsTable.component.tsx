@@ -12,6 +12,7 @@ import {
   Box,
   Tooltip,
   Link,
+  LinearProgress,
 } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -38,6 +39,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   return (
     <TableContainer style={{ height: tableHeight }}>
+      {isLoading && (
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress />
+        </Box>
+      )}
       <Table stickyHeader>
         <TableHead>
           <TableRow
@@ -251,6 +257,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             ))}
         </TableBody>
       </Table>
+
       {!data?.length && !isLoading && (
         <Box
           sx={{
