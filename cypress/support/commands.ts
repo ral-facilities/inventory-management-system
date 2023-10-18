@@ -83,3 +83,37 @@ Cypress.Commands.add('findBrowserMockedRequests', ({ method, url }) => {
     });
   });
 });
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Clear all mocks
+       * @example cy.clearMocks()
+       */
+      clearMocks(): Chainable<JQuery<HTMLElement>>
+      /**
+       * Use before findBrowserMockedRequests for checking specific requests were sent
+       * @example cy.startSnoopingBrowserMockedRequest()
+       */
+      startSnoopingBrowserMockedRequest(): Chainable<JQuery<HTMLElement>>
+      /**
+       * Returns a request that was recorded after 'startSnoopingBrowserMockedRequest' was called
+       * 
+       * URL is a pattern matching URL that uses the same behavior as handlers URL matching
+       * e.g. '* /events/groups/:groupId' without the space
+       * @example cy.findBrowserMockedRequests({
+                    method: 'POST',
+                    url: '/v1/catalogue-categories',
+                  }).should((patchRequests) => {
+                    expect(patchRequests.length).equal(1);
+                    const request = patchRequests[0];
+                    expect(JSON.stringify(request.body)).equal(
+                      '{"name":"test","is_leaf":false}'
+                    );
+                  });
+       */
+      findBrowserMockedRequests({method, url}: any): Chainable<unknown>
+    }
+  }
+}
