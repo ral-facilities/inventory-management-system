@@ -336,7 +336,7 @@ const CatalogueCategoryDialog = React.memo(
             <RadioGroup
               aria-labelledby="controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
-              value={isLeaf}
+              value={isLeaf ? 'true' : 'false'}
               onChange={(event, value) => {
                 onChangeLeaf(value === 'true' ? true : false);
                 setFormError(false);

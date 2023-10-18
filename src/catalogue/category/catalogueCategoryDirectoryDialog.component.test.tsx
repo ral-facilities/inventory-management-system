@@ -220,4 +220,10 @@ describe('CatalogueCategoryDirectoryDialog', () => {
     });
     expect(onClose).toBeCalled();
   });
+  it('shows loading indicator', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    });
+  });
 });
