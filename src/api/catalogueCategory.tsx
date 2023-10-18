@@ -3,19 +3,20 @@ import {
   useMutation,
   UseMutationResult,
   useQuery,
+  useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
 import {
-  AddCatalogueCategoryResponse,
   AddCatalogueCategory,
-  ViewCatalogueCategoryResponse,
+  CatalogueCategory,
+  EditCatalogueCategory,
 } from '../app.types';
 import { settings } from '../settings';
 
 const fetchCatalogueCategory = async (
   path?: string,
   parentPath?: string
-): Promise<ViewCatalogueCategoryResponse[]> => {
+): Promise<CatalogueCategory[]> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -41,8 +42,8 @@ const fetchCatalogueCategory = async (
 export const useCatalogueCategory = (
   path?: string,
   parent_path?: string
-): UseQueryResult<ViewCatalogueCategoryResponse[], AxiosError> => {
-  return useQuery<ViewCatalogueCategoryResponse[], AxiosError>(
+): UseQueryResult<CatalogueCategory[], AxiosError> => {
+  return useQuery<CatalogueCategory[], AxiosError>(
     ['CatalogueCategory', path, parent_path],
     (params) => {
       return fetchCatalogueCategory(path, parent_path);
@@ -57,7 +58,7 @@ export const useCatalogueCategory = (
 
 const addCatalogueCategory = async (
   catalogueCategory: AddCatalogueCategory
-): Promise<AddCatalogueCategoryResponse> => {
+): Promise<CatalogueCategory> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -66,7 +67,7 @@ const addCatalogueCategory = async (
   }
 
   return axios
-    .post<AddCatalogueCategoryResponse>(
+    .post<CatalogueCategory>(
       `${apiUrl}/v1/catalogue-categories`,
       catalogueCategory
     )
@@ -74,10 +75,11 @@ const addCatalogueCategory = async (
 };
 
 export const useAddCatalogueCategory = (): UseMutationResult<
-  AddCatalogueCategoryResponse,
+  CatalogueCategory,
   AxiosError,
   AddCatalogueCategory
 > => {
+  const queryClient = useQueryClient();
   return useMutation(
     (catalogueCategory: AddCatalogueCategory) =>
       addCatalogueCategory(catalogueCategory),
@@ -85,12 +87,54 @@ export const useAddCatalogueCategory = (): UseMutationResult<
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+      },
+    }
+  );
+};
+
+const editCatalogueCategory = async (
+  catalogueCategory: EditCatalogueCategory
+): Promise<CatalogueCategory> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+  const { id, ...updatedCategory } = catalogueCategory;
+  return axios
+    .patch<CatalogueCategory>(
+      `${apiUrl}/v1/catalogue-categories/${id}`,
+      updatedCategory
+    )
+    .then((response) => response.data);
+};
+
+export const useEditCatalogueCategory = (): UseMutationResult<
+  CatalogueCategory,
+  AxiosError,
+  EditCatalogueCategory
+> => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (catalogueCategory: EditCatalogueCategory) =>
+      editCatalogueCategory(catalogueCategory),
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategoryByID'] });
+      },
     }
   );
 };
 
 const deleteCatalogueCategory = async (
-  session: ViewCatalogueCategoryResponse
+  catalogueCategory: CatalogueCategory
 ): Promise<void> => {
   let apiUrl: string;
   apiUrl = '';
@@ -99,22 +143,60 @@ const deleteCatalogueCategory = async (
     apiUrl = settingsResult['apiUrl'];
   }
   return axios
-    .delete(`${apiUrl}/v1/catalogue-categories/${session.id}`, {})
+    .delete(`${apiUrl}/v1/catalogue-categories/${catalogueCategory.id}`, {})
     .then((response) => response.data);
 };
 
 export const useDeleteCatalogueCategory = (): UseMutationResult<
   void,
   AxiosError,
-  ViewCatalogueCategoryResponse
+  CatalogueCategory
 > => {
+  const queryClient = useQueryClient();
   return useMutation(
-    (session: ViewCatalogueCategoryResponse) =>
-      deleteCatalogueCategory(session),
+    (catalogueCategory: CatalogueCategory) =>
+      deleteCatalogueCategory(catalogueCategory),
     {
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+      },
+    }
+  );
+};
+
+const fetchCatalogueCategoryById = async (
+  id: string | undefined
+): Promise<CatalogueCategory> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+
+  return axios
+    .get(`${apiUrl}/v1/catalogue-categories/${id}`, {})
+    .then((response) => {
+      return response.data;
+    });
+};
+
+export const useCatalogueCategoryById = (
+  id: string | undefined
+): UseQueryResult<CatalogueCategory, AxiosError> => {
+  return useQuery<CatalogueCategory, AxiosError>(
+    ['CatalogueCategoryByID', id],
+    (params) => {
+      return fetchCatalogueCategoryById(id);
+    },
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+      enabled: id !== undefined,
     }
   );
 };

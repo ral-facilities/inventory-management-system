@@ -1,14 +1,5 @@
 [
   {
-    "id": "",
-    "name": "",
-    "parent_id": null,
-    "code": "",
-    "is_leaf": false,
-    "parent_path": "",
-    "path": "/"
-  },
-  {
     "id": "1",
     "name": "Beam Characterization",
     "parent_id": null,
@@ -54,12 +45,27 @@
         "name": "Frame Rate",
         "type": "number",
         "unit": "fps",
-        "mandatory": true
+        "mandatory": false
       },
       {
         "name": "Sensor Type",
         "type": "string",
         "mandatory": true
+      },
+      {
+        "name": "Sensor brand",
+        "type": "string",
+        "mandatory": false
+      },
+      {
+        "name": "Broken",
+        "type": "boolean",
+        "mandatory": true
+      },
+      {
+        "name": "Older than five years",
+        "type": "boolean",
+        "mandatory": false
       }
     ]
   },
@@ -81,7 +87,7 @@
       {
         "name": "Accuracy",
         "type": "string",
-        "mandatory": true
+        "mandatory": false
       }
     ]
   },
@@ -103,7 +109,7 @@
         "name": "Spatial Resolution",
         "type": "number",
         "unit": "micrometers",
-        "mandatory": true
+        "mandatory": false
       }
     ]
   },
@@ -166,7 +172,7 @@
         "name": "Pumping Speed",
         "type": "number",
         "unit": "liters per second",
-        "mandatory": true
+        "mandatory": false
       }
     ]
   },
@@ -211,7 +217,7 @@
       {
         "name": "Compression Ratio",
         "type": "number",
-        "mandatory": true
+        "mandatory": false
       }
     ]
   },
@@ -237,5 +243,64 @@
         "mandatory": true
       }
     ]
+  },
+  {
+    "id": "15",
+    "name": "High Power Lasers",
+    "parent_id": null,
+    "code": "High-Power-Lasers",
+    "is_leaf": false,
+    "parent_path": "/",
+    "path": "/High-Power-Lasers"
+  },
+  {
+    "id": "16",
+    "name": "X-RAY Beams",
+    "parent_id": null,
+    "code": "X-RAY-Beams",
+    "is_leaf": false,
+    "parent_path": "/",
+    "path": "/X-RAY-Beams"
+  },
+  {
+    "id": "17",
+    "name": "Frequency",
+    "parent_id": "15",
+    "code": "Frequency",
+    "is_leaf": true,
+    "parent_path": "/High-Power-Lasers",
+    "path": "/High-Power-Lasers/Frequency",
+    "catalogue_item_properties": []
+  },
+  {
+    "id": "18",
+    "name": "Voltage Meters",
+    "parent_id": "1",
+    "code": "voltage-meters",
+    "is_leaf": true,
+    "parent_path": "/beam-characterization",
+    "path": "/beam-characterization/voltage-meters",
+    "catalogue_item_properties": [
+      {
+        "name": "Measurement Range",
+        "type": "number",
+        "unit": "volts",
+        "mandatory": true
+      },
+      {
+        "name": "Accuracy",
+        "type": "string",
+        "mandatory": true
+      }
+    ]
+  },
+  {
+    "id": "19",
+    "name": "Amp Meters",
+    "parent_id": "1",
+    "code": "amp-meters",
+    "is_leaf": false,
+    "parent_path": "/beam-characterization",
+    "path": "/beam-characterization/amp-meters"
   }
 ]

@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithBrowserRouter } from '../../setupTests';
 import { screen } from '@testing-library/react';
 import CatalogueCard, { CatalogueCardProps } from './catalogueCard.component';
 import userEvent from '@testing-library/user-event';
@@ -9,6 +9,7 @@ describe('Catalogue Card', () => {
   let user;
 
   const onChangeOpenDeleteDialog = jest.fn();
+  const onChangeOpenEditDialog = jest.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(<CatalogueCard {...props} />);
   };
@@ -23,6 +24,7 @@ describe('Catalogue Card', () => {
       parent_path: '/',
       path: '/beam-characterization',
       onChangeOpenDeleteDialog: onChangeOpenDeleteDialog,
+      onChangeOpenEditDialog: onChangeOpenEditDialog,
     };
     user = userEvent.setup();
   });
@@ -34,9 +36,21 @@ describe('Catalogue Card', () => {
 
   it('opens the delete dialog', async () => {
     createView();
-    const deleteButton = screen.getByTestId('delete-catalogue-category-button');
+    const deleteButton = screen.getByRole('button', {
+      name: 'delete Beam Characterization catalogue category button',
+    });
     await user.click(deleteButton);
 
     expect(onChangeOpenDeleteDialog).toHaveBeenCalled();
+  });
+
+  it('opens the edit dialog', async () => {
+    createView();
+    const editButton = screen.getByRole('button', {
+      name: 'edit Beam Characterization catalogue category button',
+    });
+    await user.click(editButton);
+
+    expect(onChangeOpenEditDialog).toHaveBeenCalled();
   });
 });

@@ -450,6 +450,7 @@ exports[`Catalogue Properties Form renders correctly 1`] = `
       </button>
     </div>
     <button
+      aria-label="Add catalogue category field entry"
       class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-qrfbyn-MuiButtonBase-root-MuiButton-root"
       tabindex="0"
       type="button"

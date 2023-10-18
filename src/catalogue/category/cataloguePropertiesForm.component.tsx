@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { CatalogueCategoryFormData } from '../app.types';
+import { CatalogueCategoryFormData } from '../../app.types';
 
 export interface CataloguePropertiesFormProps {
   formFields: CatalogueCategoryFormData[];
@@ -22,6 +22,7 @@ export interface CataloguePropertiesFormProps {
   onChangeTypeFields: (typeFields: string[]) => void;
   errorFields: number[];
   onChangeErrorFields: (errorFields: number[]) => void;
+  resetFormError: () => void;
 }
 
 function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
@@ -34,6 +35,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangeTypeFields,
     errorFields,
     onChangeErrorFields,
+    resetFormError,
   } = props;
 
   const handleAddField = () => {
@@ -44,6 +46,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     ]);
     onChangeNameFields([...nameFields, '']);
     onChangeTypeFields([...typeFields, '']);
+    resetFormError();
   };
 
   const handleDeleteField = (index: number) => {
@@ -61,6 +64,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangeFormFields(updatedFormFields);
     onChangeNameFields(updatedNameFields);
     onChangeTypeFields(updatedTypeFields);
+    resetFormError();
   };
 
   const handleChange = (
@@ -93,6 +97,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangeFormFields(updatedFormFields);
     onChangeNameFields(updatedNameFields);
     onChangeTypeFields(updatedTypeFields);
+    resetFormError();
   };
 
   return (
@@ -181,7 +186,11 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           </Button>
         </Stack>
       ))}
-      <Button sx={{ margin: '8px' }} onClick={handleAddField}>
+      <Button
+        sx={{ margin: '8px' }}
+        onClick={handleAddField}
+        aria-label={'Add catalogue category field entry'}
+      >
         <AddIcon />
       </Button>
     </div>
