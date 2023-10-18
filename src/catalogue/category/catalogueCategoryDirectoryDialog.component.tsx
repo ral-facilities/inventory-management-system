@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -15,6 +14,7 @@ import {
   TableHead,
   TableRow,
   Paper,
+  LinearProgress,
 } from '@mui/material';
 import React from 'react';
 import { CatalogueCategory, EditCatalogueCategory } from '../../app.types';
@@ -112,7 +112,7 @@ const CatalogueCategoryDirectoryDialog = (
   };
 
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
-    catalogueCurrDirId ?? 'null'
+    catalogueCurrDirId ?? ''
   );
 
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
@@ -158,7 +158,13 @@ const CatalogueCategoryDirectoryDialog = (
         </Box>
 
         {catalogueCategoryDataLoading ? (
-          <CircularProgress />
+          <Box
+            sx={{
+              width: '100%',
+            }}
+          >
+            <LinearProgress />
+          </Box>
         ) : catalogueCategoryData && catalogueCategoryData.length > 0 ? (
           <TableContainer component={Paper}>
             <Table>
