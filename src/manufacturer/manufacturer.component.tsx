@@ -16,16 +16,29 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { useManufacturers } from '../api/manufacturer';
-import AddManufacturerDialog from './addManufacturerDialog.component';
 import { ViewManufacturerResponse } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
+import { ManufacturerDetail } from '../app.types';
 
 function Manufacturer() {
-  const [manufacturerDialogOpen, setManufacturerDialogOpen] =
+  const [addManufacturer, setAddManufacturer] =
+    React.useState<ManufacturerDetail>({
+      name: '',
+      url: '',
+      address: {
+        building_number: '',
+        street_name: '',
+        town: '',
+        county: '',
+        postCode: '',
+      },
+      telephone: '',
+    });
+
+  const [addManufacturerDialogOpen, setAddManufacturerDialogOpen] =
     React.useState<boolean>(false);
 
-  const { data: ManufacturerData, refetch: manufacturerDataRefetch } =
-    useManufacturers();
+  const { data: ManufacturerData } = useManufacturers();
 
   const [deleteManufacturerDialog, setDeleteManufacturerDialog] =
     React.useState<boolean>(false);
@@ -50,14 +63,15 @@ function Manufacturer() {
       >
         <Button
           variant="outlined"
-          onClick={() => setManufacturerDialogOpen(true)}
+          onClick={() => setAddManufacturerDialogOpen(true)}
         >
           Add Manufacturer
         </Button>
         <AddManufacturerDialog
-          open={manufacturerDialogOpen}
-          onClose={() => setManufacturerDialogOpen(false)}
-          refetchData={() => manufacturerDataRefetch()}
+          open={addManufacturerDialogOpen}
+          onClose={() => setAddManufacturerDialogOpen(false)}
+          manufacturer={addManufacturer}
+          onChangeManufacturerDetails={setAddManufacturer}
         />
       </Box>
       <TableContainer style={{ height: tableHeight }}>
@@ -203,12 +217,12 @@ function Manufacturer() {
           </TableBody>
         </Table>
       </TableContainer>
-      <DeleteManufacturerDialog
+      {/* <DeleteManufacturerDialog
         open={deleteManufacturerDialog}
         onClose={() => setDeleteManufacturerDialog(false)}
         manufacturer={selectedManufacturer}
         refetchData={() => manufacturerDataRefetch()}
-      />
+      /> */}
     </Box>
   );
 }

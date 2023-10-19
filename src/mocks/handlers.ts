@@ -132,15 +132,15 @@ export const handlers = [
       ctx.json({
         name: 'Manufacturer D',
         code: 'manufacturer-d',
-        url: 'http://test.co.uk' || null,
+        url: 'http://test.co.uk',
         address: {
           building_number: '1',
           street_name: 'Example Street',
-          town: 'Oxford' || null,
-          county: 'Oxfordshire' || null,
+          town: 'Oxford',
+          county: 'Oxfordshire',
           postCode: 'OX1 2AB',
         },
-        telephone: '07349612203' || null,
+        telephone: '07349612203',
         id: '4',
       })
     );
