@@ -254,7 +254,7 @@ describe('Catalogue Items Dialog', () => {
 
     expect(
       screen.getByText(
-        'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+        'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
       )
     ).toBeInTheDocument();
 
@@ -724,7 +724,7 @@ describe('Catalogue Items Dialog', () => {
       );
     });
 
-    it('displays error message if no form fields have been changed', async () => {
+    it('displays error message if no fields have been changed (when they are no catalogue property fields)', async () => {
       props = {
         ...props,
         parentId: '1',
