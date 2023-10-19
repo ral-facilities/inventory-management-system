@@ -399,7 +399,7 @@ describe('Catalogue Items Dialog', () => {
 
       expect(
         screen.getByText(
-          'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+          'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
         )
       ).toBeInTheDocument();
     });

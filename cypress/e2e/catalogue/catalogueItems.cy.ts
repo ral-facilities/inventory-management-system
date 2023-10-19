@@ -120,13 +120,13 @@ describe('Catalogue Items', () => {
     cy.findByRole('button', { name: 'Save' }).click();
 
     cy.findByText(
-      'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+      'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
     ).should('exist');
     cy.findByLabelText('Manufacturer URL *').clear();
     cy.findByLabelText('Manufacturer URL *').type('https://test.co.uk');
 
     cy.findByText(
-      'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+      'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
     ).should('not.exist');
   });
 
