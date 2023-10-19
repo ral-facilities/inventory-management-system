@@ -19,6 +19,7 @@ import { useManufacturers } from '../api/manufacturer';
 import AddManufacturerDialog from './addManufacturerDialog.component';
 import { ViewManufacturerResponse } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
+import EditManufacturerDialog from './editManufacturerDialog.component';
 
 function Manufacturer() {
   const [manufacturerDialogOpen, setManufacturerDialogOpen] =
@@ -33,6 +34,9 @@ function Manufacturer() {
   const [selectedManufacturer, setSelectedManufacturer] = React.useState<
     ViewManufacturerResponse | undefined
   >(undefined);
+
+  const [editManufacturerDialog, setEditManufacturerDialog] =
+    React.useState<boolean>(false);
 
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
   const tableHeight = `calc(100vh)-(64px + 36px +50px)`;
@@ -136,6 +140,10 @@ function Manufacturer() {
                       <IconButton
                         size="small"
                         aria-label={`Edit ${item.name} manufacturer`}
+                        onClick={() => {
+                          setEditManufacturerDialog(true);
+                          setSelectedManufacturer(item);
+                        }}
                       >
                         <EditIcon />
                       </IconButton>
@@ -208,6 +216,13 @@ function Manufacturer() {
         onClose={() => setDeleteManufacturerDialog(false)}
         manufacturer={selectedManufacturer}
         refetchData={() => manufacturerDataRefetch()}
+      />
+
+      <EditManufacturerDialog
+        open={editManufacturerDialog}
+        onClose={() => setEditManufacturerDialog(false)}
+        refetchData={() => manufacturerDataRefetch()}
+        id={selectedManufacturer ? selectedManufacturer.id : ''}
       />
     </Box>
   );

@@ -39,9 +39,9 @@ export interface ViewManufacturerResponse {
 
 export interface AddManufacturer {
   name: string | undefined;
-  url: string | undefined | null;
+  url?: string | undefined;
   address: Address | undefined;
-  telephone: string | undefined | null;
+  telephone?: string | undefined;
 }
 
 export interface AddManufacturerResponse {
@@ -50,6 +50,14 @@ export interface AddManufacturerResponse {
   url: string;
   address: Address;
   telephone: string;
+  id: string;
+}
+
+export interface EditManufacturer {
+  name?: string | null;
+  url?: string | null;
+  address?: Address | null;
+  telephone?: string | null;
   id: string;
 }
 
@@ -65,9 +73,9 @@ export interface ErrorParsing {
 }
 
 interface Address {
-  building_number: string | undefined;
-  street_name: string | undefined;
-  town: string | undefined | null;
-  county: string | undefined | null;
-  postCode: string | undefined;
+  building_number: string | undefined | null;
+  street_name: string | undefined | null;
+  town?: string | undefined | null;
+  county?: string | undefined | null;
+  postCode: string | undefined | null;
 }

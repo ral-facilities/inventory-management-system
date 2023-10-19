@@ -10,6 +10,7 @@ import { settings } from '../settings';
 import {
   AddManufacturer,
   AddManufacturerResponse,
+  EditManufacturer,
   ViewManufacturerResponse,
 } from '../app.types';
 
@@ -99,4 +100,32 @@ export const useDeleteManufacturer = (): UseMutationResult<
       },
     }
   );
+};
+
+const editManufacturer = async (
+  manufacturer: EditManufacturer
+): Promise<void> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+
+  console.log(manufacturer.name);
+  return axios
+    .patch(`${apiUrl}/v1/manufacturers/${manufacturer.id}`, manufacturer)
+    .then((response) => response.data);
+};
+
+export const useEditManufacturer = (): UseMutationResult<
+  void,
+  AxiosError,
+  EditManufacturer
+> => {
+  return useMutation((session: EditManufacturer) => editManufacturer(session), {
+    onError: (error) => {
+      console.log('Got error ' + error.message);
+    },
+  });
 };
