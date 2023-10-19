@@ -1,16 +1,18 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AddManufacturerDialog, {
   AddManufacturerDialogProps,
 } from './manufacturerDialog.component';
 import { renderComponentWithBrowserRouter } from '../setupTests';
+import axios from 'axios';
 
 describe('Add manufacturer dialog', () => {
   const onClose = jest.fn();
-  const refetchData = jest.fn;
+  const onChangeManufacturerDetails = jest.fn();
   let props: AddManufacturerDialogProps;
   let user;
+  let axiosPostSpy;
   const createView = () => {
     return renderComponentWithBrowserRouter(
       <AddManufacturerDialog {...props} />
@@ -20,9 +22,22 @@ describe('Add manufacturer dialog', () => {
     props = {
       open: true,
       onClose: onClose,
-      refetchData: refetchData,
+      onChangeManufacturerDetails: onChangeManufacturerDetails,
+      manufacturer: {
+        name: '',
+        url: '',
+        address: {
+          building_number: '',
+          street_name: '',
+          town: '',
+          county: '',
+          postCode: '',
+        },
+        telephone: '',
+      },
     };
     user = userEvent.setup();
+    axiosPostSpy = jest.spyOn(axios, 'post');
   });
 
   afterEach(() => {
@@ -41,65 +56,36 @@ describe('Add manufacturer dialog', () => {
   });
 
   it('adds manufacturer correctly', async () => {
+    props.manufacturer = {
+      name: 'Manufacturer D',
+
+      url: 'http://test.co.uk',
+      address: {
+        building_number: '1',
+        street_name: 'Example Street',
+        town: 'Oxford',
+        county: 'Oxfordshire',
+        postCode: 'OX1 2AB',
+      },
+      telephone: '07349612203',
+    };
     createView();
-    const nameInput = screen.getByLabelText('Name *') as HTMLInputElement;
-    user.type(nameInput, 'Manufacturer D');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('Manufacturer D')).toBeInTheDocument();
-    });
-
-    const URLInput = screen.getByLabelText('URL') as HTMLInputElement;
-    user.type(URLInput, 'http://test.co.uk');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('http://test.co.uk')).toBeInTheDocument();
-    });
-
-    const buildingNumberInput = screen.getByLabelText(
-      'Building number *'
-    ) as HTMLInputElement;
-    user.type(buildingNumberInput, '1');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('1')).toBeInTheDocument();
-    });
-
-    const streetNameInput = screen.getByLabelText(
-      'Street name *'
-    ) as HTMLInputElement;
-    user.type(streetNameInput, 'Example Street');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('Example Street')).toBeInTheDocument();
-    });
-
-    const townInput = screen.getByLabelText('Town') as HTMLInputElement;
-    user.type(townInput, 'Oxford');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('Oxford')).toBeInTheDocument();
-    });
-
-    const countyInput = screen.getByLabelText('County') as HTMLInputElement;
-    user.type(countyInput, 'Oxfordshire');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('Oxfordshire')).toBeInTheDocument();
-    });
-
-    const postCodeInput = screen.getByLabelText(
-      'Post/Zip code *'
-    ) as HTMLInputElement;
-    user.type(postCodeInput, 'OX1 2AB');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('OX1 2AB')).toBeInTheDocument();
-    });
-
-    const telephoneInput = screen.getByLabelText(
-      'Telephone number'
-    ) as HTMLInputElement;
-    user.type(telephoneInput, '07349612203');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('07349612203')).toBeInTheDocument();
-    });
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
     await user.click(saveButton);
+
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/manufacturers', {
+      address: {
+        building_number: '1',
+        county: 'Oxfordshire',
+        postCode: 'OX1 2AB',
+        street_name: 'Example Street',
+        town: 'Oxford',
+      },
+      name: 'Manufacturer D',
+      telephone: '07349612203',
+      url: 'http://test.co.uk',
+    });
 
     expect(onClose).toHaveBeenCalled();
   });
@@ -113,64 +99,23 @@ describe('Add manufacturer dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
   });
+
   it('duplicate manufacturer name displays warning message', async () => {
+    props.manufacturer = {
+      name: 'Manufacturer A',
+
+      url: 'http://test.co.uk',
+      address: {
+        building_number: '1',
+        street_name: 'Example Street',
+        town: 'Oxford',
+        county: 'Oxfordshire',
+        postCode: 'OX1 2AB',
+      },
+      telephone: '07349612203',
+    };
+
     createView();
-
-    const nameInput = screen.getByLabelText('Name *') as HTMLInputElement;
-    user.type(nameInput, 'Manufacturer A');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('Manufacturer A')).toBeInTheDocument();
-    });
-
-    const URLInput = screen.getByLabelText('URL') as HTMLInputElement;
-    user.type(URLInput, 'http://test.co.uk');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('http://test.co.uk')).toBeInTheDocument();
-    });
-
-    const buildingNumberInput = screen.getByLabelText(
-      'Building number *'
-    ) as HTMLInputElement;
-    user.type(buildingNumberInput, '1');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('1')).toBeInTheDocument();
-    });
-
-    const streetNameInput = screen.getByLabelText(
-      'Street name *'
-    ) as HTMLInputElement;
-    user.type(streetNameInput, 'Example Street');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('Example Street')).toBeInTheDocument();
-    });
-
-    const townInput = screen.getByLabelText('Town') as HTMLInputElement;
-    user.type(townInput, 'Oxford');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('Oxford')).toBeInTheDocument();
-    });
-
-    const countyInput = screen.getByLabelText('County') as HTMLInputElement;
-    user.type(countyInput, 'Oxfordshire');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('Oxfordshire')).toBeInTheDocument();
-    });
-
-    const postCodeInput = screen.getByLabelText(
-      'Post/Zip code *'
-    ) as HTMLInputElement;
-    user.type(postCodeInput, 'OX1 2AB');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('OX1 2AB')).toBeInTheDocument();
-    });
-
-    const telephoneInput = screen.getByLabelText(
-      'Telephone number'
-    ) as HTMLInputElement;
-    user.type(telephoneInput, '07349612203');
-    await waitFor(() => {
-      expect(screen.getByDisplayValue('07349612203')).toBeInTheDocument();
-    });
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
     await user.click(saveButton);
@@ -198,5 +143,179 @@ describe('Add manufacturer dialog', () => {
       screen.getByText('Please enter a post code or zip code.')
     ).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('invalid url displays error', async () => {
+    props.manufacturer = {
+      name: 'Manufacturer A',
+
+      url: 'invalid',
+      address: {
+        building_number: '1',
+        street_name: 'Example Street',
+        town: 'Oxford',
+        county: 'Oxfordshire',
+        postCode: 'OX1 2AB',
+      },
+      telephone: '07349612203',
+    };
+
+    createView();
+
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+    await user.click(saveButton);
+
+    expect(screen.getByText('Please enter a valid URL')).toBeInTheDocument();
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('handles manufacturer name input correctly', async () => {
+    const newManufacturerName = 'Test Manufacturer';
+
+    createView();
+
+    const manufacturerNameInput = screen.getByLabelText('Name *');
+
+    fireEvent.change(manufacturerNameInput, {
+      target: { value: newManufacturerName },
+    });
+
+    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+      ...props.manufacturer,
+      name: newManufacturerName,
+    });
+  });
+
+  it('handles manufacturer url input correctly', async () => {
+    const newManufacturerURL = 'Test';
+
+    createView();
+
+    const manufacturerURLInput = screen.getByLabelText('URL');
+
+    fireEvent.change(manufacturerURLInput, {
+      target: { value: newManufacturerURL },
+    });
+
+    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+      ...props.manufacturer,
+      url: newManufacturerURL,
+    });
+  });
+
+  it('handles manufacturer building number input correctly', async () => {
+    const newManufacturerBuildingNumber = 'Test';
+
+    createView();
+
+    const manufacturerBuildingNumberInput =
+      screen.getByLabelText('Building number *');
+
+    fireEvent.change(manufacturerBuildingNumberInput, {
+      target: { value: newManufacturerBuildingNumber },
+    });
+
+    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+      ...props.manufacturer,
+      address: {
+        ...props.manufacturer.address,
+        building_number: newManufacturerBuildingNumber,
+      },
+    });
+  });
+
+  it('handles manufacturer street name input correctly', async () => {
+    const newManufacturerStreetName = 'Test';
+
+    createView();
+
+    const manufacturerStreetNameInput = screen.getByLabelText('Street name *');
+
+    fireEvent.change(manufacturerStreetNameInput, {
+      target: { value: newManufacturerStreetName },
+    });
+
+    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+      ...props.manufacturer,
+      address: {
+        ...props.manufacturer.address,
+        street_name: newManufacturerStreetName,
+      },
+    });
+  });
+
+  it('handles manufacturer town input correctly', async () => {
+    const newManufacturerTown = 'Test';
+
+    createView();
+
+    const manufacturerTownInput = screen.getByLabelText('Town');
+
+    fireEvent.change(manufacturerTownInput, {
+      target: { value: newManufacturerTown },
+    });
+
+    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+      ...props.manufacturer,
+      address: { ...props.manufacturer.address, town: newManufacturerTown },
+    });
+  });
+
+  it('handles manufacturer county input correctly', async () => {
+    const newManufacturerCounty = 'Test';
+
+    createView();
+
+    const manufacturerCountyInput = screen.getByLabelText('County');
+
+    fireEvent.change(manufacturerCountyInput, {
+      target: { value: newManufacturerCounty },
+    });
+
+    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+      ...props.manufacturer,
+      address: {
+        ...props.manufacturer.address,
+        county: newManufacturerCounty,
+      },
+    });
+  });
+
+  it('handles manufacturer post code input correctly', async () => {
+    const newManufacturerPostCode = 'Test';
+
+    createView();
+
+    const manufacturerPostCodeInput = screen.getByLabelText('Post/Zip code *');
+
+    fireEvent.change(manufacturerPostCodeInput, {
+      target: { value: newManufacturerPostCode },
+    });
+
+    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+      ...props.manufacturer,
+      address: {
+        ...props.manufacturer.address,
+        postCode: newManufacturerPostCode,
+      },
+    });
+  });
+
+  it('handles manufacturer telephone input correctly', async () => {
+    const newManufacturerTelephone = 'Test';
+
+    createView();
+
+    const manufacturerTelephoneInput =
+      screen.getByLabelText('Telephone number');
+
+    fireEvent.change(manufacturerTelephoneInput, {
+      target: { value: newManufacturerTelephone },
+    });
+
+    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+      ...props.manufacturer,
+      telephone: newManufacturerTelephone,
+    });
   });
 });

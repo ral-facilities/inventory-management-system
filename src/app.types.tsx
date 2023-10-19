@@ -37,10 +37,10 @@ export interface ViewManufacturerResponse {
 }
 
 export interface AddManufacturer {
-  name: string | undefined;
-  url: string | undefined | null;
+  name: string;
+  url?: string;
   address: Address | undefined;
-  telephone: string | undefined | null;
+  telephone?: string;
 }
 
 export interface AddManufacturerResponse {
@@ -50,6 +50,13 @@ export interface AddManufacturerResponse {
   address: Address;
   telephone: string;
   id: string;
+}
+
+export interface ManufacturerDetail {
+  name: string;
+  url: string;
+  address: Address;
+  telephone: string;
 }
 
 export interface CatalogueCategoryFormData {
@@ -101,11 +108,11 @@ export interface ErrorParsing {
 }
 
 interface Address {
-  building_number: string | undefined;
-  street_name: string | undefined;
-  town: string | undefined | null;
-  county: string | undefined | null;
-  postCode: string | undefined;
+  building_number: string;
+  street_name: string;
+  town?: string;
+  county?: string;
+  postCode: string;
 }
 
 export enum SystemImportanceType {

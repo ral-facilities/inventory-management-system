@@ -3,6 +3,7 @@ import {
   useMutation,
   UseMutationResult,
   useQuery,
+  useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
 import { settings } from '../settings';
@@ -62,11 +63,15 @@ export const useAddManufacturer = (): UseMutationResult<
   AxiosError,
   AddManufacturer
 > => {
+  const queryClient = useQueryClient();
   return useMutation(
     (manufacturer: AddManufacturer) => addManufacturer(manufacturer),
     {
       onError: (error) => {
         console.log('Got error ' + error.message);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
       },
     }
   );
