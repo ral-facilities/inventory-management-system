@@ -349,7 +349,7 @@ describe('Catalogue Items Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
-    it('display error message when invalid number format', async () => {
+    it('display error message when invalid number format in property values and invalid manufacturer url', async () => {
       props = {
         ...props,
         parentId: '4',

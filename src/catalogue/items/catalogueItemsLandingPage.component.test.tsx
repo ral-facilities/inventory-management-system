@@ -95,7 +95,7 @@ describe('Catalogue Items Landing Page', () => {
     });
   });
 
-  it('opens the edit catalogue item dialog', async () => {
+  it('opens and closes the edit catalogue item dialog', async () => {
     createView('/inventory-management-system/catalogue/items/1');
 
     await waitFor(() => {

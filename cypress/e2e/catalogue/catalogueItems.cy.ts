@@ -240,7 +240,7 @@ describe('Catalogue Items', () => {
     });
   });
 
-  it('displays error message if not of the field have been edited', () => {
+  it('displays error message if none of the fields have been edited', () => {
     cy.visit(
       '/inventory-management-system/catalogue/beam-characterization/energy-meters'
     );
