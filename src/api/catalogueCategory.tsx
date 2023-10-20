@@ -18,8 +18,7 @@ import {
 import { settings } from '../settings';
 
 const fetchCatalogueCategory = async (
-  parent_id: string,
-  is_leaf?: boolean
+  parent_id: string
 ): Promise<CatalogueCategory[]> => {
   let apiUrl: string;
   apiUrl = '';
@@ -31,9 +30,6 @@ const fetchCatalogueCategory = async (
 
   queryParams.append('parent_id', parent_id);
 
-  if (typeof is_leaf === 'boolean' && is_leaf !== undefined) {
-    queryParams.append('is_leaf', String(is_leaf));
-  }
   return axios
     .get(`${apiUrl}/v1/catalogue-categories/`, {
       params: queryParams,
@@ -44,13 +40,12 @@ const fetchCatalogueCategory = async (
 };
 
 export const useCatalogueCategory = (
-  parent_id: string,
-  is_leaf?: boolean
+  parent_id: string
 ): UseQueryResult<CatalogueCategory[], AxiosError> => {
   return useQuery<CatalogueCategory[], AxiosError>(
-    ['CatalogueCategory', parent_id, is_leaf],
+    ['CatalogueCategory', parent_id],
     (params) => {
-      return fetchCatalogueCategory(parent_id, is_leaf);
+      return fetchCatalogueCategory(parent_id);
     },
     {
       onError: (error) => {

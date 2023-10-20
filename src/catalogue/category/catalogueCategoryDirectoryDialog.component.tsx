@@ -54,10 +54,7 @@ const CatalogueCategoryDirectoryDialog = (
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategory(
-    !catalogueCurrDirId ? 'null' : catalogueCurrDirId,
-    false
-  );
+  } = useCatalogueCategory(!catalogueCurrDirId ? 'null' : catalogueCurrDirId);
   const handleClose = React.useCallback(() => {
     onClose();
     onChangeSelectedCategories([]);
@@ -180,7 +177,12 @@ const CatalogueCategoryDirectoryDialog = (
                   <TableRow
                     key={category.id}
                     onClick={() => {
-                      if (!selectedCatalogueCategoryIds.includes(category.id)) {
+                      if (
+                        !(
+                          selectedCatalogueCategoryIds.includes(category.id) ||
+                          category.is_leaf
+                        )
+                      ) {
                         onChangeCatalogueCurrDirId(category.id);
                       }
                     }}
@@ -191,19 +193,21 @@ const CatalogueCategoryDirectoryDialog = (
                         hoveredRow === index
                           ? theme.palette.action.hover
                           : 'inherit',
-                      cursor: selectedCatalogueCategoryIds.includes(category.id)
-                        ? 'not-allowed'
-                        : 'pointer',
+                      cursor:
+                        selectedCatalogueCategoryIds.includes(category.id) ||
+                        category.is_leaf
+                          ? 'not-allowed'
+                          : 'pointer',
                     }}
                     aria-label={`${category.name} row`}
                   >
                     <TableCell
                       sx={{
-                        color: selectedCatalogueCategoryIds.includes(
-                          category.id
-                        )
-                          ? theme.palette.action.disabled
-                          : 'inherit',
+                        color:
+                          selectedCatalogueCategoryIds.includes(category.id) ||
+                          category.is_leaf
+                            ? theme.palette.action.disabled
+                            : 'inherit',
                       }}
                     >
                       {category.name}
