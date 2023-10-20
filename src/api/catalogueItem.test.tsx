@@ -3,9 +3,10 @@ import {
   useAddCatalogueItem,
   useCatalogueItem,
   useCatalogueItems,
+  useDeleteCatalogueItem,
 } from './catalogueItem';
 import { catalogueItemData, hooksWrapperWithProviders } from '../setupTests';
-import { AddCatalogueItem } from '../app.types';
+import { AddCatalogueItem, CatalogueItem } from '../app.types';
 
 describe('catalogue items api functions', () => {
   afterEach(() => {
@@ -103,6 +104,34 @@ describe('catalogue items api functions', () => {
 
     it.todo(
       'sends axios request to fetch catalogue item and throws an appropriate error on failure'
+    );
+  });
+
+  describe('useDeleteCatalogueItem', () => {
+    let mockDataView: CatalogueItem;
+    beforeEach(() => {
+      mockDataView = {
+        name: 'test',
+        id: '1',
+        catalogue_category_id: '3',
+        description: '',
+        properties: [],
+      };
+    });
+    it('posts a request to delete a catalogue Item and returns successful response', async () => {
+      const { result } = renderHook(() => useDeleteCatalogueItem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate(mockDataView);
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual('');
+    });
+
+    it.todo(
+      'sends axios request to delete a catalogue Item and throws an appropriate error on failure'
     );
   });
 });

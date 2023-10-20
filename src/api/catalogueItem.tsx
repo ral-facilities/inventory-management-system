@@ -106,13 +106,47 @@ export const useCatalogueItem = (
   catalogueCategoryId: string
 ): UseQueryResult<CatalogueItem, AxiosError> => {
   return useQuery<CatalogueItem, AxiosError>(
-    ['CatalogueItems', catalogueCategoryId],
+    ['CatalogueItem', catalogueCategoryId],
     (params) => {
       return fetchCatalogueItem(catalogueCategoryId);
     },
     {
       onError: (error) => {
         console.log('Got error ' + error.message);
+      },
+    }
+  );
+};
+
+const deleteCatalogueItem = async (
+  catalogueItem: CatalogueItem
+): Promise<void> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+  return axios
+    .delete(`${apiUrl}/v1/catalogue-items/${catalogueItem.id}`, {})
+    .then((response) => response.data);
+};
+
+export const useDeleteCatalogueItem = (): UseMutationResult<
+  void,
+  AxiosError,
+  CatalogueItem
+> => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (catalogueItem: CatalogueItem) => deleteCatalogueItem(catalogueItem),
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['CatalogueItems'] });
+        queryClient.removeQueries({ queryKey: ['CatalogueItem'] });
       },
     }
   );

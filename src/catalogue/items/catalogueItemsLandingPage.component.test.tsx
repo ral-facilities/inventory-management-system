@@ -73,6 +73,14 @@ describe('Catalogue Items Landing Page', () => {
       ).toBeInTheDocument();
     });
   });
+
+  it('shows the loading indicator', async () => {
+    createView('/inventory-management-system/catalogue/items/1');
+
+    await waitFor(() => {
+      expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    });
+  });
   it('toggles the manufacturer so it is either visible or hidden', async () => {
     createView('/inventory-management-system/catalogue/items/1');
     await waitFor(() => {

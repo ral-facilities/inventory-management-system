@@ -123,7 +123,7 @@ export const handlers = [
           })
         );
       } else {
-        return res(ctx.status(200), ctx.json(''));
+        return res(ctx.status(204));
       }
     } else {
       return res(ctx.status(400), ctx.json(''));
@@ -168,16 +168,34 @@ export const handlers = [
     }
     return res(ctx.status(422), ctx.json({}));
   }),
-
+  rest.delete('/v1/catalogue-items/:id', (req, res, ctx) => {
+    const { id } = req.params;
+    const validCatalogueItem = CatalogueItemJSON.find(
+      (value) => value.id === id
+    );
+    if (validCatalogueItem) {
+      if (id === '6') {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail:
+              'Catalogue category has children elements and cannot be deleted',
+          })
+        );
+      } else {
+        return res(ctx.status(204));
+      }
+    } else {
+      return res(ctx.status(400), ctx.json(''));
+    }
+  }),
   rest.get('/v1/systems/', (req, res, ctx) => {
     const systemsParams = req.url.searchParams;
     const path = systemsParams.get('path');
     const parentPath = systemsParams.get('parent_path');
     let data;
     if (path) {
-      data = SystemsJSON.filter(
-        (systems) => systems.path === path
-      );
+      data = SystemsJSON.filter((systems) => systems.path === path);
     } else if (parentPath) {
       data = SystemsJSON.filter(
         (systems) => systems.parent_path === parentPath
