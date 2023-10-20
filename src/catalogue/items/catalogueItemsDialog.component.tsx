@@ -58,7 +58,10 @@ export interface CatalogueItemsDialogProps {
 function isValidUrl(url: string) {
   try {
     const parsedUrl = new URL(url);
-    return parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:';
+    return (
+      (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') &&
+      parsedUrl.hostname.includes('.') // Checks for the typical top-level domain
+    );
   } catch (error) {
     return false;
   }
@@ -213,7 +216,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       setManufacturerWebUrlErrorMessage(
         !catalogueItemManufacturer.web_url.trim()
           ? 'Please enter a Manufacturer URL'
-          : 'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+          : 'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
       );
       hasErrors = true;
     }
@@ -354,7 +357,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         setManufacturerWebUrlErrorMessage(
           !catalogueItemManufacturer.web_url.trim()
             ? 'Please enter a Manufacturer URL'
-            : 'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+            : 'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
         );
         hasErrors = true;
       }

@@ -122,7 +122,7 @@ describe('Catalogue Items Table', () => {
     });
   });
 
-  it('opens the delete catalogue item dialog', async () => {
+  it('opens the delete catalogue item dialog and can delete an item', async () => {
     createView();
 
     await waitFor(() => {
@@ -136,6 +136,7 @@ describe('Catalogue Items Table', () => {
     const deleteButton = screen.getByRole('button', {
       name: 'Delete Energy Meters 26 catalogue item',
     });
+
     await user.click(deleteButton);
 
     await waitFor(() => {
