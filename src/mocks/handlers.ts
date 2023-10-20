@@ -131,7 +131,7 @@ export const handlers = [
           })
         );
       } else {
-        return res(ctx.status(200), ctx.json(''));
+        return res(ctx.status(204));
       }
     } else {
       return res(ctx.status(400), ctx.json(''));
@@ -191,7 +191,7 @@ export const handlers = [
           })
         );
       } else {
-        return res(ctx.status(200), ctx.json(''));
+        return res(ctx.status(204));
       }
     } else {
       return res(ctx.status(400), ctx.json(''));
