@@ -14,7 +14,7 @@ describe('Catalogue Category', () => {
     cy.findByRole('link', { name: 'motion' }).should('not.exist');
     cy.findByText('actuators').should('not.exist');
     cy.findByText('motion').should('be.visible');
-    cy.url().should('include', '/2');
+    cy.url().should('include', '/catalogue/2');
   });
 
   it('should navigate back to the root directory when the home button is pressed', () => {
