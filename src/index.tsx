@@ -178,8 +178,8 @@ const settings = fetchSettings();
 setSettings(settings);
 
 if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.REACT_APP_E2E_TESTING
+  process.env.NODE_ENV === 'development' &&
+  !process.env.REACT_APP_E2E_TESTING
 ) {
   settings
     .then((settings) => {
@@ -191,6 +191,9 @@ if (
     })
     .catch((error) => log.error(`Got error: ${error.message}`));
 
+  log.setDefaultLevel(log.levels.DEBUG);
+} else if (process.env.REACT_APP_E2E_TESTING) {
+  prepare().then(() => render());
   log.setDefaultLevel(log.levels.DEBUG);
 } else {
   log.setDefaultLevel(log.levels.ERROR);

@@ -43,6 +43,18 @@ Cypress.Commands.add('clearMocks', () => {
   mockedRequests = [];
 });
 
+Cypress.Commands.add('editEndpointResponse', ({ url, data, statusCode }) => {
+  cy.window().then((window) => {
+    const { worker, rest } = window.msw;
+
+    worker.use(
+      rest.get(url, (req, res, ctx) => {
+        return res(ctx.status(statusCode), ctx.json(data));
+      })
+    );
+  });
+});
+
 Cypress.Commands.add('startSnoopingBrowserMockedRequest', () => {
   cy.window().then((window) => {
     const worker = window?.msw?.worker;
@@ -91,12 +103,12 @@ declare global {
        * Clear all mocks
        * @example cy.clearMocks()
        */
-      clearMocks(): Chainable<JQuery<HTMLElement>>
+      clearMocks(): Chainable<JQuery<HTMLElement>>;
       /**
        * Use before findBrowserMockedRequests for checking specific requests were sent
        * @example cy.startSnoopingBrowserMockedRequest()
        */
-      startSnoopingBrowserMockedRequest(): Chainable<JQuery<HTMLElement>>
+      startSnoopingBrowserMockedRequest(): Chainable<JQuery<HTMLElement>>;
       /**
        * Returns a request that was recorded after 'startSnoopingBrowserMockedRequest' was called
        * 
@@ -113,7 +125,17 @@ declare global {
                     );
                   });
        */
-      findBrowserMockedRequests({method, url}: any): Chainable<unknown>
+      editEndpointResponse({ url, data, statusCode }: any): Chainable<unknown>;
+      /**
+       * Edits the response of the endpoint request 
+       * 
+       * @example  cy.editEndpointResponse({
+                    url: '/v1/catalogue-categories/',
+                    data: [],
+                    statusCode: 200,
+                   });
+       */
+      findBrowserMockedRequests({ method, url }: any): Chainable<unknown>;
     }
   }
 }
