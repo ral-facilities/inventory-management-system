@@ -3,6 +3,7 @@ import CatalogueCategoryJSON from './CatalogueCategory.json';
 import CatalogueItemJSON from './CatalogueItems.json';
 import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
+import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import {
   AddCatalogueCategory,
   CatalogueItem,
@@ -240,17 +241,30 @@ export const handlers = [
     const parentId = systemsParams.get('parent_id');
     let data;
 
+    console.log(req.url);
+    console.log(parentId);
+
     if (parentId) {
       if (parentId === 'null') {
-        data = SystemsJSON.filter(
-          (system) => system.parent_id === null
-        );
+        data = SystemsJSON.filter((system) => system.parent_id === null);
       } else {
-        data = SystemsJSON.filter(
-          (system) => system.parent_id === parentId
+        console.log(parentId);
+        console.log(
+          SystemsJSON.filter((system) => system.parent_id === parentId)
         );
+        data = SystemsJSON.filter((system) => system.parent_id === parentId);
       }
+    } else {
+      data = SystemsJSON;
     }
+    return res(ctx.status(200), ctx.json(data));
+  }),
+
+  rest.get('/v1/systems/:id/breadcrumbs', (req, res, ctx) => {
+    const { id } = req.params;
+    const data = SystemBreadcrumbsJSON.find(
+      (systemBreadcrumbs) => systemBreadcrumbs.id === id
+    );
     return res(ctx.status(200), ctx.json(data));
   }),
 ];

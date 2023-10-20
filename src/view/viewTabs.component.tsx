@@ -14,7 +14,7 @@ import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingP
 export const paths = {
   home: '/inventory-management-system/',
   catalogue: '/inventory-management-system/catalogue/*',
-  systems: '/inventory-management-system/systems',
+  systems: '/inventory-management-system/systems/*',
   manufacturer: '/inventory-management-system/manufacturer',
   catalogueItems: '/inventory-management-system/catalogue/items/:id',
 };

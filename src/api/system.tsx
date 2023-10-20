@@ -3,9 +3,7 @@ import { settings } from '../settings';
 import { BreadcrumbsInfo, System } from '../app.types';
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 
-const fetchSystems = async (
-  parent_id?: string
-): Promise<System[]> => {
+const fetchSystems = async (parent_id?: string): Promise<System[]> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -24,7 +22,7 @@ const fetchSystems = async (
 };
 
 export const useSystems = (
-  parent_id?: string,
+  parent_id?: string
 ): UseQueryResult<System[], AxiosError> => {
   return useQuery<System[], AxiosError>(
     ['Systems', parent_id],

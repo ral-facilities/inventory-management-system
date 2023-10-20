@@ -32,13 +32,13 @@ function Systems() {
     ''
   );
 
+  console.log(systemID);
+
   const { data: subsystemsData, isLoading: systemsDataLoading } = useSystems(
-    systemID === '' ? 'null' : systemID
+    systemID === '' ? 'null' : systemID.replace('/', '')
   );
 
-  const { data: systemsBreadcrumbs } = useSystemsBreadcrumbs(
-    systemID.replace('/', '')
-  );
+  const { data: systemsBreadcrumbs } = useSystemsBreadcrumbs(systemID);
 
   return systemsDataLoading && subsystemsData !== undefined ? null : (
     <Grid container>
