@@ -342,6 +342,33 @@ describe('Catalogue', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
+
+  it('opens copy catalogue category dialog and can closes the dialog', async () => {
+    createView('/inventory-management-system/catalogue/1');
+
+    await waitFor(() => {
+      expect(screen.getByText('Cameras')).toBeInTheDocument();
+    });
+
+    const camerasCheckbox = screen.getByLabelText('Cameras checkbox');
+
+    await user.click(camerasCheckbox);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Copy to' })
+      ).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Copy to' }));
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
   it('selects and deselects catalogue categories', async () => {
     createView('/inventory-management-system/catalogue/1');
 

@@ -24,6 +24,12 @@ export interface MoveToCatalogueCategory {
   targetLocationCatalogueCategory: CatalogueCategory;
 }
 
+export interface CopyToCatalogueCategory {
+  catalogueCategory: AddCatalogueCategory[];
+  selectedCategories: CatalogueCategory[];
+  targetLocationCatalogueCategory: CatalogueCategory;
+}
+
 export interface CatalogueCategory {
   id: string;
   name: string;

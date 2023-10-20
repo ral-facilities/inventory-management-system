@@ -11,6 +11,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   let props: CatalogueCategoryDirectoryDialogProps;
   let user;
   let axiosPatchSpy;
+  let axiosPostSpy;
   const onChangeSelectedCategories = jest.fn();
   const onClose = jest.fn();
   const onChangeCatalogueCurrDirId = jest.fn();
@@ -20,210 +21,391 @@ describe('CatalogueCategoryDirectoryDialog', () => {
     );
   };
 
-  beforeEach(() => {
-    props = {
-      open: true,
-      onClose: onClose,
-      selectedCategories: [],
-      onChangeSelectedCategories: onChangeSelectedCategories,
-      onChangeCatalogueCurrDirId: onChangeCatalogueCurrDirId,
-      catalogueCurrDirId: null,
-    };
+  describe('Move to', () => {
+    beforeEach(() => {
+      props = {
+        open: true,
+        onClose: onClose,
+        selectedCategories: [],
+        onChangeSelectedCategories: onChangeSelectedCategories,
+        onChangeCatalogueCurrDirId: onChangeCatalogueCurrDirId,
+        catalogueCurrDirId: null,
+        requestType: 'moveTo',
+      };
 
-    user = userEvent.setup();
+      user = userEvent.setup();
 
-    axiosPatchSpy = jest.spyOn(axios, 'patch');
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-    axiosPatchSpy.mockRestore();
-  });
-
-  it('renders dialog correctly with multiple selected categories', async () => {
-    props.selectedCategories = [
-      {
-        id: '1',
-        name: 'Beam Characterization',
-        parent_id: null,
-        code: 'beam-characterization',
-        is_leaf: false,
-      },
-      {
-        id: '2',
-        name: 'Motion',
-        parent_id: null,
-        code: 'motion',
-        is_leaf: false,
-      },
-    ];
-    createView();
-    expect(
-      screen.getByText(
-        'Move 2 catalogue categories to new a catalogue category'
-      )
-    ).toBeInTheDocument();
-  });
-
-  it('renders dialog correctly with one selected category', async () => {
-    props.selectedCategories = [
-      {
-        id: '1',
-        name: 'Beam Characterization',
-        parent_id: null,
-        code: 'beam-characterization',
-        is_leaf: false,
-      },
-    ];
-    createView();
-    expect(
-      screen.getByText('Move 1 catalogue category to new a catalogue category')
-    ).toBeInTheDocument();
-  });
-
-  it('calls onClose when Close button is clicked', async () => {
-    createView();
-    const closeButton = screen.getByRole('button', { name: 'Cancel' });
-    user.click(closeButton);
-
-    await waitFor(() => {
-      expect(onClose).toHaveBeenCalled();
+      axiosPatchSpy = jest.spyOn(axios, 'patch');
     });
-  });
 
-  it('highlights the row on hover', async () => {
-    createView();
+    afterEach(() => {
+      jest.clearAllMocks();
+      axiosPatchSpy.mockRestore();
+    });
 
-    await waitFor(() => {
+    it('renders dialog correctly with multiple selected categories', async () => {
+      props.selectedCategories = [
+        {
+          id: '1',
+          name: 'Beam Characterization',
+          parent_id: null,
+          code: 'beam-characterization',
+          is_leaf: false,
+        },
+        {
+          id: '2',
+          name: 'Motion',
+          parent_id: null,
+          code: 'motion',
+          is_leaf: false,
+        },
+      ];
+      createView();
       expect(
-        screen.getByRole('row', { name: 'Beam Characterization row' })
+        screen.getByText(
+          'Move 2 catalogue categories to new a catalogue category'
+        )
       ).toBeInTheDocument();
     });
 
-    const row = screen.getByRole('row', { name: 'Beam Characterization row' });
-
-    await user.hover(row);
-
-    expect(row).not.toHaveStyle('background-color: inherit');
-
-    await user.unhover(row);
-
-    await waitFor(() => {
+    it('renders dialog correctly with one selected category', async () => {
+      props.selectedCategories = [
+        {
+          id: '1',
+          name: 'Beam Characterization',
+          parent_id: null,
+          code: 'beam-characterization',
+          is_leaf: false,
+        },
+      ];
+      createView();
       expect(
-        screen.getByRole('row', { name: 'Beam Characterization row' })
-      ).toHaveStyle('background-color: inherit');
+        screen.getByText(
+          'Move 1 catalogue category to new a catalogue category'
+        )
+      ).toBeInTheDocument();
+    });
+
+    it('calls onClose when Close button is clicked', async () => {
+      createView();
+      const closeButton = screen.getByRole('button', { name: 'Cancel' });
+      user.click(closeButton);
+
+      await waitFor(() => {
+        expect(onClose).toHaveBeenCalled();
+      });
+    });
+
+    it('highlights the row on hover', async () => {
+      createView();
+
+      await waitFor(() => {
+        expect(
+          screen.getByRole('row', { name: 'Beam Characterization row' })
+        ).toBeInTheDocument();
+      });
+
+      const row = screen.getByRole('row', {
+        name: 'Beam Characterization row',
+      });
+
+      await user.hover(row);
+
+      expect(row).not.toHaveStyle('background-color: inherit');
+
+      await user.unhover(row);
+
+      await waitFor(() => {
+        expect(
+          screen.getByRole('row', { name: 'Beam Characterization row' })
+        ).toHaveStyle('background-color: inherit');
+      });
+    });
+
+    it('renders the breadcrumbs and navigate to another directory', async () => {
+      props.selectedCategories = [
+        {
+          id: '1',
+          name: 'Beam Characterization',
+          parent_id: null,
+          code: 'beam-characterization',
+          is_leaf: false,
+        },
+        {
+          id: '2',
+          name: 'Motion',
+          parent_id: null,
+          code: 'motion',
+          is_leaf: false,
+        },
+      ];
+
+      props.catalogueCurrDirId = '8';
+
+      createView();
+
+      await waitFor(() => {
+        expect(
+          screen.getByRole('link', { name: 'motion' })
+        ).toBeInTheDocument();
+      });
+      await user.click(screen.getByRole('link', { name: 'motion' }));
+
+      expect(onChangeCatalogueCurrDirId).toBeCalledWith('2');
+
+      await user.click(screen.getByLabelText('navigate to catalogue home'));
+
+      expect(onChangeCatalogueCurrDirId).toBeCalledWith(null);
+    });
+
+    it('navigates through the directory table', async () => {
+      props.selectedCategories = [
+        {
+          id: '1',
+          name: 'Beam Characterization',
+          parent_id: null,
+          code: 'beam-characterization',
+          is_leaf: false,
+        },
+        {
+          id: '2',
+          name: 'Motion',
+          parent_id: null,
+          code: 'motion',
+          is_leaf: false,
+        },
+      ];
+
+      props.catalogueCurrDirId = null;
+
+      createView();
+
+      await waitFor(() => {
+        expect(screen.getByText('Motion')).toBeInTheDocument();
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByText('Vacuum Technology'));
+
+      expect(onChangeCatalogueCurrDirId).toBeCalledWith('3');
+    });
+
+    it('moves multiple catalogue categories', async () => {
+      props.selectedCategories = [
+        {
+          id: '1',
+          name: 'Beam Characterization',
+          parent_id: null,
+          code: 'beam-characterization',
+          is_leaf: false,
+        },
+        {
+          id: '2',
+          name: 'Motion',
+          parent_id: null,
+          code: 'motion',
+          is_leaf: false,
+        },
+      ];
+
+      props.catalogueCurrDirId = '3';
+      createView();
+
+      const moveButton = screen.getByRole('button', { name: 'Move here' });
+      await user.click(moveButton);
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/1', {
+        parent_id: '3',
+      });
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/2', {
+        parent_id: '3',
+      });
+      expect(onClose).toBeCalled();
+    });
+    it('shows loading indicator', async () => {
+      createView();
+      await waitFor(() => {
+        expect(screen.getByRole('progressbar')).toBeInTheDocument();
+      });
     });
   });
 
-  it('renders the breadcrumbs and navigate to another directory', async () => {
-    props.selectedCategories = [
-      {
-        id: '1',
+  describe('Copy to', () => {
+    beforeEach(() => {
+      props = {
+        open: true,
+        onClose: onClose,
+        selectedCategories: [],
+        onChangeSelectedCategories: onChangeSelectedCategories,
+        onChangeCatalogueCurrDirId: onChangeCatalogueCurrDirId,
+        catalogueCurrDirId: null,
+        requestType: 'copyTo',
+      };
+
+      user = userEvent.setup();
+
+      axiosPostSpy = jest.spyOn(axios, 'post');
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+      axiosPostSpy.mockRestore();
+    });
+
+    it('renders dialog correctly with multiple selected categories', async () => {
+      props.selectedCategories = [
+        {
+          id: '1',
+          name: 'Beam Characterization',
+          parent_id: null,
+          code: 'beam-characterization',
+          is_leaf: false,
+        },
+        {
+          id: '2',
+          name: 'Motion',
+          parent_id: null,
+          code: 'motion',
+          is_leaf: false,
+        },
+      ];
+      createView();
+      expect(
+        screen.getByText(
+          'Copy 2 catalogue categories to new a catalogue category'
+        )
+      ).toBeInTheDocument();
+    });
+
+    it('renders dialog correctly with one selected category', async () => {
+      props.selectedCategories = [
+        {
+          id: '1',
+          name: 'Beam Characterization',
+          parent_id: null,
+          code: 'beam-characterization',
+          is_leaf: false,
+        },
+      ];
+      createView();
+      expect(
+        screen.getByText(
+          'Copy 1 catalogue category to new a catalogue category'
+        )
+      ).toBeInTheDocument();
+    });
+
+    it('copies multiple catalogue categories', async () => {
+      props.selectedCategories = [
+        {
+          id: '1',
+          name: 'Beam Characterization',
+          parent_id: null,
+          code: 'beam-characterization',
+          is_leaf: false,
+        },
+        {
+          id: '2',
+          name: 'Motion',
+          parent_id: null,
+          code: 'motion',
+          is_leaf: false,
+        },
+        {
+          id: '5',
+          name: 'Energy Meters',
+          parent_id: '1',
+          code: 'energy-meters',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Measurement Range',
+              type: 'number',
+              unit: 'Joules',
+              mandatory: true,
+            },
+            {
+              name: 'Accuracy',
+              type: 'string',
+              mandatory: false,
+            },
+          ],
+        },
+      ];
+
+      props.catalogueCurrDirId = '3';
+      createView();
+
+      const moveButton = screen.getByRole('button', { name: 'Copy here' });
+      await user.click(moveButton);
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        is_leaf: false,
         name: 'Beam Characterization',
-        parent_id: null,
-        code: 'beam-characterization',
+        parent_id: '3',
+      });
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
         is_leaf: false,
-      },
-      {
-        id: '2',
         name: 'Motion',
-        parent_id: null,
-        code: 'motion',
+        parent_id: '3',
+      });
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        catalogue_item_properties: [
+          {
+            mandatory: true,
+            name: 'Measurement Range',
+            type: 'number',
+            unit: 'Joules',
+          },
+          { mandatory: false, name: 'Accuracy', type: 'string' },
+        ],
+        is_leaf: true,
+        name: 'Energy Meters',
+        parent_id: '3',
+      });
+      expect(onClose).toBeCalled();
+    });
+
+    it('copies multiple catalogue categories (move category into the same directory)', async () => {
+      props.selectedCategories = [
+        {
+          id: '1',
+          name: 'Beam Characterization',
+          parent_id: null,
+          code: 'beam-characterization',
+          is_leaf: false,
+        },
+        {
+          id: '2',
+          name: 'Motion',
+          parent_id: null,
+          code: 'motion',
+          is_leaf: false,
+        },
+      ];
+
+      createView();
+
+      const moveButton = screen.getByRole('button', { name: 'Copy here' });
+      await user.click(moveButton);
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
         is_leaf: false,
-      },
-    ];
-
-    props.catalogueCurrDirId = '8';
-
-    createView();
-
-    await waitFor(() => {
-      expect(screen.getByRole('link', { name: 'motion' })).toBeInTheDocument();
-    });
-    await user.click(screen.getByRole('link', { name: 'motion' }));
-
-    expect(onChangeCatalogueCurrDirId).toBeCalledWith('2');
-
-    await user.click(screen.getByLabelText('navigate to catalogue home'));
-
-    expect(onChangeCatalogueCurrDirId).toBeCalledWith(null);
-  });
-
-  it('navigates through the directory table', async () => {
-    props.selectedCategories = [
-      {
-        id: '1',
-        name: 'Beam Characterization',
-        parent_id: null,
-        code: 'beam-characterization',
+        name: 'Beam Characterization_copy_1',
+      });
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
         is_leaf: false,
-      },
-      {
-        id: '2',
-        name: 'Motion',
-        parent_id: null,
-        code: 'motion',
-        is_leaf: false,
-      },
-    ];
-
-    props.catalogueCurrDirId = null;
-
-    createView();
-
-    await waitFor(() => {
-      expect(screen.getByText('Motion')).toBeInTheDocument();
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
-    });
-
-    await user.click(screen.getByText('Vacuum Technology'));
-
-    expect(onChangeCatalogueCurrDirId).toBeCalledWith('3');
-  });
-
-  it('moves multiple catalogue categories', async () => {
-    props.selectedCategories = [
-      {
-        id: '1',
-        name: 'Beam Characterization',
-        parent_id: null,
-        code: 'beam-characterization',
-        is_leaf: false,
-      },
-      {
-        id: '2',
-        name: 'Motion',
-        parent_id: null,
-        code: 'motion',
-        is_leaf: false,
-      },
-    ];
-
-    props.catalogueCurrDirId = '3';
-    createView();
-
-    const moveButton = screen.getByRole('button', { name: 'Move here' });
-    await user.click(moveButton);
-
-    expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/1', {
-      parent_id: '3',
-    });
-    expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/2', {
-      parent_id: '3',
-    });
-    expect(onClose).toBeCalled();
-  });
-  it('shows loading indicator', async () => {
-    createView();
-    await waitFor(() => {
-      expect(screen.getByRole('progressbar')).toBeInTheDocument();
+        name: 'Motion_copy_1',
+      });
+      expect(onClose).toBeCalled();
     });
   });
 });
