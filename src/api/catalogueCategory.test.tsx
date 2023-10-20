@@ -39,11 +39,10 @@ describe('catalogue category api functions', () => {
         expect(result.current.isSuccess).toBeTruthy();
       });
       expect(result.current.data).toEqual({
+        id: '1',
+        is_leaf: false,
         name: 'test',
         parent_id: null,
-        id: '1',
-        code: 'test',
-        is_leaf: false,
       });
     });
 
@@ -492,12 +491,12 @@ describe('catalogue category api functions', () => {
       expect(result.current.data).toEqual([
         {
           message: 'Successfully copied to Root',
-          name: 'test',
+          name: 'Wavefront Sensors',
           state: 'success',
         },
         {
           message: 'Successfully copied to Root',
-          name: 'test',
+          name: 'Energy Meters',
           state: 'success',
         },
         {

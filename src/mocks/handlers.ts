@@ -12,8 +12,9 @@ import {
 
 export const handlers = [
   rest.post('/v1/catalogue-categories', async (req, res, ctx) => {
-    let body: AddCatalogueCategory;
-    body = (await req.json()) as AddCatalogueCategory;
+    let body;
+
+    body = await req.json();
 
     if (body.name === 'test_dup') {
       return res(
