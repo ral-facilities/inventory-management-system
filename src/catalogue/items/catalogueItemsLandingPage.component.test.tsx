@@ -102,4 +102,27 @@ describe('Catalogue Items Landing Page', () => {
       ).toBeInTheDocument();
     });
   });
+
+  it('opens and closes the edit catalogue item dialog', async () => {
+    createView('/inventory-management-system/catalogue/items/1');
+
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+    });
+
+    const editButton = screen.getByRole('button', {
+      name: 'Edit',
+    });
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
 });

@@ -20,11 +20,18 @@ import React from 'react';
 import {
   AddCatalogueItem,
   CatalogueCategoryFormData,
+  CatalogueItem,
   CatalogueItemDetails,
   CatalogueItemManufacturer,
   CatalogueItemProperty,
+  EditCatalogueItem,
+  ErrorParsing,
 } from '../../app.types';
-import { useAddCatalogueItem } from '../../api/catalogueItem';
+import {
+  useAddCatalogueItem,
+  useCatalogueItem,
+  useEditCatalogueItem,
+} from '../../api/catalogueItem';
 import { AxiosError } from 'axios';
 
 export interface CatalogueItemsDialogProps {
@@ -44,12 +51,17 @@ export interface CatalogueItemsDialogProps {
   onChangePropertyValues: (
     propertyValues: (string | number | boolean | null)[]
   ) => void;
+  selectedCatalogueItem?: CatalogueItem;
+  type: 'edit' | 'create';
 }
 
 function isValidUrl(url: string) {
   try {
     const parsedUrl = new URL(url);
-    return parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:';
+    return (
+      (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') &&
+      parsedUrl.hostname.includes('.') // Checks for the typical top-level domain
+    );
   } catch (error) {
     return false;
   }
@@ -67,12 +79,19 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     catalogueItemPropertiesForm,
     propertyValues,
     onChangePropertyValues,
+    selectedCatalogueItem,
+    type,
   } = props;
 
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
     string | undefined
   >();
+
+  const [formError, setFormError] = React.useState(false);
+  const [formErrorMessage, setFormErrorMessage] = React.useState<
+    string | undefined
+  >(undefined);
 
   const [catchAllError, setCatchAllError] = React.useState(false);
 
@@ -100,6 +119,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       new Array(catalogueItemPropertiesForm.length).fill(false)
     );
     setNameError(false);
+    setNameErrorMessage(undefined);
+    setFormError(false);
+    setFormErrorMessage(undefined);
     setManufacturerAddressError(false);
     setManufacturerNameError(false);
     setManufacturerWebUrlError(false);
@@ -117,6 +139,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     name: string,
     newValue: string | boolean | null
   ) => {
+    setFormError(false);
+    setFormErrorMessage(undefined);
     const updatedPropertyValues = [...propertyValues];
     updatedPropertyValues[index] = newValue;
     onChangePropertyValues(updatedPropertyValues);
@@ -155,6 +179,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   };
 
   const { mutateAsync: addCatalogueItem } = useAddCatalogueItem();
+  const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
+  const { data: selectedCatalogueItemData } = useCatalogueItem(
+    selectedCatalogueItem?.id
+  );
 
   const handleAddCatalogueItem = React.useCallback(() => {
     let hasErrors = false;
@@ -188,7 +216,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       setManufacturerWebUrlErrorMessage(
         !catalogueItemManufacturer.web_url.trim()
           ? 'Please enter a Manufacturer URL'
-          : 'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+          : 'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
       );
       hasErrors = true;
     }
@@ -200,8 +228,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     ) {
       setManufacturerAddressError(true);
       hasErrors = true;
-    } else {
-      setManufacturerAddressError(false);
     }
     // Check properties
     const updatedPropertyErrors = [...propertyErrors];
@@ -298,9 +324,215 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     propertyValues,
   ]);
 
+  const handleEditCatalogueItem = React.useCallback(() => {
+    if (selectedCatalogueItem && selectedCatalogueItemData) {
+      let hasErrors = false;
+
+      if (
+        catalogueItemDetails.name === undefined ||
+        catalogueItemDetails.name.trim() === ''
+      ) {
+        setNameError(true);
+        setNameErrorMessage('Please enter name');
+
+        hasErrors = true;
+      }
+
+      // Check Manufacturer Name
+
+      if (
+        catalogueItemManufacturer.name === undefined ||
+        catalogueItemManufacturer.name.trim() === ''
+      ) {
+        setManufacturerNameError(true);
+        hasErrors = true;
+      }
+
+      // Check Manufacturer URL
+      if (
+        !catalogueItemManufacturer.web_url.trim() ||
+        !isValidUrl(catalogueItemManufacturer.web_url)
+      ) {
+        setManufacturerWebUrlError(true);
+        setManufacturerWebUrlErrorMessage(
+          !catalogueItemManufacturer.web_url.trim()
+            ? 'Please enter a Manufacturer URL'
+            : 'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
+        );
+        hasErrors = true;
+      }
+
+      // Check Manufacturer Address
+      if (
+        catalogueItemManufacturer.address === undefined ||
+        catalogueItemManufacturer.address.trim() === ''
+      ) {
+        setManufacturerAddressError(true);
+        hasErrors = true;
+      }
+
+      // Check properties
+      const updatedPropertyErrors = [...propertyErrors];
+
+      const updatedProperties = catalogueItemPropertiesForm.map(
+        (property, index) => {
+          if (
+            property.mandatory &&
+            !propertyValues[index] &&
+            typeof propertyValues[index] !== 'boolean'
+          ) {
+            updatedPropertyErrors[index] = true;
+
+            hasErrors = true;
+          } else {
+            updatedPropertyErrors[index] = false;
+          }
+
+          if (
+            propertyValues[index] !== undefined &&
+            property.type === 'number' &&
+            isNaN(Number(propertyValues[index]))
+          ) {
+            updatedPropertyErrors[index] = true;
+            hasErrors = true;
+          }
+
+          if (!propertyValues[index]) {
+            if (property.type === 'boolean') {
+              if (
+                propertyValues[index] === '' ||
+                propertyValues[index] === undefined
+              ) {
+                return null;
+              }
+            } else {
+              return null;
+            }
+          }
+
+          let typedValue: string | number | boolean | null =
+            propertyValues[index]; // Assume it's a string by default
+
+          // Check if the type of the 'property' is boolean
+          if (property.type === 'boolean') {
+            // If the type is boolean, then check the type of 'propertyValues[index]'
+            typedValue =
+              typeof propertyValues[index] !== 'boolean'
+                ? // If 'propertyValues[index]' is not a boolean, convert it based on string values 'true' or 'false',
+                  // otherwise, assign 'propertyValues[index]' directly to 'typedValue'
+                  propertyValues[index] === 'true'
+                  ? true
+                  : false
+                : // If 'propertyValues[index]' is already a boolean, assign it directly to 'typedValue'
+                  propertyValues[index];
+          } else if (property.type === 'number') {
+            typedValue = Number(propertyValues[index]);
+          }
+
+          return {
+            name: property.name,
+            value: typedValue,
+          };
+        }
+      );
+
+      setPropertyErrors(updatedPropertyErrors);
+
+      if (hasErrors) {
+        return; // Do not proceed with saving if there are errors
+      }
+
+      const filteredProperties = updatedProperties.filter(
+        (property) => property !== null
+      ) as CatalogueItemProperty[];
+
+      const isNameUpdated =
+        catalogueItemDetails.name !== selectedCatalogueItemData.name;
+
+      const isDescriptionUpdated =
+        catalogueItemDetails.description !==
+        selectedCatalogueItemData.description;
+
+      const isCatalogueItemPropertiesUpdated =
+        JSON.stringify(filteredProperties) !==
+        JSON.stringify(
+          selectedCatalogueItemData.properties.map(
+            ({ unit, ...rest }) => rest
+          ) ?? null
+        );
+
+      const isManufacturerUpdated =
+        JSON.stringify(catalogueItemManufacturer) !==
+        JSON.stringify(selectedCatalogueItemData.manufacturer);
+      let catalogueItem: EditCatalogueItem = {
+        id: selectedCatalogueItem.id,
+      };
+
+      if (isNameUpdated) {
+        catalogueItem = { ...catalogueItem, name: catalogueItemDetails.name };
+      }
+
+      if (isDescriptionUpdated) {
+        catalogueItem = {
+          ...catalogueItem,
+          description: catalogueItemDetails.description,
+        };
+      }
+
+      if (isCatalogueItemPropertiesUpdated) {
+        catalogueItem = { ...catalogueItem, properties: filteredProperties };
+      }
+
+      if (isManufacturerUpdated) {
+        catalogueItem = {
+          ...catalogueItem,
+          manufacturer: catalogueItemManufacturer,
+        };
+      }
+
+      if (
+        catalogueItem.id &&
+        (isNameUpdated ||
+          isDescriptionUpdated ||
+          isCatalogueItemPropertiesUpdated ||
+          isManufacturerUpdated)
+      ) {
+        editCatalogueItem(catalogueItem)
+          .then((response) => handleClose())
+          .catch((error: AxiosError) => {
+            const response = error.response?.data as ErrorParsing;
+            console.log(error);
+            if (response && error.response?.status === 409) {
+              if (response.detail.includes('children elements')) {
+                setFormError(true);
+                setFormErrorMessage(response.detail);
+              }
+              return;
+            }
+            setCatchAllError(true);
+          });
+      } else {
+        setFormError(true);
+        setFormErrorMessage('Please edit a form entry before clicking save');
+      }
+    }
+  }, [
+    catalogueItemDetails,
+    catalogueItemManufacturer,
+    catalogueItemPropertiesForm,
+    editCatalogueItem,
+    handleClose,
+    propertyErrors,
+    propertyValues,
+    selectedCatalogueItem,
+    selectedCatalogueItemData,
+  ]);
+
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
-      <DialogTitle>Add Catalogue Item</DialogTitle>
+      <DialogTitle>{`${
+        type === 'create' ? 'Add' : 'Edit'
+      } Catalogue Item`}</DialogTitle>
       <DialogContent>
         <Typography variant="h6">Details</Typography>
         <TextField
@@ -316,6 +548,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             });
             setNameError(false); // Clear the error when user types in the name field
             setNameErrorMessage(undefined);
+            setFormError(false);
+            setFormErrorMessage(undefined);
           }}
           fullWidth
           error={nameError} // Set error state based on the nameError state
@@ -332,6 +566,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               ...catalogueItemDetails,
               description: newDescription,
             });
+            setFormError(false);
+            setFormErrorMessage(undefined);
           }}
           fullWidth
           multiline
@@ -371,7 +607,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         {property.name}
                       </InputLabel>
                       <Select
-                        value={(propertyValues[index] as string) || ''}
+                        value={(propertyValues[index] as string) ?? ''}
                         required={property.mandatory ?? false}
                         error={propertyErrors[index]}
                         labelId={`catalogue-item-property-${property.name.replace(
@@ -477,6 +713,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               ...catalogueItemManufacturer,
               name: event.target.value,
             });
+            setFormError(false);
+            setFormErrorMessage(undefined);
             setManufacturerNameError(false);
           }}
           error={manufacturerNameError}
@@ -496,7 +734,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               ...catalogueItemManufacturer,
               web_url: event.target.value,
             });
-
+            setFormError(false);
+            setFormErrorMessage(undefined);
             setManufacturerWebUrlError(false);
             setManufacturerWebUrlErrorMessage('');
           }}
@@ -517,6 +756,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               ...catalogueItemManufacturer,
               address: event.target.value,
             });
+            setFormError(false);
+            setFormErrorMessage(undefined);
             setManufacturerAddressError(false);
           }}
           error={manufacturerAddressError} // Set error state based on the nameError state
@@ -550,11 +791,20 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={handleAddCatalogueItem}
+            onClick={
+              type === 'create'
+                ? handleAddCatalogueItem
+                : handleEditCatalogueItem
+            }
           >
             Save
           </Button>
         </Box>
+        {formError && (
+          <FormHelperText sx={{ marginBottom: '16px' }} error>
+            {formErrorMessage}
+          </FormHelperText>
+        )}
         {catchAllError && (
           <FormHelperText sx={{ marginBottom: '16px' }} error>
             {'Please refresh and try again'}
