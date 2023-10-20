@@ -4,8 +4,7 @@ import { BreadcrumbsInfo, System } from '../app.types';
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 
 const fetchSystems = async (
-  path?: string,
-  parentPath?: string
+  parent_id?: string
 ): Promise<System[]> => {
   let apiUrl: string;
   apiUrl = '';
@@ -15,24 +14,22 @@ const fetchSystems = async (
   }
   const queryParams = new URLSearchParams();
 
-  if (path) queryParams.append('path', path);
-  if (parentPath) queryParams.append('parent_path', parentPath);
+  if (parent_id) queryParams.append('parent_id', parent_id);
 
   return axios
-    .get(`${apiUrl}/v1/systems/`, { params: queryParams })
+    .get(`${apiUrl}/v1/systems`, { params: queryParams })
     .then((response) => {
       return response.data;
     });
 };
 
 export const useSystems = (
-  path?: string,
-  parent_path?: string
+  parent_id?: string,
 ): UseQueryResult<System[], AxiosError> => {
   return useQuery<System[], AxiosError>(
-    ['Systems', path, parent_path],
+    ['Systems', parent_id],
     (params) => {
-      return fetchSystems(path, parent_path);
+      return fetchSystems(parent_id);
     },
     {
       onError: (error) => {

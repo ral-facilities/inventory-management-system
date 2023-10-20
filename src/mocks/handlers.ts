@@ -235,17 +235,21 @@ export const handlers = [
     );
   }),
 
-  rest.get('/v1/systems/', (req, res, ctx) => {
+  rest.get('/v1/systems', (req, res, ctx) => {
     const systemsParams = req.url.searchParams;
-    const path = systemsParams.get('path');
-    const parentPath = systemsParams.get('parent_path');
+    const parentId = systemsParams.get('parent_id');
     let data;
-    if (path) {
-      data = SystemsJSON.filter((systems) => systems.path === path);
-    } else if (parentPath) {
-      data = SystemsJSON.filter(
-        (systems) => systems.parent_path === parentPath
-      );
+
+    if (parentId) {
+      if (parentId === 'null') {
+        data = SystemsJSON.filter(
+          (system) => system.parent_id === null
+        );
+      } else {
+        data = SystemsJSON.filter(
+          (system) => system.parent_id === parentId
+        );
+      }
     }
     return res(ctx.status(200), ctx.json(data));
   }),
