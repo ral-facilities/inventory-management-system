@@ -40,8 +40,8 @@ export const handlers = [
   }),
   rest.patch('/v1/catalogue-categories/:id', async (req, res, ctx) => {
     const { id } = req.params;
-    const data = CatalogueCategoryJSON.filter(
-      (catalogueCategory) => catalogueCategory.parent_id === id
+    const itemData = CatalogueItemJSON.filter(
+      (catalogueItem) => catalogueItem.catalogue_category_id === id
     );
 
     const obj = CatalogueCategoryJSON.find(
@@ -59,15 +59,17 @@ export const handlers = [
         })
       );
     }
-
-    if (data.length > 0) {
-      return res(
-        ctx.status(409),
-        ctx.json({
-          detail:
-            'Catalogue category has children elements and cannot be updated',
-        })
-      );
+    console.log(body);
+    if (body.catalogue_item_properties !== undefined) {
+      if (itemData.length > 0) {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail:
+              'Catalogue category has children elements and cannot be updated',
+          })
+        );
+      }
     }
 
     if (fullBody.name === 'Error 500') {
@@ -89,7 +91,6 @@ export const handlers = [
   rest.get('/v1/catalogue-categories/', (req, res, ctx) => {
     const catalogueCategoryParams = req.url.searchParams;
     const parentId = catalogueCategoryParams.get('parent_id');
-    const isLeaf = catalogueCategoryParams.get('is_leaf');
     let data;
 
     if (parentId) {
@@ -104,17 +105,6 @@ export const handlers = [
       }
     }
 
-    if (isLeaf === 'true') {
-      data = data?.filter(
-        (catalogueCategory) => catalogueCategory.is_leaf === true
-      );
-    }
-
-    if (isLeaf === 'false') {
-      data = data?.filter(
-        (catalogueCategory) => catalogueCategory.is_leaf === false
-      );
-    }
     return res(ctx.status(200), ctx.json(data));
   }),
 
