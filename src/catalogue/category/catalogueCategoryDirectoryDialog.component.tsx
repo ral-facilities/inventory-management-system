@@ -26,7 +26,7 @@ import {
   useCatalogueCategoryById,
   useMoveToCatalogueCategory,
 } from '../../api/catalogueCategory';
-import handleTransferState from './handleTransferState';
+import handleTransferState from '../../api/handleTransferState';
 
 export interface CatalogueCategoryDirectoryDialogProps {
   open: boolean;

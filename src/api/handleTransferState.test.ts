@@ -1,8 +1,8 @@
 import log from 'loglevel';
 import handleTransferState from './handleTransferState';
 import { AnyAction } from 'redux';
-import { NotificationType } from '../../state/actions/actions.types';
-import { CatalogueCategoryTransferState } from '../../app.types';
+import { NotificationType } from '../state/actions/actions.types';
+import { CatalogueCategoryTransferState } from '../app.types';
 
 jest.mock('loglevel');
 
@@ -28,19 +28,11 @@ describe('handleTransferStates', () => {
         message:
           'A catalogue category with the same name already exists within the parent catalogue category',
         state: 'error',
-        targetLocationInfo: {
-          name: 'Amp Meters',
-          id: '19',
-        },
       },
       {
         name: 'Wavefront Sensors',
         message: 'Successfully moved to',
         state: 'success',
-        targetLocationInfo: {
-          name: 'Amp Meters',
-          id: '19',
-        },
       },
     ];
     handleTransferState(transferStates);
