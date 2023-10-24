@@ -31,7 +31,7 @@ import {
   useCopyToCatalogueCategory,
   useMoveToCatalogueCategory,
 } from '../../api/catalogueCategory';
-import handleTransferState from './handleTransferState';
+import handleTransferState from '../../api/handleTransferState';
 
 function formatName(name: string) {
   name = name.toLowerCase().trim();
