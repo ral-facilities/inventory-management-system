@@ -120,13 +120,13 @@ describe('Catalogue Items', () => {
     cy.findByRole('button', { name: 'Save' }).click();
 
     cy.findByText(
-      'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+      'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
     ).should('exist');
     cy.findByLabelText('Manufacturer URL *').clear();
     cy.findByLabelText('Manufacturer URL *').type('https://test.co.uk');
 
     cy.findByText(
-      'Please enter a valid Manufacturer URL. Only "http://" and "https://" links are accepted'
+      'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
     ).should('not.exist');
   });
 
@@ -137,7 +137,7 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 4').should('exist');
   });
 
-  it.only('navigates to the landing page, toggles the properties and navigates back to the table view', () => {
+  it('navigates to the landing page, toggles the properties and navigates back to the table view', () => {
     cy.findByText('Cameras 1').click();
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'
@@ -170,6 +170,23 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 4').should('exist');
   });
 
+  it('navigates to the landing page, and opens the edit dialog and closes', () => {
+    cy.findByText('Cameras 1').click();
+    cy.findByText(
+      'High-resolution cameras for beam characterization. 1'
+    ).should('exist');
+    cy.findByRole('button', { name: 'Edit' }).click();
+    cy.findByLabelText('Name *').should('have.value', 'Cameras 1');
+    cy.findByLabelText('Description').should(
+      'have.value',
+      'High-resolution cameras for beam characterization. 1'
+    );
+    cy.findByLabelText('Resolution (megapixels) *').should('have.value', '12');
+    cy.findByLabelText('Frame Rate (fps)').should('have.value', '30');
+    cy.findByLabelText('Sensor Type *').should('have.value', 'CMOS');
+    cy.findByRole('button', { name: 'Cancel' }).click();
+  });
+
   it('displays the expired landing page message and navigates back to the catalogue home', () => {
     cy.visit('/inventory-management-system/catalogue/items/1fds');
 
@@ -180,6 +197,136 @@ describe('Catalogue Items', () => {
     cy.findByRole('link', { name: 'Home' }).click();
 
     cy.findByText('Motion').should('exist');
+  });
+
+  it('displays error message when user tries to delete a catalogue item that has children elements', () => {
+    cy.visit(
+      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
+    );
+    cy.findByRole('button', {
+      name: 'Delete Energy Meters 27 catalogue item',
+    }).click();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains(
+          'Catalogue item has children elements and cannot be deleted, please delete the children elements first'
+        );
+      });
+  });
+
+  it('delete a catalogue item', () => {
+    cy.visit(
+      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
+    );
+    cy.findByRole('button', {
+      name: 'Delete Energy Meters 26 catalogue item',
+    }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/catalogue-items/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(request.url.toString()).to.contain('89');
+    });
+  });
+
+  it('displays error message if none of the fields have been edited', () => {
+    cy.visit(
+      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
+    );
+    cy.findByRole('button', {
+      name: 'Edit Energy Meters 27 catalogue item',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+  });
+
+  it('displays error message if catalogue item has children elements', () => {
+    cy.visit(
+      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
+    );
+    cy.findByRole('button', {
+      name: 'Edit Energy Meters 27 catalogue item',
+    }).click();
+
+    cy.findByLabelText('Name *').clear();
+    cy.findByLabelText('Name *').type('test_has_children_elements');
+
+    cy.findByLabelText('Measurement Range (Joules) *').type('0');
+
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains(
+          'Catalogue item has children elements and cannot be edited, please delete the children elements first'
+        );
+      });
+  });
+
+  it('edit a catalogue item (name and desc)', () => {
+    cy.visit(
+      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
+    );
+    cy.findByRole('button', {
+      name: 'Edit Energy Meters 27 catalogue item',
+    }).click();
+
+    cy.findByLabelText('Name *').clear();
+    cy.findByLabelText('Name *').type('test');
+
+    cy.findByLabelText('Description').clear();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-items/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"name":"test","description":""}'
+      );
+    });
+  });
+
+  it('edit a catalogue item (properties)', () => {
+    cy.visit(
+      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
+    );
+    cy.findByRole('button', {
+      name: 'Edit Energy Meters 27 catalogue item',
+    }).click();
+
+    cy.findByLabelText('Measurement Range (Joules) *').type('0');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-items/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"properties":[{"name":"Measurement Range","value":20000}]}'
+      );
+    });
   });
   it('checks the href property of the manufacturer link', () => {
     // Find the element containing the link
