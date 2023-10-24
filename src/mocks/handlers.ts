@@ -4,7 +4,6 @@ import CatalogueItemJSON from './CatalogueItems.json';
 import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import {
-  AddCatalogueCategory,
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
