@@ -16,6 +16,7 @@ import {
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   CatalogueItem,
   CatalogueCategory,
@@ -28,6 +29,20 @@ import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import { matchCatalogueItemProperties } from '../catalogue.component';
 
+function generateUniqueName(
+  existingNames: (string | undefined)[],
+  originalName: string | undefined
+) {
+  let newName = originalName;
+  let copyIndex = 1;
+
+  while (existingNames.includes(newName)) {
+    newName = `${originalName}_copy${copyIndex}`;
+    copyIndex++;
+  }
+
+  return newName;
+}
 export interface CatalogueItemsTableProps {
   parentInfo: CatalogueCategory;
   catalogueItemDetails: CatalogueItemDetails;
@@ -42,6 +57,7 @@ export interface CatalogueItemsTableProps {
   onChangeCatalogueItemPropertyValues: (
     propertyValues: (string | number | boolean | null)[]
   ) => void;
+  onChangeAddItemDialogOpen: (addItemDialogOpen: boolean) => void;
 }
 
 const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
@@ -53,6 +69,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     onChangeCatalogueItemManufacturer,
     catalogueItemPropertyValues,
     onChangeCatalogueItemPropertyValues,
+    onChangeAddItemDialogOpen,
   } = props;
   // SG header + SG footer + tabs #add breadcrumbs
   const tableHeight = `calc(100vh - (64px + 36px + 50px)`;
@@ -75,6 +92,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const [selectedCatalogueItem, setSelectedCatalogueItem] = React.useState<
     CatalogueItem | undefined
   >(undefined);
+
+  const catalogueCategoryNames: (string | undefined)[] =
+    data?.map((item) => item.name) || [];
 
   return (
     <TableContainer style={{ height: tableHeight }}>
@@ -202,6 +222,30 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                         }}
                       >
                         <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        size="small"
+                        aria-label={`Save as ${item.name} catalogue item`}
+                        onClick={() => {
+                          onChangeAddItemDialogOpen(true);
+                          onChangeCatalogueItemDetails({
+                            name: generateUniqueName(
+                              catalogueCategoryNames,
+                              item.name
+                            ),
+                            description: item.description,
+                          });
+                          onChangeCatalogueItemPropertyValues(
+                            matchCatalogueItemProperties(
+                              parentInfo?.catalogue_item_properties ?? [],
+                              item.properties ?? []
+                            )
+                          );
+                          setSelectedCatalogueItem(item);
+                          onChangeCatalogueItemManufacturer(item.manufacturer);
+                        }}
+                      >
+                        <SaveAsIcon />
                       </IconButton>
                       <IconButton
                         size="small"
