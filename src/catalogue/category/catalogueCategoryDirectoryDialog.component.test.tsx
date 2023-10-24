@@ -407,5 +407,44 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       });
       expect(onClose).toBeCalled();
     });
+
+    it('navigates through the directory table', async () => {
+      props.selectedCategories = [
+        {
+          id: '1',
+          name: 'Beam Characterization',
+          parent_id: null,
+          code: 'beam-characterization',
+          is_leaf: false,
+        },
+        {
+          id: '2',
+          name: 'Motion',
+          parent_id: null,
+          code: 'motion',
+          is_leaf: false,
+        },
+      ];
+
+      props.catalogueCurrDirId = null;
+
+      createView();
+
+      await waitFor(() => {
+        expect(screen.getByText('Motion')).toBeInTheDocument();
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByText('Vacuum Technology'));
+
+      expect(onChangeCatalogueCurrDirId).toBeCalledWith('3');
+    });
   });
 });
