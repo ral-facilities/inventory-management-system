@@ -16,11 +16,10 @@ export interface DeleteManufacturerProps {
   open: boolean;
   onClose: () => void;
   manufacturer: ViewManufacturerResponse | undefined;
-  refetchData: () => void;
 }
 
 const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
-  const { open, onClose, manufacturer, refetchData } = props;
+  const { open, onClose, manufacturer } = props;
 
   const [error, setError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
@@ -39,7 +38,6 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
     if (manufacturer) {
       deleteManufacturer(manufacturer)
         .then((response) => {
-          refetchData();
           onClose();
         })
         .catch((error: AxiosError) => {
@@ -58,7 +56,7 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
       setError(true);
       setErrorMessage('No data provided, Please refresh and try again');
     }
-  }, [manufacturer, deleteManufacturer, onClose, refetchData]);
+  }, [manufacturer, deleteManufacturer, onClose]);
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">

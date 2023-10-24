@@ -19,6 +19,7 @@ import { useManufacturers } from '../api/manufacturer';
 import { ViewManufacturerResponse } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import { ManufacturerDetail } from '../app.types';
+import AddManufacturerDialog from './addManufacturerDialog.component';
 
 function Manufacturer() {
   const [addManufacturer, setAddManufacturer] =
@@ -217,12 +218,11 @@ function Manufacturer() {
           </TableBody>
         </Table>
       </TableContainer>
-      {/* <DeleteManufacturerDialog
+      <DeleteManufacturerDialog
         open={deleteManufacturerDialog}
         onClose={() => setDeleteManufacturerDialog(false)}
         manufacturer={selectedManufacturer}
-        refetchData={() => manufacturerDataRefetch()}
-      /> */}
+      />
     </Box>
   );
 }

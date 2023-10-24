@@ -8,7 +8,6 @@ import { ViewManufacturerResponse } from '../app.types';
 
 describe('Delete Manufacturer Dialog', () => {
   const onClose = jest.fn();
-  const refetchData = jest.fn();
   let props: DeleteManufacturerProps;
   let manufacturer: ViewManufacturerResponse;
   let user;
@@ -34,7 +33,6 @@ describe('Delete Manufacturer Dialog', () => {
     props = {
       open: true,
       onClose: onClose,
-      refetchData: refetchData,
       manufacturer: manufacturer,
     };
     user = userEvent;
@@ -84,7 +82,6 @@ describe('Delete Manufacturer Dialog', () => {
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
     });
-    expect(refetchData).toHaveBeenCalled();
   });
 
   it('displays error message when user tries to delete a manufacturer that is a part of a catalogue item', async () => {
