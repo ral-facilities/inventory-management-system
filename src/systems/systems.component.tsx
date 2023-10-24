@@ -13,8 +13,9 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSystemsBreadcrumbs, useSystems } from '../api/system';
+import { useSystems, useSystemsBreadcrumbs } from '../api/system';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import { SystemDialog } from './systemDialog.component';
 
 function Systems() {
   // Navigation setup
@@ -27,12 +28,13 @@ function Systems() {
     [navigate]
   );
 
+  const [addSystemDialogOpen, setAddSystemDialogOpen] =
+    React.useState<boolean>(false);
+
   const systemID = location.pathname.replace(
     '/inventory-management-system/systems',
     ''
   );
-
-  console.log(systemID);
 
   const { data: subsystemsData, isLoading: systemsDataLoading } = useSystems(
     systemID === '' ? 'null' : systemID.replace('/', '')
@@ -75,7 +77,11 @@ function Systems() {
             <Typography variant="h6">
               {systemID === '' ? 'Root systems' : 'Subsystems'}
             </Typography>
-            <IconButton sx={{ marginLeft: 'auto' }} aria-label="add system">
+            <IconButton
+              sx={{ marginLeft: 'auto' }}
+              aria-label="add system"
+              onClick={() => setAddSystemDialogOpen(true)}
+            >
               <AddIcon />
             </IconButton>
           </Box>
@@ -112,6 +118,11 @@ function Systems() {
           </Box>
         </Grid>
       </Grid>
+      <SystemDialog
+        open={addSystemDialogOpen}
+        onClose={() => setAddSystemDialogOpen(false)}
+        type="add"
+      />
     </Grid>
   );
 }
