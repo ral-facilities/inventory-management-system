@@ -20,10 +20,41 @@ import {
   CatalogueCategory,
   CatalogueItemDetails,
   CatalogueItemManufacturer,
+  CatalogueItemProperty,
 } from '../app.types';
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
+
+export function matchCatalogueItemProperties(
+  form: CatalogueCategoryFormData[],
+  items: CatalogueItemProperty[]
+): (string | number | boolean | null)[] {
+  const result: (string | number | boolean | null)[] = [];
+
+  for (const property of form) {
+    const matchingItem = items.find((item) => item.name === property.name);
+    if (matchingItem) {
+      // Type check and assign the value
+      if (property.type === 'number') {
+        result.push(matchingItem.value ? Number(matchingItem.value) : null);
+      } else if (property.type === 'boolean') {
+        result.push(
+          typeof matchingItem.value === 'boolean'
+            ? String(Boolean(matchingItem.value))
+            : ''
+        );
+      } else {
+        result.push(matchingItem.value ? String(matchingItem.value) : null);
+      }
+    } else {
+      // If there is no matching item, push null
+      result.push(null);
+    }
+  }
+
+  return result;
+}
 
 function Catalogue() {
   const [currNode, setCurrNode] = React.useState('/');
@@ -216,21 +247,31 @@ function Catalogue() {
           </Box>
         )}
 
-      {catalogueCategoryData && !parentInfo?.is_leaf && (
-        <Grid container spacing={2}>
-          {catalogueCategoryData.map((item, index) => (
-            <Grid item key={index} xs={12} sm={6} md={4}>
-              <CatalogueCard
-                {...item}
-                onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
-                onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
-              />
-            </Grid>
-          ))}
-        </Grid>
-      )}
+      {catalogueCategoryData &&
+        !parentInfo?.is_leaf &&
+        !catalogueCategoryDetailLoading && (
+          <Grid container spacing={2}>
+            {catalogueCategoryData.map((item, index) => (
+              <Grid item key={index} xs={12} sm={6} md={4}>
+                <CatalogueCard
+                  {...item}
+                  onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
+                  onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        )}
       {parentInfo && parentInfo.is_leaf && (
-        <CatalogueItemsTable parentInfo={parentInfo} />
+        <CatalogueItemsTable
+          parentInfo={parentInfo}
+          catalogueItemDetails={catalogueItemDetails}
+          onChangeCatalogueItemDetails={setCatalogueItemDetails}
+          catalogueItemManufacturer={catalogueItemManufacturer}
+          onChangeCatalogueItemManufacturer={setCatalogueItemManufacturer}
+          catalogueItemPropertyValues={catalogueItemPropertyValues}
+          onChangeCatalogueItemPropertyValues={setCatalogueItemPropertyValues}
+        />
       )}
 
       <CatalogueCategoryDialog
@@ -281,6 +322,7 @@ function Catalogue() {
         catalogueItemPropertiesForm={
           parentInfo?.catalogue_item_properties ?? []
         }
+        type="create"
         propertyValues={catalogueItemPropertyValues}
         onChangePropertyValues={setCatalogueItemPropertyValues}
       />

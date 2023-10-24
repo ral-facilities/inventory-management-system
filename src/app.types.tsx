@@ -72,6 +72,14 @@ export interface AddCatalogueItem {
   properties: CatalogueItemProperty[];
   manufacturer: CatalogueItemManufacturer;
 }
+
+export interface EditCatalogueItem {
+  name?: string | undefined;
+  description?: string;
+  properties?: CatalogueItemProperty[];
+  manufacturer?: CatalogueItemManufacturer;
+  id: string;
+}
 export interface ErrorParsing {
   detail: string;
 }

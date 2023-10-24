@@ -6,6 +6,7 @@ import {
   AddCatalogueCategory,
   CatalogueItem,
   EditCatalogueCategory,
+  EditCatalogueItem,
 } from '../app.types';
 
 export const handlers = [
@@ -123,7 +124,7 @@ export const handlers = [
           })
         );
       } else {
-        return res(ctx.status(200), ctx.json(''));
+        return res(ctx.status(204));
       }
     } else {
       return res(ctx.status(400), ctx.json(''));
@@ -168,6 +169,64 @@ export const handlers = [
     }
     return res(ctx.status(422), ctx.json({}));
   }),
+  rest.delete('/v1/catalogue-items/:id', (req, res, ctx) => {
+    const { id } = req.params;
+    const validCatalogueItem = CatalogueItemJSON.find(
+      (value) => value.id === id
+    );
+    if (validCatalogueItem) {
+      if (id === '6') {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail:
+              'Catalogue item has children elements and cannot be deleted, please delete the children elements first',
+          })
+        );
+      } else {
+        return res(ctx.status(204));
+      }
+    } else {
+      return res(ctx.status(400), ctx.json(''));
+    }
+  }),
+
+  rest.patch('/v1/catalogue-items/:id', async (req, res, ctx) => {
+    const body = (await req.json()) as EditCatalogueItem;
+    const { id } = req.params;
+
+    const validCatalogueItem = CatalogueItemJSON.find(
+      (value) => value.id === id
+    );
+
+    if (body.name === 'test_has_children_elements') {
+      return res(
+        ctx.status(409),
+        ctx.json({
+          detail:
+            'Catalogue item has children elements and cannot be edited, please delete the children elements first',
+        })
+      );
+    }
+    if (body.name === 'Error 500') {
+      return res(ctx.status(500), ctx.json(''));
+    }
+
+    const newBody = {
+      catalogue_category_id: validCatalogueItem?.catalogue_category_id,
+      name: body.name ?? validCatalogueItem?.name,
+      description: body.description ?? validCatalogueItem?.description,
+      properties: body.properties ?? validCatalogueItem?.properties,
+    };
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        ...newBody,
+        id: id,
+      })
+    );
+  }),
 
   rest.get('/v1/systems/', (req, res, ctx) => {
     const systemsParams = req.url.searchParams;
@@ -175,9 +234,7 @@ export const handlers = [
     const parentPath = systemsParams.get('parent_path');
     let data;
     if (path) {
-      data = SystemsJSON.filter(
-        (systems) => systems.path === path
-      );
+      data = SystemsJSON.filter((systems) => systems.path === path);
     } else if (parentPath) {
       data = SystemsJSON.filter(
         (systems) => systems.parent_path === parentPath
