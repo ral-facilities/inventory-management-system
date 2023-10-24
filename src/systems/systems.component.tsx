@@ -121,6 +121,7 @@ function Systems() {
       <SystemDialog
         open={addSystemDialogOpen}
         onClose={() => setAddSystemDialogOpen(false)}
+        parentId={systemID}
         type="add"
       />
     </Grid>

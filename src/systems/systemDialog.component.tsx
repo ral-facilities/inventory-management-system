@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
+  FormHelperText,
   Grid,
   InputLabel,
   MenuItem,
@@ -12,20 +13,79 @@ import {
   TextField,
 } from '@mui/material';
 import React from 'react';
-import { SystemImportanceType } from '../app.types';
+import { SystemImportanceType, SystemPost, useAddSystem } from '../api/system';
+import { AxiosError } from 'axios';
+import { ErrorParsing } from '../app.types';
 
 export interface SystemDialogProps {
   open: boolean;
   onClose: () => void;
+  parentId: string | null;
   type: 'add' | 'edit';
 }
 
 export const SystemDialog = React.memo((props: SystemDialogProps) => {
-  const { open, onClose, type } = props;
+  const { open, onClose, parentId, type } = props;
+
+  // User entered properties
+  const [name, setName] = React.useState<string>('');
+  const [description, setDescription] = React.useState<string>('');
+  const [location, setLocation] = React.useState<string>('');
+  const [owner, setOwner] = React.useState<string>('');
+  const [importance, setImportance] = React.useState<SystemImportanceType>(
+    SystemImportanceType.MEDIUM
+  );
+
+  // Error messages for the above properties (undefined means no error)
+  const [nameError, setNameError] = React.useState<string | undefined>();
+
+  // For any unhandled error e.g. a connection issue/API error
+  const [otherError, setOtherError] = React.useState<boolean>(false);
 
   const handleClose = React.useCallback(() => {
     onClose();
   }, [onClose]);
+
+  const { mutateAsync: addSystem } = useAddSystem();
+
+  const handleAddSystem = React.useCallback(() => {
+    // Validate the entered fields
+    if (name.trim() === '') {
+      setNameError('Please enter a name.');
+    } else {
+      // Should be valid so add the system
+      const system: SystemPost = {
+        name: name,
+        location: location !== '' ? location : null,
+        owner: owner !== '' ? owner : null,
+        importance: importance,
+        description: description !== '' ? owner : null,
+        parent_id: parentId,
+      };
+      addSystem(system)
+        .then((response) => handleClose())
+        .catch((error: AxiosError) => {
+          const response = error.response?.data as ErrorParsing;
+          console.log(error);
+
+          // 409 occurs when there is a system with a duplicate name with the
+          // same parent
+          if (response && error.response?.status === 409)
+            setNameError(response.detail);
+          else setOtherError(true);
+        });
+    }
+  }, [
+    addSystem,
+    description,
+    handleClose,
+    importance,
+    location,
+    name,
+    owner,
+    parentId,
+  ]);
+  const handleEditSystem = React.useCallback(() => {}, []);
 
   return (
     <Dialog open={open} maxWidth="lg" fullWidth>
@@ -33,13 +93,50 @@ export const SystemDialog = React.memo((props: SystemDialogProps) => {
       <DialogContent>
         <Grid container direction="column" spacing={2}>
           <Grid item sx={{ mt: 1 }}>
-            <TextField label="Name" required={true} fullWidth></TextField>
+            <TextField
+              label="Name"
+              required={true}
+              value={name}
+              error={nameError !== undefined}
+              helperText={nameError}
+              onChange={(event) => {
+                setName(event.target.value);
+              }}
+              fullWidth
+            ></TextField>
           </Grid>
           <Grid item>
-            <TextField label="Location" required={true} fullWidth></TextField>
+            <TextField
+              label="Description"
+              required={true}
+              value={description}
+              onChange={(event) => {
+                setDescription(event.target.value);
+              }}
+              fullWidth
+            ></TextField>
           </Grid>
           <Grid item>
-            <TextField label="Owner" required={true} fullWidth></TextField>
+            <TextField
+              label="Location"
+              required={true}
+              value={location}
+              onChange={(event) => {
+                setLocation(event.target.value);
+              }}
+              fullWidth
+            ></TextField>
+          </Grid>
+          <Grid item>
+            <TextField
+              label="Owner"
+              required={true}
+              value={owner}
+              onChange={(event) => {
+                setOwner(event.target.value);
+              }}
+              fullWidth
+            ></TextField>
           </Grid>
           <Grid item>
             <FormControl fullWidth>
@@ -47,7 +144,10 @@ export const SystemDialog = React.memo((props: SystemDialogProps) => {
               <Select
                 labelId="importance-select-label"
                 label="Importance"
-                value={SystemImportanceType.MEDIUM}
+                value={importance}
+                onChange={(event) => {
+                  setImportance(event.target.value as SystemImportanceType);
+                }}
               >
                 {Object.values(SystemImportanceType).map((value, i) => (
                   <MenuItem key={i} value={value}>
@@ -67,9 +167,18 @@ export const SystemDialog = React.memo((props: SystemDialogProps) => {
         >
           Cancel
         </Button>
-        <Button variant="outlined" sx={{ width: '50%', mx: 1 }}>
+        <Button
+          variant="outlined"
+          sx={{ width: '50%', mx: 1 }}
+          onClick={type === 'add' ? handleAddSystem : handleEditSystem}
+        >
           Save
         </Button>
+        {otherError && (
+          <FormHelperText sx={{ marginBottom: 4 }} error>
+            {'Please refresh and try again'}
+          </FormHelperText>
+        )}
       </DialogActions>
     </Dialog>
   );
