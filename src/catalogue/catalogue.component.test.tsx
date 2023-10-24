@@ -1,10 +1,80 @@
 import React from 'react';
 import { renderComponentWithMemoryRouter } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
-import Catalogue from './catalogue.component';
+import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { server } from '../mocks/server';
+import { CatalogueCategoryFormData, CatalogueItemProperty } from '../app.types';
+
+describe('matchCatalogueItemProperties', () => {
+  it('should match catalogue item properties correctly', () => {
+    const formData: CatalogueCategoryFormData[] = [
+      {
+        name: 'Name1',
+        type: 'string',
+        mandatory: true,
+      },
+      {
+        name: 'Name2',
+        type: 'number',
+        mandatory: false,
+      },
+      {
+        name: 'Name3',
+        type: 'boolean',
+        mandatory: true,
+      },
+    ];
+
+    const itemProperties: CatalogueItemProperty[] = [
+      {
+        name: 'Name1',
+        value: 'Value1',
+      },
+      {
+        name: 'Name2',
+        value: '42',
+      },
+      {
+        name: 'Name3',
+        value: true,
+      },
+    ];
+
+    const result = matchCatalogueItemProperties(formData, itemProperties);
+
+    // Your assertions
+    expect(result).toEqual(['Value1', 42, 'true']);
+  });
+
+  it('should handle missing properties', () => {
+    const formData: CatalogueCategoryFormData[] = [
+      {
+        name: 'Name1',
+        type: 'string',
+        mandatory: true,
+      },
+      {
+        name: 'Name2',
+        type: 'number',
+        mandatory: false,
+      },
+    ];
+
+    const itemProperties: CatalogueItemProperty[] = [
+      {
+        name: 'Name1',
+        value: 'Value1',
+      },
+    ];
+
+    const result = matchCatalogueItemProperties(formData, itemProperties);
+
+    // Your assertions for missing properties (null values)
+    expect(result).toEqual(['Value1', null]);
+  });
+});
 
 describe('Catalogue', () => {
   let user;
@@ -245,6 +315,14 @@ describe('Catalogue', () => {
 
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('progress bar renders correctly', async () => {
+    createView('/inventory-management-system/catalogue');
+
+    await waitFor(() => {
+      expect(screen.getByRole('progressbar')).toBeInTheDocument();
     });
   });
 });

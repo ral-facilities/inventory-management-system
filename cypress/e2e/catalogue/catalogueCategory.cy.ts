@@ -277,15 +277,10 @@ describe('Catalogue Category', () => {
   });
 
   it('when root has no data it displays no catagories error message', () => {
-    cy.window().then(async (window) => {
-      // Reference global instances set in "src/mocks/browser.js".
-
-      const { worker, rest } = window.msw;
-      worker.use(
-        rest.get('/v1/catalogue-categories/', (req, res, ctx) => {
-          return res(ctx.status(200), ctx.json([]));
-        })
-      );
+    cy.editEndpointResponse({
+      url: '/v1/catalogue-categories/',
+      data: [],
+      statusCode: 200,
     });
     cy.findByText(
       'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'

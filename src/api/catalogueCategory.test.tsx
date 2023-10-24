@@ -117,7 +117,7 @@ describe('catalogue category api functions', () => {
   describe('useCatalogueCategory', () => {
     it('sends request to fetch catalogue category data and returns successful response', async () => {
       const { result } = renderHook(
-        () => useCatalogueCategory(undefined, '/motion'),
+        () => useCatalogueCategory(false, undefined, '/motion'),
         {
           wrapper: hooksWrapperWithProviders(),
         }
@@ -142,7 +142,7 @@ describe('catalogue category api functions', () => {
 
     it('sends request to fetch parent catalogue category data and returns successful response', async () => {
       const { result } = renderHook(
-        () => useCatalogueCategory('/motion', undefined),
+        () => useCatalogueCategory(false, '/motion', undefined),
         {
           wrapper: hooksWrapperWithProviders(),
         }

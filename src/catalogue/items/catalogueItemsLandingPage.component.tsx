@@ -7,8 +7,20 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { Box, Button, Collapse, Link as MuiLink } from '@mui/material';
+import {
+  Box,
+  Button,
+  Collapse,
+  LinearProgress,
+  Link as MuiLink,
+} from '@mui/material';
 import { useCatalogueCategoryById } from '../../api/catalogueCategory';
+import CatalogueItemsDialog from './catalogueItemsDialog.component';
+import {
+  CatalogueItemDetails,
+  CatalogueItemManufacturer,
+} from '../../app.types';
+import { matchCatalogueItemProperties } from '../catalogue.component';
 
 function CatalogueItemsLandingPage() {
   const location = useLocation();
@@ -37,6 +49,25 @@ function CatalogueItemsLandingPage() {
     setShowManufacturer(!showManufacturer);
   };
 
+  const [editItemDialogOpen, setEditItemDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [catalogueItemDetails, setCatalogueItemDetails] =
+    React.useState<CatalogueItemDetails>({
+      name: undefined,
+      description: '',
+    });
+
+  const [catalogueItemManufacturer, setCatalogueItemManufacturer] =
+    React.useState<CatalogueItemManufacturer>({
+      name: '',
+      address: '',
+      web_url: '',
+    });
+
+  const [catalogueItemPropertyValues, setCatalogueItemPropertyValues] =
+    React.useState<(string | number | boolean | null)[]>([]);
+
   return (
     <Grid container>
       <Grid sx={{ padding: '8px' }} item>
@@ -56,6 +87,23 @@ function CatalogueItemsLandingPage() {
           disabled={!catalogueItemIdData}
           sx={{ margin: '8px' }}
           variant="outlined"
+          onClick={() => {
+            setEditItemDialogOpen(true);
+
+            if (catalogueItemIdData) {
+              setCatalogueItemDetails({
+                name: catalogueItemIdData.name,
+                description: catalogueItemIdData.description,
+              });
+              setCatalogueItemPropertyValues(
+                matchCatalogueItemProperties(
+                  catalogueCategoryData?.catalogue_item_properties ?? [],
+                  catalogueItemIdData.properties ?? []
+                )
+              );
+              setCatalogueItemManufacturer(catalogueItemIdData.manufacturer);
+            }
+          }}
         >
           Edit
         </Button>
@@ -213,21 +261,44 @@ function CatalogueItemsLandingPage() {
           </Box>
         </Grid>
       )}
-      {!catalogueItemIdData && !catalogueItemIdDataLoading && (
-        <Box
-          sx={{
-            width: '100%',
-            justifyContent: 'center',
-            marginTop: '8px',
-          }}
-        >
-          <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
-          <Typography>
-            This item doesn't exist. Please click the Home button to navigate to
-            the catalogue home
-          </Typography>
+      {!catalogueItemIdDataLoading ? (
+        !catalogueItemIdData && (
+          <Box
+            sx={{
+              width: '100%',
+              justifyContent: 'center',
+              marginTop: '8px',
+            }}
+          >
+            <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
+            <Typography>
+              This item doesn't exist. Please click the Home button to navigate
+              to the catalogue home
+            </Typography>
+          </Box>
+        )
+      ) : (
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress />
         </Box>
       )}
+
+      <CatalogueItemsDialog
+        open={editItemDialogOpen}
+        onClose={() => setEditItemDialogOpen(false)}
+        parentId={catalogueCategoryData?.id ?? null}
+        catalogueItemDetails={catalogueItemDetails}
+        onChangeCatalogueItemDetails={setCatalogueItemDetails}
+        catalogueItemManufacturer={catalogueItemManufacturer}
+        onChangeCatalogueItemManufacturer={setCatalogueItemManufacturer}
+        catalogueItemPropertiesForm={
+          catalogueCategoryData?.catalogue_item_properties ?? []
+        }
+        propertyValues={catalogueItemPropertyValues}
+        onChangePropertyValues={setCatalogueItemPropertyValues}
+        selectedCatalogueItem={catalogueItemIdData}
+        type="edit"
+      />
     </Grid>
   );
 }
