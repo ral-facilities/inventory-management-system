@@ -118,7 +118,7 @@ export const useAddSystem = (): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation((system: SystemPost) => addSystem(system), {
     onError: (error) => {
-      console.log('Got error ' + error.message);
+      console.log(`Got error: '${error.message}'`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['System'] });

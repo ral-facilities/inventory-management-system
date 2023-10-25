@@ -53,7 +53,7 @@ function Systems() {
           display: 'flex',
           height: '100%',
           width: '100%',
-          padding: '4px', // Add some padding for spacing
+          padding: 1, // Add some padding for spacing
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -72,14 +72,14 @@ function Systems() {
         </div>
       </Grid>
       <Grid container margin={0} direction="row" alignItems="stretch">
-        <Grid item xs={2} textAlign="left" padding={1}>
+        <Grid item xs={12} md={3} lg={2} textAlign="left" padding={1}>
           <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
             <Typography variant="h6">
               {systemID === '' ? 'Root systems' : 'Subsystems'}
             </Typography>
             <IconButton
               sx={{ marginLeft: 'auto' }}
-              aria-label="add system"
+              aria-label={systemID === '' ? 'add system' : 'add subsystem'}
               onClick={() => setAddSystemDialogOpen(true)}
             >
               <AddIcon />
@@ -96,7 +96,7 @@ function Systems() {
             ))}
           </List>
         </Grid>
-        <Grid item xs={10} textAlign="left" padding={1}>
+        <Grid item xs={12} md={9} lg={10} textAlign="left" padding={1}>
           <Box
             sx={{
               display: 'flex',
