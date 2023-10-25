@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSystems, useSystemsBreadcrumbs } from '../api/system';
+import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemDialog } from './systemDialog.component';
 

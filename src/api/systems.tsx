@@ -52,7 +52,7 @@ export const useSystems = (
 ): UseQueryResult<System[], AxiosError> => {
   return useQuery<System[], AxiosError>(
     ['Systems', parent_id],
-    (params) => {
+    () => {
       return fetchSystems(parent_id);
     },
     {

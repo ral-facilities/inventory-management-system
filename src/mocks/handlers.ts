@@ -1,17 +1,19 @@
 import { rest } from 'msw';
-import CatalogueCategoryJSON from './CatalogueCategory.json';
-import CatalogueItemJSON from './CatalogueItems.json';
-import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
-import SystemsJSON from './Systems.json';
-import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
+import { SystemPost } from '../api/systems';
 import {
   AddCatalogueCategory,
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
 } from '../app.types';
+import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
+import CatalogueCategoryJSON from './CatalogueCategory.json';
+import CatalogueItemJSON from './CatalogueItems.json';
+import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
+import SystemsJSON from './Systems.json';
 
 export const handlers = [
+  // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
   rest.post('/v1/catalogue-categories', async (req, res, ctx) => {
     const body = (await req.json()) as AddCatalogueCategory;
 
@@ -138,6 +140,9 @@ export const handlers = [
       return res(ctx.status(400), ctx.json(''));
     }
   }),
+
+  // ------------------------------------ CATALOGUE ITEMS ------------------------------------
+
   rest.post('/v1/catalogue-items/', async (req, res, ctx) => {
     const body = (await req.json()) as CatalogueItem;
 
@@ -236,6 +241,8 @@ export const handlers = [
     );
   }),
 
+  // ------------------------------------ SYSTEMS ------------------------------------
+
   rest.get('/v1/systems', (req, res, ctx) => {
     const systemsParams = req.url.searchParams;
     const parentId = systemsParams.get('parent_id');
@@ -266,5 +273,20 @@ export const handlers = [
       (systemBreadcrumbs) => systemBreadcrumbs.id === id
     );
     return res(ctx.status(200), ctx.json(data));
+  }),
+
+  rest.post('/v1/systems', async (req, res, ctx) => {
+    const body = (await req.json()) as SystemPost;
+
+    if (body.name === 'Error 500') {
+      return res(ctx.status(500), ctx.json(''));
+    }
+    return res(
+      ctx.status(200),
+      ctx.json({
+        ...body,
+        id: '1',
+      })
+    );
   }),
 ];

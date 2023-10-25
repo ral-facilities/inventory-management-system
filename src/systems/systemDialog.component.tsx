@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -13,7 +14,7 @@ import {
   TextField,
 } from '@mui/material';
 import React from 'react';
-import { SystemImportanceType, SystemPost, useAddSystem } from '../api/system';
+import { SystemImportanceType, SystemPost, useAddSystem } from '../api/systems';
 import { AxiosError } from 'axios';
 import { ErrorParsing } from '../app.types';
 
@@ -87,9 +88,14 @@ export const SystemDialog = React.memo((props: SystemDialogProps) => {
   ]);
   const handleEditSystem = React.useCallback(() => {}, []);
 
+  // For title
+  const systemText = parentId ? 'Subsystem' : 'System';
+
   return (
-    <Dialog open={open} maxWidth="lg" fullWidth>
-      <DialogTitle>{type === 'add' ? 'Add System' : 'Edit System'}</DialogTitle>
+    <Dialog open={open} maxWidth="md" fullWidth>
+      <DialogTitle>
+        {type === 'add' ? `Add ${systemText}` : `Edit ${systemText}`}
+      </DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={2}>
           <Grid item sx={{ mt: 1 }}>
@@ -108,7 +114,6 @@ export const SystemDialog = React.memo((props: SystemDialogProps) => {
           <Grid item>
             <TextField
               label="Description"
-              required={true}
               value={description}
               onChange={(event) => {
                 setDescription(event.target.value);
@@ -119,7 +124,6 @@ export const SystemDialog = React.memo((props: SystemDialogProps) => {
           <Grid item>
             <TextField
               label="Location"
-              required={true}
               value={location}
               onChange={(event) => {
                 setLocation(event.target.value);
@@ -130,7 +134,6 @@ export const SystemDialog = React.memo((props: SystemDialogProps) => {
           <Grid item>
             <TextField
               label="Owner"
-              required={true}
               value={owner}
               onChange={(event) => {
                 setOwner(event.target.value);
@@ -159,23 +162,25 @@ export const SystemDialog = React.memo((props: SystemDialogProps) => {
           </Grid>
         </Grid>
       </DialogContent>
-      <DialogActions>
-        <Button
-          variant="outlined"
-          sx={{ width: '50%', mx: 1 }}
-          onClick={handleClose}
-        >
-          Cancel
-        </Button>
-        <Button
-          variant="outlined"
-          sx={{ width: '50%', mx: 1 }}
-          onClick={type === 'add' ? handleAddSystem : handleEditSystem}
-        >
-          Save
-        </Button>
+      <DialogActions sx={{ flexDirection: 'column', padding: 4 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <Button
+            variant="outlined"
+            sx={{ width: '50%', mx: 1 }}
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="outlined"
+            sx={{ width: '50%', mx: 1 }}
+            onClick={type === 'add' ? handleAddSystem : handleEditSystem}
+          >
+            Save
+          </Button>
+        </Box>
         {otherError && (
-          <FormHelperText sx={{ marginBottom: 4 }} error>
+          <FormHelperText sx={{ marginTop: 4 }} error>
             {'Please refresh and try again'}
           </FormHelperText>
         )}
