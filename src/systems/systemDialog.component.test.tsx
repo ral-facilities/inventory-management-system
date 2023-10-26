@@ -54,7 +54,7 @@ describe('Systems Dialog', () => {
     props = {
       open: true,
       onClose: mockOnClose,
-      parentId: undefined,
+      parentId: null,
       type: 'add',
     };
     user = userEvent.setup();
