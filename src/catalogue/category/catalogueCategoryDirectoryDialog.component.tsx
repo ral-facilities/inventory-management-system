@@ -55,7 +55,7 @@ const CatalogueCategoryDirectoryDialog = (
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
   } = useCatalogueCategory(
-    false,
+    true,
     !catalogueCurrDirId ? 'null' : catalogueCurrDirId
   );
   const handleClose = React.useCallback(() => {
