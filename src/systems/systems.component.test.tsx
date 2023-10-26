@@ -16,7 +16,10 @@ describe('Systems', () => {
 
   it('renders correctly', async () => {
     createView('/inventory-management-system/systems');
-    expect(screen.getByText('Root systems')).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText('Root systems')).toBeInTheDocument();
+    });
 
     await waitFor(() => {
       expect(screen.getByText('Giant laser')).toBeInTheDocument();
@@ -25,7 +28,10 @@ describe('Systems', () => {
 
   it('renders correctly when viewing a specific system', async () => {
     createView('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
-    expect(screen.getByText('Subsystems')).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.getByText('Subsystems')).toBeInTheDocument();
+    });
 
     await waitFor(() => {
       expect(screen.getByText('Smaller laser')).toBeInTheDocument();

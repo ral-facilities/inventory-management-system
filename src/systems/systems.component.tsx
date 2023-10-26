@@ -28,19 +28,24 @@ function Systems() {
     [navigate]
   );
 
+  const getSystemID = React.useCallback(() => {
+    let systemID: string | null = location.pathname.replace(
+      '/inventory-management-system/systems',
+      ''
+    );
+    systemID = systemID === '' ? null : systemID.replace('/', '');
+    return systemID;
+  }, [location.pathname]);
+  const systemID = getSystemID();
+
   const [addSystemDialogOpen, setAddSystemDialogOpen] =
     React.useState<boolean>(false);
 
-  const systemID = location.pathname.replace(
-    '/inventory-management-system/systems',
-    ''
-  );
-
-  const { data: subsystemsData, isLoading: systemsDataLoading } = useSystems(
-    systemID === '' ? 'null' : systemID.replace('/', '')
-  );
-
   const { data: systemsBreadcrumbs } = useSystemsBreadcrumbs(systemID);
+  const { data: subsystemsData, isLoading: systemsDataLoading } = useSystems(
+    // String value of null for filtering root systems
+    systemID === null ? 'null' : systemID
+  );
 
   return systemsDataLoading && subsystemsData !== undefined ? null : (
     <Grid container>
@@ -75,7 +80,7 @@ function Systems() {
         <Grid item xs={12} md={3} lg={2} textAlign="left" padding={1}>
           <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
             <Typography variant="h6">
-              {systemID === '' ? 'Root systems' : 'Subsystems'}
+              {systemID === null ? 'Root systems' : 'Subsystems'}
             </Typography>
             <IconButton
               sx={{ marginLeft: 'auto' }}
@@ -121,7 +126,7 @@ function Systems() {
       <SystemDialog
         open={addSystemDialogOpen}
         onClose={() => setAddSystemDialogOpen(false)}
-        parentId={systemID !== '' ? systemID : undefined}
+        parentId={systemID !== null ? systemID : undefined}
         type="add"
       />
     </Grid>
