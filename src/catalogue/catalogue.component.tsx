@@ -1,6 +1,13 @@
 import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { Box, Button, Grid, IconButton, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  LinearProgress,
+  Typography,
+} from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { NavigateNext } from '@mui/icons-material';
@@ -93,12 +100,6 @@ function Catalogue() {
   );
 
   const {
-    data: catalogueCategoryData,
-    isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategory(
-    !catalogueId ? 'null' : catalogueId.replace('/', '')
-  );
-  const {
     data: catalogueCategoryDetail,
     isLoading: catalogueCategoryDetailLoading,
   } = useCatalogueCategoryById(catalogueId.replace('/', ''));
@@ -115,6 +116,13 @@ function Catalogue() {
   );
 
   const isLeafNode = parentInfo ? parentInfo.is_leaf : false;
+  const {
+    data: catalogueCategoryData,
+    isLoading: catalogueCategoryDataLoading,
+  } = useCatalogueCategory(
+    catalogueCategoryDetailLoading ? true : !!parentInfo && parentInfo.is_leaf,
+    !catalogueId ? 'null' : catalogueId.replace('/', '')
+  );
 
   const [deleteCategoryDialogOpen, setDeleteCategoryDialogOpen] =
     React.useState<boolean>(false);
@@ -261,6 +269,14 @@ function Catalogue() {
           )}
         </Grid>
       </Grid>
+
+      {catalogueCategoryDataLoading &&
+        !catalogueCategoryDetailLoading &&
+        !parentInfo?.is_leaf && (
+          <Box sx={{ width: '100%' }}>
+            <LinearProgress />
+          </Box>
+        )}
 
       {!catalogueCategoryData?.length && //logic for no results page
         !parentInfo?.is_leaf &&

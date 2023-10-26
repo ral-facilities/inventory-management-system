@@ -316,6 +316,7 @@ describe('Catalogue', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
+
   it('opens move catalogue category dialog and can closes the dialog', async () => {
     createView('/inventory-management-system/catalogue/1');
 
@@ -394,6 +395,14 @@ describe('Catalogue', () => {
       expect(
         screen.queryByRole('button', { name: 'Move to' })
       ).not.toBeInTheDocument();
+    });
+  });
+
+  it('progress bar renders correctly', async () => {
+    createView('/inventory-management-system/catalogue');
+
+    await waitFor(() => {
+      expect(screen.getByRole('progressbar')).toBeInTheDocument();
     });
   });
 });
