@@ -271,7 +271,7 @@ function Catalogue() {
       </Grid>
 
       {catalogueCategoryDataLoading &&
-        !catalogueCategoryDetailLoading &&
+        (!catalogueCategoryDetailLoading || !catalogueCategoryDetail) &&
         !parentInfo?.is_leaf && (
           <Box sx={{ width: '100%' }}>
             <LinearProgress />
