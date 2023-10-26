@@ -234,7 +234,7 @@ describe('Catalogue Items', () => {
     });
   });
 
-  it('displays error message if not of the field have been edited', () => {
+  it('displays error message if none of the field have been edited', () => {
     cy.visit('/inventory-management-system/catalogue/5');
     cy.findByRole('button', {
       name: 'Edit Energy Meters 27 catalogue item',

@@ -41,6 +41,7 @@ const fetchCatalogueCategory = async (
 };
 
 export const useCatalogueCategory = (
+  isLeaf: boolean,
   parent_id: string
 ): UseQueryResult<CatalogueCategory[], AxiosError> => {
   return useQuery<CatalogueCategory[], AxiosError>(
@@ -52,6 +53,7 @@ export const useCatalogueCategory = (
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
+      enabled: !isLeaf,
     }
   );
 };

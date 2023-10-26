@@ -86,6 +86,18 @@ describe('Catalogue', () => {
     user = userEvent.setup();
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('progress bar renders correctly', async () => {
+    createView('/inventory-management-system/catalogue');
+
+    await waitFor(() => {
+      expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    });
+  });
+
   it('renders catalogue category card view correctly', async () => {
     createView('/inventory-management-system/catalogue');
 
@@ -316,6 +328,7 @@ describe('Catalogue', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
+
   it('opens move catalogue category dialog and can closes the dialog', async () => {
     createView('/inventory-management-system/catalogue/1');
 
