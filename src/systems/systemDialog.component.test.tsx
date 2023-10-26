@@ -1,15 +1,17 @@
 import { fireEvent, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import axios from 'axios';
 import React from 'react';
+import { SystemImportanceType } from '../api/systems';
 import { renderComponentWithBrowserRouter } from '../setupTests';
 import SystemDialog, { SystemDialogProps } from './systemDialog.component';
-import axios from 'axios';
-import { SystemImportanceType } from '../api/systems';
 
 describe('Systems Dialog', () => {
   let props: SystemDialogProps;
   let user;
   let axiosPostSpy;
+
+  const mockOnClose = jest.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(<SystemDialog {...props} />);
@@ -25,19 +27,19 @@ describe('Systems Dialog', () => {
   }) => {
     values.name &&
       fireEvent.change(screen.getByLabelText('Name *'), {
-        target: { value: 'System name' },
+        target: { value: values.name },
       });
     values.description &&
       fireEvent.change(screen.getByLabelText('Description'), {
-        target: { value: 'System description' },
+        target: { value: values.description },
       });
     values.location &&
       fireEvent.change(screen.getByLabelText('Location'), {
-        target: { value: 'System location' },
+        target: { value: values.location },
       });
     values.owner &&
       fireEvent.change(screen.getByLabelText('Owner'), {
-        target: { value: 'System owner' },
+        target: { value: values.owner },
       });
 
     if (values.importance) {
@@ -51,7 +53,7 @@ describe('Systems Dialog', () => {
   beforeEach(() => {
     props = {
       open: true,
-      onClose: () => {},
+      onClose: mockOnClose,
       parentId: undefined,
       type: 'add',
     };
@@ -63,11 +65,27 @@ describe('Systems Dialog', () => {
     jest.clearAllMocks();
   });
 
-  it('renders correctly', async () => {
+  it('renders correctly when adding', async () => {
     const view = createView();
 
     expect(screen.getByText('Add System')).toBeInTheDocument();
     expect(view.baseElement).toMatchSnapshot();
+  });
+
+  it('renders correctly when adding a subsystem', async () => {
+    props.parentId = 'parent-id';
+
+    createView();
+
+    expect(screen.getByText('Add Subsystem')).toBeInTheDocument();
+  });
+
+  it('calls onClose when cancel is clicked', async () => {
+    createView();
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    expect(mockOnClose).toHaveBeenCalled();
   });
 
   it('adds a system', async () => {
@@ -90,6 +108,8 @@ describe('Systems Dialog', () => {
       ...values,
       parent_id: 'parent-id',
     });
+
+    expect(mockOnClose).toHaveBeenCalled();
   });
 
   it('adds a system with only mandatory fields', async () => {
@@ -107,5 +127,32 @@ describe('Systems Dialog', () => {
       ...values,
       importance: SystemImportanceType.MEDIUM,
     });
+    expect(mockOnClose).toHaveBeenCalled();
+  });
+
+  it('displays error message when name field is not filled in', async () => {
+    createView();
+
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    expect(screen.getByText('Please enter a name')).toBeInTheDocument();
+    expect(mockOnClose).not.toHaveBeenCalled();
+  });
+
+  it('displays error message when an unknown error occurs', async () => {
+    createView();
+
+    const values = {
+      name: 'Error 500',
+    };
+
+    modifyValues(values);
+
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    expect(
+      screen.getByText('Please refresh and try again')
+    ).toBeInTheDocument();
+    expect(mockOnClose).not.toHaveBeenCalled();
   });
 });

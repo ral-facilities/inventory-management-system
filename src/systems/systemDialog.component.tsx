@@ -52,7 +52,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const handleAddSystem = React.useCallback(() => {
     // Validate the entered fields
     if (name.trim() === '') {
-      setNameError('Please enter a name.');
+      setNameError('Please enter a name');
     } else {
       // Should be valid so add the system
       const system: SystemPost = {
@@ -182,7 +182,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         </Box>
         {otherError && (
           <FormHelperText sx={{ marginTop: 4 }} error>
-            {'Please refresh and try again'}
+            Please refresh and try again
           </FormHelperText>
         )}
       </DialogActions>
