@@ -54,7 +54,10 @@ const CatalogueCategoryDirectoryDialog = (
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategory(!catalogueCurrDirId ? 'null' : catalogueCurrDirId);
+  } = useCatalogueCategory(
+    false,
+    !catalogueCurrDirId ? 'null' : catalogueCurrDirId
+  );
   const handleClose = React.useCallback(() => {
     onClose();
     onChangeSelectedCategories([]);
