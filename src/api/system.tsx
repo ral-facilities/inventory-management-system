@@ -55,18 +55,18 @@ const fetchSystemsBreadcrumbs = async (
 };
 
 export const useSystemsBreadcrumbs = (
-  id: string
+  id: string | null
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
   return useQuery<BreadcrumbsInfo, AxiosError>(
     ['SystemBreadcrumbs', id],
     (params) => {
-      return fetchSystemsBreadcrumbs(id);
+      return fetchSystemsBreadcrumbs(id ?? '');
     },
     {
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
-      enabled: id !== '',
+      enabled: id !== null,
     }
   );
 };

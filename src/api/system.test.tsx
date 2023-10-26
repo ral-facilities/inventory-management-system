@@ -59,6 +59,15 @@ describe('System api functions', () => {
   });
 
   describe('useSystemsBreadcrumbs', () => {
+    it('does not send a request to fetch breadcrumbs data for a system when its id is null', async () => {
+      const { result } = renderHook(() => useSystemsBreadcrumbs(null), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isFetching).toBeFalsy();
+      expect(result.current.data).toEqual(undefined);
+    });
+
     it('sends request to fetch breadcrumbs data for a system and returns a successful response', async () => {
       const { result } = renderHook(
         () => useSystemsBreadcrumbs('65328f34a40ff5301575a4e3'),

@@ -27,18 +27,21 @@ function Systems() {
     [navigate]
   );
 
-  const systemID = location.pathname.replace(
-    '/inventory-management-system/systems',
-    ''
-  );
-
-  console.log(systemID);
-
-  const { data: subsystemsData, isLoading: systemsDataLoading } = useSystems(
-    systemID === '' ? 'null' : systemID.replace('/', '')
-  );
+  const getSystemID = React.useCallback(() => {
+    let systemID: string | null = location.pathname.replace(
+      '/inventory-management-system/systems',
+      ''
+    );
+    systemID = systemID === '' ? null : systemID.replace('/', '');
+    return systemID;
+  }, [location.pathname]);
+  const systemID = getSystemID();
 
   const { data: systemsBreadcrumbs } = useSystemsBreadcrumbs(systemID);
+  const { data: subsystemsData, isLoading: systemsDataLoading } = useSystems(
+    // String value of null for filtering root systems
+    systemID === null ? 'null' : systemID
+  );
 
   return systemsDataLoading && subsystemsData !== undefined ? null : (
     <Grid container>
@@ -73,7 +76,7 @@ function Systems() {
         <Grid item xs={2} textAlign="left" padding={1}>
           <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
             <Typography variant="h6">
-              {systemID === '' ? 'Root systems' : 'Subsystems'}
+              {systemID === null ? 'Root systems' : 'Subsystems'}
             </Typography>
             <IconButton sx={{ marginLeft: 'auto' }} aria-label="add system">
               <AddIcon />
