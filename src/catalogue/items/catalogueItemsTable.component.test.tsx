@@ -188,4 +188,12 @@ describe('Catalogue Items Table', () => {
     const url = await within(row).findByText('http://example.com');
     expect(url).toHaveAttribute('href', 'http://example.com');
   });
+
+  it.only('progress bar renders correctly', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    });
+  });
 });
