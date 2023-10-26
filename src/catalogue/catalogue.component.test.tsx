@@ -311,4 +311,12 @@ describe('Catalogue', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
+
+  it('progress bar renders correctly', async () => {
+    createView('/inventory-management-system/catalogue');
+
+    await waitFor(() => {
+      expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    });
+  });
 });

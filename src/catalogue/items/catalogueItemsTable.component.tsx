@@ -11,6 +11,7 @@ import {
   useTheme,
   Box,
   Tooltip,
+  LinearProgress,
   Link as MuiLink,
 } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -78,6 +79,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   return (
     <TableContainer style={{ height: tableHeight }}>
+      {isLoading && (
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress />
+        </Box>
+      )}
+
       {!isLoading && (
         <Table stickyHeader>
           <TableHead>
