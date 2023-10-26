@@ -15,7 +15,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { SystemDialog } from './systemDialog.component';
+import SystemDialog from './systemDialog.component';
 
 function Systems() {
   // Navigation setup
@@ -121,7 +121,7 @@ function Systems() {
       <SystemDialog
         open={addSystemDialogOpen}
         onClose={() => setAddSystemDialogOpen(false)}
-        parentId={systemID}
+        parentId={systemID !== '' ? systemID : undefined}
         type="add"
       />
     </Grid>

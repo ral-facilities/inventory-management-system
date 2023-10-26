@@ -17,11 +17,11 @@ export enum SystemImportanceType {
 
 export interface SystemPost {
   name: string;
-  location: string | null;
-  owner: string | null;
+  description?: string;
+  location?: string;
+  owner?: string;
   importance: SystemImportanceType;
-  description: string | null;
-  parent_id: string | null;
+  parent_id?: string;
 }
 
 export interface System extends SystemPost {
@@ -85,7 +85,7 @@ export const useSystemsBreadcrumbs = (
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
   return useQuery<BreadcrumbsInfo, AxiosError>(
     ['SystemBreadcrumbs', id],
-    (params) => {
+    () => {
       return fetchSystemsBreadcrumbs(id);
     },
     {
@@ -121,7 +121,7 @@ export const useAddSystem = (): UseMutationResult<
       console.log(`Got error: '${error.message}'`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['System'] });
+      queryClient.invalidateQueries({ queryKey: ['Systems'] });
     },
   });
 };

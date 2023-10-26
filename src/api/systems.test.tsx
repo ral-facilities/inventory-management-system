@@ -88,12 +88,12 @@ describe('System api functions', () => {
 
   describe('useAddSystem', () => {
     const MOCK_SYSTEM_POST: SystemPost = {
-      name: 'System Name',
+      name: 'System name',
+      parent_id: null,
+      description: 'Description',
       location: 'Location',
       owner: 'Owner',
       importance: SystemImportanceType.MEDIUM,
-      description: 'Description',
-      parent_id: null,
     };
 
     it('posts a request to add a system and returns a successful response', async () => {

@@ -21,11 +21,11 @@ import { ErrorParsing } from '../app.types';
 export interface SystemDialogProps {
   open: boolean;
   onClose: () => void;
-  parentId: string | null;
+  parentId: string | undefined;
   type: 'add' | 'edit';
 }
 
-export const SystemDialog = React.memo((props: SystemDialogProps) => {
+const SystemDialog = React.memo((props: SystemDialogProps) => {
   const { open, onClose, parentId, type } = props;
 
   // User entered properties
@@ -57,12 +57,12 @@ export const SystemDialog = React.memo((props: SystemDialogProps) => {
       // Should be valid so add the system
       const system: SystemPost = {
         name: name,
-        location: location !== '' ? location : null,
-        owner: owner !== '' ? owner : null,
+        description: description !== '' ? description : undefined,
+        location: location !== '' ? location : undefined,
+        owner: owner !== '' ? owner : undefined,
         importance: importance,
-        description: description !== '' ? owner : null,
-        parent_id: parentId,
       };
+      if (parentId !== undefined) system.parent_id = parentId;
       addSystem(system)
         .then((response) => handleClose())
         .catch((error: AxiosError) => {
@@ -118,6 +118,7 @@ export const SystemDialog = React.memo((props: SystemDialogProps) => {
               onChange={(event) => {
                 setDescription(event.target.value);
               }}
+              multiline
               fullWidth
             ></TextField>
           </Grid>
@@ -188,3 +189,5 @@ export const SystemDialog = React.memo((props: SystemDialogProps) => {
     </Dialog>
   );
 });
+
+export default SystemDialog;
