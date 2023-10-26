@@ -15,7 +15,7 @@ import {
 import { settings } from '../settings';
 
 const fetchCatalogueCategory = async (
-  parent_id?: string
+  parent_id: string
 ): Promise<CatalogueCategory[]> => {
   let apiUrl: string;
   apiUrl = '';
@@ -38,7 +38,7 @@ const fetchCatalogueCategory = async (
 
 export const useCatalogueCategory = (
   isLeaf: boolean,
-  parent_id?: string
+  parent_id: string
 ): UseQueryResult<CatalogueCategory[], AxiosError> => {
   return useQuery<CatalogueCategory[], AxiosError>(
     ['CatalogueCategory', parent_id],
