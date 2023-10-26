@@ -21,7 +21,7 @@ import { ErrorParsing } from '../app.types';
 export interface SystemDialogProps {
   open: boolean;
   onClose: () => void;
-  parentId: string | undefined;
+  parentId: string | null;
   type: 'add' | 'edit';
 }
 
@@ -62,7 +62,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         owner: owner !== '' ? owner : undefined,
         importance: importance,
       };
-      if (parentId !== undefined) system.parent_id = parentId;
+      if (parentId !== null) system.parent_id = parentId;
       addSystem(system)
         .then((response) => handleClose())
         .catch((error: AxiosError) => {

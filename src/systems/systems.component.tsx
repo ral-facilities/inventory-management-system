@@ -47,7 +47,7 @@ function Systems() {
     systemID === null ? 'null' : systemID
   );
 
-  return systemsDataLoading && subsystemsData !== undefined ? null : (
+  return systemsDataLoading ? null : (
     <Grid container>
       <Grid
         item
@@ -84,7 +84,7 @@ function Systems() {
             </Typography>
             <IconButton
               sx={{ marginLeft: 'auto' }}
-              aria-label={systemID === '' ? 'add system' : 'add subsystem'}
+              aria-label={systemID === null ? 'add system' : 'add subsystem'}
               onClick={() => setAddSystemDialogOpen(true)}
             >
               <AddIcon />
@@ -126,7 +126,7 @@ function Systems() {
       <SystemDialog
         open={addSystemDialogOpen}
         onClose={() => setAddSystemDialogOpen(false)}
-        parentId={systemID !== null ? systemID : undefined}
+        parentId={systemID}
         type="add"
       />
     </Grid>
