@@ -44,6 +44,11 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const [otherError, setOtherError] = React.useState<boolean>(false);
 
   const handleClose = React.useCallback(() => {
+    // Remove all errors - event though otherError says it requires a refresh,
+    // we don't want it showing if you move somewhere else or change the values
+    setNameError(undefined);
+    setOtherError(false);
+
     onClose();
   }, [onClose]);
 

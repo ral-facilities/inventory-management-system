@@ -58,7 +58,7 @@ describe('System', () => {
     );
   });
 
-  it.only('adds a subsystem', () => {
+  it('adds a subsystem', () => {
     cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
 
     cy.findByRole('button', { name: 'add subsystem' }).click();
@@ -79,5 +79,26 @@ describe('System', () => {
         );
       }
     );
+  });
+
+  it('displays an error when attempting to add a system with no name that hides once closed', () => {
+    cy.visit('/inventory-management-system/systems');
+
+    // Empty name
+    cy.findByRole('button', { name: 'add system' }).click();
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByText('Please enter a name').should('be.visible');
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Cancel' }).click();
+    cy.findByRole('button', { name: 'add system' }).click();
+    cy.findByText('Please enter a name').should('not.exist');
+
+    // Other error
+    cy.findByLabelText('Name *').type('Error 500');
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByText('Please refresh and try again').should('be.visible');
+    cy.findByRole('button', { name: 'Cancel' }).click();
+    cy.findByRole('button', { name: 'add system' }).click();
+    cy.findByText('Please refresh and try again').should('not.exist');
   });
 });
