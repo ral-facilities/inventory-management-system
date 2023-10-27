@@ -5,8 +5,8 @@ describe('Catalogue Category', () => {
   afterEach(() => {
     cy.clearMocks();
   });
-  it('should create the breadcrumbs from the url', () => {
-    cy.visit('/inventory-management-system/catalogue/motion/actuators');
+  it('should create the breadcrumbs when navigating to a non root catalogue category', () => {
+    cy.visit('/inventory-management-system/catalogue/8');
     cy.findByRole('link', { name: 'motion' }).should('be.visible');
     cy.findByText('actuators').should('be.visible');
 
@@ -14,11 +14,11 @@ describe('Catalogue Category', () => {
     cy.findByRole('link', { name: 'motion' }).should('not.exist');
     cy.findByText('actuators').should('not.exist');
     cy.findByText('motion').should('be.visible');
-    cy.url().should('include', '/catalogue/motion');
+    cy.url().should('include', '/catalogue/2');
   });
 
   it('should navigate back to the root directory when the home button is pressed', () => {
-    cy.visit('/inventory-management-system/catalogue/motion/actuators');
+    cy.visit('/inventory-management-system/catalogue/8');
     cy.findByRole('link', { name: 'motion' }).should('exist');
     cy.findByText('actuators').should('exist');
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
@@ -143,7 +143,7 @@ describe('Catalogue Category', () => {
   });
 
   it('edits a catalogue category (non leaf node)', () => {
-    cy.visit('/inventory-management-system/catalogue/beam-characterization');
+    cy.visit('/inventory-management-system/catalogue/1');
     cy.findByRole('button', {
       name: 'edit Amp Meters catalogue category button',
     }).click();
@@ -179,7 +179,7 @@ describe('Catalogue Category', () => {
   });
 
   it('displays error message if it received an unknown error from the api', () => {
-    cy.visit('/inventory-management-system/catalogue/beam-characterization');
+    cy.visit('/inventory-management-system/catalogue/1');
     cy.findByRole('button', {
       name: 'edit Cameras catalogue category button',
     }).click();
@@ -195,7 +195,7 @@ describe('Catalogue Category', () => {
       });
   });
   it('edits a catalogue category with catalogue properties', () => {
-    cy.visit('/inventory-management-system/catalogue/beam-characterization');
+    cy.visit('/inventory-management-system/catalogue/1');
     cy.findByRole('button', {
       name: 'edit Voltage Meters catalogue category button',
     }).click();
@@ -221,7 +221,7 @@ describe('Catalogue Category', () => {
   });
 
   it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
-    cy.visit('/inventory-management-system/catalogue/beam-characterization');
+    cy.visit('/inventory-management-system/catalogue/1');
     cy.findByRole('button', {
       name: 'edit Cameras catalogue category button',
     }).click();
@@ -246,16 +246,14 @@ describe('Catalogue Category', () => {
   });
 
   it('category with no data displays no results found', () => {
-    cy.visit('/inventory-management-system/catalogue/X-RAY-Beams');
+    cy.visit('/inventory-management-system/catalogue/16');
     cy.findByText(
       'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
     ).should('exist');
   });
 
   it('category with no items displays no items found message', () => {
-    cy.visit(
-      '/inventory-management-system/catalogue/High-Power-Lasers/Frequency'
-    );
+    cy.visit('/inventory-management-system/catalogue/17');
     cy.findByText(
       'There are no items. Try adding an item by using the Add Catalogue Item button in the top right of your screen'
     ).should('exist');

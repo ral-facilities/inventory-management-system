@@ -1,6 +1,7 @@
 import { rest } from 'msw';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
 import CatalogueItemJSON from './CatalogueItems.json';
+import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import {
   AddCatalogueCategory,
@@ -33,8 +34,6 @@ export const handlers = [
         parent_id: null,
         id: '1',
         code: 'test',
-        path: '/test',
-        parent_path: '/',
         is_leaf: false,
       })
     );
@@ -75,8 +74,6 @@ export const handlers = [
         parent_id: null,
         id: '1',
         code: 'test',
-        path: '/test',
-        parent_path: '/',
         is_leaf: false,
       })
     );
@@ -94,18 +91,28 @@ export const handlers = [
 
   rest.get('/v1/catalogue-categories/', (req, res, ctx) => {
     const catalogueCategoryParams = req.url.searchParams;
-    const path = catalogueCategoryParams.get('path');
-    const parentPath = catalogueCategoryParams.get('parent_path');
+    const parentId = catalogueCategoryParams.get('parent_id');
     let data;
-    if (path) {
-      data = CatalogueCategoryJSON.filter(
-        (catalogueCategory) => catalogueCategory.path === path
-      );
-    } else if (parentPath) {
-      data = CatalogueCategoryJSON.filter(
-        (catalogueCategory) => catalogueCategory.parent_path === parentPath
-      );
+
+    if (parentId) {
+      if (parentId === 'null') {
+        data = CatalogueCategoryJSON.filter(
+          (catalogueCategory) => catalogueCategory.parent_id === null
+        );
+      } else {
+        data = CatalogueCategoryJSON.filter(
+          (catalogueCategory) => catalogueCategory.parent_id === parentId
+        );
+      }
     }
+    return res(ctx.status(200), ctx.json(data));
+  }),
+
+  rest.get('/v1/catalogue-categories/:id/breadcrumbs', (req, res, ctx) => {
+    const { id } = req.params;
+    const data = CatalogueBreadcrumbsJSON.find(
+      (catalogueBreadcrumbs) => catalogueBreadcrumbs.id === id
+    );
     return res(ctx.status(200), ctx.json(data));
   }),
 

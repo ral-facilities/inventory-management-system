@@ -247,8 +247,6 @@ describe('Catalogue Category Dialog', () => {
       parent_id: null,
       id: '1',
       code: 'test',
-      path: '/test',
-      parent_path: '/',
       is_leaf: false,
     };
 
@@ -354,8 +352,6 @@ describe('Catalogue Category Dialog', () => {
         parent_id: '1',
         code: 'voltage-meters',
         is_leaf: true,
-        parent_path: '/beam-characterization',
-        path: '/beam-characterization/voltage-meters',
         catalogue_item_properties: [
           {
             name: 'Measurement Range',

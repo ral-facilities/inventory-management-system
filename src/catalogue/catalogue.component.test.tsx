@@ -99,9 +99,7 @@ describe('Catalogue', () => {
   });
 
   it('renders catalogue items table correctly', async () => {
-    createView(
-      '/inventory-management-system/catalogue/beam-characterization/cameras'
-    );
+    createView('/inventory-management-system/catalogue/4');
 
     await waitFor(() => {
       expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
@@ -109,7 +107,7 @@ describe('Catalogue', () => {
   });
 
   it('navigates back to the root directory', async () => {
-    createView('/inventory-management-system/catalogue/motion');
+    createView('/inventory-management-system/catalogue/2');
 
     await waitFor(() => {
       expect(screen.getByText('Actuators')).toBeInTheDocument();
@@ -147,7 +145,7 @@ describe('Catalogue', () => {
   });
 
   it('no results found page after X-rays opened', async () => {
-    createView('/inventory-management-system/catalogue/X-RAY-Beams');
+    createView('/inventory-management-system/catalogue/16');
 
     await waitFor(() => {
       expect(
@@ -159,9 +157,7 @@ describe('Catalogue', () => {
   });
 
   it('no items found after empty category opened', async () => {
-    createView(
-      '/inventory-management-system/catalogue/High-Power-Lasers/Frequency'
-    );
+    createView('/inventory-management-system/catalogue/17');
 
     await waitFor(() => {
       expect(
@@ -237,7 +233,7 @@ describe('Catalogue', () => {
   });
 
   it('opens the edit catalogue category dialog', async () => {
-    createView('/inventory-management-system/catalogue/beam-characterization');
+    createView('/inventory-management-system/catalogue/1');
 
     await waitFor(() => {
       expect(screen.getByText('Amp Meters')).toBeInTheDocument();
@@ -262,7 +258,7 @@ describe('Catalogue', () => {
   });
 
   it('renders the breadcrumbs and navigate to another directory', async () => {
-    createView('/inventory-management-system/catalogue/motion/actuators');
+    createView('/inventory-management-system/catalogue/8');
 
     await waitFor(() => {
       expect(screen.getByRole('link', { name: 'motion' })).toBeInTheDocument();
@@ -294,9 +290,7 @@ describe('Catalogue', () => {
   });
 
   it('opens add catalogue item dialog and can closes the dialog', async () => {
-    createView(
-      '/inventory-management-system/catalogue/beam-characterization/cameras'
-    );
+    createView('/inventory-management-system/catalogue/4');
 
     const addCatalogueItemButton = screen.getByRole('button', {
       name: 'Add Catalogue Item',

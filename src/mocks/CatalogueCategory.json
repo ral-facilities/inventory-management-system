@@ -4,27 +4,21 @@
     "name": "Beam Characterization",
     "parent_id": null,
     "code": "beam-characterization",
-    "is_leaf": false,
-    "parent_path": "/",
-    "path": "/beam-characterization"
+    "is_leaf": false
   },
   {
     "id": "2",
     "name": "Motion",
     "parent_id": null,
     "code": "motion",
-    "is_leaf": false,
-    "parent_path": "/",
-    "path": "/motion"
+    "is_leaf": false
   },
   {
     "id": "3",
     "name": "Vacuum Technology",
     "parent_id": null,
     "code": "vacuum-technology",
-    "is_leaf": false,
-    "parent_path": "/",
-    "path": "/vacuum-technology"
+    "is_leaf": false
   },
   {
     "id": "4",
@@ -32,8 +26,6 @@
     "parent_id": "1",
     "code": "cameras",
     "is_leaf": true,
-    "parent_path": "/beam-characterization",
-    "path": "/beam-characterization/cameras",
     "catalogue_item_properties": [
       {
         "name": "Resolution",
@@ -75,8 +67,6 @@
     "parent_id": "1",
     "code": "energy-meters",
     "is_leaf": true,
-    "parent_path": "/beam-characterization",
-    "path": "/beam-characterization/energy-meters",
     "catalogue_item_properties": [
       {
         "name": "Measurement Range",
@@ -97,8 +87,6 @@
     "parent_id": "1",
     "code": "wavefront-sensors",
     "is_leaf": true,
-    "parent_path": "/beam-characterization",
-    "path": "/beam-characterization/wavefront-sensors",
     "catalogue_item_properties": [
       {
         "name": "Wavefront Measurement Range",
@@ -118,9 +106,7 @@
     "name": "Actuators",
     "parent_id": "2",
     "code": "actuators",
-    "is_leaf": false,
-    "parent_path": "/motion",
-    "path": "/motion/actuators"
+    "is_leaf": false
   },
   {
     "id": "9",
@@ -128,8 +114,6 @@
     "parent_id": "8",
     "code": "motorized-actuators",
     "is_leaf": true,
-    "parent_path": "/motion/actuators",
-    "path": "/motion/actuators/motorized-actuators",
     "catalogue_item_properties": [
       {
         "name": "Travel Range",
@@ -146,13 +130,39 @@
     ]
   },
   {
+    "id": "20",
+    "name": "Electric Actuators",
+    "parent_id": "8",
+    "code": "electric-actuators",
+    "is_leaf": false
+  },
+  {
+    "id": "21",
+    "name": "Hydraulic",
+    "parent_id": "20",
+    "code": "hydraulic",
+    "is_leaf": false
+  },
+  {
+    "id": "22",
+    "name": "Linear",
+    "parent_id": "21",
+    "code": "linear",
+    "is_leaf": false
+  },
+  {
+    "id": "23",
+    "name": "Smart",
+    "parent_id": "22",
+    "code": "smart",
+    "is_leaf": false
+  },
+  {
     "id": "10",
     "name": "Vacuum Pumps",
     "parent_id": "3",
     "code": "vacuum-pumps",
-    "is_leaf": false,
-    "parent_path": "/vacuum-technology",
-    "path": "/vacuum-technology/vacuum-pumps"
+    "is_leaf": false
   },
   {
     "id": "11",
@@ -160,8 +170,6 @@
     "parent_id": "10",
     "code": "cryopumps",
     "is_leaf": true,
-    "parent_path": "/vacuum-technology/vacuum-pumps",
-    "path": "/vacuum-technology/vacuum-pumps/cryopumps",
     "catalogue_item_properties": [
       {
         "name": "Cooldown Time",
@@ -182,8 +190,6 @@
     "parent_id": "10",
     "code": "dry-vacuum-pumps",
     "is_leaf": true,
-    "parent_path": "/vacuum-technology/vacuum-pumps",
-    "path": "/vacuum-technology/vacuum-pumps/dry-vacuum-pumps",
     "catalogue_item_properties": [
       {
         "name": "Pumping Speed",
@@ -205,8 +211,6 @@
     "parent_id": "10",
     "code": "turbomolecular-pumps",
     "is_leaf": true,
-    "parent_path": "/vacuum-technology/vacuum-pumps",
-    "path": "/vacuum-technology/vacuum-pumps/turbomolecular-pumps",
     "catalogue_item_properties": [
       {
         "name": "Pumping Speed",
@@ -227,8 +231,6 @@
     "parent_id": "10",
     "code": "turbo-pumps",
     "is_leaf": true,
-    "parent_path": "/vacuum-technology/vacuum-pumps",
-    "path": "/vacuum-technology/vacuum-pumps/turbo-pumps",
     "catalogue_item_properties": [
       {
         "name": "Pumping Speed",
@@ -249,18 +251,14 @@
     "name": "High Power Lasers",
     "parent_id": null,
     "code": "High-Power-Lasers",
-    "is_leaf": false,
-    "parent_path": "/",
-    "path": "/High-Power-Lasers"
+    "is_leaf": false
   },
   {
     "id": "16",
     "name": "X-RAY Beams",
     "parent_id": null,
     "code": "X-RAY-Beams",
-    "is_leaf": false,
-    "parent_path": "/",
-    "path": "/X-RAY-Beams"
+    "is_leaf": false
   },
   {
     "id": "17",
@@ -268,8 +266,6 @@
     "parent_id": "15",
     "code": "Frequency",
     "is_leaf": true,
-    "parent_path": "/High-Power-Lasers",
-    "path": "/High-Power-Lasers/Frequency",
     "catalogue_item_properties": []
   },
   {
@@ -278,8 +274,6 @@
     "parent_id": "1",
     "code": "voltage-meters",
     "is_leaf": true,
-    "parent_path": "/beam-characterization",
-    "path": "/beam-characterization/voltage-meters",
     "catalogue_item_properties": [
       {
         "name": "Measurement Range",
@@ -299,8 +293,6 @@
     "name": "Amp Meters",
     "parent_id": "1",
     "code": "amp-meters",
-    "is_leaf": false,
-    "parent_path": "/beam-characterization",
-    "path": "/beam-characterization/amp-meters"
+    "is_leaf": false
   }
 ]

@@ -20,8 +20,6 @@ export interface EditCatalogueCategory {
 export interface CatalogueCategory {
   id: string;
   name: string;
-  parent_path: string;
-  path: string;
   parent_id: string | null;
   code: string;
   is_leaf: boolean;
@@ -82,6 +80,11 @@ export interface EditCatalogueItem {
 }
 export interface ErrorParsing {
   detail: string;
+}
+
+export interface BreadcrumbsInfo {
+  trail: [id: string, name: string][];
+  full_trail: boolean;
 }
 
 export enum SystemImportanceType {

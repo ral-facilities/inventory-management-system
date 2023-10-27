@@ -1,6 +1,5 @@
 import { NavigateNext } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
-import HomeIcon from '@mui/icons-material/Home';
 import {
   Box,
   Divider,
@@ -14,18 +13,16 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSystems } from '../api/system';
+import { useSystemsBreadcrumbs, useSystems } from '../api/system';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
 function Systems() {
   // Navigation setup
-  const [currNode, setCurrNode] = React.useState('/');
   const navigate = useNavigate();
   const location = useLocation();
   const onChangeNode = React.useCallback(
-    (newNode: string) => {
-      setCurrNode(newNode);
-      navigate(`/inventory-management-system/systems${newNode}`);
+    (newId: string) => {
+      navigate(`/inventory-management-system/systems${newId}`);
     },
     [navigate]
   );
@@ -38,6 +35,10 @@ function Systems() {
   const { data: subsystemsData, isLoading: systemsDataLoading } = useSystems(
     undefined,
     systemsLocation === '' ? '/' : systemsLocation
+  );
+
+  const { data: systemsBreadcrumbs } = useSystemsBreadcrumbs(
+    systemsLocation.replace('/', '')
   );
 
   return systemsDataLoading && subsystemsData !== undefined ? null : (
@@ -55,16 +56,14 @@ function Systems() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <IconButton
-            sx={{ margin: '4px' }}
-            onClick={() => {
+          <Breadcrumbs
+            breadcrumbsInfo={systemsBreadcrumbs}
+            onChangeNode={onChangeNode}
+            onChangeNavigateHome={() => {
               navigate('/inventory-management-system/systems');
             }}
-            aria-label="navigate to systems home"
-          >
-            <HomeIcon />
-          </IconButton>
-          <Breadcrumbs currNode={currNode} onChangeNode={onChangeNode} />
+            navigateHomeAriaLabel={'navigate to systems home'}
+          />
           <NavigateNext
             fontSize="medium"
             sx={{ color: 'rgba(0, 0, 0, 0.6)', margin: '4px' }}
@@ -110,9 +109,7 @@ function Systems() {
               margin: 1,
             }}
           >
-            <Typography variant="h3">
-              Please select a system
-            </Typography>
+            <Typography variant="h3">Please select a system</Typography>
           </Box>
         </Grid>
       </Grid>

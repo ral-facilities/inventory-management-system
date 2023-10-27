@@ -73,9 +73,11 @@ function CatalogueItemsLandingPage() {
       <Grid sx={{ padding: '8px' }} item>
         <Button
           component={Link}
-          to={`/inventory-management-system/catalogue${
-            catalogueCategoryData?.path ?? ''
-          }`}
+          to={
+            catalogueCategoryData && catalogueCategoryData.id
+              ? `/inventory-management-system/catalogue/${catalogueCategoryData.id}`
+              : '/inventory-management-system/catalogue'
+          }
           sx={{ margin: '8px' }}
           variant="outlined"
         >
