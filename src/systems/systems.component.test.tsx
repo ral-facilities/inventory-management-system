@@ -10,30 +10,36 @@ describe('Systems', () => {
     return renderComponentWithMemoryRouter(<Systems />, path);
   };
 
-  beforeEach(() =>{
+  beforeEach(() => {
     user = userEvent.setup();
   });
 
   it('renders correctly', async () => {
-    createView("/inventory-management-system/systems");
-    expect(screen.getByText('Root systems')).toBeInTheDocument();
+    createView('/inventory-management-system/systems');
 
     await waitFor(() => {
-      expect(screen.getByText("Giant laser")).toBeInTheDocument();
-    })
+      expect(screen.getByText('Root systems')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    });
   });
 
   it('renders correctly when viewing a specific system', async () => {
-    createView("/inventory-management-system/systems/giant-laser");
-    expect(screen.getByText('Subsystems')).toBeInTheDocument();
+    createView('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
 
     await waitFor(() => {
-      expect(screen.getByText("Smaller laser")).toBeInTheDocument();
-    })
+      expect(screen.getByText('Subsystems')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+    });
   });
 
   it('navigates back to the root directory when home button clicked', async () => {
-    createView('/inventory-management-system/systems/giant-laser');
+    createView('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
 
     await waitFor(() => {
       expect(screen.getByText('Smaller laser')).toBeInTheDocument();

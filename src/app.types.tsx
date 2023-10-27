@@ -101,7 +101,5 @@ export interface System {
   importance: SystemImportanceType;
   description: string;
   parent_id: string | null;
-  parent_path: string;
   code: string;
-  path: string;
 }
