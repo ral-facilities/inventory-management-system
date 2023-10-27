@@ -248,22 +248,11 @@ export const handlers = [
     const parentId = systemsParams.get('parent_id');
     let data;
 
-    console.log(req.url);
-    console.log(parentId);
-
     if (parentId) {
-      if (parentId === 'null') {
+      if (parentId === 'null')
         data = SystemsJSON.filter((system) => system.parent_id === null);
-      } else {
-        console.log(parentId);
-        console.log(
-          SystemsJSON.filter((system) => system.parent_id === parentId)
-        );
-        data = SystemsJSON.filter((system) => system.parent_id === parentId);
-      }
-    } else {
-      data = SystemsJSON;
-    }
+      else data = SystemsJSON.filter((system) => system.parent_id === parentId);
+    } else data = SystemsJSON;
     return res(ctx.status(200), ctx.json(data));
   }),
 
