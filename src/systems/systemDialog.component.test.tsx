@@ -139,6 +139,25 @@ describe('Systems Dialog', () => {
     expect(mockOnClose).not.toHaveBeenCalled();
   });
 
+  it('displays error message when attempting to add a system with a duplicate name', async () => {
+    createView();
+
+    const values = {
+      name: 'Error 409',
+    };
+
+    modifyValues(values);
+
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    expect(
+      screen.getByText(
+        'A System with the same name already exists within the same parent System'
+      )
+    ).toBeInTheDocument();
+    expect(mockOnClose).not.toHaveBeenCalled();
+  });
+
   it('displays error message when an unknown error occurs', async () => {
     createView();
 

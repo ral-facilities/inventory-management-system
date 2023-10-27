@@ -267,6 +267,15 @@ export const handlers = [
   rest.post('/v1/systems', async (req, res, ctx) => {
     const body = (await req.json()) as SystemPost;
 
+    if (body.name === 'Error 409') {
+      return res(
+        ctx.status(409),
+        ctx.json({
+          detail:
+            'A System with the same name already exists within the same parent System',
+        })
+      );
+    }
     if (body.name === 'Error 500') {
       return res(ctx.status(500), ctx.json(''));
     }
