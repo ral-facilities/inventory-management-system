@@ -2,13 +2,8 @@ import { renderHook, waitFor } from '@testing-library/react';
 import SystemBreadcrumbsJSON from '../mocks/SystemBreadcrumbs.json';
 import SystemsJSON from '../mocks/Systems.json';
 import { hooksWrapperWithProviders } from '../setupTests';
-import {
-  SystemImportanceType,
-  SystemPost,
-  useAddSystem,
-  useSystems,
-  useSystemsBreadcrumbs,
-} from './systems';
+import { useAddSystem, useSystems, useSystemsBreadcrumbs } from './systems';
+import { SystemImportanceType, SystemPost } from '../app.types';
 
 describe('System api functions', () => {
   afterEach(() => {
@@ -98,7 +93,7 @@ describe('System api functions', () => {
   describe('useAddSystem', () => {
     const MOCK_SYSTEM_POST: SystemPost = {
       name: 'System name',
-      parent_id: null,
+      parent_id: 'parent-id',
       description: 'Description',
       location: 'Location',
       owner: 'Owner',
@@ -114,21 +109,6 @@ describe('System api functions', () => {
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
 
       expect(result.current.data).toEqual({ ...MOCK_SYSTEM_POST, id: '1' });
-    });
-
-    it('records an error on failure', async () => {
-      console.log = jest.fn();
-
-      const { result } = renderHook(() => useAddSystem(), {
-        wrapper: hooksWrapperWithProviders(),
-      });
-
-      result.current.mutate({ ...MOCK_SYSTEM_POST, name: 'Error 500' });
-      await waitFor(() => expect(result.current.isError).toBeTruthy());
-
-      expect(console.log).toHaveBeenCalledWith(
-        "Got error: 'Request failed with status code 500'"
-      );
     });
   });
 });

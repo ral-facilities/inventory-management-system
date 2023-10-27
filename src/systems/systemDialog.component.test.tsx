@@ -2,9 +2,9 @@ import { fireEvent, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import React from 'react';
-import { SystemImportanceType } from '../api/systems';
 import { renderComponentWithBrowserRouter } from '../setupTests';
 import SystemDialog, { SystemDialogProps } from './systemDialog.component';
+import { SystemImportanceType } from '../app.types';
 
 describe('Systems Dialog', () => {
   let props: SystemDialogProps;

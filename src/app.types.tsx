@@ -86,3 +86,29 @@ export interface BreadcrumbsInfo {
   trail: [id: string, name: string][];
   full_trail: boolean;
 }
+
+export enum SystemImportanceType {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+}
+
+export interface SystemPost {
+  name: string;
+  description?: string;
+  location?: string;
+  owner?: string;
+  importance: SystemImportanceType;
+  parent_id?: string;
+}
+
+export interface System {
+  id: string;
+  name: string | null;
+  description: string | null;
+  location: string | null;
+  owner: string | null;
+  importance: SystemImportanceType;
+  parent_id: string | null;
+  code: string;
+}

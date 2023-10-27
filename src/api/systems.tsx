@@ -6,28 +6,8 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { BreadcrumbsInfo } from '../app.types';
+import { BreadcrumbsInfo, System, SystemPost } from '../app.types';
 import { settings } from '../settings';
-
-export enum SystemImportanceType {
-  LOW = 'low',
-  MEDIUM = 'medium',
-  HIGH = 'high',
-}
-
-export interface SystemPost {
-  name: string;
-  description?: string;
-  location?: string;
-  owner?: string;
-  importance: SystemImportanceType;
-  parent_id?: string;
-}
-
-export interface System extends SystemPost {
-  id: string;
-  code: string;
-}
 
 const fetchSystems = async (parent_id?: string): Promise<System[]> => {
   let apiUrl: string;

@@ -1,10 +1,10 @@
 import { rest } from 'msw';
-import { SystemPost } from '../api/systems';
 import {
   AddCatalogueCategory,
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
+  SystemPost,
 } from '../app.types';
 import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
