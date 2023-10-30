@@ -12,7 +12,7 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import SystemDialog from './systemDialog.component';
@@ -23,7 +23,7 @@ function Systems() {
   const location = useLocation();
   const onChangeNode = React.useCallback(
     (newId: string) => {
-      navigate(`/inventory-management-system/systems${newId}`);
+      navigate(`/inventory-management-system/systems/${newId}`);
     },
     [navigate]
   );
@@ -94,7 +94,11 @@ function Systems() {
           <List sx={{ padding: 0 }}>
             {subsystemsData?.map((item, index) => (
               <ListItem key={index} sx={{ padding: 0 }}>
-                <ListItemButton sx={{ padding: 1 }}>
+                <ListItemButton
+                  sx={{ padding: 1 }}
+                  component={Link}
+                  to={item.id}
+                >
                   <ListItemText>{item.name}</ListItemText>
                 </ListItemButton>
               </ListItem>
