@@ -256,6 +256,12 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(data));
   }),
 
+  rest.get('/v1/systems/:id', (req, res, ctx) => {
+    const { id } = req.params;
+    const data = SystemsJSON.filter((system) => system.id === id);
+    return res(ctx.status(200), ctx.json(data));
+  }),
+
   rest.get('/v1/systems/:id/breadcrumbs', (req, res, ctx) => {
     const { id } = req.params;
     const data = SystemBreadcrumbsJSON.find(
