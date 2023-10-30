@@ -104,7 +104,7 @@ export interface SystemPost {
 
 export interface System {
   id: string;
-  name: string | null;
+  name: string;
   description: string | null;
   location: string | null;
   owner: string | null;
