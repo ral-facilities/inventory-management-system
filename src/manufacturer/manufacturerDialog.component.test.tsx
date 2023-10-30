@@ -3,7 +3,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import AddManufacturerDialog, {
   AddManufacturerDialogProps,
-} from './addManufacturerDialog.component';
+} from './manufacturerDialog.component';
 import { renderComponentWithBrowserRouter } from '../setupTests';
 import axios from 'axios';
 
@@ -35,6 +35,7 @@ describe('Add manufacturer dialog', () => {
         },
         telephone: '',
       },
+      type: 'create',
     };
     user = userEvent.setup();
     axiosPostSpy = jest.spyOn(axios, 'post');

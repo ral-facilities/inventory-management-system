@@ -26,7 +26,7 @@ import {
 } from '../api/manufacturer';
 import { AxiosError } from 'axios';
 
-export interface AddManufacturerDialogProps {
+export interface ManufacturerDialogProps {
   open: boolean;
   onClose: () => void;
   onChangeManufacturerDetails: (manufacturer: ManufacturerDetail) => void;
@@ -46,7 +46,7 @@ function isValidUrl(url: string) {
   }
 }
 
-function AddManufacturerDialog(props: AddManufacturerDialogProps) {
+function ManufacturerDialog(props: ManufacturerDialogProps) {
   const {
     open,
     onClose,
@@ -64,11 +64,6 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
   const [URLErrorMessage, setURLErrorMessage] = React.useState<
     string | undefined
   >(undefined);
-  const [formError, setFormError] = React.useState(false);
-  const [formErrorMessage, setFormErrorMessage] = React.useState<
-    string | undefined
-  >(undefined);
-
   const [addressBuildingNumberError, setAddressBuildingNumberError] =
     React.useState(false);
   const [
@@ -83,11 +78,15 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
   const [AddresspostcodeErrorMessage, setAddresspostcodeErrorMessage] =
     React.useState<string | undefined>(undefined);
 
+  const [formError, setFormError] = React.useState(false);
+  const [formErrorMessage, setFormErrorMessage] = React.useState<
+    string | undefined
+  >(undefined);
+
   const { mutateAsync: addManufacturer } = useAddManufacturer();
   const { mutateAsync: editManufacturer } = useEditManufacturer(
     selectedManufacturer?.id
   );
-
   const { data: selectedManufacturerData } = useManufacturerById(
     selectedManufacturer?.id
   );
@@ -565,4 +564,4 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
   );
 }
 
-export default AddManufacturerDialog;
+export default ManufacturerDialog;

@@ -19,36 +19,21 @@ import { useManufacturers } from '../api/manufacturer';
 import { EditManufacturer, ViewManufacturerResponse } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import { ManufacturerDetail } from '../app.types';
-import AddManufacturerDialog from './addManufacturerDialog.component';
+import ManufacturerDialog from './manufacturerDialog.component';
 
 function Manufacturer() {
-  const [addManufacturer, setAddManufacturer] =
-    React.useState<ManufacturerDetail>({
-      name: '',
-      url: undefined,
-      address: {
-        building_number: '',
-        street_name: '',
-        town: '',
-        county: '',
-        postcode: '',
-      },
-      telephone: '',
-    });
-
-  const [editManufacturer, setEditManufacturer] =
-    React.useState<EditManufacturer>({
-      name: undefined,
-      url: undefined,
-      address: {
-        building_number: undefined,
-        street_name: undefined,
-        town: undefined,
-        county: undefined,
-        postcode: undefined,
-      },
-      telephone: undefined,
-    });
+  const [Manufacturer, setManufacturer] = React.useState<ManufacturerDetail>({
+    name: '',
+    url: undefined,
+    address: {
+      building_number: '',
+      street_name: '',
+      town: '',
+      county: '',
+      postcode: '',
+    },
+    telephone: '',
+  });
 
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
     React.useState<boolean>(false);
@@ -85,18 +70,18 @@ function Manufacturer() {
         >
           Add Manufacturer
         </Button>
-        <AddManufacturerDialog
+        <ManufacturerDialog
           open={addManufacturerDialogOpen}
           onClose={() => setAddManufacturerDialogOpen(false)}
-          manufacturer={addManufacturer}
-          onChangeManufacturerDetails={setAddManufacturer}
+          manufacturer={Manufacturer}
+          onChangeManufacturerDetails={setManufacturer}
           type="create"
         />
-        <AddManufacturerDialog
+        <ManufacturerDialog
           open={editManufacturerDialogOpen}
           onClose={() => setEditManufacturerDialogOpen(false)}
-          manufacturer={addManufacturer}
-          onChangeManufacturerDetails={setAddManufacturer}
+          manufacturer={Manufacturer}
+          onChangeManufacturerDetails={setManufacturer}
           type="edit"
           selectedManufacturer={selectedManufacturer}
         />
