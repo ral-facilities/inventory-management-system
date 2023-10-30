@@ -16,6 +16,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import SystemDialog from './systemDialog.component';
+import SystemDetails from './systemDetails.component';
 
 function Systems() {
   // Navigation setup
@@ -42,12 +43,12 @@ function Systems() {
     React.useState<boolean>(false);
 
   const { data: systemsBreadcrumbs } = useSystemsBreadcrumbs(systemID);
-  const { data: subsystemsData, isLoading: systemsDataLoading } = useSystems(
+  const { data: subsystemsData, isLoading: subsystemsDataLoading } = useSystems(
     // String value of null for filtering root systems
     systemID === null ? 'null' : systemID
   );
 
-  return systemsDataLoading ? null : (
+  return subsystemsDataLoading ? null : (
     <Grid container>
       <Grid
         item
@@ -106,25 +107,7 @@ function Systems() {
           </List>
         </Grid>
         <Grid item xs={12} md={9} lg={10} textAlign="left" padding={1}>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              margin: 1.5,
-            }}
-          >
-            <Typography variant="h6">No system selected</Typography>
-          </Box>
-          <Divider role="presentation" />
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              margin: 1,
-            }}
-          >
-            <Typography variant="h3">Please select a system</Typography>
-          </Box>
+          <SystemDetails id={systemID} />
         </Grid>
       </Grid>
       <SystemDialog

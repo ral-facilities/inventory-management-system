@@ -56,13 +56,17 @@ const fetchSystem = async (id: string): Promise<System> => {
   });
 };
 
-export const useSystem = (id: string): UseQueryResult<System, AxiosError> => {
+// Allows a value of null to disable
+export const useSystem = (
+  id: string | null
+): UseQueryResult<System, AxiosError> => {
   return useQuery<System, AxiosError>(
     ['System', id],
     () => {
-      return fetchSystem(id);
+      return fetchSystem(id ?? '');
     },
     {
+      enabled: id !== null,
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
