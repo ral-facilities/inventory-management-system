@@ -11,8 +11,12 @@ import { settings } from '../settings';
 import {
   AddManufacturer,
   AddManufacturerResponse,
+  EditManufacturer,
+  ManufacturerDetail,
   ViewManufacturerResponse,
 } from '../app.types';
+import Manufacturer from '../manufacturer/manufacturer.component';
+import { error } from 'console';
 
 const getAllManufacturers = async (): Promise<ViewManufacturerResponse[]> => {
   let apiUrl: string;
@@ -96,11 +100,80 @@ export const useDeleteManufacturer = (): UseMutationResult<
   AxiosError,
   ViewManufacturerResponse
 > => {
+  const queryClient = useQueryClient();
   return useMutation(
     (session: ViewManufacturerResponse) => deleteManufacturer(session),
     {
       onError: (error) => {
         console.log('Got error ' + error.message);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
+      },
+    }
+  );
+};
+
+const fetchManufacturerById = async (
+  id: string | undefined
+): Promise<ManufacturerDetail> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+
+  return axios.get(`${apiUrl}/v1/manufacturers/${id}`, {}).then((response) => {
+    return response.data;
+  });
+};
+
+export const useManufacturerById = (
+  id: string | undefined
+): UseQueryResult<ManufacturerDetail, AxiosError> => {
+  return useQuery<ManufacturerDetail, AxiosError>(
+    ['ManufacturerByID', id],
+    (params) => {
+      return fetchManufacturerById(id);
+    },
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+      enabled: id !== undefined,
+    }
+  );
+};
+
+const editManufacturer = async (
+  manufacturer: EditManufacturer,
+  id: string | undefined
+): Promise<ManufacturerDetail> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+  // const { id, ...updatedManufacturer } = manufacturer;
+  return axios
+    .patch<ManufacturerDetail>(`${apiUrl}/v1/manufacturers/${id}`, manufacturer)
+    .then((response) => response.data);
+};
+
+export const useEditManufacturer = (
+  id: string | undefined
+): UseMutationResult<ManufacturerDetail, AxiosError, EditManufacturer> => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (manufacturer: EditManufacturer) => editManufacturer(manufacturer, id),
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
       },
     }
   );

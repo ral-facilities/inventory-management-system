@@ -25,7 +25,7 @@ describe('Delete Manufacturer Dialog', () => {
         street_name: 'Example Street',
         town: 'Oxford',
         county: 'Oxfordshire',
-        postCode: 'OX1 2AB',
+        postcode: 'OX1 2AB',
       },
       telephone: '056896598',
       id: '1',

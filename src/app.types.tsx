@@ -52,7 +52,23 @@ export interface AddManufacturerResponse {
   id: string;
 }
 
+export interface EditManufacturer {
+  name?: string;
+  url?: string;
+  address?: EditAddress;
+  telephone?: string;
+  id?: string;
+}
+
 export interface ManufacturerDetail {
+  name: string;
+  url?: string;
+  address: Address;
+  telephone: string;
+}
+
+export interface Manufacturer {
+  id: string;
   name: string;
   url: string;
   address: Address;
@@ -120,7 +136,15 @@ interface Address {
   street_name: string;
   town?: string;
   county?: string;
-  postCode: string;
+  postcode: string;
+}
+
+interface EditAddress {
+  building_number?: string;
+  street_name?: string;
+  town?: string;
+  county?: string;
+  postcode?: string;
 }
 
 export enum SystemImportanceType {
