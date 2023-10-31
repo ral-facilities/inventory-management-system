@@ -1,12 +1,4 @@
-import {
-  Box,
-  Chip,
-  Divider,
-  Grid,
-  LinearProgress,
-  Skeleton,
-  Typography,
-} from '@mui/material';
+import { Box, Chip, Divider, Grid, Skeleton, Typography } from '@mui/material';
 import { getSystemImportanceColour, useSystem } from '../api/systems';
 
 export interface SystemDetailsProps {
@@ -52,25 +44,15 @@ function SystemDetails(props: SystemDetailsProps) {
       ) : (
         <Grid container direction="column" spacing={1.5} sx={{ margin: 0 }}>
           <Grid item>
-            <Typography variant="body1" component="div">
-              <Box fontWeight="fontWeightBold" display="inline">
-                Location:{' '}
-              </Box>
-              {system.location}
-            </Typography>
+            <Typography variant="h6">Location</Typography>
+            <Typography variant="body1">{system.location}</Typography>
           </Grid>
           <Grid item>
-            <Typography variant="body1" component="div">
-              <Box fontWeight="fontWeightBold" display="inline">
-                Owner:{' '}
-              </Box>
-              {system.owner}
-            </Typography>
+            <Typography variant="h6">Owner</Typography>
+            <Typography variant="body1">{system.owner}</Typography>
           </Grid>
           <Grid item sx={{ display: 'inline-flex', alignItems: 'center' }}>
-            <Typography variant="body1" fontWeight="fontWeightBold">
-              Importance:{' '}
-            </Typography>
+            <Typography variant="h6">Importance </Typography>
             <Chip
               label={system.importance}
               sx={{ marginLeft: 1 }}
@@ -78,9 +60,7 @@ function SystemDetails(props: SystemDetailsProps) {
             />
           </Grid>
           <Grid item>
-            <Typography variant="body1" fontWeight="fontWeightBold">
-              Description:
-            </Typography>
+            <Typography variant="h6">Description</Typography>
             <Typography variant="body1">{system.description}</Typography>
           </Grid>
         </Grid>
