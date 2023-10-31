@@ -159,10 +159,8 @@ function Catalogue() {
   >(null);
 
   React.useEffect(() => {
-    setParentId(parentInfo ? (!!parentInfo.id ? parentInfo.id : null) : null);
-    setIsLeaf(
-      parentInfo ? (!!parentInfo.is_leaf ? parentInfo.is_leaf : false) : false
-    );
+    setParentId((parentInfo && parentInfo.id) || null);
+    setIsLeaf(parentInfo ? !!parentInfo.is_leaf : false);
   }, [catalogueId, parentInfo]);
 
   const [selectedCategories, setSelectedCategories] = React.useState<
