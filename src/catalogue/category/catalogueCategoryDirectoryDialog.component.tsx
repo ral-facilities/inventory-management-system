@@ -22,7 +22,6 @@ import {
   CatalogueCategory,
   EditCatalogueCategory,
 } from '../../app.types';
-import { AxiosError } from 'axios';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import {
   useCatalogueBreadcrumbs,
