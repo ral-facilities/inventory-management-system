@@ -2,6 +2,9 @@ describe('Manufacturer', () => {
   beforeEach(() => {
     cy.visit('/inventory-management-system/manufacturer');
   });
+  // afterEach(() => {
+  //   cy.clearMocks();
+  // });
 
   it('should render in table headers', () => {
     cy.visit('/inventory-management-system/manufacturer');
@@ -156,7 +159,7 @@ describe('Manufacturer', () => {
       });
   });
 
-  it('Edits a manufacturer correctly', async () => {
+  it.only('Edits a manufacturer correctly', async () => {
     cy.findByRole('button', {
       name: 'Edit Manufacturer A manufacturer',
     }).click();

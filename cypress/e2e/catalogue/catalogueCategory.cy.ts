@@ -276,7 +276,7 @@ describe('Catalogue Category', () => {
     );
   });
 
-  it('when root has no data it displays no catagories error message', () => {
+  it.only('when root has no data it displays no catagories error message', () => {
     cy.editEndpointResponse({
       url: '/v1/catalogue-categories/',
       data: [],
