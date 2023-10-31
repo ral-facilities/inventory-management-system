@@ -159,7 +159,7 @@ describe('Manufacturer', () => {
       });
   });
 
-  it.only('Edits a manufacturer correctly', async () => {
+  it('Edits a manufacturer correctly', async () => {
     cy.findByRole('button', {
       name: 'Edit Manufacturer A manufacturer',
     }).click();
