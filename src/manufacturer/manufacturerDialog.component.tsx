@@ -179,6 +179,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       },
       telephone: manufacturer.telephone,
     };
+    console.log(manufacturerToAdd);
 
     addManufacturer(manufacturerToAdd)
       .then((response) => handleClose())

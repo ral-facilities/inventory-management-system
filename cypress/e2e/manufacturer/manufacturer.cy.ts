@@ -2,12 +2,11 @@ describe('Manufacturer', () => {
   beforeEach(() => {
     cy.visit('/inventory-management-system/manufacturer');
   });
-  // afterEach(() => {
-  //   cy.clearMocks();
-  // });
+  afterEach(() => {
+    cy.clearMocks();
+  });
 
   it('should render in table headers', () => {
-    cy.visit('/inventory-management-system/manufacturer');
     cy.findByText('Actions').should('be.visible');
     cy.findByText('Name').should('be.visible');
     cy.findByText('URL').should('be.visible');
@@ -16,8 +15,6 @@ describe('Manufacturer', () => {
   });
 
   it('should render manufacturer data', () => {
-    cy.visit('/inventory-management-system/manufacturer');
-
     cy.findByText('Manufacturer A').should('be.visible');
     cy.findByText('Manufacturer B').should('be.visible');
     cy.findByText('Manufacturer C').should('be.visible');
@@ -36,7 +33,6 @@ describe('Manufacturer', () => {
   });
 
   it('manufacturer url is correct and opens new webpage', () => {
-    cy.visit('/inventory-management-system/manufacturer');
     const url = cy.findByText('http://example.com');
 
     url
@@ -48,7 +44,7 @@ describe('Manufacturer', () => {
     cy.url().should('include', 'http://example.com');
   });
 
-  it('render new manufacturer when added', async () => {
+  it('render new manufacturer when added', () => {
     cy.findByRole('button', { name: 'Add Manufacturer' }).click();
     cy.findByLabelText('Name *').type('Manufacturer D');
     cy.findByLabelText('URL').type('http://test.co.uk');
@@ -70,13 +66,13 @@ describe('Manufacturer', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"Manufacturer D","url":"http://test.co.uk", "address": {building_number: "1", "street_name": "Example Street", "town": "Oxford", "county": "Oxfordshire", "postcode": "OX1 2AB",}, "telephone": "07349612203"}'
+        '{"name":"Manufacturer D","url":"http://test.co.uk","address":{"building_number":"1","street_name":"Example Street","town":"Oxford","county":"Oxfordshire","postcode":"OX1 2AB"},"telephone":"07349612203"}'
       );
     });
   });
 
-  it('render error messages if fields are not filled', async () => {
-    cy.findByTestId('Add Manufacturer').click();
+  it('render error messages if fields are not filled', () => {
+    cy.findByRole('button', { name: 'Add Manufacturer' }).click();
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog')
       .should('be.visible')
@@ -100,8 +96,8 @@ describe('Manufacturer', () => {
       });
   });
 
-  it('displays error message when duplicate name entered', async () => {
-    cy.findByTestId('Add Manufacturer').click();
+  it('displays error message when duplicate name entered', () => {
+    cy.findByRole('button', { name: 'Add Manufacturer' }).click();
     cy.findByLabelText('Name *').type('Manufacturer A');
     cy.findByLabelText('Building number *').type('1');
     cy.findByLabelText('Street name *').type('Example Street');
@@ -115,8 +111,8 @@ describe('Manufacturer', () => {
       });
   });
 
-  it('invalid url displays correct error message', async () => {
-    cy.findByTestId('Add Manufacturer').click();
+  it('invalid url displays correct error message', () => {
+    cy.findByRole('button', { name: 'Add Manufacturer' }).click();
 
     cy.findByLabelText('URL').type('test.co.uk');
 
@@ -124,12 +120,14 @@ describe('Manufacturer', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Please enter a valid url.');
+        cy.contains('Please enter a valid URL');
       });
   });
 
   it('delete a manufacturer', () => {
-    cy.findAllByTestId('DeleteIcon').first().click();
+    cy.findByRole('button', {
+      name: 'Delete Manufacturer A manufacturer',
+    }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -145,8 +143,10 @@ describe('Manufacturer', () => {
     });
   });
 
-  it('shows error when trying to delete manufacturer that is part of Catalogue Item', async () => {
-    cy.findAllByTestId('DeleteIcon').eq(1).click();
+  it('shows error when trying to delete manufacturer that is part of Catalogue Item', () => {
+    cy.findByRole('button', {
+      name: 'Delete Manufacturer B manufacturer',
+    }).click();
 
     cy.findByRole('button', { name: 'Continue' }).click();
 
@@ -159,7 +159,8 @@ describe('Manufacturer', () => {
       });
   });
 
-  it('Edits a manufacturer correctly', async () => {
+  it('Edits a manufacturer correctly', () => {
+    cy.visit('/inventory-management-system/manufacturer');
     cy.findByRole('button', {
       name: 'Edit Manufacturer A manufacturer',
     }).click();
@@ -200,7 +201,7 @@ describe('Manufacturer', () => {
     });
   });
 
-  it('Trying to edit with duplicate name displays error message', async () => {
+  it('Trying to edit with duplicate name displays error message', () => {
     cy.findByRole('button', {
       name: 'Edit Manufacturer A manufacturer',
     }).click();
@@ -219,7 +220,7 @@ describe('Manufacturer', () => {
       });
   });
 
-  it('Trying to edit with invalid url displays error message', async () => {
+  it('Trying to edit with invalid url displays error message', () => {
     cy.findByRole('button', {
       name: 'Edit Manufacturer A manufacturer',
     }).click();
