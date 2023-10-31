@@ -1,4 +1,11 @@
-import { Box, Chip, Divider, Grid, Skeleton, Typography } from '@mui/material';
+import {
+  Box,
+  Chip,
+  CircularProgress,
+  Divider,
+  Grid,
+  Typography,
+} from '@mui/material';
 import { getSystemImportanceColour, useSystem } from '../api/systems';
 
 export interface SystemDetailsProps {
@@ -9,12 +16,18 @@ function SystemDetails(props: SystemDetailsProps) {
   const { data: system, isLoading: systemLoading } = useSystem(props.id);
 
   return systemLoading && props.id !== null ? (
-    <Skeleton
-      variant="rectangular"
-      animation="wave"
-      width="100%"
-      height={400}
-    />
+    <Box
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        height: '100%',
+        minHeight: 200,
+      }}
+    >
+      <CircularProgress />
+    </Box>
   ) : (
     <>
       <Box

@@ -2,6 +2,7 @@ import { NavigateNext } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import {
   Box,
+  CircularProgress,
   Divider,
   Grid,
   IconButton,
@@ -10,15 +11,14 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  Skeleton,
   Typography,
 } from '@mui/material';
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import SystemDialog from './systemDialog.component';
 import SystemDetails from './systemDetails.component';
+import SystemDialog from './systemDialog.component';
 
 function Systems() {
   // Navigation setup
@@ -87,12 +87,18 @@ function Systems() {
       <Grid container margin={0} direction="row" alignItems="stretch">
         <Grid item xs={12} md={3} lg={2} textAlign="left" padding={1}>
           {subsystemsDataLoading ? (
-            <Skeleton
-              variant="rectangular"
-              animation="wave"
-              width="100%"
-              height={400}
-            />
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                height: '100%',
+                minHeight: 200,
+              }}
+            >
+              <CircularProgress />
+            </Box>
           ) : (
             <>
               <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
