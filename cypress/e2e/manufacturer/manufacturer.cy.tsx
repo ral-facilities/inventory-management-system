@@ -155,4 +155,81 @@ describe('Manufacturer', () => {
         );
       });
   });
+
+  it('Edits a manufacturer correctly', async () => {
+    cy.findByRole('button', {
+      name: 'Edit Manufacturer A manufacturer',
+    }).click();
+    cy.findByLabelText('Name').clear();
+    cy.findByLabelText('Name').type('test');
+
+    cy.findByLabelText('Building number').clear();
+    cy.findByLabelText('Building number').type('100');
+
+    cy.findByLabelText('Street name').clear();
+    cy.findByLabelText('Street name').type('test');
+
+    cy.findByLabelText('Town').clear();
+    cy.findByLabelText('Town').type('test');
+
+    cy.findByLabelText('County').clear();
+    cy.findByLabelText('County').type('test');
+
+    cy.findByLabelText('Post/Zip code').clear();
+    cy.findByLabelText('Post/Zip code').type('test');
+
+    cy.findByLabelText('Telephone number').clear();
+    cy.findByLabelText('Telephone number').type('0000000000');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/manufacturers/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"name":"test","address":{"building_number":"100","street_name":"test","town":"test","county":"test","postcode":"test"},"telephone":"0000000000"}'
+      );
+    });
+  });
+
+  it('Trying to edit with duplicate name displays error message', async () => {
+    cy.findByRole('button', {
+      name: 'Edit Manufacturer A manufacturer',
+    }).click();
+
+    cy.findByLabelText('Name').clear();
+    cy.findByLabelText('Name').type('test_dup');
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains(
+          'A manufacturer with the same name has been found. Please enter a different name'
+        );
+      });
+  });
+
+  it('Trying to edit with invalid url displays error message', async () => {
+    cy.findByRole('button', {
+      name: 'Edit Manufacturer A manufacturer',
+    }).click();
+
+    cy.findByLabelText('URL').clear();
+    cy.findByLabelText('URL').type('invalid');
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please enter a valid URL');
+      });
+  });
 });
