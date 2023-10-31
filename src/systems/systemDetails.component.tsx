@@ -1,4 +1,12 @@
-import { Box, Chip, Divider, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Chip,
+  Divider,
+  Grid,
+  LinearProgress,
+  Skeleton,
+  Typography,
+} from '@mui/material';
 import { getSystemImportanceColour, useSystem } from '../api/systems';
 
 export interface SystemDetailsProps {
@@ -8,7 +16,14 @@ export interface SystemDetailsProps {
 function SystemDetails(props: SystemDetailsProps) {
   const { data: system, isLoading: systemLoading } = useSystem(props.id);
 
-  return (
+  return systemLoading && props.id !== null ? (
+    <Skeleton
+      variant="rectangular"
+      animation="wave"
+      width="100%"
+      height={400}
+    />
+  ) : (
     <>
       <Box
         sx={{
@@ -37,12 +52,6 @@ function SystemDetails(props: SystemDetailsProps) {
       ) : (
         <Grid container direction="column" spacing={1.5} sx={{ margin: 0 }}>
           <Grid item>
-            <Typography variant="body1" fontWeight="fontWeightBold">
-              Description:
-            </Typography>
-            <Typography variant="body1">{system.description}</Typography>
-          </Grid>
-          <Grid item>
             <Typography variant="body1" component="div">
               <Box fontWeight="fontWeightBold" display="inline">
                 Location:{' '}
@@ -67,6 +76,12 @@ function SystemDetails(props: SystemDetailsProps) {
               sx={{ marginLeft: 1 }}
               color={getSystemImportanceColour(system.importance)}
             />
+          </Grid>
+          <Grid item>
+            <Typography variant="body1" fontWeight="fontWeightBold">
+              Description:
+            </Typography>
+            <Typography variant="body1">{system.description}</Typography>
           </Grid>
         </Grid>
       )}

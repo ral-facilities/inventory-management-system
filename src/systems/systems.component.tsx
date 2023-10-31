@@ -5,10 +5,12 @@ import {
   Divider,
   Grid,
   IconButton,
+  LinearProgress,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
+  Skeleton,
   Typography,
 } from '@mui/material';
 import React from 'react';
@@ -42,69 +44,87 @@ function Systems() {
   const [addSystemDialogOpen, setAddSystemDialogOpen] =
     React.useState<boolean>(false);
 
-  const { data: systemsBreadcrumbs } = useSystemsBreadcrumbs(systemID);
+  const { data: systemsBreadcrumbs, isLoading: systemsBreadcrumbsLoading } =
+    useSystemsBreadcrumbs(systemID);
   const { data: subsystemsData, isLoading: subsystemsDataLoading } = useSystems(
     // String value of null for filtering root systems
     systemID === null ? 'null' : systemID
   );
 
-  return subsystemsDataLoading ? null : (
+  return (
     <Grid container>
-      <Grid
-        item
-        container
-        alignItems="center"
-        justifyContent="space-between" // Align items and distribute space along the main axis
-        sx={{
-          display: 'flex',
-          height: '100%',
-          width: '100%',
-          padding: 1, // Add some padding for spacing
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Breadcrumbs
-            breadcrumbsInfo={systemsBreadcrumbs}
-            onChangeNode={onChangeNode}
-            onChangeNavigateHome={() => {
-              navigate('/inventory-management-system/systems');
-            }}
-            navigateHomeAriaLabel={'navigate to systems home'}
-          />
-          <NavigateNext
-            fontSize="medium"
-            sx={{ color: 'rgba(0, 0, 0, 0.6)', margin: '4px' }}
-          />
-        </div>
-      </Grid>
+      {systemsBreadcrumbsLoading && systemID !== null ? (
+        <LinearProgress sx={{ width: '100%' }} />
+      ) : (
+        <Grid
+          item
+          container
+          alignItems="center"
+          justifyContent="space-between" // Align items and distribute space along the main axis
+          sx={{
+            display: 'flex',
+            height: '100%',
+            width: '100%',
+            padding: 1, // Add some padding for spacing
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Breadcrumbs
+              breadcrumbsInfo={systemsBreadcrumbs}
+              onChangeNode={onChangeNode}
+              onChangeNavigateHome={() => {
+                navigate('/inventory-management-system/systems');
+              }}
+              navigateHomeAriaLabel={'navigate to systems home'}
+            />
+            <NavigateNext
+              fontSize="medium"
+              sx={{ color: 'rgba(0, 0, 0, 0.6)', margin: '4px' }}
+            />
+          </div>
+        </Grid>
+      )}
       <Grid container margin={0} direction="row" alignItems="stretch">
         <Grid item xs={12} md={3} lg={2} textAlign="left" padding={1}>
-          <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
-            <Typography variant="h6">
-              {systemID === null ? 'Root systems' : 'Subsystems'}
-            </Typography>
-            <IconButton
-              sx={{ marginLeft: 'auto' }}
-              aria-label={systemID === null ? 'add system' : 'add subsystem'}
-              onClick={() => setAddSystemDialogOpen(true)}
-            >
-              <AddIcon />
-            </IconButton>
-          </Box>
-          <Divider role="presentation" />
-          <List sx={{ padding: 0 }}>
-            {subsystemsData?.map((item, index) => (
-              <ListItem key={index} sx={{ padding: 0 }}>
-                <ListItemButton
-                  sx={{ padding: 1 }}
-                  component={Link}
-                  to={item.id}
+          {subsystemsDataLoading ? (
+            <Skeleton
+              variant="rectangular"
+              animation="wave"
+              width="100%"
+              height={400}
+            />
+          ) : (
+            <>
+              <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
+                <Typography variant="h6">
+                  {systemID === null ? 'Root systems' : 'Subsystems'}
+                </Typography>
+                <IconButton
+                  sx={{ marginLeft: 'auto' }}
+                  aria-label={
+                    systemID === null ? 'add system' : 'add subsystem'
+                  }
+                  onClick={() => setAddSystemDialogOpen(true)}
                 >
-                  <ListItemText>{item.name}</ListItemText>
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
+                  <AddIcon />
+                </IconButton>
+              </Box>
+              <Divider role="presentation" />
+              <List sx={{ padding: 0 }}>
+                {subsystemsData?.map((item, index) => (
+                  <ListItem key={index} sx={{ padding: 0 }}>
+                    <ListItemButton
+                      sx={{ padding: 1 }}
+                      component={Link}
+                      to={item.id}
+                    >
+                      <ListItemText>{item.name}</ListItemText>
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+              </List>
+            </>
+          )}
         </Grid>
         <Grid item xs={12} md={9} lg={10} textAlign="left" padding={1}>
           <SystemDetails id={systemID} />
