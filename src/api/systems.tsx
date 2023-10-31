@@ -6,8 +6,27 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { BreadcrumbsInfo, System, SystemPost } from '../app.types';
+import {
+  BreadcrumbsInfo,
+  System,
+  SystemImportanceType,
+  SystemPost,
+} from '../app.types';
 import { settings } from '../settings';
+
+/** Utility for turning an importance into an MUI palette colour to display */
+export const getSystemImportanceColour = (
+  importance: SystemImportanceType
+): 'success' | 'warning' | 'error' => {
+  switch (importance) {
+    case SystemImportanceType.LOW:
+      return 'success';
+    case SystemImportanceType.MEDIUM:
+      return 'warning';
+    case SystemImportanceType.HIGH:
+      return 'error';
+  }
+};
 
 const fetchSystems = async (parent_id?: string): Promise<System[]> => {
   let apiUrl: string;
