@@ -147,8 +147,7 @@ export const useManufacturerById = (
 };
 
 const editManufacturer = async (
-  manufacturer: EditManufacturer,
-  id: string | undefined
+  manufacturer: EditManufacturer
 ): Promise<ManufacturerDetail> => {
   let apiUrl: string;
   apiUrl = '';
@@ -156,18 +155,23 @@ const editManufacturer = async (
   if (settingsResult) {
     apiUrl = settingsResult['apiUrl'];
   }
-  // const { id, ...updatedManufacturer } = manufacturer;
+  const { id, ...updatedManufacturer } = manufacturer;
   return axios
-    .patch<ManufacturerDetail>(`${apiUrl}/v1/manufacturers/${id}`, manufacturer)
+    .patch<ManufacturerDetail>(
+      `${apiUrl}/v1/manufacturers/${id}`,
+      updatedManufacturer
+    )
     .then((response) => response.data);
 };
 
-export const useEditManufacturer = (
-  id: string | undefined
-): UseMutationResult<ManufacturerDetail, AxiosError, EditManufacturer> => {
+export const useEditManufacturer = (): UseMutationResult<
+  ManufacturerDetail,
+  AxiosError,
+  EditManufacturer
+> => {
   const queryClient = useQueryClient();
   return useMutation(
-    (manufacturer: EditManufacturer) => editManufacturer(manufacturer, id),
+    (manufacturer: EditManufacturer) => editManufacturer(manufacturer),
     {
       onError: (error) => {
         console.log('Got error ' + error.message);

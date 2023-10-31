@@ -84,9 +84,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   >(undefined);
 
   const { mutateAsync: addManufacturer } = useAddManufacturer();
-  const { mutateAsync: editManufacturer } = useEditManufacturer(
-    selectedManufacturer?.id
-  );
+  const { mutateAsync: editManufacturer } = useEditManufacturer();
   const { data: selectedManufacturerData } = useManufacturerById(
     selectedManufacturer?.id
   );
@@ -94,7 +92,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   const handleClose = React.useCallback(() => {
     onChangeManufacturerDetails({
       name: '',
-      url: '',
+      url: undefined,
       address: {
         building_number: '',
         street_name: '',
@@ -104,7 +102,18 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       },
       telephone: '',
     });
-
+    setNameError(false);
+    setNameErrorMessage(undefined);
+    setURLError(false);
+    setURLErrorMessage(undefined);
+    setAddressBuildingNumberError(false);
+    setAddressBuildingNumberErrorMessage(undefined);
+    setAddressStreetNameError(false);
+    setaddressStreetNameErrorMessage(undefined);
+    setAddresspostcodeError(false);
+    setAddresspostcodeErrorMessage(undefined);
+    setFormError(false);
+    setFormErrorMessage(undefined);
     onClose();
   }, [onClose, onChangeManufacturerDetails]);
 
@@ -119,8 +128,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         setURLErrorMessage('Please enter a valid URL');
       }
     }
-
-    console.log(manufacturer.address);
 
     //check name
     if (!manufacturer.name || manufacturer.name?.trim().length === 0) {
@@ -188,32 +195,23 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   }, [manufacturer, addManufacturer, handleClose]);
 
   const handleEditManufacturer = React.useCallback(() => {
-    let ManufacturerToEdit: EditManufacturer = {
-      name: undefined,
-      url: undefined,
-      address: {
-        building_number: undefined,
-        street_name: undefined,
-        town: undefined,
-        county: undefined,
-        postcode: undefined,
-      },
-      telephone: undefined,
-    };
-
     if (
-      (!manufacturer.name || manufacturer.name.trim() === '') &&
-      (!manufacturer.url || manufacturer.url.trim() === '') &&
-      (!manufacturer.address?.building_number ||
-        manufacturer.address.building_number.trim() === '') &&
-      (!manufacturer.address.street_name ||
-        manufacturer.address.street_name.trim() === '') &&
-      (!manufacturer.address.town || manufacturer.address.town.trim() === '') &&
-      (!manufacturer.address.county ||
-        manufacturer.address.county.trim() === '') &&
-      (!manufacturer.address.postcode ||
-        manufacturer.address.postcode.trim() === '') &&
-      (!manufacturer.telephone || manufacturer.telephone.trim() === '')
+      !manufacturer.name ||
+      manufacturer.name.trim() === '' ||
+      !manufacturer.url ||
+      manufacturer.url.trim() === '' ||
+      !manufacturer.address?.building_number ||
+      manufacturer.address.building_number.trim() === '' ||
+      !manufacturer.address.street_name ||
+      manufacturer.address.street_name.trim() === '' ||
+      !manufacturer.address.town ||
+      manufacturer.address.town.trim() === '' ||
+      !manufacturer.address.county ||
+      manufacturer.address.county.trim() === '' ||
+      !manufacturer.address.postcode ||
+      manufacturer.address.postcode.trim() === '' ||
+      !manufacturer.telephone ||
+      manufacturer.telephone.trim() === ''
     ) {
       setFormError(true);
       setFormErrorMessage('Please enter a value into atleast one field');
@@ -232,34 +230,29 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     }
 
     if (selectedManufacturer && selectedManufacturerData) {
-      const isNameUpdated =
-        manufacturer.name !== selectedManufacturer.name &&
-        manufacturer.name !== '';
+      const isNameUpdated = manufacturer.name !== selectedManufacturer.name;
       const isURLUpdated =
         manufacturer.url !== selectedManufacturer.url &&
-        manufacturer.url !== undefined &&
-        manufacturer.url !== '';
+        manufacturer.url !== undefined;
       const isBuildingNumberUpdated =
         manufacturer.address?.building_number !==
-          selectedManufacturer.address.building_number &&
-        manufacturer.address.building_number !== '';
+        selectedManufacturer.address.building_number;
       const isStreetNameUpdated =
         manufacturer.address?.street_name !==
-          selectedManufacturer.address.street_name &&
-        manufacturer.address.street_name !== '';
+        selectedManufacturer.address.street_name;
       const isTownUpdated =
-        manufacturer.address?.town !== selectedManufacturer.address.town &&
-        manufacturer.address.town !== '';
+        manufacturer.address?.town !== selectedManufacturer.address.town;
       const isCountyUpdated =
-        manufacturer.address?.county !== selectedManufacturer.address.county &&
-        manufacturer.address.county !== '';
+        manufacturer.address?.county !== selectedManufacturer.address.county;
       const ispostcodeUpdated =
         manufacturer.address?.postcode !==
-          selectedManufacturer.address.postcode &&
-        manufacturer.address.postcode !== '';
+        selectedManufacturer.address.postcode;
       const isTelephoneUpdated =
-        manufacturer.telephone !== selectedManufacturer.telephone &&
-        manufacturer.telephone !== '';
+        manufacturer.telephone !== selectedManufacturer.telephone;
+
+      let ManufacturerToEdit: EditManufacturer = {
+        id: selectedManufacturer?.id,
+      };
 
       if (isNameUpdated) {
         ManufacturerToEdit = {

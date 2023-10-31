@@ -165,6 +165,7 @@ function Manufacturer() {
                         onClick={() => {
                           setEditManufacturerDialogOpen(true);
                           setSelectedManufacturer(item);
+                          setManufacturer(item);
                         }}
                       >
                         <EditIcon />
