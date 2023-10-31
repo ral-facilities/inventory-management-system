@@ -15,8 +15,6 @@ import {
   ManufacturerDetail,
   ViewManufacturerResponse,
 } from '../app.types';
-import Manufacturer from '../manufacturer/manufacturer.component';
-import { error } from 'console';
 
 const getAllManufacturers = async (): Promise<ViewManufacturerResponse[]> => {
   let apiUrl: string;

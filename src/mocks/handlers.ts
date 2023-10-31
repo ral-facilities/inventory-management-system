@@ -10,7 +10,6 @@ import {
   EditCatalogueCategory,
   EditCatalogueItem,
 } from '../app.types';
-import { Man } from '@mui/icons-material';
 
 export const handlers = [
   rest.post('/v1/catalogue-categories', async (req, res, ctx) => {
@@ -179,10 +178,6 @@ export const handlers = [
   }),
 
   rest.patch('/v1/manufacturers/:id', async (req, res, ctx) => {
-    const { id } = req.params;
-    const data = ManufacturerJSON.filter(
-      (manufacturer) => manufacturer.id === id
-    );
     const body = (await req.json()) as EditManufacturer;
     if (body.name === 'test_dup') {
       return res(
