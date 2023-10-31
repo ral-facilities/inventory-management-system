@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogTitle,
   Typography,
-  useTheme,
   Table,
   TableBody,
   TableCell,
@@ -15,10 +14,10 @@ import {
   TableRow,
   Paper,
   LinearProgress,
+  Grid,
 } from '@mui/material';
 import React from 'react';
 import { CatalogueCategory, EditCatalogueCategory } from '../../app.types';
-import { AxiosError } from 'axios';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import {
   useCatalogueBreadcrumbs,
@@ -26,7 +25,7 @@ import {
   useCatalogueCategoryById,
   useMoveToCatalogueCategory,
 } from '../../api/catalogueCategory';
-import handleTransferState from '../../api/handleTransferState';
+import handleTransferState from '../../handleTransferState';
 
 export interface CatalogueCategoryDirectoryDialogProps {
   open: boolean;
@@ -48,7 +47,6 @@ const CatalogueCategoryDirectoryDialog = (
     catalogueCurrDirId,
     onChangeCatalogueCurrDirId,
   } = props;
-  const theme = useTheme();
 
   const {
     data: catalogueCategoryData,
@@ -57,6 +55,7 @@ const CatalogueCategoryDirectoryDialog = (
     false,
     !catalogueCurrDirId ? 'null' : catalogueCurrDirId
   );
+
   const handleClose = React.useCallback(() => {
     onClose();
     onChangeSelectedCategories([]);
@@ -89,15 +88,10 @@ const CatalogueCategoryDirectoryDialog = (
         is_leaf: false,
         code: '',
       },
-    })
-      .then((response) => {
-        console.log(response);
-        handleTransferState(response);
-        handleClose();
-      })
-      .catch((error: AxiosError) => {
-        console.log(error);
-      });
+    }).then((response) => {
+      handleTransferState(response);
+      handleClose();
+    });
   }, [
     catalogueCurrDirId,
     handleClose,
@@ -128,34 +122,28 @@ const CatalogueCategoryDirectoryDialog = (
       maxWidth="lg"
       PaperProps={{ sx: { height: '512px' } }}
     >
-      <DialogTitle sx={{ marginLeft: '8px' }}>
-        Move {selectedCategories.length}{' '}
-        {selectedCategories.length === 1
-          ? 'catalogue category'
-          : 'catalogue categories'}{' '}
-        to new a catalogue category
+      <DialogTitle sx={{ marginLeft: 2 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            Move {selectedCategories.length}{' '}
+            {selectedCategories.length === 1
+              ? 'catalogue category'
+              : 'catalogue categories'}{' '}
+            to a different catalogue category
+          </Grid>
+          <Grid item xs={12}>
+            <Breadcrumbs
+              onChangeNode={onChangeNode}
+              breadcrumbsInfo={catalogueBreadcrumbs}
+              onChangeNavigateHome={() => {
+                onChangeCatalogueCurrDirId(null);
+              }}
+              navigateHomeAriaLabel="navigate to catalogue home"
+            />
+          </Grid>
+        </Grid>
       </DialogTitle>
       <DialogContent>
-        <Box
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            position: 'sticky',
-            top: 0, // Adjust this value as needed to control the distance from the top
-            backgroundColor: theme.palette.background.paper, // Set the background color for the sticky element
-            zIndex: theme.zIndex.appBar + 1, // Ensure it's above other elements on the page
-          }}
-        >
-          <Breadcrumbs
-            onChangeNode={onChangeNode}
-            breadcrumbsInfo={catalogueBreadcrumbs}
-            onChangeNavigateHome={() => {
-              onChangeCatalogueCurrDirId(null);
-            }}
-            navigateHomeAriaLabel="navigate to catalogue home"
-          />
-        </Box>
-
         {catalogueCategoryDataLoading ? (
           <Box
             sx={{
@@ -190,11 +178,9 @@ const CatalogueCategoryDirectoryDialog = (
                     }}
                     onMouseEnter={() => setHoveredRow(index)}
                     onMouseLeave={() => setHoveredRow(null)}
-                    style={{
+                    sx={{
                       backgroundColor:
-                        hoveredRow === index
-                          ? theme.palette.action.hover
-                          : 'inherit',
+                        hoveredRow === index ? 'action.hover' : 'inherit',
                       cursor:
                         selectedCatalogueCategoryIds.includes(category.id) ||
                         category.is_leaf
@@ -208,7 +194,7 @@ const CatalogueCategoryDirectoryDialog = (
                         color:
                           selectedCatalogueCategoryIds.includes(category.id) ||
                           category.is_leaf
-                            ? theme.palette.action.disabled
+                            ? 'action.disabled'
                             : 'inherit',
                       }}
                     >

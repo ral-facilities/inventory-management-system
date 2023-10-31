@@ -75,10 +75,8 @@ function CatalogueCard(props: CatalogueCardProps) {
             minWidth: 0,
           }}
         >
-          <div aria-label="main-content">
-            <Typography aria-label="card-name">
-              {catalogueCategory.name}
-            </Typography>
+          <div>
+            <Typography>{catalogueCategory.name}</Typography>
           </div>
         </CardContent>
         <CardActions>
