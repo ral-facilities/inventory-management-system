@@ -259,7 +259,12 @@ export const handlers = [
   rest.get('/v1/systems/:id', (req, res, ctx) => {
     const { id } = req.params;
     const data = SystemsJSON.filter((system) => system.id === id);
-    return res(ctx.status(200), ctx.json(data));
+    if (data.length > 0) return res(ctx.status(200), ctx.json(data[0]));
+    else
+      return res(
+        ctx.status(404),
+        ctx.json({ detail: 'A System with such ID was not found' })
+      );
   }),
 
   rest.get('/v1/systems/:id/breadcrumbs', (req, res, ctx) => {

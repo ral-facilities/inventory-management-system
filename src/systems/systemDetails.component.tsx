@@ -58,14 +58,14 @@ function SystemDetails(props: SystemDetailsProps) {
         <Grid container direction="column" spacing={1.5} sx={{ margin: 0 }}>
           <Grid item>
             <Typography variant="h6">Location</Typography>
-            <Typography variant="body1">{system.location}</Typography>
+            <Typography variant="body1">{system.location ?? 'None'}</Typography>
           </Grid>
           <Grid item>
             <Typography variant="h6">Owner</Typography>
-            <Typography variant="body1">{system.owner}</Typography>
+            <Typography variant="body1">{system.owner ?? 'None'}</Typography>
           </Grid>
           <Grid item sx={{ display: 'inline-flex', alignItems: 'center' }}>
-            <Typography variant="h6">Importance </Typography>
+            <Typography variant="h6">Importance</Typography>
             <Chip
               label={system.importance}
               sx={{ marginLeft: 1 }}
@@ -74,7 +74,9 @@ function SystemDetails(props: SystemDetailsProps) {
           </Grid>
           <Grid item>
             <Typography variant="h6">Description</Typography>
-            <Typography variant="body1">{system.description}</Typography>
+            <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
+              {system.description ?? 'None'}
+            </Typography>
           </Grid>
         </Grid>
       )}
