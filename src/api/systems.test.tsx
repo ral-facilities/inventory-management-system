@@ -87,7 +87,9 @@ describe('System api functions', () => {
       });
 
       expect(result.current.data).toEqual(
-        SystemsJSON.filter((system) => system.id === '65328f34a40ff5301575a4e3')
+        SystemsJSON.filter(
+          (system) => system.id === '65328f34a40ff5301575a4e3'
+        )[0]
       );
     });
   });
