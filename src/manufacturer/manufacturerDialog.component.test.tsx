@@ -380,34 +380,48 @@ describe('Add manufacturer dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
-    // it('No values entered shows correct error message', async () => {
-    //   props = {
-    //     ...props,
-    //     selectedManufacturer: {
-    //       id: '1',
-    //       name: 'Manufacturer A',
-    //       url: 'http://example.com',
-    //       address: {
-    //         building_number: '1',
-    //         street_name: 'Example Street',
-    //         town: 'Oxford',
-    //         county: 'Oxfordshire',
-    //         postcode: 'OX1 2AB',
-    //       },
-    //       telephone: '07334893348',
-    //     },
-    //   };
+    it('No values changed shows correct error message', async () => {
+      props = {
+        ...props,
+        selectedManufacturer: {
+          id: '1',
+          name: 'Manufacturer A',
+          url: 'http://example.com',
+          address: {
+            building_number: '1',
+            street_name: 'Example Street',
+            town: 'Oxford',
+            county: 'Oxfordshire',
+            postcode: 'OX1 2AB',
+          },
+          telephone: '07334893348',
+        },
+        manufacturer: {
+          name: 'Manufacturer A',
+          url: 'http://example.com',
+          address: {
+            building_number: '1',
+            street_name: 'Example Street',
+            town: 'Oxford',
+            county: 'Oxfordshire',
+            postcode: 'OX1 2AB',
+          },
+          telephone: '07334893348',
+        },
+      };
 
-    //   createView();
+      createView();
 
-    //   const saveButton = screen.getByRole('button', { name: 'Save' });
+      const saveButton = screen.getByRole('button', { name: 'Save' });
 
-    //   await user.click(saveButton);
+      await user.click(saveButton);
 
-    //   expect(
-    //     screen.getByText('Please enter a value into atleast one field')
-    //   ).toBeInTheDocument();
-    // });
+      expect(
+        screen.getByText(
+          "There have been no changes made. Please change a field's value or press Cancel to exit"
+        )
+      ).toBeInTheDocument();
+    });
 
     it('Invalid url displays correct error message', async () => {
       props = {
@@ -448,7 +462,7 @@ describe('Add manufacturer dialog', () => {
       expect(screen.getByText('Please enter a valid URL')).toBeInTheDocument();
     });
 
-    it.only('Duplicate name displays error message', async () => {
+    it('Duplicate name displays error message', async () => {
       props = {
         ...props,
         manufacturer: {
@@ -490,6 +504,54 @@ describe('Add manufacturer dialog', () => {
       ).toBeInTheDocument();
     });
 
+    it('Required fields show error if they are whitespace or current value just removed', async () => {
+      props = {
+        ...props,
+        manufacturer: {
+          name: '',
+          address: {
+            building_number: '',
+            street_name: '',
+            town: 'test',
+            county: 'test',
+            postcode: '',
+          },
+          telephone: '0000000000',
+        },
+        selectedManufacturer: {
+          id: '1',
+          name: 'Manufacturer A',
+          url: 'http://example.com',
+          address: {
+            building_number: '1',
+            street_name: 'Example Street',
+            town: 'Oxford',
+            county: 'Oxfordshire',
+            postcode: 'OX1 2AB',
+          },
+          telephone: '07334893348',
+        },
+      };
+
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      expect(screen.getByText('Please enter a name.')).toBeInTheDocument();
+      expect(
+        screen.getByText('Please enter a building number.')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Please enter a street name.')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Please enter a post code or zip code.')
+      ).toBeInTheDocument();
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
     it('calls onClose when Close button is clicked', async () => {
       createView();
       const cancelButton = screen.getByRole('button', { name: 'Cancel' });
@@ -497,6 +559,156 @@ describe('Add manufacturer dialog', () => {
 
       await waitFor(() => {
         expect(onClose).toHaveBeenCalled();
+      });
+    });
+
+    it('handles manufacturer name input correctly', async () => {
+      const newManufacturerName = 'Test Manufacturer';
+
+      createView();
+
+      const manufacturerNameInput = screen.getByLabelText('Name');
+
+      fireEvent.change(manufacturerNameInput, {
+        target: { value: newManufacturerName },
+      });
+
+      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+        ...props.manufacturer,
+        name: newManufacturerName,
+      });
+    });
+
+    it('handles manufacturer url input correctly', async () => {
+      const newManufacturerURL = 'Test';
+
+      createView();
+
+      const manufacturerURLInput = screen.getByLabelText('URL');
+
+      fireEvent.change(manufacturerURLInput, {
+        target: { value: newManufacturerURL },
+      });
+
+      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+        ...props.manufacturer,
+        url: newManufacturerURL,
+      });
+    });
+
+    it('handles manufacturer building number input correctly', async () => {
+      const newManufacturerBuildingNumber = 'Test';
+
+      createView();
+
+      const manufacturerBuildingNumberInput =
+        screen.getByLabelText('Building number');
+
+      fireEvent.change(manufacturerBuildingNumberInput, {
+        target: { value: newManufacturerBuildingNumber },
+      });
+
+      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+        ...props.manufacturer,
+        address: {
+          ...props.manufacturer.address,
+          building_number: newManufacturerBuildingNumber,
+        },
+      });
+    });
+
+    it('handles manufacturer street name input correctly', async () => {
+      const newManufacturerStreetName = 'Test';
+
+      createView();
+
+      const manufacturerStreetNameInput = screen.getByLabelText('Street name');
+
+      fireEvent.change(manufacturerStreetNameInput, {
+        target: { value: newManufacturerStreetName },
+      });
+
+      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+        ...props.manufacturer,
+        address: {
+          ...props.manufacturer.address,
+          street_name: newManufacturerStreetName,
+        },
+      });
+    });
+
+    it('handles manufacturer town input correctly', async () => {
+      const newManufacturerTown = 'Test';
+
+      createView();
+
+      const manufacturerTownInput = screen.getByLabelText('Town');
+
+      fireEvent.change(manufacturerTownInput, {
+        target: { value: newManufacturerTown },
+      });
+
+      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+        ...props.manufacturer,
+        address: { ...props.manufacturer.address, town: newManufacturerTown },
+      });
+    });
+
+    it('handles manufacturer county input correctly', async () => {
+      const newManufacturerCounty = 'Test';
+
+      createView();
+
+      const manufacturerCountyInput = screen.getByLabelText('County');
+
+      fireEvent.change(manufacturerCountyInput, {
+        target: { value: newManufacturerCounty },
+      });
+
+      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+        ...props.manufacturer,
+        address: {
+          ...props.manufacturer.address,
+          county: newManufacturerCounty,
+        },
+      });
+    });
+
+    it('handles manufacturer post code input correctly', async () => {
+      const newManufacturerpostcode = 'Test';
+
+      createView();
+
+      const manufacturerpostcodeInput = screen.getByLabelText('Post/Zip code');
+
+      fireEvent.change(manufacturerpostcodeInput, {
+        target: { value: newManufacturerpostcode },
+      });
+
+      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+        ...props.manufacturer,
+        address: {
+          ...props.manufacturer.address,
+          postcode: newManufacturerpostcode,
+        },
+      });
+    });
+
+    it('handles manufacturer telephone input correctly', async () => {
+      const newManufacturerTelephone = 'Test';
+
+      createView();
+
+      const manufacturerTelephoneInput =
+        screen.getByLabelText('Telephone number');
+
+      fireEvent.change(manufacturerTelephoneInput, {
+        target: { value: newManufacturerTelephone },
+      });
+
+      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
+        ...props.manufacturer,
+        telephone: newManufacturerTelephone,
       });
     });
   });
