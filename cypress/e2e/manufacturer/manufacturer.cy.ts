@@ -236,4 +236,53 @@ describe('Manufacturer', () => {
         cy.contains('Please enter a valid URL');
       });
   });
+
+  it('Not changing any fields shows error', () => {
+    cy.findByRole('button', {
+      name: 'Edit Manufacturer A manufacturer',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains(
+          "There have been no changes made. Please change a field's value or press Cancel to exit"
+        );
+      });
+  });
+
+  it('Required fields that are cleared are not allowed and show error message', () => {
+    cy.findByRole('button', {
+      name: 'Edit Manufacturer A manufacturer',
+    }).click();
+
+    cy.findByLabelText('Name').clear();
+    cy.findByLabelText('Building number').clear();
+    cy.findByLabelText('Street name').clear();
+    cy.findByLabelText('Post/Zip code').clear();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please enter a name.');
+      });
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please enter a building number.');
+      });
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please enter a street name.');
+      });
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please enter a post code or zip code.');
+      });
+  });
 });
