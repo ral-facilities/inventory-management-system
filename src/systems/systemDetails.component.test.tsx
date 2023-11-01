@@ -28,6 +28,7 @@ describe('SystemDetails', () => {
 
     createView();
 
+    expect(screen.getByText('No system selected')).toBeInTheDocument();
     expect(screen.getByText('Please select a system')).toBeInTheDocument();
   });
 
@@ -63,5 +64,16 @@ describe('SystemDetails', () => {
     expect(screen.queryByText('Please select a system')).toBeFalsy();
     // One for each of location, owner and description
     expect(await screen.findAllByText('None')).toHaveLength(3);
+  });
+
+  it('renders correctly when the system is not found', async () => {
+    props.id = 'invalid_id';
+
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('No system selected')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Please select a system')).toBeInTheDocument();
   });
 });
