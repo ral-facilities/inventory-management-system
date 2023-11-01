@@ -79,7 +79,7 @@ function Systems() {
             />
             <NavigateNext
               fontSize="medium"
-              sx={{ color: 'rgba(0, 0, 0, 0.6)', margin: '4px' }}
+              sx={{ color: 'text.secondary', margin: '4px' }}
             />
           </div>
         </Grid>
