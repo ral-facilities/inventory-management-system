@@ -41,7 +41,7 @@ export interface CatalogueItemDetails {
 export interface CatalogueItemManufacturer {
   name: string;
   address: string;
-  web_url: string;
+  url: string;
 }
 
 export interface CatalogueItemProperty {

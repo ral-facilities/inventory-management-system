@@ -23,7 +23,7 @@ describe('Catalogue Items Table', () => {
       onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
       catalogueItemManufacturer: {
         name: '',
-        web_url: '',
+        url: '',
         address: '',
       },
       onChangeCatalogueItemManufacturer: onChangeCatalogueItemManufacturer,
