@@ -176,11 +176,13 @@ export const handlers = [
 
   rest.patch('/v1/manufacturers/:id', async (req, res, ctx) => {
     const body = (await req.json()) as EditManufacturer;
+
     if (body.name === 'test_dup') {
       return res(
         ctx.status(409),
         ctx.json({
-          detail: 'Duplicate manufacturer name',
+          detail:
+            'A manufacturer with the same name has been found. Please enter a different name',
         })
       );
     }

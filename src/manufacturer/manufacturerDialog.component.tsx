@@ -117,7 +117,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     onClose();
   }, [onClose, onChangeManufacturerDetails]);
 
-  const handleAddManufacturer = React.useCallback(() => {
+  const handleErrors = React.useCallback((): boolean => {
     let hasErrors = false;
 
     //check url is valid
@@ -163,6 +163,18 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       setAddresspostcodeErrorMessage('Please enter a post code or zip code.');
     }
 
+    return hasErrors;
+  }, [
+    manufacturer.address.building_number,
+    manufacturer.address.postcode,
+    manufacturer.address.street_name,
+    manufacturer.name,
+    manufacturer.url,
+  ]);
+
+  const handleAddManufacturer = React.useCallback(() => {
+    const hasErrors = handleErrors();
+
     if (hasErrors) {
       return;
     }
@@ -179,7 +191,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       },
       telephone: manufacturer.telephone,
     };
-    console.log(manufacturerToAdd);
 
     addManufacturer(manufacturerToAdd)
       .then((response) => handleClose())
@@ -193,44 +204,16 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           );
         }
       });
-  }, [manufacturer, addManufacturer, handleClose]);
+  }, [handleErrors, manufacturer, addManufacturer, handleClose]);
 
   const handleEditManufacturer = React.useCallback(() => {
-    if (
-      !manufacturer.name ||
-      manufacturer.name.trim() === '' ||
-      !manufacturer.url ||
-      manufacturer.url.trim() === '' ||
-      !manufacturer.address?.building_number ||
-      manufacturer.address.building_number.trim() === '' ||
-      !manufacturer.address.street_name ||
-      manufacturer.address.street_name.trim() === '' ||
-      !manufacturer.address.town ||
-      manufacturer.address.town.trim() === '' ||
-      !manufacturer.address.county ||
-      manufacturer.address.county.trim() === '' ||
-      !manufacturer.address.postcode ||
-      manufacturer.address.postcode.trim() === '' ||
-      !manufacturer.telephone ||
-      manufacturer.telephone.trim() === ''
-    ) {
-      setFormError(true);
-      setFormErrorMessage('Please enter a value into atleast one field');
-      return;
-    }
-
-    //check url is valid
-    if (manufacturer.url) {
-      if (manufacturer.url) {
-        if (!isValidUrl(manufacturer.url)) {
-          setURLError(true);
-          setURLErrorMessage('Please enter a valid URL');
-          return;
-        }
-      }
-    }
-
     if (selectedManufacturer && selectedManufacturerData) {
+      const hasErrors = handleErrors();
+
+      if (hasErrors) {
+        return;
+      }
+
       const isNameUpdated = manufacturer.name !== selectedManufacturer.name;
       const isURLUpdated =
         manufacturer.url !== selectedManufacturer.url &&
@@ -346,10 +329,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   }, [
     editManufacturer,
     handleClose,
-    manufacturer.address,
-    manufacturer.name,
-    manufacturer.telephone,
-    manufacturer.url,
+    handleErrors,
+    manufacturer,
     selectedManufacturer,
     selectedManufacturerData,
   ]);

@@ -1,8 +1,8 @@
 import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import AddManufacturerDialog, {
-  AddManufacturerDialogProps,
+import ManufacturerDialog, {
+  ManufacturerDialogProps,
 } from './manufacturerDialog.component';
 import { renderComponentWithBrowserRouter } from '../setupTests';
 import axios from 'axios';
@@ -10,13 +10,11 @@ import axios from 'axios';
 describe('Add manufacturer dialog', () => {
   const onClose = jest.fn();
   const onChangeManufacturerDetails = jest.fn();
-  let props: AddManufacturerDialogProps;
+  let props: ManufacturerDialogProps;
   let user;
   let axiosPostSpy;
   const createView = () => {
-    return renderComponentWithBrowserRouter(
-      <AddManufacturerDialog {...props} />
-    );
+    return renderComponentWithBrowserRouter(<ManufacturerDialog {...props} />);
   };
   beforeEach(() => {
     props = {
@@ -25,7 +23,7 @@ describe('Add manufacturer dialog', () => {
       onChangeManufacturerDetails: onChangeManufacturerDetails,
       manufacturer: {
         name: '',
-        url: '',
+        url: undefined,
         address: {
           building_number: '',
           street_name: '',
@@ -317,6 +315,189 @@ describe('Add manufacturer dialog', () => {
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
       ...props.manufacturer,
       telephone: newManufacturerTelephone,
+    });
+  });
+
+  describe('Edit a manufacturer', () => {
+    let axiosPatchSpy;
+    beforeEach(() => {
+      props = {
+        ...props,
+        type: 'edit',
+      };
+
+      axiosPatchSpy = jest.spyOn(axios, 'patch');
+    });
+
+    it('Edits a manufacturer correctly', async () => {
+      props = {
+        ...props,
+        selectedManufacturer: {
+          id: '1',
+          name: 'Manufacturer A',
+          url: 'http://example.com',
+          address: {
+            building_number: '1',
+            street_name: 'Example Street',
+            town: 'Oxford',
+            county: 'Oxfordshire',
+            postcode: 'OX1 2AB',
+          },
+          telephone: '07334893348',
+        },
+      };
+
+      props.manufacturer = {
+        name: 'test',
+        address: {
+          building_number: '100',
+          street_name: 'test',
+          town: 'test',
+          county: 'test',
+          postcode: 'test',
+        },
+        telephone: '0000000000',
+      };
+
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/manufacturers/1', {
+        name: 'test',
+        address: {
+          building_number: '100',
+          street_name: 'test',
+          town: 'test',
+          county: 'test',
+          postcode: 'test',
+        },
+        telephone: '0000000000',
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    });
+
+    // it('No values entered shows correct error message', async () => {
+    //   props = {
+    //     ...props,
+    //     selectedManufacturer: {
+    //       id: '1',
+    //       name: 'Manufacturer A',
+    //       url: 'http://example.com',
+    //       address: {
+    //         building_number: '1',
+    //         street_name: 'Example Street',
+    //         town: 'Oxford',
+    //         county: 'Oxfordshire',
+    //         postcode: 'OX1 2AB',
+    //       },
+    //       telephone: '07334893348',
+    //     },
+    //   };
+
+    //   createView();
+
+    //   const saveButton = screen.getByRole('button', { name: 'Save' });
+
+    //   await user.click(saveButton);
+
+    //   expect(
+    //     screen.getByText('Please enter a value into atleast one field')
+    //   ).toBeInTheDocument();
+    // });
+
+    it('Invalid url displays correct error message', async () => {
+      props = {
+        ...props,
+        manufacturer: {
+          name: 'test',
+          url: 'invalid',
+          address: {
+            building_number: '100',
+            street_name: 'test',
+            town: 'test',
+            county: 'test',
+            postcode: 'test',
+          },
+          telephone: '0000000000',
+        },
+        selectedManufacturer: {
+          id: '1',
+          name: 'Manufacturer A',
+          url: 'http://example.com',
+          address: {
+            building_number: '1',
+            street_name: 'Example Street',
+            town: 'Oxford',
+            county: 'Oxfordshire',
+            postcode: 'OX1 2AB',
+          },
+          telephone: '07334893348',
+        },
+      };
+
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      expect(screen.getByText('Please enter a valid URL')).toBeInTheDocument();
+    });
+
+    it.only('Duplicate name displays error message', async () => {
+      props = {
+        ...props,
+        manufacturer: {
+          name: 'test_dup',
+          address: {
+            building_number: '100',
+            street_name: 'test',
+            town: 'test',
+            county: 'test',
+            postcode: 'test',
+          },
+          telephone: '0000000000',
+        },
+        selectedManufacturer: {
+          id: '1',
+          name: 'Manufacturer A',
+          url: 'http://example.com',
+          address: {
+            building_number: '1',
+            street_name: 'Example Street',
+            town: 'Oxford',
+            county: 'Oxfordshire',
+            postcode: 'OX1 2AB',
+          },
+          telephone: '07334893348',
+        },
+      };
+
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      expect(
+        screen.getByText(
+          'A manufacturer with the same name has been found. Please enter a different name'
+        )
+      ).toBeInTheDocument();
+    });
+
+    it('calls onClose when Close button is clicked', async () => {
+      createView();
+      const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+      await user.click(cancelButton);
+
+      await waitFor(() => {
+        expect(onClose).toHaveBeenCalled();
+      });
     });
   });
 });
