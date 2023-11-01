@@ -317,13 +317,18 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             const response = error.response?.data as ErrorParsing;
             console.log(error);
             if (response && error.response?.status === 409) {
-              setFormError(true);
-              setFormErrorMessage(
+              setNameError(true);
+              setNameErrorMessage(
                 'A manufacturer with the same name has been found. Please enter a different name'
               );
               return;
             }
           });
+      } else {
+        setFormError(true);
+        setFormErrorMessage(
+          "There have been no changes made. Please change a field's value or press Cancel to exit"
+        );
       }
     }
   }, [
