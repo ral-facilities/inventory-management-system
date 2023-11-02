@@ -142,11 +142,11 @@ export const handlers = [
         code: 'manufacturer-d',
         url: 'http://test.co.uk',
         address: {
-          building_number: '1',
-          street_name: 'Example Street',
+          address_line: '4 Example Street',
           town: 'Oxford',
           county: 'Oxfordshire',
           postcode: 'OX1 2AB',
+          country: 'United Kingdom',
         },
         telephone: '07349612203',
         id: '4',
@@ -194,11 +194,11 @@ export const handlers = [
       ctx.json({
         name: 'test',
         address: {
-          building_number: '100',
-          street_name: 'test',
+          address_line: 'test',
           town: 'test',
           county: 'test',
           postcode: 'test',
+          country: 'test',
         },
         telephone: '0000000000',
         id: '1',

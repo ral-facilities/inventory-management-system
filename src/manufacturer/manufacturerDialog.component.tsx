@@ -64,19 +64,17 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   const [URLErrorMessage, setURLErrorMessage] = React.useState<
     string | undefined
   >(undefined);
-  const [addressBuildingNumberError, setAddressBuildingNumberError] =
-    React.useState(false);
-  const [
-    addressBuildingNumberErrorMessage,
-    setAddressBuildingNumberErrorMessage,
-  ] = React.useState<string | undefined>(undefined);
-  const [addressStreetNameError, setAddressStreetNameError] =
-    React.useState(false);
-  const [addressStreetNameErrorMessage, setaddressStreetNameErrorMessage] =
-    React.useState<string | undefined>(undefined);
+  const [addressLineError, setAddressLineError] = React.useState(false);
+  const [addressLineErrorMessage, setAddressLineErrorMessage] = React.useState<
+    string | undefined
+  >(undefined);
   const [addresspostcodeError, setAddresspostcodeError] = React.useState(false);
   const [AddresspostcodeErrorMessage, setAddresspostcodeErrorMessage] =
     React.useState<string | undefined>(undefined);
+  const [countryError, setCountryError] = React.useState(false);
+  const [countryErrorMessage, setCountryErrorMessage] = React.useState<
+    string | undefined
+  >(undefined);
 
   const [formError, setFormError] = React.useState(false);
   const [formErrorMessage, setFormErrorMessage] = React.useState<
@@ -94,11 +92,11 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       name: '',
       url: undefined,
       address: {
-        building_number: '',
-        street_name: '',
+        address_line: '',
         town: '',
         county: '',
         postcode: '',
+        country: '',
       },
       telephone: '',
     });
@@ -106,10 +104,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     setNameErrorMessage(undefined);
     setURLError(false);
     setURLErrorMessage(undefined);
-    setAddressBuildingNumberError(false);
-    setAddressBuildingNumberErrorMessage(undefined);
-    setAddressStreetNameError(false);
-    setaddressStreetNameErrorMessage(undefined);
+    setAddressLineError(false);
+    setAddressLineErrorMessage(undefined);
+    setCountryError(false);
+    setCountryErrorMessage(undefined);
     setAddresspostcodeError(false);
     setAddresspostcodeErrorMessage(undefined);
     setFormError(false);
@@ -135,24 +133,16 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       setNameError(true);
       setNameErrorMessage('Please enter a name.');
     }
-    //check building number
+    //check address line
     if (
-      !manufacturer.address?.building_number ||
-      manufacturer.address.building_number.trim().length === 0
+      !manufacturer.address?.address_line ||
+      manufacturer.address.address_line.trim().length === 0
     ) {
       hasErrors = true;
-      setAddressBuildingNumberError(true);
-      setAddressBuildingNumberErrorMessage('Please enter a building number.');
+      setAddressLineError(true);
+      setAddressLineErrorMessage('Please enter an address.');
     }
-    //check street name
-    if (
-      !manufacturer.address?.street_name ||
-      manufacturer.address.street_name?.trim().length === 0
-    ) {
-      hasErrors = true;
-      setAddressStreetNameError(true);
-      setaddressStreetNameErrorMessage('Please enter a street name.');
-    }
+
     //check post code
     if (
       !manufacturer.address?.postcode ||
@@ -162,15 +152,18 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       setAddresspostcodeError(true);
       setAddresspostcodeErrorMessage('Please enter a post code or zip code.');
     }
+    //check country
+    if (
+      !manufacturer.address?.country ||
+      manufacturer.address.country?.trim().length === 0
+    ) {
+      hasErrors = true;
+      setCountryError(true);
+      setCountryErrorMessage('Please enter a country.');
+    }
 
     return hasErrors;
-  }, [
-    manufacturer.address.building_number,
-    manufacturer.address.postcode,
-    manufacturer.address.street_name,
-    manufacturer.name,
-    manufacturer.url,
-  ]);
+  }, [manufacturer]);
 
   const handleAddManufacturer = React.useCallback(() => {
     const hasErrors = handleErrors();
@@ -183,11 +176,11 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       name: manufacturer.name,
       url: manufacturer.url,
       address: {
-        building_number: manufacturer.address.building_number,
-        street_name: manufacturer.address.street_name,
+        address_line: manufacturer.address.address_line,
         town: manufacturer.address.town,
         county: manufacturer.address.county,
         postcode: manufacturer.address.postcode,
+        country: manufacturer.address.country,
       },
       telephone: manufacturer.telephone,
     };
@@ -218,19 +211,18 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       const isURLUpdated =
         manufacturer.url !== selectedManufacturer.url &&
         manufacturer.url !== undefined;
-      const isBuildingNumberUpdated =
-        manufacturer.address?.building_number !==
-        selectedManufacturer.address.building_number;
-      const isStreetNameUpdated =
-        manufacturer.address?.street_name !==
-        selectedManufacturer.address.street_name;
+      const isAddressLineUpdated =
+        manufacturer.address?.address_line !==
+        selectedManufacturer.address.address_line;
       const isTownUpdated =
         manufacturer.address?.town !== selectedManufacturer.address.town;
       const isCountyUpdated =
         manufacturer.address?.county !== selectedManufacturer.address.county;
-      const ispostcodeUpdated =
+      const isPostcodeUpdated =
         manufacturer.address?.postcode !==
         selectedManufacturer.address.postcode;
+      const isCountryUpdated =
+        manufacturer.address?.country !== selectedManufacturer.address.country;
       const isTelephoneUpdated =
         manufacturer.telephone !== selectedManufacturer.telephone;
 
@@ -250,21 +242,12 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           url: manufacturer.url,
         };
       }
-      if (isBuildingNumberUpdated) {
+      if (isAddressLineUpdated) {
         ManufacturerToEdit = {
           ...ManufacturerToEdit,
           address: {
             ...manufacturer.address,
-            building_number: manufacturer.address?.building_number,
-          },
-        };
-      }
-      if (isStreetNameUpdated) {
-        ManufacturerToEdit = {
-          ...ManufacturerToEdit,
-          address: {
-            ...ManufacturerToEdit.address,
-            street_name: manufacturer.address?.street_name,
+            address_line: manufacturer.address?.address_line,
           },
         };
       }
@@ -286,12 +269,21 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           },
         };
       }
-      if (ispostcodeUpdated) {
+      if (isPostcodeUpdated) {
         ManufacturerToEdit = {
           ...ManufacturerToEdit,
           address: {
             ...manufacturer.address,
             postcode: manufacturer.address?.postcode,
+          },
+        };
+      }
+      if (isCountryUpdated) {
+        ManufacturerToEdit = {
+          ...ManufacturerToEdit,
+          address: {
+            ...ManufacturerToEdit.address,
+            country: manufacturer.address?.country,
           },
         };
       }
@@ -304,11 +296,11 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
       if (
         (selectedManufacturer.id && isNameUpdated) ||
-        isBuildingNumberUpdated ||
-        isStreetNameUpdated ||
+        isAddressLineUpdated ||
         isTownUpdated ||
         isCountyUpdated ||
-        ispostcodeUpdated ||
+        isPostcodeUpdated ||
+        isCountryUpdated ||
         isTelephoneUpdated
       ) {
         editManufacturer(ManufacturerToEdit)
@@ -386,49 +378,47 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         />
         <Typography>Address</Typography>
         <TextField
-          label="Building number"
+          label="Country"
           required={type === 'create' ? true : false}
           sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.address.building_number}
+          value={manufacturer.address.country}
           onChange={(event) => {
             onChangeManufacturerDetails({
               ...manufacturer,
               address: {
                 ...manufacturer.address,
-                building_number: event.target.value,
+                country: event.target.value,
               },
             });
-            setAddressBuildingNumberError(false);
-            setAddressBuildingNumberErrorMessage(undefined);
+            setCountryError(false);
+            setCountryErrorMessage(undefined);
             setFormError(false);
             setFormErrorMessage(undefined);
           }}
-          error={addressBuildingNumberError}
-          helperText={
-            addressBuildingNumberError && addressBuildingNumberErrorMessage
-          }
+          error={countryError}
+          helperText={countryError && countryErrorMessage}
           fullWidth
         />
         <TextField
-          label="Street name"
+          label="Address Line"
           required={type === 'create' ? true : false}
           sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.address.street_name}
+          value={manufacturer.address.address_line}
           onChange={(event) => {
             onChangeManufacturerDetails({
               ...manufacturer,
               address: {
                 ...manufacturer.address,
-                street_name: event.target.value,
+                address_line: event.target.value,
               },
             });
-            setAddressStreetNameError(false);
-            setaddressStreetNameErrorMessage(undefined);
+            setAddressLineError(false);
+            setAddressLineErrorMessage(undefined);
             setFormError(false);
             setFormErrorMessage(undefined);
           }}
-          error={addressStreetNameError}
-          helperText={addressStreetNameError && addressStreetNameErrorMessage}
+          error={addressLineError}
+          helperText={addressLineError && addressLineErrorMessage}
           fullWidth
         />
         <TextField

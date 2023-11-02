@@ -132,19 +132,20 @@ export interface ErrorParsing {
 }
 
 interface Address {
-  building_number: string;
-  street_name: string;
+  address_line: string;
   town?: string;
   county?: string;
   postcode: string;
+  country: string;
 }
 
 interface EditAddress {
-  building_number?: string;
+  address_line?: string;
   street_name?: string;
   town?: string;
   county?: string;
   postcode?: string;
+  country?: string;
 }
 
 export enum SystemImportanceType {

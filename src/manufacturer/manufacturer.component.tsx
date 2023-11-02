@@ -25,11 +25,11 @@ function Manufacturer() {
     name: '',
     url: undefined,
     address: {
-      building_number: '',
-      street_name: '',
+      address_line: '',
       town: '',
       county: '',
       postcode: '',
+      country: '',
     },
     telephone: '',
   });
@@ -208,9 +208,9 @@ function Manufacturer() {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
-                    {item.address.building_number +
+                    {item.address.country +
                       ' \n' +
-                      item.address.street_name +
+                      item.address.address_line +
                       ' \n' +
                       item.address.town +
                       ' \n' +
