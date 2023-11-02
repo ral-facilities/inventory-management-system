@@ -32,10 +32,6 @@ import {
 } from '../../api/catalogueCategory';
 import handleTransferState from '../../handleTransferState';
 
-function formatName(name: string) {
-  name = name.toLowerCase().trim();
-  return name.replace(/\s+/g, '-');
-}
 export interface CatalogueCategoryDirectoryDialogProps {
   open: boolean;
   onClose: () => void;
@@ -99,11 +95,13 @@ const CatalogueCategoryDirectoryDialog = (
         }
 
         // Check if the name already exists in the target location
-        if (catalogueCategoryCodes.includes(formatName(reqAddInfo.name))) {
+        if (catalogueCategoryCodes.includes(category.code)) {
           let count = 1;
           let newName = reqAddInfo.name;
+          let newCode = category.code;
 
-          while (catalogueCategoryCodes.includes(formatName(newName))) {
+          while (catalogueCategoryCodes.includes(newCode)) {
+            newCode = `${category.code}_copy_${count}`;
             newName = `${reqAddInfo.name}_copy_${count}`;
             count++;
           }
@@ -126,7 +124,7 @@ const CatalogueCategoryDirectoryDialog = (
     );
 
     CopyToCatalogueCategory({
-      catalogueCategory: catalogueCategory,
+      catalogueCategories: catalogueCategory,
       selectedCategories: selectedCategories,
       targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? {
         name: 'Root',
@@ -160,7 +158,7 @@ const CatalogueCategoryDirectoryDialog = (
     );
 
     moveToCatalogueCategory({
-      catalogueCategory: catalogueCategory,
+      catalogueCategories: catalogueCategory,
       selectedCategories: selectedCategories,
       targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? {
         name: 'Root',

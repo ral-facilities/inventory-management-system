@@ -413,8 +413,8 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       props.catalogueCurrDirId = '3';
       createView();
 
-      const moveButton = screen.getByRole('button', { name: 'Copy here' });
-      await user.click(moveButton);
+      const copyButton = screen.getByRole('button', { name: 'Copy here' });
+      await user.click(copyButton);
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
         is_leaf: false,
@@ -464,8 +464,8 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       createView();
 
-      const moveButton = screen.getByRole('button', { name: 'Copy here' });
-      await user.click(moveButton);
+      const copyButton = screen.getByRole('button', { name: 'Copy here' });
+      await user.click(copyButton);
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
         is_leaf: false,

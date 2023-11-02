@@ -278,7 +278,7 @@ describe('catalogue category api functions', () => {
 
       expect(result.current.isIdle).toBe(true);
       result.current.mutate({
-        catalogueCategory: catalogueCategories,
+        catalogueCategories: catalogueCategories,
         selectedCategories: selectedCatalogueCategories,
         targetLocationCatalogueCategory: targetLocation,
       });
@@ -350,7 +350,7 @@ describe('catalogue category api functions', () => {
 
       expect(result.current.isIdle).toBe(true);
       result.current.mutate({
-        catalogueCategory: catalogueCategories,
+        catalogueCategories: catalogueCategories,
         selectedCategories: selectedCatalogueCategories,
         targetLocationCatalogueCategory: targetLocation,
       });
@@ -481,7 +481,7 @@ describe('catalogue category api functions', () => {
 
       expect(result.current.isIdle).toBe(true);
       result.current.mutate({
-        catalogueCategory: catalogueCategories,
+        catalogueCategories: catalogueCategories,
         selectedCategories: selectedCatalogueCategories,
         targetLocationCatalogueCategory: targetLocation,
       });

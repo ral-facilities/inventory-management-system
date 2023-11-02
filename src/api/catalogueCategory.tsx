@@ -185,7 +185,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
         id: moveToCatalogueCategory.targetLocationCatalogueCategory.id,
       };
 
-      const promises = moveToCatalogueCategory.catalogueCategory.map(
+      const promises = moveToCatalogueCategory.catalogueCategories.map(
         async (category: EditCatalogueCategory, index) => {
           const { name, ...categoryWithoutName } = category;
 
@@ -256,14 +256,14 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
   return useMutation(
     async (copyToCatalogueCategory: CopyToCatalogueCategory) => {
       const transferStates: CatalogueCategoryTransferState[] = [];
-      let hasSuccessfulEdit = false;
+      let hasSuccessfulAdd = false;
 
       const targetLocationInfo = {
         name: copyToCatalogueCategory.targetLocationCatalogueCategory.name,
         id: copyToCatalogueCategory.targetLocationCatalogueCategory.id,
       };
 
-      const promises = copyToCatalogueCategory.catalogueCategory.map(
+      const promises = copyToCatalogueCategory.catalogueCategories.map(
         async (category: AddCatalogueCategory, index) => {
           return addCatalogueCategory(category)
             .then((result) => {
@@ -273,7 +273,7 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
                 state: 'success',
               };
               transferStates.push(successTransferState);
-              hasSuccessfulEdit = true;
+              hasSuccessfulAdd = true;
             })
             .catch((error) => {
               const response = error.response?.data as ErrorParsing;
@@ -289,7 +289,7 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
 
       await Promise.all(promises);
 
-      if (hasSuccessfulEdit) {
+      if (hasSuccessfulAdd) {
         queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
       }
 

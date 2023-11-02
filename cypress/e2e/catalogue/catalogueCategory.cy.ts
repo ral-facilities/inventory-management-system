@@ -308,7 +308,7 @@ describe('Catalogue Category', () => {
     });
   });
 
-  it('copies multiple catalogue category', () => {
+  it('copies multiple catalogue categories', () => {
     cy.visit('/inventory-management-system/catalogue/1');
     cy.findByLabelText('Cameras checkbox').click();
     cy.findByLabelText('test_dup checkbox').click();

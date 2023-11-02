@@ -301,7 +301,7 @@ describe('Catalogue', () => {
     expect(screen.getByText('Wavefront Sensors')).toBeInTheDocument();
   });
 
-  it('opens add catalogue item dialog and can closes the dialog', async () => {
+  it('opens add catalogue item dialog and can close the dialog', async () => {
     createView('/inventory-management-system/catalogue/4');
 
     await waitFor(() => {
