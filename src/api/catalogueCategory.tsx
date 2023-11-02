@@ -234,6 +234,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
 
       if (hasSuccessfulEdit) {
         queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+        queryClient.invalidateQueries({ queryKey: ['CatalogueBreadcrumbs'] });
       }
 
       return transferStates;

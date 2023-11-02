@@ -202,6 +202,7 @@ const CatalogueCategoryDirectoryDialog = (
       onClose={onClose}
       maxWidth="lg"
       PaperProps={{ sx: { height: '512px' } }}
+      fullWidth
     >
       <DialogTitle sx={{ marginLeft: 2 }}>
         <Grid container spacing={2}>
