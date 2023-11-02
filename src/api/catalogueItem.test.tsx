@@ -95,7 +95,7 @@ describe('catalogue items api functions', () => {
         manufacturer: {
           address: '10 My Street',
           name: 'Manufacturer A',
-          web_url: 'http://example.com',
+          url: 'http://example.com',
         },
         properties: [
           { name: 'Resolution', unit: 'megapixels', value: 12 },
