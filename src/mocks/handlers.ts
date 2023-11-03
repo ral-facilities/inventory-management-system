@@ -11,9 +11,7 @@ import {
 
 export const handlers = [
   rest.post('/v1/catalogue-categories', async (req, res, ctx) => {
-    let body;
-
-    body = await req.json();
+    let body = await req.json();
 
     if (body.name === 'test_dup') {
       return res(
@@ -65,14 +63,13 @@ export const handlers = [
         })
       );
     }
-    console.log(body);
     if (body.catalogue_item_properties !== undefined) {
       if (itemData.length > 0) {
         return res(
           ctx.status(409),
           ctx.json({
             detail:
-              'Catalogue category has children elements and cannot be updated',
+              'Catalogue category has child elements and cannot be updated',
           })
         );
       }

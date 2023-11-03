@@ -364,7 +364,7 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Catalogue category has children elements and cannot be updated'
+            'Catalogue category has child elements and cannot be updated'
           )
         ).toBeInTheDocument();
       });

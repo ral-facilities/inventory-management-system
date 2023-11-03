@@ -63,7 +63,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       expect(
         screen.getByText(
-          'Move 2 catalogue categories to new a catalogue category'
+          'Move 2 catalogue categories to a different catalogue category'
         )
       ).toBeInTheDocument();
     });
@@ -81,7 +81,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       expect(
         screen.getByText(
-          'Move 1 catalogue category to new a catalogue category'
+          'Move 1 catalogue category to a different catalogue category'
         )
       ).toBeInTheDocument();
     });
@@ -181,14 +181,6 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
 
       await waitFor(() => {
-        expect(screen.getByText('Motion')).toBeInTheDocument();
-      });
-
-      await waitFor(() => {
-        expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
-      });
-
-      await waitFor(() => {
         expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
       });
 
@@ -229,6 +221,84 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       });
       expect(onClose).toBeCalled();
     });
+
+    it('disables the leaf categories and the selected categories', async () => {
+      props.selectedCategories = [
+        {
+          id: '79',
+          name: 'test_dup',
+          parent_id: '1',
+          code: 'test_dup',
+          is_leaf: false,
+        },
+        {
+          id: '19',
+          name: 'Amp Meters',
+          parent_id: '1',
+          code: 'amp-meters',
+          is_leaf: false,
+        },
+      ];
+
+      props.catalogueCurrDirId = '1';
+      createView();
+
+      await waitFor(() => {
+        expect(
+          screen.getByRole('row', { name: 'test_dup row' })
+        ).toBeInTheDocument();
+      });
+
+      const moveButton = screen.getByRole('button', { name: 'Move here' });
+
+      const camerasRow = screen.getByRole('row', { name: 'Cameras row' });
+      const test_dupRow = screen.getByRole('row', { name: 'test_dup row' });
+      const energyMetersRow = screen.getByRole('row', {
+        name: 'Energy Meters row',
+      });
+      const wavefrontSensorsRow = screen.getByRole('row', {
+        name: 'Wavefront Sensors row',
+      });
+      const voltageMetersRow = screen.getByRole('row', {
+        name: 'Voltage Meters row',
+      });
+      const ampMetersRow = screen.getByRole('row', { name: 'Amp Meters row' });
+
+      expect(moveButton).toBeDisabled();
+
+      // Not allowed cursor
+
+      expect(camerasRow).toHaveStyle(
+        'background-color: inherit; cursor: not-allowed;'
+      );
+      expect(test_dupRow).toHaveStyle(
+        'background-color: inherit; cursor: not-allowed;'
+      );
+
+      expect(energyMetersRow).toHaveStyle(
+        'background-color: inherit; cursor: not-allowed;'
+      );
+      expect(wavefrontSensorsRow).toHaveStyle(
+        'background-color: inherit; cursor: not-allowed;'
+      );
+      expect(voltageMetersRow).toHaveStyle(
+        'background-color: inherit; cursor: not-allowed;'
+      );
+      expect(ampMetersRow).toHaveStyle(
+        'background-color: inherit; cursor: not-allowed;'
+      );
+
+      // checks noting happens on click
+      await user.click(camerasRow);
+      await user.click(test_dupRow);
+      await user.click(energyMetersRow);
+      await user.click(wavefrontSensorsRow);
+      await user.click(voltageMetersRow);
+      await user.click(ampMetersRow);
+
+      expect(onChangeCatalogueCurrDirId).not.toBeCalled();
+    });
+
     it('shows loading indicator', async () => {
       createView();
       await waitFor(() => {
@@ -279,7 +349,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       expect(
         screen.getByText(
-          'Copy 2 catalogue categories to new a catalogue category'
+          'Copy 2 catalogue categories to a different catalogue category'
         )
       ).toBeInTheDocument();
     });
@@ -297,7 +367,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       expect(
         screen.getByText(
-          'Copy 1 catalogue category to new a catalogue category'
+          'Copy 1 catalogue category to a different catalogue category'
         )
       ).toBeInTheDocument();
     });
@@ -343,8 +413,8 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       props.catalogueCurrDirId = '3';
       createView();
 
-      const moveButton = screen.getByRole('button', { name: 'Copy here' });
-      await user.click(moveButton);
+      const copyButton = screen.getByRole('button', { name: 'Copy here' });
+      await user.click(copyButton);
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
         is_leaf: false,
@@ -394,8 +464,8 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       createView();
 
-      const moveButton = screen.getByRole('button', { name: 'Copy here' });
-      await user.click(moveButton);
+      const copyButton = screen.getByRole('button', { name: 'Copy here' });
+      await user.click(copyButton);
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
         is_leaf: false,
@@ -406,6 +476,45 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         name: 'Motion_copy_1',
       });
       expect(onClose).toBeCalled();
+    });
+
+    it('navigates through the directory table', async () => {
+      props.selectedCategories = [
+        {
+          id: '1',
+          name: 'Beam Characterization',
+          parent_id: null,
+          code: 'beam-characterization',
+          is_leaf: false,
+        },
+        {
+          id: '2',
+          name: 'Motion',
+          parent_id: null,
+          code: 'motion',
+          is_leaf: false,
+        },
+      ];
+
+      props.catalogueCurrDirId = null;
+
+      createView();
+
+      await waitFor(() => {
+        expect(screen.getByText('Motion')).toBeInTheDocument();
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByText('Vacuum Technology'));
+
+      expect(onChangeCatalogueCurrDirId).toBeCalledWith('3');
     });
   });
 });

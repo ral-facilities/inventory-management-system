@@ -14,7 +14,7 @@ describe('Catalogue Category', () => {
     cy.findByRole('link', { name: 'motion' }).should('not.exist');
     cy.findByText('actuators').should('not.exist');
     cy.findByText('motion').should('be.visible');
-    cy.url().should('include', '/2');
+    cy.url().should('include', '/catalogue/2');
   });
 
   it('should navigate back to the root directory when the home button is pressed', () => {
@@ -272,6 +272,73 @@ describe('Catalogue Category', () => {
       expect(patchRequests[1].url.toString()).to.contain('/79');
       expect(JSON.stringify(patchRequests[2].body)).equal('{"parent_id":null}');
       expect(patchRequests[2].url.toString()).to.contain('/19');
+    });
+  });
+
+  it('copies multiple catalogue category (at root)', () => {
+    cy.visit('/inventory-management-system/catalogue/1');
+    cy.findByLabelText('Cameras checkbox').click();
+    cy.findByLabelText('test_dup checkbox').click();
+    cy.findByLabelText('Amp Meters checkbox').click();
+    cy.findByRole('button', { name: 'Copy to' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('navigate to catalogue home').click();
+        cy.findByRole('button', { name: 'Copy here' }).click();
+      });
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-categories',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(3);
+      expect(JSON.stringify(patchRequests[0].body)).equal(
+        '{"name":"Cameras","is_leaf":true,"catalogue_item_properties":[{"name":"Resolution","type":"number","unit":"megapixels","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":false},{"name":"Sensor Type","type":"string","mandatory":true},{"name":"Sensor brand","type":"string","mandatory":false},{"name":"Broken","type":"boolean","mandatory":true},{"name":"Older than five years","type":"boolean","mandatory":false}]}'
+      );
+      expect(JSON.stringify(patchRequests[1].body)).equal(
+        '{"name":"test_dup","is_leaf":false}'
+      );
+      expect(JSON.stringify(patchRequests[2].body)).equal(
+        '{"name":"Amp Meters","is_leaf":false}'
+      );
+    });
+  });
+
+  it('copies multiple catalogue categories', () => {
+    cy.visit('/inventory-management-system/catalogue/1');
+    cy.findByLabelText('Cameras checkbox').click();
+    cy.findByLabelText('test_dup checkbox').click();
+    cy.findByLabelText('Amp Meters checkbox').click();
+    cy.findByRole('button', { name: 'Copy to' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('navigate to catalogue home').click();
+        cy.findByText('Motion').click();
+        cy.findByRole('button', { name: 'Copy here' }).click();
+      });
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-categories',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(3);
+      expect(JSON.stringify(patchRequests[0].body)).equal(
+        '{"name":"Cameras","is_leaf":true,"parent_id":"2","catalogue_item_properties":[{"name":"Resolution","type":"number","unit":"megapixels","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":false},{"name":"Sensor Type","type":"string","mandatory":true},{"name":"Sensor brand","type":"string","mandatory":false},{"name":"Broken","type":"boolean","mandatory":true},{"name":"Older than five years","type":"boolean","mandatory":false}]}'
+      );
+      expect(JSON.stringify(patchRequests[1].body)).equal(
+        '{"name":"test_dup","is_leaf":false,"parent_id":"2"}'
+      );
+      expect(JSON.stringify(patchRequests[2].body)).equal(
+        '{"name":"Amp Meters","is_leaf":false,"parent_id":"2"}'
+      );
     });
   });
 

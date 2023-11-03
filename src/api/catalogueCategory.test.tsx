@@ -125,7 +125,7 @@ describe('catalogue category api functions', () => {
 
   describe('useCatalogueCategory', () => {
     it('sends request to fetch parent catalogue category data and returns successful response', async () => {
-      const { result } = renderHook(() => useCatalogueCategory('2'), {
+      const { result } = renderHook(() => useCatalogueCategory(false, '2'), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -278,7 +278,7 @@ describe('catalogue category api functions', () => {
 
       expect(result.current.isIdle).toBe(true);
       result.current.mutate({
-        catalogueCategory: catalogueCategories,
+        catalogueCategories: catalogueCategories,
         selectedCategories: selectedCatalogueCategories,
         targetLocationCatalogueCategory: targetLocation,
       });
@@ -350,7 +350,7 @@ describe('catalogue category api functions', () => {
 
       expect(result.current.isIdle).toBe(true);
       result.current.mutate({
-        catalogueCategory: catalogueCategories,
+        catalogueCategories: catalogueCategories,
         selectedCategories: selectedCatalogueCategories,
         targetLocationCatalogueCategory: targetLocation,
       });
@@ -481,7 +481,7 @@ describe('catalogue category api functions', () => {
 
       expect(result.current.isIdle).toBe(true);
       result.current.mutate({
-        catalogueCategory: catalogueCategories,
+        catalogueCategories: catalogueCategories,
         selectedCategories: selectedCatalogueCategories,
         targetLocationCatalogueCategory: targetLocation,
       });

@@ -1,8 +1,8 @@
 import log from 'loglevel';
 import handleTransferState from './handleTransferState';
 import { AnyAction } from 'redux';
-import { NotificationType } from '../state/actions/actions.types';
-import { CatalogueCategoryTransferState } from '../app.types';
+import { NotificationType } from './state/actions/actions.types';
+import { CatalogueCategoryTransferState } from './app.types';
 
 jest.mock('loglevel');
 
