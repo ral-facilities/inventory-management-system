@@ -356,7 +356,7 @@ describe('Catalogue', () => {
     });
   });
 
-  it('opens copy catalogue category dialog and can closes the dialog', async () => {
+  it('opens copy catalogue category dialog and can close the dialog', async () => {
     createView('/inventory-management-system/catalogue/1');
 
     await waitFor(() => {
