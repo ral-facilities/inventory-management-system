@@ -244,49 +244,45 @@ const CatalogueCategoryDirectoryDialog = (
                 </TableRow>
               </TableHead>
               <TableBody>
-                {catalogueCategoryData.map((category, index) => (
-                  <TableRow
-                    key={category.id}
-                    onClick={() => {
-                      if (!category.is_leaf) {
-                        if (
-                          !selectedCatalogueCategoryIds.includes(category.id) ||
-                          requestType === 'copyTo'
-                        ) {
-                          onChangeCatalogueCurrDirId(category.id);
+                {catalogueCategoryData.map((category, index) => {
+                  const canPlaceHere =
+                    !category.is_leaf &&
+                    (requestType !== 'moveTo' ||
+                      !selectedCatalogueCategoryIds.includes(category.id));
+                  return (
+                    <TableRow
+                      key={category.id}
+                      onClick={() => {
+                        if (!category.is_leaf) {
+                          if (
+                            !selectedCatalogueCategoryIds.includes(
+                              category.id
+                            ) ||
+                            requestType === 'copyTo'
+                          ) {
+                            onChangeCatalogueCurrDirId(category.id);
+                          }
                         }
-                      }
-                    }}
-                    onMouseEnter={() => setHoveredRow(index)}
-                    onMouseLeave={() => setHoveredRow(null)}
-                    sx={{
-                      backgroundColor:
-                        hoveredRow === index ? 'action.hover' : 'inherit',
-                      cursor: !category.is_leaf
-                        ? requestType === 'moveTo'
-                          ? selectedCatalogueCategoryIds.includes(category.id)
-                            ? 'not-allowed'
-                            : 'pointer'
-                          : 'pointer'
-                        : 'not-allowed',
-                    }}
-                    aria-label={`${category.name} row`}
-                  >
-                    <TableCell
-                      sx={{
-                        color: !category.is_leaf
-                          ? requestType === 'moveTo'
-                            ? selectedCatalogueCategoryIds.includes(category.id)
-                              ? 'action.disabled'
-                              : 'inherit'
-                            : 'inherit'
-                          : 'action.disabled',
                       }}
+                      onMouseEnter={() => setHoveredRow(index)}
+                      onMouseLeave={() => setHoveredRow(null)}
+                      sx={{
+                        backgroundColor:
+                          hoveredRow === index ? 'action.hover' : 'inherit',
+                        cursor: canPlaceHere ? 'pointer' : 'not-allowed',
+                      }}
+                      aria-label={`${category.name} row`}
                     >
-                      {category.name}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                      <TableCell
+                        sx={{
+                          color: canPlaceHere ? 'inherit' : 'action.disabled',
+                        }}
+                      >
+                        {category.name}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </TableContainer>
