@@ -298,4 +298,23 @@ export const handlers = [
       })
     );
   }),
+
+  rest.delete('/v1/systems/:id', (req, res, ctx) => {
+    const { id } = req.params;
+    const validSystem = SystemsJSON.find((value) => value.id === id);
+    if (validSystem) {
+      if (SystemsJSON.find((value) => value.parent_id === validSystem.id)) {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail: 'System has child elements and cannot be deleted',
+          })
+        );
+      } else {
+        return res(ctx.status(204));
+      }
+    } else {
+      return res(ctx.status(400), ctx.json(''));
+    }
+  }),
 ];

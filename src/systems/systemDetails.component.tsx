@@ -4,9 +4,14 @@ import {
   CircularProgress,
   Divider,
   Grid,
+  IconButton,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { getSystemImportanceColour, useSystem } from '../api/systems';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { useState } from 'react';
+import { DeleteSystemDialog } from './deleteSystemDialog.component';
 
 export interface SystemDetailsProps {
   id: string | null;
@@ -14,6 +19,9 @@ export interface SystemDetailsProps {
 
 function SystemDetails(props: SystemDetailsProps) {
   const { data: system, isLoading: systemLoading } = useSystem(props.id);
+
+  // Delete dialog
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
 
   return systemLoading && props.id !== null ? (
     <Box
@@ -42,6 +50,23 @@ function SystemDetails(props: SystemDetailsProps) {
             ? 'No system selected'
             : system.name}
         </Typography>
+        {system !== undefined && (
+          <>
+            <Tooltip title="Delete System">
+              <IconButton
+                sx={{ marginLeft: 'auto', padding: 0 }}
+                onClick={() => setDeleteDialogOpen(true)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+            <DeleteSystemDialog
+              open={deleteDialogOpen}
+              onClose={() => setDeleteDialogOpen(false)}
+              system={system}
+            />
+          </>
+        )}
       </Box>
       <Divider role="presentation" />
       {systemLoading || system === undefined ? (
