@@ -21,6 +21,13 @@
     "is_leaf": false
   },
   {
+    "id": "79",
+    "name": "test_dup",
+    "parent_id": "1",
+    "code": "test_dup",
+    "is_leaf": false
+  },
+  {
     "id": "4",
     "name": "Cameras",
     "parent_id": "1",
