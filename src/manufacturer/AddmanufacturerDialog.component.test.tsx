@@ -31,7 +31,7 @@ describe('Add manufacturer dialog', () => {
           street_name: '',
           town: '',
           county: '',
-          postCode: '',
+          postcode: '',
         },
         telephone: '',
       },
@@ -65,7 +65,7 @@ describe('Add manufacturer dialog', () => {
         street_name: 'Example Street',
         town: 'Oxford',
         county: 'Oxfordshire',
-        postCode: 'OX1 2AB',
+        postcode: 'OX1 2AB',
       },
       telephone: '07349612203',
     };
@@ -78,7 +78,7 @@ describe('Add manufacturer dialog', () => {
       address: {
         building_number: '1',
         county: 'Oxfordshire',
-        postCode: 'OX1 2AB',
+        postcode: 'OX1 2AB',
         street_name: 'Example Street',
         town: 'Oxford',
       },
@@ -110,7 +110,7 @@ describe('Add manufacturer dialog', () => {
         street_name: 'Example Street',
         town: 'Oxford',
         county: 'Oxfordshire',
-        postCode: 'OX1 2AB',
+        postcode: 'OX1 2AB',
       },
       telephone: '07349612203',
     };
@@ -155,7 +155,7 @@ describe('Add manufacturer dialog', () => {
         street_name: 'Example Street',
         town: 'Oxford',
         county: 'Oxfordshire',
-        postCode: 'OX1 2AB',
+        postcode: 'OX1 2AB',
       },
       telephone: '07349612203',
     };
@@ -282,21 +282,21 @@ describe('Add manufacturer dialog', () => {
   });
 
   it('handles manufacturer post code input correctly', async () => {
-    const newManufacturerPostCode = 'Test';
+    const newManufacturerpostcode = 'Test';
 
     createView();
 
-    const manufacturerPostCodeInput = screen.getByLabelText('Post/Zip code *');
+    const manufacturerpostcodeInput = screen.getByLabelText('Post/Zip code *');
 
-    fireEvent.change(manufacturerPostCodeInput, {
-      target: { value: newManufacturerPostCode },
+    fireEvent.change(manufacturerpostcodeInput, {
+      target: { value: newManufacturerpostcode },
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
       ...props.manufacturer,
       address: {
         ...props.manufacturer.address,
-        postCode: newManufacturerPostCode,
+        postcode: newManufacturerpostcode,
       },
     });
   });
