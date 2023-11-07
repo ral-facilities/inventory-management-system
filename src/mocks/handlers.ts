@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
+import ManufacturerJSON from './manufacturer.json';
 import CatalogueItemJSON from './CatalogueItems.json';
 import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
@@ -114,6 +115,10 @@ export const handlers = [
       (catalogueBreadcrumbs) => catalogueBreadcrumbs.id === id
     );
     return res(ctx.status(200), ctx.json(data));
+  }),
+
+  rest.get('/v1/manufacturer', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(ManufacturerJSON));
   }),
 
   rest.delete('/v1/catalogue-categories/:id', (req, res, ctx) => {

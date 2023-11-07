@@ -33,6 +33,13 @@ export interface CatalogueCategory {
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }
 
+export interface Manufacturer {
+  name: string;
+  url: string;
+  address: string;
+  id: string;
+}
+
 export interface CatalogueCategoryFormData {
   name: string;
   type: string;
