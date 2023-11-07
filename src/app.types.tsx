@@ -28,7 +28,7 @@ export interface CatalogueCategory {
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }
 
-export interface ViewManufacturerResponse {
+export interface Manufacturer {
   name: string;
   url: string;
   address: string;
