@@ -14,6 +14,7 @@ import {
   InputLabel,
   FormControl,
   FormHelperText,
+  SelectChangeEvent,
 } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import React from 'react';
@@ -26,6 +27,8 @@ import {
   CatalogueItemProperty,
   EditCatalogueItem,
   ErrorParsing,
+  Manufacturer,
+  ViewManufacturerResponse,
 } from '../../app.types';
 import {
   useAddCatalogueItem,
@@ -33,6 +36,7 @@ import {
   useEditCatalogueItem,
 } from '../../api/catalogueItem';
 import { AxiosError } from 'axios';
+import { useManufacturers } from '../../api/manufacturer';
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
@@ -528,6 +532,17 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     selectedCatalogueItemData,
   ]);
 
+  const { data: manufacturers } = useManufacturers();
+  const [manufacturer, setManufacturer] = React.useState('');
+
+  const handleDropDown = (event: SelectChangeEvent) => {
+    setManufacturer(event.target.value as string);
+  };
+
+  console.log(manufacturers);
+  console.log(typeof (manufacturers ? manufacturers[0] : false));
+  console.log(manufacturer);
+
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
       <DialogTitle>{`${
@@ -700,10 +715,29 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           </Box>
         )}
 
-        <Typography sx={{ marginTop: '16px' }} variant="h6">
+        {/* <Typography sx={{ marginTop: '16px' }} variant="h6">
           Manufacturer
-        </Typography>
-        <TextField
+        </Typography> */}
+        <FormControl fullWidth>
+          <InputLabel id="manufacturer-select-label">Manufacturer</InputLabel>
+          <Select
+            labelId="manufacturer-select-label"
+            id="manufacturer-select"
+            value={manufacturer}
+            label="Manufacturer"
+            onChange={handleDropDown}
+          >
+            {manufacturers?.map((manufacturer) => (
+              <MenuItem
+                key={manufacturer.name}
+                value={JSON.stringify(manufacturer)}
+              >
+                {manufacturer.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        {/* <TextField
           label="Manufacturer Name"
           required={true}
           sx={{ marginLeft: '4px', marginTop: '16px' }}
@@ -767,7 +801,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               : ''
           }
           fullWidth
-        />
+        /> */}
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
         <Box
