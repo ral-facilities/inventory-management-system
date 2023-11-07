@@ -120,11 +120,8 @@ export const handlers = [
 
     if (!body.name) {
       return res(ctx.status(422), ctx.json(''));
-    } else if (!body.url) {
-      return res(ctx.status(422), ctx.json(''));
-    } else if (!body.address) {
-      return res(ctx.status(422), ctx.json(''));
-    } else if (body.name === 'Manufacturer A') {
+    }
+    if (body.name === 'Manufacturer A') {
       return res(ctx.status(409), ctx.json(''));
     }
 

@@ -45,7 +45,7 @@ describe('Manufacturer', () => {
     cy.url().should('include', 'http://example.com');
   });
 
-  it('render new manufacturer when added', async () => {
+  it('adds a manufacturer with all fields', async () => {
     cy.findByRole('button', { name: 'Add Manufacturer' }).click();
     cy.findByLabelText('Name *').type('Manufacturer D');
     cy.findByLabelText('URL').type('http://test.co.uk');
@@ -72,54 +72,77 @@ describe('Manufacturer', () => {
     });
   });
 
-  it('render error messages if fields are not filled', async () => {
-    cy.findByTestId('Add Manufacturer').click();
-    cy.findByRole('button', { name: 'Save' }).click();
-    cy.findByRole('dialog')
-      .should('be.visible')
-      .within(() => {
-        cy.contains('Please enter a name.');
-      });
-    cy.findByRole('dialog')
-      .should('be.visible')
-      .within(() => {
-        cy.contains('Please enter a building number.');
-      });
-    cy.findByRole('dialog')
-      .should('be.visible')
-      .within(() => {
-        cy.contains('Please enter a street name.');
-      });
-    cy.findByRole('dialog')
-      .should('be.visible')
-      .within(() => {
-        cy.contains('Please enter a post code or zip code.');
-      });
-  });
-  it('displays error message when duplicate name entered', async () => {
-    cy.findByTestId('Add Manufacturer').click();
-    cy.findByLabelText('Name *').type('Manufacturer A');
+  it('adds a manufacturer with only mandatory fields', async () => {
+    cy.findByRole('button', { name: 'Add Manufacturer' }).click();
+    cy.findByLabelText('Name *').type('Manufacturer D');
     cy.findByLabelText('Building number *').type('1');
     cy.findByLabelText('Street name *').type('Example Street');
     cy.findByLabelText('Post/Zip code *').type('OX1 2AB');
 
-    cy.findByRole('button', { name: 'Save' }).click();
-    cy.findByRole('dialog')
-      .should('be.visible')
-      .within(() => {
-        cy.contains('A manufacturer with the same name already exists.');
-      });
-  });
-  it('invalid url displays correct error message', async () => {
-    cy.findByTestId('Add Manufacturer').click();
-
-    cy.findByLabelText('URL').type('test.co.uk');
+    cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
-    cy.findByRole('dialog')
-      .should('be.visible')
-      .within(() => {
-        cy.contains('Please enter a valid url.');
-      });
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/manufacturers',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"name":"Manufacturer D","url":"","address":{"building_number":"1","street_name":"Example Street","town":"","county":"","postCode":"OX1 2AB"},"telephone":""}'
+      );
+    });
+
+    it('render error messages if fields are not filled', async () => {
+      cy.findByTestId('Add Manufacturer').click();
+      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.contains('Please enter a name.');
+        });
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.contains('Please enter a building number.');
+        });
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.contains('Please enter a street name.');
+        });
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.contains('Please enter a post code or zip code.');
+        });
+    });
+    it('displays error message when duplicate name entered', async () => {
+      cy.findByTestId('Add Manufacturer').click();
+      cy.findByLabelText('Name *').type('Manufacturer A');
+      cy.findByLabelText('Building number *').type('1');
+      cy.findByLabelText('Street name *').type('Example Street');
+      cy.findByLabelText('Post/Zip code *').type('OX1 2AB');
+
+      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.contains('A manufacturer with the same name already exists.');
+        });
+    });
+    it('invalid url displays correct error message', async () => {
+      cy.findByTestId('Add Manufacturer').click();
+
+      cy.findByLabelText('URL').type('test.co.uk');
+
+      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.contains('Please enter a valid url.');
+        });
+    });
   });
 });

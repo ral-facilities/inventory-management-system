@@ -73,7 +73,16 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
       },
       telephone: '',
     });
-
+    setNameError(false);
+    setNameErrorMessage(undefined);
+    setURLError(false);
+    setURLErrorMessage(undefined);
+    setAddressBuildingNumberError(false);
+    setAddressBuildingNumberErrorMessage(undefined);
+    setAddressStreetNameError(false);
+    setaddressStreetNameErrorMessage(undefined);
+    setAddressPostCodeError(false);
+    setAddressPostCodeErrorMessage(undefined);
     onClose();
   }, [onClose, onChangeManufacturerDetails]);
 
