@@ -119,10 +119,6 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(data));
   }),
 
-  rest.get('/v1/manufacturer', (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(ManufacturerJSON));
-  }),
-
   rest.delete('/v1/catalogue-categories/:id', (req, res, ctx) => {
     const { id } = req.params;
     const validCatalogueCategory = CatalogueCategoryJSON.find(
@@ -143,6 +139,12 @@ export const handlers = [
     } else {
       return res(ctx.status(400), ctx.json(''));
     }
+  }),
+
+  // ------------------------------------ MANUFACTURERS ------------------------------------
+
+  rest.get('/v1/manufacturer', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(ManufacturerJSON));
   }),
 
   // ------------------------------------ CATALOGUE ITEMS ------------------------------------
