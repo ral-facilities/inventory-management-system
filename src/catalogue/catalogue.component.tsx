@@ -11,6 +11,8 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { NavigateNext } from '@mui/icons-material';
+import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
+import ClearIcon from '@mui/icons-material/Clear';
 import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
 import CatalogueCard from './category/catalogueCard.component';
 import {
@@ -28,6 +30,7 @@ import {
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
+import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirectoryDialog.component';
 
 export function matchCatalogueItemProperties(
   form: CatalogueCategoryFormData[],
@@ -112,6 +115,7 @@ function Catalogue() {
     [catalogueCategoryDetail]
   );
 
+  const isLeafNode = parentInfo ? parentInfo.is_leaf : false;
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
@@ -119,8 +123,6 @@ function Catalogue() {
     catalogueCategoryDetailLoading ? true : !!parentInfo && parentInfo.is_leaf,
     !catalogueId ? 'null' : catalogueId.replace('/', '')
   );
-
-  const disableButton = parentInfo ? parentInfo.is_leaf : false;
 
   const [deleteCategoryDialogOpen, setDeleteCategoryDialogOpen] =
     React.useState<boolean>(false);
@@ -156,9 +158,42 @@ function Catalogue() {
   >(null);
 
   React.useEffect(() => {
-    setParentId(parentInfo ? (!!parentInfo.id ? parentInfo.id : null) : null);
-    setIsLeaf(parentInfo ? parentInfo.is_leaf : false);
+    setParentId((parentInfo && parentInfo.id) || null);
+    setIsLeaf(parentInfo ? !!parentInfo.is_leaf : false);
   }, [catalogueId, parentInfo]);
+
+  const [selectedCategories, setSelectedCategories] = React.useState<
+    CatalogueCategory[]
+  >([]);
+
+  const handleToggleSelect = (catalogueCategory: CatalogueCategory) => {
+    if (
+      selectedCategories.some(
+        (category: CatalogueCategory) => category.id === catalogueCategory.id
+      )
+    ) {
+      // If the category is already selected, remove it
+      setSelectedCategories(
+        selectedCategories.filter(
+          (category: CatalogueCategory) => category.id !== catalogueCategory.id
+        )
+      );
+    } else {
+      // If the category is not selected, add it
+      setSelectedCategories([...selectedCategories, catalogueCategory]);
+    }
+  };
+
+  const [moveToCategoryDialogOpen, setMoveToCategoryDialogOpen] =
+    React.useState<boolean>(false);
+  // Clears the selected categories when the user navigates toa different page
+  React.useEffect(() => {
+    setSelectedCategories([]);
+  }, [parentId]);
+
+  const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
+    string | null
+  >(null);
 
   return (
     <Grid container>
@@ -191,25 +226,50 @@ function Catalogue() {
             <IconButton
               sx={{ mx: '4px', my: '8px' }}
               onClick={() => setAddCategoryDialogOpen(true)}
-              disabled={disableButton || (!parentInfo && catalogueId !== '')}
+              disabled={isLeafNode || (!parentInfo && catalogueId !== '')}
               aria-label="add catalogue category"
             >
               <AddIcon />
             </IconButton>
           </div>
+          {isLeafNode && (
+            <Button
+              variant="outlined"
+              onClick={() => setAddItemDialogOpen(true)}
+            >
+              Add Catalogue Item
+            </Button>
+          )}
 
-          <Button
-            variant="outlined"
-            disabled={!disableButton}
-            onClick={() => setAddItemDialogOpen(true)}
-          >
-            Add Catalogue Item
-          </Button>
+          {!isLeafNode && selectedCategories.length >= 1 && (
+            <Box>
+              <Button
+                sx={{ mx: '4px' }}
+                variant="outlined"
+                startIcon={<DriveFileMoveOutlinedIcon />}
+                onClick={() => {
+                  setCatalogueCurrDirId(parentId ?? null);
+                  setMoveToCategoryDialogOpen(true);
+                }}
+              >
+                Move to
+              </Button>
+
+              <Button
+                sx={{ mx: '4px' }}
+                variant="outlined"
+                startIcon={<ClearIcon />}
+                onClick={() => setSelectedCategories([])}
+              >
+                {selectedCategories.length} selected
+              </Button>
+            </Box>
+          )}
         </Grid>
       </Grid>
 
       {catalogueCategoryDataLoading &&
-        !catalogueCategoryDetailLoading &&
+        (!catalogueCategoryDetailLoading || !catalogueCategoryDetail) &&
         !parentInfo?.is_leaf && (
           <Box sx={{ width: '100%' }}>
             <LinearProgress />
@@ -247,6 +307,11 @@ function Catalogue() {
                   {...item}
                   onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
                   onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
+                  onToggleSelect={handleToggleSelect}
+                  isSelected={selectedCategories.some(
+                    (selectedCategory: CatalogueCategory) =>
+                      selectedCategory.id === item.id
+                  )}
                 />
               </Grid>
             ))}
@@ -315,6 +380,14 @@ function Catalogue() {
         type="create"
         propertyValues={catalogueItemPropertyValues}
         onChangePropertyValues={setCatalogueItemPropertyValues}
+      />
+      <CatalogueCategoryDirectoryDialog
+        open={moveToCategoryDialogOpen}
+        onClose={() => setMoveToCategoryDialogOpen(false)}
+        selectedCategories={selectedCategories}
+        onChangeSelectedCategories={setSelectedCategories}
+        catalogueCurrDirId={catalogueCurrDirId}
+        onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
       />
     </Grid>
   );
