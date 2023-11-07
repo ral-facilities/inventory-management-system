@@ -207,7 +207,9 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
               fullWidth
             />
           </Grid>
-          <Typography>Address</Typography>
+          <Grid item>
+            <Typography>Address</Typography>
+          </Grid>
           <Grid item>
             <TextField
               label="Building number"
