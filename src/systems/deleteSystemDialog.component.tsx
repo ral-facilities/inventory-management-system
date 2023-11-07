@@ -59,7 +59,7 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
     <Dialog open={open} onClose={onClose} maxWidth="lg">
       <DialogTitle>Delete System</DialogTitle>
       <DialogContent>
-        Are you sure you want to delete
+        Are you sure you want to delete{' '}
         <strong data-testid="delete-system-name">{system.name}</strong>?
       </DialogContent>
       <DialogActions>

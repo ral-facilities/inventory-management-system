@@ -27,10 +27,9 @@ export const useNavigateToSystem = () => {
 
   return React.useCallback(
     (newId: string | null) => {
-      if (newId)
-        navigate(
-          `/inventory-management-system/systems${newId ? `/${newId}` : ''}`
-        );
+      navigate(
+        `/inventory-management-system/systems${newId ? `/${newId}` : ''}`
+      );
     },
     [navigate]
   );
