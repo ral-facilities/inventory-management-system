@@ -173,5 +173,13 @@
       ["19", "amp-meters"]
     ],
     "full_trail": true
+  },
+  {
+    "id": "79",
+    "trail": [
+      ["1", "beam-characterization"],
+      ["79", "test-dup"]
+    ],
+    "full_trail": true
   }
 ]

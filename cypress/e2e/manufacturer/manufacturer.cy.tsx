@@ -1,0 +1,40 @@
+describe('Manufacturer', () => {
+  beforeEach(() => {
+    cy.visit('/inventory-management-system/manufacturer');
+  });
+
+  it('should render in table headers', () => {
+    cy.visit('/inventory-management-system/manufacturer');
+    cy.findByText('Actions').should('be.visible');
+    cy.findByText('Name').should('be.visible');
+    cy.findByText('URL').should('be.visible');
+    cy.findByText('Address').should('be.visible');
+  });
+
+  it('should render manufacturer data', () => {
+    cy.visit('/inventory-management-system/manufacturer');
+
+    cy.findByText('Manufacturer A').should('be.visible');
+    cy.findByText('Manufacturer B').should('be.visible');
+    cy.findByText('Manufacturer C').should('be.visible');
+    cy.findByText('http://example.com').should('be.visible');
+    cy.findByText('http://test.co.uk').should('be.visible');
+    cy.findByText('http://123test.com').should('be.visible');
+    cy.findByText('10 My Street').should('be.visible');
+    cy.findByText('11 My Street').should('be.visible');
+    cy.findByText('12 My Street').should('be.visible');
+  });
+
+  it('manufacturer url is correct and opens new webpage', () => {
+    cy.visit('/inventory-management-system/manufacturer');
+    const url = cy.findByText('http://example.com');
+
+    url
+      .should('be.visible')
+      .then(($url) => {
+        $url.attr('target', '_self');
+      })
+      .click();
+    cy.url().should('include', 'http://example.com');
+  });
+});

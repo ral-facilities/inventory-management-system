@@ -49,7 +49,11 @@ describe('View Tabs', () => {
     expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
       'Manufacturer'
     );
-    expect(screen.getByText('Manufacturer Page')).toBeInTheDocument();
+    expect(screen.getByText('Actions')).toBeInTheDocument();
+    expect(screen.getByText('Name')).toBeInTheDocument();
+    expect(screen.getByText('URL')).toBeInTheDocument();
+    expect(screen.getByText('Address')).toBeInTheDocument();
+
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[0]
     ).toHaveTextContent('Catalogue');
