@@ -314,7 +314,7 @@ export const handlers = [
         return res(ctx.status(204));
       }
     } else {
-      return res(ctx.status(400), ctx.json(''));
+      return res(ctx.status(404), ctx.json(''));
     }
   }),
 ];
