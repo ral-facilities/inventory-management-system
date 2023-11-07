@@ -11,10 +11,10 @@ import { settings } from '../settings';
 import {
   AddManufacturer,
   AddManufacturerResponse,
-  ViewManufacturerResponse,
+  Manufacturer,
 } from '../app.types';
 
-const getAllManufacturers = async (): Promise<ViewManufacturerResponse[]> => {
+const getAllManufacturers = async (): Promise<Manufacturer[]> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -28,10 +28,10 @@ const getAllManufacturers = async (): Promise<ViewManufacturerResponse[]> => {
 };
 
 export const useManufacturers = (): UseQueryResult<
-  ViewManufacturerResponse[],
+  Manufacturer[],
   AxiosError
 > => {
-  return useQuery<ViewManufacturerResponse[], AxiosError>(
+  return useQuery<Manufacturer[], AxiosError>(
     ['Manufacturers'],
     (params) => {
       return getAllManufacturers();

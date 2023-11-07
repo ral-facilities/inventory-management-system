@@ -33,7 +33,7 @@
     "id": "1",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -76,7 +76,7 @@
     "id": "2",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -119,7 +119,7 @@
     "id": "3",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -162,7 +162,7 @@
     "id": "90",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -205,7 +205,7 @@
     "id": "24",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -248,7 +248,7 @@
     "id": "25",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -291,7 +291,7 @@
     "id": "26",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -334,7 +334,7 @@
     "id": "27",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -377,7 +377,7 @@
     "id": "28",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -420,7 +420,7 @@
     "id": "29",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -463,7 +463,7 @@
     "id": "30",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -506,7 +506,7 @@
     "id": "31",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -549,7 +549,7 @@
     "id": "32",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -592,7 +592,7 @@
     "id": "33",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -635,7 +635,7 @@
     "id": "34",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -678,7 +678,7 @@
     "id": "35",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -721,7 +721,7 @@
     "id": "36",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -764,7 +764,7 @@
     "id": "37",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -807,7 +807,7 @@
     "id": "38",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -850,7 +850,7 @@
     "id": "39",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -893,7 +893,7 @@
     "id": "40",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -936,7 +936,7 @@
     "id": "41",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -979,7 +979,7 @@
     "id": "42",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1022,7 +1022,7 @@
     "id": "43",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1065,7 +1065,7 @@
     "id": "44",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1088,7 +1088,7 @@
     "id": "89",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1106,7 +1106,7 @@
     "id": "6",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1129,7 +1129,7 @@
     "id": "7",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1152,7 +1152,7 @@
     "id": "8",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1175,7 +1175,7 @@
     "id": "9",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1198,7 +1198,7 @@
     "id": "10",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1221,7 +1221,7 @@
     "id": "11",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1244,7 +1244,7 @@
     "id": "12",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1267,7 +1267,7 @@
     "id": "13",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1290,7 +1290,7 @@
     "id": "14",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1313,7 +1313,7 @@
     "id": "15",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1336,7 +1336,7 @@
     "id": "16",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1359,7 +1359,7 @@
     "id": "17",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1382,7 +1382,7 @@
     "id": "18",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1405,7 +1405,7 @@
     "id": "19",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1428,7 +1428,7 @@
     "id": "17",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1451,7 +1451,7 @@
     "id": "20",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1474,7 +1474,7 @@
     "id": "21",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1497,7 +1497,7 @@
     "id": "22",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   },
@@ -1520,7 +1520,7 @@
     "id": "23",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     }
   }

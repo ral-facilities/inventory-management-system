@@ -247,8 +247,6 @@ describe('Catalogue Category Dialog', () => {
       parent_id: null,
       id: '1',
       code: 'test',
-      path: '/test',
-      parent_path: '/',
       is_leaf: false,
     };
 
@@ -306,17 +304,67 @@ describe('Catalogue Category Dialog', () => {
     it('displays children elements warning message', async () => {
       props = {
         ...props,
-        catalogueCategoryName: 'test',
+        catalogueCategoryName: 'Cameras',
+        formFields: [
+          { name: 'radius', type: 'number', unit: 'mm', mandatory: true },
+        ],
+        parentId: '1',
+        isLeaf: true,
+        selectedCatalogueCategory: {
+          id: '4',
+          name: 'Cameras',
+          parent_id: '1',
+          code: 'cameras',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Resolution',
+              type: 'number',
+              unit: 'megapixels',
+              mandatory: true,
+            },
+            {
+              name: 'Frame Rate',
+              type: 'number',
+              unit: 'fps',
+              mandatory: false,
+            },
+            {
+              name: 'Sensor Type',
+              type: 'string',
+              mandatory: true,
+            },
+            {
+              name: 'Sensor brand',
+              type: 'string',
+              mandatory: false,
+            },
+            {
+              name: 'Broken',
+              type: 'boolean',
+              mandatory: true,
+            },
+            {
+              name: 'Older than five years',
+              type: 'boolean',
+              mandatory: false,
+            },
+          ],
+        },
       };
       createView();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
-
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
+        catalogue_item_properties: [
+          { mandatory: true, name: 'radius', type: 'number', unit: 'mm' },
+        ],
+      });
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Catalogue category has children elements and cannot be updated'
+            'Catalogue category has child elements and cannot be updated'
           )
         ).toBeInTheDocument();
       });
@@ -354,8 +402,6 @@ describe('Catalogue Category Dialog', () => {
         parent_id: '1',
         code: 'voltage-meters',
         is_leaf: true,
-        parent_path: '/beam-characterization',
-        path: '/beam-characterization/voltage-meters',
         catalogue_item_properties: [
           {
             name: 'Measurement Range',

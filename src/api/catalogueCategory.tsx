@@ -8,14 +8,17 @@ import {
 } from '@tanstack/react-query';
 import {
   AddCatalogueCategory,
+  BreadcrumbsInfo,
   CatalogueCategory,
+  CatalogueCategoryTransferState,
   EditCatalogueCategory,
+  ErrorParsing,
+  MoveToCatalogueCategory,
 } from '../app.types';
 import { settings } from '../settings';
 
 const fetchCatalogueCategory = async (
-  path?: string,
-  parentPath?: string
+  parent_id: string
 ): Promise<CatalogueCategory[]> => {
   let apiUrl: string;
   apiUrl = '';
@@ -24,12 +27,9 @@ const fetchCatalogueCategory = async (
     apiUrl = settingsResult['apiUrl'];
   }
   const queryParams = new URLSearchParams();
-  if (path) {
-    queryParams.append('path', path);
-  }
-  if (parentPath) {
-    queryParams.append('parent_path', parentPath);
-  }
+
+  queryParams.append('parent_id', parent_id);
+
   return axios
     .get(`${apiUrl}/v1/catalogue-categories/`, {
       params: queryParams,
@@ -41,19 +41,52 @@ const fetchCatalogueCategory = async (
 
 export const useCatalogueCategory = (
   isLeaf: boolean,
-  path?: string,
-  parent_path?: string
+  parent_id: string
 ): UseQueryResult<CatalogueCategory[], AxiosError> => {
   return useQuery<CatalogueCategory[], AxiosError>(
-    ['CatalogueCategory', path, parent_path],
+    ['CatalogueCategory', parent_id],
     (params) => {
-      return fetchCatalogueCategory(path, parent_path);
+      return fetchCatalogueCategory(parent_id);
     },
     {
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
       enabled: !isLeaf,
+    }
+  );
+};
+
+const fetchCatalogueBreadcrumbs = async (
+  id: string
+): Promise<BreadcrumbsInfo> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+
+  return axios
+    .get(`${apiUrl}/v1/catalogue-categories/${id}/breadcrumbs`, {})
+    .then((response) => {
+      return response.data;
+    });
+};
+
+export const useCatalogueBreadcrumbs = (
+  id: string
+): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
+  return useQuery<BreadcrumbsInfo, AxiosError>(
+    ['CatalogueBreadcrumbs', id],
+    (params) => {
+      return fetchCatalogueBreadcrumbs(id);
+    },
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+      enabled: id !== '',
     }
   );
 };
@@ -135,6 +168,83 @@ export const useEditCatalogueCategory = (): UseMutationResult<
   );
 };
 
+export const useMoveToCatalogueCategory = (): UseMutationResult<
+  CatalogueCategoryTransferState[],
+  AxiosError,
+  MoveToCatalogueCategory
+> => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    async (moveToCatalogueCategory: MoveToCatalogueCategory) => {
+      const transferStates: CatalogueCategoryTransferState[] = [];
+      let hasSuccessfulEdit = false;
+
+      const targetLocationInfo = {
+        name: moveToCatalogueCategory.targetLocationCatalogueCategory.name,
+        id: moveToCatalogueCategory.targetLocationCatalogueCategory.id,
+      };
+
+      const promises = moveToCatalogueCategory.catalogueCategory.map(
+        async (category: EditCatalogueCategory, index) => {
+          const { name, ...categoryWithoutName } = category;
+
+          if (
+            moveToCatalogueCategory.selectedCategories[index].parent_id ===
+            category.parent_id
+          ) {
+            const errorTransferState: CatalogueCategoryTransferState = {
+              name: category.name ?? '',
+              message:
+                'The destination cannot be the same as the catalogue category itself',
+              state: 'error',
+            };
+            transferStates.push(errorTransferState);
+
+            return;
+          }
+          return editCatalogueCategory(categoryWithoutName)
+            .then((result) => {
+              const successTransferState: CatalogueCategoryTransferState = {
+                name: result.name ?? '',
+                message: `Successfully moved to ${targetLocationInfo.name}`,
+                state: 'success',
+              };
+              transferStates.push(successTransferState);
+              hasSuccessfulEdit = true;
+            })
+            .catch((error) => {
+              const response = error.response?.data as ErrorParsing;
+
+              const selectedCategory =
+                moveToCatalogueCategory.selectedCategories.find(
+                  (selectedCategory) => selectedCategory.id === category.id
+                );
+              const errorTransferState: CatalogueCategoryTransferState = {
+                name: selectedCategory?.name ?? '',
+                message: response.detail,
+                state: 'error',
+              };
+              transferStates.push(errorTransferState);
+            });
+        }
+      );
+
+      await Promise.all(promises);
+
+      if (hasSuccessfulEdit) {
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+        queryClient.invalidateQueries({ queryKey: ['CatalogueBreadcrumbs'] });
+      }
+
+      return transferStates;
+    },
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+    }
+  );
+};
 const deleteCatalogueCategory = async (
   catalogueCategory: CatalogueCategory
 ): Promise<void> => {

@@ -23,7 +23,7 @@ describe('Catalogue Items Table', () => {
       onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
       catalogueItemManufacturer: {
         name: '',
-        web_url: '',
+        url: '',
         address: '',
       },
       onChangeCatalogueItemManufacturer: onChangeCatalogueItemManufacturer,
@@ -35,8 +35,6 @@ describe('Catalogue Items Table', () => {
         parent_id: '1',
         code: 'energy-meters',
         is_leaf: true,
-        parent_path: '/beam-characterization',
-        path: '/beam-characterization/energy-meters',
         catalogue_item_properties: [
           {
             name: 'Measurement Range',

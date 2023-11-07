@@ -1,8 +1,6 @@
 describe('Catalogue Items', () => {
   beforeEach(() => {
-    cy.visit(
-      '/inventory-management-system/catalogue/beam-characterization/cameras'
-    );
+    cy.visit('/inventory-management-system/catalogue/4');
   });
   afterEach(() => {
     cy.clearMocks();
@@ -36,7 +34,7 @@ describe('Catalogue Items', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"catalogue_category_id":"4","name":"test","description":"test Description","properties":[{"name":"Resolution","value":18},{"name":"Frame Rate","value":60},{"name":"Sensor Type","value":"IO"},{"name":"Sensor brand","value":"pixel"},{"name":"Broken","value":true},{"name":"Older than five years","value":false}],"manufacturer":{"name":"test","address":"1 house test TX3 6TY","web_url":"https://test.co.uk"}}'
+        '{"catalogue_category_id":"4","name":"test","description":"test Description","properties":[{"name":"Resolution","value":18},{"name":"Frame Rate","value":60},{"name":"Sensor Type","value":"IO"},{"name":"Sensor brand","value":"pixel"},{"name":"Broken","value":true},{"name":"Older than five years","value":false}],"manufacturer":{"name":"test","address":"1 house test TX3 6TY","url":"https://test.co.uk"}}'
       );
     });
   });
@@ -65,7 +63,7 @@ describe('Catalogue Items', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"catalogue_category_id":"4","name":"test","description":"","properties":[{"name":"Resolution","value":18},{"name":"Sensor Type","value":"IO"},{"name":"Broken","value":true}],"manufacturer":{"name":"test","address":"1 house test TX3 6TY","web_url":"https://test.co.uk"}}'
+        '{"catalogue_category_id":"4","name":"test","description":"","properties":[{"name":"Resolution","value":18},{"name":"Sensor Type","value":"IO"},{"name":"Broken","value":true}],"manufacturer":{"name":"test","address":"1 house test TX3 6TY","url":"https://test.co.uk"}}'
       );
     });
   });
@@ -200,9 +198,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays error message when user tries to delete a catalogue item that has children elements', () => {
-    cy.visit(
-      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
-    );
+    cy.visit('/inventory-management-system/catalogue/5');
     cy.findByRole('button', {
       name: 'Delete Energy Meters 27 catalogue item',
     }).click();
@@ -219,9 +215,7 @@ describe('Catalogue Items', () => {
   });
 
   it('delete a catalogue item', () => {
-    cy.visit(
-      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
-    );
+    cy.visit('/inventory-management-system/catalogue/5');
     cy.findByRole('button', {
       name: 'Delete Energy Meters 26 catalogue item',
     }).click();
@@ -240,10 +234,8 @@ describe('Catalogue Items', () => {
     });
   });
 
-  it('displays error message if none of the fields have been edited', () => {
-    cy.visit(
-      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
-    );
+  it('displays error message if none of the field have been edited', () => {
+    cy.visit('/inventory-management-system/catalogue/5');
     cy.findByRole('button', {
       name: 'Edit Energy Meters 27 catalogue item',
     }).click();
@@ -252,9 +244,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays error message if catalogue item has children elements', () => {
-    cy.visit(
-      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
-    );
+    cy.visit('/inventory-management-system/catalogue/5');
     cy.findByRole('button', {
       name: 'Edit Energy Meters 27 catalogue item',
     }).click();
@@ -275,9 +265,7 @@ describe('Catalogue Items', () => {
   });
 
   it('edit a catalogue item (name and desc)', () => {
-    cy.visit(
-      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
-    );
+    cy.visit('/inventory-management-system/catalogue/5');
     cy.findByRole('button', {
       name: 'Edit Energy Meters 27 catalogue item',
     }).click();
@@ -304,9 +292,7 @@ describe('Catalogue Items', () => {
   });
 
   it('edit a catalogue item (properties)', () => {
-    cy.visit(
-      '/inventory-management-system/catalogue/beam-characterization/energy-meters'
-    );
+    cy.visit('/inventory-management-system/catalogue/5');
     cy.findByRole('button', {
       name: 'Edit Energy Meters 27 catalogue item',
     }).click();
