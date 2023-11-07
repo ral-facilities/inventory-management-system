@@ -99,8 +99,6 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
       }
     }
 
-    console.log(manufacturer.address);
-
     //check name
     if (!manufacturer.name || manufacturer.name?.trim().length === 0) {
       hasErrors = true;
@@ -258,39 +256,42 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
               fullWidth
             />
           </Grid>
-          <TextField
-            label="Town"
-            required={false}
-            sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-            value={manufacturer.address.town}
-            onChange={(event) => {
-              onChangeManufacturerDetails({
-                ...manufacturer,
-                address: {
-                  ...manufacturer.address,
-                  town: event.target.value,
-                },
-              });
-            }}
-            fullWidth
-          />
-          <Grid item></Grid>
-          <TextField
-            label="County"
-            required={false}
-            sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-            value={manufacturer.address.county}
-            onChange={(event) => {
-              onChangeManufacturerDetails({
-                ...manufacturer,
-                address: {
-                  ...manufacturer.address,
-                  county: event.target.value,
-                },
-              });
-            }}
-            fullWidth
-          />
+          <Grid item>
+            <TextField
+              label="Town"
+              required={false}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.address.town}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  address: {
+                    ...manufacturer.address,
+                    town: event.target.value,
+                  },
+                });
+              }}
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="County"
+              required={false}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.address.county}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  address: {
+                    ...manufacturer.address,
+                    county: event.target.value,
+                  },
+                });
+              }}
+              fullWidth
+            />
+          </Grid>
           <Grid item>
             <TextField
               label="Post/Zip code"
