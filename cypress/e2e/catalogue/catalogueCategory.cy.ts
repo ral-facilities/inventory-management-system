@@ -245,6 +245,36 @@ describe('Catalogue Category', () => {
     });
   });
 
+  it('moves multiple catalogue category', () => {
+    cy.visit('/inventory-management-system/catalogue/1');
+    cy.findByLabelText('Cameras checkbox').click();
+    cy.findByLabelText('test_dup checkbox').click();
+    cy.findByLabelText('Amp Meters checkbox').click();
+    cy.findByRole('button', { name: 'Move to' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('navigate to catalogue home').click();
+        cy.findByRole('button', { name: 'Move here' }).click();
+      });
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-categories/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(3);
+      expect(JSON.stringify(patchRequests[0].body)).equal('{"parent_id":null}');
+      expect(patchRequests[0].url.toString()).to.contain('/4');
+      expect(JSON.stringify(patchRequests[1].body)).equal('{"parent_id":null}');
+      expect(patchRequests[1].url.toString()).to.contain('/79');
+      expect(JSON.stringify(patchRequests[2].body)).equal('{"parent_id":null}');
+      expect(patchRequests[2].url.toString()).to.contain('/19');
+    });
+  });
+
   it('category with no data displays no results found', () => {
     cy.visit('/inventory-management-system/catalogue/16');
     cy.findByText(

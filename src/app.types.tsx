@@ -15,6 +15,13 @@ export interface EditCatalogueCategory {
   id: string;
   catalogue_item_properties?: CatalogueCategoryFormData[];
   is_leaf?: boolean;
+  parent_id?: string | null;
+}
+
+export interface MoveToCatalogueCategory {
+  catalogueCategory: EditCatalogueCategory[];
+  selectedCategories: CatalogueCategory[];
+  targetLocationCatalogueCategory: CatalogueCategory;
 }
 
 export interface CatalogueCategory {
@@ -24,6 +31,13 @@ export interface CatalogueCategory {
   code: string;
   is_leaf: boolean;
   catalogue_item_properties?: CatalogueCategoryFormData[];
+}
+
+export interface Manufacturer {
+  name: string;
+  url: string;
+  address: string;
+  id: string;
 }
 
 export interface CatalogueCategoryFormData {
@@ -82,6 +96,11 @@ export interface ErrorParsing {
   detail: string;
 }
 
+export interface CatalogueCategoryTransferState {
+  name: string;
+  message: string;
+  state: 'success' | 'error';
+}
 export interface BreadcrumbsInfo {
   trail: [id: string, name: string][];
   full_trail: boolean;
