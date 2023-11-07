@@ -81,7 +81,7 @@ describe('SystemDetails', () => {
     expect(screen.getByText('Please select a system')).toBeInTheDocument();
   });
 
-  it('can open the delete dialog', async () => {
+  it('can open the delete dialog and close it again', async () => {
     createView();
 
     await waitFor(() => {
@@ -94,6 +94,14 @@ describe('SystemDetails', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('delete-system-name')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId('delete-system-name')
+      ).not.toBeInTheDocument();
     });
   });
 });
