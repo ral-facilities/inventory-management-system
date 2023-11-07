@@ -120,7 +120,7 @@ interface Address {
   street_name: string;
   town?: string;
   county?: string;
-  postCode: string;
+  postcode: string;
 }
 
 export enum SystemImportanceType {

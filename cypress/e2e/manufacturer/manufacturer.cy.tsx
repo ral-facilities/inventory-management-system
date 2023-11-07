@@ -67,7 +67,7 @@ describe('Manufacturer', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"Manufacturer D","url":"http://test.co.uk", "address": {building_number: "1", "street_name": "Example Street", "town": "Oxford", "county": "Oxfordshire", "postCode": "OX1 2AB",}, "telephone": "07349612203"}'
+        '{"name":"Manufacturer D","url":"http://test.co.uk", "address": {building_number: "1", "street_name": "Example Street", "town": "Oxford", "county": "Oxfordshire", "postcode": "OX1 2AB",}, "telephone": "07349612203"}'
       );
     });
   });
@@ -90,7 +90,7 @@ describe('Manufacturer', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"Manufacturer D","url":"","address":{"building_number":"1","street_name":"Example Street","town":"","county":"","postCode":"OX1 2AB"},"telephone":""}'
+        '{"name":"Manufacturer D","url":"","address":{"building_number":"1","street_name":"Example Street","town":"","county":"","postcode":"OX1 2AB"},"telephone":""}'
       );
     });
 

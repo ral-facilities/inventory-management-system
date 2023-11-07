@@ -55,8 +55,8 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
     React.useState(false);
   const [addressStreetNameErrorMessage, setaddressStreetNameErrorMessage] =
     React.useState<string | undefined>(undefined);
-  const [addressPostCodeError, setAddressPostCodeError] = React.useState(false);
-  const [AddressPostCodeErrorMessage, setAddressPostCodeErrorMessage] =
+  const [addresspostcodeError, setAddresspostcodeError] = React.useState(false);
+  const [AddresspostcodeErrorMessage, setAddresspostcodeErrorMessage] =
     React.useState<string | undefined>(undefined);
 
   const { mutateAsync: addManufacturer } = useAddManufacturer();
@@ -70,7 +70,7 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
         street_name: '',
         town: '',
         county: '',
-        postCode: '',
+        postcode: '',
       },
       telephone: '',
     });
@@ -82,8 +82,8 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
     setAddressBuildingNumberErrorMessage(undefined);
     setAddressStreetNameError(false);
     setaddressStreetNameErrorMessage(undefined);
-    setAddressPostCodeError(false);
-    setAddressPostCodeErrorMessage(undefined);
+    setAddresspostcodeError(false);
+    setAddresspostcodeErrorMessage(undefined);
     onClose();
   }, [onClose, onChangeManufacturerDetails]);
 
@@ -127,12 +127,12 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
     }
     //check post code
     if (
-      !manufacturer.address?.postCode ||
-      manufacturer.address.postCode?.trim().length === 0
+      !manufacturer.address?.postcode ||
+      manufacturer.address.postcode?.trim().length === 0
     ) {
       hasErrors = true;
-      setAddressPostCodeError(true);
-      setAddressPostCodeErrorMessage('Please enter a post code or zip code.');
+      setAddresspostcodeError(true);
+      setAddresspostcodeErrorMessage('Please enter a post code or zip code.');
     }
 
     if (hasErrors) {
@@ -147,7 +147,7 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
         street_name: manufacturer.address.street_name,
         town: manufacturer.address.town,
         county: manufacturer.address.county,
-        postCode: manufacturer.address.postCode,
+        postcode: manufacturer.address.postcode,
       },
       telephone: manufacturer.telephone,
     };
@@ -296,20 +296,20 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
               label="Post/Zip code"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturer.address.postCode}
+              value={manufacturer.address.postcode}
               onChange={(event) => {
                 onChangeManufacturerDetails({
                   ...manufacturer,
                   address: {
                     ...manufacturer.address,
-                    postCode: event.target.value,
+                    postcode: event.target.value,
                   },
                 });
-                setAddressPostCodeError(false);
-                setAddressPostCodeErrorMessage(undefined);
+                setAddresspostcodeError(false);
+                setAddresspostcodeErrorMessage(undefined);
               }}
-              error={addressPostCodeError}
-              helperText={addressPostCodeError && AddressPostCodeErrorMessage}
+              error={addresspostcodeError}
+              helperText={addresspostcodeError && AddresspostcodeErrorMessage}
               fullWidth
             />
           </Grid>

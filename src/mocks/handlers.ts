@@ -136,7 +136,7 @@ export const handlers = [
           street_name: 'Example Street',
           town: 'Oxford',
           county: 'Oxfordshire',
-          postCode: 'OX1 2AB',
+          postcode: 'OX1 2AB',
         },
         telephone: '07349612203',
         id: '4',
