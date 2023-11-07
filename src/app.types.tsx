@@ -27,15 +27,6 @@ export interface CatalogueCategory {
   is_leaf: boolean;
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }
-
-export interface ViewManufacturerResponse {
-  name: string;
-  url: string;
-  address: Address;
-  telephone: string;
-  id: string;
-}
-
 export interface AddManufacturer {
   name: string;
   url?: string;
@@ -44,12 +35,12 @@ export interface AddManufacturer {
 }
 
 export interface AddManufacturerResponse {
+  id: string;
   name: string;
-  code: string;
   url: string;
   address: Address;
   telephone: string;
-  id: string;
+  code: string;
 }
 
 export interface EditManufacturer {

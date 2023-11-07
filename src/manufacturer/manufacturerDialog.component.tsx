@@ -60,8 +60,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
     string | undefined
   >(undefined);
-  const [URlerror, setURLError] = React.useState(false);
-  const [URLErrorMessage, setURLErrorMessage] = React.useState<
+  const [urlError, seturlError] = React.useState(false);
+  const [urlErrorMessage, seturlErrorMessage] = React.useState<
     string | undefined
   >(undefined);
   const [addressBuildingNumberError, setAddressBuildingNumberError] =
@@ -74,14 +74,16 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     React.useState(false);
   const [addressStreetNameErrorMessage, setaddressStreetNameErrorMessage] =
     React.useState<string | undefined>(undefined);
-  const [addresspostcodeError, setAddresspostcodeError] = React.useState(false);
-  const [AddresspostcodeErrorMessage, setAddresspostcodeErrorMessage] =
+  const [addressPostcodeError, setaddressPostcodeError] = React.useState(false);
+  const [addressPostcodeErrorMessage, setaddressPostcodeErrorMessage] =
     React.useState<string | undefined>(undefined);
 
   const [formError, setFormError] = React.useState(false);
   const [formErrorMessage, setFormErrorMessage] = React.useState<
     string | undefined
   >(undefined);
+
+  const [catchAllError, setCatchAllError] = React.useState(false);
 
   const { mutateAsync: addManufacturer } = useAddManufacturer();
   const { mutateAsync: editManufacturer } = useEditManufacturer();
@@ -104,14 +106,14 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     });
     setNameError(false);
     setNameErrorMessage(undefined);
-    setURLError(false);
-    setURLErrorMessage(undefined);
+    seturlError(false);
+    seturlErrorMessage(undefined);
     setAddressBuildingNumberError(false);
     setAddressBuildingNumberErrorMessage(undefined);
     setAddressStreetNameError(false);
     setaddressStreetNameErrorMessage(undefined);
-    setAddresspostcodeError(false);
-    setAddresspostcodeErrorMessage(undefined);
+    setaddressPostcodeError(false);
+    setaddressPostcodeErrorMessage(undefined);
     setFormError(false);
     setFormErrorMessage(undefined);
     onClose();
@@ -124,8 +126,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     if (manufacturer.url) {
       if (!isValidUrl(manufacturer.url)) {
         hasErrors = true;
-        setURLError(true);
-        setURLErrorMessage('Please enter a valid URL');
+        seturlError(true);
+        seturlErrorMessage('Please enter a valid URL');
       }
     }
 
@@ -159,8 +161,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       manufacturer.address.postcode?.trim().length === 0
     ) {
       hasErrors = true;
-      setAddresspostcodeError(true);
-      setAddresspostcodeErrorMessage('Please enter a post code or zip code.');
+      setaddressPostcodeError(true);
+      setaddressPostcodeErrorMessage('Please enter a post code or zip code.');
     }
 
     return hasErrors;
@@ -181,15 +183,15 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
     const manufacturerToAdd: AddManufacturer = {
       name: manufacturer.name,
-      url: manufacturer.url,
+      url: manufacturer.url ?? undefined,
       address: {
         building_number: manufacturer.address.building_number,
         street_name: manufacturer.address.street_name,
-        town: manufacturer.address.town,
-        county: manufacturer.address.county,
+        town: manufacturer.address.town ?? undefined,
+        county: manufacturer.address.county ?? undefined,
         postcode: manufacturer.address.postcode,
       },
-      telephone: manufacturer.telephone,
+      telephone: manufacturer.telephone ?? undefined,
     };
 
     addManufacturer(manufacturerToAdd)
@@ -202,7 +204,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           setNameErrorMessage(
             'A manufacturer with the same name already exists.'
           );
+          return;
         }
+        setCatchAllError(true);
       });
   }, [handleErrors, manufacturer, addManufacturer, handleClose]);
 
@@ -323,6 +327,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               );
               return;
             }
+            setCatchAllError(true);
           });
       } else {
         setFormError(true);
@@ -375,13 +380,13 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               ...manufacturer,
               url: event.target.value,
             });
-            setURLError(false);
-            setURLErrorMessage(undefined);
+            seturlError(false);
+            seturlErrorMessage(undefined);
             setFormError(false);
             setFormErrorMessage(undefined);
           }}
-          error={URlerror}
-          helperText={URlerror && URLErrorMessage}
+          error={urlError}
+          helperText={urlError && urlErrorMessage}
           fullWidth
         />
         <Typography>Address</Typography>
@@ -480,13 +485,13 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                 postcode: event.target.value,
               },
             });
-            setAddresspostcodeError(false);
-            setAddresspostcodeErrorMessage(undefined);
+            setaddressPostcodeError(false);
+            setaddressPostcodeErrorMessage(undefined);
             setFormError(false);
             setFormErrorMessage(undefined);
           }}
-          error={addresspostcodeError}
-          helperText={addresspostcodeError && AddresspostcodeErrorMessage}
+          error={addressPostcodeError}
+          helperText={addressPostcodeError && addressPostcodeErrorMessage}
           fullWidth
         />
         <TextField
@@ -537,6 +542,11 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         {formError && (
           <FormHelperText sx={{ marginBottom: '16px' }} error>
             {formErrorMessage}
+          </FormHelperText>
+        )}
+        {catchAllError && (
+          <FormHelperText sx={{ marginBottom: '16px' }} error>
+            {'Please refresh and try again'}
           </FormHelperText>
         )}
       </DialogActions>
