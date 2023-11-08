@@ -9,12 +9,17 @@ import {
   Typography,
 } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import HomeIcon from '@mui/icons-material/Home';
 import AddIcon from '@mui/icons-material/Add';
 import { NavigateNext } from '@mui/icons-material';
+import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
+import ClearIcon from '@mui/icons-material/Clear';
 import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
 import CatalogueCard from './category/catalogueCard.component';
-import { useCatalogueCategory } from '../api/catalogueCategory';
+import {
+  useCatalogueBreadcrumbs,
+  useCatalogueCategory,
+  useCatalogueCategoryById,
+} from '../api/catalogueCategory';
 import {
   CatalogueCategoryFormData,
   CatalogueCategory,
@@ -25,6 +30,7 @@ import {
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
+import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirectoryDialog.component';
 
 export function matchCatalogueItemProperties(
   form: CatalogueCategoryFormData[],
@@ -57,22 +63,14 @@ export function matchCatalogueItemProperties(
 }
 
 function Catalogue() {
-  const [currNode, setCurrNode] = React.useState('/');
   const navigate = useNavigate();
   const location = useLocation();
   const onChangeNode = React.useCallback(
-    (newNode: string) => {
-      setCurrNode(newNode);
-      navigate(`/inventory-management-system/catalogue${newNode}`);
+    (newId: string) => {
+      navigate(`/inventory-management-system/catalogue/${newId}`);
     },
     [navigate]
   );
-
-  React.useEffect(() => {
-    setCurrNode(
-      location.pathname.replace('/inventory-management-system/catalogue', '')
-    );
-  }, [location.pathname]);
 
   const [addCategoryDialogOpen, setAddCategoryDialogOpen] =
     React.useState<boolean>(false);
@@ -90,13 +88,13 @@ function Catalogue() {
     React.useState<CatalogueItemManufacturer>({
       name: '',
       address: '',
-      web_url: '',
+      url: '',
     });
 
   const [catalogueItemPropertyValues, setCatalogueItemPropertyValues] =
     React.useState<(string | number | boolean | null)[]>([]);
 
-  const catalogueLocation = location.pathname.replace(
+  const catalogueId = location.pathname.replace(
     '/inventory-management-system/catalogue',
     ''
   );
@@ -104,29 +102,27 @@ function Catalogue() {
   const {
     data: catalogueCategoryDetail,
     isLoading: catalogueCategoryDetailLoading,
-  } = useCatalogueCategory(
-    false,
-    catalogueLocation === '' ? '/' : catalogueLocation,
-    undefined
+  } = useCatalogueCategoryById(catalogueId.replace('/', ''));
+
+  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
+    catalogueId.replace('/', '')
   );
 
   const [parentId, setParentId] = React.useState<string | null>(null);
   const [isLeaf, setIsLeaf] = React.useState<boolean>(false);
   const parentInfo = React.useMemo(
-    () => catalogueCategoryDetail?.[0],
+    () => catalogueCategoryDetail,
     [catalogueCategoryDetail]
   );
 
+  const isLeafNode = parentInfo ? parentInfo.is_leaf : false;
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
   } = useCatalogueCategory(
     catalogueCategoryDetailLoading ? true : !!parentInfo && parentInfo.is_leaf,
-    undefined,
-    catalogueLocation === '' ? '/' : catalogueLocation
+    !catalogueId ? 'null' : catalogueId.replace('/', '')
   );
-
-  const disableButton = parentInfo ? parentInfo.is_leaf : false;
 
   const [deleteCategoryDialogOpen, setDeleteCategoryDialogOpen] =
     React.useState<boolean>(false);
@@ -162,9 +158,42 @@ function Catalogue() {
   >(null);
 
   React.useEffect(() => {
-    setParentId(parentInfo ? (!!parentInfo.id ? parentInfo.id : null) : null);
-    setIsLeaf(parentInfo ? parentInfo.is_leaf : false);
-  }, [catalogueLocation, parentInfo]);
+    setParentId((parentInfo && parentInfo.id) || null);
+    setIsLeaf(parentInfo ? !!parentInfo.is_leaf : false);
+  }, [catalogueId, parentInfo]);
+
+  const [selectedCategories, setSelectedCategories] = React.useState<
+    CatalogueCategory[]
+  >([]);
+
+  const handleToggleSelect = (catalogueCategory: CatalogueCategory) => {
+    if (
+      selectedCategories.some(
+        (category: CatalogueCategory) => category.id === catalogueCategory.id
+      )
+    ) {
+      // If the category is already selected, remove it
+      setSelectedCategories(
+        selectedCategories.filter(
+          (category: CatalogueCategory) => category.id !== catalogueCategory.id
+        )
+      );
+    } else {
+      // If the category is not selected, add it
+      setSelectedCategories([...selectedCategories, catalogueCategory]);
+    }
+  };
+
+  const [moveToCategoryDialogOpen, setMoveToCategoryDialogOpen] =
+    React.useState<boolean>(false);
+  // Clears the selected categories when the user navigates toa different page
+  React.useEffect(() => {
+    setSelectedCategories([]);
+  }, [parentId]);
+
+  const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
+    string | null
+  >(null);
 
   return (
     <Grid container>
@@ -182,44 +211,65 @@ function Catalogue() {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton
-              sx={{ margin: '4px' }}
-              onClick={() => {
+            <Breadcrumbs
+              onChangeNode={onChangeNode}
+              breadcrumbsInfo={catalogueBreadcrumbs}
+              onChangeNavigateHome={() => {
                 navigate('/inventory-management-system/catalogue');
               }}
-              aria-label="navigate to catalogue home"
-            >
-              <HomeIcon />
-            </IconButton>
-            <Breadcrumbs currNode={currNode} onChangeNode={onChangeNode} />
+              navigateHomeAriaLabel={'navigate to catalogue home'}
+            />
             <NavigateNext
               fontSize="medium"
-              sx={{ color: 'rgba(0, 0, 0, 0.6)', margin: '4px' }}
+              sx={{ color: 'rgba(0, 0, 0, 0.6)', mx: '4px', my: '8px' }}
             />
             <IconButton
-              sx={{ margin: '4px' }}
+              sx={{ mx: '4px', my: '8px' }}
               onClick={() => setAddCategoryDialogOpen(true)}
-              disabled={
-                disableButton || (!parentInfo && catalogueLocation !== '')
-              }
+              disabled={isLeafNode || (!parentInfo && catalogueId !== '')}
               aria-label="add catalogue category"
             >
               <AddIcon />
             </IconButton>
           </div>
+          {isLeafNode && (
+            <Button
+              variant="outlined"
+              onClick={() => setAddItemDialogOpen(true)}
+            >
+              Add Catalogue Item
+            </Button>
+          )}
 
-          <Button
-            variant="outlined"
-            disabled={!disableButton}
-            onClick={() => setAddItemDialogOpen(true)}
-          >
-            Add Catalogue Item
-          </Button>
+          {!isLeafNode && selectedCategories.length >= 1 && (
+            <Box>
+              <Button
+                sx={{ mx: '4px' }}
+                variant="outlined"
+                startIcon={<DriveFileMoveOutlinedIcon />}
+                onClick={() => {
+                  setCatalogueCurrDirId(parentId ?? null);
+                  setMoveToCategoryDialogOpen(true);
+                }}
+              >
+                Move to
+              </Button>
+
+              <Button
+                sx={{ mx: '4px' }}
+                variant="outlined"
+                startIcon={<ClearIcon />}
+                onClick={() => setSelectedCategories([])}
+              >
+                {selectedCategories.length} selected
+              </Button>
+            </Box>
+          )}
         </Grid>
       </Grid>
 
       {catalogueCategoryDataLoading &&
-        !catalogueCategoryDetailLoading &&
+        (!catalogueCategoryDetailLoading || !catalogueCategoryDetail) &&
         !parentInfo?.is_leaf && (
           <Box sx={{ width: '100%' }}>
             <LinearProgress />
@@ -240,7 +290,7 @@ function Catalogue() {
               No results found
             </Typography>
             <Typography>
-              {!parentInfo && catalogueLocation !== ''
+              {!parentInfo && catalogueId !== ''
                 ? 'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
                 : 'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'}
             </Typography>
@@ -257,6 +307,11 @@ function Catalogue() {
                   {...item}
                   onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
                   onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
+                  onToggleSelect={handleToggleSelect}
+                  isSelected={selectedCategories.some(
+                    (selectedCategory: CatalogueCategory) =>
+                      selectedCategory.id === item.id
+                  )}
                 />
               </Grid>
             ))}
@@ -325,6 +380,14 @@ function Catalogue() {
         type="create"
         propertyValues={catalogueItemPropertyValues}
         onChangePropertyValues={setCatalogueItemPropertyValues}
+      />
+      <CatalogueCategoryDirectoryDialog
+        open={moveToCategoryDialogOpen}
+        onClose={() => setMoveToCategoryDialogOpen(false)}
+        selectedCategories={selectedCategories}
+        onChangeSelectedCategories={setSelectedCategories}
+        catalogueCurrDirId={catalogueCurrDirId}
+        onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
       />
     </Grid>
   );

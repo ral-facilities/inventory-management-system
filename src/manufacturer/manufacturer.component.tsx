@@ -31,7 +31,7 @@ function Manufacturer() {
         street_name: '',
         town: '',
         county: '',
-        postCode: '',
+        postcode: '',
       },
       telephone: '',
     });
@@ -201,7 +201,7 @@ function Manufacturer() {
                       ' \n' +
                       item.address.county +
                       ' \n' +
-                      item.address.postCode}
+                      item.address.postcode}
                   </TableCell>
                   <TableCell
                     sx={{

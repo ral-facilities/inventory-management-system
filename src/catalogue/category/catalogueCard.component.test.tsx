@@ -10,6 +10,7 @@ describe('Catalogue Card', () => {
 
   const onChangeOpenDeleteDialog = jest.fn();
   const onChangeOpenEditDialog = jest.fn();
+  const onToggleSelect = jest.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(<CatalogueCard {...props} />);
   };
@@ -21,10 +22,10 @@ describe('Catalogue Card', () => {
       parent_id: '',
       code: 'beam-characterization',
       is_leaf: false,
-      parent_path: '/',
-      path: '/beam-characterization',
       onChangeOpenDeleteDialog: onChangeOpenDeleteDialog,
       onChangeOpenEditDialog: onChangeOpenEditDialog,
+      isSelected: false,
+      onToggleSelect: onToggleSelect,
     };
     user = userEvent.setup();
   });
@@ -42,6 +43,15 @@ describe('Catalogue Card', () => {
     await user.click(deleteButton);
 
     expect(onChangeOpenDeleteDialog).toHaveBeenCalled();
+  });
+
+  it('checks the checkbox', async () => {
+    createView();
+    const checkbox = screen.getByLabelText('Beam Characterization checkbox');
+
+    await user.click(checkbox);
+
+    expect(onToggleSelect).toHaveBeenCalled();
   });
 
   it('opens the edit dialog', async () => {

@@ -3,7 +3,9 @@ import CatalogueCategoryJSON from './CatalogueCategory.json';
 import ManufacturerJSON from './manufacturer.json';
 import { AddManufacturer } from '../app.types';
 import CatalogueItemJSON from './CatalogueItems.json';
+import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
+import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import {
   AddCatalogueCategory,
   CatalogueItem,
@@ -35,19 +37,23 @@ export const handlers = [
         parent_id: null,
         id: '1',
         code: 'test',
-        path: '/test',
-        parent_path: '/',
         is_leaf: false,
       })
     );
   }),
   rest.patch('/v1/catalogue-categories/:id', async (req, res, ctx) => {
     const { id } = req.params;
-    const data = CatalogueCategoryJSON.filter(
-      (catalogueCategory) => catalogueCategory.parent_id === id
+    const itemData = CatalogueItemJSON.filter(
+      (catalogueItem) => catalogueItem.catalogue_category_id === id
+    );
+
+    const obj = CatalogueCategoryJSON.find(
+      (catalogueCategory) => catalogueCategory.id === id
     );
     const body = (await req.json()) as EditCatalogueCategory;
-    if (body.name === 'test_dup') {
+
+    const fullBody = { ...obj, ...body };
+    if (fullBody.name === 'test_dup') {
       return res(
         ctx.status(409),
         ctx.json({
@@ -56,32 +62,22 @@ export const handlers = [
         })
       );
     }
-
-    if (data.length > 0) {
-      return res(
-        ctx.status(409),
-        ctx.json({
-          detail:
-            'Catalogue category has children elements and cannot be updated',
-        })
-      );
+    if (body.catalogue_item_properties !== undefined) {
+      if (itemData.length > 0) {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail:
+              'Catalogue category has child elements and cannot be updated',
+          })
+        );
+      }
     }
 
-    if (body.name === 'Error 500') {
+    if (fullBody.name === 'Error 500') {
       return res(ctx.status(500), ctx.json(''));
     }
-    return res(
-      ctx.status(200),
-      ctx.json({
-        name: 'test',
-        parent_id: null,
-        id: '1',
-        code: 'test',
-        path: '/test',
-        parent_path: '/',
-        is_leaf: false,
-      })
-    );
+    return res(ctx.status(200), ctx.json(fullBody));
   }),
 
   rest.get('/v1/catalogue-categories/:id', (req, res, ctx) => {
@@ -96,18 +92,29 @@ export const handlers = [
 
   rest.get('/v1/catalogue-categories/', (req, res, ctx) => {
     const catalogueCategoryParams = req.url.searchParams;
-    const path = catalogueCategoryParams.get('path');
-    const parentPath = catalogueCategoryParams.get('parent_path');
+    const parentId = catalogueCategoryParams.get('parent_id');
     let data;
-    if (path) {
-      data = CatalogueCategoryJSON.filter(
-        (catalogueCategory) => catalogueCategory.path === path
-      );
-    } else if (parentPath) {
-      data = CatalogueCategoryJSON.filter(
-        (catalogueCategory) => catalogueCategory.parent_path === parentPath
-      );
+
+    if (parentId) {
+      if (parentId === 'null') {
+        data = CatalogueCategoryJSON.filter(
+          (catalogueCategory) => catalogueCategory.parent_id === null
+        );
+      } else {
+        data = CatalogueCategoryJSON.filter(
+          (catalogueCategory) => catalogueCategory.parent_id === parentId
+        );
+      }
     }
+
+    return res(ctx.status(200), ctx.json(data));
+  }),
+
+  rest.get('/v1/catalogue-categories/:id/breadcrumbs', (req, res, ctx) => {
+    const { id } = req.params;
+    const data = CatalogueBreadcrumbsJSON.find(
+      (catalogueBreadcrumbs) => catalogueBreadcrumbs.id === id
+    );
     return res(ctx.status(200), ctx.json(data));
   }),
 
@@ -120,11 +127,8 @@ export const handlers = [
 
     if (!body.name) {
       return res(ctx.status(422), ctx.json(''));
-    } else if (!body.url) {
-      return res(ctx.status(422), ctx.json(''));
-    } else if (!body.address) {
-      return res(ctx.status(422), ctx.json(''));
-    } else if (body.name === 'Manufacturer A') {
+    }
+    if (body.name === 'Manufacturer A') {
       return res(ctx.status(409), ctx.json(''));
     }
 
@@ -139,7 +143,7 @@ export const handlers = [
           street_name: 'Example Street',
           town: 'Oxford',
           county: 'Oxfordshire',
-          postCode: 'OX1 2AB',
+          postcode: 'OX1 2AB',
         },
         telephone: '07349612203',
         id: '4',
@@ -286,18 +290,24 @@ export const handlers = [
     );
   }),
 
-  rest.get('/v1/systems/', (req, res, ctx) => {
+  rest.get('/v1/systems', (req, res, ctx) => {
     const systemsParams = req.url.searchParams;
-    const path = systemsParams.get('path');
-    const parentPath = systemsParams.get('parent_path');
+    const parentId = systemsParams.get('parent_id');
     let data;
-    if (path) {
-      data = SystemsJSON.filter((systems) => systems.path === path);
-    } else if (parentPath) {
-      data = SystemsJSON.filter(
-        (systems) => systems.parent_path === parentPath
-      );
-    }
+
+    if (parentId) {
+      if (parentId === 'null')
+        data = SystemsJSON.filter((system) => system.parent_id === null);
+      else data = SystemsJSON.filter((system) => system.parent_id === parentId);
+    } else data = SystemsJSON;
+    return res(ctx.status(200), ctx.json(data));
+  }),
+
+  rest.get('/v1/systems/:id/breadcrumbs', (req, res, ctx) => {
+    const { id } = req.params;
+    const data = SystemBreadcrumbsJSON.find(
+      (systemBreadcrumbs) => systemBreadcrumbs.id === id
+    );
     return res(ctx.status(200), ctx.json(data));
   }),
 ];

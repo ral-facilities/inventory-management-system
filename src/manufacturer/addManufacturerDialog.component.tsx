@@ -5,6 +5,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Grid,
   TextField,
   Typography,
 } from '@mui/material';
@@ -54,8 +55,8 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
     React.useState(false);
   const [addressStreetNameErrorMessage, setaddressStreetNameErrorMessage] =
     React.useState<string | undefined>(undefined);
-  const [addressPostCodeError, setAddressPostCodeError] = React.useState(false);
-  const [AddressPostCodeErrorMessage, setAddressPostCodeErrorMessage] =
+  const [addresspostcodeError, setAddresspostcodeError] = React.useState(false);
+  const [AddresspostcodeErrorMessage, setAddresspostcodeErrorMessage] =
     React.useState<string | undefined>(undefined);
 
   const { mutateAsync: addManufacturer } = useAddManufacturer();
@@ -69,11 +70,20 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
         street_name: '',
         town: '',
         county: '',
-        postCode: '',
+        postcode: '',
       },
       telephone: '',
     });
-
+    setNameError(false);
+    setNameErrorMessage(undefined);
+    setURLError(false);
+    setURLErrorMessage(undefined);
+    setAddressBuildingNumberError(false);
+    setAddressBuildingNumberErrorMessage(undefined);
+    setAddressStreetNameError(false);
+    setaddressStreetNameErrorMessage(undefined);
+    setAddresspostcodeError(false);
+    setAddresspostcodeErrorMessage(undefined);
     onClose();
   }, [onClose, onChangeManufacturerDetails]);
 
@@ -88,8 +98,6 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
         setURLErrorMessage('Please enter a valid URL');
       }
     }
-
-    console.log(manufacturer.address);
 
     //check name
     if (!manufacturer.name || manufacturer.name?.trim().length === 0) {
@@ -117,12 +125,12 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
     }
     //check post code
     if (
-      !manufacturer.address?.postCode ||
-      manufacturer.address.postCode?.trim().length === 0
+      !manufacturer.address?.postcode ||
+      manufacturer.address.postcode?.trim().length === 0
     ) {
       hasErrors = true;
-      setAddressPostCodeError(true);
-      setAddressPostCodeErrorMessage('Please enter a post code or zip code.');
+      setAddresspostcodeError(true);
+      setAddresspostcodeErrorMessage('Please enter a post code or zip code.');
     }
 
     if (hasErrors) {
@@ -137,7 +145,7 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
         street_name: manufacturer.address.street_name,
         town: manufacturer.address.town,
         county: manufacturer.address.county,
-        postCode: manufacturer.address.postCode,
+        postcode: manufacturer.address.postcode,
       },
       telephone: manufacturer.telephone,
     };
@@ -160,148 +168,170 @@ function AddManufacturerDialog(props: AddManufacturerDialogProps) {
     <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
       <DialogTitle>Add Manufacturer</DialogTitle>
       <DialogContent>
-        <TextField
-          label="Name"
-          required={true}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.name}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              name: event.target.value,
-            });
-            setNameError(false);
-            setNameErrorMessage(undefined);
-          }}
-          error={nameError}
-          helperText={nameError && nameErrorMessage}
-          fullWidth
-        />
-        <TextField
-          label="URL"
-          required={false}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.url}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              url: event.target.value,
-            });
-            setURLError(false);
-            setURLErrorMessage(undefined);
-          }}
-          error={URlerror}
-          helperText={URlerror && URLErrorMessage}
-          fullWidth
-        />
-        <Typography>Address</Typography>
-        <TextField
-          label="Building number"
-          required={true}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.address.building_number}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              address: {
-                ...manufacturer.address,
-                building_number: event.target.value,
-              },
-            });
-            setAddressBuildingNumberError(false);
-            setAddressBuildingNumberErrorMessage(undefined);
-          }}
-          error={addressBuildingNumberError}
-          helperText={
-            addressBuildingNumberError && addressBuildingNumberErrorMessage
-          }
-          fullWidth
-        />
-        <TextField
-          label="Street name"
-          required={true}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.address.street_name}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              address: {
-                ...manufacturer.address,
-                street_name: event.target.value,
-              },
-            });
-            setAddressStreetNameError(false);
-            setaddressStreetNameErrorMessage(undefined);
-          }}
-          error={addressStreetNameError}
-          helperText={addressStreetNameError && addressStreetNameErrorMessage}
-          fullWidth
-        />
-        <TextField
-          label="Town"
-          required={false}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.address.town}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              address: {
-                ...manufacturer.address,
-                town: event.target.value,
-              },
-            });
-          }}
-          fullWidth
-        />
-        <TextField
-          label="County"
-          required={false}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.address.county}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              address: {
-                ...manufacturer.address,
-                county: event.target.value,
-              },
-            });
-          }}
-          fullWidth
-        />
-        <TextField
-          label="Post/Zip code"
-          required={true}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.address.postCode}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              address: {
-                ...manufacturer.address,
-                postCode: event.target.value,
-              },
-            });
-            setAddressPostCodeError(false);
-            setAddressPostCodeErrorMessage(undefined);
-          }}
-          error={addressPostCodeError}
-          helperText={addressPostCodeError && AddressPostCodeErrorMessage}
-          fullWidth
-        />
-        <TextField
-          label="Telephone number"
-          required={false}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.telephone}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              telephone: event.target.value,
-            });
-          }}
-          fullWidth
-        />
+        <Grid container direction="column" spacing={2}>
+          <Grid item sx={{ mt: 1 }}>
+            <TextField
+              label="Name"
+              required={true}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.name}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  name: event.target.value,
+                });
+                setNameError(false);
+                setNameErrorMessage(undefined);
+              }}
+              error={nameError}
+              helperText={nameError && nameErrorMessage}
+              fullWidth
+            ></TextField>
+          </Grid>
+          <Grid item>
+            <TextField
+              label="URL"
+              required={false}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.url}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  url: event.target.value,
+                });
+                setURLError(false);
+                setURLErrorMessage(undefined);
+              }}
+              error={URlerror}
+              helperText={URlerror && URLErrorMessage}
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <Typography>Address</Typography>
+          </Grid>
+          <Grid item>
+            <TextField
+              label="Building number"
+              required={true}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.address.building_number}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  address: {
+                    ...manufacturer.address,
+                    building_number: event.target.value,
+                  },
+                });
+                setAddressBuildingNumberError(false);
+                setAddressBuildingNumberErrorMessage(undefined);
+              }}
+              error={addressBuildingNumberError}
+              helperText={
+                addressBuildingNumberError && addressBuildingNumberErrorMessage
+              }
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="Street name"
+              required={true}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.address.street_name}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  address: {
+                    ...manufacturer.address,
+                    street_name: event.target.value,
+                  },
+                });
+                setAddressStreetNameError(false);
+                setaddressStreetNameErrorMessage(undefined);
+              }}
+              error={addressStreetNameError}
+              helperText={
+                addressStreetNameError && addressStreetNameErrorMessage
+              }
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="Town"
+              required={false}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.address.town}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  address: {
+                    ...manufacturer.address,
+                    town: event.target.value,
+                  },
+                });
+              }}
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="County"
+              required={false}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.address.county}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  address: {
+                    ...manufacturer.address,
+                    county: event.target.value,
+                  },
+                });
+              }}
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="Post/Zip code"
+              required={true}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.address.postcode}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  address: {
+                    ...manufacturer.address,
+                    postcode: event.target.value,
+                  },
+                });
+                setAddresspostcodeError(false);
+                setAddresspostcodeErrorMessage(undefined);
+              }}
+              error={addresspostcodeError}
+              helperText={addresspostcodeError && AddresspostcodeErrorMessage}
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="Telephone number"
+              required={false}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.telephone}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  telephone: event.target.value,
+                });
+              }}
+              fullWidth
+            />
+          </Grid>
+        </Grid>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
         <Box
