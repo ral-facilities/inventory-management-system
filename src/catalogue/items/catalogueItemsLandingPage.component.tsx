@@ -62,7 +62,7 @@ function CatalogueItemsLandingPage() {
     React.useState<CatalogueItemManufacturer>({
       name: '',
       address: '',
-      web_url: '',
+      url: '',
     });
 
   const [catalogueItemPropertyValues, setCatalogueItemPropertyValues] =
@@ -73,9 +73,11 @@ function CatalogueItemsLandingPage() {
       <Grid sx={{ padding: '8px' }} item>
         <Button
           component={Link}
-          to={`/inventory-management-system/catalogue${
-            catalogueCategoryData?.path ?? ''
-          }`}
+          to={
+            catalogueCategoryData && catalogueCategoryData.id
+              ? `/inventory-management-system/catalogue/${catalogueCategoryData.id}`
+              : '/inventory-management-system/catalogue'
+          }
           sx={{ margin: '8px' }}
           variant="outlined"
         >
@@ -233,9 +235,9 @@ function CatalogueItemsLandingPage() {
                         <MuiLink
                           underline="hover"
                           target="_blank"
-                          href={catalogueItemIdData.manufacturer.web_url}
+                          href={catalogueItemIdData.manufacturer.url}
                         >
-                          {catalogueItemIdData.manufacturer.web_url}
+                          {catalogueItemIdData.manufacturer.url}
                         </MuiLink>
                       }
                     />

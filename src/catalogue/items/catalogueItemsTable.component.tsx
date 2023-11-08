@@ -305,9 +305,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                     <MuiLink
                       underline="hover"
                       target="_blank"
-                      href={item.manufacturer.web_url}
+                      href={item.manufacturer.url}
                     >
-                      {item.manufacturer.web_url}
+                      {item.manufacturer.url}
                     </MuiLink>
                   </TableCell>
                   <TableCell

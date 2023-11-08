@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
+  Grid,
   TextField,
   Typography,
 } from '@mui/material';
@@ -351,164 +352,184 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         type === 'create' ? 'Add' : 'Edit'
       } Manufacturer`}</DialogTitle>
       <DialogContent>
-        <TextField
-          label="Name"
-          required={type === 'create' ? true : false}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.name}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              name: event.target.value,
-            });
-            setNameError(false);
-            setNameErrorMessage(undefined);
-            setFormError(false);
-            setFormErrorMessage(undefined);
-          }}
-          error={nameError}
-          helperText={nameError && nameErrorMessage}
-          fullWidth
-        />
-        <TextField
-          label="URL"
-          required={false}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.url}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              url: event.target.value,
-            });
-            seturlError(false);
-            seturlErrorMessage(undefined);
-            setFormError(false);
-            setFormErrorMessage(undefined);
-          }}
-          error={urlError}
-          helperText={urlError && urlErrorMessage}
-          fullWidth
-        />
-        <Typography>Address</Typography>
-        <TextField
-          label="Building number"
-          required={type === 'create' ? true : false}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.address.building_number}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              address: {
-                ...manufacturer.address,
-                building_number: event.target.value,
-              },
-            });
-            setAddressBuildingNumberError(false);
-            setAddressBuildingNumberErrorMessage(undefined);
-            setFormError(false);
-            setFormErrorMessage(undefined);
-          }}
-          error={addressBuildingNumberError}
-          helperText={
-            addressBuildingNumberError && addressBuildingNumberErrorMessage
-          }
-          fullWidth
-        />
-        <TextField
-          label="Street name"
-          required={type === 'create' ? true : false}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.address.street_name}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              address: {
-                ...manufacturer.address,
-                street_name: event.target.value,
-              },
-            });
-            setAddressStreetNameError(false);
-            setaddressStreetNameErrorMessage(undefined);
-            setFormError(false);
-            setFormErrorMessage(undefined);
-          }}
-          error={addressStreetNameError}
-          helperText={addressStreetNameError && addressStreetNameErrorMessage}
-          fullWidth
-        />
-        <TextField
-          label="Town"
-          required={false}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.address.town}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              address: {
-                ...manufacturer.address,
-                town: event.target.value,
-              },
-            });
-            setFormError(false);
-            setFormErrorMessage(undefined);
-          }}
-          fullWidth
-        />
-        <TextField
-          label="County"
-          required={false}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.address.county}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              address: {
-                ...manufacturer.address,
-                county: event.target.value,
-              },
-            });
-            setFormError(false);
-            setFormErrorMessage(undefined);
-          }}
-          fullWidth
-        />
-        <TextField
-          label="Post/Zip code"
-          required={type === 'create' ? true : false}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.address.postcode}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              address: {
-                ...manufacturer.address,
-                postcode: event.target.value,
-              },
-            });
-            setaddressPostcodeError(false);
-            setaddressPostcodeErrorMessage(undefined);
-            setFormError(false);
-            setFormErrorMessage(undefined);
-          }}
-          error={addressPostcodeError}
-          helperText={addressPostcodeError && addressPostcodeErrorMessage}
-          fullWidth
-        />
-        <TextField
-          label="Telephone number"
-          required={false}
-          sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-          value={manufacturer.telephone}
-          onChange={(event) => {
-            onChangeManufacturerDetails({
-              ...manufacturer,
-              telephone: event.target.value,
-            });
-            setFormError(false);
-            setFormErrorMessage(undefined);
-          }}
-          fullWidth
-        />
+        <Grid container direction="column" spacing={2}>
+          <Grid item sx={{ mt: 1 }}>
+            <TextField
+              label="Name"
+              required={type === 'create' ? true : false}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.name}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  name: event.target.value,
+                });
+                setNameError(false);
+                setNameErrorMessage(undefined);
+                setFormError(false);
+                setFormErrorMessage(undefined);
+              }}
+              error={nameError}
+              helperText={nameError && nameErrorMessage}
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="URL"
+              required={false}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.url}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  url: event.target.value,
+                });
+                seturlError(false);
+                seturlErrorMessage(undefined);
+                setFormError(false);
+                setFormErrorMessage(undefined);
+              }}
+              error={urlError}
+              helperText={urlError && urlErrorMessage}
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <Typography>Address</Typography>
+            <TextField
+              label="Building number"
+              required={type === 'create' ? true : false}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.address.building_number}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  address: {
+                    ...manufacturer.address,
+                    building_number: event.target.value,
+                  },
+                });
+                setAddressBuildingNumberError(false);
+                setAddressBuildingNumberErrorMessage(undefined);
+                setFormError(false);
+                setFormErrorMessage(undefined);
+              }}
+              error={addressBuildingNumberError}
+              helperText={
+                addressBuildingNumberError && addressBuildingNumberErrorMessage
+              }
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="Street name"
+              required={type === 'create' ? true : false}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.address.street_name}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  address: {
+                    ...manufacturer.address,
+                    street_name: event.target.value,
+                  },
+                });
+                setAddressStreetNameError(false);
+                setaddressStreetNameErrorMessage(undefined);
+                setFormError(false);
+                setFormErrorMessage(undefined);
+              }}
+              error={addressStreetNameError}
+              helperText={
+                addressStreetNameError && addressStreetNameErrorMessage
+              }
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="Town"
+              required={false}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.address.town}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  address: {
+                    ...manufacturer.address,
+                    town: event.target.value,
+                  },
+                });
+                setFormError(false);
+                setFormErrorMessage(undefined);
+              }}
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="County"
+              required={false}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.address.county}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  address: {
+                    ...manufacturer.address,
+                    county: event.target.value,
+                  },
+                });
+                setFormError(false);
+                setFormErrorMessage(undefined);
+              }}
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="Post/Zip code"
+              required={type === 'create' ? true : false}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.address.postcode}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  address: {
+                    ...manufacturer.address,
+                    postcode: event.target.value,
+                  },
+                });
+                setaddressPostcodeError(false);
+                setaddressPostcodeErrorMessage(undefined);
+                setFormError(false);
+                setFormErrorMessage(undefined);
+              }}
+              error={addressPostcodeError}
+              helperText={addressPostcodeError && addressPostcodeErrorMessage}
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="Telephone number"
+              required={false}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.telephone}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  telephone: event.target.value,
+                });
+                setFormError(false);
+                setFormErrorMessage(undefined);
+              }}
+              fullWidth
+            />
+          </Grid>
+        </Grid>
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
         <Box

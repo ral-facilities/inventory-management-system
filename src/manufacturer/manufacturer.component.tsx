@@ -21,7 +21,7 @@ import { ManufacturerDetail, Manufacturer } from '../app.types';
 import ManufacturerDialog from './manufacturerDialog.component';
 
 function ManufacturerComponent() {
-  const [Manufacturer, setManufacturer] = React.useState<ManufacturerDetail>({
+  const [manufacturer, setManufacturer] = React.useState<ManufacturerDetail>({
     name: '',
     url: undefined,
     address: {
@@ -72,14 +72,14 @@ function ManufacturerComponent() {
         <ManufacturerDialog
           open={addManufacturerDialogOpen}
           onClose={() => setAddManufacturerDialogOpen(false)}
-          manufacturer={Manufacturer}
+          manufacturer={manufacturer}
           onChangeManufacturerDetails={setManufacturer}
           type="create"
         />
         <ManufacturerDialog
           open={editManufacturerDialogOpen}
           onClose={() => setEditManufacturerDialogOpen(false)}
-          manufacturer={Manufacturer}
+          manufacturer={manufacturer}
           onChangeManufacturerDetails={setManufacturer}
           type="edit"
           selectedManufacturer={selectedManufacturer}
