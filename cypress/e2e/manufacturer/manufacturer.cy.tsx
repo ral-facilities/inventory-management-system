@@ -2,6 +2,9 @@ describe('Manufacturer', () => {
   beforeEach(() => {
     cy.visit('/inventory-management-system/manufacturer');
   });
+  afterEach(() => {
+    cy.clearMocks();
+  });
 
   it('should render in table headers', () => {
     cy.visit('/inventory-management-system/manufacturer');
@@ -45,7 +48,7 @@ describe('Manufacturer', () => {
     cy.url().should('include', 'http://example.com');
   });
 
-  it('adds a manufacturer with all fields', async () => {
+  it('adds a manufacturer with all fields', () => {
     cy.findByRole('button', { name: 'Add Manufacturer' }).click();
     cy.findByLabelText('Name *').type('Manufacturer D');
     cy.findByLabelText('URL').type('http://test.co.uk');
@@ -67,12 +70,12 @@ describe('Manufacturer', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"Manufacturer D","url":"http://test.co.uk", "address": {building_number: "1", "street_name": "Example Street", "town": "Oxford", "county": "Oxfordshire", "postcode": "OX1 2AB",}, "telephone": "07349612203"}'
+        '{"name":"Manufacturer D","url":"http://test.co.uk","address":{"building_number":"1","street_name":"Example Street","town":"Oxford","county":"Oxfordshire","postcode":"OX1 2AB"},"telephone":"07349612203"}'
       );
     });
   });
 
-  it('adds a manufacturer with only mandatory fields', async () => {
+  it('adds a manufacturer with only mandatory fields', () => {
     cy.findByRole('button', { name: 'Add Manufacturer' }).click();
     cy.findByLabelText('Name *').type('Manufacturer D');
     cy.findByLabelText('Building number *').type('1');
@@ -94,7 +97,7 @@ describe('Manufacturer', () => {
       );
     });
 
-    it('render error messages if fields are not filled', async () => {
+    it('render error messages if fields are not filled', () => {
       cy.findByTestId('Add Manufacturer').click();
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByRole('dialog')
@@ -118,7 +121,7 @@ describe('Manufacturer', () => {
           cy.contains('Please enter a post code or zip code.');
         });
     });
-    it('displays error message when duplicate name entered', async () => {
+    it('displays error message when duplicate name entered', () => {
       cy.findByTestId('Add Manufacturer').click();
       cy.findByLabelText('Name *').type('Manufacturer A');
       cy.findByLabelText('Building number *').type('1');
@@ -132,7 +135,7 @@ describe('Manufacturer', () => {
           cy.contains('A manufacturer with the same name already exists.');
         });
     });
-    it('invalid url displays correct error message', async () => {
+    it('invalid url displays correct error message', () => {
       cy.findByTestId('Add Manufacturer').click();
 
       cy.findByLabelText('URL').type('test.co.uk');
@@ -163,7 +166,7 @@ describe('Manufacturer', () => {
     });
   });
 
-  it('shows error when trying to delete manufacturer that is part of Catalogue Item', async () => {
+  it('shows error when trying to delete manufacturer that is part of Catalogue Item', () => {
     cy.findAllByTestId('DeleteIcon').eq(1).click();
 
     cy.findByRole('button', { name: 'Continue' }).click();
@@ -172,7 +175,7 @@ describe('Manufacturer', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'The manufacturer is a part of a Catalogue Item, Please delete the Catalogue Item first Please delete the Catalogue Item first'
+          'The specified manufacturer is a part of a Catalogue Item. Please delete the Catalogue Item first.'
         );
       });
   });

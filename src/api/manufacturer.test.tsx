@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { AddManufacturer, ViewManufacturerResponse } from '../app.types';
+import { AddManufacturer, Manufacturer } from '../app.types';
 import { hooksWrapperWithProviders } from '../setupTests';
 import {
   useAddManufacturer,
@@ -23,7 +23,7 @@ describe('manufacturer api functions', () => {
           street_name: 'Example',
           town: 'Oxford',
           county: 'Oxfordshire',
-          postCode: 'OX1 2AB',
+          postcode: 'OX1 2AB',
         },
         telephone: '07349612203',
       };
@@ -47,7 +47,7 @@ describe('manufacturer api functions', () => {
           street_name: 'Example Street',
           town: 'Oxford',
           county: 'Oxfordshire',
-          postCode: 'OX1 2AB',
+          postcode: 'OX1 2AB',
         },
         telephone: '07349612203',
         id: '4',
@@ -60,7 +60,7 @@ describe('manufacturer api functions', () => {
   });
 
   describe('useDeleteManufacturer', () => {
-    let mockDataView: ViewManufacturerResponse;
+    let mockDataView: Manufacturer;
     beforeEach(() => {
       mockDataView = {
         name: 'Manufacturer A',
@@ -70,7 +70,7 @@ describe('manufacturer api functions', () => {
           street_name: 'Example',
           town: 'Oxford',
           county: 'Oxfordshire',
-          postCode: 'OX1 2AB',
+          postcode: 'OX1 2AB',
         },
         telephone: '07334893348',
         id: '1',
@@ -114,7 +114,7 @@ describe('manufacturer api functions', () => {
             street_name: 'Example Street',
             town: 'Oxford',
             county: 'Oxfordshire',
-            postCode: 'OX1 2AB',
+            postcode: 'OX1 2AB',
           },
           telephone: '07334893348',
         },
@@ -128,7 +128,7 @@ describe('manufacturer api functions', () => {
             street_name: 'Example Street',
             town: 'Oxford',
             county: 'Oxfordshire',
-            postCode: 'OX1 2AB',
+            postcode: 'OX1 2AB',
           },
           telephone: '07294958549',
         },
@@ -142,7 +142,7 @@ describe('manufacturer api functions', () => {
             street_name: 'Example Street',
             town: 'Oxford',
             county: 'Oxfordshire',
-            postCode: 'OX1 2AB',
+            postcode: 'OX1 2AB',
           },
           telephone: '07934303412',
         },

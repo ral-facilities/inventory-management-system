@@ -159,8 +159,7 @@ export const handlers = [
         return res(
           ctx.status(409),
           ctx.json({
-            detail:
-              'The manufacturer is a part of a Catalogue Item, Please delete the Catalogue Item first',
+            detail: 'The specified manufacturer is a part of a Catalogue Item',
           })
         );
       } else {
