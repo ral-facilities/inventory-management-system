@@ -93,7 +93,7 @@ describe('Manufacturer', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"Manufacturer D","url":"","address":{"building_number":"1","street_name":"Example Street","town":"","county":"","postcode":"OX1 2AB"},"telephone":""}'
+        '{"name":"Manufacturer D","address":{"building_number":"1","street_name":"Example Street","town":"","county":"","postcode":"OX1 2AB"},"telephone":""}'
       );
     });
 
