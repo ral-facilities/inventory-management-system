@@ -56,30 +56,34 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     selectedManufacturer,
   } = props;
 
-  const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
     string | undefined
   >(undefined);
-  const [URlerror, setURLError] = React.useState(false);
-  const [URLErrorMessage, setURLErrorMessage] = React.useState<
+  const nameError = nameErrorMessage !== undefined;
+
+  const [urlErrorMessage, seturlErrorMessage] = React.useState<
     string | undefined
   >(undefined);
-  const [addressLineError, setAddressLineError] = React.useState(false);
+  const urlError = urlErrorMessage !== undefined;
+
   const [addressLineErrorMessage, setAddressLineErrorMessage] = React.useState<
     string | undefined
   >(undefined);
-  const [addresspostcodeError, setAddresspostcodeError] = React.useState(false);
+  const addressLineError = addressLineErrorMessage !== undefined;
+
   const [AddresspostcodeErrorMessage, setAddresspostcodeErrorMessage] =
     React.useState<string | undefined>(undefined);
-  const [countryError, setCountryError] = React.useState(false);
+  const addresspostcodeError = AddresspostcodeErrorMessage !== undefined;
+
   const [countryErrorMessage, setCountryErrorMessage] = React.useState<
     string | undefined
   >(undefined);
+  const countryError = countryErrorMessage !== undefined;
 
-  const [formError, setFormError] = React.useState(false);
   const [formErrorMessage, setFormErrorMessage] = React.useState<
     string | undefined
   >(undefined);
+  const formError = formErrorMessage !== undefined;
 
   const { mutateAsync: addManufacturer } = useAddManufacturer();
   const { mutateAsync: editManufacturer } = useEditManufacturer();
@@ -100,17 +104,17 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       },
       telephone: '',
     });
-    setNameError(false);
+
     setNameErrorMessage(undefined);
-    setURLError(false);
-    setURLErrorMessage(undefined);
-    setAddressLineError(false);
+
+    seturlErrorMessage(undefined);
+
     setAddressLineErrorMessage(undefined);
-    setCountryError(false);
+
     setCountryErrorMessage(undefined);
-    setAddresspostcodeError(false);
+
     setAddresspostcodeErrorMessage(undefined);
-    setFormError(false);
+
     setFormErrorMessage(undefined);
     onClose();
   }, [onClose, onChangeManufacturerDetails]);
@@ -122,15 +126,15 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     if (manufacturer.url) {
       if (!isValidUrl(manufacturer.url)) {
         hasErrors = true;
-        setURLError(true);
-        setURLErrorMessage('Please enter a valid URL');
+
+        seturlErrorMessage('Please enter a valid URL');
       }
     }
 
     //check name
     if (!manufacturer.name || manufacturer.name?.trim().length === 0) {
       hasErrors = true;
-      setNameError(true);
+      // setNameError(true);
       setNameErrorMessage('Please enter a name.');
     }
     //check address line
@@ -139,7 +143,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       manufacturer.address.address_line.trim().length === 0
     ) {
       hasErrors = true;
-      setAddressLineError(true);
+
       setAddressLineErrorMessage('Please enter an address.');
     }
 
@@ -149,7 +153,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       manufacturer.address.postcode?.trim().length === 0
     ) {
       hasErrors = true;
-      setAddresspostcodeError(true);
+
       setAddresspostcodeErrorMessage('Please enter a post code or zip code.');
     }
     //check country
@@ -158,7 +162,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       manufacturer.address.country?.trim().length === 0
     ) {
       hasErrors = true;
-      setCountryError(true);
+
       setCountryErrorMessage('Please enter a country.');
     }
 
@@ -191,7 +195,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         console.log(error.response?.status, manufacturer.name);
 
         if (error.response?.status === 409) {
-          setNameError(true);
+          // setNameError(true);
           setNameErrorMessage(
             'A manufacturer with the same name already exists.'
           );
@@ -309,7 +313,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             const response = error.response?.data as ErrorParsing;
             console.log(error);
             if (response && error.response?.status === 409) {
-              setNameError(true);
+              // setNameError(true);
               setNameErrorMessage(
                 'A manufacturer with the same name has been found. Please enter a different name'
               );
@@ -317,7 +321,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             }
           });
       } else {
-        setFormError(true);
         setFormErrorMessage(
           "There have been no changes made. Please change a field's value or press Cancel to exit"
         );
@@ -348,9 +351,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               ...manufacturer,
               name: event.target.value,
             });
-            setNameError(false);
+            // setNameError(false);
             setNameErrorMessage(undefined);
-            setFormError(false);
+
             setFormErrorMessage(undefined);
           }}
           error={nameError}
@@ -367,13 +370,13 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               ...manufacturer,
               url: event.target.value,
             });
-            setURLError(false);
-            setURLErrorMessage(undefined);
-            setFormError(false);
+
+            seturlErrorMessage(undefined);
+
             setFormErrorMessage(undefined);
           }}
-          error={URlerror}
-          helperText={URlerror && URLErrorMessage}
+          error={urlError}
+          helperText={urlError && urlErrorMessage}
           fullWidth
         />
         <Typography>Address</Typography>
@@ -390,9 +393,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                 country: event.target.value,
               },
             });
-            setCountryError(false);
+
             setCountryErrorMessage(undefined);
-            setFormError(false);
+
             setFormErrorMessage(undefined);
           }}
           error={countryError}
@@ -412,9 +415,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                 address_line: event.target.value,
               },
             });
-            setAddressLineError(false);
+
             setAddressLineErrorMessage(undefined);
-            setFormError(false);
+
             setFormErrorMessage(undefined);
           }}
           error={addressLineError}
@@ -434,7 +437,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                 town: event.target.value,
               },
             });
-            setFormError(false);
+
             setFormErrorMessage(undefined);
           }}
           fullWidth
@@ -452,7 +455,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                 county: event.target.value,
               },
             });
-            setFormError(false);
+
             setFormErrorMessage(undefined);
           }}
           fullWidth
@@ -470,9 +473,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                 postcode: event.target.value,
               },
             });
-            setAddresspostcodeError(false);
+
             setAddresspostcodeErrorMessage(undefined);
-            setFormError(false);
+
             setFormErrorMessage(undefined);
           }}
           error={addresspostcodeError}
@@ -489,7 +492,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               ...manufacturer,
               telephone: event.target.value,
             });
-            setFormError(false);
+
             setFormErrorMessage(undefined);
           }}
           fullWidth
