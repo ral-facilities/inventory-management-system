@@ -1,6 +1,7 @@
 import { rest } from 'msw';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
 import ManufacturerJSON from './manufacturer.json';
+import { AddManufacturer } from '../app.types';
 import CatalogueItemJSON from './CatalogueItems.json';
 import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
@@ -117,8 +118,37 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(data));
   }),
 
-  rest.get('/v1/manufacturer', (req, res, ctx) => {
+  rest.get('/v1/manufacturers', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(ManufacturerJSON));
+  }),
+
+  rest.post('/v1/manufacturers', async (req, res, ctx) => {
+    const body = (await req.json()) as AddManufacturer;
+
+    if (!body.name) {
+      return res(ctx.status(422), ctx.json(''));
+    }
+    if (body.name === 'Manufacturer A') {
+      return res(ctx.status(409), ctx.json(''));
+    }
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        name: 'Manufacturer D',
+        code: 'manufacturer-d',
+        url: 'http://test.co.uk',
+        address: {
+          building_number: '1',
+          street_name: 'Example Street',
+          town: 'Oxford',
+          county: 'Oxfordshire',
+          postcode: 'OX1 2AB',
+        },
+        telephone: '07349612203',
+        id: '4',
+      })
+    );
   }),
 
   rest.delete('/v1/catalogue-categories/:id', (req, res, ctx) => {

@@ -22,6 +22,7 @@ describe('Manufacturer', () => {
     expect(screen.getByText('Name')).toBeInTheDocument();
     expect(screen.getByText('URL')).toBeInTheDocument();
     expect(screen.getByText('Address')).toBeInTheDocument();
+    expect(screen.getByText('Telephone')).toBeInTheDocument();
   });
 
   it('renders table data correctly', async () => {
@@ -33,11 +34,20 @@ describe('Manufacturer', () => {
     expect(screen.getByText('Manufacturer B')).toBeInTheDocument();
     expect(screen.getByText('Manufacturer C')).toBeInTheDocument();
     expect(screen.getByText('http://example.com')).toBeInTheDocument();
+    expect(screen.getByText('http://test.com')).toBeInTheDocument();
     expect(screen.getByText('http://test.co.uk')).toBeInTheDocument();
-    expect(screen.getByText('http://123test.com')).toBeInTheDocument();
-    expect(screen.getByText('10 My Street')).toBeInTheDocument();
-    expect(screen.getByText('11 My Street')).toBeInTheDocument();
-    expect(screen.getByText('12 My Street')).toBeInTheDocument();
+    expect(
+      screen.getByText('1 Example Street Oxford Oxfordshire OX1 2AB')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('2 Example Street Oxford Oxfordshire OX1 2AB')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('3 Example Street Oxford Oxfordshire OX1 2AB')
+    ).toBeInTheDocument();
+    expect(screen.getByText('07334893348')).toBeInTheDocument();
+    expect(screen.getByText('07294958549')).toBeInTheDocument();
+    expect(screen.getByText('07934303412')).toBeInTheDocument();
   });
 
   it('manufacturer url has a href so therefore links to new webpage', async () => {
