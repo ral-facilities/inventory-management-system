@@ -99,7 +99,7 @@ describe('Manufacturer', () => {
     await user.click(closeButton);
 
     await waitFor(() => {
-      expect(screen.getByText('Actions')).toBeInTheDocument();
+      expect(screen.queryByText('Delete Manufacturer')).not.toBeInTheDocument();
     });
   });
 });
