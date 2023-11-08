@@ -16,10 +16,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { useManufacturers } from '../api/manufacturer';
-import AddManufacturerDialog from './manufacturerDialog.component';
+import { Manufacturer } from '../app.types';
+import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import { ManufacturerDetail } from '../app.types';
+import AddManufacturerDialog from './addManufacturerDialog.component';
 
-function Manufacturer() {
+function ManufacturerComponent() {
   const [addManufacturer, setAddManufacturer] =
     React.useState<ManufacturerDetail>({
       name: '',
@@ -38,6 +40,13 @@ function Manufacturer() {
     React.useState<boolean>(false);
 
   const { data: ManufacturerData } = useManufacturers();
+
+  const [deleteManufacturerDialog, setDeleteManufacturerDialog] =
+    React.useState<boolean>(false);
+
+  const [selectedManufacturer, setSelectedManufacturer] = React.useState<
+    Manufacturer | undefined
+  >(undefined);
 
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
   const tableHeight = `calc(100vh)-(64px + 36px +50px)`;
@@ -148,6 +157,10 @@ function Manufacturer() {
                       <IconButton
                         size="small"
                         aria-label={`Delete ${item.name} manufacturer`}
+                        onClick={() => {
+                          setDeleteManufacturerDialog(true);
+                          setSelectedManufacturer(item);
+                        }}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -205,8 +218,13 @@ function Manufacturer() {
           </TableBody>
         </Table>
       </TableContainer>
+      <DeleteManufacturerDialog
+        open={deleteManufacturerDialog}
+        onClose={() => setDeleteManufacturerDialog(false)}
+        manufacturer={selectedManufacturer}
+      />
     </Box>
   );
 }
 
-export default Manufacturer;
+export default ManufacturerComponent;
