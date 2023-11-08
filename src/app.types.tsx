@@ -28,43 +28,35 @@ export interface CatalogueCategory {
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }
 
-export interface ViewManufacturerResponse {
-  name: string;
-  url: string;
-  address: Address;
-  telephone: string;
-  id: string;
-}
-
 export interface AddManufacturer {
   name: string;
-  url?: string;
+  url: string | undefined;
   address: Address | undefined;
-  telephone?: string;
+  telephone: string | null;
 }
 
 export interface AddManufacturerResponse {
-  name: string;
-  code: string;
-  url: string;
-  address: Address;
-  telephone: string;
   id: string;
+  name: string;
+  url: string | undefined;
+  address: Address;
+  telephone: string | null;
+  code: string;
 }
 
 export interface EditManufacturer {
-  name?: string;
-  url?: string;
-  address?: EditAddress;
-  telephone?: string;
-  id?: string;
+  name?: string | null;
+  url?: string | undefined;
+  address?: EditAddress | null;
+  telephone?: string | null;
+  id?: string | null;
 }
 
 export interface ManufacturerDetail {
   name: string;
-  url?: string;
+  url: string | undefined;
   address: Address;
-  telephone: string;
+  telephone: string | null;
 }
 
 export interface Manufacturer {
@@ -133,19 +125,18 @@ export interface ErrorParsing {
 
 interface Address {
   address_line: string;
-  town?: string;
-  county?: string;
+  town: string | null;
+  county: string | null;
   postcode: string;
   country: string;
 }
 
 interface EditAddress {
-  address_line?: string;
-  street_name?: string;
-  town?: string;
-  county?: string;
-  postcode?: string;
-  country?: string;
+  address_line: string | null;
+  town: string | null;
+  county: string | null;
+  postcode: string | null;
+  country: string | null;
 }
 
 export enum SystemImportanceType {

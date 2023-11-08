@@ -17,21 +17,21 @@ import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { useManufacturers } from '../api/manufacturer';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
-import { ManufacturerDetail, ViewManufacturerResponse } from '../app.types';
+import { ManufacturerDetail, Manufacturer } from '../app.types';
 import ManufacturerDialog from './manufacturerDialog.component';
 
-function Manufacturer() {
+function ManufacturerComponent() {
   const [Manufacturer, setManufacturer] = React.useState<ManufacturerDetail>({
     name: '',
     url: undefined,
     address: {
       address_line: '',
-      town: '',
-      county: '',
+      town: null,
+      county: null,
       postcode: '',
       country: '',
     },
-    telephone: '',
+    telephone: null,
   });
 
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
@@ -46,7 +46,7 @@ function Manufacturer() {
     React.useState<boolean>(false);
 
   const [selectedManufacturer, setSelectedManufacturer] = React.useState<
-    ViewManufacturerResponse | undefined
+    Manufacturer | undefined
   >(undefined);
 
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
@@ -242,4 +242,4 @@ function Manufacturer() {
   );
 }
 
-export default Manufacturer;
+export default ManufacturerComponent;

@@ -97,24 +97,18 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       url: undefined,
       address: {
         address_line: '',
-        town: '',
-        county: '',
+        town: null,
+        county: null,
         postcode: '',
         country: '',
       },
-      telephone: '',
+      telephone: null,
     });
-
     setNameErrorMessage(undefined);
-
     seturlErrorMessage(undefined);
-
     setAddressLineErrorMessage(undefined);
-
     setCountryErrorMessage(undefined);
-
     setAddresspostcodeErrorMessage(undefined);
-
     setFormErrorMessage(undefined);
     onClose();
   }, [onClose, onChangeManufacturerDetails]);
@@ -178,15 +172,15 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
     const manufacturerToAdd: AddManufacturer = {
       name: manufacturer.name,
-      url: manufacturer.url,
+      url: manufacturer.url ?? undefined,
       address: {
         address_line: manufacturer.address.address_line,
-        town: manufacturer.address.town,
-        county: manufacturer.address.county,
+        town: manufacturer.address.town ?? null,
+        county: manufacturer.address.county ?? null,
         postcode: manufacturer.address.postcode,
         country: manufacturer.address.country,
       },
-      telephone: manufacturer.telephone,
+      telephone: manufacturer.telephone ?? null,
     };
 
     addManufacturer(manufacturerToAdd)
@@ -286,7 +280,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         ManufacturerToEdit = {
           ...ManufacturerToEdit,
           address: {
-            ...ManufacturerToEdit.address,
+            ...manufacturer.address,
             country: manufacturer.address?.country,
           },
         };
@@ -353,7 +347,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             });
             // setNameError(false);
             setNameErrorMessage(undefined);
-
             setFormErrorMessage(undefined);
           }}
           error={nameError}

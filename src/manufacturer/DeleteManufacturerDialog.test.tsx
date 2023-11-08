@@ -4,12 +4,12 @@ import userEvent from '@testing-library/user-event';
 import { renderComponentWithBrowserRouter } from '../setupTests';
 import { DeleteManufacturerProps } from './deleteManufacturerDialog.component';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
-import { ViewManufacturerResponse } from '../app.types';
+import { Manufacturer } from '../app.types';
 
 describe('Delete Manufacturer Dialog', () => {
   const onClose = jest.fn();
   let props: DeleteManufacturerProps;
-  let manufacturer: ViewManufacturerResponse;
+  let manufacturer: Manufacturer;
   let user;
   const createView = (): RenderResult => {
     return renderComponentWithBrowserRouter(

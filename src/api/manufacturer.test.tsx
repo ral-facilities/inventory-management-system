@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { AddManufacturer, ViewManufacturerResponse } from '../app.types';
+import { AddManufacturer, Manufacturer } from '../app.types';
 import { hooksWrapperWithProviders } from '../setupTests';
 import {
   useAddManufacturer,
@@ -60,7 +60,7 @@ describe('manufacturer api functions', () => {
   });
 
   describe('useDeleteManufacturer', () => {
-    let mockDataView: ViewManufacturerResponse;
+    let mockDataView: Manufacturer;
     beforeEach(() => {
       mockDataView = {
         id: '1',
