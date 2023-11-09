@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
 import ManufacturerJSON from './manufacturer.json';
-import { AddManufacturer } from '../app.types';
+import { AddManufacturer, EditManufacturer } from '../app.types';
 import CatalogueItemJSON from './CatalogueItems.json';
 import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
@@ -122,12 +122,19 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(ManufacturerJSON));
   }),
 
+  rest.get('/v1/manufacturers/:id', (req, res, ctx) => {
+    const { id } = req.params;
+
+    const data = ManufacturerJSON.find(
+      (manufacturer) => manufacturer.id === id
+    );
+
+    return res(ctx.status(200), ctx.json(data));
+  }),
+
   rest.post('/v1/manufacturers', async (req, res, ctx) => {
     const body = (await req.json()) as AddManufacturer;
 
-    if (!body.name) {
-      return res(ctx.status(422), ctx.json(''));
-    }
     if (body.name === 'Manufacturer A') {
       return res(ctx.status(409), ctx.json(''));
     }
@@ -168,6 +175,38 @@ export const handlers = [
     } else {
       return res(ctx.status(400), ctx.json(''));
     }
+  }),
+
+  rest.patch('/v1/manufacturers/:id', async (req, res, ctx) => {
+    const body = (await req.json()) as EditManufacturer;
+
+    if (body.name === 'test_dup') {
+      return res(
+        ctx.status(409),
+        ctx.json({
+          detail:
+            'A manufacturer with the same name has been found. Please enter a different name',
+        })
+      );
+    }
+    if (body.name === 'Error 500') {
+      return res(ctx.status(500), ctx.json(''));
+    }
+    return res(
+      ctx.status(200),
+      ctx.json({
+        name: 'test',
+        address: {
+          building_number: '100',
+          street_name: 'test',
+          town: 'test',
+          county: 'test',
+          postcode: 'test',
+        },
+        telephone: '0000000000',
+        id: '1',
+      })
+    );
   }),
 
   rest.delete('/v1/catalogue-categories/:id', (req, res, ctx) => {

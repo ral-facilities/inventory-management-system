@@ -11,6 +11,7 @@ import { settings } from '../settings';
 import {
   AddManufacturer,
   AddManufacturerResponse,
+  EditManufacturer,
   Manufacturer,
 } from '../app.types';
 
@@ -103,4 +104,73 @@ export const useDeleteManufacturer = (): UseMutationResult<
       queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
     },
   });
+};
+
+const fetchManufacturer = async (
+  id: string | undefined
+): Promise<Manufacturer> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+
+  return axios.get(`${apiUrl}/v1/manufacturers/${id}`, {}).then((response) => {
+    return response.data;
+  });
+};
+
+export const useManufacturer = (
+  id: string | undefined
+): UseQueryResult<Manufacturer, AxiosError> => {
+  return useQuery<Manufacturer, AxiosError>(
+    ['Manufacturer', id],
+    (params) => {
+      return fetchManufacturer(id);
+    },
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+      enabled: id !== undefined,
+    }
+  );
+};
+
+const editManufacturer = async (
+  manufacturer: EditManufacturer
+): Promise<Manufacturer> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+  const { id, ...updatedManufacturer } = manufacturer;
+  return axios
+    .patch<Manufacturer>(
+      `${apiUrl}/v1/manufacturers/${id}`,
+      updatedManufacturer
+    )
+    .then((response) => response.data);
+};
+
+export const useEditManufacturer = (): UseMutationResult<
+  Manufacturer,
+  AxiosError,
+  EditManufacturer
+> => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (manufacturer: EditManufacturer) => editManufacturer(manufacturer),
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
+      },
+    }
+  );
 };
