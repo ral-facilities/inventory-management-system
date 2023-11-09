@@ -1,6 +1,7 @@
 import { rest } from 'msw';
 import {
   AddCatalogueCategory,
+  AddManufacturer,
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
@@ -143,8 +144,56 @@ export const handlers = [
 
   // ------------------------------------ MANUFACTURERS ------------------------------------
 
-  rest.get('/v1/manufacturer', (req, res, ctx) => {
+  rest.get('/v1/manufacturers', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(ManufacturerJSON));
+  }),
+
+  rest.post('/v1/manufacturers', async (req, res, ctx) => {
+    const body = (await req.json()) as AddManufacturer;
+
+    if (!body.name) {
+      return res(ctx.status(422), ctx.json(''));
+    }
+    if (body.name === 'Manufacturer A') {
+      return res(ctx.status(409), ctx.json(''));
+    }
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        name: 'Manufacturer D',
+        code: 'manufacturer-d',
+        url: 'http://test.co.uk',
+        address: {
+          building_number: '1',
+          street_name: 'Example Street',
+          town: 'Oxford',
+          county: 'Oxfordshire',
+          postcode: 'OX1 2AB',
+        },
+        telephone: '07349612203',
+        id: '4',
+      })
+    );
+  }),
+
+  rest.delete('/v1/manufacturers/:id', (req, res, ctx) => {
+    const { id } = req.params;
+    const validManufacturer = ManufacturerJSON.find((value) => value.id === id);
+    if (validManufacturer) {
+      if (id === '2') {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail: 'The specified manufacturer is a part of a Catalogue Item',
+          })
+        );
+      } else {
+        return res(ctx.status(200), ctx.json(''));
+      }
+    } else {
+      return res(ctx.status(400), ctx.json(''));
+    }
   }),
 
   // ------------------------------------ CATALOGUE ITEMS ------------------------------------

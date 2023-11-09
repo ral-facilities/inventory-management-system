@@ -4,20 +4,41 @@
     "name": "Manufacturer A",
     "code": "manufacturer-a",
     "url": "http://example.com",
-    "address": "10 My Street"
+    "address": {
+      "building_number": "1",
+      "street_name": "Example Street",
+      "town": "Oxford",
+      "county": "Oxfordshire",
+      "postcode": "OX1 2AB"
+    },
+    "telephone": "07334893348"
   },
   {
     "id": "2",
     "name": "Manufacturer B",
     "code": "manufacturer-b",
-    "url": "http://test.co.uk",
-    "address": "11 My Street"
+    "url": "http://test.com",
+    "address": {
+      "building_number": "2",
+      "street_name": "Example Street",
+      "town": "Oxford",
+      "county": "Oxfordshire",
+      "postcode": "OX1 2AB"
+    },
+    "telephone": "07294958549"
   },
   {
     "id": "3",
     "name": "Manufacturer C",
     "code": "manufacturer-c",
-    "url": "http://123test.com",
-    "address": "12 My Street"
+    "url": "http://test.co.uk",
+    "address": {
+      "building_number": "3",
+      "street_name": "Example Street",
+      "town": "Oxford",
+      "county": "Oxfordshire",
+      "postcode": "OX1 2AB"
+    },
+    "telephone": "07934303412"
   }
 ]
