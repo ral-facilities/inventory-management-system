@@ -12,7 +12,6 @@ import {
   AddManufacturer,
   AddManufacturerResponse,
   EditManufacturer,
-  // ManufacturerDetail,
   Manufacturer,
 } from '../app.types';
 

@@ -552,7 +552,7 @@ describe('Add manufacturer dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
-    it.only('CatchAllError request works correctly and displays refresh page message', async () => {
+    it('CatchAllError request works correctly and displays refresh page message', async () => {
       props = {
         ...props,
         manufacturer: {
