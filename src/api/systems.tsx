@@ -7,10 +7,10 @@ import {
 } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import {
+  AddSystem,
   BreadcrumbsInfo,
   System,
   SystemImportanceType,
-  SystemPost,
 } from '../app.types';
 import { settings } from '../settings';
 
@@ -127,7 +127,7 @@ export const useSystemsBreadcrumbs = (
   );
 };
 
-const addSystem = async (system: SystemPost): Promise<System> => {
+const addSystem = async (system: AddSystem): Promise<System> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -143,10 +143,10 @@ const addSystem = async (system: SystemPost): Promise<System> => {
 export const useAddSystem = (): UseMutationResult<
   System,
   AxiosError,
-  SystemPost
+  AddSystem
 > => {
   const queryClient = useQueryClient();
-  return useMutation((system: SystemPost) => addSystem(system), {
+  return useMutation((system: AddSystem) => addSystem(system), {
     onError: (error) => {
       console.log(`Got error: '${error.message}'`);
     },
