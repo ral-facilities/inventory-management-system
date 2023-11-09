@@ -15,13 +15,18 @@ export interface EditCatalogueCategory {
   id: string;
   catalogue_item_properties?: CatalogueCategoryFormData[];
   is_leaf?: boolean;
+  parent_id?: string | null;
+}
+
+export interface MoveToCatalogueCategory {
+  catalogueCategory: EditCatalogueCategory[];
+  selectedCategories: CatalogueCategory[];
+  targetLocationCatalogueCategory: CatalogueCategory;
 }
 
 export interface CatalogueCategory {
   id: string;
   name: string;
-  parent_path: string;
-  path: string;
   parent_id: string | null;
   code: string;
   is_leaf: boolean;
@@ -52,19 +57,12 @@ export interface EditManufacturer {
   id?: string | null;
 }
 
-export interface ManufacturerDetail {
+export interface Manufacturer {
+  id?: string;
   name: string;
   url: string | undefined;
   address: Address;
   telephone: string | null;
-}
-
-export interface Manufacturer {
-  id: string;
-  name: string;
-  url: string;
-  address: Address;
-  telephone: string;
 }
 
 export interface CatalogueCategoryFormData {
@@ -82,7 +80,7 @@ export interface CatalogueItemDetails {
 export interface CatalogueItemManufacturer {
   name: string;
   address: string;
-  web_url: string;
+  url: string;
 }
 
 export interface CatalogueItemProperty {
@@ -138,6 +136,15 @@ interface EditAddress {
   postcode: string | null;
   country: string | null;
 }
+export interface CatalogueCategoryTransferState {
+  name: string;
+  message: string;
+  state: 'success' | 'error';
+}
+export interface BreadcrumbsInfo {
+  trail: [id: string, name: string][];
+  full_trail: boolean;
+}
 
 export enum SystemImportanceType {
   LOW = 'low',
@@ -153,7 +160,5 @@ export interface System {
   importance: SystemImportanceType;
   description: string;
   parent_id: string | null;
-  parent_path: string;
   code: string;
-  path: string;
 }

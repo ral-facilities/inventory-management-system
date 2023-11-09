@@ -344,6 +344,7 @@ describe('Add manufacturer dialog', () => {
 
       props.manufacturer = {
         name: 'test',
+        url: 'https://test.co.uk',
         address: {
           address_line: 'test',
           town: 'test',
@@ -362,6 +363,7 @@ describe('Add manufacturer dialog', () => {
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/manufacturers/1', {
         name: 'test',
+        url: 'https://test.co.uk',
         address: {
           address_line: 'test',
           town: 'test',
@@ -462,6 +464,7 @@ describe('Add manufacturer dialog', () => {
         ...props,
         manufacturer: {
           name: 'test_dup',
+          url: 'https://test.co.uk',
           address: {
             address_line: 'test',
             town: 'test',
@@ -504,6 +507,7 @@ describe('Add manufacturer dialog', () => {
         ...props,
         manufacturer: {
           name: '',
+          url: 'https://test.co.uk',
           address: {
             address_line: '',
             town: '',
@@ -543,6 +547,46 @@ describe('Add manufacturer dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
+    it('CatchAllError request works correctly and displays refresh page message', async () => {
+      props = {
+        ...props,
+        manufacturer: {
+          name: 'Error 500',
+          url: 'https://test.co.uk',
+          address: {
+            address_line: 'test',
+            town: 'test',
+            county: 'test',
+            postcode: 'test',
+            country: 'test',
+          },
+          telephone: '0000000000',
+        },
+        selectedManufacturer: {
+          id: '1',
+          name: 'Manufacturer A',
+          url: 'http://example.com',
+          address: {
+            address_line: '1 Example Street',
+            town: 'Oxford',
+            county: 'Oxfordshire',
+            postcode: 'OX1 2AB',
+            country: 'United Kingdom',
+          },
+          telephone: '07334893348',
+        },
+      };
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      expect(
+        screen.getByText('Please refresh and try again')
+      ).toBeInTheDocument();
+    });
+
     it('calls onClose when Close button is clicked', async () => {
       createView();
       const cancelButton = screen.getByRole('button', { name: 'Cancel' });
@@ -571,7 +615,7 @@ describe('Add manufacturer dialog', () => {
     });
 
     it('handles manufacturer url input correctly', async () => {
-      const newManufacturerURL = 'Test';
+      const newManufacturerURL = 'https://test.co.uk';
 
       createView();
 

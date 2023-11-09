@@ -45,7 +45,7 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
           if (response && error.response?.status === 409) {
             setError(true);
             setErrorMessage(
-              `${response.detail} Please delete the Catalogue Item first`
+              `${response.detail}. Please delete the Catalogue Item first.`
             );
             return;
           }

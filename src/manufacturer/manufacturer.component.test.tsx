@@ -88,4 +88,44 @@ describe('Manufacturer', () => {
       ).toHaveStyle('background-color: inherit');
     });
   });
+
+  it('opens delete dialog and closes it correctly', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
+    });
+
+    await user.click(
+      screen.getByRole('button', { name: 'Delete Manufacturer A manufacturer' })
+    );
+
+    expect(screen.getByText('Delete Manufacturer')).toBeInTheDocument();
+
+    const closeButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(closeButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('Delete Manufacturer')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens edit dialog and closes it correctly', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
+    });
+
+    await user.click(
+      screen.getByRole('button', { name: 'Edit Manufacturer A manufacturer' })
+    );
+
+    expect(screen.getByText('Edit Manufacturer')).toBeInTheDocument();
+
+    const closeButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(closeButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('Edit Manufacturer')).not.toBeInTheDocument();
+    });
+  });
 });
