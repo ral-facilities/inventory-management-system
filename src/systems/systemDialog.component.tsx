@@ -16,7 +16,7 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { useAddSystem } from '../api/systems';
-import { ErrorParsing, SystemImportanceType, SystemPost } from '../app.types';
+import { AddSystem, ErrorParsing, SystemImportanceType } from '../app.types';
 
 export interface SystemDialogProps {
   open: boolean;
@@ -66,7 +66,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
       setNameError('Please enter a name');
     } else {
       // Should be valid so add the system
-      const system: SystemPost = {
+      const system: AddSystem = {
         name: name,
         description: description !== '' ? description : undefined,
         location: location !== '' ? location : undefined,

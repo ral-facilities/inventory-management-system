@@ -143,7 +143,7 @@ export enum SystemImportanceType {
   HIGH = 'high',
 }
 
-export interface SystemPost {
+export interface AddSystem {
   name: string;
   description?: string;
   location?: string;

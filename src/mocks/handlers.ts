@@ -5,7 +5,7 @@ import {
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
-  SystemPost,
+  AddSystem,
 } from '../app.types';
 import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
@@ -320,7 +320,7 @@ export const handlers = [
   }),
 
   rest.post('/v1/systems', async (req, res, ctx) => {
-    const body = (await req.json()) as SystemPost;
+    const body = (await req.json()) as AddSystem;
 
     if (body.name === 'Error 409') {
       return res(

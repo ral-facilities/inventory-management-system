@@ -3,7 +3,7 @@ import SystemBreadcrumbsJSON from '../mocks/SystemBreadcrumbs.json';
 import SystemsJSON from '../mocks/Systems.json';
 import { hooksWrapperWithProviders } from '../setupTests';
 import { useAddSystem, useSystems, useSystemsBreadcrumbs } from './systems';
-import { SystemImportanceType, SystemPost } from '../app.types';
+import { SystemImportanceType, AddSystem } from '../app.types';
 
 describe('System api functions', () => {
   afterEach(() => {
@@ -91,7 +91,7 @@ describe('System api functions', () => {
   });
 
   describe('useAddSystem', () => {
-    const MOCK_SYSTEM_POST: SystemPost = {
+    const MOCK_SYSTEM_POST: AddSystem = {
       name: 'System name',
       parent_id: 'parent-id',
       description: 'Description',
