@@ -20,7 +20,20 @@ describe('Catalogue Items Table', () => {
 
   beforeEach(() => {
     props = {
-      catalogueItemDetails: { name: undefined, description: '' },
+      catalogueItemDetails: {
+        cost_gbp: NaN,
+        cost_to_rework_gbp: NaN,
+        days_to_replace: NaN,
+        days_to_rework: NaN,
+        description: null,
+        drawing_link: null,
+        drawing_number: null,
+        is_obsolete: false,
+        model_number: null,
+        name: '',
+        obsolete_reason: null,
+        obsolete_replacement_catalogue_item_id: null,
+      },
       onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
       onChangeAddItemDialogOpen: onChangeAddItemDialogOpen,
       catalogueItemManufacturer: {
@@ -210,7 +223,20 @@ describe('Catalogue Items Table', () => {
     expect(url).toHaveAttribute('href', 'http://example.com');
   });
 
-  it.only('progress bar renders correctly', async () => {
+  it('navigates to replacement obsolete item', async () => {
+    createView();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('row', { name: 'Energy Meters 26 row' })
+      ).toBeInTheDocument();
+    });
+
+    const row = screen.getByRole('row', { name: 'Energy Meters 26 row' });
+    const url = await within(row).findByText('Click here');
+    expect(url).toHaveAttribute('href', '/items/6');
+  });
+
+  it('progress bar renders correctly', async () => {
     createView();
 
     await waitFor(() => {

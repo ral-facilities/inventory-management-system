@@ -30,7 +30,20 @@ describe('Catalogue Items Dialog', () => {
       open: true,
       onClose: onClose,
       parentId: null,
-      catalogueItemDetails: { name: undefined, description: '' },
+      catalogueItemDetails: {
+        name: '',
+        description: null,
+        cost_gbp: null,
+        cost_to_rework_gbp: null,
+        days_to_replace: null,
+        days_to_rework: null,
+        drawing_number: null,
+        drawing_link: null,
+        model_number: null,
+        is_obsolete: 'false',
+        obsolete_replacement_catalogue_item_id: null,
+        obsolete_reason: null,
+      },
       onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
       catalogueItemManufacturer: {
         name: '',
@@ -65,7 +78,20 @@ describe('Catalogue Items Dialog', () => {
     props = {
       ...props,
       parentId: '1',
-      catalogueItemDetails: { name: 'test', description: '' },
+      catalogueItemDetails: {
+        name: 'test',
+        description: '',
+        cost_gbp: '1200',
+        cost_to_rework_gbp: '400',
+        days_to_replace: '20',
+        days_to_rework: '2',
+        drawing_number: 'mk4324',
+        drawing_link: 'https://example.com',
+        model_number: 'mk4324',
+        is_obsolete: 'false',
+        obsolete_replacement_catalogue_item_id: null,
+        obsolete_reason: null,
+      },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
       propertyValues: [12, 60, 'IO', 'pixel', true, false],
       catalogueItemManufacturer: {
@@ -83,13 +109,23 @@ describe('Catalogue Items Dialog', () => {
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '1',
+      cost_gbp: 1200,
+      cost_to_rework_gbp: 400,
+      days_to_replace: 20,
+      days_to_rework: 2,
       description: '',
-      name: 'test',
+      drawing_link: 'https://example.com',
+      drawing_number: 'mk4324',
+      is_obsolete: false,
       manufacturer: {
+        address: '1 venus street UY6 9OP',
         name: 'Sony',
         web_url: 'https://sony.com',
-        address: '1 venus street UY6 9OP',
       },
+      model_number: 'mk4324',
+      name: 'test',
+      obsolete_reason: null,
+      obsolete_replacement_catalogue_item_id: null,
       properties: [
         { name: 'Resolution', value: 12 },
         { name: 'Frame Rate', value: 60 },
@@ -105,7 +141,20 @@ describe('Catalogue Items Dialog', () => {
     props = {
       ...props,
       parentId: '1',
-      catalogueItemDetails: { name: 'test', description: '' },
+      catalogueItemDetails: {
+        name: 'test',
+        description: '',
+        cost_gbp: '200',
+        cost_to_rework_gbp: null,
+        days_to_replace: '5',
+        days_to_rework: null,
+        drawing_number: null,
+        drawing_link: null,
+        model_number: null,
+        is_obsolete: 'false',
+        obsolete_replacement_catalogue_item_id: null,
+        obsolete_reason: null,
+      },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
       propertyValues: [12, null, 'IO', null, true, ''],
       catalogueItemManufacturer: {
@@ -123,13 +172,23 @@ describe('Catalogue Items Dialog', () => {
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '1',
+      cost_gbp: 200,
+      cost_to_rework_gbp: null,
+      days_to_replace: 5,
+      days_to_rework: null,
       description: '',
-      name: 'test',
+      drawing_link: null,
+      drawing_number: null,
+      is_obsolete: false,
       manufacturer: {
+        address: '1 venus street UY6 9OP',
         name: 'Sony',
         web_url: 'https://sony.com',
-        address: '1 venus street UY6 9OP',
       },
+      model_number: null,
+      name: 'test',
+      obsolete_reason: null,
+      obsolete_replacement_catalogue_item_id: null,
       properties: [
         { name: 'Resolution', value: 12 },
         { name: 'Sensor Type', value: 'IO' },
@@ -142,7 +201,20 @@ describe('Catalogue Items Dialog', () => {
     props = {
       ...props,
       parentId: '1',
-      catalogueItemDetails: { name: 'test', description: '' },
+      catalogueItemDetails: {
+        name: 'test',
+        description: '',
+        cost_gbp: '200',
+        cost_to_rework_gbp: null,
+        days_to_replace: '5',
+        days_to_rework: null,
+        drawing_number: null,
+        drawing_link: null,
+        model_number: null,
+        is_obsolete: 'false',
+        obsolete_replacement_catalogue_item_id: null,
+        obsolete_reason: null,
+      },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
       propertyValues: [12, null, 'IO', null, 'true', 'false'],
       catalogueItemManufacturer: {
@@ -160,21 +232,28 @@ describe('Catalogue Items Dialog', () => {
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '1',
+      cost_gbp: 200,
+      cost_to_rework_gbp: null,
+      days_to_replace: 5,
+      days_to_rework: null,
       description: '',
-      name: 'test',
+      drawing_link: null,
+      drawing_number: null,
+      is_obsolete: false,
       manufacturer: {
+        address: '1 venus street UY6 9OP',
         name: 'Sony',
         web_url: 'https://sony.com',
-        address: '1 venus street UY6 9OP',
       },
+      model_number: null,
+      name: 'test',
+      obsolete_reason: null,
+      obsolete_replacement_catalogue_item_id: null,
       properties: [
         { name: 'Resolution', value: 12 },
         { name: 'Sensor Type', value: 'IO' },
         { name: 'Broken', value: true },
-        {
-          name: 'Older than five years',
-          value: false,
-        },
+        { name: 'Older than five years', value: false },
       ],
     });
   });
@@ -183,7 +262,20 @@ describe('Catalogue Items Dialog', () => {
     props = {
       ...props,
       parentId: '1',
-      catalogueItemDetails: { name: '', description: '' },
+      catalogueItemDetails: {
+        name: '',
+        description: '',
+        cost_gbp: null,
+        cost_to_rework_gbp: null,
+        days_to_replace: null,
+        days_to_rework: null,
+        drawing_number: null,
+        drawing_link: null,
+        model_number: null,
+        is_obsolete: 'false',
+        obsolete_replacement_catalogue_item_id: null,
+        obsolete_reason: null,
+      },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
       propertyValues: [null, null, null, null, '', ''],
     };
@@ -202,10 +294,16 @@ describe('Catalogue Items Dialog', () => {
       'Please select either True or False'
     );
 
-    const nameHelperText = screen.getByText('Please enter name');
+    const nameHelperText = screen.getByText('Please enter a name');
+    const costHelperText = screen.getByText('Please enter a cost');
+    const daysToReplaceHelperText = screen.getByText(
+      'Please enter how many days it would take to replace'
+    );
 
     expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
     expect(nameHelperText).toBeInTheDocument();
+    expect(costHelperText).toBeInTheDocument();
+    expect(daysToReplaceHelperText).toBeInTheDocument();
     expect(mandatoryFieldHelperText.length).toBe(2);
     expect(mandatoryFieldHelperText[0]).toHaveTextContent(
       'This field is mandatory'
@@ -227,7 +325,20 @@ describe('Catalogue Items Dialog', () => {
     props = {
       ...props,
       parentId: '1',
-      catalogueItemDetails: { name: '', description: '' },
+      catalogueItemDetails: {
+        name: '',
+        description: '',
+        cost_gbp: null,
+        cost_to_rework_gbp: null,
+        days_to_replace: null,
+        days_to_rework: null,
+        drawing_number: null,
+        drawing_link: 'test',
+        model_number: null,
+        is_obsolete: 'false',
+        obsolete_replacement_catalogue_item_id: null,
+        obsolete_reason: null,
+      },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
       propertyValues: ['rsdf', 'fsdf', 'pixel', null, false, ''],
       catalogueItemManufacturer: {
@@ -258,6 +369,12 @@ describe('Catalogue Items Dialog', () => {
       )
     ).toBeInTheDocument();
 
+    expect(
+      screen.getByText(
+        'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
+      )
+    ).toBeInTheDocument();
+
     props.propertyValues = [12, 12, 'pixel', null, false, ''];
 
     rerender(<CatalogueItemsDialog {...props} />);
@@ -269,7 +386,20 @@ describe('Catalogue Items Dialog', () => {
     props = {
       ...props,
       parentId: '1',
-      catalogueItemDetails: { name: 'Error 500', description: '' },
+      catalogueItemDetails: {
+        name: 'Error 500',
+        description: '',
+        cost_gbp: '687',
+        cost_to_rework_gbp: null,
+        days_to_replace: '78',
+        days_to_rework: null,
+        drawing_number: null,
+        drawing_link: null,
+        model_number: null,
+        is_obsolete: 'false',
+        obsolete_replacement_catalogue_item_id: null,
+        obsolete_reason: null,
+      },
       catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
       propertyValues: [12, null, 'IO', null, true, ''],
       catalogueItemManufacturer: {
@@ -293,6 +423,55 @@ describe('Catalogue Items Dialog', () => {
 
   describe('Edit a catalogue item', () => {
     let axiosPatchSpy;
+
+    const cameras1 = {
+      catalogue_category_id: '4',
+      name: 'Cameras 1',
+      description: 'High-resolution cameras for beam characterization. 1',
+      properties: [
+        {
+          name: 'Resolution',
+          value: 12,
+          unit: 'megapixels',
+        },
+        {
+          name: 'Frame Rate',
+          value: 30,
+          unit: 'fps',
+        },
+        {
+          name: 'Sensor Type',
+          value: 'CMOS',
+          unit: '',
+        },
+        {
+          name: 'Broken',
+          value: true,
+          unit: '',
+        },
+        {
+          name: 'Older than five years',
+          value: false,
+          unit: '',
+        },
+      ],
+      id: '1',
+      manufacturer: {
+        name: 'Manufacturer A',
+        web_url: 'http://example.com',
+        address: '10 My Street',
+      },
+      cost_gbp: 500,
+      cost_to_rework_gbp: null,
+      days_to_replace: 7,
+      days_to_rework: null,
+      drawing_number: null,
+      drawing_link: null,
+      model_number: null,
+      is_obsolete: false,
+      obsolete_replacement_catalogue_item_id: null,
+      obsolete_reason: null,
+    };
     beforeEach(() => {
       props = {
         ...props,
@@ -306,28 +485,23 @@ describe('Catalogue Items Dialog', () => {
       props = {
         ...props,
         parentId: '4',
-        catalogueItemDetails: { name: 'test', description: '' },
-        selectedCatalogueItem: {
-          catalogue_category_id: '4',
-          name: 'Cameras 4',
-          description: 'High-resolution cameras for beam characterization. 4',
-          properties: [
-            { name: 'Resolution', value: 24, unit: 'megapixels' },
-            { name: 'Frame Rate', value: 240, unit: 'fps' },
-            { name: 'Sensor Type', value: 'CCD', unit: '' },
-            { name: 'Sensor brand', value: 'Nikon', unit: '' },
-            { name: 'Broken', value: false, unit: '' },
-            { name: 'Older than five years', value: true, unit: '' },
-          ],
-          id: '90',
-          manufacturer: {
-            name: 'Manufacturer A',
-            web_url: 'http://example.com',
-            address: '10 My Street',
-          },
+        catalogueItemDetails: {
+          name: 'test',
+          description: '',
+          cost_gbp: '687',
+          cost_to_rework_gbp: '89',
+          days_to_replace: '78',
+          days_to_rework: '68',
+          drawing_number: 'test',
+          drawing_link: 'http://example.com',
+          model_number: 'tets01',
+          is_obsolete: 'false',
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         },
+        selectedCatalogueItem: cameras1,
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        propertyValues: [24, 240, 'CCD', 'Nikon', false, true],
+        propertyValues: [12, 30, 'CMOS', null, 'true', 'false'],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
           web_url: 'http://example.com',
@@ -341,67 +515,19 @@ describe('Catalogue Items Dialog', () => {
 
       await user.click(saveButton);
 
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/90', {
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
+        cost_gbp: 687,
+        cost_to_rework_gbp: 89,
+        days_to_replace: 78,
+        days_to_rework: 68,
         description: '',
+        drawing_link: 'http://example.com',
+        drawing_number: 'test',
+        model_number: 'tets01',
         name: 'test',
       });
 
       expect(onClose).toHaveBeenCalled();
-    });
-
-    it('display error message when invalid number format in property values and invalid manufacturer url', async () => {
-      props = {
-        ...props,
-        parentId: '4',
-        catalogueItemDetails: { name: 'test', description: '' },
-        catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        selectedCatalogueItem: {
-          catalogue_category_id: '4',
-          name: 'Cameras 4',
-          description: 'High-resolution cameras for beam characterization. 4',
-          properties: [
-            { name: 'Resolution', value: 24, unit: 'megapixels' },
-            { name: 'Frame Rate', value: 240, unit: 'fps' },
-            { name: 'Sensor Type', value: 'CCD', unit: '' },
-            { name: 'Sensor brand', value: 'Nikon', unit: '' },
-            { name: 'Broken', value: false, unit: '' },
-            { name: 'Older than five years', value: true, unit: '' },
-          ],
-          id: '90',
-          manufacturer: {
-            name: 'Manufacturer A',
-            web_url: 'http://example.com',
-            address: '10 My Street',
-          },
-        },
-        propertyValues: ['12a', '21a', 'pixel', null, false, ''],
-        catalogueItemManufacturer: {
-          name: 'Manufacturer A',
-          web_url: 'example.com',
-          address: '10 My Street',
-        },
-      };
-
-      createView();
-
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-
-      await user.click(saveButton);
-
-      const validNumberHelperText = screen.getAllByText(
-        'Please enter a valid number'
-      );
-
-      expect(validNumberHelperText.length).toBe(2);
-      expect(validNumberHelperText[0]).toHaveTextContent(
-        'Please enter a valid number'
-      );
-
-      expect(
-        screen.getByText(
-          'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
-        )
-      ).toBeInTheDocument();
     });
 
     it('display error message when mandatory field is not filled in', async () => {
@@ -411,26 +537,18 @@ describe('Catalogue Items Dialog', () => {
         catalogueItemDetails: {
           name: '',
           description: 'High-resolution cameras for beam characterization. 4',
+          cost_gbp: null,
+          cost_to_rework_gbp: null,
+          days_to_replace: null,
+          days_to_rework: null,
+          drawing_number: null,
+          drawing_link: null,
+          model_number: null,
+          is_obsolete: 'false',
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         },
-        selectedCatalogueItem: {
-          catalogue_category_id: '4',
-          name: 'Cameras 4',
-          description: 'High-resolution cameras for beam characterization. 4',
-          properties: [
-            { name: 'Resolution', value: 24, unit: 'megapixels' },
-            { name: 'Frame Rate', value: 240, unit: 'fps' },
-            { name: 'Sensor Type', value: 'CCD', unit: '' },
-            { name: 'Sensor brand', value: 'Nikon', unit: '' },
-            { name: 'Broken', value: false, unit: '' },
-            { name: 'Older than five years', value: true, unit: '' },
-          ],
-          id: '90',
-          manufacturer: {
-            name: 'Manufacturer A',
-            web_url: 'http://example.com',
-            address: '10 My Street',
-          },
-        },
+        selectedCatalogueItem: cameras1,
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
         propertyValues: [null, 240, null, 'Nikon', '', true],
         catalogueItemManufacturer: {
@@ -454,10 +572,16 @@ describe('Catalogue Items Dialog', () => {
         'Please select either True or False'
       );
 
-      const nameHelperText = screen.getByText('Please enter name');
+      const nameHelperText = screen.getByText('Please enter a name');
+      const costHelperText = screen.getByText('Please enter a cost');
+      const daysToReplaceHelperText = screen.getByText(
+        'Please enter how many days it would take to replace'
+      );
 
       expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
       expect(nameHelperText).toBeInTheDocument();
+      expect(costHelperText).toBeInTheDocument();
+      expect(daysToReplaceHelperText).toBeInTheDocument();
       expect(mandatoryFieldHelperText.length).toBe(2);
       expect(mandatoryFieldHelperText[0]).toHaveTextContent(
         'This field is mandatory'
@@ -479,30 +603,22 @@ describe('Catalogue Items Dialog', () => {
         ...props,
         parentId: '1',
         catalogueItemDetails: {
-          name: 'Cameras 4',
-          description: 'High-resolution cameras for beam characterization. 4',
+          name: 'Cameras 1',
+          description: 'High-resolution cameras for beam characterization. 1',
+          cost_gbp: '500',
+          cost_to_rework_gbp: null,
+          days_to_replace: '7',
+          days_to_rework: null,
+          drawing_number: null,
+          drawing_link: null,
+          model_number: null,
+          is_obsolete: 'false',
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         },
-        selectedCatalogueItem: {
-          catalogue_category_id: '4',
-          name: 'Cameras 4',
-          description: 'High-resolution cameras for beam characterization. 4',
-          properties: [
-            { name: 'Resolution', value: 24, unit: 'megapixels' },
-            { name: 'Frame Rate', value: 240, unit: 'fps' },
-            { name: 'Sensor Type', value: 'CCD', unit: '' },
-            { name: 'Sensor brand', value: 'Nikon', unit: '' },
-            { name: 'Broken', value: false, unit: '' },
-            { name: 'Older than five years', value: true, unit: '' },
-          ],
-          id: '90',
-          manufacturer: {
-            name: 'Manufacturer A',
-            web_url: 'http://example.com',
-            address: '10 My Street',
-          },
-        },
+        selectedCatalogueItem: cameras1,
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        propertyValues: [24, 240, 'CCD', 'Nikon', true, true],
+        propertyValues: [24, 240, 'CCD', 'Nikon', 'true', 'true'],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
           web_url: 'http://example.com',
@@ -515,7 +631,7 @@ describe('Catalogue Items Dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
       await user.click(saveButton);
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/90', {
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         properties: [
           { name: 'Resolution', value: 24 },
           { name: 'Frame Rate', value: 240 },
@@ -534,28 +650,20 @@ describe('Catalogue Items Dialog', () => {
         ...props,
         parentId: '1',
         catalogueItemDetails: {
-          name: 'Cameras 4',
-          description: 'High-resolution cameras for beam characterization. 4',
+          name: 'Cameras 1',
+          description: 'High-resolution cameras for beam characterization. 1',
+          cost_gbp: '500',
+          cost_to_rework_gbp: null,
+          days_to_replace: '7',
+          days_to_rework: null,
+          drawing_number: null,
+          drawing_link: null,
+          model_number: null,
+          is_obsolete: 'false',
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         },
-        selectedCatalogueItem: {
-          catalogue_category_id: '4',
-          name: 'Cameras 4',
-          description: 'High-resolution cameras for beam characterization. 4',
-          properties: [
-            { name: 'Resolution', value: 24, unit: 'megapixels' },
-            { name: 'Frame Rate', value: 240, unit: 'fps' },
-            { name: 'Sensor Type', value: 'CCD', unit: '' },
-            { name: 'Sensor brand', value: 'Nikon', unit: '' },
-            { name: 'Broken', value: false, unit: '' },
-            { name: 'Older than five years', value: true, unit: '' },
-          ],
-          id: '90',
-          manufacturer: {
-            name: 'Manufacturer A',
-            web_url: 'http://example.com',
-            address: '10 My Street',
-          },
-        },
+        selectedCatalogueItem: cameras1,
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
         propertyValues: [24, 240, 'CCD', 'Nikon', 'true', 'false'],
         catalogueItemManufacturer: {
@@ -570,7 +678,7 @@ describe('Catalogue Items Dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
       await user.click(saveButton);
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/90', {
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         properties: [
           { name: 'Resolution', value: 24 },
           { name: 'Frame Rate', value: 240 },
@@ -589,30 +697,22 @@ describe('Catalogue Items Dialog', () => {
         ...props,
         parentId: '1',
         catalogueItemDetails: {
-          name: 'Cameras 4',
-          description: 'High-resolution cameras for beam characterization. 4',
+          name: 'Cameras 1',
+          description: 'High-resolution cameras for beam characterization. 1',
+          cost_gbp: '500',
+          cost_to_rework_gbp: null,
+          days_to_replace: '7',
+          days_to_rework: null,
+          drawing_number: null,
+          drawing_link: null,
+          model_number: null,
+          is_obsolete: 'false',
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         },
-        selectedCatalogueItem: {
-          catalogue_category_id: '4',
-          name: 'Cameras 4',
-          description: 'High-resolution cameras for beam characterization. 4',
-          properties: [
-            { name: 'Resolution', value: 24, unit: 'megapixels' },
-            { name: 'Frame Rate', value: 240, unit: 'fps' },
-            { name: 'Sensor Type', value: 'CCD', unit: '' },
-            { name: 'Sensor brand', value: 'Nikon', unit: '' },
-            { name: 'Broken', value: false, unit: '' },
-            { name: 'Older than five years', value: true, unit: '' },
-          ],
-          id: '90',
-          manufacturer: {
-            name: 'Manufacturer A',
-            web_url: 'http://example.com',
-            address: '10 My Street',
-          },
-        },
+        selectedCatalogueItem: cameras1,
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        propertyValues: [24, 240, 'CCD', 'Nikon', false, true],
+        propertyValues: [12, 30, 'CMOS', null, 'true', 'false'],
         catalogueItemManufacturer: {
           name: 'Sony1',
           web_url: 'https://sony.com',
@@ -625,7 +725,7 @@ describe('Catalogue Items Dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
       await user.click(saveButton);
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/90', {
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         manufacturer: {
           name: 'Sony1',
           web_url: 'https://sony.com',
@@ -641,30 +741,22 @@ describe('Catalogue Items Dialog', () => {
         ...props,
         parentId: '1',
         catalogueItemDetails: {
-          name: 'Cameras 4',
-          description: 'High-resolution cameras for beam characterization. 4',
+          name: 'Cameras 1',
+          description: 'High-resolution cameras for beam characterization. 1',
+          cost_gbp: '500',
+          cost_to_rework_gbp: null,
+          days_to_replace: '7',
+          days_to_rework: null,
+          drawing_number: null,
+          drawing_link: null,
+          model_number: null,
+          is_obsolete: 'false',
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         },
-        selectedCatalogueItem: {
-          catalogue_category_id: '4',
-          name: 'Cameras 4',
-          description: 'High-resolution cameras for beam characterization. 4',
-          properties: [
-            { name: 'Resolution', value: 24, unit: 'megapixels' },
-            { name: 'Frame Rate', value: 240, unit: 'fps' },
-            { name: 'Sensor Type', value: 'CCD', unit: '' },
-            { name: 'Sensor brand', value: 'Nikon', unit: '' },
-            { name: 'Broken', value: false, unit: '' },
-            { name: 'Older than five years', value: true, unit: '' },
-          ],
-          id: '90',
-          manufacturer: {
-            name: 'Manufacturer A',
-            web_url: 'http://example.com',
-            address: '10 My Street',
-          },
-        },
+        selectedCatalogueItem: cameras1,
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        propertyValues: [24, 240, 'CCD', 'Nikon', false, true],
+        propertyValues: [12, 30, 'CMOS', null, 'true', 'false'],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
           web_url: 'http://example.com',
@@ -695,6 +787,16 @@ describe('Catalogue Items Dialog', () => {
         catalogueItemDetails: {
           name: 'Cameras 1',
           description: 'High-resolution cameras for beam characterization. 1',
+          cost_gbp: '500',
+          cost_to_rework_gbp: null,
+          days_to_replace: '7',
+          days_to_rework: null,
+          drawing_number: null,
+          drawing_link: null,
+          model_number: null,
+          is_obsolete: 'false',
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
         propertyValues: [12, 30, 'CMOS', null, true, false],
@@ -728,7 +830,20 @@ describe('Catalogue Items Dialog', () => {
       props = {
         ...props,
         parentId: '1',
-        catalogueItemDetails: { name: 'test', description: '' },
+        catalogueItemDetails: {
+          name: 'Cameras 1',
+          description: 'High-resolution cameras for beam characterization. 1',
+          cost_gbp: '500',
+          cost_to_rework_gbp: null,
+          days_to_replace: '7',
+          days_to_rework: null,
+          drawing_number: null,
+          drawing_link: null,
+          model_number: null,
+          is_obsolete: 'false',
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
+        },
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
         propertyValues: [12, 60, 'IO', 'pixel', true, false],
       };
@@ -753,28 +868,20 @@ describe('Catalogue Items Dialog', () => {
         catalogueItemDetails: {
           name: 'test_has_children_elements',
           description: '',
+          cost_gbp: '500',
+          cost_to_rework_gbp: null,
+          days_to_replace: '7',
+          days_to_rework: null,
+          drawing_number: null,
+          drawing_link: null,
+          model_number: null,
+          is_obsolete: 'false',
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         },
-        selectedCatalogueItem: {
-          catalogue_category_id: '4',
-          name: 'Cameras 4',
-          description: 'High-resolution cameras for beam characterization. 4',
-          properties: [
-            { name: 'Resolution', value: 24, unit: 'megapixels' },
-            { name: 'Frame Rate', value: 240, unit: 'fps' },
-            { name: 'Sensor Type', value: 'CCD', unit: '' },
-            { name: 'Sensor brand', value: 'Nikon', unit: '' },
-            { name: 'Broken', value: false, unit: '' },
-            { name: 'Older than five years', value: true, unit: '' },
-          ],
-          id: '90',
-          manufacturer: {
-            name: 'Manufacturer A',
-            web_url: 'http://example.com',
-            address: '10 My Street',
-          },
-        },
+        selectedCatalogueItem: cameras1,
         catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        propertyValues: [24, 240, 'CCD', 'NIkon', false, true],
+        propertyValues: [24, 240, 'CCD', 'NIkon', 'false', 'true'],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
           web_url: 'http://example.com',
@@ -787,7 +894,7 @@ describe('Catalogue Items Dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
       await user.click(saveButton);
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/90', {
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         description: '',
         name: 'test_has_children_elements',
         properties: [
@@ -813,27 +920,22 @@ describe('Catalogue Items Dialog', () => {
       props = {
         ...props,
         parentId: '1',
-        catalogueItemDetails: { name: 'Error 500', description: '' },
-        catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
-        selectedCatalogueItem: {
-          catalogue_category_id: '4',
-          name: 'Cameras 4',
-          description: 'High-resolution cameras for beam characterization. 4',
-          properties: [
-            { name: 'Resolution', value: 24, unit: 'megapixels' },
-            { name: 'Frame Rate', value: 240, unit: 'fps' },
-            { name: 'Sensor Type', value: 'CCD', unit: '' },
-            { name: 'Sensor brand', value: 'Nikon', unit: '' },
-            { name: 'Broken', value: false, unit: '' },
-            { name: 'Older than five years', value: true, unit: '' },
-          ],
-          id: '90',
-          manufacturer: {
-            name: 'Manufacturer A',
-            web_url: 'http://example.com',
-            address: '10 My Street',
-          },
+        catalogueItemDetails: {
+          name: 'Error 500',
+          description: '',
+          cost_gbp: '500',
+          cost_to_rework_gbp: null,
+          days_to_replace: '7',
+          days_to_rework: null,
+          drawing_number: null,
+          drawing_link: null,
+          model_number: null,
+          is_obsolete: 'false',
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
         },
+        catalogueItemPropertiesForm: getCatalogueItemsPropertiesById('4'),
+        selectedCatalogueItem: cameras1,
         propertyValues: [12, 60, 'IO', 'pixel', true, false],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
@@ -865,7 +967,7 @@ describe('Catalogue Items Dialog', () => {
       createView();
 
       const nameInput = screen.getByLabelText('Name *');
-      await user.type(nameInput, newName);
+      fireEvent.change(nameInput, { target: { value: newName } });
 
       expect(onChangeCatalogueItemDetails).toHaveBeenCalledWith({
         ...props.catalogueItemDetails,
@@ -884,6 +986,116 @@ describe('Catalogue Items Dialog', () => {
       expect(onChangeCatalogueItemDetails).toHaveBeenCalledWith({
         ...props.catalogueItemDetails,
         description: newDescription,
+      });
+    });
+
+    it('handles Cost (£) input correctly', async () => {
+      const newCost = '100.0';
+
+      createView();
+
+      const costInput = screen.getByLabelText('Cost (£) *');
+      fireEvent.change(costInput, { target: { value: newCost } });
+
+      expect(onChangeCatalogueItemDetails).toHaveBeenCalledWith({
+        ...props.catalogueItemDetails,
+        cost_gbp: newCost,
+      });
+    });
+
+    it('handles Cost to rework (£) input correctly', async () => {
+      const newCostToRework = '50.0';
+
+      createView();
+
+      const costToReworkInput = screen.getByLabelText('Cost to rework (£)');
+      fireEvent.change(costToReworkInput, {
+        target: { value: newCostToRework },
+      });
+
+      expect(onChangeCatalogueItemDetails).toHaveBeenCalledWith({
+        ...props.catalogueItemDetails,
+        cost_to_rework_gbp: newCostToRework,
+      });
+    });
+
+    it('handles Time to replace (days) input correctly', async () => {
+      const newDaysToReplace = '7';
+
+      createView();
+
+      const daysToReplaceInput = screen.getByLabelText(
+        'Time to replace (days) *'
+      );
+      fireEvent.change(daysToReplaceInput, {
+        target: { value: newDaysToReplace },
+      });
+
+      expect(onChangeCatalogueItemDetails).toHaveBeenCalledWith({
+        ...props.catalogueItemDetails,
+        days_to_replace: newDaysToReplace,
+      });
+    });
+
+    it('handles Time to rework (days) input correctly', async () => {
+      const newDaysToRework = '3';
+
+      createView();
+
+      const daysToReworkInput = screen.getByLabelText('Time to rework (days)');
+      fireEvent.change(daysToReworkInput, {
+        target: { value: newDaysToRework },
+      });
+
+      expect(onChangeCatalogueItemDetails).toHaveBeenCalledWith({
+        ...props.catalogueItemDetails,
+        days_to_rework: newDaysToRework,
+      });
+    });
+
+    it('handles Drawing number input correctly', async () => {
+      const newDrawingNumber = '12345';
+
+      createView();
+
+      const drawingNumberInput = screen.getByLabelText('Drawing number');
+      fireEvent.change(drawingNumberInput, {
+        target: { value: newDrawingNumber },
+      });
+
+      expect(onChangeCatalogueItemDetails).toHaveBeenCalledWith({
+        ...props.catalogueItemDetails,
+        drawing_number: newDrawingNumber,
+      });
+    });
+
+    it('handles Drawing Link input correctly', async () => {
+      const newDrawingLink = '12345';
+
+      createView();
+
+      const drawingNumberInput = screen.getByLabelText('Drawing link');
+      fireEvent.change(drawingNumberInput, {
+        target: { value: newDrawingLink },
+      });
+
+      expect(onChangeCatalogueItemDetails).toHaveBeenCalledWith({
+        ...props.catalogueItemDetails,
+        drawing_link: newDrawingLink,
+      });
+    });
+
+    it('handles Model number input correctly', async () => {
+      const newModelNumber = '7890';
+
+      createView();
+
+      const modelNumberInput = screen.getByLabelText('Model number');
+      fireEvent.change(modelNumberInput, { target: { value: newModelNumber } });
+
+      expect(onChangeCatalogueItemDetails).toHaveBeenCalledWith({
+        ...props.catalogueItemDetails,
+        model_number: newModelNumber,
       });
     });
   });

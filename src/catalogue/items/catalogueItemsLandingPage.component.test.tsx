@@ -34,7 +34,7 @@ describe('Catalogue Items Landing Page', () => {
       screen.getByText('High-resolution cameras for beam characterization. 1')
     ).toBeInTheDocument();
 
-    expect(screen.getByText('Resolution')).toBeInTheDocument();
+    expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
   });
 
   it('renders no item page correctly', async () => {
@@ -70,6 +70,26 @@ describe('Catalogue Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByLabelText('Show catalogue item properties')
+      ).toBeInTheDocument();
+    });
+  });
+
+  it('toggles the details so it is either visible or hidden', async () => {
+    createView('/inventory-management-system/catalogue/items/1');
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByLabelText('Close catalogue item details')
+    ).toBeInTheDocument();
+
+    const toggleButton = screen.getByLabelText('Close catalogue item details');
+
+    await user.click(toggleButton);
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText('Show catalogue item details')
       ).toBeInTheDocument();
     });
   });

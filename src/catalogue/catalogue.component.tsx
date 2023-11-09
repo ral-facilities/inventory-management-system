@@ -1,5 +1,8 @@
-import React from 'react';
-import Breadcrumbs from '../view/breadcrumbs.component';
+import { NavigateNext } from '@mui/icons-material';
+import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
+import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
+import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 import {
   Box,
   Button,
@@ -8,30 +11,27 @@ import {
   LinearProgress,
   Typography,
 } from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom';
-import AddIcon from '@mui/icons-material/Add';
-import { NavigateNext } from '@mui/icons-material';
-import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
-import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
-import ClearIcon from '@mui/icons-material/Clear';
-import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
-import CatalogueCard from './category/catalogueCard.component';
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
   useCatalogueCategoryById,
 } from '../api/catalogueCategory';
 import {
-  CatalogueCategoryFormData,
   CatalogueCategory,
-  CatalogueItemDetails,
+  CatalogueCategoryFormData,
+  CatalogueItemDetailsPlaceholder,
   CatalogueItemManufacturer,
   CatalogueItemProperty,
 } from '../app.types';
-import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
-import CatalogueItemsTable from './items/catalogueItemsTable.component';
-import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
+import Breadcrumbs from '../view/breadcrumbs.component';
+import CatalogueCard from './category/catalogueCard.component';
+import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
 import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirectoryDialog.component';
+import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
+import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
+import CatalogueItemsTable from './items/catalogueItemsTable.component';
 
 export function matchCatalogueItemProperties(
   form: CatalogueCategoryFormData[],
@@ -80,9 +80,19 @@ function Catalogue() {
     React.useState<boolean>(false);
 
   const [catalogueItemDetails, setCatalogueItemDetails] =
-    React.useState<CatalogueItemDetails>({
-      name: undefined,
-      description: '',
+    React.useState<CatalogueItemDetailsPlaceholder>({
+      name: null,
+      description: null,
+      cost_gbp: null,
+      cost_to_rework_gbp: null,
+      days_to_replace: null,
+      days_to_rework: null,
+      drawing_number: null,
+      drawing_link: null,
+      model_number: null,
+      is_obsolete: null,
+      obsolete_replacement_catalogue_item_id: null,
+      obsolete_reason: null,
     });
 
   const [catalogueItemManufacturer, setCatalogueItemManufacturer] =

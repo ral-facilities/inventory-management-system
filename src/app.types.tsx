@@ -47,8 +47,34 @@ export interface CatalogueCategoryFormData {
 }
 
 export interface CatalogueItemDetails {
-  name: string | undefined;
-  description: string | undefined;
+  name: string;
+  description: string | null;
+  cost_gbp: number;
+  cost_to_rework_gbp: number | null;
+  days_to_replace: number;
+  days_to_rework: number | null;
+  drawing_number: string | null;
+  drawing_link: string | null;
+  model_number: string | null;
+  is_obsolete: boolean;
+  obsolete_replacement_catalogue_item_id: string | null;
+  obsolete_reason: string | null;
+}
+// need so we can cast string to number e.g for 10.50
+export type CatalogueItemDetailsPlaceholder = {
+  [K in keyof CatalogueItemDetails]: string | null;
+};
+
+export interface CatalogueDetailsErrorMessages {
+  name: string;
+  description: string;
+  cost_gbp: string;
+  cost_to_rework_gbp: string;
+  days_to_replace: string;
+  days_to_rework: string;
+  drawing_number: string;
+  drawing_link: string;
+  model_number: string;
 }
 
 export interface CatalogueItemManufacturer {
@@ -68,25 +94,19 @@ export interface CatalogueItemPropertyResponse {
   unit: string;
 }
 
-export interface CatalogueItem {
+export interface CatalogueItem extends CatalogueItemDetails {
   catalogue_category_id: string;
-  name: string | undefined;
-  description: string;
   properties: CatalogueItemPropertyResponse[];
   manufacturer: CatalogueItemManufacturer;
   id: string;
 }
-export interface AddCatalogueItem {
+export interface AddCatalogueItem extends CatalogueItemDetails {
   catalogue_category_id: string;
-  name: string | undefined;
-  description: string;
   properties: CatalogueItemProperty[];
   manufacturer: CatalogueItemManufacturer;
 }
 
-export interface EditCatalogueItem {
-  name?: string | undefined;
-  description?: string;
+export interface EditCatalogueItem extends Partial<CatalogueItemDetails> {
   properties?: CatalogueItemProperty[];
   manufacturer?: CatalogueItemManufacturer;
   id: string;
