@@ -36,8 +36,32 @@ export interface CatalogueCategory {
 export interface Manufacturer {
   name: string;
   url: string;
-  address: string;
+  address: Address;
+  telephone: string;
   id: string;
+}
+
+export interface AddManufacturer {
+  name: string;
+  url?: string;
+  address: Address | undefined;
+  telephone?: string;
+}
+
+export interface AddManufacturerResponse {
+  name: string;
+  code: string;
+  url: string;
+  address: Address;
+  telephone: string;
+  id: string;
+}
+
+export interface ManufacturerDetail {
+  name: string;
+  url: string;
+  address: Address;
+  telephone: string;
 }
 
 export interface CatalogueCategoryFormData {
@@ -96,6 +120,13 @@ export interface ErrorParsing {
   detail: string;
 }
 
+interface Address {
+  building_number: string;
+  street_name: string;
+  town?: string;
+  county?: string;
+  postcode: string;
+}
 export interface CatalogueCategoryTransferState {
   name: string;
   message: string;
