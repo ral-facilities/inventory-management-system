@@ -16,25 +16,26 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { useManufacturers } from '../api/manufacturer';
-import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
-import { ManufacturerDetail } from '../app.types';
-import AddManufacturerDialog from './addManufacturerDialog.component';
+import { Manufacturer } from '../app.types';
+import ManufacturerDialog from './manufacturerDialog.component';
 
 function ManufacturerComponent() {
-  const [addManufacturer, setAddManufacturer] =
-    React.useState<ManufacturerDetail>({
-      name: '',
-      url: '',
-      address: {
-        building_number: '',
-        street_name: '',
-        town: '',
-        county: '',
-        postcode: '',
-      },
-      telephone: '',
-    });
+  const [manufacturer, setManufacturer] = React.useState<Manufacturer>({
+    name: '',
+    url: undefined,
+    address: {
+      building_number: '',
+      street_name: '',
+      town: '',
+      county: '',
+      postcode: '',
+    },
+    telephone: '',
+  });
+
+  const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
+    React.useState<boolean>(false);
 
   const [addManufacturerDialogOpen, setAddManufacturerDialogOpen] =
     React.useState<boolean>(false);
@@ -68,11 +69,20 @@ function ManufacturerComponent() {
         >
           Add Manufacturer
         </Button>
-        <AddManufacturerDialog
+        <ManufacturerDialog
           open={addManufacturerDialogOpen}
           onClose={() => setAddManufacturerDialogOpen(false)}
-          manufacturer={addManufacturer}
-          onChangeManufacturerDetails={setAddManufacturer}
+          manufacturer={manufacturer}
+          onChangeManufacturerDetails={setManufacturer}
+          type="create"
+        />
+        <ManufacturerDialog
+          open={editManufacturerDialogOpen}
+          onClose={() => setEditManufacturerDialogOpen(false)}
+          manufacturer={manufacturer}
+          onChangeManufacturerDetails={setManufacturer}
+          type="edit"
+          selectedManufacturer={selectedManufacturer}
         />
       </Box>
       <TableContainer style={{ height: tableHeight }}>
@@ -151,6 +161,11 @@ function ManufacturerComponent() {
                       <IconButton
                         size="small"
                         aria-label={`Edit ${item.name} manufacturer`}
+                        onClick={() => {
+                          setEditManufacturerDialogOpen(true);
+                          setSelectedManufacturer(item);
+                          setManufacturer(item);
+                        }}
                       >
                         <EditIcon />
                       </IconButton>
