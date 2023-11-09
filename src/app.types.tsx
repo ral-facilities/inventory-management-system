@@ -32,15 +32,6 @@ export interface CatalogueCategory {
   is_leaf: boolean;
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }
-
-export interface Manufacturer {
-  name: string;
-  url: string;
-  address: Address;
-  telephone: string;
-  id: string;
-}
-
 export interface AddManufacturer {
   name: string;
   url?: string;
@@ -49,17 +40,26 @@ export interface AddManufacturer {
 }
 
 export interface AddManufacturerResponse {
+  id: string;
   name: string;
-  code: string;
   url: string;
   address: Address;
   telephone: string;
-  id: string;
+  code: string;
 }
 
-export interface ManufacturerDetail {
+export interface EditManufacturer {
+  name?: string;
+  url?: string;
+  address?: EditAddress;
+  telephone?: string;
+  id?: string;
+}
+
+export interface Manufacturer {
+  id?: string;
   name: string;
-  url: string;
+  url?: string;
   address: Address;
   telephone: string;
 }
@@ -127,6 +127,14 @@ interface Address {
   county?: string;
   postcode: string;
 }
+
+interface EditAddress {
+  building_number?: string;
+  street_name?: string;
+  town?: string;
+  county?: string;
+  postcode?: string;
+}
 export interface CatalogueCategoryTransferState {
   name: string;
   message: string;
@@ -143,7 +151,7 @@ export enum SystemImportanceType {
   HIGH = 'high',
 }
 
-export interface SystemPost {
+export interface AddSystem {
   name: string;
   description?: string;
   location?: string;

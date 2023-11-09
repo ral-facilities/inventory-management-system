@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { SystemImportanceType, SystemPost } from '../app.types';
+import { AddSystem, SystemImportanceType } from '../app.types';
 import SystemBreadcrumbsJSON from '../mocks/SystemBreadcrumbs.json';
 import SystemsJSON from '../mocks/Systems.json';
 import { hooksWrapperWithProviders } from '../setupTests';
@@ -139,7 +139,7 @@ describe('System api functions', () => {
   });
 
   describe('useAddSystem', () => {
-    const MOCK_SYSTEM_POST: SystemPost = {
+    const MOCK_SYSTEM_POST: AddSystem = {
       name: 'System name',
       parent_id: 'parent-id',
       description: 'Description',

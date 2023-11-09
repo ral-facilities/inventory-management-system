@@ -2,10 +2,11 @@ import { rest } from 'msw';
 import {
   AddCatalogueCategory,
   AddManufacturer,
+  AddSystem,
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
-  SystemPost,
+  EditManufacturer,
 } from '../app.types';
 import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
@@ -142,62 +143,29 @@ export const handlers = [
     }
   }),
 
-  // ------------------------------------ MANUFACTURERS ------------------------------------
+  // ------------------------------------ CATALOGUE ITEMS ------------------------------------
 
-  rest.get('/v1/manufacturers', (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(ManufacturerJSON));
-  }),
-
-  rest.post('/v1/manufacturers', async (req, res, ctx) => {
-    const body = (await req.json()) as AddManufacturer;
-
-    if (!body.name) {
-      return res(ctx.status(422), ctx.json(''));
-    }
-    if (body.name === 'Manufacturer A') {
-      return res(ctx.status(409), ctx.json(''));
-    }
-
-    return res(
-      ctx.status(200),
-      ctx.json({
-        name: 'Manufacturer D',
-        code: 'manufacturer-d',
-        url: 'http://test.co.uk',
-        address: {
-          building_number: '1',
-          street_name: 'Example Street',
-          town: 'Oxford',
-          county: 'Oxfordshire',
-          postcode: 'OX1 2AB',
-        },
-        telephone: '07349612203',
-        id: '4',
-      })
-    );
-  }),
-
-  rest.delete('/v1/manufacturers/:id', (req, res, ctx) => {
+  rest.delete('/v1/catalogue-categories/:id', (req, res, ctx) => {
     const { id } = req.params;
-    const validManufacturer = ManufacturerJSON.find((value) => value.id === id);
-    if (validManufacturer) {
+    const validCatalogueCategory = CatalogueCategoryJSON.find(
+      (value) => value.id === id
+    );
+    if (validCatalogueCategory) {
       if (id === '2') {
         return res(
           ctx.status(409),
           ctx.json({
-            detail: 'The specified manufacturer is a part of a Catalogue Item',
+            detail:
+              'Catalogue category has children elements and cannot be deleted',
           })
         );
       } else {
-        return res(ctx.status(200), ctx.json(''));
+        return res(ctx.status(204));
       }
     } else {
       return res(ctx.status(400), ctx.json(''));
     }
   }),
-
-  // ------------------------------------ CATALOGUE ITEMS ------------------------------------
-
   rest.post('/v1/catalogue-items/', async (req, res, ctx) => {
     const body = (await req.json()) as CatalogueItem;
 
@@ -296,6 +264,99 @@ export const handlers = [
     );
   }),
 
+  // ------------------------------------ MANUFACTURERS ------------------------------------
+
+  rest.get('/v1/manufacturers', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(ManufacturerJSON));
+  }),
+
+  rest.get('/v1/manufacturers/:id', (req, res, ctx) => {
+    const { id } = req.params;
+
+    const data = ManufacturerJSON.find(
+      (manufacturer) => manufacturer.id === id
+    );
+
+    return res(ctx.status(200), ctx.json(data));
+  }),
+
+  rest.post('/v1/manufacturers', async (req, res, ctx) => {
+    const body = (await req.json()) as AddManufacturer;
+
+    if (body.name === 'Manufacturer A') {
+      return res(ctx.status(409), ctx.json(''));
+    }
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        name: 'Manufacturer D',
+        code: 'manufacturer-d',
+        url: 'http://test.co.uk',
+        address: {
+          building_number: '1',
+          street_name: 'Example Street',
+          town: 'Oxford',
+          county: 'Oxfordshire',
+          postcode: 'OX1 2AB',
+        },
+        telephone: '07349612203',
+        id: '4',
+      })
+    );
+  }),
+
+  rest.delete('/v1/manufacturers/:id', (req, res, ctx) => {
+    const { id } = req.params;
+    const validManufacturer = ManufacturerJSON.find((value) => value.id === id);
+    if (validManufacturer) {
+      if (id === '2') {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail: 'The specified manufacturer is a part of a Catalogue Item',
+          })
+        );
+      } else {
+        return res(ctx.status(200), ctx.json(''));
+      }
+    } else {
+      return res(ctx.status(400), ctx.json(''));
+    }
+  }),
+
+  rest.patch('/v1/manufacturers/:id', async (req, res, ctx) => {
+    const body = (await req.json()) as EditManufacturer;
+
+    if (body.name === 'test_dup') {
+      return res(
+        ctx.status(409),
+        ctx.json({
+          detail:
+            'A manufacturer with the same name has been found. Please enter a different name',
+        })
+      );
+    }
+    if (body.name === 'Error 500') {
+      return res(ctx.status(500), ctx.json(''));
+    }
+    return res(
+      ctx.status(200),
+      ctx.json({
+        name: 'test',
+        address: {
+          building_number: '100',
+          street_name: 'test',
+          town: 'test',
+          county: 'test',
+          postcode: 'test',
+        },
+        telephone: '0000000000',
+        id: '1',
+      })
+    );
+  }),
+
   // ------------------------------------ SYSTEMS ------------------------------------
 
   rest.get('/v1/systems', (req, res, ctx) => {
@@ -331,7 +392,7 @@ export const handlers = [
   }),
 
   rest.post('/v1/systems', async (req, res, ctx) => {
-    const body = (await req.json()) as SystemPost;
+    const body = (await req.json()) as AddSystem;
 
     if (body.name === 'Error 409') {
       return res(
