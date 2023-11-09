@@ -103,7 +103,7 @@ describe('Manufacturer', () => {
     });
   });
 
-  it.only('opens edit dialog and closes it correctly', async () => {
+  it('opens edit dialog and closes it correctly', async () => {
     createView();
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
