@@ -135,9 +135,6 @@ export const handlers = [
   rest.post('/v1/manufacturers', async (req, res, ctx) => {
     const body = (await req.json()) as AddManufacturer;
 
-    if (!body.name) {
-      return res(ctx.status(422), ctx.json(''));
-    }
     if (body.name === 'Manufacturer A') {
       return res(ctx.status(409), ctx.json(''));
     }

@@ -552,6 +552,46 @@ describe('Add manufacturer dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
+    it.only('CatchAllError request works correctly and displays refresh page message', async () => {
+      props = {
+        ...props,
+        manufacturer: {
+          name: 'Error 500',
+          address: {
+            building_number: '100',
+            street_name: 'test',
+            town: 'test',
+            county: 'test',
+            postcode: 'test',
+          },
+          telephone: '0000000000',
+        },
+        selectedManufacturer: {
+          id: '1',
+          name: 'Manufacturer A',
+          url: 'http://example.com',
+          address: {
+            building_number: '1',
+            street_name: 'Example Street',
+            town: 'Oxford',
+            county: 'Oxfordshire',
+            postcode: 'OX1 2AB',
+          },
+          telephone: '07334893348',
+        },
+      };
+
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      expect(
+        screen.getByText('Please refresh and try again')
+      ).toBeInTheDocument();
+    });
+
     it('calls onClose when Close button is clicked', async () => {
       createView();
       const cancelButton = screen.getByRole('button', { name: 'Cancel' });

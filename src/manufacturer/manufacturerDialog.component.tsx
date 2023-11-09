@@ -23,7 +23,7 @@ import {
 import {
   useAddManufacturer,
   useEditManufacturer,
-  useManufacturerById,
+  useManufacturer,
 } from '../api/manufacturer';
 import { AxiosError } from 'axios';
 
@@ -88,7 +88,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
   const { mutateAsync: addManufacturer } = useAddManufacturer();
   const { mutateAsync: editManufacturer } = useEditManufacturer();
-  const { data: selectedManufacturerData } = useManufacturerById(
+  const { data: selectedManufacturerData } = useManufacturer(
     selectedManufacturer?.id
   );
 
