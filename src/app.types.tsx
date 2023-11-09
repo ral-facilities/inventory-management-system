@@ -56,17 +56,10 @@ export interface EditManufacturer {
   id?: string;
 }
 
-export interface ManufacturerDetail {
+export interface Manufacturer {
+  id?: string;
   name: string;
   url?: string;
-  address: Address;
-  telephone: string;
-}
-
-export interface Manufacturer {
-  id: string;
-  name: string;
-  url: string;
   address: Address;
   telephone: string;
 }

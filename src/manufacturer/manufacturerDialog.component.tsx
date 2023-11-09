@@ -18,7 +18,6 @@ import {
   EditManufacturer,
   ErrorParsing,
   Manufacturer,
-  ManufacturerDetail,
 } from '../app.types';
 import {
   useAddManufacturer,
@@ -30,8 +29,8 @@ import { AxiosError } from 'axios';
 export interface ManufacturerDialogProps {
   open: boolean;
   onClose: () => void;
-  onChangeManufacturerDetails: (manufacturer: ManufacturerDetail) => void;
-  manufacturer: ManufacturerDetail;
+  onChangeManufacturerDetails: (manufacturer: Manufacturer) => void;
+  manufacturer: Manufacturer;
   selectedManufacturer?: Manufacturer;
   type: 'edit' | 'create';
 }
