@@ -228,18 +228,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         id: selectedManufacturer?.id,
       };
 
-      if (isNameUpdated) {
-        ManufacturerToEdit = {
-          ...ManufacturerToEdit,
-          name: manufacturer.name,
-        };
-      }
-      if (isURLUpdated) {
-        ManufacturerToEdit = {
-          ...ManufacturerToEdit,
-          url: manufacturer.url,
-        };
-      }
+      isNameUpdated && (ManufacturerToEdit.name = manufacturer.name);
+      isURLUpdated && (ManufacturerToEdit.url = manufacturer.url);
+
       if (isAddressLineUpdated) {
         ManufacturerToEdit = {
           ...ManufacturerToEdit,
@@ -285,12 +276,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           },
         };
       }
-      if (isTelephoneUpdated) {
-        ManufacturerToEdit = {
-          ...ManufacturerToEdit,
-          telephone: manufacturer.telephone,
-        };
-      }
+
+      isTelephoneUpdated &&
+        (ManufacturerToEdit.telephone = manufacturer.telephone);
 
       if (
         (selectedManufacturer.id && isNameUpdated) ||
