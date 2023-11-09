@@ -620,7 +620,7 @@ describe('Add manufacturer dialog', () => {
     });
 
     it('handles manufacturer url input correctly', async () => {
-      const newManufacturerURL = 'Test';
+      const newManufacturerURL = 'https://test.co.uk';
 
       createView();
 
