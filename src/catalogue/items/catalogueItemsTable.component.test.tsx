@@ -25,7 +25,7 @@ describe('Catalogue Items Table', () => {
       onChangeAddItemDialogOpen: onChangeAddItemDialogOpen,
       catalogueItemManufacturer: {
         name: '',
-        web_url: '',
+        url: '',
         address: '',
       },
       onChangeCatalogueItemManufacturer: onChangeCatalogueItemManufacturer,

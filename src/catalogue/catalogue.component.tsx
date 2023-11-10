@@ -89,7 +89,7 @@ function Catalogue() {
     React.useState<CatalogueItemManufacturer>({
       name: '',
       address: '',
-      web_url: '',
+      url: '',
     });
 
   const [catalogueItemPropertyValues, setCatalogueItemPropertyValues] =
