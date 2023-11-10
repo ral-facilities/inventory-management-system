@@ -33,7 +33,7 @@
     "id": "1",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 500,
@@ -86,7 +86,7 @@
     "id": "2",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 600,
@@ -139,7 +139,7 @@
     "id": "3",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 700,
@@ -192,7 +192,7 @@
     "id": "90",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 800,
@@ -245,7 +245,7 @@
     "id": "24",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 900,
@@ -298,7 +298,7 @@
     "id": "25",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 1000,
@@ -351,7 +351,7 @@
     "id": "26",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 1100,
@@ -404,7 +404,7 @@
     "id": "27",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 1200,
@@ -457,7 +457,7 @@
     "id": "28",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 1300,
@@ -510,7 +510,7 @@
     "id": "29",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 1400,
@@ -563,7 +563,7 @@
     "id": "30",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 1500,
@@ -616,7 +616,7 @@
     "id": "31",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 1600,
@@ -669,7 +669,7 @@
     "id": "32",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 1700,
@@ -722,7 +722,7 @@
     "id": "33",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 1800,
@@ -775,7 +775,7 @@
     "id": "34",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 1900,
@@ -828,7 +828,7 @@
     "id": "35",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 2000,
@@ -881,7 +881,7 @@
     "id": "36",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 2100,
@@ -934,7 +934,7 @@
     "id": "37",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 2200,
@@ -988,7 +988,7 @@
     "id": "38",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 2300,
@@ -1041,7 +1041,7 @@
     "id": "39",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 2400,
@@ -1094,7 +1094,7 @@
     "id": "40",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 2500,
@@ -1147,7 +1147,7 @@
     "id": "41",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 2600,
@@ -1200,7 +1200,7 @@
     "id": "42",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 2700,
@@ -1253,7 +1253,7 @@
     "id": "43",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 2800,
@@ -1306,7 +1306,7 @@
     "id": "44",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 2900,
@@ -1339,7 +1339,7 @@
     "id": "89",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 500,
@@ -1367,7 +1367,7 @@
     "id": "6",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 600,
@@ -1400,7 +1400,7 @@
     "id": "7",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 700,
@@ -1433,7 +1433,7 @@
     "id": "8",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 800,
@@ -1466,7 +1466,7 @@
     "id": "9",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 900,
@@ -1499,7 +1499,7 @@
     "id": "10",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 1000,
@@ -1532,7 +1532,7 @@
     "id": "11",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 1100,
@@ -1565,7 +1565,7 @@
     "id": "12",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 1200,
@@ -1598,7 +1598,7 @@
     "id": "13",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 1300,
@@ -1631,7 +1631,7 @@
     "id": "14",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 200,
@@ -1664,7 +1664,7 @@
     "id": "15",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 150,
@@ -1697,7 +1697,7 @@
     "id": "16",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 180,
@@ -1730,7 +1730,7 @@
     "id": "17",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 220,
@@ -1763,7 +1763,7 @@
     "id": "18",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 240,
@@ -1796,7 +1796,7 @@
     "id": "19",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 260,
@@ -1829,7 +1829,7 @@
     "id": "17",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 220,
@@ -1862,7 +1862,7 @@
     "id": "20",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 250,
@@ -1895,7 +1895,7 @@
     "id": "21",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 270,
@@ -1928,7 +1928,7 @@
     "id": "22",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 300,
@@ -1961,7 +1961,7 @@
     "id": "23",
     "manufacturer": {
       "name": "Manufacturer A",
-      "web_url": "http://example.com",
+      "url": "http://example.com",
       "address": "10 My Street"
     },
     "cost_gbp": 320,

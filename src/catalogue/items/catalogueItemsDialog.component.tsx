@@ -133,7 +133,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     onChangeCatalogueItemManufacturer({
       name: '',
       address: '',
-      web_url: '',
+      url: '',
     });
     onChangePropertyValues([]);
     setPropertyErrors(
@@ -312,12 +312,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
     // Check Manufacturer URL
     if (
-      !catalogueItemManufacturer.web_url.trim() ||
-      !isValidUrl(catalogueItemManufacturer.web_url)
+      !catalogueItemManufacturer.url.trim() ||
+      !isValidUrl(catalogueItemManufacturer.url)
     ) {
       setManufacturerWebUrlError(true);
       setManufacturerWebUrlErrorMessage(
-        !catalogueItemManufacturer.web_url.trim()
+        !catalogueItemManufacturer.url.trim()
           ? 'Please enter a Manufacturer URL'
           : 'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
       );
@@ -820,11 +820,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   label="Manufacturer URL"
                   required={true}
                   size="small"
-                  value={catalogueItemManufacturer.web_url}
+                  value={catalogueItemManufacturer.url}
                   onChange={(event) => {
                     onChangeCatalogueItemManufacturer({
                       ...catalogueItemManufacturer,
-                      web_url: event.target.value,
+                      url: event.target.value,
                     });
                     setFormError(false);
                     setFormErrorMessage(undefined);

@@ -31,6 +31,7 @@ describe('Catalogue Items Dialog', () => {
       onClose: onClose,
       parentId: null,
       catalogueItemDetails: {
+        catalogue_category_id: null,
         name: '',
         description: null,
         cost_gbp: null,
@@ -47,7 +48,7 @@ describe('Catalogue Items Dialog', () => {
       onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
       catalogueItemManufacturer: {
         name: '',
-        web_url: '',
+        url: '',
         address: '',
       },
       onChangeCatalogueItemManufacturer: onChangeCatalogueItemManufacturer,
@@ -79,6 +80,7 @@ describe('Catalogue Items Dialog', () => {
       ...props,
       parentId: '1',
       catalogueItemDetails: {
+        catalogue_category_id: '1',
         name: 'test',
         description: '',
         cost_gbp: '1200',
@@ -96,7 +98,7 @@ describe('Catalogue Items Dialog', () => {
       propertyValues: [12, 60, 'IO', 'pixel', true, false],
       catalogueItemManufacturer: {
         name: 'Sony',
-        web_url: 'https://sony.com',
+        url: 'https://sony.com',
         address: '1 venus street UY6 9OP',
       },
     };
@@ -120,7 +122,7 @@ describe('Catalogue Items Dialog', () => {
       manufacturer: {
         address: '1 venus street UY6 9OP',
         name: 'Sony',
-        web_url: 'https://sony.com',
+        url: 'https://sony.com',
       },
       item_model_number: 'mk4324',
       name: 'test',
@@ -142,6 +144,7 @@ describe('Catalogue Items Dialog', () => {
       ...props,
       parentId: '1',
       catalogueItemDetails: {
+        catalogue_category_id: '1',
         name: 'test',
         description: '',
         cost_gbp: '200',
@@ -159,7 +162,7 @@ describe('Catalogue Items Dialog', () => {
       propertyValues: [12, null, 'IO', null, true, ''],
       catalogueItemManufacturer: {
         name: 'Sony',
-        web_url: 'https://sony.com',
+        url: 'https://sony.com',
         address: '1 venus street UY6 9OP',
       },
     };
@@ -183,7 +186,7 @@ describe('Catalogue Items Dialog', () => {
       manufacturer: {
         address: '1 venus street UY6 9OP',
         name: 'Sony',
-        web_url: 'https://sony.com',
+        url: 'https://sony.com',
       },
       item_model_number: null,
       name: 'test',
@@ -202,6 +205,7 @@ describe('Catalogue Items Dialog', () => {
       ...props,
       parentId: '1',
       catalogueItemDetails: {
+        catalogue_category_id: '1',
         name: 'test',
         description: '',
         cost_gbp: '200',
@@ -219,7 +223,7 @@ describe('Catalogue Items Dialog', () => {
       propertyValues: [12, null, 'IO', null, 'true', 'false'],
       catalogueItemManufacturer: {
         name: 'Sony',
-        web_url: 'https://sony.com',
+        url: 'https://sony.com',
         address: '1 venus street UY6 9OP',
       },
     };
@@ -243,7 +247,7 @@ describe('Catalogue Items Dialog', () => {
       manufacturer: {
         address: '1 venus street UY6 9OP',
         name: 'Sony',
-        web_url: 'https://sony.com',
+        url: 'https://sony.com',
       },
       item_model_number: null,
       name: 'test',
@@ -263,6 +267,7 @@ describe('Catalogue Items Dialog', () => {
       ...props,
       parentId: '1',
       catalogueItemDetails: {
+        catalogue_category_id: '1',
         name: '',
         description: '',
         cost_gbp: null,
@@ -326,6 +331,7 @@ describe('Catalogue Items Dialog', () => {
       ...props,
       parentId: '1',
       catalogueItemDetails: {
+        catalogue_category_id: '1',
         name: '',
         description: '',
         cost_gbp: 're',
@@ -343,7 +349,7 @@ describe('Catalogue Items Dialog', () => {
       propertyValues: ['rsdf', 'fsdf', 'pixel', null, false, ''],
       catalogueItemManufacturer: {
         name: 'Sony',
-        web_url: 'sony.com',
+        url: 'sony.com',
         address: '1 venus street UY6 9OP',
       },
     };
@@ -398,7 +404,7 @@ describe('Catalogue Items Dialog', () => {
       propertyValues: [12, null, 'IO', null, true, ''],
       catalogueItemManufacturer: {
         name: 'Sony',
-        web_url: 'https://sony.com',
+        url: 'https://sony.com',
         address: '1 venus street UY6 9OP',
       },
     };
@@ -452,7 +458,7 @@ describe('Catalogue Items Dialog', () => {
       id: '1',
       manufacturer: {
         name: 'Manufacturer A',
-        web_url: 'http://example.com',
+        url: 'http://example.com',
         address: '10 My Street',
       },
       cost_gbp: 500,
@@ -480,6 +486,7 @@ describe('Catalogue Items Dialog', () => {
         ...props,
         parentId: '4',
         catalogueItemDetails: {
+          catalogue_category_id: '1',
           name: 'test',
           description: '',
           cost_gbp: '687',
@@ -498,7 +505,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [12, 30, 'CMOS', null, 'true', 'false'],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
-          web_url: 'http://example.com',
+          url: 'http://example.com',
           address: '10 My Street',
         },
       };
@@ -547,7 +554,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [null, 240, null, 'Nikon', '', true],
         catalogueItemManufacturer: {
           name: '',
-          web_url: '',
+          url: '',
           address: '',
         },
       };
@@ -598,6 +605,7 @@ describe('Catalogue Items Dialog', () => {
         parentId: '1',
         catalogueItemDetails: {
           name: 'Cameras 1',
+          catalogue_category_id: '1',
           description: 'High-resolution cameras for beam characterization. 1',
           cost_gbp: '500',
           cost_to_rework_gbp: null,
@@ -615,7 +623,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [24, 240, 'CCD', 'Nikon', 'true', 'true'],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
-          web_url: 'http://example.com',
+          url: 'http://example.com',
           address: '10 My Street',
         },
       };
@@ -645,6 +653,7 @@ describe('Catalogue Items Dialog', () => {
         parentId: '1',
         catalogueItemDetails: {
           name: 'Cameras 1',
+          catalogue_category_id: '1',
           description: 'High-resolution cameras for beam characterization. 1',
           cost_gbp: '500',
           cost_to_rework_gbp: null,
@@ -662,7 +671,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [24, 240, 'CCD', 'Nikon', 'true', 'false'],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
-          web_url: 'http://example.com',
+          url: 'http://example.com',
           address: '10 My Street',
         },
       };
@@ -692,6 +701,7 @@ describe('Catalogue Items Dialog', () => {
         parentId: '1',
         catalogueItemDetails: {
           name: 'Cameras 1',
+          catalogue_category_id: '1',
           description: 'High-resolution cameras for beam characterization. 1',
           cost_gbp: '500',
           cost_to_rework_gbp: null,
@@ -709,7 +719,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [12, 30, 'CMOS', null, 'true', 'false'],
         catalogueItemManufacturer: {
           name: 'Sony1',
-          web_url: 'https://sony.com',
+          url: 'https://sony.com',
           address: '12 venus street UY6 9OP',
         },
       };
@@ -722,7 +732,7 @@ describe('Catalogue Items Dialog', () => {
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         manufacturer: {
           name: 'Sony1',
-          web_url: 'https://sony.com',
+          url: 'https://sony.com',
           address: '12 venus street UY6 9OP',
         },
       });
@@ -736,6 +746,7 @@ describe('Catalogue Items Dialog', () => {
         parentId: '1',
         catalogueItemDetails: {
           name: 'Cameras 1',
+          catalogue_category_id: '1',
           description: 'High-resolution cameras for beam characterization. 1',
           cost_gbp: '500',
           cost_to_rework_gbp: null,
@@ -753,7 +764,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [12, 30, 'CMOS', null, 'true', 'false'],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
-          web_url: 'http://example.com',
+          url: 'http://example.com',
           address: '10 My Street',
         },
       };
@@ -825,6 +836,7 @@ describe('Catalogue Items Dialog', () => {
         ...props,
         parentId: '1',
         catalogueItemDetails: {
+          catalogue_category_id: '1',
           name: 'Cameras 1',
           description: 'High-resolution cameras for beam characterization. 1',
           cost_gbp: '500',
@@ -860,6 +872,7 @@ describe('Catalogue Items Dialog', () => {
         ...props,
         parentId: '1',
         catalogueItemDetails: {
+          catalogue_category_id: '1',
           name: 'test_has_children_elements',
           description: '',
           cost_gbp: '500',
@@ -878,7 +891,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [24, 240, 'CCD', 'NIkon', 'false', 'true'],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
-          web_url: 'http://example.com',
+          url: 'http://example.com',
           address: '10 My Street',
         },
       };
@@ -915,6 +928,7 @@ describe('Catalogue Items Dialog', () => {
         ...props,
         parentId: '1',
         catalogueItemDetails: {
+          catalogue_category_id: '1',
           name: 'Error 500',
           description: '',
           cost_gbp: '500',
@@ -933,7 +947,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [12, 60, 'IO', 'pixel', true, false],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
-          web_url: 'http://example.com',
+          url: 'http://example.com',
           address: '10 My Street',
         },
       };
@@ -1216,7 +1230,7 @@ describe('Catalogue Items Dialog', () => {
 
       expect(onChangeCatalogueItemManufacturer).toHaveBeenCalledWith({
         ...props.catalogueItemManufacturer,
-        web_url: newManufacturerUrl,
+        url: newManufacturerUrl,
       });
     });
   });

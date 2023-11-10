@@ -38,6 +38,37 @@ export interface CatalogueCategory {
   is_leaf: boolean;
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }
+export interface AddManufacturer {
+  name: string;
+  url?: string;
+  address: Address | undefined;
+  telephone?: string;
+}
+
+export interface AddManufacturerResponse {
+  id: string;
+  name: string;
+  url: string;
+  address: Address;
+  telephone: string;
+  code: string;
+}
+
+export interface EditManufacturer {
+  name?: string;
+  url?: string;
+  address?: EditAddress;
+  telephone?: string;
+  id?: string;
+}
+
+export interface Manufacturer {
+  id?: string;
+  name: string;
+  url?: string;
+  address: Address;
+  telephone: string;
+}
 
 export interface CatalogueCategoryFormData {
   name: string;
@@ -81,7 +112,7 @@ export interface CatalogueDetailsErrorMessages {
 export interface CatalogueItemManufacturer {
   name: string;
   address: string;
-  web_url: string;
+  url: string;
 }
 
 export interface CatalogueItemProperty {
@@ -112,6 +143,21 @@ export interface ErrorParsing {
   detail: string;
 }
 
+interface Address {
+  building_number: string;
+  street_name: string;
+  town?: string;
+  county?: string;
+  postcode: string;
+}
+
+interface EditAddress {
+  building_number?: string;
+  street_name?: string;
+  town?: string;
+  county?: string;
+  postcode?: string;
+}
 export interface CatalogueCategoryTransferState {
   name: string;
   message: string;
@@ -128,15 +174,22 @@ export enum SystemImportanceType {
   HIGH = 'high',
 }
 
+export interface AddSystem {
+  name: string;
+  description?: string;
+  location?: string;
+  owner?: string;
+  importance: SystemImportanceType;
+  parent_id?: string;
+}
+
 export interface System {
   id: string;
   name: string;
-  location: string;
-  owner: string;
+  description: string | null;
+  location: string | null;
+  owner: string | null;
   importance: SystemImportanceType;
-  description: string;
   parent_id: string | null;
-  parent_path: string;
   code: string;
-  path: string;
 }
