@@ -637,10 +637,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   required={true}
                   value={catalogueItemDetails.name}
                   onChange={(event) => {
-                    const newName = event.target.value
-                      ? event.target.value
-                      : '';
-                    handleCatalogueDetails('name', newName);
+                    handleCatalogueDetails('name', event.target.value);
                   }}
                   fullWidth
                   error={errorMessages.name !== undefined}
@@ -655,17 +652,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   size="small"
                   value={catalogueItemDetails.description}
                   onChange={(event) => {
-                    const newDescription = event.target.value
-                      ? event.target.value
-                      : '';
-                    handleCatalogueDetails('description', newDescription);
+                    handleCatalogueDetails('description', event.target.value);
                   }}
-                  error={errorMessages.description !== undefined}
-                  helperText={
-                    errorMessages.description !== undefined
-                      ? errorMessages.description
-                      : ''
-                  }
                   fullWidth
                   multiline
                 />
@@ -764,12 +752,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       event.target.value
                     );
                   }}
-                  error={errorMessages.drawing_number !== undefined}
-                  helperText={
-                    errorMessages.drawing_number !== undefined
-                      ? errorMessages.drawing_number
-                      : ''
-                  }
                   fullWidth
                 />
               </Grid>
@@ -803,12 +785,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       event.target.value
                     );
                   }}
-                  error={errorMessages.item_model_number !== undefined}
-                  helperText={
-                    errorMessages.item_model_number !== undefined
-                      ? errorMessages.item_model_number
-                      : ''
-                  }
                   fullWidth
                 />
               </Grid>
@@ -971,11 +947,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                     ? // If 'property' is mandatory and 'propertyValues[index]' is empty, return a mandatory field error message
                                       'This field is mandatory'
                                     : property.type === 'number' &&
-                                      isNaN(Number(propertyValues[index]))
-                                    ? // If 'property' is of type 'number' and 'propertyValues[index]' is not a valid number, return an invalid number error message
-                                      'Please enter a valid number'
-                                    : // If none of the above conditions are met, return an empty string (no error)
-                                      ''
+                                      isNaN(Number(propertyValues[index])) &&
+                                      'Please enter a valid number' // If 'property' is of type 'number' and 'propertyValues[index]' is not a valid number, return an invalid number error message
                                   : // If 'propertyErrors[index]' is falsy, return an empty string (no error)
                                     ''
                               }

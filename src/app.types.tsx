@@ -105,9 +105,7 @@ export interface AddCatalogueItem extends CatalogueItemDetails {
   manufacturer: CatalogueItemManufacturer;
 }
 
-export interface EditCatalogueItem extends Partial<CatalogueItemDetails> {
-  properties?: CatalogueItemProperty[];
-  manufacturer?: CatalogueItemManufacturer;
+export interface EditCatalogueItem extends Partial<AddCatalogueItem> {
   id: string;
 }
 export interface ErrorParsing {

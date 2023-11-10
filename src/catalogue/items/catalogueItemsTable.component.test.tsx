@@ -21,14 +21,15 @@ describe('Catalogue Items Table', () => {
   beforeEach(() => {
     props = {
       catalogueItemDetails: {
-        cost_gbp: NaN,
-        cost_to_rework_gbp: NaN,
-        days_to_replace: NaN,
-        days_to_rework: NaN,
+        catalogue_category_id: '',
+        cost_gbp: null,
+        cost_to_rework_gbp: null,
+        days_to_replace: null,
+        days_to_rework: null,
         description: null,
         drawing_link: null,
         drawing_number: null,
-        is_obsolete: false,
+        is_obsolete: 'false',
         item_model_number: null,
         name: '',
         obsolete_reason: null,
@@ -192,6 +193,33 @@ describe('Catalogue Items Table', () => {
     });
   });
 
+  it('opens the edit catalogue item dialog (more catalogue item details filled in)', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText(
+          'Catalogue item description: Precision energy meters for accurate measurements. 27'
+        )
+      ).toBeInTheDocument();
+    });
+
+    const editButton = screen.getByRole('button', {
+      name: 'Edit Energy Meters 27 catalogue item',
+    });
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('opens the add catalogue item dialog for save as', async () => {
     createView();
 
@@ -205,6 +233,25 @@ describe('Catalogue Items Table', () => {
 
     const saveAsButton = screen.getByRole('button', {
       name: 'Save as Energy Meters 26 catalogue item',
+    });
+    await user.click(saveAsButton);
+
+    expect(onChangeAddItemDialogOpen).toBeCalledWith(true);
+  });
+
+  it('opens the add catalogue item dialog for save as (more catalogue item details filled in)', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText(
+          'Catalogue item description: Precision energy meters for accurate measurements. 27'
+        )
+      ).toBeInTheDocument();
+    });
+
+    const saveAsButton = screen.getByRole('button', {
+      name: 'Save as Energy Meters 27 catalogue item',
     });
     await user.click(saveAsButton);
 

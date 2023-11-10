@@ -449,7 +449,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
-                    {item.obsolete_replacement_catalogue_item_id ? (
+                    {item.obsolete_replacement_catalogue_item_id && (
                       <MuiLink
                         underline="hover"
                         component={Link}
@@ -457,8 +457,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                       >
                         Click here
                       </MuiLink>
-                    ) : (
-                      'None'
                     )}
                   </TableCell>
 

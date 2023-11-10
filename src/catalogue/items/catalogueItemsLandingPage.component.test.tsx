@@ -145,4 +145,39 @@ describe('Catalogue Items Landing Page', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
+
+  it('opens and closes the edit catalogue item dialog (more catalogue item details filled in)', async () => {
+    createView('/inventory-management-system/catalogue/items/6');
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 27')).toBeInTheDocument();
+    });
+
+    const editButton = screen.getByRole('button', {
+      name: 'Edit',
+    });
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('renders obsolete replace id link', async () => {
+    createView('/inventory-management-system/catalogue/items/89');
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByRole('link', { name: 'Click here' })
+    ).toBeInTheDocument();
+  });
 });
