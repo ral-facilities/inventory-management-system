@@ -15,7 +15,9 @@ import {
   Paper,
   LinearProgress,
   Grid,
+  Tooltip,
 } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import React from 'react';
 import {
   AddCatalogueCategory,
@@ -204,13 +206,29 @@ const CatalogueCategoryDirectoryDialog = (
     >
       <DialogTitle sx={{ marginLeft: 2 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            {requestType === 'moveTo' ? 'Move ' : 'Copy '}{' '}
-            {selectedCategories.length}{' '}
-            {selectedCategories.length === 1
-              ? 'catalogue category'
-              : 'catalogue categories'}{' '}
-            to a different catalogue category
+          <Grid container item flexDirection="row" alignItems="center" xs={12}>
+            <>
+              {requestType === 'moveTo' ? 'Move ' : 'Copy '}{' '}
+              {selectedCategories.length}{' '}
+              {selectedCategories.length === 1
+                ? 'catalogue category'
+                : 'catalogue categories'}{' '}
+              to a different catalogue category
+            </>
+            {requestType === 'copyTo' && (
+              <Tooltip
+                title={
+                  'Only the catalogue category details will be copied; no contained catalogue categories or catalogue items within the catalogue categories will be included.'
+                }
+                placement="top"
+                enterTouchDelay={0}
+                arrow
+                aria-label={'Copy Warning'}
+                sx={{ mx: 2 }}
+              >
+                <InfoOutlinedIcon />
+              </Tooltip>
+            )}
           </Grid>
           <Grid item xs={12}>
             <Breadcrumbs

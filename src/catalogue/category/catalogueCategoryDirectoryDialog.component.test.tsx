@@ -444,6 +444,49 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       expect(onClose).toBeCalled();
     });
 
+    it('displays descriptions tooltip on hover', async () => {
+      props.selectedCategories = [
+        {
+          id: '1',
+          name: 'Beam Characterization',
+          parent_id: null,
+          code: 'beam-characterization',
+          is_leaf: false,
+        },
+        {
+          id: '2',
+          name: 'Motion',
+          parent_id: null,
+          code: 'motion',
+          is_leaf: false,
+        },
+      ];
+
+      createView();
+
+      const infoIcon = screen.getByLabelText('Copy Warning');
+
+      await user.hover(infoIcon);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'Only the catalogue category details will be copied; no contained catalogue categories or catalogue items within the catalogue categories will be included.'
+          )
+        ).toBeInTheDocument();
+      });
+
+      await user.unhover(infoIcon);
+
+      await waitFor(() => {
+        expect(
+          screen.queryByText(
+            'Only the catalogue category details will be copied; no contained catalogue categories or catalogue items within the catalogue categories will be included.'
+          )
+        ).not.toBeInTheDocument();
+      });
+    });
+
     it('copies multiple catalogue categories (move category into the same directory)', async () => {
       props.selectedCategories = [
         {
