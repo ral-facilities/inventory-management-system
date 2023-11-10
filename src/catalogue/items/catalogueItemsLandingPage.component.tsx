@@ -62,7 +62,7 @@ function CatalogueItemsLandingPage() {
     React.useState<CatalogueItemManufacturer>({
       name: '',
       address: '',
-      web_url: '',
+      url: '',
     });
 
   const [catalogueItemPropertyValues, setCatalogueItemPropertyValues] =
@@ -235,9 +235,9 @@ function CatalogueItemsLandingPage() {
                         <MuiLink
                           underline="hover"
                           target="_blank"
-                          href={catalogueItemIdData.manufacturer.web_url}
+                          href={catalogueItemIdData.manufacturer.url}
                         >
-                          {catalogueItemIdData.manufacturer.web_url}
+                          {catalogueItemIdData.manufacturer.url}
                         </MuiLink>
                       }
                     />

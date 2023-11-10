@@ -34,7 +34,7 @@ describe('Catalogue Items Dialog', () => {
       onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
       catalogueItemManufacturer: {
         name: '',
-        web_url: '',
+        url: '',
         address: '',
       },
       onChangeCatalogueItemManufacturer: onChangeCatalogueItemManufacturer,
@@ -70,7 +70,7 @@ describe('Catalogue Items Dialog', () => {
       propertyValues: [12, 60, 'IO', 'pixel', true, false],
       catalogueItemManufacturer: {
         name: 'Sony',
-        web_url: 'https://sony.com',
+        url: 'https://sony.com',
         address: '1 venus street UY6 9OP',
       },
     };
@@ -87,7 +87,7 @@ describe('Catalogue Items Dialog', () => {
       name: 'test',
       manufacturer: {
         name: 'Sony',
-        web_url: 'https://sony.com',
+        url: 'https://sony.com',
         address: '1 venus street UY6 9OP',
       },
       properties: [
@@ -110,7 +110,7 @@ describe('Catalogue Items Dialog', () => {
       propertyValues: [12, null, 'IO', null, true, ''],
       catalogueItemManufacturer: {
         name: 'Sony',
-        web_url: 'https://sony.com',
+        url: 'https://sony.com',
         address: '1 venus street UY6 9OP',
       },
     };
@@ -127,7 +127,7 @@ describe('Catalogue Items Dialog', () => {
       name: 'test',
       manufacturer: {
         name: 'Sony',
-        web_url: 'https://sony.com',
+        url: 'https://sony.com',
         address: '1 venus street UY6 9OP',
       },
       properties: [
@@ -147,7 +147,7 @@ describe('Catalogue Items Dialog', () => {
       propertyValues: [12, null, 'IO', null, 'true', 'false'],
       catalogueItemManufacturer: {
         name: 'Sony',
-        web_url: 'https://sony.com',
+        url: 'https://sony.com',
         address: '1 venus street UY6 9OP',
       },
     };
@@ -164,7 +164,7 @@ describe('Catalogue Items Dialog', () => {
       name: 'test',
       manufacturer: {
         name: 'Sony',
-        web_url: 'https://sony.com',
+        url: 'https://sony.com',
         address: '1 venus street UY6 9OP',
       },
       properties: [
@@ -232,7 +232,7 @@ describe('Catalogue Items Dialog', () => {
       propertyValues: ['rsdf', 'fsdf', 'pixel', null, false, ''],
       catalogueItemManufacturer: {
         name: 'Sony',
-        web_url: 'sony.com',
+        url: 'sony.com',
         address: '1 venus street UY6 9OP',
       },
     };
@@ -274,7 +274,7 @@ describe('Catalogue Items Dialog', () => {
       propertyValues: [12, null, 'IO', null, true, ''],
       catalogueItemManufacturer: {
         name: 'Sony',
-        web_url: 'https://sony.com',
+        url: 'https://sony.com',
         address: '1 venus street UY6 9OP',
       },
     };
@@ -322,7 +322,7 @@ describe('Catalogue Items Dialog', () => {
           id: '90',
           manufacturer: {
             name: 'Manufacturer A',
-            web_url: 'http://example.com',
+            url: 'http://example.com',
             address: '10 My Street',
           },
         },
@@ -330,7 +330,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [24, 240, 'CCD', 'Nikon', false, true],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
-          web_url: 'http://example.com',
+          url: 'http://example.com',
           address: '10 My Street',
         },
       };
@@ -370,14 +370,14 @@ describe('Catalogue Items Dialog', () => {
           id: '90',
           manufacturer: {
             name: 'Manufacturer A',
-            web_url: 'http://example.com',
+            url: 'http://example.com',
             address: '10 My Street',
           },
         },
         propertyValues: ['12a', '21a', 'pixel', null, false, ''],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
-          web_url: 'example.com',
+          url: 'example.com',
           address: '10 My Street',
         },
       };
@@ -427,7 +427,7 @@ describe('Catalogue Items Dialog', () => {
           id: '90',
           manufacturer: {
             name: 'Manufacturer A',
-            web_url: 'http://example.com',
+            url: 'http://example.com',
             address: '10 My Street',
           },
         },
@@ -435,7 +435,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [null, 240, null, 'Nikon', '', true],
         catalogueItemManufacturer: {
           name: '',
-          web_url: '',
+          url: '',
           address: '',
         },
       };
@@ -497,7 +497,7 @@ describe('Catalogue Items Dialog', () => {
           id: '90',
           manufacturer: {
             name: 'Manufacturer A',
-            web_url: 'http://example.com',
+            url: 'http://example.com',
             address: '10 My Street',
           },
         },
@@ -505,7 +505,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [24, 240, 'CCD', 'Nikon', true, true],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
-          web_url: 'http://example.com',
+          url: 'http://example.com',
           address: '10 My Street',
         },
       };
@@ -552,7 +552,7 @@ describe('Catalogue Items Dialog', () => {
           id: '90',
           manufacturer: {
             name: 'Manufacturer A',
-            web_url: 'http://example.com',
+            url: 'http://example.com',
             address: '10 My Street',
           },
         },
@@ -560,7 +560,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [24, 240, 'CCD', 'Nikon', 'true', 'false'],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
-          web_url: 'http://example.com',
+          url: 'http://example.com',
           address: '10 My Street',
         },
       };
@@ -607,7 +607,7 @@ describe('Catalogue Items Dialog', () => {
           id: '90',
           manufacturer: {
             name: 'Manufacturer A',
-            web_url: 'http://example.com',
+            url: 'http://example.com',
             address: '10 My Street',
           },
         },
@@ -615,7 +615,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [24, 240, 'CCD', 'Nikon', false, true],
         catalogueItemManufacturer: {
           name: 'Sony1',
-          web_url: 'https://sony.com',
+          url: 'https://sony.com',
           address: '12 venus street UY6 9OP',
         },
       };
@@ -628,7 +628,7 @@ describe('Catalogue Items Dialog', () => {
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/90', {
         manufacturer: {
           name: 'Sony1',
-          web_url: 'https://sony.com',
+          url: 'https://sony.com',
           address: '12 venus street UY6 9OP',
         },
       });
@@ -659,7 +659,7 @@ describe('Catalogue Items Dialog', () => {
           id: '90',
           manufacturer: {
             name: 'Manufacturer A',
-            web_url: 'http://example.com',
+            url: 'http://example.com',
             address: '10 My Street',
           },
         },
@@ -667,7 +667,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [24, 240, 'CCD', 'Nikon', false, true],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
-          web_url: 'http://example.com',
+          url: 'http://example.com',
           address: '10 My Street',
         },
       };
@@ -769,7 +769,7 @@ describe('Catalogue Items Dialog', () => {
           id: '90',
           manufacturer: {
             name: 'Manufacturer A',
-            web_url: 'http://example.com',
+            url: 'http://example.com',
             address: '10 My Street',
           },
         },
@@ -777,7 +777,7 @@ describe('Catalogue Items Dialog', () => {
         propertyValues: [24, 240, 'CCD', 'NIkon', false, true],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
-          web_url: 'http://example.com',
+          url: 'http://example.com',
           address: '10 My Street',
         },
       };
@@ -830,14 +830,14 @@ describe('Catalogue Items Dialog', () => {
           id: '90',
           manufacturer: {
             name: 'Manufacturer A',
-            web_url: 'http://example.com',
+            url: 'http://example.com',
             address: '10 My Street',
           },
         },
         propertyValues: [12, 60, 'IO', 'pixel', true, false],
         catalogueItemManufacturer: {
           name: 'Manufacturer A',
-          web_url: 'http://example.com',
+          url: 'http://example.com',
           address: '10 My Street',
         },
       };
@@ -996,7 +996,7 @@ describe('Catalogue Items Dialog', () => {
 
       expect(onChangeCatalogueItemManufacturer).toHaveBeenCalledWith({
         ...props.catalogueItemManufacturer,
-        web_url: newManufacturerUrl,
+        url: newManufacturerUrl,
       });
     });
   });

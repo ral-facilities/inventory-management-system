@@ -36,8 +36,9 @@
 //   }
 // }
 import '@testing-library/cypress/add-commands';
+import { MockedRequest } from 'msw';
 
-let mockedRequests = [];
+let mockedRequests: MockedRequest[] = [];
 
 Cypress.Commands.add('clearMocks', () => {
   mockedRequests = [];
@@ -110,6 +111,16 @@ declare global {
        */
       startSnoopingBrowserMockedRequest(): Chainable<JQuery<HTMLElement>>;
       /**
+       * Edits the response of the endpoint request 
+       * 
+       * @example  cy.editEndpointResponse({
+                    url: '/v1/catalogue-categories/',
+                    data: [],
+                    statusCode: 200,
+                   });
+       */
+      editEndpointResponse({ url, data, statusCode }: any): Chainable<unknown>;
+      /**
        * Returns a request that was recorded after 'startSnoopingBrowserMockedRequest' was called
        * 
        * URL is a pattern matching URL that uses the same behavior as handlers URL matching
@@ -125,17 +136,10 @@ declare global {
                     );
                   });
        */
-      editEndpointResponse({ url, data, statusCode }: any): Chainable<unknown>;
-      /**
-       * Edits the response of the endpoint request 
-       * 
-       * @example  cy.editEndpointResponse({
-                    url: '/v1/catalogue-categories/',
-                    data: [],
-                    statusCode: 200,
-                   });
-       */
-      findBrowserMockedRequests({ method, url }: any): Chainable<unknown>;
+      findBrowserMockedRequests({
+        method,
+        url,
+      }: any): Chainable<MockedRequest[]>;
     }
   }
 }
