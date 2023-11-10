@@ -81,6 +81,7 @@ function Catalogue() {
 
   const [catalogueItemDetails, setCatalogueItemDetails] =
     React.useState<CatalogueItemDetailsPlaceholder>({
+      catalogue_category_id: null,
       name: null,
       description: null,
       cost_gbp: null,
@@ -89,7 +90,7 @@ function Catalogue() {
       days_to_rework: null,
       drawing_number: null,
       drawing_link: null,
-      model_number: null,
+      item_model_number: null,
       is_obsolete: null,
       obsolete_replacement_catalogue_item_id: null,
       obsolete_reason: null,

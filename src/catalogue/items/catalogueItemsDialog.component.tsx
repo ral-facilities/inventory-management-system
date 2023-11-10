@@ -116,6 +116,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const handleClose = React.useCallback(() => {
     onChangeCatalogueItemDetails({
+      catalogue_category_id: null,
       name: '',
       description: null,
       cost_gbp: null,
@@ -124,7 +125,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       days_to_rework: null,
       drawing_number: null,
       drawing_link: null,
-      model_number: null,
+      item_model_number: null,
       is_obsolete: 'false',
       obsolete_replacement_catalogue_item_id: null,
       obsolete_reason: null,
@@ -225,7 +226,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       }
     }
 
-    // Check the ctalogue item Name is defined
+    // Check the catalogue item Name is defined
     if (!catalogueItemDetails.name || catalogueItemDetails.name.trim() === '') {
       setErrorMessages((prevErrorMessages) => ({
         ...prevErrorMessages,
@@ -429,7 +430,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           ? null
           : Number(catalogueItemDetails.days_to_rework),
       description: catalogueItemDetails.description,
-      model_number: catalogueItemDetails.model_number,
+      item_model_number: catalogueItemDetails.item_model_number,
       is_obsolete: false,
       obsolete_reason: catalogueItemDetails.obsolete_reason,
       obsolete_replacement_catalogue_item_id:
@@ -480,7 +481,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             ? null
             : Number(catalogueItemDetails.days_to_rework),
         description: catalogueItemDetails.description,
-        model_number: catalogueItemDetails.model_number,
+        item_model_number: catalogueItemDetails.item_model_number,
         is_obsolete: false,
         obsolete_reason: catalogueItemDetails.obsolete_reason,
         obsolete_replacement_catalogue_item_id:
@@ -517,7 +518,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         details.drawing_link !== selectedCatalogueItemData.drawing_link;
 
       const isModelNumberUpdated =
-        details.model_number !== selectedCatalogueItemData.model_number;
+        details.item_model_number !==
+        selectedCatalogueItemData.item_model_number;
 
       const isCatalogueItemPropertiesUpdated =
         JSON.stringify(filteredProperties) !==
@@ -535,73 +537,24 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       };
 
       isNameUpdated && (catalogueItem.name = details.name);
-
-      if (isDescriptionUpdated) {
-        catalogueItem = {
-          ...catalogueItem,
-          description: details.description,
-        };
-      }
-
-      if (isCostGbpUpdated) {
-        catalogueItem = {
-          ...catalogueItem,
-          cost_gbp: details.cost_gbp,
-        };
-      }
-
-      if (isCostToReworkGbpUpdated) {
-        catalogueItem = {
-          ...catalogueItem,
-          cost_to_rework_gbp: details.cost_to_rework_gbp,
-        };
-      }
-
-      if (isDaysToReplaceUpdated) {
-        catalogueItem = {
-          ...catalogueItem,
-          days_to_replace: details.days_to_replace,
-        };
-      }
-
-      if (isDaysToReworkUpdated) {
-        catalogueItem = {
-          ...catalogueItem,
-          days_to_rework: details.days_to_rework,
-        };
-      }
-
-      if (isDrawingNumberUpdated) {
-        catalogueItem = {
-          ...catalogueItem,
-          drawing_number: details.drawing_number,
-        };
-      }
-
-      if (isDrawingLinkUpdated) {
-        catalogueItem = {
-          ...catalogueItem,
-          drawing_link: details.drawing_link,
-        };
-      }
-
-      if (isModelNumberUpdated) {
-        catalogueItem = {
-          ...catalogueItem,
-          model_number: details.model_number,
-        };
-      }
-
-      if (isCatalogueItemPropertiesUpdated) {
-        catalogueItem = { ...catalogueItem, properties: filteredProperties };
-      }
-
-      if (isManufacturerUpdated) {
-        catalogueItem = {
-          ...catalogueItem,
-          manufacturer: catalogueItemManufacturer,
-        };
-      }
+      isDescriptionUpdated && (catalogueItem.description = details.description);
+      isCostGbpUpdated && (catalogueItem.cost_gbp = details.cost_gbp);
+      isCostToReworkGbpUpdated &&
+        (catalogueItem.cost_to_rework_gbp = details.cost_to_rework_gbp);
+      isDaysToReplaceUpdated &&
+        (catalogueItem.days_to_replace = details.days_to_replace);
+      isDaysToReworkUpdated &&
+        (catalogueItem.days_to_rework = details.days_to_rework);
+      isDrawingNumberUpdated &&
+        (catalogueItem.drawing_number = details.drawing_number);
+      isDrawingLinkUpdated &&
+        (catalogueItem.drawing_link = details.drawing_link);
+      isModelNumberUpdated &&
+        (catalogueItem.item_model_number = details.item_model_number);
+      isCatalogueItemPropertiesUpdated &&
+        (catalogueItem.properties = filteredProperties);
+      isManufacturerUpdated &&
+        (catalogueItem.manufacturer = catalogueItemManufacturer);
 
       if (
         catalogueItem.id &&
@@ -656,18 +609,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     setFormError(false);
     setFormErrorMessage(undefined);
 
-    switch (field) {
-      case 'cost_gbp':
-      case 'cost_to_rework_gbp':
-      case 'days_to_rework':
-      case 'days_to_replace':
-      case 'name':
-      case 'description':
-        updatedDetails[field] = value as string;
-        break;
-
-      default:
-        updatedDetails[field] = value;
+    if (value?.trim() === '') {
+      updatedDetails[field] = null;
+    } else {
+      updatedDetails[field] = value as string;
     }
 
     onChangeCatalogueItemDetails(updatedDetails);
@@ -851,14 +796,17 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 <TextField
                   label="Model number"
                   size="small"
-                  value={catalogueItemDetails.model_number}
+                  value={catalogueItemDetails.item_model_number}
                   onChange={(event) => {
-                    handleCatalogueDetails('model_number', event.target.value);
+                    handleCatalogueDetails(
+                      'item_model_number',
+                      event.target.value
+                    );
                   }}
-                  error={errorMessages.model_number !== undefined}
+                  error={errorMessages.item_model_number !== undefined}
                   helperText={
-                    errorMessages.model_number !== undefined
-                      ? errorMessages.model_number
+                    errorMessages.item_model_number !== undefined
+                      ? errorMessages.item_model_number
                       : ''
                   }
                   fullWidth

@@ -55,10 +55,11 @@ export interface CatalogueItemDetails {
   days_to_rework: number | null;
   drawing_number: string | null;
   drawing_link: string | null;
-  model_number: string | null;
+  item_model_number: string | null;
   is_obsolete: boolean;
   obsolete_replacement_catalogue_item_id: string | null;
   obsolete_reason: string | null;
+  catalogue_category_id: string;
 }
 // need so we can cast string to number e.g for 10.50
 export type CatalogueItemDetailsPlaceholder = {
@@ -74,7 +75,7 @@ export interface CatalogueDetailsErrorMessages {
   days_to_rework: string;
   drawing_number: string;
   drawing_link: string;
-  model_number: string;
+  item_model_number: string;
 }
 
 export interface CatalogueItemManufacturer {
@@ -95,13 +96,11 @@ export interface CatalogueItemPropertyResponse {
 }
 
 export interface CatalogueItem extends CatalogueItemDetails {
-  catalogue_category_id: string;
   properties: CatalogueItemPropertyResponse[];
   manufacturer: CatalogueItemManufacturer;
   id: string;
 }
 export interface AddCatalogueItem extends CatalogueItemDetails {
-  catalogue_category_id: string;
   properties: CatalogueItemProperty[];
   manufacturer: CatalogueItemManufacturer;
 }

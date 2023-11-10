@@ -103,7 +103,7 @@ describe('catalogue items api functions', () => {
           name: 'Manufacturer A',
           web_url: 'http://example.com',
         },
-        model_number: null,
+        item_model_number: null,
         name: 'Cameras 1',
         obsolete_reason: null,
         obsolete_replacement_catalogue_item_id: null,

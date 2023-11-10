@@ -310,19 +310,20 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                         onClick={() => {
                           setEditItemDialogOpen(true);
                           onChangeCatalogueItemDetails({
+                            catalogue_category_id: item.catalogue_category_id,
                             name: item.name,
                             description: item.description,
                             cost_gbp: String(item.cost_gbp),
                             cost_to_rework_gbp: item.cost_to_rework_gbp
                               ? String(item.cost_to_rework_gbp)
-                              : '',
+                              : null,
                             days_to_replace: String(item.days_to_replace),
                             days_to_rework: item.days_to_rework
                               ? String(item.days_to_rework)
-                              : '',
+                              : null,
                             drawing_number: item.drawing_number,
                             drawing_link: item.drawing_link,
-                            model_number: item.model_number,
+                            item_model_number: item.item_model_number,
                             is_obsolete: String(item.is_obsolete),
                             obsolete_replacement_catalogue_item_id:
                               item.obsolete_replacement_catalogue_item_id,
@@ -347,6 +348,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                           onChangeAddItemDialogOpen(true);
 
                           onChangeCatalogueItemDetails({
+                            catalogue_category_id: item.catalogue_category_id,
                             name: generateUniqueName(
                               catalogueCategoryNames,
                               item.name
@@ -355,14 +357,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                             cost_gbp: String(item.cost_gbp),
                             cost_to_rework_gbp: item.cost_to_rework_gbp
                               ? String(item.cost_to_rework_gbp)
-                              : '',
+                              : null,
                             days_to_replace: String(item.days_to_replace),
                             days_to_rework: item.days_to_rework
                               ? String(item.days_to_rework)
-                              : '',
+                              : null,
                             drawing_number: item.drawing_number,
                             drawing_link: item.drawing_link,
-                            model_number: item.model_number,
+                            item_model_number: item.item_model_number,
                             is_obsolete: String(item.is_obsolete),
                             obsolete_replacement_catalogue_item_id:
                               item.obsolete_replacement_catalogue_item_id,
@@ -564,7 +566,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
-                    {item.model_number}
+                    {item.item_model_number}
                   </TableCell>
                   <TableCell
                     sx={{

@@ -42,7 +42,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -95,7 +95,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -148,7 +148,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -201,7 +201,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -254,7 +254,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -307,7 +307,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -360,7 +360,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -413,7 +413,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -466,7 +466,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -519,7 +519,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -572,7 +572,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -625,7 +625,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -678,7 +678,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -731,7 +731,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -784,7 +784,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -837,7 +837,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -890,7 +890,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -943,7 +943,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -997,7 +997,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1050,7 +1050,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1103,7 +1103,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1156,7 +1156,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1209,7 +1209,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1262,7 +1262,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1315,7 +1315,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1348,7 +1348,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": true,
     "obsolete_replacement_catalogue_item_id": "6",
     "obsolete_reason": "The item is no longer being manufactured"
@@ -1376,7 +1376,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1409,7 +1409,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1442,7 +1442,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1475,7 +1475,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1508,7 +1508,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1541,7 +1541,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1574,7 +1574,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1607,7 +1607,7 @@
     "days_to_rework": null,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1640,7 +1640,7 @@
     "days_to_rework": 2,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1673,7 +1673,7 @@
     "days_to_rework": 1,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1706,7 +1706,7 @@
     "days_to_rework": 3,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1739,7 +1739,7 @@
     "days_to_rework": 4,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1772,7 +1772,7 @@
     "days_to_rework": 2,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1805,7 +1805,7 @@
     "days_to_rework": 1,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1838,7 +1838,7 @@
     "days_to_rework": 4,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": true,
     "obsolete_replacement_catalogue_item_id": "19",
     "obsolete_reason": "The item is no longer being manufactured"
@@ -1871,7 +1871,7 @@
     "days_to_rework": 3,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1904,7 +1904,7 @@
     "days_to_rework": 2,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1937,7 +1937,7 @@
     "days_to_rework": 1,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null
@@ -1970,7 +1970,7 @@
     "days_to_rework": 3,
     "drawing_number": null,
     "drawing_link": null,
-    "model_number": null,
+    "item_model_number": null,
     "is_obsolete": false,
     "obsolete_replacement_catalogue_item_id": null,
     "obsolete_reason": null

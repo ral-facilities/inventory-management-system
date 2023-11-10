@@ -29,7 +29,7 @@ describe('Catalogue Items Table', () => {
         drawing_link: null,
         drawing_number: null,
         is_obsolete: false,
-        model_number: null,
+        item_model_number: null,
         name: '',
         obsolete_reason: null,
         obsolete_replacement_catalogue_item_id: null,

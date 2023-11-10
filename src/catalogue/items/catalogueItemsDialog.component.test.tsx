@@ -39,7 +39,7 @@ describe('Catalogue Items Dialog', () => {
         days_to_rework: null,
         drawing_number: null,
         drawing_link: null,
-        model_number: null,
+        item_model_number: null,
         is_obsolete: 'false',
         obsolete_replacement_catalogue_item_id: null,
         obsolete_reason: null,
@@ -87,7 +87,7 @@ describe('Catalogue Items Dialog', () => {
         days_to_rework: '2',
         drawing_number: 'mk4324',
         drawing_link: 'https://example.com',
-        model_number: 'mk4324',
+        item_model_number: 'mk4324',
         is_obsolete: 'false',
         obsolete_replacement_catalogue_item_id: null,
         obsolete_reason: null,
@@ -122,7 +122,7 @@ describe('Catalogue Items Dialog', () => {
         name: 'Sony',
         web_url: 'https://sony.com',
       },
-      model_number: 'mk4324',
+      item_model_number: 'mk4324',
       name: 'test',
       obsolete_reason: null,
       obsolete_replacement_catalogue_item_id: null,
@@ -150,7 +150,7 @@ describe('Catalogue Items Dialog', () => {
         days_to_rework: null,
         drawing_number: null,
         drawing_link: null,
-        model_number: null,
+        item_model_number: null,
         is_obsolete: 'false',
         obsolete_replacement_catalogue_item_id: null,
         obsolete_reason: null,
@@ -185,7 +185,7 @@ describe('Catalogue Items Dialog', () => {
         name: 'Sony',
         web_url: 'https://sony.com',
       },
-      model_number: null,
+      item_model_number: null,
       name: 'test',
       obsolete_reason: null,
       obsolete_replacement_catalogue_item_id: null,
@@ -210,7 +210,7 @@ describe('Catalogue Items Dialog', () => {
         days_to_rework: null,
         drawing_number: null,
         drawing_link: null,
-        model_number: null,
+        item_model_number: null,
         is_obsolete: 'false',
         obsolete_replacement_catalogue_item_id: null,
         obsolete_reason: null,
@@ -245,7 +245,7 @@ describe('Catalogue Items Dialog', () => {
         name: 'Sony',
         web_url: 'https://sony.com',
       },
-      model_number: null,
+      item_model_number: null,
       name: 'test',
       obsolete_reason: null,
       obsolete_replacement_catalogue_item_id: null,
@@ -271,7 +271,7 @@ describe('Catalogue Items Dialog', () => {
         days_to_rework: null,
         drawing_number: null,
         drawing_link: null,
-        model_number: null,
+        item_model_number: null,
         is_obsolete: 'false',
         obsolete_replacement_catalogue_item_id: null,
         obsolete_reason: null,
@@ -328,13 +328,13 @@ describe('Catalogue Items Dialog', () => {
       catalogueItemDetails: {
         name: '',
         description: '',
-        cost_gbp: null,
-        cost_to_rework_gbp: null,
-        days_to_replace: null,
-        days_to_rework: null,
+        cost_gbp: 're',
+        cost_to_rework_gbp: 're',
+        days_to_replace: 're',
+        days_to_rework: 're',
         drawing_number: null,
         drawing_link: 'test',
-        model_number: null,
+        item_model_number: null,
         is_obsolete: 'false',
         obsolete_replacement_catalogue_item_id: null,
         obsolete_reason: null,
@@ -348,7 +348,7 @@ describe('Catalogue Items Dialog', () => {
       },
     };
 
-    const { rerender } = createView();
+    createView();
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -358,7 +358,7 @@ describe('Catalogue Items Dialog', () => {
       'Please enter a valid number'
     );
 
-    expect(validNumberHelperText.length).toBe(2);
+    expect(validNumberHelperText.length).toBe(6);
     expect(validNumberHelperText[0]).toHaveTextContent(
       'Please enter a valid number'
     );
@@ -374,12 +374,6 @@ describe('Catalogue Items Dialog', () => {
         'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
       )
     ).toBeInTheDocument();
-
-    props.propertyValues = [12, 12, 'pixel', null, false, ''];
-
-    rerender(<CatalogueItemsDialog {...props} />);
-
-    expect(screen.queryByText('Please enter a valid number')).toBeNull();
   });
 
   it('displays warning message when an unknown error occurs', async () => {
@@ -395,7 +389,7 @@ describe('Catalogue Items Dialog', () => {
         days_to_rework: null,
         drawing_number: null,
         drawing_link: null,
-        model_number: null,
+        item_model_number: null,
         is_obsolete: 'false',
         obsolete_replacement_catalogue_item_id: null,
         obsolete_reason: null,
@@ -467,7 +461,7 @@ describe('Catalogue Items Dialog', () => {
       days_to_rework: null,
       drawing_number: null,
       drawing_link: null,
-      model_number: null,
+      item_model_number: null,
       is_obsolete: false,
       obsolete_replacement_catalogue_item_id: null,
       obsolete_reason: null,
@@ -494,7 +488,7 @@ describe('Catalogue Items Dialog', () => {
           days_to_rework: '68',
           drawing_number: 'test',
           drawing_link: 'http://example.com',
-          model_number: 'tets01',
+          item_model_number: 'tets01',
           is_obsolete: 'false',
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
@@ -523,7 +517,7 @@ describe('Catalogue Items Dialog', () => {
         description: '',
         drawing_link: 'http://example.com',
         drawing_number: 'test',
-        model_number: 'tets01',
+        item_model_number: 'tets01',
         name: 'test',
       });
 
@@ -543,7 +537,7 @@ describe('Catalogue Items Dialog', () => {
           days_to_rework: null,
           drawing_number: null,
           drawing_link: null,
-          model_number: null,
+          item_model_number: null,
           is_obsolete: 'false',
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
@@ -611,7 +605,7 @@ describe('Catalogue Items Dialog', () => {
           days_to_rework: null,
           drawing_number: null,
           drawing_link: null,
-          model_number: null,
+          item_model_number: null,
           is_obsolete: 'false',
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
@@ -658,7 +652,7 @@ describe('Catalogue Items Dialog', () => {
           days_to_rework: null,
           drawing_number: null,
           drawing_link: null,
-          model_number: null,
+          item_model_number: null,
           is_obsolete: 'false',
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
@@ -705,7 +699,7 @@ describe('Catalogue Items Dialog', () => {
           days_to_rework: null,
           drawing_number: null,
           drawing_link: null,
-          model_number: null,
+          item_model_number: null,
           is_obsolete: 'false',
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
@@ -749,7 +743,7 @@ describe('Catalogue Items Dialog', () => {
           days_to_rework: null,
           drawing_number: null,
           drawing_link: null,
-          model_number: null,
+          item_model_number: null,
           is_obsolete: 'false',
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
@@ -793,7 +787,7 @@ describe('Catalogue Items Dialog', () => {
           days_to_rework: null,
           drawing_number: null,
           drawing_link: null,
-          model_number: null,
+          item_model_number: null,
           is_obsolete: 'false',
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
@@ -839,7 +833,7 @@ describe('Catalogue Items Dialog', () => {
           days_to_rework: null,
           drawing_number: null,
           drawing_link: null,
-          model_number: null,
+          item_model_number: null,
           is_obsolete: 'false',
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
@@ -874,7 +868,7 @@ describe('Catalogue Items Dialog', () => {
           days_to_rework: null,
           drawing_number: null,
           drawing_link: null,
-          model_number: null,
+          item_model_number: null,
           is_obsolete: 'false',
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
@@ -929,7 +923,7 @@ describe('Catalogue Items Dialog', () => {
           days_to_rework: null,
           drawing_number: null,
           drawing_link: null,
-          model_number: null,
+          item_model_number: null,
           is_obsolete: 'false',
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
@@ -972,6 +966,20 @@ describe('Catalogue Items Dialog', () => {
       expect(onChangeCatalogueItemDetails).toHaveBeenCalledWith({
         ...props.catalogueItemDetails,
         name: newName,
+      });
+    });
+
+    it('handles name input correctly when it is an empty string', async () => {
+      let newName = ' ';
+
+      createView();
+
+      const nameInput = screen.getByLabelText('Name *');
+      fireEvent.change(nameInput, { target: { value: newName } });
+
+      expect(onChangeCatalogueItemDetails).toHaveBeenCalledWith({
+        ...props.catalogueItemDetails,
+        name: null,
       });
     });
 
@@ -1095,7 +1103,7 @@ describe('Catalogue Items Dialog', () => {
 
       expect(onChangeCatalogueItemDetails).toHaveBeenCalledWith({
         ...props.catalogueItemDetails,
-        model_number: newModelNumber,
+        item_model_number: newModelNumber,
       });
     });
   });

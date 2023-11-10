@@ -1,12 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useCatalogueItem } from '../../api/catalogueItem';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
   Box,
   Button,
@@ -14,14 +7,20 @@ import {
   LinearProgress,
   Link as MuiLink,
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useCatalogueCategoryById } from '../../api/catalogueCategory';
-import CatalogueItemsDialog from './catalogueItemsDialog.component';
+import { useCatalogueItem } from '../../api/catalogueItem';
 import {
-  CatalogueItemDetails,
   CatalogueItemDetailsPlaceholder,
   CatalogueItemManufacturer,
 } from '../../app.types';
 import { matchCatalogueItemProperties } from '../catalogue.component';
+import CatalogueItemsDialog from './catalogueItemsDialog.component';
 
 function CatalogueItemsLandingPage() {
   const location = useLocation();
@@ -61,6 +60,7 @@ function CatalogueItemsLandingPage() {
 
   const [catalogueItemDetails, setCatalogueItemDetails] =
     React.useState<CatalogueItemDetailsPlaceholder>({
+      catalogue_category_id: null,
       name: null,
       description: null,
       cost_gbp: null,
@@ -69,7 +69,7 @@ function CatalogueItemsLandingPage() {
       days_to_rework: null,
       drawing_number: null,
       drawing_link: null,
-      model_number: null,
+      item_model_number: null,
       is_obsolete: null,
       obsolete_replacement_catalogue_item_id: null,
       obsolete_reason: null,
@@ -113,19 +113,21 @@ function CatalogueItemsLandingPage() {
 
             if (catalogueItemIdData) {
               setCatalogueItemDetails({
+                catalogue_category_id:
+                  catalogueItemIdData.catalogue_category_id,
                 name: catalogueItemIdData.name,
                 description: catalogueItemIdData.description,
                 cost_gbp: String(catalogueItemIdData.cost_gbp),
                 cost_to_rework_gbp: catalogueItemIdData.cost_to_rework_gbp
                   ? String(catalogueItemIdData.cost_to_rework_gbp)
-                  : '',
+                  : null,
                 days_to_replace: String(catalogueItemIdData.days_to_replace),
                 days_to_rework: catalogueItemIdData.days_to_rework
                   ? String(catalogueItemIdData.days_to_rework)
-                  : '',
+                  : null,
                 drawing_number: catalogueItemIdData.drawing_number,
                 drawing_link: catalogueItemIdData.drawing_link,
-                model_number: catalogueItemIdData.model_number,
+                item_model_number: catalogueItemIdData.item_model_number,
                 is_obsolete: String(catalogueItemIdData.is_obsolete),
                 obsolete_replacement_catalogue_item_id:
                   catalogueItemIdData.obsolete_replacement_catalogue_item_id,
@@ -353,7 +355,9 @@ function CatalogueItemsLandingPage() {
                       >
                         <ListItemText
                           primary={'Model Number'}
-                          secondary={catalogueItemIdData.model_number ?? 'None'}
+                          secondary={
+                            catalogueItemIdData.item_model_number ?? 'None'
+                          }
                         />
                       </ListItem>
                     </Grid>
