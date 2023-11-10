@@ -218,7 +218,7 @@ const CatalogueCategoryDirectoryDialog = (
             {requestType === 'copyTo' && (
               <Tooltip
                 title={
-                  'Only the catalogue category details will be copied; no contained catalogue categories or catalogue items within the catalogue categories will be included.'
+                  'Only the catalogue category details will be copied; no contained catalogue categories or catalogue items within the catalogue category will be included.'
                 }
                 placement="top"
                 enterTouchDelay={0}
