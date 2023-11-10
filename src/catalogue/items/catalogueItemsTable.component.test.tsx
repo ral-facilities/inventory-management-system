@@ -210,7 +210,7 @@ describe('Catalogue Items Table', () => {
     expect(url).toHaveAttribute('href', 'http://example.com');
   });
 
-  it.only('progress bar renders correctly', async () => {
+  it('progress bar renders correctly', async () => {
     createView();
 
     await waitFor(() => {
