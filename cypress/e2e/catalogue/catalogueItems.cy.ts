@@ -64,7 +64,7 @@ describe('Catalogue Items', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"Energy Meters 27_copy1","cost_gbp":600,"cost_to_rework_gbp":null,"days_to_replace":7,"days_to_rework":null,"description":"Precision energy meters for accurate measurements. 27","item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"catalogue_category_id":"5","properties":[{"name":"Measurement Range","value":2000}],"manufacturer":{"name":"Manufacturer A","web_url":"http://example.com","address":"10 My Street"}}'
+        '{"name":"Energy Meters 27_copy1","cost_gbp":600,"cost_to_rework_gbp":89,"days_to_replace":7,"days_to_rework":60,"description":"Precision energy meters for accurate measurements. 27","item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"catalogue_category_id":"5","properties":[{"name":"Measurement Range","value":2000}],"manufacturer":{"name":"Manufacturer A","web_url":"http://example.com","address":"10 My Street"}}'
       );
     });
   });
@@ -352,7 +352,7 @@ describe('Catalogue Items', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"test","description":null,"cost_gbp":6000,"cost_to_rework_gbp":4,"days_to_replace":71,"days_to_rework":5,"drawing_number":"MX43242","drawing_link":"https://example.com","item_model_number":"MXtest"}'
+        '{"name":"test","description":null,"cost_gbp":6000,"cost_to_rework_gbp":894,"days_to_replace":71,"days_to_rework":605,"drawing_number":"MX43242","drawing_link":"https://example.com","item_model_number":"MXtest"}'
       );
     });
   });
