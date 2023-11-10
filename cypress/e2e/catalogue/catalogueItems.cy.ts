@@ -56,7 +56,7 @@ describe('Catalogue Items', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"catalogue_category_id":"5","name":"Energy Meters 27_copy1","description":"Precision energy meters for accurate measurements. 27","properties":[{"name":"Measurement Range","value":2000}],"manufacturer":{"name":"Manufacturer A","web_url":"http://example.com","address":"10 My Street"}}'
+        '{"catalogue_category_id":"5","name":"Energy Meters 27_copy1","description":"Precision energy meters for accurate measurements. 27","properties":[{"name":"Measurement Range","value":2000}],"manufacturer":{"name":"Manufacturer A","url":"http://example.com","address":"10 My Street"}}'
       );
     });
   });
