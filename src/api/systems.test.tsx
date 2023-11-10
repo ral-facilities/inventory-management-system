@@ -1,8 +1,9 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { hooksWrapperWithProviders } from '../setupTests';
-import { useSystems, useSystemsBreadcrumbs } from './system';
-import SystemsJSON from '../mocks/Systems.json';
 import SystemBreadcrumbsJSON from '../mocks/SystemBreadcrumbs.json';
+import SystemsJSON from '../mocks/Systems.json';
+import { hooksWrapperWithProviders } from '../setupTests';
+import { useAddSystem, useSystems, useSystemsBreadcrumbs } from './systems';
+import { SystemImportanceType, AddSystem } from '../app.types';
 
 describe('System api functions', () => {
   afterEach(() => {
@@ -86,6 +87,28 @@ describe('System api functions', () => {
             systemBreadcrumbs.id === '65328f34a40ff5301575a4e3'
         )
       );
+    });
+  });
+
+  describe('useAddSystem', () => {
+    const MOCK_SYSTEM_POST: AddSystem = {
+      name: 'System name',
+      parent_id: 'parent-id',
+      description: 'Description',
+      location: 'Location',
+      owner: 'Owner',
+      importance: SystemImportanceType.MEDIUM,
+    };
+
+    it('posts a request to add a system and returns a successful response', async () => {
+      const { result } = renderHook(() => useAddSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      result.current.mutate(MOCK_SYSTEM_POST);
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+
+      expect(result.current.data).toEqual({ ...MOCK_SYSTEM_POST, id: '1' });
     });
   });
 });

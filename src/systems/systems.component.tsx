@@ -13,8 +13,9 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSystemsBreadcrumbs, useSystems } from '../api/system';
+import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import SystemDialog from './systemDialog.component';
 
 function Systems() {
   // Navigation setup
@@ -37,13 +38,16 @@ function Systems() {
   }, [location.pathname]);
   const systemID = getSystemID();
 
+  const [addSystemDialogOpen, setAddSystemDialogOpen] =
+    React.useState<boolean>(false);
+
   const { data: systemsBreadcrumbs } = useSystemsBreadcrumbs(systemID);
   const { data: subsystemsData, isLoading: systemsDataLoading } = useSystems(
     // String value of null for filtering root systems
     systemID === null ? 'null' : systemID
   );
 
-  return systemsDataLoading && subsystemsData !== undefined ? null : (
+  return systemsDataLoading ? null : (
     <Grid container>
       <Grid
         item
@@ -54,7 +58,7 @@ function Systems() {
           display: 'flex',
           height: '100%',
           width: '100%',
-          padding: '4px', // Add some padding for spacing
+          padding: 1, // Add some padding for spacing
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -73,12 +77,16 @@ function Systems() {
         </div>
       </Grid>
       <Grid container margin={0} direction="row" alignItems="stretch">
-        <Grid item xs={2} textAlign="left" padding={1}>
+        <Grid item xs={12} md={3} lg={2} textAlign="left" padding={1}>
           <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
             <Typography variant="h6">
               {systemID === null ? 'Root systems' : 'Subsystems'}
             </Typography>
-            <IconButton sx={{ marginLeft: 'auto' }} aria-label="add system">
+            <IconButton
+              sx={{ marginLeft: 'auto' }}
+              aria-label={systemID === null ? 'add system' : 'add subsystem'}
+              onClick={() => setAddSystemDialogOpen(true)}
+            >
               <AddIcon />
             </IconButton>
           </Box>
@@ -93,7 +101,7 @@ function Systems() {
             ))}
           </List>
         </Grid>
-        <Grid item xs={10} textAlign="left" padding={1}>
+        <Grid item xs={12} md={9} lg={10} textAlign="left" padding={1}>
           <Box
             sx={{
               display: 'flex',
@@ -115,6 +123,12 @@ function Systems() {
           </Box>
         </Grid>
       </Grid>
+      <SystemDialog
+        open={addSystemDialogOpen}
+        onClose={() => setAddSystemDialogOpen(false)}
+        parentId={systemID}
+        type="add"
+      />
     </Grid>
   );
 }

@@ -1,7 +1,13 @@
+import {
+  UseMutationResult,
+  UseQueryResult,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
+import { BreadcrumbsInfo, System, AddSystem } from '../app.types';
 import { settings } from '../settings';
-import { BreadcrumbsInfo, System } from '../app.types';
-import { UseQueryResult, useQuery } from '@tanstack/react-query';
 
 const fetchSystems = async (parent_id?: string): Promise<System[]> => {
   let apiUrl: string;
@@ -26,7 +32,7 @@ export const useSystems = (
 ): UseQueryResult<System[], AxiosError> => {
   return useQuery<System[], AxiosError>(
     ['Systems', parent_id],
-    (params) => {
+    () => {
       return fetchSystems(parent_id);
     },
     {
@@ -59,7 +65,7 @@ export const useSystemsBreadcrumbs = (
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
   return useQuery<BreadcrumbsInfo, AxiosError>(
     ['SystemBreadcrumbs', id],
-    (params) => {
+    () => {
       return fetchSystemsBreadcrumbs(id ?? '');
     },
     {
@@ -69,4 +75,33 @@ export const useSystemsBreadcrumbs = (
       enabled: id !== null,
     }
   );
+};
+
+const addSystem = async (system: AddSystem): Promise<System> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+
+  return axios
+    .post<System>(`${apiUrl}/v1/systems`, system)
+    .then((response) => response.data);
+};
+
+export const useAddSystem = (): UseMutationResult<
+  System,
+  AxiosError,
+  AddSystem
+> => {
+  const queryClient = useQueryClient();
+  return useMutation((system: AddSystem) => addSystem(system), {
+    onError: (error) => {
+      console.log(`Got error: '${error.message}'`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['Systems'] });
+    },
+  });
 };
