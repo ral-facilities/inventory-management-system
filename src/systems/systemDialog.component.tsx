@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -15,7 +16,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { useAddSystem } from '../api/systems';
+import { getSystemImportanceColour, useAddSystem } from '../api/systems';
 import { AddSystem, ErrorParsing, SystemImportanceType } from '../app.types';
 
 export interface SystemDialogProps {
@@ -166,7 +167,11 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               >
                 {Object.values(SystemImportanceType).map((value, i) => (
                   <MenuItem key={i} value={value}>
-                    {value}
+                    <Chip
+                      label={value}
+                      sx={{ margin: 0 }}
+                      color={getSystemImportanceColour(value)}
+                    />
                   </MenuItem>
                 ))}
               </Select>

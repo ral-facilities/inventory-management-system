@@ -239,7 +239,15 @@ exports[`Systems Dialog renders correctly when adding 1`] = `
                     role="button"
                     tabindex="0"
                   >
-                    medium
+                    <div
+                      class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorWarning MuiChip-filledWarning css-1mtfbl3-MuiChip-root"
+                    >
+                      <span
+                        class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+                      >
+                        medium
+                      </span>
+                    </div>
                   </div>
                   <input
                     aria-hidden="true"

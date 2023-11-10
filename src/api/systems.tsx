@@ -6,8 +6,27 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { BreadcrumbsInfo, System, AddSystem } from '../app.types';
+import {
+  AddSystem,
+  BreadcrumbsInfo,
+  System,
+  SystemImportanceType,
+} from '../app.types';
 import { settings } from '../settings';
+
+/** Utility for turning an importance into an MUI palette colour to display */
+export const getSystemImportanceColour = (
+  importance: SystemImportanceType
+): 'success' | 'warning' | 'error' => {
+  switch (importance) {
+    case SystemImportanceType.LOW:
+      return 'success';
+    case SystemImportanceType.MEDIUM:
+      return 'warning';
+    case SystemImportanceType.HIGH:
+      return 'error';
+  }
+};
 
 const fetchSystems = async (parent_id?: string): Promise<System[]> => {
   let apiUrl: string;
@@ -36,6 +55,37 @@ export const useSystems = (
       return fetchSystems(parent_id);
     },
     {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+    }
+  );
+};
+
+const fetchSystem = async (id: string): Promise<System> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+
+  return axios.get(`${apiUrl}/v1/systems/${id}`).then((response) => {
+    return response.data;
+  });
+};
+
+// Allows a value of null to disable
+export const useSystem = (
+  id: string | null
+): UseQueryResult<System, AxiosError> => {
+  return useQuery<System, AxiosError>(
+    ['System', id],
+    () => {
+      return fetchSystem(id ?? '');
+    },
+    {
+      enabled: id !== null,
       onError: (error) => {
         console.log('Got error ' + error.message);
       },

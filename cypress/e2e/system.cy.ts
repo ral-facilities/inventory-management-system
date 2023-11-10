@@ -12,6 +12,52 @@ describe('System', () => {
     cy.findByText('Giant laser').should('be.visible');
   });
 
+  it('should be able to navigate through subsystems', () => {
+    cy.findByText('No system selected').should('be.visible');
+    cy.findByText('Please select a system').should('be.visible');
+
+    // Navigate deeper
+    cy.findByRole('link', { name: 'Giant laser' }).click();
+    cy.url().should('include', '/systems/65328f34a40ff5301575a4e3');
+    cy.findByText('No system selected').should('not.exist');
+    cy.findByText('Please select a system').should('not.exist');
+
+    cy.findByText('Smaller laser').should('be.visible');
+    cy.findByText('Description').should('be.visible');
+
+    // Navigate deeper again
+    cy.findByRole('link', { name: 'Smaller laser' }).click();
+    cy.url().should('include', '/systems/65328f34a40ff5301575a4e4');
+
+    cy.findByText('Pulse Laser').should('be.visible');
+    cy.findByText('Description').should('be.visible');
+  });
+
+  it('breadcrumbs should work correctly', () => {
+    cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e9');
+
+    cy.findByRole('link', { name: 'Pulse Laser' }).should('be.visible');
+    cy.findByRole('link', { name: 'Giant laser' }).should('be.visible');
+    cy.findByRole('link', { name: 'Laser Star' }).should('be.visible');
+    cy.findByRole('link', { name: 'Smaller laser' }).should('be.visible');
+
+    // One in title, one in breadcrumbs
+    cy.findAllByText('Plasma Beam').should('have.length', 2);
+
+    // Check can navigate back with breadcrumbs
+    cy.findByRole('link', { name: 'Giant laser' }).click();
+    cy.url().should('include', '/systems/65328f34a40ff5301575a4e6');
+    cy.findAllByText('Giant laser').should('have.length', 2);
+
+    // Check can go back to root
+    cy.findByRole('button', { name: 'navigate to systems home' }).click();
+    cy.url().then((url) => {
+      expect(url.endsWith('/systems'));
+    });
+    cy.findByText('No system selected').should('be.visible');
+    cy.findByText('Please select a system').should('be.visible');
+  });
+
   it('adds a root system with only required parameters', () => {
     cy.findByRole('button', { name: 'add system' }).click();
 

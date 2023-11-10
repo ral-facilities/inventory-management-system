@@ -1,9 +1,14 @@
 import { renderHook, waitFor } from '@testing-library/react';
+import { AddSystem, SystemImportanceType } from '../app.types';
 import SystemBreadcrumbsJSON from '../mocks/SystemBreadcrumbs.json';
 import SystemsJSON from '../mocks/Systems.json';
 import { hooksWrapperWithProviders } from '../setupTests';
-import { useAddSystem, useSystems, useSystemsBreadcrumbs } from './systems';
-import { SystemImportanceType, AddSystem } from '../app.types';
+import {
+  useAddSystem,
+  useSystem,
+  useSystems,
+  useSystemsBreadcrumbs,
+} from './systems';
 
 describe('System api functions', () => {
   afterEach(() => {
@@ -55,6 +60,36 @@ describe('System api functions', () => {
         SystemsJSON.filter(
           (system) => system.parent_id === '65328f34a40ff5301575a4e3'
         )
+      );
+    });
+  });
+
+  describe('useSystem', () => {
+    it('does not send a request when given an id of null', async () => {
+      const { result } = renderHook(() => useSystem(null), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isFetching).toBeFalsy();
+      expect(result.current.data).toEqual(undefined);
+    });
+
+    it('sends request to fetch a system and returns successful response', async () => {
+      const { result } = renderHook(
+        () => useSystem('65328f34a40ff5301575a4e3'),
+        {
+          wrapper: hooksWrapperWithProviders(),
+        }
+      );
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toEqual(
+        SystemsJSON.filter(
+          (system) => system.id === '65328f34a40ff5301575a4e3'
+        )[0]
       );
     });
   });

@@ -34,7 +34,47 @@ describe('Systems', () => {
     expect(screen.getByText('Smaller laser')).toBeInTheDocument();
   });
 
-  it('navigates back to the root directory when home button clicked', async () => {
+  it('renders the breadcrumbs when navigating to a subsystem', async () => {
+    createView('/inventory-management-system/systems');
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'Giant laser' })
+      ).toBeInTheDocument();
+    });
+    await user.click(screen.getByRole('link', { name: 'Giant laser' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+    });
+    expect(
+      screen.queryByRole('link', { name: 'motion' })
+    ).not.toBeInTheDocument();
+  });
+
+  it('navigates back a system using the breadcrumbs', async () => {
+    createView('/inventory-management-system/systems/65328f34a40ff5301575a4e4');
+
+    await waitFor(() => {
+      expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+    });
+
+    await user.click(
+      screen.getByRole('link', {
+        name: 'Giant laser',
+      })
+    );
+    await waitFor(() => {
+      expect(
+        screen.queryByRole('link', {
+          name: 'Giant laser',
+        })
+      ).not.toBeInTheDocument();
+    });
+    expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+  });
+
+  it('navigates back to the root systems when home button clicked', async () => {
     createView('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
 
     await waitFor(() => {
