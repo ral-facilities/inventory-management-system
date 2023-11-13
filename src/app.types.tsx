@@ -152,13 +152,22 @@ export enum SystemImportanceType {
   HIGH = 'high',
 }
 
+export interface AddSystem {
+  name: string;
+  description?: string;
+  location?: string;
+  owner?: string;
+  importance: SystemImportanceType;
+  parent_id?: string;
+}
+
 export interface System {
   id: string;
   name: string;
-  location: string;
-  owner: string;
+  description: string | null;
+  location: string | null;
+  owner: string | null;
   importance: SystemImportanceType;
-  description: string;
   parent_id: string | null;
   code: string;
 }

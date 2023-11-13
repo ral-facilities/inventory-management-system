@@ -3,7 +3,6 @@ import { renderComponentWithBrowserRouter } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import Manufacturer from './manufacturer.component';
 import userEvent from '@testing-library/user-event';
-import exp from 'constants';
 
 describe('Manufacturer', () => {
   let user;

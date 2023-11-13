@@ -1,10 +1,10 @@
 [
   {
     "name": "Giant laser",
-    "location": "80371 Alvarado Drive Apt. 272\nHeatherhaven, MP 33307",
+    "location": "80371 Alvarado Drive Apt. 272, Heatherhaven, MP 33307",
     "owner": "Juan Horton",
     "importance": "high",
-    "description": "Take Democrat early money some. Tree meet fly her likely.",
+    "description": "Take Democrat early money some.\nTree meet fly her likely.",
     "parent_id": null,
     "id": "65328f34a40ff5301575a4e3",
     "code": "laser-tech"
@@ -21,10 +21,10 @@
   },
   {
     "name": "Pulse Laser",
-    "location": "8988 Richard Mews\nCatherinemouth, IL 68034",
-    "owner": "Sarah Parker",
+    "location": null,
+    "owner": null,
     "importance": "medium",
-    "description": "State still last to think.",
+    "description": null,
     "parent_id": "65328f34a40ff5301575a4e4",
     "id": "65328f34a40ff5301575a4e5",
     "code": "pulse-laser"
