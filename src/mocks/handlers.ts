@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import {
   AddCatalogueCategory,
-  AddManufacturer,
+  Manufacturer,
   AddSystem,
   CatalogueItem,
   EditCatalogueCategory,
@@ -281,7 +281,7 @@ export const handlers = [
   }),
 
   rest.post('/v1/manufacturers', async (req, res, ctx) => {
-    const body = (await req.json()) as AddManufacturer;
+    const body = (await req.json()) as Manufacturer;
 
     if (body.name === 'Manufacturer A') {
       return res(ctx.status(409), ctx.json(''));

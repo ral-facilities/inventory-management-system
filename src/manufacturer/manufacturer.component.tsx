@@ -26,12 +26,12 @@ function ManufacturerComponent() {
     url: undefined,
     address: {
       address_line: '',
-      town: undefined,
-      county: undefined,
+      town: null,
+      county: null,
       postcode: '',
       country: '',
     },
-    telephone: undefined,
+    telephone: null,
   });
 
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
@@ -209,9 +209,6 @@ function ManufacturerComponent() {
                     }}
                   >
                     <Typography fontSize={14}>
-                      {item.address.country}
-                    </Typography>
-                    <Typography fontSize={14}>
                       {item.address.address_line}
                     </Typography>
                     <Typography fontSize={14}>
@@ -219,6 +216,9 @@ function ManufacturerComponent() {
                     </Typography>
                     <Typography fontSize={14}>
                       {item.address.county ?? ''}
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {item.address.country}
                     </Typography>
                     <Typography fontSize={14}>
                       {item.address.postcode}

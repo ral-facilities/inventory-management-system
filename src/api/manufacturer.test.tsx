@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { AddManufacturer, Manufacturer } from '../app.types';
+import { Manufacturer } from '../app.types';
 import { hooksWrapperWithProviders } from '../setupTests';
 import {
   useAddManufacturer,
@@ -13,7 +13,7 @@ describe('manufacturer api functions', () => {
   });
 
   describe('useAddManufacturer', () => {
-    let mockDataAdd: AddManufacturer;
+    let mockDataAdd: Manufacturer;
     beforeEach(() => {
       mockDataAdd = {
         name: 'Manufacturer D',

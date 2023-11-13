@@ -26,12 +26,12 @@ describe('Add manufacturer dialog', () => {
         url: undefined,
         address: {
           address_line: '',
-          town: '',
-          county: '',
+          town: null,
+          county: null,
           postcode: '',
           country: '',
         },
-        telephone: '',
+        telephone: null,
       },
       type: 'create',
     };
@@ -602,7 +602,7 @@ describe('Add manufacturer dialog', () => {
 
       createView();
 
-      const manufacturerNameInput = screen.getByLabelText('Name');
+      const manufacturerNameInput = screen.getByLabelText('Name *');
 
       fireEvent.change(manufacturerNameInput, {
         target: { value: newManufacturerName },
@@ -636,7 +636,7 @@ describe('Add manufacturer dialog', () => {
 
       createView();
 
-      const manufacturerCountryInput = screen.getByLabelText('Country');
+      const manufacturerCountryInput = screen.getByLabelText('Country *');
 
       fireEvent.change(manufacturerCountryInput, {
         target: { value: newManufacturerCountry },
@@ -656,7 +656,8 @@ describe('Add manufacturer dialog', () => {
 
       createView();
 
-      const manufacturerStreetNameInput = screen.getByLabelText('Address Line');
+      const manufacturerStreetNameInput =
+        screen.getByLabelText('Address Line *');
 
       fireEvent.change(manufacturerStreetNameInput, {
         target: { value: newManufacturerAddressLine },
@@ -713,7 +714,8 @@ describe('Add manufacturer dialog', () => {
 
       createView();
 
-      const manufacturerpostcodeInput = screen.getByLabelText('Post/Zip code');
+      const manufacturerpostcodeInput =
+        screen.getByLabelText('Post/Zip code *');
 
       fireEvent.change(manufacturerpostcodeInput, {
         target: { value: newManufacturerpostcode },

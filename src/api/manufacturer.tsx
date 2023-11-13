@@ -9,10 +9,9 @@ import {
 import { settings } from '../settings';
 
 import {
-  AddManufacturer,
+  Manufacturer,
   AddManufacturerResponse,
   EditManufacturer,
-  Manufacturer,
 } from '../app.types';
 
 const getAllManufacturers = async (): Promise<Manufacturer[]> => {
@@ -46,7 +45,7 @@ export const useManufacturers = (): UseQueryResult<
 };
 
 const addManufacturer = async (
-  manufacturer: AddManufacturer
+  manufacturer: Manufacturer
 ): Promise<AddManufacturerResponse> => {
   let apiUrl: string;
   apiUrl = '';
@@ -62,11 +61,11 @@ const addManufacturer = async (
 export const useAddManufacturer = (): UseMutationResult<
   AddManufacturerResponse,
   AxiosError,
-  AddManufacturer
+  Manufacturer
 > => {
   const queryClient = useQueryClient();
   return useMutation(
-    (manufacturer: AddManufacturer) => addManufacturer(manufacturer),
+    (manufacturer: Manufacturer) => addManufacturer(manufacturer),
     {
       onError: (error) => {
         console.log('Got error ' + error.message);

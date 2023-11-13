@@ -13,12 +13,7 @@ import {
 
 import React from 'react';
 
-import {
-  AddManufacturer,
-  EditManufacturer,
-  ErrorParsing,
-  Manufacturer,
-} from '../app.types';
+import { Manufacturer, EditManufacturer, ErrorParsing } from '../app.types';
 import {
   useAddManufacturer,
   useEditManufacturer,
@@ -61,7 +56,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   >(undefined);
   const nameError = nameErrorMessage !== undefined;
 
-  const [urlErrorMessage, seturlErrorMessage] = React.useState<
+  const [urlErrorMessage, setUrlErrorMessage] = React.useState<
     string | undefined
   >(undefined);
   const urlError = urlErrorMessage !== undefined;
@@ -71,9 +66,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   >(undefined);
   const addressLineError = addressLineErrorMessage !== undefined;
 
-  const [AddresspostcodeErrorMessage, setAddresspostcodeErrorMessage] =
+  const [addressPostcodeErrorMessage, setAddressPostcodeErrorMessage] =
     React.useState<string | undefined>(undefined);
-  const addresspostcodeError = AddresspostcodeErrorMessage !== undefined;
+  const addressPostcodeError = addressPostcodeErrorMessage !== undefined;
 
   const [countryErrorMessage, setCountryErrorMessage] = React.useState<
     string | undefined
@@ -99,18 +94,18 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       url: undefined,
       address: {
         address_line: '',
-        town: undefined,
-        county: undefined,
+        town: null,
+        county: null,
         postcode: '',
         country: '',
       },
-      telephone: undefined,
+      telephone: null,
     });
     setNameErrorMessage(undefined);
-    seturlErrorMessage(undefined);
+    setUrlErrorMessage(undefined);
     setAddressLineErrorMessage(undefined);
     setCountryErrorMessage(undefined);
-    setAddresspostcodeErrorMessage(undefined);
+    setAddressPostcodeErrorMessage(undefined);
     setFormErrorMessage(undefined);
     onClose();
   }, [onClose, onChangeManufacturerDetails]);
@@ -122,14 +117,13 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     if (manufacturer.url || manufacturer.url?.trim().length === 0) {
       if (!isValidUrl(manufacturer.url)) {
         hasErrors = true;
-        seturlErrorMessage('Please enter a valid URL');
+        setUrlErrorMessage('Please enter a valid URL');
       }
     }
 
     //check name
     if (!manufacturer.name || manufacturer.name?.trim().length === 0) {
       hasErrors = true;
-      // setNameError(true);
       setNameErrorMessage('Please enter a name.');
     }
     //check address line
@@ -149,7 +143,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     ) {
       hasErrors = true;
 
-      setAddresspostcodeErrorMessage('Please enter a post code or zip code.');
+      setAddressPostcodeErrorMessage('Please enter a post code or zip code.');
     }
     //check country
     if (
@@ -171,17 +165,17 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       return;
     }
 
-    const manufacturerToAdd: AddManufacturer = {
+    const manufacturerToAdd: Manufacturer = {
       name: manufacturer.name,
       url: manufacturer.url ?? undefined,
       address: {
         address_line: manufacturer.address.address_line,
-        town: manufacturer.address.town ?? undefined,
-        county: manufacturer.address.county ?? undefined,
+        town: manufacturer.address.town ?? null,
+        county: manufacturer.address.county ?? null,
         postcode: manufacturer.address.postcode,
         country: manufacturer.address.country,
       },
-      telephone: manufacturer.telephone ?? undefined,
+      telephone: manufacturer.telephone ?? null,
     };
 
     addManufacturer(manufacturerToAdd)
@@ -208,21 +202,28 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       }
 
       const isNameUpdated = manufacturer.name !== selectedManufacturer.name;
+
       const isURLUpdated =
         manufacturer.url !== selectedManufacturer.url &&
         manufacturer.url !== undefined;
+
       const isAddressLineUpdated =
         manufacturer.address?.address_line !==
         selectedManufacturer.address.address_line;
+
       const isTownUpdated =
         manufacturer.address?.town !== selectedManufacturer.address.town;
+
       const isCountyUpdated =
         manufacturer.address?.county !== selectedManufacturer.address.county;
+
       const isPostcodeUpdated =
         manufacturer.address?.postcode !==
         selectedManufacturer.address.postcode;
+
       const isCountryUpdated =
         manufacturer.address?.country !== selectedManufacturer.address.country;
+
       const isTelephoneUpdated =
         manufacturer.telephone !== selectedManufacturer.telephone;
 
@@ -297,7 +298,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             const response = error.response?.data as ErrorParsing;
             console.log(error);
             if (response && error.response?.status === 409) {
-              // setNameError(true);
               setNameErrorMessage(
                 'A manufacturer with the same name has been found. Please enter a different name'
               );
@@ -330,7 +330,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           <Grid item sx={{ mt: 1 }}>
             <TextField
               label="Name"
-              required={type === 'create' ? true : false}
+              required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
               value={manufacturer.name}
               onChange={(event) => {
@@ -338,7 +338,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                   ...manufacturer,
                   name: event.target.value,
                 });
-                // setNameError(false);
                 setNameErrorMessage(undefined);
                 setFormErrorMessage(undefined);
               }}
@@ -359,7 +358,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                   url: event.target.value,
                 });
 
-                seturlErrorMessage(undefined);
+                setUrlErrorMessage(undefined);
 
                 setFormErrorMessage(undefined);
               }}
@@ -374,7 +373,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           <Grid item>
             <TextField
               label="Country"
-              required={type === 'create' ? true : false}
+              required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
               value={manufacturer.address.country}
               onChange={(event) => {
@@ -398,7 +397,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           <Grid item>
             <TextField
               label="Address Line"
-              required={type === 'create' ? true : false}
+              required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
               value={manufacturer.address.address_line}
               onChange={(event) => {
@@ -430,7 +429,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                   ...manufacturer,
                   address: {
                     ...manufacturer.address,
-                    town: event.target.value,
+                    town: event.target.value || null,
                   },
                 });
 
@@ -450,7 +449,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                   ...manufacturer,
                   address: {
                     ...manufacturer.address,
-                    county: event.target.value,
+                    county: event.target.value || null,
                   },
                 });
 
@@ -462,7 +461,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           <Grid item>
             <TextField
               label="Post/Zip code"
-              required={type === 'create' ? true : false}
+              required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
               value={manufacturer.address.postcode}
               onChange={(event) => {
@@ -474,12 +473,12 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                   },
                 });
 
-                setAddresspostcodeErrorMessage(undefined);
+                setAddressPostcodeErrorMessage(undefined);
 
                 setFormErrorMessage(undefined);
               }}
-              error={addresspostcodeError}
-              helperText={addresspostcodeError && AddresspostcodeErrorMessage}
+              error={addressPostcodeError}
+              helperText={addressPostcodeError && addressPostcodeErrorMessage}
               fullWidth
             />
           </Grid>
@@ -492,7 +491,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               onChange={(event) => {
                 onChangeManufacturerDetails({
                   ...manufacturer,
-                  telephone: event.target.value,
+                  telephone: event.target.value || null,
                 });
 
                 setFormErrorMessage(undefined);

@@ -87,7 +87,7 @@ describe('Manufacturer', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"Manufacturer D","address":{"address_line":"4 Example Street","postcode":"OX1 2AB","country":"United Kingdom"}}'
+        '{"name":"Manufacturer D","address":{"address_line":"4 Example Street","town":null,"county":null,"postcode":"OX1 2AB","country":"United Kingdom"},"telephone":null}'
       );
     });
 
@@ -177,14 +177,14 @@ describe('Manufacturer', () => {
     cy.findByRole('button', {
       name: 'Edit Manufacturer A manufacturer',
     }).click();
-    cy.findByLabelText('Name').clear();
-    cy.findByLabelText('Name').type('test');
+    cy.findByLabelText('Name *').clear();
+    cy.findByLabelText('Name *').type('test');
 
-    cy.findByLabelText('Country').clear();
-    cy.findByLabelText('Country').type('test');
+    cy.findByLabelText('Country *').clear();
+    cy.findByLabelText('Country *').type('test');
 
-    cy.findByLabelText('Address Line').clear();
-    cy.findByLabelText('Address Line').type('test');
+    cy.findByLabelText('Address Line *').clear();
+    cy.findByLabelText('Address Line *').type('test');
 
     cy.findByLabelText('Town').clear();
     cy.findByLabelText('Town').type('test');
@@ -192,8 +192,8 @@ describe('Manufacturer', () => {
     cy.findByLabelText('County').clear();
     cy.findByLabelText('County').type('test');
 
-    cy.findByLabelText('Post/Zip code').clear();
-    cy.findByLabelText('Post/Zip code').type('test');
+    cy.findByLabelText('Post/Zip code *').clear();
+    cy.findByLabelText('Post/Zip code *').type('test');
 
     cy.findByLabelText('Telephone number').clear();
     cy.findByLabelText('Telephone number').type('0000000000');
@@ -219,8 +219,8 @@ describe('Manufacturer', () => {
       name: 'Edit Manufacturer A manufacturer',
     }).click();
 
-    cy.findByLabelText('Name').clear();
-    cy.findByLabelText('Name').type('test_dup');
+    cy.findByLabelText('Name *').clear();
+    cy.findByLabelText('Name *').type('test_dup');
 
     cy.findByRole('button', { name: 'Save' }).click();
 
@@ -271,10 +271,10 @@ describe('Manufacturer', () => {
       name: 'Edit Manufacturer A manufacturer',
     }).click();
 
-    cy.findByLabelText('Name').clear();
-    cy.findByLabelText('Country').clear();
-    cy.findByLabelText('Address Line').clear();
-    cy.findByLabelText('Post/Zip code').clear();
+    cy.findByLabelText('Name *').clear();
+    cy.findByLabelText('Country *').clear();
+    cy.findByLabelText('Address Line *').clear();
+    cy.findByLabelText('Post/Zip code *').clear();
 
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog')
