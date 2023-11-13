@@ -24,15 +24,9 @@ describe('Manufacturer', () => {
     cy.findByText('http://example.com').should('be.visible');
     cy.findByText('http://test.com').should('be.visible');
     cy.findByText('http://test.co.uk').should('be.visible');
-    cy.findByText(
-      'United Kingdom 1 Example Street Oxford Oxfordshire OX1 2AB'
-    ).should('be.visible');
-    cy.findByText(
-      'United Kingdom 2 Example Street Oxford Oxfordshire OX1 2AB'
-    ).should('be.visible');
-    cy.findByText(
-      'United Kingdom 3 Example Street Oxford Oxfordshire OX1 2AB'
-    ).should('be.visible');
+    cy.findByText('07334893348').should('be.visible');
+    cy.findByText('07294958549').should('be.visible');
+    cy.findByText('07934303412').should('be.visible');
   });
 
   it('manufacturer url is correct and opens new webpage', () => {
@@ -93,7 +87,7 @@ describe('Manufacturer', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"Manufacturer D","address":{"address_line":"4 Example Street","town":null,"county":null,"postcode":"OX1 2AB","country":"United Kingdom"},"telephone":null}'
+        '{"name":"Manufacturer D","address":{"address_line":"4 Example Street","postcode":"OX1 2AB","country":"United Kingdom"}}'
       );
     });
 

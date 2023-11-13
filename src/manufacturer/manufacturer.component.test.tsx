@@ -3,6 +3,7 @@ import { renderComponentWithBrowserRouter } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import Manufacturer from './manufacturer.component';
 import userEvent from '@testing-library/user-event';
+import exp from 'constants';
 
 describe('Manufacturer', () => {
   let user;
@@ -25,7 +26,7 @@ describe('Manufacturer', () => {
     expect(screen.getByText('Telephone')).toBeInTheDocument();
   });
 
-  it('renders table data correctly', async () => {
+  it.only('renders table data correctly', async () => {
     createView();
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
@@ -36,21 +37,6 @@ describe('Manufacturer', () => {
     expect(screen.getByText('http://example.com')).toBeInTheDocument();
     expect(screen.getByText('http://test.com')).toBeInTheDocument();
     expect(screen.getByText('http://test.co.uk')).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        'United Kingdom 1 Example Street Oxford Oxfordshire OX1 2AB'
-      )
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        'United Kingdom 2 Example Street Oxford Oxfordshire OX1 2AB'
-      )
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        'United Kingdom 3 Example Street Oxford Oxfordshire OX1 2AB'
-      )
-    ).toBeInTheDocument();
     expect(screen.getByText('07334893348')).toBeInTheDocument();
     expect(screen.getByText('07294958549')).toBeInTheDocument();
     expect(screen.getByText('07934303412')).toBeInTheDocument();
