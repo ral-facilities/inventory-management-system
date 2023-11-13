@@ -26,12 +26,12 @@ function ManufacturerComponent() {
     url: undefined,
     address: {
       address_line: '',
-      town: null,
-      county: null,
+      town: undefined,
+      county: undefined,
       postcode: '',
       country: '',
     },
-    telephone: null,
+    telephone: undefined,
   });
 
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
@@ -208,15 +208,19 @@ function ManufacturerComponent() {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
+                    {/* {item.address.country}
+                    {item.address.address_line}
+                    {item.address.town ?? ''}
+                    {item.address.county ?? ''}
+                    {item.address.postcode} */}
+
                     {item.address.country +
                       ' \n' +
                       item.address.address_line +
                       ' \n' +
-                      item.address.town +
-                      ' \n' +
-                      item.address.county +
-                      ' \n' +
-                      item.address.postcode}
+                      item.address.town ??
+                      '' + ' \n' + item.address.county ??
+                      '' + ' \n' + item.address.postcode}
                   </TableCell>
                   <TableCell
                     sx={{

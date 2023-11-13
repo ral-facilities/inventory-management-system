@@ -35,24 +35,24 @@ export interface CatalogueCategory {
 
 export interface AddManufacturer {
   name: string;
-  url: string | undefined;
-  address: Address | undefined;
-  telephone: string | null;
+  url?: string;
+  address?: Address;
+  telephone?: string;
 }
 
 export interface AddManufacturerResponse {
   id: string;
   name: string;
-  url: string | undefined;
-  address: Address;
-  telephone: string | null;
+  url?: string;
+  address?: Address;
+  telephone?: string;
   code: string;
 }
 
 export interface EditManufacturer {
-  name?: string | null;
-  url?: string | undefined;
-  address?: EditAddress | null;
+  name?: string;
+  url?: string;
+  address?: EditAddress;
   telephone?: string | null;
   id?: string | null;
 }
@@ -60,9 +60,9 @@ export interface EditManufacturer {
 export interface Manufacturer {
   id?: string;
   name: string;
-  url: string | undefined;
+  url?: string;
   address: Address;
-  telephone: string | null;
+  telephone?: string;
 }
 
 export interface CatalogueCategoryFormData {
@@ -123,18 +123,18 @@ export interface ErrorParsing {
 
 interface Address {
   address_line: string;
-  town: string | null;
-  county: string | null;
+  town?: string;
+  county?: string;
   postcode: string;
   country: string;
 }
 
 interface EditAddress {
-  address_line: string | null;
-  town: string | null;
-  county: string | null;
-  postcode: string | null;
-  country: string | null;
+  address_line?: string;
+  town?: string | null;
+  county?: string | null;
+  postcode?: string;
+  country?: string;
 }
 export interface CatalogueCategoryTransferState {
   name: string;

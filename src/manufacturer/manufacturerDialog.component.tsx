@@ -99,12 +99,12 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       url: undefined,
       address: {
         address_line: '',
-        town: null,
-        county: null,
+        town: undefined,
+        county: undefined,
         postcode: '',
         country: '',
       },
-      telephone: null,
+      telephone: undefined,
     });
     setNameErrorMessage(undefined);
     seturlErrorMessage(undefined);
@@ -119,7 +119,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     let hasErrors = false;
 
     //check url is valid
-    if (manufacturer.url) {
+    if (manufacturer.url || manufacturer.url?.trim().length === 0) {
       if (!isValidUrl(manufacturer.url)) {
         hasErrors = true;
         seturlErrorMessage('Please enter a valid URL');
@@ -176,12 +176,12 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       url: manufacturer.url ?? undefined,
       address: {
         address_line: manufacturer.address.address_line,
-        town: manufacturer.address.town ?? null,
-        county: manufacturer.address.county ?? null,
+        town: manufacturer.address.town ?? undefined,
+        county: manufacturer.address.county ?? undefined,
         postcode: manufacturer.address.postcode,
         country: manufacturer.address.country,
       },
-      telephone: manufacturer.telephone ?? null,
+      telephone: manufacturer.telephone ?? undefined,
     };
 
     addManufacturer(manufacturerToAdd)
@@ -190,7 +190,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         console.log(error.response?.status, manufacturer.name);
 
         if (error.response?.status === 409) {
-          // setNameError(true);
           setNameErrorMessage(
             'A manufacturer with the same name already exists.'
           );
@@ -327,7 +326,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         type === 'create' ? 'Add' : 'Edit'
       } Manufacturer`}</DialogTitle>
       <DialogContent>
-        <Grid container direction="column" spacing={2}>
+        <Grid container direction="column" spacing={1}>
           <Grid item sx={{ mt: 1 }}>
             <TextField
               label="Name"
