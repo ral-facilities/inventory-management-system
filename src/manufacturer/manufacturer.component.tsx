@@ -208,19 +208,21 @@ function ManufacturerComponent() {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
-                    {/* {item.address.country}
-                    {item.address.address_line}
-                    {item.address.town ?? ''}
-                    {item.address.county ?? ''}
-                    {item.address.postcode} */}
-
-                    {item.address.country +
-                      ' \n' +
-                      item.address.address_line +
-                      ' \n' +
-                      item.address.town ??
-                      '' + ' \n' + item.address.county ??
-                      '' + ' \n' + item.address.postcode}
+                    <Typography fontSize={14}>
+                      {item.address.country}
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {item.address.address_line}
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {item.address.town ?? ''}
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {item.address.county ?? ''}
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {item.address.postcode}
+                    </Typography>
                   </TableCell>
                   <TableCell
                     sx={{
