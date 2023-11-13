@@ -471,7 +471,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Only the catalogue category details will be copied; no contained catalogue categories or catalogue items within the catalogue categories will be included.'
+            'Only the catalogue category details will be copied; no contained catalogue categories or catalogue items within the catalogue category will be included.'
           )
         ).toBeInTheDocument();
       });
@@ -481,7 +481,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       await waitFor(() => {
         expect(
           screen.queryByText(
-            'Only the catalogue category details will be copied; no contained catalogue categories or catalogue items within the catalogue categories will be included.'
+            'Only the catalogue category details will be copied; no contained catalogue categories or catalogue items within the catalogue category will be included.'
           )
         ).not.toBeInTheDocument();
       });
