@@ -9,7 +9,7 @@ import {
   IconButton,
   useTheme,
   Box,
-  Link,
+  Link as MuiLink,
   Button,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -19,6 +19,7 @@ import { useManufacturers } from '../api/manufacturer';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import { Manufacturer } from '../app.types';
 import ManufacturerDialog from './manufacturerDialog.component';
+import { Link } from 'react-router-dom';
 
 function ManufacturerComponent() {
   const [manufacturer, setManufacturer] = React.useState<Manufacturer>({
@@ -186,7 +187,13 @@ function ManufacturerComponent() {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
-                    {item.name}
+                    <MuiLink
+                      underline="hover"
+                      component={Link}
+                      to={`/inventory-management-system/manufacturer/${item.id}`}
+                    >
+                      {item.name}
+                    </MuiLink>
                   </TableCell>
                   <TableCell
                     sx={{
@@ -196,9 +203,9 @@ function ManufacturerComponent() {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
-                    <Link underline="hover" href={item.url}>
+                    <MuiLink underline="hover" href={item.url}>
                       {item.url}
-                    </Link>
+                    </MuiLink>
                   </TableCell>
                   <TableCell
                     sx={{
@@ -241,5 +248,4 @@ function ManufacturerComponent() {
     </Box>
   );
 }
-
 export default ManufacturerComponent;
