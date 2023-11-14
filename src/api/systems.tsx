@@ -9,6 +9,7 @@ import axios, { AxiosError } from 'axios';
 import {
   AddSystem,
   BreadcrumbsInfo,
+  EditSystem,
   System,
   SystemImportanceType,
 } from '../app.types';
@@ -154,6 +155,48 @@ export const useAddSystem = (): UseMutationResult<
       queryClient.invalidateQueries({ queryKey: ['Systems'] });
     },
   });
+};
+
+const editSystem = async (
+  systemId: string,
+  system: EditSystem
+): Promise<System> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+
+  return axios
+    .patch<System>(`${apiUrl}/v1/systems/${systemId}`, system)
+    .then((response) => response.data);
+};
+
+export const useEditSystem = (): UseMutationResult<
+  System,
+  AxiosError,
+  { systemId: string; system: EditSystem }
+> => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (data: { systemId: string; system: EditSystem }) =>
+      editSystem(data.systemId, data.system),
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+      onSuccess: (data: System) => {
+        queryClient.invalidateQueries({
+          queryKey: ['Systems', data.parent_id],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['SystemBreadcrumbs', data.id],
+        });
+        queryClient.removeQueries({ queryKey: ['System', data.id] });
+      },
+    }
+  );
 };
 
 const deleteSystem = async (systemId: string): Promise<void> => {

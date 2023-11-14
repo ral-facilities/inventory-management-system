@@ -24,7 +24,8 @@ function SystemDetails(props: SystemDetailsProps) {
 
   // Dialogues
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
-  const [editSystemDialogOpen, setEditSystemDialogOpen] = useState<boolean>(false);
+  const [editSystemDialogOpen, setEditSystemDialogOpen] =
+    useState<boolean>(false);
 
   return systemLoading && props.id !== null ? (
     <Box
@@ -76,6 +77,7 @@ function SystemDetails(props: SystemDetailsProps) {
               onClose={() => setEditSystemDialogOpen(false)}
               parentId={system.id}
               type="edit"
+              selectedSystem={system}
             />
             <DeleteSystemDialog
               open={deleteDialogOpen}
