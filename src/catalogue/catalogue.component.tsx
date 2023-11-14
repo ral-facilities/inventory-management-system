@@ -341,6 +341,7 @@ function Catalogue() {
           onChangeCatalogueItemManufacturer={setCatalogueItemManufacturer}
           catalogueItemPropertyValues={catalogueItemPropertyValues}
           onChangeCatalogueItemPropertyValues={setCatalogueItemPropertyValues}
+          onChangeAddItemDialogOpen={setAddItemDialogOpen}
         />
       )}
 
