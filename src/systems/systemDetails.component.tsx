@@ -75,7 +75,6 @@ function SystemDetails(props: SystemDetailsProps) {
             <SystemDialog
               open={editSystemDialogOpen}
               onClose={() => setEditSystemDialogOpen(false)}
-              parentId={system.id}
               type="edit"
               selectedSystem={system}
             />

@@ -32,8 +32,9 @@ import {
 export interface SystemDialogProps {
   open: boolean;
   onClose: () => void;
-  parentId: string | null;
   type: 'add' | 'edit';
+  // Only required for add
+  parentId?: string | null;
   // Only required for prepopulating fields for an edit dialog
   selectedSystem?: System;
 }
@@ -141,7 +142,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
 
   const handleEditSystem = React.useCallback(() => {
     // Validate the entered fields
-    if (validateFields() && selectedSystem && parentId) {
+    if (validateFields() && selectedSystem) {
       // Now ensure there is actually something to update
       const isNameUpdated = systemData.name !== selectedSystem?.name;
       const isDescriptionUpdated =
@@ -159,7 +160,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         isOwnerUpdated ||
         isImportanceUpdated
       ) {
-        const editSystemData: EditSystem = { id: parentId };
+        const editSystemData: EditSystem = { id: selectedSystem.id };
 
         isNameUpdated && (editSystemData.name = systemData.name);
         isDescriptionUpdated &&
@@ -189,7 +190,6 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   }, [
     editSystem,
     handleClose,
-    parentId,
     selectedSystem,
     systemData.description,
     systemData.importance,
@@ -226,12 +226,12 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
                 handleFormChange({ ...systemData, name: event.target.value });
               }}
               fullWidth
-            ></TextField>
+            />
           </Grid>
           <Grid item>
             <TextField
               label="Description"
-              value={systemData.description}
+              value={systemData.description ?? ''}
               onChange={(event) => {
                 handleFormChange({
                   ...systemData,
@@ -240,12 +240,12 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               }}
               multiline
               fullWidth
-            ></TextField>
+            />
           </Grid>
           <Grid item>
             <TextField
               label="Location"
-              value={systemData.location}
+              value={systemData.location ?? ''}
               onChange={(event) => {
                 handleFormChange({
                   ...systemData,
@@ -253,12 +253,12 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
                 });
               }}
               fullWidth
-            ></TextField>
+            />
           </Grid>
           <Grid item>
             <TextField
               label="Owner"
-              value={systemData.owner}
+              value={systemData.owner ?? ''}
               onChange={(event) => {
                 handleFormChange({
                   ...systemData,
@@ -266,7 +266,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
                 });
               }}
               fullWidth
-            ></TextField>
+            />
           </Grid>
           <Grid item>
             <FormControl fullWidth>

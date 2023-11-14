@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Systems Dialog renders correctly when adding 1`] = `
+exports[`Systems Dialog Add renders correctly when adding 1`] = `
 <body
   style="padding-right: 1024px; overflow: hidden;"
 >
