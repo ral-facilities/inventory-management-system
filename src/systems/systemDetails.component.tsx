@@ -1,3 +1,5 @@
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
   Chip,
@@ -8,10 +10,10 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { getSystemImportanceColour, useSystem } from '../api/systems';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
+import { getSystemImportanceColour, useSystem } from '../api/systems';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
+import SystemDialog from './systemDialog.component';
 
 export interface SystemDetailsProps {
   id: string | null;
@@ -20,8 +22,9 @@ export interface SystemDetailsProps {
 function SystemDetails(props: SystemDetailsProps) {
   const { data: system, isLoading: systemLoading } = useSystem(props.id);
 
-  // Delete dialog
+  // Dialogues
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+  const [editSystemDialogOpen, setEditSystemDialogOpen] = useState<boolean>(false);
 
   return systemLoading && props.id !== null ? (
     <Box
@@ -52,14 +55,28 @@ function SystemDetails(props: SystemDetailsProps) {
         </Typography>
         {system !== undefined && (
           <>
-            <Tooltip title="Delete System">
+            <Tooltip title="Edit System">
               <IconButton
                 sx={{ marginLeft: 'auto', padding: 0 }}
+                onClick={() => setEditSystemDialogOpen(true)}
+              >
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete System">
+              <IconButton
+                sx={{ padding: 0, pl: 2 }}
                 onClick={() => setDeleteDialogOpen(true)}
               >
                 <DeleteIcon />
               </IconButton>
             </Tooltip>
+            <SystemDialog
+              open={editSystemDialogOpen}
+              onClose={() => setEditSystemDialogOpen(false)}
+              parentId={system.id}
+              type="edit"
+            />
             <DeleteSystemDialog
               open={deleteDialogOpen}
               onClose={() => setDeleteDialogOpen(false)}
