@@ -12,6 +12,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { NavigateNext } from '@mui/icons-material';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
+import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 import ClearIcon from '@mui/icons-material/Clear';
 import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
 import CatalogueCard from './category/catalogueCard.component';
@@ -186,6 +187,8 @@ function Catalogue() {
 
   const [moveToCategoryDialogOpen, setMoveToCategoryDialogOpen] =
     React.useState<boolean>(false);
+  const [copyToCategoryDialogOpen, setCopyToCategoryDialogOpen] =
+    React.useState<boolean>(false);
   // Clears the selected categories when the user navigates toa different page
   React.useEffect(() => {
     setSelectedCategories([]);
@@ -253,6 +256,18 @@ function Catalogue() {
                 }}
               >
                 Move to
+              </Button>
+
+              <Button
+                sx={{ mx: '4px' }}
+                variant="outlined"
+                startIcon={<FolderCopyOutlinedIcon />}
+                onClick={() => {
+                  setCatalogueCurrDirId(parentId ?? null);
+                  setCopyToCategoryDialogOpen(true);
+                }}
+              >
+                Copy to
               </Button>
 
               <Button
@@ -388,6 +403,16 @@ function Catalogue() {
         onChangeSelectedCategories={setSelectedCategories}
         catalogueCurrDirId={catalogueCurrDirId}
         onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
+        requestType="moveTo"
+      />
+      <CatalogueCategoryDirectoryDialog
+        open={copyToCategoryDialogOpen}
+        onClose={() => setCopyToCategoryDialogOpen(false)}
+        selectedCategories={selectedCategories}
+        onChangeSelectedCategories={setSelectedCategories}
+        catalogueCurrDirId={catalogueCurrDirId}
+        onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
+        requestType="copyTo"
       />
     </Grid>
   );

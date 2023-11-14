@@ -19,7 +19,13 @@ export interface EditCatalogueCategory {
 }
 
 export interface MoveToCatalogueCategory {
-  catalogueCategory: EditCatalogueCategory[];
+  catalogueCategories: EditCatalogueCategory[];
+  selectedCategories: CatalogueCategory[];
+  targetLocationCatalogueCategory: CatalogueCategory;
+}
+
+export interface CopyToCatalogueCategory {
+  catalogueCategories: AddCatalogueCategory[];
   selectedCategories: CatalogueCategory[];
   targetLocationCatalogueCategory: CatalogueCategory;
 }
