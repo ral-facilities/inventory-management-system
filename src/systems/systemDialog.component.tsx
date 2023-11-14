@@ -58,7 +58,14 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   );
 
   // Error messages for the above properties (undefined means no error)
-  const [nameError, setNameError] = React.useState<string | undefined>();
+  const [nameError, setNameError] = React.useState<string | undefined>(
+    undefined
+  );
+
+  // Form error that should dissappear when the form is modified
+  const [formError, setFormError] = React.useState<string | undefined>(
+    undefined
+  );
 
   // For any unhandled error e.g. a connection issue/API error
   const [otherError, setOtherError] = React.useState<boolean>(false);
@@ -76,6 +83,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     // Remove all errors - event though otherError says it requires a refresh,
     // we don't want it showing if you move somewhere else or change the values
     setNameError(undefined);
+    setFormError(undefined);
     setOtherError(false);
 
     onClose();
@@ -176,7 +184,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               setNameError(response.detail);
             else setOtherError(true);
           });
-      }
+      } else setFormError('Please edit a form entry before clicking save');
     }
   }, [
     editSystem,
@@ -190,6 +198,12 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     systemData.owner,
     validateFields,
   ]);
+
+  // Reset form error on any form modification
+  const handleFormChange = (newSystemData: AddSystem) => {
+    setSystemData(newSystemData);
+    setFormError(undefined);
+  };
 
   // For title
   const systemText = parentId ? 'Subsystem' : 'System';
@@ -209,7 +223,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               error={nameError !== undefined}
               helperText={nameError}
               onChange={(event) => {
-                setSystemData({ ...systemData, name: event.target.value });
+                handleFormChange({ ...systemData, name: event.target.value });
               }}
               fullWidth
             ></TextField>
@@ -219,7 +233,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               label="Description"
               value={systemData.description}
               onChange={(event) => {
-                setSystemData({
+                handleFormChange({
                   ...systemData,
                   description: event.target.value || null,
                 });
@@ -233,7 +247,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               label="Location"
               value={systemData.location}
               onChange={(event) => {
-                setSystemData({
+                handleFormChange({
                   ...systemData,
                   location: event.target.value || null,
                 });
@@ -246,7 +260,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               label="Owner"
               value={systemData.owner}
               onChange={(event) => {
-                setSystemData({
+                handleFormChange({
                   ...systemData,
                   owner: event.target.value || null,
                 });
@@ -262,7 +276,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
                 label="Importance"
                 value={systemData.importance}
                 onChange={(event) => {
-                  setSystemData({
+                  handleFormChange({
                     ...systemData,
                     importance: event.target.value as SystemImportanceType,
                   });
@@ -299,6 +313,11 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             Save
           </Button>
         </Box>
+        {formError && (
+          <FormHelperText sx={{ marginTop: 4 }} error>
+            {formError}
+          </FormHelperText>
+        )}
         {otherError && (
           <FormHelperText sx={{ marginTop: 4 }} error>
             Please refresh and try again
