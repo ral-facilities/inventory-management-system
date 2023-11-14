@@ -157,10 +157,7 @@ export const useAddSystem = (): UseMutationResult<
   });
 };
 
-const editSystem = async (
-  systemId: string,
-  system: EditSystem
-): Promise<System> => {
+const editSystem = async (system: EditSystem): Promise<System> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -168,35 +165,33 @@ const editSystem = async (
     apiUrl = settingsResult['apiUrl'];
   }
 
+  const { id, ...updateData } = system;
+
   return axios
-    .patch<System>(`${apiUrl}/v1/systems/${systemId}`, system)
+    .patch<System>(`${apiUrl}/v1/systems/${id}`, updateData)
     .then((response) => response.data);
 };
 
 export const useEditSystem = (): UseMutationResult<
   System,
   AxiosError,
-  { systemId: string; system: EditSystem }
+  EditSystem
 > => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (data: { systemId: string; system: EditSystem }) =>
-      editSystem(data.systemId, data.system),
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-      onSuccess: (data: System) => {
-        queryClient.invalidateQueries({
-          queryKey: ['Systems', data.parent_id],
-        });
-        queryClient.invalidateQueries({
-          queryKey: ['SystemBreadcrumbs', data.id],
-        });
-        queryClient.removeQueries({ queryKey: ['System', data.id] });
-      },
-    }
-  );
+  return useMutation((system: EditSystem) => editSystem(system), {
+    onError: (error) => {
+      console.log('Got error ' + error.message);
+    },
+    onSuccess: (data: System) => {
+      queryClient.invalidateQueries({
+        queryKey: ['Systems', data.parent_id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['SystemBreadcrumbs', data.id],
+      });
+      queryClient.removeQueries({ queryKey: ['System', data.id] });
+    },
+  });
 };
 
 const deleteSystem = async (systemId: string): Promise<void> => {

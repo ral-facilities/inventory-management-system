@@ -171,4 +171,6 @@ export interface System {
   code: string;
 }
 
-export interface EditSystem extends Partial<AddSystem> {}
+export interface EditSystem extends Partial<AddSystem> {
+  id: string;
+}

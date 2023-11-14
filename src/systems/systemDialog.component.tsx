@@ -151,7 +151,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         isOwnerUpdated ||
         isImportanceUpdated
       ) {
-        const editSystemData: EditSystem = {};
+        const editSystemData: EditSystem = { id: parentId };
 
         isNameUpdated && (editSystemData.name = systemData.name);
         isDescriptionUpdated &&
@@ -161,7 +161,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         isImportanceUpdated &&
           (editSystemData.importance = systemData.importance);
 
-        editSystem({ systemId: parentId, system: editSystemData })
+        editSystem(editSystemData)
           .then((response) => {
             setSystemData(response);
             handleClose();
