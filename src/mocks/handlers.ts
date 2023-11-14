@@ -7,6 +7,7 @@ import {
   EditCatalogueCategory,
   EditCatalogueItem,
   EditManufacturer,
+  EditSystem,
 } from '../app.types';
 import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
@@ -413,6 +414,16 @@ export const handlers = [
         id: '1',
       })
     );
+  }),
+
+  rest.patch('/v1/systems/:id', async (req, res, ctx) => {
+    const { id } = req.params;
+    const validSystem = SystemsJSON.find((value) => value.id === id);
+
+    if (validSystem) {
+      const body = (await req.json()) as EditSystem;
+      return res(ctx.status(200), ctx.json({ ...validSystem, ...body }));
+    } else return res(ctx.status(404), ctx.json(''));
   }),
 
   rest.delete('/v1/systems/:id', (req, res, ctx) => {
