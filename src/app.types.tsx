@@ -54,12 +54,15 @@ export interface EditManufacturer {
   id?: string | null;
 }
 
-export interface Manufacturer {
-  id?: string;
+export interface ManufacturerDetails {
   name: string;
   url?: string;
   address: AddAddress;
   telephone: string | null;
+}
+
+export interface Manufacturer extends ManufacturerDetails {
+  id: string;
 }
 
 export interface CatalogueCategoryFormData {

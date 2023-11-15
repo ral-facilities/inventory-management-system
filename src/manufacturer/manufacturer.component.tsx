@@ -17,22 +17,23 @@ import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { useManufacturers } from '../api/manufacturer';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
-import { Manufacturer } from '../app.types';
+import { Manufacturer, ManufacturerDetails } from '../app.types';
 import ManufacturerDialog from './manufacturerDialog.component';
 
 function ManufacturerComponent() {
-  const [manufacturer, setManufacturer] = React.useState<Manufacturer>({
-    name: '',
-    url: undefined,
-    address: {
-      address_line: '',
-      town: null,
-      county: null,
-      postcode: '',
-      country: '',
-    },
-    telephone: null,
-  });
+  const [manufacturerDetails, setManufacturerDetails] =
+    React.useState<ManufacturerDetails>({
+      name: '',
+      url: undefined,
+      address: {
+        address_line: '',
+        town: null,
+        county: null,
+        postcode: '',
+        country: '',
+      },
+      telephone: null,
+    });
 
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
     React.useState<boolean>(false);
@@ -44,6 +45,10 @@ function ManufacturerComponent() {
 
   const [deleteManufacturerDialog, setDeleteManufacturerDialog] =
     React.useState<boolean>(false);
+
+  const [selectedManufacturer, setSelectedManufacturer] = React.useState<
+    Manufacturer | undefined
+  >(undefined);
 
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
   const tableHeight = `calc(100vh)-(64px + 36px +50px)`;
@@ -68,16 +73,17 @@ function ManufacturerComponent() {
         <ManufacturerDialog
           open={addManufacturerDialogOpen}
           onClose={() => setAddManufacturerDialogOpen(false)}
-          manufacturer={manufacturer}
-          onChangeManufacturerDetails={setManufacturer}
+          manufacturerDetails={manufacturerDetails}
+          onChangeManufacturerDetails={setManufacturerDetails}
           type="create"
         />
         <ManufacturerDialog
           open={editManufacturerDialogOpen}
           onClose={() => setEditManufacturerDialogOpen(false)}
-          manufacturer={manufacturer}
-          onChangeManufacturerDetails={setManufacturer}
+          manufacturerDetails={manufacturerDetails}
+          onChangeManufacturerDetails={setManufacturerDetails}
           type="edit"
+          selectedManufacturer={selectedManufacturer}
         />
       </Box>
       <TableContainer style={{ height: tableHeight }}>
@@ -158,8 +164,8 @@ function ManufacturerComponent() {
                         aria-label={`Edit ${item.name} manufacturer`}
                         onClick={() => {
                           setEditManufacturerDialogOpen(true);
-                          // setSelectedManufacturer(item);
-                          setManufacturer(item);
+                          setSelectedManufacturer(item);
+                          setManufacturerDetails(item);
                         }}
                       >
                         <EditIcon />
@@ -169,8 +175,7 @@ function ManufacturerComponent() {
                         aria-label={`Delete ${item.name} manufacturer`}
                         onClick={() => {
                           setDeleteManufacturerDialog(true);
-                          // setSelectedManufacturer(item);
-                          setManufacturer(item);
+                          setSelectedManufacturer(item);
                         }}
                       >
                         <DeleteIcon />
@@ -238,7 +243,7 @@ function ManufacturerComponent() {
       <DeleteManufacturerDialog
         open={deleteManufacturerDialog}
         onClose={() => setDeleteManufacturerDialog(false)}
-        manufacturer={manufacturer}
+        manufacturer={selectedManufacturer}
       />
     </Box>
   );

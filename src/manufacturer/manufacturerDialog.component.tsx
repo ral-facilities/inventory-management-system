@@ -18,6 +18,7 @@ import {
   Manufacturer,
   EditManufacturer,
   ErrorParsing,
+  ManufacturerDetails,
 } from '../app.types';
 import {
   useAddManufacturer,
@@ -29,9 +30,11 @@ import { AxiosError } from 'axios';
 export interface ManufacturerDialogProps {
   open: boolean;
   onClose: () => void;
-  onChangeManufacturerDetails: (manufacturer: Manufacturer) => void;
-  manufacturer: Manufacturer;
-
+  onChangeManufacturerDetails: (
+    manufacturerDetails: ManufacturerDetails
+  ) => void;
+  manufacturerDetails: ManufacturerDetails;
+  selectedManufacturer?: Manufacturer;
   type: 'edit' | 'create';
 }
 function isValidUrl(url: string) {
@@ -47,8 +50,14 @@ function isValidUrl(url: string) {
 }
 
 function ManufacturerDialog(props: ManufacturerDialogProps) {
-  const { open, onClose, manufacturer, onChangeManufacturerDetails, type } =
-    props;
+  const {
+    open,
+    onClose,
+    manufacturerDetails,
+    onChangeManufacturerDetails,
+    selectedManufacturer,
+    type,
+  } = props;
 
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
     string | undefined
@@ -83,7 +92,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
   const { mutateAsync: addManufacturer } = useAddManufacturer();
   const { mutateAsync: editManufacturer } = useEditManufacturer();
-  const { data: selectedManufacturerData } = useManufacturer(manufacturer?.id);
+  const { data: selectedManufacturerData } = useManufacturer(
+    selectedManufacturer?.id
+  );
 
   const handleClose = React.useCallback(() => {
     onChangeManufacturerDetails({
@@ -111,22 +122,28 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     let hasErrors = false;
 
     //check url is valid
-    if (manufacturer.url || manufacturer.url?.trim().length === 0) {
-      if (!isValidUrl(manufacturer.url)) {
+    if (
+      manufacturerDetails.url ||
+      manufacturerDetails.url?.trim().length === 0
+    ) {
+      if (!isValidUrl(manufacturerDetails.url)) {
         hasErrors = true;
         setUrlErrorMessage('Please enter a valid URL');
       }
     }
 
     //check name
-    if (!manufacturer.name || manufacturer.name?.trim().length === 0) {
+    if (
+      !manufacturerDetails.name ||
+      manufacturerDetails.name?.trim().length === 0
+    ) {
       hasErrors = true;
       setNameErrorMessage('Please enter a name.');
     }
     //check address line
     if (
-      !manufacturer.address?.address_line ||
-      manufacturer.address.address_line.trim().length === 0
+      !manufacturerDetails.address?.address_line ||
+      manufacturerDetails.address.address_line.trim().length === 0
     ) {
       hasErrors = true;
 
@@ -135,8 +152,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
     //check post code
     if (
-      !manufacturer.address?.postcode ||
-      manufacturer.address.postcode?.trim().length === 0
+      !manufacturerDetails.address?.postcode ||
+      manufacturerDetails.address.postcode?.trim().length === 0
     ) {
       hasErrors = true;
 
@@ -144,8 +161,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     }
     //check country
     if (
-      !manufacturer.address?.country ||
-      manufacturer.address.country?.trim().length === 0
+      !manufacturerDetails.address?.country ||
+      manufacturerDetails.address.country?.trim().length === 0
     ) {
       hasErrors = true;
 
@@ -153,7 +170,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     }
 
     return hasErrors;
-  }, [manufacturer]);
+  }, [manufacturerDetails]);
 
   const handleAddManufacturer = React.useCallback(() => {
     const hasErrors = handleErrors();
@@ -163,22 +180,22 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     }
 
     const manufacturerToAdd: AddManufacturer = {
-      name: manufacturer.name,
-      url: manufacturer.url ?? undefined,
+      name: manufacturerDetails.name,
+      url: manufacturerDetails.url ?? undefined,
       address: {
-        address_line: manufacturer.address.address_line,
-        town: manufacturer.address.town ?? null,
-        county: manufacturer.address.county ?? null,
-        postcode: manufacturer.address.postcode,
-        country: manufacturer.address.country,
+        address_line: manufacturerDetails.address.address_line,
+        town: manufacturerDetails.address.town ?? null,
+        county: manufacturerDetails.address.county ?? null,
+        postcode: manufacturerDetails.address.postcode,
+        country: manufacturerDetails.address.country,
       },
-      telephone: manufacturer.telephone ?? null,
+      telephone: manufacturerDetails.telephone ?? null,
     };
 
     addManufacturer(manufacturerToAdd)
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
-        console.log(error.response?.status, manufacturer.name);
+        console.log(error.response?.status, manufacturerDetails.name);
 
         if (error.response?.status === 409) {
           setNameErrorMessage(
@@ -188,57 +205,63 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         }
         setCatchAllError(true);
       });
-  }, [handleErrors, manufacturer, addManufacturer, handleClose]);
+  }, [handleErrors, manufacturerDetails, addManufacturer, handleClose]);
 
   const handleEditManufacturer = React.useCallback(() => {
-    if (manufacturer && selectedManufacturerData) {
+    console.log(manufacturerDetails);
+    console.log(selectedManufacturerData);
+    if (manufacturerDetails && selectedManufacturerData) {
       const hasErrors = handleErrors();
 
       if (hasErrors) {
         return;
       }
 
-      const isNameUpdated = manufacturer.name !== selectedManufacturerData.name;
+      const isNameUpdated =
+        manufacturerDetails.name !== selectedManufacturerData.name;
 
       const isURLUpdated =
-        manufacturer.url !== selectedManufacturerData.url &&
-        manufacturer.url !== undefined;
+        manufacturerDetails.url !== selectedManufacturerData.url &&
+        manufacturerDetails.url !== undefined;
 
       const isAddressLineUpdated =
-        manufacturer.address?.address_line !==
+        manufacturerDetails.address?.address_line !==
         selectedManufacturerData.address.address_line;
 
       const isTownUpdated =
-        manufacturer.address?.town !== selectedManufacturerData.address.town;
+        manufacturerDetails.address?.town !==
+        selectedManufacturerData.address.town;
 
       const isCountyUpdated =
-        manufacturer.address?.county !==
+        manufacturerDetails.address?.county !==
         selectedManufacturerData.address.county;
 
       const isPostcodeUpdated =
-        manufacturer.address?.postcode !==
+        manufacturerDetails.address?.postcode !==
         selectedManufacturerData.address.postcode;
 
       const isCountryUpdated =
-        manufacturer.address?.country !==
+        manufacturerDetails.address?.country !==
         selectedManufacturerData.address.country;
 
       const isTelephoneUpdated =
-        manufacturer.telephone !== selectedManufacturerData.telephone;
+        manufacturerDetails.telephone !== selectedManufacturerData.telephone;
 
       let ManufacturerToEdit: EditManufacturer = {
         id: selectedManufacturerData?.id,
       };
 
-      isNameUpdated && (ManufacturerToEdit.name = manufacturer.name);
-      isURLUpdated && (ManufacturerToEdit.url = manufacturer.url);
+      console.log(selectedManufacturerData);
+
+      isNameUpdated && (ManufacturerToEdit.name = manufacturerDetails.name);
+      isURLUpdated && (ManufacturerToEdit.url = manufacturerDetails.url);
 
       if (isAddressLineUpdated) {
         ManufacturerToEdit = {
           ...ManufacturerToEdit,
           address: {
-            ...manufacturer.address,
-            address_line: manufacturer.address?.address_line,
+            ...manufacturerDetails.address,
+            address_line: manufacturerDetails.address?.address_line,
           },
         };
       }
@@ -246,8 +269,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         ManufacturerToEdit = {
           ...ManufacturerToEdit,
           address: {
-            ...manufacturer.address,
-            town: manufacturer.address?.town,
+            ...manufacturerDetails.address,
+            town: manufacturerDetails.address?.town,
           },
         };
       }
@@ -255,8 +278,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         ManufacturerToEdit = {
           ...ManufacturerToEdit,
           address: {
-            ...manufacturer.address,
-            county: manufacturer.address?.county,
+            ...manufacturerDetails.address,
+            county: manufacturerDetails.address?.county,
           },
         };
       }
@@ -264,8 +287,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         ManufacturerToEdit = {
           ...ManufacturerToEdit,
           address: {
-            ...manufacturer.address,
-            postcode: manufacturer.address?.postcode,
+            ...manufacturerDetails.address,
+            postcode: manufacturerDetails.address?.postcode,
           },
         };
       }
@@ -273,14 +296,14 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         ManufacturerToEdit = {
           ...ManufacturerToEdit,
           address: {
-            ...manufacturer.address,
-            country: manufacturer.address?.country,
+            ...manufacturerDetails.address,
+            country: manufacturerDetails.address?.country,
           },
         };
       }
 
       isTelephoneUpdated &&
-        (ManufacturerToEdit.telephone = manufacturer.telephone);
+        (ManufacturerToEdit.telephone = manufacturerDetails.telephone);
 
       if (
         (selectedManufacturerData.id && isNameUpdated) ||
@@ -314,7 +337,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     editManufacturer,
     handleClose,
     handleErrors,
-    manufacturer,
+    manufacturerDetails,
     selectedManufacturerData,
   ]);
 
@@ -330,10 +353,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               label="Name"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturer.name}
+              value={manufacturerDetails.name}
               onChange={(event) => {
                 onChangeManufacturerDetails({
-                  ...manufacturer,
+                  ...manufacturerDetails,
                   name: event.target.value,
                 });
                 setNameErrorMessage(undefined);
@@ -349,10 +372,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               label="URL"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturer.url}
+              value={manufacturerDetails.url}
               onChange={(event) => {
                 onChangeManufacturerDetails({
-                  ...manufacturer,
+                  ...manufacturerDetails,
                   url: event.target.value,
                 });
 
@@ -374,12 +397,12 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               label="Address Line"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturer.address.address_line}
+              value={manufacturerDetails.address.address_line}
               onChange={(event) => {
                 onChangeManufacturerDetails({
-                  ...manufacturer,
+                  ...manufacturerDetails,
                   address: {
-                    ...manufacturer.address,
+                    ...manufacturerDetails.address,
                     address_line: event.target.value,
                   },
                 });
@@ -398,12 +421,12 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               label="Town"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturer.address.town}
+              value={manufacturerDetails.address.town}
               onChange={(event) => {
                 onChangeManufacturerDetails({
-                  ...manufacturer,
+                  ...manufacturerDetails,
                   address: {
-                    ...manufacturer.address,
+                    ...manufacturerDetails.address,
                     town: event.target.value || null,
                   },
                 });
@@ -418,12 +441,12 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               label="County"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturer.address.county}
+              value={manufacturerDetails.address.county}
               onChange={(event) => {
                 onChangeManufacturerDetails({
-                  ...manufacturer,
+                  ...manufacturerDetails,
                   address: {
-                    ...manufacturer.address,
+                    ...manufacturerDetails.address,
                     county: event.target.value || null,
                   },
                 });
@@ -438,12 +461,12 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               label="Country"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturer.address.country}
+              value={manufacturerDetails.address.country}
               onChange={(event) => {
                 onChangeManufacturerDetails({
-                  ...manufacturer,
+                  ...manufacturerDetails,
                   address: {
-                    ...manufacturer.address,
+                    ...manufacturerDetails.address,
                     country: event.target.value,
                   },
                 });
@@ -462,12 +485,12 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               label="Post/Zip code"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturer.address.postcode}
+              value={manufacturerDetails.address.postcode}
               onChange={(event) => {
                 onChangeManufacturerDetails({
-                  ...manufacturer,
+                  ...manufacturerDetails,
                   address: {
-                    ...manufacturer.address,
+                    ...manufacturerDetails.address,
                     postcode: event.target.value,
                   },
                 });
@@ -486,10 +509,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               label="Telephone number"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturer.telephone}
+              value={manufacturerDetails.telephone}
               onChange={(event) => {
                 onChangeManufacturerDetails({
-                  ...manufacturer,
+                  ...manufacturerDetails,
                   telephone: event.target.value || null,
                 });
 
