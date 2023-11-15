@@ -5,6 +5,7 @@ import {
   Typography,
   Link as MuiLink,
   Collapse,
+  LinearProgress,
 } from '@mui/material';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -218,6 +219,27 @@ function ManufacturerLandingPage() {
             </Grid>
           </Collapse>
         </Grid>
+      )}
+      {!manufacturerDataLoading ? (
+        !manufacturerData && (
+          <Box
+            sx={{
+              width: '100%',
+              justifyContent: 'center',
+              marginTop: '8px',
+            }}
+          >
+            <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
+            <Typography>
+              This manufacturer doesn't exist. Please click the Home button to
+              navigate to the catalogue home
+            </Typography>
+          </Box>
+        )
+      ) : (
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress />
+        </Box>
       )}
     </Grid>
   );
