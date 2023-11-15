@@ -370,30 +370,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           <Grid item>
             <Typography>Address</Typography>
           </Grid>
-          <Grid item>
-            <TextField
-              label="Country"
-              required={true}
-              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturer.address.country}
-              onChange={(event) => {
-                onChangeManufacturerDetails({
-                  ...manufacturer,
-                  address: {
-                    ...manufacturer.address,
-                    country: event.target.value,
-                  },
-                });
 
-                setCountryErrorMessage(undefined);
-
-                setFormErrorMessage(undefined);
-              }}
-              error={countryError}
-              helperText={countryError && countryErrorMessage}
-              fullWidth
-            />
-          </Grid>
           <Grid item>
             <TextField
               label="Address Line"
@@ -455,6 +432,30 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
                 setFormErrorMessage(undefined);
               }}
+              fullWidth
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              label="Country"
+              required={true}
+              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              value={manufacturer.address.country}
+              onChange={(event) => {
+                onChangeManufacturerDetails({
+                  ...manufacturer,
+                  address: {
+                    ...manufacturer.address,
+                    country: event.target.value,
+                  },
+                });
+
+                setCountryErrorMessage(undefined);
+
+                setFormErrorMessage(undefined);
+              }}
+              error={countryError}
+              helperText={countryError && countryErrorMessage}
               fullWidth
             />
           </Grid>
