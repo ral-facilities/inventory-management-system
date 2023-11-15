@@ -87,7 +87,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
   const [catchAllError, setCatchAllError] = React.useState(false);
 
-  const { mutateAsync: AddManufacturer } = useAddManufacturer();
+  const { mutateAsync: addManufacturer } = useAddManufacturer();
   const { mutateAsync: editManufacturer } = useEditManufacturer();
   const { data: selectedManufacturerData } = useManufacturer(
     selectedManufacturer?.id
@@ -183,7 +183,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       telephone: manufacturer.telephone ?? null,
     };
 
-    AddManufacturer(manufacturerToAdd)
+    addManufacturer(manufacturerToAdd)
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
         console.log(error.response?.status, manufacturer.name);
@@ -196,7 +196,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         }
         setCatchAllError(true);
       });
-  }, [handleErrors, manufacturer, AddManufacturer, handleClose]);
+  }, [handleErrors, manufacturer, addManufacturer, handleClose]);
 
   const handleEditManufacturer = React.useCallback(() => {
     if (selectedManufacturer && selectedManufacturerData) {
