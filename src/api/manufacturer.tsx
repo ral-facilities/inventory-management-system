@@ -8,11 +8,7 @@ import {
 } from '@tanstack/react-query';
 import { settings } from '../settings';
 
-import {
-  Manufacturer,
-  AddManufacturerResponse,
-  EditManufacturer,
-} from '../app.types';
+import { AddManufacturer, Manufacturer, EditManufacturer } from '../app.types';
 
 const getAllManufacturers = async (): Promise<Manufacturer[]> => {
   let apiUrl: string;
@@ -45,8 +41,8 @@ export const useManufacturers = (): UseQueryResult<
 };
 
 const addManufacturer = async (
-  manufacturer: Manufacturer
-): Promise<AddManufacturerResponse> => {
+  manufacturer: AddManufacturer
+): Promise<Manufacturer> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -54,18 +50,18 @@ const addManufacturer = async (
     apiUrl = settingsResult['apiUrl'];
   }
   return axios
-    .post<AddManufacturerResponse>(`${apiUrl}/v1/manufacturers`, manufacturer)
+    .post<Manufacturer>(`${apiUrl}/v1/manufacturers`, manufacturer)
     .then((response) => response.data);
 };
 
 export const useAddManufacturer = (): UseMutationResult<
-  AddManufacturerResponse,
+  Manufacturer,
   AxiosError,
-  Manufacturer
+  AddManufacturer
 > => {
   const queryClient = useQueryClient();
   return useMutation(
-    (manufacturer: Manufacturer) => addManufacturer(manufacturer),
+    (manufacturer: AddManufacturer) => addManufacturer(manufacturer),
     {
       onError: (error) => {
         console.log('Got error ' + error.message);

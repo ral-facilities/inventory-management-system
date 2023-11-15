@@ -13,7 +13,12 @@ import {
 
 import React from 'react';
 
-import { Manufacturer, EditManufacturer, ErrorParsing } from '../app.types';
+import {
+  AddManufacturer,
+  Manufacturer,
+  EditManufacturer,
+  ErrorParsing,
+} from '../app.types';
 import {
   useAddManufacturer,
   useEditManufacturer,
@@ -82,7 +87,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
   const [catchAllError, setCatchAllError] = React.useState(false);
 
-  const { mutateAsync: addManufacturer } = useAddManufacturer();
+  const { mutateAsync: AddManufacturer } = useAddManufacturer();
   const { mutateAsync: editManufacturer } = useEditManufacturer();
   const { data: selectedManufacturerData } = useManufacturer(
     selectedManufacturer?.id
@@ -165,7 +170,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       return;
     }
 
-    const manufacturerToAdd: Manufacturer = {
+    const manufacturerToAdd: AddManufacturer = {
       name: manufacturer.name,
       url: manufacturer.url ?? undefined,
       address: {
@@ -178,7 +183,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       telephone: manufacturer.telephone ?? null,
     };
 
-    addManufacturer(manufacturerToAdd)
+    AddManufacturer(manufacturerToAdd)
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
         console.log(error.response?.status, manufacturer.name);
@@ -191,7 +196,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         }
         setCatchAllError(true);
       });
-  }, [handleErrors, manufacturer, addManufacturer, handleClose]);
+  }, [handleErrors, manufacturer, AddManufacturer, handleClose]);
 
   const handleEditManufacturer = React.useCallback(() => {
     if (selectedManufacturer && selectedManufacturerData) {

@@ -33,13 +33,11 @@ export interface CatalogueCategory {
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }
 
-export interface AddManufacturerResponse {
-  id: string;
+export interface AddManufacturer {
   name: string;
   url?: string;
-  address: Address;
-  telephone?: string;
-  code: string;
+  address: AddAddress;
+  telephone?: string | null;
 }
 
 export interface EditManufacturer {
@@ -114,18 +112,10 @@ export interface ErrorParsing {
   detail: string;
 }
 
-interface Address {
-  address_line: string;
-  town?: string;
-  county?: string;
-  postcode: string;
-  country: string;
-}
-
 interface AddAddress {
   address_line: string;
-  town: string | null;
-  county: string | null;
+  town?: string | null;
+  county?: string | null;
   postcode: string;
   country: string;
 }
