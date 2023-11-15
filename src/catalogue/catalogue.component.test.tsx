@@ -301,7 +301,7 @@ describe('Catalogue', () => {
     expect(screen.getByText('Wavefront Sensors')).toBeInTheDocument();
   });
 
-  it('opens add catalogue item dialog and can closes the dialog', async () => {
+  it('opens add catalogue item dialog and can close the dialog', async () => {
     createView('/inventory-management-system/catalogue/4');
 
     await waitFor(() => {
@@ -347,6 +347,33 @@ describe('Catalogue', () => {
     });
 
     await user.click(screen.getByRole('button', { name: 'Move to' }));
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens copy catalogue category dialog and can close the dialog', async () => {
+    createView('/inventory-management-system/catalogue/1');
+
+    await waitFor(() => {
+      expect(screen.getByText('Cameras')).toBeInTheDocument();
+    });
+
+    const camerasCheckbox = screen.getByLabelText('Cameras checkbox');
+
+    await user.click(camerasCheckbox);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Copy to' })
+      ).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Copy to' }));
 
     const cancelButton = screen.getByRole('button', { name: 'Cancel' });
     await user.click(cancelButton);

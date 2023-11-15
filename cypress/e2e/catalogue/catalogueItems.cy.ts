@@ -39,6 +39,28 @@ describe('Catalogue Items', () => {
     });
   });
 
+  it('"save as" a catalogue item', () => {
+    cy.visit('/inventory-management-system/catalogue/5');
+    cy.findByRole('button', {
+      name: 'Save as Energy Meters 27 catalogue item',
+    }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-items',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"catalogue_category_id":"5","name":"Energy Meters 27_copy1","description":"Precision energy meters for accurate measurements. 27","properties":[{"name":"Measurement Range","value":2000}],"manufacturer":{"name":"Manufacturer A","url":"http://example.com","address":"10 My Street"}}'
+      );
+    });
+  });
+
   it('adds a catalogue item only mandatory fields', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
 
