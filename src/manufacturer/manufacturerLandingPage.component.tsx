@@ -14,6 +14,9 @@ import { useManufacturer } from '../api/manufacturer';
 import { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ManufacturerDialog from './manufacturerDialog.component';
+import React from 'react';
+import { Manufacturer } from '../app.types';
 
 function ManufacturerLandingPage() {
   const location = useLocation();
@@ -27,6 +30,22 @@ function ManufacturerLandingPage() {
     useManufacturer(manufacturerId);
 
   const [showAddress, setShowAddress] = useState(true);
+
+  const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [manufacturer, setManufacturer] = React.useState<Manufacturer>({
+    name: '',
+    url: undefined,
+    address: {
+      building_number: '',
+      street_name: '',
+      town: '',
+      county: '',
+      postcode: '',
+    },
+    telephone: '',
+  });
 
   const toggleAddress = () => {
     setShowAddress(!showAddress);
@@ -47,6 +66,12 @@ function ManufacturerLandingPage() {
           disabled={!manufacturerData}
           sx={{ margin: '8px' }}
           variant="outlined"
+          onClick={() => {
+            setEditManufacturerDialogOpen(true);
+            if (manufacturerData) {
+              setManufacturer(manufacturerData);
+            }
+          }}
         >
           Edit
         </Button>
@@ -232,7 +257,7 @@ function ManufacturerLandingPage() {
             <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
             <Typography>
               This manufacturer doesn't exist. Please click the Home button to
-              navigate to the catalogue home
+              navigate to the manufacturer table
             </Typography>
           </Box>
         )
@@ -241,6 +266,15 @@ function ManufacturerLandingPage() {
           <LinearProgress />
         </Box>
       )}
+
+      <ManufacturerDialog
+        open={editManufacturerDialogOpen}
+        onClose={() => setEditManufacturerDialogOpen(false)}
+        manufacturer={manufacturer}
+        onChangeManufacturerDetails={setManufacturer}
+        type="edit"
+        selectedManufacturer={manufacturerData}
+      />
     </Grid>
   );
 }
