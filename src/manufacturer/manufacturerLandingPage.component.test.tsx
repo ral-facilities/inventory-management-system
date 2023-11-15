@@ -4,7 +4,7 @@ import { screen, waitFor } from '@testing-library/react';
 import ManufacturerLandingPage from './manufacturerLandingPage.component';
 import userEvent from '@testing-library/user-event';
 
-describe('Manufacturer', () => {
+describe('Manufacturer Landing page', () => {
   let user;
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(<ManufacturerLandingPage />, path);
