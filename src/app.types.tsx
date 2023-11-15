@@ -78,6 +78,7 @@ export interface CatalogueCategoryFormData {
 }
 
 export interface CatalogueItemDetails {
+  catalogue_category_id: string;
   name: string;
   description: string | null;
   cost_gbp: number;
@@ -90,7 +91,6 @@ export interface CatalogueItemDetails {
   is_obsolete: boolean;
   obsolete_replacement_catalogue_item_id: string | null;
   obsolete_reason: string | null;
-  catalogue_category_id: string;
 }
 // need so we can cast string to number e.g for 10.50
 export type CatalogueItemDetailsPlaceholder = {

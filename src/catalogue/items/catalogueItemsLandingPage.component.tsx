@@ -165,7 +165,7 @@ function CatalogueItemsLandingPage() {
                 {catalogueItemIdData.description}
               </Typography>
             </Grid>
-            <Grid container spacing={1} sx={{ mx: '192px' }}>
+            <Grid container spacing={1} sx={{ px: '192px' }}>
               <Grid
                 item
                 xs={12}

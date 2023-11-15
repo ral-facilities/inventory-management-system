@@ -312,10 +312,10 @@ function Catalogue() {
               justifyContent: 'center',
             }}
           >
-            <Typography sx={{ fontWeight: 'bold' }}>
+            <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
               No results found
             </Typography>
-            <Typography>
+            <Typography sx={{ textAlign: 'center' }}>
               {!parentInfo && catalogueId !== ''
                 ? 'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
                 : 'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'}

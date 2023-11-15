@@ -402,18 +402,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     catalogueItemPropertiesForm,
     propertyValues,
   ]);
-
-  const handleAddCatalogueItem = React.useCallback(() => {
-    const { hasErrors, updatedProperties } = handleFormErrorStates();
-    if (hasErrors) {
-      return; // Do not proceed with saving if there are errors
-    }
-
-    const filteredProperties = updatedProperties.filter(
-      (property) => property !== null
-    ) as CatalogueItemProperty[];
-
-    const catalogueItem: AddCatalogueItem = {
+  const details = React.useMemo(
+    () => ({
+      catalogue_category_id: parentId ?? '',
       name: catalogueItemDetails.name ?? '',
       cost_gbp: catalogueItemDetails.cost_gbp
         ? Number(catalogueItemDetails.cost_gbp)
@@ -437,7 +428,21 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         catalogueItemDetails.obsolete_replacement_catalogue_item_id,
       drawing_link: catalogueItemDetails.drawing_link,
       drawing_number: catalogueItemDetails.drawing_number,
-      catalogue_category_id: parentId ?? '',
+    }),
+    [catalogueItemDetails, parentId]
+  );
+  const handleAddCatalogueItem = React.useCallback(() => {
+    const { hasErrors, updatedProperties } = handleFormErrorStates();
+    if (hasErrors) {
+      return; // Do not proceed with saving if there are errors
+    }
+
+    const filteredProperties = updatedProperties.filter(
+      (property) => property !== null
+    ) as CatalogueItemProperty[];
+
+    const catalogueItem: AddCatalogueItem = {
+      ...details,
       properties: filteredProperties,
       manufacturer: catalogueItemManufacturer,
     };
@@ -451,10 +456,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   }, [
     addCatalogueItem,
     catalogueItemManufacturer,
-    catalogueItemDetails,
     handleClose,
+    details,
     handleFormErrorStates,
-    parentId,
   ]);
 
   const handleEditCatalogueItem = React.useCallback(() => {
@@ -464,31 +468,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       if (hasErrors) {
         return; // Do not proceed with saving if there are errors
       }
-      const details = {
-        name: catalogueItemDetails.name ?? '',
-        cost_gbp: catalogueItemDetails.cost_gbp
-          ? Number(catalogueItemDetails.cost_gbp)
-          : 0,
-        cost_to_rework_gbp:
-          catalogueItemDetails.cost_to_rework_gbp === null
-            ? null
-            : Number(catalogueItemDetails.cost_to_rework_gbp),
-        days_to_replace: catalogueItemDetails.days_to_replace
-          ? Number(catalogueItemDetails.days_to_replace)
-          : 0,
-        days_to_rework:
-          catalogueItemDetails.days_to_rework === null
-            ? null
-            : Number(catalogueItemDetails.days_to_rework),
-        description: catalogueItemDetails.description,
-        item_model_number: catalogueItemDetails.item_model_number,
-        is_obsolete: false,
-        obsolete_reason: catalogueItemDetails.obsolete_reason,
-        obsolete_replacement_catalogue_item_id:
-          catalogueItemDetails.obsolete_replacement_catalogue_item_id,
-        drawing_link: catalogueItemDetails.drawing_link,
-        drawing_number: catalogueItemDetails.drawing_number,
-      };
+
       const filteredProperties = updatedProperties.filter(
         (property) => property !== null
       ) as CatalogueItemProperty[];
@@ -596,7 +576,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     handleFormErrorStates,
     selectedCatalogueItem,
     selectedCatalogueItemData,
-    catalogueItemDetails,
+    details,
   ]);
 
   const handleCatalogueDetails = (
