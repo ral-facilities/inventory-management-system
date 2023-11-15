@@ -45,10 +45,6 @@ function ManufacturerComponent() {
   const [deleteManufacturerDialog, setDeleteManufacturerDialog] =
     React.useState<boolean>(false);
 
-  const [selectedManufacturer, setSelectedManufacturer] = React.useState<
-    Manufacturer | undefined
-  >(undefined);
-
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
   const tableHeight = `calc(100vh)-(64px + 36px +50px)`;
   const theme = useTheme();
@@ -82,7 +78,6 @@ function ManufacturerComponent() {
           manufacturer={manufacturer}
           onChangeManufacturerDetails={setManufacturer}
           type="edit"
-          selectedManufacturer={selectedManufacturer}
         />
       </Box>
       <TableContainer style={{ height: tableHeight }}>
@@ -163,7 +158,7 @@ function ManufacturerComponent() {
                         aria-label={`Edit ${item.name} manufacturer`}
                         onClick={() => {
                           setEditManufacturerDialogOpen(true);
-                          setSelectedManufacturer(item);
+                          // setSelectedManufacturer(item);
                           setManufacturer(item);
                         }}
                       >
@@ -174,7 +169,8 @@ function ManufacturerComponent() {
                         aria-label={`Delete ${item.name} manufacturer`}
                         onClick={() => {
                           setDeleteManufacturerDialog(true);
-                          setSelectedManufacturer(item);
+                          // setSelectedManufacturer(item);
+                          setManufacturer(item);
                         }}
                       >
                         <DeleteIcon />
@@ -242,7 +238,7 @@ function ManufacturerComponent() {
       <DeleteManufacturerDialog
         open={deleteManufacturerDialog}
         onClose={() => setDeleteManufacturerDialog(false)}
-        manufacturer={selectedManufacturer}
+        manufacturer={manufacturer}
       />
     </Box>
   );

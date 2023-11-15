@@ -31,7 +31,7 @@ export interface ManufacturerDialogProps {
   onClose: () => void;
   onChangeManufacturerDetails: (manufacturer: Manufacturer) => void;
   manufacturer: Manufacturer;
-  selectedManufacturer?: Manufacturer;
+
   type: 'edit' | 'create';
 }
 function isValidUrl(url: string) {
@@ -47,14 +47,8 @@ function isValidUrl(url: string) {
 }
 
 function ManufacturerDialog(props: ManufacturerDialogProps) {
-  const {
-    open,
-    onClose,
-    manufacturer,
-    onChangeManufacturerDetails,
-    type,
-    selectedManufacturer,
-  } = props;
+  const { open, onClose, manufacturer, onChangeManufacturerDetails, type } =
+    props;
 
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
     string | undefined
@@ -89,9 +83,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
   const { mutateAsync: addManufacturer } = useAddManufacturer();
   const { mutateAsync: editManufacturer } = useEditManufacturer();
-  const { data: selectedManufacturerData } = useManufacturer(
-    selectedManufacturer?.id
-  );
+  const { data: selectedManufacturerData } = useManufacturer(manufacturer?.id);
 
   const handleClose = React.useCallback(() => {
     onChangeManufacturerDetails({
@@ -199,41 +191,43 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   }, [handleErrors, manufacturer, addManufacturer, handleClose]);
 
   const handleEditManufacturer = React.useCallback(() => {
-    if (selectedManufacturer && selectedManufacturerData) {
+    if (manufacturer && selectedManufacturerData) {
       const hasErrors = handleErrors();
 
       if (hasErrors) {
         return;
       }
 
-      const isNameUpdated = manufacturer.name !== selectedManufacturer.name;
+      const isNameUpdated = manufacturer.name !== selectedManufacturerData.name;
 
       const isURLUpdated =
-        manufacturer.url !== selectedManufacturer.url &&
+        manufacturer.url !== selectedManufacturerData.url &&
         manufacturer.url !== undefined;
 
       const isAddressLineUpdated =
         manufacturer.address?.address_line !==
-        selectedManufacturer.address.address_line;
+        selectedManufacturerData.address.address_line;
 
       const isTownUpdated =
-        manufacturer.address?.town !== selectedManufacturer.address.town;
+        manufacturer.address?.town !== selectedManufacturerData.address.town;
 
       const isCountyUpdated =
-        manufacturer.address?.county !== selectedManufacturer.address.county;
+        manufacturer.address?.county !==
+        selectedManufacturerData.address.county;
 
       const isPostcodeUpdated =
         manufacturer.address?.postcode !==
-        selectedManufacturer.address.postcode;
+        selectedManufacturerData.address.postcode;
 
       const isCountryUpdated =
-        manufacturer.address?.country !== selectedManufacturer.address.country;
+        manufacturer.address?.country !==
+        selectedManufacturerData.address.country;
 
       const isTelephoneUpdated =
-        manufacturer.telephone !== selectedManufacturer.telephone;
+        manufacturer.telephone !== selectedManufacturerData.telephone;
 
       let ManufacturerToEdit: EditManufacturer = {
-        id: selectedManufacturer?.id,
+        id: selectedManufacturerData?.id,
       };
 
       isNameUpdated && (ManufacturerToEdit.name = manufacturer.name);
@@ -289,7 +283,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         (ManufacturerToEdit.telephone = manufacturer.telephone);
 
       if (
-        (selectedManufacturer.id && isNameUpdated) ||
+        (selectedManufacturerData.id && isNameUpdated) ||
         isAddressLineUpdated ||
         isTownUpdated ||
         isCountyUpdated ||
@@ -321,7 +315,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     handleClose,
     handleErrors,
     manufacturer,
-    selectedManufacturer,
     selectedManufacturerData,
   ]);
 
