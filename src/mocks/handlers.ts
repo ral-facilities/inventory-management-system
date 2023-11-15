@@ -1,6 +1,5 @@
 import { rest } from 'msw';
 import {
-  AddCatalogueCategory,
   AddManufacturer,
   AddSystem,
   CatalogueItem,
@@ -19,7 +18,7 @@ import ManufacturerJSON from './manufacturer.json';
 export const handlers = [
   // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
   rest.post('/v1/catalogue-categories', async (req, res, ctx) => {
-    const body = (await req.json()) as AddCatalogueCategory;
+    let body = await req.json();
 
     if (body.name === 'test_dup') {
       return res(
@@ -34,14 +33,19 @@ export const handlers = [
     if (body.name === 'Error 500') {
       return res(ctx.status(500), ctx.json(''));
     }
+
+    if (!body.parent_id) {
+      body = {
+        ...body,
+        parent_id: null,
+      };
+    }
+
     return res(
       ctx.status(200),
       ctx.json({
-        name: 'test',
-        parent_id: null,
         id: '1',
-        code: 'test',
-        is_leaf: false,
+        ...body,
       })
     );
   }),

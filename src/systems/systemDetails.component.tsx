@@ -49,7 +49,7 @@ function SystemDetails(props: SystemDetailsProps) {
           margin: 1.5,
         }}
       >
-        <Typography variant="h6">
+        <Typography variant="h6" fontWeight="bold">
           {systemLoading || system === undefined
             ? 'No system selected'
             : system.name}
@@ -99,21 +99,37 @@ function SystemDetails(props: SystemDetailsProps) {
         </Box>
       ) : (
         <Grid container direction="column" spacing={1.5} sx={{ margin: 0 }}>
-          <Grid item>
-            <Typography variant="h6">Location</Typography>
-            <Typography variant="body1">{system.location ?? 'None'}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="h6">Owner</Typography>
-            <Typography variant="body1">{system.owner ?? 'None'}</Typography>
-          </Grid>
-          <Grid item sx={{ display: 'inline-flex', alignItems: 'center' }}>
-            <Typography variant="h6">Importance</Typography>
-            <Chip
-              label={system.importance}
-              sx={{ marginLeft: 1 }}
-              color={getSystemImportanceColour(system.importance)}
-            />
+          <Grid
+            container
+            item
+            direction="row"
+            justifyContent="space-evenly"
+            sx={{ margin: 0 }}
+          >
+            <Grid item container direction="column" spacing={1.5} xs={6}>
+              <Grid item>
+                <Typography variant="h6">Location</Typography>
+                <Typography variant="body1">
+                  {system.location ?? 'None'}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="h6">Owner</Typography>
+                <Typography variant="body1">
+                  {system.owner ?? 'None'}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item container direction="column" spacing={1.5} xs={6}>
+              <Grid item sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                <Typography variant="h6">Importance</Typography>
+                <Chip
+                  label={system.importance}
+                  sx={{ marginLeft: 1 }}
+                  color={getSystemImportanceColour(system.importance)}
+                />
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item>
             <Typography variant="h6">Description</Typography>

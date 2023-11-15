@@ -12,6 +12,7 @@ describe('Catalogue Items Table', () => {
   const onChangeCatalogueItemDetails = jest.fn();
   const onChangeCatalogueItemManufacturer = jest.fn();
   const onChangeCatalogueItemPropertyValues = jest.fn();
+  const onChangeAddItemDialogOpen = jest.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(<CatalogueItemsTable {...props} />);
@@ -21,6 +22,7 @@ describe('Catalogue Items Table', () => {
     props = {
       catalogueItemDetails: { name: undefined, description: '' },
       onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
+      onChangeAddItemDialogOpen: onChangeAddItemDialogOpen,
       catalogueItemManufacturer: {
         name: '',
         url: '',
@@ -176,6 +178,25 @@ describe('Catalogue Items Table', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
+
+  it('opens the add catalogue item dialog for save as', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText(
+          'Catalogue item description: Precision energy meters for accurate measurements. 26'
+        )
+      ).toBeInTheDocument();
+    });
+
+    const saveAsButton = screen.getByRole('button', {
+      name: 'Save as Energy Meters 26 catalogue item',
+    });
+    await user.click(saveAsButton);
+
+    expect(onChangeAddItemDialogOpen).toBeCalledWith(true);
+  });
   it('navigates to the manufacturer url', async () => {
     createView();
     await waitFor(() => {
@@ -189,7 +210,7 @@ describe('Catalogue Items Table', () => {
     expect(url).toHaveAttribute('href', 'http://example.com');
   });
 
-  it.only('progress bar renders correctly', async () => {
+  it('progress bar renders correctly', async () => {
     createView();
 
     await waitFor(() => {

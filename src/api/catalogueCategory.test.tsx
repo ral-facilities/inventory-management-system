@@ -4,6 +4,7 @@ import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
   useCatalogueCategoryById,
+  useCopyToCatalogueCategory,
   useDeleteCatalogueCategory,
   useEditCatalogueCategory,
   useMoveToCatalogueCategory,
@@ -38,11 +39,10 @@ describe('catalogue category api functions', () => {
         expect(result.current.isSuccess).toBeTruthy();
       });
       expect(result.current.data).toEqual({
+        id: '1',
+        is_leaf: false,
         name: 'test',
         parent_id: null,
-        id: '1',
-        code: 'test',
-        is_leaf: false,
       });
     });
 
@@ -278,7 +278,7 @@ describe('catalogue category api functions', () => {
 
       expect(result.current.isIdle).toBe(true);
       result.current.mutate({
-        catalogueCategory: catalogueCategories,
+        catalogueCategories: catalogueCategories,
         selectedCategories: selectedCatalogueCategories,
         targetLocationCatalogueCategory: targetLocation,
       });
@@ -350,7 +350,7 @@ describe('catalogue category api functions', () => {
 
       expect(result.current.isIdle).toBe(true);
       result.current.mutate({
-        catalogueCategory: catalogueCategories,
+        catalogueCategories: catalogueCategories,
         selectedCategories: selectedCatalogueCategories,
         targetLocationCatalogueCategory: targetLocation,
       });
@@ -369,6 +369,147 @@ describe('catalogue category api functions', () => {
 
     it.todo(
       'sends axios request to fetch a single catalogue category and throws an appropriate error on failure'
+    );
+  });
+
+  describe('useCopyToCatalogueCategory', () => {
+    it('sends requests to copy (adding category to new location) a single or multiple catalogue categories data and returns successful response', async () => {
+      const selectedCatalogueCategories = [
+        {
+          id: '79',
+          name: 'test_dup',
+          parent_id: '1',
+          code: 'test_dup',
+          is_leaf: false,
+        },
+        {
+          id: '6',
+          name: 'Wavefront Sensors',
+          parent_id: '1',
+          code: 'wavefront-sensors',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Wavefront Measurement Range',
+              type: 'string',
+              mandatory: true,
+            },
+            {
+              name: 'Spatial Resolution',
+              type: 'number',
+              unit: 'micrometers',
+              mandatory: false,
+            },
+          ],
+        },
+        {
+          id: '5',
+          name: 'Energy Meters',
+          parent_id: '1',
+          code: 'energy-meters',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Measurement Range',
+              type: 'number',
+              unit: 'Joules',
+              mandatory: true,
+            },
+            {
+              name: 'Accuracy',
+              type: 'string',
+              mandatory: false,
+            },
+          ],
+        },
+      ];
+
+      const catalogueCategories = [
+        {
+          name: 'Wavefront Sensors',
+          code: 'wavefront-sensors',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Wavefront Measurement Range',
+              type: 'string',
+              mandatory: true,
+            },
+            {
+              name: 'Spatial Resolution',
+              type: 'number',
+              unit: 'micrometers',
+              mandatory: false,
+            },
+          ],
+        },
+        {
+          name: 'test_dup',
+          code: 'test_dup',
+          is_leaf: false,
+        },
+        {
+          name: 'Energy Meters',
+          code: 'energy-meters',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Measurement Range',
+              type: 'number',
+              unit: 'Joules',
+              mandatory: true,
+            },
+            {
+              name: 'Accuracy',
+              type: 'string',
+              mandatory: false,
+            },
+          ],
+        },
+      ];
+
+      const targetLocation = {
+        name: 'Root',
+        id: '',
+        parent_id: null,
+        is_leaf: false,
+        code: '',
+      };
+      const { result } = renderHook(() => useCopyToCatalogueCategory(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate({
+        catalogueCategories: catalogueCategories,
+        selectedCategories: selectedCatalogueCategories,
+        targetLocationCatalogueCategory: targetLocation,
+      });
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual([
+        {
+          message: 'Successfully copied to Root',
+          name: 'Wavefront Sensors',
+          state: 'success',
+        },
+        {
+          message: 'Successfully copied to Root',
+          name: 'Energy Meters',
+          state: 'success',
+        },
+        {
+          message:
+            'A catalogue category with the same name already exists within the parent catalogue category',
+          name: 'test_dup',
+          state: 'error',
+        },
+      ]);
+    });
+
+    it.todo(
+      'sends axios request to copy catalogue category and throws an appropriate error on failure'
     );
   });
 });
