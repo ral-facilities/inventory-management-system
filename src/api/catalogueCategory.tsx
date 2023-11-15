@@ -11,6 +11,7 @@ import {
   BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueCategoryTransferState,
+  CopyToCatalogueCategory,
   EditCatalogueCategory,
   ErrorParsing,
   MoveToCatalogueCategory,
@@ -184,7 +185,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
         id: moveToCatalogueCategory.targetLocationCatalogueCategory.id,
       };
 
-      const promises = moveToCatalogueCategory.catalogueCategory.map(
+      const promises = moveToCatalogueCategory.catalogueCategories.map(
         async (category: EditCatalogueCategory, index) => {
           const { name, ...categoryWithoutName } = category;
 
@@ -234,6 +235,62 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
       if (hasSuccessfulEdit) {
         queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
         queryClient.invalidateQueries({ queryKey: ['CatalogueBreadcrumbs'] });
+      }
+
+      return transferStates;
+    },
+    {
+      onError: (error) => {
+        console.log('Got error ' + error.message);
+      },
+    }
+  );
+};
+
+export const useCopyToCatalogueCategory = (): UseMutationResult<
+  CatalogueCategoryTransferState[],
+  AxiosError,
+  CopyToCatalogueCategory
+> => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    async (copyToCatalogueCategory: CopyToCatalogueCategory) => {
+      const transferStates: CatalogueCategoryTransferState[] = [];
+      let hasSuccessfulAdd = false;
+
+      const targetLocationInfo = {
+        name: copyToCatalogueCategory.targetLocationCatalogueCategory.name,
+        id: copyToCatalogueCategory.targetLocationCatalogueCategory.id,
+      };
+
+      const promises = copyToCatalogueCategory.catalogueCategories.map(
+        async (category: AddCatalogueCategory, index) => {
+          return addCatalogueCategory(category)
+            .then((result) => {
+              const successTransferState: CatalogueCategoryTransferState = {
+                name: result.name ?? '',
+                message: `Successfully copied to ${targetLocationInfo.name}`,
+                state: 'success',
+              };
+              transferStates.push(successTransferState);
+              hasSuccessfulAdd = true;
+            })
+            .catch((error) => {
+              const response = error.response?.data as ErrorParsing;
+              const errorTransferState: CatalogueCategoryTransferState = {
+                name: category.name ?? '',
+                message: response.detail,
+                state: 'error',
+              };
+              transferStates.push(errorTransferState);
+            });
+        }
+      );
+
+      await Promise.all(promises);
+
+      if (hasSuccessfulAdd) {
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
       }
 
       return transferStates;
