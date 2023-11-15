@@ -276,17 +276,6 @@ describe('Systems Dialog', () => {
       expect(mockOnClose).toHaveBeenCalled();
     });
 
-    it('displays error message when name field is not filled in', async () => {
-      createView();
-
-      modifyValues({ name: '' });
-
-      await user.click(screen.getByRole('button', { name: 'Save' }));
-
-      expect(screen.getByText('Please enter a name')).toBeInTheDocument();
-      expect(mockOnClose).not.toHaveBeenCalled();
-    });
-
     it('displays error message when no fields have been changed that disappears when the form is modified', async () => {
       createView();
 
@@ -302,6 +291,17 @@ describe('Systems Dialog', () => {
       expect(
         screen.queryByText('Please edit a form entry before clicking save')
       ).not.toBeInTheDocument();
+    });
+
+    it('displays error message when name field is not filled in', async () => {
+      createView();
+
+      modifyValues({ name: '' });
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(screen.getByText('Please enter a name')).toBeInTheDocument();
+      expect(mockOnClose).not.toHaveBeenCalled();
     });
 
     it('displays error message when attempting to edit a system with a duplicate name', async () => {
