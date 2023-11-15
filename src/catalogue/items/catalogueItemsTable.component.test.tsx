@@ -35,6 +35,7 @@ describe('Catalogue Items Table', () => {
         obsolete_reason: null,
         obsolete_replacement_catalogue_item_id: null,
       },
+      dense: false,
       onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
       onChangeAddItemDialogOpen: onChangeAddItemDialogOpen,
       catalogueItemManufacturer: {

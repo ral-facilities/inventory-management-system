@@ -353,6 +353,7 @@ function Catalogue() {
           catalogueItemPropertyValues={catalogueItemPropertyValues}
           onChangeCatalogueItemPropertyValues={setCatalogueItemPropertyValues}
           onChangeAddItemDialogOpen={setAddItemDialogOpen}
+          dense={false}
         />
       )}
 
