@@ -208,8 +208,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   }, [handleErrors, manufacturerDetails, addManufacturer, handleClose]);
 
   const handleEditManufacturer = React.useCallback(() => {
-    console.log(manufacturerDetails);
-    console.log(selectedManufacturerData);
     if (manufacturerDetails && selectedManufacturerData) {
       const hasErrors = handleErrors();
 
@@ -250,8 +248,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       let ManufacturerToEdit: EditManufacturer = {
         id: selectedManufacturerData?.id,
       };
-
-      console.log(selectedManufacturerData);
 
       isNameUpdated && (ManufacturerToEdit.name = manufacturerDetails.name);
       isURLUpdated && (ManufacturerToEdit.url = manufacturerDetails.url);
