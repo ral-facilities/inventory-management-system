@@ -65,20 +65,52 @@ function ManufacturerLandingPage() {
             >
               {manufacturerData.name}
             </Typography>
-            <Typography sx={{ margin: '8px' }} variant="h6">
-              URL:
-            </Typography>
-            <Typography sx={{ margin: '8px' }} variant="body1">
-              <MuiLink underline="hover" href={manufacturerData.url}>
-                {manufacturerData.url}
-              </MuiLink>
-            </Typography>
-            <Typography sx={{ margin: '8px' }} variant="h6">
-              Telephone number:
-            </Typography>
-            <Typography sx={{ margin: '8px' }} variant="body1">
-              {manufacturerData.telephone}
-            </Typography>
+          </Box>
+          <Box
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              cursor: 'pointer',
+              margin: '8px',
+            }}
+          >
+            <Grid container spacing={1}>
+              <Grid item xs={12} sm={6} md={4}>
+                <ListItem
+                  style={{
+                    justifyContent: 'flex-start',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
+                  <ListItemText primary={'URL'} />
+                </ListItem>
+                <MuiLink
+                  sx={{ alignItems: 'left' }}
+                  underline="hover"
+                  href={manufacturerData.url}
+                >
+                  {manufacturerData.url}
+                </MuiLink>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <ListItem
+                  style={{
+                    justifyContent: 'flex-start',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
+                  <ListItemText
+                    primary={'Telephone number'}
+                    secondary={manufacturerData.telephone}
+                  />
+                </ListItem>
+              </Grid>
+            </Grid>
           </Box>
 
           <Box
