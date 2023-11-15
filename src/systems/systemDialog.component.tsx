@@ -15,7 +15,7 @@ import {
   TextField,
 } from '@mui/material';
 import { AxiosError } from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   getSystemImportanceColour,
   useAddSystem,
@@ -43,20 +43,20 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const { open, onClose, parentId, type, selectedSystem } = props;
 
   // User entered properties
-  const [systemData, setSystemData] = React.useState<AddSystem>(
-    selectedSystem
-      ? // Cast here to remove the values not needed here i.e. id & code
-        (selectedSystem as AddSystem)
-      : {
-          // Here using null for optional values only, so that types for isUpdated parameters
-          // can match
-          name: '',
-          description: null,
-          location: null,
-          owner: null,
-          importance: SystemImportanceType.MEDIUM,
-        }
-  );
+  const [systemData, setSystemData] = React.useState<AddSystem>({
+    // Here using null for optional values only, so that types for isUpdated parameters
+    // can match
+    name: '',
+    description: null,
+    location: null,
+    owner: null,
+    importance: SystemImportanceType.MEDIUM,
+  });
+
+  // Ensure system data is updated when the selected system changes
+  useEffect(() => {
+    if (selectedSystem) setSystemData(selectedSystem as AddSystem);
+  }, [selectedSystem]);
 
   // Error messages for the above properties (undefined means no error)
   const [nameError, setNameError] = React.useState<string | undefined>(
