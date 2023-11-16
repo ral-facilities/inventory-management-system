@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Typography, TableRow } from '@mui/material';
 import React from 'react';
 import { CatalogueCategory } from '../../app.types';
 import {
@@ -6,7 +6,7 @@ import {
   useMaterialReactTable,
   type MRT_ColumnDef,
 } from 'material-react-table';
-
+import { MRT_Localization_EN } from 'material-react-table/locales/en';
 export interface CatalogueCategoryTableViewProps {
   selectedCategories: CatalogueCategory[];
   onChangeCatalogueCurrDirId: (catalogueCurrDirId: string | null) => void;
@@ -27,6 +27,8 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     selectedCategories.map((category) => {
       return category.id;
     });
+
+  const noResultsTxt = 'No catalogue categories found';
   const columns = React.useMemo<MRT_ColumnDef<CatalogueCategory>[]>(() => {
     return [
       {
@@ -39,42 +41,21 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
             (requestType !== 'moveTo' ||
               !selectedCatalogueCategoryIds.includes(row.original.id));
           return (
-            <Box
-              key={row.original.id}
-              onClick={() => {
-                if (
-                  !row.original.is_leaf &&
-                  (!selectedCatalogueCategoryIds.includes(row.original.id) ||
-                    requestType === 'copyTo')
-                ) {
-                  onChangeCatalogueCurrDirId(row.original.id);
-                } else if (requestType === 'standard') {
-                  onChangeCatalogueCurrDirId(row.original.id);
-                }
-              }}
+            <Typography
               sx={{
-                cursor:
+                color:
                   canPlaceHere || requestType === 'standard'
-                    ? 'pointer'
-                    : 'not-allowed',
+                    ? 'inherit'
+                    : 'action.disabled',
               }}
             >
-              <Typography
-                sx={{
-                  color:
-                    canPlaceHere || requestType === 'standard'
-                      ? 'inherit'
-                      : 'action.disabled',
-                }}
-              >
-                {renderedCellValue}
-              </Typography>
-            </Box>
+              {renderedCellValue}
+            </Typography>
           );
         },
       },
     ];
-  }, [onChangeCatalogueCurrDirId, requestType, selectedCatalogueCategoryIds]);
+  }, [requestType, selectedCatalogueCategoryIds]);
 
   const table = useMaterialReactTable({
     columns: columns, // If dense only show the name column
@@ -92,7 +73,38 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     enableColumnFilters: true,
     enableHiding: false,
     enableFullScreenToggle: false,
+    muiTableBodyRowProps: ({ row }) => {
+      const canPlaceHere =
+        !row.original.is_leaf &&
+        (requestType !== 'moveTo' ||
+          !selectedCatalogueCategoryIds.includes(row.original.id));
+      return {
+        component: TableRow,
+        onClick: () => {
+          if (
+            !row.original.is_leaf &&
+            (!selectedCatalogueCategoryIds.includes(row.original.id) ||
+              requestType === 'copyTo')
+          ) {
+            onChangeCatalogueCurrDirId(row.original.id);
+          } else if (requestType === 'standard') {
+            onChangeCatalogueCurrDirId(row.original.id);
+          }
+        },
+        'aria-label': `${row.original.name} row`,
+        style: {
+          cursor:
+            canPlaceHere || requestType === 'standard'
+              ? 'pointer'
+              : 'not-allowed',
+        },
+      };
+    },
     muiTableContainerProps: { sx: { height: '360.4px' } },
+    localization: {
+      ...MRT_Localization_EN,
+      noRecordsToDisplay: noResultsTxt,
+    },
     enablePagination: true,
     initialState: {
       showColumnFilters: true,

@@ -4,6 +4,8 @@ import {
   Button,
   MenuItem,
   ListItemIcon,
+  Typography,
+  TableRow,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -48,7 +50,7 @@ function ManufacturerComponent() {
     Manufacturer | undefined
   >(undefined);
 
-  const tableHeight = `calc(100vh - (64px + 36px + 50px + 112px))`;
+  const tableHeight = `calc(100vh - (64px + 36px + 50px + 172px))`;
 
   const columns = React.useMemo<MRT_ColumnDef<Manufacturer>[]>(() => {
     return [
@@ -74,21 +76,27 @@ function ManufacturerComponent() {
         accessorFn: (row) => row.address,
         size: 650,
         Cell: ({ row }) => (
-          <>
-            {row.original.address.building_number +
-              ' \n' +
-              row.original.address.street_name +
-              ' \n' +
-              row.original.address.town +
-              ' \n' +
-              row.original.address.county +
-              ' \n' +
-              row.original.address.postcode}
-          </>
+          <div style={{ display: 'inline-block' }}>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {row.original.address.building_number}
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {row.original.address.street_name}
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {row.original.address.town}
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {row.original.address.county}
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {row.original.address.postcode}
+            </Typography>
+          </div>
         ),
       },
       {
-        header: 'telephone',
+        header: 'Telephone',
         accessorFn: (row) => row.telephone,
         size: 250,
       },
@@ -111,6 +119,9 @@ function ManufacturerComponent() {
       showColumnFilters: true,
       showGlobalFilter: true,
       pagination: { pageSize: 25, pageIndex: 0 },
+    },
+    muiTableBodyRowProps: ({ row }) => {
+      return { component: TableRow, 'aria-label': `${row.original.name} row` };
     },
     muiTableContainerProps: { sx: { height: tableHeight } },
     paginationDisplayMode: 'pages',

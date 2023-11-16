@@ -4,11 +4,18 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
-  Link as MuiLink,
-  Tooltip,
-  MenuItem,
   ListItemIcon,
+  MenuItem,
+  Link as MuiLink,
+  TableRow,
+  Tooltip,
 } from '@mui/material';
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+  type MRT_ColumnDef,
+} from 'material-react-table';
+import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCatalogueItems } from '../../api/catalogueItem';
@@ -18,15 +25,10 @@ import {
   CatalogueItemDetailsPlaceholder,
   CatalogueItemManufacturer,
 } from '../../app.types';
-import {
-  MaterialReactTable,
-  useMaterialReactTable,
-  type MRT_ColumnDef,
-} from 'material-react-table';
 import { matchCatalogueItemProperties } from '../catalogue.component';
+import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
-import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 
 function generateUniqueName(
   existingNames: (string | undefined)[],
@@ -73,7 +75,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     dense,
   } = props;
   // SG header + SG footer + tabs #add breadcrumbs + Mui table V2
-  const tableHeight = `calc(100vh - (64px + 36px + 50px + 112px))`;
+  const tableHeight = `calc(100vh - (64px + 36px + 50px + 172px))`;
 
   const { data, isLoading } = useCatalogueItems(parentInfo.id);
 
@@ -95,6 +97,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const catalogueCategoryNames: (string | undefined)[] =
     data?.map((item) => item.name) || [];
+
+  const noResultsTxt =
+    'No results found: Try adding an item by using the Add Catalogue Item button in the top right of your screen';
 
   const columns = React.useMemo<MRT_ColumnDef<CatalogueItem>[]>(() => {
     const viewCatalogueItemProperties =
@@ -298,6 +303,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableRowSelection: dense ? true : false,
     enableFullScreenToggle: false,
     enablePagination: true,
+    localization: {
+      ...MRT_Localization_EN,
+      noRecordsToDisplay: noResultsTxt,
+    },
+    muiTableBodyRowProps: ({ row }) => {
+      return { component: TableRow, 'aria-label': `${row.original.name} row` };
+    },
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
@@ -345,6 +357,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           key={0}
           aria-label={`Edit ${row.original.name} catalogue item`}
           onClick={() => {
+            closeMenu();
             setEditItemDialogOpen(true);
             onChangeCatalogueItemDetails &&
               onChangeCatalogueItemDetails(details);
@@ -358,8 +371,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             setSelectedCatalogueItem(row.original);
             onChangeCatalogueItemManufacturer &&
               onChangeCatalogueItemManufacturer(row.original.manufacturer);
-
-            closeMenu();
           }}
           sx={{ m: 0 }}
         >
@@ -372,6 +383,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           key={1}
           aria-label={`Save as ${row.original.name} catalogue item`}
           onClick={() => {
+            closeMenu();
             onChangeAddItemDialogOpen && onChangeAddItemDialogOpen(true);
             onChangeCatalogueItemDetails &&
               onChangeCatalogueItemDetails({
@@ -391,8 +403,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             setSelectedCatalogueItem(row.original);
             onChangeCatalogueItemManufacturer &&
               onChangeCatalogueItemManufacturer(row.original.manufacturer);
-
-            closeMenu();
           }}
           sx={{ m: 0 }}
         >
@@ -405,9 +415,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           key={2}
           aria-label={`Delete ${row.original.name} catalogue item`}
           onClick={() => {
+            closeMenu();
             setDeleteItemDialogOpen(true);
             setSelectedCatalogueItem(row.original);
-            closeMenu();
           }}
           sx={{ m: 0 }}
         >

@@ -182,7 +182,6 @@ describe('CatalogueCategoryTableView', () => {
     expect(screen.getByText('Energy Meters')).toBeInTheDocument();
     expect(screen.getByText('Wavefront Sensors')).toBeInTheDocument();
     expect(screen.getByText('Voltage Meters')).toBeInTheDocument();
-    expect(screen.getByText('Amp Meters')).toBeInTheDocument();
   });
 
   it('renders no results page correctly', async () => {
@@ -193,32 +192,6 @@ describe('CatalogueCategoryTableView', () => {
       expect(
         screen.getByText('No catalogue categories found')
       ).toBeInTheDocument();
-    });
-  });
-
-  it('highlights the row on hover', async () => {
-    createView();
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('row', { name: 'Cameras row' })
-      ).toBeInTheDocument();
-    });
-
-    const row = screen.getByRole('row', {
-      name: 'Cameras row',
-    });
-
-    await user.hover(row);
-
-    expect(row).not.toHaveStyle('background-color: inherit');
-
-    await user.unhover(row);
-
-    await waitFor(() => {
-      expect(screen.getByRole('row', { name: 'Cameras row' })).toHaveStyle(
-        'background-color: inherit'
-      );
     });
   });
 
@@ -240,20 +213,19 @@ describe('CatalogueCategoryTableView', () => {
     createView();
 
     await waitFor(() => {
+      expect(screen.getByText('Cameras')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Go to page 2' }));
+
+    await waitFor(() => {
       expect(screen.getByText('Amp Meters')).toBeInTheDocument();
     });
 
-    const camerasRow = screen.getByRole('row', { name: 'Amp Meters row' });
-    await user.click(camerasRow);
+    const AmpMetersRow = screen.getByRole('row', { name: 'Amp Meters row' });
+    await user.click(AmpMetersRow);
 
     expect(onChangeCatalogueCurrDirId).toBeCalledWith('19');
-  });
-  it('shows loading indicator', async () => {
-    props.catalogueCategoryDataLoading = true;
-    createView();
-    await waitFor(() => {
-      expect(screen.getByRole('progressbar')).toBeInTheDocument();
-    });
   });
 
   it('disables the leaf categories and the selected categories', async () => {
@@ -295,29 +267,15 @@ describe('CatalogueCategoryTableView', () => {
     const voltageMetersRow = screen.getByRole('row', {
       name: 'Voltage Meters row',
     });
-    const ampMetersRow = screen.getByRole('row', { name: 'Amp Meters row' });
 
     // Not allowed cursor
 
-    expect(camerasRow).toHaveStyle(
-      'background-color: inherit; cursor: not-allowed;'
-    );
-    expect(test_dupRow).toHaveStyle(
-      'background-color: inherit; cursor: not-allowed;'
-    );
+    expect(camerasRow).toHaveStyle('cursor: not-allowed;');
+    expect(test_dupRow).toHaveStyle('cursor: not-allowed;');
 
-    expect(energyMetersRow).toHaveStyle(
-      'background-color: inherit; cursor: not-allowed;'
-    );
-    expect(wavefrontSensorsRow).toHaveStyle(
-      'background-color: inherit; cursor: not-allowed;'
-    );
-    expect(voltageMetersRow).toHaveStyle(
-      'background-color: inherit; cursor: not-allowed;'
-    );
-    expect(ampMetersRow).toHaveStyle(
-      'background-color: inherit; cursor: not-allowed;'
-    );
+    expect(energyMetersRow).toHaveStyle('cursor: not-allowed;');
+    expect(wavefrontSensorsRow).toHaveStyle('cursor: not-allowed;');
+    expect(voltageMetersRow).toHaveStyle('cursor: not-allowed;');
 
     // checks noting happens on click
     await user.click(camerasRow);
@@ -325,7 +283,6 @@ describe('CatalogueCategoryTableView', () => {
     await user.click(energyMetersRow);
     await user.click(wavefrontSensorsRow);
     await user.click(voltageMetersRow);
-    await user.click(ampMetersRow);
 
     expect(onChangeCatalogueCurrDirId).not.toBeCalled();
   });

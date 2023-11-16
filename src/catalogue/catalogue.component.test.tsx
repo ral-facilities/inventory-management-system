@@ -174,7 +174,7 @@ describe('Catalogue', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'There are no items. Try adding an item by using the Add Catalogue Item button in the top right of your screen'
+          'No results found: Try adding an item by using the Add Catalogue Item button in the top right of your screen'
         )
       ).toBeInTheDocument();
     });
