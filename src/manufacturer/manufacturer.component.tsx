@@ -197,9 +197,11 @@ function ManufacturerComponent() {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
-                    <Link underline="hover" href={item.url}>
-                      {item.url}
-                    </Link>
+                    {item.url && (
+                      <Link underline="hover" href={item.url}>
+                        {item.url}
+                      </Link>
+                    )}
                   </TableCell>
                   <TableCell
                     sx={{

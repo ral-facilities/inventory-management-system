@@ -41,14 +41,14 @@ export interface CatalogueCategory {
 
 export interface AddManufacturer {
   name: string;
-  url?: string;
+  url?: string | null;
   address: AddAddress;
   telephone?: string | null;
 }
 
 export interface EditManufacturer {
   name?: string;
-  url?: string;
+  url?: string | null;
   address?: EditAddress;
   telephone?: string | null;
   id?: string | null;
@@ -56,7 +56,7 @@ export interface EditManufacturer {
 
 export interface ManufacturerDetails {
   name: string;
-  url?: string;
+  url?: string | null;
   address: AddAddress;
   telephone: string | null;
 }
