@@ -25,9 +25,9 @@ describe('Manufacturer Landing page', () => {
         screen.getByRole('link', { name: 'Back to manufacturer table view' })
       ).toBeInTheDocument();
     });
-    expect(screen.getByText('URL')).toBeInTheDocument();
+    expect(screen.getByText('URL:')).toBeInTheDocument();
     expect(screen.getByText('http://example.com')).toBeInTheDocument();
-    expect(screen.getByText('Telephone number')).toBeInTheDocument();
+    expect(screen.getByText('Telephone number:')).toBeInTheDocument();
     expect(screen.getByText('07334893348')).toBeInTheDocument();
     expect(screen.getByText('Address')).toBeInTheDocument();
   });
@@ -46,26 +46,6 @@ describe('Manufacturer Landing page', () => {
     expect(editButton).toBeDisabled();
     const homeButton = screen.getByRole('link', { name: 'Home' });
     expect(homeButton).toBeInTheDocument();
-  });
-
-  it('toggles the address so it is either visible or hidden', async () => {
-    createView('/inventory-management-system/manufacturer/1');
-    await waitFor(() => {
-      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
-    });
-
-    expect(
-      screen.getByLabelText('Close manufacturer address')
-    ).toBeInTheDocument();
-
-    const toggleButton = screen.getByLabelText('Close manufacturer address');
-
-    await user.click(toggleButton);
-    await waitFor(() => {
-      expect(
-        screen.getByLabelText('Show manufacturer address')
-      ).toBeInTheDocument();
-    });
   });
 
   it('shows the loading indicator', async () => {

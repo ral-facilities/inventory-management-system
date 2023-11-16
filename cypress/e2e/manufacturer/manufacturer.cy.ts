@@ -306,14 +306,9 @@ describe('Manufacturer', () => {
       });
   });
 
-  it('navigates to landing page, toggles address and navigates back to the table view', () => {
+  it('navigates to landing page and navigates back to the table view', () => {
     cy.findByText('Manufacturer A').click();
-    cy.findByText('Telephone number').should('exist');
-    cy.findByLabelText('Close manufacturer address').should('exist');
-    cy.findByLabelText('Close manufacturer address').click();
-
-    cy.findByLabelText('Close manufacturer address').should('not.exist');
-    cy.findByLabelText('Show manufacturer address').should('exist');
+    cy.findByText('Telephone number:').should('exist');
 
     cy.findByRole('link', { name: 'Back to manufacturer table view' }).click();
 

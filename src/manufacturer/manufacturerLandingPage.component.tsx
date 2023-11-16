@@ -4,16 +4,13 @@ import {
   Grid,
   Typography,
   Link as MuiLink,
-  Collapse,
   LinearProgress,
 } from '@mui/material';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { Link, useLocation } from 'react-router-dom';
 import { useManufacturer } from '../api/manufacturer';
-import { useState } from 'react';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+
 import ManufacturerDialog from './manufacturerDialog.component';
 import React from 'react';
 import { Manufacturer } from '../app.types';
@@ -28,8 +25,6 @@ function ManufacturerLandingPage() {
 
   const { data: manufacturerData, isLoading: manufacturerDataLoading } =
     useManufacturer(manufacturerId);
-
-  const [showAddress, setShowAddress] = useState(true);
 
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
     React.useState<boolean>(false);
@@ -46,10 +41,6 @@ function ManufacturerLandingPage() {
     },
     telephone: '',
   });
-
-  const toggleAddress = () => {
-    setShowAddress(!showAddress);
-  };
 
   return (
     <Grid container>
@@ -82,7 +73,7 @@ function ManufacturerLandingPage() {
             sx={{
               padding: '20px',
               textAlign: 'left',
-              mx: '192px',
+              px: '192px',
             }}
           >
             <Typography
@@ -91,80 +82,42 @@ function ManufacturerLandingPage() {
             >
               {manufacturerData.name}
             </Typography>
-          </Box>
-          <Box
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              cursor: 'pointer',
-              margin: '8px',
-            }}
-          >
-            <Grid container spacing={1}>
-              <Grid item xs={12} sm={6} md={4}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}
-                >
-                  <ListItemText primary={'URL'} />
-                </ListItem>
-                <MuiLink
-                  sx={{ alignItems: 'left' }}
-                  underline="hover"
-                  href={manufacturerData.url}
-                >
+
+            <Box
+              style={{
+                flexDirection: 'row',
+                alignItems: 'left',
+                cursor: 'pointer',
+                margin: '8px',
+              }}
+            >
+              <Typography sx={{ margin: '8px' }} variant="h6">
+                URL:
+              </Typography>
+              <Typography sx={{ margin: '8px' }} variant="body1">
+                <MuiLink underline="hover" href={manufacturerData.url}>
                   {manufacturerData.url}
                 </MuiLink>
-              </Grid>
+              </Typography>
+              <Typography sx={{ margin: '8px' }} variant="h6">
+                Telephone number:
+              </Typography>
+              <Typography sx={{ margin: '8px' }} variant="body1">
+                {manufacturerData.telephone}
+              </Typography>
+            </Box>
+            <Box
+              style={{
+                flexDirection: 'row',
+                alignItems: 'left',
+                cursor: 'pointer',
+                margin: '8px',
+              }}
+            >
               <Grid item xs={12} sm={6} md={4}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}
-                >
-                  <ListItemText
-                    primary={'Telephone number'}
-                    secondary={manufacturerData.telephone}
-                  />
-                </ListItem>
+                <Typography variant="h6">Address</Typography>
               </Grid>
-            </Grid>
-          </Box>
-
-          <Box
-            onClick={toggleAddress}
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              cursor: 'pointer',
-              margin: '8px',
-            }}
-            aria-label={`${
-              showAddress ? 'Close' : 'Show'
-            } manufacturer address`}
-          >
-            {showAddress ? (
-              <>
-                <Typography variant="h6">Address</Typography>
-                <ExpandLessIcon />
-              </>
-            ) : (
-              <>
-                <Typography variant="h6">Address</Typography>
-                <ExpandMoreIcon />
-              </>
-            )}
-          </Box>
-          <Collapse in={showAddress}>
+            </Box>
             <Grid container spacing={1}>
               <Grid item xs={12} sm={6} md={4}>
                 <ListItem
@@ -242,7 +195,7 @@ function ManufacturerLandingPage() {
                 </ListItem>
               </Grid>
             </Grid>
-          </Collapse>
+          </Box>
         </Grid>
       )}
       {!manufacturerDataLoading ? (
