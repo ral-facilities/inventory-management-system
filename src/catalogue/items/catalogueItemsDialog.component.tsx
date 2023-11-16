@@ -15,6 +15,7 @@ import {
   FormControl,
   FormHelperText,
   SelectChangeEvent,
+  Autocomplete,
 } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import React from 'react';
@@ -715,93 +716,17 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           </Box>
         )}
 
-        {/* <Typography sx={{ marginTop: '16px' }} variant="h6">
-          Manufacturer
-        </Typography> */}
         <FormControl fullWidth>
-          <InputLabel id="manufacturer-select-label">Manufacturer</InputLabel>
-          <Select
-            labelId="manufacturer-select-label"
-            id="manufacturer-select"
-            value={manufacturer}
-            label="Manufacturer"
-            onChange={handleDropDown}
-          >
-            {manufacturers?.map((manufacturer) => (
-              <MenuItem
-                key={manufacturer.name}
-                value={JSON.stringify(manufacturer)}
-              >
-                {manufacturer.name}
-              </MenuItem>
-            ))}
-          </Select>
+          <Autocomplete
+            disablePortal
+            id="manufacturer-autocomplete"
+            options={manufacturers ? manufacturers : []}
+            sx={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} name="Manufacturer" />
+            )}
+          />
         </FormControl>
-        {/* <TextField
-          label="Manufacturer Name"
-          required={true}
-          sx={{ marginLeft: '4px', marginTop: '16px' }}
-          value={catalogueItemManufacturer.name}
-          onChange={(event) => {
-            onChangeCatalogueItemManufacturer({
-              ...catalogueItemManufacturer,
-              name: event.target.value,
-            });
-            setFormError(false);
-            setFormErrorMessage(undefined);
-            setManufacturerNameError(false);
-          }}
-          error={manufacturerNameError}
-          helperText={
-            manufacturerNameError ? 'Please enter a Manufacturer Name' : ''
-          }
-          fullWidth
-        />
-
-        <TextField
-          label="Manufacturer URL"
-          required={true}
-          sx={{ marginLeft: '4px', marginTop: '16px' }}
-          value={catalogueItemManufacturer.web_url}
-          onChange={(event) => {
-            onChangeCatalogueItemManufacturer({
-              ...catalogueItemManufacturer,
-              web_url: event.target.value,
-            });
-            setFormError(false);
-            setFormErrorMessage(undefined);
-            setManufacturerWebUrlError(false);
-            setManufacturerWebUrlErrorMessage('');
-          }}
-          error={manufacturerWebUrlError} // Set error state based on the nameError state
-          helperText={
-            manufacturerWebUrlError ? manufacturerWebUrlErrorMessage : ''
-          }
-          fullWidth
-        />
-
-        <TextField
-          label="Manufacturer Address"
-          required={true}
-          sx={{ marginLeft: '4px', marginTop: '16px' }}
-          value={catalogueItemManufacturer.address}
-          onChange={(event) => {
-            onChangeCatalogueItemManufacturer({
-              ...catalogueItemManufacturer,
-              address: event.target.value,
-            });
-            setFormError(false);
-            setFormErrorMessage(undefined);
-            setManufacturerAddressError(false);
-          }}
-          error={manufacturerAddressError} // Set error state based on the nameError state
-          helperText={
-            manufacturerAddressError
-              ? 'Please enter a Manufacturer Address'
-              : ''
-          }
-          fullWidth
-        /> */}
       </DialogContent>
       <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
         <Box
