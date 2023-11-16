@@ -1,7 +1,11 @@
 import { NavigateNext } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
+import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import {
   Box,
+  Button,
+  Checkbox,
   CircularProgress,
   Divider,
   Grid,
@@ -14,8 +18,9 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
+import { System } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog from './systemDialog.component';
@@ -35,12 +40,11 @@ export const useNavigateToSystem = () => {
   );
 };
 
-function Systems() {
-  // Navigation setup
+/* Returns the system id from the location pathname (null when not found) */
+export const useSystemId = (): string | null => {
   const location = useLocation();
-  const navigateToSystem = useNavigateToSystem();
 
-  const getSystemId = React.useCallback(() => {
+  return React.useMemo(() => {
     let systemId: string | null = location.pathname.replace(
       '/inventory-management-system/systems',
       ''
@@ -48,17 +52,41 @@ function Systems() {
     systemId = systemId === '' ? null : systemId.replace('/', '');
     return systemId;
   }, [location.pathname]);
-  const systemId = getSystemId();
+};
 
+function Systems() {
+  // Navigation
+  const systemId = useSystemId();
+  const navigateToSystem = useNavigateToSystem();
+
+  // States
   const [addSystemDialogOpen, setAddSystemDialogOpen] =
     React.useState<boolean>(false);
 
+  const [selectedSystems, setSelectedSystems] = React.useState<System[]>([]);
+
+  // Data
   const { data: systemsBreadcrumbs, isLoading: systemsBreadcrumbsLoading } =
     useSystemsBreadcrumbs(systemId);
   const { data: subsystemsData, isLoading: subsystemsDataLoading } = useSystems(
     // String value of null for filtering root systems
     systemId === null ? 'null' : systemId
   );
+
+  const handleSystemCheckboxChange = (checked: boolean, system: System) => {
+    if (checked) setSelectedSystems([...selectedSystems, system]);
+    else
+      setSelectedSystems(
+        selectedSystems.filter(
+          (selectedSystem: System) => selectedSystem.id !== system.id
+        )
+      );
+  };
+
+  // Clear selected system when user navigates to a different page
+  React.useEffect(() => {
+    setSelectedSystems([]);
+  }, [systemId]);
 
   return (
     <Grid container>
@@ -87,10 +115,29 @@ function Systems() {
               navigateHomeAriaLabel={'navigate to systems home'}
             />
             <NavigateNext
-              fontSize="medium"
-              sx={{ color: 'text.secondary', margin: '4px' }}
+              fontSize="small"
+              sx={{ color: 'text.secondary', margin: 1 }}
             />
           </div>
+          {selectedSystems.length > 0 && (
+            <Box>
+              <Button
+                sx={{ mx: 1 }}
+                variant="outlined"
+                startIcon={<DriveFileMoveOutlinedIcon />}
+              >
+                Move to
+              </Button>
+              <Button
+                sx={{ mx: 1 }}
+                variant="outlined"
+                startIcon={<ClearIcon />}
+                onClick={() => setSelectedSystems([])}
+              >
+                {selectedSystems.length} selected
+              </Button>
+            </Box>
+          )}
         </Grid>
       )}
       <Grid container margin={0} direction="row" alignItems="stretch">
@@ -126,17 +173,37 @@ function Systems() {
               </Box>
               <Divider role="presentation" />
               <List sx={{ padding: 0 }}>
-                {subsystemsData?.map((item, index) => (
-                  <ListItem key={index} sx={{ padding: 0 }}>
-                    <ListItemButton
-                      sx={{ padding: 1 }}
-                      component={Link}
-                      to={item.id}
-                    >
-                      <ListItemText>{item.name}</ListItemText>
-                    </ListItemButton>
-                  </ListItem>
-                ))}
+                {subsystemsData?.map((system, index) => {
+                  const selected = selectedSystems.some(
+                    (selectedSystem) => selectedSystem.id === system.id
+                  );
+                  return (
+                    <ListItem key={index} sx={{ padding: 0 }}>
+                      <ListItemButton
+                        sx={{ padding: 0 }}
+                        onClick={() => {
+                          setSelectedSystems([]);
+                          navigateToSystem(system.id);
+                        }}
+                        selected={selected}
+                      >
+                        <Checkbox
+                          size="small"
+                          checked={selected}
+                          // Prevent button being triggered as well
+                          onClick={(event) => event.stopPropagation()}
+                          onChange={(event) => {
+                            handleSystemCheckboxChange(
+                              event.target.checked,
+                              system
+                            );
+                          }}
+                        />
+                        <ListItemText>{system.name}</ListItemText>
+                      </ListItemButton>
+                    </ListItem>
+                  );
+                })}
               </List>
             </>
           )}
