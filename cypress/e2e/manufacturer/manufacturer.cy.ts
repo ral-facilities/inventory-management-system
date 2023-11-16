@@ -319,7 +319,7 @@ describe('Manufacturer', () => {
 
   it('navigates to landing page, opens edit dialog and closes it', () => {
     cy.findByText('Manufacturer A').click();
-    cy.findByText('Telephone number').should('exist');
+    cy.findByText('Telephone number:').should('exist');
 
     cy.findByRole('button', { name: 'Edit' }).click();
     cy.findByLabelText('Name').should('have.value', 'Manufacturer A');
