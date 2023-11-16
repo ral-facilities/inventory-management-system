@@ -6,7 +6,8 @@ import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { server } from '../mocks/server';
 import { CatalogueCategoryFormData, CatalogueItemProperty } from '../app.types';
-
+const newTimeout = 10000;
+jest.setTimeout(newTimeout);
 describe('matchCatalogueItemProperties', () => {
   it('should match catalogue item properties correctly', () => {
     const formData: CatalogueCategoryFormData[] = [

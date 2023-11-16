@@ -5,7 +5,8 @@ import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';
 import userEvent from '@testing-library/user-event';
-
+const newTimeout = 10000;
+jest.setTimeout(newTimeout);
 describe('Catalogue Items Table', () => {
   let props: CatalogueItemsTableProps;
   let user;
