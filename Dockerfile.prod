@@ -53,5 +53,10 @@ RUN set -eux; \
 # Switch to non-root user defined in httpd image
 USER www-data
 
+ENV API_URL="/inventory-management-system-api"
+
+COPY docker/docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
+
 CMD ["httpd-foreground"]
 EXPOSE 80
