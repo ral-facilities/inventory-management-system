@@ -336,10 +336,7 @@ const CatalogueCategoryDialog = React.memo(
                   setNameFields([]);
                   setTypeFields([]);
                 }
-                handleFormChange({
-                  ...categoryData,
-                  is_leaf: value === 'true' ? true : false,
-                });
+                handleFormChange(newData);
               }}
             >
               <FormControlLabel
