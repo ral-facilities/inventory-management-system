@@ -15,3 +15,4 @@ License
 README.md
 .yarn/*
 !.yarn/releases
+!.yarn/plugins

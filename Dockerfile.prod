@@ -16,8 +16,7 @@ COPY public public
 RUN --mount=type=cache,target=/root/.cache/.yarn/cache \
     set -eux; \
     \
-    # TODO: Use `yarn workspaces focus --production` to only install prod dependencies \
-    yarn install;
+    yarn workspaces focus --production;
 
 COPY . .
 
