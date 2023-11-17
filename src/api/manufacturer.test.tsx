@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { AddManufacturer, Manufacturer } from '../app.types';
+import { Manufacturer } from '../app.types';
 import { hooksWrapperWithProviders } from '../setupTests';
 import {
   useAddManufacturer,
@@ -13,17 +13,17 @@ describe('manufacturer api functions', () => {
   });
 
   describe('useAddManufacturer', () => {
-    let mockDataAdd: AddManufacturer;
+    let mockDataAdd: Manufacturer;
     beforeEach(() => {
       mockDataAdd = {
         name: 'Manufacturer D',
         url: 'http://test.co.uk',
         address: {
-          building_number: '1',
-          street_name: 'Example',
+          address_line: '4 Example Street',
           town: 'Oxford',
           county: 'Oxfordshire',
           postcode: 'OX1 2AB',
+          country: 'United Kingdom',
         },
         telephone: '07349612203',
       };
@@ -43,11 +43,11 @@ describe('manufacturer api functions', () => {
         code: 'manufacturer-d',
         url: 'http://test.co.uk',
         address: {
-          building_number: '1',
-          street_name: 'Example Street',
+          address_line: '4 Example Street',
           town: 'Oxford',
           county: 'Oxfordshire',
           postcode: 'OX1 2AB',
+          country: 'United Kingdom',
         },
         telephone: '07349612203',
         id: '4',
@@ -63,17 +63,17 @@ describe('manufacturer api functions', () => {
     let mockDataView: Manufacturer;
     beforeEach(() => {
       mockDataView = {
+        id: '1',
         name: 'Manufacturer A',
         url: 'http://example.com',
         address: {
-          building_number: '1',
-          street_name: 'Example',
+          address_line: '1 Example Street',
           town: 'Oxford',
           county: 'Oxfordshire',
           postcode: 'OX1 2AB',
+          country: 'United Kingdom',
         },
         telephone: '07334893348',
-        id: '1',
       };
     });
     it('posts a request to delete a manufacturer and return a successful response', async () => {
@@ -110,11 +110,11 @@ describe('manufacturer api functions', () => {
           code: 'manufacturer-a',
           url: 'http://example.com',
           address: {
-            building_number: '1',
-            street_name: 'Example Street',
+            address_line: '1 Example Street',
             town: 'Oxford',
             county: 'Oxfordshire',
             postcode: 'OX1 2AB',
+            country: 'United Kingdom',
           },
           telephone: '07334893348',
         },
@@ -124,11 +124,11 @@ describe('manufacturer api functions', () => {
           code: 'manufacturer-b',
           url: 'http://test.com',
           address: {
-            building_number: '2',
-            street_name: 'Example Street',
+            address_line: '2 Example Street',
             town: 'Oxford',
             county: 'Oxfordshire',
             postcode: 'OX1 2AB',
+            country: 'United Kingdom',
           },
           telephone: '07294958549',
         },
@@ -138,11 +138,11 @@ describe('manufacturer api functions', () => {
           code: 'manufacturer-c',
           url: 'http://test.co.uk',
           address: {
-            building_number: '3',
-            street_name: 'Example Street',
+            address_line: '3 Example Street',
             town: 'Oxford',
             county: 'Oxfordshire',
             postcode: 'OX1 2AB',
+            country: 'United Kingdom',
           },
           telephone: '07934303412',
         },
