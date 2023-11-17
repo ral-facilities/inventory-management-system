@@ -24,7 +24,7 @@ COPY . .
 RUN set -eux; \
     \
     # Set the React production variable which holds reference to the path of the plugin build \
-    echo "REACT_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY=/inventory-management-system/" > .env.production; \
+    echo "REACT_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY=/ims/" > .env.production; \
     \
     cp public/inventory-management-system-settings.example.json public/inventory-management-system-settings.json ;\
     \
@@ -42,7 +42,10 @@ RUN set -eux; \
     # Privileged ports are permitted to root only by default. \
     # setcap to bind to privileged ports (80) as non-root. \
     apk --no-cache add libcap; \
-    setcap 'cap_net_bind_service=+ep' /usr/local/apache2/bin/httpd;
+    setcap 'cap_net_bind_service=+ep' /usr/local/apache2/bin/httpd; \
+    \
+    # Change ownership of logs directory \
+    chown www-data:www-data /usr/local/apache2/logs;
 
 CMD ["httpd-foreground"]
 EXPOSE 80
