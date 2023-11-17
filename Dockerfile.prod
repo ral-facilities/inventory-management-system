@@ -29,3 +29,13 @@ RUN set -eux; \
     cp public/inventory-management-system-settings.example.json public/inventory-management-system-settings.json ;\
     \
     yarn build;
+
+# Run stage
+FROM httpd:2.4-alpine3.15
+
+WORKDIR /usr/local/apache2/htdocs
+
+COPY --from=builder /inventory-management-system-build/build/. .
+
+CMD ["httpd-foreground"]
+EXPOSE 80
