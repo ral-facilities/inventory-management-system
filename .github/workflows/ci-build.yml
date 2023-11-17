@@ -63,3 +63,9 @@ jobs:
         registry: harbor.stfc.ac.uk/inventory-management-system
         username: ${{ secrets.HARBOR_USERNAME }}
         password: ${{ secrets.HARBOR_TOKEN }}
+
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934 # v5.0.0
+      with:
+        images: harbor.stfc.ac.uk/inventory-management-system/ims-api
