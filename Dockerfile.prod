@@ -47,5 +47,8 @@ RUN set -eux; \
     # Change ownership of logs directory \
     chown www-data:www-data /usr/local/apache2/logs;
 
+# Switch to non-root user defined in httpd image
+USER www-data
+
 CMD ["httpd-foreground"]
 EXPOSE 80
