@@ -21,11 +21,11 @@ describe('Delete Manufacturer Dialog', () => {
       name: 'test',
       url: 'http://example.com',
       address: {
-        building_number: '1',
-        street_name: 'Example Street',
+        address_line: '1 Example Street',
         town: 'Oxford',
         county: 'Oxfordshire',
         postcode: 'OX1 2AB',
+        country: 'United Kingdom',
       },
       telephone: '056896598',
       id: '1',

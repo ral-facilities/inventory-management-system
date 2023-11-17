@@ -38,36 +38,31 @@ export interface CatalogueCategory {
   is_leaf: boolean;
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }
+
 export interface AddManufacturer {
   name: string;
-  url?: string;
-  address: Address | undefined;
-  telephone?: string;
-}
-
-export interface AddManufacturerResponse {
-  id: string;
-  name: string;
-  url: string;
-  address: Address;
-  telephone: string;
-  code: string;
+  url?: string | null;
+  address: AddAddress;
+  telephone?: string | null;
 }
 
 export interface EditManufacturer {
   name?: string;
-  url?: string;
+  url?: string | null;
   address?: EditAddress;
-  telephone?: string;
-  id?: string;
+  telephone?: string | null;
+  id?: string | null;
 }
 
-export interface Manufacturer {
-  id?: string;
+export interface ManufacturerDetails {
   name: string;
-  url?: string;
-  address: Address;
-  telephone: string;
+  url?: string | null;
+  address: AddAddress;
+  telephone: string | null;
+}
+
+export interface Manufacturer extends ManufacturerDetails {
+  id: string;
 }
 
 export interface CatalogueCategoryFormData {
@@ -126,20 +121,19 @@ export interface ErrorParsing {
   detail: string;
 }
 
-interface Address {
-  building_number: string;
-  street_name: string;
-  town?: string;
-  county?: string;
+interface AddAddress {
+  address_line: string;
+  town?: string | null;
+  county?: string | null;
   postcode: string;
+  country: string;
 }
-
 interface EditAddress {
-  building_number?: string;
-  street_name?: string;
-  town?: string;
-  county?: string;
+  address_line?: string;
+  town?: string | null;
+  county?: string | null;
   postcode?: string;
+  country?: string;
 }
 export interface CatalogueCategoryTransferState {
   name: string;

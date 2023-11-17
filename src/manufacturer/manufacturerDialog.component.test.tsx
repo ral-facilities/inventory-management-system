@@ -21,17 +21,17 @@ describe('Add manufacturer dialog', () => {
       open: true,
       onClose: onClose,
       onChangeManufacturerDetails: onChangeManufacturerDetails,
-      manufacturer: {
+      manufacturerDetails: {
         name: '',
         url: undefined,
         address: {
-          building_number: '',
-          street_name: '',
-          town: '',
-          county: '',
+          address_line: '',
+          town: null,
+          county: null,
           postcode: '',
+          country: '',
         },
-        telephone: '',
+        telephone: null,
       },
       type: 'create',
     };
@@ -46,8 +46,8 @@ describe('Add manufacturer dialog', () => {
     createView();
     expect(screen.getByLabelText('Name *')).toBeInTheDocument();
     expect(screen.getByLabelText('URL')).toBeInTheDocument();
-    expect(screen.getByLabelText('Building number *')).toBeInTheDocument();
-    expect(screen.getByLabelText('Street name *')).toBeInTheDocument();
+    expect(screen.getByLabelText('Country *')).toBeInTheDocument();
+    expect(screen.getByLabelText('Address Line *')).toBeInTheDocument();
     expect(screen.getByLabelText('Town')).toBeInTheDocument();
     expect(screen.getByLabelText('County')).toBeInTheDocument();
     expect(screen.getByLabelText('Post/Zip code *')).toBeInTheDocument();
@@ -55,16 +55,15 @@ describe('Add manufacturer dialog', () => {
   });
 
   it('adds manufacturer correctly', async () => {
-    props.manufacturer = {
+    props.manufacturerDetails = {
       name: 'Manufacturer D',
-
       url: 'http://test.co.uk',
       address: {
-        building_number: '1',
-        street_name: 'Example Street',
+        address_line: '4 Example Street',
         town: 'Oxford',
         county: 'Oxfordshire',
         postcode: 'OX1 2AB',
+        country: 'United Kingdom',
       },
       telephone: '07349612203',
     };
@@ -74,16 +73,16 @@ describe('Add manufacturer dialog', () => {
     await user.click(saveButton);
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/v1/manufacturers', {
+      name: 'Manufacturer D',
+      url: 'http://test.co.uk',
       address: {
-        building_number: '1',
+        address_line: '4 Example Street',
+        town: 'Oxford',
         county: 'Oxfordshire',
         postcode: 'OX1 2AB',
-        street_name: 'Example Street',
-        town: 'Oxford',
+        country: 'United Kingdom',
       },
-      name: 'Manufacturer D',
       telephone: '07349612203',
-      url: 'http://test.co.uk',
     });
 
     expect(onClose).toHaveBeenCalled();
@@ -100,16 +99,15 @@ describe('Add manufacturer dialog', () => {
   });
 
   it('duplicate manufacturer name displays warning message', async () => {
-    props.manufacturer = {
+    props.manufacturerDetails = {
       name: 'Manufacturer A',
-
       url: 'http://test.co.uk',
       address: {
-        building_number: '1',
-        street_name: 'Example Street',
+        address_line: '4 Example Street',
         town: 'Oxford',
         county: 'Oxfordshire',
         postcode: 'OX1 2AB',
+        country: 'United Kingdom',
       },
       telephone: '07349612203',
     };
@@ -134,10 +132,8 @@ describe('Add manufacturer dialog', () => {
     await user.click(saveButton);
 
     expect(screen.getByText('Please enter a name.')).toBeInTheDocument();
-    expect(
-      screen.getByText('Please enter a building number.')
-    ).toBeInTheDocument();
-    expect(screen.getByText('Please enter a street name.')).toBeInTheDocument();
+    expect(screen.getByText('Please enter a country.')).toBeInTheDocument();
+    expect(screen.getByText('Please enter an address.')).toBeInTheDocument();
     expect(
       screen.getByText('Please enter a post code or zip code.')
     ).toBeInTheDocument();
@@ -145,16 +141,15 @@ describe('Add manufacturer dialog', () => {
   });
 
   it('invalid url displays error', async () => {
-    props.manufacturer = {
-      name: 'Manufacturer A',
-
+    props.manufacturerDetails = {
+      name: 'Manufacturer D',
       url: 'invalid',
       address: {
-        building_number: '1',
-        street_name: 'Example Street',
+        address_line: '4 Example Street',
         town: 'Oxford',
         county: 'Oxfordshire',
         postcode: 'OX1 2AB',
+        country: 'United Kingdom',
       },
       telephone: '07349612203',
     };
@@ -180,7 +175,7 @@ describe('Add manufacturer dialog', () => {
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
+      ...props.manufacturerDetails,
       name: newManufacturerName,
     });
   });
@@ -197,48 +192,48 @@ describe('Add manufacturer dialog', () => {
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
+      ...props.manufacturerDetails,
       url: newManufacturerURL,
     });
   });
 
-  it('handles manufacturer building number input correctly', async () => {
-    const newManufacturerBuildingNumber = 'Test';
+  it('handles manufacturer country input correctly', async () => {
+    const newManufacturerCountry = 'Test';
 
     createView();
 
-    const manufacturerBuildingNumberInput =
-      screen.getByLabelText('Building number *');
+    const manufacturerCountryInput = screen.getByLabelText('Country *');
 
-    fireEvent.change(manufacturerBuildingNumberInput, {
-      target: { value: newManufacturerBuildingNumber },
+    fireEvent.change(manufacturerCountryInput, {
+      target: { value: newManufacturerCountry },
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
+      ...props.manufacturerDetails,
       address: {
-        ...props.manufacturer.address,
-        building_number: newManufacturerBuildingNumber,
+        ...props.manufacturerDetails.address,
+        country: newManufacturerCountry,
       },
     });
   });
 
-  it('handles manufacturer street name input correctly', async () => {
-    const newManufacturerStreetName = 'Test';
+  it('handles manufacturer address line input correctly', async () => {
+    const newManufacturerAddressLine = 'Test';
 
     createView();
 
-    const manufacturerStreetNameInput = screen.getByLabelText('Street name *');
+    const manufacturerAddressLineInput =
+      screen.getByLabelText('Address Line *');
 
-    fireEvent.change(manufacturerStreetNameInput, {
-      target: { value: newManufacturerStreetName },
+    fireEvent.change(manufacturerAddressLineInput, {
+      target: { value: newManufacturerAddressLine },
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
+      ...props.manufacturerDetails,
       address: {
-        ...props.manufacturer.address,
-        street_name: newManufacturerStreetName,
+        ...props.manufacturerDetails.address,
+        address_line: newManufacturerAddressLine,
       },
     });
   });
@@ -255,8 +250,11 @@ describe('Add manufacturer dialog', () => {
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
-      address: { ...props.manufacturer.address, town: newManufacturerTown },
+      ...props.manufacturerDetails,
+      address: {
+        ...props.manufacturerDetails.address,
+        town: newManufacturerTown,
+      },
     });
   });
 
@@ -272,9 +270,9 @@ describe('Add manufacturer dialog', () => {
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
+      ...props.manufacturerDetails,
       address: {
-        ...props.manufacturer.address,
+        ...props.manufacturerDetails.address,
         county: newManufacturerCounty,
       },
     });
@@ -292,9 +290,9 @@ describe('Add manufacturer dialog', () => {
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
+      ...props.manufacturerDetails,
       address: {
-        ...props.manufacturer.address,
+        ...props.manufacturerDetails.address,
         postcode: newManufacturerpostcode,
       },
     });
@@ -313,7 +311,7 @@ describe('Add manufacturer dialog', () => {
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
+      ...props.manufacturerDetails,
       telephone: newManufacturerTelephone,
     });
   });
@@ -337,24 +335,25 @@ describe('Add manufacturer dialog', () => {
           name: 'Manufacturer A',
           url: 'http://example.com',
           address: {
-            building_number: '1',
-            street_name: 'Example Street',
+            address_line: '1 Example Street',
             town: 'Oxford',
             county: 'Oxfordshire',
             postcode: 'OX1 2AB',
+            country: 'United Kingdom',
           },
           telephone: '07334893348',
         },
       };
 
-      props.manufacturer = {
+      props.manufacturerDetails = {
         name: 'test',
+        url: 'https://test.co.uk',
         address: {
-          building_number: '100',
-          street_name: 'test',
+          address_line: 'test',
           town: 'test',
           county: 'test',
           postcode: 'test',
+          country: 'test',
         },
         telephone: '0000000000',
       };
@@ -367,12 +366,13 @@ describe('Add manufacturer dialog', () => {
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/manufacturers/1', {
         name: 'test',
+        url: 'https://test.co.uk',
         address: {
-          building_number: '100',
-          street_name: 'test',
+          address_line: 'test',
           town: 'test',
           county: 'test',
           postcode: 'test',
+          country: 'test',
         },
         telephone: '0000000000',
       });
@@ -388,23 +388,23 @@ describe('Add manufacturer dialog', () => {
           name: 'Manufacturer A',
           url: 'http://example.com',
           address: {
-            building_number: '1',
-            street_name: 'Example Street',
+            address_line: '1 Example Street',
             town: 'Oxford',
             county: 'Oxfordshire',
             postcode: 'OX1 2AB',
+            country: 'United Kingdom',
           },
           telephone: '07334893348',
         },
-        manufacturer: {
+        manufacturerDetails: {
           name: 'Manufacturer A',
           url: 'http://example.com',
           address: {
-            building_number: '1',
-            street_name: 'Example Street',
+            address_line: '1 Example Street',
             town: 'Oxford',
             county: 'Oxfordshire',
             postcode: 'OX1 2AB',
+            country: 'United Kingdom',
           },
           telephone: '07334893348',
         },
@@ -426,15 +426,15 @@ describe('Add manufacturer dialog', () => {
     it('Invalid url displays correct error message', async () => {
       props = {
         ...props,
-        manufacturer: {
+        manufacturerDetails: {
           name: 'test',
           url: 'invalid',
           address: {
-            building_number: '100',
-            street_name: 'test',
+            address_line: 'test',
             town: 'test',
             county: 'test',
             postcode: 'test',
+            country: 'test',
           },
           telephone: '0000000000',
         },
@@ -443,11 +443,11 @@ describe('Add manufacturer dialog', () => {
           name: 'Manufacturer A',
           url: 'http://example.com',
           address: {
-            building_number: '1',
-            street_name: 'Example Street',
+            address_line: '1 Example Street',
             town: 'Oxford',
             county: 'Oxfordshire',
             postcode: 'OX1 2AB',
+            country: 'United Kingdom',
           },
           telephone: '07334893348',
         },
@@ -465,14 +465,15 @@ describe('Add manufacturer dialog', () => {
     it('Duplicate name displays error message', async () => {
       props = {
         ...props,
-        manufacturer: {
+        manufacturerDetails: {
           name: 'test_dup',
+          url: 'https://test.co.uk',
           address: {
-            building_number: '100',
-            street_name: 'test',
+            address_line: 'test',
             town: 'test',
             county: 'test',
             postcode: 'test',
+            country: 'test',
           },
           telephone: '0000000000',
         },
@@ -481,11 +482,11 @@ describe('Add manufacturer dialog', () => {
           name: 'Manufacturer A',
           url: 'http://example.com',
           address: {
-            building_number: '1',
-            street_name: 'Example Street',
+            address_line: '1 Example Street',
             town: 'Oxford',
             county: 'Oxfordshire',
             postcode: 'OX1 2AB',
+            country: 'United Kingdom',
           },
           telephone: '07334893348',
         },
@@ -507,27 +508,28 @@ describe('Add manufacturer dialog', () => {
     it('Required fields show error if they are whitespace or current value just removed', async () => {
       props = {
         ...props,
-        manufacturer: {
+        manufacturerDetails: {
           name: '',
+          url: 'https://test.co.uk',
           address: {
-            building_number: '',
-            street_name: '',
-            town: 'test',
-            county: 'test',
+            address_line: '',
+            town: '',
+            county: '',
             postcode: '',
+            country: '',
           },
-          telephone: '0000000000',
+          telephone: '',
         },
         selectedManufacturer: {
           id: '1',
           name: 'Manufacturer A',
           url: 'http://example.com',
           address: {
-            building_number: '1',
-            street_name: 'Example Street',
+            address_line: '1 Example Street',
             town: 'Oxford',
             county: 'Oxfordshire',
             postcode: 'OX1 2AB',
+            country: 'United Kingdom',
           },
           telephone: '07334893348',
         },
@@ -540,12 +542,8 @@ describe('Add manufacturer dialog', () => {
       await user.click(saveButton);
 
       expect(screen.getByText('Please enter a name.')).toBeInTheDocument();
-      expect(
-        screen.getByText('Please enter a building number.')
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText('Please enter a street name.')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Please enter a country.')).toBeInTheDocument();
+      expect(screen.getByText('Please enter an address.')).toBeInTheDocument();
       expect(
         screen.getByText('Please enter a post code or zip code.')
       ).toBeInTheDocument();
@@ -555,14 +553,15 @@ describe('Add manufacturer dialog', () => {
     it('CatchAllError request works correctly and displays refresh page message', async () => {
       props = {
         ...props,
-        manufacturer: {
+        manufacturerDetails: {
           name: 'Error 500',
+          url: 'https://test.co.uk',
           address: {
-            building_number: '100',
-            street_name: 'test',
+            address_line: 'test',
             town: 'test',
             county: 'test',
             postcode: 'test',
+            country: 'test',
           },
           telephone: '0000000000',
         },
@@ -571,16 +570,15 @@ describe('Add manufacturer dialog', () => {
           name: 'Manufacturer A',
           url: 'http://example.com',
           address: {
-            building_number: '1',
-            street_name: 'Example Street',
+            address_line: '1 Example Street',
             town: 'Oxford',
             county: 'Oxfordshire',
             postcode: 'OX1 2AB',
+            country: 'United Kingdom',
           },
           telephone: '07334893348',
         },
       };
-
       createView();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
@@ -607,14 +605,14 @@ describe('Add manufacturer dialog', () => {
 
       createView();
 
-      const manufacturerNameInput = screen.getByLabelText('Name');
+      const manufacturerNameInput = screen.getByLabelText('Name *');
 
       fireEvent.change(manufacturerNameInput, {
         target: { value: newManufacturerName },
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
+        ...props.manufacturerDetails,
         name: newManufacturerName,
       });
     });
@@ -631,48 +629,48 @@ describe('Add manufacturer dialog', () => {
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
+        ...props.manufacturerDetails,
         url: newManufacturerURL,
       });
     });
 
-    it('handles manufacturer building number input correctly', async () => {
-      const newManufacturerBuildingNumber = 'Test';
+    it('handles manufacturer country input correctly', async () => {
+      const newManufacturerCountry = 'Test';
 
       createView();
 
-      const manufacturerBuildingNumberInput =
-        screen.getByLabelText('Building number');
+      const manufacturerCountryInput = screen.getByLabelText('Country *');
 
-      fireEvent.change(manufacturerBuildingNumberInput, {
-        target: { value: newManufacturerBuildingNumber },
+      fireEvent.change(manufacturerCountryInput, {
+        target: { value: newManufacturerCountry },
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
+        ...props.manufacturerDetails,
         address: {
-          ...props.manufacturer.address,
-          building_number: newManufacturerBuildingNumber,
+          ...props.manufacturerDetails.address,
+          country: newManufacturerCountry,
         },
       });
     });
 
-    it('handles manufacturer street name input correctly', async () => {
-      const newManufacturerStreetName = 'Test';
+    it('handles manufacturer address line input correctly', async () => {
+      const newManufacturerAddressLine = 'Test';
 
       createView();
 
-      const manufacturerStreetNameInput = screen.getByLabelText('Street name');
+      const manufacturerStreetNameInput =
+        screen.getByLabelText('Address Line *');
 
       fireEvent.change(manufacturerStreetNameInput, {
-        target: { value: newManufacturerStreetName },
+        target: { value: newManufacturerAddressLine },
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
+        ...props.manufacturerDetails,
         address: {
-          ...props.manufacturer.address,
-          street_name: newManufacturerStreetName,
+          ...props.manufacturerDetails.address,
+          address_line: newManufacturerAddressLine,
         },
       });
     });
@@ -689,8 +687,11 @@ describe('Add manufacturer dialog', () => {
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
-        address: { ...props.manufacturer.address, town: newManufacturerTown },
+        ...props.manufacturerDetails,
+        address: {
+          ...props.manufacturerDetails.address,
+          town: newManufacturerTown,
+        },
       });
     });
 
@@ -706,9 +707,9 @@ describe('Add manufacturer dialog', () => {
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
+        ...props.manufacturerDetails,
         address: {
-          ...props.manufacturer.address,
+          ...props.manufacturerDetails.address,
           county: newManufacturerCounty,
         },
       });
@@ -719,16 +720,17 @@ describe('Add manufacturer dialog', () => {
 
       createView();
 
-      const manufacturerpostcodeInput = screen.getByLabelText('Post/Zip code');
+      const manufacturerpostcodeInput =
+        screen.getByLabelText('Post/Zip code *');
 
       fireEvent.change(manufacturerpostcodeInput, {
         target: { value: newManufacturerpostcode },
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
+        ...props.manufacturerDetails,
         address: {
-          ...props.manufacturer.address,
+          ...props.manufacturerDetails.address,
           postcode: newManufacturerpostcode,
         },
       });
@@ -747,7 +749,7 @@ describe('Add manufacturer dialog', () => {
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
+        ...props.manufacturerDetails,
         telephone: newManufacturerTelephone,
       });
     });
