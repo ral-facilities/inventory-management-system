@@ -49,9 +49,9 @@ describe('Catalogue Items', () => {
 
   it('"save as" a catalogue item', () => {
     cy.visit('/inventory-management-system/catalogue/5');
-    cy.findByRole('button', {
-      name: 'Save as Energy Meters 27 catalogue item',
-    }).click();
+
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByText('Save as').click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -64,7 +64,7 @@ describe('Catalogue Items', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"catalogue_category_id":"5","name":"Energy Meters 27_copy1","cost_gbp":600,"cost_to_rework_gbp":89,"days_to_replace":7,"days_to_rework":60,"description":"Precision energy meters for accurate measurements. 27","item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"properties":[{"name":"Measurement Range","value":2000}],"manufacturer":{"name":"Manufacturer A","url":"http://example.com","address":"10 My Street"}}'
+        '{"catalogue_category_id":"5","name":"Energy Meters 27_copy","cost_gbp":600,"cost_to_rework_gbp":89,"days_to_replace":7,"days_to_rework":60,"description":"Precision energy meters for accurate measurements. 27","item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"properties":[{"name":"Measurement Range","value":2000}],"manufacturer":{"name":"Manufacturer A","url":"http://example.com","address":"10 My Street"}}'
       );
     });
   });
@@ -73,7 +73,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
 
     cy.findByLabelText('Name *').type('test');
-    cy.findByLabelText('Resolution (megapixels) *').type(18);
+    cy.findByLabelText('Resolution (megapixels) *').type('18');
     cy.findByLabelText('Sensor Type *').type('IO');
     cy.findByLabelText('Broken *').click();
     cy.findByText('True').click();
@@ -260,9 +260,8 @@ describe('Catalogue Items', () => {
 
   it('displays error message when user tries to delete a catalogue item that has children elements', () => {
     cy.visit('/inventory-management-system/catalogue/5');
-    cy.findByRole('button', {
-      name: 'Delete Energy Meters 27 catalogue item',
-    }).click();
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByText('Delete').click();
 
     cy.findByRole('button', { name: 'Continue' }).click();
 
@@ -277,9 +276,8 @@ describe('Catalogue Items', () => {
 
   it('delete a catalogue item', () => {
     cy.visit('/inventory-management-system/catalogue/5');
-    cy.findByRole('button', {
-      name: 'Delete Energy Meters 26 catalogue item',
-    }).click();
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Delete').click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -297,18 +295,16 @@ describe('Catalogue Items', () => {
 
   it('displays error message if none of the field have been edited', () => {
     cy.visit('/inventory-management-system/catalogue/5');
-    cy.findByRole('button', {
-      name: 'Edit Energy Meters 27 catalogue item',
-    }).click();
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByText('Edit').click();
 
     cy.findByRole('button', { name: 'Save' }).click();
   });
 
   it('displays error message if catalogue item has children elements', () => {
     cy.visit('/inventory-management-system/catalogue/5');
-    cy.findByRole('button', {
-      name: 'Edit Energy Meters 27 catalogue item',
-    }).click();
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByText('Edit').click();
 
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('test_has_children_elements');
@@ -327,9 +323,8 @@ describe('Catalogue Items', () => {
 
   it('edit a catalogue item (Catalogue item details)', () => {
     cy.visit('/inventory-management-system/catalogue/5');
-    cy.findByRole('button', {
-      name: 'Edit Energy Meters 27 catalogue item',
-    }).click();
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByText('Edit').click();
 
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('test');
@@ -359,9 +354,8 @@ describe('Catalogue Items', () => {
 
   it('edit a catalogue item (properties)', () => {
     cy.visit('/inventory-management-system/catalogue/5');
-    cy.findByRole('button', {
-      name: 'Edit Energy Meters 27 catalogue item',
-    }).click();
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByText('Edit').click();
 
     cy.findByLabelText('Measurement Range (Joules) *').type('0');
 
@@ -381,18 +375,20 @@ describe('Catalogue Items', () => {
     });
   });
   it('checks the href property of the manufacturer link', () => {
-    // Find the element containing the link
-    const row = cy.findByRole('row', { name: 'Cameras 1 row' });
+    cy.findByRole('button', { name: 'Show/Hide columns' }).click();
+    cy.findByText('Hide all').click();
 
-    row.within(() => {
-      // Find the link element
-      cy.findByText('http://example.com')
-        .should('have.attr', 'href')
-        .should('include', 'http://example.com'); // Check href attribute value
+    cy.findByText('Manufacturer URL').click();
 
-      cy.findByText('http://example.com')
-        .should('have.attr', 'target')
-        .should('include', '_blank'); // Check target attribute value
-    });
+    // Find the link element
+    cy.findAllByText('http://example.com')
+      .first()
+      .should('have.attr', 'href')
+      .should('include', 'http://example.com'); // Check href attribute value
+
+    cy.findAllByText('http://example.com')
+      .first()
+      .should('have.attr', 'target')
+      .should('include', '_blank'); // Check target attribute value
   });
 });

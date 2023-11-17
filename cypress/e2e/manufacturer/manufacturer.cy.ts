@@ -11,6 +11,7 @@ describe('Manufacturer', () => {
     cy.findByText('Actions').should('be.visible');
     cy.findByText('Name').should('be.visible');
     cy.findByText('URL').should('be.visible');
+    cy.findByText('Telephone').scrollIntoView();
     cy.findByText('Address').should('be.visible');
     cy.findByText('Telephone').should('be.visible');
   });
@@ -23,7 +24,10 @@ describe('Manufacturer', () => {
     cy.findByText('Manufacturer C').should('be.visible');
     cy.findByText('http://example.com').should('be.visible');
     cy.findByText('http://test.com').should('be.visible');
+    cy.findByText('http://test.co.uk').scrollIntoView();
     cy.findByText('http://test.co.uk').should('be.visible');
+    cy.findByText('http://example.com').scrollIntoView();
+    cy.findByText('07334893348').scrollIntoView();
     cy.findByText('07334893348').should('be.visible');
     cy.findByText('07294958549').should('be.visible');
     cy.findByText('07934303412').should('be.visible');
@@ -143,7 +147,8 @@ describe('Manufacturer', () => {
   });
 
   it('delete a manufacturer', () => {
-    cy.findAllByTestId('DeleteIcon').first().click();
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Delete').click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -160,7 +165,8 @@ describe('Manufacturer', () => {
   });
 
   it('shows error when trying to delete manufacturer that is part of Catalogue Item', () => {
-    cy.findAllByTestId('DeleteIcon').eq(1).click();
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByText('Delete').click();
 
     cy.findByRole('button', { name: 'Continue' }).click();
 
@@ -174,9 +180,8 @@ describe('Manufacturer', () => {
   });
   it('Edits a manufacturer correctly', () => {
     cy.visit('/inventory-management-system/manufacturer');
-    cy.findByRole('button', {
-      name: 'Edit Manufacturer A manufacturer',
-    }).click();
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Edit').click();
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('test');
 
@@ -215,9 +220,8 @@ describe('Manufacturer', () => {
   });
 
   it('Trying to edit with duplicate name displays error message', () => {
-    cy.findByRole('button', {
-      name: 'Edit Manufacturer A manufacturer',
-    }).click();
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Edit').click();
 
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('test_dup');
@@ -234,9 +238,8 @@ describe('Manufacturer', () => {
   });
 
   it('Trying to edit with invalid url displays error message', () => {
-    cy.findByRole('button', {
-      name: 'Edit Manufacturer A manufacturer',
-    }).click();
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Edit').click();
 
     cy.findByLabelText('URL').clear();
     cy.findByLabelText('URL').type('invalid');
@@ -251,9 +254,8 @@ describe('Manufacturer', () => {
   });
 
   it('Not changing any fields shows error', () => {
-    cy.findByRole('button', {
-      name: 'Edit Manufacturer A manufacturer',
-    }).click();
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Edit').click();
 
     cy.findByRole('button', { name: 'Save' }).click();
 
@@ -267,9 +269,8 @@ describe('Manufacturer', () => {
   });
 
   it('Required fields that are cleared are not allowed and show error message', () => {
-    cy.findByRole('button', {
-      name: 'Edit Manufacturer A manufacturer',
-    }).click();
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Edit').click();
 
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Country *').clear();

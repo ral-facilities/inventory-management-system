@@ -315,6 +315,20 @@ describe('Catalogue Items Table', () => {
     expect(url[0]).toHaveAttribute('href', '/items/6');
   });
 
+  it('renders the dense table correctly', async () => {
+    props.dense = true;
+    window.Element.prototype.getBoundingClientRect = jest
+      .fn()
+      .mockReturnValue({ height: 100, width: 1135 });
+    const view = createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
   // skipping this test as it causes an infinite loop on the waitFor this infinite
   // loop doesn't when tested on the browser
   it.skip('renders the dense table correctly and can expand and coll', async () => {

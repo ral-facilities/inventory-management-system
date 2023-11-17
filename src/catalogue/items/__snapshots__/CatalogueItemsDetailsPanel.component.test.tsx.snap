@@ -1,5 +1,510 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Catalogue Items details panel renders details panel correctly (with obsolete replacement link) 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiGrid-root MuiGrid-container css-k6wrnl-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1bc19ni-MuiGrid-root"
+    >
+      <div
+        class="MuiTabs-root css-1ujnqem-MuiTabs-root"
+      >
+        <div
+          class="MuiTabs-scroller MuiTabs-fixed css-jpln7h-MuiTabs-scroller"
+          style="overflow: hidden; margin-bottom: 0px;"
+        >
+          <div
+            class="MuiTabs-flexContainer css-heg063-MuiTabs-flexContainer"
+            role="tablist"
+          >
+            <button
+              aria-selected="true"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="0"
+              type="button"
+            >
+              Details
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Properties
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Manufacturer
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+          <span
+            class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
+            style="left: 0px; width: 0px;"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1kgdoxy-MuiGrid-root"
+    >
+      <div
+        aria-labelledby="tab-0"
+        id="tabpanel-0"
+        role="tabpanel"
+      >
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-pwcg7p-MuiCollapse-root"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <h4
+                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                    >
+                      Motorized Actuators 32
+                    </h4>
+                    <h6
+                      class="MuiTypography-root MuiTypography-h6 css-1iz74ne-MuiTypography-root"
+                    >
+                      Description:
+                    </h6>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                    >
+                      Motorized actuators for controlled motion. 32
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1k15kbj-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <li
+                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      >
+                        <div
+                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        >
+                          <span
+                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                          >
+                            Obsolete
+                          </span>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                          >
+                            No
+                          </p>
+                        </div>
+                      </li>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <li
+                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      >
+                        <div
+                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        >
+                          <span
+                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                          >
+                            Obsolete replacement link
+                          </span>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                          >
+                            None
+                          </p>
+                        </div>
+                      </li>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <li
+                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      >
+                        <div
+                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        >
+                          <span
+                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                          >
+                            Obsolete reason
+                          </span>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                          >
+                            None
+                          </p>
+                        </div>
+                      </li>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <li
+                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      >
+                        <div
+                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        >
+                          <span
+                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                          >
+                            Cost (£)
+                          </span>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                          >
+                            1100
+                          </p>
+                        </div>
+                      </li>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <li
+                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      >
+                        <div
+                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        >
+                          <span
+                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                          >
+                            Cost to rework (£)
+                          </span>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                          >
+                            None
+                          </p>
+                        </div>
+                      </li>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <li
+                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      >
+                        <div
+                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        >
+                          <span
+                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                          >
+                            Time to replace (days)
+                          </span>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                          >
+                            90
+                          </p>
+                        </div>
+                      </li>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <li
+                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      >
+                        <div
+                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        >
+                          <span
+                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                          >
+                            Time to rework (days)
+                          </span>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                          >
+                            None
+                          </p>
+                        </div>
+                      </li>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <li
+                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      >
+                        <div
+                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        >
+                          <span
+                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                          >
+                            Drawing Number
+                          </span>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                          >
+                            None
+                          </p>
+                        </div>
+                      </li>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <li
+                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      >
+                        <div
+                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        >
+                          <span
+                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                          >
+                            Model Number
+                          </span>
+                          <p
+                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                          >
+                            None
+                          </p>
+                        </div>
+                      </li>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-labelledby="tab-1"
+        hidden=""
+        id="tabpanel-1"
+        role="tabpanel"
+      >
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <li
+                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    >
+                      <div
+                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                      >
+                        <span
+                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                        >
+                          Travel Range (Joules)
+                        </span>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                        >
+                          100
+                        </p>
+                      </div>
+                    </li>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <li
+                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    >
+                      <div
+                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                      >
+                        <span
+                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                        >
+                          Load Capacity 
+                        </span>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                        >
+                          10
+                        </p>
+                      </div>
+                    </li>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-labelledby="tab-2"
+        hidden=""
+        id="tabpanel-2"
+        role="tabpanel"
+      >
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <li
+                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    >
+                      <div
+                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                      >
+                        <span
+                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                        >
+                          Manufacturer Name
+                        </span>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                        >
+                          Manufacturer A
+                        </p>
+                      </div>
+                    </li>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <li
+                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    >
+                      <div
+                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                      >
+                        <span
+                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                        >
+                          Manufacturer URL
+                        </span>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                        >
+                          <a
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                            href="http://example.com"
+                            target="_blank"
+                          >
+                            http://example.com
+                          </a>
+                        </p>
+                      </div>
+                    </li>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <li
+                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
+                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    >
+                      <div
+                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                      >
+                        <span
+                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                        >
+                          Manufacturer Address
+                        </span>
+                        <p
+                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                        >
+                          10 My Street
+                        </p>
+                      </div>
+                    </li>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`Catalogue Items details panel renders details panel correctly 1`] = `
 <DocumentFragment>
   <div
