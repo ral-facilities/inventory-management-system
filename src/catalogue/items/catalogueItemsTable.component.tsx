@@ -3,7 +3,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
-  Box,
+  Button,
   ListItemIcon,
   MenuItem,
   Link as MuiLink,
@@ -19,61 +19,18 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCatalogueItems } from '../../api/catalogueItem';
-import {
-  CatalogueCategory,
-  CatalogueItem,
-  CatalogueItemDetailsPlaceholder,
-  CatalogueItemManufacturer,
-} from '../../app.types';
-import { matchCatalogueItemProperties } from '../catalogue.component';
+import { CatalogueCategory, CatalogueItem } from '../../app.types';
 import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 
-function generateUniqueName(
-  existingNames: (string | undefined)[],
-  originalName: string
-) {
-  let newName = originalName;
-  let copyIndex = 1;
-
-  while (existingNames.includes(newName)) {
-    newName = `${originalName}_copy${copyIndex}`;
-    copyIndex++;
-  }
-
-  return newName;
-}
 export interface CatalogueItemsTableProps {
   parentInfo: CatalogueCategory;
   dense: boolean;
-  catalogueItemDetails?: CatalogueItemDetailsPlaceholder;
-  onChangeCatalogueItemDetails?: (
-    catalogueItemDetails: CatalogueItemDetailsPlaceholder
-  ) => void;
-  catalogueItemManufacturer?: CatalogueItemManufacturer;
-  onChangeCatalogueItemManufacturer?: (
-    catalogueItemManufacturer: CatalogueItemManufacturer
-  ) => void;
-  catalogueItemPropertyValues?: (string | number | boolean | null)[];
-  onChangeCatalogueItemPropertyValues?: (
-    propertyValues: (string | number | boolean | null)[]
-  ) => void;
-  onChangeAddItemDialogOpen?: (addItemDialogOpen: boolean) => void;
 }
 
 const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
-  const {
-    parentInfo,
-    catalogueItemDetails,
-    onChangeCatalogueItemDetails,
-    catalogueItemManufacturer,
-    onChangeCatalogueItemManufacturer,
-    catalogueItemPropertyValues,
-    onChangeCatalogueItemPropertyValues,
-    onChangeAddItemDialogOpen,
-    dense,
-  } = props;
+  const { parentInfo, dense } = props;
   // SG header + SG footer + tabs #add breadcrumbs + Mui table V2
   const tableHeight = `calc(100vh - (64px + 36px + 50px + 172px))`;
 
@@ -82,8 +39,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
     React.useState<boolean>(false);
 
-  const [editItemDialogOpen, setEditItemDialogOpen] =
-    React.useState<boolean>(false);
   type PropertyFiltersType = {
     boolean: 'select' | 'text' | 'range-slider';
     string: 'select' | 'text' | 'range-slider';
@@ -95,12 +50,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     CatalogueItem | undefined
   >(undefined);
 
-  const catalogueCategoryNames: (string | undefined)[] =
-    data?.map((item) => item.name) || [];
-
   const noResultsTxt =
     'No results found: Try adding an item by using the Add Catalogue Item button in the top right of your screen';
-
+  const [itemDialogType, setItemsDialogType] = React.useState<
+    'create' | 'save as' | 'edit'
+  >('create');
   const columns = React.useMemo<MRT_ColumnDef<CatalogueItem>[]>(() => {
     const viewCatalogueItemProperties =
       parentInfo.catalogue_item_properties ?? [];
@@ -295,13 +249,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     columns: dense ? [{ ...columns[0], size: 1135 }] : columns, // If dense only show the name column
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     enableColumnOrdering: true,
-    enableColumnPinning: true,
-    enableColumnResizing: true,
     enableFacetedValues: true,
     enableRowActions: dense ? false : true,
     enableStickyHeader: true,
     enableRowSelection: dense ? true : false,
+    enableRowVirtualization: false,
     enableFullScreenToggle: false,
+    enableColumnVirtualization: true,
+    columnVirtualizerOptions: {
+      overscan: 4,
+      estimateSize: () => 200,
+    },
     enablePagination: true,
     localization: {
       ...MRT_Localization_EN,
@@ -313,7 +271,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      pagination: { pageSize: 25, pageIndex: 0 },
+      pagination: { pageSize: 15, pageIndex: 0 },
     },
     muiTableContainerProps: { sx: { height: dense ? 'inherit' : tableHeight } },
     paginationDisplayMode: 'pages',
@@ -327,50 +285,47 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [25, 50, 100],
+      rowsPerPageOptions: [15, 30, 45],
       shape: 'rounded',
       variant: 'outlined',
     },
+    renderCreateRowDialogContent: ({ table, row }) => {
+      return (
+        <>
+          <CatalogueItemsDialog
+            open={true}
+            onClose={() => {
+              table.setCreatingRow(null);
+            }}
+            parentInfo={parentInfo}
+            type={itemDialogType}
+            selectedCatalogueItem={
+              itemDialogType === 'create' ? undefined : row.original
+            }
+          />
+        </>
+      );
+    },
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Button
+        variant="outlined"
+        onClick={() => {
+          setItemsDialogType('create');
+          table.setCreatingRow(true);
+        }}
+      >
+        Add Catalogue Item
+      </Button>
+    ),
     renderRowActionMenuItems: ({ closeMenu, row }) => {
-      const details = {
-        catalogue_category_id: row.original.catalogue_category_id,
-        name: row.original.name,
-        description: row.original.description,
-        cost_gbp: String(row.original.cost_gbp),
-        cost_to_rework_gbp: row.original.cost_to_rework_gbp
-          ? String(row.original.cost_to_rework_gbp)
-          : null,
-        days_to_replace: String(row.original.days_to_replace),
-        days_to_rework: row.original.days_to_rework
-          ? String(row.original.days_to_rework)
-          : null,
-        drawing_number: row.original.drawing_number,
-        drawing_link: row.original.drawing_link,
-        item_model_number: row.original.item_model_number,
-        is_obsolete: String(row.original.is_obsolete),
-        obsolete_replacement_catalogue_item_id:
-          row.original.obsolete_replacement_catalogue_item_id,
-        obsolete_reason: row.original.obsolete_reason,
-      };
       return [
         <MenuItem
           key={0}
           aria-label={`Edit ${row.original.name} catalogue item`}
           onClick={() => {
+            setItemsDialogType('edit');
+            table.setCreatingRow(row);
             closeMenu();
-            setEditItemDialogOpen(true);
-            onChangeCatalogueItemDetails &&
-              onChangeCatalogueItemDetails(details);
-            onChangeCatalogueItemPropertyValues &&
-              onChangeCatalogueItemPropertyValues(
-                matchCatalogueItemProperties(
-                  parentInfo?.catalogue_item_properties ?? [],
-                  row.original.properties ?? []
-                )
-              );
-            setSelectedCatalogueItem(row.original);
-            onChangeCatalogueItemManufacturer &&
-              onChangeCatalogueItemManufacturer(row.original.manufacturer);
           }}
           sx={{ m: 0 }}
         >
@@ -383,26 +338,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           key={1}
           aria-label={`Save as ${row.original.name} catalogue item`}
           onClick={() => {
+            setItemsDialogType('save as');
+            table.setCreatingRow(row);
             closeMenu();
-            onChangeAddItemDialogOpen && onChangeAddItemDialogOpen(true);
-            onChangeCatalogueItemDetails &&
-              onChangeCatalogueItemDetails({
-                ...details,
-                name: generateUniqueName(
-                  catalogueCategoryNames,
-                  row.original.name
-                ),
-              });
-            onChangeCatalogueItemPropertyValues &&
-              onChangeCatalogueItemPropertyValues(
-                matchCatalogueItemProperties(
-                  parentInfo?.catalogue_item_properties ?? [],
-                  row.original.properties ?? []
-                )
-              );
-            setSelectedCatalogueItem(row.original);
-            onChangeCatalogueItemManufacturer &&
-              onChangeCatalogueItemManufacturer(row.original.manufacturer);
           }}
           sx={{ m: 0 }}
         >
@@ -415,27 +353,25 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           key={2}
           aria-label={`Delete ${row.original.name} catalogue item`}
           onClick={() => {
-            closeMenu();
             setDeleteItemDialogOpen(true);
             setSelectedCatalogueItem(row.original);
+            closeMenu();
           }}
           sx={{ m: 0 }}
         >
           <ListItemIcon>
             <DeleteIcon />
           </ListItemIcon>
-          Delete
+          <>Delete</>
         </MenuItem>,
       ];
     },
     renderDetailPanel: dense
       ? ({ row }) => (
-          <Box>
-            <CatalogueItemsDetailsPanel
-              catalogueItemIdData={row.original}
-              catalogueCategoryData={parentInfo}
-            />
-          </Box>
+          <CatalogueItemsDetailsPanel
+            catalogueItemIdData={row.original}
+            catalogueCategoryData={parentInfo}
+          />
         )
       : undefined,
   });
@@ -445,39 +381,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       <MaterialReactTable table={table} />
 
       {!dense && (
-        <>
-          <DeleteCatalogueItemsDialog
-            open={deleteItemDialogOpen}
-            onClose={() => setDeleteItemDialogOpen(false)}
-            catalogueItem={selectedCatalogueItem}
-            onChangeCatalogueItem={setSelectedCatalogueItem}
-          />
-          {catalogueItemDetails &&
-            onChangeCatalogueItemDetails &&
-            catalogueItemManufacturer &&
-            onChangeCatalogueItemManufacturer &&
-            catalogueItemPropertyValues &&
-            onChangeCatalogueItemPropertyValues && (
-              <CatalogueItemsDialog
-                open={editItemDialogOpen}
-                onClose={() => setEditItemDialogOpen(false)}
-                parentId={parentInfo.id}
-                catalogueItemDetails={catalogueItemDetails}
-                onChangeCatalogueItemDetails={onChangeCatalogueItemDetails}
-                catalogueItemManufacturer={catalogueItemManufacturer}
-                onChangeCatalogueItemManufacturer={
-                  onChangeCatalogueItemManufacturer
-                }
-                catalogueItemPropertiesForm={
-                  parentInfo?.catalogue_item_properties ?? []
-                }
-                propertyValues={catalogueItemPropertyValues}
-                onChangePropertyValues={onChangeCatalogueItemPropertyValues}
-                selectedCatalogueItem={selectedCatalogueItem}
-                type="edit"
-              />
-            )}
-        </>
+        <DeleteCatalogueItemsDialog
+          open={deleteItemDialogOpen}
+          onClose={() => setDeleteItemDialogOpen(false)}
+          catalogueItem={selectedCatalogueItem}
+          onChangeCatalogueItem={setSelectedCatalogueItem}
+        />
       )}
     </div>
   );

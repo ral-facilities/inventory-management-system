@@ -6,8 +6,7 @@ import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { server } from '../mocks/server';
 import { CatalogueCategoryFormData, CatalogueItemProperty } from '../app.types';
-const newTimeout = 10000;
-jest.setTimeout(newTimeout);
+
 describe('matchCatalogueItemProperties', () => {
   it('should match catalogue item properties correctly', () => {
     const formData: CatalogueCategoryFormData[] = [
@@ -85,6 +84,14 @@ describe('Catalogue', () => {
 
   beforeEach(() => {
     user = userEvent.setup();
+    window.ResizeObserver = jest.fn().mockImplementation(() => ({
+      disconnect: jest.fn(),
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+    }));
+    window.Element.prototype.getBoundingClientRect = jest
+      .fn()
+      .mockReturnValue({ height: 100, width: 200 });
   });
 
   afterEach(() => {
@@ -115,7 +122,7 @@ describe('Catalogue', () => {
     createView('/inventory-management-system/catalogue/4');
 
     await waitFor(() => {
-      expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
+      expect(screen.getByText('Description')).toBeInTheDocument();
     });
   });
 

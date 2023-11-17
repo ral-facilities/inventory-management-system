@@ -91,4 +91,16 @@ describe('Manufacturer', () => {
       expect(screen.queryByText('Edit Manufacturer')).not.toBeInTheDocument();
     });
   });
+
+  it('opens add dialog and closes it correctly', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Add Manufacturer' }));
+
+    const closeButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(closeButton);
+  });
 });

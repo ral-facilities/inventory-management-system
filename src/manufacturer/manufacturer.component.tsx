@@ -1,45 +1,25 @@
-import {
-  Box,
-  Link as MuiLink,
-  Button,
-  MenuItem,
-  ListItemIcon,
-  Typography,
-  TableRow,
-} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import React from 'react';
-import { useManufacturers } from '../api/manufacturer';
-import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
-import { Manufacturer } from '../app.types';
-import ManufacturerDialog from './manufacturerDialog.component';
+import {
+  Button,
+  ListItemIcon,
+  MenuItem,
+  Link as MuiLink,
+  TableRow,
+  Typography,
+} from '@mui/material';
 import {
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
 } from 'material-react-table';
+import React from 'react';
+import { useManufacturers } from '../api/manufacturer';
+import { Manufacturer } from '../app.types';
+import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
+import ManufacturerDialog from './manufacturerDialog.component';
 
 function ManufacturerComponent() {
-  const [manufacturer, setManufacturer] = React.useState<Manufacturer>({
-    name: '',
-    url: undefined,
-    address: {
-      building_number: '',
-      street_name: '',
-      town: '',
-      county: '',
-      postcode: '',
-    },
-    telephone: '',
-  });
-
-  const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
-    React.useState<boolean>(false);
-
-  const [addManufacturerDialogOpen, setAddManufacturerDialogOpen] =
-    React.useState<boolean>(false);
-
   const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
     useManufacturers();
 
@@ -50,7 +30,7 @@ function ManufacturerComponent() {
     Manufacturer | undefined
   >(undefined);
 
-  const tableHeight = `calc(100vh - (64px + 36px + 50px + 172px))`;
+  const tableHeight = `calc(100vh - (64px + 36px + 172px))`;
 
   const columns = React.useMemo<MRT_ColumnDef<Manufacturer>[]>(() => {
     return [
@@ -63,13 +43,14 @@ function ManufacturerComponent() {
       },
       {
         header: 'URL',
-        accessorFn: (row) => row.url,
+        accessorFn: (row) => row.url ?? '',
         size: 500,
-        Cell: ({ row }) => (
-          <MuiLink underline="hover" target="_blank" href={row.original.url}>
-            {row.original.url}
-          </MuiLink>
-        ),
+        Cell: ({ row }) =>
+          row.original.url && (
+            <MuiLink underline="hover" target="_blank" href={row.original.url}>
+              {row.original.url}
+            </MuiLink>
+          ),
       },
       {
         header: 'Address',
@@ -78,10 +59,7 @@ function ManufacturerComponent() {
         Cell: ({ row }) => (
           <div style={{ display: 'inline-block' }}>
             <Typography sx={{ fontSize: 'inherit' }}>
-              {row.original.address.building_number}
-            </Typography>
-            <Typography sx={{ fontSize: 'inherit' }}>
-              {row.original.address.street_name}
+              {row.original.address.address_line}
             </Typography>
             <Typography sx={{ fontSize: 'inherit' }}>
               {row.original.address.town}
@@ -91,6 +69,9 @@ function ManufacturerComponent() {
             </Typography>
             <Typography sx={{ fontSize: 'inherit' }}>
               {row.original.address.postcode}
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {row.original.address.country}
             </Typography>
           </div>
         ),
@@ -139,15 +120,39 @@ function ManufacturerComponent() {
       shape: 'rounded',
       variant: 'outlined',
     },
+    renderCreateRowDialogContent: ({ table, row }) => {
+      return (
+        <>
+          <ManufacturerDialog
+            open={true}
+            onClose={() => {
+              table.setCreatingRow(null);
+            }}
+            selectedManufacturer={
+              selectedManufacturer ? selectedManufacturer : undefined
+            }
+          />
+        </>
+      );
+    },
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Button
+        variant="outlined"
+        onClick={() => {
+          table.setCreatingRow(true);
+        }}
+      >
+        Add Manufacturer
+      </Button>
+    ),
     renderRowActionMenuItems: ({ closeMenu, row }) => {
       return [
         <MenuItem
           key={0}
           aria-label={`Edit ${row.original.name} manufacturer`}
           onClick={() => {
-            setEditManufacturerDialogOpen(true);
             setSelectedManufacturer(row.original);
-            setManufacturer(row.original);
+            table.setCreatingRow(true);
             closeMenu();
           }}
           sx={{ m: 0 }}
@@ -177,37 +182,7 @@ function ManufacturerComponent() {
 
   return (
     <div style={{ width: '100%' }}>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'right',
-          padding: '9.75px', //px to match width of catalogue page
-          margin: '4px',
-        }}
-      >
-        <Button
-          variant="outlined"
-          onClick={() => setAddManufacturerDialogOpen(true)}
-        >
-          Add Manufacturer
-        </Button>
-      </Box>
       <MaterialReactTable table={table} />
-      <ManufacturerDialog
-        open={addManufacturerDialogOpen}
-        onClose={() => setAddManufacturerDialogOpen(false)}
-        manufacturer={manufacturer}
-        onChangeManufacturerDetails={setManufacturer}
-        type="create"
-      />
-      <ManufacturerDialog
-        open={editManufacturerDialogOpen}
-        onClose={() => setEditManufacturerDialogOpen(false)}
-        manufacturer={manufacturer}
-        onChangeManufacturerDetails={setManufacturer}
-        type="edit"
-        selectedManufacturer={selectedManufacturer}
-      />
 
       <DeleteManufacturerDialog
         open={deleteManufacturerDialog}

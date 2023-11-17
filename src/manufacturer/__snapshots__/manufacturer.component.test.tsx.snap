@@ -6,20 +6,6 @@ exports[`Manufacturer renders table data correctly 1`] = `
     style="width: 100%;"
   >
     <div
-      class="MuiBox-root css-1fgxxi4"
-    >
-      <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-1rwt2y5-MuiButtonBase-root-MuiButton-root"
-        tabindex="0"
-        type="button"
-      >
-        Add Manufacturer
-        <span
-          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-        />
-      </button>
-    </div>
-    <div
       class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1atu56z-MuiPaper-root"
     >
       <div
@@ -38,7 +24,16 @@ exports[`Manufacturer renders table data correctly 1`] = `
         <div
           class="MuiBox-root css-wsew38"
         >
-          <span />
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium css-1rwt2y5-MuiButtonBase-root-MuiButton-root"
+            tabindex="0"
+            type="button"
+          >
+            Add Manufacturer
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
           <div
             class="MuiBox-root css-1p0wbhh"
           >
@@ -74,7 +69,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                         aria-invalid="false"
                         autocomplete="new-password"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":rt:"
+                        id=":rr:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -227,7 +222,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-qj8zt0-MuiTableContainer-root"
+        class="MuiTableContainer-root css-13yt8r9-MuiTableContainer-root"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-1n7ptpu-MuiTable-root"
@@ -391,7 +386,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                               autocapitalize="none"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r15:"
+                              id=":r13:"
                               placeholder="Filter by Name"
                               role="combobox"
                               spellcheck="false"
@@ -556,7 +551,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                             aria-label="Filter by URL"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1a:"
+                            id=":r18:"
                             placeholder="Filter by URL"
                             title="Filter by URL"
                             type="text"
@@ -721,7 +716,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                             aria-label="Filter by Address"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1f:"
+                            id=":r1d:"
                             placeholder="Filter by Address"
                             title="Filter by Address"
                             type="text"
@@ -886,7 +881,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                             aria-label="Filter by Telephone"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1k:"
+                            id=":r1i:"
                             placeholder="Filter by Telephone"
                             title="Filter by Telephone"
                             type="text"
@@ -1008,12 +1003,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
                   >
-                    1
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    Example Street
+                    1 Example Street
                   </p>
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
@@ -1029,6 +1019,11 @@ exports[`Manufacturer renders table data correctly 1`] = `
                     class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
                   >
                     OX1 2AB
+                  </p>
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  >
+                    United Kingdom
                   </p>
                 </div>
               </td>
@@ -1097,12 +1092,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
                   >
-                    2
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    Example Street
+                    2 Example Street
                   </p>
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
@@ -1118,6 +1108,11 @@ exports[`Manufacturer renders table data correctly 1`] = `
                     class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
                   >
                     OX1 2AB
+                  </p>
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  >
+                    United Kingdom
                   </p>
                 </div>
               </td>
@@ -1186,12 +1181,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
                   >
-                    3
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    Example Street
+                    3 Example Street
                   </p>
                   <p
                     class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
@@ -1207,6 +1197,11 @@ exports[`Manufacturer renders table data correctly 1`] = `
                     class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
                   >
                     OX1 2AB
+                  </p>
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  >
+                    United Kingdom
                   </p>
                 </div>
               </td>
@@ -1308,7 +1303,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r1m:"
+                    aria-controls=":r1k:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"

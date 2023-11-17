@@ -21,11 +21,11 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import {
   useAddCatalogueItem,
-  useCatalogueItem,
   useEditCatalogueItem,
 } from '../../api/catalogueItem';
 import {
   AddCatalogueItem,
+  CatalogueCategory,
   CatalogueCategoryFormData,
   CatalogueDetailsErrorMessages,
   CatalogueItem,
@@ -35,26 +35,14 @@ import {
   EditCatalogueItem,
   ErrorParsing,
 } from '../../app.types';
+import { matchCatalogueItemProperties } from '../catalogue.component';
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
   onClose: () => void;
-  parentId: string | null;
-  catalogueItemDetails: CatalogueItemDetailsPlaceholder;
-  onChangeCatalogueItemDetails: (
-    catalogueItemDetails: CatalogueItemDetailsPlaceholder
-  ) => void;
-  catalogueItemManufacturer: CatalogueItemManufacturer;
-  onChangeCatalogueItemManufacturer: (
-    catalogueItemManufacturer: CatalogueItemManufacturer
-  ) => void;
-  catalogueItemPropertiesForm: CatalogueCategoryFormData[];
-  propertyValues: (string | number | boolean | null)[];
-  onChangePropertyValues: (
-    propertyValues: (string | number | boolean | null)[]
-  ) => void;
+  parentInfo: CatalogueCategory | undefined;
   selectedCatalogueItem?: CatalogueItem;
-  type: 'edit' | 'create';
+  type: 'edit' | 'create' | 'save as';
 }
 
 function isValidUrl(url: string) {
@@ -75,20 +63,41 @@ const isValidNumber = (input: string): boolean => {
 };
 
 function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
-  const {
-    open,
-    onClose,
-    parentId,
-    catalogueItemDetails,
-    onChangeCatalogueItemDetails,
-    catalogueItemManufacturer,
-    onChangeCatalogueItemManufacturer,
-    catalogueItemPropertiesForm,
-    propertyValues,
-    onChangePropertyValues,
-    selectedCatalogueItem,
-    type,
-  } = props;
+  const { open, onClose, parentInfo, selectedCatalogueItem, type } = props;
+  const parentId = parentInfo?.id ?? null;
+  const parentCatalogueItemPropertiesInfo = React.useMemo(
+    () => parentInfo?.catalogue_item_properties ?? [],
+    [parentInfo]
+  );
+
+  const [catalogueItemDetails, setCatalogueItemDetails] =
+    React.useState<CatalogueItemDetailsPlaceholder>({
+      catalogue_category_id: null,
+      name: '',
+      description: null,
+      cost_gbp: null,
+      cost_to_rework_gbp: null,
+      days_to_replace: null,
+      days_to_rework: null,
+      drawing_number: null,
+      drawing_link: null,
+      item_model_number: null,
+      is_obsolete: null,
+      obsolete_replacement_catalogue_item_id: null,
+      obsolete_reason: null,
+    });
+
+  const [catalogueItemManufacturer, setCatalogueItemManufacturer] =
+    React.useState<CatalogueItemManufacturer>({
+      name: '',
+      address: '',
+      url: '',
+    });
+
+  const [propertyValues, setPropertyValues] = React.useState<
+    (string | number | boolean | null)[]
+  >([]);
+
   const [formError, setFormError] = React.useState(false);
   const [formErrorMessage, setFormErrorMessage] = React.useState<
     string | undefined
@@ -105,7 +114,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const [manufacturerAddressError, setManufacturerAddressError] =
     React.useState(false);
   const [propertyErrors, setPropertyErrors] = React.useState(
-    new Array(catalogueItemPropertiesForm.length).fill(false)
+    new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
   );
 
   // set the errors as the types into the input fields
@@ -115,9 +124,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   >({});
 
   const handleClose = React.useCallback(() => {
-    onChangeCatalogueItemDetails({
+    setCatalogueItemDetails({
       catalogue_category_id: null,
-      name: '',
+      name: null,
       description: null,
       cost_gbp: null,
       cost_to_rework_gbp: null,
@@ -130,14 +139,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       obsolete_replacement_catalogue_item_id: null,
       obsolete_reason: null,
     });
-    onChangeCatalogueItemManufacturer({
+    setCatalogueItemManufacturer({
       name: '',
       address: '',
       url: '',
     });
-    onChangePropertyValues([]);
+    setPropertyValues([]);
     setPropertyErrors(
-      new Array(catalogueItemPropertiesForm.length).fill(false)
+      new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
     );
     setErrorMessages({});
     setFormError(false);
@@ -147,12 +156,44 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     setManufacturerWebUrlError(false);
     onClose();
   }, [
-    catalogueItemPropertiesForm.length,
-    onChangeCatalogueItemDetails,
-    onChangeCatalogueItemManufacturer,
-    onChangePropertyValues,
+    parentCatalogueItemPropertiesInfo.length,
+    setCatalogueItemDetails,
+    setCatalogueItemManufacturer,
+    setPropertyValues,
     onClose,
   ]);
+
+  React.useEffect(() => {
+    if (selectedCatalogueItem) {
+      setCatalogueItemDetails({
+        catalogue_category_id: selectedCatalogueItem.catalogue_category_id,
+        name: selectedCatalogueItem.name,
+        description: selectedCatalogueItem.description,
+        cost_gbp: String(selectedCatalogueItem.cost_gbp),
+        cost_to_rework_gbp: selectedCatalogueItem.cost_to_rework_gbp
+          ? String(selectedCatalogueItem.cost_to_rework_gbp)
+          : null,
+        days_to_replace: String(selectedCatalogueItem.days_to_replace),
+        days_to_rework: selectedCatalogueItem.days_to_rework
+          ? String(selectedCatalogueItem.days_to_rework)
+          : null,
+        drawing_number: selectedCatalogueItem.drawing_number,
+        drawing_link: selectedCatalogueItem.drawing_link,
+        item_model_number: selectedCatalogueItem.item_model_number,
+        is_obsolete: String(selectedCatalogueItem.is_obsolete),
+        obsolete_replacement_catalogue_item_id:
+          selectedCatalogueItem.obsolete_replacement_catalogue_item_id,
+        obsolete_reason: selectedCatalogueItem.obsolete_reason,
+      });
+      setPropertyValues(
+        matchCatalogueItemProperties(
+          parentCatalogueItemPropertiesInfo,
+          selectedCatalogueItem.properties ?? []
+        )
+      );
+      setCatalogueItemManufacturer(selectedCatalogueItem.manufacturer);
+    }
+  }, [parentCatalogueItemPropertiesInfo, selectedCatalogueItem]);
 
   const handlePropertyChange = (
     index: number,
@@ -163,10 +204,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     setFormErrorMessage(undefined);
     const updatedPropertyValues = [...propertyValues];
     updatedPropertyValues[index] = newValue;
-    onChangePropertyValues(updatedPropertyValues);
+    setPropertyValues(updatedPropertyValues);
 
     const updatedProperties: CatalogueItemProperty[] = [];
-    const propertyType = catalogueItemPropertiesForm[index]?.type || 'string';
+    const propertyType =
+      parentCatalogueItemPropertiesInfo[index]?.type || 'string';
 
     if (!updatedProperties[index]) {
       // Initialize the property if it doesn't exist
@@ -200,9 +242,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const { mutateAsync: addCatalogueItem } = useAddCatalogueItem();
   const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
-  const { data: selectedCatalogueItemData } = useCatalogueItem(
-    selectedCatalogueItem?.id
-  );
 
   const handleFormErrorStates = React.useCallback(() => {
     let hasErrors = false;
@@ -335,7 +374,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     // Check properties
     const updatedPropertyErrors = [...propertyErrors];
 
-    const updatedProperties = catalogueItemPropertiesForm.map(
+    const updatedProperties = parentCatalogueItemPropertiesInfo.map(
       (property, index) => {
         if (property.mandatory && !propertyValues[index]) {
           updatedPropertyErrors[index] = true;
@@ -399,7 +438,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     catalogueItemDetails,
     catalogueItemManufacturer,
     propertyErrors,
-    catalogueItemPropertiesForm,
+    parentCatalogueItemPropertiesInfo,
     propertyValues,
   ]);
   const details = React.useMemo(
@@ -433,6 +472,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   );
   const handleAddCatalogueItem = React.useCallback(() => {
     const { hasErrors, updatedProperties } = handleFormErrorStates();
+
     if (hasErrors) {
       return; // Do not proceed with saving if there are errors
     }
@@ -445,6 +485,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       ...details,
       properties: filteredProperties,
       manufacturer: catalogueItemManufacturer,
+      name: type === 'save as' ? `${details.name}_copy` : details.name,
     };
 
     addCatalogueItem(catalogueItem)
@@ -459,10 +500,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     handleClose,
     details,
     handleFormErrorStates,
+    type,
   ]);
 
   const handleEditCatalogueItem = React.useCallback(() => {
-    if (selectedCatalogueItem && selectedCatalogueItemData) {
+    if (selectedCatalogueItem) {
       const { hasErrors, updatedProperties } = handleFormErrorStates();
 
       if (hasErrors) {
@@ -473,45 +515,42 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         (property) => property !== null
       ) as CatalogueItemProperty[];
 
-      const isNameUpdated = details.name !== selectedCatalogueItemData.name;
+      const isNameUpdated = details.name !== selectedCatalogueItem.name;
 
       const isDescriptionUpdated =
-        details.description !== selectedCatalogueItemData.description;
+        details.description !== selectedCatalogueItem.description;
 
       const isCostGbpUpdated =
-        details.cost_gbp !== selectedCatalogueItemData.cost_gbp;
+        details.cost_gbp !== selectedCatalogueItem.cost_gbp;
 
       const isCostToReworkGbpUpdated =
-        details.cost_to_rework_gbp !==
-        selectedCatalogueItemData.cost_to_rework_gbp;
+        details.cost_to_rework_gbp !== selectedCatalogueItem.cost_to_rework_gbp;
 
       const isDaysToReplaceUpdated =
-        details.days_to_replace !== selectedCatalogueItemData.days_to_replace;
+        details.days_to_replace !== selectedCatalogueItem.days_to_replace;
 
       const isDaysToReworkUpdated =
-        details.days_to_rework !== selectedCatalogueItemData.days_to_rework;
+        details.days_to_rework !== selectedCatalogueItem.days_to_rework;
 
       const isDrawingNumberUpdated =
-        details.drawing_number !== selectedCatalogueItemData.drawing_number;
+        details.drawing_number !== selectedCatalogueItem.drawing_number;
 
       const isDrawingLinkUpdated =
-        details.drawing_link !== selectedCatalogueItemData.drawing_link;
+        details.drawing_link !== selectedCatalogueItem.drawing_link;
 
       const isModelNumberUpdated =
-        details.item_model_number !==
-        selectedCatalogueItemData.item_model_number;
+        details.item_model_number !== selectedCatalogueItem.item_model_number;
 
       const isCatalogueItemPropertiesUpdated =
         JSON.stringify(filteredProperties) !==
         JSON.stringify(
-          selectedCatalogueItemData.properties.map(
-            ({ unit, ...rest }) => rest
-          ) ?? null
+          selectedCatalogueItem.properties.map(({ unit, ...rest }) => rest) ??
+            null
         );
 
       const isManufacturerUpdated =
         JSON.stringify(catalogueItemManufacturer) !==
-        JSON.stringify(selectedCatalogueItemData.manufacturer);
+        JSON.stringify(selectedCatalogueItem.manufacturer);
       let catalogueItem: EditCatalogueItem = {
         id: selectedCatalogueItem.id,
       };
@@ -575,7 +614,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     handleClose,
     handleFormErrorStates,
     selectedCatalogueItem,
-    selectedCatalogueItemData,
     details,
   ]);
 
@@ -595,13 +633,13 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       updatedDetails[field] = value as string;
     }
 
-    onChangeCatalogueItemDetails(updatedDetails);
+    setCatalogueItemDetails(updatedDetails);
   };
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
       <DialogTitle>{`${
-        type === 'create' ? 'Add' : 'Edit'
+        type === 'edit' ? 'Edit' : 'Add'
       } Catalogue Item`}</DialogTitle>
       <DialogContent>
         <Grid container spacing={1.5}>
@@ -615,7 +653,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   label="Name"
                   size="small"
                   required={true}
-                  value={catalogueItemDetails.name}
+                  value={catalogueItemDetails.name ?? ''}
                   onChange={(event) => {
                     handleCatalogueDetails('name', event.target.value);
                   }}
@@ -630,7 +668,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 <TextField
                   label="Description"
                   size="small"
-                  value={catalogueItemDetails.description}
+                  value={catalogueItemDetails.description ?? ''}
                   onChange={(event) => {
                     handleCatalogueDetails('description', event.target.value);
                   }}
@@ -643,7 +681,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   label="Cost (£)"
                   size="small"
                   required={true}
-                  value={catalogueItemDetails.cost_gbp}
+                  value={catalogueItemDetails.cost_gbp ?? ''}
                   onChange={(event) => {
                     handleCatalogueDetails('cost_gbp', event.target.value);
                   }}
@@ -661,7 +699,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 <TextField
                   label="Cost to rework (£)"
                   size="small"
-                  value={catalogueItemDetails.cost_to_rework_gbp}
+                  value={catalogueItemDetails.cost_to_rework_gbp ?? ''}
                   onChange={(event) => {
                     handleCatalogueDetails(
                       'cost_to_rework_gbp',
@@ -683,7 +721,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   label="Time to replace (days)"
                   size="small"
                   required={true}
-                  value={catalogueItemDetails.days_to_replace}
+                  value={catalogueItemDetails.days_to_replace ?? ''}
                   onChange={(event) => {
                     handleCatalogueDetails(
                       'days_to_replace',
@@ -704,7 +742,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 <TextField
                   label="Time to rework (days)"
                   size="small"
-                  value={catalogueItemDetails.days_to_rework}
+                  value={catalogueItemDetails.days_to_rework ?? ''}
                   onChange={(event) => {
                     handleCatalogueDetails(
                       'days_to_rework',
@@ -725,7 +763,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 <TextField
                   label="Drawing number"
                   size="small"
-                  value={catalogueItemDetails.drawing_number}
+                  value={catalogueItemDetails.drawing_number ?? ''}
                   onChange={(event) => {
                     handleCatalogueDetails(
                       'drawing_number',
@@ -740,7 +778,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 <TextField
                   label="Drawing link"
                   size="small"
-                  value={catalogueItemDetails.drawing_link}
+                  value={catalogueItemDetails.drawing_link ?? ''}
                   onChange={(event) => {
                     handleCatalogueDetails('drawing_link', event.target.value);
                   }}
@@ -758,7 +796,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 <TextField
                   label="Model number"
                   size="small"
-                  value={catalogueItemDetails.item_model_number}
+                  value={catalogueItemDetails.item_model_number ?? ''}
                   onChange={(event) => {
                     handleCatalogueDetails(
                       'item_model_number',
@@ -778,7 +816,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   size="small"
                   value={catalogueItemManufacturer.name}
                   onChange={(event) => {
-                    onChangeCatalogueItemManufacturer({
+                    setCatalogueItemManufacturer({
                       ...catalogueItemManufacturer,
                       name: event.target.value,
                     });
@@ -802,7 +840,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   size="small"
                   value={catalogueItemManufacturer.url}
                   onChange={(event) => {
-                    onChangeCatalogueItemManufacturer({
+                    setCatalogueItemManufacturer({
                       ...catalogueItemManufacturer,
                       url: event.target.value,
                     });
@@ -827,7 +865,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   size="small"
                   value={catalogueItemManufacturer.address}
                   onChange={(event) => {
-                    onChangeCatalogueItemManufacturer({
+                    setCatalogueItemManufacturer({
                       ...catalogueItemManufacturer,
                       address: event.target.value,
                     });
@@ -848,12 +886,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           </Grid>
 
           <Grid item xs={6}>
-            {catalogueItemPropertiesForm.length >= 1 && (
+            {parentCatalogueItemPropertiesInfo.length >= 1 && (
               <Grid container spacing={1.5}>
                 <Grid item xs={12}>
                   <Typography variant="h6">Properties</Typography>
                 </Grid>
-                {catalogueItemPropertiesForm.map(
+                {parentCatalogueItemPropertiesInfo.map(
                   (property: CatalogueCategoryFormData, index: number) => (
                     <Grid item xs={12} key={index}>
                       <Grid container spacing={1.5}>
@@ -990,9 +1028,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
             onClick={
-              type === 'create'
-                ? handleAddCatalogueItem
-                : handleEditCatalogueItem
+              type === 'edit' ? handleEditCatalogueItem : handleAddCatalogueItem
             }
           >
             Save
