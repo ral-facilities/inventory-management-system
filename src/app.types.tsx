@@ -73,8 +73,35 @@ export interface CatalogueCategoryFormData {
 }
 
 export interface CatalogueItemDetails {
-  name: string | undefined;
-  description: string | undefined;
+  catalogue_category_id: string;
+  name: string;
+  description: string | null;
+  cost_gbp: number;
+  cost_to_rework_gbp: number | null;
+  days_to_replace: number;
+  days_to_rework: number | null;
+  drawing_number: string | null;
+  drawing_link: string | null;
+  item_model_number: string | null;
+  is_obsolete: boolean;
+  obsolete_replacement_catalogue_item_id: string | null;
+  obsolete_reason: string | null;
+}
+// need so we can cast string to number e.g for 10.50
+export type CatalogueItemDetailsPlaceholder = {
+  [K in keyof CatalogueItemDetails]: string | null;
+};
+
+export interface CatalogueDetailsErrorMessages {
+  name: string;
+  description: string;
+  cost_gbp: string;
+  cost_to_rework_gbp: string;
+  days_to_replace: string;
+  days_to_rework: string;
+  drawing_number: string;
+  drawing_link: string;
+  item_model_number: string;
 }
 
 export interface CatalogueItemManufacturer {
@@ -94,27 +121,17 @@ export interface CatalogueItemPropertyResponse {
   unit: string;
 }
 
-export interface CatalogueItem {
-  catalogue_category_id: string;
-  name: string | undefined;
-  description: string;
+export interface CatalogueItem extends CatalogueItemDetails {
   properties: CatalogueItemPropertyResponse[];
   manufacturer: CatalogueItemManufacturer;
   id: string;
 }
-export interface AddCatalogueItem {
-  catalogue_category_id: string;
-  name: string | undefined;
-  description: string;
+export interface AddCatalogueItem extends CatalogueItemDetails {
   properties: CatalogueItemProperty[];
   manufacturer: CatalogueItemManufacturer;
 }
 
-export interface EditCatalogueItem {
-  name?: string | undefined;
-  description?: string;
-  properties?: CatalogueItemProperty[];
-  manufacturer?: CatalogueItemManufacturer;
+export interface EditCatalogueItem extends Partial<AddCatalogueItem> {
   id: string;
 }
 export interface ErrorParsing {

@@ -20,7 +20,21 @@ describe('Catalogue Items Table', () => {
 
   beforeEach(() => {
     props = {
-      catalogueItemDetails: { name: undefined, description: '' },
+      catalogueItemDetails: {
+        catalogue_category_id: '',
+        cost_gbp: null,
+        cost_to_rework_gbp: null,
+        days_to_replace: null,
+        days_to_rework: null,
+        description: null,
+        drawing_link: null,
+        drawing_number: null,
+        is_obsolete: 'false',
+        item_model_number: null,
+        name: '',
+        obsolete_reason: null,
+        obsolete_replacement_catalogue_item_id: null,
+      },
       onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
       onChangeAddItemDialogOpen: onChangeAddItemDialogOpen,
       catalogueItemManufacturer: {
@@ -179,6 +193,33 @@ describe('Catalogue Items Table', () => {
     });
   });
 
+  it('opens the edit catalogue item dialog (more catalogue item details filled in)', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText(
+          'Catalogue item description: Precision energy meters for accurate measurements. 27'
+        )
+      ).toBeInTheDocument();
+    });
+
+    const editButton = screen.getByRole('button', {
+      name: 'Edit Energy Meters 27 catalogue item',
+    });
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('opens the add catalogue item dialog for save as', async () => {
     createView();
 
@@ -197,6 +238,25 @@ describe('Catalogue Items Table', () => {
 
     expect(onChangeAddItemDialogOpen).toBeCalledWith(true);
   });
+
+  it('opens the add catalogue item dialog for save as (more catalogue item details filled in)', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText(
+          'Catalogue item description: Precision energy meters for accurate measurements. 27'
+        )
+      ).toBeInTheDocument();
+    });
+
+    const saveAsButton = screen.getByRole('button', {
+      name: 'Save as Energy Meters 27 catalogue item',
+    });
+    await user.click(saveAsButton);
+
+    expect(onChangeAddItemDialogOpen).toBeCalledWith(true);
+  });
   it('navigates to the manufacturer url', async () => {
     createView();
     await waitFor(() => {
@@ -208,6 +268,19 @@ describe('Catalogue Items Table', () => {
     const row = screen.getByRole('row', { name: 'Energy Meters 26 row' });
     const url = await within(row).findByText('http://example.com');
     expect(url).toHaveAttribute('href', 'http://example.com');
+  });
+
+  it('navigates to replacement obsolete item', async () => {
+    createView();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('row', { name: 'Energy Meters 26 row' })
+      ).toBeInTheDocument();
+    });
+
+    const row = screen.getByRole('row', { name: 'Energy Meters 26 row' });
+    const url = await within(row).findByText('Click here');
+    expect(url).toHaveAttribute('href', '/items/6');
   });
 
   it('progress bar renders correctly', async () => {
