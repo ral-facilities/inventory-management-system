@@ -544,8 +544,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       const isCatalogueItemPropertiesUpdated =
         JSON.stringify(filteredProperties) !==
         JSON.stringify(
-          selectedCatalogueItem.properties.map(({ unit, ...rest }) => rest) ??
-            null
+          selectedCatalogueItem.properties.map(({ unit, ...rest }) => rest)
         );
 
       const isManufacturerUpdated =

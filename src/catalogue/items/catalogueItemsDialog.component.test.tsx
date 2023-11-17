@@ -634,7 +634,7 @@ describe('Catalogue Items Dialog', () => {
 
         selectedCatalogueItem: {
           ...getCatalogueItemById('1'),
-          properties: undefined,
+          properties: [],
         },
       };
 
