@@ -24,7 +24,7 @@ COPY . .
 RUN set -eux; \
     \
     # Set the React production variable which holds reference to the path of the plugin build \
-    echo "REACT_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY=/ims/" > .env.production; \
+    echo "REACT_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY=/inventory-management-system/" > .env.production; \
     \
     cp public/inventory-management-system-settings.example.json public/inventory-management-system-settings.json ;\
     \
@@ -45,7 +45,10 @@ RUN set -eux; \
     setcap 'cap_net_bind_service=+ep' /usr/local/apache2/bin/httpd; \
     \
     # Change ownership of logs directory \
-    chown www-data:www-data /usr/local/apache2/logs;
+    chown www-data:www-data /usr/local/apache2/logs; \
+    \
+    # Change ownership of settings file \
+    chown www-data:www-data /usr/local/apache2/htdocs/inventory-management-system-settings.json;
 
 # Switch to non-root user defined in httpd image
 USER www-data
