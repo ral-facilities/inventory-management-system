@@ -57,6 +57,20 @@ describe('Catalogue Items Table', () => {
     expect(screen.getByText('Obsolete replacement link')).toBeInTheDocument();
   });
 
+  it('renders table correctly (Cameras more details)', async () => {
+    props.parentInfo = getCatalogueCategoryById('4');
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    await hideOrShowColumn([
+      'Sensor brand',
+      'Cost to Rework (GBP)',
+      'Days to Rework',
+    ]);
+  });
+
   it('renders table correctly (section 2 due to column virtualisation )', async () => {
     createView();
     await waitFor(() => {

@@ -632,7 +632,10 @@ describe('Catalogue Items Dialog', () => {
         ...props,
         parentInfo: getCatalogueCategoryById('17'),
 
-        selectedCatalogueItem: { ...getCatalogueItemById('1'), properties: [] },
+        selectedCatalogueItem: {
+          ...getCatalogueItemById('1'),
+          properties: undefined,
+        },
       };
 
       createView();

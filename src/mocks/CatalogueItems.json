@@ -249,9 +249,9 @@
       "address": "10 My Street"
     },
     "cost_gbp": 900,
-    "cost_to_rework_gbp": null,
+    "cost_to_rework_gbp": 0,
     "days_to_replace": 7,
-    "days_to_rework": null,
+    "days_to_rework": 0,
     "drawing_number": null,
     "drawing_link": null,
     "item_model_number": null,
