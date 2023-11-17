@@ -37,5 +37,12 @@ WORKDIR /usr/local/apache2/htdocs
 
 COPY --from=builder /inventory-management-system-build/build/. .
 
+RUN set -eux; \
+    \
+    # Privileged ports are permitted to root only by default. \
+    # setcap to bind to privileged ports (80) as non-root. \
+    apk --no-cache add libcap; \
+    setcap 'cap_net_bind_service=+ep' /usr/local/apache2/bin/httpd;
+
 CMD ["httpd-foreground"]
 EXPOSE 80
