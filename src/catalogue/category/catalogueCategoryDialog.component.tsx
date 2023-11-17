@@ -331,7 +331,7 @@ const CatalogueCategoryDialog = React.memo(
                   is_leaf: value === 'true' ? true : false,
                 };
                 if (value === 'false') {
-                  newData.catalogue_item_properties = [];
+                  newData.catalogue_item_properties = undefined;
                   setErrorFields([]);
                   setNameFields([]);
                   setTypeFields([]);
