@@ -50,6 +50,7 @@ jobs:
           path: cypress/screenshots
 
   docker:
+    needs: [test]
     name: Docker
     runs-on: ubuntu-latest
     steps:
