@@ -110,9 +110,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             variant="outlined"
             required={true}
             value={field.name}
-            onChange={(e) => {
-              handleChange(index, 'name', e.target.value);
-            }}
+            onChange={(e) => handleChange(index, 'name', e.target.value)}
             error={errorFields.includes(index) && !nameFields[index].trim()}
             helperText={
               errorFields.includes(index) && !nameFields[index].trim()
