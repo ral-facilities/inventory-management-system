@@ -2,6 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import BlockIcon from '@mui/icons-material/Block';
 import {
   Button,
   ListItemIcon,
@@ -14,6 +15,7 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
+  type MRT_RowSelectionState,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
@@ -23,20 +25,27 @@ import { CatalogueCategory, CatalogueItem } from '../../app.types';
 import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
+import ObsoleteCatalogueItemDialog from './ObsoleteCatalogueItemDialog.component';
 
 export interface CatalogueItemsTableProps {
   parentInfo: CatalogueCategory;
   dense: boolean;
+  onChangeObsoleteReplacementId?: (
+    obsoleteReplacementId: string | null
+  ) => void;
 }
 
 const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
-  const { parentInfo, dense } = props;
+  const { parentInfo, dense, onChangeObsoleteReplacementId } = props;
   // SG header + SG footer + tabs #add breadcrumbs + Mui table V2
   const tableHeight = `calc(100vh - (64px + 36px + 50px + 172px))`;
 
   const { data, isLoading } = useCatalogueItems(parentInfo.id);
 
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [obsoleteItemDialogOpen, setObsoleteItemDialogOpen] =
     React.useState<boolean>(false);
 
   type PropertyFiltersType = {
@@ -245,14 +254,22 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     ];
   }, [dense, parentInfo]);
 
+  const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
+    {}
+  );
+
   const table = useMaterialReactTable({
     columns: dense ? [{ ...columns[0], size: 1135 }] : columns, // If dense only show the name column
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-    enableColumnOrdering: true,
+    enableColumnOrdering: dense ? false : true,
     enableFacetedValues: true,
     enableRowActions: dense ? false : true,
     enableStickyHeader: true,
     enableRowSelection: dense ? true : false,
+    enableHiding: dense ? false : true,
+    enableDensityToggle: dense ? false : true,
+    enableTopToolbar: dense ? false : true,
+    enableMultiRowSelection: false,
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
     enableColumnVirtualization: true,
@@ -265,15 +282,40 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       ...MRT_Localization_EN,
       noRecordsToDisplay: noResultsTxt,
     },
+    onRowSelectionChange: (value) => {
+      setRowSelection(value);
+    },
+
     muiTableBodyRowProps: ({ row }) => {
-      return { component: TableRow, 'aria-label': `${row.original.name} row` };
+      return {
+        component: TableRow,
+        onClick: () =>
+          setRowSelection((prev) => ({
+            [row.id]: !prev[row.id],
+          })),
+
+        selected: rowSelection[row.id],
+        sx: { cursor: 'pointer' },
+        'aria-label': `${row.original.name} row`,
+      };
+    },
+    muiSelectCheckboxProps: ({ row }) => {
+      return {
+        onClick: () => {
+          onChangeObsoleteReplacementId &&
+            onChangeObsoleteReplacementId(row.original.id);
+        },
+      };
     },
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      pagination: { pageSize: 15, pageIndex: 0 },
+      pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
     },
-    muiTableContainerProps: { sx: { height: dense ? 'inherit' : tableHeight } },
+    getRowId: (row) => row.id,
+    muiTableContainerProps: {
+      sx: { height: dense ? '360.4px' : tableHeight },
+    },
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
     muiSearchTextFieldProps: {
@@ -282,10 +324,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     },
     state: {
       showProgressBars: isLoading, //or showSkeletons
+      rowSelection,
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: dense ? [5] : [15, 30, 45],
       shape: 'rounded',
       variant: 'outlined',
     },
@@ -317,7 +360,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Add Catalogue Item
       </Button>
     ),
-    renderRowActionMenuItems: ({ closeMenu, row }) => {
+    renderRowActionMenuItems: ({ closeMenu, row, table }) => {
       return [
         <MenuItem
           key={0}
@@ -364,6 +407,22 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           </ListItemIcon>
           <>Delete</>
         </MenuItem>,
+        <MenuItem
+          key={3}
+          aria-label={`Obsolete ${row.original.name} catalogue item`}
+          onClick={() => {
+            setObsoleteItemDialogOpen(true);
+            setSelectedCatalogueItem(row.original);
+
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <BlockIcon />
+          </ListItemIcon>
+          <>Obsolete</>
+        </MenuItem>,
       ];
     },
     renderDetailPanel: dense
@@ -375,18 +434,25 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         )
       : undefined,
   });
-
+  // console.log(obsoleteReplacementId);
   return (
     <div style={{ width: '100%' }}>
       <MaterialReactTable table={table} />
 
       {!dense && (
-        <DeleteCatalogueItemsDialog
-          open={deleteItemDialogOpen}
-          onClose={() => setDeleteItemDialogOpen(false)}
-          catalogueItem={selectedCatalogueItem}
-          onChangeCatalogueItem={setSelectedCatalogueItem}
-        />
+        <>
+          <DeleteCatalogueItemsDialog
+            open={deleteItemDialogOpen}
+            onClose={() => setDeleteItemDialogOpen(false)}
+            catalogueItem={selectedCatalogueItem}
+            onChangeCatalogueItem={setSelectedCatalogueItem}
+          />
+          <ObsoleteCatalogueItemDialog
+            open={obsoleteItemDialogOpen}
+            onClose={() => setObsoleteItemDialogOpen(false)}
+            catalogueItem={selectedCatalogueItem}
+          />
+        </>
       )}
     </div>
   );
