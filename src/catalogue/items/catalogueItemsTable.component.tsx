@@ -29,6 +29,7 @@ import {
 import { matchCatalogueItemProperties } from '../catalogue.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
+import { useManufacturers } from '../../api/manufacturer';
 
 function generateUniqueName(
   existingNames: (string | undefined)[],
@@ -44,6 +45,7 @@ function generateUniqueName(
 
   return newName;
 }
+
 export interface CatalogueItemsTableProps {
   parentInfo: CatalogueCategory;
   catalogueItemDetails: CatalogueItemDetailsPlaceholder;
@@ -79,6 +81,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     parentInfo.catalogue_item_properties ?? [];
 
   const { data, isLoading } = useCatalogueItems(parentInfo.id);
+
+  const { data: manufacturerList } = useManufacturers();
 
   const theme = useTheme();
 
@@ -263,7 +267,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                   Manufacturer Name
                 </Typography>
               </TableCell>
-              <TableCell
+              {/* <TableCell
                 sx={{
                   borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
                   borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
@@ -282,7 +286,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                 <Typography sx={{ fontWeight: 'bold' }}>
                   Manufacturer Address
                 </Typography>
-              </TableCell>
+              </TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -336,7 +340,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                             )
                           );
                           setSelectedCatalogueItem(item);
-                          onChangeCatalogueItemManufacturer(item.manufacturer);
+                          // onChangeCatalogueItemManufacturer(item.manufacturer);
                         }}
                       >
                         <EditIcon />
@@ -377,7 +381,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                             )
                           );
                           setSelectedCatalogueItem(item);
-                          onChangeCatalogueItemManufacturer(item.manufacturer);
+                          // onChangeCatalogueItemManufacturer(item.manufacturer);
                         }}
                       >
                         <SaveAsIcon />
@@ -574,33 +578,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
-                    {item.manufacturer.name}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      px: '8px',
-                      paddingTop: '0px',
-                      paddingBottom: '0px',
-                      borderRight: '1px solid #e0e0e0',
-                    }}
-                  >
-                    <MuiLink
-                      underline="hover"
-                      target="_blank"
-                      href={item.manufacturer.url}
-                    >
-                      {item.manufacturer.url}
-                    </MuiLink>
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      px: '8px',
-                      paddingTop: '0px',
-                      paddingBottom: '0px',
-                      borderRight: '1px solid #e0e0e0',
-                    }}
-                  >
-                    {item.manufacturer.address}
+                    {
+                      manufacturerList?.find((manufacturer) => {
+                        return manufacturer.id === item.id;
+                      })?.name
+                    }
                   </TableCell>
                 </TableRow>
               ))}
