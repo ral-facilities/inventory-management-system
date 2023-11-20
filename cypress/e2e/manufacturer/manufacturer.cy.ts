@@ -315,13 +315,16 @@ describe('Manufacturer', () => {
     cy.findByText('Telephone number:').should('exist');
 
     cy.findByRole('button', { name: 'Edit' }).click();
-    cy.findByLabelText('Name').should('have.value', 'Manufacturer A');
+    cy.findByLabelText('Name *').should('have.value', 'Manufacturer A');
     cy.findByLabelText('URL').should('have.value', 'http://example.com');
-    cy.findByLabelText('address line').should('have.value', '1 Example Street');
+    cy.findByLabelText('Address Line *').should(
+      'have.value',
+      '1 Example Street'
+    );
     cy.findByLabelText('Town').should('have.value', 'Oxford');
     cy.findByLabelText('County').should('have.value', 'Oxfordshire');
-    cy.findByLabelText('Country').should('have.value', 'United Kingdom');
-    cy.findByLabelText('Post/Zip code').should('have.value', 'OX1 2AB');
+    cy.findByLabelText('Country *').should('have.value', 'United Kingdom');
+    cy.findByLabelText('Post/Zip code *').should('have.value', 'OX1 2AB');
     cy.findByLabelText('Telephone number').should('have.value', '07334893348');
 
     cy.findByRole('button', { name: 'Cancel' }).click();
