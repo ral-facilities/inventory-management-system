@@ -8,15 +8,9 @@ import {
 } from '@tanstack/react-query';
 import { settings } from '../settings';
 
-import {
-  AddManufacturer,
-  AddManufacturerResponse,
-  EditManufacturer,
-  ManufacturerDetail,
-  ViewManufacturerResponse,
-} from '../app.types';
+import { AddManufacturer, Manufacturer, EditManufacturer } from '../app.types';
 
-const getAllManufacturers = async (): Promise<ViewManufacturerResponse[]> => {
+const getAllManufacturers = async (): Promise<Manufacturer[]> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -30,10 +24,10 @@ const getAllManufacturers = async (): Promise<ViewManufacturerResponse[]> => {
 };
 
 export const useManufacturers = (): UseQueryResult<
-  ViewManufacturerResponse[],
+  Manufacturer[],
   AxiosError
 > => {
-  return useQuery<ViewManufacturerResponse[], AxiosError>(
+  return useQuery<Manufacturer[], AxiosError>(
     ['Manufacturers'],
     (params) => {
       return getAllManufacturers();
@@ -48,7 +42,7 @@ export const useManufacturers = (): UseQueryResult<
 
 const addManufacturer = async (
   manufacturer: AddManufacturer
-): Promise<AddManufacturerResponse> => {
+): Promise<Manufacturer> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -56,12 +50,12 @@ const addManufacturer = async (
     apiUrl = settingsResult['apiUrl'];
   }
   return axios
-    .post<AddManufacturerResponse>(`${apiUrl}/v1/manufacturers`, manufacturer)
+    .post<Manufacturer>(`${apiUrl}/v1/manufacturers`, manufacturer)
     .then((response) => response.data);
 };
 
 export const useAddManufacturer = (): UseMutationResult<
-  AddManufacturerResponse,
+  Manufacturer,
   AxiosError,
   AddManufacturer
 > => {
@@ -79,9 +73,7 @@ export const useAddManufacturer = (): UseMutationResult<
   );
 };
 
-const deleteManufacturer = async (
-  session: ViewManufacturerResponse
-): Promise<void> => {
+const deleteManufacturer = async (session: Manufacturer): Promise<void> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -96,25 +88,22 @@ const deleteManufacturer = async (
 export const useDeleteManufacturer = (): UseMutationResult<
   void,
   AxiosError,
-  ViewManufacturerResponse
+  Manufacturer
 > => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (session: ViewManufacturerResponse) => deleteManufacturer(session),
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
-      },
-    }
-  );
+  return useMutation((session: Manufacturer) => deleteManufacturer(session), {
+    onError: (error) => {
+      console.log('Got error ' + error.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
+    },
+  });
 };
 
-const fetchManufacturerById = async (
+const fetchManufacturer = async (
   id: string | undefined
-): Promise<ManufacturerDetail> => {
+): Promise<Manufacturer> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -127,13 +116,13 @@ const fetchManufacturerById = async (
   });
 };
 
-export const useManufacturerById = (
+export const useManufacturer = (
   id: string | undefined
-): UseQueryResult<ManufacturerDetail, AxiosError> => {
-  return useQuery<ManufacturerDetail, AxiosError>(
-    ['ManufacturerByID', id],
+): UseQueryResult<Manufacturer, AxiosError> => {
+  return useQuery<Manufacturer, AxiosError>(
+    ['Manufacturer', id],
     (params) => {
-      return fetchManufacturerById(id);
+      return fetchManufacturer(id);
     },
     {
       onError: (error) => {
@@ -146,7 +135,7 @@ export const useManufacturerById = (
 
 const editManufacturer = async (
   manufacturer: EditManufacturer
-): Promise<ManufacturerDetail> => {
+): Promise<Manufacturer> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -155,7 +144,7 @@ const editManufacturer = async (
   }
   const { id, ...updatedManufacturer } = manufacturer;
   return axios
-    .patch<ManufacturerDetail>(
+    .patch<Manufacturer>(
       `${apiUrl}/v1/manufacturers/${id}`,
       updatedManufacturer
     )
@@ -163,7 +152,7 @@ const editManufacturer = async (
 };
 
 export const useEditManufacturer = (): UseMutationResult<
-  ManufacturerDetail,
+  Manufacturer,
   AxiosError,
   EditManufacturer
 > => {

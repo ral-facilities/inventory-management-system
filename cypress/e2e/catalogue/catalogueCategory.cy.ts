@@ -5,8 +5,8 @@ describe('Catalogue Category', () => {
   afterEach(() => {
     cy.clearMocks();
   });
-  it('should create the breadcrumbs from the url', () => {
-    cy.visit('/inventory-management-system/catalogue/motion/actuators');
+  it('should create the breadcrumbs when navigating to a non root catalogue category', () => {
+    cy.visit('/inventory-management-system/catalogue/8');
     cy.findByRole('link', { name: 'motion' }).should('be.visible');
     cy.findByText('actuators').should('be.visible');
 
@@ -14,11 +14,11 @@ describe('Catalogue Category', () => {
     cy.findByRole('link', { name: 'motion' }).should('not.exist');
     cy.findByText('actuators').should('not.exist');
     cy.findByText('motion').should('be.visible');
-    cy.url().should('include', '/catalogue/motion');
+    cy.url().should('include', '/catalogue/2');
   });
 
   it('should navigate back to the root directory when the home button is pressed', () => {
-    cy.visit('/inventory-management-system/catalogue/motion/actuators');
+    cy.visit('/inventory-management-system/catalogue/8');
     cy.findByRole('link', { name: 'motion' }).should('exist');
     cy.findByText('actuators').should('exist');
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
@@ -143,7 +143,7 @@ describe('Catalogue Category', () => {
   });
 
   it('edits a catalogue category (non leaf node)', () => {
-    cy.visit('/inventory-management-system/catalogue/beam-characterization');
+    cy.visit('/inventory-management-system/catalogue/1');
     cy.findByRole('button', {
       name: 'edit Amp Meters catalogue category button',
     }).click();
@@ -179,7 +179,7 @@ describe('Catalogue Category', () => {
   });
 
   it('displays error message if it received an unknown error from the api', () => {
-    cy.visit('/inventory-management-system/catalogue/beam-characterization');
+    cy.visit('/inventory-management-system/catalogue/1');
     cy.findByRole('button', {
       name: 'edit Cameras catalogue category button',
     }).click();
@@ -195,7 +195,7 @@ describe('Catalogue Category', () => {
       });
   });
   it('edits a catalogue category with catalogue properties', () => {
-    cy.visit('/inventory-management-system/catalogue/beam-characterization');
+    cy.visit('/inventory-management-system/catalogue/1');
     cy.findByRole('button', {
       name: 'edit Voltage Meters catalogue category button',
     }).click();
@@ -221,7 +221,7 @@ describe('Catalogue Category', () => {
   });
 
   it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
-    cy.visit('/inventory-management-system/catalogue/beam-characterization');
+    cy.visit('/inventory-management-system/catalogue/1');
     cy.findByRole('button', {
       name: 'edit Cameras catalogue category button',
     }).click();
@@ -245,17 +245,112 @@ describe('Catalogue Category', () => {
     });
   });
 
+  it('moves multiple catalogue category', () => {
+    cy.visit('/inventory-management-system/catalogue/1');
+    cy.findByLabelText('Cameras checkbox').click();
+    cy.findByLabelText('test_dup checkbox').click();
+    cy.findByLabelText('Amp Meters checkbox').click();
+    cy.findByRole('button', { name: 'Move to' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('navigate to catalogue home').click();
+        cy.findByRole('button', { name: 'Move here' }).click();
+      });
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-categories/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(3);
+      expect(JSON.stringify(patchRequests[0].body)).equal('{"parent_id":null}');
+      expect(patchRequests[0].url.toString()).to.contain('/4');
+      expect(JSON.stringify(patchRequests[1].body)).equal('{"parent_id":null}');
+      expect(patchRequests[1].url.toString()).to.contain('/79');
+      expect(JSON.stringify(patchRequests[2].body)).equal('{"parent_id":null}');
+      expect(patchRequests[2].url.toString()).to.contain('/19');
+    });
+  });
+
+  it('copies multiple catalogue category (at root)', () => {
+    cy.visit('/inventory-management-system/catalogue/1');
+    cy.findByLabelText('Cameras checkbox').click();
+    cy.findByLabelText('test_dup checkbox').click();
+    cy.findByLabelText('Amp Meters checkbox').click();
+    cy.findByRole('button', { name: 'Copy to' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('navigate to catalogue home').click();
+        cy.findByRole('button', { name: 'Copy here' }).click();
+      });
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-categories',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(3);
+      expect(JSON.stringify(patchRequests[0].body)).equal(
+        '{"name":"Cameras","is_leaf":true,"catalogue_item_properties":[{"name":"Resolution","type":"number","unit":"megapixels","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":false},{"name":"Sensor Type","type":"string","mandatory":true},{"name":"Sensor brand","type":"string","mandatory":false},{"name":"Broken","type":"boolean","mandatory":true},{"name":"Older than five years","type":"boolean","mandatory":false}]}'
+      );
+      expect(JSON.stringify(patchRequests[1].body)).equal(
+        '{"name":"test_dup","is_leaf":false}'
+      );
+      expect(JSON.stringify(patchRequests[2].body)).equal(
+        '{"name":"Amp Meters","is_leaf":false}'
+      );
+    });
+  });
+
+  it('copies multiple catalogue categories', () => {
+    cy.visit('/inventory-management-system/catalogue/1');
+    cy.findByLabelText('Cameras checkbox').click();
+    cy.findByLabelText('test_dup checkbox').click();
+    cy.findByLabelText('Amp Meters checkbox').click();
+    cy.findByRole('button', { name: 'Copy to' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('navigate to catalogue home').click();
+        cy.findByText('Motion').click();
+        cy.findByRole('button', { name: 'Copy here' }).click();
+      });
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-categories',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(3);
+      expect(JSON.stringify(patchRequests[0].body)).equal(
+        '{"name":"Cameras","is_leaf":true,"parent_id":"2","catalogue_item_properties":[{"name":"Resolution","type":"number","unit":"megapixels","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":false},{"name":"Sensor Type","type":"string","mandatory":true},{"name":"Sensor brand","type":"string","mandatory":false},{"name":"Broken","type":"boolean","mandatory":true},{"name":"Older than five years","type":"boolean","mandatory":false}]}'
+      );
+      expect(JSON.stringify(patchRequests[1].body)).equal(
+        '{"name":"test_dup","is_leaf":false,"parent_id":"2"}'
+      );
+      expect(JSON.stringify(patchRequests[2].body)).equal(
+        '{"name":"Amp Meters","is_leaf":false,"parent_id":"2"}'
+      );
+    });
+  });
+
   it('category with no data displays no results found', () => {
-    cy.visit('/inventory-management-system/catalogue/X-RAY-Beams');
+    cy.visit('/inventory-management-system/catalogue/16');
     cy.findByText(
       'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
     ).should('exist');
   });
 
   it('category with no items displays no items found message', () => {
-    cy.visit(
-      '/inventory-management-system/catalogue/High-Power-Lasers/Frequency'
-    );
+    cy.visit('/inventory-management-system/catalogue/17');
     cy.findByText(
       'There are no items. Try adding an item by using the Add Catalogue Item button in the top right of your screen'
     ).should('exist');

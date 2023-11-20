@@ -89,14 +89,24 @@ describe('catalogue items api functions', () => {
 
       expect(result.current.data).toEqual({
         catalogue_category_id: '4',
+        cost_gbp: 500,
+        cost_to_rework_gbp: null,
+        days_to_replace: 7,
+        days_to_rework: null,
         description: 'High-resolution cameras for beam characterization. 1',
+        drawing_link: null,
+        drawing_number: null,
         id: '1',
-        name: 'Cameras 1',
+        is_obsolete: false,
         manufacturer: {
           address: '10 My Street',
           name: 'Manufacturer A',
-          web_url: 'http://example.com',
+          url: 'http://example.com',
         },
+        item_model_number: null,
+        name: 'Cameras 1',
+        obsolete_reason: null,
+        obsolete_replacement_catalogue_item_id: null,
         properties: [
           { name: 'Resolution', unit: 'megapixels', value: 12 },
           { name: 'Frame Rate', unit: 'fps', value: 30 },

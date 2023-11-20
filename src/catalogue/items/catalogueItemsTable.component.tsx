@@ -1,39 +1,54 @@
-import React from 'react';
-import {
-  TableContainer,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  Typography,
-  IconButton,
-  useTheme,
-  Box,
-  Tooltip,
-  LinearProgress,
-  Link as MuiLink,
-} from '@mui/material';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
-  CatalogueItem,
+  Box,
+  IconButton,
+  LinearProgress,
+  Link as MuiLink,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+  Typography,
+  useTheme,
+} from '@mui/material';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useCatalogueItems } from '../../api/catalogueItem';
+import {
   CatalogueCategory,
-  CatalogueItemDetails,
+  CatalogueItem,
+  CatalogueItemDetailsPlaceholder,
   CatalogueItemManufacturer,
 } from '../../app.types';
-import { useCatalogueItems } from '../../api/catalogueItem';
-import { Link } from 'react-router-dom';
-import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
-import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import { matchCatalogueItemProperties } from '../catalogue.component';
+import CatalogueItemsDialog from './catalogueItemsDialog.component';
+import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 
+function generateUniqueName(
+  existingNames: (string | undefined)[],
+  originalName: string
+) {
+  let newName = originalName;
+  let copyIndex = 1;
+
+  while (existingNames.includes(newName)) {
+    newName = `${originalName}_copy${copyIndex}`;
+    copyIndex++;
+  }
+
+  return newName;
+}
 export interface CatalogueItemsTableProps {
   parentInfo: CatalogueCategory;
-  catalogueItemDetails: CatalogueItemDetails;
+  catalogueItemDetails: CatalogueItemDetailsPlaceholder;
   onChangeCatalogueItemDetails: (
-    catalogueItemName: CatalogueItemDetails
+    catalogueItemDetails: CatalogueItemDetailsPlaceholder
   ) => void;
   catalogueItemManufacturer: CatalogueItemManufacturer;
   onChangeCatalogueItemManufacturer: (
@@ -43,6 +58,7 @@ export interface CatalogueItemsTableProps {
   onChangeCatalogueItemPropertyValues: (
     propertyValues: (string | number | boolean | null)[]
   ) => void;
+  onChangeAddItemDialogOpen: (addItemDialogOpen: boolean) => void;
 }
 
 const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
@@ -54,6 +70,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     onChangeCatalogueItemManufacturer,
     catalogueItemPropertyValues,
     onChangeCatalogueItemPropertyValues,
+    onChangeAddItemDialogOpen,
   } = props;
   // SG header + SG footer + tabs #add breadcrumbs
   const tableHeight = `calc(100vh - (64px + 36px + 50px)`;
@@ -76,6 +93,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const [selectedCatalogueItem, setSelectedCatalogueItem] = React.useState<
     CatalogueItem | undefined
   >(undefined);
+
+  const catalogueCategoryNames: (string | undefined)[] =
+    data?.map((item) => item.name) || [];
 
   return (
     <TableContainer style={{ height: tableHeight }}>
@@ -122,6 +142,38 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                   Description
                 </Typography>
               </TableCell>
+
+              <TableCell
+                sx={{
+                  borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
+                  borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold', width: '100px' }}>
+                  Obsolete
+                </Typography>
+              </TableCell>
+              <TableCell
+                sx={{
+                  borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
+                  borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold', width: '100px' }}>
+                  Obsolete replacement link
+                </Typography>
+              </TableCell>
+              <TableCell
+                sx={{
+                  borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
+                  borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold', width: '100px' }}>
+                  Obsolete reason
+                </Typography>
+              </TableCell>
+
               {viewCatalogueItemProperties &&
                 viewCatalogueItemProperties.map((property) => (
                   <TableCell
@@ -138,6 +190,69 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                     </Typography>
                   </TableCell>
                 ))}
+
+              <TableCell
+                sx={{
+                  borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
+                  borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold', width: '100px' }}>
+                  Cost (£)
+                </Typography>
+              </TableCell>
+              <TableCell
+                sx={{
+                  borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
+                  borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold', width: '100px' }}>
+                  Cost to rework (£)
+                </Typography>
+              </TableCell>
+
+              <TableCell
+                sx={{
+                  borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
+                  borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold', width: '100px' }}>
+                  Time to replace (days)
+                </Typography>
+              </TableCell>
+              <TableCell
+                sx={{
+                  borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
+                  borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold', width: '100px' }}>
+                  Time to rework (days)
+                </Typography>
+              </TableCell>
+
+              <TableCell
+                sx={{
+                  borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
+                  borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold', width: '100px' }}>
+                  Drawing Number
+                </Typography>
+              </TableCell>
+              <TableCell
+                sx={{
+                  borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
+                  borderTop: '1px solid #e0e0e0', // Adjust the color and width as needed
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold', width: '100px' }}>
+                  Model Number
+                </Typography>
+              </TableCell>
               <TableCell
                 sx={{
                   borderRight: '1px solid #e0e0e0', // Adjust the color and width as needed
@@ -195,8 +310,24 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                         onClick={() => {
                           setEditItemDialogOpen(true);
                           onChangeCatalogueItemDetails({
+                            catalogue_category_id: item.catalogue_category_id,
                             name: item.name,
                             description: item.description,
+                            cost_gbp: String(item.cost_gbp),
+                            cost_to_rework_gbp: item.cost_to_rework_gbp
+                              ? String(item.cost_to_rework_gbp)
+                              : null,
+                            days_to_replace: String(item.days_to_replace),
+                            days_to_rework: item.days_to_rework
+                              ? String(item.days_to_rework)
+                              : null,
+                            drawing_number: item.drawing_number,
+                            drawing_link: item.drawing_link,
+                            item_model_number: item.item_model_number,
+                            is_obsolete: String(item.is_obsolete),
+                            obsolete_replacement_catalogue_item_id:
+                              item.obsolete_replacement_catalogue_item_id,
+                            obsolete_reason: item.obsolete_reason,
                           });
                           onChangeCatalogueItemPropertyValues(
                             matchCatalogueItemProperties(
@@ -209,6 +340,47 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                         }}
                       >
                         <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        size="small"
+                        aria-label={`Save as ${item.name} catalogue item`}
+                        onClick={() => {
+                          onChangeAddItemDialogOpen(true);
+
+                          onChangeCatalogueItemDetails({
+                            catalogue_category_id: item.catalogue_category_id,
+                            name: generateUniqueName(
+                              catalogueCategoryNames,
+                              item.name
+                            ),
+                            description: item.description,
+                            cost_gbp: String(item.cost_gbp),
+                            cost_to_rework_gbp: item.cost_to_rework_gbp
+                              ? String(item.cost_to_rework_gbp)
+                              : null,
+                            days_to_replace: String(item.days_to_replace),
+                            days_to_rework: item.days_to_rework
+                              ? String(item.days_to_rework)
+                              : null,
+                            drawing_number: item.drawing_number,
+                            drawing_link: item.drawing_link,
+                            item_model_number: item.item_model_number,
+                            is_obsolete: String(item.is_obsolete),
+                            obsolete_replacement_catalogue_item_id:
+                              item.obsolete_replacement_catalogue_item_id,
+                            obsolete_reason: item.obsolete_reason,
+                          });
+                          onChangeCatalogueItemPropertyValues(
+                            matchCatalogueItemProperties(
+                              parentInfo?.catalogue_item_properties ?? [],
+                              item.properties ?? []
+                            )
+                          );
+                          setSelectedCatalogueItem(item);
+                          onChangeCatalogueItemManufacturer(item.manufacturer);
+                        }}
+                      >
+                        <SaveAsIcon />
                       </IconButton>
                       <IconButton
                         size="small"
@@ -259,6 +431,56 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                       </Tooltip>
                     )}
                   </TableCell>
+                  <TableCell
+                    sx={{
+                      px: '8px',
+                      paddingTop: '0px',
+                      paddingBottom: '0px',
+                      borderRight: '1px solid #e0e0e0',
+                    }}
+                  >
+                    {item.is_obsolete ? 'Yes' : 'No'}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      px: '8px',
+                      paddingTop: '0px',
+                      paddingBottom: '0px',
+                      borderRight: '1px solid #e0e0e0',
+                    }}
+                  >
+                    {item.obsolete_replacement_catalogue_item_id && (
+                      <MuiLink
+                        underline="hover"
+                        component={Link}
+                        to={`items/${item.obsolete_replacement_catalogue_item_id}`}
+                      >
+                        Click here
+                      </MuiLink>
+                    )}
+                  </TableCell>
+
+                  <TableCell
+                    sx={{
+                      px: '8px',
+                      paddingTop: '0px',
+                      paddingBottom: '0px',
+                      borderRight: '1px solid #e0e0e0',
+                      width: '100px',
+                    }}
+                  >
+                    {item.obsolete_reason !== null && (
+                      <Tooltip
+                        title={item.obsolete_reason}
+                        placement="top"
+                        enterTouchDelay={0}
+                        arrow
+                        aria-label={`Catalogue item obsolete reason: ${item.obsolete_reason}`}
+                      >
+                        <InfoOutlinedIcon />
+                      </Tooltip>
+                    )}
+                  </TableCell>
                   {viewCatalogueItemProperties &&
                     viewCatalogueItemProperties.length >= 1 &&
                     viewCatalogueItemProperties.map((property, index) => (
@@ -292,6 +514,66 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
+                    {item.cost_gbp}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      px: '8px',
+                      paddingTop: '0px',
+                      paddingBottom: '0px',
+                      borderRight: '1px solid #e0e0e0',
+                    }}
+                  >
+                    {item.cost_to_rework_gbp}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      px: '8px',
+                      paddingTop: '0px',
+                      paddingBottom: '0px',
+                      borderRight: '1px solid #e0e0e0',
+                    }}
+                  >
+                    {item.days_to_replace}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      px: '8px',
+                      paddingTop: '0px',
+                      paddingBottom: '0px',
+                      borderRight: '1px solid #e0e0e0',
+                    }}
+                  >
+                    {item.days_to_rework}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      px: '8px',
+                      paddingTop: '0px',
+                      paddingBottom: '0px',
+                      borderRight: '1px solid #e0e0e0',
+                    }}
+                  >
+                    {item.drawing_number}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      px: '8px',
+                      paddingTop: '0px',
+                      paddingBottom: '0px',
+                      borderRight: '1px solid #e0e0e0',
+                    }}
+                  >
+                    {item.item_model_number}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      px: '8px',
+                      paddingTop: '0px',
+                      paddingBottom: '0px',
+                      borderRight: '1px solid #e0e0e0',
+                    }}
+                  >
                     {item.manufacturer.name}
                   </TableCell>
                   <TableCell
@@ -305,9 +587,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                     <MuiLink
                       underline="hover"
                       target="_blank"
-                      href={item.manufacturer.web_url}
+                      href={item.manufacturer.url}
                     >
-                      {item.manufacturer.web_url}
+                      {item.manufacturer.url}
                     </MuiLink>
                   </TableCell>
                   <TableCell

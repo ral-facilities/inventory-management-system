@@ -8,14 +8,14 @@ import {
   FormHelperText,
 } from '@mui/material';
 import React from 'react';
-import { ErrorParsing, ViewManufacturerResponse } from '../app.types';
+import { ErrorParsing, Manufacturer } from '../app.types';
 import { AxiosError } from 'axios';
 import { useDeleteManufacturer } from '../api/manufacturer';
 
 export interface DeleteManufacturerProps {
   open: boolean;
   onClose: () => void;
-  manufacturer: ViewManufacturerResponse | undefined;
+  manufacturer: Manufacturer | undefined;
 }
 
 const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
@@ -45,7 +45,7 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
           if (response && error.response?.status === 409) {
             setError(true);
             setErrorMessage(
-              `${response.detail} Please delete the Catalogue Item first`
+              `${response.detail}. Please delete the Catalogue Item first.`
             );
             return;
           }

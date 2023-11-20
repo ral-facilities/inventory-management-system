@@ -36,21 +36,6 @@ describe('Manufacturer', () => {
     expect(screen.getByText('http://example.com')).toBeInTheDocument();
     expect(screen.getByText('http://test.com')).toBeInTheDocument();
     expect(screen.getByText('http://test.co.uk')).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        'United Kingdom 1 Example Street Oxford Oxfordshire OX1 2AB'
-      )
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        'United Kingdom 2 Example Street Oxford Oxfordshire OX1 2AB'
-      )
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        'United Kingdom 3 Example Street Oxford Oxfordshire OX1 2AB'
-      )
-    ).toBeInTheDocument();
     expect(screen.getByText('07334893348')).toBeInTheDocument();
     expect(screen.getByText('07294958549')).toBeInTheDocument();
     expect(screen.getByText('07934303412')).toBeInTheDocument();
@@ -86,6 +71,46 @@ describe('Manufacturer', () => {
       expect(
         screen.getByRole('row', { name: 'Manufacturer A row' })
       ).toHaveStyle('background-color: inherit');
+    });
+  });
+
+  it('opens delete dialog and closes it correctly', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
+    });
+
+    await user.click(
+      screen.getByRole('button', { name: 'Delete Manufacturer A manufacturer' })
+    );
+
+    expect(screen.getByText('Delete Manufacturer')).toBeInTheDocument();
+
+    const closeButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(closeButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('Delete Manufacturer')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens edit dialog and closes it correctly', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
+    });
+
+    await user.click(
+      screen.getByRole('button', { name: 'Edit Manufacturer A manufacturer' })
+    );
+
+    expect(screen.getByText('Edit Manufacturer')).toBeInTheDocument();
+
+    const closeButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(closeButton);
+
+    await waitFor(() => {
+      expect(screen.queryByText('Edit Manufacturer')).not.toBeInTheDocument();
     });
   });
 });

@@ -1,19 +1,23 @@
 import { rest } from 'msw';
-import CatalogueCategoryJSON from './CatalogueCategory.json';
-import ManufacturerJSON from './manufacturer.json';
-import { AddManufacturer, EditManufacturer } from '../app.types';
-import CatalogueItemJSON from './CatalogueItems.json';
-import SystemsJSON from './Systems.json';
 import {
-  AddCatalogueCategory,
+  AddSystem,
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
+  EditManufacturer,
+  Manufacturer,
 } from '../app.types';
+import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
+import CatalogueCategoryJSON from './CatalogueCategory.json';
+import CatalogueItemJSON from './CatalogueItems.json';
+import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
+import SystemsJSON from './Systems.json';
+import ManufacturerJSON from './manufacturer.json';
 
 export const handlers = [
+  // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
   rest.post('/v1/catalogue-categories', async (req, res, ctx) => {
-    const body = (await req.json()) as AddCatalogueCategory;
+    let body = await req.json();
 
     if (body.name === 'test_dup') {
       return res(
@@ -28,26 +32,35 @@ export const handlers = [
     if (body.name === 'Error 500') {
       return res(ctx.status(500), ctx.json(''));
     }
+
+    if (!body.parent_id) {
+      body = {
+        ...body,
+        parent_id: null,
+      };
+    }
+
     return res(
       ctx.status(200),
       ctx.json({
-        name: 'test',
-        parent_id: null,
         id: '1',
-        code: 'test',
-        path: '/test',
-        parent_path: '/',
-        is_leaf: false,
+        ...body,
       })
     );
   }),
   rest.patch('/v1/catalogue-categories/:id', async (req, res, ctx) => {
     const { id } = req.params;
-    const data = CatalogueCategoryJSON.filter(
-      (catalogueCategory) => catalogueCategory.parent_id === id
+    const itemData = CatalogueItemJSON.filter(
+      (catalogueItem) => catalogueItem.catalogue_category_id === id
+    );
+
+    const obj = CatalogueCategoryJSON.find(
+      (catalogueCategory) => catalogueCategory.id === id
     );
     const body = (await req.json()) as EditCatalogueCategory;
-    if (body.name === 'test_dup') {
+
+    const fullBody = { ...obj, ...body };
+    if (fullBody.name === 'test_dup') {
       return res(
         ctx.status(409),
         ctx.json({
@@ -56,32 +69,22 @@ export const handlers = [
         })
       );
     }
-
-    if (data.length > 0) {
-      return res(
-        ctx.status(409),
-        ctx.json({
-          detail:
-            'Catalogue category has children elements and cannot be updated',
-        })
-      );
+    if (body.catalogue_item_properties !== undefined) {
+      if (itemData.length > 0) {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail:
+              'Catalogue category has child elements and cannot be updated',
+          })
+        );
+      }
     }
 
-    if (body.name === 'Error 500') {
+    if (fullBody.name === 'Error 500') {
       return res(ctx.status(500), ctx.json(''));
     }
-    return res(
-      ctx.status(200),
-      ctx.json({
-        name: 'test',
-        parent_id: null,
-        id: '1',
-        code: 'test',
-        path: '/test',
-        parent_path: '/',
-        is_leaf: false,
-      })
-    );
+    return res(ctx.status(200), ctx.json(fullBody));
   }),
 
   rest.get('/v1/catalogue-categories/:id', (req, res, ctx) => {
@@ -96,115 +99,55 @@ export const handlers = [
 
   rest.get('/v1/catalogue-categories/', (req, res, ctx) => {
     const catalogueCategoryParams = req.url.searchParams;
-    const path = catalogueCategoryParams.get('path');
-    const parentPath = catalogueCategoryParams.get('parent_path');
+    const parentId = catalogueCategoryParams.get('parent_id');
     let data;
-    if (path) {
-      data = CatalogueCategoryJSON.filter(
-        (catalogueCategory) => catalogueCategory.path === path
-      );
-    } else if (parentPath) {
-      data = CatalogueCategoryJSON.filter(
-        (catalogueCategory) => catalogueCategory.parent_path === parentPath
-      );
+
+    if (parentId) {
+      if (parentId === 'null') {
+        data = CatalogueCategoryJSON.filter(
+          (catalogueCategory) => catalogueCategory.parent_id === null
+        );
+      } else {
+        data = CatalogueCategoryJSON.filter(
+          (catalogueCategory) => catalogueCategory.parent_id === parentId
+        );
+      }
     }
-    return res(ctx.status(200), ctx.json(data));
-  }),
-
-  rest.get('/v1/manufacturers', (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(ManufacturerJSON));
-  }),
-
-  rest.get('/v1/manufacturers/:id', (req, res, ctx) => {
-    const { id } = req.params;
-
-    const data = ManufacturerJSON.find(
-      (manufacturer) => manufacturer.id === id
-    );
 
     return res(ctx.status(200), ctx.json(data));
   }),
 
-  rest.post('/v1/manufacturers', async (req, res, ctx) => {
-    const body = (await req.json()) as AddManufacturer;
-
-    if (!body.name) {
-      return res(ctx.status(422), ctx.json(''));
-    }
-    if (body.name === 'Manufacturer A') {
-      return res(ctx.status(409), ctx.json(''));
-    }
-
-    return res(
-      ctx.status(200),
-      ctx.json({
-        name: 'Manufacturer D',
-        code: 'manufacturer-d',
-        url: 'http://test.co.uk',
-        address: {
-          address_line: '4 Example Street',
-          town: 'Oxford',
-          county: 'Oxfordshire',
-          postcode: 'OX1 2AB',
-          country: 'United Kingdom',
-        },
-        telephone: '07349612203',
-        id: '4',
-      })
+  rest.get('/v1/catalogue-categories/:id/breadcrumbs', (req, res, ctx) => {
+    const { id } = req.params;
+    const data = CatalogueBreadcrumbsJSON.find(
+      (catalogueBreadcrumbs) => catalogueBreadcrumbs.id === id
     );
+    return res(ctx.status(200), ctx.json(data));
   }),
 
-  rest.delete('/v1/manufacturers/:id', (req, res, ctx) => {
+  rest.delete('/v1/catalogue-categories/:id', (req, res, ctx) => {
     const { id } = req.params;
-    const validManufacturer = ManufacturerJSON.find((value) => value.id === id);
-    if (validManufacturer) {
+    const validCatalogueCategory = CatalogueCategoryJSON.find(
+      (value) => value.id === id
+    );
+    if (validCatalogueCategory) {
       if (id === '2') {
         return res(
           ctx.status(409),
           ctx.json({
             detail:
-              'The manufacturer is a part of a Catalogue Item, Please delete the Catalogue Item first',
+              'Catalogue category has children elements and cannot be deleted',
           })
         );
       } else {
-        return res(ctx.status(200), ctx.json(''));
+        return res(ctx.status(204));
       }
     } else {
       return res(ctx.status(400), ctx.json(''));
     }
   }),
 
-  rest.patch('/v1/manufacturers/:id', async (req, res, ctx) => {
-    const body = (await req.json()) as EditManufacturer;
-
-    if (body.name === 'test_dup') {
-      return res(
-        ctx.status(409),
-        ctx.json({
-          detail:
-            'A manufacturer with the same name has been found. Please enter a different name',
-        })
-      );
-    }
-    if (body.name === 'Error 500') {
-      return res(ctx.status(500), ctx.json(''));
-    }
-    return res(
-      ctx.status(200),
-      ctx.json({
-        name: 'test',
-        address: {
-          address_line: 'test',
-          town: 'test',
-          county: 'test',
-          postcode: 'test',
-          country: 'test',
-        },
-        telephone: '0000000000',
-        id: '1',
-      })
-    );
-  }),
+  // ------------------------------------ CATALOGUE ITEMS ------------------------------------
 
   rest.delete('/v1/catalogue-categories/:id', (req, res, ctx) => {
     const { id } = req.params;
@@ -325,18 +268,154 @@ export const handlers = [
     );
   }),
 
-  rest.get('/v1/systems/', (req, res, ctx) => {
-    const systemsParams = req.url.searchParams;
-    const path = systemsParams.get('path');
-    const parentPath = systemsParams.get('parent_path');
-    let data;
-    if (path) {
-      data = SystemsJSON.filter((systems) => systems.path === path);
-    } else if (parentPath) {
-      data = SystemsJSON.filter(
-        (systems) => systems.parent_path === parentPath
+  // ------------------------------------ MANUFACTURERS ------------------------------------
+
+  rest.get('/v1/manufacturers', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(ManufacturerJSON));
+  }),
+
+  rest.get('/v1/manufacturers/:id', (req, res, ctx) => {
+    const { id } = req.params;
+
+    const data = ManufacturerJSON.find(
+      (manufacturer) => manufacturer.id === id
+    );
+
+    return res(ctx.status(200), ctx.json(data));
+  }),
+
+  rest.post('/v1/manufacturers', async (req, res, ctx) => {
+    const body = (await req.json()) as Manufacturer;
+
+    if (body.name === 'Manufacturer A') {
+      return res(ctx.status(409), ctx.json(''));
+    }
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        name: 'Manufacturer D',
+        code: 'manufacturer-d',
+        url: 'http://test.co.uk',
+        address: {
+          address_line: '4 Example Street',
+          country: 'United Kingdom',
+          town: 'Oxford',
+          county: 'Oxfordshire',
+          postcode: 'OX1 2AB',
+        },
+        telephone: '07349612203',
+        id: '4',
+      })
+    );
+  }),
+
+  rest.delete('/v1/manufacturers/:id', (req, res, ctx) => {
+    const { id } = req.params;
+    const validManufacturer = ManufacturerJSON.find((value) => value.id === id);
+    if (validManufacturer) {
+      if (id === '2') {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail: 'The specified manufacturer is a part of a Catalogue Item',
+          })
+        );
+      } else {
+        return res(ctx.status(200), ctx.json(''));
+      }
+    } else {
+      return res(ctx.status(400), ctx.json(''));
+    }
+  }),
+
+  rest.patch('/v1/manufacturers/:id', async (req, res, ctx) => {
+    const body = (await req.json()) as EditManufacturer;
+
+    if (body.name === 'test_dup') {
+      return res(
+        ctx.status(409),
+        ctx.json({
+          detail:
+            'A manufacturer with the same name has been found. Please enter a different name',
+        })
       );
     }
+    if (body.name === 'Error 500') {
+      return res(ctx.status(500), ctx.json(''));
+    }
+    return res(
+      ctx.status(200),
+      ctx.json({
+        name: 'test',
+        address: {
+          building_number: '100',
+          street_name: 'test',
+          town: 'test',
+          county: 'test',
+          postcode: 'test',
+        },
+        telephone: '0000000000',
+        id: '1',
+      })
+    );
+  }),
+
+  // ------------------------------------ SYSTEMS ------------------------------------
+
+  rest.get('/v1/systems', (req, res, ctx) => {
+    const systemsParams = req.url.searchParams;
+    const parentId = systemsParams.get('parent_id');
+    let data;
+
+    if (parentId) {
+      if (parentId === 'null')
+        data = SystemsJSON.filter((system) => system.parent_id === null);
+      else data = SystemsJSON.filter((system) => system.parent_id === parentId);
+    } else data = SystemsJSON;
     return res(ctx.status(200), ctx.json(data));
+  }),
+
+  rest.get('/v1/systems/:id', (req, res, ctx) => {
+    const { id } = req.params;
+    const data = SystemsJSON.filter((system) => system.id === id);
+    if (data.length > 0) return res(ctx.status(200), ctx.json(data[0]));
+    else
+      return res(
+        ctx.status(404),
+        ctx.json({ detail: 'A System with such ID was not found' })
+      );
+  }),
+
+  rest.get('/v1/systems/:id/breadcrumbs', (req, res, ctx) => {
+    const { id } = req.params;
+    const data = SystemBreadcrumbsJSON.find(
+      (systemBreadcrumbs) => systemBreadcrumbs.id === id
+    );
+    return res(ctx.status(200), ctx.json(data));
+  }),
+
+  rest.post('/v1/systems', async (req, res, ctx) => {
+    const body = (await req.json()) as AddSystem;
+
+    if (body.name === 'Error 409') {
+      return res(
+        ctx.status(409),
+        ctx.json({
+          detail:
+            'A System with the same name already exists within the same parent System',
+        })
+      );
+    }
+    if (body.name === 'Error 500') {
+      return res(ctx.status(500), ctx.json(''));
+    }
+    return res(
+      ctx.status(200),
+      ctx.json({
+        ...body,
+        id: '1',
+      })
+    );
   }),
 ];

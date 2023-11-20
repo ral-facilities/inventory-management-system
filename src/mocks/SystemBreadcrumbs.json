@@ -1,0 +1,144 @@
+[
+  {
+    "id": "65328f34a40ff5301575a4e3",
+    "trail": [
+      [
+        "65328f34a40ff5301575a4e3",
+        "Giant laser"
+      ]
+    ],
+    "full_trail": true
+  },
+  {
+    "id": "65328f34a40ff5301575a4e4",
+    "trail": [
+      [
+        "65328f34a40ff5301575a4e3",
+        "Giant laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e4",
+        "Smaller laser"
+      ]
+    ],
+    "full_trail": true
+  },
+  {
+    "id": "65328f34a40ff5301575a4e5",
+    "trail": [
+      [
+        "65328f34a40ff5301575a4e3",
+        "Giant laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e4",
+        "Smaller laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e5",
+        "Pulse Laser"
+      ]
+    ],
+    "full_trail": true
+  },
+  {
+    "id": "65328f34a40ff5301575a4e6",
+    "trail": [
+      [
+        "65328f34a40ff5301575a4e3",
+        "Giant laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e4",
+        "Smaller laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e5",
+        "Pulse Laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e6",
+        "Giant laser"
+      ]
+    ],
+    "full_trail": true
+  },
+  {
+    "id": "65328f34a40ff5301575a4e7",
+    "trail": [
+      [
+        "65328f34a40ff5301575a4e3",
+        "Giant laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e4",
+        "Smaller laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e5",
+        "Pulse Laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e6",
+        "Giant laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e7",
+        "Laser Star"
+      ]
+    ],
+    "full_trail": true
+  },
+  {
+    "id": "65328f34a40ff5301575a4e8",
+    "trail": [
+      [
+        "65328f34a40ff5301575a4e4",
+        "Smaller laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e5",
+        "Pulse Laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e6",
+        "Giant laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e7",
+        "Laser Star"
+      ],
+      [
+        "65328f34a40ff5301575a4e8",
+        "Smaller laser"
+      ]
+    ],
+    "full_trail": false
+  },
+  {
+    "id": "65328f34a40ff5301575a4e9",
+    "trail": [
+      [
+        "65328f34a40ff5301575a4e5",
+        "Pulse Laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e6",
+        "Giant laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e7",
+        "Laser Star"
+      ],
+      [
+        "65328f34a40ff5301575a4e8",
+        "Smaller laser"
+      ],
+      [
+        "65328f34a40ff5301575a4e9",
+        "Plasma Beam"
+      ]
+    ],
+    "full_trail": false
+  }
+]

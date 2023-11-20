@@ -21,17 +21,17 @@ describe('Add manufacturer dialog', () => {
       open: true,
       onClose: onClose,
       onChangeManufacturerDetails: onChangeManufacturerDetails,
-      manufacturer: {
+      manufacturerDetails: {
         name: '',
         url: undefined,
         address: {
           address_line: '',
-          town: '',
-          county: '',
+          town: null,
+          county: null,
           postcode: '',
           country: '',
         },
-        telephone: '',
+        telephone: null,
       },
       type: 'create',
     };
@@ -55,7 +55,7 @@ describe('Add manufacturer dialog', () => {
   });
 
   it('adds manufacturer correctly', async () => {
-    props.manufacturer = {
+    props.manufacturerDetails = {
       name: 'Manufacturer D',
       url: 'http://test.co.uk',
       address: {
@@ -99,7 +99,7 @@ describe('Add manufacturer dialog', () => {
   });
 
   it('duplicate manufacturer name displays warning message', async () => {
-    props.manufacturer = {
+    props.manufacturerDetails = {
       name: 'Manufacturer A',
       url: 'http://test.co.uk',
       address: {
@@ -141,7 +141,7 @@ describe('Add manufacturer dialog', () => {
   });
 
   it('invalid url displays error', async () => {
-    props.manufacturer = {
+    props.manufacturerDetails = {
       name: 'Manufacturer D',
       url: 'invalid',
       address: {
@@ -175,7 +175,7 @@ describe('Add manufacturer dialog', () => {
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
+      ...props.manufacturerDetails,
       name: newManufacturerName,
     });
   });
@@ -192,7 +192,7 @@ describe('Add manufacturer dialog', () => {
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
+      ...props.manufacturerDetails,
       url: newManufacturerURL,
     });
   });
@@ -209,9 +209,9 @@ describe('Add manufacturer dialog', () => {
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
+      ...props.manufacturerDetails,
       address: {
-        ...props.manufacturer.address,
+        ...props.manufacturerDetails.address,
         country: newManufacturerCountry,
       },
     });
@@ -230,9 +230,9 @@ describe('Add manufacturer dialog', () => {
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
+      ...props.manufacturerDetails,
       address: {
-        ...props.manufacturer.address,
+        ...props.manufacturerDetails.address,
         address_line: newManufacturerAddressLine,
       },
     });
@@ -250,8 +250,11 @@ describe('Add manufacturer dialog', () => {
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
-      address: { ...props.manufacturer.address, town: newManufacturerTown },
+      ...props.manufacturerDetails,
+      address: {
+        ...props.manufacturerDetails.address,
+        town: newManufacturerTown,
+      },
     });
   });
 
@@ -267,9 +270,9 @@ describe('Add manufacturer dialog', () => {
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
+      ...props.manufacturerDetails,
       address: {
-        ...props.manufacturer.address,
+        ...props.manufacturerDetails.address,
         county: newManufacturerCounty,
       },
     });
@@ -287,9 +290,9 @@ describe('Add manufacturer dialog', () => {
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
+      ...props.manufacturerDetails,
       address: {
-        ...props.manufacturer.address,
+        ...props.manufacturerDetails.address,
         postcode: newManufacturerpostcode,
       },
     });
@@ -308,7 +311,7 @@ describe('Add manufacturer dialog', () => {
     });
 
     expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturer,
+      ...props.manufacturerDetails,
       telephone: newManufacturerTelephone,
     });
   });
@@ -342,8 +345,9 @@ describe('Add manufacturer dialog', () => {
         },
       };
 
-      props.manufacturer = {
+      props.manufacturerDetails = {
         name: 'test',
+        url: 'https://test.co.uk',
         address: {
           address_line: 'test',
           town: 'test',
@@ -362,6 +366,7 @@ describe('Add manufacturer dialog', () => {
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/manufacturers/1', {
         name: 'test',
+        url: 'https://test.co.uk',
         address: {
           address_line: 'test',
           town: 'test',
@@ -391,7 +396,7 @@ describe('Add manufacturer dialog', () => {
           },
           telephone: '07334893348',
         },
-        manufacturer: {
+        manufacturerDetails: {
           name: 'Manufacturer A',
           url: 'http://example.com',
           address: {
@@ -421,7 +426,7 @@ describe('Add manufacturer dialog', () => {
     it('Invalid url displays correct error message', async () => {
       props = {
         ...props,
-        manufacturer: {
+        manufacturerDetails: {
           name: 'test',
           url: 'invalid',
           address: {
@@ -460,8 +465,9 @@ describe('Add manufacturer dialog', () => {
     it('Duplicate name displays error message', async () => {
       props = {
         ...props,
-        manufacturer: {
+        manufacturerDetails: {
           name: 'test_dup',
+          url: 'https://test.co.uk',
           address: {
             address_line: 'test',
             town: 'test',
@@ -502,8 +508,9 @@ describe('Add manufacturer dialog', () => {
     it('Required fields show error if they are whitespace or current value just removed', async () => {
       props = {
         ...props,
-        manufacturer: {
+        manufacturerDetails: {
           name: '',
+          url: 'https://test.co.uk',
           address: {
             address_line: '',
             town: '',
@@ -543,6 +550,46 @@ describe('Add manufacturer dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
+    it('CatchAllError request works correctly and displays refresh page message', async () => {
+      props = {
+        ...props,
+        manufacturerDetails: {
+          name: 'Error 500',
+          url: 'https://test.co.uk',
+          address: {
+            address_line: 'test',
+            town: 'test',
+            county: 'test',
+            postcode: 'test',
+            country: 'test',
+          },
+          telephone: '0000000000',
+        },
+        selectedManufacturer: {
+          id: '1',
+          name: 'Manufacturer A',
+          url: 'http://example.com',
+          address: {
+            address_line: '1 Example Street',
+            town: 'Oxford',
+            county: 'Oxfordshire',
+            postcode: 'OX1 2AB',
+            country: 'United Kingdom',
+          },
+          telephone: '07334893348',
+        },
+      };
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      expect(
+        screen.getByText('Please refresh and try again')
+      ).toBeInTheDocument();
+    });
+
     it('calls onClose when Close button is clicked', async () => {
       createView();
       const cancelButton = screen.getByRole('button', { name: 'Cancel' });
@@ -558,20 +605,20 @@ describe('Add manufacturer dialog', () => {
 
       createView();
 
-      const manufacturerNameInput = screen.getByLabelText('Name');
+      const manufacturerNameInput = screen.getByLabelText('Name *');
 
       fireEvent.change(manufacturerNameInput, {
         target: { value: newManufacturerName },
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
+        ...props.manufacturerDetails,
         name: newManufacturerName,
       });
     });
 
     it('handles manufacturer url input correctly', async () => {
-      const newManufacturerURL = 'Test';
+      const newManufacturerURL = 'https://test.co.uk';
 
       createView();
 
@@ -582,7 +629,7 @@ describe('Add manufacturer dialog', () => {
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
+        ...props.manufacturerDetails,
         url: newManufacturerURL,
       });
     });
@@ -592,16 +639,16 @@ describe('Add manufacturer dialog', () => {
 
       createView();
 
-      const manufacturerCountryInput = screen.getByLabelText('Country');
+      const manufacturerCountryInput = screen.getByLabelText('Country *');
 
       fireEvent.change(manufacturerCountryInput, {
         target: { value: newManufacturerCountry },
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
+        ...props.manufacturerDetails,
         address: {
-          ...props.manufacturer.address,
+          ...props.manufacturerDetails.address,
           country: newManufacturerCountry,
         },
       });
@@ -612,16 +659,17 @@ describe('Add manufacturer dialog', () => {
 
       createView();
 
-      const manufacturerStreetNameInput = screen.getByLabelText('Address Line');
+      const manufacturerStreetNameInput =
+        screen.getByLabelText('Address Line *');
 
       fireEvent.change(manufacturerStreetNameInput, {
         target: { value: newManufacturerAddressLine },
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
+        ...props.manufacturerDetails,
         address: {
-          ...props.manufacturer.address,
+          ...props.manufacturerDetails.address,
           address_line: newManufacturerAddressLine,
         },
       });
@@ -639,8 +687,11 @@ describe('Add manufacturer dialog', () => {
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
-        address: { ...props.manufacturer.address, town: newManufacturerTown },
+        ...props.manufacturerDetails,
+        address: {
+          ...props.manufacturerDetails.address,
+          town: newManufacturerTown,
+        },
       });
     });
 
@@ -656,9 +707,9 @@ describe('Add manufacturer dialog', () => {
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
+        ...props.manufacturerDetails,
         address: {
-          ...props.manufacturer.address,
+          ...props.manufacturerDetails.address,
           county: newManufacturerCounty,
         },
       });
@@ -669,16 +720,17 @@ describe('Add manufacturer dialog', () => {
 
       createView();
 
-      const manufacturerpostcodeInput = screen.getByLabelText('Post/Zip code');
+      const manufacturerpostcodeInput =
+        screen.getByLabelText('Post/Zip code *');
 
       fireEvent.change(manufacturerpostcodeInput, {
         target: { value: newManufacturerpostcode },
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
+        ...props.manufacturerDetails,
         address: {
-          ...props.manufacturer.address,
+          ...props.manufacturerDetails.address,
           postcode: newManufacturerpostcode,
         },
       });
@@ -697,7 +749,7 @@ describe('Add manufacturer dialog', () => {
       });
 
       expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturer,
+        ...props.manufacturerDetails,
         telephone: newManufacturerTelephone,
       });
     });

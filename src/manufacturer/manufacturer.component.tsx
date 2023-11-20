@@ -17,22 +17,23 @@ import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { useManufacturers } from '../api/manufacturer';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
-import { ManufacturerDetail, ViewManufacturerResponse } from '../app.types';
+import { Manufacturer, ManufacturerDetails } from '../app.types';
 import ManufacturerDialog from './manufacturerDialog.component';
 
-function Manufacturer() {
-  const [Manufacturer, setManufacturer] = React.useState<ManufacturerDetail>({
-    name: '',
-    url: undefined,
-    address: {
-      address_line: '',
-      town: '',
-      county: '',
-      postcode: '',
-      country: '',
-    },
-    telephone: '',
-  });
+function ManufacturerComponent() {
+  const [manufacturerDetails, setManufacturerDetails] =
+    React.useState<ManufacturerDetails>({
+      name: '',
+      url: undefined,
+      address: {
+        address_line: '',
+        town: null,
+        county: null,
+        postcode: '',
+        country: '',
+      },
+      telephone: null,
+    });
 
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
     React.useState<boolean>(false);
@@ -46,7 +47,7 @@ function Manufacturer() {
     React.useState<boolean>(false);
 
   const [selectedManufacturer, setSelectedManufacturer] = React.useState<
-    ViewManufacturerResponse | undefined
+    Manufacturer | undefined
   >(undefined);
 
   const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
@@ -72,15 +73,15 @@ function Manufacturer() {
         <ManufacturerDialog
           open={addManufacturerDialogOpen}
           onClose={() => setAddManufacturerDialogOpen(false)}
-          manufacturer={Manufacturer}
-          onChangeManufacturerDetails={setManufacturer}
+          manufacturerDetails={manufacturerDetails}
+          onChangeManufacturerDetails={setManufacturerDetails}
           type="create"
         />
         <ManufacturerDialog
           open={editManufacturerDialogOpen}
           onClose={() => setEditManufacturerDialogOpen(false)}
-          manufacturer={Manufacturer}
-          onChangeManufacturerDetails={setManufacturer}
+          manufacturerDetails={manufacturerDetails}
+          onChangeManufacturerDetails={setManufacturerDetails}
           type="edit"
           selectedManufacturer={selectedManufacturer}
         />
@@ -164,7 +165,7 @@ function Manufacturer() {
                         onClick={() => {
                           setEditManufacturerDialogOpen(true);
                           setSelectedManufacturer(item);
-                          setManufacturer(item);
+                          setManufacturerDetails(item);
                         }}
                       >
                         <EditIcon />
@@ -196,9 +197,11 @@ function Manufacturer() {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
-                    <Link underline="hover" href={item.url}>
-                      {item.url}
-                    </Link>
+                    {item.url && (
+                      <Link underline="hover" href={item.url}>
+                        {item.url}
+                      </Link>
+                    )}
                   </TableCell>
                   <TableCell
                     sx={{
@@ -208,15 +211,21 @@ function Manufacturer() {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
-                    {item.address.country +
-                      ' \n' +
-                      item.address.address_line +
-                      ' \n' +
-                      item.address.town +
-                      ' \n' +
-                      item.address.county +
-                      ' \n' +
-                      item.address.postcode}
+                    <Typography fontSize={14}>
+                      {item.address.address_line}
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {item.address.town ?? ''}
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {item.address.county ?? ''}
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {item.address.country}
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {item.address.postcode}
+                    </Typography>
                   </TableCell>
                   <TableCell
                     sx={{
@@ -242,4 +251,4 @@ function Manufacturer() {
   );
 }
 
-export default Manufacturer;
+export default ManufacturerComponent;
