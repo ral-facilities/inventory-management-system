@@ -33,8 +33,8 @@ function ManufacturerLandingPage() {
     name: '',
     url: undefined,
     address: {
-      building_number: '',
-      street_name: '',
+      address_line: '',
+      country: '',
       town: '',
       county: '',
       postcode: '',
@@ -130,7 +130,7 @@ function ManufacturerLandingPage() {
                 >
                   <ListItemText
                     primary={'Address Line'}
-                    secondary={manufacturerData.address.building_number}
+                    secondary={manufacturerData.address.address_line}
                   />
                 </ListItem>
               </Grid>
@@ -175,7 +175,7 @@ function ManufacturerLandingPage() {
                 >
                   <ListItemText
                     primary={'Country'}
-                    secondary={manufacturerData.address.street_name}
+                    secondary={manufacturerData.address.country}
                   />
                 </ListItem>
               </Grid>
