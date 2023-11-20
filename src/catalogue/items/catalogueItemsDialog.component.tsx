@@ -99,14 +99,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const [catchAllError, setCatchAllError] = React.useState(false);
 
-  const [manufacturerNameError, setManufacturerNameError] =
-    React.useState(false);
-  const [manufacturerWebUrlError, setManufacturerWebUrlError] =
-    React.useState(false);
-  const [manufacturerWebUrlErrorMessage, setManufacturerWebUrlErrorMessage] =
-    React.useState<string>('');
-  const [manufacturerAddressError, setManufacturerAddressError] =
-    React.useState(false);
   const [propertyErrors, setPropertyErrors] = React.useState(
     new Array(catalogueItemPropertiesForm.length).fill(false)
   );
@@ -116,6 +108,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const [errorMessages, setErrorMessages] = React.useState<
     Partial<CatalogueDetailsErrorMessages>
   >({});
+
+  const { data: manufacturerList } = useManufacturers();
+  //for now is undefined, needs to be set to the current manufacturer (for edit)
+  const [selectedManufacturer, setSelectedManufacturer] =
+    React.useState<Manufacturer>();
 
   const handleClose = React.useCallback(() => {
     onChangeCatalogueItemDetails({
@@ -133,11 +130,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       obsolete_replacement_catalogue_item_id: null,
       obsolete_reason: null,
     });
-    onChangeCatalogueItemManufacturer({
-      name: '',
-      address: '',
-      url: '',
-    });
+
     onChangePropertyValues([]);
     setPropertyErrors(
       new Array(catalogueItemPropertiesForm.length).fill(false)
@@ -145,14 +138,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     setErrorMessages({});
     setFormError(false);
     setFormErrorMessage(undefined);
-    setManufacturerAddressError(false);
-    setManufacturerNameError(false);
-    setManufacturerWebUrlError(false);
+
     onClose();
   }, [
     catalogueItemPropertiesForm.length,
     onChangeCatalogueItemDetails,
-    onChangeCatalogueItemManufacturer,
     onChangePropertyValues,
     onClose,
   ]);
@@ -303,38 +293,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         hasErrors = true;
       }
     }
-    // Check Manufacturer Name
 
-    if (
-      catalogueItemManufacturer.name === undefined ||
-      catalogueItemManufacturer.name.trim() === ''
-    ) {
-      setManufacturerNameError(true);
-      hasErrors = true;
-    }
-
-    // Check Manufacturer URL
-    if (
-      !catalogueItemManufacturer.url.trim() ||
-      !isValidUrl(catalogueItemManufacturer.url)
-    ) {
-      setManufacturerWebUrlError(true);
-      setManufacturerWebUrlErrorMessage(
-        !catalogueItemManufacturer.url.trim()
-          ? 'Please enter a Manufacturer URL'
-          : 'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
-      );
-      hasErrors = true;
-    }
-
-    // Check Manufacturer Address
-    if (
-      catalogueItemManufacturer.address === undefined ||
-      catalogueItemManufacturer.address.trim() === ''
-    ) {
-      setManufacturerAddressError(true);
-      hasErrors = true;
-    }
     // Check properties
     const updatedPropertyErrors = [...propertyErrors];
 
@@ -400,7 +359,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     return { hasErrors, updatedProperties };
   }, [
     catalogueItemDetails,
-    catalogueItemManufacturer,
     propertyErrors,
     catalogueItemPropertiesForm,
     propertyValues,
@@ -447,7 +405,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     const catalogueItem: AddCatalogueItem = {
       ...details,
       properties: filteredProperties,
-      manufacturer: catalogueItemManufacturer,
+      manufacturer_id: selectedManufacturer?.id ?? '',
     };
 
     addCatalogueItem(catalogueItem)
@@ -457,11 +415,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         setCatchAllError(true);
       });
   }, [
-    addCatalogueItem,
-    catalogueItemManufacturer,
-    handleClose,
-    details,
     handleFormErrorStates,
+    details,
+    selectedManufacturer?.id,
+    addCatalogueItem,
+    handleClose,
   ]);
 
   const handleEditCatalogueItem = React.useCallback(() => {
@@ -513,8 +471,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         );
 
       const isManufacturerUpdated =
-        JSON.stringify(catalogueItemManufacturer) !==
-        JSON.stringify(selectedCatalogueItemData.manufacturer);
+        JSON.stringify(selectedManufacturer?.id) !==
+        JSON.stringify(selectedCatalogueItemData.manufacturer_id);
       let catalogueItem: EditCatalogueItem = {
         id: selectedCatalogueItem.id,
       };
@@ -537,7 +495,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       isCatalogueItemPropertiesUpdated &&
         (catalogueItem.properties = filteredProperties);
       isManufacturerUpdated &&
-        (catalogueItem.manufacturer = catalogueItemManufacturer);
+        (catalogueItem.manufacturer_id = selectedManufacturer?.id);
 
       if (
         catalogueItem.id &&
@@ -573,22 +531,22 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       }
     }
   }, [
-    catalogueItemManufacturer,
-    editCatalogueItem,
-    handleClose,
-    handleFormErrorStates,
     selectedCatalogueItem,
     selectedCatalogueItemData,
-    details,
+    handleFormErrorStates,
+    details.name,
+    details.description,
+    details.cost_gbp,
+    details.cost_to_rework_gbp,
+    details.days_to_replace,
+    details.days_to_rework,
+    details.drawing_number,
+    details.drawing_link,
+    details.item_model_number,
+    selectedManufacturer?.id,
+    editCatalogueItem,
+    handleClose,
   ]);
-
-  const { data: manufacturerList } = useManufacturers();
-  //for now is undefined, needs to be set to the current manufacturer (for edit)
-  const [selectedManufacturer, setSelectedManufacturer] = React.useState<
-    Manufacturer | undefined
-  >(undefined);
-
-  console.log(selectedManufacturer);
 
   const handleCatalogueDetails = (
     field: keyof CatalogueDetailsErrorMessages,
@@ -779,9 +737,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   fullWidth
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <Typography variant="h6">Manufacturer</Typography>
-              </Grid> */}
               <Grid item xs={12}>
                 <Autocomplete
                   value={selectedManufacturer}
@@ -789,7 +744,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     event: any,
                     newManufacturer: Manufacturer | null
                   ) => {
-                    setSelectedManufacturer(newManufacturer ?? undefined);
+                    setSelectedManufacturer(
+                      newManufacturer ?? /*added manufacturer*/ undefined
+                    );
                   }}
                   disablePortal
                   id="manufacturer-autocomplete"

@@ -123,12 +123,12 @@ export interface CatalogueItemPropertyResponse {
 
 export interface CatalogueItem extends CatalogueItemDetails {
   properties: CatalogueItemPropertyResponse[];
-  manufacturer: CatalogueItemManufacturer;
+  manufacturer_id: string;
   id: string;
 }
 export interface AddCatalogueItem extends CatalogueItemDetails {
   properties: CatalogueItemProperty[];
-  manufacturer: CatalogueItemManufacturer;
+  manufacturer_id: string;
 }
 
 export interface EditCatalogueItem extends Partial<AddCatalogueItem> {
