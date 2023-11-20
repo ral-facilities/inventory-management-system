@@ -17,23 +17,24 @@ import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 import { useManufacturers } from '../api/manufacturer';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
-import { Manufacturer } from '../app.types';
+import { Manufacturer, ManufacturerDetails } from '../app.types';
 import ManufacturerDialog from './manufacturerDialog.component';
 import { Link } from 'react-router-dom';
 
 function ManufacturerComponent() {
-  const [manufacturer, setManufacturer] = React.useState<Manufacturer>({
-    name: '',
-    url: undefined,
-    address: {
-      building_number: '',
-      street_name: '',
-      town: '',
-      county: '',
-      postcode: '',
-    },
-    telephone: '',
-  });
+  const [manufacturerDetails, setManufacturerDetails] =
+    React.useState<ManufacturerDetails>({
+      name: '',
+      url: undefined,
+      address: {
+        address_line: '',
+        town: null,
+        county: null,
+        postcode: '',
+        country: '',
+      },
+      telephone: null,
+    });
 
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
     React.useState<boolean>(false);
@@ -73,15 +74,15 @@ function ManufacturerComponent() {
         <ManufacturerDialog
           open={addManufacturerDialogOpen}
           onClose={() => setAddManufacturerDialogOpen(false)}
-          manufacturer={manufacturer}
-          onChangeManufacturerDetails={setManufacturer}
+          manufacturerDetails={manufacturerDetails}
+          onChangeManufacturerDetails={setManufacturerDetails}
           type="create"
         />
         <ManufacturerDialog
           open={editManufacturerDialogOpen}
           onClose={() => setEditManufacturerDialogOpen(false)}
-          manufacturer={manufacturer}
-          onChangeManufacturerDetails={setManufacturer}
+          manufacturerDetails={manufacturerDetails}
+          onChangeManufacturerDetails={setManufacturerDetails}
           type="edit"
           selectedManufacturer={selectedManufacturer}
         />
@@ -165,7 +166,7 @@ function ManufacturerComponent() {
                         onClick={() => {
                           setEditManufacturerDialogOpen(true);
                           setSelectedManufacturer(item);
-                          setManufacturer(item);
+                          setManufacturerDetails(item);
                         }}
                       >
                         <EditIcon />
@@ -203,9 +204,11 @@ function ManufacturerComponent() {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
-                    <MuiLink underline="hover" href={item.url}>
-                      {item.url}
-                    </MuiLink>
+                    {item.url && (
+                      <MuiLink underline="hover" href={item.url}>
+                        {item.url}
+                      </MuiLink>
+                    )}
                   </TableCell>
                   <TableCell
                     sx={{
@@ -215,15 +218,21 @@ function ManufacturerComponent() {
                       borderRight: '1px solid #e0e0e0',
                     }}
                   >
-                    {item.address.building_number +
-                      ' \n' +
-                      item.address.street_name +
-                      ' \n' +
-                      item.address.town +
-                      ' \n' +
-                      item.address.county +
-                      ' \n' +
-                      item.address.postcode}
+                    <Typography fontSize={14}>
+                      {item.address.address_line}
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {item.address.town ?? ''}
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {item.address.county ?? ''}
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {item.address.country}
+                    </Typography>
+                    <Typography fontSize={14}>
+                      {item.address.postcode}
+                    </Typography>
                   </TableCell>
                   <TableCell
                     sx={{

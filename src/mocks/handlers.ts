@@ -1,12 +1,11 @@
 import { rest } from 'msw';
 import {
-  AddCatalogueCategory,
-  AddManufacturer,
   AddSystem,
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
   EditManufacturer,
+  Manufacturer,
 } from '../app.types';
 import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
@@ -18,7 +17,7 @@ import ManufacturerJSON from './manufacturer.json';
 export const handlers = [
   // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
   rest.post('/v1/catalogue-categories', async (req, res, ctx) => {
-    const body = (await req.json()) as AddCatalogueCategory;
+    let body = await req.json();
 
     if (body.name === 'test_dup') {
       return res(
@@ -33,14 +32,19 @@ export const handlers = [
     if (body.name === 'Error 500') {
       return res(ctx.status(500), ctx.json(''));
     }
+
+    if (!body.parent_id) {
+      body = {
+        ...body,
+        parent_id: null,
+      };
+    }
+
     return res(
       ctx.status(200),
       ctx.json({
-        name: 'test',
-        parent_id: null,
         id: '1',
-        code: 'test',
-        is_leaf: false,
+        ...body,
       })
     );
   }),
@@ -281,7 +285,7 @@ export const handlers = [
   }),
 
   rest.post('/v1/manufacturers', async (req, res, ctx) => {
-    const body = (await req.json()) as AddManufacturer;
+    const body = (await req.json()) as Manufacturer;
 
     if (body.name === 'Manufacturer A') {
       return res(ctx.status(409), ctx.json(''));
@@ -294,8 +298,8 @@ export const handlers = [
         code: 'manufacturer-d',
         url: 'http://test.co.uk',
         address: {
-          building_number: '1',
-          street_name: 'Example Street',
+          address_line: '4 Example Street',
+          country: 'United Kingdom',
           town: 'Oxford',
           county: 'Oxfordshire',
           postcode: 'OX1 2AB',

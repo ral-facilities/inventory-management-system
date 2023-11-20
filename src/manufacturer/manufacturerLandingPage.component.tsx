@@ -13,7 +13,7 @@ import { useManufacturer } from '../api/manufacturer';
 
 import ManufacturerDialog from './manufacturerDialog.component';
 import React from 'react';
-import { Manufacturer } from '../app.types';
+import { ManufacturerDetails } from '../app.types';
 
 function ManufacturerLandingPage() {
   const location = useLocation();
@@ -29,7 +29,7 @@ function ManufacturerLandingPage() {
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
     React.useState<boolean>(false);
 
-  const [manufacturer, setManufacturer] = React.useState<Manufacturer>({
+  const [manufacturer, setManufacturer] = React.useState<ManufacturerDetails>({
     name: '',
     url: undefined,
     address: {
@@ -94,11 +94,15 @@ function ManufacturerLandingPage() {
               <Typography sx={{ margin: '8px' }} variant="h6">
                 URL:
               </Typography>
-              <Typography sx={{ margin: '8px' }} variant="body1">
-                <MuiLink underline="hover" href={manufacturerData.url}>
-                  {manufacturerData.url}
-                </MuiLink>
-              </Typography>
+
+              {manufacturerData.url && (
+                <Typography sx={{ margin: '8px' }} variant="body1">
+                  <MuiLink underline="hover" href={manufacturerData.url}>
+                    {manufacturerData.url}
+                  </MuiLink>
+                </Typography>
+              )}
+
               <Typography sx={{ margin: '8px' }} variant="h6">
                 Telephone number:
               </Typography>
@@ -223,7 +227,7 @@ function ManufacturerLandingPage() {
       <ManufacturerDialog
         open={editManufacturerDialogOpen}
         onClose={() => setEditManufacturerDialogOpen(false)}
-        manufacturer={manufacturer}
+        manufacturerDetails={manufacturer}
         onChangeManufacturerDetails={setManufacturer}
         type="edit"
         selectedManufacturer={manufacturerData}

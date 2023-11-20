@@ -15,14 +15,21 @@ import {
   Paper,
   LinearProgress,
   Grid,
+  Tooltip,
 } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import React from 'react';
-import { CatalogueCategory, EditCatalogueCategory } from '../../app.types';
+import {
+  AddCatalogueCategory,
+  CatalogueCategory,
+  EditCatalogueCategory,
+} from '../../app.types';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
   useCatalogueCategoryById,
+  useCopyToCatalogueCategory,
   useMoveToCatalogueCategory,
 } from '../../api/catalogueCategory';
 import handleTransferState from '../../handleTransferState';
@@ -34,6 +41,7 @@ export interface CatalogueCategoryDirectoryDialogProps {
   onChangeSelectedCategories: (selectedCategories: CatalogueCategory[]) => void;
   catalogueCurrDirId: string | null;
   onChangeCatalogueCurrDirId: (catalogueCurrDirId: string | null) => void;
+  requestType: 'moveTo' | 'copyTo';
 }
 
 const CatalogueCategoryDirectoryDialog = (
@@ -44,6 +52,7 @@ const CatalogueCategoryDirectoryDialog = (
     onClose,
     selectedCategories,
     onChangeSelectedCategories,
+    requestType,
     catalogueCurrDirId,
     onChangeCatalogueCurrDirId,
   } = props;
@@ -63,10 +72,82 @@ const CatalogueCategoryDirectoryDialog = (
   }, [onChangeCatalogueCurrDirId, onChangeSelectedCategories, onClose]);
 
   const { mutateAsync: moveToCatalogueCategory } = useMoveToCatalogueCategory();
+  const { mutateAsync: CopyToCatalogueCategory } = useCopyToCatalogueCategory();
 
   const { data: targetLocationCatalogueCategory } = useCatalogueCategoryById(
     catalogueCurrDirId ?? undefined
   );
+
+  const handleCopyToCatalogueCategory = React.useCallback(() => {
+    const currId = catalogueCurrDirId === '' ? null : catalogueCurrDirId;
+    const catalogueCategoryCodes: string[] =
+      catalogueCategoryData?.map((category) => category.code) || [];
+
+    const catalogueCategory: AddCatalogueCategory[] = selectedCategories.map(
+      (category) => {
+        let reqAddInfo: AddCatalogueCategory = {
+          name: category.name,
+          is_leaf: category.is_leaf,
+        };
+        if (currId) {
+          reqAddInfo = {
+            ...reqAddInfo,
+            parent_id: currId,
+          };
+        }
+
+        // Check if the name already exists in the target location
+        if (catalogueCategoryCodes.includes(category.code)) {
+          let count = 1;
+          let newName = reqAddInfo.name;
+          let newCode = category.code;
+
+          while (catalogueCategoryCodes.includes(newCode)) {
+            newCode = `${category.code}_copy_${count}`;
+            newName = `${reqAddInfo.name}_copy_${count}`;
+            count++;
+          }
+
+          reqAddInfo.name = newName;
+        }
+
+        if (
+          category.catalogue_item_properties &&
+          category.catalogue_item_properties.length > 0
+        ) {
+          reqAddInfo = {
+            ...reqAddInfo,
+            catalogue_item_properties: category.catalogue_item_properties,
+          };
+        }
+
+        return reqAddInfo;
+      }
+    );
+
+    CopyToCatalogueCategory({
+      catalogueCategories: catalogueCategory,
+      selectedCategories: selectedCategories,
+      targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? {
+        name: 'Root',
+        id: '',
+        parent_id: null,
+        is_leaf: false,
+        code: '',
+      },
+    }).then((response) => {
+      handleTransferState(response);
+      handleClose();
+    });
+  }, [
+    CopyToCatalogueCategory,
+    catalogueCategoryData,
+    catalogueCurrDirId,
+    handleClose,
+    selectedCategories,
+    targetLocationCatalogueCategory,
+  ]);
+
   const handleMoveToCatalogueCategory = React.useCallback(() => {
     const currId = catalogueCurrDirId === '' ? null : catalogueCurrDirId;
 
@@ -79,7 +160,7 @@ const CatalogueCategoryDirectoryDialog = (
     );
 
     moveToCatalogueCategory({
-      catalogueCategory: catalogueCategory,
+      catalogueCategories: catalogueCategory,
       selectedCategories: selectedCategories,
       targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? {
         name: 'Root',
@@ -125,12 +206,29 @@ const CatalogueCategoryDirectoryDialog = (
     >
       <DialogTitle sx={{ marginLeft: 2 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            Move {selectedCategories.length}{' '}
-            {selectedCategories.length === 1
-              ? 'catalogue category'
-              : 'catalogue categories'}{' '}
-            to a different catalogue category
+          <Grid container item flexDirection="row" alignItems="center" xs={12}>
+            <>
+              {requestType === 'moveTo' ? 'Move ' : 'Copy '}{' '}
+              {selectedCategories.length}{' '}
+              {selectedCategories.length === 1
+                ? 'catalogue category'
+                : 'catalogue categories'}{' '}
+              to a different catalogue category
+            </>
+            {requestType === 'copyTo' && (
+              <Tooltip
+                title={
+                  'Only the catalogue category details will be copied; no contained catalogue categories or catalogue items within the catalogue category will be included.'
+                }
+                placement="top"
+                enterTouchDelay={0}
+                arrow
+                aria-label={'Copy Warning'}
+                sx={{ mx: 2 }}
+              >
+                <InfoOutlinedIcon />
+              </Tooltip>
+            )}
           </Grid>
           <Grid item xs={12}>
             <Breadcrumbs
@@ -164,45 +262,45 @@ const CatalogueCategoryDirectoryDialog = (
                 </TableRow>
               </TableHead>
               <TableBody>
-                {catalogueCategoryData.map((category, index) => (
-                  <TableRow
-                    key={category.id}
-                    onClick={() => {
-                      if (
-                        !(
-                          selectedCatalogueCategoryIds.includes(category.id) ||
-                          category.is_leaf
-                        )
-                      ) {
-                        onChangeCatalogueCurrDirId(category.id);
-                      }
-                    }}
-                    onMouseEnter={() => setHoveredRow(index)}
-                    onMouseLeave={() => setHoveredRow(null)}
-                    sx={{
-                      backgroundColor:
-                        hoveredRow === index ? 'action.hover' : 'inherit',
-                      cursor:
-                        selectedCatalogueCategoryIds.includes(category.id) ||
-                        category.is_leaf
-                          ? 'not-allowed'
-                          : 'pointer',
-                    }}
-                    aria-label={`${category.name} row`}
-                  >
-                    <TableCell
-                      sx={{
-                        color:
-                          selectedCatalogueCategoryIds.includes(category.id) ||
-                          category.is_leaf
-                            ? 'action.disabled'
-                            : 'inherit',
+                {catalogueCategoryData.map((category, index) => {
+                  const canPlaceHere =
+                    !category.is_leaf &&
+                    (requestType !== 'moveTo' ||
+                      !selectedCatalogueCategoryIds.includes(category.id));
+                  return (
+                    <TableRow
+                      key={category.id}
+                      onClick={() => {
+                        if (!category.is_leaf) {
+                          if (
+                            !selectedCatalogueCategoryIds.includes(
+                              category.id
+                            ) ||
+                            requestType === 'copyTo'
+                          ) {
+                            onChangeCatalogueCurrDirId(category.id);
+                          }
+                        }
                       }}
+                      onMouseEnter={() => setHoveredRow(index)}
+                      onMouseLeave={() => setHoveredRow(null)}
+                      sx={{
+                        backgroundColor:
+                          hoveredRow === index ? 'action.hover' : 'inherit',
+                        cursor: canPlaceHere ? 'pointer' : 'not-allowed',
+                      }}
+                      aria-label={`${category.name} row`}
                     >
-                      {category.name}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                      <TableCell
+                        sx={{
+                          color: canPlaceHere ? 'inherit' : 'action.disabled',
+                        }}
+                      >
+                        {category.name}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </TableContainer>
@@ -220,13 +318,19 @@ const CatalogueCategoryDirectoryDialog = (
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           disabled={
-            selectedCategories.length > 0
-              ? catalogueCurrDirId === selectedCategories[0].parent_id
+            requestType === 'moveTo'
+              ? selectedCategories.length > 0
+                ? catalogueCurrDirId === selectedCategories[0].parent_id
+                : false
               : false
           }
-          onClick={handleMoveToCatalogueCategory}
+          onClick={
+            requestType === 'moveTo'
+              ? handleMoveToCatalogueCategory
+              : handleCopyToCatalogueCategory
+          }
         >
-          Move here
+          {requestType === 'moveTo' ? 'Move' : 'Copy'} here
         </Button>
       </DialogActions>
     </Dialog>
