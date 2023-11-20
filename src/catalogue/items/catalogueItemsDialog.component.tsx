@@ -1,5 +1,6 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
+  Autocomplete,
   Box,
   Button,
   Dialog,
@@ -34,6 +35,7 @@ import {
   CatalogueItemProperty,
   EditCatalogueItem,
   ErrorParsing,
+  Manufacturer,
 } from '../../app.types';
 import { useManufacturers } from '../../api/manufacturer';
 
@@ -580,10 +582,13 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     details,
   ]);
 
-  const { data: manufacturers } = useManufacturers();
+  const { data: manufacturerList } = useManufacturers();
+  //for now is undefined, needs to be set to the current manufacturer (for edit)
+  const [selectedManufacturer, setSelectedManufacturer] = React.useState<
+    Manufacturer | undefined
+  >(undefined);
 
-  console.log(manufacturers);
-  console.log(typeof (manufacturers ? manufacturers[0] : false));
+  console.log(selectedManufacturer);
 
   const handleCatalogueDetails = (
     field: keyof CatalogueDetailsErrorMessages,
@@ -774,80 +779,26 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <Typography variant="h6">Manufacturer</Typography>
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
-                <TextField
-                  label="Manufacturer Name"
-                  required={true}
-                  size="small"
-                  value={catalogueItemManufacturer.name}
-                  onChange={(event) => {
-                    onChangeCatalogueItemManufacturer({
-                      ...catalogueItemManufacturer,
-                      name: event.target.value,
-                    });
-                    setFormError(false);
-                    setFormErrorMessage(undefined);
-                    setManufacturerNameError(false);
+                <Autocomplete
+                  value={selectedManufacturer}
+                  onChange={(
+                    event: any,
+                    newManufacturer: Manufacturer | null
+                  ) => {
+                    setSelectedManufacturer(newManufacturer ?? undefined);
                   }}
-                  error={manufacturerNameError}
-                  helperText={
-                    manufacturerNameError
-                      ? 'Please enter a Manufacturer Name'
-                      : ''
-                  }
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Manufacturer URL"
-                  required={true}
-                  size="small"
-                  value={catalogueItemManufacturer.url}
-                  onChange={(event) => {
-                    onChangeCatalogueItemManufacturer({
-                      ...catalogueItemManufacturer,
-                      url: event.target.value,
-                    });
-                    setFormError(false);
-                    setFormErrorMessage(undefined);
-                    setManufacturerWebUrlError(false);
-                    setManufacturerWebUrlErrorMessage('');
-                  }}
-                  error={manufacturerWebUrlError} // Set error state based on the nameError state
-                  helperText={
-                    manufacturerWebUrlError
-                      ? manufacturerWebUrlErrorMessage
-                      : ''
-                  }
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Manufacturer Address"
-                  required={true}
-                  size="small"
-                  value={catalogueItemManufacturer.address}
-                  onChange={(event) => {
-                    onChangeCatalogueItemManufacturer({
-                      ...catalogueItemManufacturer,
-                      address: event.target.value,
-                    });
-                    setFormError(false);
-                    setFormErrorMessage(undefined);
-                    setManufacturerAddressError(false);
-                  }}
-                  error={manufacturerAddressError} // Set error state based on the nameError state
-                  helperText={
-                    manufacturerAddressError
-                      ? 'Please enter a Manufacturer Address'
-                      : ''
-                  }
-                  fullWidth
+                  disablePortal
+                  id="manufacturer-autocomplete"
+                  options={manufacturerList ?? []}
+                  sx={{ width: 300 }}
+                  getOptionLabel={(option) => option.name}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Manufacturer" />
+                  )}
                 />
               </Grid>
             </Grid>
