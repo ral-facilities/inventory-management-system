@@ -580,7 +580,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                   >
                     {
                       manufacturerList?.find((manufacturer) => {
-                        return manufacturer.id === item.id;
+                        return manufacturer.id === item.manufacturer_id;
                       })?.name
                     }
                   </TableCell>

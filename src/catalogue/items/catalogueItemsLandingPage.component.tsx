@@ -139,7 +139,7 @@ function CatalogueItemsLandingPage() {
                   catalogueItemIdData.properties ?? []
                 )
               );
-              setCatalogueItemManufacturer(catalogueItemIdData.manufacturer);
+              // setCatalogueItemManufacturer(catalogueItemIdData.manufacturer);
             }
           }}
         >
@@ -420,7 +420,7 @@ function CatalogueItemsLandingPage() {
                 </Collapse>
               </Grid>
 
-              <Grid
+              {/* <Grid
                 item
                 xs={12}
                 onClick={toggleManufacturer}
@@ -505,7 +505,7 @@ function CatalogueItemsLandingPage() {
                     </Grid>
                   </Grid>
                 </Collapse>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
         </Grid>
