@@ -771,6 +771,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       event: any,
                       newManufacturer: Manufacturer | null
                     ) => {
+                      console.log(newManufacturer);
                       setSelectedManufacturer(newManufacturer ?? undefined);
                       setManufacturerErrorMessage(undefined);
                     }}
@@ -795,6 +796,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   <IconButton
                     sx={{ mx: '4px', my: '2px' }}
                     onClick={() => setAddManufacturerDialogOpen(true)}
+                    disabled={selectedManufacturer !== undefined}
                     aria-label="add manufacturer"
                   >
                     <AddIcon />
