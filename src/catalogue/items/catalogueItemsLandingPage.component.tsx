@@ -15,12 +15,10 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useCatalogueCategoryById } from '../../api/catalogueCategory';
 import { useCatalogueItem } from '../../api/catalogueItem';
-import {
-  CatalogueItemDetailsPlaceholder,
-  CatalogueItemManufacturer,
-} from '../../app.types';
+import { CatalogueItemDetailsPlaceholder } from '../../app.types';
 import { matchCatalogueItemProperties } from '../catalogue.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
+import { useManufacturer } from '../../api/manufacturer';
 
 function CatalogueItemsLandingPage() {
   const location = useLocation();
@@ -76,12 +74,9 @@ function CatalogueItemsLandingPage() {
       manufacturer_id: null,
     });
 
-  const [catalogueItemManufacturer, setCatalogueItemManufacturer] =
-    React.useState<CatalogueItemManufacturer>({
-      name: '',
-      address: '',
-      url: '',
-    });
+  const { data: manufacturer } = useManufacturer(
+    catalogueItemIdData?.manufacturer_id
+  );
 
   const [catalogueItemPropertyValues, setCatalogueItemPropertyValues] =
     React.useState<(string | number | boolean | null)[]>([]);
@@ -422,7 +417,7 @@ function CatalogueItemsLandingPage() {
                 </Collapse>
               </Grid>
 
-              {/* <Grid
+              <Grid
                 item
                 xs={12}
                 onClick={toggleManufacturer}
@@ -449,65 +444,135 @@ function CatalogueItemsLandingPage() {
                 )}
               </Grid>
 
-              <Grid item xs={12}>
-                <Collapse in={showManufacturer}>
-                  <Grid container spacing={1}>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ListItem
-                        style={{
-                          justifyContent: 'flex-start',
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <ListItemText
-                          primary={'Manufacturer Name'}
-                          secondary={catalogueItemIdData.manufacturer.name}
-                        />
-                      </ListItem>
+              {manufacturer && (
+                <Grid item xs={12}>
+                  <Collapse in={showManufacturer}>
+                    <Grid container spacing={1}>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <ListItem
+                          style={{
+                            justifyContent: 'flex-start',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <ListItemText
+                            primary={'Manufacturer Name'}
+                            secondary={manufacturer?.name}
+                          />
+                        </ListItem>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <ListItem
+                          style={{
+                            justifyContent: 'flex-start',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <ListItemText
+                            primary={'Manufacturer URL'}
+                            secondary={manufacturer.url}
+                          />
+                        </ListItem>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <ListItem
+                          style={{
+                            justifyContent: 'flex-start',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <ListItemText
+                            primary={'Telephone number'}
+                            secondary={manufacturer?.telephone}
+                          />
+                        </ListItem>
+                      </Grid>
+
+                      <Grid item xs={12} sm={6} md={4}>
+                        <ListItem
+                          style={{
+                            justifyContent: 'flex-start',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <ListItemText
+                            primary={'Address Line'}
+                            secondary={manufacturer?.address.address_line}
+                          />
+                        </ListItem>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <ListItem
+                          style={{
+                            justifyContent: 'flex-start',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <ListItemText
+                            primary={'Town'}
+                            secondary={manufacturer?.address.town}
+                          />
+                        </ListItem>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <ListItem
+                          style={{
+                            justifyContent: 'flex-start',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <ListItemText
+                            primary={'County'}
+                            secondary={manufacturer?.address.county}
+                          />
+                        </ListItem>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <ListItem
+                          style={{
+                            justifyContent: 'flex-start',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <ListItemText
+                            primary={'Country'}
+                            secondary={manufacturer?.address.country}
+                          />
+                        </ListItem>
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={4}>
+                        <ListItem
+                          style={{
+                            justifyContent: 'flex-start',
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <ListItemText
+                            primary={'Post/Zip code'}
+                            secondary={manufacturer?.address.postcode}
+                          />
+                        </ListItem>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ListItem
-                        style={{
-                          justifyContent: 'flex-start',
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <ListItemText
-                          primary={'Manufacturer URL'}
-                          secondary={
-                            <MuiLink
-                              underline="hover"
-                              target="_blank"
-                              href={catalogueItemIdData.manufacturer.url}
-                            >
-                              {catalogueItemIdData.manufacturer.url}
-                            </MuiLink>
-                          }
-                        />
-                      </ListItem>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ListItem
-                        style={{
-                          justifyContent: 'flex-start',
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <ListItemText
-                          primary={'Manufacturer Address'}
-                          secondary={catalogueItemIdData.manufacturer.address}
-                        />
-                      </ListItem>
-                    </Grid>
-                  </Grid>
-                </Collapse>
-              </Grid> */}
+                  </Collapse>
+                </Grid>
+              )}
             </Grid>
           </Grid>
         </Grid>
