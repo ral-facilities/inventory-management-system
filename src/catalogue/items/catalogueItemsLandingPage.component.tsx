@@ -73,6 +73,7 @@ function CatalogueItemsLandingPage() {
       is_obsolete: null,
       obsolete_replacement_catalogue_item_id: null,
       obsolete_reason: null,
+      manufacturer_id: null,
     });
 
   const [catalogueItemManufacturer, setCatalogueItemManufacturer] =
@@ -132,6 +133,7 @@ function CatalogueItemsLandingPage() {
                 obsolete_replacement_catalogue_item_id:
                   catalogueItemIdData.obsolete_replacement_catalogue_item_id,
                 obsolete_reason: catalogueItemIdData.obsolete_reason,
+                manufacturer_id: catalogueItemIdData.manufacturer_id,
               });
               setCatalogueItemPropertyValues(
                 matchCatalogueItemProperties(
@@ -538,8 +540,6 @@ function CatalogueItemsLandingPage() {
         parentId={catalogueCategoryData?.id ?? null}
         catalogueItemDetails={catalogueItemDetails}
         onChangeCatalogueItemDetails={setCatalogueItemDetails}
-        catalogueItemManufacturer={catalogueItemManufacturer}
-        onChangeCatalogueItemManufacturer={setCatalogueItemManufacturer}
         catalogueItemPropertiesForm={
           catalogueCategoryData?.catalogue_item_properties ?? []
         }

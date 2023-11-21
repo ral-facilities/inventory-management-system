@@ -47,10 +47,6 @@ export interface CatalogueItemsDialogProps {
   onChangeCatalogueItemDetails: (
     catalogueItemDetails: CatalogueItemDetailsPlaceholder
   ) => void;
-  catalogueItemManufacturer: CatalogueItemManufacturer;
-  onChangeCatalogueItemManufacturer: (
-    catalogueItemManufacturer: CatalogueItemManufacturer
-  ) => void;
   catalogueItemPropertiesForm: CatalogueCategoryFormData[];
   propertyValues: (string | number | boolean | null)[];
   onChangePropertyValues: (
@@ -84,8 +80,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     parentId,
     catalogueItemDetails,
     onChangeCatalogueItemDetails,
-    catalogueItemManufacturer,
-    onChangeCatalogueItemManufacturer,
     catalogueItemPropertiesForm,
     propertyValues,
     onChangePropertyValues,
@@ -129,6 +123,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       is_obsolete: 'false',
       obsolete_replacement_catalogue_item_id: null,
       obsolete_reason: null,
+      manufacturer_id: '',
     });
 
     onChangePropertyValues([]);
@@ -567,6 +562,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     onChangeCatalogueItemDetails(updatedDetails);
   };
 
+  console.log(selectedManufacturer);
+
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
       <DialogTitle>{`${
@@ -754,7 +751,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   sx={{ width: 300 }}
                   getOptionLabel={(option) => option.name}
                   renderInput={(params) => (
-                    <TextField {...params} label="Manufacturer" />
+                    <TextField
+                      {...params}
+                      required={true}
+                      label="Manufacturer"
+                    />
                   )}
                 />
               </Grid>

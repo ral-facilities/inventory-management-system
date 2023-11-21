@@ -94,6 +94,7 @@ function Catalogue() {
       is_obsolete: null,
       obsolete_replacement_catalogue_item_id: null,
       obsolete_reason: null,
+      manufacturer_id: null,
     });
 
   const [catalogueItemManufacturer, setCatalogueItemManufacturer] =
@@ -399,8 +400,6 @@ function Catalogue() {
         parentId={parentId}
         catalogueItemDetails={catalogueItemDetails}
         onChangeCatalogueItemDetails={setCatalogueItemDetails}
-        catalogueItemManufacturer={catalogueItemManufacturer}
-        onChangeCatalogueItemManufacturer={setCatalogueItemManufacturer}
         catalogueItemPropertiesForm={
           parentInfo?.catalogue_item_properties ?? []
         }

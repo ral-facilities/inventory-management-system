@@ -68,8 +68,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     parentInfo,
     catalogueItemDetails,
     onChangeCatalogueItemDetails,
-    catalogueItemManufacturer,
-    onChangeCatalogueItemManufacturer,
     catalogueItemPropertyValues,
     onChangeCatalogueItemPropertyValues,
     onChangeAddItemDialogOpen,
@@ -332,6 +330,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                             obsolete_replacement_catalogue_item_id:
                               item.obsolete_replacement_catalogue_item_id,
                             obsolete_reason: item.obsolete_reason,
+                            manufacturer_id: item.manufacturer_id,
                           });
                           onChangeCatalogueItemPropertyValues(
                             matchCatalogueItemProperties(
@@ -373,6 +372,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                             obsolete_replacement_catalogue_item_id:
                               item.obsolete_replacement_catalogue_item_id,
                             obsolete_reason: item.obsolete_reason,
+                            manufacturer_id: item.manufacturer_id,
                           });
                           onChangeCatalogueItemPropertyValues(
                             matchCatalogueItemProperties(
@@ -616,8 +616,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         parentId={parentInfo.id}
         catalogueItemDetails={catalogueItemDetails}
         onChangeCatalogueItemDetails={onChangeCatalogueItemDetails}
-        catalogueItemManufacturer={catalogueItemManufacturer}
-        onChangeCatalogueItemManufacturer={onChangeCatalogueItemManufacturer}
         catalogueItemPropertiesForm={
           parentInfo?.catalogue_item_properties ?? []
         }

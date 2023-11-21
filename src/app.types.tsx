@@ -86,6 +86,7 @@ export interface CatalogueItemDetails {
   is_obsolete: boolean;
   obsolete_replacement_catalogue_item_id: string | null;
   obsolete_reason: string | null;
+  manufacturer_id: string;
 }
 // need so we can cast string to number e.g for 10.50
 export type CatalogueItemDetailsPlaceholder = {
@@ -123,7 +124,7 @@ export interface CatalogueItemPropertyResponse {
 
 export interface CatalogueItem extends CatalogueItemDetails {
   properties: CatalogueItemPropertyResponse[];
-  manufacturer_id: string;
+
   id: string;
 }
 export interface AddCatalogueItem extends CatalogueItemDetails {
