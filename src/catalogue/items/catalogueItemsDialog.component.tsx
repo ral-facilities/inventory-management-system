@@ -760,15 +760,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     event: any,
                     newManufacturer: Manufacturer | null
                   ) => {
-                    setSelectedManufacturer(
-                      newManufacturer ?? /*added manufacturer*/ undefined
-                    );
+                    setSelectedManufacturer(newManufacturer ?? undefined);
                     setManufacturerErrorMessage(undefined);
                   }}
                   disablePortal
                   id="manufacturer-autocomplete"
                   options={manufacturerList ?? []}
-                  sx={{ width: 300 }}
+                  size="small"
+                  sx={{ alignItems: 'center', width: '400px' }}
                   isOptionEqualToValue={(option, value) =>
                     option.name === value.name
                   }
