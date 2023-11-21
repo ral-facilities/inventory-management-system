@@ -38,6 +38,7 @@ import {
   Manufacturer,
 } from '../../app.types';
 import { useManufacturers } from '../../api/manufacturer';
+import { error } from 'console';
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
@@ -91,6 +92,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     string | undefined
   >(undefined);
 
+  const [manufacturerErrorMessage, setManufacturerErrorMessage] =
+    React.useState<string | undefined>(undefined);
+  const manufacturerError = manufacturerErrorMessage !== undefined;
+
   const [catchAllError, setCatchAllError] = React.useState(false);
 
   const [propertyErrors, setPropertyErrors] = React.useState(
@@ -104,9 +109,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   >({});
 
   const { data: manufacturerList } = useManufacturers();
-  //for now is undefined, needs to be set to the current manufacturer (for edit)
-  const [selectedManufacturer, setSelectedManufacturer] =
-    React.useState<Manufacturer>();
+  const [selectedManufacturer, setSelectedManufacturer] = React.useState<
+    Manufacturer | undefined
+  >(undefined);
 
   const handleClose = React.useCallback(() => {
     onChangeCatalogueItemDetails({
@@ -123,7 +128,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       is_obsolete: 'false',
       obsolete_replacement_catalogue_item_id: null,
       obsolete_reason: null,
-      manufacturer_id: '',
+      manufacturer_id: null,
     });
 
     onChangePropertyValues([]);
@@ -133,7 +138,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     setErrorMessages({});
     setFormError(false);
     setFormErrorMessage(undefined);
-
+    setSelectedManufacturer(undefined);
+    setManufacturerErrorMessage(undefined);
     onClose();
   }, [
     catalogueItemPropertiesForm.length,
@@ -289,6 +295,16 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       }
     }
 
+    //check manufacturer entered
+    if (
+      selectedManufacturer === undefined &&
+      catalogueItemDetails.manufacturer_id === null
+    ) {
+      setManufacturerErrorMessage(
+        'No manufacturer chosen. Please add a manufacturer or add a new manufacturer.'
+      );
+    }
+
     // Check properties
     const updatedPropertyErrors = [...propertyErrors];
 
@@ -354,6 +370,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     return { hasErrors, updatedProperties };
   }, [
     catalogueItemDetails,
+    selectedManufacturer,
     propertyErrors,
     catalogueItemPropertiesForm,
     propertyValues,
@@ -402,6 +419,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       properties: filteredProperties,
       manufacturer_id: selectedManufacturer?.id ?? '',
     };
+
+    console.log(catalogueItem);
 
     addCatalogueItem(catalogueItem)
       .then((response) => handleClose())
@@ -563,7 +582,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   };
 
   console.log(selectedManufacturer);
-
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
       <DialogTitle>{`${
@@ -737,6 +755,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               <Grid item xs={12}>
                 <Autocomplete
                   value={selectedManufacturer}
+                  inputValue={undefined}
                   onChange={(
                     event: any,
                     newManufacturer: Manufacturer | null
@@ -744,17 +763,23 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     setSelectedManufacturer(
                       newManufacturer ?? /*added manufacturer*/ undefined
                     );
+                    setManufacturerErrorMessage(undefined);
                   }}
                   disablePortal
                   id="manufacturer-autocomplete"
                   options={manufacturerList ?? []}
                   sx={{ width: 300 }}
+                  isOptionEqualToValue={(option, value) =>
+                    option.name === value.name
+                  }
                   getOptionLabel={(option) => option.name}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       required={true}
                       label="Manufacturer"
+                      error={manufacturerError}
+                      helperText={manufacturerErrorMessage}
                     />
                   )}
                 />
