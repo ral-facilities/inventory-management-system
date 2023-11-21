@@ -1,4 +1,5 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import AddIcon from '@mui/icons-material/Add';
 import {
   Autocomplete,
   Box,
@@ -36,9 +37,12 @@ import {
   EditCatalogueItem,
   ErrorParsing,
   Manufacturer,
+  ManufacturerDetails,
 } from '../../app.types';
 import { useManufacturers } from '../../api/manufacturer';
 import { error } from 'console';
+import { display } from '@mui/system';
+import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
@@ -197,6 +201,23 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const { data: selectedCatalogueItemData } = useCatalogueItem(
     selectedCatalogueItem?.id
   );
+
+  const [addManufacturerDialogOpen, setAddManufacturerDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [manufacturerDetails, setManufacturerDetails] =
+    React.useState<ManufacturerDetails>({
+      name: '',
+      url: undefined,
+      address: {
+        address_line: '',
+        town: null,
+        county: null,
+        postcode: '',
+        country: '',
+      },
+      telephone: null,
+    });
 
   const handleFormErrorStates = React.useCallback(() => {
     let hasErrors = false;
@@ -420,8 +441,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       manufacturer_id: selectedManufacturer?.id ?? '',
     };
 
-    console.log(catalogueItem);
-
     addCatalogueItem(catalogueItem)
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
@@ -548,15 +567,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     selectedCatalogueItem,
     selectedCatalogueItemData,
     handleFormErrorStates,
-    details.name,
-    details.description,
-    details.cost_gbp,
-    details.cost_to_rework_gbp,
-    details.days_to_replace,
-    details.days_to_rework,
-    details.drawing_number,
-    details.drawing_link,
-    details.item_model_number,
+    details,
     selectedManufacturer?.id,
     editCatalogueItem,
     handleClose,
@@ -581,7 +592,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     onChangeCatalogueItemDetails(updatedDetails);
   };
 
-  console.log(selectedManufacturer);
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
       <DialogTitle>{`${
@@ -752,37 +762,52 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={12}>
-                <Autocomplete
-                  value={selectedManufacturer}
-                  inputValue={undefined}
-                  onChange={(
-                    event: any,
-                    newManufacturer: Manufacturer | null
-                  ) => {
-                    setSelectedManufacturer(newManufacturer ?? undefined);
-                    setManufacturerErrorMessage(undefined);
-                  }}
-                  disablePortal
-                  id="manufacturer-autocomplete"
-                  options={manufacturerList ?? []}
-                  size="small"
-                  sx={{ alignItems: 'center', width: '400px' }}
-                  isOptionEqualToValue={(option, value) =>
-                    option.name === value.name
-                  }
-                  getOptionLabel={(option) => option.name}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      required={true}
-                      label="Manufacturer"
-                      error={manufacturerError}
-                      helperText={manufacturerErrorMessage}
-                    />
-                  )}
-                />
+              <Grid item xs={12} style={{ display: 'flex' }}>
+                <Grid item xs={12} flexDirection={'row'}>
+                  <Autocomplete
+                    value={selectedManufacturer}
+                    inputValue={undefined}
+                    onChange={(
+                      event: any,
+                      newManufacturer: Manufacturer | null
+                    ) => {
+                      setSelectedManufacturer(newManufacturer ?? undefined);
+                      setManufacturerErrorMessage(undefined);
+                    }}
+                    disablePortal
+                    id="manufacturer-autocomplete"
+                    options={manufacturerList ?? []}
+                    size="small"
+                    sx={{ alignItems: 'center', width: '400px' }}
+                    getOptionLabel={(option) => option.name}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        required={true}
+                        label="Manufacturer"
+                        error={manufacturerError}
+                        helperText={manufacturerErrorMessage}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} flexDirection={'row'}>
+                  <IconButton
+                    sx={{ mx: '4px', my: '2px' }}
+                    onClick={() => setAddManufacturerDialogOpen(true)}
+                    aria-label="add manufacturer"
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </Grid>
               </Grid>
+              <ManufacturerDialog
+                open={addManufacturerDialogOpen}
+                onClose={() => setAddManufacturerDialogOpen(false)}
+                manufacturerDetails={manufacturerDetails}
+                onChangeManufacturerDetails={setManufacturerDetails}
+                type="create"
+              />
             </Grid>
           </Grid>
 
