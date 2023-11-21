@@ -771,7 +771,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       event: any,
                       newManufacturer: Manufacturer | null
                     ) => {
-                      console.log(newManufacturer);
                       setSelectedManufacturer(newManufacturer ?? undefined);
                       setManufacturerErrorMessage(undefined);
                     }}
