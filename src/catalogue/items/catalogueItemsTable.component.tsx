@@ -14,16 +14,46 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
+  MRT_Row,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCatalogueItems } from '../../api/catalogueItem';
-import { CatalogueCategory, CatalogueItem } from '../../app.types';
+import {
+  CatalogueCategory,
+  CatalogueItem,
+  CatalogueItemPropertyResponse,
+} from '../../app.types';
 import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 
+function findPropertyValue(
+  properties: CatalogueItemPropertyResponse[],
+  targetName: string | undefined
+) {
+  // Use the find method to locate the object with the target name
+  const foundProperty = properties.find((prop) => prop.name === targetName);
+
+  // Return the value of the 'name' property if the object is found, or "" otherwise
+  return foundProperty ? foundProperty.value : '';
+}
+
+function generateUniqueName(
+  existingNames: (string | undefined)[],
+  originalName: string
+) {
+  let newName = originalName;
+  let copyIndex = 1;
+
+  while (existingNames.includes(newName)) {
+    newName = `${originalName}_copy${copyIndex}`;
+    copyIndex++;
+  }
+
+  return newName;
+}
 export interface CatalogueItemsTableProps {
   parentInfo: CatalogueCategory;
   dense: boolean;
@@ -32,7 +62,7 @@ export interface CatalogueItemsTableProps {
 const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const { parentInfo, dense } = props;
   // SG header + SG footer + tabs #add breadcrumbs + Mui table V2
-  const tableHeight = `calc(100vh - (64px + 36px + 50px + 172px))`;
+  const tableHeight = `calc(100vh - (64px + 36px + 50px + 125px))`;
 
   const { data, isLoading } = useCatalogueItems(parentInfo.id);
 
@@ -50,8 +80,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     CatalogueItem | undefined
   >(undefined);
 
+  const catalogueCategoryNames: (string | undefined)[] =
+    data?.map((item) => item.name) || [];
+
   const noResultsTxt =
-    'No results found: Try adding an item by using the Add Catalogue Item button in the top right of your screen';
+    'No results found: Try adding an item by using the Add Catalogue Item button on the top left of your screen';
   const [itemDialogType, setItemsDialogType] = React.useState<
     'create' | 'save as' | 'edit'
   >('create');
@@ -143,15 +176,22 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
         accessorFn: (row: CatalogueItem) => {
           if (property.type === 'boolean') {
-            return (row.properties[index]?.value as boolean) === true
+            return (findPropertyValue(
+              row.properties,
+              property.name
+            ) as boolean) === true
               ? 'Yes'
               : 'No';
+          } else if (property.type === 'number') {
+            return typeof findPropertyValue(row.properties, property.name) ===
+              'number'
+              ? findPropertyValue(row.properties, property.name)
+              : 0;
           } else {
             // if the value doesn't exist it return type "true" we need to change this
             // to '' to allow this column to be filterable
-            return typeof row.properties[index]?.value === 'boolean'
-              ? ''
-              : row.properties[index]?.value;
+
+            return findPropertyValue(row.properties, property.name);
           }
         },
         size: 250,
@@ -159,6 +199,22 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           propertyFilters[
             property.type as 'string' | 'boolean' | 'number' | 'null'
           ],
+
+        Cell: ({ row }: { row: MRT_Row<CatalogueItem> }) => {
+          if (
+            typeof findPropertyValue(row.original.properties, property.name) ===
+            'number'
+          ) {
+            return findPropertyValue(row.original.properties, property.name) ===
+              0
+              ? 0
+              : findPropertyValue(row.original.properties, property.name) !==
+                null
+              ? findPropertyValue(row.original.properties, property.name)
+              : '';
+          } else
+            return findPropertyValue(row.original.properties, property.name);
+        },
       })),
       {
         header: 'Cost (GBP)',
@@ -181,7 +237,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         },
       },
       {
-        header: 'Days to Replace',
+        header: 'Time to replace (days)',
         accessorFn: (row) => row.days_to_replace,
         size: 250,
         filterVariant: 'range-slider',
@@ -300,7 +356,18 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             parentInfo={parentInfo}
             type={itemDialogType}
             selectedCatalogueItem={
-              itemDialogType === 'create' ? undefined : row.original
+              itemDialogType === 'create'
+                ? undefined
+                : {
+                    ...row.original,
+                    name:
+                      itemDialogType === 'save as'
+                        ? generateUniqueName(
+                            catalogueCategoryNames,
+                            row.original.name
+                          )
+                        : row.original.name,
+                  }
             }
           />
         </>

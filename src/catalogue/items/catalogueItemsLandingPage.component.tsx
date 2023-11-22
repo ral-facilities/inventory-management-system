@@ -55,7 +55,17 @@ function CatalogueItemsLandingPage() {
 
   return (
     <Grid container>
-      <Grid sx={{ padding: '8px' }} item>
+      <Grid
+        sx={{
+          padding: '8px',
+          position: 'sticky',
+          top: 0,
+          backgroundColor: 'background.default',
+          zIndex: 1000,
+          width: '100%',
+        }}
+        item
+      >
         <Button
           component={Link}
           to={
@@ -93,10 +103,16 @@ function CatalogueItemsLandingPage() {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography sx={{ margin: '8px' }} variant="h6">
+              <Typography
+                sx={{ margin: '8px', textAlign: 'center' }}
+                variant="h6"
+              >
                 Description:
               </Typography>
-              <Typography sx={{ margin: '8px' }} variant="body1">
+              <Typography
+                sx={{ margin: '8px', textAlign: 'center' }}
+                variant="body1"
+              >
                 {catalogueItemIdData.description}
               </Typography>
             </Grid>
@@ -275,6 +291,34 @@ function CatalogueItemsLandingPage() {
                           primary={'Drawing Number'}
                           secondary={
                             catalogueItemIdData.drawing_number ?? 'None'
+                          }
+                        />
+                      </ListItem>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={4}>
+                      <ListItem
+                        style={{
+                          justifyContent: 'flex-start',
+                          display: 'flex',
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <ListItemText
+                          primary={'Drawing Link'}
+                          secondary={
+                            catalogueItemIdData.drawing_link ? (
+                              <MuiLink
+                                underline="hover"
+                                target="_blank"
+                                href={catalogueItemIdData.drawing_link}
+                              >
+                                {catalogueItemIdData.drawing_link}
+                              </MuiLink>
+                            ) : (
+                              'None'
+                            )
                           }
                         />
                       </ListItem>
