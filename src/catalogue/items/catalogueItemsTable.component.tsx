@@ -280,9 +280,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           manufacturerList?.find((manufacturer) => {
             return manufacturer.id === row.manufacturer_id;
           })?.name,
-        // accessorFn: (manufacturerList?.find((manufacturer) => {
-        //   return manufacturer.id === row.manufacturer_id;
-        // })?.name) ?? ''
       },
     ];
   }, [dense, manufacturerList, parentInfo.catalogue_item_properties]);
