@@ -245,7 +245,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
           </Grid>
         </TabPanel>
 
-        <TabPanel value={tabValue} index={2}>
+        {/* <TabPanel value={tabValue} index={2}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <ListItem
@@ -304,7 +304,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               </ListItem>
             </Grid>
           </Grid>
-        </TabPanel>
+        </TabPanel> */}
       </Grid>
     </Grid>
   );

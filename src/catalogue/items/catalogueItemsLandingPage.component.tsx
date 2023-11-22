@@ -428,7 +428,7 @@ function CatalogueItemsLandingPage() {
 
               <Grid item xs={12}>
                 <Collapse in={showManufacturer}>
-                  <Grid container spacing={1}>
+                  {/* <Grid container spacing={1}>
                     <Grid item xs={12} sm={6} md={4}>
                       <ListItem
                         style={{
@@ -481,8 +481,8 @@ function CatalogueItemsLandingPage() {
                           secondary={catalogueItemIdData.manufacturer.address}
                         />
                       </ListItem>
-                    </Grid>
-                  </Grid>
+                    </Grid> */}
+                  {/* </Grid> */}
                 </Collapse>
               </Grid>
             </Grid>

@@ -272,32 +272,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         size: 250,
       },
 
-      {
-        header: 'Manufacturer Name',
-        accessorFn: (row) => row.manufacturer.name,
-        size: 250,
-        filterVariant: 'autocomplete',
-        filterFn: 'equals',
-      },
-      {
-        header: 'Manufacturer Address',
-        accessorFn: (row) => row.manufacturer.address,
-        size: 350,
-      },
-      {
-        header: 'Manufacturer URL',
-        accessorFn: (row) => row.manufacturer.url,
-        size: 300,
-        Cell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            target="_blank"
-            href={row.original.manufacturer.url}
-          >
-            {row.original.manufacturer.url}
-          </MuiLink>
-        ),
-      },
+      //add manufacturer here
     ];
   }, [dense, parentInfo]);
 
