@@ -17,7 +17,11 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { useCatalogueCategoryById } from '../../api/catalogueCategory';
+import {
+  useCatalogueBreadcrumbs,
+  useCatalogueCategory,
+  useCatalogueCategoryById,
+} from '../../api/catalogueCategory';
 import { useEditCatalogueItem } from '../../api/catalogueItem';
 import {
   CatalogueItem,
@@ -25,6 +29,8 @@ import {
   ObsoleteDetails,
 } from '../../app.types';
 import CatalogueItemsTable from './catalogueItemsTable.component';
+import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';
+import Breadcrumbs from '../../view/breadcrumbs.component';
 
 export interface ObsoleteCatalogueItemDialogProps {
   open: boolean;
@@ -47,6 +53,10 @@ const ObsoleteCatalogueItemDialog = (
     undefined
   );
 
+  const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
+    string | null
+  >(null);
+
   const [obsoleteDetails, setObsoleteDetails] = React.useState<ObsoleteDetails>(
     {
       is_obsolete: false,
@@ -59,7 +69,21 @@ const ObsoleteCatalogueItemDialog = (
     string | null
   >(null);
 
+  const onChangeNode = (newId: string): void => {
+    setCatalogueCurrDirId(newId);
+    setObsoleteReplacementId(null);
+  };
+
   const prevObsoleteReplacementIdRef = React.useRef<string | null>(null);
+
+  // React.useEffect(() => {
+  //   setObsoleteDetails({
+  //     is_obsolete: catalogueItem?.is_obsolete ?? false,
+  //     obsolete_reason: catalogueItem?.obsolete_reason ?? null,
+  //     obsolete_replacement_catalogue_item_id:
+  //       catalogueItem?.obsolete_replacement_catalogue_item_id ?? null,
+  //   });
+  // }, [catalogueItem]);
 
   React.useEffect(() => {
     // Compare the current and previous obsoleteReplacementId
@@ -76,9 +100,18 @@ const ObsoleteCatalogueItemDialog = (
       obsolete_replacement_catalogue_item_id: obsoleteReplacementId,
     });
   }, [obsoleteReplacementId, obsoleteDetails]);
-  console.log(obsoleteReplacementId, obsoleteDetails);
+
   const { data: catalogueCategoryData } = useCatalogueCategoryById(
-    catalogueItem?.catalogue_category_id
+    catalogueCurrDirId ?? undefined
+  );
+
+  const {
+    data: catalogueCategoryDataList,
+    isLoading: catalogueCategoryDataListLoading,
+  } = useCatalogueCategory(false, catalogueCurrDirId ?? 'null');
+
+  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
+    catalogueCurrDirId ?? ''
   );
   const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
 
@@ -90,10 +123,7 @@ const ObsoleteCatalogueItemDialog = (
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleStepChange = (step: number) => {
-    setActiveStep(step);
-  };
-  const handleDeleteCatalogueCategory2 = React.useCallback(() => {
+  const handleObsoleteDetails = React.useCallback(() => {
     if (catalogueItem) {
       const isIsObsoleteUpdated =
         String(obsoleteDetails.is_obsolete) !==
@@ -128,82 +158,88 @@ const ObsoleteCatalogueItemDialog = (
     }
   }, [catalogueItem, editCatalogueItem, obsoleteDetails]);
 
-  const handleDeleteCatalogueCategory = React.useCallback(
-    () => {
-      // Your existing code for updating catalog item
-      // ...
-
-      // Move to the next step
-      handleNext();
-    },
-    [
-      /* dependencies */
-    ]
-  );
-
   const handleFinish = React.useCallback(() => {
-    // Perform any final actions here
-    // ...
-
-    // Close the dialog
+    handleObsoleteDetails();
+    setActiveStep(0);
+    setObsoleteDetails({
+      is_obsolete: false,
+      obsolete_reason: null,
+      obsolete_replacement_catalogue_item_id: null,
+    });
+    setCatalogueCurrDirId(null);
     onClose();
-  }, [onClose]);
-
+  }, [handleObsoleteDetails, onClose]);
   const renderStepContent = (step: number) => {
-    if (catalogueCategoryData) {
-      switch (step) {
-        case 0:
-          return (
-            <FormControl sx={{ margin: 1 }} fullWidth>
-              <InputLabel id={'is-obsolete'}>Is Obsolete</InputLabel>
-              <Select
-                labelId={'is-obsolete'}
-                value={obsoleteDetails.is_obsolete}
-                onChange={(e) =>
-                  setObsoleteDetails({
-                    ...obsoleteDetails,
-                    is_obsolete: e.target.value === 'true' ? true : false,
-                  })
-                }
-                label="Is Obsolete"
-              >
-                <MenuItem value={'true'}>Yes</MenuItem>
-                <MenuItem value={'false'}>No</MenuItem>
-              </Select>
-            </FormControl>
-          );
-        case 1:
-          return (
-            <>
-              <Typography>Obsolete Reason</Typography>
-              <TextField
-                value={obsoleteDetails.obsolete_reason || ''}
-                onChange={(e) =>
-                  setObsoleteDetails({
-                    ...obsoleteDetails,
-                    obsolete_reason: e.target.value,
-                  })
-                }
-                minRows={16}
-                multiline
-                fullWidth
-              />
-            </>
-          );
-        case 2:
-          // Render your table for Obsolete Replacement
-          // ...
-
-          return (
-            <CatalogueItemsTable
-              parentInfo={catalogueCategoryData}
-              onChangeObsoleteReplacementId={setObsoleteReplacementId}
-              dense={true}
+    switch (step) {
+      case 0:
+        return (
+          <FormControl sx={{ margin: 1 }} fullWidth>
+            <InputLabel id={'is-obsolete'}>Is Obsolete</InputLabel>
+            <Select
+              labelId={'is-obsolete'}
+              value={obsoleteDetails.is_obsolete}
+              onChange={(e) =>
+                setObsoleteDetails({
+                  ...obsoleteDetails,
+                  is_obsolete: e.target.value === 'true' ? true : false,
+                })
+              }
+              label="Is Obsolete"
+            >
+              <MenuItem value={'true'}>Yes</MenuItem>
+              <MenuItem value={'false'}>No</MenuItem>
+            </Select>
+          </FormControl>
+        );
+      case 1:
+        return (
+          <>
+            <Typography>Obsolete Reason</Typography>
+            <TextField
+              value={obsoleteDetails.obsolete_reason || ''}
+              onChange={(e) =>
+                setObsoleteDetails({
+                  ...obsoleteDetails,
+                  obsolete_reason: e.target.value,
+                })
+              }
+              minRows={16}
+              multiline
+              fullWidth
             />
-          );
-        default:
-          return null;
-      }
+          </>
+        );
+      case 2:
+        // Render your table for Obsolete Replacement
+        // ...
+
+        return (
+          <>
+            <Breadcrumbs
+              onChangeNode={onChangeNode}
+              breadcrumbsInfo={catalogueBreadcrumbs}
+              onChangeNavigateHome={() => setCatalogueCurrDirId(null)}
+              navigateHomeAriaLabel={'Navigate back to Catalogue home'}
+            />
+            {catalogueCategoryData?.is_leaf ? (
+              <CatalogueItemsTable
+                parentInfo={catalogueCategoryData}
+                onChangeObsoleteReplacementId={setObsoleteReplacementId}
+                dense={true}
+              />
+            ) : (
+              <CatalogueCategoryTableView
+                selectedCategories={[]}
+                onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
+                requestType={'standard'}
+                catalogueCategoryData={catalogueCategoryDataList}
+                catalogueCategoryDataLoading={catalogueCategoryDataListLoading}
+              />
+            )}
+          </>
+        );
+      default:
+        return null;
     }
   };
 
@@ -246,7 +282,7 @@ const ObsoleteCatalogueItemDialog = (
         {activeStep === steps.length - 1 ? (
           <Button onClick={handleFinish}>Finish</Button>
         ) : (
-          <Button onClick={handleDeleteCatalogueCategory}>Next</Button>
+          <Button onClick={handleNext}>Next</Button>
         )}
       </DialogActions>
       {error && (

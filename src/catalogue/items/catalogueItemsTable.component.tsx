@@ -30,7 +30,7 @@ import {
 import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
-import ObsoleteCatalogueItemDialog from './ObsoleteCatalogueItemDialog.component';
+import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
 
 function findPropertyValue(
   properties: CatalogueItemPropertyResponse[],
@@ -342,27 +342,37 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       setRowSelection(value);
     },
 
-    muiTableBodyRowProps: ({ row }) => {
-      return {
-        component: TableRow,
-        onClick: () =>
-          setRowSelection((prev) => ({
-            [row.id]: !prev[row.id],
-          })),
+    muiTableBodyRowProps: dense
+      ? ({ row }) => {
+          return {
+            component: TableRow,
+            onClick: () =>
+              setRowSelection((prev) => ({
+                [row.id]: !prev[row.id],
+              })),
 
-        selected: rowSelection[row.id],
-        sx: { cursor: 'pointer' },
-        'aria-label': `${row.original.name} row`,
-      };
-    },
-    muiSelectCheckboxProps: ({ row }) => {
-      return {
-        onClick: () => {
-          onChangeObsoleteReplacementId &&
-            onChangeObsoleteReplacementId(row.original.id);
-        },
-      };
-    },
+            selected: rowSelection[row.id],
+            sx: { cursor: 'pointer' },
+            'aria-label': `${row.original.name} row`,
+          };
+        }
+      : undefined,
+    muiSelectCheckboxProps: dense
+      ? ({ row }) => {
+          return {
+            onClick: () => {
+              onChangeObsoleteReplacementId &&
+                onChangeObsoleteReplacementId(row.original.id);
+
+              if (row.original.id === Object.keys(rowSelection)[0]) {
+                onChangeObsoleteReplacementId &&
+                  onChangeObsoleteReplacementId(null);
+                setRowSelection({});
+              }
+            },
+          };
+        }
+      : undefined,
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
