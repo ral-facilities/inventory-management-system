@@ -108,6 +108,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
   );
 
+  const [manufacturerErrorMessage, setManufacturerErrorMessage] =
+    React.useState<string | undefined>(undefined);
+  const manufacturerError = manufacturerErrorMessage !== undefined;
   // set the errors as the types into the input fields
 
   const [errorMessages, setErrorMessages] = React.useState<
@@ -334,7 +337,16 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         hasErrors = true;
       }
     }
-    // Check Manufacturer Name
+    // Check Manufacturer
+    if (
+      selectedManufacturer === null &&
+      catalogueItemDetails.manufacturer_id === null
+    ) {
+      setManufacturerErrorMessage(
+        'Please chose a manufacturer, or add a new manufacturer'
+      );
+      hasErrors = true;
+    }
 
     // Check properties
     const updatedPropertyErrors = [...propertyErrors];
@@ -401,6 +413,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     return { hasErrors, updatedProperties };
   }, [
     catalogueItemDetails,
+    selectedManufacturer,
     propertyErrors,
     parentCatalogueItemPropertiesInfo,
     propertyValues,
@@ -462,6 +475,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const handleEditCatalogueItem = React.useCallback(() => {
     if (selectedCatalogueItem) {
+      console.log('test');
+      console.log(selectedCatalogueItem);
       const { hasErrors, updatedProperties } = handleFormErrorStates();
 
       if (hasErrors) {
@@ -504,9 +519,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           selectedCatalogueItem.properties.map(({ unit, ...rest }) => rest)
         );
 
-      // const isManufacturerUpdated =
-      //   JSON.stringify(catalogueItemManufacturer) !==
-      //   JSON.stringify(selectedCatalogueItem.manufacturer);
+      const isManufacturerUpdated =
+        JSON.stringify(details.manufacturer_id) !==
+        JSON.stringify(selectedCatalogueItem.manufacturer_id);
       let catalogueItem: EditCatalogueItem = {
         id: selectedCatalogueItem.id,
       };
@@ -528,8 +543,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         (catalogueItem.item_model_number = details.item_model_number);
       isCatalogueItemPropertiesUpdated &&
         (catalogueItem.properties = filteredProperties);
-      // isManufacturerUpdated &&
-      //   (catalogueItem.manufacturer = catalogueItemManufacturer);
+      isManufacturerUpdated &&
+        (catalogueItem.manufacturer_id = details.manufacturer_id);
 
       if (
         catalogueItem.id &&
@@ -542,8 +557,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           isDrawingNumberUpdated ||
           isDrawingLinkUpdated ||
           isModelNumberUpdated ||
-          isCatalogueItemPropertiesUpdated)
-        // isManufacturerUpdated
+          isCatalogueItemPropertiesUpdated ||
+          isManufacturerUpdated)
       ) {
         editCatalogueItem(catalogueItem)
           .then((response) => handleClose())
@@ -775,12 +790,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       newManufacturer: Manufacturer | null
                     ) => {
                       setSelectedManufacturer(newManufacturer ?? null);
-                      // details
                       handleCatalogueDetails(
                         'manufacturer_id',
                         newManufacturer?.id ?? null
                       );
-                      // setManufacturerErrorMessage(undefined);
+                      setManufacturerErrorMessage(undefined);
                     }}
                     disablePortal
                     id="manufacturer-autocomplete"
@@ -793,8 +807,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         {...params}
                         required={true}
                         label="Manufacturer"
-                        // error={manufacturerError}
-                        // helperText={manufacturerErrorMessage}
+                        error={manufacturerError}
+                        helperText={manufacturerErrorMessage}
                       />
                     )}
                   />
