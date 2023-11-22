@@ -98,6 +98,7 @@ function ManufacturerComponent() {
     enableRowActions: true,
     enableStickyHeader: true,
     enableRowSelection: false,
+    enableDensityToggle: false,
     enableFullScreenToggle: false,
     enablePagination: true,
     localization: {

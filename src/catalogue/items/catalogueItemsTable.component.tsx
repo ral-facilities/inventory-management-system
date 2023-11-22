@@ -308,6 +308,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableFacetedValues: true,
     enableRowActions: dense ? false : true,
     enableStickyHeader: true,
+    enableDensityToggle: false,
     enableRowSelection: dense ? true : false,
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
