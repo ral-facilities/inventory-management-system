@@ -10,15 +10,21 @@ import {
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { Link } from 'react-router-dom';
-import { CatalogueCategory, CatalogueItem } from '../../app.types';
+import {
+  CatalogueCategory,
+  CatalogueItem,
+  Manufacturer,
+} from '../../app.types';
 
 export interface CatalogueItemsDetailsPanelProps {
   catalogueItemIdData: CatalogueItem;
   catalogueCategoryData: CatalogueCategory;
+  manufacturerData?: Manufacturer;
 }
 
 function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
-  const { catalogueItemIdData, catalogueCategoryData } = props;
+  const { catalogueItemIdData, catalogueCategoryData, manufacturerData } =
+    props;
   const [tabValue, setTabValue] = React.useState(0);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -245,7 +251,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
           </Grid>
         </TabPanel>
 
-        {/* <TabPanel value={tabValue} index={2}>
+        <TabPanel value={tabValue} index={2}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
               <ListItem
@@ -259,7 +265,49 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               >
                 <ListItemText
                   primary={'Manufacturer Name'}
-                  secondary={catalogueItemIdData.manufacturer.name}
+                  secondary={manufacturerData?.name}
+                />
+              </ListItem>
+            </Grid>
+            <Grid item xs={12}>
+              {manufacturerData?.url && (
+                <ListItem
+                  style={{
+                    justifyContent: 'flex-start',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    padding: 0,
+                  }}
+                >
+                  <ListItemText
+                    primary={'Manufacturer URL'}
+                    secondary={
+                      <MuiLink
+                        underline="hover"
+                        target="_blank"
+                        href={manufacturerData?.url}
+                      >
+                        {manufacturerData?.url}
+                      </MuiLink>
+                    }
+                  />
+                </ListItem>
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <ListItem
+                style={{
+                  justifyContent: 'flex-start',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: 0,
+                }}
+              >
+                <ListItemText
+                  primary={'Manufacturer Address Line'}
+                  secondary={manufacturerData?.address.address_line}
                 />
               </ListItem>
             </Grid>
@@ -274,16 +322,8 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 }}
               >
                 <ListItemText
-                  primary={'Manufacturer URL'}
-                  secondary={
-                    <MuiLink
-                      underline="hover"
-                      target="_blank"
-                      href={catalogueItemIdData.manufacturer.url}
-                    >
-                      {catalogueItemIdData.manufacturer.url}
-                    </MuiLink>
-                  }
+                  primary={'Manufacturer Town'}
+                  secondary={manufacturerData?.address.town}
                 />
               </ListItem>
             </Grid>
@@ -298,13 +338,45 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 }}
               >
                 <ListItemText
-                  primary={'Manufacturer Address'}
-                  secondary={catalogueItemIdData.manufacturer.address}
+                  primary={'Manufacturer County'}
+                  secondary={manufacturerData?.address.county}
+                />
+              </ListItem>
+            </Grid>
+            <Grid item xs={12}>
+              <ListItem
+                style={{
+                  justifyContent: 'flex-start',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: 0,
+                }}
+              >
+                <ListItemText
+                  primary={'Manufacturer Country'}
+                  secondary={manufacturerData?.address.country}
+                />
+              </ListItem>
+            </Grid>
+            <Grid item xs={12}>
+              <ListItem
+                style={{
+                  justifyContent: 'flex-start',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  padding: 0,
+                }}
+              >
+                <ListItemText
+                  primary={'Manufacturer Post/Zip code'}
+                  secondary={manufacturerData?.address.postcode}
                 />
               </ListItem>
             </Grid>
           </Grid>
-        </TabPanel> */}
+        </TabPanel>
       </Grid>
     </Grid>
   );

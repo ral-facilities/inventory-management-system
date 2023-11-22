@@ -422,6 +422,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <CatalogueItemsDetailsPanel
             catalogueItemIdData={row.original}
             catalogueCategoryData={parentInfo}
+            manufacturerData={manufacturerList?.find((manufacturer) => {
+              return manufacturer.id === row.original.manufacturer_id;
+            })}
           />
         )
       : undefined,
