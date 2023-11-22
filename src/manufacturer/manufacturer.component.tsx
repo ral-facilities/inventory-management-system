@@ -18,6 +18,7 @@ import { useManufacturers } from '../api/manufacturer';
 import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
+import { MRT_Localization_EN } from 'material-react-table/locales/en';
 
 function ManufacturerComponent() {
   const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
@@ -30,7 +31,7 @@ function ManufacturerComponent() {
     Manufacturer | undefined
   >(undefined);
 
-  const tableHeight = `calc(100vh - (64px + 36px + 172px))`;
+  const tableHeight = `calc(100vh - (64px + 36px + 111px))`;
 
   const columns = React.useMemo<MRT_ColumnDef<Manufacturer>[]>(() => {
     return [
@@ -84,6 +85,9 @@ function ManufacturerComponent() {
     ];
   }, []);
 
+  const noResultsTxt =
+    'No results found: Try adding an Manufacturer by using the Add Manufacturer button on the top left of your screen';
+
   const table = useMaterialReactTable({
     columns: columns, // If dense only show the name column
     data: ManufacturerData ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
@@ -94,8 +98,13 @@ function ManufacturerComponent() {
     enableRowActions: true,
     enableStickyHeader: true,
     enableRowSelection: false,
+    enableDensityToggle: false,
     enableFullScreenToggle: false,
     enablePagination: true,
+    localization: {
+      ...MRT_Localization_EN,
+      noRecordsToDisplay: noResultsTxt,
+    },
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,

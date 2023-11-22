@@ -193,7 +193,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       );
       setCatalogueItemManufacturer(selectedCatalogueItem.manufacturer);
     }
-  }, [parentCatalogueItemPropertiesInfo, selectedCatalogueItem]);
+  }, [parentCatalogueItemPropertiesInfo, selectedCatalogueItem, open]);
 
   const handlePropertyChange = (
     index: number,
@@ -485,7 +485,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       ...details,
       properties: filteredProperties,
       manufacturer: catalogueItemManufacturer,
-      name: type === 'save as' ? `${details.name}_copy` : details.name,
+      name: details.name,
     };
 
     addCatalogueItem(catalogueItem)
@@ -500,7 +500,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     handleClose,
     details,
     handleFormErrorStates,
-    type,
   ]);
 
   const handleEditCatalogueItem = React.useCallback(() => {

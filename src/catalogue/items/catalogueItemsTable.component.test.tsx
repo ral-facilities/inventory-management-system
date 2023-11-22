@@ -121,7 +121,7 @@ describe('Catalogue Items Table', () => {
 
     await hideOrShowColumn([
       'Cost to Rework (GBP)',
-      'Days to Replace',
+      'Time to replace (days)',
       'Days to Rework',
       'Drawing Number',
     ]);

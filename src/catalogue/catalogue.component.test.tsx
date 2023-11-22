@@ -182,7 +182,7 @@ describe('Catalogue', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'No results found: Try adding an item by using the Add Catalogue Item button in the top right of your screen'
+          'No results found: Try adding an item by using the Add Catalogue Item button on the top left of your screen'
         )
       ).toBeInTheDocument();
     });
