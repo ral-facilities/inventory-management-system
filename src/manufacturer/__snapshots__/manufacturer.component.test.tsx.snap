@@ -222,7 +222,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-13yt8r9-MuiTableContainer-root"
+        class="MuiTableContainer-root css-rjqh4v-MuiTableContainer-root"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-1n7ptpu-MuiTable-root"
