@@ -69,7 +69,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                         aria-invalid="false"
                         autocomplete="new-password"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":rt6:"
+                        id=":rsn:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -163,28 +163,6 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 >
                   <path
                     d="M14.67 5v14H9.33V5h5.34zm1 14H21V5h-5.33v14zm-7.34 0V5H3v14h5.33z"
-                  />
-                </svg>
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
-              </button>
-              <button
-                aria-label="Toggle density"
-                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-                data-mui-internal-clone-element="true"
-                tabindex="0"
-                type="button"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                  data-testid="DensityMediumIcon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M3 3h18v2H3zm0 16h18v2H3zm0-8h18v2H3z"
                   />
                 </svg>
                 <span
@@ -450,7 +428,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rth:"
+                            id=":rt1:"
                             placeholder="Filter by Name"
                             title="Filter by Name"
                             type="text"
@@ -929,7 +907,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":rtb:"
+                    aria-controls=":rsr:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
