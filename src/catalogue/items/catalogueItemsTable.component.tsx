@@ -28,6 +28,7 @@ import {
 import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
+import { useManufacturers } from '../../api/manufacturer';
 
 function findPropertyValue(
   properties: CatalogueItemPropertyResponse[],
@@ -65,6 +66,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const tableHeight = `calc(100vh - (64px + 36px + 50px + 125px))`;
 
   const { data, isLoading } = useCatalogueItems(parentInfo.id);
+
+  const { data: manufacturerList } = useManufacturers();
 
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
     React.useState<boolean>(false);
@@ -271,10 +274,18 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) => row.item_model_number ?? '',
         size: 250,
       },
-
-      //add manufacturer here
+      {
+        header: 'Manufacturer',
+        accessorFn: (row) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer.id === row.manufacturer_id;
+          })?.name,
+        // accessorFn: (manufacturerList?.find((manufacturer) => {
+        //   return manufacturer.id === row.manufacturer_id;
+        // })?.name) ?? ''
+      },
     ];
-  }, [dense, parentInfo]);
+  }, [dense, manufacturerList, parentInfo.catalogue_item_properties]);
 
   const table = useMaterialReactTable({
     columns: dense ? [{ ...columns[0], size: 1135 }] : columns, // If dense only show the name column
