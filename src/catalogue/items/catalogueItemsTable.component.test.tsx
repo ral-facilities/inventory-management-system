@@ -1,15 +1,14 @@
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import {
   getCatalogueCategoryById,
   renderComponentWithBrowserRouter,
 } from '../../setupTests';
-import { screen, waitFor } from '@testing-library/react';
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';
-import userEvent from '@testing-library/user-event';
 
-// jest.setTimeout(20000);
 describe('Catalogue Items Table', () => {
   let props: CatalogueItemsTableProps;
   let user;
@@ -18,7 +17,7 @@ describe('Catalogue Items Table', () => {
     return renderComponentWithBrowserRouter(<CatalogueItemsTable {...props} />);
   };
 
-  const hideOrShowColumn = async (columns: string[]) => {
+  const ensureColumnsVisible = async (columns: string[]) => {
     await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
     await user.click(screen.getByText('Hide all'));
     for (const column of columns) {
@@ -64,7 +63,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await hideOrShowColumn([
+    await ensureColumnsVisible([
       'Sensor brand',
       'Cost to Rework (GBP)',
       'Days to Rework',
@@ -77,7 +76,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await hideOrShowColumn([
+    await ensureColumnsVisible([
       'Obsolete Reason',
       'Measurement Range (Joules)',
       'Accuracy',
@@ -119,7 +118,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await hideOrShowColumn([
+    await ensureColumnsVisible([
       'Cost to Rework (GBP)',
       'Time to replace (days)',
       'Days to Rework',
@@ -134,7 +133,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await hideOrShowColumn(['Broken', 'Older than five years']);
+    await ensureColumnsVisible(['Broken', 'Older than five years']);
   });
 
   it('renders table correctly (section 4 due to column virtualisation )', async () => {
@@ -143,7 +142,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await hideOrShowColumn([
+    await ensureColumnsVisible([
       'Drawing Link',
       'Item Model Number',
       'Manufacturer Name',

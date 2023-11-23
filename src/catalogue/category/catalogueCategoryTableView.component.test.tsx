@@ -269,7 +269,6 @@ describe('CatalogueCategoryTableView', () => {
     });
 
     // Not allowed cursor
-
     expect(camerasRow).toHaveStyle('cursor: not-allowed;');
     expect(test_dupRow).toHaveStyle('cursor: not-allowed;');
 
@@ -277,7 +276,7 @@ describe('CatalogueCategoryTableView', () => {
     expect(wavefrontSensorsRow).toHaveStyle('cursor: not-allowed;');
     expect(voltageMetersRow).toHaveStyle('cursor: not-allowed;');
 
-    // checks noting happens on click
+    // checks nothing happens on click
     await user.click(camerasRow);
     await user.click(test_dupRow);
     await user.click(energyMetersRow);
