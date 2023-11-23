@@ -40,8 +40,31 @@ export const useNavigateToSystem = () => {
   );
 };
 
+const AddSystemButton = (props: { systemId: string | null }) => {
+  const [addSystemDialogOpen, setAddSystemDialogOpen] =
+    React.useState<boolean>(false);
+
+  return (
+    <>
+      <IconButton
+        aria-label={props.systemId === null ? 'add system' : 'add subsystem'}
+        onClick={() => setAddSystemDialogOpen(true)}
+      >
+        <AddIcon />
+      </IconButton>
+      <SystemDialog
+        open={addSystemDialogOpen}
+        onClose={() => setAddSystemDialogOpen(false)}
+        parentId={props.systemId}
+        type="add"
+      />
+    </>
+  );
+};
+
 /* Returns the system id from the location pathname (null when not found) */
 export const useSystemId = (): string | null => {
+  // Navigation setup
   const location = useLocation();
 
   return React.useMemo(() => {
@@ -60,9 +83,6 @@ function Systems() {
   const navigateToSystem = useNavigateToSystem();
 
   // States
-  const [addSystemDialogOpen, setAddSystemDialogOpen] =
-    React.useState<boolean>(false);
-
   const [selectedSystems, setSelectedSystems] = React.useState<System[]>([]);
 
   // Data
@@ -158,18 +178,10 @@ function Systems() {
           ) : (
             <>
               <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
-                <Typography variant="h6">
+                <Typography variant="h6" sx={{ marginRight: 'auto' }}>
                   {systemId === null ? 'Root systems' : 'Subsystems'}
                 </Typography>
-                <IconButton
-                  sx={{ marginLeft: 'auto' }}
-                  aria-label={
-                    systemId === null ? 'add system' : 'add subsystem'
-                  }
-                  onClick={() => setAddSystemDialogOpen(true)}
-                >
-                  <AddIcon />
-                </IconButton>
+                <AddSystemButton systemId={systemId} />
               </Box>
               <Divider role="presentation" />
               <List sx={{ padding: 0 }}>
@@ -212,12 +224,6 @@ function Systems() {
           <SystemDetails id={systemId} />
         </Grid>
       </Grid>
-      <SystemDialog
-        open={addSystemDialogOpen}
-        onClose={() => setAddSystemDialogOpen(false)}
-        parentId={systemId}
-        type="add"
-      />
     </Grid>
   );
 }
