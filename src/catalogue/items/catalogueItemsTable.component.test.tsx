@@ -308,11 +308,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
-
-    await user.click(screen.getByText('Hide all'));
-
-    await user.click(screen.getByText('Manufacturer URL'));
+    await ensureColumnsVisible(['Manufacturer URL']);
 
     const url = screen.getAllByText('http://example.com');
     expect(url[0]).toHaveAttribute('href', 'http://example.com');
@@ -342,9 +338,10 @@ describe('Catalogue Items Table', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
-  // skipping this test as it causes an infinite loop on the waitFor this infinite
-  // loop doesn't when tested on the browser
-  it.skip('renders the dense table correctly and can expand and coll', async () => {
+  // skipping this test as it causes an infinite loop when expanding the details panel
+  // loop doesn't occur when tested on the browser - I think it's an issue with MRT interacting
+  // with an MUI tabs component
+  it.skip('renders the dense table correctly and can expand and collapse', async () => {
     props.dense = true;
     window.Element.prototype.getBoundingClientRect = jest
       .fn()
@@ -356,10 +353,10 @@ describe('Catalogue Items Table', () => {
     });
     const rowExpandButton = screen.getAllByRole('button', { name: 'Expand' });
 
-    user.click(rowExpandButton[0]);
+    await user.click(rowExpandButton[0]);
 
     await waitFor(() => {
-      expect(screen.getByText('Details')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('Details')).toBeInTheDocument();
     });
   });
 });
