@@ -1042,10 +1042,10 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
             role="tablist"
           >
             <button
-              aria-selected="false"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              aria-selected="true"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
               role="tab"
-              tabindex="-1"
+              tabindex="0"
               type="button"
             >
               Details
@@ -1066,10 +1066,10 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
               />
             </button>
             <button
-              aria-selected="true"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
               role="tab"
-              tabindex="0"
+              tabindex="-1"
               type="button"
             >
               Manufacturer
@@ -1099,13 +1099,12 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
     >
       <div
         aria-labelledby="tab-0"
-        hidden=""
         id="tabpanel-0"
         role="tabpanel"
       >
         <div
-          class="MuiCollapse-root MuiCollapse-vertical css-1fkrdiv-MuiCollapse-root"
-          style="min-height: 0px; height: 0px; transition-duration: 300ms;"
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-pwcg7p-MuiCollapse-root"
+          style="min-height: 0px;"
         >
           <div
             class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
@@ -1437,12 +1436,13 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
       </div>
       <div
         aria-labelledby="tab-2"
+        hidden=""
         id="tabpanel-2"
         role="tabpanel"
       >
         <div
-          class="MuiCollapse-root MuiCollapse-vertical css-1fkrdiv-MuiCollapse-root"
-          style="min-height: 0px; height: 0px; transition-duration: 300ms;"
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
         >
           <div
             class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
@@ -1562,10 +1562,10 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
             role="tablist"
           >
             <button
-              aria-selected="false"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              aria-selected="true"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
               role="tab"
-              tabindex="-1"
+              tabindex="0"
               type="button"
             >
               Details
@@ -1574,10 +1574,10 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
               />
             </button>
             <button
-              aria-selected="true"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
               role="tab"
-              tabindex="0"
+              tabindex="-1"
               type="button"
             >
               Properties
@@ -1619,13 +1619,12 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
     >
       <div
         aria-labelledby="tab-0"
-        hidden=""
         id="tabpanel-0"
         role="tabpanel"
       >
         <div
-          class="MuiCollapse-root MuiCollapse-vertical css-1fkrdiv-MuiCollapse-root"
-          style="min-height: 0px; height: 0px; transition-duration: 300ms;"
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-pwcg7p-MuiCollapse-root"
+          style="min-height: 0px;"
         >
           <div
             class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
