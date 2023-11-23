@@ -39,7 +39,7 @@ import {
 } from '../../app.types';
 import { matchCatalogueItemProperties } from '../catalogue.component';
 import { Autocomplete } from '@mui/material';
-import { useManufacturers } from '../../api/manufacturer';
+import { useManufacturer, useManufacturers } from '../../api/manufacturer';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 
 export interface CatalogueItemsDialogProps {
@@ -111,6 +111,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const [manufacturerErrorMessage, setManufacturerErrorMessage] =
     React.useState<string | undefined>(undefined);
   const manufacturerError = manufacturerErrorMessage !== undefined;
+
   // set the errors as the types into the input fields
 
   const [errorMessages, setErrorMessages] = React.useState<
@@ -231,14 +232,18 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
 
   const { data: manufacturerList } = useManufacturers();
+  const { data: selectedCatalogueItemManufacturer } = useManufacturer(
+    selectedCatalogueItem?.manufacturer_id
+  );
+
   const [selectedManufacturer, setSelectedManufacturer] =
     React.useState<Manufacturer | null>(null);
 
   const [addManufacturerDialogOpen, setAddManufacturerDialogOpen] =
     React.useState<boolean>(false);
 
-  const [inputValue, setInputValue] = React.useState<string>(
-    selectedManufacturer?.name ?? ''
+  const [inputValue, setInputValue] = React.useState<string | undefined>(
+    selectedManufacturer?.name ?? undefined
   );
 
   const handleFormErrorStates = React.useCallback(() => {
@@ -780,7 +785,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               <Grid item xs={12} style={{ display: 'flex' }}>
                 <Grid item xs={12} flexDirection={'row'}>
                   <Autocomplete
-                    value={selectedManufacturer}
+                    value={
+                      //logic means that current manufacturer renders in edit dialog, but behaves the same as in add (so can be changed/cleared)
+                      selectedCatalogueItemManufacturer &&
+                      selectedManufacturer === null &&
+                      inputValue !== ''
+                        ? selectedCatalogueItemManufacturer
+                        : selectedManufacturer
+                    }
                     inputValue={inputValue}
                     onInputChange={(event, newInputValue) =>
                       setInputValue(newInputValue)
@@ -790,6 +802,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       newManufacturer: Manufacturer | null
                     ) => {
                       setSelectedManufacturer(newManufacturer ?? null);
+                      setInputValue(newManufacturer?.name ?? '');
                       handleCatalogueDetails(
                         'manufacturer_id',
                         newManufacturer?.id ?? null
