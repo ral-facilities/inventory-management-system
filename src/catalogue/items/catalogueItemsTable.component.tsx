@@ -276,10 +276,19 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Manufacturer',
-        accessorFn: (row) =>
-          manufacturerList?.find((manufacturer) => {
-            return manufacturer.id === row.manufacturer_id;
-          })?.name,
+        Cell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            to={`/inventory-management-system/manufacturer/${row.original.manufacturer_id}`}
+          >
+            {
+              manufacturerList?.find((manufacturer) => {
+                return manufacturer.id === row.original.manufacturer_id;
+              })?.name
+            }
+          </MuiLink>
+        ),
       },
     ];
   }, [dense, manufacturerList, parentInfo.catalogue_item_properties]);

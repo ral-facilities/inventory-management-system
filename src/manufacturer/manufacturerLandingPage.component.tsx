@@ -29,19 +29,6 @@ function ManufacturerLandingPage() {
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
     React.useState<boolean>(false);
 
-  const [manufacturer, setManufacturer] = React.useState<ManufacturerDetails>({
-    name: '',
-    url: undefined,
-    address: {
-      address_line: '',
-      country: '',
-      town: '',
-      county: '',
-      postcode: '',
-    },
-    telephone: '',
-  });
-
   return (
     <Grid container>
       <Grid sx={{ padding: '8px' }} item>
@@ -51,7 +38,7 @@ function ManufacturerLandingPage() {
           sx={{ margin: '8px' }}
           variant="outlined"
         >
-          {manufacturerData ? 'Back to manufacturer table view' : 'Home'}
+          {manufacturerData ? 'Manufacturer table view' : 'Home'}
         </Button>
         <Button
           disabled={!manufacturerData}
@@ -59,9 +46,6 @@ function ManufacturerLandingPage() {
           variant="outlined"
           onClick={() => {
             setEditManufacturerDialogOpen(true);
-            if (manufacturerData) {
-              setManufacturer(manufacturerData);
-            }
           }}
         >
           Edit
