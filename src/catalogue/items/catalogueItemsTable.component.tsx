@@ -63,10 +63,12 @@ export interface CatalogueItemsTableProps {
   onChangeObsoleteReplacementId?: (
     obsoleteReplacementId: string | null
   ) => void;
+  selectedRowState?: { [x: string]: boolean };
 }
 
 const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
-  const { parentInfo, dense, onChangeObsoleteReplacementId } = props;
+  const { parentInfo, dense, onChangeObsoleteReplacementId, selectedRowState } =
+    props;
   // SG header + SG footer + tabs #add breadcrumbs + Mui table V2
   const tableHeight = `calc(100vh - (64px + 36px + 50px + 125px))`;
 
@@ -311,7 +313,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   }, [dense, parentInfo]);
 
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
-    {}
+    selectedRowState ?? {}
   );
 
   const table = useMaterialReactTable({

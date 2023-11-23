@@ -22,7 +22,10 @@ import {
   useCatalogueCategory,
   useCatalogueCategoryById,
 } from '../../api/catalogueCategory';
-import { useEditCatalogueItem } from '../../api/catalogueItem';
+import {
+  useCatalogueItem,
+  useEditCatalogueItem,
+} from '../../api/catalogueItem';
 import {
   CatalogueItem,
   EditCatalogueItem,
@@ -77,12 +80,17 @@ const ObsoleteCatalogueItemDialog = (
   const prevObsoleteReplacementIdRef = React.useRef<string | null>(null);
 
   // React.useEffect(() => {
-  //   setObsoleteDetails({
-  //     is_obsolete: catalogueItem?.is_obsolete ?? false,
-  //     obsolete_reason: catalogueItem?.obsolete_reason ?? null,
-  //     obsolete_replacement_catalogue_item_id:
-  //       catalogueItem?.obsolete_replacement_catalogue_item_id ?? null,
-  //   });
+  //   // setObsoleteDetails({
+  //   //   is_obsolete: catalogueItem?.is_obsolete ?? false,
+  //   //   obsolete_reason: catalogueItem?.obsolete_reason ?? null,
+  //   //   obsolete_replacement_catalogue_item_id:
+  //   //     catalogueItem?.obsolete_replacement_catalogue_item_id ?? null,
+  //   // });
+
+  //   catalogueItem?.obsolete_replacement_catalogue_item_id &&
+  //     setObsoleteReplacementId(
+  //       catalogueItem?.obsolete_replacement_catalogue_item_id
+  //     );
   // }, [catalogueItem]);
 
   React.useEffect(() => {
@@ -103,6 +111,10 @@ const ObsoleteCatalogueItemDialog = (
 
   const { data: catalogueCategoryData } = useCatalogueCategoryById(
     catalogueCurrDirId ?? undefined
+  );
+
+  const { data: catalogueItemObsoleteData } = useCatalogueItem(
+    catalogueItem?.catalogue_category_id ?? undefined
   );
 
   const {
@@ -226,6 +238,14 @@ const ObsoleteCatalogueItemDialog = (
                 parentInfo={catalogueCategoryData}
                 onChangeObsoleteReplacementId={setObsoleteReplacementId}
                 dense={true}
+                selectedRowState={
+                  catalogueItem?.obsolete_replacement_catalogue_item_id
+                    ? {
+                        [catalogueItem.obsolete_replacement_catalogue_item_id]:
+                          true,
+                      }
+                    : undefined
+                }
               />
             ) : (
               <CatalogueCategoryTableView
