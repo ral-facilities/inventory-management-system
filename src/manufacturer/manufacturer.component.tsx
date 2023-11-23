@@ -14,6 +14,7 @@ import {
   type MRT_ColumnDef,
 } from 'material-react-table';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useManufacturers } from '../api/manufacturer';
 import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
@@ -39,6 +40,16 @@ function ManufacturerComponent() {
         header: 'Name',
         accessorFn: (row) => row.name,
         size: 400,
+        Cell: ({ row }) =>
+          row.original.name && (
+            <MuiLink
+              underline="hover"
+              component={Link}
+              to={`/inventory-management-system/manufacturer/${row.original.id}`}
+            >
+              {row.original.name}
+            </MuiLink>
+          ),
         filterVariant: 'autocomplete',
         filterFn: 'equals',
       },
@@ -201,5 +212,4 @@ function ManufacturerComponent() {
     </div>
   );
 }
-
 export default ManufacturerComponent;
