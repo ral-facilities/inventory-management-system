@@ -35,7 +35,6 @@ import {
   EditCatalogueItem,
   ErrorParsing,
   Manufacturer,
-  ManufacturerDetails,
 } from '../../app.types';
 import { matchCatalogueItemProperties } from '../catalogue.component';
 import { Autocomplete } from '@mui/material';

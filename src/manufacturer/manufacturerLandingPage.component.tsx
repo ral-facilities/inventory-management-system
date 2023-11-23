@@ -13,7 +13,6 @@ import { useManufacturer } from '../api/manufacturer';
 
 import ManufacturerDialog from './manufacturerDialog.component';
 import React from 'react';
-import { ManufacturerDetails } from '../app.types';
 
 function ManufacturerLandingPage() {
   const location = useLocation();
