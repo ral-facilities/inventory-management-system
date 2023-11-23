@@ -1,12 +1,12 @@
 import { rest } from 'msw';
 import {
-  AddManufacturer,
   AddSystem,
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
   EditManufacturer,
   EditSystem,
+  Manufacturer,
 } from '../app.types';
 import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
 import CatalogueCategoryJSON from './CatalogueCategory.json';
@@ -286,7 +286,7 @@ export const handlers = [
   }),
 
   rest.post('/v1/manufacturers', async (req, res, ctx) => {
-    const body = (await req.json()) as AddManufacturer;
+    const body = (await req.json()) as Manufacturer;
 
     if (body.name === 'Manufacturer A') {
       return res(ctx.status(409), ctx.json(''));
@@ -299,8 +299,8 @@ export const handlers = [
         code: 'manufacturer-d',
         url: 'http://test.co.uk',
         address: {
-          building_number: '1',
-          street_name: 'Example Street',
+          address_line: '4 Example Street',
+          country: 'United Kingdom',
           town: 'Oxford',
           county: 'Oxfordshire',
           postcode: 'OX1 2AB',
