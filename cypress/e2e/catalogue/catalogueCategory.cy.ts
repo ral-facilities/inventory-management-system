@@ -220,7 +220,7 @@ describe('Catalogue Category', () => {
     });
   });
 
-  it.only('edits a catalogue category from a leaf node to a non-leaf node ', () => {
+  it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
     cy.visit('/inventory-management-system/catalogue/1');
     cy.findByRole('button', {
       name: 'edit Voltage Meters catalogue category button',
