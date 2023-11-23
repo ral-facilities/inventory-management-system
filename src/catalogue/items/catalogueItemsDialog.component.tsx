@@ -786,7 +786,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 <Grid item xs={12} flexDirection={'row'}>
                   <Autocomplete
                     value={
-                      //logic means that current manufacturer renders in edit dialog, but behaves the same as in add (so can be changed/cleared)
+                      //logic means that current manufacturer renders in edit dialog, but behaves the same as add dialog (so can be changed/cleared)
                       selectedCatalogueItemManufacturer &&
                       selectedManufacturer === null &&
                       inputValue !== ''
