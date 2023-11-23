@@ -35,7 +35,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 500,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -78,7 +88,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 600,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -121,7 +141,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 700,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -164,7 +194,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 800,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -207,7 +247,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 900,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -250,7 +300,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 1000,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -293,7 +353,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 1100,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -336,7 +406,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 1200,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -379,7 +459,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 1300,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -422,7 +512,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 1400,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -465,7 +565,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 1500,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -494,12 +604,12 @@
       },
       {
         "name": "Broken",
-        "value": false,
+        "value": true,
         "unit": ""
       },
       {
         "name": "Older than five years",
-        "value": true,
+        "value": false,
         "unit": ""
       }
     ],
@@ -508,7 +618,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 1600,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -551,7 +671,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 1700,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -594,7 +724,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 1800,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -637,7 +777,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 1900,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -680,7 +830,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 2000,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -723,7 +883,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 2100,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -766,8 +936,19 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 2200,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
+
   {
     "catalogue_category_id": "4",
     "name": "Cameras 19",
@@ -809,7 +990,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 2300,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -852,7 +1043,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 2400,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -895,7 +1096,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 2500,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -938,7 +1149,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 2600,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -981,7 +1202,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 2700,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -1024,7 +1255,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 2800,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "4",
@@ -1067,7 +1308,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 2900,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "5",
@@ -1090,7 +1341,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 500,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": true,
+    "obsolete_replacement_catalogue_item_id": "6",
+    "obsolete_reason": "The item is no longer being manufactured"
   },
   {
     "catalogue_category_id": "5",
@@ -1108,7 +1369,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 600,
+    "cost_to_rework_gbp": 89,
+    "days_to_replace": 7,
+    "days_to_rework": 60,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "5",
@@ -1131,7 +1402,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 700,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "5",
@@ -1154,7 +1435,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 800,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": true,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "6",
@@ -1177,7 +1468,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 900,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "6",
@@ -1200,7 +1501,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 1000,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "9",
@@ -1223,7 +1534,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 1100,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 90,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "9",
@@ -1246,7 +1567,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 1200,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "9",
@@ -1269,7 +1600,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 1300,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "9",
@@ -1292,7 +1633,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 200,
+    "cost_to_rework_gbp": 50,
+    "days_to_replace": 3,
+    "days_to_rework": 2,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "11",
@@ -1315,7 +1666,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 150,
+    "cost_to_rework_gbp": 40,
+    "days_to_replace": 4,
+    "days_to_rework": 1,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "11",
@@ -1338,7 +1699,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 180,
+    "cost_to_rework_gbp": 45,
+    "days_to_replace": 2,
+    "days_to_rework": 3,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "12",
@@ -1361,7 +1732,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 220,
+    "cost_to_rework_gbp": 55,
+    "days_to_replace": 1,
+    "days_to_rework": 4,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "12",
@@ -1384,7 +1765,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 240,
+    "cost_to_rework_gbp": 60,
+    "days_to_replace": 3,
+    "days_to_rework": 2,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "12",
@@ -1407,7 +1798,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 260,
+    "cost_to_rework_gbp": 65,
+    "days_to_replace": 2,
+    "days_to_rework": 1,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "12",
@@ -1430,7 +1831,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 220,
+    "cost_to_rework_gbp": 55,
+    "days_to_replace": 1,
+    "days_to_rework": 4,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": true,
+    "obsolete_replacement_catalogue_item_id": "19",
+    "obsolete_reason": "The item is no longer being manufactured"
   },
   {
     "catalogue_category_id": "13",
@@ -1453,7 +1864,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 250,
+    "cost_to_rework_gbp": 60,
+    "days_to_replace": 2,
+    "days_to_rework": 3,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "13",
@@ -1476,7 +1897,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 270,
+    "cost_to_rework_gbp": 70,
+    "days_to_replace": 3,
+    "days_to_rework": 2,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "14",
@@ -1499,7 +1930,17 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 300,
+    "cost_to_rework_gbp": 80,
+    "days_to_replace": 4,
+    "days_to_rework": 1,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   },
   {
     "catalogue_category_id": "14",
@@ -1522,6 +1963,16 @@
       "name": "Manufacturer A",
       "url": "http://example.com",
       "address": "10 My Street"
-    }
+    },
+    "cost_gbp": 320,
+    "cost_to_rework_gbp": 90,
+    "days_to_replace": 1,
+    "days_to_rework": 3,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null
   }
 ]

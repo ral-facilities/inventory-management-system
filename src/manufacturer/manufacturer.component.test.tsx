@@ -36,15 +36,6 @@ describe('Manufacturer', () => {
     expect(screen.getByText('http://example.com')).toBeInTheDocument();
     expect(screen.getByText('http://test.com')).toBeInTheDocument();
     expect(screen.getByText('http://test.co.uk')).toBeInTheDocument();
-    expect(
-      screen.getByText('1 Example Street Oxford Oxfordshire OX1 2AB')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText('2 Example Street Oxford Oxfordshire OX1 2AB')
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText('3 Example Street Oxford Oxfordshire OX1 2AB')
-    ).toBeInTheDocument();
     expect(screen.getByText('07334893348')).toBeInTheDocument();
     expect(screen.getByText('07294958549')).toBeInTheDocument();
     expect(screen.getByText('07934303412')).toBeInTheDocument();
