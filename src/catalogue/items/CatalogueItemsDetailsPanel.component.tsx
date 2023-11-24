@@ -48,7 +48,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
   return (
     <Grid container spacing={0} flexDirection="column">
       <Grid item sx={{ mb: 4 }} xs={12}>
-        <Tabs value={0} onChange={handleTabChange}>
+        <Tabs value={tabValue} onChange={handleTabChange}>
           <Tab label="Details" />
           <Tab label="Properties" />
           <Tab label="Manufacturer" />
