@@ -11,7 +11,7 @@ import {
   MenuItem,
   Select,
   Step,
-  StepLabel,
+  StepButton,
   Stepper,
   TextField,
   Typography,
@@ -31,30 +31,22 @@ import {
   EditCatalogueItem,
   ObsoleteDetails,
 } from '../../app.types';
-import CatalogueItemsTable from './catalogueItemsTable.component';
-import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';
 import Breadcrumbs from '../../view/breadcrumbs.component';
+import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';
+import CatalogueItemsTable from './catalogueItemsTable.component';
 
 export interface ObsoleteCatalogueItemDialogProps {
   open: boolean;
   onClose: () => void;
   catalogueItem: CatalogueItem | undefined;
-  obsoleteReplacementId?: string | null;
 }
 
-const steps = ['Is Obsolete', 'Obsolete Reason', 'Obsolete Replacement'];
+const STEPS = ['Is Obsolete', 'Obsolete Reason', 'Obsolete Replacement'];
 
 const ObsoleteCatalogueItemDialog = (
   props: ObsoleteCatalogueItemDialogProps
 ) => {
   const { open, onClose, catalogueItem } = props;
-
-  const [activeStep, setActiveStep] = React.useState(0);
-
-  const [error, setError] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
-    undefined
-  );
 
   const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
     string | null
@@ -68,53 +60,42 @@ const ObsoleteCatalogueItemDialog = (
     }
   );
 
-  const [obsoleteReplacementId, setObsoleteReplacementId] = React.useState<
-    string | null
-  >(null);
+  const [steps, setSteps] = React.useState<string[]>(STEPS);
+  const [activeStep, setActiveStep] = React.useState<number>(0);
+
+  const [error, setError] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
+    undefined
+  );
 
   const onChangeNode = (newId: string): void => {
     setCatalogueCurrDirId(newId);
-    setObsoleteReplacementId(null);
   };
 
-  const prevObsoleteReplacementIdRef = React.useRef<string | null>(null);
+  const updateSteps = (isObsolete: boolean) => {
+    if (isObsolete) setSteps(STEPS);
+    else setSteps([STEPS[0]]);
+  };
 
-  // React.useEffect(() => {
-  //   // setObsoleteDetails({
-  //   //   is_obsolete: catalogueItem?.is_obsolete ?? false,
-  //   //   obsolete_reason: catalogueItem?.obsolete_reason ?? null,
-  //   //   obsolete_replacement_catalogue_item_id:
-  //   //     catalogueItem?.obsolete_replacement_catalogue_item_id ?? null,
-  //   // });
-
-  //   catalogueItem?.obsolete_replacement_catalogue_item_id &&
-  //     setObsoleteReplacementId(
-  //       catalogueItem?.obsolete_replacement_catalogue_item_id
-  //     );
-  // }, [catalogueItem]);
-
+  // Reset when a new item is selected
   React.useEffect(() => {
-    // Compare the current and previous obsoleteReplacementId
-    if (prevObsoleteReplacementIdRef.current === obsoleteReplacementId) {
-      return; // Return early if they are the same
+    if (catalogueItem) {
+      setObsoleteDetails(catalogueItem as ObsoleteDetails);
+      updateSteps(catalogueItem.is_obsolete);
     }
+  }, [catalogueItem]);
 
-    // Update the ref with the current obsoleteReplacementId
-    prevObsoleteReplacementIdRef.current = obsoleteReplacementId;
-
-    // Update the obsoleteDetails with the new obsoleteReplacementId
-    setObsoleteDetails({
-      ...obsoleteDetails,
-      obsolete_replacement_catalogue_item_id: obsoleteReplacementId,
-    });
-  }, [obsoleteReplacementId, obsoleteDetails]);
+  // Start at the parent category of the current replacement item
+  const { data: catalogueItemObsoleteData } = useCatalogueItem(
+    obsoleteDetails.obsolete_replacement_catalogue_item_id ?? undefined
+  );
+  React.useEffect(() => {
+    catalogueItemObsoleteData &&
+      setCatalogueCurrDirId(catalogueItemObsoleteData.catalogue_category_id);
+  }, [catalogueItemObsoleteData]);
 
   const { data: catalogueCategoryData } = useCatalogueCategoryById(
     catalogueCurrDirId ?? undefined
-  );
-
-  const { data: catalogueItemObsoleteData } = useCatalogueItem(
-    catalogueItem?.catalogue_category_id ?? undefined
   );
 
   const {
@@ -127,6 +108,19 @@ const ObsoleteCatalogueItemDialog = (
   );
   const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
 
+  const handleObsoleteChange = (isObsolete: boolean) => {
+    updateSteps(isObsolete);
+
+    setObsoleteDetails({
+      is_obsolete: isObsolete,
+      // Clear these if no longer obsolete
+      obsolete_replacement_catalogue_item_id: isObsolete
+        ? obsoleteDetails.obsolete_replacement_catalogue_item_id
+        : null,
+      obsolete_reason: isObsolete ? obsoleteDetails.obsolete_reason : null,
+    });
+  };
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -138,8 +132,7 @@ const ObsoleteCatalogueItemDialog = (
   const handleObsoleteDetails = React.useCallback(() => {
     if (catalogueItem) {
       const isIsObsoleteUpdated =
-        String(obsoleteDetails.is_obsolete) !==
-        String(catalogueItem.is_obsolete);
+        obsoleteDetails.is_obsolete !== catalogueItem.is_obsolete;
 
       const isObsoleteReasonUpdated =
         obsoleteDetails.obsolete_reason !== catalogueItem.obsolete_reason;
@@ -147,6 +140,7 @@ const ObsoleteCatalogueItemDialog = (
       const isReplacementIdUpdated =
         obsoleteDetails.obsolete_replacement_catalogue_item_id !==
         catalogueItem.obsolete_replacement_catalogue_item_id;
+
       let editObsoleteCatalogueItem: EditCatalogueItem = {
         id: catalogueItem.id,
       };
@@ -181,6 +175,7 @@ const ObsoleteCatalogueItemDialog = (
     setCatalogueCurrDirId(null);
     onClose();
   }, [handleObsoleteDetails, onClose]);
+
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
@@ -191,10 +186,7 @@ const ObsoleteCatalogueItemDialog = (
               labelId={'is-obsolete'}
               value={obsoleteDetails.is_obsolete}
               onChange={(e) =>
-                setObsoleteDetails({
-                  ...obsoleteDetails,
-                  is_obsolete: e.target.value === 'true' ? true : false,
-                })
+                handleObsoleteChange(e.target.value === 'true' ? true : false)
               }
               label="Is Obsolete"
             >
@@ -222,9 +214,6 @@ const ObsoleteCatalogueItemDialog = (
           </>
         );
       case 2:
-        // Render your table for Obsolete Replacement
-        // ...
-
         return (
           <>
             <Breadcrumbs
@@ -236,7 +225,13 @@ const ObsoleteCatalogueItemDialog = (
             {catalogueCategoryData?.is_leaf ? (
               <CatalogueItemsTable
                 parentInfo={catalogueCategoryData}
-                onChangeObsoleteReplacementId={setObsoleteReplacementId}
+                onChangeObsoleteReplacementId={(obsoleteReplacementId) =>
+                  setObsoleteDetails({
+                    ...obsoleteDetails,
+                    obsolete_replacement_catalogue_item_id:
+                      obsoleteReplacementId,
+                  })
+                }
                 dense={true}
                 selectedRowState={
                   catalogueItem?.obsolete_replacement_catalogue_item_id
@@ -274,13 +269,17 @@ const ObsoleteCatalogueItemDialog = (
       <DialogTitle>Delete Catalogue Item</DialogTitle>
       <DialogContent>
         <Stepper
+          // Allow user to skip steps if want to
+          nonLinear
           activeStep={activeStep}
           orientation="horizontal"
           sx={{ marginTop: 2 }}
         >
           {steps.map((label, index) => (
             <Step key={label}>
-              <StepLabel>{label}</StepLabel>
+              <StepButton onClick={() => setActiveStep(index)}>
+                {label}
+              </StepButton>
             </Step>
           ))}
         </Stepper>
@@ -288,14 +287,7 @@ const ObsoleteCatalogueItemDialog = (
           {renderStepContent(activeStep)}
         </Box>
       </DialogContent>
-      <DialogActions
-        sx={{
-          position: 'absolute',
-          bottom: 0,
-          width: '100%',
-          textAlign: 'center',
-        }}
-      >
+      <DialogActions>
         <Button disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 2 }}>
           Back
         </Button>
@@ -308,8 +300,8 @@ const ObsoleteCatalogueItemDialog = (
       {error && (
         <Box
           sx={{
-            mx: '24px',
-            marginBottom: '24px',
+            mx: 3,
+            marginBottom: 3,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
