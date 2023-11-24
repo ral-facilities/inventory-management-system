@@ -112,7 +112,7 @@ export const hooksWrapperWithProviders = (queryClient?: QueryClient) => {
 export const getCatalogueItemsPropertiesById = (
   id: string
 ): CatalogueCategoryFormData[] => {
-  const filteredCategories = catalogueCategoryJson.filter(
+  const filteredCategories = catalogueCategoryJSON.filter(
     (catalogueCategory) => catalogueCategory.id === id
   );
 

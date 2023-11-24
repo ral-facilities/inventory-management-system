@@ -12,6 +12,26 @@ import ListItemText from '@mui/material/ListItemText';
 import { Link } from 'react-router-dom';
 import { CatalogueCategory, CatalogueItem } from '../../app.types';
 
+function TabPanel(props: any) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
+      {...other}
+    >
+      <Collapse in={value === index}>
+        <Grid container spacing={2}>
+          {children}
+        </Grid>
+      </Collapse>
+    </div>
+  );
+}
+
 export interface CatalogueItemsDetailsPanelProps {
   catalogueItemIdData: CatalogueItem;
   catalogueCategoryData: CatalogueCategory;
@@ -28,15 +48,15 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
   return (
     <Grid container spacing={0} flexDirection="column">
       <Grid item sx={{ mb: 4 }} xs={12}>
-        <Tabs value={tabValue} onChange={handleTabChange}>
+        <Tabs value={0} onChange={handleTabChange}>
           <Tab label="Details" />
           <Tab label="Properties" />
           <Tab label="Manufacturer" />
         </Tabs>
       </Grid>
       <Grid item container sx={{ ml: 2 }} xs={12}>
-        <TabPanel value={tabValue} index={0}>
-          <Grid spacing={0} item container>
+        <TabPanel value={0} index={0}>
+          <Grid item container spacing={0}>
             <Grid item xs={12}>
               <Typography variant="h4">{catalogueItemIdData.name}</Typography>
               <Typography sx={{ my: 1 }} variant="h6">
@@ -216,7 +236,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
         </TabPanel>
 
         <TabPanel value={tabValue} index={1}>
-          <Grid container spacing={0}>
+          <Grid item container spacing={0}>
             {catalogueItemIdData.properties &&
               catalogueItemIdData.properties.map((property, index) => (
                 <Grid item xs={12} sm={6} key={index}>
@@ -245,8 +265,8 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
           </Grid>
         </TabPanel>
 
-        <TabPanel value={tabValue} index={2}>
-          <Grid container spacing={1}>
+        <TabPanel value={0} index={2}>
+          <Grid item container spacing={0}>
             <Grid item xs={12}>
               <ListItem
                 style={{
@@ -307,26 +327,6 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
         </TabPanel>
       </Grid>
     </Grid>
-  );
-}
-
-function TabPanel(props: any) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`tabpanel-${index}`}
-      aria-labelledby={`tab-${index}`}
-      {...other}
-    >
-      <Collapse in={value === index}>
-        <Grid container spacing={2}>
-          {children}
-        </Grid>
-      </Collapse>
-    </div>
   );
 }
 

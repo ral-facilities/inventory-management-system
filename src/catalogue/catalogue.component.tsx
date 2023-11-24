@@ -163,8 +163,6 @@ function Catalogue() {
     }
   };
 
-  // console.log(catalogueItemDetails);
-
   const [moveToCategoryDialogOpen, setMoveToCategoryDialogOpen] =
     React.useState<boolean>(false);
   const [copyToCategoryDialogOpen, setCopyToCategoryDialogOpen] =
@@ -177,7 +175,6 @@ function Catalogue() {
   const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
     string | null
   >(null);
-  // const { data, isLoading } = useCatalogueItems(parentInfo?.id ?? null);
   return (
     <Grid container>
       <Grid container>

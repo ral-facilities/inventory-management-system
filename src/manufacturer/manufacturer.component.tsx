@@ -55,7 +55,9 @@ function ManufacturerComponent() {
       },
       {
         header: 'Address',
-        accessorFn: (row) => row.address,
+        // Stitch together for filtering
+        accessorFn: (row) =>
+          `${row.address.address_line} ${row.address.town} ${row.address.county} ${row.address.postcode} ${row.address.country}`,
         size: 650,
         Cell: ({ row }) => (
           <div style={{ display: 'inline-block' }}>

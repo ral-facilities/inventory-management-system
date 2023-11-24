@@ -150,7 +150,13 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                           <p
                             class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
                           >
-                            None
+                            <a
+                              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                              href="/inventory-management-system/catalogue/items/10"
+                              target="_blank"
+                            >
+                              Click here
+                            </a>
                           </p>
                         </div>
                       </li>
@@ -343,7 +349,7 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -417,7 +423,7 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
@@ -854,7 +860,7 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -928,7 +934,7 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
@@ -1036,10 +1042,10 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
             role="tablist"
           >
             <button
-              aria-selected="false"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              aria-selected="true"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
               role="tab"
-              tabindex="-1"
+              tabindex="0"
               type="button"
             >
               Details
@@ -1060,10 +1066,10 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
               />
             </button>
             <button
-              aria-selected="true"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
               role="tab"
-              tabindex="0"
+              tabindex="-1"
               type="button"
             >
               Manufacturer
@@ -1093,13 +1099,12 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
     >
       <div
         aria-labelledby="tab-0"
-        hidden=""
         id="tabpanel-0"
         role="tabpanel"
       >
         <div
-          class="MuiCollapse-root MuiCollapse-vertical css-1fkrdiv-MuiCollapse-root"
-          style="min-height: 0px; height: 0px; transition-duration: 300ms;"
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-pwcg7p-MuiCollapse-root"
+          style="min-height: 0px;"
         >
           <div
             class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
@@ -1375,7 +1380,7 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1431,12 +1436,13 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
       </div>
       <div
         aria-labelledby="tab-2"
+        hidden=""
         id="tabpanel-2"
         role="tabpanel"
       >
         <div
-          class="MuiCollapse-root MuiCollapse-vertical css-1fkrdiv-MuiCollapse-root"
-          style="min-height: 0px; height: 0px; transition-duration: 300ms;"
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
         >
           <div
             class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
@@ -1448,7 +1454,7 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
@@ -1556,10 +1562,10 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
             role="tablist"
           >
             <button
-              aria-selected="false"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              aria-selected="true"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
               role="tab"
-              tabindex="-1"
+              tabindex="0"
               type="button"
             >
               Details
@@ -1568,10 +1574,10 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
               />
             </button>
             <button
-              aria-selected="true"
-              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
               role="tab"
-              tabindex="0"
+              tabindex="-1"
               type="button"
             >
               Properties
@@ -1613,13 +1619,12 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
     >
       <div
         aria-labelledby="tab-0"
-        hidden=""
         id="tabpanel-0"
         role="tabpanel"
       >
         <div
-          class="MuiCollapse-root MuiCollapse-vertical css-1fkrdiv-MuiCollapse-root"
-          style="min-height: 0px; height: 0px; transition-duration: 300ms;"
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-pwcg7p-MuiCollapse-root"
+          style="min-height: 0px;"
         >
           <div
             class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
@@ -1894,7 +1899,7 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1968,7 +1973,7 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"

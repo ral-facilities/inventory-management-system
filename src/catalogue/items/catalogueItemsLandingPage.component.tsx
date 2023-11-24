@@ -57,7 +57,9 @@ function CatalogueItemsLandingPage() {
     <Grid container>
       <Grid
         sx={{
-          padding: '8px',
+          display: 'flex',
+          justifyContent: 'left',
+          padding: 1,
           position: 'sticky',
           top: 0,
           backgroundColor: 'background.default',
@@ -73,7 +75,7 @@ function CatalogueItemsLandingPage() {
               ? `/inventory-management-system/catalogue/${catalogueCategoryData.id}`
               : '/inventory-management-system/catalogue'
           }
-          sx={{ margin: '8px' }}
+          sx={{ margin: 1 }}
           variant="outlined"
         >
           {catalogueItemIdData
@@ -82,7 +84,7 @@ function CatalogueItemsLandingPage() {
         </Button>
         <Button
           disabled={!catalogueItemIdData}
-          sx={{ margin: '8px' }}
+          sx={{ margin: 1 }}
           variant="outlined"
           onClick={() => {
             setEditItemDialogOpen(true);
@@ -95,22 +97,16 @@ function CatalogueItemsLandingPage() {
         <Grid item xs={12}>
           <Grid container spacing={1} flexDirection="column">
             <Grid item xs={12}>
-              <Typography
-                sx={{ margin: '8px', textAlign: 'center' }}
-                variant="h4"
-              >
+              <Typography sx={{ margin: 1, textAlign: 'center' }} variant="h4">
                 {catalogueItemIdData.name}
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography
-                sx={{ margin: '8px', textAlign: 'center' }}
-                variant="h6"
-              >
+              <Typography sx={{ margin: 1, textAlign: 'center' }} variant="h6">
                 Description:
               </Typography>
               <Typography
-                sx={{ margin: '8px', textAlign: 'center' }}
+                sx={{ margin: 1, textAlign: 'center' }}
                 variant="body1"
               >
                 {catalogueItemIdData.description}
@@ -495,7 +491,7 @@ function CatalogueItemsLandingPage() {
             sx={{
               width: '100%',
               justifyContent: 'center',
-              marginTop: '8px',
+              marginTop: 1,
             }}
           >
             <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
