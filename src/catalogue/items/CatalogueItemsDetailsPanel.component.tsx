@@ -55,7 +55,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
         </Tabs>
       </Grid>
       <Grid item container sx={{ ml: 2 }} xs={12}>
-        <TabPanel value={0} index={0}>
+        <TabPanel value={tabValue} index={0}>
           <Grid item container spacing={0}>
             <Grid item xs={12}>
               <Typography variant="h4">{catalogueItemIdData.name}</Typography>
@@ -265,7 +265,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
           </Grid>
         </TabPanel>
 
-        <TabPanel value={0} index={2}>
+        <TabPanel value={tabValue} index={2}>
           <Grid item container spacing={0}>
             <Grid item xs={12}>
               <ListItem
