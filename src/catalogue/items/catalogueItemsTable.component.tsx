@@ -513,7 +513,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         )
       : undefined,
   });
-  // console.log(obsoleteReplacementId);
+
   return (
     <div style={{ width: '100%' }}>
       <MaterialReactTable table={table} />
