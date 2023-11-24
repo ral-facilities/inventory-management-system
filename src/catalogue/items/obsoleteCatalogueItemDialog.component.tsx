@@ -16,6 +16,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { AxiosError } from 'axios';
 import React from 'react';
 import {
   useCatalogueBreadcrumbs,
@@ -63,10 +64,13 @@ const ObsoleteCatalogueItemDialog = (
   const [steps, setSteps] = React.useState<string[]>(STEPS);
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
-  const [error, setError] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
+  // Form error that should dissappear when the form is modified
+  const [formError, setFormError] = React.useState<string | undefined>(
     undefined
   );
+
+  // For any unhandled error e.g. a connection issue/API error
+  const [otherError, setOtherError] = React.useState<boolean>(false);
 
   const onChangeNode = (newId: string): void => {
     setCatalogueCurrDirId(newId);
@@ -77,10 +81,15 @@ const ObsoleteCatalogueItemDialog = (
     else setSteps([STEPS[0]]);
   };
 
+  const handleObsoleteDetailChanged = (newObsoleteDetails: ObsoleteDetails) => {
+    setFormError(undefined);
+    setObsoleteDetails(newObsoleteDetails);
+  };
+
   // Reset when a new item is selected
   React.useEffect(() => {
     if (catalogueItem) {
-      setObsoleteDetails(catalogueItem as ObsoleteDetails);
+      handleObsoleteDetailChanged(catalogueItem as ObsoleteDetails);
       updateSteps(catalogueItem.is_obsolete);
     }
   }, [catalogueItem]);
@@ -111,7 +120,7 @@ const ObsoleteCatalogueItemDialog = (
   const handleObsoleteChange = (isObsolete: boolean) => {
     updateSteps(isObsolete);
 
-    setObsoleteDetails({
+    handleObsoleteDetailChanged({
       is_obsolete: isObsolete,
       // Clear these if no longer obsolete
       obsolete_replacement_catalogue_item_id: isObsolete
@@ -129,7 +138,13 @@ const ObsoleteCatalogueItemDialog = (
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleObsoleteDetails = React.useCallback(() => {
+  const handleClose = () => {
+    onClose();
+    setFormError(undefined);
+    setOtherError(false);
+  };
+
+  const handleFinish = React.useCallback(() => {
     if (catalogueItem) {
       const isIsObsoleteUpdated =
         obsoleteDetails.is_obsolete !== catalogueItem.is_obsolete;
@@ -159,22 +174,28 @@ const ObsoleteCatalogueItemDialog = (
           isObsoleteReasonUpdated ||
           isReplacementIdUpdated)
       ) {
-        editCatalogueItem(editObsoleteCatalogueItem);
-      }
+        editCatalogueItem(editObsoleteCatalogueItem)
+          .then(() => {
+            // Reset form when successful
+            setActiveStep(0);
+            handleObsoleteDetailChanged({
+              is_obsolete: false,
+              obsolete_reason: null,
+              obsolete_replacement_catalogue_item_id: null,
+            });
+            setCatalogueCurrDirId(null);
+            onClose();
+          })
+          .catch((error: AxiosError) => {
+            console.log(error);
+            setOtherError(true);
+          });
+      } else
+        setFormError(
+          'Nothing changed, please edit an entry before clicking finish'
+        );
     }
-  }, [catalogueItem, editCatalogueItem, obsoleteDetails]);
-
-  const handleFinish = React.useCallback(() => {
-    handleObsoleteDetails();
-    setActiveStep(0);
-    setObsoleteDetails({
-      is_obsolete: false,
-      obsolete_reason: null,
-      obsolete_replacement_catalogue_item_id: null,
-    });
-    setCatalogueCurrDirId(null);
-    onClose();
-  }, [handleObsoleteDetails, onClose]);
+  }, [catalogueItem, editCatalogueItem, obsoleteDetails, onClose]);
 
   const renderStepContent = (step: number) => {
     switch (step) {
@@ -202,7 +223,7 @@ const ObsoleteCatalogueItemDialog = (
             <TextField
               value={obsoleteDetails.obsolete_reason || ''}
               onChange={(e) =>
-                setObsoleteDetails({
+                handleObsoleteDetailChanged({
                   ...obsoleteDetails,
                   obsolete_reason: e.target.value,
                 })
@@ -226,7 +247,7 @@ const ObsoleteCatalogueItemDialog = (
               <CatalogueItemsTable
                 parentInfo={catalogueCategoryData}
                 onChangeObsoleteReplacementId={(obsoleteReplacementId) =>
-                  setObsoleteDetails({
+                  handleObsoleteDetailChanged({
                     ...obsoleteDetails,
                     obsolete_replacement_catalogue_item_id:
                       obsoleteReplacementId,
@@ -261,7 +282,7 @@ const ObsoleteCatalogueItemDialog = (
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={handleClose}
       PaperProps={{ sx: { height: '648px' } }}
       fullWidth
       maxWidth="lg"
@@ -297,7 +318,7 @@ const ObsoleteCatalogueItemDialog = (
           <Button onClick={handleNext}>Next</Button>
         )}
       </DialogActions>
-      {error && (
+      {formError && (
         <Box
           sx={{
             mx: 3,
@@ -308,7 +329,22 @@ const ObsoleteCatalogueItemDialog = (
           }}
         >
           <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-            {errorMessage}
+            {formError}
+          </FormHelperText>
+        </Box>
+      )}
+      {otherError && (
+        <Box
+          sx={{
+            mx: 3,
+            marginBottom: 3,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+            Please refresh and try again
           </FormHelperText>
         </Box>
       )}
