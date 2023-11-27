@@ -14,7 +14,7 @@ describe('Catalogue Items Landing Page', () => {
     user = userEvent.setup();
   });
 
-  it('renders text correctly', async () => {
+  it('renders text correctly (only basic details given)', async () => {
     createView('/inventory-management-system/catalogue/items/1');
 
     await waitFor(() => {
@@ -33,6 +33,34 @@ describe('Catalogue Items Landing Page', () => {
     expect(
       screen.getByText('High-resolution cameras for beam characterization. 1')
     ).toBeInTheDocument();
+
+    expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
+  });
+
+  it('renders text correctly (extra details given)', async () => {
+    createView('/inventory-management-system/catalogue/items/2');
+
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 2')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', {
+          name: 'Back to Cameras table view',
+        })
+      ).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Description:')).toBeInTheDocument();
+    expect(
+      screen.getByText('High-resolution cameras for beam characterization. 2')
+    ).toBeInTheDocument();
+
+    expect(screen.getByText('http://example-drawing-link.com')).toHaveAttribute(
+      'href',
+      'http://example-drawing-link.com'
+    );
 
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
   });

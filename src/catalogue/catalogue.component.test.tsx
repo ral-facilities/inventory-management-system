@@ -84,6 +84,14 @@ describe('Catalogue', () => {
 
   beforeEach(() => {
     user = userEvent.setup();
+    window.ResizeObserver = jest.fn().mockImplementation(() => ({
+      disconnect: jest.fn(),
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+    }));
+    window.Element.prototype.getBoundingClientRect = jest
+      .fn()
+      .mockReturnValue({ height: 100, width: 200 });
   });
 
   afterEach(() => {
@@ -114,7 +122,7 @@ describe('Catalogue', () => {
     createView('/inventory-management-system/catalogue/4');
 
     await waitFor(() => {
-      expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
+      expect(screen.getByText('Description')).toBeInTheDocument();
     });
   });
 
@@ -174,7 +182,7 @@ describe('Catalogue', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'There are no items. Try adding an item by using the Add Catalogue Item button in the top right of your screen'
+          'No results found: Try adding an item by using the Add Catalogue Item button on the top left of your screen'
         )
       ).toBeInTheDocument();
     });

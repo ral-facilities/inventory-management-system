@@ -352,7 +352,7 @@ describe('Catalogue Category', () => {
   it('category with no items displays no items found message', () => {
     cy.visit('/inventory-management-system/catalogue/17');
     cy.findByText(
-      'There are no items. Try adding an item by using the Add Catalogue Item button in the top right of your screen'
+      'No results found: Try adding an item by using the Add Catalogue Item button on the top left of your screen'
     ).should('exist');
   });
 
