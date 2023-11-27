@@ -382,6 +382,26 @@ describe('Catalogue Items Dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
+  it.only('opens add manufacturer dialog and returns back to catalogue item dialog', async () => {
+    props = {
+      ...props,
+      parentInfo: getCatalogueCategoryById('4'),
+    };
+    createView();
+
+    const addManufacturerButton = screen.getByRole('button', {
+      name: 'add manufacturer',
+    });
+    await user.click(addManufacturerButton);
+
+    expect(screen.getByText('Add Manufacturer')).toBeInTheDocument();
+
+    const closeButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(closeButton);
+
+    expect(screen.getByText('Add Catalogue Item')).toBeInTheDocument();
+  });
+
   describe('Edit a catalogue item', () => {
     let axiosPatchSpy;
 

@@ -25,7 +25,7 @@ describe('Manufacturer', () => {
     expect(screen.getByText('Telephone')).toBeInTheDocument();
   });
 
-  it.only('renders table data correctly', async () => {
+  it('renders table data correctly', async () => {
     const view = createView();
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();

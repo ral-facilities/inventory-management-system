@@ -312,7 +312,25 @@ describe('Catalogue Items Table', () => {
     expect(url[0]).toHaveAttribute('href', '/items/6');
   });
 
-  it.only('renders the dense table correctly', async () => {
+  // it.only('navigates to manufacturer landing page correctly', async () => {
+  //   createView();
+  //   await waitFor(() => {
+  //     expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+  //   });
+
+  //   hideOrShowColumn(['Name', 'Manufacturer']);
+  //   expect(screen.getByText('Manufacturer')).toBeInTheDocument();
+
+  //   screen.debug(screen.getAllByRole('link'));
+
+  //   const manufacturerLink = screen.getByRole('link');
+  //   expect(manufacturerLink[0]).toHaveAttribute(
+  //     'href',
+  //     '/inventory-management-system/manufacturer/1'
+  //   );
+  // });
+
+  it('renders the dense table correctly', async () => {
     props.dense = true;
     window.Element.prototype.getBoundingClientRect = jest
       .fn()
