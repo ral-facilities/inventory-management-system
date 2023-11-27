@@ -35,7 +35,11 @@ describe('Obsolete Catalogue Item Dialog', () => {
   ) => {
     // Ensure form is loaded
     await waitFor(() => {
-      expect(screen.queryAllByText('Is Obsolete').length).toBe(3);
+      expect(
+        within(screen.getByRole('combobox')).getByText(
+          alreadyObsolete ? 'Yes' : 'No'
+        )
+      ).toBeInTheDocument();
     });
 
     // Yes/No drop down
@@ -52,13 +56,15 @@ describe('Obsolete Catalogue Item Dialog', () => {
     }
 
     // More steps to fill out?
-    if (values.is_obsolete === undefined || values.is_obsolete) {
+    if (
+      values.is_obsolete === undefined ? alreadyObsolete : values.is_obsolete
+    ) {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       // Obsolete reason
       if (values.obsolete_reason !== undefined) {
         fireEvent.change(screen.getByRole('textbox'), {
-          target: { value: 'Some reason' },
+          target: { value: values.obsolete_reason },
         });
       }
 
@@ -127,6 +133,10 @@ describe('Obsolete Catalogue Item Dialog', () => {
       .mockReturnValue({ height: 100, width: 2000 });
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('renders exisiting data correctly (not obsolete)', async () => {
     props.catalogueItem = getCatalogueItemById('1');
 
@@ -180,6 +190,26 @@ describe('Obsolete Catalogue Item Dialog', () => {
         })[0]
         .getAttribute('data-selected')
     ).toBe('true');
+  });
+
+  it('can navigate between steps in a non-linear order', async () => {
+    createView();
+
+    // First step
+    await waitFor(() => {
+      expect(screen.queryAllByText('Is Obsolete').length).toBe(3);
+    });
+
+    expect(
+      screen.queryByRole('button', { name: 'Finish' })
+    ).not.toBeInTheDocument();
+
+    // Skip to third step
+    await user.click(
+      screen.getByRole('button', { name: 'Obsolete Replacement' })
+    );
+
+    expect(screen.getByRole('button', { name: 'Finish' })).toBeInTheDocument();
   });
 
   it('can make an item obsolete (no details)', async () => {
@@ -242,5 +272,114 @@ describe('Obsolete Catalogue Item Dialog', () => {
         obsolete_replacement_catalogue_item_id: null,
       }
     );
+  });
+
+  it('displays error if nothing changed that disappears when the reason modified', async () => {
+    createView();
+
+    await modifyForm(true, {});
+
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+    expect(axiosPatchSpy).not.toHaveBeenCalled();
+
+    const errorMessage =
+      'Nothing changed, please edit an entry before clicking finish';
+    expect(screen.getByText(errorMessage)).toBeInTheDocument();
+
+    // Go back to the reason and modify it
+    await user.click(screen.getByRole('button', { name: 'Back' }));
+    expect(screen.getByText(errorMessage)).toBeInTheDocument();
+
+    fireEvent.change(screen.getByRole('textbox'), {
+      target: { value: 'Some reason' },
+    });
+    expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
+  });
+
+  it('displays error if an unknown error occurrs', async () => {
+    createView();
+
+    await modifyForm(true, { obsolete_reason: 'Error 500' });
+
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Please refresh and try again')
+      ).toBeInTheDocument();
+    });
+  });
+
+  it('can edit an obsolete replacement item having navigated using the breadcrumbs', async () => {
+    props.catalogueItem = getCatalogueItemById('20');
+
+    createView();
+
+    // Get to end of form
+    await modifyForm(true, {});
+
+    // Navigate up a category
+    await user.click(screen.getByRole('link', { name: 'vacuum-pumps' }));
+
+    // Select new item
+    await user.click(
+      screen.getByRole('row', {
+        name: `Cryo Pumps row`,
+      })
+    );
+    await waitFor(() => {
+      expect(
+        screen.getAllByRole('row', {
+          name: `Cryo Pumps 36 row`,
+        }).length
+      ).toBe(2);
+    });
+    await user.click(
+      within(
+        screen.getAllByRole('row', {
+          name: `Cryo Pumps 36 row`,
+        })[0]
+      ).getByRole('radio')
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+    expect(axiosPatchSpy).toHaveBeenCalledWith(
+      `/v1/catalogue-items/${props.catalogueItem?.id}`,
+      {
+        obsolete_replacement_catalogue_item_id: '15',
+      }
+    );
+  }, 10000); // Long running
+
+  it('can navigate back to root when selecting an item', async () => {
+    createView();
+
+    // Get to end of form
+    await modifyForm(true, {});
+
+    await waitFor(() => {
+      expect(
+        screen.getAllByRole('row', {
+          name: `Energy Meters 26 row`,
+        }).length
+      ).toBe(2);
+    });
+
+    // Navigate to root directory
+    await user.click(
+      screen.getByRole('button', {
+        name: 'Navigate back to Catalogue home',
+      })
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('row', {
+          name: `Beam Characterization row`,
+        })
+      ).toBeInTheDocument();
+    });
   });
 });

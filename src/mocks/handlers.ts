@@ -248,9 +248,8 @@ export const handlers = [
         })
       );
     }
-    if (body.name === 'Error 500') {
+    if (body.name === 'Error 500' || body.obsolete_reason === 'Error 500')
       return res(ctx.status(500), ctx.json(''));
-    }
 
     const newBody = {
       catalogue_category_id: validCatalogueItem?.catalogue_category_id,

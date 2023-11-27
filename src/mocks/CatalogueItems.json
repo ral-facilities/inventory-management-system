@@ -1825,7 +1825,7 @@
         "unit": "millibar"
       }
     ],
-    "id": "17",
+    "id": "20",
     "manufacturer": {
       "name": "Manufacturer A",
       "url": "http://example.com",
@@ -1858,7 +1858,7 @@
         "unit": ""
       }
     ],
-    "id": "20",
+    "id": "21",
     "manufacturer": {
       "name": "Manufacturer A",
       "url": "http://example.com",
@@ -1891,7 +1891,7 @@
         "unit": ""
       }
     ],
-    "id": "21",
+    "id": "22",
     "manufacturer": {
       "name": "Manufacturer A",
       "url": "http://example.com",
@@ -1924,7 +1924,7 @@
         "unit": "millibar"
       }
     ],
-    "id": "22",
+    "id": "23",
     "manufacturer": {
       "name": "Manufacturer A",
       "url": "http://example.com",
@@ -1957,7 +1957,7 @@
         "unit": "millibar"
       }
     ],
-    "id": "23",
+    "id": "24",
     "manufacturer": {
       "name": "Manufacturer A",
       "url": "http://example.com",

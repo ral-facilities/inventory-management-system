@@ -270,8 +270,6 @@ const ObsoleteCatalogueItemDialog = (
             )}
           </>
         );
-      default:
-        return null;
     }
   };
 
