@@ -241,8 +241,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const [addManufacturerDialogOpen, setAddManufacturerDialogOpen] =
     React.useState<boolean>(false);
 
-  const [inputValue, setInputValue] = React.useState<string | undefined>(
-    selectedManufacturer?.name ?? undefined
+  const [inputValue, setInputValue] = React.useState<string | null>(
+    selectedManufacturer?.name ?? null
   );
 
   const handleFormErrorStates = React.useCallback(() => {
@@ -792,7 +792,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         ? selectedCatalogueItemManufacturer
                         : selectedManufacturer
                     }
-                    inputValue={inputValue}
+                    inputValue={inputValue ?? ''}
                     onInputChange={(event, newInputValue) =>
                       setInputValue(newInputValue)
                     }
@@ -810,6 +810,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     }}
                     disablePortal
                     id="manufacturer-autocomplete"
+                    data-testid="manufacturer-autocomplete-test"
                     options={manufacturerList ?? []}
                     size="small"
                     sx={{ alignItems: 'center', width: '400px' }}

@@ -22,7 +22,7 @@ describe('Manufacturer Landing page', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('link', { name: 'Back to manufacturer table view' })
+        screen.getByRole('link', { name: 'Manufacturer table view' })
       ).toBeInTheDocument();
     });
     expect(screen.getByText('URL:')).toBeInTheDocument();

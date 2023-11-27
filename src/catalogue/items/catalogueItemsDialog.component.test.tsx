@@ -16,7 +16,7 @@ import userEvent from '@testing-library/user-event';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
-
+// jest.setTimeout(10000);
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
   let user;
@@ -50,9 +50,6 @@ describe('Catalogue Items Dialog', () => {
     drawingNumber?: string;
     drawingLink?: string;
     itemModelNumber?: string;
-    manufacturerName?: string;
-    manufacturerUrl?: string;
-    manufacturerAddress?: string;
     resolution?: string;
     frameRate?: string;
     sensorType?: string;
@@ -103,21 +100,6 @@ describe('Catalogue Items Dialog', () => {
     values.itemModelNumber !== undefined &&
       fireEvent.change(screen.getByLabelText('Model number'), {
         target: { value: values.itemModelNumber },
-      });
-
-    values.manufacturerName !== undefined &&
-      fireEvent.change(screen.getByLabelText('Manufacturer Name *'), {
-        target: { value: values.manufacturerName },
-      });
-
-    values.manufacturerUrl !== undefined &&
-      fireEvent.change(screen.getByLabelText('Manufacturer URL *'), {
-        target: { value: values.manufacturerUrl },
-      });
-
-    values.manufacturerAddress !== undefined &&
-      fireEvent.change(screen.getByLabelText('Manufacturer Address *'), {
-        target: { value: values.manufacturerAddress },
       });
 
     values.resolution !== undefined &&
@@ -185,9 +167,6 @@ describe('Catalogue Items Dialog', () => {
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
-      manufacturerAddress: '1 venus street UY6 9OP',
-      manufacturerName: 'Sony',
-      manufacturerUrl: 'https://sony.com',
       itemModelNumber: 'mk4324',
       name: 'test',
       resolution: '12',
@@ -198,8 +177,9 @@ describe('Catalogue Items Dialog', () => {
       older: 'False',
     });
 
+    const manufacturerPopup = screen.getAllByRole('combobox')[0];
+    await user.type(manufacturerPopup, 'Man{arrowdown}{enter}');
     const saveButton = screen.getByRole('button', { name: 'Save' });
-
     await user.click(saveButton);
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
@@ -212,11 +192,7 @@ describe('Catalogue Items Dialog', () => {
       drawing_link: 'https://example.com',
       drawing_number: 'mk4324',
       is_obsolete: false,
-      manufacturer: {
-        address: '1 venus street UY6 9OP',
-        name: 'Sony',
-        url: 'https://sony.com',
-      },
+      manufacturer_id: '1',
       item_model_number: 'mk4324',
       name: 'test',
       obsolete_reason: null,
@@ -243,14 +219,14 @@ describe('Catalogue Items Dialog', () => {
     modifyValues({
       costGbp: '200',
       daysToReplace: '5',
-      manufacturerAddress: '1 venus street UY6 9OP',
-      manufacturerName: 'Sony',
-      manufacturerUrl: 'https://sony.com',
       name: 'test',
       resolution: '12',
       sensorType: 'IO',
       broken: 'True',
     });
+
+    const manufacturerPopup = screen.getAllByRole('combobox')[0];
+    await user.type(manufacturerPopup, 'Man{arrowdown}{enter}');
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -266,11 +242,7 @@ describe('Catalogue Items Dialog', () => {
       drawing_link: null,
       drawing_number: null,
       is_obsolete: false,
-      manufacturer: {
-        address: '1 venus street UY6 9OP',
-        name: 'Sony',
-        url: 'https://sony.com',
-      },
+      manufacturer_id: '1',
       item_model_number: null,
       name: 'test',
       obsolete_reason: null,
@@ -319,15 +291,7 @@ describe('Catalogue Items Dialog', () => {
     );
 
     expect(
-      screen.getByText('Please enter a Manufacturer Name')
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText('Please enter a Manufacturer URL')
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText('Please enter a Manufacturer Address')
+      screen.getByText('Please chose a manufacturer, or add a new manufacturer')
     ).toBeInTheDocument();
   });
   it('display error message when invalid number format', async () => {
@@ -346,9 +310,6 @@ describe('Catalogue Items Dialog', () => {
       description: '',
       drawingLink: 'example.com',
       drawingNumber: 'mk4324',
-      manufacturerAddress: '1 venus street UY6 9OP',
-      manufacturerName: 'Sony',
-      manufacturerUrl: 'sony.com',
       itemModelNumber: 'mk4324',
       name: 'test',
       resolution: '12a',
@@ -358,6 +319,9 @@ describe('Catalogue Items Dialog', () => {
       broken: 'True',
       older: 'False',
     });
+
+    const manufacturerPopup = screen.getAllByRole('combobox')[0];
+    await user.type(manufacturerPopup, 'Man{arrowdown}{enter}');
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -371,12 +335,6 @@ describe('Catalogue Items Dialog', () => {
     expect(validNumberHelperText[0]).toHaveTextContent(
       'Please enter a valid number'
     );
-
-    expect(
-      screen.getByText(
-        'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
-      )
-    ).toBeInTheDocument();
 
     expect(
       screen.getByText(
@@ -400,9 +358,6 @@ describe('Catalogue Items Dialog', () => {
       description: '',
       drawingLink: 'https://example.com',
       drawingNumber: 'mk4324',
-      manufacturerAddress: '1 venus street UY6 9OP',
-      manufacturerName: 'Sony',
-      manufacturerUrl: 'https://sony.com',
       itemModelNumber: 'mk4324',
       name: 'Error 500',
       resolution: '12',
@@ -412,6 +367,9 @@ describe('Catalogue Items Dialog', () => {
       broken: 'True',
       older: 'False',
     });
+
+    const manufacturerPopup = screen.getAllByRole('combobox')[0];
+    await user.type(manufacturerPopup, 'Man{arrowdown}{enter}');
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
     await user.click(saveButton);
@@ -457,6 +415,9 @@ describe('Catalogue Items Dialog', () => {
         name: 'test',
       });
 
+      const manufacturerPopup = screen.getAllByRole('combobox')[0];
+      await user.type(manufacturerPopup, 'Man{arrowdown}{arrowdown}{enter}');
+
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
       await user.click(saveButton);
@@ -471,6 +432,7 @@ describe('Catalogue Items Dialog', () => {
         drawing_number: 'test',
         item_model_number: 'test1',
         name: 'test',
+        manufacturer_id: '2',
       });
 
       expect(onClose).toHaveBeenCalled();
@@ -493,9 +455,6 @@ describe('Catalogue Items Dialog', () => {
         description: '',
         drawingLink: '',
         drawingNumber: '',
-        manufacturerAddress: '',
-        manufacturerName: '',
-        manufacturerUrl: '',
         itemModelNumber: '',
         name: '',
         resolution: '',
@@ -505,6 +464,9 @@ describe('Catalogue Items Dialog', () => {
         broken: 'None',
         older: 'None',
       });
+
+      const manufacturerPopup = screen.getAllByRole('combobox')[0];
+      await user.type(manufacturerPopup, '{delete}');
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -534,13 +496,9 @@ describe('Catalogue Items Dialog', () => {
       );
 
       expect(
-        screen.getByText('Please enter a Manufacturer Name')
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText('Please enter a Manufacturer URL')
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText('Please enter a Manufacturer Address')
+        screen.getByText(
+          'Please chose a manufacturer, or add a new manufacturer'
+        )
       ).toBeInTheDocument();
     });
 
@@ -585,20 +543,14 @@ describe('Catalogue Items Dialog', () => {
       };
 
       createView();
-      modifyValues({
-        manufacturerAddress: '12 venus street UY6 9OP',
-        manufacturerName: 'Sony1',
-        manufacturerUrl: 'https://sony.com',
-      });
+
+      const manufacturerPopup = screen.getAllByRole('combobox')[0];
+      await user.type(manufacturerPopup, 'Man{arrowdown}{arrowdown}{enter}');
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
       await user.click(saveButton);
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
-        manufacturer: {
-          name: 'Sony1',
-          url: 'https://sony.com',
-          address: '12 venus street UY6 9OP',
-        },
+        manufacturer_id: '2',
       });
 
       expect(onClose).toHaveBeenCalled();
