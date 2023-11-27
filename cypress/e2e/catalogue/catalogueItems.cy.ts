@@ -17,7 +17,7 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Drawing number').type('MX43242');
     cy.findByLabelText('Drawing link').type('https://example.com');
     cy.findByLabelText('Model number').type('MXtest');
-
+    cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
     cy.findByLabelText('Resolution (megapixels) *').type('18');
     cy.findByLabelText('Frame Rate (fps)').type('60');
     cy.findByLabelText('Sensor Type *').type('IO');
@@ -26,10 +26,6 @@ describe('Catalogue Items', () => {
     cy.findByText('True').click();
     cy.findByLabelText('Older than five years').click();
     cy.findByText('False').click();
-
-    cy.findByLabelText('Manufacturer Name *').type('test');
-    cy.findByLabelText('Manufacturer URL *').type('https://test.co.uk');
-    cy.findByLabelText('Manufacturer Address *').type('1 house test TX3 6TY');
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -42,7 +38,7 @@ describe('Catalogue Items', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"catalogue_category_id":"4","name":"test","cost_gbp":5000,"cost_to_rework_gbp":400,"days_to_replace":14,"days_to_rework":5,"description":"test Description","item_model_number":"MXtest","is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":"https://example.com","drawing_number":"MX43242","properties":[{"name":"Resolution","value":18},{"name":"Frame Rate","value":60},{"name":"Sensor Type","value":"IO"},{"name":"Sensor brand","value":"pixel"},{"name":"Broken","value":true},{"name":"Older than five years","value":false}],"manufacturer":{"name":"test","address":"1 house test TX3 6TY","url":"https://test.co.uk"}}'
+        '{"catalogue_category_id":"4","name":"test","cost_gbp":5000,"cost_to_rework_gbp":400,"days_to_replace":14,"days_to_rework":5,"description":"test Description","item_model_number":"MXtest","is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":"https://example.com","drawing_number":"MX43242","manufacturer_id":"1","properties":[{"name":"Resolution","value":18},{"name":"Frame Rate","value":60},{"name":"Sensor Type","value":"IO"},{"name":"Sensor brand","value":"pixel"},{"name":"Broken","value":true},{"name":"Older than five years","value":false}]}'
       );
     });
   });
@@ -64,7 +60,7 @@ describe('Catalogue Items', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"catalogue_category_id":"5","name":"Energy Meters 27_copy1","cost_gbp":600,"cost_to_rework_gbp":89,"days_to_replace":7,"days_to_rework":60,"description":"Precision energy meters for accurate measurements. 27","item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"properties":[{"name":"Measurement Range","value":2000}],"manufacturer":{"name":"Manufacturer A","url":"http://example.com","address":"10 My Street"}}'
+        '{"catalogue_category_id":"5","name":"Energy Meters 27_copy1","cost_gbp":600,"cost_to_rework_gbp":89,"days_to_replace":7,"days_to_rework":60,"description":"Precision energy meters for accurate measurements. 27","item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"manufacturer_id":"3","properties":[{"name":"Measurement Range","value":2000}]}'
       );
     });
   });
@@ -81,9 +77,7 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Cost (£) *').type('5000');
     cy.findByLabelText('Time to replace (days) *').type('14');
 
-    cy.findByLabelText('Manufacturer Name *').type('test');
-    cy.findByLabelText('Manufacturer URL *').type('https://test.co.uk');
-    cy.findByLabelText('Manufacturer Address *').type('1 house test TX3 6TY');
+    cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -96,7 +90,7 @@ describe('Catalogue Items', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"catalogue_category_id":"4","name":"test","cost_gbp":5000,"cost_to_rework_gbp":null,"days_to_replace":14,"days_to_rework":null,"description":null,"item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"properties":[{"name":"Resolution","value":18},{"name":"Sensor Type","value":"IO"},{"name":"Broken","value":true}],"manufacturer":{"name":"test","address":"1 house test TX3 6TY","url":"https://test.co.uk"}}'
+        '{"catalogue_category_id":"4","name":"test","cost_gbp":5000,"cost_to_rework_gbp":null,"days_to_replace":14,"days_to_rework":null,"description":null,"item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"manufacturer_id":"1","properties":[{"name":"Resolution","value":18},{"name":"Sensor Type","value":"IO"},{"name":"Broken","value":true}]}'
       );
     });
   });
@@ -111,6 +105,9 @@ describe('Catalogue Items', () => {
     cy.findByText('Please enter how many days it would take to replace').should(
       'exist'
     );
+    cy.findByText(
+      'Please chose a manufacturer, or add a new manufacturer'
+    ).should('exist');
     cy.findByText('Please select either True or False').should('exist');
 
     cy.findByLabelText('Name *').type('test');
@@ -120,6 +117,7 @@ describe('Catalogue Items', () => {
     cy.findByText('True').click();
     cy.findByLabelText('Cost (£) *').type('5000');
     cy.findByLabelText('Time to replace (days) *').type('14');
+    cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
 
     cy.findAllByText('This field is mandatory').should('have.length', 0);
     cy.findByText('Please enter name').should('not.exist');
@@ -128,6 +126,9 @@ describe('Catalogue Items', () => {
     cy.findByText('Please enter how many days it would take to replace').should(
       'not.exist'
     );
+    cy.findByText(
+      'Please chose a manufacturer, or add a new manufacturer'
+    ).should('not.exist');
 
     // value error from number field
 
@@ -154,36 +155,19 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Time to replace (days) *').type('14');
 
     cy.findAllByText('Please enter a valid number').should('have.length', 0);
-
-    cy.findByText('Please enter a Manufacturer Name').should('exist');
-    cy.findByText('Please enter a Manufacturer URL').should('exist');
-    cy.findByText('Please enter a Manufacturer Address').should('exist');
-
-    cy.findByLabelText('Manufacturer Name *').type('test');
-    cy.findByLabelText('Manufacturer URL *').type('test.co.uk');
     cy.findByLabelText('Drawing link').type('test.co.uk');
-    cy.findByLabelText('Manufacturer Address *').type('1 house test TX3 6TY');
-
-    cy.findByText('Please enter a Manufacturer Name').should('not.exist');
-    cy.findByText('Please enter a Manufacturer URL').should('not.exist');
-    cy.findByText('Please enter a Manufacturer Address').should('not.exist');
 
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findAllByText(
-      'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
-    ).should('exist');
     cy.findAllByText(
       'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
     ).should('exist');
-    cy.findByLabelText('Manufacturer URL *').clear();
+
     cy.findByLabelText('Drawing link').clear();
-    cy.findByLabelText('Manufacturer URL *').type('https://test.co.uk');
+
     cy.findByLabelText('Drawing link').type('https://test.co.uk');
     cy.findByRole('button', { name: 'Save' }).click();
-    cy.findByText(
-      'Please enter a valid Manufacturer URL. Only "http://" and "https://" links with typical top-level domain are accepted'
-    ).should('not.exist');
+
     cy.findAllByText(
       'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
     ).should('not.exist');
@@ -243,6 +227,8 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Resolution (megapixels) *').should('have.value', '12');
     cy.findByLabelText('Frame Rate (fps)').should('have.value', '30');
     cy.findByLabelText('Sensor Type *').should('have.value', 'CMOS');
+    cy.findByLabelText('Manufacturer *').should('have.value', 'Manufacturer A');
+
     cy.findByRole('button', { name: 'Cancel' }).click();
   });
 
@@ -336,6 +322,9 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Drawing number').type('MX43242');
     cy.findByLabelText('Drawing link').type('https://example.com');
     cy.findByLabelText('Model number').type('MXtest');
+    cy.findByLabelText('Manufacturer *')
+      .click()
+      .type('Man{downArrow}{downArrow}{enter}');
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
@@ -347,7 +336,7 @@ describe('Catalogue Items', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"test","description":null,"cost_gbp":6000,"cost_to_rework_gbp":894,"days_to_replace":71,"days_to_rework":605,"drawing_number":"MX43242","drawing_link":"https://example.com","item_model_number":"MXtest"}'
+        '{"name":"test","description":null,"cost_gbp":6000,"cost_to_rework_gbp":894,"days_to_replace":71,"days_to_rework":605,"drawing_number":"MX43242","drawing_link":"https://example.com","item_model_number":"MXtest","manufacturer_id":"2"}'
       );
     });
   });
@@ -373,22 +362,5 @@ describe('Catalogue Items', () => {
         '{"properties":[{"name":"Measurement Range","value":20000}]}'
       );
     });
-  });
-  it('checks the href property of the manufacturer link', () => {
-    cy.findByRole('button', { name: 'Show/Hide columns' }).click();
-    cy.findByText('Hide all').click();
-
-    cy.findByText('Manufacturer URL').click();
-
-    // Find the link element
-    cy.findAllByText('http://example.com')
-      .first()
-      .should('have.attr', 'href')
-      .should('include', 'http://example.com'); // Check href attribute value
-
-    cy.findAllByText('http://example.com')
-      .first()
-      .should('have.attr', 'target')
-      .should('include', '_blank'); // Check target attribute value
   });
 });

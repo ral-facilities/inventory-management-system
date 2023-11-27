@@ -304,7 +304,7 @@ describe('Manufacturer', () => {
     cy.findByText('Manufacturer A').click();
     cy.findByText('Telephone number:').should('exist');
 
-    cy.findByRole('link', { name: 'Back to manufacturer table view' }).click();
+    cy.findByRole('link', { name: 'Manufacturer table view' }).click();
 
     cy.findByText('Manufacturer A').should('exist');
     cy.findByText('Manufacturer B').should('exist');
