@@ -302,6 +302,32 @@ describe('Catalogue Items Table', () => {
     await user.click(saveAsButton);
   });
 
+  it('opens obsolete dialog and can close it again', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Obsolete')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Obsolete'));
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    // document.body doesnt work here, so use actual known element
+    await user.click(rowActionsButton[0]);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('navigates to the manufacturer url', async () => {
     createView();
     await waitFor(() => {
