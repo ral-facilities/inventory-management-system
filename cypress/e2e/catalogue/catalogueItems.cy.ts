@@ -391,4 +391,119 @@ describe('Catalogue Items', () => {
       .should('have.attr', 'target')
       .should('include', '_blank'); // Check target attribute value
   });
+
+  it('make an item obsolete (no details)', () => {
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByText('Obsolete').click();
+
+    cy.findByLabelText('Is Obsolete').click();
+    cy.findByRole('option', { name: 'Yes' }).click();
+
+    cy.findByText('Obsolete Replacement').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+    cy.findByText('Finish').click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-items/:id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({ is_obsolete: true })
+      );
+    });
+  });
+
+  it('make an item obsolete (all details)', () => {
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByText('Obsolete').click();
+
+    cy.findByLabelText('Is Obsolete').click();
+    cy.findByRole('option', { name: 'Yes' }).click();
+
+    cy.findByText('Next').click();
+    cy.findByRole('textbox').type('Obsolete reason\nNew line');
+
+    cy.findByText('Next').click();
+    cy.findByText('Beam Characterization').click();
+    cy.findByText('Cameras').click();
+
+    cy.findAllByRole('row', { name: 'Cameras 2 row' })
+      .eq(0)
+      .findByRole('radio')
+      .click();
+
+    cy.startSnoopingBrowserMockedRequest();
+    cy.findByText('Finish').click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-items/:id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({
+          is_obsolete: true,
+          obsolete_reason: 'Obsolete reason\nNew line',
+          obsolete_replacement_catalogue_item_id: '2',
+        })
+      );
+    });
+  });
+
+  it('make an obsolete item not obsolete', () => {
+    cy.visit('/inventory-management-system/catalogue/5');
+
+    cy.findAllByLabelText('Row Actions').eq(0).click();
+    cy.findByText('Obsolete').click();
+
+    cy.findByLabelText('Is Obsolete').click();
+    cy.findByRole('option', { name: 'No' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+    cy.findByText('Finish').click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-items/:id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({
+          is_obsolete: false,
+          obsolete_reason: null,
+          obsolete_replacement_catalogue_item_id: null,
+        })
+      );
+    });
+  });
+
+  it('can view item details in the obsolete dialog', () => {
+    cy.visit('/inventory-management-system/catalogue/5');
+
+    cy.findAllByLabelText('Row Actions').eq(0).click();
+    cy.findByText('Obsolete').click();
+
+    cy.findByText('Obsolete Replacement').click();
+
+    cy.findAllByRole('row', { name: 'Energy Meters 26 row' })
+      .eq(0)
+      .findByRole('button', { name: 'Expand' })
+      .click();
+
+    cy.findByText('Description').should('exist');
+    cy.findByRole('tab', { name: 'Properties' }).click();
+    cy.findAllByText('Measurement Range (Joules)').should('exist');
+    cy.findByRole('tab', { name: 'Manufacturer' }).click();
+    cy.findAllByText('Manufacturer Name').should('exist');
+  });
+
+  it('can navigate to an items replacment', () => {
+    cy.visit('/inventory-management-system/catalogue/5');
+
+    cy.findAllByRole('link', { name: 'Click here' }).eq(0).click();
+
+    cy.url().should('contain', 'inventory-management-system/catalogue/items/6');
+  });
 });
