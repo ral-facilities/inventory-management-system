@@ -90,14 +90,12 @@ const ObsoleteCatalogueItemDialog = (
   // Resets errors/disables & enables steps as needed
   const handleObsoleteDetailChanged = React.useCallback(
     (newObsoleteDetails: ObsoleteDetails) => {
-      if (newObsoleteDetails.is_obsolete !== obsoleteDetails.is_obsolete) {
-        if (newObsoleteDetails.is_obsolete) setSteps(STEPS);
-        else setSteps([STEPS[0]]);
-      }
+      if (newObsoleteDetails.is_obsolete) setSteps(STEPS);
+      else setSteps([STEPS[0]]);
       setFormError(undefined);
       setObsoleteDetails(newObsoleteDetails);
     },
-    [obsoleteDetails.is_obsolete]
+    []
   );
 
   // Reset when a new item is selected
@@ -144,15 +142,11 @@ const ObsoleteCatalogueItemDialog = (
   const handleClose = React.useCallback(() => {
     onClose();
     setActiveStep(0);
-    handleObsoleteDetailChanged({
-      is_obsolete: false,
-      obsolete_reason: null,
-      obsolete_replacement_catalogue_item_id: null,
-    });
+    handleObsoleteDetailChanged(catalogueItem as ObsoleteDetails);
     setCatalogueCurrDirId(null);
     setFormError(undefined);
     setOtherError(false);
-  }, [handleObsoleteDetailChanged, onClose]);
+  }, [catalogueItem, handleObsoleteDetailChanged, onClose]);
 
   const handleFinish = React.useCallback(() => {
     if (catalogueItem) {
@@ -257,9 +251,9 @@ const ObsoleteCatalogueItemDialog = (
                 }
                 dense={true}
                 selectedRowState={
-                  catalogueItem?.obsolete_replacement_catalogue_item_id
+                  obsoleteDetails.obsolete_replacement_catalogue_item_id
                     ? {
-                        [catalogueItem.obsolete_replacement_catalogue_item_id]:
+                        [obsoleteDetails.obsolete_replacement_catalogue_item_id]:
                           true,
                       }
                     : undefined
@@ -289,7 +283,7 @@ const ObsoleteCatalogueItemDialog = (
       fullWidth
       maxWidth="lg"
     >
-      <DialogTitle>Delete Catalogue Item</DialogTitle>
+      <DialogTitle>Obsolete Catalogue Item</DialogTitle>
       <DialogContent>
         <Stepper
           // Allow user to skip steps if want to
