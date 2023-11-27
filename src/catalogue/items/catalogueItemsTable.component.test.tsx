@@ -321,8 +321,8 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
-    // document.body doesnt work here, so use actual known element
-    await user.click(rowActionsButton[0]);
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });

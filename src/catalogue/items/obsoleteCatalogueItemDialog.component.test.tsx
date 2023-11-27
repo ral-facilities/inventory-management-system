@@ -137,6 +137,14 @@ describe('Obsolete Catalogue Item Dialog', () => {
     jest.clearAllMocks();
   });
 
+  it('calls onClose when cancel is clicked', async () => {
+    createView();
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    expect(mockOnClose).toHaveBeenCalled();
+  });
+
   it('renders exisiting data correctly (not obsolete)', async () => {
     props.catalogueItem = getCatalogueItemById('1');
 

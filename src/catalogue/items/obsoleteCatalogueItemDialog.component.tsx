@@ -303,6 +303,9 @@ const ObsoleteCatalogueItemDialog = (
         </Box>
       </DialogContent>
       <DialogActions>
+        <Button onClick={handleClose} sx={{ mr: 'auto' }}>
+          Cancel
+        </Button>
         <Button disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 2 }}>
           Back
         </Button>
