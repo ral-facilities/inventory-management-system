@@ -1,19 +1,9 @@
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  LinearProgress,
   Grid,
   Tooltip,
 } from '@mui/material';
@@ -33,6 +23,7 @@ import {
   useMoveToCatalogueCategory,
 } from '../../api/catalogueCategory';
 import handleTransferState from '../../handleTransferState';
+import CatalogueCategoryTableView from './catalogueCategoryTableView.component';
 
 export interface CatalogueCategoryDirectoryDialogProps {
   open: boolean;
@@ -189,19 +180,12 @@ const CatalogueCategoryDirectoryDialog = (
     catalogueCurrDirId ?? ''
   );
 
-  const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
-
-  const selectedCatalogueCategoryIds: (string | null)[] =
-    selectedCategories.map((category) => {
-      return category.id;
-    });
-
   return (
     <Dialog
       open={open}
       onClose={onClose}
       maxWidth="lg"
-      PaperProps={{ sx: { height: '512px' } }}
+      PaperProps={{ sx: { height: '632px' } }}
       fullWidth
     >
       <DialogTitle sx={{ marginLeft: 2 }}>
@@ -243,76 +227,13 @@ const CatalogueCategoryDirectoryDialog = (
         </Grid>
       </DialogTitle>
       <DialogContent>
-        {catalogueCategoryDataLoading ? (
-          <Box
-            sx={{
-              width: '100%',
-            }}
-          >
-            <LinearProgress />
-          </Box>
-        ) : catalogueCategoryData && catalogueCategoryData.length > 0 ? (
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <Typography sx={{ fontWeight: 'bold' }}>Name </Typography>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {catalogueCategoryData.map((category, index) => {
-                  const canPlaceHere =
-                    !category.is_leaf &&
-                    (requestType !== 'moveTo' ||
-                      !selectedCatalogueCategoryIds.includes(category.id));
-                  return (
-                    <TableRow
-                      key={category.id}
-                      onClick={() => {
-                        if (!category.is_leaf) {
-                          if (
-                            !selectedCatalogueCategoryIds.includes(
-                              category.id
-                            ) ||
-                            requestType === 'copyTo'
-                          ) {
-                            onChangeCatalogueCurrDirId(category.id);
-                          }
-                        }
-                      }}
-                      onMouseEnter={() => setHoveredRow(index)}
-                      onMouseLeave={() => setHoveredRow(null)}
-                      sx={{
-                        backgroundColor:
-                          hoveredRow === index ? 'action.hover' : 'inherit',
-                        cursor: canPlaceHere ? 'pointer' : 'not-allowed',
-                      }}
-                      aria-label={`${category.name} row`}
-                    >
-                      <TableCell
-                        sx={{
-                          color: canPlaceHere ? 'inherit' : 'action.disabled',
-                        }}
-                      >
-                        {category.name}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        ) : (
-          <Box
-            sx={{ display: 'flex', width: '100%', justifyContent: 'center' }}
-          >
-            <Typography sx={{ fontWeight: 'bold', margin: '16px' }}>
-              No catalogue categories found
-            </Typography>
-          </Box>
-        )}
+        <CatalogueCategoryTableView
+          selectedCategories={selectedCategories}
+          onChangeCatalogueCurrDirId={onChangeCatalogueCurrDirId}
+          requestType={requestType}
+          catalogueCategoryData={catalogueCategoryData}
+          catalogueCategoryDataLoading={catalogueCategoryDataLoading}
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>

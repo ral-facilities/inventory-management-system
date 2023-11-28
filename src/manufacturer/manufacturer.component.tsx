@@ -1,47 +1,28 @@
-import {
-  TableContainer,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  Typography,
-  IconButton,
-  useTheme,
-  Box,
-  Link,
-  Button,
-} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import {
+  Button,
+  ListItemIcon,
+  MenuItem,
+  Link as MuiLink,
+  TableRow,
+  Typography,
+} from '@mui/material';
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+  type MRT_ColumnDef,
+} from 'material-react-table';
 import React from 'react';
 import { useManufacturers } from '../api/manufacturer';
+import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
-import { Manufacturer, ManufacturerDetails } from '../app.types';
 import ManufacturerDialog from './manufacturerDialog.component';
+import { MRT_Localization_EN } from 'material-react-table/locales/en';
 
 function ManufacturerComponent() {
-  const [manufacturerDetails, setManufacturerDetails] =
-    React.useState<ManufacturerDetails>({
-      name: '',
-      url: undefined,
-      address: {
-        address_line: '',
-        town: null,
-        county: null,
-        postcode: '',
-        country: '',
-      },
-      telephone: null,
-    });
-
-  const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
-    React.useState<boolean>(false);
-
-  const [addManufacturerDialogOpen, setAddManufacturerDialogOpen] =
-    React.useState<boolean>(false);
-
-  const { data: ManufacturerData } = useManufacturers();
+  const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
+    useManufacturers();
 
   const [deleteManufacturerDialog, setDeleteManufacturerDialog] =
     React.useState<boolean>(false);
@@ -50,204 +31,176 @@ function ManufacturerComponent() {
     Manufacturer | undefined
   >(undefined);
 
-  const [hoveredRow, setHoveredRow] = React.useState<number | null>(null);
-  const tableHeight = `calc(100vh)-(64px + 36px +50px)`;
-  const theme = useTheme();
+  const tableHeight = `calc(100vh - (64px + 36px + 111px))`;
 
-  return (
-    <Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'right',
-          padding: '9.75px', //px to match wdith of catalogue page
-          margin: '4px',
+  const columns = React.useMemo<MRT_ColumnDef<Manufacturer>[]>(() => {
+    return [
+      {
+        header: 'Name',
+        accessorFn: (row) => row.name,
+        size: 400,
+        filterVariant: 'autocomplete',
+        filterFn: 'equals',
+      },
+      {
+        header: 'URL',
+        accessorFn: (row) => row.url ?? '',
+        size: 500,
+        Cell: ({ row }) =>
+          row.original.url && (
+            <MuiLink underline="hover" target="_blank" href={row.original.url}>
+              {row.original.url}
+            </MuiLink>
+          ),
+      },
+      {
+        header: 'Address',
+        // Stitch together for filtering
+        accessorFn: (row) =>
+          `${row.address.address_line} ${row.address.town} ${row.address.county} ${row.address.postcode} ${row.address.country}`,
+        size: 650,
+        Cell: ({ row }) => (
+          <div style={{ display: 'inline-block' }}>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {row.original.address.address_line}
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {row.original.address.town}
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {row.original.address.county}
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {row.original.address.postcode}
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {row.original.address.country}
+            </Typography>
+          </div>
+        ),
+      },
+      {
+        header: 'Telephone',
+        accessorFn: (row) => row.telephone,
+        size: 250,
+      },
+    ];
+  }, []);
+
+  const noResultsTxt =
+    'No results found: Try adding an Manufacturer by using the Add Manufacturer button on the top left of your screen';
+
+  const table = useMaterialReactTable({
+    columns: columns, // If dense only show the name column
+    data: ManufacturerData ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    enableColumnOrdering: true,
+    enableColumnPinning: true,
+    enableColumnResizing: true,
+    enableFacetedValues: true,
+    enableRowActions: true,
+    enableStickyHeader: true,
+    enableRowSelection: false,
+    enableDensityToggle: false,
+    enableFullScreenToggle: false,
+    enablePagination: true,
+    localization: {
+      ...MRT_Localization_EN,
+      noRecordsToDisplay: noResultsTxt,
+    },
+    initialState: {
+      showColumnFilters: true,
+      showGlobalFilter: true,
+      pagination: { pageSize: 25, pageIndex: 0 },
+    },
+    muiTableBodyRowProps: ({ row }) => {
+      return { component: TableRow, 'aria-label': `${row.original.name} row` };
+    },
+    muiTableContainerProps: { sx: { height: tableHeight } },
+    paginationDisplayMode: 'pages',
+    positionToolbarAlertBanner: 'bottom',
+    muiSearchTextFieldProps: {
+      size: 'small',
+      variant: 'outlined',
+    },
+    state: {
+      showProgressBars: ManufacturerDataLoading, //or showSkeletons
+    },
+    muiPaginationProps: {
+      color: 'secondary',
+      rowsPerPageOptions: [25, 50, 100],
+      shape: 'rounded',
+      variant: 'outlined',
+    },
+    renderCreateRowDialogContent: ({ table, row }) => {
+      return (
+        <>
+          <ManufacturerDialog
+            open={true}
+            onClose={() => {
+              table.setCreatingRow(null);
+            }}
+            selectedManufacturer={
+              selectedManufacturer ? selectedManufacturer : undefined
+            }
+          />
+        </>
+      );
+    },
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Button
+        variant="outlined"
+        onClick={() => {
+          table.setCreatingRow(true);
         }}
       >
-        <Button
-          variant="outlined"
-          onClick={() => setAddManufacturerDialogOpen(true)}
+        Add Manufacturer
+      </Button>
+    ),
+    renderRowActionMenuItems: ({ closeMenu, row }) => {
+      return [
+        <MenuItem
+          key={0}
+          aria-label={`Edit ${row.original.name} manufacturer`}
+          onClick={() => {
+            setSelectedManufacturer(row.original);
+            table.setCreatingRow(true);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
         >
-          Add Manufacturer
-        </Button>
-        <ManufacturerDialog
-          open={addManufacturerDialogOpen}
-          onClose={() => setAddManufacturerDialogOpen(false)}
-          manufacturerDetails={manufacturerDetails}
-          onChangeManufacturerDetails={setManufacturerDetails}
-          type="create"
-        />
-        <ManufacturerDialog
-          open={editManufacturerDialogOpen}
-          onClose={() => setEditManufacturerDialogOpen(false)}
-          manufacturerDetails={manufacturerDetails}
-          onChangeManufacturerDetails={setManufacturerDetails}
-          type="edit"
-          selectedManufacturer={selectedManufacturer}
-        />
-      </Box>
-      <TableContainer style={{ height: tableHeight }}>
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow
-              sx={{
-                position: 'sticky',
-                top: 0,
-                backgroundColor: theme.palette.background.paper,
-                zIndex: 2,
-              }}
-            >
-              <TableCell
-                sx={{
-                  borderRight: '1px solid #e0e0e0',
-                  borderTop: '1px solid #e0e0e0',
-                }}
-              >
-                <Typography sx={{ fontWeight: 'bold' }}>Actions</Typography>
-              </TableCell>
+          <ListItemIcon>
+            <EditIcon />
+          </ListItemIcon>
+          Edit
+        </MenuItem>,
+        <MenuItem
+          key={1}
+          aria-label={`Delete ${row.original.name} manufacturer`}
+          onClick={() => {
+            setDeleteManufacturerDialog(true);
+            setSelectedManufacturer(row.original);
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <DeleteIcon />
+          </ListItemIcon>
+          Delete
+        </MenuItem>,
+      ];
+    },
+  });
 
-              <TableCell
-                sx={{
-                  borderRight: '1px solid #e0e0e0',
-                  borderTop: '1px solid #e0e0e0',
-                }}
-              >
-                <Typography sx={{ fontWeight: 'bold' }}>Name</Typography>
-              </TableCell>
-              <TableCell
-                sx={{
-                  borderRight: '1px solid #e0e0e0',
-                  borderTop: '1px solid #e0e0e0',
-                }}
-              >
-                <Typography sx={{ fontWeight: 'bold' }}>URL</Typography>
-              </TableCell>
-              <TableCell
-                sx={{
-                  borderRight: '1px solid #e0e0e0',
-                  borderTop: '1px solid #e0e0e0',
-                }}
-              >
-                <Typography sx={{ fontWeight: 'bold' }}>Address</Typography>
-              </TableCell>
-              <TableCell
-                sx={{
-                  borderRight: '1px solid #e0e0e0',
-                  borderTop: '1px solid #e0e0e0',
-                }}
-              >
-                <Typography sx={{ fontWeight: 'bold' }}>Telephone</Typography>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {ManufacturerData &&
-              ManufacturerData.map((item, index) => (
-                <TableRow
-                  onMouseEnter={() => setHoveredRow(index)}
-                  onMouseLeave={() => setHoveredRow(null)}
-                  style={{
-                    backgroundColor:
-                      hoveredRow === index
-                        ? theme.palette.action.hover
-                        : 'inherit',
-                  }}
-                  key={item.id}
-                  aria-label={`${item.name} row`}
-                >
-                  <TableCell
-                    sx={{ borderRight: '1px solid #e0e0e0', width: '100px' }}
-                  >
-                    <Box sx={{ display: 'flex' }}>
-                      <IconButton
-                        size="small"
-                        aria-label={`Edit ${item.name} manufacturer`}
-                        onClick={() => {
-                          setEditManufacturerDialogOpen(true);
-                          setSelectedManufacturer(item);
-                          setManufacturerDetails(item);
-                        }}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton
-                        size="small"
-                        aria-label={`Delete ${item.name} manufacturer`}
-                        onClick={() => {
-                          setDeleteManufacturerDialog(true);
-                          setSelectedManufacturer(item);
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Box>
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      borderRight: '1px solid #e0e0e0',
-                    }}
-                  >
-                    {item.name}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      px: '8px',
-                      paddingTop: '0px',
-                      paddingBottom: '0px',
-                      borderRight: '1px solid #e0e0e0',
-                    }}
-                  >
-                    {item.url && (
-                      <Link underline="hover" href={item.url}>
-                        {item.url}
-                      </Link>
-                    )}
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      px: '8px',
-                      paddingTop: '0px',
-                      paddingBottom: '0px',
-                      borderRight: '1px solid #e0e0e0',
-                    }}
-                  >
-                    <Typography fontSize={14}>
-                      {item.address.address_line}
-                    </Typography>
-                    <Typography fontSize={14}>
-                      {item.address.town ?? ''}
-                    </Typography>
-                    <Typography fontSize={14}>
-                      {item.address.county ?? ''}
-                    </Typography>
-                    <Typography fontSize={14}>
-                      {item.address.country}
-                    </Typography>
-                    <Typography fontSize={14}>
-                      {item.address.postcode}
-                    </Typography>
-                  </TableCell>
-                  <TableCell
-                    sx={{
-                      px: '8px',
-                      paddingTop: '0px',
-                      paddingBottom: '0px',
-                      borderRight: '1px solid #e0e0e0',
-                    }}
-                  >
-                    {item.telephone}
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+  return (
+    <div style={{ width: '100%' }}>
+      <MaterialReactTable table={table} />
+
       <DeleteManufacturerDialog
         open={deleteManufacturerDialog}
         onClose={() => setDeleteManufacturerDialog(false)}
         manufacturer={selectedManufacturer}
       />
-    </Box>
+    </div>
   );
 }
 

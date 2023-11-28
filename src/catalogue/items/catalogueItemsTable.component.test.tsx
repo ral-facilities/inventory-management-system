@@ -1,81 +1,153 @@
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
-import { screen, waitFor, within } from '@testing-library/react';
+import {
+  getCatalogueCategoryById,
+  renderComponentWithBrowserRouter,
+} from '../../setupTests';
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';
-import userEvent from '@testing-library/user-event';
 
 describe('Catalogue Items Table', () => {
   let props: CatalogueItemsTableProps;
   let user;
-  const onChangeCatalogueItemDetails = jest.fn();
-  const onChangeCatalogueItemManufacturer = jest.fn();
-  const onChangeCatalogueItemPropertyValues = jest.fn();
-  const onChangeAddItemDialogOpen = jest.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(<CatalogueItemsTable {...props} />);
   };
 
+  const ensureColumnsVisible = async (columns: string[]) => {
+    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
+    await user.click(screen.getByText('Hide all'));
+    for (const column of columns) {
+      await user.click(screen.getByText(column));
+      expect(screen.getAllByText(column).length).toEqual(2);
+    }
+  };
+
   beforeEach(() => {
     props = {
-      catalogueItemDetails: {
-        catalogue_category_id: '',
-        cost_gbp: null,
-        cost_to_rework_gbp: null,
-        days_to_replace: null,
-        days_to_rework: null,
-        description: null,
-        drawing_link: null,
-        drawing_number: null,
-        is_obsolete: 'false',
-        item_model_number: null,
-        name: '',
-        obsolete_reason: null,
-        obsolete_replacement_catalogue_item_id: null,
-      },
-      onChangeCatalogueItemDetails: onChangeCatalogueItemDetails,
-      onChangeAddItemDialogOpen: onChangeAddItemDialogOpen,
-      catalogueItemManufacturer: {
-        name: '',
-        url: '',
-        address: '',
-      },
-      onChangeCatalogueItemManufacturer: onChangeCatalogueItemManufacturer,
-      catalogueItemPropertyValues: [12, '23'],
-      onChangeCatalogueItemPropertyValues: onChangeCatalogueItemPropertyValues,
-      parentInfo: {
-        id: '5',
-        name: 'Energy Meters',
-        parent_id: '1',
-        code: 'energy-meters',
-        is_leaf: true,
-        catalogue_item_properties: [
-          {
-            name: 'Measurement Range',
-            type: 'number',
-            unit: 'Joules',
-            mandatory: true,
-          },
-          { name: 'Accuracy', type: 'string', mandatory: false },
-        ],
-      },
+      dense: false,
+      parentInfo: getCatalogueCategoryById('5'),
     };
     user = userEvent.setup();
+    window.ResizeObserver = jest.fn().mockImplementation(() => ({
+      disconnect: jest.fn(),
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+    }));
+    window.Element.prototype.getBoundingClientRect = jest
+      .fn()
+      .mockReturnValue({ height: 100, width: 200 });
   });
 
-  it('renders text correctly', async () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders table correctly (section 1 due to column virtualisation )', async () => {
     createView();
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
     expect(screen.getByText('Description')).toBeInTheDocument();
-    expect(screen.getByText('Measurement Range (Joules)')).toBeInTheDocument();
-    expect(screen.getByText('Accuracy')).toBeInTheDocument();
-    expect(screen.getByText('Manufacturer Name')).toBeInTheDocument();
-    expect(screen.getByText('Manufacturer URL')).toBeInTheDocument();
-    expect(screen.getByText('Manufacturer Address')).toBeInTheDocument();
+    expect(screen.getByText('Is Obsolete')).toBeInTheDocument();
+    expect(screen.getByText('Obsolete replacement link')).toBeInTheDocument();
+  });
+
+  it('renders table correctly (Cameras more details)', async () => {
+    props.parentInfo = getCatalogueCategoryById('4');
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    await ensureColumnsVisible([
+      'Sensor brand',
+      'Cost to Rework (GBP)',
+      'Days to Rework',
+    ]);
+  });
+
+  it('renders table correctly (section 2 due to column virtualisation )', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    await ensureColumnsVisible([
+      'Obsolete Reason',
+      'Measurement Range (Joules)',
+      'Accuracy',
+      'Cost (GBP)',
+    ]);
+  });
+
+  it('opens add catalogue item dialog and can close the dialog', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', {
+          name: 'Add Catalogue Item',
+        })
+      ).toBeInTheDocument();
+    });
+
+    const addCatalogueItemButton = screen.getByRole('button', {
+      name: 'Add Catalogue Item',
+    });
+
+    await user.click(addCatalogueItemButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('renders table correctly (section 3 due to column virtualisation )', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    await ensureColumnsVisible([
+      'Cost to Rework (GBP)',
+      'Time to replace (days)',
+      'Days to Rework',
+      'Drawing Number',
+    ]);
+  });
+
+  it('renders table correctly for properties with type boolean', async () => {
+    props.parentInfo = getCatalogueCategoryById('4');
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    await ensureColumnsVisible(['Broken', 'Older than five years']);
+  });
+
+  it('renders table correctly (section 4 due to column virtualisation )', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    await ensureColumnsVisible([
+      'Drawing Link',
+      'Item Model Number',
+      'Manufacturer Name',
+      'Manufacturer Address',
+    ]);
   });
 
   it('displays descriptions tooltip on hover', async () => {
@@ -114,44 +186,20 @@ describe('Catalogue Items Table', () => {
     });
   });
 
-  it('highlights the row on hover', async () => {
-    createView();
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('row', { name: 'Energy Meters 26 row' })
-      ).toBeInTheDocument();
-    });
-
-    const row = screen.getByRole('row', { name: 'Energy Meters 26 row' });
-
-    await user.hover(row);
-
-    expect(row).not.toHaveStyle('background-color: inherit');
-
-    await user.unhover(row);
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('row', { name: 'Energy Meters 26 row' })
-      ).toHaveStyle('background-color: inherit');
-    });
-  });
-
   it('opens the delete catalogue item dialog and can delete an item', async () => {
     createView();
 
     await waitFor(() => {
-      expect(
-        screen.getByLabelText(
-          'Catalogue item description: Precision energy meters for accurate measurements. 26'
-        )
-      ).toBeInTheDocument();
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Delete')).toBeInTheDocument();
     });
 
-    const deleteButton = screen.getByRole('button', {
-      name: 'Delete Energy Meters 26 catalogue item',
-    });
+    const deleteButton = screen.getByText('Delete');
 
     await user.click(deleteButton);
 
@@ -170,16 +218,16 @@ describe('Catalogue Items Table', () => {
     createView();
 
     await waitFor(() => {
-      expect(
-        screen.getByLabelText(
-          'Catalogue item description: Precision energy meters for accurate measurements. 26'
-        )
-      ).toBeInTheDocument();
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Edit')).toBeInTheDocument();
     });
 
-    const editButton = screen.getByRole('button', {
-      name: 'Edit Energy Meters 26 catalogue item',
-    });
+    const editButton = screen.getByText('Edit');
     await user.click(editButton);
 
     await waitFor(() => {
@@ -197,16 +245,16 @@ describe('Catalogue Items Table', () => {
     createView();
 
     await waitFor(() => {
-      expect(
-        screen.getByLabelText(
-          'Catalogue item description: Precision energy meters for accurate measurements. 27'
-        )
-      ).toBeInTheDocument();
+      expect(screen.getByText('Energy Meters 27')).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[1]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Edit')).toBeInTheDocument();
     });
 
-    const editButton = screen.getByRole('button', {
-      name: 'Edit Energy Meters 27 catalogue item',
-    });
+    const editButton = screen.getByText('Edit');
     await user.click(editButton);
 
     await waitFor(() => {
@@ -224,70 +272,91 @@ describe('Catalogue Items Table', () => {
     createView();
 
     await waitFor(() => {
-      expect(
-        screen.getByLabelText(
-          'Catalogue item description: Precision energy meters for accurate measurements. 26'
-        )
-      ).toBeInTheDocument();
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Save as')).toBeInTheDocument();
     });
 
-    const saveAsButton = screen.getByRole('button', {
-      name: 'Save as Energy Meters 26 catalogue item',
-    });
+    const saveAsButton = screen.getByText('Save as');
     await user.click(saveAsButton);
-
-    expect(onChangeAddItemDialogOpen).toBeCalledWith(true);
   });
 
   it('opens the add catalogue item dialog for save as (more catalogue item details filled in)', async () => {
     createView();
 
     await waitFor(() => {
-      expect(
-        screen.getByLabelText(
-          'Catalogue item description: Precision energy meters for accurate measurements. 27'
-        )
-      ).toBeInTheDocument();
+      expect(screen.getByText('Energy Meters 27')).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[1]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Save as')).toBeInTheDocument();
     });
 
-    const saveAsButton = screen.getByRole('button', {
-      name: 'Save as Energy Meters 27 catalogue item',
-    });
+    const saveAsButton = screen.getByText('Save as');
     await user.click(saveAsButton);
-
-    expect(onChangeAddItemDialogOpen).toBeCalledWith(true);
   });
+
   it('navigates to the manufacturer url', async () => {
     createView();
     await waitFor(() => {
-      expect(
-        screen.getByRole('row', { name: 'Energy Meters 26 row' })
-      ).toBeInTheDocument();
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
 
-    const row = screen.getByRole('row', { name: 'Energy Meters 26 row' });
-    const url = await within(row).findByText('http://example.com');
-    expect(url).toHaveAttribute('href', 'http://example.com');
+    await ensureColumnsVisible(['Manufacturer URL']);
+
+    const url = screen.getAllByText('http://example.com');
+    expect(url[0]).toHaveAttribute('href', 'http://example.com');
   });
 
   it('navigates to replacement obsolete item', async () => {
     createView();
     await waitFor(() => {
-      expect(
-        screen.getByRole('row', { name: 'Energy Meters 26 row' })
-      ).toBeInTheDocument();
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
 
-    const row = screen.getByRole('row', { name: 'Energy Meters 26 row' });
-    const url = await within(row).findByText('Click here');
-    expect(url).toHaveAttribute('href', '/items/6');
+    const url = screen.queryAllByText('Click here');
+    expect(url[0]).toHaveAttribute('href', '/items/6');
   });
 
-  it('progress bar renders correctly', async () => {
+  it('renders the dense table correctly', async () => {
+    props.dense = true;
+    window.Element.prototype.getBoundingClientRect = jest
+      .fn()
+      .mockReturnValue({ height: 100, width: 1135 });
+    const view = createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  // skipping this test as it causes an infinite loop when expanding the details panel
+  // loop doesn't occur when tested on the browser - I think it's an issue with MRT interacting
+  // with an MUI tabs component
+  it.skip('renders the dense table correctly and can expand and collapse', async () => {
+    props.dense = true;
+    window.Element.prototype.getBoundingClientRect = jest
+      .fn()
+      .mockReturnValue({ height: 100, width: 1135 });
     createView();
 
     await waitFor(() => {
-      expect(screen.getByRole('progressbar')).toBeInTheDocument();
+      expect(screen.getAllByLabelText('Expand')[0]).toBeInTheDocument();
+    });
+    const rowExpandButton = screen.getAllByRole('button', { name: 'Expand' });
+
+    await user.click(rowExpandButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByDisplayValue('Details')).toBeInTheDocument();
     });
   });
 });
