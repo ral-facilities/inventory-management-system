@@ -10,8 +10,11 @@ import {
   AddSystem,
   BreadcrumbsInfo,
   EditSystem,
+  ErrorParsing,
+  MoveToSystem,
   System,
   SystemImportanceType,
+  TransferState,
 } from '../app.types';
 import { settings } from '../settings';
 
@@ -222,5 +225,56 @@ export const useDeleteSystem = (): UseMutationResult<
       queryClient.invalidateQueries({ queryKey: ['Systems'] });
       queryClient.removeQueries({ queryKey: ['System'] });
     },
+  });
+};
+
+export const useMoveToSystem = (): UseMutationResult<
+  TransferState[],
+  AxiosError,
+  MoveToSystem
+> => {
+  const queryClient = useQueryClient();
+
+  return useMutation(async (moveToSystem: MoveToSystem) => {
+    const transferStates: TransferState[] = [];
+
+    let successfulIds: string[] = [];
+
+    const promises = moveToSystem.systemEdits.map(
+      async (systemEdit: EditSystem, index: number) => {
+        return editSystem(systemEdit)
+          .then((result: System) => {
+            const targetSystemName = moveToSystem.targetSystem?.name || 'Root';
+            transferStates.push({
+              name: result.name,
+              message: `Successfully moved to ${targetSystemName}`,
+              state: 'success',
+            });
+
+            successfulIds.push(systemEdit.id);
+          })
+          .catch((error) => {
+            const response = error.response?.data as ErrorParsing;
+
+            transferStates.push({
+              name: moveToSystem.selectedSystems[index].name,
+              message: response.detail,
+              state: 'error',
+            });
+          });
+      }
+    );
+
+    await Promise.all(promises);
+
+    if (successfulIds.length > 0) {
+      queryClient.invalidateQueries({ queryKey: ['Systems'] });
+      queryClient.invalidateQueries({ queryKey: ['SystemBreadcrumbs'] });
+      successfulIds.map((id: string) =>
+        queryClient.invalidateQueries({ queryKey: ['System', id] })
+      );
+    }
+
+    return transferStates;
   });
 };

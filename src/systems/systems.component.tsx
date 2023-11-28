@@ -24,6 +24,7 @@ import { System } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog from './systemDialog.component';
+import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
 
 /* Returns function that navigates to a specific system id (or to the root of all systems
    if given null) */
@@ -57,6 +58,33 @@ const AddSystemButton = (props: { systemId: string | null }) => {
         onClose={() => setAddSystemDialogOpen(false)}
         parentId={props.systemId}
         type="add"
+      />
+    </>
+  );
+};
+
+const MoveSystemsButton = (props: {
+  selectedSystems: System[];
+  onChangeSelectedSystems: (selectedSystems: System[]) => void;
+}) => {
+  const [moveSystemDialogOpen, setMoveSystemDialogOpen] =
+    React.useState<boolean>(false);
+
+  return (
+    <>
+      <Button
+        sx={{ mx: 1 }}
+        variant="outlined"
+        startIcon={<DriveFileMoveOutlinedIcon />}
+        onClick={() => setMoveSystemDialogOpen(true)}
+      >
+        Move to
+      </Button>
+      <SystemDirectoryDialog
+        open={moveSystemDialogOpen}
+        onClose={() => setMoveSystemDialogOpen(false)}
+        selectedSystems={props.selectedSystems}
+        onChangeSelectedSystems={props.onChangeSelectedSystems}
       />
     </>
   );
@@ -141,13 +169,10 @@ function Systems() {
           </div>
           {selectedSystems.length > 0 && (
             <Box>
-              <Button
-                sx={{ mx: 1 }}
-                variant="outlined"
-                startIcon={<DriveFileMoveOutlinedIcon />}
-              >
-                Move to
-              </Button>
+              <MoveSystemsButton
+                selectedSystems={selectedSystems}
+                onChangeSelectedSystems={setSelectedSystems}
+              />
               <Button
                 sx={{ mx: 1 }}
                 variant="outlined"
