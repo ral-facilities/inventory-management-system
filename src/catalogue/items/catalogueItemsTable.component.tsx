@@ -9,6 +9,7 @@ import {
   Link as MuiLink,
   TableRow,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import {
   MaterialReactTable,
@@ -275,7 +276,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         size: 250,
       },
       {
-        header: 'Manufacturer',
+        header: 'Manufacturer Name',
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
@@ -289,6 +290,74 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             }
           </MuiLink>
         ),
+      },
+      {
+        header: 'Manufacturer URl',
+        Cell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            href={
+              manufacturerList?.find((manufacturer) => {
+                return manufacturer.id === row.original.manufacturer_id;
+              })?.url ?? undefined
+            }
+          >
+            {
+              manufacturerList?.find((manufacturer) => {
+                return manufacturer.id === row.original.manufacturer_id;
+              })?.url
+            }
+          </MuiLink>
+        ),
+      },
+      {
+        header: 'Manufacturer Address',
+        Cell: ({ row }) => (
+          <div style={{ display: 'inline-block' }}>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer.id === row.original.manufacturer_id;
+                })?.address.address_line
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer.id === row.original.manufacturer_id;
+                })?.address.town
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer.id === row.original.manufacturer_id;
+                })?.address.county
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer.id === row.original.manufacturer_id;
+                })?.address.postcode
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer.id === row.original.manufacturer_id;
+                })?.address.country
+              }
+            </Typography>
+          </div>
+        ),
+      },
+      {
+        header: 'Manufacturer Telephone',
+        Cell: ({ row }) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer.id === row.original.manufacturer_id;
+          })?.telephone,
       },
     ];
   }, [dense, manufacturerList, parentInfo.catalogue_item_properties]);
