@@ -1,34 +1,34 @@
-import React from 'react';
-import { AxiosError } from 'axios';
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  Divider,
-  Box,
-  TextField,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Typography,
   DialogTitle,
+  Divider,
+  FormControl,
+  FormControlLabel,
   FormHelperText,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography,
 } from '@mui/material';
-import {
-  AddCatalogueCategory,
-  CatalogueCategory,
-  EditCatalogueCategory,
-  CatalogueCategoryFormData,
-  ErrorParsing,
-} from '../../app.types';
+import { AxiosError } from 'axios';
+import React from 'react';
 import {
   useAddCatalogueCategory,
   useCatalogueCategoryById,
   useEditCatalogueCategory,
 } from '../../api/catalogueCategory';
+import {
+  AddCatalogueCategory,
+  CatalogueCategory,
+  CatalogueCategoryFormData,
+  EditCatalogueCategory,
+  ErrorParsing,
+} from '../../app.types';
 import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 
 export interface CatalogueCategoryDialogProps {

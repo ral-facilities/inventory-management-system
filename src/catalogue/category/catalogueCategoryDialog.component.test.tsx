@@ -1,18 +1,12 @@
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import React from 'react';
-import {
-  act,
-  fireEvent,
-  screen,
-  waitFor,
-  within,
-} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { CatalogueCategory, CatalogueCategoryFormData } from '../../app.types';
+import { renderComponentWithBrowserRouter } from '../../setupTests';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
-import { CatalogueCategory, CatalogueCategoryFormData } from '../../app.types';
 
 describe('Catalogue Category Dialog', () => {
   const onClose = jest.fn();
@@ -72,10 +66,9 @@ describe('Catalogue Category Dialog', () => {
         const field = values.newFormFields[i];
 
         if (field.name)
-          // eslint-disable-next-line no-loop-func
-          await act(() =>
-            user.type(nameFields[i + numberOfCurrentFields], field.name)
-          );
+          await fireEvent.change(nameFields[i + numberOfCurrentFields], {
+            target: { value: field.name },
+          });
 
         if (field.type) {
           await user.click(typeSelects[i + numberOfCurrentFields]);
@@ -91,7 +84,9 @@ describe('Catalogue Category Dialog', () => {
         }
 
         if (field.unit)
-          await user.type(unitFields[i + numberOfCurrentFields], field.unit);
+          await fireEvent.change(unitFields[i + numberOfCurrentFields], {
+            target: { value: field.unit },
+          });
 
         await user.click(mandatorySelect[i + numberOfCurrentFields]);
         const mandatoryDropdown = screen.getByRole('listbox', {
@@ -523,9 +518,7 @@ describe('Catalogue Category Dialog', () => {
     it('edits a new catalogue category at sub level ("/catalogue/*")', async () => {
       createView();
 
-      const nameInput = screen.getByLabelText('Name *') as HTMLInputElement;
-      await user.clear(nameInput);
-      await user.type(nameInput, 'test');
+      await modifyValues({ name: 'test' });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
@@ -548,11 +541,7 @@ describe('Catalogue Category Dialog', () => {
       };
       createView();
 
-      const nameInput = screen.getByLabelText('Name *');
-      user.type(nameInput, 'test');
-      await waitFor(() => {
-        expect(screen.getByDisplayValue('test')).toBeInTheDocument();
-      });
+      await modifyValues({ name: 'test' });
       expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
