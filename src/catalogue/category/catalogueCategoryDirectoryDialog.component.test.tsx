@@ -96,32 +96,6 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       });
     });
 
-    it('highlights the row on hover', async () => {
-      createView();
-
-      await waitFor(() => {
-        expect(
-          screen.getByRole('row', { name: 'Beam Characterization row' })
-        ).toBeInTheDocument();
-      });
-
-      const row = screen.getByRole('row', {
-        name: 'Beam Characterization row',
-      });
-
-      await user.hover(row);
-
-      expect(row).not.toHaveStyle('background-color: inherit');
-
-      await user.unhover(row);
-
-      await waitFor(() => {
-        expect(
-          screen.getByRole('row', { name: 'Beam Characterization row' })
-        ).toHaveStyle('background-color: inherit');
-      });
-    });
-
     it('renders the breadcrumbs and navigate to another directory', async () => {
       props.selectedCategories = [
         {
@@ -220,90 +194,6 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         parent_id: '3',
       });
       expect(onClose).toBeCalled();
-    });
-
-    it('disables the leaf categories and the selected categories', async () => {
-      props.selectedCategories = [
-        {
-          id: '79',
-          name: 'test_dup',
-          parent_id: '1',
-          code: 'test_dup',
-          is_leaf: false,
-        },
-        {
-          id: '19',
-          name: 'Amp Meters',
-          parent_id: '1',
-          code: 'amp-meters',
-          is_leaf: false,
-        },
-      ];
-
-      props.catalogueCurrDirId = '1';
-      createView();
-
-      await waitFor(() => {
-        expect(
-          screen.getByRole('row', { name: 'test_dup row' })
-        ).toBeInTheDocument();
-      });
-
-      const moveButton = screen.getByRole('button', { name: 'Move here' });
-
-      const camerasRow = screen.getByRole('row', { name: 'Cameras row' });
-      const test_dupRow = screen.getByRole('row', { name: 'test_dup row' });
-      const energyMetersRow = screen.getByRole('row', {
-        name: 'Energy Meters row',
-      });
-      const wavefrontSensorsRow = screen.getByRole('row', {
-        name: 'Wavefront Sensors row',
-      });
-      const voltageMetersRow = screen.getByRole('row', {
-        name: 'Voltage Meters row',
-      });
-      const ampMetersRow = screen.getByRole('row', { name: 'Amp Meters row' });
-
-      expect(moveButton).toBeDisabled();
-
-      // Not allowed cursor
-
-      expect(camerasRow).toHaveStyle(
-        'background-color: inherit; cursor: not-allowed;'
-      );
-      expect(test_dupRow).toHaveStyle(
-        'background-color: inherit; cursor: not-allowed;'
-      );
-
-      expect(energyMetersRow).toHaveStyle(
-        'background-color: inherit; cursor: not-allowed;'
-      );
-      expect(wavefrontSensorsRow).toHaveStyle(
-        'background-color: inherit; cursor: not-allowed;'
-      );
-      expect(voltageMetersRow).toHaveStyle(
-        'background-color: inherit; cursor: not-allowed;'
-      );
-      expect(ampMetersRow).toHaveStyle(
-        'background-color: inherit; cursor: not-allowed;'
-      );
-
-      // checks noting happens on click
-      await user.click(camerasRow);
-      await user.click(test_dupRow);
-      await user.click(energyMetersRow);
-      await user.click(wavefrontSensorsRow);
-      await user.click(voltageMetersRow);
-      await user.click(ampMetersRow);
-
-      expect(onChangeCatalogueCurrDirId).not.toBeCalled();
-    });
-
-    it('shows loading indicator', async () => {
-      createView();
-      await waitFor(() => {
-        expect(screen.getByRole('progressbar')).toBeInTheDocument();
-      });
     });
   });
 

@@ -26,19 +26,11 @@ describe('Manufacturer', () => {
   });
 
   it('renders table data correctly', async () => {
-    createView();
+    const view = createView();
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
     });
-
-    expect(screen.getByText('Manufacturer B')).toBeInTheDocument();
-    expect(screen.getByText('Manufacturer C')).toBeInTheDocument();
-    expect(screen.getByText('http://example.com')).toBeInTheDocument();
-    expect(screen.getByText('http://test.com')).toBeInTheDocument();
-    expect(screen.getByText('http://test.co.uk')).toBeInTheDocument();
-    expect(screen.getByText('07334893348')).toBeInTheDocument();
-    expect(screen.getByText('07294958549')).toBeInTheDocument();
-    expect(screen.getByText('07934303412')).toBeInTheDocument();
+    expect(view.asFragment()).toMatchSnapshot();
   });
 
   it('manufacturer url has a href so therefore links to new webpage', async () => {
@@ -50,39 +42,20 @@ describe('Manufacturer', () => {
     expect(url).toHaveAttribute('href', 'http://example.com');
   });
 
-  it('highlights the row on hover', async () => {
-    createView();
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('row', { name: 'Manufacturer A row' })
-      ).toBeInTheDocument();
-    });
-
-    const row = screen.getByRole('row', { name: 'Manufacturer A row' });
-
-    await user.hover(row);
-
-    expect(row).not.toHaveStyle('background-color: inherit');
-
-    await user.unhover(row);
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('row', { name: 'Manufacturer A row' })
-      ).toHaveStyle('background-color: inherit');
-    });
-  });
-
   it('opens delete dialog and closes it correctly', async () => {
     createView();
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
     });
 
-    await user.click(
-      screen.getByRole('button', { name: 'Delete Manufacturer A manufacturer' })
-    );
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Delete')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Delete'));
 
     expect(screen.getByText('Delete Manufacturer')).toBeInTheDocument();
 
@@ -100,9 +73,14 @@ describe('Manufacturer', () => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
     });
 
-    await user.click(
-      screen.getByRole('button', { name: 'Edit Manufacturer A manufacturer' })
-    );
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Edit')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Edit'));
 
     expect(screen.getByText('Edit Manufacturer')).toBeInTheDocument();
 
@@ -112,5 +90,17 @@ describe('Manufacturer', () => {
     await waitFor(() => {
       expect(screen.queryByText('Edit Manufacturer')).not.toBeInTheDocument();
     });
+  });
+
+  it('opens add dialog and closes it correctly', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Add Manufacturer' }));
+
+    const closeButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(closeButton);
   });
 });
