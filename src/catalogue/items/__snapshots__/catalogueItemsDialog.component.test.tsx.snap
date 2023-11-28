@@ -450,11 +450,10 @@ exports[`Catalogue Items Dialog renders text correctly 1`] = `
                   style="display: flex;"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ukvwqo-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-11 css-ykovpn-MuiGrid-root"
                   >
                     <div
-                      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-7pvbyf-MuiAutocomplete-root"
-                      data-testid="manufacturer-autocomplete-test"
+                      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1xnbq41-MuiAutocomplete-root"
                     >
                       <div
                         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -536,7 +535,7 @@ exports[`Catalogue Items Dialog renders text correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-ukvwqo-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-u78q51-MuiGrid-root"
                   >
                     <button
                       aria-label="add manufacturer"

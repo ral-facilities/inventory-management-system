@@ -146,7 +146,7 @@ describe('Catalogue Items Table', () => {
     await hideOrShowColumn([
       'Drawing Link',
       'Item Model Number',
-      'Manufacturer',
+      'Manufacturer Name',
     ]);
   });
 
@@ -310,6 +310,18 @@ describe('Catalogue Items Table', () => {
 
     const url = screen.queryAllByText('Click here');
     expect(url[0]).toHaveAttribute('href', '/items/6');
+  });
+
+  it('navigates to the manufacturer url', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    await hideOrShowColumn(['Manufacturer URL']);
+
+    const url1 = screen.getAllByText('http://example.com');
+    expect(url1[0]).toHaveAttribute('href', 'http://example.com');
   });
 
   it('renders the dense table correctly', async () => {

@@ -296,7 +296,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         ),
       },
       {
-        header: 'Manufacturer URl',
+        header: 'Manufacturer URL',
         accessorFn: (row) =>
           manufacturerList?.find((manufacturer) => {
             return manufacturer.id === row.manufacturer_id;
