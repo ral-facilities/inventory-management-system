@@ -1,15 +1,14 @@
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import {
   getCatalogueCategoryById,
   renderComponentWithBrowserRouter,
 } from '../../setupTests';
-import { screen, waitFor } from '@testing-library/react';
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';
-import userEvent from '@testing-library/user-event';
 
-// jest.setTimeout(20000);
 describe('Catalogue Items Table', () => {
   let props: CatalogueItemsTableProps;
   let user;
@@ -18,7 +17,7 @@ describe('Catalogue Items Table', () => {
     return renderComponentWithBrowserRouter(<CatalogueItemsTable {...props} />);
   };
 
-  const hideOrShowColumn = async (columns: string[]) => {
+  const ensureColumnsVisible = async (columns: string[]) => {
     await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
     await user.click(screen.getByText('Hide all'));
     for (const column of columns) {
@@ -64,7 +63,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await hideOrShowColumn([
+    await ensureColumnsVisible([
       'Sensor brand',
       'Cost to Rework (GBP)',
       'Days to Rework',
@@ -77,7 +76,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await hideOrShowColumn([
+    await ensureColumnsVisible([
       'Obsolete Reason',
       'Measurement Range (Joules)',
       'Accuracy',
@@ -119,7 +118,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await hideOrShowColumn([
+    await ensureColumnsVisible([
       'Cost to Rework (GBP)',
       'Time to replace (days)',
       'Days to Rework',
@@ -134,7 +133,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await hideOrShowColumn(['Broken', 'Older than five years']);
+    await ensureColumnsVisible(['Broken', 'Older than five years']);
   });
 
   it('renders table correctly (section 4 due to column virtualisation )', async () => {
@@ -143,7 +142,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await hideOrShowColumn([
+    await ensureColumnsVisible([
       'Drawing Link',
       'Item Model Number',
       'Manufacturer Name',
@@ -318,7 +317,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
 
-    await hideOrShowColumn(['Manufacturer URL']);
+    await ensureColumnsVisible(['Manufacturer URL']);
 
     const url1 = screen.getAllByText('http://example.com');
     expect(url1[0]).toHaveAttribute('href', 'http://example.com');
@@ -338,9 +337,10 @@ describe('Catalogue Items Table', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
-  // skipping this test as it causes an infinite loop on the waitFor this infinite
-  // loop doesn't when tested on the browser
-  it.skip('renders the dense table correctly and can expand and coll', async () => {
+  // skipping this test as it causes an infinite loop when expanding the details panel
+  // loop doesn't occur when tested on the browser - I think it's an issue with MRT interacting
+  // with an MUI tabs component
+  it.skip('renders the dense table correctly and can expand and collapse', async () => {
     props.dense = true;
     window.Element.prototype.getBoundingClientRect = jest
       .fn()
@@ -352,10 +352,10 @@ describe('Catalogue Items Table', () => {
     });
     const rowExpandButton = screen.getAllByRole('button', { name: 'Expand' });
 
-    user.click(rowExpandButton[0]);
+    await user.click(rowExpandButton[0]);
 
     await waitFor(() => {
-      expect(screen.getByText('Details')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('Details')).toBeInTheDocument();
     });
   });
 });

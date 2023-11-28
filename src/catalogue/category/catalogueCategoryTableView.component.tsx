@@ -1,12 +1,13 @@
-import { Typography, TableRow } from '@mui/material';
-import React from 'react';
-import { CatalogueCategory } from '../../app.types';
+import { TableRow, Typography } from '@mui/material';
 import {
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
+import React from 'react';
+import { CatalogueCategory } from '../../app.types';
+
 export interface CatalogueCategoryTableViewProps {
   selectedCategories: CatalogueCategory[];
   onChangeCatalogueCurrDirId: (catalogueCurrDirId: string | null) => void;
@@ -81,15 +82,8 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       return {
         component: TableRow,
         onClick: () => {
-          if (
-            !row.original.is_leaf &&
-            (!selectedCatalogueCategoryIds.includes(row.original.id) ||
-              requestType === 'copyTo')
-          ) {
+          if (canPlaceHere || requestType === 'standard')
             onChangeCatalogueCurrDirId(row.original.id);
-          } else if (requestType === 'standard') {
-            onChangeCatalogueCurrDirId(row.original.id);
-          }
         },
         'aria-label': `${row.original.name} row`,
         style: {
