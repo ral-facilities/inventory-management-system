@@ -814,6 +814,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     options={manufacturerList ?? []}
                     size="small"
                     sx={{ alignItems: 'center', width: '400px' }}
+                    isOptionEqualToValue={(option, value) =>
+                      option.name === value.name
+                    }
                     getOptionLabel={(option) => option.name}
                     renderInput={(params) => (
                       <TextField

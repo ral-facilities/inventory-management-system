@@ -16,7 +16,7 @@ import userEvent from '@testing-library/user-event';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
-// jest.setTimeout(10000);
+jest.setTimeout(10000); //multiple long running tests
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
   let user;
@@ -178,7 +178,7 @@ describe('Catalogue Items Dialog', () => {
     });
 
     const manufacturerPopup = screen.getAllByRole('combobox')[0];
-    await user.type(manufacturerPopup, 'Man{arrowdown}{enter}');
+    await user.type(manufacturerPopup, 'M{arrowdown}{enter}');
     const saveButton = screen.getByRole('button', { name: 'Save' });
     await user.click(saveButton);
 
@@ -382,7 +382,7 @@ describe('Catalogue Items Dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
-  it.only('opens add manufacturer dialog and returns back to catalogue item dialog', async () => {
+  it('opens add manufacturer dialog and returns back to catalogue item dialog', async () => {
     props = {
       ...props,
       parentInfo: getCatalogueCategoryById('4'),
@@ -452,7 +452,7 @@ describe('Catalogue Items Dialog', () => {
         drawing_number: 'test',
         item_model_number: 'test1',
         name: 'test',
-        manufacturer_id: '2',
+        manufacturer_id: '3',
       });
 
       expect(onClose).toHaveBeenCalled();
@@ -570,7 +570,7 @@ describe('Catalogue Items Dialog', () => {
 
       await user.click(saveButton);
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
-        manufacturer_id: '2',
+        manufacturer_id: '3',
       });
 
       expect(onClose).toHaveBeenCalled();
