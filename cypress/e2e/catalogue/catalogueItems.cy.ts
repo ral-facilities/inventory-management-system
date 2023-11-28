@@ -252,12 +252,30 @@ describe('Catalogue Items', () => {
     cy.findByRole('button', { name: 'Show/Hide columns' }).click();
     cy.findByRole('button', { name: 'Hide all' }).click();
     cy.findByRole('checkbox', {
-      name: 'Toggle visibility Manufacturer',
+      name: 'Toggle visibility Manufacturer Name',
     }).click();
     cy.get('body').click();
 
     cy.findByRole('link', { name: 'Manufacturer A' }).click();
     cy.url().should('contain', '/manufacturer/1');
+  });
+
+  it('checks the href property of the manufacturer link', () => {
+    cy.findByRole('button', { name: 'Show/Hide columns' }).click();
+    cy.findByText('Hide all').click();
+
+    cy.findByText('Manufacturer URL').click();
+
+    // Find the link element
+    cy.findAllByText('http://example.com')
+      .first()
+      .should('have.attr', 'href')
+      .should('include', 'http://example.com'); // Check href attribute value
+
+    cy.findAllByText('http://example.com')
+      .first()
+      .should('have.attr', 'target')
+      .should('include', '_blank'); // Check target attribute value
   });
 
   it('displays the expired landing page message and navigates back to the catalogue home', () => {

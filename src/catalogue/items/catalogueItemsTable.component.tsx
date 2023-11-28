@@ -304,6 +304,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
+            target="_blank"
             href={
               manufacturerList?.find((manufacturer) => {
                 return manufacturer.id === row.original.manufacturer_id;
