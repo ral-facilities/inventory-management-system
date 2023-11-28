@@ -30,12 +30,7 @@ import { AxiosError } from 'axios';
 export interface ManufacturerDialogProps {
   open: boolean;
   onClose: () => void;
-  onChangeManufacturerDetails: (
-    manufacturerDetails: ManufacturerDetails
-  ) => void;
-  manufacturerDetails: ManufacturerDetails;
   selectedManufacturer?: Manufacturer;
-  type: 'edit' | 'create';
 }
 function isValidUrl(url: string) {
   try {
@@ -50,14 +45,25 @@ function isValidUrl(url: string) {
 }
 
 function ManufacturerDialog(props: ManufacturerDialogProps) {
-  const {
-    open,
-    onClose,
-    manufacturerDetails,
-    onChangeManufacturerDetails,
-    selectedManufacturer,
-    type,
-  } = props;
+  const { open, onClose, selectedManufacturer } = props;
+
+  const [manufacturerDetails, setManufacturerDetails] =
+    React.useState<ManufacturerDetails>({
+      name: '',
+      url: undefined,
+      address: {
+        address_line: '',
+        town: null,
+        county: null,
+        postcode: '',
+        country: '',
+      },
+      telephone: null,
+    });
+
+  React.useEffect(() => {
+    if (selectedManufacturer) setManufacturerDetails(selectedManufacturer);
+  }, [selectedManufacturer]);
 
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
     string | undefined
@@ -97,7 +103,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   );
 
   const handleClose = React.useCallback(() => {
-    onChangeManufacturerDetails({
+    setManufacturerDetails({
       name: '',
       url: undefined,
       address: {
@@ -116,7 +122,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     setAddressPostcodeErrorMessage(undefined);
     setFormErrorMessage(undefined);
     onClose();
-  }, [onClose, onChangeManufacturerDetails]);
+  }, [onClose, setManufacturerDetails]);
 
   const handleErrors = React.useCallback((): boolean => {
     let hasErrors = false;
@@ -340,7 +346,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
       <DialogTitle>{`${
-        type === 'create' ? 'Add' : 'Edit'
+        !selectedManufacturer ? 'Add' : 'Edit'
       } Manufacturer`}</DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={1}>
@@ -351,7 +357,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
               value={manufacturerDetails.name}
               onChange={(event) => {
-                onChangeManufacturerDetails({
+                setManufacturerDetails({
                   ...manufacturerDetails,
                   name: event.target.value,
                 });
@@ -370,7 +376,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
               value={manufacturerDetails.url}
               onChange={(event) => {
-                onChangeManufacturerDetails({
+                setManufacturerDetails({
                   ...manufacturerDetails,
                   url: event.target.value,
                 });
@@ -395,7 +401,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
               value={manufacturerDetails.address.address_line}
               onChange={(event) => {
-                onChangeManufacturerDetails({
+                setManufacturerDetails({
                   ...manufacturerDetails,
                   address: {
                     ...manufacturerDetails.address,
@@ -419,7 +425,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
               value={manufacturerDetails.address.town}
               onChange={(event) => {
-                onChangeManufacturerDetails({
+                setManufacturerDetails({
                   ...manufacturerDetails,
                   address: {
                     ...manufacturerDetails.address,
@@ -439,7 +445,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
               value={manufacturerDetails.address.county}
               onChange={(event) => {
-                onChangeManufacturerDetails({
+                setManufacturerDetails({
                   ...manufacturerDetails,
                   address: {
                     ...manufacturerDetails.address,
@@ -459,7 +465,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
               value={manufacturerDetails.address.country}
               onChange={(event) => {
-                onChangeManufacturerDetails({
+                setManufacturerDetails({
                   ...manufacturerDetails,
                   address: {
                     ...manufacturerDetails.address,
@@ -483,7 +489,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
               value={manufacturerDetails.address.postcode}
               onChange={(event) => {
-                onChangeManufacturerDetails({
+                setManufacturerDetails({
                   ...manufacturerDetails,
                   address: {
                     ...manufacturerDetails.address,
@@ -507,7 +513,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
               value={manufacturerDetails.telephone}
               onChange={(event) => {
-                onChangeManufacturerDetails({
+                setManufacturerDetails({
                   ...manufacturerDetails,
                   telephone: event.target.value || null,
                 });
@@ -542,7 +548,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
             onClick={
-              type === 'create' ? handleAddManufacturer : handleEditManufacturer
+              !selectedManufacturer
+                ? handleAddManufacturer
+                : handleEditManufacturer
             }
           >
             Save

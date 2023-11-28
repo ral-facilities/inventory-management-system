@@ -21,8 +21,6 @@ import {
 import {
   CatalogueCategory,
   CatalogueCategoryFormData,
-  CatalogueItemDetailsPlaceholder,
-  CatalogueItemManufacturer,
   CatalogueItemProperty,
 } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
@@ -30,7 +28,6 @@ import CatalogueCard from './category/catalogueCard.component';
 import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
 import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirectoryDialog.component';
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
-import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 
 export function matchCatalogueItemProperties(
@@ -75,36 +72,6 @@ function Catalogue() {
 
   const [addCategoryDialogOpen, setAddCategoryDialogOpen] =
     React.useState<boolean>(false);
-
-  const [addItemDialogOpen, setAddItemDialogOpen] =
-    React.useState<boolean>(false);
-
-  const [catalogueItemDetails, setCatalogueItemDetails] =
-    React.useState<CatalogueItemDetailsPlaceholder>({
-      catalogue_category_id: null,
-      name: null,
-      description: null,
-      cost_gbp: null,
-      cost_to_rework_gbp: null,
-      days_to_replace: null,
-      days_to_rework: null,
-      drawing_number: null,
-      drawing_link: null,
-      item_model_number: null,
-      is_obsolete: null,
-      obsolete_replacement_catalogue_item_id: null,
-      obsolete_reason: null,
-    });
-
-  const [catalogueItemManufacturer, setCatalogueItemManufacturer] =
-    React.useState<CatalogueItemManufacturer>({
-      name: '',
-      address: '',
-      url: '',
-    });
-
-  const [catalogueItemPropertyValues, setCatalogueItemPropertyValues] =
-    React.useState<(string | number | boolean | null)[]>([]);
 
   const catalogueId = location.pathname.replace(
     '/inventory-management-system/catalogue',
@@ -208,7 +175,6 @@ function Catalogue() {
   const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
     string | null
   >(null);
-
   return (
     <Grid container>
       <Grid container>
@@ -246,14 +212,6 @@ function Catalogue() {
               <AddIcon />
             </IconButton>
           </div>
-          {isLeafNode && (
-            <Button
-              variant="outlined"
-              onClick={() => setAddItemDialogOpen(true)}
-            >
-              Add Catalogue Item
-            </Button>
-          )}
 
           {!isLeafNode && selectedCategories.length >= 1 && (
             <Box>
@@ -344,16 +302,7 @@ function Catalogue() {
           </Grid>
         )}
       {parentInfo && parentInfo.is_leaf && (
-        <CatalogueItemsTable
-          parentInfo={parentInfo}
-          catalogueItemDetails={catalogueItemDetails}
-          onChangeCatalogueItemDetails={setCatalogueItemDetails}
-          catalogueItemManufacturer={catalogueItemManufacturer}
-          onChangeCatalogueItemManufacturer={setCatalogueItemManufacturer}
-          catalogueItemPropertyValues={catalogueItemPropertyValues}
-          onChangeCatalogueItemPropertyValues={setCatalogueItemPropertyValues}
-          onChangeAddItemDialogOpen={setAddItemDialogOpen}
-        />
+        <CatalogueItemsTable parentInfo={parentInfo} dense={false} />
       )}
 
       <CatalogueCategoryDialog
@@ -393,21 +342,7 @@ function Catalogue() {
         catalogueCategory={selectedCatalogueCategory}
         onChangeCatalogueCategory={setSelectedCatalogueCategory}
       />
-      <CatalogueItemsDialog
-        open={addItemDialogOpen}
-        onClose={() => setAddItemDialogOpen(false)}
-        parentId={parentId}
-        catalogueItemDetails={catalogueItemDetails}
-        onChangeCatalogueItemDetails={setCatalogueItemDetails}
-        catalogueItemManufacturer={catalogueItemManufacturer}
-        onChangeCatalogueItemManufacturer={setCatalogueItemManufacturer}
-        catalogueItemPropertiesForm={
-          parentInfo?.catalogue_item_properties ?? []
-        }
-        type="create"
-        propertyValues={catalogueItemPropertyValues}
-        onChangePropertyValues={setCatalogueItemPropertyValues}
-      />
+
       <CatalogueCategoryDirectoryDialog
         open={moveToCategoryDialogOpen}
         onClose={() => setMoveToCategoryDialogOpen(false)}

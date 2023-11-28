@@ -7,9 +7,15 @@ import { server } from './mocks/server';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RenderOptions, render } from '@testing-library/react';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
-import { CatalogueCategoryFormData, CatalogueItem } from './app.types';
-import catalogueCategoryJson from './mocks/CatalogueCategory.json';
+import {
+  CatalogueCategory,
+  CatalogueCategoryFormData,
+  CatalogueItem,
+  Manufacturer,
+} from './app.types';
+import catalogueCategoryJSON from './mocks/CatalogueCategory.json';
 import CatalogueItemJSON from './mocks/CatalogueItems.json';
+import manufacturerJSON from './mocks/manufacturer.json';
 
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
@@ -106,7 +112,7 @@ export const hooksWrapperWithProviders = (queryClient?: QueryClient) => {
 export const getCatalogueItemsPropertiesById = (
   id: string
 ): CatalogueCategoryFormData[] => {
-  const filteredCategories = catalogueCategoryJson.filter(
+  const filteredCategories = catalogueCategoryJSON.filter(
     (catalogueCategory) => catalogueCategory.id === id
   );
 
@@ -118,8 +124,46 @@ export const getCatalogueItemsPropertiesById = (
   return properties;
 };
 
+export const getCatalogueCategoryById = (
+  id: string
+): CatalogueCategory | undefined => {
+  const filteredCategories = catalogueCategoryJSON.find(
+    (catalogueCategory) => catalogueCategory.id === id
+  );
+
+  if (!filteredCategories) {
+    return undefined;
+  }
+
+  return filteredCategories;
+};
+
+export const getCatalogueItemById = (id: string): CatalogueItem | undefined => {
+  const filteredItems = CatalogueItemJSON.find(
+    (catalogueItem) => catalogueItem.id === id
+  );
+
+  if (!filteredItems) {
+    return undefined;
+  }
+
+  return filteredItems;
+};
+
 export const catalogueItemData = (id: string): CatalogueItem[] => {
   return CatalogueItemJSON.filter(
     (catalogueitem) => catalogueitem.catalogue_category_id === id
   );
+};
+
+export const getManufacturerById = (id: string): Manufacturer | undefined => {
+  const filteredManufacturer = manufacturerJSON.find(
+    (manufacturer) => manufacturer.id === id
+  );
+
+  if (!filteredManufacturer) {
+    return undefined;
+  }
+
+  return filteredManufacturer;
 };

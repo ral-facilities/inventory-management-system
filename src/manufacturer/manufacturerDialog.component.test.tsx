@@ -4,12 +4,14 @@ import userEvent from '@testing-library/user-event';
 import ManufacturerDialog, {
   ManufacturerDialogProps,
 } from './manufacturerDialog.component';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import {
+  getManufacturerById,
+  renderComponentWithBrowserRouter,
+} from '../setupTests';
 import axios from 'axios';
 
 describe('Add manufacturer dialog', () => {
   const onClose = jest.fn();
-  const onChangeManufacturerDetails = jest.fn();
   let props: ManufacturerDialogProps;
   let user;
   let axiosPostSpy;
@@ -20,299 +22,184 @@ describe('Add manufacturer dialog', () => {
     props = {
       open: true,
       onClose: onClose,
-      onChangeManufacturerDetails: onChangeManufacturerDetails,
-      manufacturerDetails: {
-        name: '',
-        url: undefined,
-        address: {
-          address_line: '',
-          town: null,
-          county: null,
-          postcode: '',
-          country: '',
-        },
-        telephone: null,
-      },
-      type: 'create',
     };
     user = userEvent.setup();
-    axiosPostSpy = jest.spyOn(axios, 'post');
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
-  it('renders text fields correctly', async () => {
-    createView();
-    expect(screen.getByLabelText('Name *')).toBeInTheDocument();
-    expect(screen.getByLabelText('URL')).toBeInTheDocument();
-    expect(screen.getByLabelText('Country *')).toBeInTheDocument();
-    expect(screen.getByLabelText('Address Line *')).toBeInTheDocument();
-    expect(screen.getByLabelText('Town')).toBeInTheDocument();
-    expect(screen.getByLabelText('County')).toBeInTheDocument();
-    expect(screen.getByLabelText('Post/Zip code *')).toBeInTheDocument();
-    expect(screen.getByLabelText('Telephone number')).toBeInTheDocument();
-  });
+  const modifyManufacturerValues = (values: {
+    name?: string;
+    url?: string;
+    addressLine?: string;
+    town?: string;
+    county?: string;
+    country?: string;
+    postcode?: string;
+    telephone?: string;
+  }) => {
+    values.name !== undefined &&
+      fireEvent.change(screen.getByLabelText('Name *'), {
+        target: { value: values.name },
+      });
 
-  it('adds manufacturer correctly', async () => {
-    props.manufacturerDetails = {
-      name: 'Manufacturer D',
-      url: 'http://test.co.uk',
-      address: {
-        address_line: '4 Example Street',
-        town: 'Oxford',
-        county: 'Oxfordshire',
-        postcode: 'OX1 2AB',
-        country: 'United Kingdom',
-      },
-      telephone: '07349612203',
-    };
-    createView();
+    values.url !== undefined &&
+      fireEvent.change(screen.getByLabelText('URL'), {
+        target: { value: values.url },
+      });
 
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-    await user.click(saveButton);
+    values.addressLine !== undefined &&
+      fireEvent.change(screen.getByLabelText('Address Line *'), {
+        target: { value: values.addressLine },
+      });
 
-    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/manufacturers', {
-      name: 'Manufacturer D',
-      url: 'http://test.co.uk',
-      address: {
-        address_line: '4 Example Street',
-        town: 'Oxford',
-        county: 'Oxfordshire',
-        postcode: 'OX1 2AB',
-        country: 'United Kingdom',
-      },
-      telephone: '07349612203',
+    values.town !== undefined &&
+      fireEvent.change(screen.getByLabelText('Town'), {
+        target: { value: values.town || '' },
+      });
+
+    values.county !== undefined &&
+      fireEvent.change(screen.getByLabelText('County'), {
+        target: { value: values.county || '' },
+      });
+
+    values.country !== undefined &&
+      fireEvent.change(screen.getByLabelText('Country *'), {
+        target: { value: values.country },
+      });
+
+    values.postcode !== undefined &&
+      fireEvent.change(screen.getByLabelText('Post/Zip code *'), {
+        target: { value: values.postcode },
+      });
+
+    values.telephone !== undefined &&
+      fireEvent.change(screen.getByLabelText('Telephone number'), {
+        target: { value: values.telephone || '' },
+      });
+  };
+
+  describe('Add manufacturer', () => {
+    beforeEach(() => {
+      axiosPostSpy = jest.spyOn(axios, 'post');
     });
 
-    expect(onClose).toHaveBeenCalled();
-  });
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+    it('renders text fields correctly', async () => {
+      createView();
+      expect(screen.getByLabelText('Name *')).toBeInTheDocument();
+      expect(screen.getByLabelText('URL')).toBeInTheDocument();
+      expect(screen.getByLabelText('Country *')).toBeInTheDocument();
+      expect(screen.getByLabelText('Address Line *')).toBeInTheDocument();
+      expect(screen.getByLabelText('Town')).toBeInTheDocument();
+      expect(screen.getByLabelText('County')).toBeInTheDocument();
+      expect(screen.getByLabelText('Post/Zip code *')).toBeInTheDocument();
+      expect(screen.getByLabelText('Telephone number')).toBeInTheDocument();
+    });
 
-  it('calls onClose when Close button is clicked', async () => {
-    createView();
-    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
-    await user.click(cancelButton);
+    it('adds manufacturer correctly', async () => {
+      createView();
 
-    await waitFor(() => {
+      modifyManufacturerValues({
+        name: 'Manufacturer D',
+        url: 'http://test.co.uk',
+        addressLine: '4 Example Street',
+        town: 'Oxford',
+        county: 'Oxfordshire',
+        postcode: 'OX1 2AB',
+        country: 'United Kingdom',
+        telephone: '07349612203',
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/manufacturers', {
+        name: 'Manufacturer D',
+        url: 'http://test.co.uk',
+        address: {
+          address_line: '4 Example Street',
+          town: 'Oxford',
+          county: 'Oxfordshire',
+          postcode: 'OX1 2AB',
+          country: 'United Kingdom',
+        },
+        telephone: '07349612203',
+      });
+
       expect(onClose).toHaveBeenCalled();
     });
-  });
 
-  it('duplicate manufacturer name displays warning message', async () => {
-    props.manufacturerDetails = {
-      name: 'Manufacturer A',
-      url: 'http://test.co.uk',
-      address: {
-        address_line: '4 Example Street',
+    it('calls onClose when Close button is clicked', async () => {
+      createView();
+      const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+      await user.click(cancelButton);
+
+      await waitFor(() => {
+        expect(onClose).toHaveBeenCalled();
+      });
+    });
+
+    it('duplicate manufacturer name displays warning message', async () => {
+      createView();
+      modifyManufacturerValues({
+        name: 'Manufacturer A',
+        url: 'http://test.co.uk',
+        addressLine: '4 Example Street',
         town: 'Oxford',
         county: 'Oxfordshire',
         postcode: 'OX1 2AB',
         country: 'United Kingdom',
-      },
-      telephone: '07349612203',
-    };
+        telephone: '07349612203',
+      });
 
-    createView();
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
 
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-    await user.click(saveButton);
+      await waitFor(() => {
+        expect(
+          screen.getByText('A manufacturer with the same name already exists.')
+        ).toBeInTheDocument();
+      });
+      expect(onClose).not.toHaveBeenCalled();
+    });
 
-    await waitFor(() => {
+    it('empty fields that are required display warning', async () => {
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(screen.getByText('Please enter a name.')).toBeInTheDocument();
+      expect(screen.getByText('Please enter a country.')).toBeInTheDocument();
+      expect(screen.getByText('Please enter an address.')).toBeInTheDocument();
       expect(
-        screen.getByText('A manufacturer with the same name already exists.')
+        screen.getByText('Please enter a post code or zip code.')
       ).toBeInTheDocument();
+      expect(onClose).not.toHaveBeenCalled();
     });
-    expect(onClose).not.toHaveBeenCalled();
-  });
 
-  it('empty fields that are required display warning', async () => {
-    createView();
-
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-    await user.click(saveButton);
-
-    expect(screen.getByText('Please enter a name.')).toBeInTheDocument();
-    expect(screen.getByText('Please enter a country.')).toBeInTheDocument();
-    expect(screen.getByText('Please enter an address.')).toBeInTheDocument();
-    expect(
-      screen.getByText('Please enter a post code or zip code.')
-    ).toBeInTheDocument();
-    expect(onClose).not.toHaveBeenCalled();
-  });
-
-  it('invalid url displays error', async () => {
-    props.manufacturerDetails = {
-      name: 'Manufacturer D',
-      url: 'invalid',
-      address: {
-        address_line: '4 Example Street',
+    it('invalid url displays error', async () => {
+      createView();
+      modifyManufacturerValues({
+        name: 'Manufacturer D',
+        url: 'invalid',
+        addressLine: '4 Example Street',
         town: 'Oxford',
         county: 'Oxfordshire',
         postcode: 'OX1 2AB',
         country: 'United Kingdom',
-      },
-      telephone: '07349612203',
-    };
+        telephone: '07349612203',
+      });
 
-    createView();
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
 
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-    await user.click(saveButton);
-
-    expect(screen.getByText('Please enter a valid URL')).toBeInTheDocument();
-    expect(onClose).not.toHaveBeenCalled();
-  });
-
-  it('handles manufacturer name input correctly', async () => {
-    const newManufacturerName = 'Test Manufacturer';
-
-    createView();
-
-    const manufacturerNameInput = screen.getByLabelText('Name *');
-
-    fireEvent.change(manufacturerNameInput, {
-      target: { value: newManufacturerName },
-    });
-
-    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturerDetails,
-      name: newManufacturerName,
-    });
-  });
-
-  it('handles manufacturer url input correctly', async () => {
-    const newManufacturerURL = 'Test';
-
-    createView();
-
-    const manufacturerURLInput = screen.getByLabelText('URL');
-
-    fireEvent.change(manufacturerURLInput, {
-      target: { value: newManufacturerURL },
-    });
-
-    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturerDetails,
-      url: newManufacturerURL,
-    });
-  });
-
-  it('handles manufacturer country input correctly', async () => {
-    const newManufacturerCountry = 'Test';
-
-    createView();
-
-    const manufacturerCountryInput = screen.getByLabelText('Country *');
-
-    fireEvent.change(manufacturerCountryInput, {
-      target: { value: newManufacturerCountry },
-    });
-
-    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturerDetails,
-      address: {
-        ...props.manufacturerDetails.address,
-        country: newManufacturerCountry,
-      },
-    });
-  });
-
-  it('handles manufacturer address line input correctly', async () => {
-    const newManufacturerAddressLine = 'Test';
-
-    createView();
-
-    const manufacturerAddressLineInput =
-      screen.getByLabelText('Address Line *');
-
-    fireEvent.change(manufacturerAddressLineInput, {
-      target: { value: newManufacturerAddressLine },
-    });
-
-    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturerDetails,
-      address: {
-        ...props.manufacturerDetails.address,
-        address_line: newManufacturerAddressLine,
-      },
-    });
-  });
-
-  it('handles manufacturer town input correctly', async () => {
-    const newManufacturerTown = 'Test';
-
-    createView();
-
-    const manufacturerTownInput = screen.getByLabelText('Town');
-
-    fireEvent.change(manufacturerTownInput, {
-      target: { value: newManufacturerTown },
-    });
-
-    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturerDetails,
-      address: {
-        ...props.manufacturerDetails.address,
-        town: newManufacturerTown,
-      },
-    });
-  });
-
-  it('handles manufacturer county input correctly', async () => {
-    const newManufacturerCounty = 'Test';
-
-    createView();
-
-    const manufacturerCountyInput = screen.getByLabelText('County');
-
-    fireEvent.change(manufacturerCountyInput, {
-      target: { value: newManufacturerCounty },
-    });
-
-    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturerDetails,
-      address: {
-        ...props.manufacturerDetails.address,
-        county: newManufacturerCounty,
-      },
-    });
-  });
-
-  it('handles manufacturer post code input correctly', async () => {
-    const newManufacturerpostcode = 'Test';
-
-    createView();
-
-    const manufacturerpostcodeInput = screen.getByLabelText('Post/Zip code *');
-
-    fireEvent.change(manufacturerpostcodeInput, {
-      target: { value: newManufacturerpostcode },
-    });
-
-    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturerDetails,
-      address: {
-        ...props.manufacturerDetails.address,
-        postcode: newManufacturerpostcode,
-      },
-    });
-  });
-
-  it('handles manufacturer telephone input correctly', async () => {
-    const newManufacturerTelephone = 'Test';
-
-    createView();
-
-    const manufacturerTelephoneInput =
-      screen.getByLabelText('Telephone number');
-
-    fireEvent.change(manufacturerTelephoneInput, {
-      target: { value: newManufacturerTelephone },
-    });
-
-    expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-      ...props.manufacturerDetails,
-      telephone: newManufacturerTelephone,
+      expect(screen.getByText('Please enter a valid URL')).toBeInTheDocument();
+      expect(onClose).not.toHaveBeenCalled();
     });
   });
 
@@ -321,44 +208,24 @@ describe('Add manufacturer dialog', () => {
     beforeEach(() => {
       props = {
         ...props,
-        type: 'edit',
+        selectedManufacturer: getManufacturerById('1'),
       };
 
       axiosPatchSpy = jest.spyOn(axios, 'patch');
     });
 
     it('Edits a manufacturer correctly', async () => {
-      props = {
-        ...props,
-        selectedManufacturer: {
-          id: '1',
-          name: 'Manufacturer A',
-          url: 'http://example.com',
-          address: {
-            address_line: '1 Example Street',
-            town: 'Oxford',
-            county: 'Oxfordshire',
-            postcode: 'OX1 2AB',
-            country: 'United Kingdom',
-          },
-          telephone: '07334893348',
-        },
-      };
-
-      props.manufacturerDetails = {
+      createView();
+      modifyManufacturerValues({
         name: 'test',
         url: 'https://test.co.uk',
-        address: {
-          address_line: 'test',
-          town: 'test',
-          county: 'test',
-          postcode: 'test',
-          country: 'test',
-        },
+        addressLine: 'test',
+        town: 'test',
+        county: 'test',
+        postcode: 'test',
+        country: 'test',
         telephone: '0000000000',
-      };
-
-      createView();
+      });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -381,35 +248,6 @@ describe('Add manufacturer dialog', () => {
     });
 
     it('No values changed shows correct error message', async () => {
-      props = {
-        ...props,
-        selectedManufacturer: {
-          id: '1',
-          name: 'Manufacturer A',
-          url: 'http://example.com',
-          address: {
-            address_line: '1 Example Street',
-            town: 'Oxford',
-            county: 'Oxfordshire',
-            postcode: 'OX1 2AB',
-            country: 'United Kingdom',
-          },
-          telephone: '07334893348',
-        },
-        manufacturerDetails: {
-          name: 'Manufacturer A',
-          url: 'http://example.com',
-          address: {
-            address_line: '1 Example Street',
-            town: 'Oxford',
-            county: 'Oxfordshire',
-            postcode: 'OX1 2AB',
-            country: 'United Kingdom',
-          },
-          telephone: '07334893348',
-        },
-      };
-
       createView();
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
@@ -424,37 +262,18 @@ describe('Add manufacturer dialog', () => {
     });
 
     it('Invalid url displays correct error message', async () => {
-      props = {
-        ...props,
-        manufacturerDetails: {
-          name: 'test',
-          url: 'invalid',
-          address: {
-            address_line: 'test',
-            town: 'test',
-            county: 'test',
-            postcode: 'test',
-            country: 'test',
-          },
-          telephone: '0000000000',
-        },
-        selectedManufacturer: {
-          id: '1',
-          name: 'Manufacturer A',
-          url: 'http://example.com',
-          address: {
-            address_line: '1 Example Street',
-            town: 'Oxford',
-            county: 'Oxfordshire',
-            postcode: 'OX1 2AB',
-            country: 'United Kingdom',
-          },
-          telephone: '07334893348',
-        },
-      };
-
       createView();
 
+      modifyManufacturerValues({
+        name: 'test',
+        url: 'invalid',
+        addressLine: 'test',
+        town: 'test',
+        county: 'test',
+        postcode: 'test',
+        country: 'test',
+        telephone: '0000000000',
+      });
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
       await user.click(saveButton);
@@ -463,36 +282,17 @@ describe('Add manufacturer dialog', () => {
     });
 
     it('Duplicate name displays error message', async () => {
-      props = {
-        ...props,
-        manufacturerDetails: {
-          name: 'test_dup',
-          url: 'https://test.co.uk',
-          address: {
-            address_line: 'test',
-            town: 'test',
-            county: 'test',
-            postcode: 'test',
-            country: 'test',
-          },
-          telephone: '0000000000',
-        },
-        selectedManufacturer: {
-          id: '1',
-          name: 'Manufacturer A',
-          url: 'http://example.com',
-          address: {
-            address_line: '1 Example Street',
-            town: 'Oxford',
-            county: 'Oxfordshire',
-            postcode: 'OX1 2AB',
-            country: 'United Kingdom',
-          },
-          telephone: '07334893348',
-        },
-      };
-
       createView();
+      modifyManufacturerValues({
+        name: 'test_dup',
+        url: 'https://test.co.uk',
+        addressLine: 'test',
+        town: 'test',
+        county: 'test',
+        postcode: 'test',
+        country: 'test',
+        telephone: '0000000000',
+      });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
@@ -506,37 +306,17 @@ describe('Add manufacturer dialog', () => {
     });
 
     it('Required fields show error if they are whitespace or current value just removed', async () => {
-      props = {
-        ...props,
-        manufacturerDetails: {
-          name: '',
-          url: 'https://test.co.uk',
-          address: {
-            address_line: '',
-            town: '',
-            county: '',
-            postcode: '',
-            country: '',
-          },
-          telephone: '',
-        },
-        selectedManufacturer: {
-          id: '1',
-          name: 'Manufacturer A',
-          url: 'http://example.com',
-          address: {
-            address_line: '1 Example Street',
-            town: 'Oxford',
-            county: 'Oxfordshire',
-            postcode: 'OX1 2AB',
-            country: 'United Kingdom',
-          },
-          telephone: '07334893348',
-        },
-      };
-
       createView();
-
+      modifyManufacturerValues({
+        name: '',
+        url: 'https://test.co.uk',
+        addressLine: '',
+        town: '',
+        county: '',
+        postcode: '',
+        country: '',
+        telephone: '',
+      });
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
       await user.click(saveButton);
@@ -551,36 +331,17 @@ describe('Add manufacturer dialog', () => {
     });
 
     it('CatchAllError request works correctly and displays refresh page message', async () => {
-      props = {
-        ...props,
-        manufacturerDetails: {
-          name: 'Error 500',
-          url: 'https://test.co.uk',
-          address: {
-            address_line: 'test',
-            town: 'test',
-            county: 'test',
-            postcode: 'test',
-            country: 'test',
-          },
-          telephone: '0000000000',
-        },
-        selectedManufacturer: {
-          id: '1',
-          name: 'Manufacturer A',
-          url: 'http://example.com',
-          address: {
-            address_line: '1 Example Street',
-            town: 'Oxford',
-            county: 'Oxfordshire',
-            postcode: 'OX1 2AB',
-            country: 'United Kingdom',
-          },
-          telephone: '07334893348',
-        },
-      };
       createView();
-
+      modifyManufacturerValues({
+        name: 'Error 500',
+        url: 'https://test.co.uk',
+        addressLine: 'test',
+        town: 'test',
+        county: 'test',
+        postcode: 'test',
+        country: 'test',
+        telephone: '0000000000',
+      });
       const saveButton = screen.getByRole('button', { name: 'Save' });
 
       await user.click(saveButton);
@@ -597,160 +358,6 @@ describe('Add manufacturer dialog', () => {
 
       await waitFor(() => {
         expect(onClose).toHaveBeenCalled();
-      });
-    });
-
-    it('handles manufacturer name input correctly', async () => {
-      const newManufacturerName = 'Test Manufacturer';
-
-      createView();
-
-      const manufacturerNameInput = screen.getByLabelText('Name *');
-
-      fireEvent.change(manufacturerNameInput, {
-        target: { value: newManufacturerName },
-      });
-
-      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturerDetails,
-        name: newManufacturerName,
-      });
-    });
-
-    it('handles manufacturer url input correctly', async () => {
-      const newManufacturerURL = 'https://test.co.uk';
-
-      createView();
-
-      const manufacturerURLInput = screen.getByLabelText('URL');
-
-      fireEvent.change(manufacturerURLInput, {
-        target: { value: newManufacturerURL },
-      });
-
-      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturerDetails,
-        url: newManufacturerURL,
-      });
-    });
-
-    it('handles manufacturer country input correctly', async () => {
-      const newManufacturerCountry = 'Test';
-
-      createView();
-
-      const manufacturerCountryInput = screen.getByLabelText('Country *');
-
-      fireEvent.change(manufacturerCountryInput, {
-        target: { value: newManufacturerCountry },
-      });
-
-      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturerDetails,
-        address: {
-          ...props.manufacturerDetails.address,
-          country: newManufacturerCountry,
-        },
-      });
-    });
-
-    it('handles manufacturer address line input correctly', async () => {
-      const newManufacturerAddressLine = 'Test';
-
-      createView();
-
-      const manufacturerStreetNameInput =
-        screen.getByLabelText('Address Line *');
-
-      fireEvent.change(manufacturerStreetNameInput, {
-        target: { value: newManufacturerAddressLine },
-      });
-
-      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturerDetails,
-        address: {
-          ...props.manufacturerDetails.address,
-          address_line: newManufacturerAddressLine,
-        },
-      });
-    });
-
-    it('handles manufacturer town input correctly', async () => {
-      const newManufacturerTown = 'Test';
-
-      createView();
-
-      const manufacturerTownInput = screen.getByLabelText('Town');
-
-      fireEvent.change(manufacturerTownInput, {
-        target: { value: newManufacturerTown },
-      });
-
-      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturerDetails,
-        address: {
-          ...props.manufacturerDetails.address,
-          town: newManufacturerTown,
-        },
-      });
-    });
-
-    it('handles manufacturer county input correctly', async () => {
-      const newManufacturerCounty = 'Test';
-
-      createView();
-
-      const manufacturerCountyInput = screen.getByLabelText('County');
-
-      fireEvent.change(manufacturerCountyInput, {
-        target: { value: newManufacturerCounty },
-      });
-
-      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturerDetails,
-        address: {
-          ...props.manufacturerDetails.address,
-          county: newManufacturerCounty,
-        },
-      });
-    });
-
-    it('handles manufacturer post code input correctly', async () => {
-      const newManufacturerpostcode = 'Test';
-
-      createView();
-
-      const manufacturerpostcodeInput =
-        screen.getByLabelText('Post/Zip code *');
-
-      fireEvent.change(manufacturerpostcodeInput, {
-        target: { value: newManufacturerpostcode },
-      });
-
-      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturerDetails,
-        address: {
-          ...props.manufacturerDetails.address,
-          postcode: newManufacturerpostcode,
-        },
-      });
-    });
-
-    it('handles manufacturer telephone input correctly', async () => {
-      const newManufacturerTelephone = 'Test';
-
-      createView();
-
-      const manufacturerTelephoneInput =
-        screen.getByLabelText('Telephone number');
-
-      fireEvent.change(manufacturerTelephoneInput, {
-        target: { value: newManufacturerTelephone },
-      });
-
-      expect(onChangeManufacturerDetails).toHaveBeenCalledWith({
-        ...props.manufacturerDetails,
-        telephone: newManufacturerTelephone,
       });
     });
   });
