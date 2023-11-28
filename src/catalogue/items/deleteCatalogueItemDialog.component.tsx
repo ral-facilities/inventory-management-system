@@ -38,8 +38,8 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
     if (catalogueItem) {
       deleteCatalogueItem(catalogueItem)
         .then((response) => {
-          onChangeCatalogueItem(undefined);
           onClose();
+          onChangeCatalogueItem(undefined);
         })
         .catch((error: AxiosError) => {
           const response = error.response?.data as ErrorParsing;
