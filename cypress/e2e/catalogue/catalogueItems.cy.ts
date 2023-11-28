@@ -173,6 +173,20 @@ describe('Catalogue Items', () => {
     ).should('not.exist');
   });
 
+  it('opens add manufacturer dialog and closes it back to catalogue item dialog', () => {
+    cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
+
+    cy.findByRole('button', { name: 'add manufacturer' }).click();
+
+    cy.findByText('Add Manufacturer').should('exist');
+
+    cy.findByRole('button', { name: 'Cancel' }).click();
+
+    cy.findByText('Add Manufacturer').should('not.exist');
+
+    cy.findByText('Details').should('exist');
+  });
+
   it('displays the table view correctly', () => {
     cy.findByText('Cameras 1').should('exist');
     cy.findByText('Cameras 2').should('exist');
@@ -230,6 +244,20 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Manufacturer *').should('have.value', 'Manufacturer A');
 
     cy.findByRole('button', { name: 'Cancel' }).click();
+  });
+
+  it('navigates to manufacturer landing page', () => {
+    cy.visit('/inventory-management-system/catalogue/5');
+
+    cy.findByRole('button', { name: 'Show/Hide columns' }).click();
+    cy.findByRole('button', { name: 'Hide all' }).click();
+    cy.findByRole('checkbox', {
+      name: 'Toggle visibility Manufacturer',
+    }).click();
+    cy.get('body').click();
+
+    cy.findByRole('link', { name: 'Manufacturer A' }).click();
+    cy.url().should('contain', '/manufacturer/1');
   });
 
   it('displays the expired landing page message and navigates back to the catalogue home', () => {
