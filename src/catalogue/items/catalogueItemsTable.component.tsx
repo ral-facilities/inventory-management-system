@@ -277,6 +277,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Manufacturer Name',
+        accessorFn: (row) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer.id === row.manufacturer_id;
+          })?.name,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
@@ -293,6 +297,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Manufacturer URl',
+        accessorFn: (row) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer.id === row.manufacturer_id;
+          })?.url,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
@@ -312,6 +320,28 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Manufacturer Address',
+        accessorFn: (row) =>
+          `${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer.id === row.manufacturer_id;
+            })?.address.address_line
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer.id === row.manufacturer_id;
+            })?.address.town
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer.id === row.manufacturer_id;
+            })?.address.county
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer.id === row.manufacturer_id;
+            })?.address.postcode
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer.id === row.manufacturer_id;
+            })?.address.country
+          }`,
         Cell: ({ row }) => (
           <div style={{ display: 'inline-block' }}>
             <Typography sx={{ fontSize: 'inherit' }}>
@@ -354,6 +384,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Manufacturer Telephone',
+        accessorFn: (row) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer.id === row.manufacturer_id;
+          })?.telephone,
         Cell: ({ row }) =>
           manufacturerList?.find((manufacturer) => {
             return manufacturer.id === row.original.manufacturer_id;
