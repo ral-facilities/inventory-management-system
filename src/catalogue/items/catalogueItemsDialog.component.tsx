@@ -782,7 +782,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               </Grid>
 
               <Grid item xs={12} style={{ display: 'flex' }}>
-                <Grid item xs={12} flexDirection={'row'}>
+                <Grid item xs={11}>
                   <Autocomplete
                     value={
                       //logic means that current manufacturer renders in edit dialog, but behaves the same as add dialog (so can be changed/cleared)
@@ -810,10 +810,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     }}
                     disablePortal
                     id="manufacturer-autocomplete"
-                    data-testid="manufacturer-autocomplete-test"
                     options={manufacturerList ?? []}
                     size="small"
-                    sx={{ alignItems: 'center', width: '400px' }}
                     isOptionEqualToValue={(option, value) =>
                       option.name === value.name
                     }
@@ -829,7 +827,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     )}
                   />
                 </Grid>
-                <Grid item xs={12} flexDirection={'row'}>
+                <Grid item xs={1}>
                   <IconButton
                     sx={{ mx: '4px', my: '2px' }}
                     onClick={() => setAddManufacturerDialogOpen(true)}
