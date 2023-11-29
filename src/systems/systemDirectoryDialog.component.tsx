@@ -13,10 +13,10 @@ import {
   useSystems,
   useSystemsBreadcrumbs,
 } from '../api/systems';
-import { EditSystem, System } from '../app.types';
+import { System } from '../app.types';
+import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemsTableView } from './systemsTableView.component';
-import handleTransferState from '../handleTransferState';
 
 export interface SystemDirectoryDialogProps {
   open: boolean;
@@ -51,13 +51,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
 
   const handleMoveTo = React.useCallback(() => {
     if (!targetSystemLoading) {
-      const systemEdits: EditSystem[] = selectedSystems.map((system) => ({
-        id: system.id,
-        parent_id: parentSystemId,
-      }));
-
       moveToSystem({
-        systemEdits: systemEdits,
         selectedSystems: selectedSystems,
         // Only reason for targetSystem to be undefined here is if not loading at all
         // which happens when at root
@@ -70,7 +64,6 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   }, [
     handleClose,
     moveToSystem,
-    parentSystemId,
     selectedSystems,
     targetSystem,
     targetSystemLoading,

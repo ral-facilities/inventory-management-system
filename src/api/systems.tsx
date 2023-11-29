@@ -240,9 +240,12 @@ export const useMoveToSystem = (): UseMutationResult<
 
     let successfulIds: string[] = [];
 
-    const promises = moveToSystem.systemEdits.map(
-      async (systemEdit: EditSystem, index: number) => {
-        return editSystem(systemEdit)
+    const promises = moveToSystem.selectedSystems.map(
+      async (system: System, index: number) => {
+        return editSystem({
+          id: system.id,
+          parent_id: moveToSystem.targetSystem?.id || null,
+        })
           .then((result: System) => {
             const targetSystemName = moveToSystem.targetSystem?.name || 'Root';
             transferStates.push({
@@ -251,7 +254,7 @@ export const useMoveToSystem = (): UseMutationResult<
               state: 'success',
             });
 
-            successfulIds.push(systemEdit.id);
+            successfulIds.push(system.id);
           })
           .catch((error) => {
             const response = error.response?.data as ErrorParsing;

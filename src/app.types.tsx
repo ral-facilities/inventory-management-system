@@ -193,7 +193,6 @@ export interface EditSystem extends Partial<AddSystem> {
 }
 
 export interface MoveToSystem {
-  systemEdits: EditSystem[];
   selectedSystems: System[];
   // Null if root
   targetSystem: System | null;
