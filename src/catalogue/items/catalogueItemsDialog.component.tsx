@@ -479,8 +479,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const handleEditCatalogueItem = React.useCallback(() => {
     if (selectedCatalogueItem) {
-      console.log('test');
-      console.log(selectedCatalogueItem);
       const { hasErrors, updatedProperties } = handleFormErrorStates();
 
       if (hasErrors) {
