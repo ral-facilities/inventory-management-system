@@ -163,8 +163,11 @@ export const useEditManufacturer = (): UseMutationResult<
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
-      onSuccess: () => {
+      onSuccess: (manufacturerReturned) => {
         queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
+        queryClient.invalidateQueries({
+          queryKey: ['Manufacturer', manufacturerReturned.id],
+        });
       },
     }
   );
