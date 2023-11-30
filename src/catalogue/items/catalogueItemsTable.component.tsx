@@ -30,7 +30,7 @@ import {
 import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
-import { useManufacturer, useManufacturerIds } from '../../api/manufacturer';
+import { useManufacturerIds } from '../../api/manufacturer';
 
 function findPropertyValue(
   properties: CatalogueItemPropertyResponse[],
