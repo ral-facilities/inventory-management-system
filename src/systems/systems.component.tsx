@@ -20,16 +20,25 @@ import Breadcrumbs from '../view/breadcrumbs.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog from './systemDialog.component';
 
-function Systems() {
-  // Navigation setup
+/* Returns function that navigates to a specific system id (or to the root of all systems
+   if given null) */
+export const useNavigateToSystem = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const onChangeNode = React.useCallback(
-    (newId: string) => {
-      navigate(`/inventory-management-system/systems/${newId}`);
+
+  return React.useCallback(
+    (newId: string | null) => {
+      navigate(
+        `/inventory-management-system/systems${newId ? `/${newId}` : ''}`
+      );
     },
     [navigate]
   );
+};
+
+function Systems() {
+  // Navigation setup
+  const location = useLocation();
+  const navigateToSystem = useNavigateToSystem();
 
   const getSystemID = React.useCallback(() => {
     let systemID: string | null = location.pathname.replace(
@@ -71,9 +80,9 @@ function Systems() {
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Breadcrumbs
               breadcrumbsInfo={systemsBreadcrumbs}
-              onChangeNode={onChangeNode}
+              onChangeNode={navigateToSystem}
               onChangeNavigateHome={() => {
-                navigate('/inventory-management-system/systems');
+                navigateToSystem(null);
               }}
               navigateHomeAriaLabel={'navigate to systems home'}
             />

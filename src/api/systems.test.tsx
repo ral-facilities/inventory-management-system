@@ -5,6 +5,7 @@ import SystemsJSON from '../mocks/Systems.json';
 import { hooksWrapperWithProviders } from '../setupTests';
 import {
   useAddSystem,
+  useDeleteSystem,
   useSystem,
   useSystems,
   useSystemsBreadcrumbs,
@@ -62,6 +63,10 @@ describe('System api functions', () => {
         )
       );
     });
+
+    it.todo(
+      'sends request to all systems and throws an appropriate error on failure'
+    );
   });
 
   describe('useSystem', () => {
@@ -92,6 +97,10 @@ describe('System api functions', () => {
         )[0]
       );
     });
+
+    it.todo(
+      'sends request to fetch a system and throws an appropriate error on failure'
+    );
   });
 
   describe('useSystemsBreadcrumbs', () => {
@@ -123,6 +132,10 @@ describe('System api functions', () => {
         )
       );
     });
+
+    it.todo(
+      'sends request to add a system and throws an appropriate error on failure'
+    );
   });
 
   describe('useAddSystem', () => {
@@ -145,5 +158,26 @@ describe('System api functions', () => {
 
       expect(result.current.data).toEqual({ ...MOCK_SYSTEM_POST, id: '1' });
     });
+
+    it.todo(
+      'sends request to add a system and throws an appropriate error on failure'
+    );
+  });
+
+  describe('useDeleteSystem', () => {
+    it('posts a request to delete a system and returns a successful response', async () => {
+      const { result } = renderHook(() => useDeleteSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      result.current.mutate('65328f34a40ff5301575a4e9');
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+
+      expect(result.current.data).toEqual('');
+    });
+
+    it.todo(
+      'sends request to delete a system and throws an appropriate error on failure'
+    );
   });
 });
