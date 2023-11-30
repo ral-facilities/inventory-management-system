@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios';
 import {
   useMutation,
   UseMutationResult,
+  useQueries,
   useQuery,
   useQueryClient,
   UseQueryResult,
@@ -131,6 +132,17 @@ export const useManufacturer = (
       enabled: id !== undefined,
     }
   );
+};
+
+export const useManufacturerIds = (
+  ids: string[]
+): UseQueryResult<Manufacturer, unknown>[] => {
+  return useQueries({
+    queries: ids.map((id) => ({
+      queryKey: ['Manufacturer', id],
+      queryFn: () => fetchManufacturer(id),
+    })),
+  });
 };
 
 const editManufacturer = async (

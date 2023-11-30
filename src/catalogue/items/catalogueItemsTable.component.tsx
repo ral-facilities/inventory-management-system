@@ -25,11 +25,12 @@ import {
   CatalogueCategory,
   CatalogueItem,
   CatalogueItemPropertyResponse,
+  Manufacturer,
 } from '../../app.types';
 import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
-import { useManufacturers } from '../../api/manufacturer';
+import { useManufacturer, useManufacturerIds } from '../../api/manufacturer';
 
 function findPropertyValue(
   properties: CatalogueItemPropertyResponse[],
@@ -68,7 +69,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const { data, isLoading } = useCatalogueItems(parentInfo.id);
 
-  const { data: manufacturerList } = useManufacturers();
+  let manufacturerIdList = new Set<string>();
+
+  data?.forEach((obj) => {
+    manufacturerIdList.add(obj.manufacturer_id);
+  });
+
+  const manufacturerList: (Manufacturer | undefined)[] = useManufacturerIds(
+    Array.from(manufacturerIdList.values())
+  ).map((obj) => {
+    return obj.data;
+  });
 
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
     React.useState<boolean>(false);
@@ -279,7 +290,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Manufacturer Name',
         accessorFn: (row) =>
           manufacturerList?.find((manufacturer) => {
-            return manufacturer.id === row.manufacturer_id;
+            return manufacturer?.id === row.manufacturer_id;
           })?.name,
         Cell: ({ row }) => (
           <MuiLink
@@ -289,7 +300,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           >
             {
               manufacturerList?.find((manufacturer) => {
-                return manufacturer.id === row.original.manufacturer_id;
+                return manufacturer?.id === row.original.manufacturer_id;
               })?.name
             }
           </MuiLink>
@@ -299,7 +310,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Manufacturer URL',
         accessorFn: (row) =>
           manufacturerList?.find((manufacturer) => {
-            return manufacturer.id === row.manufacturer_id;
+            return manufacturer?.id === row.manufacturer_id;
           })?.url,
         Cell: ({ row }) => (
           <MuiLink
@@ -307,13 +318,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             target="_blank"
             href={
               manufacturerList?.find((manufacturer) => {
-                return manufacturer.id === row.original.manufacturer_id;
+                return manufacturer?.id === row.original.manufacturer_id;
               })?.url ?? undefined
             }
           >
             {
               manufacturerList?.find((manufacturer) => {
-                return manufacturer.id === row.original.manufacturer_id;
+                return manufacturer?.id === row.original.manufacturer_id;
               })?.url
             }
           </MuiLink>
@@ -324,23 +335,23 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) =>
           `${
             manufacturerList?.find((manufacturer) => {
-              return manufacturer.id === row.manufacturer_id;
+              return manufacturer?.id === row.manufacturer_id;
             })?.address.address_line
           }${
             manufacturerList?.find((manufacturer) => {
-              return manufacturer.id === row.manufacturer_id;
+              return manufacturer?.id === row.manufacturer_id;
             })?.address.town
           }${
             manufacturerList?.find((manufacturer) => {
-              return manufacturer.id === row.manufacturer_id;
+              return manufacturer?.id === row.manufacturer_id;
             })?.address.county
           }${
             manufacturerList?.find((manufacturer) => {
-              return manufacturer.id === row.manufacturer_id;
+              return manufacturer?.id === row.manufacturer_id;
             })?.address.postcode
           }${
             manufacturerList?.find((manufacturer) => {
-              return manufacturer.id === row.manufacturer_id;
+              return manufacturer?.id === row.manufacturer_id;
             })?.address.country
           }`,
         Cell: ({ row }) => (
@@ -348,35 +359,35 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             <Typography sx={{ fontSize: 'inherit' }}>
               {
                 manufacturerList?.find((manufacturer) => {
-                  return manufacturer.id === row.original.manufacturer_id;
+                  return manufacturer?.id === row.original.manufacturer_id;
                 })?.address.address_line
               }
             </Typography>
             <Typography sx={{ fontSize: 'inherit' }}>
               {
                 manufacturerList?.find((manufacturer) => {
-                  return manufacturer.id === row.original.manufacturer_id;
+                  return manufacturer?.id === row.original.manufacturer_id;
                 })?.address.town
               }
             </Typography>
             <Typography sx={{ fontSize: 'inherit' }}>
               {
                 manufacturerList?.find((manufacturer) => {
-                  return manufacturer.id === row.original.manufacturer_id;
+                  return manufacturer?.id === row.original.manufacturer_id;
                 })?.address.county
               }
             </Typography>
             <Typography sx={{ fontSize: 'inherit' }}>
               {
                 manufacturerList?.find((manufacturer) => {
-                  return manufacturer.id === row.original.manufacturer_id;
+                  return manufacturer?.id === row.original.manufacturer_id;
                 })?.address.postcode
               }
             </Typography>
             <Typography sx={{ fontSize: 'inherit' }}>
               {
                 manufacturerList?.find((manufacturer) => {
-                  return manufacturer.id === row.original.manufacturer_id;
+                  return manufacturer?.id === row.original.manufacturer_id;
                 })?.address.country
               }
             </Typography>
@@ -387,11 +398,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Manufacturer Telephone',
         accessorFn: (row) =>
           manufacturerList?.find((manufacturer) => {
-            return manufacturer.id === row.manufacturer_id;
+            return manufacturer?.id === row.manufacturer_id;
           })?.telephone,
         Cell: ({ row }) =>
           manufacturerList?.find((manufacturer) => {
-            return manufacturer.id === row.original.manufacturer_id;
+            return manufacturer?.id === row.original.manufacturer_id;
           })?.telephone,
       },
     ];
@@ -536,7 +547,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             catalogueItemIdData={row.original}
             catalogueCategoryData={parentInfo}
             manufacturerData={manufacturerList?.find((manufacturer) => {
-              return manufacturer.id === row.original.manufacturer_id;
+              return manufacturer?.id === row.original.manufacturer_id;
             })}
           />
         )
