@@ -6,7 +6,7 @@ module.exports = {
         "react-dom": "ReactDOM", // Case matters here
       };
 
-      if (env === "production" && !process.env.REACT_APP_E2E_TESTING) {
+      if (env === "production" && process.env.REACT_APP_E2E_TESTING !== "true") {
         webpackConfig.output.library = "inventory-management-system";
         webpackConfig.output.libraryTarget = "window";
 
@@ -16,6 +16,13 @@ module.exports = {
         delete webpackConfig.optimization.splitChunks;
         webpackConfig.optimization.runtimeChunk = false;
       }
+
+      webpackConfig.output.clean = {
+        keep(asset) {
+          // exclude mockServiceWorker.js from build
+          return !asset.includes('mockServiceWorker.js');
+        },
+      };
 
       return webpackConfig;
     },
