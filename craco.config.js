@@ -15,14 +15,14 @@ module.exports = {
 
         delete webpackConfig.optimization.splitChunks;
         webpackConfig.optimization.runtimeChunk = false;
-      }
 
-      webpackConfig.output.clean = {
-        keep(asset) {
-          // exclude mockServiceWorker.js from build
-          return !asset.includes('mockServiceWorker.js');
-        },
-      };
+        webpackConfig.output.clean = {
+          keep(asset) {
+            // exclude mockServiceWorker.js from build
+            return !asset.includes('mockServiceWorker.js');
+          },
+        };
+      }
 
       return webpackConfig;
     },
