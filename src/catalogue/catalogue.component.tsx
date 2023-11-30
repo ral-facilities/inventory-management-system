@@ -1,5 +1,8 @@
-import React from 'react';
-import Breadcrumbs from '../view/breadcrumbs.component';
+import { NavigateNext } from '@mui/icons-material';
+import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
+import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
+import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 import {
   Box,
   Button,
@@ -8,30 +11,24 @@ import {
   LinearProgress,
   Typography,
 } from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom';
-import AddIcon from '@mui/icons-material/Add';
-import { NavigateNext } from '@mui/icons-material';
-import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
-import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
-import ClearIcon from '@mui/icons-material/Clear';
-import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
-import CatalogueCard from './category/catalogueCard.component';
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
   useCatalogueCategoryById,
 } from '../api/catalogueCategory';
 import {
-  CatalogueCategoryFormData,
   CatalogueCategory,
-  CatalogueItemDetails,
-  CatalogueItemManufacturer,
+  CatalogueCategoryFormData,
   CatalogueItemProperty,
 } from '../app.types';
+import Breadcrumbs from '../view/breadcrumbs.component';
+import CatalogueCard from './category/catalogueCard.component';
+import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
+import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirectoryDialog.component';
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
-import CatalogueItemsDialog from './items/catalogueItemsDialog.component';
-import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirectoryDialog.component';
 
 export function matchCatalogueItemProperties(
   form: CatalogueCategoryFormData[],
@@ -75,25 +72,6 @@ function Catalogue() {
 
   const [addCategoryDialogOpen, setAddCategoryDialogOpen] =
     React.useState<boolean>(false);
-
-  const [addItemDialogOpen, setAddItemDialogOpen] =
-    React.useState<boolean>(false);
-
-  const [catalogueItemDetails, setCatalogueItemDetails] =
-    React.useState<CatalogueItemDetails>({
-      name: undefined,
-      description: '',
-    });
-
-  const [catalogueItemManufacturer, setCatalogueItemManufacturer] =
-    React.useState<CatalogueItemManufacturer>({
-      name: '',
-      address: '',
-      url: '',
-    });
-
-  const [catalogueItemPropertyValues, setCatalogueItemPropertyValues] =
-    React.useState<(string | number | boolean | null)[]>([]);
 
   const catalogueId = location.pathname.replace(
     '/inventory-management-system/catalogue',
@@ -197,7 +175,6 @@ function Catalogue() {
   const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
     string | null
   >(null);
-
   return (
     <Grid container>
       <Grid container>
@@ -235,14 +212,6 @@ function Catalogue() {
               <AddIcon />
             </IconButton>
           </div>
-          {isLeafNode && (
-            <Button
-              variant="outlined"
-              onClick={() => setAddItemDialogOpen(true)}
-            >
-              Add Catalogue Item
-            </Button>
-          )}
 
           {!isLeafNode && selectedCategories.length >= 1 && (
             <Box>
@@ -301,10 +270,10 @@ function Catalogue() {
               justifyContent: 'center',
             }}
           >
-            <Typography sx={{ fontWeight: 'bold' }}>
+            <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
               No results found
             </Typography>
-            <Typography>
+            <Typography sx={{ textAlign: 'center' }}>
               {!parentInfo && catalogueId !== ''
                 ? 'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
                 : 'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'}
@@ -333,16 +302,7 @@ function Catalogue() {
           </Grid>
         )}
       {parentInfo && parentInfo.is_leaf && (
-        <CatalogueItemsTable
-          parentInfo={parentInfo}
-          catalogueItemDetails={catalogueItemDetails}
-          onChangeCatalogueItemDetails={setCatalogueItemDetails}
-          catalogueItemManufacturer={catalogueItemManufacturer}
-          onChangeCatalogueItemManufacturer={setCatalogueItemManufacturer}
-          catalogueItemPropertyValues={catalogueItemPropertyValues}
-          onChangeCatalogueItemPropertyValues={setCatalogueItemPropertyValues}
-          onChangeAddItemDialogOpen={setAddItemDialogOpen}
-        />
+        <CatalogueItemsTable parentInfo={parentInfo} dense={false} />
       )}
 
       <CatalogueCategoryDialog
@@ -382,21 +342,7 @@ function Catalogue() {
         catalogueCategory={selectedCatalogueCategory}
         onChangeCatalogueCategory={setSelectedCatalogueCategory}
       />
-      <CatalogueItemsDialog
-        open={addItemDialogOpen}
-        onClose={() => setAddItemDialogOpen(false)}
-        parentId={parentId}
-        catalogueItemDetails={catalogueItemDetails}
-        onChangeCatalogueItemDetails={setCatalogueItemDetails}
-        catalogueItemManufacturer={catalogueItemManufacturer}
-        onChangeCatalogueItemManufacturer={setCatalogueItemManufacturer}
-        catalogueItemPropertiesForm={
-          parentInfo?.catalogue_item_properties ?? []
-        }
-        type="create"
-        propertyValues={catalogueItemPropertyValues}
-        onChangePropertyValues={setCatalogueItemPropertyValues}
-      />
+
       <CatalogueCategoryDirectoryDialog
         open={moveToCategoryDialogOpen}
         onClose={() => setMoveToCategoryDialogOpen(false)}

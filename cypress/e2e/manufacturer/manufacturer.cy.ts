@@ -11,6 +11,7 @@ describe('Manufacturer', () => {
     cy.findByText('Actions').should('be.visible');
     cy.findByText('Name').should('be.visible');
     cy.findByText('URL').should('be.visible');
+    cy.findByText('Telephone').scrollIntoView();
     cy.findByText('Address').should('be.visible');
     cy.findByText('Telephone').should('be.visible');
   });
@@ -23,16 +24,13 @@ describe('Manufacturer', () => {
     cy.findByText('Manufacturer C').should('be.visible');
     cy.findByText('http://example.com').should('be.visible');
     cy.findByText('http://test.com').should('be.visible');
+    cy.findByText('http://test.co.uk').scrollIntoView();
     cy.findByText('http://test.co.uk').should('be.visible');
-    cy.findByText('1 Example Street Oxford Oxfordshire OX1 2AB').should(
-      'be.visible'
-    );
-    cy.findByText('2 Example Street Oxford Oxfordshire OX1 2AB').should(
-      'be.visible'
-    );
-    cy.findByText('3 Example Street Oxford Oxfordshire OX1 2AB').should(
-      'be.visible'
-    );
+    cy.findByText('http://example.com').scrollIntoView();
+    cy.findByText('07334893348').scrollIntoView();
+    cy.findByText('07334893348').should('be.visible');
+    cy.findByText('07294958549').should('be.visible');
+    cy.findByText('07934303412').should('be.visible');
   });
 
   it('manufacturer url is correct and opens new webpage', () => {
@@ -52,8 +50,8 @@ describe('Manufacturer', () => {
     cy.findByRole('button', { name: 'Add Manufacturer' }).click();
     cy.findByLabelText('Name *').type('Manufacturer D');
     cy.findByLabelText('URL').type('http://test.co.uk');
-    cy.findByLabelText('Building number *').type('1');
-    cy.findByLabelText('Street name *').type('Example Street');
+    cy.findByLabelText('Country *').type('United Kingdom');
+    cy.findByLabelText('Address Line *').type('4 Example Street');
     cy.findByLabelText('Town').type('Oxford');
     cy.findByLabelText('County').type('Oxfordshire');
     cy.findByLabelText('Post/Zip code *').type('OX1 2AB');
@@ -70,7 +68,7 @@ describe('Manufacturer', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"Manufacturer D","url":"http://test.co.uk","address":{"building_number":"1","street_name":"Example Street","town":"Oxford","county":"Oxfordshire","postcode":"OX1 2AB"},"telephone":"07349612203"}'
+        '{"name":"Manufacturer D","url":"http://test.co.uk","address":{"address_line":"4 Example Street","town":"Oxford","county":"Oxfordshire","postcode":"OX1 2AB","country":"United Kingdom"},"telephone":"07349612203"}'
       );
     });
   });
@@ -78,8 +76,8 @@ describe('Manufacturer', () => {
   it('adds a manufacturer with only mandatory fields', () => {
     cy.findByRole('button', { name: 'Add Manufacturer' }).click();
     cy.findByLabelText('Name *').type('Manufacturer D');
-    cy.findByLabelText('Building number *').type('1');
-    cy.findByLabelText('Street name *').type('Example Street');
+    cy.findByLabelText('Country *').type('United Kingdom');
+    cy.findByLabelText('Address Line *').type('4 Example Street');
     cy.findByLabelText('Post/Zip code *').type('OX1 2AB');
 
     cy.startSnoopingBrowserMockedRequest();
@@ -93,7 +91,7 @@ describe('Manufacturer', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"Manufacturer D","address":{"building_number":"1","street_name":"Example Street","town":"","county":"","postcode":"OX1 2AB"},"telephone":""}'
+        '{"name":"Manufacturer D","address":{"address_line":"4 Example Street","town":null,"county":null,"postcode":"OX1 2AB","country":"United Kingdom"},"telephone":null}'
       );
     });
 
@@ -108,12 +106,12 @@ describe('Manufacturer', () => {
       cy.findByRole('dialog')
         .should('be.visible')
         .within(() => {
-          cy.contains('Please enter a building number.');
+          cy.contains('Please enter a country.');
         });
       cy.findByRole('dialog')
         .should('be.visible')
         .within(() => {
-          cy.contains('Please enter a street name.');
+          cy.contains('Please enter an address.');
         });
       cy.findByRole('dialog')
         .should('be.visible')
@@ -122,11 +120,10 @@ describe('Manufacturer', () => {
         });
     });
     it('displays error message when duplicate name entered', () => {
-      cy.findByTestId('Add Manufacturer').click();
+      cy.findByRole('button', { name: 'Add Manufacturer' }).click();
       cy.findByLabelText('Name *').type('Manufacturer A');
-      cy.findByLabelText('Building number *').type('1');
-      cy.findByLabelText('Street name *').type('Example Street');
-      cy.findByLabelText('Post/Zip code *').type('OX1 2AB');
+      cy.findByLabelText('Country *').type('United Kingdom');
+      cy.findByLabelText('Address Line *').type('4 Example Street');
 
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByRole('dialog')
@@ -150,7 +147,8 @@ describe('Manufacturer', () => {
   });
 
   it('delete a manufacturer', () => {
-    cy.findAllByTestId('DeleteIcon').first().click();
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Delete').click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -167,7 +165,8 @@ describe('Manufacturer', () => {
   });
 
   it('shows error when trying to delete manufacturer that is part of Catalogue Item', () => {
-    cy.findAllByTestId('DeleteIcon').eq(1).click();
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByText('Delete').click();
 
     cy.findByRole('button', { name: 'Continue' }).click();
 
@@ -181,17 +180,16 @@ describe('Manufacturer', () => {
   });
   it('Edits a manufacturer correctly', () => {
     cy.visit('/inventory-management-system/manufacturer');
-    cy.findByRole('button', {
-      name: 'Edit Manufacturer A manufacturer',
-    }).click();
-    cy.findByLabelText('Name').clear();
-    cy.findByLabelText('Name').type('test');
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Edit').click();
+    cy.findByLabelText('Name *').clear();
+    cy.findByLabelText('Name *').type('test');
 
-    cy.findByLabelText('Building number').clear();
-    cy.findByLabelText('Building number').type('100');
+    cy.findByLabelText('Country *').clear();
+    cy.findByLabelText('Country *').type('test');
 
-    cy.findByLabelText('Street name').clear();
-    cy.findByLabelText('Street name').type('test');
+    cy.findByLabelText('Address Line *').clear();
+    cy.findByLabelText('Address Line *').type('test');
 
     cy.findByLabelText('Town').clear();
     cy.findByLabelText('Town').type('test');
@@ -199,8 +197,8 @@ describe('Manufacturer', () => {
     cy.findByLabelText('County').clear();
     cy.findByLabelText('County').type('test');
 
-    cy.findByLabelText('Post/Zip code').clear();
-    cy.findByLabelText('Post/Zip code').type('test');
+    cy.findByLabelText('Post/Zip code *').clear();
+    cy.findByLabelText('Post/Zip code *').type('test');
 
     cy.findByLabelText('Telephone number').clear();
     cy.findByLabelText('Telephone number').type('0000000000');
@@ -216,18 +214,17 @@ describe('Manufacturer', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"test","address":{"building_number":"100","street_name":"test","town":"test","county":"test","postcode":"test"},"telephone":"0000000000"}'
+        '{"name":"test","address":{"address_line":"test","town":"test","county":"test","postcode":"test","country":"test"},"telephone":"0000000000"}'
       );
     });
   });
 
   it('Trying to edit with duplicate name displays error message', () => {
-    cy.findByRole('button', {
-      name: 'Edit Manufacturer A manufacturer',
-    }).click();
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Edit').click();
 
-    cy.findByLabelText('Name').clear();
-    cy.findByLabelText('Name').type('test_dup');
+    cy.findByLabelText('Name *').clear();
+    cy.findByLabelText('Name *').type('test_dup');
 
     cy.findByRole('button', { name: 'Save' }).click();
 
@@ -241,9 +238,8 @@ describe('Manufacturer', () => {
   });
 
   it('Trying to edit with invalid url displays error message', () => {
-    cy.findByRole('button', {
-      name: 'Edit Manufacturer A manufacturer',
-    }).click();
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Edit').click();
 
     cy.findByLabelText('URL').clear();
     cy.findByLabelText('URL').type('invalid');
@@ -258,9 +254,8 @@ describe('Manufacturer', () => {
   });
 
   it('Not changing any fields shows error', () => {
-    cy.findByRole('button', {
-      name: 'Edit Manufacturer A manufacturer',
-    }).click();
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Edit').click();
 
     cy.findByRole('button', { name: 'Save' }).click();
 
@@ -274,14 +269,13 @@ describe('Manufacturer', () => {
   });
 
   it('Required fields that are cleared are not allowed and show error message', () => {
-    cy.findByRole('button', {
-      name: 'Edit Manufacturer A manufacturer',
-    }).click();
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Edit').click();
 
-    cy.findByLabelText('Name').clear();
-    cy.findByLabelText('Building number').clear();
-    cy.findByLabelText('Street name').clear();
-    cy.findByLabelText('Post/Zip code').clear();
+    cy.findByLabelText('Name *').clear();
+    cy.findByLabelText('Country *').clear();
+    cy.findByLabelText('Address Line *').clear();
+    cy.findByLabelText('Post/Zip code *').clear();
 
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog')
@@ -292,12 +286,12 @@ describe('Manufacturer', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Please enter a building number.');
+        cy.contains('Please enter a country.');
       });
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains('Please enter a street name.');
+        cy.contains('Please enter an address.');
       });
     cy.findByRole('dialog')
       .should('be.visible')
