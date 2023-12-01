@@ -153,7 +153,7 @@ export const useAddSystem = (): UseMutationResult<
     },
     onSuccess: (systemResponse) => {
       queryClient.invalidateQueries({
-        queryKey: ['Systems', systemResponse.parent_id],
+        queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
       });
     },
   });
