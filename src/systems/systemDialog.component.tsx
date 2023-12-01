@@ -288,8 +288,14 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
                   <MenuItem key={i} value={value}>
                     <Chip
                       label={value}
-                      sx={{ margin: 0 }}
-                      color={getSystemImportanceColour(value)}
+                      sx={() => {
+                        const colorName = getSystemImportanceColour(value);
+                        return {
+                          margin: 0,
+                          bgcolor: `${colorName}.main`,
+                          color: `${colorName}.contrastText`,
+                        };
+                      }}
                     />
                   </MenuItem>
                 ))}

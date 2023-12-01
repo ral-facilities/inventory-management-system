@@ -147,8 +147,16 @@ function SystemDetails(props: SystemDetailsProps) {
                 <Typography variant="h6">Importance</Typography>
                 <Chip
                   label={system.importance}
-                  sx={{ marginLeft: 1 }}
-                  color={getSystemImportanceColour(system.importance)}
+                  sx={() => {
+                    const colorName = getSystemImportanceColour(
+                      system.importance
+                    );
+                    return {
+                      marginLeft: 1,
+                      bgcolor: `${colorName}.main`,
+                      color: `${colorName}.contrastText`,
+                    };
+                  }}
                 />
               </Grid>
             </Grid>
