@@ -319,8 +319,23 @@ describe('Catalogue Items Table', () => {
 
     await ensureColumnsVisible(['Manufacturer URL']);
 
-    const url1 = screen.getAllByText('http://example.com');
-    expect(url1[0]).toHaveAttribute('href', 'http://example.com');
+    const url = screen.getAllByText('http://example.com');
+    expect(url[0]).toHaveAttribute('href', 'http://example.com');
+  });
+
+  it('navigates to manufacturer landing page', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    await ensureColumnsVisible(['Manufacturer Name']);
+
+    const url = screen.getAllByText('Manufacturer A');
+    expect(url[0]).toHaveAttribute(
+      'href',
+      '/inventory-management-system/manufacturer/1'
+    );
   });
 
   it('renders the dense table correctly', async () => {

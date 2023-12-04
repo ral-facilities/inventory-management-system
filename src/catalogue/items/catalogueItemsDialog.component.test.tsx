@@ -56,6 +56,7 @@ describe('Catalogue Items Dialog', () => {
     sensorBrand?: string;
     broken?: string;
     older?: string;
+    manufacturer?: string;
   }) => {
     values.name !== undefined &&
       fireEvent.change(screen.getByLabelText('Name *'), {
@@ -137,6 +138,18 @@ describe('Catalogue Items Dialog', () => {
       });
   };
 
+  const modifyManufacturer = async (type: string) => {
+    const manufacturerPopup = screen.getAllByRole('combobox')[0];
+    await user.type(
+      manufacturerPopup,
+      type === 'create'
+        ? 'M{arrowdown}{enter}'
+        : 'Man{arrowdown}{arrowdown}{enter}'
+    );
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+    await user.click(saveButton);
+  };
+
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -175,12 +188,10 @@ describe('Catalogue Items Dialog', () => {
       sensorBrand: 'pixel',
       broken: 'True',
       older: 'False',
+      manufacturer: 'Man{arrowdown}{enter}',
     });
 
-    const manufacturerPopup = screen.getAllByRole('combobox')[0];
-    await user.type(manufacturerPopup, 'M{arrowdown}{enter}');
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-    await user.click(saveButton);
+    await modifyManufacturer('create');
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '4',
@@ -225,12 +236,7 @@ describe('Catalogue Items Dialog', () => {
       broken: 'True',
     });
 
-    const manufacturerPopup = screen.getAllByRole('combobox')[0];
-    await user.type(manufacturerPopup, 'Man{arrowdown}{enter}');
-
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-
-    await user.click(saveButton);
+    await modifyManufacturer('create');
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '4',
@@ -291,7 +297,9 @@ describe('Catalogue Items Dialog', () => {
     );
 
     expect(
-      screen.getByText('Please chose a manufacturer, or add a new manufacturer')
+      screen.getByText(
+        'Please choose a manufacturer, or add a new manufacturer'
+      )
     ).toBeInTheDocument();
   });
   it('display error message when invalid number format', async () => {
@@ -320,12 +328,7 @@ describe('Catalogue Items Dialog', () => {
       older: 'False',
     });
 
-    const manufacturerPopup = screen.getAllByRole('combobox')[0];
-    await user.type(manufacturerPopup, 'Man{arrowdown}{enter}');
-
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-
-    await user.click(saveButton);
+    await modifyManufacturer('create');
 
     const validNumberHelperText = screen.getAllByText(
       'Please enter a valid number'
@@ -368,11 +371,7 @@ describe('Catalogue Items Dialog', () => {
       older: 'False',
     });
 
-    const manufacturerPopup = screen.getAllByRole('combobox')[0];
-    await user.type(manufacturerPopup, 'Man{arrowdown}{enter}');
-
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-    await user.click(saveButton);
+    await modifyManufacturer('create');
 
     await waitFor(() => {
       expect(
@@ -435,12 +434,7 @@ describe('Catalogue Items Dialog', () => {
         name: 'test',
       });
 
-      const manufacturerPopup = screen.getAllByRole('combobox')[0];
-      await user.type(manufacturerPopup, 'Man{arrowdown}{arrowdown}{enter}');
-
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-
-      await user.click(saveButton);
+      await modifyManufacturer('edit');
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         cost_gbp: 687,
@@ -487,9 +481,7 @@ describe('Catalogue Items Dialog', () => {
 
       const manufacturerPopup = screen.getAllByRole('combobox')[0];
       await user.type(manufacturerPopup, '{delete}');
-
       const saveButton = screen.getByRole('button', { name: 'Save' });
-
       await user.click(saveButton);
 
       const mandatoryFieldHelperText = screen.getAllByText(
@@ -517,7 +509,7 @@ describe('Catalogue Items Dialog', () => {
 
       expect(
         screen.getByText(
-          'Please chose a manufacturer, or add a new manufacturer'
+          'Please choose a manufacturer, or add a new manufacturer'
         )
       ).toBeInTheDocument();
     });
@@ -564,11 +556,8 @@ describe('Catalogue Items Dialog', () => {
 
       createView();
 
-      const manufacturerPopup = screen.getAllByRole('combobox')[0];
-      await user.type(manufacturerPopup, 'Man{arrowdown}{arrowdown}{enter}');
-      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await modifyManufacturer('edit');
 
-      await user.click(saveButton);
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         manufacturer_id: '3',
       });

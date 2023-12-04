@@ -428,113 +428,100 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Name
-                        </span>
-                      </div>
-                    </li>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                  />
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                  >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
-                    >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Address Line
-                        </span>
-                      </div>
-                    </li>
+                        Manufacturer Name
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      />
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Town
-                        </span>
-                      </div>
-                    </li>
+                        Manufacturer URL
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer County
-                        </span>
-                      </div>
-                    </li>
+                      Manufacturer Address Line
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Country
-                        </span>
-                      </div>
-                    </li>
+                      Manufacturer Town
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Post/Zip code
-                        </span>
-                      </div>
-                    </li>
+                      Manufacturer County
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Country
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Post/Zip code
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                 </div>
               </div>
@@ -975,113 +962,100 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Name
-                        </span>
-                      </div>
-                    </li>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                  />
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                  >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
-                    >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Address Line
-                        </span>
-                      </div>
-                    </li>
+                        Manufacturer Name
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      />
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Town
-                        </span>
-                      </div>
-                    </li>
+                        Manufacturer URL
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer County
-                        </span>
-                      </div>
-                    </li>
+                      Manufacturer Address Line
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Country
-                        </span>
-                      </div>
-                    </li>
+                      Manufacturer Town
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Post/Zip code
-                        </span>
-                      </div>
-                    </li>
+                      Manufacturer County
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Country
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Post/Zip code
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                 </div>
               </div>
@@ -1531,113 +1505,100 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Name
-                        </span>
-                      </div>
-                    </li>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                  />
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                  >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
-                    >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Address Line
-                        </span>
-                      </div>
-                    </li>
+                        Manufacturer Name
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      />
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Town
-                        </span>
-                      </div>
-                    </li>
+                        Manufacturer URL
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer County
-                        </span>
-                      </div>
-                    </li>
+                      Manufacturer Address Line
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Country
-                        </span>
-                      </div>
-                    </li>
+                      Manufacturer Town
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Post/Zip code
-                        </span>
-                      </div>
-                    </li>
+                      Manufacturer County
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Country
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Post/Zip code
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                 </div>
               </div>
@@ -2087,113 +2048,100 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Name
-                        </span>
-                      </div>
-                    </li>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                  />
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                  >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
-                    >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Address Line
-                        </span>
-                      </div>
-                    </li>
+                        Manufacturer Name
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      />
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Town
-                        </span>
-                      </div>
-                    </li>
+                        Manufacturer URL
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer County
-                        </span>
-                      </div>
-                    </li>
+                      Manufacturer Address Line
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Country
-                        </span>
-                      </div>
-                    </li>
+                      Manufacturer Town
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root css-tlelie-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Post/Zip code
-                        </span>
-                      </div>
-                    </li>
+                      Manufacturer County
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Country
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Post/Zip code
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                 </div>
               </div>
