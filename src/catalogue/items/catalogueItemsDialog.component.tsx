@@ -107,10 +107,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
   );
 
-  const [manufacturerErrorMessage, setManufacturerErrorMessage] =
-    React.useState<string | undefined>(undefined);
-  const manufacturerError = manufacturerErrorMessage !== undefined;
-
   // set the errors as the types into the input fields
 
   const [errorMessages, setErrorMessages] = React.useState<
@@ -346,9 +342,15 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       selectedManufacturer === null &&
       catalogueItemDetails.manufacturer_id === null
     ) {
-      setManufacturerErrorMessage(
-        'Please chose a manufacturer, or add a new manufacturer'
-      );
+      setErrorMessages((prevErrorMessages) => ({
+        ...prevErrorMessages,
+        manufacturer_id:
+          'Please choose a manufacturer, or add a new manufacturer',
+      }));
+
+      // setManufacturerErrorMessage(
+      //   'Please choose a manufacturer, or add a new manufacturer'
+      // );
       hasErrors = true;
     }
 
@@ -804,7 +806,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         'manufacturer_id',
                         newManufacturer?.id ?? null
                       );
-                      setManufacturerErrorMessage(undefined);
                     }}
                     disablePortal
                     id="manufacturer-autocomplete"
@@ -819,8 +820,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         {...params}
                         required={true}
                         label="Manufacturer"
-                        error={manufacturerError}
-                        helperText={manufacturerErrorMessage}
+                        error={errorMessages.manufacturer_id !== undefined}
+                        helperText={
+                          errorMessages.manufacturer_id !== undefined
+                            ? errorMessages.manufacturer_id
+                            : ''
+                        }
                       />
                     )}
                   />
