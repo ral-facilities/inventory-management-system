@@ -17,6 +17,7 @@ import { useCatalogueCategoryById } from '../../api/catalogueCategory';
 import { useCatalogueItem } from '../../api/catalogueItem';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import { useManufacturer } from '../../api/manufacturer';
+import { M } from 'msw/lib/glossary-de6278a9';
 
 function CatalogueItemsLandingPage() {
   const location = useLocation();
@@ -430,127 +431,61 @@ function CatalogueItemsLandingPage() {
               {manufacturer && (
                 <Grid item xs={12}>
                   <Collapse in={showManufacturer}>
-                    <Grid container spacing={1}>
-                      <Grid item xs={12} sm={6} md={4}>
-                        <ListItem
-                          style={{
-                            justifyContent: 'flex-start',
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <ListItemText
-                            primary={'Manufacturer Name'}
-                            secondary={manufacturer?.name}
-                          />
-                        </ListItem>
+                    <Grid container spacing={1} sx={{ px: '192px' }}>
+                      <Grid item xs={12}>
+                        <Typography color="text.primary">Name</Typography>
+                        <Typography color="text.secondary">
+                          {manufacturer?.name}
+                        </Typography>
                       </Grid>
-                      <Grid item xs={12} sm={6} md={4}>
-                        <ListItem
-                          style={{
-                            justifyContent: 'flex-start',
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <ListItemText
-                            primary={'Manufacturer URL'}
-                            secondary={manufacturer.url}
-                          />
-                        </ListItem>
+                      <Grid item xs={12}>
+                        {manufacturer?.url && (
+                          <Grid item xs={12}>
+                            <Typography color="text.primary">URL</Typography>
+                            <Typography sx={{ margin: '8px' }} variant="body1">
+                              <MuiLink
+                                underline="hover"
+                                href={manufacturer.url}
+                              >
+                                {manufacturer.url}
+                              </MuiLink>
+                            </Typography>
+                          </Grid>
+                        )}
                       </Grid>
-                      <Grid item xs={12} sm={6} md={4}>
-                        <ListItem
-                          style={{
-                            justifyContent: 'flex-start',
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <ListItemText
-                            primary={'Telephone number'}
-                            secondary={manufacturer?.telephone}
-                          />
-                        </ListItem>
+                      <Grid item xs={12}>
+                        <Typography color="text.primary">
+                          Address Line
+                        </Typography>
+                        <Typography color="text.secondary">
+                          {manufacturer?.address.address_line}
+                        </Typography>
                       </Grid>
-
-                      <Grid item xs={12} sm={6} md={4}>
-                        <ListItem
-                          style={{
-                            justifyContent: 'flex-start',
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <ListItemText
-                            primary={'Address Line'}
-                            secondary={manufacturer?.address.address_line}
-                          />
-                        </ListItem>
+                      <Grid item xs={12}>
+                        <Typography color="text.primary">Town</Typography>
+                        <Typography color="text.secondary">
+                          {manufacturer?.address.town}
+                        </Typography>
                       </Grid>
-                      <Grid item xs={12} sm={6} md={4}>
-                        <ListItem
-                          style={{
-                            justifyContent: 'flex-start',
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <ListItemText
-                            primary={'Town'}
-                            secondary={manufacturer?.address.town}
-                          />
-                        </ListItem>
+                      <Grid item xs={12}>
+                        <Typography color="text.primary">County</Typography>
+                        <Typography color="text.secondary">
+                          {manufacturer?.address.county}
+                        </Typography>
                       </Grid>
-                      <Grid item xs={12} sm={6} md={4}>
-                        <ListItem
-                          style={{
-                            justifyContent: 'flex-start',
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <ListItemText
-                            primary={'County'}
-                            secondary={manufacturer?.address.county}
-                          />
-                        </ListItem>
+                      <Grid item xs={12}>
+                        <Typography color="text.primary">Country</Typography>
+                        <Typography color="text.secondary">
+                          {manufacturer?.address.country}
+                        </Typography>
                       </Grid>
-                      <Grid item xs={12} sm={6} md={4}>
-                        <ListItem
-                          style={{
-                            justifyContent: 'flex-start',
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <ListItemText
-                            primary={'Country'}
-                            secondary={manufacturer?.address.country}
-                          />
-                        </ListItem>
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={4}>
-                        <ListItem
-                          style={{
-                            justifyContent: 'flex-start',
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}
-                        >
-                          <ListItemText
-                            primary={'Post/Zip code'}
-                            secondary={manufacturer?.address.postcode}
-                          />
-                        </ListItem>
+                      <Grid item xs={12}>
+                        <Typography color="text.primary">
+                          Post/Zip code
+                        </Typography>
+                        <Typography color="text.secondary">
+                          {manufacturer?.address.postcode}
+                        </Typography>
                       </Grid>
                     </Grid>
                   </Collapse>
