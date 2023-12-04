@@ -17,7 +17,6 @@ import { useCatalogueCategoryById } from '../../api/catalogueCategory';
 import { useCatalogueItem } from '../../api/catalogueItem';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import { useManufacturer } from '../../api/manufacturer';
-import { M } from 'msw/lib/glossary-de6278a9';
 
 function CatalogueItemsLandingPage() {
   const location = useLocation();
