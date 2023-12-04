@@ -34,22 +34,33 @@ describe('Systems', () => {
     expect(screen.getByText('Smaller laser')).toBeInTheDocument();
   });
 
-  it('renders the breadcrumbs when navigating to a subsystem', async () => {
+  it('renders the breadcrumbs when navigating to subsystems', async () => {
     createView('/inventory-management-system/systems');
 
     await waitFor(() => {
       expect(
-        screen.getByRole('link', { name: 'Giant laser' })
+        screen.getByRole('button', { name: 'Giant laser' })
       ).toBeInTheDocument();
     });
-    await user.click(screen.getByRole('link', { name: 'Giant laser' }));
+    await user.click(screen.getByRole('button', { name: 'Giant laser' }));
 
     await waitFor(() => {
       expect(screen.getByText('Smaller laser')).toBeInTheDocument();
     });
+
+    expect(screen.getAllByText('Giant laser').length).toBe(2);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Smaller laser' })
+      ).toBeInTheDocument();
+    });
+    await user.click(screen.getByRole('button', { name: 'Smaller laser' }));
+
     expect(
-      screen.queryByRole('link', { name: 'motion' })
-    ).not.toBeInTheDocument();
+      screen.getByRole('link', { name: 'Giant laser' })
+    ).toBeInTheDocument();
+    expect(screen.getAllByText('Smaller laser').length).toBe(2);
   });
 
   it('navigates back a system using the breadcrumbs', async () => {
