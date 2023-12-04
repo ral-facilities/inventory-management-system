@@ -258,6 +258,9 @@ const ObsoleteCatalogueItemDialog = (
                       }
                     : undefined
                 }
+                isItemSelectable={(item: CatalogueItem) =>
+                  catalogueItem?.id !== item.id && !item.is_obsolete
+                }
               />
             ) : (
               <CatalogueCategoryTableView

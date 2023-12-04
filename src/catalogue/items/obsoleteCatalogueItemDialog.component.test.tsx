@@ -31,6 +31,8 @@ describe('Obsolete Catalogue Item Dialog', () => {
       // Should be a list of catalogue category names followed by the name of the
       // item to select
       replacement_item_navigation?: string[];
+      // Should not click on last item? (will error if disabled)
+      ignore_replacement_item?: boolean;
     }
   ) => {
     // Ensure form is loaded
@@ -97,18 +99,22 @@ describe('Obsolete Catalogue Item Dialog', () => {
             }).length
           ).toBe(2);
         });
-        // Select item
-        await user.click(
-          within(
-            screen.getAllByRole('row', {
-              name: `${
-                values.replacement_item_navigation[
-                  values.replacement_item_navigation.length - 1
-                ]
-              } row`,
-            })[0]
-          ).getByRole('radio')
-        );
+        // Select item if requested
+        if (
+          values.ignore_replacement_item === undefined ||
+          !values.ignore_replacement_item
+        )
+          await user.click(
+            within(
+              screen.getAllByRole('row', {
+                name: `${
+                  values.replacement_item_navigation[
+                    values.replacement_item_navigation.length - 1
+                  ]
+                } row`,
+              })[0]
+            ).getByRole('radio')
+          );
       }
     }
   };
@@ -264,6 +270,54 @@ describe('Obsolete Catalogue Item Dialog', () => {
       }
     );
   }, 10000); // Long running
+
+  it('cannot select self as obsolete item', async () => {
+    props.catalogueItem = getCatalogueItemById('6');
+
+    createView();
+
+    await modifyForm(false, {
+      is_obsolete: true,
+      replacement_item_navigation: [
+        'Beam Characterization',
+        'Energy Meters',
+        'Energy Meters 27',
+      ],
+      ignore_replacement_item: true,
+    });
+
+    expect(
+      within(
+        screen.getAllByRole('row', {
+          name: 'Energy Meters 27 row',
+        })[0]
+      ).getByRole('radio')
+    ).toBeDisabled();
+  });
+
+  it('cannot select another obsolete item as obsolete item', async () => {
+    props.catalogueItem = getCatalogueItemById('6');
+
+    createView();
+
+    await modifyForm(false, {
+      is_obsolete: true,
+      replacement_item_navigation: [
+        'Beam Characterization',
+        'Energy Meters',
+        'Energy Meters 26',
+      ],
+      ignore_replacement_item: true,
+    });
+
+    expect(
+      within(
+        screen.getAllByRole('row', {
+          name: 'Energy Meters 26 row',
+        })[0]
+      ).getByRole('radio')
+    ).toBeDisabled();
+  });
 
   it('can make an obsolete item not obsolete', async () => {
     createView();

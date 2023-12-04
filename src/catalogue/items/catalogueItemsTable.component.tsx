@@ -10,6 +10,7 @@ import {
   Link as MuiLink,
   TableRow,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import {
   MaterialReactTable,
@@ -64,11 +65,19 @@ export interface CatalogueItemsTableProps {
     obsoleteReplacementId: string | null
   ) => void;
   selectedRowState?: { [x: string]: boolean };
+  // Only for dense tables with a select - should return if a given catalogue item is
+  // selectable or not
+  isItemSelectable?: (item: CatalogueItem) => boolean;
 }
 
 const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
-  const { parentInfo, dense, onChangeObsoleteReplacementId, selectedRowState } =
-    props;
+  const {
+    parentInfo,
+    dense,
+    onChangeObsoleteReplacementId,
+    selectedRowState,
+    isItemSelectable,
+  } = props;
   // SG header + SG footer + tabs #add breadcrumbs + Mui table V2
   const tableHeight = `calc(100vh - (64px + 36px + 50px + 125px))`;
 
@@ -115,7 +124,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         size: 200,
         Cell: ({ renderedCellValue, row }) =>
           dense ? (
-            renderedCellValue
+            <Typography
+              sx={{
+                color:
+                  isItemSelectable === undefined ||
+                  isItemSelectable(row.original)
+                    ? 'inherit'
+                    : 'action.disabled',
+              }}
+            >
+              {renderedCellValue}
+            </Typography>
           ) : (
             <MuiLink
               underline="hover"
@@ -310,7 +329,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         ),
       },
     ];
-  }, [dense, parentInfo]);
+  }, [dense, isItemSelectable, parentInfo.catalogue_item_properties]);
 
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     selectedRowState ?? {}
@@ -349,6 +368,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           return {
             component: TableRow,
             onClick: () =>
+              (isItemSelectable === undefined ||
+                isItemSelectable(row.original)) &&
               setRowSelection((prev) => ({
                 [row.id]: !prev[row.id],
               })),
@@ -363,15 +384,23 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       ? ({ row }) => {
           return {
             onClick: () => {
-              onChangeObsoleteReplacementId &&
-                onChangeObsoleteReplacementId(row.original.id);
-
-              if (row.original.id === Object.keys(rowSelection)[0]) {
+              if (
+                isItemSelectable === undefined ||
+                isItemSelectable(row.original)
+              ) {
                 onChangeObsoleteReplacementId &&
-                  onChangeObsoleteReplacementId(null);
-                setRowSelection({});
+                  onChangeObsoleteReplacementId(row.original.id);
+
+                if (row.original.id === Object.keys(rowSelection)[0]) {
+                  onChangeObsoleteReplacementId &&
+                    onChangeObsoleteReplacementId(null);
+                  setRowSelection({});
+                }
               }
             },
+            disabled: !(
+              isItemSelectable === undefined || isItemSelectable(row.original)
+            ),
           };
         }
       : undefined,
