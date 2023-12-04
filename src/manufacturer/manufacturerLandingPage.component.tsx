@@ -52,137 +52,161 @@ function ManufacturerLandingPage() {
       </Grid>
       {manufacturerData && (
         <Grid item xs={12}>
-          <Box
-            sx={{
-              padding: '20px',
-              textAlign: 'left',
-              px: '192px',
-            }}
-          >
-            <Typography
-              sx={{ margin: '8px', textAlign: 'center' }}
-              variant="h4"
-            >
-              {manufacturerData.name}
-            </Typography>
-
-            <Box
-              style={{
-                flexDirection: 'row',
-                alignItems: 'left',
-                cursor: 'pointer',
-                margin: '8px',
-              }}
-            >
-              <Typography sx={{ margin: '8px' }} variant="h6">
-                URL:
+          <Grid container spacing={1} flexDirection="column">
+            <Grid item xs={12}>
+              <Typography sx={{ margin: 1, textAlign: 'center' }} variant="h4">
+                {manufacturerData.name}
               </Typography>
-
-              {manufacturerData.url && (
+            </Grid>
+            <Grid container spacing={1} sx={{ px: '192px' }}>
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                }}
+              >
+                <Typography variant="h6">URL:</Typography>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                }}
+              >
+                {manufacturerData.url && (
+                  <Typography sx={{ margin: '8px' }} variant="body1">
+                    <MuiLink underline="hover" href={manufacturerData.url}>
+                      {manufacturerData.url}
+                    </MuiLink>
+                  </Typography>
+                )}
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                }}
+              >
+                <Typography variant="h6">Telephone number:</Typography>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                }}
+              >
                 <Typography sx={{ margin: '8px' }} variant="body1">
-                  <MuiLink underline="hover" href={manufacturerData.url}>
-                    {manufacturerData.url}
-                  </MuiLink>
+                  {manufacturerData.telephone}
                 </Typography>
-              )}
-
-              <Typography sx={{ margin: '8px' }} variant="h6">
-                Telephone number:
-              </Typography>
-              <Typography sx={{ margin: '8px' }} variant="body1">
-                {manufacturerData.telephone}
-              </Typography>
-            </Box>
-            <Box
-              style={{
-                flexDirection: 'row',
-                alignItems: 'left',
-                cursor: 'pointer',
-                margin: '8px',
-              }}
-            >
-              <Grid item xs={12} sm={6} md={4}>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                }}
+              >
                 <Typography variant="h6">Address</Typography>
               </Grid>
-            </Box>
-            <Grid container spacing={1}>
-              <Grid item xs={12} sm={6} md={4}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}
-                >
-                  <ListItemText
-                    primary={'Address Line'}
-                    secondary={manufacturerData.address.address_line}
-                  />
-                </ListItem>
-              </Grid>
-              <Grid item xs={12} sm={6} md={4}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}
-                >
-                  <ListItemText
-                    primary={'Town'}
-                    secondary={manufacturerData.address.town}
-                  />
-                </ListItem>
-              </Grid>
-              <Grid item xs={12} sm={6} md={4}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}
-                >
-                  <ListItemText
-                    primary={'County'}
-                    secondary={manufacturerData.address.county}
-                  />
-                </ListItem>
-              </Grid>
-              <Grid item xs={12} sm={6} md={4}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}
-                >
-                  <ListItemText
-                    primary={'Country'}
-                    secondary={manufacturerData.address.country}
-                  />
-                </ListItem>
-              </Grid>
-              <Grid item xs={12} sm={6} md={4}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}
-                >
-                  <ListItemText
-                    primary={'Post/Zip code'}
-                    secondary={manufacturerData.address.postcode}
-                  />
-                </ListItem>
+
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={6} md={4}>
+                  <ListItem
+                    style={{
+                      justifyContent: 'flex-start',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <ListItemText
+                      primary={'Address Line'}
+                      secondary={manufacturerData.address.address_line}
+                    />
+                  </ListItem>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <ListItem
+                    style={{
+                      justifyContent: 'flex-start',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <ListItemText
+                      primary={'Town'}
+                      secondary={manufacturerData.address.town}
+                    />
+                  </ListItem>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <ListItem
+                    style={{
+                      justifyContent: 'flex-start',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <ListItemText
+                      primary={'County'}
+                      secondary={manufacturerData.address.county}
+                    />
+                  </ListItem>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <ListItem
+                    style={{
+                      justifyContent: 'flex-start',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <ListItemText
+                      primary={'Country'}
+                      secondary={manufacturerData.address.country}
+                    />
+                  </ListItem>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <ListItem
+                    style={{
+                      justifyContent: 'flex-start',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <ListItemText
+                      primary={'Post/Zip code'}
+                      secondary={manufacturerData.address.postcode}
+                    />
+                  </ListItem>
+                </Grid>
               </Grid>
             </Grid>
-          </Box>
+          </Grid>
         </Grid>
       )}
       {!manufacturerDataLoading ? (
