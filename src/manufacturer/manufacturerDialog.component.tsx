@@ -63,7 +63,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
   React.useEffect(() => {
     if (selectedManufacturer) setManufacturerDetails(selectedManufacturer);
-  }, [selectedManufacturer, open]);
+  }, [selectedManufacturer]);
 
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
     string | undefined

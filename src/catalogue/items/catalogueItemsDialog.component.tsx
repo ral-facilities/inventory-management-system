@@ -807,7 +807,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         newManufacturer?.id ?? null
                       );
                     }}
-                    disablePortal
                     id="manufacturer-autocomplete"
                     options={manufacturerList ?? []}
                     size="small"
