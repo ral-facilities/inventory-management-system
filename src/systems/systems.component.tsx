@@ -18,7 +18,7 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { System } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
@@ -218,23 +218,21 @@ function Systems() {
                     <ListItem key={index} sx={{ padding: 0 }}>
                       <ListItemButton
                         sx={{ padding: 0 }}
-                        onClick={() => {
-                          setSelectedSystems([]);
-                          navigateToSystem(system.id);
-                        }}
                         selected={selected}
+                        component={Link}
+                        to={system.id}
                       >
                         <Checkbox
                           size="small"
                           checked={selected}
                           // Prevent button being triggered as well
                           onClick={(event) => event.stopPropagation()}
-                          onChange={(event) => {
+                          onChange={(event) =>
                             handleSystemCheckboxChange(
                               event.target.checked,
                               system
-                            );
-                          }}
+                            )
+                          }
                         />
                         <ListItemText>{system.name}</ListItemText>
                       </ListItemButton>
