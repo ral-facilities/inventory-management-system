@@ -429,7 +429,7 @@ describe('Catalogue Items', () => {
     cy.findByText('Beam Characterization').click();
     cy.findByText('Cameras').click();
 
-    cy.findAllByRole('row', { name: 'Cameras 2 row' })
+    cy.findAllByRole('row', { name: 'Cameras 3 row' })
       .eq(0)
       .findByRole('radio')
       .click();
@@ -446,7 +446,7 @@ describe('Catalogue Items', () => {
         JSON.stringify({
           is_obsolete: true,
           obsolete_reason: 'Obsolete reason\nNew line',
-          obsolete_replacement_catalogue_item_id: '2',
+          obsolete_replacement_catalogue_item_id: '3',
         })
       );
     });
