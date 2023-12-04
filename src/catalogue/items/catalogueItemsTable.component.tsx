@@ -69,14 +69,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const { data, isLoading } = useCatalogueItems(parentInfo.id);
 
-  let manufacturerIdList = new Set<string>();
-
-  data?.forEach((obj) => {
-    manufacturerIdList.add(obj.manufacturer_id);
-  });
+  const manufacturerIdSet = new Set<string>(
+    data?.map((obj) => obj.manufacturer_id) ?? []
+  );
 
   const manufacturerList: (Manufacturer | undefined)[] = useManufacturerIds(
-    Array.from(manufacturerIdList.values())
+    Array.from(manufacturerIdSet.values())
   ).map((obj) => {
     return obj.data;
   });
