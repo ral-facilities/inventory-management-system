@@ -336,6 +336,23 @@ describe('Obsolete Catalogue Item Dialog', () => {
     );
   });
 
+  it('can remove an obsolete replacement item', async () => {
+    createView();
+
+    await modifyForm(true, {
+      replacement_item_navigation: ['Energy Meters 27'],
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+    expect(axiosPatchSpy).toHaveBeenCalledWith(
+      `/v1/catalogue-items/${props.catalogueItem?.id}`,
+      {
+        obsolete_replacement_catalogue_item_id: null,
+      }
+    );
+  });
+
   it('displays error if nothing changed that disappears when the reason modified', async () => {
     createView();
 
