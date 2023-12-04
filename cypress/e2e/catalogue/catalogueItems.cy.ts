@@ -106,7 +106,7 @@ describe('Catalogue Items', () => {
       'exist'
     );
     cy.findByText(
-      'Please chose a manufacturer, or add a new manufacturer'
+      'Please choose a manufacturer, or add a new manufacturer'
     ).should('exist');
     cy.findByText('Please select either True or False').should('exist');
 
