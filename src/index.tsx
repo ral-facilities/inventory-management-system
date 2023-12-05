@@ -1,13 +1,14 @@
-import React from 'react';
-import './index.css';
-import App from './App';
-import * as log from 'loglevel';
-import singleSpaReact from 'single-spa-react';
 import axios from 'axios';
-import { MicroFrontendId } from './app.types';
-import { PluginRoute, RegisterRouteType } from './state/actions/actions.types';
-import { InventoryManagementSystemSettings, setSettings } from './settings';
+import * as log from 'loglevel';
+import { SetupWorker } from 'msw';
+import React from 'react';
 import ReactDOMClient from 'react-dom/client';
+import singleSpaReact from 'single-spa-react';
+import App from './App';
+import { MicroFrontendId } from './app.types';
+import './index.css';
+import { InventoryManagementSystemSettings, setSettings } from './settings';
+import { PluginRoute, RegisterRouteType } from './state/actions/actions.types';
 
 export const pluginName = 'inventory-management-system';
 
@@ -168,9 +169,25 @@ export const fetchSettings =
   };
 
 function prepare() {
-  return import('./mocks/browser').then(({ worker }) => {
-    return worker.start();
-  });
+  if (
+    process.env.NODE_ENV === 'development' ||
+    process.env.REACT_APP_E2E_TESTING === 'true'
+  ) {
+    // need to use require instead of import as import breaks when loaded in SG
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { worker } = require('./mocks/browser');
+    return (worker as SetupWorker).start({
+      onUnhandledRequest(request, print) {
+        // Ignore unhandled requests to non-localhost things (normally means you're contacting a real server)
+        if (request.url.hostname !== 'localhost') {
+          return;
+        }
+
+        print.warning();
+      },
+    });
+  }
+  return Promise.resolve();
 }
 
 const settings = fetchSettings();
@@ -179,7 +196,7 @@ setSettings(settings);
 
 if (
   process.env.NODE_ENV === 'development' &&
-  !process.env.REACT_APP_E2E_TESTING
+  process.env.REACT_APP_E2E_TESTING !== 'true'
 ) {
   settings
     .then((settings) => {
@@ -192,7 +209,7 @@ if (
     .catch((error) => log.error(`Got error: ${error.message}`));
 
   log.setDefaultLevel(log.levels.DEBUG);
-} else if (process.env.REACT_APP_E2E_TESTING) {
+} else if (process.env.REACT_APP_E2E_TESTING === 'true') {
   prepare().then(() => render());
   log.setDefaultLevel(log.levels.DEBUG);
 } else {
