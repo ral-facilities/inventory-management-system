@@ -1,7 +1,9 @@
 /.github
-/build
-/cypress
-/node_modules
+**/build
+**/coverage
+**/cypress
+**/lib
+**/node_modules
 .git
 .gitignore
 .prettierrc
