@@ -147,4 +147,48 @@ describe('System', () => {
     cy.findByRole('button', { name: 'add system' }).click();
     cy.findByText('Please refresh and try again').should('not.exist');
   });
+
+  it('deletes a system', () => {
+    cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e9');
+
+    cy.findByRole('button', { name: 'Delete System' }).click();
+    cy.startSnoopingBrowserMockedRequest();
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/systems/65328f34a40ff5301575a4e9',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+    });
+
+    // ID of the parent
+    cy.url().should('include', '/systems/65328f34a40ff5301575a4e8');
+  });
+
+  it('displays an error when attempting to delete a system with children that hides once closed', () => {
+    cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
+
+    cy.findByRole('button', { name: 'Delete System' }).click();
+    cy.startSnoopingBrowserMockedRequest();
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByText(
+          'System has child elements and cannot be deleted, please delete the child systems first'
+        ).should('be.visible');
+      });
+
+    cy.findByRole('button', { name: 'Cancel' }).click();
+    cy.findByRole('button', { name: 'Delete System' }).click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByText(
+          'System has child elements and cannot be deleted, please delete the child systems first'
+        ).should('not.exist');
+      });
+  });
 });

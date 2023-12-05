@@ -155,3 +155,34 @@ export const useAddSystem = (): UseMutationResult<
     },
   });
 };
+
+const deleteSystem = async (systemId: string): Promise<void> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+
+  return axios
+    .delete(`${apiUrl}/v1/systems/${systemId}`)
+    .then((response) => response.data);
+};
+
+export const useDeleteSystem = (): UseMutationResult<
+  void,
+  AxiosError,
+  string
+> => {
+  const queryClient = useQueryClient();
+
+  return useMutation((systemId: string) => deleteSystem(systemId), {
+    onError: (error) => {
+      console.log(`Got error: '${error.message}'`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['Systems'] });
+      queryClient.removeQueries({ queryKey: ['System'] });
+    },
+  });
+};
