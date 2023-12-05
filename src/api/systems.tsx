@@ -186,10 +186,11 @@ export const useEditSystem = (): UseMutationResult<
     },
     onSuccess: (systemResponse: System) => {
       queryClient.invalidateQueries({
-        queryKey: ['Systems', systemResponse.parent_id],
+        queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
       });
       queryClient.invalidateQueries({
-        queryKey: ['SystemBreadcrumbs', systemResponse.id],
+        // Don't use ID here as will also need to update any of its children as well
+        queryKey: ['SystemBreadcrumbs'],
       });
       queryClient.invalidateQueries({
         queryKey: ['System', systemResponse.id],
