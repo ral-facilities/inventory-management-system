@@ -331,4 +331,47 @@ describe('System', () => {
         ).should('not.exist');
       });
   });
+
+  it.only('moves systems', () => {
+    cy.visit('/inventory-management-system/systems');
+
+    cy.findByRole('link', { name: 'Pulse Laser' })
+      .findByRole('checkbox')
+      .click();
+    cy.findByRole('link', { name: 'Pico Laser' })
+      .findByRole('checkbox')
+      .click();
+
+    cy.findByRole('button', { name: 'Move to' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('Giant laser row').click();
+        cy.findByRole('button', { name: 'Move here' }).click();
+      });
+
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/systems/:id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).eq(2);
+      expect(patchRequests[0].url.toString()).to.contain(
+        '/656da8ef9cba7a76c6f81a5d'
+      );
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({ parent_id: '65328f34a40ff5301575a4e3' })
+      );
+      expect(patchRequests[1].url.toString()).to.contain(
+        '/656ef565ed0773f82e44bc6d'
+      );
+      expect(JSON.stringify(await patchRequests[1].json())).equal(
+        JSON.stringify({ parent_id: '65328f34a40ff5301575a4e3' })
+      );
+    });
+  });
 });

@@ -138,7 +138,7 @@ describe('Systems', () => {
     });
   });
 
-  it('can select and deselects systems', async () => {
+  it('can select and deselect systems', async () => {
     createView('/inventory-management-system/systems');
 
     await waitFor(() => {
