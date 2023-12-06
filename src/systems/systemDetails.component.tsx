@@ -51,7 +51,7 @@ const DeleteSystemButton = (props: SystemButtonProps) => {
     <>
       <Tooltip title="Delete System">
         <IconButton
-          sx={{ padding: 0, pl: 2 }}
+          sx={{ padding: 0 }}
           onClick={() => setDeleteDialogOpen(true)}
         >
           <DeleteIcon />
@@ -103,6 +103,7 @@ function SystemDetails(props: SystemDetailsProps) {
         {system !== undefined && (
           <>
             <EditSystemButton system={system} />
+            <Box sx={{ px: 1 }} />
             <DeleteSystemButton system={system} />
           </>
         )}
@@ -146,8 +147,16 @@ function SystemDetails(props: SystemDetailsProps) {
                 <Typography variant="h6">Importance</Typography>
                 <Chip
                   label={system.importance}
-                  sx={{ marginLeft: 1 }}
-                  color={getSystemImportanceColour(system.importance)}
+                  sx={() => {
+                    const colorName = getSystemImportanceColour(
+                      system.importance
+                    );
+                    return {
+                      marginLeft: 1,
+                      bgcolor: `${colorName}.main`,
+                      color: `${colorName}.contrastText`,
+                    };
+                  }}
                 />
               </Grid>
             </Grid>

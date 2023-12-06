@@ -223,7 +223,7 @@ describe('Catalogue Category', () => {
   it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
     cy.visit('/inventory-management-system/catalogue/1');
     cy.findByRole('button', {
-      name: 'edit Cameras catalogue category button',
+      name: 'edit Voltage Meters catalogue category button',
     }).click();
     cy.findByLabelText('Catalogue Categories').click();
     cy.findByLabelText('Name *').type('1');
@@ -239,7 +239,7 @@ describe('Catalogue Category', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"Cameras1","is_leaf":false}'
+        '{"name":"Voltage Meters1","is_leaf":false}'
       );
       expect(request.url.toString()).to.contain('1');
     });

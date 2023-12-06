@@ -80,6 +80,8 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         owner: null,
         importance: SystemImportanceType.MEDIUM,
       });
+    // Reset for edit
+    else setSystemData(selectedSystem as AddSystem);
 
     // Remove all errors - event though otherError says it requires a refresh,
     // we don't want it showing if you move somewhere else or change the values
@@ -88,7 +90,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     setOtherError(false);
 
     onClose();
-  }, [onClose, type]);
+  }, [onClose, selectedSystem, type]);
 
   const { mutateAsync: addSystem } = useAddSystem();
   const { mutateAsync: editSystem } = useEditSystem();
@@ -286,8 +288,14 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
                   <MenuItem key={i} value={value}>
                     <Chip
                       label={value}
-                      sx={{ margin: 0 }}
-                      color={getSystemImportanceColour(value)}
+                      sx={() => {
+                        const colorName = getSystemImportanceColour(value);
+                        return {
+                          margin: 0,
+                          bgcolor: `${colorName}.main`,
+                          color: `${colorName}.contrastText`,
+                        };
+                      }}
                     />
                   </MenuItem>
                 ))}

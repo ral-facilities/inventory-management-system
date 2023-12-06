@@ -30,6 +30,39 @@ import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirect
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 
+export interface AddCatalogueButtonProps {
+  disabled: boolean;
+  parentId: string | null;
+  type: 'add' | 'edit';
+  selectedCatalogueCategory?: CatalogueCategory;
+  resetSelectedCatalogueCategory: () => void;
+}
+
+const AddCategoryButton = (props: AddCatalogueButtonProps) => {
+  const [addCategoryDialogOpen, setAddCategoryDialogOpen] =
+    React.useState<boolean>(false);
+
+  return (
+    <>
+      <IconButton
+        sx={{ mx: 1, my: 2 }}
+        onClick={() => setAddCategoryDialogOpen(true)}
+        disabled={props.disabled}
+        aria-label="add catalogue category"
+      >
+        <AddIcon />
+      </IconButton>
+      <CatalogueCategoryDialog
+        open={addCategoryDialogOpen}
+        onClose={() => setAddCategoryDialogOpen(false)}
+        parentId={props.parentId}
+        type="add"
+        resetSelectedCatalogueCategory={props.resetSelectedCatalogueCategory}
+      />
+    </>
+  );
+};
+
 export function matchCatalogueItemProperties(
   form: CatalogueCategoryFormData[],
   items: CatalogueItemProperty[]
@@ -70,9 +103,6 @@ function Catalogue() {
     [navigate]
   );
 
-  const [addCategoryDialogOpen, setAddCategoryDialogOpen] =
-    React.useState<boolean>(false);
-
   const catalogueId = location.pathname.replace(
     '/inventory-management-system/catalogue',
     ''
@@ -87,12 +117,11 @@ function Catalogue() {
     catalogueId.replace('/', '')
   );
 
-  const [parentId, setParentId] = React.useState<string | null>(null);
-  const [isLeaf, setIsLeaf] = React.useState<boolean>(false);
   const parentInfo = React.useMemo(
     () => catalogueCategoryDetail,
     [catalogueCategoryDetail]
   );
+  const parentId = (parentInfo && parentInfo.id) || null;
 
   const isLeafNode = parentInfo ? parentInfo.is_leaf : false;
   const {
@@ -112,10 +141,6 @@ function Catalogue() {
   const [selectedCatalogueCategory, setSelectedCatalogueCategory] =
     React.useState<CatalogueCategory | undefined>(undefined);
 
-  const [catalogueCategoryName, setCatalogueCategoryName] = React.useState<
-    string | undefined
-  >(undefined);
-
   const onChangeOpenDeleteCategoryDialog = (
     catalogueCategory: CatalogueCategory
   ) => {
@@ -128,18 +153,7 @@ function Catalogue() {
   ) => {
     setEditCategoryDialogOpen(true);
     setSelectedCatalogueCategory(catalogueCategory);
-    setCatalogueCategoryName(catalogueCategory.name);
-    setIsLeaf(catalogueCategory.is_leaf);
-    setFormFields(catalogueCategory.catalogue_item_properties ?? null);
   };
-  const [formFields, setFormFields] = React.useState<
-    CatalogueCategoryFormData[] | null
-  >(null);
-
-  React.useEffect(() => {
-    setParentId((parentInfo && parentInfo.id) || null);
-    setIsLeaf(parentInfo ? !!parentInfo.is_leaf : false);
-  }, [catalogueId, parentInfo]);
 
   const [selectedCategories, setSelectedCategories] = React.useState<
     CatalogueCategory[]
@@ -203,14 +217,14 @@ function Catalogue() {
               fontSize="medium"
               sx={{ color: 'rgba(0, 0, 0, 0.6)', mx: '4px', my: '8px' }}
             />
-            <IconButton
-              sx={{ mx: '4px', my: '8px' }}
-              onClick={() => setAddCategoryDialogOpen(true)}
+            <AddCategoryButton
               disabled={isLeafNode || (!parentInfo && catalogueId !== '')}
-              aria-label="add catalogue category"
-            >
-              <AddIcon />
-            </IconButton>
+              parentId={parentId}
+              type="add"
+              resetSelectedCatalogueCategory={() =>
+                setSelectedCatalogueCategory(undefined)
+              }
+            />
           </div>
 
           {!isLeafNode && selectedCategories.length >= 1 && (
@@ -306,32 +320,11 @@ function Catalogue() {
       )}
 
       <CatalogueCategoryDialog
-        open={addCategoryDialogOpen}
-        onClose={() => setAddCategoryDialogOpen(false)}
-        parentId={parentId}
-        onChangeCatalogueCategoryName={setCatalogueCategoryName}
-        catalogueCategoryName={catalogueCategoryName}
-        onChangeLeaf={setIsLeaf}
-        isLeaf={isLeaf}
-        type="add"
-        formFields={formFields}
-        onChangeFormFields={setFormFields}
-        resetSelectedCatalogueCategory={() =>
-          setSelectedCatalogueCategory(undefined)
-        }
-      />
-      <CatalogueCategoryDialog
         open={editCategoryDialogOpen}
         onClose={() => setEditCategoryDialogOpen(false)}
         parentId={parentId}
-        onChangeCatalogueCategoryName={setCatalogueCategoryName}
-        catalogueCategoryName={catalogueCategoryName}
-        onChangeLeaf={setIsLeaf}
-        isLeaf={isLeaf}
         type="edit"
         selectedCatalogueCategory={selectedCatalogueCategory}
-        formFields={formFields}
-        onChangeFormFields={setFormFields}
         resetSelectedCatalogueCategory={() =>
           setSelectedCatalogueCategory(undefined)
         }

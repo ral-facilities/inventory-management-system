@@ -241,7 +241,7 @@ exports[`Systems Dialog Add renders correctly when adding 1`] = `
                     tabindex="0"
                   >
                     <div
-                      class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorWarning MuiChip-filledWarning css-u3it8s-MuiChip-root"
+                      class="MuiChip-root MuiChip-filled MuiChip-sizeMedium MuiChip-colorDefault MuiChip-filledDefault css-twhs9h-MuiChip-root"
                     >
                       <span
                         class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"

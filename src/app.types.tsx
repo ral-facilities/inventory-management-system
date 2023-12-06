@@ -5,7 +5,7 @@ export type TabValue = 'Systems' | 'Catalogue' | 'Manufacturer';
 
 export interface AddCatalogueCategory {
   name: string;
-  parent_id?: string;
+  parent_id?: string | null;
   is_leaf: boolean;
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }

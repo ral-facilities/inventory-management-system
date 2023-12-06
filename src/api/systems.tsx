@@ -123,10 +123,10 @@ export const useSystemsBreadcrumbs = (
       return fetchSystemsBreadcrumbs(id ?? '');
     },
     {
+      enabled: id !== null,
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
-      enabled: id !== null,
     }
   );
 };
@@ -154,8 +154,10 @@ export const useAddSystem = (): UseMutationResult<
     onError: (error) => {
       console.log(`Got error: '${error.message}'`);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['Systems'] });
+    onSuccess: (systemResponse) => {
+      queryClient.invalidateQueries({
+        queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
+      });
     },
   });
 };
@@ -185,14 +187,17 @@ export const useEditSystem = (): UseMutationResult<
     onError: (error) => {
       console.log('Got error ' + error.message);
     },
-    onSuccess: (data: System) => {
+    onSuccess: (systemResponse: System) => {
       queryClient.invalidateQueries({
-        queryKey: ['Systems', data.parent_id],
+        queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
       });
       queryClient.invalidateQueries({
-        queryKey: ['SystemBreadcrumbs', data.id],
+        // Don't use ID here as will also need to update any of its children as well
+        queryKey: ['SystemBreadcrumbs'],
       });
-      queryClient.removeQueries({ queryKey: ['System', data.id] });
+      queryClient.invalidateQueries({
+        queryKey: ['System', systemResponse.id],
+      });
     },
   });
 };
