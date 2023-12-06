@@ -338,6 +338,32 @@ describe('Catalogue Items Table', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
+  it('set filters and clears the filters', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    const nameInput = screen.getByLabelText('Filter by Name');
+
+    await user.type(nameInput, '29');
+
+    await waitFor(() => {
+      expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
+    });
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+  });
+
   // skipping this test as it causes an infinite loop when expanding the details panel
   // loop doesn't occur when tested on the browser - I think it's an issue with MRT interacting
   // with an MUI tabs component

@@ -3,6 +3,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
+  Box,
   Button,
   ListItemIcon,
   MenuItem,
@@ -70,10 +71,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     React.useState<boolean>(false);
 
   type PropertyFiltersType = {
-    boolean: 'select' | 'text' | 'range-slider';
-    string: 'select' | 'text' | 'range-slider';
-    number: 'select' | 'text' | 'range-slider';
-    null: 'select' | 'text' | 'range-slider';
+    boolean: 'select' | 'text' | 'range';
+    string: 'select' | 'text' | 'range';
+    number: 'select' | 'text' | 'range';
+    null: 'select' | 'text' | 'range';
   };
 
   const [selectedCatalogueItem, setSelectedCatalogueItem] = React.useState<
@@ -94,7 +95,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     const propertyFilters: PropertyFiltersType = {
       boolean: 'select',
       string: 'text',
-      number: 'range-slider',
+      number: 'range',
       null: 'text',
     };
     return [
@@ -220,13 +221,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Cost (GBP)',
         accessorFn: (row) => row.cost_gbp,
         size: 200,
-        filterVariant: 'range-slider',
+        filterVariant: 'range',
       },
       {
         header: 'Cost to Rework (GBP)',
         accessorFn: (row) => row.cost_to_rework_gbp ?? 0,
         size: 300,
-        filterVariant: 'range-slider',
+        filterVariant: 'range',
         Cell: ({ row }) => {
           // Logic to get the range slider to work with null values
           return row.original.cost_to_rework_gbp === 0
@@ -240,13 +241,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Time to replace (days)',
         accessorFn: (row) => row.days_to_replace,
         size: 250,
-        filterVariant: 'range-slider',
+        filterVariant: 'range',
       },
       {
         header: 'Days to Rework',
         accessorFn: (row) => row.days_to_rework ?? 0,
         size: 250,
-        filterVariant: 'range-slider',
+        filterVariant: 'range',
         Cell: ({ row }) => {
           // Logic to get the range slider to work with null values
           return row.original.cost_to_rework_gbp === 0
@@ -375,15 +376,27 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       );
     },
     renderTopToolbarCustomActions: ({ table }) => (
-      <Button
-        variant="outlined"
-        onClick={() => {
-          setItemsDialogType('create');
-          table.setCreatingRow(true);
-        }}
-      >
-        Add Catalogue Item
-      </Button>
+      <Box sx={{ display: 'flex' }}>
+        <Button
+          sx={{ mx: '4px' }}
+          variant="outlined"
+          onClick={() => {
+            setItemsDialogType('create');
+            table.setCreatingRow(true);
+          }}
+        >
+          Add Catalogue Item
+        </Button>
+        <Button
+          sx={{ mx: '4px' }}
+          variant="outlined"
+          onClick={() => {
+            table.resetColumnFilters();
+          }}
+        >
+          Clear Filters
+        </Button>
+      </Box>
     ),
     renderRowActionMenuItems: ({ closeMenu, row }) => {
       return [

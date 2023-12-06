@@ -1,6 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {
+  Box,
   Button,
   ListItemIcon,
   MenuItem,
@@ -39,8 +40,6 @@ function ManufacturerComponent() {
         header: 'Name',
         accessorFn: (row) => row.name,
         size: 400,
-        filterVariant: 'autocomplete',
-        filterFn: 'equals',
       },
       {
         header: 'URL',
@@ -147,14 +146,26 @@ function ManufacturerComponent() {
       );
     },
     renderTopToolbarCustomActions: ({ table }) => (
-      <Button
-        variant="outlined"
-        onClick={() => {
-          table.setCreatingRow(true);
-        }}
-      >
-        Add Manufacturer
-      </Button>
+      <Box>
+        <Button
+          sx={{ mx: '4px' }}
+          variant="outlined"
+          onClick={() => {
+            table.setCreatingRow(true);
+          }}
+        >
+          Add Manufacturer
+        </Button>
+        <Button
+          sx={{ mx: '4px' }}
+          variant="outlined"
+          onClick={() => {
+            table.resetColumnFilters();
+          }}
+        >
+          Clear Filters
+        </Button>
+      </Box>
     ),
     renderRowActionMenuItems: ({ closeMenu, row }) => {
       return [
