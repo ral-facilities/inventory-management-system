@@ -214,6 +214,7 @@ describe('Systems Dialog', () => {
       await user.click(screen.getByRole('button', { name: 'Cancel' }));
 
       expect(mockOnClose).toHaveBeenCalled();
+      expect(axiosPatchSpy).not.toHaveBeenCalled();
     });
 
     it('edits a system', async () => {

@@ -45,9 +45,8 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
 
   const handleClose = React.useCallback(() => {
     onClose();
-    onChangeSelectedSystems([]);
     setParentSystemId(null);
-  }, [onChangeSelectedSystems, onClose]);
+  }, [onClose]);
 
   const handleMoveTo = React.useCallback(() => {
     if (!targetSystemLoading) {
@@ -58,12 +57,14 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
         targetSystem: targetSystem || null,
       }).then((response) => {
         handleTransferState(response);
+        onChangeSelectedSystems([]);
         handleClose();
       });
     }
   }, [
     handleClose,
     moveToSystem,
+    onChangeSelectedSystems,
     selectedSystems,
     targetSystem,
     targetSystemLoading,

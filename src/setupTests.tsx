@@ -2,9 +2,8 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom';
-import { server } from './mocks/server';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import '@testing-library/jest-dom';
 import { RenderOptions, render } from '@testing-library/react';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import {
@@ -13,9 +12,10 @@ import {
   CatalogueItem,
   Manufacturer,
 } from './app.types';
-import catalogueCategoryJSON from './mocks/CatalogueCategory.json';
+import CatalogueCategoryJSON from './mocks/CatalogueCategory.json';
 import CatalogueItemJSON from './mocks/CatalogueItems.json';
-import manufacturerJSON from './mocks/manufacturer.json';
+import ManufacturerJSON from './mocks/manufacturer.json';
+import { server } from './mocks/server';
 
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
@@ -112,7 +112,7 @@ export const hooksWrapperWithProviders = (queryClient?: QueryClient) => {
 export const getCatalogueItemsPropertiesById = (
   id: string
 ): CatalogueCategoryFormData[] => {
-  const filteredCategories = catalogueCategoryJSON.filter(
+  const filteredCategories = CatalogueCategoryJSON.filter(
     (catalogueCategory) => catalogueCategory.id === id
   );
 
@@ -127,27 +127,19 @@ export const getCatalogueItemsPropertiesById = (
 export const getCatalogueCategoryById = (
   id: string
 ): CatalogueCategory | undefined => {
-  const filteredCategories = catalogueCategoryJSON.find(
-    (catalogueCategory) => catalogueCategory.id === id
+  return (
+    (CatalogueCategoryJSON.find(
+      (catalogueCategory) => catalogueCategory.id === id
+    ) as CatalogueCategory) || undefined
   );
-
-  if (!filteredCategories) {
-    return undefined;
-  }
-
-  return filteredCategories;
 };
 
 export const getCatalogueItemById = (id: string): CatalogueItem | undefined => {
-  const filteredItems = CatalogueItemJSON.find(
-    (catalogueItem) => catalogueItem.id === id
+  return (
+    (CatalogueItemJSON.find(
+      (catalogueItem) => catalogueItem.id === id
+    ) as CatalogueItem) || undefined
   );
-
-  if (!filteredItems) {
-    return undefined;
-  }
-
-  return filteredItems;
 };
 
 export const catalogueItemData = (id: string): CatalogueItem[] => {
@@ -157,13 +149,9 @@ export const catalogueItemData = (id: string): CatalogueItem[] => {
 };
 
 export const getManufacturerById = (id: string): Manufacturer | undefined => {
-  const filteredManufacturer = manufacturerJSON.find(
-    (manufacturer) => manufacturer.id === id
+  return (
+    (ManufacturerJSON.find(
+      (manufacturer) => manufacturer.id === id
+    ) as Manufacturer) || undefined
   );
-
-  if (!filteredManufacturer) {
-    return undefined;
-  }
-
-  return filteredManufacturer;
 };
