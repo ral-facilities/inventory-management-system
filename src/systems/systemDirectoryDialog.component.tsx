@@ -23,14 +23,21 @@ export interface SystemDirectoryDialogProps {
   onClose: () => void;
   selectedSystems: System[];
   onChangeSelectedSystems: (selectedSystems: System[]) => void;
+  parentSystemId: string | null;
 }
 
 export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   const { open, onClose, selectedSystems, onChangeSelectedSystems } = props;
 
+  // Store here and update only if changed to reduce re-renders and allow
+  // navigation
   const [parentSystemId, setParentSystemId] = React.useState<string | null>(
-    null
+    props.parentSystemId
   );
+  React.useEffect(() => {
+    setParentSystemId(props.parentSystemId);
+  }, [props.parentSystemId]);
+
   const { data: parentSystemBreadcrumbs } =
     useSystemsBreadcrumbs(parentSystemId);
 
@@ -45,7 +52,6 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
 
   const handleClose = React.useCallback(() => {
     onClose();
-    setParentSystemId(null);
   }, [onClose]);
 
   const handleMoveTo = React.useCallback(() => {

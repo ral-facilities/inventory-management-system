@@ -332,7 +332,7 @@ describe('System', () => {
       });
   });
 
-  it('move systems', () => {
+  it('moves systems', () => {
     cy.visit('/inventory-management-system/systems');
 
     cy.findByRole('link', { name: 'Pulse Laser' })

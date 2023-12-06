@@ -36,6 +36,7 @@ describe('SystemDirectoryDialog', () => {
       onClose: mockOnClose,
       selectedSystems: mockSelectedSystems,
       onChangeSelectedSystems: mockOnChangeSelectedSystems,
+      parentSystemId: null,
     };
 
     user = userEvent.setup();
@@ -109,6 +110,21 @@ describe('SystemDirectoryDialog', () => {
       expect(screen.queryByText('Smaller laser')).not.toBeInTheDocument();
     });
     expect(screen.getByText('Giant laser')).toBeInTheDocument();
+  });
+
+  it('starts navigation in the parent when given', async () => {
+    props.parentSystemId = '65328f34a40ff5301575a4e4';
+
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Pulse Laser')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByRole('link', { name: 'Giant laser' })
+    ).toBeInTheDocument();
+    expect(screen.getByText('Smaller laser')).toBeInTheDocument();
   });
 
   it('moves selected systems', async () => {

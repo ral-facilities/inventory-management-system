@@ -66,6 +66,7 @@ const AddSystemButton = (props: { systemId: string | null }) => {
 const MoveSystemsButton = (props: {
   selectedSystems: System[];
   onChangeSelectedSystems: (selectedSystems: System[]) => void;
+  parentSystemId: string | null;
 }) => {
   const [moveSystemDialogOpen, setMoveSystemDialogOpen] =
     React.useState<boolean>(false);
@@ -85,6 +86,7 @@ const MoveSystemsButton = (props: {
         onClose={() => setMoveSystemDialogOpen(false)}
         selectedSystems={props.selectedSystems}
         onChangeSelectedSystems={props.onChangeSelectedSystems}
+        parentSystemId={props.parentSystemId}
       />
     </>
   );
@@ -172,6 +174,7 @@ function Systems() {
               <MoveSystemsButton
                 selectedSystems={selectedSystems}
                 onChangeSelectedSystems={setSelectedSystems}
+                parentSystemId={systemId}
               />
               <Button
                 sx={{ mx: 1 }}
