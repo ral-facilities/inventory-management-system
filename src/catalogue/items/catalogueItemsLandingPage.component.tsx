@@ -20,10 +20,7 @@ import CatalogueItemsDialog from './catalogueItemsDialog.component';
 function CatalogueItemsLandingPage() {
   const location = useLocation();
 
-  const catalogueItemId = location.pathname.replace(
-    '/inventory-management-system/catalogue/items/',
-    ''
-  );
+  const catalogueItemId = location.pathname.replace('/catalogue/items/', '');
 
   const { data: catalogueItemIdData, isLoading: catalogueItemIdDataLoading } =
     useCatalogueItem(catalogueItemId);
@@ -72,8 +69,8 @@ function CatalogueItemsLandingPage() {
           component={Link}
           to={
             catalogueCategoryData && catalogueCategoryData.id
-              ? `/inventory-management-system/catalogue/${catalogueCategoryData.id}`
-              : '/inventory-management-system/catalogue'
+              ? `/catalogue/${catalogueCategoryData.id}`
+              : '/catalogue'
           }
           sx={{ margin: 1 }}
           variant="outlined"
@@ -177,7 +174,7 @@ function CatalogueItemsLandingPage() {
                                 component={Link}
                                 underline="hover"
                                 target="_blank"
-                                to={`/inventory-management-system/catalogue/items/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
+                                to={`/catalogue/items/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
                               >
                                 Click here
                               </MuiLink>

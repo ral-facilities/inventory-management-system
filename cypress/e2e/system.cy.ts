@@ -1,6 +1,6 @@
 describe('System', () => {
   beforeEach(() => {
-    cy.visit('/inventory-management-system/systems');
+    cy.visit('/systems');
   });
 
   afterEach(() => {
@@ -34,7 +34,7 @@ describe('System', () => {
   });
 
   it('breadcrumbs should work correctly', () => {
-    cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e9');
+    cy.visit('/systems/65328f34a40ff5301575a4e9');
 
     cy.findByRole('link', { name: 'Pulse Laser' }).should('be.visible');
     cy.findByRole('link', { name: 'Giant laser' }).should('be.visible');
@@ -105,7 +105,7 @@ describe('System', () => {
   });
 
   it('adds a subsystem', () => {
-    cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
+    cy.visit('/systems/65328f34a40ff5301575a4e3');
 
     cy.findByRole('button', { name: 'add subsystem' }).click();
 
@@ -128,7 +128,7 @@ describe('System', () => {
   });
 
   it('displays an error when attempting to add a system with no name that hides once closed', () => {
-    cy.visit('/inventory-management-system/systems');
+    cy.visit('/systems');
 
     // Empty name
     cy.findByRole('button', { name: 'add system' }).click();
@@ -149,7 +149,7 @@ describe('System', () => {
   });
 
   it('deletes a system', () => {
-    cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e9');
+    cy.visit('/systems/65328f34a40ff5301575a4e9');
 
     cy.findByRole('button', { name: 'Delete System' }).click();
     cy.startSnoopingBrowserMockedRequest();
@@ -167,7 +167,7 @@ describe('System', () => {
   });
 
   it('displays an error when attempting to delete a system with children that hides once closed', () => {
-    cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
+    cy.visit('/systems/65328f34a40ff5301575a4e3');
 
     cy.findByRole('button', { name: 'Delete System' }).click();
     cy.startSnoopingBrowserMockedRequest();

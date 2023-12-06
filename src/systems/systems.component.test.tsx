@@ -15,7 +15,7 @@ describe('Systems', () => {
   });
 
   it('renders correctly', async () => {
-    createView('/inventory-management-system/systems');
+    createView('/systems');
 
     await waitFor(() => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
@@ -25,7 +25,7 @@ describe('Systems', () => {
   });
 
   it('renders correctly when viewing a specific system', async () => {
-    createView('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
+    createView('/systems/65328f34a40ff5301575a4e3');
 
     await waitFor(() => {
       expect(screen.getByText('Subsystems')).toBeInTheDocument();
@@ -35,7 +35,7 @@ describe('Systems', () => {
   });
 
   it('renders the breadcrumbs when navigating to a subsystem', async () => {
-    createView('/inventory-management-system/systems');
+    createView('/systems');
 
     await waitFor(() => {
       expect(
@@ -53,7 +53,7 @@ describe('Systems', () => {
   });
 
   it('navigates back a system using the breadcrumbs', async () => {
-    createView('/inventory-management-system/systems/65328f34a40ff5301575a4e4');
+    createView('/systems/65328f34a40ff5301575a4e4');
 
     await waitFor(() => {
       expect(screen.getByText('Smaller laser')).toBeInTheDocument();
@@ -75,7 +75,7 @@ describe('Systems', () => {
   });
 
   it('navigates back to the root systems when home button clicked', async () => {
-    createView('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
+    createView('/systems/65328f34a40ff5301575a4e3');
 
     await waitFor(() => {
       expect(screen.getByText('Smaller laser')).toBeInTheDocument();
@@ -92,7 +92,7 @@ describe('Systems', () => {
   });
 
   it('can open and close the add system dialog at root', async () => {
-    createView('/inventory-management-system/systems');
+    createView('/systems');
 
     await waitFor(() => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
@@ -110,7 +110,7 @@ describe('Systems', () => {
   });
 
   it('can open and close the add subsystem dialog when not at root', async () => {
-    createView('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
+    createView('/systems/65328f34a40ff5301575a4e3');
 
     await waitFor(() => {
       expect(screen.getByText('Subsystems')).toBeInTheDocument();

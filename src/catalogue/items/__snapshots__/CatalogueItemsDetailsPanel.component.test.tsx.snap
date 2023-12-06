@@ -152,7 +152,7 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                           >
                             <a
                               class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                              href="/inventory-management-system/catalogue/items/10"
+                              href="/catalogue/items/10"
                               target="_blank"
                             >
                               Click here
@@ -663,7 +663,7 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                           >
                             <a
                               class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                              href="/inventory-management-system/catalogue/items/6"
+                              href="/catalogue/items/6"
                               target="_blank"
                             >
                               Click here
@@ -1184,7 +1184,7 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                           >
                             <a
                               class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                              href="/inventory-management-system/catalogue/items/6"
+                              href="/catalogue/items/6"
                               target="_blank"
                             >
                               Click here
@@ -1704,7 +1704,7 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                           >
                             <a
                               class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                              href="/inventory-management-system/catalogue/items/6"
+                              href="/catalogue/items/6"
                               target="_blank"
                             >
                               Click here

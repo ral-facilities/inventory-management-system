@@ -27,9 +27,7 @@ export const useNavigateToSystem = () => {
 
   return React.useCallback(
     (newId: string | null) => {
-      navigate(
-        `/inventory-management-system/systems${newId ? `/${newId}` : ''}`
-      );
+      navigate(`/systems${newId ? `/${newId}` : ''}`);
     },
     [navigate]
   );
@@ -41,10 +39,7 @@ function Systems() {
   const navigateToSystem = useNavigateToSystem();
 
   const getSystemID = React.useCallback(() => {
-    let systemID: string | null = location.pathname.replace(
-      '/inventory-management-system/systems',
-      ''
-    );
+    let systemID: string | null = location.pathname.replace('/systems', '');
     systemID = systemID === '' ? null : systemID.replace('/', '');
     return systemID;
   }, [location.pathname]);

@@ -3,7 +3,7 @@
   "routes": [
     {
       "section": "Homepage",
-      "link": "/inventory-management-system",
+      "link": "/",
       "displayName": "Inventory Management System",
       "order": 0
     }

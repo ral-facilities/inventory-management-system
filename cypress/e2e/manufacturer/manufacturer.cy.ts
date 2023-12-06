@@ -1,13 +1,13 @@
 describe('Manufacturer', () => {
   beforeEach(() => {
-    cy.visit('/inventory-management-system/manufacturer');
+    cy.visit('/manufacturer');
   });
   afterEach(() => {
     cy.clearMocks();
   });
 
   it('should render in table headers', () => {
-    cy.visit('/inventory-management-system/manufacturer');
+    cy.visit('/manufacturer');
     cy.findByText('Actions').should('be.visible');
     cy.findByText('Name').should('be.visible');
     cy.findByText('URL').should('be.visible');
@@ -17,7 +17,7 @@ describe('Manufacturer', () => {
   });
 
   it('should render manufacturer data', () => {
-    cy.visit('/inventory-management-system/manufacturer');
+    cy.visit('/manufacturer');
 
     cy.findByText('Manufacturer A').should('be.visible');
     cy.findByText('Manufacturer B').should('be.visible');
@@ -34,7 +34,7 @@ describe('Manufacturer', () => {
   });
 
   it('manufacturer url is correct and opens new webpage', () => {
-    cy.visit('/inventory-management-system/manufacturer');
+    cy.visit('/manufacturer');
     const url = cy.findByText('http://example.com');
 
     url
@@ -179,7 +179,7 @@ describe('Manufacturer', () => {
       });
   });
   it('Edits a manufacturer correctly', () => {
-    cy.visit('/inventory-management-system/manufacturer');
+    cy.visit('/manufacturer');
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
     cy.findByLabelText('Name *').clear();

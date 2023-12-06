@@ -12,11 +12,11 @@ import Manufacturer from '../manufacturer/manufacturer.component';
 import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingPage.component';
 
 export const paths = {
-  home: '/inventory-management-system/',
-  catalogue: '/inventory-management-system/catalogue/*',
-  systems: '/inventory-management-system/systems/*',
-  manufacturer: '/inventory-management-system/manufacturer',
-  catalogueItems: '/inventory-management-system/catalogue/items/:id',
+  home: '/',
+  catalogue: '/catalogue/*',
+  systems: '/systems/*',
+  manufacturer: '/manufacturer',
+  catalogueItems: '/catalogue/items/:id',
 };
 
 interface TabPanelProps {
@@ -73,59 +73,64 @@ function ViewTabs() {
   }, [location.pathname, value]);
 
   React.useEffect(() => {
-    if (
-      location.pathname === '/inventory-management-system/' ||
-      location.pathname === '/'
-    ) {
-      navigate('/inventory-management-system/catalogue');
+    if (location.pathname === '/') {
+      navigate('/catalogue');
     }
   }, [location.pathname, navigate]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: TabValue) => {
     setValue(newValue);
-    navigate(`/inventory-management-system/${newValue.toLowerCase()}`);
+    navigate(`/${newValue.toLowerCase()}`);
   };
+
+  const routing = (
+    <Routes location={location}>
+      <Route path="/" element={<Catalogue />}></Route>
+      <Route path={paths.catalogue} element={<Catalogue />}></Route>
+      <Route
+        path={paths.catalogueItems}
+        element={<CatalogueItemsLandingPage />}
+      ></Route>
+      <Route path={paths.systems} element={<Systems />}></Route>
+      <Route path={paths.manufacturer} element={<Manufacturer />}></Route>
+    </Routes>
+  );
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="view tabs">
-          <StyledTab
-            value="Catalogue"
-            label="Catalogue"
-            {...a11yProps('Catalogue')}
-          />
-          <StyledTab
-            value="Systems"
-            label="Systems"
-            {...a11yProps('Systems')}
-          />
-          <StyledTab
-            value="Manufacturer"
-            label="Manufacturer"
-            {...a11yProps('Manufacturer')}
-          />
-        </Tabs>
-      </Box>
-      <Box
-        sx={{
-          borderBottom: 1,
-          borderColor: 'divider',
-        }}
-      >
-        <TabPanel value={value} label={value}>
-          <Routes location={location}>
-            <Route path="/" element={<Catalogue />}></Route>
-            <Route path={paths.catalogue} element={<Catalogue />}></Route>
-            <Route
-              path={paths.catalogueItems}
-              element={<CatalogueItemsLandingPage />}
-            ></Route>
-            <Route path={paths.systems} element={<Systems />}></Route>
-            <Route path={paths.manufacturer} element={<Manufacturer />}></Route>
-          </Routes>
-        </TabPanel>
-      </Box>
+      {process.env.NODE_ENV !== 'production' ? (
+        <Box>
+          <Tabs value={value} onChange={handleChange} aria-label="view tabs">
+            <StyledTab
+              value="Catalogue"
+              label="Catalogue"
+              {...a11yProps('Catalogue')}
+            />
+            <StyledTab
+              value="Systems"
+              label="Systems"
+              {...a11yProps('Systems')}
+            />
+            <StyledTab
+              value="Manufacturer"
+              label="Manufacturer"
+              {...a11yProps('Manufacturer')}
+            />
+          </Tabs>
+          <Box
+            sx={{
+              borderBottom: 1,
+              borderColor: 'divider',
+            }}
+          >
+            <TabPanel value={value} label={value}>
+              {routing}
+            </TabPanel>
+          </Box>
+        </Box>
+      ) : (
+        routing
+      )}
     </Box>
   );
 }
