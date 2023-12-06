@@ -78,14 +78,17 @@ const ObsoleteCatalogueItemDialog = (
     setCatalogueCurrDirId(newId);
   };
 
-  // Start at the parent category of the current replacement item
+  // Start at the parent category of the current replacement item if it exists
+  // otherwise at the current category
   const { data: catalogueItemObsoleteData } = useCatalogueItem(
     obsoleteDetails.obsolete_replacement_catalogue_item_id ?? undefined
   );
   React.useEffect(() => {
-    catalogueItemObsoleteData &&
+    if (catalogueItemObsoleteData)
       setCatalogueCurrDirId(catalogueItemObsoleteData.catalogue_category_id);
-  }, [catalogueItemObsoleteData]);
+    else if (catalogueItem)
+      setCatalogueCurrDirId(catalogueItem.catalogue_category_id);
+  }, [catalogueItem, catalogueItemObsoleteData]);
 
   // Resets errors/disables & enables steps as needed
   const handleObsoleteDetailChanged = React.useCallback(
@@ -280,9 +283,9 @@ const ObsoleteCatalogueItemDialog = (
     <Dialog
       open={open}
       onClose={handleClose}
-      PaperProps={{ sx: { height: '648px' } }}
+      PaperProps={{ sx: { height: '658px' } }}
       fullWidth
-      maxWidth="lg"
+      maxWidth="xl"
     >
       <DialogTitle>Obsolete Catalogue Item</DialogTitle>
       <DialogContent>

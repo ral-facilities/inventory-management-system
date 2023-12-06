@@ -426,8 +426,6 @@ describe('Catalogue Items', () => {
     cy.findByRole('textbox').type('Obsolete reason\nNew line');
 
     cy.findByText('Next').click();
-    cy.findByText('Beam Characterization').click();
-    cy.findByText('Cameras').click();
 
     cy.findAllByRole('row', { name: 'Cameras 3 row' })
       .eq(0)
