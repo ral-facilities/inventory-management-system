@@ -57,23 +57,28 @@ function ViewTabs() {
   const [value, setValue] = React.useState<TabValue>('Catalogue');
   const navigate = useNavigate();
   const location = useLocation();
-  React.useEffect(() => {
-    const prefixIndex = location.pathname.indexOf(paths.home);
-    let tabValue =
-      prefixIndex !== -1
-        ? location.pathname
-            .substring(prefixIndex + paths.home.length)
-            .split('/')[0]
-        : '';
 
-    if (tabValue !== value && tabValue !== '') {
-      tabValue = tabValue.charAt(0).toUpperCase() + tabValue.slice(1);
-      setValue(tabValue as TabValue);
+  // The useEffect below is only active when it is in not production
+  // because that is when the tabs are visible
+  React.useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') {
+      const prefixIndex = location.pathname.indexOf(paths.home);
+      let tabValue =
+        prefixIndex !== -1
+          ? location.pathname
+              .substring(prefixIndex + paths.home.length)
+              .split('/')[0]
+          : '';
+
+      if (tabValue !== value && tabValue !== '') {
+        tabValue = tabValue.charAt(0).toUpperCase() + tabValue.slice(1);
+        setValue(tabValue as TabValue);
+      }
     }
   }, [location.pathname, value]);
-
+  // navigate to the catalogue only used for developement and e2e testing
   React.useEffect(() => {
-    if (location.pathname === '/') {
+    if (location.pathname === '/' && process.env.NODE_ENV !== 'production') {
       navigate('/catalogue');
     }
   }, [location.pathname, navigate]);
@@ -85,7 +90,6 @@ function ViewTabs() {
 
   const routing = (
     <Routes location={location}>
-      <Route path="/" element={<Catalogue />}></Route>
       <Route path={paths.catalogue} element={<Catalogue />}></Route>
       <Route
         path={paths.catalogueItems}
