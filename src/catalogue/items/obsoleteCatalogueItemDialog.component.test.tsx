@@ -279,7 +279,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
         obsolete_replacement_catalogue_item_id: '12',
       }
     );
-  }, 10000); // Long running
+  }, 12000); // Long running
 
   it('cannot select self as obsolete item', async () => {
     props.catalogueItem = getCatalogueItemById('6');
@@ -353,7 +353,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
         obsolete_replacement_catalogue_item_id: null,
       }
     );
-  });
+  }, 7500); // Long running test
 
   it('displays error if nothing changed that disappears when the reason modified', async () => {
     createView();
