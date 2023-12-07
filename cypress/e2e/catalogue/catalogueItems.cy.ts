@@ -391,4 +391,12 @@ describe('Catalogue Items', () => {
       .should('have.attr', 'target')
       .should('include', '_blank'); // Check target attribute value
   });
+
+  it('sets the table filters and clears the table filters', () => {
+    cy.findByText('Cameras 1').should('exist');
+    cy.findByLabelText('Filter by Name').type('15');
+    cy.findByText('Cameras 1').should('not.exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+    cy.findByText('Cameras 1').should('exist');
+  });
 });
