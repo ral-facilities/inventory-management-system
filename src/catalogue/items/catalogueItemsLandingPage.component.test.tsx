@@ -209,7 +209,7 @@ describe('Catalogue Items Landing Page', () => {
     ).toBeInTheDocument();
   });
 
-  it.only('prints when the button is clicked', async () => {
+  it('prints when the button is clicked', async () => {
     const spy = jest.spyOn(window, 'print').mockImplementation(() => {});
     createView('/inventory-management-system/catalogue/items/89');
 
