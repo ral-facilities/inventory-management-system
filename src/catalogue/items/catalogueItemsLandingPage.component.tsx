@@ -75,7 +75,7 @@ function CatalogueItemsLandingPage() {
               ? `/inventory-management-system/catalogue/${catalogueCategoryData.id}`
               : '/inventory-management-system/catalogue'
           }
-          sx={{ margin: 1 }}
+          sx={{ mx: 0.5 }}
           variant="outlined"
         >
           {catalogueItemIdData
@@ -84,13 +84,22 @@ function CatalogueItemsLandingPage() {
         </Button>
         <Button
           disabled={!catalogueItemIdData}
-          sx={{ margin: 1 }}
+          sx={{ mx: 0.5 }}
           variant="outlined"
           onClick={() => {
             setEditItemDialogOpen(true);
           }}
         >
           Edit
+        </Button>
+        <Button
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          onClick={() => {
+            window.print();
+          }}
+        >
+          Print
         </Button>
       </Grid>
       {catalogueItemIdData && (
