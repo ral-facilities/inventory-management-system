@@ -5,6 +5,7 @@ import {
   EditCatalogueCategory,
   EditCatalogueItem,
   EditManufacturer,
+  EditSystem,
   Manufacturer,
 } from '../app.types';
 import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
@@ -406,10 +407,8 @@ export const handlers = [
             'A System with the same name already exists within the same parent System',
         })
       );
-    }
-    if (body.name === 'Error 500') {
+    } else if (body.name === 'Error 500')
       return res(ctx.status(500), ctx.json(''));
-    }
     return res(
       ctx.status(200),
       ctx.json({
@@ -417,6 +416,28 @@ export const handlers = [
         id: '1',
       })
     );
+  }),
+
+  rest.patch('/v1/systems/:id', async (req, res, ctx) => {
+    const body = (await req.json()) as EditSystem;
+
+    if (body.name === 'Error 409') {
+      return res(
+        ctx.status(409),
+        ctx.json({
+          detail:
+            'A System with the same name already exists within the same parent System',
+        })
+      );
+    } else if (body.name === 'Error 500')
+      return res(ctx.status(500), ctx.json(''));
+
+    const { id } = req.params;
+    const validSystem = SystemsJSON.find((value) => value.id === id);
+
+    if (validSystem) {
+      return res(ctx.status(200), ctx.json({ ...validSystem, ...body }));
+    } else return res(ctx.status(404), ctx.json(''));
   }),
 
   rest.delete('/v1/systems/:id', (req, res, ctx) => {

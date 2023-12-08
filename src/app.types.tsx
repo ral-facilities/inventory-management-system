@@ -170,11 +170,11 @@ export enum SystemImportanceType {
 
 export interface AddSystem {
   name: string;
-  description?: string;
-  location?: string;
-  owner?: string;
+  description?: string | null;
+  location?: string | null;
+  owner?: string | null;
   importance: SystemImportanceType;
-  parent_id?: string;
+  parent_id?: string | null;
 }
 
 export interface System {
@@ -186,4 +186,8 @@ export interface System {
   importance: SystemImportanceType;
   parent_id: string | null;
   code: string;
+}
+
+export interface EditSystem extends Partial<AddSystem> {
+  id: string;
 }

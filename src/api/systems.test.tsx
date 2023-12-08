@@ -1,11 +1,12 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { AddSystem, SystemImportanceType } from '../app.types';
+import { AddSystem, EditSystem, SystemImportanceType } from '../app.types';
 import SystemBreadcrumbsJSON from '../mocks/SystemBreadcrumbs.json';
 import SystemsJSON from '../mocks/Systems.json';
 import { hooksWrapperWithProviders } from '../setupTests';
 import {
   useAddSystem,
   useDeleteSystem,
+  useEditSystem,
   useSystem,
   useSystems,
   useSystemsBreadcrumbs,
@@ -148,7 +149,7 @@ describe('System api functions', () => {
       importance: SystemImportanceType.MEDIUM,
     };
 
-    it('posts a request to add a system and returns a successful response', async () => {
+    it('sends a post request to add a system and returns a successful response', async () => {
       const { result } = renderHook(() => useAddSystem(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -161,6 +162,39 @@ describe('System api functions', () => {
 
     it.todo(
       'sends request to add a system and throws an appropriate error on failure'
+    );
+  });
+
+  describe('useEditSystem', () => {
+    const MOCK_SYSTEM_PATCH: EditSystem = {
+      id: '65328f34a40ff5301575a4e3',
+      name: 'System name',
+      parent_id: 'parent-id',
+      description: 'Description',
+      location: 'Location',
+      owner: 'Owner',
+      importance: SystemImportanceType.MEDIUM,
+    };
+
+    it('sends a patch request to edit a system and returns a successful response', async () => {
+      const { result } = renderHook(() => useEditSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      result.current.mutate(MOCK_SYSTEM_PATCH);
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+
+      expect(result.current.data).toEqual({
+        ...SystemsJSON.find(
+          (systemBreadcrumbs) =>
+            systemBreadcrumbs.id === MOCK_SYSTEM_PATCH['id']
+        ),
+        ...MOCK_SYSTEM_PATCH,
+      });
+    });
+
+    it.todo(
+      'sends patch request to edit a system and throws an appropriate error on failure'
     );
   });
 

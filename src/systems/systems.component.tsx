@@ -35,34 +35,53 @@ export const useNavigateToSystem = () => {
   );
 };
 
+const AddSystemButton = (props: { systemId: string | null }) => {
+  const [addSystemDialogOpen, setAddSystemDialogOpen] =
+    React.useState<boolean>(false);
+
+  return (
+    <>
+      <IconButton
+        aria-label={props.systemId === null ? 'add system' : 'add subsystem'}
+        onClick={() => setAddSystemDialogOpen(true)}
+      >
+        <AddIcon />
+      </IconButton>
+      <SystemDialog
+        open={addSystemDialogOpen}
+        onClose={() => setAddSystemDialogOpen(false)}
+        parentId={props.systemId}
+        type="add"
+      />
+    </>
+  );
+};
+
 function Systems() {
   // Navigation setup
   const location = useLocation();
   const navigateToSystem = useNavigateToSystem();
 
-  const getSystemID = React.useCallback(() => {
-    let systemID: string | null = location.pathname.replace(
+  const getSystemId = React.useCallback(() => {
+    let systemId: string | null = location.pathname.replace(
       '/inventory-management-system/systems',
       ''
     );
-    systemID = systemID === '' ? null : systemID.replace('/', '');
-    return systemID;
+    systemId = systemId === '' ? null : systemId.replace('/', '');
+    return systemId;
   }, [location.pathname]);
-  const systemID = getSystemID();
-
-  const [addSystemDialogOpen, setAddSystemDialogOpen] =
-    React.useState<boolean>(false);
+  const systemId = getSystemId();
 
   const { data: systemsBreadcrumbs, isLoading: systemsBreadcrumbsLoading } =
-    useSystemsBreadcrumbs(systemID);
+    useSystemsBreadcrumbs(systemId);
   const { data: subsystemsData, isLoading: subsystemsDataLoading } = useSystems(
     // String value of null for filtering root systems
-    systemID === null ? 'null' : systemID
+    systemId === null ? 'null' : systemId
   );
 
   return (
     <Grid container>
-      {systemsBreadcrumbsLoading && systemID !== null ? (
+      {systemsBreadcrumbsLoading && systemId !== null ? (
         <LinearProgress sx={{ width: '100%' }} />
       ) : (
         <Grid
@@ -111,18 +130,10 @@ function Systems() {
           ) : (
             <>
               <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
-                <Typography variant="h6">
-                  {systemID === null ? 'Root systems' : 'Subsystems'}
+                <Typography variant="h6" sx={{ marginRight: 'auto' }}>
+                  {systemId === null ? 'Root systems' : 'Subsystems'}
                 </Typography>
-                <IconButton
-                  sx={{ marginLeft: 'auto' }}
-                  aria-label={
-                    systemID === null ? 'add system' : 'add subsystem'
-                  }
-                  onClick={() => setAddSystemDialogOpen(true)}
-                >
-                  <AddIcon />
-                </IconButton>
+                <AddSystemButton systemId={systemId} />
               </Box>
               <Divider role="presentation" />
               <List sx={{ padding: 0 }}>
@@ -142,15 +153,9 @@ function Systems() {
           )}
         </Grid>
         <Grid item xs={12} md={9} lg={10} textAlign="left" padding={1}>
-          <SystemDetails id={systemID} />
+          <SystemDetails id={systemId} />
         </Grid>
       </Grid>
-      <SystemDialog
-        open={addSystemDialogOpen}
-        onClose={() => setAddSystemDialogOpen(false)}
-        parentId={systemID}
-        type="add"
-      />
     </Grid>
   );
 }
