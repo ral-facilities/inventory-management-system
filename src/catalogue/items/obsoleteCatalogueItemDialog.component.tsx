@@ -83,12 +83,15 @@ const ObsoleteCatalogueItemDialog = (
   const { data: catalogueItemObsoleteData } = useCatalogueItem(
     obsoleteDetails.obsolete_replacement_catalogue_item_id ?? undefined
   );
-  React.useEffect(() => {
+  const setDefaultCatalogueCurrDirId = React.useCallback(() => {
     if (catalogueItemObsoleteData)
       setCatalogueCurrDirId(catalogueItemObsoleteData.catalogue_category_id);
     else if (catalogueItem)
       setCatalogueCurrDirId(catalogueItem.catalogue_category_id);
   }, [catalogueItem, catalogueItemObsoleteData]);
+  React.useEffect(() => {
+    setDefaultCatalogueCurrDirId();
+  }, [setDefaultCatalogueCurrDirId]);
 
   // Resets errors/disables & enables steps as needed
   const handleObsoleteDetailChanged = React.useCallback(
@@ -149,7 +152,13 @@ const ObsoleteCatalogueItemDialog = (
     setCatalogueCurrDirId(null);
     setFormError(undefined);
     setOtherError(false);
-  }, [catalogueItem, handleObsoleteDetailChanged, onClose]);
+    setDefaultCatalogueCurrDirId();
+  }, [
+    catalogueItem,
+    handleObsoleteDetailChanged,
+    onClose,
+    setDefaultCatalogueCurrDirId,
+  ]);
 
   const handleFinish = React.useCallback(() => {
     if (catalogueItem) {

@@ -434,7 +434,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     );
   }, 10000); // Long running
 
-  it('can navigate back to root when selecting an item', async () => {
+  it('can navigate back to root when selecting an item, but resets on close', async () => {
     createView();
 
     // Get to end of form
@@ -462,5 +462,23 @@ describe('Obsolete Catalogue Item Dialog', () => {
         })
       ).toBeInTheDocument();
     });
-  });
+
+    // Ensure reset in close
+    await user.click(
+      screen.getByRole('button', {
+        name: 'Cancel',
+      })
+    );
+
+    // Get to end of form
+    await modifyForm(true, {});
+
+    await waitFor(() => {
+      expect(
+        screen.getAllByRole('row', {
+          name: `Energy Meters 26 row`,
+        }).length
+      ).toBe(2);
+    });
+  }, 10000); // Long running
 });
