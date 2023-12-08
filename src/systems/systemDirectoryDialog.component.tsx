@@ -55,7 +55,9 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   }, [onClose]);
 
   const handleMoveTo = React.useCallback(() => {
-    if (!targetSystemLoading) {
+    // Either ensure finished loading, or moving to root
+    // (where we don't need to load anything as the name is known)
+    if (!targetSystemLoading || parentSystemId === null) {
       moveToSystem({
         selectedSystems: selectedSystems,
         // Only reason for targetSystem to be undefined here is if not loading at all
@@ -71,6 +73,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
     handleClose,
     moveToSystem,
     onChangeSelectedSystems,
+    parentSystemId,
     selectedSystems,
     targetSystem,
     targetSystemLoading,

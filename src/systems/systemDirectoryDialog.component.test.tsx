@@ -18,10 +18,9 @@ describe('SystemDirectoryDialog', () => {
   const mockOnClose = jest.fn();
   const mockOnChangeSelectedSystems = jest.fn();
 
-  // Mock systems that won't interfere with the main ones
   const mockSelectedSystems: System[] = [
-    { ...(SystemsJSON[0] as System), id: '1' },
-    { ...(SystemsJSON[1] as System), id: '2' },
+    SystemsJSON[4] as System,
+    SystemsJSON[5] as System,
   ];
 
   const createView = () => {
@@ -127,7 +126,49 @@ describe('SystemDirectoryDialog', () => {
     expect(screen.getByText('Smaller laser')).toBeInTheDocument();
   });
 
-  it('moves selected systems', async () => {
+  it('cannot move selected systems to the same system', async () => {
+    // Change selected systems to have a parent equal to the target
+    props.selectedSystems = [
+      SystemsJSON[0] as System,
+      SystemsJSON[1] as System,
+    ];
+
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    });
+
+    expect(screen.getByRole('button', { name: 'Move here' })).toBeDisabled();
+  });
+
+  it('moves selected systems (to root system)', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Move here' }));
+
+    expect(axiosPatchSpy).toHaveBeenCalledWith(
+      '/v1/systems/65328f34a40ff5301575a4e7',
+      {
+        parent_id: null,
+      }
+    );
+    expect(axiosPatchSpy).toHaveBeenCalledWith(
+      '/v1/systems/65328f34a40ff5301575a4e8',
+      {
+        parent_id: null,
+      }
+    );
+
+    expect(mockOnClose).toHaveBeenCalled();
+    expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith([]);
+  });
+
+  it('moves selected systems (to non-root system)', async () => {
     createView();
 
     await waitFor(() => {
@@ -142,12 +183,18 @@ describe('SystemDirectoryDialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Move here' }));
 
-    expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/systems/1', {
-      parent_id: '65328f34a40ff5301575a4e3',
-    });
-    expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/systems/2', {
-      parent_id: '65328f34a40ff5301575a4e3',
-    });
+    expect(axiosPatchSpy).toHaveBeenCalledWith(
+      '/v1/systems/65328f34a40ff5301575a4e7',
+      {
+        parent_id: '65328f34a40ff5301575a4e3',
+      }
+    );
+    expect(axiosPatchSpy).toHaveBeenCalledWith(
+      '/v1/systems/65328f34a40ff5301575a4e8',
+      {
+        parent_id: '65328f34a40ff5301575a4e3',
+      }
+    );
 
     expect(mockOnClose).toHaveBeenCalled();
     expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith([]);

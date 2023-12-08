@@ -18,7 +18,7 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { System } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
@@ -222,8 +222,7 @@ function Systems() {
                       <ListItemButton
                         sx={{ padding: 0 }}
                         selected={selected}
-                        component={Link}
-                        to={system.id}
+                        onClick={(event) => navigateToSystem(system.id)}
                       >
                         <Checkbox
                           size="small"
