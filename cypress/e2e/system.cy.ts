@@ -17,7 +17,7 @@ describe('System', () => {
     cy.findByText('Please select a system').should('be.visible');
 
     // Navigate deeper
-    cy.findByRole('link', { name: 'Giant laser' }).click();
+    cy.findByRole('button', { name: 'Giant laser' }).click();
     cy.url().should('include', '/systems/65328f34a40ff5301575a4e3');
     cy.findByText('No system selected').should('not.exist');
     cy.findByText('Please select a system').should('not.exist');
@@ -26,7 +26,7 @@ describe('System', () => {
     cy.findByText('Description').should('be.visible');
 
     // Navigate deeper again
-    cy.findByRole('link', { name: 'Smaller laser' }).click();
+    cy.findByRole('button', { name: 'Smaller laser' }).click();
     cy.url().should('include', '/systems/65328f34a40ff5301575a4e4');
 
     cy.findByText('Pulse Laser').should('be.visible');
@@ -335,10 +335,10 @@ describe('System', () => {
   it('moves systems', () => {
     cy.visit('/inventory-management-system/systems');
 
-    cy.findByRole('link', { name: 'Pulse Laser' })
+    cy.findByRole('button', { name: 'Pulse Laser' })
       .findByRole('checkbox')
       .click();
-    cy.findByRole('link', { name: 'Pico Laser' })
+    cy.findByRole('button', { name: 'Pico Laser' })
       .findByRole('checkbox')
       .click();
 
