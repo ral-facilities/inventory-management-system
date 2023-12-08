@@ -72,7 +72,12 @@ export interface CatalogueCategoryFormData {
   mandatory: boolean;
 }
 
-export interface CatalogueItemDetails {
+export interface ObsoleteDetails {
+  is_obsolete: boolean;
+  obsolete_replacement_catalogue_item_id: string | null;
+  obsolete_reason: string | null;
+}
+export interface CatalogueItemDetails extends ObsoleteDetails {
   catalogue_category_id: string;
   name: string;
   description: string | null;
@@ -83,9 +88,6 @@ export interface CatalogueItemDetails {
   drawing_number: string | null;
   drawing_link: string | null;
   item_model_number: string | null;
-  is_obsolete: boolean;
-  obsolete_replacement_catalogue_item_id: string | null;
-  obsolete_reason: string | null;
 }
 // need so we can cast string to number e.g for 10.50
 export type CatalogueItemDetailsPlaceholder = {

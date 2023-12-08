@@ -28,8 +28,8 @@ describe('Catalogue Items Table', () => {
 
   beforeEach(() => {
     props = {
-      dense: false,
       parentInfo: getCatalogueCategoryById('5'),
+      dense: false,
     };
     user = userEvent.setup();
     window.ResizeObserver = jest.fn().mockImplementation(() => ({
@@ -300,6 +300,32 @@ describe('Catalogue Items Table', () => {
 
     const saveAsButton = screen.getByText('Save as');
     await user.click(saveAsButton);
+  });
+
+  it('opens obsolete dialog and can close it again', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Obsolete')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Obsolete'));
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
   });
 
   it('navigates to the manufacturer url', async () => {
