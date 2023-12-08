@@ -1,9 +1,9 @@
 import log from 'loglevel';
 import { NotificationType } from './state/actions/actions.types';
-import { CatalogueCategoryTransferState, MicroFrontendId } from './app.types';
+import { TransferState, MicroFrontendId } from './app.types';
 
 const handleTransferState = (
-  transferStates: CatalogueCategoryTransferState[],
+  transferStates: TransferState[],
   broadcast = true
 ): void => {
   transferStates.forEach((singleTransferState) => {

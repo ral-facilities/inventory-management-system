@@ -154,7 +154,7 @@ interface EditAddress {
   postcode?: string;
   country?: string;
 }
-export interface CatalogueCategoryTransferState {
+export interface TransferState {
   name: string;
   message: string;
   state: 'success' | 'error';
@@ -192,4 +192,10 @@ export interface System {
 
 export interface EditSystem extends Partial<AddSystem> {
   id: string;
+}
+
+export interface MoveToSystem {
+  selectedSystems: System[];
+  // Null if root
+  targetSystem: System | null;
 }

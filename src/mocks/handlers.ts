@@ -420,7 +420,8 @@ export const handlers = [
   rest.patch('/v1/systems/:id', async (req, res, ctx) => {
     const body = (await req.json()) as EditSystem;
 
-    if (body.name === 'Error 409') {
+    const { id } = req.params;
+    if (body.name === 'Error 409' || id === 'Error 409') {
       return res(
         ctx.status(409),
         ctx.json({
@@ -431,7 +432,6 @@ export const handlers = [
     } else if (body.name === 'Error 500')
       return res(ctx.status(500), ctx.json(''));
 
-    const { id } = req.params;
     const validSystem = SystemsJSON.find((value) => value.id === id);
 
     if (validSystem) {
