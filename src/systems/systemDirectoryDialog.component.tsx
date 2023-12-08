@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import {
+  useCopyToSystem,
   useMoveToSystem,
   useSystem,
   useSystems,
@@ -24,10 +25,12 @@ export interface SystemDirectoryDialogProps {
   selectedSystems: System[];
   onChangeSelectedSystems: (selectedSystems: System[]) => void;
   parentSystemId: string | null;
+  type: 'moveTo' | 'copyTo';
 }
 
 export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
-  const { open, onClose, selectedSystems, onChangeSelectedSystems } = props;
+  const { open, onClose, selectedSystems, onChangeSelectedSystems, type } =
+    props;
 
   // Store here and update only if changed to reduce re-renders and allow
   // navigation
@@ -49,6 +52,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
     useSystem(parentSystemId);
 
   const { mutateAsync: moveToSystem } = useMoveToSystem();
+  const { mutateAsync: copyToSystem } = useCopyToSystem();
 
   const handleClose = React.useCallback(() => {
     onClose();
@@ -79,6 +83,34 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
     targetSystemLoading,
   ]);
 
+  const handleCopyTo = React.useCallback(() => {
+    console.log(systemsData);
+    if ((!targetSystemLoading || parentSystemId === null) && systemsData) {
+      const existingSystemCodes = systemsData.map((system) => system.code);
+
+      copyToSystem({
+        selectedSystems: selectedSystems,
+        // Only reason for targetSystem to be undefined here is if not loading at all
+        // which happens when at root
+        targetSystem: targetSystem || null,
+        existingSystemCodes: existingSystemCodes,
+      }).then((response) => {
+        handleTransferState(response);
+        onChangeSelectedSystems([]);
+        handleClose();
+      });
+    }
+  }, [
+    copyToSystem,
+    handleClose,
+    onChangeSelectedSystems,
+    parentSystemId,
+    selectedSystems,
+    systemsData,
+    targetSystem,
+    targetSystemLoading,
+  ]);
+
   return (
     <Dialog
       open={open}
@@ -91,7 +123,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
         <Grid container spacing={2}>
           <Grid item>
             <>
-              Move{' '}
+              {type === 'moveTo' ? 'Move ' : 'Copy '}
               {selectedSystems.length > 1
                 ? `${selectedSystems.length} systems`
                 : '1 system'}{' '}
@@ -124,11 +156,12 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
           disabled={
             // Disable when not moving anywhere different
             selectedSystems.length > 0 &&
-            selectedSystems[0].parent_id === parentSystemId
+            selectedSystems[0].parent_id === parentSystemId &&
+            type === 'moveTo'
           }
-          onClick={handleMoveTo}
+          onClick={type === 'moveTo' ? handleMoveTo : handleCopyTo}
         >
-          Move here
+          {type === 'moveTo' ? 'Move' : 'Copy'} here
         </Button>
       </DialogActions>
     </Dialog>
