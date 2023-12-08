@@ -29,7 +29,8 @@ describe('Obsolete Catalogue Item Dialog', () => {
       is_obsolete?: boolean;
       obsolete_reason?: string;
       // Should be a list of catalogue category names followed by the name of the
-      // item to select
+      // item to select (starting from root) - when there is only one will stay in same
+      // category
       replacement_item_navigation?: string[];
       // Should not click on last item? (will error if disabled)
       ignore_replacement_item?: boolean;
@@ -76,16 +77,25 @@ describe('Obsolete Catalogue Item Dialog', () => {
       if (values.replacement_item_navigation !== undefined) {
         // Select categories
         if (values.replacement_item_navigation.length > 0) {
-          for (
-            let i = 0;
-            i < values.replacement_item_navigation.length - 1;
-            i++
-          )
+          if (values.replacement_item_navigation.length > 1) {
+            // When there is more than one value start from root
             await user.click(
-              screen.getByRole('row', {
-                name: `${values.replacement_item_navigation[i]} row`,
+              screen.getByRole('button', {
+                name: 'Navigate back to Catalogue home',
               })
             );
+
+            for (
+              let i = 0;
+              i < values.replacement_item_navigation.length - 1;
+              i++
+            )
+              await user.click(
+                screen.getByRole('row', {
+                  name: `${values.replacement_item_navigation[i]} row`,
+                })
+              );
+          }
         }
         // Ensure loaded
         await waitFor(() => {
@@ -269,7 +279,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
         obsolete_replacement_catalogue_item_id: '12',
       }
     );
-  }, 10000); // Long running
+  }, 12000); // Long running
 
   it('cannot select self as obsolete item', async () => {
     props.catalogueItem = getCatalogueItemById('6');
@@ -278,11 +288,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
 
     await modifyForm(false, {
       is_obsolete: true,
-      replacement_item_navigation: [
-        'Beam Characterization',
-        'Energy Meters',
-        'Energy Meters 27',
-      ],
+      replacement_item_navigation: ['Energy Meters 27'],
       ignore_replacement_item: true,
     });
 
@@ -302,11 +308,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
 
     await modifyForm(false, {
       is_obsolete: true,
-      replacement_item_navigation: [
-        'Beam Characterization',
-        'Energy Meters',
-        'Energy Meters 26',
-      ],
+      replacement_item_navigation: ['Energy Meters 26'],
       ignore_replacement_item: true,
     });
 
@@ -351,7 +353,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
         obsolete_replacement_catalogue_item_id: null,
       }
     );
-  });
+  }, 7500); // Long running test
 
   it('displays error if nothing changed that disappears when the reason modified', async () => {
     createView();

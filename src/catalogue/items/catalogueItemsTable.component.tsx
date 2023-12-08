@@ -375,7 +375,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               })),
 
             selected: rowSelection[row.id],
-            sx: { cursor: 'pointer' },
+            sx: {
+              cursor:
+                isItemSelectable === undefined || isItemSelectable(row.original)
+                  ? 'pointer'
+                  : 'not-allowed',
+            },
             'aria-label': `${row.original.name} row`,
           };
         }
