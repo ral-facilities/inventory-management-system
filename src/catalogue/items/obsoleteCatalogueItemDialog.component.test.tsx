@@ -34,6 +34,8 @@ describe('Obsolete Catalogue Item Dialog', () => {
       replacement_item_navigation?: string[];
       // Should not click on last item? (will error if disabled)
       ignore_replacement_item?: boolean;
+      // Should select items by clicking on the row itself and not checkbox
+      selectUsingRow?: boolean;
     }
   ) => {
     // Ensure form is loaded
@@ -113,9 +115,18 @@ describe('Obsolete Catalogue Item Dialog', () => {
         if (
           values.ignore_replacement_item === undefined ||
           !values.ignore_replacement_item
-        )
-          await user.click(
-            within(
+        ) {
+          let elementToClick;
+          if (values.selectUsingRow === undefined || !values.selectUsingRow) {
+            elementToClick = screen.getAllByRole('row', {
+              name: `${
+                values.replacement_item_navigation[
+                  values.replacement_item_navigation.length - 1
+                ]
+              } row`,
+            })[0];
+          } else {
+            elementToClick = within(
               screen.getAllByRole('row', {
                 name: `${
                   values.replacement_item_navigation[
@@ -123,8 +134,10 @@ describe('Obsolete Catalogue Item Dialog', () => {
                   ]
                 } row`,
               })[0]
-            ).getByRole('radio')
-          );
+            ).getByRole('radio');
+          }
+          await user.click(elementToClick);
+        }
       }
     }
   };
@@ -276,6 +289,33 @@ describe('Obsolete Catalogue Item Dialog', () => {
       {
         is_obsolete: true,
         obsolete_reason: 'Some reason',
+        obsolete_replacement_catalogue_item_id: '12',
+      }
+    );
+  }, 12000); // Long running
+
+  it('can make an item obsolete (only using row itself to select)', async () => {
+    props.catalogueItem = getCatalogueItemById('1');
+
+    createView();
+
+    await modifyForm(false, {
+      is_obsolete: true,
+      replacement_item_navigation: [
+        'Motion',
+        'Actuators',
+        'Motorized Actuators',
+        'Motorized Actuators 33',
+      ],
+      selectUsingRow: true,
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+    expect(axiosPatchSpy).toHaveBeenCalledWith(
+      `/v1/catalogue-items/${props.catalogueItem?.id}`,
+      {
+        is_obsolete: true,
         obsolete_replacement_catalogue_item_id: '12',
       }
     );
@@ -434,7 +474,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     );
   }, 10000); // Long running
 
-  it('can navigate back to root when selecting an item', async () => {
+  it('can navigate back to root when selecting an item, but resets on close', async () => {
     createView();
 
     // Get to end of form
@@ -462,5 +502,23 @@ describe('Obsolete Catalogue Item Dialog', () => {
         })
       ).toBeInTheDocument();
     });
-  });
+
+    // Ensure reset in close
+    await user.click(
+      screen.getByRole('button', {
+        name: 'Cancel',
+      })
+    );
+
+    // Get to end of form
+    await modifyForm(true, {});
+
+    await waitFor(() => {
+      expect(
+        screen.getAllByRole('row', {
+          name: `Energy Meters 26 row`,
+        }).length
+      ).toBe(2);
+    });
+  }, 10000); // Long running
 });

@@ -68,5 +68,25 @@
     "parent_id": "65328f34a40ff5301575a4e8",
     "id": "65328f34a40ff5301575a4e9",
     "code": "plasma-beam"
+  },
+  {
+    "parent_id": null,
+    "name": "Pulse Laser",
+    "description": "Ullam fuga neque fugiat dolores laborum.",
+    "location": "Studio 80s\nO'Sullivan trail\nVictoriaville\nNP1R 4QP",
+    "owner": "Antony Yates",
+    "importance": "high",
+    "id": "656da8ef9cba7a76c6f81a5d",
+    "code": "pulse-laser"
+  },
+  {
+    "parent_id": null,
+    "name": "Pico Laser",
+    "description": "Totam maxime est.",
+    "location": "Flat 90w\nWatson inlet\nNew Eric\nG05 6SZ",
+    "owner": "Dr Stacey Ward",
+    "importance": "low",
+    "id": "656ef565ed0773f82e44bc6d",
+    "code": "pico-laser"
   }
 ]

@@ -1,15 +1,24 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { AddSystem, SystemImportanceType } from '../app.types';
+import {
+  AddSystem,
+  EditSystem,
+  MoveToSystem,
+  System,
+  SystemImportanceType,
+} from '../app.types';
 import SystemBreadcrumbsJSON from '../mocks/SystemBreadcrumbs.json';
 import SystemsJSON from '../mocks/Systems.json';
 import { hooksWrapperWithProviders } from '../setupTests';
 import {
   useAddSystem,
   useDeleteSystem,
+  useEditSystem,
+  useMoveToSystem,
   useSystem,
   useSystems,
   useSystemsBreadcrumbs,
 } from './systems';
+import axios from 'axios';
 
 describe('System api functions', () => {
   afterEach(() => {
@@ -148,7 +157,7 @@ describe('System api functions', () => {
       importance: SystemImportanceType.MEDIUM,
     };
 
-    it('posts a request to add a system and returns a successful response', async () => {
+    it('sends a post request to add a system and returns a successful response', async () => {
       const { result } = renderHook(() => useAddSystem(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -161,6 +170,39 @@ describe('System api functions', () => {
 
     it.todo(
       'sends request to add a system and throws an appropriate error on failure'
+    );
+  });
+
+  describe('useEditSystem', () => {
+    const MOCK_SYSTEM_PATCH: EditSystem = {
+      id: '65328f34a40ff5301575a4e3',
+      name: 'System name',
+      parent_id: 'parent-id',
+      description: 'Description',
+      location: 'Location',
+      owner: 'Owner',
+      importance: SystemImportanceType.MEDIUM,
+    };
+
+    it('sends a patch request to edit a system and returns a successful response', async () => {
+      const { result } = renderHook(() => useEditSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      result.current.mutate(MOCK_SYSTEM_PATCH);
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
+
+      expect(result.current.data).toEqual({
+        ...SystemsJSON.find(
+          (systemBreadcrumbs) =>
+            systemBreadcrumbs.id === MOCK_SYSTEM_PATCH['id']
+        ),
+        ...MOCK_SYSTEM_PATCH,
+      });
+    });
+
+    it.todo(
+      'sends patch request to edit a system and throws an appropriate error on failure'
     );
   });
 
@@ -179,5 +221,135 @@ describe('System api functions', () => {
     it.todo(
       'sends request to delete a system and throws an appropriate error on failure'
     );
+  });
+
+  describe('useMoveToSystem', () => {
+    const mockSystems: System[] = [
+      SystemsJSON[0] as System,
+      SystemsJSON[1] as System,
+    ];
+
+    let moveToSystem: MoveToSystem;
+
+    // Use patch spy for testing since response is not actual data in this case
+    // so cant test the underlying use of editSystem's otherwise
+    let axiosPatchSpy;
+
+    beforeEach(() => {
+      moveToSystem = {
+        selectedSystems: mockSystems,
+        targetSystem: null,
+      };
+
+      axiosPatchSpy = jest.spyOn(axios, 'patch');
+    });
+
+    it('sends requests to move multiple systems to root and returns a successful response for each', async () => {
+      moveToSystem.targetSystem = null;
+
+      const { result } = renderHook(() => useMoveToSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      result.current.mutate(moveToSystem);
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      moveToSystem.selectedSystems.map((system) =>
+        expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/systems/${system.id}`, {
+          parent_id: null,
+        })
+      );
+      expect(result.current.data).toEqual(
+        moveToSystem.selectedSystems.map((system) => ({
+          message: 'Successfully moved to Root',
+          name: system.name,
+          state: 'success',
+        }))
+      );
+    });
+
+    it('sends requests to move multiple systems to another system and returns a successful response for each', async () => {
+      moveToSystem.targetSystem = {
+        ...(SystemsJSON[0] as System),
+        name: 'New system name',
+        id: 'new_system_id',
+      };
+
+      const { result } = renderHook(() => useMoveToSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      result.current.mutate(moveToSystem);
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      moveToSystem.selectedSystems.map((system) =>
+        expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/systems/${system.id}`, {
+          parent_id: 'new_system_id',
+        })
+      );
+      expect(result.current.data).toEqual(
+        moveToSystem.selectedSystems.map((system) => ({
+          message: 'Successfully moved to New system name',
+          name: system.name,
+          state: 'success',
+        }))
+      );
+    });
+
+    it('handles a failed request to move a system correctly', async () => {
+      moveToSystem.targetSystem = {
+        ...(SystemsJSON[0] as System),
+        name: 'New system name',
+        id: 'new_system_id',
+      };
+
+      // Fail just the 1st system
+      moveToSystem.selectedSystems[0].id = 'Error 409';
+
+      const { result } = renderHook(() => useMoveToSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      result.current.mutate(moveToSystem);
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      moveToSystem.selectedSystems.map((system) =>
+        expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/systems/${system.id}`, {
+          parent_id: 'new_system_id',
+        })
+      );
+      console.log(result.current.data);
+      expect(result.current.data).toEqual(
+        moveToSystem.selectedSystems
+          .map((system, index) =>
+            index === 0
+              ? {
+                  message:
+                    'A System with the same name already exists within the same parent System',
+                  name: system.name,
+                  state: 'error',
+                }
+              : {
+                  message: 'Successfully moved to New system name',
+                  name: system.name,
+                  state: 'success',
+                }
+          )
+          // Exception takes longer to resolve so it gets added last
+          .reverse()
+      );
+    });
   });
 });
