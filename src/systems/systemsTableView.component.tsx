@@ -62,6 +62,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     enableColumnFilters: true,
     enableHiding: false,
     enableFullScreenToggle: false,
+    muiTableContainerProps: { sx: { height: '360.4px' } },
     localization: {
       ...MRT_Localization_EN,
       noRecordsToDisplay: noResultsText,
