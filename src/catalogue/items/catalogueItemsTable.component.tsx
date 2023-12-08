@@ -1,8 +1,8 @@
+import BlockIcon from '@mui/icons-material/Block';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
-import BlockIcon from '@mui/icons-material/Block';
 import {
   Button,
   ListItemIcon,
@@ -13,11 +13,11 @@ import {
   Typography,
 } from '@mui/material';
 import {
+  MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
   type MRT_RowSelectionState,
-  MRT_Row,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
@@ -335,6 +335,29 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     selectedRowState ?? {}
   );
 
+  const handleRowSelection = React.useCallback(
+    (row: MRT_Row<CatalogueItem>) => {
+      // Ensure selectable
+      if (isItemSelectable === undefined || isItemSelectable(row.original)) {
+        if (row.original.id === Object.keys(rowSelection)[0]) {
+          // Deselect
+          onChangeObsoleteReplacementId && onChangeObsoleteReplacementId(null);
+
+          setRowSelection({});
+        } else {
+          // Select
+          onChangeObsoleteReplacementId &&
+            onChangeObsoleteReplacementId(row.original.id);
+
+          setRowSelection((prev) => ({
+            [row.id]: !prev[row.id],
+          }));
+        }
+      }
+    },
+    [isItemSelectable, onChangeObsoleteReplacementId, rowSelection]
+  );
+
   const table = useMaterialReactTable({
     columns: dense ? [{ ...columns[0], size: 1135 }] : columns, // If dense only show the name column
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
@@ -367,12 +390,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       ? ({ row }) => {
           return {
             component: TableRow,
-            onClick: () =>
-              (isItemSelectable === undefined ||
-                isItemSelectable(row.original)) &&
-              setRowSelection((prev) => ({
-                [row.id]: !prev[row.id],
-              })),
+            onClick: () => handleRowSelection(row),
 
             selected: rowSelection[row.id],
             sx: {
@@ -388,21 +406,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     muiSelectCheckboxProps: dense
       ? ({ row }) => {
           return {
-            onClick: () => {
-              if (
-                isItemSelectable === undefined ||
-                isItemSelectable(row.original)
-              ) {
-                onChangeObsoleteReplacementId &&
-                  onChangeObsoleteReplacementId(row.original.id);
-
-                if (row.original.id === Object.keys(rowSelection)[0]) {
-                  onChangeObsoleteReplacementId &&
-                    onChangeObsoleteReplacementId(null);
-                  setRowSelection({});
-                }
-              }
-            },
+            onClick: () => handleRowSelection(row),
             disabled: !(
               isItemSelectable === undefined || isItemSelectable(row.original)
             ),

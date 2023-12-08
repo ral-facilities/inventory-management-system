@@ -28,8 +28,8 @@ describe('Catalogue Items Table', () => {
 
   beforeEach(() => {
     props = {
-      dense: false,
       parentInfo: getCatalogueCategoryById('5'),
+      dense: false,
     };
     user = userEvent.setup();
     window.ResizeObserver = jest.fn().mockImplementation(() => ({
