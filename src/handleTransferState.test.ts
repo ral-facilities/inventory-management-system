@@ -2,12 +2,12 @@ import log from 'loglevel';
 import handleTransferState from './handleTransferState';
 import { AnyAction } from 'redux';
 import { NotificationType } from './state/actions/actions.types';
-import { CatalogueCategoryTransferState } from './app.types';
+import { TransferState } from './app.types';
 
 jest.mock('loglevel');
 
 describe('handleTransferStates', () => {
-  let transferStates: CatalogueCategoryTransferState[];
+  let transferStates: TransferState[];
   let events: CustomEvent<AnyAction>[] = [];
 
   beforeEach(() => {

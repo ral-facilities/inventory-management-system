@@ -1,3 +1,5 @@
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
   Chip,
@@ -8,10 +10,61 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { getSystemImportanceColour, useSystem } from '../api/systems';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
+import { getSystemImportanceColour, useSystem } from '../api/systems';
+import { System } from '../app.types';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
+import SystemDialog from './systemDialog.component';
+
+interface SystemButtonProps {
+  system: System;
+}
+
+const EditSystemButton = (props: SystemButtonProps) => {
+  const [editSystemDialogOpen, setEditSystemDialogOpen] =
+    useState<boolean>(false);
+
+  return (
+    <>
+      <Tooltip title="Edit System">
+        <IconButton
+          sx={{ marginLeft: 'auto', padding: 0 }}
+          onClick={() => setEditSystemDialogOpen(true)}
+        >
+          <EditIcon />
+        </IconButton>
+      </Tooltip>
+      <SystemDialog
+        open={editSystemDialogOpen}
+        onClose={() => setEditSystemDialogOpen(false)}
+        type="edit"
+        selectedSystem={props.system}
+      />
+    </>
+  );
+};
+
+const DeleteSystemButton = (props: SystemButtonProps) => {
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+
+  return (
+    <>
+      <Tooltip title="Delete System">
+        <IconButton
+          sx={{ padding: 0 }}
+          onClick={() => setDeleteDialogOpen(true)}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </Tooltip>
+      <DeleteSystemDialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+        system={props.system}
+      />
+    </>
+  );
+};
 
 export interface SystemDetailsProps {
   id: string | null;
@@ -19,9 +72,6 @@ export interface SystemDetailsProps {
 
 function SystemDetails(props: SystemDetailsProps) {
   const { data: system, isLoading: systemLoading } = useSystem(props.id);
-
-  // Delete dialog
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
 
   return systemLoading && props.id !== null ? (
     <Box
@@ -52,19 +102,9 @@ function SystemDetails(props: SystemDetailsProps) {
         </Typography>
         {system !== undefined && (
           <>
-            <Tooltip title="Delete System">
-              <IconButton
-                sx={{ marginLeft: 'auto', padding: 0 }}
-                onClick={() => setDeleteDialogOpen(true)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
-            <DeleteSystemDialog
-              open={deleteDialogOpen}
-              onClose={() => setDeleteDialogOpen(false)}
-              system={system}
-            />
+            <EditSystemButton system={system} />
+            <Box sx={{ px: 1 }} />
+            <DeleteSystemButton system={system} />
           </>
         )}
       </Box>
@@ -107,8 +147,16 @@ function SystemDetails(props: SystemDetailsProps) {
                 <Typography variant="h6">Importance</Typography>
                 <Chip
                   label={system.importance}
-                  sx={{ marginLeft: 1 }}
-                  color={getSystemImportanceColour(system.importance)}
+                  sx={() => {
+                    const colorName = getSystemImportanceColour(
+                      system.importance
+                    );
+                    return {
+                      marginLeft: 1,
+                      bgcolor: `${colorName}.main`,
+                      color: `${colorName}.contrastText`,
+                    };
+                  }}
                 />
               </Grid>
             </Grid>
