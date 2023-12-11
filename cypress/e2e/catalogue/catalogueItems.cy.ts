@@ -497,11 +497,74 @@ describe('Catalogue Items', () => {
     cy.findAllByText('Manufacturer Name').should('exist');
   });
 
-  it('can navigate to an items replacment', () => {
+  it('can navigate to an items replacement', () => {
     cy.visit('/inventory-management-system/catalogue/5');
 
     cy.findAllByRole('link', { name: 'Click here' }).eq(0).click();
 
     cy.url().should('contain', 'inventory-management-system/catalogue/items/6');
+  });
+
+  it('can move multiple catalogue items', () => {
+    cy.visit('/inventory-management-system/catalogue/5');
+
+    cy.findAllByLabelText('Toggle select row').first().click();
+    cy.findAllByLabelText('Toggle select row').eq(2).click();
+
+    cy.findByRole('button', { name: 'Move to' }).click();
+
+    cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
+
+    cy.findByText('Energy Meters V2').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Move here' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-items/:id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).equal(2);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({ catalogue_category_id: '8967' })
+      );
+      expect(JSON.stringify(await patchRequests[1].json())).equal(
+        JSON.stringify({ catalogue_category_id: '8967' })
+      );
+    });
+  });
+
+  it('errors when moving multiple catalogue items to a catalogue category with different catalogue item properties ', () => {
+    cy.visit('/inventory-management-system/catalogue/5');
+
+    cy.findAllByLabelText('Toggle select row').first().click();
+    cy.findAllByLabelText('Toggle select row').eq(2).click();
+
+    cy.findByRole('button', { name: 'Move to' }).click();
+
+    cy.findByText('Cameras').click();
+
+    cy.findByRole('button', { name: 'Move here' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains(
+          'The destination catalogue item properties must precisely match the current destination. Ensure identical attributes, order, and formatting, with no spacing variations.'
+        );
+      });
+  });
+  it('Move here button is disabled when trying to move to the current location', () => {
+    cy.visit('/inventory-management-system/catalogue/5');
+
+    cy.findAllByLabelText('Toggle select row').first().click();
+    cy.findAllByLabelText('Toggle select row').eq(2).click();
+
+    cy.findByRole('button', { name: 'Move to' }).click();
+
+    cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
+    cy.findByText('Energy Meters').click();
+    cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
   });
 });

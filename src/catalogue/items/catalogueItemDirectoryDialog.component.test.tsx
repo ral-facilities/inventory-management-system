@@ -238,7 +238,7 @@ describe('catalogue item directory Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Only the catalogue items details, properies and manufacturer will be copied; no contained items within the catalogue category will be included.'
+            'Only the catalogue items details, properties and manufacturer will be copied; no contained items within the catalogue category will be included.'
           )
         ).toBeInTheDocument();
       });
@@ -248,7 +248,7 @@ describe('catalogue item directory Dialog', () => {
       await waitFor(() => {
         expect(
           screen.queryByText(
-            'Only the catalogue items details, properies and manufacturer will be copied; no contained items within the catalogue category will be included.'
+            'Only the catalogue items details, properties and manufacturer will be copied; no contained items within the catalogue category will be included.'
           )
         ).not.toBeInTheDocument();
       });
