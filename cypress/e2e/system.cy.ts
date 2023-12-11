@@ -376,7 +376,7 @@ describe('System', () => {
   });
 
   it('copies systems', () => {
-    cy.visit('/inventory-management-system/systems');
+    cy.visit('/systems');
 
     cy.findByRole('button', { name: 'Pulse Laser' })
       .findByRole('checkbox')

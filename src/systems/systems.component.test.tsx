@@ -243,7 +243,7 @@ describe('Systems', () => {
   });
 
   it('can open and close copy dialog', async () => {
-    createView('/inventory-management-system/systems');
+    createView('/systems');
 
     await waitFor(() => {
       expect(screen.getByText('Root systems')).toBeInTheDocument();
