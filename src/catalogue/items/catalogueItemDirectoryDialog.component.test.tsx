@@ -112,7 +112,6 @@ describe('catalogue item directory Dialog', () => {
       ],
     };
     user = userEvent.setup();
-    axiosPatchSpy = jest.spyOn(axios, 'patch');
 
     window.ResizeObserver = jest.fn().mockImplementation(() => ({
       disconnect: jest.fn(),
@@ -127,82 +126,132 @@ describe('catalogue item directory Dialog', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
+  describe('Move to', () => {
+    beforeEach(() => {
+      axiosPatchSpy = jest.spyOn(axios, 'patch');
+    });
 
-  it('calls onClose when cancel is clicked', async () => {
-    createView();
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
 
-    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+    it('calls onClose when cancel is clicked', async () => {
+      createView();
 
-    expect(onClose).toHaveBeenCalled();
+      await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+      expect(onClose).toHaveBeenCalled();
+    });
+    it('navigates to home when the home button is clicked', async () => {
+      createView();
+      await waitFor(() => {
+        expect(screen.getByText('Cameras')).toBeInTheDocument();
+      });
+      await user.click(screen.getByLabelText('navigate to catalogue home'));
+
+      expect(onChangeCatalogueCurrDirId).toBeCalledWith(null);
+    });
+
+    it('navigates to a new to a new location', async () => {
+      createView();
+      await waitFor(() => {
+        expect(screen.getByText('Cameras')).toBeInTheDocument();
+      });
+      await user.click(screen.getByText('Energy Meters V2'));
+      expect(onChangeCatalogueCurrDirId).toBeCalledWith('8967');
+    });
+
+    it('navigates to a new to a new location using the breadcrumbs', async () => {
+      props.catalogueCurrDirId = '5';
+      createView();
+      await waitFor(() => {
+        expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+      });
+      await user.click(
+        screen.getByRole('link', { name: 'beam-characterization' })
+      );
+      expect(onChangeCatalogueCurrDirId).toBeCalledWith('1');
+    });
+
+    it('moves multiple catalogue items', async () => {
+      props.catalogueCurrDirId = '8967';
+      createView();
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('No catalogue items found')
+        ).toBeInTheDocument();
+      });
+      const moveButton = screen.getByRole('button', { name: 'Move here' });
+
+      await user.click(moveButton);
+      expect(onClose).toHaveBeenCalled();
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/89', {
+        catalogue_category_id: '8967',
+      });
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/6', {
+        catalogue_category_id: '8967',
+      });
+    });
+
+    it('moves multiple catalogue items to a catalogue category with different catalogue item properties and errors', async () => {
+      props.catalogueCurrDirId = '4';
+      createView();
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('No catalogue items found')
+        ).toBeInTheDocument();
+      });
+      const moveButton = screen.getByRole('button', { name: 'Move here' });
+
+      await user.click(moveButton);
+      expect(onClose).not.toHaveBeenCalled();
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'The destination catalogue item properties must precisely match the current destination. Ensure identical attributes, order, and formatting, with no spacing variations.'
+          )
+        ).toBeInTheDocument();
+      });
+    });
   });
-  it('navigates to home when the home button is clicked', async () => {
-    createView();
-    await waitFor(() => {
-      expect(screen.getByText('Cameras')).toBeInTheDocument();
+  describe('Copy to', () => {
+    beforeEach(() => {
+      props.requestType = 'copyTo';
     });
-    await user.click(screen.getByLabelText('navigate to catalogue home'));
-
-    expect(onChangeCatalogueCurrDirId).toBeCalledWith(null);
-  });
-
-  it('navigates to a new to a new location', async () => {
-    createView();
-    await waitFor(() => {
-      expect(screen.getByText('Cameras')).toBeInTheDocument();
+    afterEach(() => {
+      jest.clearAllMocks();
     });
-    await user.click(screen.getByText('Energy Meters V2'));
-    expect(onChangeCatalogueCurrDirId).toBeCalledWith('8967');
-  });
 
-  it('navigates to a new to a new location using the breadcrumbs', async () => {
-    props.catalogueCurrDirId = '5';
-    createView();
-    await waitFor(() => {
-      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
-    });
-    await user.click(
-      screen.getByRole('link', { name: 'beam-characterization' })
-    );
-    expect(onChangeCatalogueCurrDirId).toBeCalledWith('1');
-  });
+    it('displays copy warning tooltip', async () => {
+      createView();
+      await waitFor(() => {
+        expect(screen.getByLabelText('Copy Warning')).toBeInTheDocument();
+      });
 
-  it('moves multiple catalogue items', async () => {
-    props.catalogueCurrDirId = '8967';
-    createView();
+      const infoIcon = screen.getByLabelText('Copy Warning');
 
-    await waitFor(() => {
-      expect(screen.getByText('No catalogue items found')).toBeInTheDocument();
-    });
-    const moveButton = screen.getByRole('button', { name: 'Move here' });
+      await user.hover(infoIcon);
 
-    await user.click(moveButton);
-    expect(onClose).toHaveBeenCalled();
-    expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/89', {
-      catalogue_category_id: '8967',
-    });
-    expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/6', {
-      catalogue_category_id: '8967',
-    });
-  });
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'Only the catalogue items details, properies and manufacturer will be copied; no contained items within the catalogue category will be included.'
+          )
+        ).toBeInTheDocument();
+      });
 
-  it('moves multiple catalogue items to a catalogue category with different catalogue item properties and errors', async () => {
-    props.catalogueCurrDirId = '4';
-    createView();
+      await user.unhover(infoIcon);
 
-    await waitFor(() => {
-      expect(screen.getByText('No catalogue items found')).toBeInTheDocument();
-    });
-    const moveButton = screen.getByRole('button', { name: 'Move here' });
-
-    await user.click(moveButton);
-    expect(onClose).not.toHaveBeenCalled();
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(
-          'The destination catalogue item properties must precisely match the current destination. Ensure identical attributes, order, and formatting, with no spacing variations.'
-        )
-      ).toBeInTheDocument();
+      await waitFor(() => {
+        expect(
+          screen.queryByText(
+            'Only the catalogue items details, properies and manufacturer will be copied; no contained items within the catalogue category will be included.'
+          )
+        ).not.toBeInTheDocument();
+      });
     });
   });
 });

@@ -82,12 +82,7 @@ const CatalogueItemDirectoryDialog = (
       catalogue_category_id: currId ?? '',
       name: item.name,
     }));
-    console.log(
-      JSON.stringify(parentInfo.catalogue_item_properties) !==
-        JSON.stringify(
-          targetLocationCatalogueCategory?.catalogue_item_properties
-        )
-    );
+
     if (
       JSON.stringify(parentInfo.catalogue_item_properties) !==
       JSON.stringify(targetLocationCatalogueCategory?.catalogue_item_properties)

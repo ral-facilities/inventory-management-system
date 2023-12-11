@@ -265,13 +265,6 @@ describe('catalogue category api functions', () => {
         },
       ];
 
-      const targetLocation = {
-        name: 'Root',
-        id: '',
-        parent_id: null,
-        is_leaf: false,
-        code: '',
-      };
       const { result } = renderHook(() => useMoveToCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -280,7 +273,7 @@ describe('catalogue category api functions', () => {
       result.current.mutate({
         catalogueCategories: catalogueCategories,
         selectedCategories: selectedCatalogueCategories,
-        targetLocationCatalogueCategory: targetLocation,
+        targetLocationCatalogueCategory: null,
       });
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
