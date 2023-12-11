@@ -305,7 +305,9 @@ export const useCopyToSystem = (): UseMutationResult<
     const promises = copyToSystem.selectedSystems.map(
       async (system: System) => {
         // Information to post (backend will just ignore the extra here - only id and code)
-        const systemAdd: AddSystem = system as AddSystem;
+        // Also use Object.assign to copy the data otherwise will modify in place causing issues
+        // in tests
+        const systemAdd: AddSystem = Object.assign({}, system) as AddSystem;
 
         // Assing new parent
         systemAdd.parent_id = copyToSystem.targetSystem?.id || null;
@@ -313,11 +315,11 @@ export const useCopyToSystem = (): UseMutationResult<
         // Avoid duplicates by appending _copy_n for nth copy
         if (copyToSystem.existingSystemCodes.includes(system.code)) {
           let count = 1;
-          let newName = system.name;
+          let newName = systemAdd.name;
           let newCode = system.code;
 
           while (copyToSystem.existingSystemCodes.includes(newCode)) {
-            newName = `${system.name}_copy_${count}`;
+            newName = `${systemAdd.name}_copy_${count}`;
             newCode = `${system.code}_copy_${count}`;
             count++;
           }

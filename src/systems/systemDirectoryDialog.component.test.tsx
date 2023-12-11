@@ -14,6 +14,7 @@ describe('SystemDirectoryDialog', () => {
   let props: SystemDirectoryDialogProps;
   let user;
   let axiosPatchSpy;
+  let axiosPostSpy;
 
   const mockOnClose = jest.fn();
   const mockOnChangeSelectedSystems = jest.fn();
@@ -41,6 +42,7 @@ describe('SystemDirectoryDialog', () => {
 
     user = userEvent.setup();
     axiosPatchSpy = jest.spyOn(axios, 'patch');
+    axiosPostSpy = jest.spyOn(axios, 'post');
   });
 
   afterEach(() => {
@@ -53,6 +55,7 @@ describe('SystemDirectoryDialog', () => {
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
 
     expect(axiosPatchSpy).not.toHaveBeenCalled();
+    expect(axiosPostSpy).not.toHaveBeenCalled();
     expect(mockOnChangeSelectedSystems).not.toHaveBeenCalled();
     expect(mockOnClose).toHaveBeenCalled();
   });
@@ -197,6 +200,97 @@ describe('SystemDirectoryDialog', () => {
           parent_id: '65328f34a40ff5301575a4e3',
         }
       );
+
+      expect(mockOnClose).toHaveBeenCalled();
+      expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith([]);
+    });
+  });
+
+  describe('Copy to', () => {
+    beforeEach(() => {
+      props.type = 'copyTo';
+    });
+
+    it('renders dialog correctly with multiple selected systems', () => {
+      createView();
+
+      expect(
+        screen.getByText('Copy 2 systems to a different system')
+      ).toBeInTheDocument();
+    });
+
+    it('renders dialog correctly with one selected system', () => {
+      props.selectedSystems = [mockSelectedSystems[0]];
+
+      createView();
+
+      expect(
+        screen.getByText('Copy 1 system to a different system')
+      ).toBeInTheDocument();
+    });
+
+    it('can copy a selected system to the same parent system', async () => {
+      props.selectedSystems = [SystemsJSON[0] as System];
+
+      createView();
+
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Copy here' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
+        ...(SystemsJSON[0] as System),
+        name: 'Giant laser_copy_1',
+      });
+    });
+
+    it('copies selected systems (to root system)', async () => {
+      createView();
+
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Copy here' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
+        ...props.selectedSystems[0],
+        parent_id: null,
+      });
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
+        ...props.selectedSystems[1],
+        parent_id: null,
+      });
+
+      expect(mockOnClose).toHaveBeenCalled();
+      expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith([]);
+    });
+
+    it('copies selected systems (to non-root system)', async () => {
+      createView();
+
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByText('Giant laser'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Copy here' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
+        ...props.selectedSystems[0],
+        parent_id: '65328f34a40ff5301575a4e3',
+      });
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
+        ...props.selectedSystems[1],
+        parent_id: '65328f34a40ff5301575a4e3',
+      });
 
       expect(mockOnClose).toHaveBeenCalled();
       expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith([]);
