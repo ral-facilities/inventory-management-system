@@ -104,12 +104,17 @@ describe('Manufacturer', () => {
     await user.click(closeButton);
   });
 
-  it('set filters and clears the filters', async () => {
+  it('sets the table filters and clears the table filters', async () => {
     createView();
 
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
     });
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    expect(clearFiltersButton).toBeDisabled();
 
     const nameInput = screen.getByLabelText('Filter by Name');
 
@@ -117,10 +122,6 @@ describe('Manufacturer', () => {
 
     await waitFor(() => {
       expect(screen.queryByText('Manufacturer A')).not.toBeInTheDocument();
-    });
-
-    const clearFiltersButton = screen.getByRole('button', {
-      name: 'Clear Filters',
     });
 
     await user.click(clearFiltersButton);

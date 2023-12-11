@@ -65,7 +65,7 @@ describe('Catalogue Items Table', () => {
 
     await ensureColumnsVisible([
       'Sensor brand',
-      'Cost to Rework (GBP)',
+      'Cost to Rework (£)',
       'Days to Rework',
     ]);
   });
@@ -80,7 +80,7 @@ describe('Catalogue Items Table', () => {
       'Obsolete Reason',
       'Measurement Range (Joules)',
       'Accuracy',
-      'Cost (GBP)',
+      'Cost (£)',
     ]);
   });
 
@@ -119,7 +119,7 @@ describe('Catalogue Items Table', () => {
     });
 
     await ensureColumnsVisible([
-      'Cost to Rework (GBP)',
+      'Cost to Rework (£)',
       'Time to replace (days)',
       'Days to Rework',
       'Drawing Number',
@@ -364,12 +364,16 @@ describe('Catalogue Items Table', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
-  it('set filters and clears the filters', async () => {
+  it('sets the table filters and clears the table filters', async () => {
     createView();
 
     await waitFor(() => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+    expect(clearFiltersButton).toBeDisabled();
 
     const nameInput = screen.getByLabelText('Filter by Name');
 
@@ -377,10 +381,6 @@ describe('Catalogue Items Table', () => {
 
     await waitFor(() => {
       expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
-    });
-
-    const clearFiltersButton = screen.getByRole('button', {
-      name: 'Clear Filters',
     });
 
     await user.click(clearFiltersButton);

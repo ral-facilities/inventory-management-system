@@ -3,6 +3,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import ClearIcon from '@mui/icons-material/Clear';
+import AddIcon from '@mui/icons-material/Add';
 import {
   Box,
   Button,
@@ -19,6 +21,7 @@ import {
   useMaterialReactTable,
   type MRT_ColumnDef,
   type MRT_RowSelectionState,
+  type MRT_ColumnFiltersState,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
@@ -248,13 +251,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         },
       })),
       {
-        header: 'Cost (GBP)',
+        header: 'Cost (£)',
         accessorFn: (row) => row.cost_gbp,
-        size: 200,
+        size: 250,
         filterVariant: 'range',
       },
       {
-        header: 'Cost to Rework (GBP)',
+        header: 'Cost to Rework (£)',
         accessorFn: (row) => row.cost_to_rework_gbp ?? 0,
         size: 300,
         filterVariant: 'range',
@@ -336,6 +339,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     selectedRowState ?? {}
   );
 
+  const [columnFilters, setColumnFilters] =
+    React.useState<MRT_ColumnFiltersState>([]);
+
   const handleRowSelection = React.useCallback(
     (row: MRT_Row<CatalogueItem>) => {
       // Ensure selectable
@@ -364,6 +370,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     enableColumnOrdering: dense ? false : true,
     enableFacetedValues: true,
+    enableColumnResizing: true,
     enableRowActions: dense ? false : true,
     enableStickyHeader: true,
     enableDensityToggle: false,
@@ -374,6 +381,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
     enableColumnVirtualization: true,
+    manualFiltering: false,
+    onColumnFiltersChange: setColumnFilters,
     columnVirtualizerOptions: {
       overscan: 4,
       estimateSize: () => 200,
@@ -432,6 +441,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     state: {
       showProgressBars: isLoading, //or showSkeletons
       rowSelection,
+      columnFilters,
     },
     muiPaginationProps: {
       color: 'secondary',
@@ -470,6 +480,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
         <Button
+          startIcon={<AddIcon />}
           sx={{ mx: '4px' }}
           variant="outlined"
           onClick={() => {
@@ -480,8 +491,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           Add Catalogue Item
         </Button>
         <Button
+          startIcon={<ClearIcon />}
           sx={{ mx: '4px' }}
           variant="outlined"
+          disabled={columnFilters.length === 0}
           onClick={() => {
             table.resetColumnFilters();
           }}

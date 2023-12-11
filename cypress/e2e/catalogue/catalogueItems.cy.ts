@@ -394,6 +394,7 @@ describe('Catalogue Items', () => {
 
   it('sets the table filters and clears the table filters', () => {
     cy.findByText('Cameras 1').should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
     cy.findByLabelText('Filter by Name').type('15');
     cy.findByText('Cameras 1').should('not.exist');
     cy.findByRole('button', { name: 'Clear Filters' }).click();
