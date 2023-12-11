@@ -74,168 +74,102 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
             </Grid>
             <Grid item container spacing={0} xs={12} sm={6}>
               <Grid item xs={12} sm={6} key={0}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    padding: 0,
-                  }}
-                >
-                  <ListItemText
-                    primary={'Obsolete'}
-                    secondary={catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}
-                  />
-                </ListItem>
+                <Grid item xs={12}>
+                  <Typography color="text.primary">Obsolete</Typography>
+                  <Typography color="text.secondary">
+                    {catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}
+                  </Typography>
+                </Grid>
               </Grid>
 
               <Grid item xs={12} sm={6} key={1}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    padding: 0,
-                  }}
-                >
-                  <ListItemText
-                    primary={'Obsolete replacement link'}
-                    secondary={
-                      catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
-                        <MuiLink
-                          component={Link}
-                          underline="hover"
-                          target="_blank"
-                          to={`/inventory-management-system/catalogue/items/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
-                        >
-                          Click here
-                        </MuiLink>
-                      ) : (
-                        'None'
-                      )
-                    }
-                  />
-                </ListItem>
+                <Grid item xs={12}>
+                  <Typography color="text.primary">
+                    Obsolete replacement link
+                  </Typography>
+                  <Typography color="text.secondary">
+                    {catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
+                      <MuiLink
+                        component={Link}
+                        underline="hover"
+                        target="_blank"
+                        to={`/inventory-management-system/catalogue/items/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
+                      >
+                        Click here
+                      </MuiLink>
+                    ) : (
+                      'None'
+                    )}
+                  </Typography>
+                </Grid>
               </Grid>
 
               <Grid item xs={12} sm={6} key={2}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    padding: 0,
-                  }}
-                >
-                  <ListItemText
-                    primary={'Obsolete reason'}
-                    secondary={catalogueItemIdData.obsolete_reason ?? 'None'}
-                  />
-                </ListItem>
+                <Grid item xs={12}>
+                  <Typography color="text.primary">Obsolete Reason</Typography>
+                  <Typography color="text.secondary">
+                    {catalogueItemIdData.obsolete_reason ?? 'None'}
+                  </Typography>
+                </Grid>
               </Grid>
 
               <Grid item xs={12} sm={6} key={3}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    padding: 0,
-                  }}
-                >
-                  <ListItemText
-                    primary={'Cost (£)'}
-                    secondary={catalogueItemIdData.cost_gbp ?? 'None'}
-                  />
-                </ListItem>
+                <Grid item xs={12}>
+                  <Typography color="text.primary">Cost (£)</Typography>
+                  <Typography color="text.secondary">
+                    {catalogueItemIdData.cost_gbp ?? 'None'}
+                  </Typography>
+                </Grid>
               </Grid>
               <Grid item xs={12} sm={6} key={4}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    padding: 0,
-                  }}
-                >
-                  <ListItemText
-                    primary={'Cost to rework (£)'}
-                    secondary={catalogueItemIdData.cost_to_rework_gbp ?? 'None'}
-                  />
-                </ListItem>
+                <Grid item xs={12}>
+                  <Typography color="text.primary">
+                    Cost to rework (£)
+                  </Typography>
+                  <Typography color="text.secondary">
+                    {catalogueItemIdData.cost_to_rework_gbp ?? 'None'}
+                  </Typography>
+                </Grid>
               </Grid>
 
               <Grid item xs={12} sm={6} key={5}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    padding: 0,
-                  }}
-                >
-                  <ListItemText
-                    primary={'Time to replace (days)'}
-                    secondary={catalogueItemIdData.days_to_replace ?? 'None'}
-                  />
-                </ListItem>
+                <Grid item xs={12}>
+                  <Typography color="text.primary">
+                    Time to replace (days)
+                  </Typography>
+                  <Typography color="text.secondary">
+                    {catalogueItemIdData.days_to_replace ?? 'None'}
+                  </Typography>
+                </Grid>
               </Grid>
 
               <Grid item xs={12} sm={6} key={6}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    padding: 0,
-                  }}
-                >
-                  <ListItemText
-                    primary={'Time to rework (days)'}
-                    secondary={catalogueItemIdData.days_to_rework ?? 'None'}
-                  />
-                </ListItem>
+                <Grid item xs={12}>
+                  <Typography color="text.primary">
+                    Time to rework (days)
+                  </Typography>
+                  <Typography color="text.secondary">
+                    {catalogueItemIdData.days_to_rework ?? 'None'}
+                  </Typography>
+                </Grid>
               </Grid>
 
               <Grid item xs={12} sm={6} key={7}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    padding: 0,
-                  }}
-                >
-                  <ListItemText
-                    primary={'Drawing Number'}
-                    secondary={catalogueItemIdData.drawing_number ?? 'None'}
-                  />
-                </ListItem>
+                <Grid item xs={12}>
+                  <Typography color="text.primary">Drawing Number</Typography>
+                  <Typography color="text.secondary">
+                    {catalogueItemIdData.drawing_number ?? 'None'}
+                  </Typography>
+                </Grid>
               </Grid>
 
               <Grid item xs={12} sm={6} key={8}>
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    padding: 0,
-                  }}
-                >
-                  <ListItemText
-                    primary={'Model Number'}
-                    secondary={catalogueItemIdData.item_model_number ?? 'None'}
-                  />
-                </ListItem>
+                <Grid item xs={12}>
+                  <Typography color="text.primary">Model Number</Typography>
+                  <Typography color="text.secondary">
+                    {catalogueItemIdData.item_model_number ?? 'None'}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -283,28 +217,14 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
             </Grid>
             <Grid item xs={12}>
               {manufacturerData?.url ? (
-                <ListItem
-                  style={{
-                    justifyContent: 'flex-start',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    padding: 0,
-                  }}
-                >
-                  <ListItemText
-                    primary={'Manufacturer URL'}
-                    secondary={
-                      <MuiLink
-                        underline="hover"
-                        target="_blank"
-                        href={manufacturerData?.url}
-                      >
-                        {manufacturerData?.url ?? 'None'}
-                      </MuiLink>
-                    }
-                  />
-                </ListItem>
+                <Grid item xs={12}>
+                  <Typography color="text.primary">URL</Typography>
+                  <Typography sx={{ margin: '8px' }} variant="body1">
+                    <MuiLink underline="hover" href={manufacturerData.url}>
+                      {manufacturerData.url}
+                    </MuiLink>
+                  </Typography>
+                </Grid>
               ) : (
                 <Grid item xs={12}>
                   <Typography color="text.primary">Manufacturer URL</Typography>
