@@ -502,6 +502,6 @@ describe('Catalogue Items', () => {
 
     cy.findAllByRole('link', { name: 'Click here' }).eq(0).click();
 
-    cy.url().should('contain', 'inventory-management-system/catalogue/items/6');
+    cy.url().should('contain', 'catalogue/items/6');
   });
 });
