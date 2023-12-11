@@ -36,6 +36,7 @@ describe('SystemDirectoryDialog', () => {
       selectedSystems: mockSelectedSystems,
       onChangeSelectedSystems: mockOnChangeSelectedSystems,
       parentSystemId: null,
+      type: 'moveTo',
     };
 
     user = userEvent.setup();
@@ -44,24 +45,6 @@ describe('SystemDirectoryDialog', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-  });
-
-  it('renders dialog correctly with multiple selected systems', () => {
-    createView();
-
-    expect(
-      screen.getByText('Move 2 systems to a different system')
-    ).toBeInTheDocument();
-  });
-
-  it('renders dialog correctly with one selected system', () => {
-    props.selectedSystems = [mockSelectedSystems[0]];
-
-    createView();
-
-    expect(
-      screen.getByText('Move 1 system to a different system')
-    ).toBeInTheDocument();
   });
 
   it('calls onClose when Cancel button is clicked', async () => {
@@ -126,77 +109,97 @@ describe('SystemDirectoryDialog', () => {
     expect(screen.getByText('Smaller laser')).toBeInTheDocument();
   });
 
-  it('cannot move selected systems to the same system', async () => {
-    // Change selected systems to have a parent equal to the target
-    props.selectedSystems = [
-      SystemsJSON[0] as System,
-      SystemsJSON[1] as System,
-    ];
+  describe('Move to', () => {
+    it('renders dialog correctly with multiple selected systems', () => {
+      createView();
 
-    createView();
-
-    await waitFor(() => {
-      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      expect(
+        screen.getByText('Move 2 systems to a different system')
+      ).toBeInTheDocument();
     });
 
-    expect(screen.getByRole('button', { name: 'Move here' })).toBeDisabled();
-  });
+    it('renders dialog correctly with one selected system', () => {
+      props.selectedSystems = [mockSelectedSystems[0]];
 
-  it('moves selected systems (to root system)', async () => {
-    createView();
+      createView();
 
-    await waitFor(() => {
-      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      expect(
+        screen.getByText('Move 1 system to a different system')
+      ).toBeInTheDocument();
     });
 
-    await user.click(screen.getByRole('button', { name: 'Move here' }));
+    it('cannot move selected systems to the same system', async () => {
+      // Change selected systems to have a parent equal to the target
+      props.selectedSystems = [
+        SystemsJSON[0] as System,
+        SystemsJSON[1] as System,
+      ];
 
-    expect(axiosPatchSpy).toHaveBeenCalledWith(
-      '/v1/systems/65328f34a40ff5301575a4e7',
-      {
-        parent_id: null,
-      }
-    );
-    expect(axiosPatchSpy).toHaveBeenCalledWith(
-      '/v1/systems/65328f34a40ff5301575a4e8',
-      {
-        parent_id: null,
-      }
-    );
+      createView();
 
-    expect(mockOnClose).toHaveBeenCalled();
-    expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith([]);
-  });
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
 
-  it('moves selected systems (to non-root system)', async () => {
-    createView();
-
-    await waitFor(() => {
-      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Move here' })).toBeDisabled();
     });
 
-    await user.click(screen.getByText('Giant laser'));
+    it('moves selected systems (to root system)', async () => {
+      createView();
 
-    await waitFor(() => {
-      expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Move here' }));
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith(
+        '/v1/systems/65328f34a40ff5301575a4e7',
+        {
+          parent_id: null,
+        }
+      );
+      expect(axiosPatchSpy).toHaveBeenCalledWith(
+        '/v1/systems/65328f34a40ff5301575a4e8',
+        {
+          parent_id: null,
+        }
+      );
+
+      expect(mockOnClose).toHaveBeenCalled();
+      expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith([]);
     });
 
-    await user.click(screen.getByRole('button', { name: 'Move here' }));
+    it('moves selected systems (to non-root system)', async () => {
+      createView();
 
-    expect(axiosPatchSpy).toHaveBeenCalledWith(
-      '/v1/systems/65328f34a40ff5301575a4e7',
-      {
-        parent_id: '65328f34a40ff5301575a4e3',
-      }
-    );
-    expect(axiosPatchSpy).toHaveBeenCalledWith(
-      '/v1/systems/65328f34a40ff5301575a4e8',
-      {
-        parent_id: '65328f34a40ff5301575a4e3',
-      }
-    );
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
 
-    expect(mockOnClose).toHaveBeenCalled();
-    expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith([]);
+      await user.click(screen.getByText('Giant laser'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Move here' }));
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith(
+        '/v1/systems/65328f34a40ff5301575a4e7',
+        {
+          parent_id: '65328f34a40ff5301575a4e3',
+        }
+      );
+      expect(axiosPatchSpy).toHaveBeenCalledWith(
+        '/v1/systems/65328f34a40ff5301575a4e8',
+        {
+          parent_id: '65328f34a40ff5301575a4e3',
+        }
+      );
+
+      expect(mockOnClose).toHaveBeenCalled();
+      expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith([]);
+    });
   });
 });

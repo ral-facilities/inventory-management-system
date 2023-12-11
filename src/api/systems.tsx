@@ -256,7 +256,7 @@ export const useMoveToSystem = (): UseMutationResult<
             const targetSystemName = moveToSystem.targetSystem?.name || 'Root';
             transferStates.push({
               name: result.name,
-              message: `Successfully ${system.name} moved to ${targetSystemName}`,
+              message: `Successfully moved ${system.name} to ${targetSystemName}`,
               state: 'success',
             });
 

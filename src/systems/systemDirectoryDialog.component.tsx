@@ -84,7 +84,6 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   ]);
 
   const handleCopyTo = React.useCallback(() => {
-    console.log(systemsData);
     if ((!targetSystemLoading || parentSystemId === null) && systemsData) {
       const existingSystemCodes = systemsData.map((system) => system.code);
 
