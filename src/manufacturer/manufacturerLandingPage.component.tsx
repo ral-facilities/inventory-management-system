@@ -78,7 +78,6 @@ function ManufacturerLandingPage() {
                   display: 'flex',
                   flexDirection: 'row',
                   alignItems: 'center',
-                  cursor: 'pointer',
                 }}
               >
                 {manufacturerData.url && (
@@ -96,7 +95,6 @@ function ManufacturerLandingPage() {
                   display: 'flex',
                   flexDirection: 'row',
                   alignItems: 'center',
-                  cursor: 'pointer',
                 }}
               >
                 <Typography variant="h6">Telephone number:</Typography>
@@ -108,7 +106,6 @@ function ManufacturerLandingPage() {
                   display: 'flex',
                   flexDirection: 'row',
                   alignItems: 'center',
-                  cursor: 'pointer',
                 }}
               >
                 <Typography sx={{ margin: '8px' }} variant="body1">
@@ -122,7 +119,6 @@ function ManufacturerLandingPage() {
                   display: 'flex',
                   flexDirection: 'row',
                   alignItems: 'center',
-                  cursor: 'pointer',
                 }}
               >
                 <Typography variant="h6">Address</Typography>
