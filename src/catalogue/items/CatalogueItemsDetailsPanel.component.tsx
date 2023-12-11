@@ -109,7 +109,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                           component={Link}
                           underline="hover"
                           target="_blank"
-                          to={`/inventory-management-system/catalogue/items/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
+                          to={`/catalogue/items/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
                         >
                           Click here
                         </MuiLink>

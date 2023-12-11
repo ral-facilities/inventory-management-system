@@ -98,15 +98,12 @@ function Catalogue() {
   const location = useLocation();
   const onChangeNode = React.useCallback(
     (newId: string) => {
-      navigate(`/inventory-management-system/catalogue/${newId}`);
+      navigate(`/catalogue/${newId}`);
     },
     [navigate]
   );
 
-  const catalogueId = location.pathname.replace(
-    '/inventory-management-system/catalogue',
-    ''
-  );
+  const catalogueId = location.pathname.replace('/catalogue', '');
 
   const {
     data: catalogueCategoryDetail,
@@ -209,7 +206,7 @@ function Catalogue() {
               onChangeNode={onChangeNode}
               breadcrumbsInfo={catalogueBreadcrumbs}
               onChangeNavigateHome={() => {
-                navigate('/inventory-management-system/catalogue');
+                navigate('/catalogue');
               }}
               navigateHomeAriaLabel={'navigate to catalogue home'}
             />

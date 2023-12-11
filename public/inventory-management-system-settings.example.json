@@ -3,19 +3,19 @@
   "routes": [
     {
       "section": "Inventory Management System",
-      "link": "/inventory-management-system/catalogue",
+      "link": "/catalogue",
       "displayName": "Catalogue",
       "order": 1
     },
     {
       "section": "Inventory Management System",
-      "link": "/inventory-management-system/systems",
+      "link": "/systems",
       "displayName": "Systems",
       "order": 2
     },
     {
       "section": "Inventory Management System",
-      "link": "/inventory-management-system/manufacturer",
+      "link": "/manufacturer",
       "displayName": "Manufacturer",
       "order": 3
     }

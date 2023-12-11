@@ -1,12 +1,12 @@
 describe('Catalogue Category', () => {
   beforeEach(() => {
-    cy.visit('/inventory-management-system/catalogue');
+    cy.visit('/catalogue');
   });
   afterEach(() => {
     cy.clearMocks();
   });
   it('should create the breadcrumbs when navigating to a non root catalogue category', () => {
-    cy.visit('/inventory-management-system/catalogue/8');
+    cy.visit('/catalogue/8');
     cy.findByRole('link', { name: 'motion' }).should('be.visible');
     cy.findByText('actuators').should('be.visible');
 
@@ -18,7 +18,7 @@ describe('Catalogue Category', () => {
   });
 
   it('should navigate back to the root directory when the home button is pressed', () => {
-    cy.visit('/inventory-management-system/catalogue/8');
+    cy.visit('/catalogue/8');
     cy.findByRole('link', { name: 'motion' }).should('exist');
     cy.findByText('actuators').should('exist');
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
@@ -143,7 +143,7 @@ describe('Catalogue Category', () => {
   });
 
   it('edits a catalogue category (non leaf node)', () => {
-    cy.visit('/inventory-management-system/catalogue/1');
+    cy.visit('/catalogue/1');
     cy.findByRole('button', {
       name: 'edit Amp Meters catalogue category button',
     }).click();
@@ -179,7 +179,7 @@ describe('Catalogue Category', () => {
   });
 
   it('displays error message if it received an unknown error from the api', () => {
-    cy.visit('/inventory-management-system/catalogue/1');
+    cy.visit('/catalogue/1');
     cy.findByRole('button', {
       name: 'edit Cameras catalogue category button',
     }).click();
@@ -195,7 +195,7 @@ describe('Catalogue Category', () => {
       });
   });
   it('edits a catalogue category with catalogue properties', () => {
-    cy.visit('/inventory-management-system/catalogue/1');
+    cy.visit('/catalogue/1');
     cy.findByRole('button', {
       name: 'edit Voltage Meters catalogue category button',
     }).click();
@@ -221,7 +221,7 @@ describe('Catalogue Category', () => {
   });
 
   it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
-    cy.visit('/inventory-management-system/catalogue/1');
+    cy.visit('/catalogue/1');
     cy.findByRole('button', {
       name: 'edit Voltage Meters catalogue category button',
     }).click();
@@ -246,7 +246,7 @@ describe('Catalogue Category', () => {
   });
 
   it('moves multiple catalogue category', () => {
-    cy.visit('/inventory-management-system/catalogue/1');
+    cy.visit('/catalogue/1');
     cy.findByLabelText('Cameras checkbox').click();
     cy.findByLabelText('test_dup checkbox').click();
     cy.findByLabelText('Amp Meters checkbox').click();
@@ -282,7 +282,7 @@ describe('Catalogue Category', () => {
   });
 
   it('copies multiple catalogue category (at root)', () => {
-    cy.visit('/inventory-management-system/catalogue/1');
+    cy.visit('/catalogue/1');
     cy.findByLabelText('Cameras checkbox').click();
     cy.findByLabelText('test_dup checkbox').click();
     cy.findByLabelText('Amp Meters checkbox').click();
@@ -315,7 +315,7 @@ describe('Catalogue Category', () => {
   });
 
   it('copies multiple catalogue categories', () => {
-    cy.visit('/inventory-management-system/catalogue/1');
+    cy.visit('/catalogue/1');
     cy.findByLabelText('Cameras checkbox').click();
     cy.findByLabelText('test_dup checkbox').click();
     cy.findByLabelText('Amp Meters checkbox').click();
@@ -349,28 +349,28 @@ describe('Catalogue Category', () => {
   });
 
   it('category with no data displays no results found', () => {
-    cy.visit('/inventory-management-system/catalogue/16');
+    cy.visit('/catalogue/16');
     cy.findByText(
       'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
     ).should('exist');
   });
 
   it('category with no items displays no items found message', () => {
-    cy.visit('/inventory-management-system/catalogue/17');
+    cy.visit('/catalogue/17');
     cy.findByText(
       'No results found: Try adding an item by using the Add Catalogue Item button on the top left of your screen'
     ).should('exist');
   });
 
   it('expired url displays search not found message', () => {
-    cy.visit('/inventory-management-system/catalogue/not-exist');
+    cy.visit('/catalogue/not-exist');
     cy.findByText(
       'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
     ).should('exist');
   });
 
   it('add button disabled when expired url is used', () => {
-    cy.visit('/inventory-management-system/catalogue/not-exist');
+    cy.visit('/catalogue/not-exist');
 
     cy.findByRole('button', { name: 'add catalogue category' }).should(
       'be.disabled'
