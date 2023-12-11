@@ -3,7 +3,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import {
+  Box,
   Button,
   ListItemIcon,
   MenuItem,
@@ -32,6 +34,7 @@ import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
+import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 
 function findPropertyValue(
   properties: CatalogueItemPropertyResponse[],
@@ -100,11 +103,19 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     CatalogueItem | undefined
   >(undefined);
 
+  const [moveToItemDialogOpen, setMoveToItemDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
+    string | null
+  >(null);
+
   const catalogueCategoryNames: (string | undefined)[] =
     data?.map((item) => item.name) || [];
 
-  const noResultsTxt =
-    'No results found: Try adding an item by using the Add Catalogue Item button on the top left of your screen';
+  const noResultsTxt = dense
+    ? 'No catalogue items found'
+    : 'No results found: Try adding an item by using the Add Catalogue Item button on the top left of your screen';
   const [itemDialogType, setItemsDialogType] = React.useState<
     'create' | 'save as' | 'edit'
   >('create');
@@ -366,26 +377,25 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableRowActions: dense ? false : true,
     enableStickyHeader: true,
     enableDensityToggle: false,
-    enableRowSelection: dense ? true : false,
+    enableRowSelection: true,
     enableHiding: dense ? false : true,
     enableTopToolbar: dense ? false : true,
-    enableMultiRowSelection: false,
+    enableMultiRowSelection: dense ? false : true,
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
-    enableColumnVirtualization: true,
-    columnVirtualizerOptions: {
-      overscan: 4,
-      estimateSize: () => 200,
-    },
+    enableColumnVirtualization: dense ? false : true,
+    columnVirtualizerOptions: dense
+      ? undefined
+      : {
+          overscan: 4,
+          estimateSize: () => 200,
+        },
     enablePagination: true,
     localization: {
       ...MRT_Localization_EN,
       noRecordsToDisplay: noResultsTxt,
     },
-    onRowSelectionChange: (value) => {
-      setRowSelection(value);
-    },
-
+    onRowSelectionChange: setRowSelection,
     muiTableBodyRowProps: dense
       ? ({ row }) => {
           return {
@@ -467,15 +477,31 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       );
     },
     renderTopToolbarCustomActions: ({ table }) => (
-      <Button
-        variant="outlined"
-        onClick={() => {
-          setItemsDialogType('create');
-          table.setCreatingRow(true);
-        }}
-      >
-        Add Catalogue Item
-      </Button>
+      <Box>
+        <Button
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          onClick={() => {
+            setItemsDialogType('create');
+            table.setCreatingRow(true);
+          }}
+        >
+          Add Catalogue Item
+        </Button>
+        {Object.keys(rowSelection).length > 0 && (
+          <Button
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            startIcon={<DriveFileMoveOutlinedIcon />}
+            onClick={() => {
+              setCatalogueCurrDirId(parentInfo.parent_id);
+              setMoveToItemDialogOpen(true);
+            }}
+          >
+            Move to
+          </Button>
+        )}
+      </Box>
     ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
       return [
@@ -568,6 +594,20 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             open={obsoleteItemDialogOpen}
             onClose={() => setObsoleteItemDialogOpen(false)}
             catalogueItem={selectedCatalogueItem}
+          />
+          <CatalogueItemDirectoryDialog
+            open={moveToItemDialogOpen}
+            onClose={() => setMoveToItemDialogOpen(false)}
+            selectedItems={
+              data?.filter((catalogueItem) =>
+                Object.keys(rowSelection).includes(catalogueItem.id)
+              ) ?? []
+            }
+            onChangeSelectedItems={setRowSelection}
+            catalogueCurrDirId={catalogueCurrDirId}
+            onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
+            requestType={'moveTo'}
+            parentInfo={parentInfo}
           />
         </>
       )}

@@ -20,6 +20,7 @@ describe('Catalogue Items Table', () => {
   const ensureColumnsVisible = async (columns: string[]) => {
     await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
     await user.click(screen.getByText('Hide all'));
+
     for (const column of columns) {
       await user.click(screen.getByText(column));
       expect(screen.getAllByText(column).length).toEqual(2);
@@ -53,7 +54,6 @@ describe('Catalogue Items Table', () => {
     });
     expect(screen.getByText('Description')).toBeInTheDocument();
     expect(screen.getByText('Is Obsolete')).toBeInTheDocument();
-    expect(screen.getByText('Obsolete replacement link')).toBeInTheDocument();
   });
 
   it('renders table correctly (Cameras more details)', async () => {
@@ -70,6 +70,20 @@ describe('Catalogue Items Table', () => {
     ]);
   });
 
+  it('renders table correctly (more details)', async () => {
+    props.parentInfo = getCatalogueCategoryById('4');
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    await ensureColumnsVisible([
+      'Obsolete replacement link',
+      'Obsolete Reason',
+      'Cost to Rework (GBP)',
+    ]);
+  });
+
   it('renders table correctly (section 2 due to column virtualisation )', async () => {
     createView();
     await waitFor(() => {
@@ -77,7 +91,6 @@ describe('Catalogue Items Table', () => {
     });
 
     await ensureColumnsVisible([
-      'Obsolete Reason',
       'Measurement Range (Joules)',
       'Accuracy',
       'Cost (GBP)',
@@ -119,7 +132,6 @@ describe('Catalogue Items Table', () => {
     });
 
     await ensureColumnsVisible([
-      'Cost to Rework (GBP)',
       'Time to replace (days)',
       'Days to Rework',
       'Drawing Number',
@@ -146,8 +158,16 @@ describe('Catalogue Items Table', () => {
       'Drawing Link',
       'Item Model Number',
       'Manufacturer Name',
-      'Manufacturer Address',
     ]);
+  });
+
+  it('renders table correctly (section5 due to column virtualisation )', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
+    await ensureColumnsVisible(['Manufacturer Address']);
   });
 
   it('displays descriptions tooltip on hover', async () => {
@@ -328,6 +348,31 @@ describe('Catalogue Items Table', () => {
     });
   });
 
+  it('opens move to dialog and can close it again', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    const rowToggleSelect = screen.getAllByLabelText('Toggle select row');
+    await user.click(rowToggleSelect[1]);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Move to' })
+      ).toBeInTheDocument();
+    });
+    const moveToButton = screen.getByRole('button', { name: 'Move to' });
+
+    await user.click(moveToButton);
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('navigates to the manufacturer url', async () => {
     createView();
     await waitFor(() => {
@@ -345,7 +390,7 @@ describe('Catalogue Items Table', () => {
     await waitFor(() => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
-
+    await ensureColumnsVisible(['Obsolete replacement link']);
     const url = screen.queryAllByText('Click here');
     expect(url[0]).toHaveAttribute('href', '/items/6');
   });

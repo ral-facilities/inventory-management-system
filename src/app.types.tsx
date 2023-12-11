@@ -21,13 +21,13 @@ export interface EditCatalogueCategory {
 export interface MoveToCatalogueCategory {
   catalogueCategories: EditCatalogueCategory[];
   selectedCategories: CatalogueCategory[];
-  targetLocationCatalogueCategory: CatalogueCategory;
+  targetLocationCatalogueCategory: CatalogueCategory | null;
 }
 
 export interface CopyToCatalogueCategory {
   catalogueCategories: AddCatalogueCategory[];
   selectedCategories: CatalogueCategory[];
-  targetLocationCatalogueCategory: CatalogueCategory;
+  targetLocationCatalogueCategory: CatalogueCategory | null;
 }
 
 export interface CatalogueCategory {
@@ -135,6 +135,12 @@ export interface AddCatalogueItem extends CatalogueItemDetails {
 
 export interface EditCatalogueItem extends Partial<AddCatalogueItem> {
   id: string;
+}
+
+export interface MoveToCatalogueItem {
+  catalogueItems: EditCatalogueItem[];
+  selectedItems: CatalogueItem[];
+  targetLocationCatalogueCategory: CatalogueCategory | null;
 }
 export interface ErrorParsing {
   detail: string;

@@ -119,13 +119,7 @@ const CatalogueCategoryDirectoryDialog = (
     CopyToCatalogueCategory({
       catalogueCategories: catalogueCategory,
       selectedCategories: selectedCategories,
-      targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? {
-        name: 'Root',
-        id: '',
-        parent_id: null,
-        is_leaf: false,
-        code: '',
-      },
+      targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? null,
     }).then((response) => {
       handleTransferState(response);
       handleClose();
@@ -153,13 +147,7 @@ const CatalogueCategoryDirectoryDialog = (
     moveToCatalogueCategory({
       catalogueCategories: catalogueCategory,
       selectedCategories: selectedCategories,
-      targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? {
-        name: 'Root',
-        id: '',
-        parent_id: null,
-        is_leaf: false,
-        code: '',
-      },
+      targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? null,
     }).then((response) => {
       handleTransferState(response);
       handleClose();

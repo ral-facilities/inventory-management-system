@@ -8,8 +8,11 @@ import {
 } from '@tanstack/react-query';
 import {
   AddCatalogueItem,
+  TransferState,
   CatalogueItem,
   EditCatalogueItem,
+  MoveToCatalogueItem,
+  ErrorParsing,
 } from '../app.types';
 import { settings } from '../settings';
 
@@ -190,4 +193,75 @@ export const useEditCatalogueItem = (): UseMutationResult<
       },
     }
   );
+};
+
+export const useMoveToCatalogueItem = (): UseMutationResult<
+  TransferState[],
+  AxiosError,
+  MoveToCatalogueItem
+> => {
+  const queryClient = useQueryClient();
+  return useMutation(async (MoveToCatalogueItem: MoveToCatalogueItem) => {
+    const transferStates: TransferState[] = [];
+    let hasSuccessfulEdit = false;
+
+    const targetLocationInfo = {
+      name: MoveToCatalogueItem.targetLocationCatalogueCategory?.name ?? 'Root',
+      id: MoveToCatalogueItem.targetLocationCatalogueCategory?.id ?? null,
+    };
+
+    const promises = MoveToCatalogueItem.catalogueItems.map(
+      async (item: EditCatalogueItem, index) => {
+        const { name, ...itemWithoutName } = item;
+
+        if (
+          MoveToCatalogueItem.selectedItems[index].catalogue_category_id ===
+          item.catalogue_category_id
+        ) {
+          const errorTransferState: TransferState = {
+            name: item.name ?? '',
+            message:
+              'The destination cannot be the same as the catalogue item itself',
+            state: 'error',
+          };
+          transferStates.push(errorTransferState);
+
+          return;
+        }
+
+        return editCatalogueItem(itemWithoutName)
+          .then((result) => {
+            const successTransferState: TransferState = {
+              name: result.name ?? '',
+              message: `Successfully moved to ${targetLocationInfo.name}`,
+              state: 'success',
+            };
+            transferStates.push(successTransferState);
+            hasSuccessfulEdit = true;
+          })
+          .catch((error) => {
+            const response = error.response?.data as ErrorParsing;
+
+            const selectedItem = MoveToCatalogueItem.selectedItems.find(
+              (selectedItem) => selectedItem.id === item.id
+            );
+            const errorTransferState: TransferState = {
+              name: selectedItem?.name ?? '',
+              message: response.detail ?? '',
+              state: 'error',
+            };
+            transferStates.push(errorTransferState);
+          });
+      }
+    );
+
+    await Promise.all(promises);
+
+    if (hasSuccessfulEdit) {
+      queryClient.invalidateQueries({ queryKey: ['CatalogueItems'] });
+      queryClient.invalidateQueries({ queryKey: ['CatalogueBreadcrumbs'] });
+    }
+
+    return transferStates;
+  });
 };
