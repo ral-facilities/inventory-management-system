@@ -66,6 +66,7 @@ describe('DeleteSystemDialog', () => {
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
 
     expect(props.onClose).toHaveBeenCalled();
+    expect(axiosDeleteSpy).not.toHaveBeenCalled();
   });
 
   it('sends a delete request, closes the dialog and navigates to the parent system when continue button is clicked with a valid system', async () => {

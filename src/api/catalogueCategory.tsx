@@ -10,7 +10,7 @@ import {
   AddCatalogueCategory,
   BreadcrumbsInfo,
   CatalogueCategory,
-  CatalogueCategoryTransferState,
+  TransferState,
   CopyToCatalogueCategory,
   EditCatalogueCategory,
   ErrorParsing,
@@ -170,14 +170,14 @@ export const useEditCatalogueCategory = (): UseMutationResult<
 };
 
 export const useMoveToCatalogueCategory = (): UseMutationResult<
-  CatalogueCategoryTransferState[],
+  TransferState[],
   AxiosError,
   MoveToCatalogueCategory
 > => {
   const queryClient = useQueryClient();
   return useMutation(
     async (moveToCatalogueCategory: MoveToCatalogueCategory) => {
-      const transferStates: CatalogueCategoryTransferState[] = [];
+      const transferStates: TransferState[] = [];
       let hasSuccessfulEdit = false;
 
       const targetLocationInfo = {
@@ -193,7 +193,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
             moveToCatalogueCategory.selectedCategories[index].parent_id ===
             category.parent_id
           ) {
-            const errorTransferState: CatalogueCategoryTransferState = {
+            const errorTransferState: TransferState = {
               name: category.name ?? '',
               message:
                 'The destination cannot be the same as the catalogue category itself',
@@ -205,7 +205,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
           }
           return editCatalogueCategory(categoryWithoutName)
             .then((result) => {
-              const successTransferState: CatalogueCategoryTransferState = {
+              const successTransferState: TransferState = {
                 name: result.name ?? '',
                 message: `Successfully moved to ${targetLocationInfo.name}`,
                 state: 'success',
@@ -220,7 +220,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
                 moveToCatalogueCategory.selectedCategories.find(
                   (selectedCategory) => selectedCategory.id === category.id
                 );
-              const errorTransferState: CatalogueCategoryTransferState = {
+              const errorTransferState: TransferState = {
                 name: selectedCategory?.name ?? '',
                 message: response.detail,
                 state: 'error',
@@ -248,14 +248,14 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
 };
 
 export const useCopyToCatalogueCategory = (): UseMutationResult<
-  CatalogueCategoryTransferState[],
+  TransferState[],
   AxiosError,
   CopyToCatalogueCategory
 > => {
   const queryClient = useQueryClient();
   return useMutation(
     async (copyToCatalogueCategory: CopyToCatalogueCategory) => {
-      const transferStates: CatalogueCategoryTransferState[] = [];
+      const transferStates: TransferState[] = [];
       let hasSuccessfulAdd = false;
 
       const targetLocationInfo = {
@@ -267,7 +267,7 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
         async (category: AddCatalogueCategory, index) => {
           return addCatalogueCategory(category)
             .then((result) => {
-              const successTransferState: CatalogueCategoryTransferState = {
+              const successTransferState: TransferState = {
                 name: result.name ?? '',
                 message: `Successfully copied to ${targetLocationInfo.name}`,
                 state: 'success',
@@ -277,7 +277,7 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
             })
             .catch((error) => {
               const response = error.response?.data as ErrorParsing;
-              const errorTransferState: CatalogueCategoryTransferState = {
+              const errorTransferState: TransferState = {
                 name: category.name ?? '',
                 message: response.detail,
                 state: 'error',
