@@ -149,66 +149,67 @@ const CatalogueCategoryDialog = React.memo(
       setTypeFields([...typeFields, '']);
     }, [nameFields, typeFields]);
 
-    const handleAddCatalogueCategory = React.useCallback(() => {
-      // Check if catalogue category name is undefined or an empty string
+    const handleErrorStates = React.useCallback(() => {
+      let hasErrors = false;
       if (!categoryData.name || categoryData.name.trim() === '') {
         setNameError('Please enter a name.');
-        return; // Stop further execution if the name is invalid
+        hasErrors = true;
       }
+      const errorIndexes = validateFormFields();
+      if (errorIndexes.length !== 0) {
+        hasErrors = true;
+      }
+      return { hasErrors };
+    }, [categoryData, validateFormFields]);
+
+    const handleAddCatalogueCategory = React.useCallback(() => {
       let catalogueCategory: AddCatalogueCategory;
       catalogueCategory = {
         name: categoryData.name,
         is_leaf: categoryData.is_leaf,
       };
 
-      const errorIndexes = validateFormFields();
-      if (errorIndexes.length === 0) {
-        clearFormFields();
-
-        if (parentId !== null) {
-          catalogueCategory = {
-            ...catalogueCategory,
-            parent_id: parentId,
-          };
-        }
-        if (!!categoryData.catalogue_item_properties) {
-          catalogueCategory = {
-            ...catalogueCategory,
-            catalogue_item_properties: categoryData.catalogue_item_properties,
-          };
-        }
-
-        addCatalogueCategory(catalogueCategory)
-          .then((response) => handleClose())
-          .catch((error: AxiosError) => {
-            const response = error.response?.data as ErrorParsing;
-            console.log(error);
-            if (response && error.response?.status === 409) {
-              setNameError(response.detail);
-              return;
-            }
-            setCatchAllError(true);
-          });
+      const { hasErrors } = handleErrorStates();
+      if (hasErrors) {
+        return;
       }
+      clearFormFields();
+
+      if (parentId !== null) {
+        catalogueCategory = {
+          ...catalogueCategory,
+          parent_id: parentId,
+        };
+      }
+      if (!!categoryData.catalogue_item_properties) {
+        catalogueCategory = {
+          ...catalogueCategory,
+          catalogue_item_properties: categoryData.catalogue_item_properties,
+        };
+      }
+
+      addCatalogueCategory(catalogueCategory)
+        .then((response) => handleClose())
+        .catch((error: AxiosError) => {
+          const response = error.response?.data as ErrorParsing;
+          console.log(error);
+          if (response && error.response?.status === 409) {
+            setNameError(response.detail);
+            return;
+          }
+          setCatchAllError(true);
+        });
     }, [
       addCatalogueCategory,
-      categoryData.catalogue_item_properties,
-      categoryData.is_leaf,
-      categoryData.name,
+      categoryData,
       clearFormFields,
       handleClose,
+      handleErrorStates,
       parentId,
-      validateFormFields,
     ]);
 
     const handleEditCatalogueCategory = React.useCallback(() => {
       let catalogueCategory: EditCatalogueCategory;
-
-      // Check if catalogue category name is undefined or an empty string
-      if (!categoryData.name || categoryData.name.trim() === '') {
-        setNameError('Please enter a name.');
-        return; // Stop further execution if the name is invalid
-      }
 
       if (selectedCatalogueCategory && selectedCatalogueCategoryData) {
         catalogueCategory = {
@@ -250,51 +251,49 @@ const CatalogueCategoryDialog = React.memo(
           };
         }
 
-        const errorIndexes = validateFormFields();
-
-        if (errorIndexes.length === 0) {
-          // Clear the error state and add a new field
-          clearFormFields();
-
-          if (
-            catalogueCategory.id && // Check if id is present
-            (isNameUpdated ||
-              (!!categoryData.catalogue_item_properties &&
-                isCatalogueItemPropertiesUpdated) ||
-              isIsLeafUpdated) // Check if any of these properties have been updated
-          ) {
-            // Only call editCatalogueCategory if id is present and at least one of the properties has been updated
-            editCatalogueCategory(catalogueCategory)
-              .then((response) => {
-                resetSelectedCatalogueCategory();
-                handleClose();
-              })
-              .catch((error: AxiosError) => {
-                console.log(error.response);
-                const response = error.response?.data as ErrorParsing;
-                if (response && error.response?.status === 409) {
-                  if (response.detail.includes('child elements'))
-                    setFormError(response.detail);
-                  else setNameError(response.detail);
-
-                  return;
-                }
-                setCatchAllError(true);
-              });
-          } else setFormError('Please edit a form entry before clicking save');
+        const { hasErrors } = handleErrorStates();
+        if (hasErrors) {
+          return;
         }
+        // Clear the error state and add a new field
+        clearFormFields();
+
+        if (
+          catalogueCategory.id && // Check if id is present
+          (isNameUpdated ||
+            (!!categoryData.catalogue_item_properties &&
+              isCatalogueItemPropertiesUpdated) ||
+            isIsLeafUpdated) // Check if any of these properties have been updated
+        ) {
+          // Only call editCatalogueCategory if id is present and at least one of the properties has been updated
+          editCatalogueCategory(catalogueCategory)
+            .then((response) => {
+              resetSelectedCatalogueCategory();
+              handleClose();
+            })
+            .catch((error: AxiosError) => {
+              console.log(error.response);
+              const response = error.response?.data as ErrorParsing;
+              if (response && error.response?.status === 409) {
+                if (response.detail.includes('child elements'))
+                  setFormError(response.detail);
+                else setNameError(response.detail);
+
+                return;
+              }
+              setCatchAllError(true);
+            });
+        } else setFormError('Please edit a form entry before clicking save');
       }
     }, [
-      categoryData.catalogue_item_properties,
-      categoryData.is_leaf,
-      categoryData.name,
+      categoryData,
       clearFormFields,
       editCatalogueCategory,
       handleClose,
+      handleErrorStates,
       resetSelectedCatalogueCategory,
       selectedCatalogueCategory,
       selectedCatalogueCategoryData,
-      validateFormFields,
     ]);
 
     return (

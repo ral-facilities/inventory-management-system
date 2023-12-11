@@ -55,6 +55,10 @@ export const handlers = [
       (catalogueItem) => catalogueItem.catalogue_category_id === id
     );
 
+    const catalogueData = CatalogueCategoryJSON.filter(
+      (catalogueData) => catalogueData.parent_id === id
+    );
+
     const obj = CatalogueCategoryJSON.find(
       (catalogueCategory) => catalogueCategory.id === id
     );
@@ -72,6 +76,14 @@ export const handlers = [
     }
     if (body.catalogue_item_properties !== undefined) {
       if (itemData.length > 0) {
+        return res(
+          ctx.status(409),
+          ctx.json({
+            detail:
+              'Catalogue category has child elements and cannot be updated',
+          })
+        );
+      } else if (catalogueData.length > 0) {
         return res(
           ctx.status(409),
           ctx.json({
