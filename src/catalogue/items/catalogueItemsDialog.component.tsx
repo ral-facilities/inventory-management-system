@@ -347,10 +347,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         manufacturer_id:
           'Please choose a manufacturer, or add a new manufacturer',
       }));
-
-      // setManufacturerErrorMessage(
-      //   'Please choose a manufacturer, or add a new manufacturer'
-      // );
       hasErrors = true;
     }
 
