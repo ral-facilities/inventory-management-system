@@ -40,7 +40,7 @@ describe('Catalogue Items Dialog', () => {
     user = userEvent.setup();
     axiosPostSpy = jest.spyOn(axios, 'post');
   });
-  const modifyValues = (values: {
+  const modifyValues = async (values: {
     name?: string;
     description?: string;
     costGbp?: string;
@@ -103,6 +103,11 @@ describe('Catalogue Items Dialog', () => {
         target: { value: values.itemModelNumber },
       });
 
+    if (values.manufacturer !== undefined) {
+      const manufacturerPopup = screen.getAllByRole('combobox')[0];
+      await user.type(manufacturerPopup, values.manufacturer);
+    }
+
     values.resolution !== undefined &&
       fireEvent.change(screen.getByLabelText('Resolution (megapixels) *'), {
         target: { value: values.resolution },
@@ -138,17 +143,17 @@ describe('Catalogue Items Dialog', () => {
       });
   };
 
-  const modifyManufacturer = async (type: string) => {
-    const manufacturerPopup = screen.getAllByRole('combobox')[0];
-    await user.type(
-      manufacturerPopup,
-      type === 'create'
-        ? 'M{arrowdown}{enter}'
-        : 'Man{arrowdown}{arrowdown}{enter}'
-    );
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-    await user.click(saveButton);
-  };
+  // const modifyManufacturer = async (type: string) => {
+  //   const manufacturerPopup = screen.getAllByRole('combobox')[0];
+  //   await user.type(
+  //     manufacturerPopup,
+  //     type === 'create'
+  //       ? 'M{arrowdown}{enter}'
+  //       : 'Man{arrowdown}{arrowdown}{enter}'
+  //   );
+  //   const saveButton = screen.getByRole('button', { name: 'Save' });
+  //   await user.click(saveButton);
+  // };
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -172,7 +177,7 @@ describe('Catalogue Items Dialog', () => {
 
     createView();
 
-    modifyValues({
+    await modifyValues({
       costGbp: '1200',
       costToReworkGbp: '400',
       daysToReplace: '20',
@@ -191,7 +196,8 @@ describe('Catalogue Items Dialog', () => {
       manufacturer: 'Man{arrowdown}{enter}',
     });
 
-    await modifyManufacturer('create');
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+    await user.click(saveButton);
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '4',
@@ -227,16 +233,18 @@ describe('Catalogue Items Dialog', () => {
 
     createView();
 
-    modifyValues({
+    await modifyValues({
       costGbp: '200',
       daysToReplace: '5',
       name: 'test',
       resolution: '12',
       sensorType: 'IO',
       broken: 'True',
+      manufacturer: 'Man{arrowdown}{enter}',
     });
 
-    await modifyManufacturer('create');
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+    await user.click(saveButton);
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '4',
@@ -310,7 +318,7 @@ describe('Catalogue Items Dialog', () => {
 
     createView();
 
-    modifyValues({
+    await modifyValues({
       costGbp: '1200a',
       costToReworkGbp: '400a',
       daysToReplace: '20a',
@@ -326,9 +334,11 @@ describe('Catalogue Items Dialog', () => {
       sensorBrand: 'pixel',
       broken: 'True',
       older: 'False',
+      manufacturer: 'Man{arrowdown}{enter}',
     });
 
-    await modifyManufacturer('create');
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+    await user.click(saveButton);
 
     const validNumberHelperText = screen.getAllByText(
       'Please enter a valid number'
@@ -353,7 +363,7 @@ describe('Catalogue Items Dialog', () => {
     };
     createView();
 
-    modifyValues({
+    await modifyValues({
       costGbp: '1200',
       costToReworkGbp: '400',
       daysToReplace: '20',
@@ -369,9 +379,11 @@ describe('Catalogue Items Dialog', () => {
       sensorBrand: 'pixel',
       broken: 'True',
       older: 'False',
+      manufacturer: 'Man{arrowdown}{enter}',
     });
 
-    await modifyManufacturer('create');
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+    await user.click(saveButton);
 
     await waitFor(() => {
       expect(
@@ -422,7 +434,7 @@ describe('Catalogue Items Dialog', () => {
 
       createView();
 
-      modifyValues({
+      await modifyValues({
         costGbp: '687',
         costToReworkGbp: '89',
         daysToReplace: '78',
@@ -432,10 +444,11 @@ describe('Catalogue Items Dialog', () => {
         drawingNumber: 'test',
         itemModelNumber: 'test1',
         name: 'test',
+        manufacturer: 'Man{arrowdown}{arrowdown}{enter}',
       });
 
-      await modifyManufacturer('edit');
-
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         cost_gbp: 687,
         cost_to_rework_gbp: 89,
@@ -461,7 +474,7 @@ describe('Catalogue Items Dialog', () => {
 
       createView();
 
-      modifyValues({
+      await modifyValues({
         costGbp: '',
         costToReworkGbp: '',
         daysToReplace: '',
@@ -522,7 +535,7 @@ describe('Catalogue Items Dialog', () => {
       };
 
       createView();
-      modifyValues({
+      await modifyValues({
         resolution: '24',
         frameRate: '240',
         sensorType: 'CCD',
@@ -556,7 +569,12 @@ describe('Catalogue Items Dialog', () => {
 
       createView();
 
-      await modifyManufacturer('edit');
+      await modifyValues({
+        manufacturer: 'Man{arrowdown}{arrowdown}{enter}',
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         manufacturer_id: '3',
@@ -621,7 +639,7 @@ describe('Catalogue Items Dialog', () => {
 
       createView();
 
-      modifyValues({
+      await modifyValues({
         name: 'test_has_children_elements',
       });
 
@@ -649,7 +667,7 @@ describe('Catalogue Items Dialog', () => {
       };
       createView();
 
-      modifyValues({
+      await modifyValues({
         name: 'Error 500',
       });
 
