@@ -299,4 +299,12 @@ describe('Manufacturer', () => {
         cy.contains('Please enter a post code or zip code.');
       });
   });
+  it('sets the table filters and clears the table filters', () => {
+    cy.findByText('Manufacturer A').should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+    cy.findByLabelText('Filter by Name').type('B');
+    cy.findByText('Manufacturer A').should('not.exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+    cy.findByText('Manufacturer A').should('exist');
+  });
 });

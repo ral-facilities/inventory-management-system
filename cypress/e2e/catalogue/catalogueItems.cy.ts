@@ -392,6 +392,15 @@ describe('Catalogue Items', () => {
       .should('include', '_blank'); // Check target attribute value
   });
 
+  it('sets the table filters and clears the table filters', () => {
+    cy.findByText('Cameras 1').should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+    cy.findByLabelText('Filter by Name').type('15');
+    cy.findByText('Cameras 1').should('not.exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+    cy.findByText('Cameras 1').should('exist');
+  });
+
   it('make an item obsolete (no details)', () => {
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Obsolete').click();

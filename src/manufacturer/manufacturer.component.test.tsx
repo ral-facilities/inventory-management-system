@@ -103,4 +103,31 @@ describe('Manufacturer', () => {
     const closeButton = screen.getByRole('button', { name: 'Cancel' });
     await user.click(closeButton);
   });
+
+  it('sets the table filters and clears the table filters', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
+    });
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+
+    expect(clearFiltersButton).toBeDisabled();
+
+    const nameInput = screen.getByLabelText('Filter by Name');
+
+    await user.type(nameInput, 'B');
+
+    await waitFor(() => {
+      expect(screen.queryByText('Manufacturer A')).not.toBeInTheDocument();
+    });
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
+    });
+  });
 });
