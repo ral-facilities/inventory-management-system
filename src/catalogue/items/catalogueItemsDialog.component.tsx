@@ -38,7 +38,7 @@ import {
 } from '../../app.types';
 import { matchCatalogueItemProperties } from '../catalogue.component';
 import { Autocomplete } from '@mui/material';
-import { useManufacturer, useManufacturers } from '../../api/manufacturer';
+import { useManufacturers } from '../../api/manufacturer';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 
 export interface CatalogueItemsDialogProps {

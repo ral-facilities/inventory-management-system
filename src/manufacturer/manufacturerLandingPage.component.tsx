@@ -6,8 +6,6 @@ import {
   Link as MuiLink,
   LinearProgress,
 } from '@mui/material';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import { Link, useLocation } from 'react-router-dom';
 import { useManufacturer } from '../api/manufacturer';
 
