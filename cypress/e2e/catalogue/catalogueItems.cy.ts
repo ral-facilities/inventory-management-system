@@ -1,6 +1,6 @@
 describe('Catalogue Items', () => {
   beforeEach(() => {
-    cy.visit('/inventory-management-system/catalogue/4');
+    cy.visit('/catalogue/4');
   });
   afterEach(() => {
     cy.clearMocks();
@@ -48,7 +48,7 @@ describe('Catalogue Items', () => {
   });
 
   it('"save as" a catalogue item', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
 
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Save as').click();
@@ -247,7 +247,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays the expired landing page message and navigates back to the catalogue home', () => {
-    cy.visit('/inventory-management-system/catalogue/items/1fds');
+    cy.visit('/catalogue/items/1fds');
 
     cy.findByText(
       `This item doesn't exist. Please click the Home button to navigate to the catalogue home`
@@ -259,7 +259,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays error message when user tries to delete a catalogue item that has children elements', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Delete').click();
 
@@ -275,7 +275,7 @@ describe('Catalogue Items', () => {
   });
 
   it('delete a catalogue item', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Delete').click();
 
@@ -294,7 +294,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays error message if none of the field have been edited', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Edit').click();
 
@@ -302,7 +302,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays error message if catalogue item has children elements', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Edit').click();
 
@@ -322,7 +322,7 @@ describe('Catalogue Items', () => {
   });
 
   it('edit a catalogue item (Catalogue item details)', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Edit').click();
 
@@ -353,7 +353,7 @@ describe('Catalogue Items', () => {
   });
 
   it('edit a catalogue item (properties)', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Edit').click();
 
@@ -451,7 +451,7 @@ describe('Catalogue Items', () => {
   });
 
   it('make an obsolete item not obsolete', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
 
     cy.findAllByLabelText('Row Actions').eq(0).click();
     cy.findByText('Obsolete').click();
@@ -478,7 +478,7 @@ describe('Catalogue Items', () => {
   });
 
   it('can view item details in the obsolete dialog', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
 
     cy.findAllByLabelText('Row Actions').eq(0).click();
     cy.findByText('Obsolete').click();
@@ -497,11 +497,11 @@ describe('Catalogue Items', () => {
     cy.findAllByText('Manufacturer Name').should('exist');
   });
 
-  it('can navigate to an items replacment', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+  it('can navigate to an items replacement', () => {
+    cy.visit('/catalogue/5');
 
     cy.findAllByRole('link', { name: 'Click here' }).eq(0).click();
 
-    cy.url().should('contain', 'inventory-management-system/catalogue/items/6');
+    cy.url().should('contain', 'catalogue/items/6');
   });
 });

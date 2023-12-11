@@ -78,9 +78,7 @@ describe('DeleteSystemDialog', () => {
       `/v1/systems/${props.system.id}`
     );
     expect(props.onClose).toHaveBeenCalled();
-    expect(window.location.pathname).toBe(
-      `/inventory-management-system/systems/${props.system.parent_id}`
-    );
+    expect(window.location.pathname).toBe(`/systems/${props.system.parent_id}`);
   });
 
   it('displays error message when deleting a system with children', async () => {
