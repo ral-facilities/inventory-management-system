@@ -829,7 +829,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   <IconButton
                     sx={{ mx: '4px', my: '2px' }}
                     onClick={() => setAddManufacturerDialogOpen(true)}
-                    disabled={selectedManufacturer !== null}
                     aria-label="add manufacturer"
                   >
                     <AddIcon />
