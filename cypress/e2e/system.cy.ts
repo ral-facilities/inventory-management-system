@@ -1,6 +1,6 @@
 describe('System', () => {
   beforeEach(() => {
-    cy.visit('/inventory-management-system/systems');
+    cy.visit('/systems');
   });
 
   afterEach(() => {
@@ -34,7 +34,7 @@ describe('System', () => {
   });
 
   it('breadcrumbs should work correctly', () => {
-    cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e9');
+    cy.visit('/systems/65328f34a40ff5301575a4e9');
 
     cy.findByRole('link', { name: 'Pulse Laser' }).should('be.visible');
     cy.findByRole('link', { name: 'Giant laser' }).should('be.visible');
@@ -108,7 +108,7 @@ describe('System', () => {
     });
 
     it('adds a subsystem', () => {
-      cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
+      cy.visit('/systems/65328f34a40ff5301575a4e3');
 
       cy.findByRole('button', { name: 'add subsystem' }).click();
 
@@ -132,7 +132,7 @@ describe('System', () => {
     });
 
     it('displays error message when name is not given that disappears once closed', () => {
-      cy.visit('/inventory-management-system/systems');
+      cy.visit('/systems');
 
       cy.findByRole('button', { name: 'add system' }).click();
       cy.findByRole('button', { name: 'Save' }).click();
@@ -144,7 +144,7 @@ describe('System', () => {
     });
 
     it('displays error message if the system has a duplicate name that disappears once closed', () => {
-      cy.visit('/inventory-management-system/systems');
+      cy.visit('/systems');
 
       cy.findByRole('button', { name: 'add system' }).click();
       cy.findByLabelText('Name *').type('Error 409');
@@ -160,7 +160,7 @@ describe('System', () => {
     });
 
     it('displays error message if any other error occurs that disappears once closed', () => {
-      cy.visit('/inventory-management-system/systems');
+      cy.visit('/systems');
 
       cy.findByRole('button', { name: 'add system' }).click();
       cy.findByLabelText('Name *').type('Error 500');
@@ -174,7 +174,7 @@ describe('System', () => {
 
   describe('Edit', () => {
     it("edits all of a system's fields", () => {
-      cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
+      cy.visit('/systems/65328f34a40ff5301575a4e3');
 
       cy.findByRole('button', { name: 'Edit System' }).click();
 
@@ -206,7 +206,7 @@ describe('System', () => {
     });
 
     it("edits only a system's name", () => {
-      cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
+      cy.visit('/systems/65328f34a40ff5301575a4e3');
 
       cy.findByRole('button', { name: 'Edit System' }).click();
 
@@ -229,7 +229,7 @@ describe('System', () => {
     });
 
     it('displays error message when no field has been edited that disappears when description is edited', () => {
-      cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
+      cy.visit('/systems/65328f34a40ff5301575a4e3');
 
       cy.findByRole('button', { name: 'Edit System' }).click();
 
@@ -244,7 +244,7 @@ describe('System', () => {
     });
 
     it('displays error message when name is not given that disappears once closed', () => {
-      cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
+      cy.visit('/systems/65328f34a40ff5301575a4e3');
 
       cy.findByRole('button', { name: 'Edit System' }).click();
 
@@ -258,7 +258,7 @@ describe('System', () => {
     });
 
     it('displays error message if the system has a duplicate name that disappears once closed', () => {
-      cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
+      cy.visit('/systems/65328f34a40ff5301575a4e3');
 
       cy.findByRole('button', { name: 'Edit System' }).click();
 
@@ -275,7 +275,7 @@ describe('System', () => {
     });
 
     it('displays error message if any other error occurs that disappears once closed', () => {
-      cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
+      cy.visit('/systems/65328f34a40ff5301575a4e3');
 
       cy.findByRole('button', { name: 'Edit System' }).click();
 
@@ -289,7 +289,7 @@ describe('System', () => {
   });
 
   it('deletes a system', () => {
-    cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e9');
+    cy.visit('/systems/65328f34a40ff5301575a4e9');
 
     cy.findByRole('button', { name: 'Delete System' }).click();
     cy.startSnoopingBrowserMockedRequest();
@@ -307,7 +307,7 @@ describe('System', () => {
   });
 
   it('displays an error when attempting to delete a system with children that hides once closed', () => {
-    cy.visit('/inventory-management-system/systems/65328f34a40ff5301575a4e3');
+    cy.visit('/systems/65328f34a40ff5301575a4e3');
 
     cy.findByRole('button', { name: 'Delete System' }).click();
     cy.startSnoopingBrowserMockedRequest();
@@ -333,7 +333,7 @@ describe('System', () => {
   });
 
   it('moves systems', () => {
-    cy.visit('/inventory-management-system/systems');
+    cy.visit('/systems');
 
     cy.findByRole('button', { name: 'Pulse Laser' })
       .findByRole('checkbox')

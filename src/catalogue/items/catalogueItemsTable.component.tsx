@@ -4,6 +4,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
+import ClearIcon from '@mui/icons-material/Clear';
+import AddIcon from '@mui/icons-material/Add';
 import {
   Box,
   Button,
@@ -20,6 +22,7 @@ import {
   useMaterialReactTable,
   type MRT_ColumnDef,
   type MRT_RowSelectionState,
+  type MRT_ColumnFiltersState,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
@@ -93,10 +96,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     React.useState<boolean>(false);
 
   type PropertyFiltersType = {
-    boolean: 'select' | 'text' | 'range-slider';
-    string: 'select' | 'text' | 'range-slider';
-    number: 'select' | 'text' | 'range-slider';
-    null: 'select' | 'text' | 'range-slider';
+    boolean: 'select' | 'text' | 'range';
+    string: 'select' | 'text' | 'range';
+    number: 'select' | 'text' | 'range';
+    null: 'select' | 'text' | 'range';
   };
 
   const [selectedCatalogueItem, setSelectedCatalogueItem] = React.useState<
@@ -125,7 +128,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     const propertyFilters: PropertyFiltersType = {
       boolean: 'select',
       string: 'text',
-      number: 'range-slider',
+      number: 'range',
       null: 'text',
     };
     return [
@@ -258,16 +261,16 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         },
       })),
       {
-        header: 'Cost (GBP)',
+        header: 'Cost (£)',
         accessorFn: (row) => row.cost_gbp,
-        size: 200,
-        filterVariant: 'range-slider',
+        size: 250,
+        filterVariant: 'range',
       },
       {
-        header: 'Cost to Rework (GBP)',
+        header: 'Cost to Rework (£)',
         accessorFn: (row) => row.cost_to_rework_gbp ?? 0,
         size: 300,
-        filterVariant: 'range-slider',
+        filterVariant: 'range',
         Cell: ({ row }) => {
           // Logic to get the range slider to work with null values
           return row.original.cost_to_rework_gbp === 0
@@ -281,13 +284,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Time to replace (days)',
         accessorFn: (row) => row.days_to_replace,
         size: 250,
-        filterVariant: 'range-slider',
+        filterVariant: 'range',
       },
       {
         header: 'Days to Rework',
         accessorFn: (row) => row.days_to_rework ?? 0,
         size: 250,
-        filterVariant: 'range-slider',
+        filterVariant: 'range',
         Cell: ({ row }) => {
           // Logic to get the range slider to work with null values
           return row.original.cost_to_rework_gbp === 0
@@ -346,6 +349,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     selectedRowState ?? {}
   );
 
+  const [columnFilters, setColumnFilters] =
+    React.useState<MRT_ColumnFiltersState>([]);
+
   const handleRowSelection = React.useCallback(
     (row: MRT_Row<CatalogueItem>) => {
       // Ensure selectable
@@ -374,6 +380,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     enableColumnOrdering: dense ? false : true,
     enableFacetedValues: true,
+    enableColumnResizing: true,
     enableRowActions: dense ? false : true,
     enableStickyHeader: true,
     enableDensityToggle: false,
@@ -384,12 +391,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
     enableColumnVirtualization: dense ? false : true,
+    onColumnFiltersChange: setColumnFilters,
     columnVirtualizerOptions: dense
       ? undefined
       : {
           overscan: 4,
           estimateSize: () => 200,
         },
+    manualFiltering: false,
     enablePagination: true,
     localization: {
       ...MRT_Localization_EN,
@@ -441,6 +450,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     state: {
       showProgressBars: isLoading, //or showSkeletons
       rowSelection,
+      columnFilters,
     },
     muiPaginationProps: {
       color: 'secondary',
@@ -477,8 +487,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       );
     },
     renderTopToolbarCustomActions: ({ table }) => (
-      <Box>
+      <Box sx={{ display: 'flex' }}>
         <Button
+          startIcon={<AddIcon />}
           sx={{ mx: 0.5 }}
           variant="outlined"
           onClick={() => {
@@ -501,6 +512,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             Move to
           </Button>
         )}
+        <Button
+          startIcon={<ClearIcon />}
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          disabled={columnFilters.length === 0}
+          onClick={() => {
+            table.resetColumnFilters();
+          }}
+        >
+          Clear Filters
+        </Button>
       </Box>
     ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {

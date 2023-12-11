@@ -65,7 +65,7 @@ describe('Catalogue Items Table', () => {
 
     await ensureColumnsVisible([
       'Sensor brand',
-      'Cost to Rework (GBP)',
+      'Cost to Rework (£)',
       'Days to Rework',
     ]);
   });
@@ -80,7 +80,7 @@ describe('Catalogue Items Table', () => {
     await ensureColumnsVisible([
       'Obsolete replacement link',
       'Obsolete Reason',
-      'Cost to Rework (GBP)',
+      'Cost to Rework (£)',
     ]);
   });
 
@@ -93,7 +93,7 @@ describe('Catalogue Items Table', () => {
     await ensureColumnsVisible([
       'Measurement Range (Joules)',
       'Accuracy',
-      'Cost (GBP)',
+      'Cost (£)',
     ]);
   });
 
@@ -407,6 +407,32 @@ describe('Catalogue Items Table', () => {
     });
 
     expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('sets the table filters and clears the table filters', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+    expect(clearFiltersButton).toBeDisabled();
+
+    const nameInput = screen.getByLabelText('Filter by Name');
+
+    await user.type(nameInput, '29');
+
+    await waitFor(() => {
+      expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
+    });
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
   });
 
   // skipping this test as it causes an infinite loop when expanding the details panel
