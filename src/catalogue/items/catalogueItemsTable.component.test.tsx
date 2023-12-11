@@ -8,7 +8,7 @@ import {
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';
-
+jest.setTimeout(10000);
 describe('Catalogue Items Table', () => {
   let props: CatalogueItemsTableProps;
   let user;

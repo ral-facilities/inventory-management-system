@@ -97,11 +97,7 @@ const CatalogueItemDirectoryDialog = (
       );
       return;
     }
-    console.log({
-      catalogueItems: catalogueItem,
-      selectedItems: selectedItems,
-      targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? null,
-    });
+
     moveToCatalogueItem({
       catalogueItems: catalogueItem,
       selectedItems: selectedItems,
