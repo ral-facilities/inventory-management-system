@@ -142,11 +142,36 @@ function CatalogueItemsLandingPage() {
                 )}
               </Grid>
 
-              <Grid item xs={12}>
+              <Grid
+                item
+                xs={12}
+                style={{
+                  justifyContent: 'flex-start',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
                 <Collapse in={showDetails}>
                   <Grid container spacing={1}>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ListItem
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={2}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        padding: '16px',
+                      }}
+                    >
+                      <Typography color="text.primary">Obsolete</Typography>
+                      <Typography color="text.secondary">
+                        {catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}
+                      </Typography>
+
+                      {/* <ListItem
                         style={{
                           justifyContent: 'flex-start',
                           display: 'flex',
@@ -160,183 +185,195 @@ function CatalogueItemsLandingPage() {
                             catalogueItemIdData.is_obsolete ? 'Yes' : 'No'
                           }
                         />
-                      </ListItem>
+                      </ListItem> */}
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ListItem
-                        style={{
-                          justifyContent: 'flex-start',
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <ListItemText
-                          primary={'Obsolete replacement link'}
-                          secondary={
-                            catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
-                              <MuiLink
-                                component={Link}
-                                underline="hover"
-                                target="_blank"
-                                to={`/catalogue/items/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
-                              >
-                                Click here
-                              </MuiLink>
-                            ) : (
-                              'None'
-                            )
-                          }
-                        />
-                      </ListItem>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={2}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        padding: '16px',
+                      }}
+                    >
+                      <Typography color="text.primary">
+                        Obsolete replacement link
+                      </Typography>
+                      <Typography color="text.secondary">
+                        {catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
+                          <MuiLink
+                            component={Link}
+                            underline="hover"
+                            target="_blank"
+                            to={`/catalogue/items/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
+                          >
+                            Click here
+                          </MuiLink>
+                        ) : (
+                          'None'
+                        )}
+                      </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ListItem
-                        style={{
-                          justifyContent: 'flex-start',
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <ListItemText
-                          primary={'Obsolete reason'}
-                          secondary={
-                            catalogueItemIdData.obsolete_reason ?? 'None'
-                          }
-                        />
-                      </ListItem>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ListItem
-                        style={{
-                          justifyContent: 'flex-start',
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <ListItemText
-                          primary={'Cost (£)'}
-                          secondary={catalogueItemIdData.cost_gbp ?? 'None'}
-                        />
-                      </ListItem>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ListItem
-                        style={{
-                          justifyContent: 'flex-start',
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <ListItemText
-                          primary={'Cost to rework (£)'}
-                          secondary={
-                            catalogueItemIdData.cost_to_rework_gbp ?? 'None'
-                          }
-                        />
-                      </ListItem>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={2}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        padding: '16px',
+                      }}
+                    >
+                      <Typography color="text.primary">
+                        Obsolete reason
+                      </Typography>
+                      <Typography color="text.secondary">
+                        {catalogueItemIdData.obsolete_reason ?? 'None'}
+                      </Typography>
                     </Grid>
 
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ListItem
-                        style={{
-                          justifyContent: 'flex-start',
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <ListItemText
-                          primary={'Time to replace (days)'}
-                          secondary={
-                            catalogueItemIdData.days_to_replace ?? 'None'
-                          }
-                        />
-                      </ListItem>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={2}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        padding: '16px',
+                      }}
+                    >
+                      <Typography color="text.primary">Cost (£)</Typography>
+                      <Typography color="text.secondary">
+                        {catalogueItemIdData.cost_gbp ?? 'None'}
+                      </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ListItem
-                        style={{
-                          justifyContent: 'flex-start',
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <ListItemText
-                          primary={'Time to rework (days)'}
-                          secondary={
-                            catalogueItemIdData.days_to_rework ?? 'None'
-                          }
-                        />
-                      </ListItem>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ListItem
-                        style={{
-                          justifyContent: 'flex-start',
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <ListItemText
-                          primary={'Drawing Number'}
-                          secondary={
-                            catalogueItemIdData.drawing_number ?? 'None'
-                          }
-                        />
-                      </ListItem>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={2}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        padding: '16px',
+                      }}
+                    >
+                      <Typography color="text.primary">Name</Typography>
+                      <Typography color="text.secondary">
+                        {catalogueItemIdData.cost_to_rework_gbp ?? 'None'}
+                      </Typography>
                     </Grid>
 
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ListItem
-                        style={{
-                          justifyContent: 'flex-start',
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <ListItemText
-                          primary={'Drawing Link'}
-                          secondary={
-                            catalogueItemIdData.drawing_link ? (
-                              <MuiLink
-                                underline="hover"
-                                target="_blank"
-                                href={catalogueItemIdData.drawing_link}
-                              >
-                                {catalogueItemIdData.drawing_link}
-                              </MuiLink>
-                            ) : (
-                              'None'
-                            )
-                          }
-                        />
-                      </ListItem>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={2}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        padding: '16px',
+                      }}
+                    >
+                      <Typography color="text.primary">
+                        Time to replace (days)
+                      </Typography>
+                      <Typography color="text.secondary">
+                        {catalogueItemIdData.days_to_replace ?? 'None'}
+                      </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <ListItem
-                        style={{
-                          justifyContent: 'flex-start',
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <ListItemText
-                          primary={'Model Number'}
-                          secondary={
-                            catalogueItemIdData.item_model_number ?? 'None'
-                          }
-                        />
-                      </ListItem>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={2}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        padding: '16px',
+                      }}
+                    >
+                      <Typography color="text.primary">
+                        Time to rework (days)
+                      </Typography>
+                      <Typography color="text.secondary">
+                        {catalogueItemIdData.days_to_rework ?? 'None'}
+                      </Typography>
+                    </Grid>
+
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={2}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        padding: '16px',
+                      }}
+                    >
+                      <Typography color="text.primary">
+                        Drawing Number
+                      </Typography>
+                      <Typography color="text.secondary">
+                        {catalogueItemIdData.drawing_number ?? 'None'}
+                      </Typography>
+                    </Grid>
+
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={2}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        padding: '16px',
+                      }}
+                    >
+                      <Typography color="text.primary">Drawing link</Typography>
+                      <Typography color="text.secondary">
+                        {catalogueItemIdData.drawing_link ? (
+                          <MuiLink
+                            underline="hover"
+                            target="_blank"
+                            href={catalogueItemIdData.drawing_link}
+                          >
+                            {catalogueItemIdData.drawing_link}
+                          </MuiLink>
+                        ) : (
+                          'None'
+                        )}
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={2}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        padding: '16px',
+                      }}
+                    >
+                      <Typography color="text.primary">Model Number</Typography>
+                      <Typography color="text.secondary">
+                        {catalogueItemIdData.item_model_number ?? 'None'}
+                      </Typography>
                     </Grid>
                   </Grid>
                 </Collapse>
@@ -367,30 +404,44 @@ function CatalogueItemsLandingPage() {
                   </>
                 )}
               </Grid>
-              <Grid item xs={12}>
+              <Grid
+                item
+                xs={12}
+                style={{
+                  justifyContent: 'flex-start',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}
+              >
                 <Collapse in={showProperties}>
                   <Grid container spacing={1}>
                     {catalogueItemIdData.properties &&
                       catalogueItemIdData.properties.map((property, index) => (
-                        <Grid item xs={12} sm={6} md={4} key={index}>
-                          <ListItem
+                        <Grid item xs={12} sm={6} md={2} key={index}>
+                          <Grid
+                            item
+                            xs={12}
                             style={{
                               justifyContent: 'flex-start',
                               display: 'flex',
-                              flexDirection: 'row',
+                              flexDirection: 'column',
                               alignItems: 'center',
+                              padding: '16px',
                             }}
                           >
-                            <ListItemText
-                              primary={`${property.name} ${
-                                catalogueCategoryData
-                                  ?.catalogue_item_properties?.[index].unit
-                                  ? `(${catalogueCategoryData?.catalogue_item_properties?.[index].unit})`
-                                  : ''
-                              }`}
-                              secondary={String(property.value)}
-                            />
-                          </ListItem>
+                            <Typography color="text.primary">{`${
+                              property.name
+                            } ${
+                              catalogueCategoryData
+                                ?.catalogue_item_properties?.[index].unit
+                                ? `(${catalogueCategoryData?.catalogue_item_properties?.[index].unit})`
+                                : ''
+                            }`}</Typography>
+                            <Typography color="text.secondary">
+                              {String(property.value)}
+                            </Typography>
+                          </Grid>
                         </Grid>
                       ))}
                   </Grid>
@@ -443,6 +494,7 @@ function CatalogueItemsLandingPage() {
                           justifyContent: 'flex-start',
                           display: 'flex',
                           flexDirection: 'row',
+                          alignItems: 'left',
                         }}
                       >
                         <Grid
@@ -452,6 +504,7 @@ function CatalogueItemsLandingPage() {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            padding: '16px',
                           }}
                         >
                           <Typography color="text.primary">Name</Typography>
@@ -466,33 +519,26 @@ function CatalogueItemsLandingPage() {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            padding: '16px',
                           }}
                         >
-                          {manufacturer?.url && (
-                            <Grid
-                              item
-                              xs={12}
-                              sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                              }}
-                            >
-                              <Typography color="text.primary">URL</Typography>
-                              <Typography
-                                sx={{ margin: '8px' }}
-                                variant="body1"
+                          <Typography color="text.primary">URL</Typography>
+                          <Typography color="text.secondary">
+                            {manufacturer.url ? (
+                              <MuiLink
+                                component={Link}
+                                underline="hover"
+                                target="_blank"
+                                to={manufacturer.url}
                               >
-                                <MuiLink
-                                  underline="hover"
-                                  href={manufacturer.url}
-                                >
-                                  {manufacturer.url}
-                                </MuiLink>
-                              </Typography>
-                            </Grid>
-                          )}
+                                {manufacturer.url}
+                              </MuiLink>
+                            ) : (
+                              'None'
+                            )}
+                          </Typography>
                         </Grid>
+
                         <Grid
                           item
                           xs={12}
@@ -500,6 +546,7 @@ function CatalogueItemsLandingPage() {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            padding: '16px',
                           }}
                         >
                           <Typography color="text.primary">
@@ -516,6 +563,7 @@ function CatalogueItemsLandingPage() {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            padding: '16px',
                           }}
                         >
                           <Typography color="text.primary">Town</Typography>
@@ -530,6 +578,7 @@ function CatalogueItemsLandingPage() {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            padding: '16px',
                           }}
                         >
                           <Typography color="text.primary">County</Typography>
@@ -544,6 +593,7 @@ function CatalogueItemsLandingPage() {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            padding: '16px',
                           }}
                         >
                           <Typography color="text.primary">Country</Typography>
@@ -558,6 +608,7 @@ function CatalogueItemsLandingPage() {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            padding: '16px',
                           }}
                         >
                           <Typography color="text.primary">
