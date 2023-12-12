@@ -131,7 +131,7 @@ describe('SystemDirectoryDialog', () => {
       ).toBeInTheDocument();
     });
 
-    it('cannot move selected systems to the same system', async () => {
+    it('cannot move selected systems to the same parent system', async () => {
       // Change selected systems to have a parent equal to the target
       props.selectedSystems = [
         SystemsJSON[0] as System,
@@ -145,6 +145,22 @@ describe('SystemDirectoryDialog', () => {
       });
 
       expect(screen.getByRole('button', { name: 'Move here' })).toBeDisabled();
+    });
+
+    it('cannot move a selected system into itself', async () => {
+      props.selectedSystems = [SystemsJSON[0] as System];
+
+      createView();
+
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      expect(
+        screen.getByRole('row', {
+          name: `Giant laser row`,
+        })
+      ).toHaveStyle('cursor: not-allowed');
     });
 
     it('moves selected systems (to root system)', async () => {
@@ -268,6 +284,36 @@ describe('SystemDirectoryDialog', () => {
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...(SystemsJSON[0] as System),
         name: 'Giant laser_copy_1',
+      });
+    });
+
+    it('can copy a selected system into itself', async () => {
+      props.selectedSystems = [SystemsJSON[0] as System];
+
+      createView();
+
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      expect(
+        screen.getByRole('row', {
+          name: `Giant laser row`,
+        })
+      ).toHaveStyle('cursor: pointer');
+
+      await user.click(screen.getByText('Giant laser'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Copy here' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
+        ...(SystemsJSON[0] as System),
+        name: 'Giant laser',
+        parent_id: SystemsJSON[0].id,
       });
     });
 
