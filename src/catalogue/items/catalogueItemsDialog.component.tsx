@@ -237,9 +237,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     selectedManufacturer?.name ?? null
   );
 
-  console.log(manufacturerList);
-  console.log(selectedManufacturer);
-
   const [addManufacturerDialogOpen, setAddManufacturerDialogOpen] =
     React.useState<boolean>(false);
 
