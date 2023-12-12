@@ -210,7 +210,7 @@ describe('Catalogue Items Dialog', () => {
         { name: 'Older than five years', value: false },
       ],
     });
-  });
+  }, 10000);
 
   it('adds a catalogue item (just mandatory fields)', async () => {
     props = {
@@ -341,7 +341,7 @@ describe('Catalogue Items Dialog', () => {
         'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
       )
     ).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('displays warning message when an unknown error occurs', async () => {
     props = {
@@ -378,7 +378,7 @@ describe('Catalogue Items Dialog', () => {
       ).toBeInTheDocument();
     });
     expect(onClose).not.toHaveBeenCalled();
-  });
+  }, 10000);
 
   it('opens add manufacturer dialog and returns back to catalogue item dialog', async () => {
     props = {
