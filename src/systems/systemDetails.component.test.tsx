@@ -4,16 +4,18 @@ import { System } from '../app.types';
 import { renderComponentWithBrowserRouter } from '../setupTests';
 import SystemsJSON from '../mocks/Systems.json';
 import SystemDetails, { SystemDetailsProps } from './systemDetails.component';
+import userEvent from '@testing-library/user-event';
 
 describe('SystemDetails', () => {
   let props: SystemDetailsProps;
   let mockSystemDetails: System;
+  let user;
 
   const createView = () => {
     if (props.id)
       mockSystemDetails = SystemsJSON.filter(
         (system) => system.id === props.id
-      )[0];
+      )[0] as System;
     return renderComponentWithBrowserRouter(<SystemDetails {...props} />);
   };
 
@@ -21,6 +23,8 @@ describe('SystemDetails', () => {
     props = {
       id: '65328f34a40ff5301575a4e3',
     };
+
+    user = userEvent.setup();
   });
 
   it('renders correctly when no system is selected', async () => {
@@ -75,5 +79,51 @@ describe('SystemDetails', () => {
       expect(screen.getByText('No system selected')).toBeInTheDocument();
     });
     expect(screen.getByText('Please select a system')).toBeInTheDocument();
+  });
+
+  it('can open the edit dialog and close it again', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText(mockSystemDetails.name)).toBeInTheDocument();
+    });
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Edit System' }));
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the delete dialog and close it again', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText(mockSystemDetails.name)).toBeInTheDocument();
+    });
+
+    expect(screen.queryByTestId('delete-system-name')).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Delete System' }));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('delete-system-name')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId('delete-system-name')
+      ).not.toBeInTheDocument();
+    });
   });
 });

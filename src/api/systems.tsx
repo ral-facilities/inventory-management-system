@@ -9,8 +9,12 @@ import axios, { AxiosError } from 'axios';
 import {
   AddSystem,
   BreadcrumbsInfo,
+  EditSystem,
+  ErrorParsing,
+  MoveToSystem,
   System,
   SystemImportanceType,
+  TransferState,
 } from '../app.types';
 import { settings } from '../settings';
 
@@ -119,10 +123,10 @@ export const useSystemsBreadcrumbs = (
       return fetchSystemsBreadcrumbs(id ?? '');
     },
     {
+      enabled: id !== null,
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
-      enabled: id !== null,
     }
   );
 };
@@ -150,8 +154,135 @@ export const useAddSystem = (): UseMutationResult<
     onError: (error) => {
       console.log(`Got error: '${error.message}'`);
     },
+    onSuccess: (systemResponse) => {
+      queryClient.invalidateQueries({
+        queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
+      });
+    },
+  });
+};
+
+const editSystem = async (system: EditSystem): Promise<System> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+
+  const { id, ...updateData } = system;
+
+  return axios
+    .patch<System>(`${apiUrl}/v1/systems/${id}`, updateData)
+    .then((response) => response.data);
+};
+
+export const useEditSystem = (): UseMutationResult<
+  System,
+  AxiosError,
+  EditSystem
+> => {
+  const queryClient = useQueryClient();
+  return useMutation((system: EditSystem) => editSystem(system), {
+    onError: (error) => {
+      console.log('Got error ' + error.message);
+    },
+    onSuccess: (systemResponse: System) => {
+      queryClient.invalidateQueries({
+        queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
+      });
+      queryClient.invalidateQueries({
+        // Don't use ID here as will also need to update any of its children as well
+        queryKey: ['SystemBreadcrumbs'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['System', systemResponse.id],
+      });
+    },
+  });
+};
+
+const deleteSystem = async (systemId: string): Promise<void> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+
+  return axios
+    .delete(`${apiUrl}/v1/systems/${systemId}`)
+    .then((response) => response.data);
+};
+
+export const useDeleteSystem = (): UseMutationResult<
+  void,
+  AxiosError,
+  string
+> => {
+  const queryClient = useQueryClient();
+
+  return useMutation((systemId: string) => deleteSystem(systemId), {
+    onError: (error) => {
+      console.log(`Got error: '${error.message}'`);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['Systems'] });
+      queryClient.removeQueries({ queryKey: ['System'] });
     },
+  });
+};
+
+export const useMoveToSystem = (): UseMutationResult<
+  TransferState[],
+  AxiosError,
+  MoveToSystem
+> => {
+  const queryClient = useQueryClient();
+
+  return useMutation(async (moveToSystem: MoveToSystem) => {
+    const transferStates: TransferState[] = [];
+
+    let successfulIds: string[] = [];
+
+    const promises = moveToSystem.selectedSystems.map(
+      async (system: System, index: number) => {
+        return editSystem({
+          id: system.id,
+          parent_id: moveToSystem.targetSystem?.id || null,
+        })
+          .then((result: System) => {
+            const targetSystemName = moveToSystem.targetSystem?.name || 'Root';
+            transferStates.push({
+              name: result.name,
+              message: `Successfully moved to ${targetSystemName}`,
+              state: 'success',
+            });
+
+            successfulIds.push(system.id);
+          })
+          .catch((error) => {
+            const response = error.response?.data as ErrorParsing;
+
+            transferStates.push({
+              name: moveToSystem.selectedSystems[index].name,
+              message: response.detail,
+              state: 'error',
+            });
+          });
+      }
+    );
+
+    await Promise.all(promises);
+
+    if (successfulIds.length > 0) {
+      queryClient.invalidateQueries({ queryKey: ['Systems'] });
+      queryClient.invalidateQueries({ queryKey: ['SystemBreadcrumbs'] });
+      successfulIds.map((id: string) =>
+        queryClient.invalidateQueries({ queryKey: ['System', id] })
+      );
+    }
+
+    return transferStates;
   });
 };

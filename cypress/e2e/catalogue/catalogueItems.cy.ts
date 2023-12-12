@@ -1,6 +1,6 @@
 describe('Catalogue Items', () => {
   beforeEach(() => {
-    cy.visit('/inventory-management-system/catalogue/4');
+    cy.visit('/catalogue/4');
   });
   afterEach(() => {
     cy.clearMocks();
@@ -44,7 +44,7 @@ describe('Catalogue Items', () => {
   });
 
   it('"save as" a catalogue item', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
 
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Save as').click();
@@ -247,7 +247,7 @@ describe('Catalogue Items', () => {
   });
 
   it('navigates to manufacturer landing page', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
 
     cy.findByRole('button', { name: 'Show/Hide columns' }).click();
     cy.findByRole('button', { name: 'Hide all' }).click();
@@ -279,7 +279,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays the expired landing page message and navigates back to the catalogue home', () => {
-    cy.visit('/inventory-management-system/catalogue/items/1fds');
+    cy.visit('/catalogue/items/1fds');
 
     cy.findByText(
       `This item doesn't exist. Please click the Home button to navigate to the catalogue home`
@@ -291,7 +291,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays error message when user tries to delete a catalogue item that has children elements', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Delete').click();
 
@@ -307,7 +307,7 @@ describe('Catalogue Items', () => {
   });
 
   it('delete a catalogue item', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Delete').click();
 
@@ -326,7 +326,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays error message if none of the field have been edited', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Edit').click();
 
@@ -334,7 +334,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays error message if catalogue item has children elements', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Edit').click();
 
@@ -354,7 +354,7 @@ describe('Catalogue Items', () => {
   });
 
   it('edit a catalogue item (Catalogue item details)', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Edit').click();
 
@@ -388,7 +388,7 @@ describe('Catalogue Items', () => {
   });
 
   it('edit a catalogue item (properties)', () => {
-    cy.visit('/inventory-management-system/catalogue/5');
+    cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Edit').click();
 
@@ -408,5 +408,144 @@ describe('Catalogue Items', () => {
         '{"properties":[{"name":"Measurement Range","value":20000}]}'
       );
     });
+  });
+  it('checks the href property of the manufacturer link', () => {
+    cy.findByRole('button', { name: 'Show/Hide columns' }).click();
+    cy.findByText('Hide all').click();
+
+    cy.findByText('Manufacturer URL').click();
+
+    // Find the link element
+    cy.findAllByText('http://example.com')
+      .first()
+      .should('have.attr', 'href')
+      .should('include', 'http://example.com'); // Check href attribute value
+
+    cy.findAllByText('http://example.com')
+      .first()
+      .should('have.attr', 'target')
+      .should('include', '_blank'); // Check target attribute value
+  });
+
+  it('sets the table filters and clears the table filters', () => {
+    cy.findByText('Cameras 1').should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+    cy.findByLabelText('Filter by Name').type('15');
+    cy.findByText('Cameras 1').should('not.exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+    cy.findByText('Cameras 1').should('exist');
+  });
+
+  it('make an item obsolete (no details)', () => {
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByText('Obsolete').click();
+
+    cy.findByLabelText('Is Obsolete').click();
+    cy.findByRole('option', { name: 'Yes' }).click();
+
+    cy.findByText('Obsolete Replacement').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+    cy.findByText('Finish').click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-items/:id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({ is_obsolete: true })
+      );
+    });
+  });
+
+  it('make an item obsolete (all details)', () => {
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByText('Obsolete').click();
+
+    cy.findByLabelText('Is Obsolete').click();
+    cy.findByRole('option', { name: 'Yes' }).click();
+
+    cy.findByText('Next').click();
+    cy.findByRole('textbox').type('Obsolete reason\nNew line');
+
+    cy.findByText('Next').click();
+
+    cy.findAllByRole('row', { name: 'Cameras 3 row' })
+      .eq(0)
+      .findByRole('radio')
+      .click();
+
+    cy.startSnoopingBrowserMockedRequest();
+    cy.findByText('Finish').click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-items/:id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({
+          is_obsolete: true,
+          obsolete_reason: 'Obsolete reason\nNew line',
+          obsolete_replacement_catalogue_item_id: '3',
+        })
+      );
+    });
+  });
+
+  it('make an obsolete item not obsolete', () => {
+    cy.visit('/catalogue/5');
+
+    cy.findAllByLabelText('Row Actions').eq(0).click();
+    cy.findByText('Obsolete').click();
+
+    cy.findByLabelText('Is Obsolete').click();
+    cy.findByRole('option', { name: 'No' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+    cy.findByText('Finish').click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/catalogue-items/:id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({
+          is_obsolete: false,
+          obsolete_reason: null,
+          obsolete_replacement_catalogue_item_id: null,
+        })
+      );
+    });
+  });
+
+  it('can view item details in the obsolete dialog', () => {
+    cy.visit('/catalogue/5');
+
+    cy.findAllByLabelText('Row Actions').eq(0).click();
+    cy.findByText('Obsolete').click();
+
+    cy.findByText('Obsolete Replacement').click();
+
+    cy.findAllByRole('row', { name: 'Energy Meters 26 row' })
+      .eq(0)
+      .findByRole('button', { name: 'Expand' })
+      .click();
+
+    cy.findByText('Description').should('exist');
+    cy.findByRole('tab', { name: 'Properties' }).click();
+    cy.findAllByText('Measurement Range (Joules)').should('exist');
+    cy.findByRole('tab', { name: 'Manufacturer' }).click();
+    cy.findAllByText('Manufacturer Name').should('exist');
+  });
+
+  it('can navigate to an items replacement', () => {
+    cy.visit('/catalogue/5');
+
+    cy.findAllByRole('link', { name: 'Click here' }).eq(0).click();
+
+    cy.url().should('contain', 'catalogue/items/6');
   });
 });

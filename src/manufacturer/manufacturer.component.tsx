@@ -1,6 +1,9 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import ClearIcon from '@mui/icons-material/Clear';
+import AddIcon from '@mui/icons-material/Add';
 import {
+  Box,
   Button,
   ListItemIcon,
   MenuItem,
@@ -12,6 +15,7 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
+  type MRT_ColumnFiltersState,
 } from 'material-react-table';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -45,7 +49,7 @@ function ManufacturerComponent() {
             <MuiLink
               underline="hover"
               component={Link}
-              to={`/inventory-management-system/manufacturer/${row.original.id}`}
+              to={`/manufacturer/${row.original.id}`}
             >
               {row.original.name}
             </MuiLink>
@@ -101,11 +105,13 @@ function ManufacturerComponent() {
   const noResultsTxt =
     'No results found: Try adding an Manufacturer by using the Add Manufacturer button on the top left of your screen';
 
+  const [columnFilters, setColumnFilters] =
+    React.useState<MRT_ColumnFiltersState>([]);
+
   const table = useMaterialReactTable({
     columns: columns, // If dense only show the name column
     data: ManufacturerData ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     enableColumnOrdering: true,
-    enableColumnPinning: true,
     enableColumnResizing: true,
     enableFacetedValues: true,
     enableRowActions: true,
@@ -114,6 +120,8 @@ function ManufacturerComponent() {
     enableDensityToggle: false,
     enableFullScreenToggle: false,
     enablePagination: true,
+    manualFiltering: false,
+    onColumnFiltersChange: setColumnFilters,
     localization: {
       ...MRT_Localization_EN,
       noRecordsToDisplay: noResultsTxt,
@@ -134,6 +142,7 @@ function ManufacturerComponent() {
       variant: 'outlined',
     },
     state: {
+      columnFilters,
       showProgressBars: ManufacturerDataLoading, //or showSkeletons
     },
     muiPaginationProps: {
@@ -142,7 +151,7 @@ function ManufacturerComponent() {
       shape: 'rounded',
       variant: 'outlined',
     },
-    renderCreateRowDialogContent: ({ table, row }) => {
+    renderCreateRowDialogContent: ({ table }) => {
       return (
         <>
           <ManufacturerDialog
@@ -158,14 +167,29 @@ function ManufacturerComponent() {
       );
     },
     renderTopToolbarCustomActions: ({ table }) => (
-      <Button
-        variant="outlined"
-        onClick={() => {
-          table.setCreatingRow(true);
-        }}
-      >
-        Add Manufacturer
-      </Button>
+      <Box>
+        <Button
+          startIcon={<AddIcon />}
+          sx={{ mx: '4px' }}
+          variant="outlined"
+          onClick={() => {
+            table.setCreatingRow(true);
+          }}
+        >
+          Add Manufacturer
+        </Button>
+        <Button
+          startIcon={<ClearIcon />}
+          sx={{ mx: '4px' }}
+          variant="outlined"
+          disabled={columnFilters.length === 0}
+          onClick={() => {
+            table.resetColumnFilters();
+          }}
+        >
+          Clear Filters
+        </Button>
+      </Box>
     ),
     renderRowActionMenuItems: ({ closeMenu, row }) => {
       return [

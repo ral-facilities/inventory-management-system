@@ -38,16 +38,14 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         size: 1135,
         Cell: ({ renderedCellValue, row }) => {
           const canPlaceHere =
-            !row.original.is_leaf &&
-            (requestType !== 'moveTo' ||
-              !selectedCatalogueCategoryIds.includes(row.original.id));
+            (!row.original.is_leaf &&
+              (requestType !== 'moveTo' ||
+                !selectedCatalogueCategoryIds.includes(row.original.id))) ||
+            requestType === 'standard';
           return (
             <Typography
               sx={{
-                color:
-                  canPlaceHere || requestType === 'standard'
-                    ? 'inherit'
-                    : 'action.disabled',
+                color: canPlaceHere ? 'inherit' : 'action.disabled',
               }}
             >
               {renderedCellValue}
@@ -76,21 +74,18 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     enableFullScreenToggle: false,
     muiTableBodyRowProps: ({ row }) => {
       const canPlaceHere =
-        !row.original.is_leaf &&
-        (requestType !== 'moveTo' ||
-          !selectedCatalogueCategoryIds.includes(row.original.id));
+        (!row.original.is_leaf &&
+          (requestType !== 'moveTo' ||
+            !selectedCatalogueCategoryIds.includes(row.original.id))) ||
+        requestType === 'standard';
       return {
         component: TableRow,
         onClick: () => {
-          if (canPlaceHere || requestType === 'standard')
-            onChangeCatalogueCurrDirId(row.original.id);
+          canPlaceHere && onChangeCatalogueCurrDirId(row.original.id);
         },
         'aria-label': `${row.original.name} row`,
         style: {
-          cursor:
-            canPlaceHere || requestType === 'standard'
-              ? 'pointer'
-              : 'not-allowed',
+          cursor: canPlaceHere ? 'pointer' : 'not-allowed',
         },
       };
     },

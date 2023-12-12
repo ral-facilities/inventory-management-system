@@ -1,13 +1,13 @@
 describe('Manufacturer', () => {
   beforeEach(() => {
-    cy.visit('/inventory-management-system/manufacturer');
+    cy.visit('/manufacturer');
   });
   afterEach(() => {
     cy.clearMocks();
   });
 
   it('should render in table headers', () => {
-    cy.visit('/inventory-management-system/manufacturer');
+    cy.visit('/manufacturer');
     cy.findByText('Actions').should('be.visible');
     cy.findByText('Name').should('be.visible');
     cy.findByText('URL').should('be.visible');
@@ -17,7 +17,7 @@ describe('Manufacturer', () => {
   });
 
   it('should render manufacturer data', () => {
-    cy.visit('/inventory-management-system/manufacturer');
+    cy.visit('/manufacturer');
 
     cy.findByText('Manufacturer A').should('be.visible');
     cy.findByText('Manufacturer B').should('be.visible');
@@ -34,7 +34,7 @@ describe('Manufacturer', () => {
   });
 
   it('manufacturer url is correct and opens new webpage', () => {
-    cy.visit('/inventory-management-system/manufacturer');
+    cy.visit('/manufacturer');
     const url = cy.findByText('http://example.com');
 
     url
@@ -179,7 +179,7 @@ describe('Manufacturer', () => {
       });
   });
   it('Edits a manufacturer correctly', () => {
-    cy.visit('/inventory-management-system/manufacturer');
+    cy.visit('/manufacturer');
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
     cy.findByLabelText('Name *').clear();
@@ -332,7 +332,7 @@ describe('Manufacturer', () => {
   });
 
   it('displays expired landing page message and navigates back to manufacturer table view', () => {
-    cy.visit('/inventory-management-system/manufacturer/invalid');
+    cy.visit('/manufacturer/invalid');
 
     cy.findByText(
       `This manufacturer doesn't exist. Please click the Home button to navigate to the manufacturer table`
@@ -343,5 +343,13 @@ describe('Manufacturer', () => {
     cy.findByText('Manufacturer A').should('exist');
     cy.findByText('Manufacturer B').should('exist');
     cy.findByText('Manufacturer C').should('exist');
+  });
+  it('sets the table filters and clears the table filters', () => {
+    cy.findByText('Manufacturer A').should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+    cy.findByLabelText('Filter by Name').type('B');
+    cy.findByText('Manufacturer A').should('not.exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+    cy.findByText('Manufacturer A').should('exist');
   });
 });

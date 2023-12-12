@@ -15,10 +15,7 @@ import React from 'react';
 function ManufacturerLandingPage() {
   const location = useLocation();
 
-  const manufacturerId = location.pathname.replace(
-    '/inventory-management-system/manufacturer/',
-    ''
-  );
+  const manufacturerId = location.pathname.replace('/manufacturer/', '');
 
   const { data: manufacturerData, isLoading: manufacturerDataLoading } =
     useManufacturer(manufacturerId);
@@ -31,7 +28,7 @@ function ManufacturerLandingPage() {
       <Grid sx={{ padding: '8px' }} item>
         <Button
           component={Link}
-          to={`/inventory-management-system/manufacturer/`}
+          to={`/manufacturer/`}
           sx={{ margin: '8px' }}
           variant="outlined"
         >

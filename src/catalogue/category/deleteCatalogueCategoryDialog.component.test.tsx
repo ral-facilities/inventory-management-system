@@ -33,7 +33,7 @@ describe('delete Catalogue Category dialogue', () => {
       catalogueCategory: catalogueCategory,
       onChangeCatalogueCategory: onChangeCatalogueCategory,
     };
-    user = userEvent; // Assigning userEvent to 'user'
+    user = userEvent.setup(); // Assigning userEvent to 'user'
   });
   afterEach(() => {
     jest.clearAllMocks();

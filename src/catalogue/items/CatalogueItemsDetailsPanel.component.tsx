@@ -52,7 +52,14 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
   };
 
   return (
-    <Grid container spacing={0} flexDirection="column">
+    <Grid
+      container
+      spacing={0}
+      flexDirection="column"
+      // Stop any further propagation to prevent a table select from being triggered
+      // by clicks inside this grid
+      onClick={(e) => e.stopPropagation()}
+    >
       <Grid item sx={{ mb: 4 }} xs={12}>
         <Tabs value={tabValue} onChange={handleTabChange}>
           <Tab label="Details" />
@@ -93,7 +100,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                         component={Link}
                         underline="hover"
                         target="_blank"
-                        to={`/inventory-management-system/catalogue/items/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
+                        to={`/catalogue/items/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
                       >
                         Click here
                       </MuiLink>

@@ -5,7 +5,7 @@ export type TabValue = 'Systems' | 'Catalogue' | 'Manufacturer';
 
 export interface AddCatalogueCategory {
   name: string;
-  parent_id?: string;
+  parent_id?: string | null;
   is_leaf: boolean;
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }
@@ -72,7 +72,12 @@ export interface CatalogueCategoryFormData {
   mandatory: boolean;
 }
 
-export interface CatalogueItemDetails {
+export interface ObsoleteDetails {
+  is_obsolete: boolean;
+  obsolete_replacement_catalogue_item_id: string | null;
+  obsolete_reason: string | null;
+}
+export interface CatalogueItemDetails extends ObsoleteDetails {
   catalogue_category_id: string;
   name: string;
   description: string | null;
@@ -83,9 +88,6 @@ export interface CatalogueItemDetails {
   drawing_number: string | null;
   drawing_link: string | null;
   item_model_number: string | null;
-  is_obsolete: boolean;
-  obsolete_replacement_catalogue_item_id: string | null;
-  obsolete_reason: string | null;
   manufacturer_id: string;
 }
 // need so we can cast string to number e.g for 10.50
@@ -146,7 +148,7 @@ interface EditAddress {
   postcode?: string;
   country?: string;
 }
-export interface CatalogueCategoryTransferState {
+export interface TransferState {
   name: string;
   message: string;
   state: 'success' | 'error';
@@ -164,11 +166,11 @@ export enum SystemImportanceType {
 
 export interface AddSystem {
   name: string;
-  description?: string;
-  location?: string;
-  owner?: string;
+  description?: string | null;
+  location?: string | null;
+  owner?: string | null;
   importance: SystemImportanceType;
-  parent_id?: string;
+  parent_id?: string | null;
 }
 
 export interface System {
@@ -180,4 +182,14 @@ export interface System {
   importance: SystemImportanceType;
   parent_id: string | null;
   code: string;
+}
+
+export interface EditSystem extends Partial<AddSystem> {
+  id: string;
+}
+
+export interface MoveToSystem {
+  selectedSystems: System[];
+  // Null if root
+  targetSystem: System | null;
 }

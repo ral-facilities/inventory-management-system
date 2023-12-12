@@ -14,7 +14,7 @@ describe('Manufacturer Landing page', () => {
   });
 
   it('landing page renders data correctly', async () => {
-    createView('/inventory-management-system/manufacturer/1');
+    createView('/manufacturer/1');
 
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe('Manufacturer Landing page', () => {
   });
 
   it('shows no manufacturer page correctly', async () => {
-    createView('/inventory-management-system/manufacturer/invalid');
+    createView('/manufacturer/invalid');
 
     await waitFor(() => {
       expect(
@@ -49,7 +49,7 @@ describe('Manufacturer Landing page', () => {
   });
 
   it('shows the loading indicator', async () => {
-    createView('/inventory-management-system/manufacturer/1');
+    createView('/manufacturer/1');
 
     await waitFor(() => {
       expect(screen.getByRole('progressbar')).toBeInTheDocument();
@@ -57,7 +57,7 @@ describe('Manufacturer Landing page', () => {
   });
 
   it('opens and closes the edit manufacturer dialog', async () => {
-    createView('/inventory-management-system/manufacturer/1');
+    createView('/manufacturer/1');
 
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();

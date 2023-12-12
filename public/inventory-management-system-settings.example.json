@@ -2,10 +2,22 @@
   "apiUrl": "",
   "routes": [
     {
-      "section": "Homepage",
-      "link": "/inventory-management-system",
-      "displayName": "Inventory Management System",
-      "order": 0
+      "section": "Inventory Management System",
+      "link": "/catalogue",
+      "displayName": "Catalogue",
+      "order": 1
+    },
+    {
+      "section": "Inventory Management System",
+      "link": "/systems",
+      "displayName": "Systems",
+      "order": 2
+    },
+    {
+      "section": "Inventory Management System",
+      "link": "/manufacturer",
+      "displayName": "Manufacturer",
+      "order": 3
     }
   ],
   "pluginHost": "http://localhost:3000"

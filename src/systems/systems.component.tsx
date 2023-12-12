@@ -1,7 +1,11 @@
 import { NavigateNext } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
+import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import {
   Box,
+  Button,
+  Checkbox,
   CircularProgress,
   Divider,
   Grid,
@@ -14,46 +18,124 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
+import { System } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog from './systemDialog.component';
+import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
 
-function Systems() {
-  // Navigation setup
+/* Returns function that navigates to a specific system id (or to the root of all systems
+   if given null) */
+export const useNavigateToSystem = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const onChangeNode = React.useCallback(
-    (newId: string) => {
-      navigate(`/inventory-management-system/systems/${newId}`);
+
+  return React.useCallback(
+    (newId: string | null) => {
+      navigate(`/systems${newId ? `/${newId}` : ''}`);
     },
     [navigate]
   );
+};
 
-  const getSystemID = React.useCallback(() => {
-    let systemID: string | null = location.pathname.replace(
-      '/inventory-management-system/systems',
-      ''
-    );
-    systemID = systemID === '' ? null : systemID.replace('/', '');
-    return systemID;
-  }, [location.pathname]);
-  const systemID = getSystemID();
-
+const AddSystemButton = (props: { systemId: string | null }) => {
   const [addSystemDialogOpen, setAddSystemDialogOpen] =
     React.useState<boolean>(false);
 
+  return (
+    <>
+      <IconButton
+        aria-label={props.systemId === null ? 'add system' : 'add subsystem'}
+        onClick={() => setAddSystemDialogOpen(true)}
+      >
+        <AddIcon />
+      </IconButton>
+      <SystemDialog
+        open={addSystemDialogOpen}
+        onClose={() => setAddSystemDialogOpen(false)}
+        parentId={props.systemId}
+        type="add"
+      />
+    </>
+  );
+};
+
+const MoveSystemsButton = (props: {
+  selectedSystems: System[];
+  onChangeSelectedSystems: (selectedSystems: System[]) => void;
+  parentSystemId: string | null;
+}) => {
+  const [moveSystemDialogOpen, setMoveSystemDialogOpen] =
+    React.useState<boolean>(false);
+
+  return (
+    <>
+      <Button
+        sx={{ mx: 1 }}
+        variant="outlined"
+        startIcon={<DriveFileMoveOutlinedIcon />}
+        onClick={() => setMoveSystemDialogOpen(true)}
+      >
+        Move to
+      </Button>
+      <SystemDirectoryDialog
+        open={moveSystemDialogOpen}
+        onClose={() => setMoveSystemDialogOpen(false)}
+        selectedSystems={props.selectedSystems}
+        onChangeSelectedSystems={props.onChangeSelectedSystems}
+        parentSystemId={props.parentSystemId}
+      />
+    </>
+  );
+};
+
+/* Returns the system id from the location pathname (null when not found) */
+export const useSystemId = (): string | null => {
+  // Navigation setup
+  const location = useLocation();
+
+  return React.useMemo(() => {
+    let systemId: string | null = location.pathname.replace('/systems', '');
+    systemId = systemId === '' ? null : systemId.replace('/', '');
+    return systemId;
+  }, [location.pathname]);
+};
+
+function Systems() {
+  // Navigation
+  const systemId = useSystemId();
+  const navigateToSystem = useNavigateToSystem();
+
+  // States
+  const [selectedSystems, setSelectedSystems] = React.useState<System[]>([]);
+
+  // Data
   const { data: systemsBreadcrumbs, isLoading: systemsBreadcrumbsLoading } =
-    useSystemsBreadcrumbs(systemID);
+    useSystemsBreadcrumbs(systemId);
   const { data: subsystemsData, isLoading: subsystemsDataLoading } = useSystems(
     // String value of null for filtering root systems
-    systemID === null ? 'null' : systemID
+    systemId === null ? 'null' : systemId
   );
+
+  const handleSystemCheckboxChange = (checked: boolean, system: System) => {
+    if (checked) setSelectedSystems([...selectedSystems, system]);
+    else
+      setSelectedSystems(
+        selectedSystems.filter(
+          (selectedSystem: System) => selectedSystem.id !== system.id
+        )
+      );
+  };
+
+  // Clear selected system when user navigates to a different page
+  React.useEffect(() => {
+    setSelectedSystems([]);
+  }, [systemId]);
 
   return (
     <Grid container>
-      {systemsBreadcrumbsLoading && systemID !== null ? (
+      {systemsBreadcrumbsLoading && systemId !== null ? (
         <LinearProgress sx={{ width: '100%' }} />
       ) : (
         <Grid
@@ -71,17 +153,34 @@ function Systems() {
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Breadcrumbs
               breadcrumbsInfo={systemsBreadcrumbs}
-              onChangeNode={onChangeNode}
+              onChangeNode={navigateToSystem}
               onChangeNavigateHome={() => {
-                navigate('/inventory-management-system/systems');
+                navigateToSystem(null);
               }}
               navigateHomeAriaLabel={'navigate to systems home'}
             />
             <NavigateNext
-              fontSize="medium"
-              sx={{ color: 'text.secondary', margin: '4px' }}
+              fontSize="small"
+              sx={{ color: 'text.secondary', margin: 1 }}
             />
           </div>
+          {selectedSystems.length > 0 && (
+            <Box>
+              <MoveSystemsButton
+                selectedSystems={selectedSystems}
+                onChangeSelectedSystems={setSelectedSystems}
+                parentSystemId={systemId}
+              />
+              <Button
+                sx={{ mx: 1 }}
+                variant="outlined"
+                startIcon={<ClearIcon />}
+                onClick={() => setSelectedSystems([])}
+              >
+                {selectedSystems.length} selected
+              </Button>
+            </Box>
+          )}
         </Grid>
       )}
       <Grid container margin={0} direction="row" alignItems="stretch">
@@ -102,46 +201,49 @@ function Systems() {
           ) : (
             <>
               <Box sx={{ display: 'flex', alignItems: 'center', margin: 1 }}>
-                <Typography variant="h6">
-                  {systemID === null ? 'Root systems' : 'Subsystems'}
+                <Typography variant="h6" sx={{ marginRight: 'auto' }}>
+                  {systemId === null ? 'Root systems' : 'Subsystems'}
                 </Typography>
-                <IconButton
-                  sx={{ marginLeft: 'auto' }}
-                  aria-label={
-                    systemID === null ? 'add system' : 'add subsystem'
-                  }
-                  onClick={() => setAddSystemDialogOpen(true)}
-                >
-                  <AddIcon />
-                </IconButton>
+                <AddSystemButton systemId={systemId} />
               </Box>
               <Divider role="presentation" />
               <List sx={{ padding: 0 }}>
-                {subsystemsData?.map((item, index) => (
-                  <ListItem key={index} sx={{ padding: 0 }}>
-                    <ListItemButton
-                      sx={{ padding: 1 }}
-                      component={Link}
-                      to={item.id}
-                    >
-                      <ListItemText>{item.name}</ListItemText>
-                    </ListItemButton>
-                  </ListItem>
-                ))}
+                {subsystemsData?.map((system, index) => {
+                  const selected = selectedSystems.some(
+                    (selectedSystem) => selectedSystem.id === system.id
+                  );
+                  return (
+                    <ListItem key={index} sx={{ padding: 0 }}>
+                      <ListItemButton
+                        sx={{ padding: 0 }}
+                        selected={selected}
+                        onClick={(event) => navigateToSystem(system.id)}
+                      >
+                        <Checkbox
+                          size="small"
+                          checked={selected}
+                          // Prevent button being triggered as well
+                          onClick={(event) => event.stopPropagation()}
+                          onChange={(event) =>
+                            handleSystemCheckboxChange(
+                              event.target.checked,
+                              system
+                            )
+                          }
+                        />
+                        <ListItemText>{system.name}</ListItemText>
+                      </ListItemButton>
+                    </ListItem>
+                  );
+                })}
               </List>
             </>
           )}
         </Grid>
         <Grid item xs={12} md={9} lg={10} textAlign="left" padding={1}>
-          <SystemDetails id={systemID} />
+          <SystemDetails id={systemId} />
         </Grid>
       </Grid>
-      <SystemDialog
-        open={addSystemDialogOpen}
-        onClose={() => setAddSystemDialogOpen(false)}
-        parentId={systemID}
-        type="add"
-      />
     </Grid>
   );
 }

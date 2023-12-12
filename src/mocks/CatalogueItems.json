@@ -1665,7 +1665,7 @@
         "unit": "millibar"
       }
     ],
-    "id": "17",
+    "id": "20",
     "manufacturer_id": "2",
     "cost_gbp": 220,
     "cost_to_rework_gbp": 55,
@@ -1694,7 +1694,7 @@
         "unit": ""
       }
     ],
-    "id": "20",
+    "id": "21",
     "manufacturer_id": "3",
     "cost_gbp": 250,
     "cost_to_rework_gbp": 60,
@@ -1723,7 +1723,7 @@
         "unit": ""
       }
     ],
-    "id": "21",
+    "id": "22",
     "manufacturer_id": "2",
     "cost_gbp": 270,
     "cost_to_rework_gbp": 70,
@@ -1752,7 +1752,7 @@
         "unit": "millibar"
       }
     ],
-    "id": "22",
+    "id": "23",
     "manufacturer_id": "1",
     "cost_gbp": 300,
     "cost_to_rework_gbp": 80,
@@ -1781,7 +1781,7 @@
         "unit": "millibar"
       }
     ],
-    "id": "23",
+    "id": "24",
     "manufacturer_id": "3",
     "cost_gbp": 320,
     "cost_to_rework_gbp": 90,

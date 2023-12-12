@@ -38,7 +38,7 @@ import {
 } from '../../app.types';
 import { matchCatalogueItemProperties } from '../catalogue.component';
 import { Autocomplete } from '@mui/material';
-import { useManufacturers } from '../../api/manufacturer';
+import { useManufacturer, useManufacturers } from '../../api/manufacturer';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 
 export interface CatalogueItemsDialogProps {
@@ -227,13 +227,16 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
 
   const { data: manufacturerList } = useManufacturers();
-
+  const { data: selectedManufacturerReturned } = useManufacturer(
+    selectedCatalogueItem?.manufacturer_id
+  );
   const [selectedManufacturer, setSelectedManufacturer] =
-    React.useState<Manufacturer | null>(
-      manufacturerList?.find((manufacturer) => {
-        return manufacturer?.id === selectedCatalogueItem?.manufacturer_id;
-      }) ?? null
-    );
+    React.useState<Manufacturer | null>(selectedManufacturerReturned ?? null);
+
+  const [inputValue, setInputValue] = React.useState('');
+
+  console.log(manufacturerList);
+  console.log(selectedManufacturer);
 
   const [addManufacturerDialogOpen, setAddManufacturerDialogOpen] =
     React.useState<boolean>(false);
@@ -778,7 +781,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 <Grid item xs={11}>
                   <Autocomplete
                     value={selectedManufacturer}
-                    inputValue={selectedManufacturer?.name ?? ''}
+                    inputValue={
+                      inputValue === ''
+                        ? selectedManufacturer?.name ?? ''
+                        : inputValue
+                    }
                     onChange={(
                       event: any,
                       newManufacturer: Manufacturer | null
@@ -790,6 +797,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         newManufacturer?.id ?? null
                       );
                     }}
+                    onInputChange={(event, newInputValue) =>
+                      setInputValue(newInputValue)
+                    }
                     id="manufacturer-autocomplete"
                     options={manufacturerList ?? []}
                     size="small"

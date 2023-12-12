@@ -459,7 +459,7 @@ describe('Catalogue Items Dialog', () => {
         drawing_number: 'test',
         item_model_number: 'test1',
         name: 'test',
-        manufacturer_id: '3',
+        manufacturer_id: '2',
       });
 
       expect(onClose).toHaveBeenCalled();
@@ -490,10 +490,11 @@ describe('Catalogue Items Dialog', () => {
         sensorBrand: '',
         broken: 'None',
         older: 'None',
+        manufacturer: '{delete} ',
       });
 
-      const manufacturerPopup = screen.getAllByRole('combobox')[0];
-      await user.type(manufacturerPopup, '{delete}');
+      // const manufacturerPopup = screen.getAllByRole('combobox')[0];
+      // await user.type(manufacturerPopup, '{delete}');
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
@@ -577,7 +578,7 @@ describe('Catalogue Items Dialog', () => {
       await user.click(saveButton);
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
-        manufacturer_id: '3',
+        manufacturer_id: '2',
       });
 
       expect(onClose).toHaveBeenCalled();
