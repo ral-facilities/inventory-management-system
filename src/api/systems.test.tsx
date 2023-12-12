@@ -267,7 +267,7 @@ describe('System api functions', () => {
       );
       expect(result.current.data).toEqual(
         moveToSystem.selectedSystems.map((system) => ({
-          message: `Successfully moved ${system.name} to Root`,
+          message: `Successfully moved to Root`,
           name: system.name,
           state: 'success',
         }))
@@ -299,7 +299,7 @@ describe('System api functions', () => {
       );
       expect(result.current.data).toEqual(
         moveToSystem.selectedSystems.map((system) => ({
-          message: `Successfully moved ${system.name} to New system name`,
+          message: `Successfully moved to New system name`,
           name: system.name,
           state: 'success',
         }))
@@ -343,8 +343,7 @@ describe('System api functions', () => {
                   state: 'error',
                 }
               : {
-                  message:
-                    'Successfully moved Smaller laser to New system name',
+                  message: 'Successfully moved to New system name',
                   name: system.name,
                   state: 'success',
                 }
@@ -399,7 +398,7 @@ describe('System api functions', () => {
       );
       expect(result.current.data).toEqual(
         copyToSystem.selectedSystems.map((system) => ({
-          message: `Successfully copied ${system.name} to Root`,
+          message: `Successfully copied to Root`,
           name: system.name,
           state: 'success',
         }))
@@ -432,7 +431,7 @@ describe('System api functions', () => {
       );
       expect(result.current.data).toEqual(
         copyToSystem.selectedSystems.map((system) => ({
-          message: `Successfully copied ${system.name} to New system name`,
+          message: `Successfully copied to New system name`,
           name: system.name,
           state: 'success',
         }))
@@ -472,8 +471,8 @@ describe('System api functions', () => {
       );
       expect(result.current.data).toEqual(
         copyToSystem.selectedSystems.map((system, index) => ({
-          message: `Successfully copied ${system.name} to Root`,
-          name: index === 0 ? 'System1_copy_1' : 'System2_copy_3',
+          message: `Successfully copied to Root`,
+          name: system.name,
           state: 'success',
         }))
       );
@@ -518,8 +517,7 @@ describe('System api functions', () => {
                   state: 'error',
                 }
               : {
-                  message:
-                    'Successfully copied Smaller laser to New system name',
+                  message: 'Successfully copied to New system name',
                   name: system.name,
                   state: 'success',
                 }
