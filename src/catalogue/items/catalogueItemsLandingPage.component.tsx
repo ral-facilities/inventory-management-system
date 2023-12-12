@@ -8,8 +8,6 @@ import {
   Link as MuiLink,
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -170,22 +168,6 @@ function CatalogueItemsLandingPage() {
                       <Typography color="text.secondary">
                         {catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}
                       </Typography>
-
-                      {/* <ListItem
-                        style={{
-                          justifyContent: 'flex-start',
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <ListItemText
-                          primary={'Obsolete'}
-                          secondary={
-                            catalogueItemIdData.is_obsolete ? 'Yes' : 'No'
-                          }
-                        />
-                      </ListItem> */}
                     </Grid>
                     <Grid
                       item
