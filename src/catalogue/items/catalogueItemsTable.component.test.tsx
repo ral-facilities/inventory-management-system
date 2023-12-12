@@ -68,7 +68,7 @@ describe('Catalogue Items Table', () => {
       'Cost to Rework (£)',
       'Days to Rework',
     ]);
-  }, 10000);
+  });
 
   it('renders table correctly (section 2 due to column virtualisation )', async () => {
     createView();

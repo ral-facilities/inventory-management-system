@@ -16,7 +16,6 @@ import userEvent from '@testing-library/user-event';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
-jest.setTimeout(10000); //multiple long running tests
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
   let user;
@@ -142,18 +141,6 @@ describe('Catalogue Items Dialog', () => {
         target: { value: values.sensorType },
       });
   };
-
-  // const modifyManufacturer = async (type: string) => {
-  //   const manufacturerPopup = screen.getAllByRole('combobox')[0];
-  //   await user.type(
-  //     manufacturerPopup,
-  //     type === 'create'
-  //       ? 'M{arrowdown}{enter}'
-  //       : 'Man{arrowdown}{arrowdown}{enter}'
-  //   );
-  //   const saveButton = screen.getByRole('button', { name: 'Save' });
-  //   await user.click(saveButton);
-  // };
 
   afterEach(() => {
     jest.clearAllMocks();
