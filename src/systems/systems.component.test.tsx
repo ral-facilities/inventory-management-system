@@ -160,6 +160,7 @@ describe('Systems', () => {
         screen.getByRole('button', { name: 'Move to' })
       ).toBeInTheDocument();
     });
+    expect(screen.getByRole('button', { name: 'Copy to' })).toBeInTheDocument();
 
     await user.click(giantLaserCheckbox);
     await user.click(pulseLaserCheckbox);
@@ -169,6 +170,9 @@ describe('Systems', () => {
         screen.queryByRole('button', { name: 'Move to' })
       ).not.toBeInTheDocument();
     });
+    expect(
+      screen.queryByRole('button', { name: 'Copy to' })
+    ).not.toBeInTheDocument();
   });
 
   it('can deselect all selected systems at once', async () => {
@@ -193,6 +197,7 @@ describe('Systems', () => {
         screen.getByRole('button', { name: 'Move to' })
       ).toBeInTheDocument();
     });
+    expect(screen.getByRole('button', { name: 'Copy to' })).toBeInTheDocument();
 
     await user.click(screen.queryByRole('button', { name: '2 selected' }));
 
@@ -201,6 +206,9 @@ describe('Systems', () => {
         screen.queryByRole('button', { name: 'Move to' })
       ).not.toBeInTheDocument();
     });
+    expect(
+      screen.queryByRole('button', { name: 'Copy to' })
+    ).not.toBeInTheDocument();
   });
 
   it('can open and close move dialog', async () => {
@@ -222,6 +230,37 @@ describe('Systems', () => {
     });
 
     await user.click(screen.getByRole('button', { name: 'Move to' }));
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open and close copy dialog', async () => {
+    createView('/systems');
+
+    await waitFor(() => {
+      expect(screen.getByText('Root systems')).toBeInTheDocument();
+    });
+
+    const giantLaserCheckbox = within(
+      screen.getByRole('button', { name: 'Giant laser' })
+    ).getByRole('checkbox');
+    await user.click(giantLaserCheckbox);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Copy to' })
+      ).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Copy to' }));
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();

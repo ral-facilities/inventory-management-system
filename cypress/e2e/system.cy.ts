@@ -374,4 +374,59 @@ describe('System', () => {
       );
     });
   });
+
+  it('copies systems', () => {
+    cy.visit('/systems');
+
+    cy.findByRole('button', { name: 'Pulse Laser' })
+      .findByRole('checkbox')
+      .click();
+    cy.findByRole('button', { name: 'Pico Laser' })
+      .findByRole('checkbox')
+      .click();
+
+    cy.findByRole('button', { name: 'Copy to' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('Giant laser row').click();
+        cy.findByRole('button', { name: 'Copy here' }).click();
+      });
+
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/systems',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).eq(2);
+      expect(JSON.stringify(await postRequests[0].json())).equal(
+        JSON.stringify({
+          parent_id: '65328f34a40ff5301575a4e3',
+          name: 'Pulse Laser',
+          description: 'Ullam fuga neque fugiat dolores laborum.',
+          location: "Studio 80s\nO'Sullivan trail\nVictoriaville\nNP1R 4QP",
+          owner: 'Antony Yates',
+          importance: 'high',
+          id: '656da8ef9cba7a76c6f81a5d',
+          code: 'pulse-laser',
+        })
+      );
+      expect(JSON.stringify(await postRequests[1].json())).equal(
+        JSON.stringify({
+          parent_id: '65328f34a40ff5301575a4e3',
+          name: 'Pico Laser',
+          description: 'Totam maxime est.',
+          location: 'Flat 90w\nWatson inlet\nNew Eric\nG05 6SZ',
+          owner: 'Dr Stacey Ward',
+          importance: 'low',
+          id: '656ef565ed0773f82e44bc6d',
+          code: 'pico-laser',
+        })
+      );
+    });
+  });
 });

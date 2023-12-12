@@ -2,6 +2,7 @@ import { NavigateNext } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
+import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 import {
   Box,
   Button,
@@ -66,7 +67,7 @@ const MoveSystemsButton = (props: {
   onChangeSelectedSystems: (selectedSystems: System[]) => void;
   parentSystemId: string | null;
 }) => {
-  const [moveSystemDialogOpen, setMoveSystemDialogOpen] =
+  const [moveSystemsDialogOpen, setMoveSystemsDialogOpen] =
     React.useState<boolean>(false);
 
   return (
@@ -75,16 +76,47 @@ const MoveSystemsButton = (props: {
         sx={{ mx: 1 }}
         variant="outlined"
         startIcon={<DriveFileMoveOutlinedIcon />}
-        onClick={() => setMoveSystemDialogOpen(true)}
+        onClick={() => setMoveSystemsDialogOpen(true)}
       >
         Move to
       </Button>
       <SystemDirectoryDialog
-        open={moveSystemDialogOpen}
-        onClose={() => setMoveSystemDialogOpen(false)}
+        open={moveSystemsDialogOpen}
+        onClose={() => setMoveSystemsDialogOpen(false)}
         selectedSystems={props.selectedSystems}
         onChangeSelectedSystems={props.onChangeSelectedSystems}
         parentSystemId={props.parentSystemId}
+        type="moveTo"
+      />
+    </>
+  );
+};
+
+const CopySystemsButton = (props: {
+  selectedSystems: System[];
+  onChangeSelectedSystems: (selectedSystems: System[]) => void;
+  parentSystemId: string | null;
+}) => {
+  const [copySystemsDialogOpen, setCopySystemsDialogOpen] =
+    React.useState<boolean>(false);
+
+  return (
+    <>
+      <Button
+        sx={{ mx: 1 }}
+        variant="outlined"
+        startIcon={<FolderCopyOutlinedIcon />}
+        onClick={() => setCopySystemsDialogOpen(true)}
+      >
+        Copy to
+      </Button>
+      <SystemDirectoryDialog
+        open={copySystemsDialogOpen}
+        onClose={() => setCopySystemsDialogOpen(false)}
+        selectedSystems={props.selectedSystems}
+        onChangeSelectedSystems={props.onChangeSelectedSystems}
+        parentSystemId={props.parentSystemId}
+        type="copyTo"
       />
     </>
   );
@@ -167,6 +199,11 @@ function Systems() {
           {selectedSystems.length > 0 && (
             <Box>
               <MoveSystemsButton
+                selectedSystems={selectedSystems}
+                onChangeSelectedSystems={setSelectedSystems}
+                parentSystemId={systemId}
+              />
+              <CopySystemsButton
                 selectedSystems={selectedSystems}
                 onChangeSelectedSystems={setSelectedSystems}
                 parentSystemId={systemId}
