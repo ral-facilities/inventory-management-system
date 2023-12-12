@@ -427,61 +427,146 @@ function CatalogueItemsLandingPage() {
               {manufacturer && (
                 <Grid item xs={12}>
                   <Collapse in={showManufacturer}>
-                    <Grid container spacing={1} sx={{ px: '192px' }}>
-                      <Grid item xs={12}>
-                        <Typography color="text.primary">Name</Typography>
-                        <Typography color="text.secondary">
-                          {manufacturer?.name}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        {manufacturer?.url && (
-                          <Grid item xs={12}>
-                            <Typography color="text.primary">URL</Typography>
-                            <Typography sx={{ margin: '8px' }} variant="body1">
-                              <MuiLink
-                                underline="hover"
-                                href={manufacturer.url}
+                    <Grid
+                      container
+                      spacing={1}
+                      style={{
+                        justifyContent: 'flex-start',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                    >
+                      <Grid
+                        item
+                        style={{
+                          justifyContent: 'flex-start',
+                          display: 'flex',
+                          flexDirection: 'row',
+                        }}
+                      >
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <Typography color="text.primary">Name</Typography>
+                          <Typography color="text.secondary">
+                            {manufacturer?.name}
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                          }}
+                        >
+                          {manufacturer?.url && (
+                            <Grid
+                              item
+                              xs={12}
+                              sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                              }}
+                            >
+                              <Typography color="text.primary">URL</Typography>
+                              <Typography
+                                sx={{ margin: '8px' }}
+                                variant="body1"
                               >
-                                {manufacturer.url}
-                              </MuiLink>
-                            </Typography>
-                          </Grid>
-                        )}
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Typography color="text.primary">
-                          Address Line
-                        </Typography>
-                        <Typography color="text.secondary">
-                          {manufacturer?.address.address_line}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Typography color="text.primary">Town</Typography>
-                        <Typography color="text.secondary">
-                          {manufacturer?.address.town}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Typography color="text.primary">County</Typography>
-                        <Typography color="text.secondary">
-                          {manufacturer?.address.county}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Typography color="text.primary">Country</Typography>
-                        <Typography color="text.secondary">
-                          {manufacturer?.address.country}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Typography color="text.primary">
-                          Post/Zip code
-                        </Typography>
-                        <Typography color="text.secondary">
-                          {manufacturer?.address.postcode}
-                        </Typography>
+                                <MuiLink
+                                  underline="hover"
+                                  href={manufacturer.url}
+                                >
+                                  {manufacturer.url}
+                                </MuiLink>
+                              </Typography>
+                            </Grid>
+                          )}
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <Typography color="text.primary">
+                            Address Line
+                          </Typography>
+                          <Typography color="text.secondary">
+                            {manufacturer?.address.address_line}
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <Typography color="text.primary">Town</Typography>
+                          <Typography color="text.secondary">
+                            {manufacturer?.address.town}
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <Typography color="text.primary">County</Typography>
+                          <Typography color="text.secondary">
+                            {manufacturer?.address.county}
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <Typography color="text.primary">Country</Typography>
+                          <Typography color="text.secondary">
+                            {manufacturer?.address.country}
+                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                          }}
+                        >
+                          <Typography color="text.primary">
+                            Post/Zip code
+                          </Typography>
+                          <Typography color="text.secondary">
+                            {manufacturer?.address.postcode}
+                          </Typography>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Collapse>

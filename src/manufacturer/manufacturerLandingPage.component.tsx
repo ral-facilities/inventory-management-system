@@ -61,7 +61,6 @@ function ManufacturerLandingPage() {
                   display: 'flex',
                   flexDirection: 'row',
                   alignItems: 'center',
-                  cursor: 'pointer',
                 }}
               >
                 <Typography variant="h6">URL:</Typography>
@@ -125,35 +124,75 @@ function ManufacturerLandingPage() {
                 style={{
                   justifyContent: 'flex-start',
                   display: 'flex',
-                  flexDirection: 'row',
+                  flexDirection: 'column',
                   alignItems: 'left',
                 }}
               >
-                <Grid item xs={12}>
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
                   <Typography color="text.primary">Address Line</Typography>
                   <Typography color="text.secondary">
                     {manufacturerData?.address.address_line}
                   </Typography>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
                   <Typography color="text.primary">Town</Typography>
                   <Typography color="text.secondary">
                     {manufacturerData?.address.town}
                   </Typography>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
                   <Typography color="text.primary">County</Typography>
                   <Typography color="text.secondary">
                     {manufacturerData?.address.county}
                   </Typography>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
                   <Typography color="text.primary">Country</Typography>
                   <Typography color="text.secondary">
                     {manufacturerData?.address.country}
                   </Typography>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid
+                  item
+                  xs={12}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
                   <Typography color="text.primary">Post/Zip code</Typography>
                   <Typography color="text.secondary">
                     {manufacturerData?.address.postcode}
