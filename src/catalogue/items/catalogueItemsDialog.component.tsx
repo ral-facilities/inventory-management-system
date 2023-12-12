@@ -227,13 +227,15 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
 
   const { data: manufacturerList } = useManufacturers();
-  const { data: selectedManufacturerReturned } = useManufacturer(
+  const { data: selectedCatalogueItemManufacturer } = useManufacturer(
     selectedCatalogueItem?.manufacturer_id
   );
   const [selectedManufacturer, setSelectedManufacturer] =
-    React.useState<Manufacturer | null>(selectedManufacturerReturned ?? null);
+    React.useState<Manufacturer | null>(null);
 
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue] = React.useState<string | null>(
+    selectedManufacturer?.name ?? null
+  );
 
   console.log(manufacturerList);
   console.log(selectedManufacturer);
@@ -780,26 +782,29 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               <Grid item xs={12} style={{ display: 'flex' }}>
                 <Grid item xs={11}>
                   <Autocomplete
-                    value={selectedManufacturer}
-                    inputValue={
-                      inputValue === ''
-                        ? selectedManufacturer?.name ?? ''
-                        : inputValue
+                    value={
+                      //logic means that current manufacturer renders in edit dialog, but behaves the same as add dialog (so can be changed/cleared)
+                      selectedCatalogueItemManufacturer &&
+                      selectedManufacturer === null &&
+                      inputValue !== ''
+                        ? selectedCatalogueItemManufacturer
+                        : selectedManufacturer
+                    }
+                    inputValue={inputValue ?? ''}
+                    onInputChange={(event, newInputValue) =>
+                      setInputValue(newInputValue)
                     }
                     onChange={(
                       event: any,
                       newManufacturer: Manufacturer | null
                     ) => {
                       setSelectedManufacturer(newManufacturer ?? null);
-                      //setInputValue(newManufacturer?.name ?? '');
+                      setInputValue(newManufacturer?.name ?? '');
                       handleCatalogueDetails(
                         'manufacturer_id',
                         newManufacturer?.id ?? null
                       );
                     }}
-                    onInputChange={(event, newInputValue) =>
-                      setInputValue(newInputValue)
-                    }
                     id="manufacturer-autocomplete"
                     options={manufacturerList ?? []}
                     size="small"
