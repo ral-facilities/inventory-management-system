@@ -1,10 +1,13 @@
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   Grid,
+  Tooltip,
 } from '@mui/material';
 import React from 'react';
 import {
@@ -121,13 +124,33 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
       <DialogTitle marginLeft={2}>
         <Grid container spacing={2}>
           <Grid item>
-            <>
-              {type === 'moveTo' ? 'Move ' : 'Copy '}
-              {selectedSystems.length > 1
-                ? `${selectedSystems.length} systems`
-                : '1 system'}{' '}
-              to a different system
-            </>
+            <Box
+              display="inline-flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <>
+                {type === 'moveTo' ? 'Move ' : 'Copy '}
+                {selectedSystems.length > 1
+                  ? `${selectedSystems.length} systems`
+                  : '1 system'}{' '}
+                to a different system
+              </>
+              {type === 'copyTo' && (
+                <Tooltip
+                  title={
+                    'Only the system details will be copied; no subsystems or items within the system will be included.'
+                  }
+                  placement="top"
+                  enterTouchDelay={0}
+                  arrow
+                  aria-label={'Copy Warning'}
+                  sx={{ mx: 2 }}
+                >
+                  <InfoOutlinedIcon />
+                </Tooltip>
+              )}
+            </Box>
           </Grid>
           <Grid item xs={12}>
             <Breadcrumbs

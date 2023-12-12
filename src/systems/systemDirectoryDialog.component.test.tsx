@@ -229,6 +229,31 @@ describe('SystemDirectoryDialog', () => {
       ).toBeInTheDocument();
     });
 
+    it('displays warning tooltip on hover', async () => {
+      createView();
+
+      const infoIcon = screen.getByLabelText('Copy Warning');
+      await user.hover(infoIcon);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'Only the system details will be copied; no subsystems or items within the system will be included.'
+          )
+        ).toBeInTheDocument();
+      });
+
+      await user.unhover(infoIcon);
+
+      await waitFor(() => {
+        expect(
+          screen.queryByText(
+            'Only the system details will be copied; no subsystems or items within the system will be included.'
+          )
+        ).not.toBeInTheDocument();
+      });
+    });
+
     it('can copy a selected system to the same parent system', async () => {
       props.selectedSystems = [SystemsJSON[0] as System];
 
