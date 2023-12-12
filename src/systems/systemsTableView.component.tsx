@@ -13,11 +13,17 @@ export interface SystemsTableViewProps {
   systemsDataLoading: boolean;
   onChangeParentId: (systemId: string | null) => void;
   selectedSystems: System[];
+  type: 'moveTo' | 'copyTo';
 }
 
 export const SystemsTableView = (props: SystemsTableViewProps) => {
-  const { systemsData, systemsDataLoading, onChangeParentId, selectedSystems } =
-    props;
+  const {
+    systemsData,
+    systemsDataLoading,
+    onChangeParentId,
+    selectedSystems,
+    type,
+  } = props;
 
   const selectedSystemIds: string[] = React.useMemo(
     () => selectedSystems.map((system) => system.id),
@@ -31,7 +37,8 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         header: 'Name',
         accessorKey: 'name',
         Cell: ({ renderedCellValue, row }) => {
-          const canPlaceHere = !selectedSystemIds.includes(row.original.id);
+          const canPlaceHere =
+            type === 'copyTo' || !selectedSystemIds.includes(row.original.id);
           return (
             <Typography
               sx={{
@@ -44,7 +51,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         },
       },
     ],
-    [selectedSystemIds]
+    [selectedSystemIds, type]
   );
   const table = useMaterialReactTable({
     columns: columns,
@@ -83,7 +90,8 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       variant: 'outlined',
     },
     muiTableBodyRowProps: ({ row }) => {
-      const canPlaceHere = !selectedSystemIds.includes(row.original.id);
+      const canPlaceHere =
+        type === 'copyTo' || !selectedSystemIds.includes(row.original.id);
       return {
         component: TableRow,
         onClick: () => canPlaceHere && onChangeParentId(row.original.id),

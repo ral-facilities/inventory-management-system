@@ -30,6 +30,7 @@ describe('SystemsTableView', () => {
       systemsDataLoading: false,
       onChangeParentId: mockOnChangeParentId,
       selectedSystems: [mockSystemsData[1], mockSystemsData[2]],
+      type: 'moveTo',
     };
 
     user = userEvent.setup();
@@ -75,7 +76,7 @@ describe('SystemsTableView', () => {
     expect(mockOnChangeParentId).toBeCalledWith(mockSystemsData[0].id);
   });
 
-  it('disables clicking of systems that are already selected', async () => {
+  it('disables clicking of systems that are already selected for moveTo', async () => {
     createView();
 
     await waitFor(() => {
@@ -87,10 +88,31 @@ describe('SystemsTableView', () => {
       const disabledSystemRow = screen.getByRole('row', {
         name: `${system.name} row`,
       });
-      await user.click(disabledSystemRow);
       expect(disabledSystemRow).toHaveStyle('cursor: not-allowed');
+      await user.click(disabledSystemRow);
     }
 
     expect(mockOnChangeParentId).not.toHaveBeenCalled();
+  });
+
+  it('does not disable clicking of systems that are already selected for copyTo', async () => {
+    props.type = 'copyTo';
+
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    });
+
+    expect(props.selectedSystems.length).toBe(2);
+    for (const system of props.selectedSystems) {
+      const systemRow = screen.getByRole('row', {
+        name: `${system.name} row`,
+      });
+
+      expect(systemRow).toHaveStyle('cursor: pointer');
+      await user.click(systemRow);
+      expect(mockOnChangeParentId).toHaveBeenCalledWith(system.id);
+    }
   });
 });

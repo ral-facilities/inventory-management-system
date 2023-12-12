@@ -1,6 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import {
   AddSystem,
+  CopyToSystem,
   EditSystem,
   MoveToSystem,
   System,
@@ -11,6 +12,7 @@ import SystemsJSON from '../mocks/Systems.json';
 import { hooksWrapperWithProviders } from '../setupTests';
 import {
   useAddSystem,
+  useCopyToSystem,
   useDeleteSystem,
   useEditSystem,
   useMoveToSystem,
@@ -232,7 +234,7 @@ describe('System api functions', () => {
     let moveToSystem: MoveToSystem;
 
     // Use patch spy for testing since response is not actual data in this case
-    // so cant test the underlying use of editSystem's otherwise
+    // so can't test the underlying use of editSystem otherwise
     let axiosPatchSpy;
 
     beforeEach(() => {
@@ -265,7 +267,7 @@ describe('System api functions', () => {
       );
       expect(result.current.data).toEqual(
         moveToSystem.selectedSystems.map((system) => ({
-          message: 'Successfully moved to Root',
+          message: `Successfully moved to Root`,
           name: system.name,
           state: 'success',
         }))
@@ -297,7 +299,7 @@ describe('System api functions', () => {
       );
       expect(result.current.data).toEqual(
         moveToSystem.selectedSystems.map((system) => ({
-          message: 'Successfully moved to New system name',
+          message: `Successfully moved to New system name`,
           name: system.name,
           state: 'success',
         }))
@@ -330,7 +332,6 @@ describe('System api functions', () => {
           parent_id: 'new_system_id',
         })
       );
-      console.log(result.current.data);
       expect(result.current.data).toEqual(
         moveToSystem.selectedSystems
           .map((system, index) =>
@@ -343,6 +344,180 @@ describe('System api functions', () => {
                 }
               : {
                   message: 'Successfully moved to New system name',
+                  name: system.name,
+                  state: 'success',
+                }
+          )
+          // Exception takes longer to resolve so it gets added last
+          .reverse()
+      );
+    });
+  });
+
+  describe('useCopyToSystem', () => {
+    const mockSystems: System[] = [
+      SystemsJSON[0] as System,
+      SystemsJSON[1] as System,
+    ];
+
+    let copyToSystem: CopyToSystem;
+
+    // Use post spy for testing since response is not actual data in this case
+    // so can't test the underlying use of addSystem otherwise
+    let axiosPostSpy;
+
+    beforeEach(() => {
+      copyToSystem = {
+        selectedSystems: mockSystems,
+        targetSystem: null,
+        existingSystemCodes: [],
+      };
+
+      axiosPostSpy = jest.spyOn(axios, 'post');
+    });
+
+    it('sends requests to copy multiple systems to root and returns a successful response for each', async () => {
+      copyToSystem.targetSystem = null;
+
+      const { result } = renderHook(() => useCopyToSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      result.current.mutate(copyToSystem);
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      copyToSystem.selectedSystems.map((system) =>
+        expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/systems`, {
+          ...system,
+          parent_id: null,
+        })
+      );
+      expect(result.current.data).toEqual(
+        copyToSystem.selectedSystems.map((system) => ({
+          message: `Successfully copied to Root`,
+          name: system.name,
+          state: 'success',
+        }))
+      );
+    });
+
+    it('sends requests to copy multiple systems to another system and returns a successful response for each', async () => {
+      copyToSystem.targetSystem = {
+        ...(SystemsJSON[0] as System),
+        name: 'New system name',
+        id: 'new_system_id',
+      };
+
+      const { result } = renderHook(() => useCopyToSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      result.current.mutate(copyToSystem);
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      copyToSystem.selectedSystems.map((system) =>
+        expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/systems`, {
+          ...system,
+          parent_id: 'new_system_id',
+        })
+      );
+      expect(result.current.data).toEqual(
+        copyToSystem.selectedSystems.map((system) => ({
+          message: `Successfully copied to New system name`,
+          name: system.name,
+          state: 'success',
+        }))
+      );
+    });
+
+    it('sends requests to copy multiple systems to root while avoiding duplicate codes and returns a successful response for each', async () => {
+      copyToSystem.targetSystem = null;
+      copyToSystem.selectedSystems = [
+        { ...(SystemsJSON[0] as System), name: 'System1', code: 'system1' },
+        { ...(SystemsJSON[1] as System), name: 'System2', code: 'system2' },
+      ];
+      copyToSystem.existingSystemCodes = [
+        'system1',
+        'system2',
+        'system2_copy_1',
+        'system2_copy_2',
+      ];
+
+      const { result } = renderHook(() => useCopyToSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      result.current.mutate(copyToSystem);
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      copyToSystem.selectedSystems.map((system, index) =>
+        expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/systems`, {
+          ...system,
+          parent_id: null,
+          name: index === 0 ? 'System1_copy_1' : 'System2_copy_3',
+        })
+      );
+      expect(result.current.data).toEqual(
+        copyToSystem.selectedSystems.map((system, index) => ({
+          message: `Successfully copied to Root`,
+          name: system.name,
+          state: 'success',
+        }))
+      );
+    });
+
+    it('handles a failed request to copy a system correctly', async () => {
+      copyToSystem.targetSystem = {
+        ...(SystemsJSON[0] as System),
+        name: 'New system name',
+        id: 'new_system_id',
+      };
+
+      // Fail just the 1st system (In reality shouldn't get a 409 if the correct list
+      // of existing codes are given - just using as an error test here)
+      copyToSystem.selectedSystems[0].name = 'Error 409';
+
+      const { result } = renderHook(() => useCopyToSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      result.current.mutate(copyToSystem);
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      copyToSystem.selectedSystems.map((system) =>
+        expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/systems`, {
+          ...system,
+          parent_id: 'new_system_id',
+        })
+      );
+      expect(result.current.data).toEqual(
+        copyToSystem.selectedSystems
+          .map((system, index) =>
+            index === 0
+              ? {
+                  message:
+                    'A System with the same name already exists within the same parent System',
+                  name: system.name,
+                  state: 'error',
+                }
+              : {
+                  message: 'Successfully copied to New system name',
                   name: system.name,
                   state: 'success',
                 }
