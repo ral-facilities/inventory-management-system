@@ -227,9 +227,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
 
   const { data: manufacturerList } = useManufacturers();
-  const { data: selectedCatalogueItemManufacturer } = useManufacturer(
-    selectedCatalogueItem?.manufacturer_id
-  );
+  const selectedCatalogueItemManufacturer =
+    manufacturerList?.find(
+      (manufactuerer) =>
+        manufactuerer.id === selectedCatalogueItem?.manufacturer_id
+    ) || null;
   const [selectedManufacturer, setSelectedManufacturer] =
     React.useState<Manufacturer | null>(null);
 
