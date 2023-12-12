@@ -264,7 +264,7 @@ export const handlers = [
     if (
       body.name === 'Error 500' ||
       body.obsolete_reason === 'Error 500' ||
-      body.catalogue_category_id === 'error'
+      body.catalogue_category_id === 'Error 500'
     )
       return res(ctx.status(500), ctx.json(''));
 
