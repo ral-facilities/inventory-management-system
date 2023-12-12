@@ -380,7 +380,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     enableColumnOrdering: dense ? false : true,
     enableFacetedValues: true,
-    enableColumnResizing: true,
+    enableColumnResizing: dense ? false : true,
     enableRowActions: dense ? false : true,
     enableStickyHeader: true,
     enableDensityToggle: false,
