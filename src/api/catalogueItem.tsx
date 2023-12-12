@@ -201,65 +201,47 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
   MoveToCatalogueItem
 > => {
   const queryClient = useQueryClient();
-  return useMutation(async (MoveToCatalogueItem: MoveToCatalogueItem) => {
+  return useMutation(async (moveToCatalogueItem: MoveToCatalogueItem) => {
     const transferStates: TransferState[] = [];
-    let hasSuccessfulEdit = false;
+    let successfulIds: string[] = [];
 
-    const targetLocationInfo = {
-      name: MoveToCatalogueItem.targetLocationCatalogueCategory?.name ?? 'Root',
-      id: MoveToCatalogueItem.targetLocationCatalogueCategory?.id ?? null,
-    };
-
-    const promises = MoveToCatalogueItem.catalogueItems.map(
+    const promises = moveToCatalogueItem.selectedItems.map(
       async (item: EditCatalogueItem, index) => {
-        const { name, ...itemWithoutName } = item;
-
-        if (
-          MoveToCatalogueItem.selectedItems[index].catalogue_category_id ===
-          item.catalogue_category_id
-        ) {
-          const errorTransferState: TransferState = {
-            name: item.name ?? '',
-            message:
-              'The destination cannot be the same as the catalogue item itself',
-            state: 'error',
-          };
-          transferStates.push(errorTransferState);
-
-          return;
-        }
-
-        return editCatalogueItem(itemWithoutName)
+        return editCatalogueItem({
+          id: item.id,
+          catalogue_category_id:
+            moveToCatalogueItem.targetCatalogueCategory?.id,
+        })
           .then((result) => {
-            const successTransferState: TransferState = {
+            transferStates.push({
               name: result.name ?? '',
-              message: `Successfully moved to ${targetLocationInfo.name}`,
+              message: `Successfully moved to ${
+                moveToCatalogueItem.targetCatalogueCategory?.name || 'Root'
+              }`,
               state: 'success',
-            };
-            transferStates.push(successTransferState);
-            hasSuccessfulEdit = true;
+            });
+            successfulIds.push(item.id);
           })
           .catch((error) => {
             const response = error.response?.data as ErrorParsing;
 
-            const selectedItem = MoveToCatalogueItem.selectedItems.find(
-              (selectedItem) => selectedItem.id === item.id
-            );
-            const errorTransferState: TransferState = {
-              name: selectedItem?.name ?? '',
-              message: response.detail ?? '',
+            transferStates.push({
+              name: moveToCatalogueItem.selectedItems[index].name,
+              message: response.detail,
               state: 'error',
-            };
-            transferStates.push(errorTransferState);
+            });
           });
       }
     );
 
     await Promise.all(promises);
 
-    if (hasSuccessfulEdit) {
+    if (successfulIds.length > 0) {
       queryClient.invalidateQueries({ queryKey: ['CatalogueItems'] });
       queryClient.invalidateQueries({ queryKey: ['CatalogueBreadcrumbs'] });
+      successfulIds.map((id: string) =>
+        queryClient.invalidateQueries({ queryKey: ['CatalogueItem', id] })
+      );
     }
 
     return transferStates;

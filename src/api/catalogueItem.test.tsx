@@ -195,18 +195,6 @@ describe('catalogue items api functions', () => {
 
     beforeEach(() => {
       props = {
-        catalogueItems: [
-          {
-            id: '657305e51e468454e97b638b',
-            catalogue_category_id: '657305bc1e468454e97b638a',
-            name: 'test',
-          },
-          {
-            id: '657324df1e468454e97b638e',
-            catalogue_category_id: '657305bc1e468454e97b638a',
-            name: 'test_copy1',
-          },
-        ],
         selectedItems: [
           {
             catalogue_category_id: '657305a01e468454e97b6389',
@@ -265,7 +253,7 @@ describe('catalogue items api functions', () => {
             id: '657324df1e468454e97b638e',
           },
         ],
-        targetLocationCatalogueCategory: {
+        targetCatalogueCategory: {
           name: 'RF Lenses',
           is_leaf: true,
           parent_id: '655ca56c1c251a2a828ca906',
@@ -282,7 +270,11 @@ describe('catalogue items api functions', () => {
         },
       };
     });
-    it('sends requests to move a single or multiple catalogue items and returns successful response', async () => {
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+    it('sends requests to move multiple catalogue items and returns successful response', async () => {
       const { result } = renderHook(() => useMoveToCatalogueItem(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -307,49 +299,11 @@ describe('catalogue items api functions', () => {
     });
 
     it('sends requests to move a single catalogue item and returns unsuccessful response as the catalogue_category_id has not changed', async () => {
-      props.catalogueItems = [
-        {
-          id: '657305e51e468454e97b638b',
-          catalogue_category_id: '657305a01e468454e97b6389',
-          name: 'test',
-        },
-        {
-          id: '657324df1e468454e97b638e',
-          catalogue_category_id: 'error',
-          name: 'Error 500',
-        },
-      ];
-      props.selectedItems = [
-        ...props.selectedItems,
-        {
-          catalogue_category_id: '657305a01e468454e9d7b6389',
-          manufacturer: {
-            name: 'test',
-            url: 'https://exampple.com/',
-            address: 'test',
-          },
-          name: 'Error 500',
-          description: null,
-          cost_gbp: 20,
-          cost_to_rework_gbp: null,
-          days_to_replace: 2,
-          days_to_rework: null,
-          drawing_number: null,
-          drawing_link: null,
-          item_model_number: null,
-          is_obsolete: false,
-          obsolete_reason: null,
-          obsolete_replacement_catalogue_item_id: null,
-          properties: [
-            {
-              name: 'center wavelength',
-              value: 10,
-              unit: 'nm',
-            },
-          ],
-          id: '657324df1e468454e97hb638e',
-        },
-      ];
+      props.targetCatalogueCategory = {
+        ...props.targetCatalogueCategory,
+        id: 'Error 500',
+      };
+
       const { result } = renderHook(() => useMoveToCatalogueItem(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -360,13 +314,8 @@ describe('catalogue items api functions', () => {
         expect(result.current.isSuccess).toBeTruthy();
       });
       expect(result.current.data).toEqual([
-        {
-          message:
-            'The destination cannot be the same as the catalogue item itself',
-          name: 'test',
-          state: 'error',
-        },
-        { message: '', name: 'test_copy1', state: 'error' },
+        { message: undefined, name: 'test', state: 'error' },
+        { message: undefined, name: 'test_copy1', state: 'error' },
       ]);
     });
   });

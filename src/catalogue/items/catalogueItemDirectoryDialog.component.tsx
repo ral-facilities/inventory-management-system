@@ -1,3 +1,4 @@
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
   Box,
   Button,
@@ -9,24 +10,19 @@ import {
   Grid,
   Tooltip,
 } from '@mui/material';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
-import {
-  CatalogueCategory,
-  CatalogueItem,
-  EditCatalogueItem,
-} from '../../app.types';
-import Breadcrumbs from '../../view/breadcrumbs.component';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
   useCatalogueCategoryById,
 } from '../../api/catalogueCategory';
-import handleTransferState from '../../handleTransferState';
-import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';
-import { MRT_RowSelectionState } from 'material-react-table';
-import CatalogueItemsTable from './catalogueItemsTable.component';
 import { useMoveToCatalogueItem } from '../../api/catalogueItem';
+import { CatalogueCategory, CatalogueItem } from '../../app.types';
+import handleTransferState from '../../handleTransferState';
+import Breadcrumbs from '../../view/breadcrumbs.component';
+import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';
+import CatalogueItemsTable from './catalogueItemsTable.component';
 export interface CatalogueItemDirectoryDialogProps {
   open: boolean;
   onClose: () => void;
@@ -66,26 +62,22 @@ const CatalogueItemDirectoryDialog = (
     setErrorMessage('');
   }, [onChangeCatalogueCurrDirId, onChangeSelectedItems, onClose]);
 
+  // reset error message when catalogue catagory id changes
+  React.useEffect(() => {
+    setErrorMessage('');
+  }, [catalogueCurrDirId]);
   const { mutateAsync: moveToCatalogueItem } = useMoveToCatalogueItem();
 
-  const { data: targetLocationCatalogueCategory } = useCatalogueCategoryById(
+  const { data: targetCatalogueCategory } = useCatalogueCategoryById(
     catalogueCurrDirId ?? undefined
   );
 
   const [errorMessage, setErrorMessage] = React.useState<string>('');
 
   const handleMoveToCatalogueItem = React.useCallback(() => {
-    const currId = catalogueCurrDirId === '' ? null : catalogueCurrDirId;
-
-    const catalogueItem: EditCatalogueItem[] = selectedItems.map((item) => ({
-      id: item.id,
-      catalogue_category_id: currId ?? '',
-      name: item.name,
-    }));
-
     if (
       JSON.stringify(parentInfo.catalogue_item_properties) !==
-      JSON.stringify(targetLocationCatalogueCategory?.catalogue_item_properties)
+      JSON.stringify(targetCatalogueCategory?.catalogue_item_properties)
     ) {
       setErrorMessage(
         'The destination catalogue item properties must precisely match the current destination. Ensure identical attributes, order, and formatting, with no spacing variations.'
@@ -94,20 +86,18 @@ const CatalogueItemDirectoryDialog = (
     }
 
     moveToCatalogueItem({
-      catalogueItems: catalogueItem,
       selectedItems: selectedItems,
-      targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? null,
+      targetCatalogueCategory: targetCatalogueCategory ?? null,
     }).then((response) => {
       handleTransferState(response);
       handleClose();
     });
   }, [
-    catalogueCurrDirId,
     handleClose,
     moveToCatalogueItem,
     parentInfo,
     selectedItems,
-    targetLocationCatalogueCategory,
+    targetCatalogueCategory,
   ]);
 
   const onChangeNode = (newId: string): void => {
@@ -121,7 +111,7 @@ const CatalogueItemDirectoryDialog = (
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={handleClose}
       maxWidth="lg"
       PaperProps={{ sx: { height: '692px' } }}
       fullWidth
@@ -165,9 +155,9 @@ const CatalogueItemDirectoryDialog = (
         </Grid>
       </DialogTitle>
       <DialogContent>
-        {targetLocationCatalogueCategory?.is_leaf ? (
+        {targetCatalogueCategory?.is_leaf ? (
           <CatalogueItemsTable
-            parentInfo={targetLocationCatalogueCategory}
+            parentInfo={targetCatalogueCategory}
             dense={true}
             isItemSelectable={(item: CatalogueItem) => false}
           />
@@ -185,7 +175,7 @@ const CatalogueItemDirectoryDialog = (
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           disabled={
-            (targetLocationCatalogueCategory?.is_leaf ?? false) &&
+            (targetCatalogueCategory?.is_leaf ?? false) &&
             catalogueCurrDirId !== parentInfo.id
               ? false
               : true

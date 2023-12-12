@@ -138,9 +138,8 @@ export interface EditCatalogueItem extends Partial<AddCatalogueItem> {
 }
 
 export interface MoveToCatalogueItem {
-  catalogueItems: EditCatalogueItem[];
   selectedItems: CatalogueItem[];
-  targetLocationCatalogueCategory: CatalogueCategory | null;
+  targetCatalogueCategory: CatalogueCategory | null;
 }
 export interface ErrorParsing {
   detail: string;
