@@ -205,3 +205,12 @@ export interface MoveToSystem {
   // Null if root
   targetSystem: System | null;
 }
+
+export interface CopyToSystem {
+  selectedSystems: System[];
+  // Null if root
+  targetSystem: System | null;
+  // Existing known system codes at the destination
+  // (for appending to the names to avoid duplication)
+  existingSystemCodes: String[];
+}
