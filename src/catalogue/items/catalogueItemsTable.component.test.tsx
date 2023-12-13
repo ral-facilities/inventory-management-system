@@ -373,6 +373,31 @@ describe('Catalogue Items Table', () => {
     });
   });
 
+  it('opens copy to dialog and can close it again', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    const rowToggleSelect = screen.getAllByLabelText('Toggle select row');
+    await user.click(rowToggleSelect[1]);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Copy to' })
+      ).toBeInTheDocument();
+    });
+    const copyToButton = screen.getByRole('button', { name: 'Copy to' });
+
+    await user.click(copyToButton);
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('navigates to the manufacturer url', async () => {
     createView();
     await waitFor(() => {

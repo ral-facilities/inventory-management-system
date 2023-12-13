@@ -17,7 +17,10 @@ import {
   useCatalogueCategory,
   useCatalogueCategoryById,
 } from '../../api/catalogueCategory';
-import { useMoveToCatalogueItem } from '../../api/catalogueItem';
+import {
+  useCopyToCatalogueItem,
+  useMoveToCatalogueItem,
+} from '../../api/catalogueItem';
 import { CatalogueCategory, CatalogueItem } from '../../app.types';
 import handleTransferState from '../../handleTransferState';
 import Breadcrumbs from '../../view/breadcrumbs.component';
@@ -66,7 +69,9 @@ const CatalogueItemDirectoryDialog = (
   React.useEffect(() => {
     setErrorMessage('');
   }, [catalogueCurrDirId]);
+
   const { mutateAsync: moveToCatalogueItem } = useMoveToCatalogueItem();
+  const { mutateAsync: copyToCatalogueItem } = useCopyToCatalogueItem();
 
   const { data: targetCatalogueCategory } = useCatalogueCategoryById(
     catalogueCurrDirId ?? undefined
@@ -86,7 +91,7 @@ const CatalogueItemDirectoryDialog = (
     }
 
     moveToCatalogueItem({
-      selectedItems: selectedItems,
+      selectedCatalogueItems: selectedItems,
       targetCatalogueCategory: targetCatalogueCategory ?? null,
     }).then((response) => {
       handleTransferState(response);
@@ -96,6 +101,32 @@ const CatalogueItemDirectoryDialog = (
     handleClose,
     moveToCatalogueItem,
     parentInfo,
+    selectedItems,
+    targetCatalogueCategory,
+  ]);
+
+  const handleCopyToCatalogueItem = React.useCallback(() => {
+    if (
+      JSON.stringify(parentInfo.catalogue_item_properties) !==
+      JSON.stringify(targetCatalogueCategory?.catalogue_item_properties)
+    ) {
+      setErrorMessage(
+        'The destination catalogue item properties must precisely match the current destination. Ensure identical attributes, order, and formatting, with no spacing variations.'
+      );
+      return;
+    }
+
+    copyToCatalogueItem({
+      selectedCatalogueItems: selectedItems,
+      targetCatalogueCategory: targetCatalogueCategory ?? null,
+    }).then((response) => {
+      handleTransferState(response);
+      handleClose();
+    });
+  }, [
+    copyToCatalogueItem,
+    handleClose,
+    parentInfo.catalogue_item_properties,
     selectedItems,
     targetCatalogueCategory,
   ]);
@@ -175,12 +206,18 @@ const CatalogueItemDirectoryDialog = (
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           disabled={
-            (targetCatalogueCategory?.is_leaf ?? false) &&
-            catalogueCurrDirId !== parentInfo.id
-              ? false
-              : true
+            requestType === 'moveTo'
+              ? !(
+                  (targetCatalogueCategory?.is_leaf ?? false) &&
+                  catalogueCurrDirId !== parentInfo.id
+                )
+              : !(targetCatalogueCategory?.is_leaf ?? false)
           }
-          onClick={handleMoveToCatalogueItem}
+          onClick={
+            requestType === 'moveTo'
+              ? handleMoveToCatalogueItem
+              : handleCopyToCatalogueItem
+          }
         >
           {requestType === 'moveTo' ? 'Move' : 'Copy'} here
         </Button>

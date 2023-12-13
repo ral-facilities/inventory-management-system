@@ -186,9 +186,13 @@ export const handlers = [
   rest.post('/v1/catalogue-items/', async (req, res, ctx) => {
     const body = (await req.json()) as CatalogueItem;
 
-    if (body.name === 'Error 500') {
+    if (
+      body.name === 'Error 500' ||
+      body.catalogue_category_id === 'Error 500'
+    ) {
       return res(ctx.status(500), ctx.json(''));
     }
+
     return res(
       ctx.status(200),
       ctx.json({

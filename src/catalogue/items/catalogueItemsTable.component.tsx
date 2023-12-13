@@ -4,6 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
+import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 import ClearIcon from '@mui/icons-material/Clear';
 import AddIcon from '@mui/icons-material/Add';
 import {
@@ -58,7 +59,7 @@ function generateUniqueName(
   let copyIndex = 1;
 
   while (existingNames.includes(newName)) {
-    newName = `${originalName}_copy${copyIndex}`;
+    newName = `${originalName}_copy_${copyIndex}`;
     copyIndex++;
   }
 
@@ -107,6 +108,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   >(undefined);
 
   const [moveToItemDialogOpen, setMoveToItemDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [copyToItemDialogOpen, setCopyToItemDialogOpen] =
     React.useState<boolean>(false);
 
   const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
@@ -500,17 +504,30 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           Add Catalogue Item
         </Button>
         {Object.keys(rowSelection).length > 0 && (
-          <Button
-            sx={{ mx: 0.5 }}
-            variant="outlined"
-            startIcon={<DriveFileMoveOutlinedIcon />}
-            onClick={() => {
-              setCatalogueCurrDirId(parentInfo.parent_id);
-              setMoveToItemDialogOpen(true);
-            }}
-          >
-            Move to
-          </Button>
+          <>
+            <Button
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              startIcon={<DriveFileMoveOutlinedIcon />}
+              onClick={() => {
+                setCatalogueCurrDirId(parentInfo.parent_id);
+                setMoveToItemDialogOpen(true);
+              }}
+            >
+              Move to
+            </Button>
+            <Button
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              startIcon={<FolderCopyOutlinedIcon />}
+              onClick={() => {
+                setCatalogueCurrDirId(parentInfo.parent_id);
+                setCopyToItemDialogOpen(true);
+              }}
+            >
+              Copy to
+            </Button>
+          </>
         )}
         <Button
           startIcon={<ClearIcon />}
@@ -629,6 +646,20 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             catalogueCurrDirId={catalogueCurrDirId}
             onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
             requestType={'moveTo'}
+            parentInfo={parentInfo}
+          />
+          <CatalogueItemDirectoryDialog
+            open={copyToItemDialogOpen}
+            onClose={() => setCopyToItemDialogOpen(false)}
+            selectedItems={
+              data?.filter((catalogueItem) =>
+                Object.keys(rowSelection).includes(catalogueItem.id)
+              ) ?? []
+            }
+            onChangeSelectedItems={setRowSelection}
+            catalogueCurrDirId={catalogueCurrDirId}
+            onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
+            requestType={'copyTo'}
             parentInfo={parentInfo}
           />
         </>

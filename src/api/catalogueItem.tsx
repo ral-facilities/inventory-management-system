@@ -11,8 +11,8 @@ import {
   TransferState,
   CatalogueItem,
   EditCatalogueItem,
-  MoveToCatalogueItem,
   ErrorParsing,
+  TransferToCatalogueItem,
 } from '../app.types';
 import { settings } from '../settings';
 
@@ -198,17 +198,17 @@ export const useEditCatalogueItem = (): UseMutationResult<
 export const useMoveToCatalogueItem = (): UseMutationResult<
   TransferState[],
   AxiosError,
-  MoveToCatalogueItem
+  TransferToCatalogueItem
 > => {
   const queryClient = useQueryClient();
-  return useMutation(async (moveToCatalogueItem: MoveToCatalogueItem) => {
+  return useMutation(async (moveToCatalogueItem: TransferToCatalogueItem) => {
     const transferStates: TransferState[] = [];
     let successfulIds: string[] = [];
 
-    const promises = moveToCatalogueItem.selectedItems.map(
-      async (item: EditCatalogueItem, index) => {
+    const promises = moveToCatalogueItem.selectedCatalogueItems.map(
+      async (catalogueItem: EditCatalogueItem, index) => {
         return editCatalogueItem({
-          id: item.id,
+          id: catalogueItem.id,
           catalogue_category_id:
             moveToCatalogueItem.targetCatalogueCategory?.id,
         })
@@ -220,13 +220,13 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
               }`,
               state: 'success',
             });
-            successfulIds.push(item.id);
+            successfulIds.push(catalogueItem.id);
           })
           .catch((error) => {
             const response = error.response?.data as ErrorParsing;
 
             transferStates.push({
-              name: moveToCatalogueItem.selectedItems[index].name,
+              name: moveToCatalogueItem.selectedCatalogueItems[index].name,
               message: response.detail,
               state: 'error',
             });
@@ -243,6 +243,70 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
         queryClient.invalidateQueries({ queryKey: ['CatalogueItem', id] })
       );
     }
+
+    return transferStates;
+  });
+};
+
+export const useCopyToCatalogueItem = (): UseMutationResult<
+  TransferState[],
+  AxiosError,
+  TransferToCatalogueItem
+> => {
+  const queryClient = useQueryClient();
+
+  const successfulIds: string[] = [];
+
+  return useMutation(async (copyToCatalogueItem: TransferToCatalogueItem) => {
+    const transferStates: TransferState[] = [];
+
+    const promises = copyToCatalogueItem.selectedCatalogueItems.map(
+      async (catalogueItem: CatalogueItem) => {
+        // Information to post (backend will just ignore the extra here - only id and code)
+        // Also use Object.assign to copy the data otherwise will modify in place causing issues
+        // in tests
+        const catalogueItemAdd: AddCatalogueItem = Object.assign(
+          {},
+          catalogueItem
+        ) as AddCatalogueItem;
+
+        // Assing new parent
+        catalogueItemAdd.catalogue_category_id =
+          copyToCatalogueItem.targetCatalogueCategory?.id ?? '';
+
+        return addCatalogueItem(catalogueItemAdd)
+          .then((result: CatalogueItem) => {
+            const targetSystemName =
+              copyToCatalogueItem.targetCatalogueCategory?.name || 'Root';
+            transferStates.push({
+              name: catalogueItem.name,
+              message: `Successfully copied to ${targetSystemName}`,
+              state: 'success',
+            });
+
+            successfulIds.push(result.id);
+          })
+          .catch((error) => {
+            const response = error.response?.data as ErrorParsing;
+
+            transferStates.push({
+              name: catalogueItem.name,
+              message: response.detail,
+              state: 'error',
+            });
+          });
+      }
+    );
+
+    await Promise.all(promises);
+
+    if (successfulIds.length > 0)
+      queryClient.invalidateQueries({
+        queryKey: [
+          'CatalogueItems',
+          copyToCatalogueItem.targetCatalogueCategory?.id || 'null',
+        ],
+      });
 
     return transferStates;
   });

@@ -137,10 +137,13 @@ export interface EditCatalogueItem extends Partial<AddCatalogueItem> {
   id: string;
 }
 
-export interface MoveToCatalogueItem {
-  selectedItems: CatalogueItem[];
+// Used for the move to and copy to
+export interface TransferToCatalogueItem {
+  selectedCatalogueItems: CatalogueItem[];
+  // Null if root
   targetCatalogueCategory: CatalogueCategory | null;
 }
+
 export interface ErrorParsing {
   detail: string;
 }
