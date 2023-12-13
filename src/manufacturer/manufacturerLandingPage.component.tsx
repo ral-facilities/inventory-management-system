@@ -53,151 +53,57 @@ function ManufacturerLandingPage() {
                 {manufacturerData.name}
               </Typography>
             </Grid>
-            <Grid container spacing={1} sx={{ px: '192px' }}>
-              <Grid
-                item
-                xs={12}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <Typography variant="h6">URL:</Typography>
+            <Grid
+              container
+              spacing={1}
+              sx={{ px: '192px' }}
+              alignContent={'center'}
+            >
+              <Grid item xs={12} my={2}>
+                <Typography textAlign={'center'} variant="h6">
+                  URL:
+                </Typography>
               </Grid>
-              <Grid
-                item
-                xs={12}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
+              <Grid item xs={12}>
                 {manufacturerData.url && (
-                  <Typography sx={{ margin: '8px' }} variant="body1">
+                  <Typography
+                    textAlign={'center'}
+                    sx={{ mx: '8px' }}
+                    variant="body1"
+                  >
                     <MuiLink underline="hover" href={manufacturerData.url}>
                       {manufacturerData.url}
                     </MuiLink>
                   </Typography>
                 )}
               </Grid>
-              <Grid
-                item
-                xs={12}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
+              <Grid item xs={12} my={2}>
                 <Typography variant="h6">Telephone number:</Typography>
               </Grid>
-              <Grid
-                item
-                xs={12}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <Typography sx={{ margin: '8px' }} variant="body1">
+              <Grid item xs={12}>
+                <Typography sx={{ mx: '8px' }} variant="body1">
                   {manufacturerData.telephone}
                 </Typography>
               </Grid>
-              <Grid
-                item
-                xs={12}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}
-              >
-                <Typography variant="h6">Address</Typography>
+              <Grid item xs={12} my={2}>
+                <Typography variant="h6">Address:</Typography>
               </Grid>
-
-              <Grid
-                container
-                spacing={1}
-                style={{
-                  justifyContent: 'flex-start',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'left',
-                }}
-              >
-                <Grid
-                  item
-                  xs={12}
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Typography color="text.primary">Address Line</Typography>
-                  <Typography color="text.secondary">
-                    {manufacturerData?.address.address_line}
-                  </Typography>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Typography color="text.primary">Town</Typography>
-                  <Typography color="text.secondary">
-                    {manufacturerData?.address.town}
-                  </Typography>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Typography color="text.primary">County</Typography>
-                  <Typography color="text.secondary">
-                    {manufacturerData?.address.county}
-                  </Typography>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Typography color="text.primary">Country</Typography>
-                  <Typography color="text.secondary">
-                    {manufacturerData?.address.country}
-                  </Typography>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Typography color="text.primary">Post/Zip code</Typography>
-                  <Typography color="text.secondary">
-                    {manufacturerData?.address.postcode}
-                  </Typography>
-                </Grid>
+              <Grid item xs={12}>
+                <Typography align="center" sx={{ mx: '8px' }}>
+                  {manufacturerData.address.address_line}
+                </Typography>
+                <Typography align="center" sx={{ mx: '8px' }}>
+                  {manufacturerData.address.town}
+                </Typography>
+                <Typography align="center" sx={{ mx: '8px' }}>
+                  {manufacturerData.address.county}
+                </Typography>
+                <Typography align="center" sx={{ mx: '8px' }}>
+                  {manufacturerData.address.postcode}
+                </Typography>
+                <Typography align="center" sx={{ mx: '8px' }}>
+                  {manufacturerData.address.country}
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
