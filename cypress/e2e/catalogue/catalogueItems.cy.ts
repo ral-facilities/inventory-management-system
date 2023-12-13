@@ -577,7 +577,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
   });
 
-  it.only('can copy multiple catalogue items', () => {
+  it('can copy multiple catalogue items', () => {
     cy.visit('/catalogue/5');
 
     cy.findAllByLabelText('Toggle select row').first().click();
@@ -654,7 +654,7 @@ describe('Catalogue Items', () => {
     });
   });
 
-  it.only('errors when copying multiple catalogue items to a catalogue category with different catalogue item properties ', () => {
+  it('errors when copying multiple catalogue items to a catalogue category with different catalogue item properties ', () => {
     cy.visit('/catalogue/5');
 
     cy.findAllByLabelText('Toggle select row').first().click();
