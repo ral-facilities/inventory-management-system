@@ -576,4 +576,102 @@ describe('Catalogue Items', () => {
     cy.findByText('Energy Meters').click();
     cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
   });
+
+  it.only('can copy multiple catalogue items', () => {
+    cy.visit('/catalogue/5');
+
+    cy.findAllByLabelText('Toggle select row').first().click();
+    cy.findAllByLabelText('Toggle select row').eq(2).click();
+
+    cy.findByRole('button', { name: 'Copy to' }).click();
+
+    cy.findByRole('button', { name: 'Copy here' }).should('be.disabled');
+
+    cy.findByText('Energy Meters V2').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Copy here' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-items',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).equal(2);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({
+          catalogue_category_id: '8967',
+          name: 'Energy Meters 26',
+          description: 'Precision energy meters for accurate measurements. 26',
+          properties: [
+            { name: 'Measurement Range', value: 1000, unit: 'Joules' },
+            { name: 'Accuracy', value: '±0.5%', unit: '' },
+          ],
+          id: '89',
+          manufacturer: {
+            name: 'Manufacturer A',
+            url: 'http://example.com',
+            address: '10 My Street',
+          },
+          cost_gbp: 500,
+          cost_to_rework_gbp: null,
+          days_to_replace: 7,
+          days_to_rework: null,
+          drawing_number: null,
+          drawing_link: null,
+          item_model_number: null,
+          is_obsolete: true,
+          obsolete_replacement_catalogue_item_id: '6',
+          obsolete_reason: 'The item is no longer being manufactured',
+        })
+      );
+      expect(JSON.stringify(await patchRequests[1].json())).equal(
+        JSON.stringify({
+          catalogue_category_id: '8967',
+          name: 'Energy Meters 27',
+          description: 'Precision energy meters for accurate measurements. 27',
+          properties: [
+            { name: 'Measurement Range', value: 2000, unit: 'Joules' },
+          ],
+          id: '6',
+          manufacturer: {
+            name: 'Manufacturer A',
+            url: 'http://example.com',
+            address: '10 My Street',
+          },
+          cost_gbp: 600,
+          cost_to_rework_gbp: 89,
+          days_to_replace: 7,
+          days_to_rework: 60,
+          drawing_number: null,
+          drawing_link: null,
+          item_model_number: null,
+          is_obsolete: false,
+          obsolete_replacement_catalogue_item_id: null,
+          obsolete_reason: null,
+        })
+      );
+    });
+  });
+
+  it.only('errors when copying multiple catalogue items to a catalogue category with different catalogue item properties ', () => {
+    cy.visit('/catalogue/5');
+
+    cy.findAllByLabelText('Toggle select row').first().click();
+    cy.findAllByLabelText('Toggle select row').eq(2).click();
+
+    cy.findByRole('button', { name: 'Copy to' }).click();
+
+    cy.findByText('Cameras').click();
+
+    cy.findByRole('button', { name: 'Copy here' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains(
+          'The destination catalogue item properties must precisely match the current destination. Ensure identical attributes, order, and formatting, with no spacing variations.'
+        );
+      });
+  });
 });
