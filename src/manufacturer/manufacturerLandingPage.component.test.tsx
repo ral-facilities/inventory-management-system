@@ -29,7 +29,7 @@ describe('Manufacturer Landing page', () => {
     expect(screen.getByText('http://example.com')).toBeInTheDocument();
     expect(screen.getByText('Telephone number:')).toBeInTheDocument();
     expect(screen.getByText('07334893348')).toBeInTheDocument();
-    expect(screen.getByText('Address')).toBeInTheDocument();
+    expect(screen.getByText('Address:')).toBeInTheDocument();
   });
 
   it('shows no manufacturer page correctly', async () => {
