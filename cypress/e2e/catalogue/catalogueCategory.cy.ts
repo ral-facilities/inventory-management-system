@@ -111,7 +111,7 @@ describe('Catalogue Category', () => {
     cy.findByRole('button', {
       name: 'Add catalogue category field entry',
     }).click();
-    cy.findByLabelText('Property Name *').type('Updated Field');
+    cy.findByLabelText('Property Name *').type('Updated Field 1');
     cy.findByLabelText('Select Type *').click();
     cy.findByText('Boolean').click();
 
@@ -124,7 +124,7 @@ describe('Catalogue Category', () => {
     cy.findByText('Property Name is required').should('exist');
     cy.findByText('Select Type is required').should('exist');
 
-    cy.findAllByLabelText('Property Name *').last().type('Updated Field');
+    cy.findAllByLabelText('Property Name *').last().type('Updated Field 2');
     cy.findAllByLabelText('Select Type *').last().click();
     cy.findByText('Number').click();
 
@@ -137,7 +137,7 @@ describe('Catalogue Category', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(request.body)).equal(
-        '{"name":"test","is_leaf":true,"catalogue_item_properties":[{"name":"Updated Field","type":"boolean","mandatory":false},{"name":"Updated Field","type":"number","unit":"","mandatory":false}]}'
+        '{"name":"test","is_leaf":true,"catalogue_item_properties":[{"name":"Updated Field 1","type":"boolean","mandatory":false},{"name":"Updated Field 2","type":"number","unit":"","mandatory":false}]}'
       );
     });
   });
