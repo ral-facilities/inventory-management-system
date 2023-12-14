@@ -221,23 +221,21 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} key={1}>
-              {manufacturerData?.url ? (
-                <Grid item xs={12}>
-                  <Typography color="text.primary">Manufacturer URL</Typography>
-                  <Typography sx={{ margin: '8px' }} variant="body1">
-                    <MuiLink underline="hover" href={manufacturerData.url}>
-                      {manufacturerData.url}
-                    </MuiLink>
-                  </Typography>
-                </Grid>
-              ) : (
-                <Grid item xs={12}>
-                  <Typography color="text.primary">Manufacturer URL</Typography>
-                  <Typography color="text.secondary">
-                    {manufacturerData?.url ?? 'None'}
-                  </Typography>
-                </Grid>
-              )}
+              <Typography color="text.primary">Manufacturer URL</Typography>
+              <Typography color="text.secondary">
+                {manufacturerData?.url ? (
+                  <MuiLink
+                    component={Link}
+                    underline="hover"
+                    target="_blank"
+                    to={manufacturerData.url}
+                  >
+                    {manufacturerData.url}
+                  </MuiLink>
+                ) : (
+                  'None'
+                )}
+              </Typography>
             </Grid>
             <Grid item xs={12} sm={6} key={2}>
               <Typography color="text.primary">
