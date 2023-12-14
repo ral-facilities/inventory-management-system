@@ -101,6 +101,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangeFormFields(updatedFormFields);
     onChangeNameFields(updatedNameFields);
     onChangeTypeFields(updatedTypeFields);
+    onChangePropertyNameError([]);
     resetFormError();
   };
 

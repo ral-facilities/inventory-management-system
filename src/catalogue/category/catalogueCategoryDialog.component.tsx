@@ -116,6 +116,7 @@ const CatalogueCategoryDialog = React.memo(
       setErrorFields([]);
       setNameFields([]);
       setTypeFields([]);
+      setDuplicatePropertyError([]);
       setFormError(undefined);
       resetSelectedCatalogueCategory();
     }, [onClose, resetSelectedCatalogueCategory]);
