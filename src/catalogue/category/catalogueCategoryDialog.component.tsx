@@ -72,6 +72,10 @@ const CatalogueCategoryDialog = React.memo(
       undefined
     );
 
+    const [duplicatePropertyError, setDuplicatePropertyError] = React.useState<
+      string[] | undefined
+    >(undefined);
+
     const [catchAllError, setCatchAllError] = React.useState(false);
 
     const { mutateAsync: addCatalogueCategory } = useAddCatalogueCategory();
@@ -138,6 +142,7 @@ const CatalogueCategoryDialog = React.memo(
             errorIndexes.push(i);
         }
       }
+      //add error handling here?
 
       setErrorFields(errorIndexes);
       return errorIndexes;
@@ -159,6 +164,29 @@ const CatalogueCategoryDialog = React.memo(
       if (errorIndexes.length !== 0) {
         hasErrors = true;
       }
+
+      if (categoryData.catalogue_item_properties) {
+        const listOfPropertyNames: string[] =
+          categoryData.catalogue_item_properties.map(
+            (property) => property.name
+          );
+        const uniqueNames = new Set();
+        const duplicateNames: string[] = [];
+
+        for (const name of listOfPropertyNames) {
+          if (uniqueNames.has(name)) {
+            duplicateNames.push(name);
+          } else {
+            uniqueNames.add(name);
+          }
+        }
+        if (duplicateNames.length > 0) {
+          setDuplicatePropertyError(duplicateNames);
+          hasErrors = true;
+        }
+      }
+
+      //add error handling here?
       return { hasErrors };
     }, [categoryData, validateFormFields]);
 
@@ -372,6 +400,8 @@ const CatalogueCategoryDialog = React.memo(
                   typeFields={typeFields}
                   onChangeTypeFields={setTypeFields}
                   errorFields={errorFields}
+                  propertyNameError={duplicatePropertyError ?? []}
+                  onChangePropertyNameError={setDuplicatePropertyError}
                   onChangeErrorFields={setErrorFields}
                   resetFormError={() => setFormError(undefined)}
                 />
