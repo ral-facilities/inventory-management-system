@@ -142,6 +142,37 @@ describe('Catalogue Category', () => {
     });
   });
 
+  it('displays error message when duplicate names for properties are entered', () => {
+    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByLabelText('Name *').type('test');
+
+    cy.findByLabelText('Catalogue Items').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+
+    cy.findByLabelText('Property Name *').type('Duplicate');
+    cy.findByLabelText('Select Type *').click();
+    cy.findByText('Boolean').click();
+
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+
+    cy.findAllByLabelText('Property Name *').last().type('Duplicate');
+    cy.findAllByLabelText('Select Type *').last().click();
+    cy.findByText('Number').click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findAllByText(
+      'Duplicate property name. Please change the name or remove the property'
+    ).should('exist');
+  });
+
   it('edits a catalogue category (non leaf node)', () => {
     cy.visit('/catalogue/1');
     cy.findByRole('button', {
@@ -218,6 +249,27 @@ describe('Catalogue Category', () => {
       );
       expect(request.url.toString()).to.contain('1');
     });
+  });
+
+  it('displays error message when duplicate names for properties are entered', () => {
+    cy.visit('/catalogue/1');
+    cy.findByRole('button', {
+      name: 'edit Voltage Meters catalogue category button',
+    }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findAllByLabelText('Property Name *').first().clear();
+    cy.findAllByLabelText('Property Name *').first().type('Updated Field');
+
+    cy.findAllByLabelText('Property Name *').last().clear();
+    cy.findAllByLabelText('Property Name *').last().type('Updated Field');
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findAllByText(
+      'Duplicate property name. Please change the name or remove the property'
+    ).should('exist');
   });
 
   it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
