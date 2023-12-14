@@ -13,6 +13,7 @@ describe('Catalogue Properties Form', () => {
   const onChangeNameFields = jest.fn();
   const onChangeTypeFields = jest.fn();
   const onChangeErrorFields = jest.fn();
+  const onChangePropertyNameError = jest.fn();
   const resetFormError = jest.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(
@@ -30,6 +31,8 @@ describe('Catalogue Properties Form', () => {
       onChangeTypeFields: onChangeTypeFields,
       errorFields: [],
       onChangeErrorFields: onChangeErrorFields,
+      propertyNameError: [],
+      onChangePropertyNameError: onChangePropertyNameError,
       resetFormError: resetFormError,
     };
     user = userEvent.setup();
@@ -265,5 +268,25 @@ describe('Catalogue Properties Form', () => {
       '',
       'number',
     ]);
+  });
+
+  it('display error if duplicate property names are entered', async () => {
+    const formFields = [
+      { name: 'Field 1', type: 'text', unit: '', mandatory: false },
+      { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
+      { name: 'Field 1', type: 'boolean', mandatory: false },
+    ];
+    const propertyNameError = ['Field 1'];
+    props = {
+      ...props,
+      formFields: formFields,
+      propertyNameError: propertyNameError,
+    };
+    createView();
+
+    const duplicatePropertyNameHelperText = screen.queryAllByText(
+      'Duplicate property name. Please change the name or remove the property'
+    );
+    expect(duplicatePropertyNameHelperText.length).toBe(2);
   });
 });
