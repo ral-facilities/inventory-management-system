@@ -73,8 +73,8 @@ const CatalogueCategoryDialog = React.memo(
     );
 
     const [duplicatePropertyError, setDuplicatePropertyError] = React.useState<
-      string[] | undefined
-    >(undefined);
+      string[]
+    >([]);
 
     const [catchAllError, setCatchAllError] = React.useState(false);
 
@@ -400,7 +400,7 @@ const CatalogueCategoryDialog = React.memo(
                   typeFields={typeFields}
                   onChangeTypeFields={setTypeFields}
                   errorFields={errorFields}
-                  propertyNameError={duplicatePropertyError ?? []}
+                  propertyNameError={duplicatePropertyError}
                   onChangePropertyNameError={setDuplicatePropertyError}
                   onChangeErrorFields={setErrorFields}
                   resetFormError={() => setFormError(undefined)}
