@@ -101,10 +101,9 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangeFormFields(updatedFormFields);
     onChangeNameFields(updatedNameFields);
     onChangeTypeFields(updatedTypeFields);
+    onChangePropertyNameError([]);
     resetFormError();
   };
-
-  console.log(propertyNameError);
 
   return (
     <div>
@@ -121,16 +120,16 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               (errorFields.includes(index) && !nameFields[index].trim()) ||
               (propertyNameError.length !== 0 &&
                 propertyNameError.find((name) => {
-                  return name === field.name;
-                }) === field.name)
+                  return name === field.name.toLowerCase();
+                }) === field.name.toLowerCase())
             }
             helperText={
               errorFields.includes(index) && !nameFields[index].trim()
                 ? 'Property Name is required'
                 : propertyNameError.length !== 0 &&
                   propertyNameError.find((name) => {
-                    return name === field.name;
-                  }) === field.name
+                    return name === field.name.toLowerCase();
+                  }) === field.name.toLowerCase()
                 ? 'Duplicate property name. Please change the name or remove the property'
                 : ''
             }
