@@ -211,7 +211,7 @@ describe('Catalogue Items Landing Page', () => {
 
   it('prints when the button is clicked', async () => {
     const spy = jest.spyOn(window, 'print').mockImplementation(() => {});
-    createView('/inventory-management-system/catalogue/items/89');
+    createView('/catalogue/items/89');
 
     await waitFor(() => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
