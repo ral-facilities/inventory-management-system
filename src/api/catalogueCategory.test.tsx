@@ -171,7 +171,7 @@ describe('catalogue category api functions', () => {
     );
   });
 
-  describe('useCatalogueCategoryByID', () => {
+  describe('useCatalogueCategoryById', () => {
     it('sends request to fetch a single catalogue category data and returns successful response', async () => {
       const { result } = renderHook(() => useCatalogueCategoryById('1'), {
         wrapper: hooksWrapperWithProviders(),
@@ -196,91 +196,65 @@ describe('catalogue category api functions', () => {
   });
 
   describe('useMoveToCatalogueCategory', () => {
-    it('sends requests to move a single or multiple catalogue categories data and returns successful response', async () => {
-      const selectedCatalogueCategories = [
-        {
-          id: '79',
-          name: 'test_dup',
-          parent_id: '1',
-          code: 'test_dup',
-          is_leaf: false,
-        },
-        {
-          id: '6',
-          name: 'Wavefront Sensors',
-          parent_id: '1',
-          code: 'wavefront-sensors',
-          is_leaf: true,
-          catalogue_item_properties: [
-            {
-              name: 'Wavefront Measurement Range',
-              type: 'string',
-              mandatory: true,
-            },
-            {
-              name: 'Spatial Resolution',
-              type: 'number',
-              unit: 'micrometers',
-              mandatory: false,
-            },
-          ],
-        },
-        {
-          id: '5',
-          name: 'Energy Meters',
-          parent_id: '1',
-          code: 'energy-meters',
-          is_leaf: true,
-          catalogue_item_properties: [
-            {
-              name: 'Measurement Range',
-              type: 'number',
-              unit: 'Joules',
-              mandatory: true,
-            },
-            {
-              name: 'Accuracy',
-              type: 'string',
-              mandatory: false,
-            },
-          ],
-        },
-      ];
-
-      const catalogueCategories = [
-        {
-          id: '6',
-          parent_id: null,
-          name: 'Wavefront Sensors',
-        },
-        {
-          id: '79',
-          parent_id: null,
-          name: 'test_dup',
-        },
-        {
-          id: '5',
-          parent_id: null,
-          name: 'Energy Meters',
-        },
-      ];
-
-      const targetLocation = {
-        name: 'Root',
-        id: '',
-        parent_id: null,
+    const selectedCatalogueCategories = [
+      {
+        id: '79',
+        name: 'test_dup',
+        parent_id: '1',
+        code: 'test_dup',
         is_leaf: false,
-        code: '',
-      };
+      },
+      {
+        id: '6',
+        name: 'Wavefront Sensors',
+        parent_id: '1',
+        code: 'wavefront-sensors',
+        is_leaf: true,
+        catalogue_item_properties: [
+          {
+            name: 'Wavefront Measurement Range',
+            type: 'string',
+            mandatory: true,
+          },
+          {
+            name: 'Spatial Resolution',
+            type: 'number',
+            unit: 'micrometers',
+            mandatory: false,
+          },
+        ],
+      },
+      {
+        id: '5',
+        name: 'Energy Meters',
+        parent_id: '1',
+        code: 'energy-meters',
+        is_leaf: true,
+        catalogue_item_properties: [
+          {
+            name: 'Measurement Range',
+            type: 'number',
+            unit: 'Joules',
+            mandatory: true,
+          },
+          {
+            name: 'Accuracy',
+            type: 'string',
+            mandatory: false,
+          },
+        ],
+      },
+    ];
+
+    it('sends requests to move a single or multiple catalogue categories data to root and returns successful response', async () => {
       const { result } = renderHook(() => useMoveToCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
 
       expect(result.current.isIdle).toBe(true);
       result.current.mutate({
-        catalogueCategories: catalogueCategories,
         selectedCategories: selectedCatalogueCategories,
-        targetLocationCatalogueCategory: targetLocation,
+        targetCategory: null,
       });
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
@@ -305,63 +279,43 @@ describe('catalogue category api functions', () => {
       ]);
     });
 
-    it('sends requests to move a single catalogue category data and returns unsuccessful response as the category parent_id has not changed', async () => {
-      const selectedCatalogueCategories = [
-        {
-          id: '5',
-          name: 'Energy Meters',
-          parent_id: '1',
-          code: 'energy-meters',
-          is_leaf: true,
-          catalogue_item_properties: [
-            {
-              name: 'Measurement Range',
-              type: 'number',
-              unit: 'Joules',
-              mandatory: true,
-            },
-            {
-              name: 'Accuracy',
-              type: 'string',
-              mandatory: false,
-            },
-          ],
-        },
-      ];
-
-      const catalogueCategories = [
-        {
-          id: '5',
-          parent_id: '1',
-          name: 'Energy Meters',
-        },
-      ];
-
-      const targetLocation = {
-        id: '1',
-        name: 'Beam Characterization',
-        parent_id: null,
-        code: 'beam-characterization',
-        is_leaf: false,
-      };
+    it('sends requests to move a single or multiple catalogue categories data to another category and returns successful response', async () => {
       const { result } = renderHook(() => useMoveToCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
 
       expect(result.current.isIdle).toBe(true);
+
+      const targetCategory: CatalogueCategory = {
+        id: '6',
+        parent_id: null,
+        name: 'Wavefront Sensors',
+        code: 'wavefront-sensors',
+        is_leaf: false,
+      };
+
       result.current.mutate({
-        catalogueCategories: catalogueCategories,
         selectedCategories: selectedCatalogueCategories,
-        targetLocationCatalogueCategory: targetLocation,
+        targetCategory: targetCategory,
       });
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
       expect(result.current.data).toEqual([
         {
-          message:
-            'The destination cannot be the same as the catalogue category itself',
+          message: 'Successfully moved to Wavefront Sensors',
+          name: 'Wavefront Sensors',
+          state: 'success',
+        },
+        {
+          message: 'Successfully moved to Wavefront Sensors',
           name: 'Energy Meters',
+          state: 'success',
+        },
+        {
+          message:
+            'A catalogue category with the same name already exists within the parent catalogue category',
+          name: 'test_dup',
           state: 'error',
         },
       ]);

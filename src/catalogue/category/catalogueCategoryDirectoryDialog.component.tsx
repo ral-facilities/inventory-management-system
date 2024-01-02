@@ -1,3 +1,4 @@
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
   Box,
   Button,
@@ -8,14 +9,7 @@ import {
   Grid,
   Tooltip,
 } from '@mui/material';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import React from 'react';
-import {
-  AddCatalogueCategory,
-  CatalogueCategory,
-  EditCatalogueCategory,
-} from '../../app.types';
-import Breadcrumbs from '../../view/breadcrumbs.component';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
@@ -23,7 +17,9 @@ import {
   useCopyToCatalogueCategory,
   useMoveToCatalogueCategory,
 } from '../../api/catalogueCategory';
+import { AddCatalogueCategory, CatalogueCategory } from '../../app.types';
 import handleTransferState from '../../handleTransferState';
+import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from './catalogueCategoryTableView.component';
 
 export interface CatalogueCategoryDirectoryDialogProps {
@@ -66,9 +62,8 @@ const CatalogueCategoryDirectoryDialog = (
   const { mutateAsync: moveToCatalogueCategory } = useMoveToCatalogueCategory();
   const { mutateAsync: CopyToCatalogueCategory } = useCopyToCatalogueCategory();
 
-  const { data: targetLocationCatalogueCategory } = useCatalogueCategoryById(
-    catalogueCurrDirId ?? undefined
-  );
+  const { data: targetCategory, isLoading: targetCategoryLoading } =
+    useCatalogueCategoryById(catalogueCurrDirId ?? undefined);
 
   const handleCopyToCatalogueCategory = React.useCallback(() => {
     const currId = catalogueCurrDirId === '' ? null : catalogueCurrDirId;
@@ -120,7 +115,7 @@ const CatalogueCategoryDirectoryDialog = (
     CopyToCatalogueCategory({
       catalogueCategories: catalogueCategory,
       selectedCategories: selectedCategories,
-      targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? {
+      targetLocationCatalogueCategory: targetCategory ?? {
         name: 'Root',
         id: '',
         parent_id: null,
@@ -137,40 +132,30 @@ const CatalogueCategoryDirectoryDialog = (
     catalogueCurrDirId,
     handleClose,
     selectedCategories,
-    targetLocationCatalogueCategory,
+    targetCategory,
   ]);
 
   const handleMoveToCatalogueCategory = React.useCallback(() => {
-    const currId = catalogueCurrDirId === '' ? null : catalogueCurrDirId;
-
-    const catalogueCategory: EditCatalogueCategory[] = selectedCategories.map(
-      (category) => ({
-        id: category.id,
-        parent_id: currId,
-        name: category.name,
-      })
-    );
-
-    moveToCatalogueCategory({
-      catalogueCategories: catalogueCategory,
-      selectedCategories: selectedCategories,
-      targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? {
-        name: 'Root',
-        id: '',
-        parent_id: null,
-        is_leaf: false,
-        code: '',
-      },
-    }).then((response) => {
-      handleTransferState(response);
-      handleClose();
-    });
+    // Either ensure finished loading, or moving to root
+    // (where we don't need to load anything as the name is known)
+    if (!targetCategoryLoading || catalogueCurrDirId === null) {
+      moveToCatalogueCategory({
+        selectedCategories: selectedCategories,
+        // Only reason for targetSystem to be undefined here is if not loading at all
+        // which happens when at root
+        targetCategory: targetCategory || null,
+      }).then((response) => {
+        handleTransferState(response);
+        handleClose();
+      });
+    }
   }, [
     catalogueCurrDirId,
     handleClose,
     moveToCatalogueCategory,
     selectedCategories,
-    targetLocationCatalogueCategory,
+    targetCategory,
+    targetCategoryLoading,
   ]);
 
   const onChangeNode = (newId: string): void => {

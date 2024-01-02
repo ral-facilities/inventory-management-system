@@ -19,9 +19,9 @@ export interface EditCatalogueCategory {
 }
 
 export interface MoveToCatalogueCategory {
-  catalogueCategories: EditCatalogueCategory[];
   selectedCategories: CatalogueCategory[];
-  targetLocationCatalogueCategory: CatalogueCategory;
+  // Null if root
+  targetCategory: CatalogueCategory | null;
 }
 
 export interface CopyToCatalogueCategory {
