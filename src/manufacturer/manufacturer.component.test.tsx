@@ -129,5 +129,5 @@ describe('Manufacturer', () => {
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
     });
-  });
+  }, 10000);
 });

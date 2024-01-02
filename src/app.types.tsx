@@ -88,6 +88,7 @@ export interface CatalogueItemDetails extends ObsoleteDetails {
   drawing_number: string | null;
   drawing_link: string | null;
   item_model_number: string | null;
+  manufacturer_id: string;
 }
 // need so we can cast string to number e.g for 10.50
 export type CatalogueItemDetailsPlaceholder = {
@@ -104,12 +105,7 @@ export interface CatalogueDetailsErrorMessages {
   drawing_number: string;
   drawing_link: string;
   item_model_number: string;
-}
-
-export interface CatalogueItemManufacturer {
-  name: string;
-  address: string;
-  url: string;
+  manufacturer_id: string;
 }
 
 export interface CatalogueItemProperty {
@@ -125,12 +121,10 @@ export interface CatalogueItemPropertyResponse {
 
 export interface CatalogueItem extends CatalogueItemDetails {
   properties: CatalogueItemPropertyResponse[];
-  manufacturer: CatalogueItemManufacturer;
   id: string;
 }
 export interface AddCatalogueItem extends CatalogueItemDetails {
   properties: CatalogueItemProperty[];
-  manufacturer: CatalogueItemManufacturer;
 }
 
 export interface EditCatalogueItem extends Partial<AddCatalogueItem> {
