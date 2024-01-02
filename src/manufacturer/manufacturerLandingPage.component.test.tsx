@@ -78,4 +78,22 @@ describe('Manufacturer Landing page', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
+
+  it('prints when the button is clicked', async () => {
+    const spy = jest.spyOn(window, 'print').mockImplementation(() => {});
+    createView('/manufacturer/1');
+
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
+    });
+
+    const printButton = screen.getByRole('button', { name: 'Print' });
+
+    await user.click(printButton);
+    // Assert that the window.print() function was called
+    expect(spy).toHaveBeenCalled();
+
+    // Clean up the mock
+    spy.mockRestore();
+  });
 });
