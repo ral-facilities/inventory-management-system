@@ -194,11 +194,7 @@ describe('catalogue items api functions', () => {
         selectedItems: [
           {
             catalogue_category_id: '657305a01e468454e97b6389',
-            manufacturer: {
-              name: 'test',
-              url: 'https://exampple.com/',
-              address: 'test',
-            },
+            manufacturer_id: '1',
             name: 'test',
             description: null,
             cost_gbp: 20,
@@ -222,11 +218,7 @@ describe('catalogue items api functions', () => {
           },
           {
             catalogue_category_id: '657305a01e468454e97b6389',
-            manufacturer: {
-              name: 'test',
-              url: 'https://exampple.com/',
-              address: 'test',
-            },
+            manufacturer_id: '1',
             name: 'test_copy1',
             description: null,
             cost_gbp: 20,
