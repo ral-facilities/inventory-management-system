@@ -163,7 +163,7 @@ export const useEditCatalogueCategory = (): UseMutationResult<
       },
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['CatalogueCategories'] });
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategoryById'] });
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
       },
     }
   );
@@ -233,7 +233,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
         queryClient.invalidateQueries({ queryKey: ['CatalogueBreadcrumbs'] });
         successfulIds.forEach((id: string) =>
           queryClient.invalidateQueries({
-            queryKey: ['CatalogueCategoryById', id],
+            queryKey: ['CatalogueCategory', id],
           })
         );
       }
@@ -375,7 +375,7 @@ export const useDeleteCatalogueCategory = (): UseMutationResult<
   );
 };
 
-const fetchCatalogueCategoryById = async (
+const fetchCatalogueCategory = async (
   id: string | undefined
 ): Promise<CatalogueCategory> => {
   let apiUrl: string;
@@ -392,13 +392,13 @@ const fetchCatalogueCategoryById = async (
     });
 };
 
-export const useCatalogueCategoryById = (
+export const useCatalogueCategory = (
   id: string | undefined
 ): UseQueryResult<CatalogueCategory, AxiosError> => {
   return useQuery<CatalogueCategory, AxiosError>(
-    ['CatalogueCategoryById', id],
+    ['CatalogueCategory', id],
     (params) => {
-      return fetchCatalogueCategoryById(id);
+      return fetchCatalogueCategory(id);
     },
     {
       onError: (error) => {

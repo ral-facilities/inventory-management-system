@@ -12,7 +12,7 @@ import {
   useAddCatalogueCategory,
   useCatalogueBreadcrumbs,
   useCatalogueCategories,
-  useCatalogueCategoryById,
+  useCatalogueCategory,
   useCopyToCatalogueCategory,
   useDeleteCatalogueCategory,
   useEditCatalogueCategory,
@@ -174,9 +174,9 @@ describe('catalogue category api functions', () => {
     );
   });
 
-  describe('useCatalogueCategoryById', () => {
+  describe('useCatalogueCategory', () => {
     it('sends request to fetch a single catalogue category data and returns successful response', async () => {
-      const { result } = renderHook(() => useCatalogueCategoryById('1'), {
+      const { result } = renderHook(() => useCatalogueCategory('1'), {
         wrapper: hooksWrapperWithProviders(),
       });
 

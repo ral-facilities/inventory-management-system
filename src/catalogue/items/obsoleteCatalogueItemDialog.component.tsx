@@ -21,7 +21,7 @@ import React from 'react';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategories,
-  useCatalogueCategoryById,
+  useCatalogueCategory,
 } from '../../api/catalogueCategory';
 import {
   useCatalogueItem,
@@ -111,7 +111,7 @@ const ObsoleteCatalogueItemDialog = (
   }, [catalogueItem, handleObsoleteDetailChanged]);
 
   // Current category and its children
-  const { data: catalogueCategoryData } = useCatalogueCategoryById(
+  const { data: catalogueCategoryData } = useCatalogueCategory(
     catalogueCurrDirId ?? undefined
   );
   const {

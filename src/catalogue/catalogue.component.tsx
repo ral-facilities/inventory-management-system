@@ -16,7 +16,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategories,
-  useCatalogueCategoryById,
+  useCatalogueCategory,
 } from '../api/catalogueCategory';
 import {
   CatalogueCategory,
@@ -108,7 +108,7 @@ function Catalogue() {
   const {
     data: catalogueCategoryDetail,
     isLoading: catalogueCategoryDetailLoading,
-  } = useCatalogueCategoryById(catalogueId.replace('/', ''));
+  } = useCatalogueCategory(catalogueId.replace('/', ''));
 
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
     catalogueId.replace('/', '')

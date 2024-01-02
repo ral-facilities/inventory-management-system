@@ -13,7 +13,7 @@ import React from 'react';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategories,
-  useCatalogueCategoryById,
+  useCatalogueCategory,
   useCopyToCatalogueCategory,
   useMoveToCatalogueCategory,
 } from '../../api/catalogueCategory';
@@ -63,7 +63,7 @@ const CatalogueCategoryDirectoryDialog = (
   const { mutateAsync: CopyToCatalogueCategory } = useCopyToCatalogueCategory();
 
   const { data: targetCategory, isLoading: targetCategoryLoading } =
-    useCatalogueCategoryById(catalogueCurrDirId ?? undefined);
+    useCatalogueCategory(catalogueCurrDirId ?? undefined);
 
   const handleMoveToCatalogueCategory = React.useCallback(() => {
     // Either ensure finished loading, or moving to root
