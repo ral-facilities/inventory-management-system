@@ -390,50 +390,56 @@ exports[`Manufacturer renders table data correctly 1`] = `
                       class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
                     >
                       <div
-                        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
+                        class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon css-1h51icj-MuiAutocomplete-root"
                       >
                         <div
-                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-l4u8b9-MuiInputBase-root-MuiInput-root"
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
                         >
-                          <input
-                            aria-invalid="false"
-                            aria-label="Filter by Name"
-                            autocomplete="new-password"
-                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r11:"
-                            placeholder="Filter by Name"
-                            title="Filter by Name"
-                            type="text"
-                            value=""
-                          />
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiAutocomplete-inputRoot css-l4u8b9-MuiInputBase-root-MuiInput-root"
                           >
-                            <span
-                              aria-label="Clear filter"
-                              class=""
-                              data-mui-internal-clone-element="true"
+                            <input
+                              aria-autocomplete="list"
+                              aria-expanded="false"
+                              aria-invalid="false"
+                              aria-label="Filter by Name"
+                              autocapitalize="none"
+                              autocomplete="new-password"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-929hxt-MuiInputBase-input-MuiInput-input"
+                              id=":r11:"
+                              placeholder="Filter by Name"
+                              role="combobox"
+                              spellcheck="false"
+                              title="Filter by Name"
+                              type="text"
+                              value=""
+                            />
+                            <div
+                              class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
                             >
                               <button
-                                aria-label="Clear filter"
-                                class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-1so9ih7-MuiButtonBase-root-MuiIconButton-root"
-                                disabled=""
+                                aria-label="Clear"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
                                 tabindex="-1"
+                                title="Clear"
                                 type="button"
                               >
                                 <svg
                                   aria-hidden="true"
-                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
                                   data-testid="CloseIcon"
                                   focusable="false"
                                   viewBox="0 0 24 24"
                                 >
                                   <path
-                                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                                   />
                                 </svg>
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
                               </button>
-                            </span>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -995,7 +1001,12 @@ exports[`Manufacturer renders table data correctly 1`] = `
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-rqdd49-MuiTableCell-root"
               >
-                Manufacturer A
+                <a
+                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                  href="/manufacturer/1"
+                >
+                  Manufacturer A
+                </a>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1pj26wl-MuiTableCell-root"
@@ -1084,7 +1095,12 @@ exports[`Manufacturer renders table data correctly 1`] = `
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-rqdd49-MuiTableCell-root"
               >
-                Manufacturer B
+                <a
+                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                  href="/manufacturer/2"
+                >
+                  Manufacturer B
+                </a>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1pj26wl-MuiTableCell-root"
@@ -1173,7 +1189,12 @@ exports[`Manufacturer renders table data correctly 1`] = `
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-rqdd49-MuiTableCell-root"
               >
-                Manufacturer C
+                <a
+                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                  href="/manufacturer/3"
+                >
+                  Manufacturer C
+                </a>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1pj26wl-MuiTableCell-root"

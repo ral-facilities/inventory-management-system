@@ -112,215 +112,170 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Obsolete
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            No
-                          </p>
-                        </div>
-                      </li>
+                          Obsolete
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          No
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                          Obsolete replacement link
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          <a
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                            href="/catalogue/items/10"
+                            target="_blank"
                           >
-                            Obsolete replacement link
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            <a
-                              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                              href="/catalogue/items/10"
-                              target="_blank"
-                            >
-                              Click here
-                            </a>
-                          </p>
-                        </div>
-                      </li>
+                            Click here
+                          </a>
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Obsolete reason
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Obsolete Reason
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Cost (£)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            1100
-                          </p>
-                        </div>
-                      </li>
+                          Cost (£)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          1100
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Cost to rework (£)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Cost to rework (£)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Time to replace (days)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            90
-                          </p>
-                        </div>
-                      </li>
+                          Time to replace (days)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          90
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Time to rework (days)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Time to rework (days)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Drawing Number
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Drawing Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Model Number
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Model Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -426,79 +381,94 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                   class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Name
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          Manufacturer A
-                        </p>
-                      </div>
-                    </li>
+                      Manufacturer Name
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer URL
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                            href="http://example.com"
-                            target="_blank"
-                          >
-                            http://example.com
-                          </a>
-                        </p>
-                      </div>
-                    </li>
+                      Manufacturer URL
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Address
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          10 My Street
-                        </p>
-                      </div>
-                    </li>
+                      Manufacturer Address Line
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Town
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer County
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Country
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Post/Zip code
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                 </div>
               </div>
@@ -623,215 +593,170 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Obsolete
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            Yes
-                          </p>
-                        </div>
-                      </li>
+                          Obsolete
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          Yes
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                          Obsolete replacement link
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          <a
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                            href="/catalogue/items/6"
+                            target="_blank"
                           >
-                            Obsolete replacement link
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            <a
-                              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                              href="/catalogue/items/6"
-                              target="_blank"
-                            >
-                              Click here
-                            </a>
-                          </p>
-                        </div>
-                      </li>
+                            Click here
+                          </a>
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Obsolete reason
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            The item is no longer being manufactured
-                          </p>
-                        </div>
-                      </li>
+                          Obsolete Reason
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          The item is no longer being manufactured
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Cost (£)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            500
-                          </p>
-                        </div>
-                      </li>
+                          Cost (£)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          500
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Cost to rework (£)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Cost to rework (£)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Time to replace (days)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            7
-                          </p>
-                        </div>
-                      </li>
+                          Time to replace (days)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          7
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Time to rework (days)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Time to rework (days)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Drawing Number
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Drawing Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Model Number
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Model Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -937,79 +862,94 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                   class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Name
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          Manufacturer A
-                        </p>
-                      </div>
-                    </li>
+                      Manufacturer Name
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer URL
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                            href="http://example.com"
-                            target="_blank"
-                          >
-                            http://example.com
-                          </a>
-                        </p>
-                      </div>
-                    </li>
+                      Manufacturer URL
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Address
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          10 My Street
-                        </p>
-                      </div>
-                    </li>
+                      Manufacturer Address Line
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Town
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer County
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Country
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Post/Zip code
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                 </div>
               </div>
@@ -1144,215 +1084,170 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Obsolete
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            Yes
-                          </p>
-                        </div>
-                      </li>
+                          Obsolete
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          Yes
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                          Obsolete replacement link
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          <a
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                            href="/catalogue/items/6"
+                            target="_blank"
                           >
-                            Obsolete replacement link
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            <a
-                              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                              href="/catalogue/items/6"
-                              target="_blank"
-                            >
-                              Click here
-                            </a>
-                          </p>
-                        </div>
-                      </li>
+                            Click here
+                          </a>
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Obsolete reason
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            The item is no longer being manufactured
-                          </p>
-                        </div>
-                      </li>
+                          Obsolete Reason
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          The item is no longer being manufactured
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Cost (£)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            500
-                          </p>
-                        </div>
-                      </li>
+                          Cost (£)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          500
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Cost to rework (£)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Cost to rework (£)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Time to replace (days)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            7
-                          </p>
-                        </div>
-                      </li>
+                          Time to replace (days)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          7
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Time to rework (days)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Time to rework (days)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Drawing Number
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Drawing Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Model Number
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Model Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1457,79 +1352,94 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                   class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Name
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          Manufacturer A
-                        </p>
-                      </div>
-                    </li>
+                      Manufacturer Name
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer URL
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                            href="http://example.com"
-                            target="_blank"
-                          >
-                            http://example.com
-                          </a>
-                        </p>
-                      </div>
-                    </li>
+                      Manufacturer URL
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Address
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          10 My Street
-                        </p>
-                      </div>
-                    </li>
+                      Manufacturer Address Line
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Town
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer County
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Country
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Post/Zip code
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                 </div>
               </div>
@@ -1664,215 +1574,170 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Obsolete
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            Yes
-                          </p>
-                        </div>
-                      </li>
+                          Obsolete
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          Yes
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
+                          Obsolete replacement link
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          <a
+                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                            href="/catalogue/items/6"
+                            target="_blank"
                           >
-                            Obsolete replacement link
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            <a
-                              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                              href="/catalogue/items/6"
-                              target="_blank"
-                            >
-                              Click here
-                            </a>
-                          </p>
-                        </div>
-                      </li>
+                            Click here
+                          </a>
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Obsolete reason
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            The item is no longer being manufactured
-                          </p>
-                        </div>
-                      </li>
+                          Obsolete Reason
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          The item is no longer being manufactured
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Cost (£)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            500
-                          </p>
-                        </div>
-                      </li>
+                          Cost (£)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          500
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Cost to rework (£)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Cost to rework (£)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Time to replace (days)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            7
-                          </p>
-                        </div>
-                      </li>
+                          Time to replace (days)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          7
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Time to rework (days)
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Time to rework (days)
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Drawing Number
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Drawing Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <li
-                        class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                        style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                       >
-                        <div
-                          class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          <span
-                            class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                          >
-                            Model Number
-                          </span>
-                          <p
-                            class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                          >
-                            None
-                          </p>
-                        </div>
-                      </li>
+                          Model Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          None
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1977,79 +1842,94 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                   class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Name
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          Manufacturer A
-                        </p>
-                      </div>
-                    </li>
+                      Manufacturer Name
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer URL
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                            href="http://example.com"
-                            target="_blank"
-                          >
-                            http://example.com
-                          </a>
-                        </p>
-                      </div>
-                    </li>
+                      Manufacturer URL
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Manufacturer Address
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          10 My Street
-                        </p>
-                      </div>
-                    </li>
+                      Manufacturer Address Line
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Town
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer County
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      None
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Country
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Post/Zip code
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    />
                   </div>
                 </div>
               </div>

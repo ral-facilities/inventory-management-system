@@ -142,11 +142,20 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
+    await ensureColumnsVisible(['Drawing Link', 'Item Model Number']);
+  });
+
+  it('renders table correctly (section 5 due to column virtualisation)', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
     await ensureColumnsVisible([
-      'Drawing Link',
-      'Item Model Number',
       'Manufacturer Name',
+      'Manufacturer URL',
       'Manufacturer Address',
+      'Manufacturer Telephone',
     ]);
   });
 
@@ -302,6 +311,15 @@ describe('Catalogue Items Table', () => {
     await user.click(saveAsButton);
   });
 
+  it('navigates to replacement obsolete item', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    const url = screen.queryAllByText('Click here');
+    expect(url[0]).toHaveAttribute('href', '/items/6');
+  });
   it('opens obsolete dialog and can close it again', async () => {
     createView();
 
@@ -340,14 +358,16 @@ describe('Catalogue Items Table', () => {
     expect(url[0]).toHaveAttribute('href', 'http://example.com');
   });
 
-  it('navigates to replacement obsolete item', async () => {
+  it('navigates to manufacturer landing page', async () => {
     createView();
     await waitFor(() => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
 
-    const url = screen.queryAllByText('Click here');
-    expect(url[0]).toHaveAttribute('href', '/items/6');
+    await ensureColumnsVisible(['Manufacturer Name']);
+
+    const url = screen.getAllByText('Manufacturer A');
+    expect(url[0]).toHaveAttribute('href', '/manufacturer/1');
   });
 
   it('renders the dense table correctly', async () => {

@@ -31,10 +31,12 @@ import {
   CatalogueCategory,
   CatalogueItem,
   CatalogueItemPropertyResponse,
+  Manufacturer,
 } from '../../app.types';
 import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
+import { useManufacturerIds } from '../../api/manufacturer';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
 
 function findPropertyValue(
@@ -86,6 +88,16 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const tableHeight = `calc(100vh - (64px + 36px + 50px + 125px))`;
 
   const { data, isLoading } = useCatalogueItems(parentInfo.id);
+
+  const manufacturerIdSet = new Set<string>(
+    data?.map((obj) => obj.manufacturer_id) ?? []
+  );
+
+  const manufacturerList: (Manufacturer | undefined)[] = useManufacturerIds(
+    Array.from(manufacturerIdSet.values())
+  ).map((obj) => {
+    return obj.data;
+  });
 
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
     React.useState<boolean>(false);
@@ -305,35 +317,132 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) => row.item_model_number ?? '',
         size: 250,
       },
-
       {
         header: 'Manufacturer Name',
-        accessorFn: (row) => row.manufacturer.name,
-        size: 250,
-        filterVariant: 'autocomplete',
-        filterFn: 'equals',
-      },
-      {
-        header: 'Manufacturer Address',
-        accessorFn: (row) => row.manufacturer.address,
-        size: 350,
+        accessorFn: (row) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer?.id === row.manufacturer_id;
+          })?.name,
+        Cell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            to={`/manufacturer/${row.original.manufacturer_id}`}
+          >
+            {
+              manufacturerList?.find((manufacturer) => {
+                return manufacturer?.id === row.original.manufacturer_id;
+              })?.name
+            }
+          </MuiLink>
+        ),
       },
       {
         header: 'Manufacturer URL',
-        accessorFn: (row) => row.manufacturer.url,
-        size: 300,
+        accessorFn: (row) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer?.id === row.manufacturer_id;
+          })?.url,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
             target="_blank"
-            href={row.original.manufacturer.url}
+            href={
+              manufacturerList?.find((manufacturer) => {
+                return manufacturer?.id === row.original.manufacturer_id;
+              })?.url ?? undefined
+            }
           >
-            {row.original.manufacturer.url}
+            {
+              manufacturerList?.find((manufacturer) => {
+                return manufacturer?.id === row.original.manufacturer_id;
+              })?.url
+            }
           </MuiLink>
         ),
       },
+      {
+        header: 'Manufacturer Address',
+        accessorFn: (row) =>
+          `${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.address_line
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.town
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.county
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.postcode
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.country
+          }`,
+        Cell: ({ row }) => (
+          <div style={{ display: 'inline-block' }}>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.address_line
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.town
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.county
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.postcode
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.country
+              }
+            </Typography>
+          </div>
+        ),
+      },
+      {
+        header: 'Manufacturer Telephone',
+        accessorFn: (row) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer?.id === row.manufacturer_id;
+          })?.telephone,
+        Cell: ({ row }) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer?.id === row.original.manufacturer_id;
+          })?.telephone,
+      },
     ];
-  }, [dense, isItemSelectable, parentInfo.catalogue_item_properties]);
+  }, [
+    dense,
+    isItemSelectable,
+    manufacturerList,
+    parentInfo.catalogue_item_properties,
+  ]);
 
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     selectedRowState ?? {}
@@ -573,6 +682,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <CatalogueItemsDetailsPanel
             catalogueItemIdData={row.original}
             catalogueCategoryData={parentInfo}
+            manufacturerData={manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.original.manufacturer_id;
+            })}
           />
         )
       : undefined,

@@ -10,12 +10,14 @@ import Catalogue from '../catalogue/catalogue.component';
 import Systems from '../systems/systems.component';
 import Manufacturer from '../manufacturer/manufacturer.component';
 import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingPage.component';
+import ManufacturerLandingPage from '../manufacturer/manufacturerLandingPage.component';
 
 export const paths = {
   home: '/',
   catalogue: '/catalogue/*',
   systems: '/systems/*',
-  manufacturer: '/manufacturer',
+  manufacturers: '/manufacturer',
+  manufacturer: '/manufacturer/:id',
   catalogueItems: '/catalogue/items/:id',
 };
 
@@ -96,7 +98,11 @@ function ViewTabs() {
         element={<CatalogueItemsLandingPage />}
       ></Route>
       <Route path={paths.systems} element={<Systems />}></Route>
-      <Route path={paths.manufacturer} element={<Manufacturer />}></Route>
+      <Route path={paths.manufacturers} element={<Manufacturer />}></Route>
+      <Route
+        path={paths.manufacturer}
+        element={<ManufacturerLandingPage />}
+      ></Route>
     </Routes>
   );
 

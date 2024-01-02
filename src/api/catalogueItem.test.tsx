@@ -98,11 +98,7 @@ describe('catalogue items api functions', () => {
         drawing_number: null,
         id: '1',
         is_obsolete: false,
-        manufacturer: {
-          address: '10 My Street',
-          name: 'Manufacturer A',
-          url: 'http://example.com',
-        },
+        manufacturer_id: '1',
         item_model_number: null,
         name: 'Cameras 1',
         obsolete_reason: null,
