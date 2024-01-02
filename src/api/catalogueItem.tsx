@@ -250,7 +250,6 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
       const uniqueCatalogueCategoryIds = new Set(
         successfulCatalogueCategoryIds
       );
-      console.log(uniqueCatalogueCategoryIds);
       uniqueCatalogueCategoryIds.forEach((catalogueCategoryIds: string) =>
         queryClient.invalidateQueries({
           queryKey: ['CatalogueItems', catalogueCategoryIds],
