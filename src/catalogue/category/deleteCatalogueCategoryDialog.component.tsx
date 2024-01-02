@@ -80,7 +80,9 @@ const DeleteCatalogueCategoryDialog = (
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleDeleteCatalogueCategory}>Continue</Button>
+        <Button onClick={handleDeleteCatalogueCategory} disabled={error}>
+          Continue
+        </Button>
       </DialogActions>
       {error && (
         <Box
