@@ -203,10 +203,12 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation(async (moveToCatalogueItem: MoveToCatalogueItem) => {
     const transferStates: TransferState[] = [];
-    let successfulIds: string[] = [];
+    // Ids for invalidation
+    const successfulIds: string[] = [];
+    const successfulCatalogueCategoryIds: string[] = [];
 
     const promises = moveToCatalogueItem.selectedItems.map(
-      async (item: EditCatalogueItem, index) => {
+      async (item: CatalogueItem, index) => {
         return editCatalogueItem({
           id: item.id,
           catalogue_category_id:
@@ -214,13 +216,14 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
         })
           .then((result) => {
             transferStates.push({
-              name: result.name ?? '',
+              name: result.name,
               message: `Successfully moved to ${
                 moveToCatalogueItem.targetCatalogueCategory?.name || 'Root'
               }`,
               state: 'success',
             });
             successfulIds.push(item.id);
+            successfulCatalogueCategoryIds.push(item.catalogue_category_id);
           })
           .catch((error) => {
             const response = error.response?.data as ErrorParsing;
@@ -237,9 +240,24 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
     await Promise.all(promises);
 
     if (successfulIds.length > 0) {
-      queryClient.invalidateQueries({ queryKey: ['CatalogueItems'] });
+      queryClient.invalidateQueries({
+        queryKey: [
+          'CatalogueItems',
+          moveToCatalogueItem.targetCatalogueCategory?.id,
+        ],
+      });
+      // Also need to invalidate each catalogue categories we are moving from (likely just the one)
+      const uniqueCatalogueCategoryIds = new Set(
+        successfulCatalogueCategoryIds
+      );
+      console.log(uniqueCatalogueCategoryIds);
+      uniqueCatalogueCategoryIds.forEach((catalogueCategoryIds: string) =>
+        queryClient.invalidateQueries({
+          queryKey: ['CatalogueItems', catalogueCategoryIds],
+        })
+      );
       queryClient.invalidateQueries({ queryKey: ['CatalogueBreadcrumbs'] });
-      successfulIds.map((id: string) =>
+      successfulIds.forEach((id: string) =>
         queryClient.invalidateQueries({ queryKey: ['CatalogueItem', id] })
       );
     }
