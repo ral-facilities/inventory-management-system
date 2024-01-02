@@ -63,7 +63,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
   React.useEffect(() => {
     if (selectedManufacturer) setManufacturerDetails(selectedManufacturer);
-  }, [selectedManufacturer]);
+  }, [selectedManufacturer, open]);
 
   const [nameErrorMessage, setNameErrorMessage] = React.useState<
     string | undefined
@@ -344,7 +344,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   ]);
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
+    <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
       <DialogTitle>{`${
         !selectedManufacturer ? 'Add' : 'Edit'
       } Manufacturer`}</DialogTitle>

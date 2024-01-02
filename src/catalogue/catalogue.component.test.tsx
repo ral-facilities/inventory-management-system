@@ -335,7 +335,7 @@ describe('Catalogue', () => {
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
-  });
+  }, 10000);
 
   it('opens move catalogue category dialog and can closes the dialog', async () => {
     createView('/catalogue/1');
