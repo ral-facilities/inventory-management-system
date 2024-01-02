@@ -325,7 +325,8 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
       await Promise.all(promises);
 
       if (successfulParentIds.length > 0)
-        successfulParentIds.forEach((parentId) =>
+        // Only invalidate the unique parents
+        new Set(successfulParentIds).forEach((parentId) =>
           queryClient.invalidateQueries({
             queryKey: ['CatalogueCategory', parentId],
           })
