@@ -65,6 +65,9 @@ function CatalogueItemsLandingPage() {
           backgroundColor: 'background.default',
           zIndex: 1000,
           width: '100%',
+          '@media print': {
+            display: 'none',
+          },
         }}
         item
       >

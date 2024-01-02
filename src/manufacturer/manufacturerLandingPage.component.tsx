@@ -25,7 +25,15 @@ function ManufacturerLandingPage() {
 
   return (
     <Grid container>
-      <Grid sx={{ mx: 0.5 }} item>
+      <Grid
+        sx={{
+          mx: 0.5,
+          '@media print': {
+            display: 'none',
+          },
+        }}
+        item
+      >
         <Button
           component={Link}
           to={`/manufacturer/`}
