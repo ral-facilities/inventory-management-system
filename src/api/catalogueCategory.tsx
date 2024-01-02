@@ -123,8 +123,10 @@ export const useAddCatalogueCategory = (): UseMutationResult<
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategories'] });
+      onSuccess: (category) => {
+        queryClient.invalidateQueries({
+          queryKey: ['CatalogueCategories', category.parent_id ?? 'null'],
+        });
       },
     }
   );
@@ -161,9 +163,17 @@ export const useEditCatalogueCategory = (): UseMutationResult<
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategories'] });
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+      onSuccess: (category) => {
+        queryClient.invalidateQueries({
+          queryKey: ['CatalogueCategories', category.parent_id ?? 'null'],
+        });
+        queryClient.invalidateQueries({
+          // Don't use ID here as will also need to update any of its children as well
+          queryKey: ['CatalogueBreadcrumbs'],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['CatalogueCategory', category.id],
+        });
       },
     }
   );
