@@ -17,7 +17,7 @@ import {
   useCopyToCatalogueCategory,
   useMoveToCatalogueCategory,
 } from '../../api/catalogueCategory';
-import { AddCatalogueCategory, CatalogueCategory } from '../../app.types';
+import { CatalogueCategory } from '../../app.types';
 import handleTransferState from '../../handleTransferState';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from './catalogueCategoryTableView.component';
