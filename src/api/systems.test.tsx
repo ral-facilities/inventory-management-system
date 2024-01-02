@@ -246,6 +246,10 @@ describe('System api functions', () => {
       axiosPatchSpy = jest.spyOn(axios, 'patch');
     });
 
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
     it('sends requests to move multiple systems to root and returns a successful response for each', async () => {
       moveToSystem.targetSystem = null;
 
@@ -374,6 +378,10 @@ describe('System api functions', () => {
       };
 
       axiosPostSpy = jest.spyOn(axios, 'post');
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
     });
 
     it('sends requests to copy multiple systems to root and returns a successful response for each', async () => {

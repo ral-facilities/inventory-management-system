@@ -65,76 +65,6 @@ const CatalogueCategoryDirectoryDialog = (
   const { data: targetCategory, isLoading: targetCategoryLoading } =
     useCatalogueCategoryById(catalogueCurrDirId ?? undefined);
 
-  const handleCopyToCatalogueCategory = React.useCallback(() => {
-    const currId = catalogueCurrDirId === '' ? null : catalogueCurrDirId;
-    const catalogueCategoryCodes: string[] =
-      catalogueCategoryData?.map((category) => category.code) || [];
-
-    const catalogueCategory: AddCatalogueCategory[] = selectedCategories.map(
-      (category) => {
-        let reqAddInfo: AddCatalogueCategory = {
-          name: category.name,
-          is_leaf: category.is_leaf,
-        };
-        if (currId) {
-          reqAddInfo = {
-            ...reqAddInfo,
-            parent_id: currId,
-          };
-        }
-
-        // Check if the name already exists in the target location
-        if (catalogueCategoryCodes.includes(category.code)) {
-          let count = 1;
-          let newName = reqAddInfo.name;
-          let newCode = category.code;
-
-          while (catalogueCategoryCodes.includes(newCode)) {
-            newCode = `${category.code}_copy_${count}`;
-            newName = `${reqAddInfo.name}_copy_${count}`;
-            count++;
-          }
-
-          reqAddInfo.name = newName;
-        }
-
-        if (
-          category.catalogue_item_properties &&
-          category.catalogue_item_properties.length > 0
-        ) {
-          reqAddInfo = {
-            ...reqAddInfo,
-            catalogue_item_properties: category.catalogue_item_properties,
-          };
-        }
-
-        return reqAddInfo;
-      }
-    );
-
-    CopyToCatalogueCategory({
-      catalogueCategories: catalogueCategory,
-      selectedCategories: selectedCategories,
-      targetLocationCatalogueCategory: targetCategory ?? {
-        name: 'Root',
-        id: '',
-        parent_id: null,
-        is_leaf: false,
-        code: '',
-      },
-    }).then((response) => {
-      handleTransferState(response);
-      handleClose();
-    });
-  }, [
-    CopyToCatalogueCategory,
-    catalogueCategoryData,
-    catalogueCurrDirId,
-    handleClose,
-    selectedCategories,
-    targetCategory,
-  ]);
-
   const handleMoveToCatalogueCategory = React.useCallback(() => {
     // Either ensure finished loading, or moving to root
     // (where we don't need to load anything as the name is known)
@@ -153,6 +83,36 @@ const CatalogueCategoryDirectoryDialog = (
     catalogueCurrDirId,
     handleClose,
     moveToCatalogueCategory,
+    selectedCategories,
+    targetCategory,
+    targetCategoryLoading,
+  ]);
+
+  const handleCopyToCatalogueCategory = React.useCallback(() => {
+    if (
+      (!targetCategoryLoading || catalogueCurrDirId === null) &&
+      catalogueCategoryData !== undefined
+    ) {
+      const existingCategoryCodes: string[] = catalogueCategoryData.map(
+        (category) => category.code
+      );
+
+      CopyToCatalogueCategory({
+        selectedCategories: selectedCategories,
+        // Only reason for targetSystem to be undefined here is if not loading at all
+        // which happens when at root
+        targetCategory: targetCategory || null,
+        existingCategoryCodes: existingCategoryCodes,
+      }).then((response) => {
+        handleTransferState(response);
+        handleClose();
+      });
+    }
+  }, [
+    CopyToCatalogueCategory,
+    catalogueCategoryData,
+    catalogueCurrDirId,
+    handleClose,
     selectedCategories,
     targetCategory,
     targetCategoryLoading,

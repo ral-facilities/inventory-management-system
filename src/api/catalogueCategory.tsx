@@ -254,45 +254,82 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
   CopyToCatalogueCategory
 > => {
   const queryClient = useQueryClient();
+
   return useMutation(
     async (copyToCatalogueCategory: CopyToCatalogueCategory) => {
       const transferStates: TransferState[] = [];
-      let hasSuccessfulAdd = false;
 
-      const targetLocationInfo = {
-        name: copyToCatalogueCategory.targetLocationCatalogueCategory.name,
-        id: copyToCatalogueCategory.targetLocationCatalogueCategory.id,
-      };
+      // Ids for invalidation (must be a string value of 'null' if null
+      // for invalidation)
+      const successfulParentIds: string[] = [];
 
-      const promises = copyToCatalogueCategory.catalogueCategories.map(
-        async (category: AddCatalogueCategory, index) => {
-          return addCatalogueCategory(category)
+      const promises = copyToCatalogueCategory.selectedCategories.map(
+        async (category: CatalogueCategory) => {
+          // Data to post (backend will just ignore the extra here - only id and code)
+          // Also use Object.assign to copy the data otherwise will modify in place causing issues
+          // in tests
+          const categoryAdd: AddCatalogueCategory = Object.assign(
+            {},
+            category
+          ) as AddCatalogueCategory;
+
+          // Assign new parent
+          categoryAdd.parent_id =
+            copyToCatalogueCategory.targetCategory?.id || null;
+
+          // Avoid duplicates by appending _copy_n for nth copy
+          if (
+            copyToCatalogueCategory.existingCategoryCodes.includes(
+              category.code
+            )
+          ) {
+            let count = 1;
+            let newName = categoryAdd.name;
+            let newCode = category.code;
+
+            while (
+              copyToCatalogueCategory.existingCategoryCodes.includes(newCode)
+            ) {
+              newName = `${categoryAdd.name}_copy_${count}`;
+              newCode = `${category.code}_copy_${count}`;
+              count++;
+            }
+
+            categoryAdd.name = newName;
+          }
+
+          return addCatalogueCategory(categoryAdd)
             .then((result) => {
-              const successTransferState: TransferState = {
-                name: result.name ?? '',
-                message: `Successfully copied to ${targetLocationInfo.name}`,
+              const targetCategoryName =
+                copyToCatalogueCategory.targetCategory?.name || 'Root';
+              transferStates.push({
+                name: result.name,
+                message: `Successfully copied to ${targetCategoryName}`,
                 state: 'success',
-              };
-              transferStates.push(successTransferState);
-              hasSuccessfulAdd = true;
+              });
+
+              successfulParentIds.push(result.parent_id || 'null');
             })
             .catch((error) => {
               const response = error.response?.data as ErrorParsing;
-              const errorTransferState: TransferState = {
-                name: category.name ?? '',
+
+              transferStates.push({
+                name: category.name,
                 message: response.detail,
                 state: 'error',
-              };
-              transferStates.push(errorTransferState);
+              });
             });
         }
       );
 
       await Promise.all(promises);
 
-      if (hasSuccessfulAdd) {
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
-      }
+      if (successfulParentIds.length > 0)
+        successfulParentIds.forEach((parentId) =>
+          queryClient.invalidateQueries({
+            queryKey: ['CatalogueCategory', parentId],
+          })
+        );
 
       return transferStates;
     },

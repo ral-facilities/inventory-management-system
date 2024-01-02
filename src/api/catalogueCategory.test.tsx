@@ -1,4 +1,13 @@
 import { renderHook, waitFor } from '@testing-library/react';
+import axios from 'axios';
+import {
+  AddCatalogueCategory,
+  CatalogueCategory,
+  CopyToCatalogueCategory,
+  EditCatalogueCategory,
+  MoveToCatalogueCategory,
+} from '../app.types';
+import { hooksWrapperWithProviders } from '../setupTests';
 import {
   useAddCatalogueCategory,
   useCatalogueBreadcrumbs,
@@ -9,12 +18,6 @@ import {
   useEditCatalogueCategory,
   useMoveToCatalogueCategory,
 } from './catalogueCategory';
-import {
-  AddCatalogueCategory,
-  CatalogueCategory,
-  EditCatalogueCategory,
-} from '../app.types';
-import { hooksWrapperWithProviders } from '../setupTests';
 
 describe('catalogue category api functions', () => {
   afterEach(() => {
@@ -196,7 +199,7 @@ describe('catalogue category api functions', () => {
   });
 
   describe('useMoveToCatalogueCategory', () => {
-    const selectedCatalogueCategories = [
+    const mockSelectedCatalogueCategories = [
       {
         id: '79',
         name: 'test_dup',
@@ -246,19 +249,41 @@ describe('catalogue category api functions', () => {
       },
     ];
 
+    let moveToCatalogueCategory: MoveToCatalogueCategory;
+
+    let axiosPatchSpy;
+
+    beforeEach(() => {
+      axiosPatchSpy = jest.spyOn(axios, 'patch');
+
+      moveToCatalogueCategory = {
+        selectedCategories: mockSelectedCatalogueCategories,
+        targetCategory: null,
+      };
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
     it('sends requests to move a single or multiple catalogue categories data to root and returns successful response', async () => {
       const { result } = renderHook(() => useMoveToCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
 
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate({
-        selectedCategories: selectedCatalogueCategories,
-        targetCategory: null,
-      });
+      result.current.mutate(moveToCatalogueCategory);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
+      moveToCatalogueCategory.selectedCategories.map((category) =>
+        expect(axiosPatchSpy).toHaveBeenCalledWith(
+          `/v1/catalogue-categories/${category.id}`,
+          {
+            parent_id: null,
+          }
+        )
+      );
       expect(result.current.data).toEqual([
         {
           message: 'Successfully moved to Root',
@@ -293,14 +318,20 @@ describe('catalogue category api functions', () => {
         code: 'wavefront-sensors',
         is_leaf: false,
       };
+      moveToCatalogueCategory.targetCategory = targetCategory;
 
-      result.current.mutate({
-        selectedCategories: selectedCatalogueCategories,
-        targetCategory: targetCategory,
-      });
+      result.current.mutate(moveToCatalogueCategory);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
+      moveToCatalogueCategory.selectedCategories.map((category) =>
+        expect(axiosPatchSpy).toHaveBeenCalledWith(
+          `/v1/catalogue-categories/${category.id}`,
+          {
+            parent_id: targetCategory.id,
+          }
+        )
+      );
       expect(result.current.data).toEqual([
         {
           message: 'Successfully moved to Wavefront Sensors',
@@ -327,121 +358,96 @@ describe('catalogue category api functions', () => {
   });
 
   describe('useCopyToCatalogueCategory', () => {
-    it('sends requests to copy (adding category to new location) a single or multiple catalogue categories data and returns successful response', async () => {
-      const selectedCatalogueCategories = [
-        {
-          id: '79',
-          name: 'test_dup',
-          parent_id: '1',
-          code: 'test_dup',
-          is_leaf: false,
-        },
-        {
-          id: '6',
-          name: 'Wavefront Sensors',
-          parent_id: '1',
-          code: 'wavefront-sensors',
-          is_leaf: true,
-          catalogue_item_properties: [
-            {
-              name: 'Wavefront Measurement Range',
-              type: 'string',
-              mandatory: true,
-            },
-            {
-              name: 'Spatial Resolution',
-              type: 'number',
-              unit: 'micrometers',
-              mandatory: false,
-            },
-          ],
-        },
-        {
-          id: '5',
-          name: 'Energy Meters',
-          parent_id: '1',
-          code: 'energy-meters',
-          is_leaf: true,
-          catalogue_item_properties: [
-            {
-              name: 'Measurement Range',
-              type: 'number',
-              unit: 'Joules',
-              mandatory: true,
-            },
-            {
-              name: 'Accuracy',
-              type: 'string',
-              mandatory: false,
-            },
-          ],
-        },
-      ];
-
-      const catalogueCategories = [
-        {
-          name: 'Wavefront Sensors',
-          code: 'wavefront-sensors',
-          is_leaf: true,
-          catalogue_item_properties: [
-            {
-              name: 'Wavefront Measurement Range',
-              type: 'string',
-              mandatory: true,
-            },
-            {
-              name: 'Spatial Resolution',
-              type: 'number',
-              unit: 'micrometers',
-              mandatory: false,
-            },
-          ],
-        },
-        {
-          name: 'test_dup',
-          code: 'test_dup',
-          is_leaf: false,
-        },
-        {
-          name: 'Energy Meters',
-          code: 'energy-meters',
-          is_leaf: true,
-          catalogue_item_properties: [
-            {
-              name: 'Measurement Range',
-              type: 'number',
-              unit: 'Joules',
-              mandatory: true,
-            },
-            {
-              name: 'Accuracy',
-              type: 'string',
-              mandatory: false,
-            },
-          ],
-        },
-      ];
-
-      const targetLocation = {
-        name: 'Root',
-        id: '',
-        parent_id: null,
+    const mockCatalogueCategories: CatalogueCategory[] = [
+      {
+        id: '79',
+        name: 'test_dup',
+        parent_id: '1',
+        code: 'test_dup',
         is_leaf: false,
-        code: '',
+      },
+      {
+        id: '6',
+        name: 'Wavefront Sensors',
+        parent_id: '1',
+        code: 'wavefront-sensors',
+        is_leaf: true,
+        catalogue_item_properties: [
+          {
+            name: 'Wavefront Measurement Range',
+            type: 'string',
+            mandatory: true,
+          },
+          {
+            name: 'Spatial Resolution',
+            type: 'number',
+            unit: 'micrometers',
+            mandatory: false,
+          },
+        ],
+      },
+      {
+        id: '5',
+        name: 'Energy Meters',
+        parent_id: '1',
+        code: 'energy-meters',
+        is_leaf: true,
+        catalogue_item_properties: [
+          {
+            name: 'Measurement Range',
+            type: 'number',
+            unit: 'Joules',
+            mandatory: true,
+          },
+          {
+            name: 'Accuracy',
+            type: 'string',
+            mandatory: false,
+          },
+        ],
+      },
+    ];
+
+    let copyToCatalogueCategory: CopyToCatalogueCategory;
+
+    let axiosPostSpy;
+
+    beforeEach(() => {
+      copyToCatalogueCategory = {
+        selectedCategories: mockCatalogueCategories,
+        targetCategory: null,
+        existingCategoryCodes: [],
       };
+
+      axiosPostSpy = jest.spyOn(axios, 'post');
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('sends requests to copy multiple catalogue categories to root and returns successful response', async () => {
       const { result } = renderHook(() => useCopyToCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
 
       expect(result.current.isIdle).toBe(true);
+
       result.current.mutate({
-        catalogueCategories: catalogueCategories,
-        selectedCategories: selectedCatalogueCategories,
-        targetLocationCatalogueCategory: targetLocation,
+        selectedCategories: mockCatalogueCategories,
+        targetCategory: null,
+        existingCategoryCodes: [''],
       });
+
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
+      copyToCatalogueCategory.selectedCategories.map((category) =>
+        expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/catalogue-categories`, {
+          ...category,
+          parent_id: null,
+        })
+      );
       expect(result.current.data).toEqual([
         {
           message: 'Successfully copied to Root',
@@ -458,6 +464,100 @@ describe('catalogue category api functions', () => {
             'A catalogue category with the same name already exists within the parent catalogue category',
           name: 'test_dup',
           state: 'error',
+        },
+      ]);
+    });
+
+    it('sends requests to copy multiple catalogue categories to another category and returns successful response', async () => {
+      const { result } = renderHook(() => useCopyToCatalogueCategory(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      const targetCategory: CatalogueCategory = {
+        id: '6',
+        parent_id: null,
+        name: 'Wavefront Sensors',
+        code: 'wavefront-sensors',
+        is_leaf: false,
+      };
+      copyToCatalogueCategory.targetCategory = targetCategory;
+
+      result.current.mutate({
+        selectedCategories: mockCatalogueCategories,
+        targetCategory: targetCategory,
+        existingCategoryCodes: [''],
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      copyToCatalogueCategory.selectedCategories.map((category) =>
+        expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/catalogue-categories`, {
+          ...category,
+          parent_id: targetCategory.id,
+        })
+      );
+      expect(result.current.data).toEqual([
+        {
+          message: 'Successfully copied to Wavefront Sensors',
+          name: 'Wavefront Sensors',
+          state: 'success',
+        },
+        {
+          message: 'Successfully copied to Wavefront Sensors',
+          name: 'Energy Meters',
+          state: 'success',
+        },
+        {
+          message:
+            'A catalogue category with the same name already exists within the parent catalogue category',
+          name: 'test_dup',
+          state: 'error',
+        },
+      ]);
+    });
+
+    it('sends requests to copy multiple catalogue categories to root while renaming those with codes that are already present', async () => {
+      const { result } = renderHook(() => useCopyToCatalogueCategory(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      copyToCatalogueCategory.existingCategoryCodes = [
+        ...mockCatalogueCategories.map((category) => category.code),
+        mockCatalogueCategories[1].code + '_copy_1',
+      ];
+      result.current.mutate(copyToCatalogueCategory);
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      copyToCatalogueCategory.selectedCategories.map((category, index) =>
+        expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/catalogue-categories`, {
+          ...category,
+          parent_id: null,
+          name:
+            index === 1 ? category.name + '_copy_2' : category.name + '_copy_1',
+        })
+      );
+      expect(result.current.data).toEqual([
+        {
+          message: 'Successfully copied to Root',
+          name: 'test_dup_copy_1',
+          state: 'success',
+        },
+        {
+          message: 'Successfully copied to Root',
+          name: 'Wavefront Sensors_copy_2',
+          state: 'success',
+        },
+        {
+          message: 'Successfully copied to Root',
+          name: 'Energy Meters_copy_1',
+          state: 'success',
         },
       ]);
     });
