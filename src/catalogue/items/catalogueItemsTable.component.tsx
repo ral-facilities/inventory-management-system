@@ -1,20 +1,27 @@
+import BlockIcon from '@mui/icons-material/Block';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import ClearIcon from '@mui/icons-material/Clear';
+import AddIcon from '@mui/icons-material/Add';
 import {
+  Box,
   Button,
   ListItemIcon,
   MenuItem,
   Link as MuiLink,
   TableRow,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import {
+  MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
-  MRT_Row,
+  type MRT_RowSelectionState,
+  type MRT_ColumnFiltersState,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
@@ -24,10 +31,13 @@ import {
   CatalogueCategory,
   CatalogueItem,
   CatalogueItemPropertyResponse,
+  Manufacturer,
 } from '../../app.types';
 import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
+import { useManufacturerIds } from '../../api/manufacturer';
+import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
 
 function findPropertyValue(
   properties: CatalogueItemPropertyResponse[],
@@ -57,23 +67,49 @@ function generateUniqueName(
 export interface CatalogueItemsTableProps {
   parentInfo: CatalogueCategory;
   dense: boolean;
+  onChangeObsoleteReplacementId?: (
+    obsoleteReplacementId: string | null
+  ) => void;
+  selectedRowState?: { [x: string]: boolean };
+  // Only for dense tables with a select - should return if a given catalogue item is
+  // selectable or not
+  isItemSelectable?: (item: CatalogueItem) => boolean;
 }
 
 const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
-  const { parentInfo, dense } = props;
+  const {
+    parentInfo,
+    dense,
+    onChangeObsoleteReplacementId,
+    selectedRowState,
+    isItemSelectable,
+  } = props;
   // SG header + SG footer + tabs #add breadcrumbs + Mui table V2
   const tableHeight = `calc(100vh - (64px + 36px + 50px + 125px))`;
 
   const { data, isLoading } = useCatalogueItems(parentInfo.id);
 
+  const manufacturerIdSet = new Set<string>(
+    data?.map((obj) => obj.manufacturer_id) ?? []
+  );
+
+  const manufacturerList: (Manufacturer | undefined)[] = useManufacturerIds(
+    Array.from(manufacturerIdSet.values())
+  ).map((obj) => {
+    return obj.data;
+  });
+
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
     React.useState<boolean>(false);
 
+  const [obsoleteItemDialogOpen, setObsoleteItemDialogOpen] =
+    React.useState<boolean>(false);
+
   type PropertyFiltersType = {
-    boolean: 'select' | 'text' | 'range-slider';
-    string: 'select' | 'text' | 'range-slider';
-    number: 'select' | 'text' | 'range-slider';
-    null: 'select' | 'text' | 'range-slider';
+    boolean: 'select' | 'text' | 'range';
+    string: 'select' | 'text' | 'range';
+    number: 'select' | 'text' | 'range';
+    null: 'select' | 'text' | 'range';
   };
 
   const [selectedCatalogueItem, setSelectedCatalogueItem] = React.useState<
@@ -94,7 +130,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     const propertyFilters: PropertyFiltersType = {
       boolean: 'select',
       string: 'text',
-      number: 'range-slider',
+      number: 'range',
       null: 'text',
     };
     return [
@@ -104,7 +140,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         size: 200,
         Cell: ({ renderedCellValue, row }) =>
           dense ? (
-            renderedCellValue
+            <Typography
+              sx={{
+                color:
+                  isItemSelectable === undefined ||
+                  isItemSelectable(row.original)
+                    ? 'inherit'
+                    : 'action.disabled',
+              }}
+            >
+              {renderedCellValue}
+            </Typography>
           ) : (
             <MuiLink
               underline="hover"
@@ -217,16 +263,16 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         },
       })),
       {
-        header: 'Cost (GBP)',
+        header: 'Cost (£)',
         accessorFn: (row) => row.cost_gbp,
-        size: 200,
-        filterVariant: 'range-slider',
+        size: 250,
+        filterVariant: 'range',
       },
       {
-        header: 'Cost to Rework (GBP)',
+        header: 'Cost to Rework (£)',
         accessorFn: (row) => row.cost_to_rework_gbp ?? 0,
         size: 300,
-        filterVariant: 'range-slider',
+        filterVariant: 'range',
         Cell: ({ row }) => {
           // Logic to get the range slider to work with null values
           return row.original.cost_to_rework_gbp === 0
@@ -240,13 +286,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Time to replace (days)',
         accessorFn: (row) => row.days_to_replace,
         size: 250,
-        filterVariant: 'range-slider',
+        filterVariant: 'range',
       },
       {
         header: 'Days to Rework',
         accessorFn: (row) => row.days_to_rework ?? 0,
         size: 250,
-        filterVariant: 'range-slider',
+        filterVariant: 'range',
         Cell: ({ row }) => {
           // Logic to get the range slider to work with null values
           return row.original.cost_to_rework_gbp === 0
@@ -271,48 +317,181 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) => row.item_model_number ?? '',
         size: 250,
       },
-
       {
         header: 'Manufacturer Name',
-        accessorFn: (row) => row.manufacturer.name,
-        size: 250,
-        filterVariant: 'autocomplete',
-        filterFn: 'equals',
-      },
-      {
-        header: 'Manufacturer Address',
-        accessorFn: (row) => row.manufacturer.address,
-        size: 350,
+        accessorFn: (row) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer?.id === row.manufacturer_id;
+          })?.name,
+        Cell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            to={`/manufacturer/${row.original.manufacturer_id}`}
+          >
+            {
+              manufacturerList?.find((manufacturer) => {
+                return manufacturer?.id === row.original.manufacturer_id;
+              })?.name
+            }
+          </MuiLink>
+        ),
       },
       {
         header: 'Manufacturer URL',
-        accessorFn: (row) => row.manufacturer.url,
-        size: 300,
+        accessorFn: (row) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer?.id === row.manufacturer_id;
+          })?.url,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
             target="_blank"
-            href={row.original.manufacturer.url}
+            href={
+              manufacturerList?.find((manufacturer) => {
+                return manufacturer?.id === row.original.manufacturer_id;
+              })?.url ?? undefined
+            }
           >
-            {row.original.manufacturer.url}
+            {
+              manufacturerList?.find((manufacturer) => {
+                return manufacturer?.id === row.original.manufacturer_id;
+              })?.url
+            }
           </MuiLink>
         ),
       },
+      {
+        header: 'Manufacturer Address',
+        accessorFn: (row) =>
+          `${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.address_line
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.town
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.county
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.postcode
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.country
+          }`,
+        Cell: ({ row }) => (
+          <div style={{ display: 'inline-block' }}>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.address_line
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.town
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.county
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.postcode
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.country
+              }
+            </Typography>
+          </div>
+        ),
+      },
+      {
+        header: 'Manufacturer Telephone',
+        accessorFn: (row) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer?.id === row.manufacturer_id;
+          })?.telephone,
+        Cell: ({ row }) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer?.id === row.original.manufacturer_id;
+          })?.telephone,
+      },
     ];
-  }, [dense, parentInfo]);
+  }, [
+    dense,
+    isItemSelectable,
+    manufacturerList,
+    parentInfo.catalogue_item_properties,
+  ]);
+
+  const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
+    selectedRowState ?? {}
+  );
+
+  const [columnFilters, setColumnFilters] =
+    React.useState<MRT_ColumnFiltersState>([]);
+
+  const handleRowSelection = React.useCallback(
+    (row: MRT_Row<CatalogueItem>) => {
+      // Ensure selectable
+      if (isItemSelectable === undefined || isItemSelectable(row.original)) {
+        if (row.original.id === Object.keys(rowSelection)[0]) {
+          // Deselect
+          onChangeObsoleteReplacementId && onChangeObsoleteReplacementId(null);
+
+          setRowSelection({});
+        } else {
+          // Select
+          onChangeObsoleteReplacementId &&
+            onChangeObsoleteReplacementId(row.original.id);
+
+          setRowSelection((prev) => ({
+            [row.id]: !prev[row.id],
+          }));
+        }
+      }
+    },
+    [isItemSelectable, onChangeObsoleteReplacementId, rowSelection]
+  );
 
   const table = useMaterialReactTable({
     columns: dense ? [{ ...columns[0], size: 1135 }] : columns, // If dense only show the name column
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-    enableColumnOrdering: true,
+    enableColumnOrdering: dense ? false : true,
     enableFacetedValues: true,
+    enableColumnResizing: true,
     enableRowActions: dense ? false : true,
     enableStickyHeader: true,
     enableDensityToggle: false,
     enableRowSelection: dense ? true : false,
+    enableHiding: dense ? false : true,
+    enableTopToolbar: dense ? false : true,
+    enableMultiRowSelection: false,
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
     enableColumnVirtualization: true,
+    manualFiltering: false,
+    onColumnFiltersChange: setColumnFilters,
     columnVirtualizerOptions: {
       overscan: 4,
       estimateSize: () => 200,
@@ -322,15 +501,46 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       ...MRT_Localization_EN,
       noRecordsToDisplay: noResultsTxt,
     },
-    muiTableBodyRowProps: ({ row }) => {
-      return { component: TableRow, 'aria-label': `${row.original.name} row` };
+    onRowSelectionChange: (value) => {
+      setRowSelection(value);
     },
+
+    muiTableBodyRowProps: dense
+      ? ({ row }) => {
+          return {
+            component: TableRow,
+            onClick: () => handleRowSelection(row),
+
+            selected: rowSelection[row.id],
+            sx: {
+              cursor:
+                isItemSelectable === undefined || isItemSelectable(row.original)
+                  ? 'pointer'
+                  : 'not-allowed',
+            },
+            'aria-label': `${row.original.name} row`,
+          };
+        }
+      : undefined,
+    muiSelectCheckboxProps: dense
+      ? ({ row }) => {
+          return {
+            onClick: () => handleRowSelection(row),
+            disabled: !(
+              isItemSelectable === undefined || isItemSelectable(row.original)
+            ),
+          };
+        }
+      : undefined,
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      pagination: { pageSize: 15, pageIndex: 0 },
+      pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
     },
-    muiTableContainerProps: { sx: { height: dense ? 'inherit' : tableHeight } },
+    getRowId: (row) => row.id,
+    muiTableContainerProps: {
+      sx: { height: dense ? '360.4px' : tableHeight },
+    },
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
     muiSearchTextFieldProps: {
@@ -339,10 +549,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     },
     state: {
       showProgressBars: isLoading, //or showSkeletons
+      rowSelection,
+      columnFilters,
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: dense ? [5] : [15, 30, 45],
       shape: 'rounded',
       variant: 'outlined',
     },
@@ -375,17 +587,32 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       );
     },
     renderTopToolbarCustomActions: ({ table }) => (
-      <Button
-        variant="outlined"
-        onClick={() => {
-          setItemsDialogType('create');
-          table.setCreatingRow(true);
-        }}
-      >
-        Add Catalogue Item
-      </Button>
+      <Box sx={{ display: 'flex' }}>
+        <Button
+          startIcon={<AddIcon />}
+          sx={{ mx: '4px' }}
+          variant="outlined"
+          onClick={() => {
+            setItemsDialogType('create');
+            table.setCreatingRow(true);
+          }}
+        >
+          Add Catalogue Item
+        </Button>
+        <Button
+          startIcon={<ClearIcon />}
+          sx={{ mx: '4px' }}
+          variant="outlined"
+          disabled={columnFilters.length === 0}
+          onClick={() => {
+            table.resetColumnFilters();
+          }}
+        >
+          Clear Filters
+        </Button>
+      </Box>
     ),
-    renderRowActionMenuItems: ({ closeMenu, row }) => {
+    renderRowActionMenuItems: ({ closeMenu, row, table }) => {
       return [
         <MenuItem
           key={0}
@@ -432,6 +659,22 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           </ListItemIcon>
           <>Delete</>
         </MenuItem>,
+        <MenuItem
+          key={3}
+          aria-label={`Obsolete ${row.original.name} catalogue item`}
+          onClick={() => {
+            setObsoleteItemDialogOpen(true);
+            setSelectedCatalogueItem(row.original);
+
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <BlockIcon />
+          </ListItemIcon>
+          <>Obsolete</>
+        </MenuItem>,
       ];
     },
     renderDetailPanel: dense
@@ -439,6 +682,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <CatalogueItemsDetailsPanel
             catalogueItemIdData={row.original}
             catalogueCategoryData={parentInfo}
+            manufacturerData={manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.original.manufacturer_id;
+            })}
           />
         )
       : undefined,
@@ -449,12 +695,19 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       <MaterialReactTable table={table} />
 
       {!dense && (
-        <DeleteCatalogueItemsDialog
-          open={deleteItemDialogOpen}
-          onClose={() => setDeleteItemDialogOpen(false)}
-          catalogueItem={selectedCatalogueItem}
-          onChangeCatalogueItem={setSelectedCatalogueItem}
-        />
+        <>
+          <DeleteCatalogueItemsDialog
+            open={deleteItemDialogOpen}
+            onClose={() => setDeleteItemDialogOpen(false)}
+            catalogueItem={selectedCatalogueItem}
+            onChangeCatalogueItem={setSelectedCatalogueItem}
+          />
+          <ObsoleteCatalogueItemDialog
+            open={obsoleteItemDialogOpen}
+            onClose={() => setObsoleteItemDialogOpen(false)}
+            catalogueItem={selectedCatalogueItem}
+          />
+        </>
       )}
     </div>
   );

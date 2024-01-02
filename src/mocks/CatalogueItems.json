@@ -31,11 +31,7 @@
       }
     ],
     "id": "1",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "1",
     "cost_gbp": 500,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -84,11 +80,7 @@
       }
     ],
     "id": "2",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "2",
     "cost_gbp": 600,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -137,11 +129,7 @@
       }
     ],
     "id": "3",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "1",
     "cost_gbp": 700,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -190,11 +178,7 @@
       }
     ],
     "id": "90",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 800,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -243,11 +227,7 @@
       }
     ],
     "id": "24",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "2",
     "cost_gbp": 900,
     "cost_to_rework_gbp": 0,
     "days_to_replace": 7,
@@ -296,11 +276,7 @@
       }
     ],
     "id": "25",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "2",
     "cost_gbp": 1000,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -349,11 +325,7 @@
       }
     ],
     "id": "26",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 1100,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -402,11 +374,7 @@
       }
     ],
     "id": "27",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "1",
     "cost_gbp": 1200,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -455,11 +423,7 @@
       }
     ],
     "id": "28",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 1300,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -508,11 +472,7 @@
       }
     ],
     "id": "29",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "2",
     "cost_gbp": 1400,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -561,11 +521,7 @@
       }
     ],
     "id": "30",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "1",
     "cost_gbp": 1500,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -614,11 +570,7 @@
       }
     ],
     "id": "31",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 1600,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -667,11 +619,7 @@
       }
     ],
     "id": "32",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "2",
     "cost_gbp": 1700,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -720,11 +668,7 @@
       }
     ],
     "id": "33",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "1",
     "cost_gbp": 1800,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -773,11 +717,7 @@
       }
     ],
     "id": "34",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 1900,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -826,11 +766,7 @@
       }
     ],
     "id": "35",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "2",
     "cost_gbp": 2000,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -879,11 +815,7 @@
       }
     ],
     "id": "36",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 2100,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -932,11 +864,7 @@
       }
     ],
     "id": "37",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "2",
     "cost_gbp": 2200,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -985,11 +913,7 @@
       }
     ],
     "id": "38",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "2",
     "cost_gbp": 2300,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -1038,11 +962,7 @@
       }
     ],
     "id": "39",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 2400,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -1091,11 +1011,7 @@
       }
     ],
     "id": "40",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "2",
     "cost_gbp": 2500,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -1144,11 +1060,7 @@
       }
     ],
     "id": "41",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 2600,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -1197,11 +1109,7 @@
       }
     ],
     "id": "42",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "1",
     "cost_gbp": 2700,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -1250,11 +1158,7 @@
       }
     ],
     "id": "43",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "2",
     "cost_gbp": 2800,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -1303,11 +1207,7 @@
       }
     ],
     "id": "44",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 2900,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -1336,11 +1236,7 @@
       }
     ],
     "id": "89",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "1",
     "cost_gbp": 500,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -1364,11 +1260,7 @@
       }
     ],
     "id": "6",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 600,
     "cost_to_rework_gbp": 89,
     "days_to_replace": 7,
@@ -1397,11 +1289,7 @@
       }
     ],
     "id": "7",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "2",
     "cost_gbp": 700,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -1430,11 +1318,7 @@
       }
     ],
     "id": "8",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 800,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -1463,11 +1347,7 @@
       }
     ],
     "id": "9",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "1",
     "cost_gbp": 900,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -1496,11 +1376,7 @@
       }
     ],
     "id": "10",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "2",
     "cost_gbp": 1000,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -1529,11 +1405,7 @@
       }
     ],
     "id": "11",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 1100,
     "cost_to_rework_gbp": null,
     "days_to_replace": 90,
@@ -1562,11 +1434,7 @@
       }
     ],
     "id": "12",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "1",
     "cost_gbp": 1200,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -1595,11 +1463,7 @@
       }
     ],
     "id": "13",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 1300,
     "cost_to_rework_gbp": null,
     "days_to_replace": 7,
@@ -1628,11 +1492,7 @@
       }
     ],
     "id": "14",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "2",
     "cost_gbp": 200,
     "cost_to_rework_gbp": 50,
     "days_to_replace": 3,
@@ -1661,11 +1521,7 @@
       }
     ],
     "id": "15",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "1",
     "cost_gbp": 150,
     "cost_to_rework_gbp": 40,
     "days_to_replace": 4,
@@ -1694,11 +1550,7 @@
       }
     ],
     "id": "16",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "2",
     "cost_gbp": 180,
     "cost_to_rework_gbp": 45,
     "days_to_replace": 2,
@@ -1727,11 +1579,7 @@
       }
     ],
     "id": "17",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 220,
     "cost_to_rework_gbp": 55,
     "days_to_replace": 1,
@@ -1760,11 +1608,7 @@
       }
     ],
     "id": "18",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "3",
     "cost_gbp": 240,
     "cost_to_rework_gbp": 60,
     "days_to_replace": 3,
@@ -1793,11 +1637,7 @@
       }
     ],
     "id": "19",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "manufacturer_id": "1",
     "cost_gbp": 260,
     "cost_to_rework_gbp": 65,
     "days_to_replace": 2,
@@ -1825,12 +1665,8 @@
         "unit": "millibar"
       }
     ],
-    "id": "17",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "id": "20",
+    "manufacturer_id": "2",
     "cost_gbp": 220,
     "cost_to_rework_gbp": 55,
     "days_to_replace": 1,
@@ -1858,12 +1694,8 @@
         "unit": ""
       }
     ],
-    "id": "20",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "id": "21",
+    "manufacturer_id": "3",
     "cost_gbp": 250,
     "cost_to_rework_gbp": 60,
     "days_to_replace": 2,
@@ -1891,12 +1723,8 @@
         "unit": ""
       }
     ],
-    "id": "21",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "id": "22",
+    "manufacturer_id": "2",
     "cost_gbp": 270,
     "cost_to_rework_gbp": 70,
     "days_to_replace": 3,
@@ -1924,12 +1752,8 @@
         "unit": "millibar"
       }
     ],
-    "id": "22",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "id": "23",
+    "manufacturer_id": "1",
     "cost_gbp": 300,
     "cost_to_rework_gbp": 80,
     "days_to_replace": 4,
@@ -1957,12 +1781,8 @@
         "unit": "millibar"
       }
     ],
-    "id": "23",
-    "manufacturer": {
-      "name": "Manufacturer A",
-      "url": "http://example.com",
-      "address": "10 My Street"
-    },
+    "id": "24",
+    "manufacturer_id": "3",
     "cost_gbp": 320,
     "cost_to_rework_gbp": 90,
     "days_to_replace": 1,

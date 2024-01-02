@@ -66,6 +66,7 @@ describe('DeleteSystemDialog', () => {
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
 
     expect(props.onClose).toHaveBeenCalled();
+    expect(axiosDeleteSpy).not.toHaveBeenCalled();
   });
 
   it('sends a delete request, closes the dialog and navigates to the parent system when continue button is clicked with a valid system', async () => {
@@ -77,9 +78,7 @@ describe('DeleteSystemDialog', () => {
       `/v1/systems/${props.system.id}`
     );
     expect(props.onClose).toHaveBeenCalled();
-    expect(window.location.pathname).toBe(
-      `/inventory-management-system/systems/${props.system.parent_id}`
-    );
+    expect(window.location.pathname).toBe(`/systems/${props.system.parent_id}`);
   });
 
   it('displays error message when deleting a system with children', async () => {

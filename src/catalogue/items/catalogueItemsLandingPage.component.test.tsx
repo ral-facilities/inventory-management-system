@@ -15,7 +15,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('renders text correctly (only basic details given)', async () => {
-    createView('/inventory-management-system/catalogue/items/1');
+    createView('/catalogue/items/1');
 
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
@@ -38,7 +38,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('renders text correctly (extra details given)', async () => {
-    createView('/inventory-management-system/catalogue/items/2');
+    createView('/catalogue/items/2');
 
     await waitFor(() => {
       expect(screen.getByText('Cameras 2')).toBeInTheDocument();
@@ -66,7 +66,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('renders no item page correctly', async () => {
-    createView('/inventory-management-system/catalogue/items/1fds');
+    createView('/catalogue/items/1fds');
     await waitFor(() => {
       expect(
         screen.getByText(
@@ -81,7 +81,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('toggles the properties so it is either visible or hidden', async () => {
-    createView('/inventory-management-system/catalogue/items/1');
+    createView('/catalogue/items/1');
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
@@ -103,7 +103,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('toggles the details so it is either visible or hidden', async () => {
-    createView('/inventory-management-system/catalogue/items/1');
+    createView('/catalogue/items/1');
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
@@ -123,14 +123,14 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('shows the loading indicator', async () => {
-    createView('/inventory-management-system/catalogue/items/1');
+    createView('/catalogue/items/1');
 
     await waitFor(() => {
       expect(screen.getByRole('progressbar')).toBeInTheDocument();
     });
   });
   it('toggles the manufacturer so it is either visible or hidden', async () => {
-    createView('/inventory-management-system/catalogue/items/1');
+    createView('/catalogue/items/1');
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
@@ -152,7 +152,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('opens and closes the edit catalogue item dialog', async () => {
-    createView('/inventory-management-system/catalogue/items/1');
+    createView('/catalogue/items/1');
 
     await waitFor(() => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
@@ -175,7 +175,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('opens and closes the edit catalogue item dialog (more catalogue item details filled in)', async () => {
-    createView('/inventory-management-system/catalogue/items/6');
+    createView('/catalogue/items/6');
 
     await waitFor(() => {
       expect(screen.getByText('Energy Meters 27')).toBeInTheDocument();
@@ -198,7 +198,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('renders obsolete replace id link', async () => {
-    createView('/inventory-management-system/catalogue/items/89');
+    createView('/catalogue/items/89');
 
     await waitFor(() => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();

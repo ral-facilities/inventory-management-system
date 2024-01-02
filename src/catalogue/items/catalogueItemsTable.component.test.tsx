@@ -28,8 +28,8 @@ describe('Catalogue Items Table', () => {
 
   beforeEach(() => {
     props = {
-      dense: false,
       parentInfo: getCatalogueCategoryById('5'),
+      dense: false,
     };
     user = userEvent.setup();
     window.ResizeObserver = jest.fn().mockImplementation(() => ({
@@ -65,7 +65,7 @@ describe('Catalogue Items Table', () => {
 
     await ensureColumnsVisible([
       'Sensor brand',
-      'Cost to Rework (GBP)',
+      'Cost to Rework (£)',
       'Days to Rework',
     ]);
   });
@@ -80,7 +80,7 @@ describe('Catalogue Items Table', () => {
       'Obsolete Reason',
       'Measurement Range (Joules)',
       'Accuracy',
-      'Cost (GBP)',
+      'Cost (£)',
     ]);
   });
 
@@ -119,7 +119,7 @@ describe('Catalogue Items Table', () => {
     });
 
     await ensureColumnsVisible([
-      'Cost to Rework (GBP)',
+      'Cost to Rework (£)',
       'Time to replace (days)',
       'Days to Rework',
       'Drawing Number',
@@ -142,11 +142,20 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
+    await ensureColumnsVisible(['Drawing Link', 'Item Model Number']);
+  });
+
+  it('renders table correctly (section 5 due to column virtualisation)', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Name')).toBeInTheDocument();
+    });
+
     await ensureColumnsVisible([
-      'Drawing Link',
-      'Item Model Number',
       'Manufacturer Name',
+      'Manufacturer URL',
       'Manufacturer Address',
+      'Manufacturer Telephone',
     ]);
   });
 
@@ -302,6 +311,41 @@ describe('Catalogue Items Table', () => {
     await user.click(saveAsButton);
   });
 
+  it('navigates to replacement obsolete item', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    const url = screen.queryAllByText('Click here');
+    expect(url[0]).toHaveAttribute('href', '/items/6');
+  });
+  it('opens obsolete dialog and can close it again', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Obsolete')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Obsolete'));
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('navigates to the manufacturer url', async () => {
     createView();
     await waitFor(() => {
@@ -314,14 +358,16 @@ describe('Catalogue Items Table', () => {
     expect(url[0]).toHaveAttribute('href', 'http://example.com');
   });
 
-  it('navigates to replacement obsolete item', async () => {
+  it('navigates to manufacturer landing page', async () => {
     createView();
     await waitFor(() => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
 
-    const url = screen.queryAllByText('Click here');
-    expect(url[0]).toHaveAttribute('href', '/items/6');
+    await ensureColumnsVisible(['Manufacturer Name']);
+
+    const url = screen.getAllByText('Manufacturer A');
+    expect(url[0]).toHaveAttribute('href', '/manufacturer/1');
   });
 
   it('renders the dense table correctly', async () => {
@@ -336,6 +382,32 @@ describe('Catalogue Items Table', () => {
     });
 
     expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('sets the table filters and clears the table filters', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+    expect(clearFiltersButton).toBeDisabled();
+
+    const nameInput = screen.getByLabelText('Filter by Name');
+
+    await user.type(nameInput, '29');
+
+    await waitFor(() => {
+      expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
+    });
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
   });
 
   // skipping this test as it causes an infinite loop when expanding the details panel

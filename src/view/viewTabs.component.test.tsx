@@ -62,8 +62,8 @@ describe('View Tabs', () => {
     ).toHaveTextContent('Systems');
   });
 
-  it('navigates to catalogue if the url is /inventory-management-system/', async () => {
-    createView('/inventory-management-system/');
+  it('navigates to catalogue if the url is /', async () => {
+    createView('/');
     const viewTabs = within(screen.getByRole('tablist', { name: 'view tabs' }));
 
     expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
@@ -79,7 +79,7 @@ describe('View Tabs', () => {
   });
 
   it('updates the tab value when url is not default Tab', async () => {
-    createView('/inventory-management-system/systems');
+    createView('/systems');
 
     const viewTabs = within(screen.getByRole('tablist', { name: 'view tabs' }));
 

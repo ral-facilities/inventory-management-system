@@ -140,5 +140,15 @@
       ]
     ],
     "full_trail": false
+  },
+  {
+    "id": "656da8ef9cba7a76c6f81a5d",
+    "trail": [
+      [
+        "656da8ef9cba7a76c6f81a5d",
+        "Pulse Laser"
+      ]
+    ],
+    "full_trail": true
   }
 ]

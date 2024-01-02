@@ -9,8 +9,13 @@ import axios, { AxiosError } from 'axios';
 import {
   AddSystem,
   BreadcrumbsInfo,
+  CopyToSystem,
+  EditSystem,
+  ErrorParsing,
+  MoveToSystem,
   System,
   SystemImportanceType,
+  TransferState,
 } from '../app.types';
 import { settings } from '../settings';
 
@@ -119,10 +124,10 @@ export const useSystemsBreadcrumbs = (
       return fetchSystemsBreadcrumbs(id ?? '');
     },
     {
+      enabled: id !== null,
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
-      enabled: id !== null,
     }
   );
 };
@@ -150,8 +155,50 @@ export const useAddSystem = (): UseMutationResult<
     onError: (error) => {
       console.log(`Got error: '${error.message}'`);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['Systems'] });
+    onSuccess: (systemResponse) => {
+      queryClient.invalidateQueries({
+        queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
+      });
+    },
+  });
+};
+
+const editSystem = async (system: EditSystem): Promise<System> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+
+  const { id, ...updateData } = system;
+
+  return axios
+    .patch<System>(`${apiUrl}/v1/systems/${id}`, updateData)
+    .then((response) => response.data);
+};
+
+export const useEditSystem = (): UseMutationResult<
+  System,
+  AxiosError,
+  EditSystem
+> => {
+  const queryClient = useQueryClient();
+  return useMutation((system: EditSystem) => editSystem(system), {
+    onError: (error) => {
+      console.log('Got error ' + error.message);
+    },
+    onSuccess: (systemResponse: System) => {
+      queryClient.invalidateQueries({
+        queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
+      });
+      queryClient.invalidateQueries({
+        // Don't use ID here as will also need to update any of its children as well
+        queryKey: ['SystemBreadcrumbs'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['System', systemResponse.id],
+      });
     },
   });
 };
@@ -184,5 +231,132 @@ export const useDeleteSystem = (): UseMutationResult<
       queryClient.invalidateQueries({ queryKey: ['Systems'] });
       queryClient.removeQueries({ queryKey: ['System'] });
     },
+  });
+};
+
+export const useMoveToSystem = (): UseMutationResult<
+  TransferState[],
+  AxiosError,
+  MoveToSystem
+> => {
+  const queryClient = useQueryClient();
+
+  return useMutation(async (moveToSystem: MoveToSystem) => {
+    const transferStates: TransferState[] = [];
+
+    const successfulIds: string[] = [];
+
+    const promises = moveToSystem.selectedSystems.map(
+      async (system: System) => {
+        return editSystem({
+          id: system.id,
+          parent_id: moveToSystem.targetSystem?.id || null,
+        })
+          .then((result: System) => {
+            const targetSystemName = moveToSystem.targetSystem?.name || 'Root';
+            transferStates.push({
+              name: system.name,
+              message: `Successfully moved to ${targetSystemName}`,
+              state: 'success',
+            });
+
+            successfulIds.push(system.id);
+          })
+          .catch((error) => {
+            const response = error.response?.data as ErrorParsing;
+
+            transferStates.push({
+              name: system.name,
+              message: response.detail,
+              state: 'error',
+            });
+          });
+      }
+    );
+
+    await Promise.all(promises);
+
+    if (successfulIds.length > 0) {
+      queryClient.invalidateQueries({
+        queryKey: ['Systems', moveToSystem.targetSystem?.id || null],
+      });
+      queryClient.invalidateQueries({ queryKey: ['SystemBreadcrumbs'] });
+      successfulIds.forEach((id: string) =>
+        queryClient.invalidateQueries({ queryKey: ['System', id] })
+      );
+    }
+
+    return transferStates;
+  });
+};
+
+export const useCopyToSystem = (): UseMutationResult<
+  TransferState[],
+  AxiosError,
+  CopyToSystem
+> => {
+  const queryClient = useQueryClient();
+
+  const successfulIds: string[] = [];
+
+  return useMutation(async (copyToSystem: CopyToSystem) => {
+    const transferStates: TransferState[] = [];
+
+    const promises = copyToSystem.selectedSystems.map(
+      async (system: System) => {
+        // Information to post (backend will just ignore the extra here - only id and code)
+        // Also use Object.assign to copy the data otherwise will modify in place causing issues
+        // in tests
+        const systemAdd: AddSystem = Object.assign({}, system) as AddSystem;
+
+        // Assing new parent
+        systemAdd.parent_id = copyToSystem.targetSystem?.id || null;
+
+        // Avoid duplicates by appending _copy_n for nth copy
+        if (copyToSystem.existingSystemCodes.includes(system.code)) {
+          let count = 1;
+          let newName = systemAdd.name;
+          let newCode = system.code;
+
+          while (copyToSystem.existingSystemCodes.includes(newCode)) {
+            newName = `${systemAdd.name}_copy_${count}`;
+            newCode = `${system.code}_copy_${count}`;
+            count++;
+          }
+
+          systemAdd.name = newName;
+        }
+
+        return addSystem(systemAdd)
+          .then((result: System) => {
+            const targetSystemName = copyToSystem.targetSystem?.name || 'Root';
+            transferStates.push({
+              name: system.name,
+              message: `Successfully copied to ${targetSystemName}`,
+              state: 'success',
+            });
+
+            successfulIds.push(result.id);
+          })
+          .catch((error) => {
+            const response = error.response?.data as ErrorParsing;
+
+            transferStates.push({
+              name: system.name,
+              message: response.detail,
+              state: 'error',
+            });
+          });
+      }
+    );
+
+    await Promise.all(promises);
+
+    if (successfulIds.length > 0)
+      queryClient.invalidateQueries({
+        queryKey: ['Systems', copyToSystem.targetSystem?.id || 'null'],
+      });
+
+    return transferStates;
   });
 };

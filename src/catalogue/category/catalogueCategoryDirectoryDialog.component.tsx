@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -190,29 +191,35 @@ const CatalogueCategoryDirectoryDialog = (
     >
       <DialogTitle sx={{ marginLeft: 2 }}>
         <Grid container spacing={2}>
-          <Grid container item flexDirection="row" alignItems="center" xs={12}>
-            <>
-              {requestType === 'moveTo' ? 'Move ' : 'Copy '}{' '}
-              {selectedCategories.length}{' '}
-              {selectedCategories.length === 1
-                ? 'catalogue category'
-                : 'catalogue categories'}{' '}
-              to a different catalogue category
-            </>
-            {requestType === 'copyTo' && (
-              <Tooltip
-                title={
-                  'Only the catalogue category details will be copied; no contained catalogue categories or catalogue items within the catalogue category will be included.'
-                }
-                placement="top"
-                enterTouchDelay={0}
-                arrow
-                aria-label={'Copy Warning'}
-                sx={{ mx: 2 }}
-              >
-                <InfoOutlinedIcon />
-              </Tooltip>
-            )}
+          <Grid item>
+            <Box
+              display="inline-flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <>
+                {requestType === 'moveTo' ? 'Move ' : 'Copy '}{' '}
+                {selectedCategories.length}{' '}
+                {selectedCategories.length === 1
+                  ? 'catalogue category'
+                  : 'catalogue categories'}{' '}
+                to a different catalogue category
+              </>
+              {requestType === 'copyTo' && (
+                <Tooltip
+                  title={
+                    'Only the catalogue category details will be copied; no contained catalogue categories or catalogue items within the catalogue category will be included.'
+                  }
+                  placement="top"
+                  enterTouchDelay={0}
+                  arrow
+                  aria-label={'Copy Warning'}
+                  sx={{ mx: 2 }}
+                >
+                  <InfoOutlinedIcon />
+                </Tooltip>
+              )}
+            </Box>
           </Grid>
           <Grid item xs={12}>
             <Breadcrumbs

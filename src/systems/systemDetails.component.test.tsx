@@ -81,6 +81,28 @@ describe('SystemDetails', () => {
     expect(screen.getByText('Please select a system')).toBeInTheDocument();
   });
 
+  it('can open the edit dialog and close it again', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText(mockSystemDetails.name)).toBeInTheDocument();
+    });
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Edit System' }));
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('can open the delete dialog and close it again', async () => {
     createView();
 
