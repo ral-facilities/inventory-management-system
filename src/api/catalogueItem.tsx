@@ -216,7 +216,7 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
         })
           .then((result) => {
             transferStates.push({
-              name: result.name,
+              name: item.name,
               message: `Successfully moved to ${
                 moveToCatalogueItem.targetCatalogueCategory?.name || 'Root'
               }`,
@@ -229,7 +229,7 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
             const response = error.response?.data as ErrorParsing;
 
             transferStates.push({
-              name: moveToCatalogueItem.selectedItems[index].name,
+              name: item.name,
               message: response.detail,
               state: 'error',
             });

@@ -283,12 +283,12 @@ describe('catalogue items api functions', () => {
       expect(result.current.data).toEqual([
         {
           message: 'Successfully moved to RF Lenses',
-          name: '',
+          name: 'test',
           state: 'success',
         },
         {
           message: 'Successfully moved to RF Lenses',
-          name: '',
+          name: 'test_copy1',
           state: 'success',
         },
       ]);
