@@ -406,6 +406,11 @@ const CatalogueCategoryDialog = React.memo(
                   ? handleAddCatalogueCategory
                   : handleEditCatalogueCategory
               }
+              disabled={
+                formError !== undefined ||
+                catchAllError ||
+                nameError !== undefined
+              }
             >
               Save
             </Button>

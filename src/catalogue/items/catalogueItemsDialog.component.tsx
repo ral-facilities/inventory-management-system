@@ -106,7 +106,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const [propertyErrors, setPropertyErrors] = React.useState(
     new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
   );
-
   // set the errors as the types into the input fields
 
   const [errorMessages, setErrorMessages] = React.useState<
@@ -987,6 +986,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             sx={{ width: '50%', mx: 1 }}
             onClick={
               type === 'edit' ? handleEditCatalogueItem : handleAddCatalogueItem
+            }
+            disabled={
+              JSON.stringify(errorMessages) !== '{}' ||
+              catchAllError ||
+              formError ||
+              propertyErrors.some((value) => {
+                return value === true;
+              })
             }
           >
             Save
