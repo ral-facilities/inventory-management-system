@@ -11,7 +11,7 @@ import { hooksWrapperWithProviders } from '../setupTests';
 import {
   useAddCatalogueCategory,
   useCatalogueBreadcrumbs,
-  useCatalogueCategory,
+  useCatalogueCategories,
   useCatalogueCategoryById,
   useCopyToCatalogueCategory,
   useDeleteCatalogueCategory,
@@ -126,9 +126,9 @@ describe('catalogue category api functions', () => {
     );
   });
 
-  describe('useCatalogueCategory', () => {
+  describe('useCatalogueCategories', () => {
     it('sends request to fetch parent catalogue category data and returns successful response', async () => {
-      const { result } = renderHook(() => useCatalogueCategory(false, '2'), {
+      const { result } = renderHook(() => useCatalogueCategories(false, '2'), {
         wrapper: hooksWrapperWithProviders(),
       });
 

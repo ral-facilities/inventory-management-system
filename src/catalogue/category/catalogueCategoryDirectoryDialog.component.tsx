@@ -12,7 +12,7 @@ import {
 import React from 'react';
 import {
   useCatalogueBreadcrumbs,
-  useCatalogueCategory,
+  useCatalogueCategories,
   useCatalogueCategoryById,
   useCopyToCatalogueCategory,
   useMoveToCatalogueCategory,
@@ -48,7 +48,7 @@ const CatalogueCategoryDirectoryDialog = (
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategory(
+  } = useCatalogueCategories(
     false,
     !catalogueCurrDirId ? 'null' : catalogueCurrDirId
   );

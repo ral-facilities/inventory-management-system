@@ -1,4 +1,3 @@
-import axios, { AxiosError } from 'axios';
 import {
   useMutation,
   UseMutationResult,
@@ -6,19 +5,20 @@ import {
   useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
+import axios, { AxiosError } from 'axios';
 import {
   AddCatalogueCategory,
   BreadcrumbsInfo,
   CatalogueCategory,
-  TransferState,
   CopyToCatalogueCategory,
   EditCatalogueCategory,
   ErrorParsing,
   MoveToCatalogueCategory,
+  TransferState,
 } from '../app.types';
 import { settings } from '../settings';
 
-const fetchCatalogueCategory = async (
+const fetchCatalogueCategories = async (
   parent_id: string
 ): Promise<CatalogueCategory[]> => {
   let apiUrl: string;
@@ -40,14 +40,14 @@ const fetchCatalogueCategory = async (
     });
 };
 
-export const useCatalogueCategory = (
+export const useCatalogueCategories = (
   isLeaf: boolean,
   parent_id: string
 ): UseQueryResult<CatalogueCategory[], AxiosError> => {
   return useQuery<CatalogueCategory[], AxiosError>(
-    ['CatalogueCategory', parent_id],
+    ['CatalogueCategories', parent_id],
     (params) => {
-      return fetchCatalogueCategory(parent_id);
+      return fetchCatalogueCategories(parent_id);
     },
     {
       onError: (error) => {
@@ -124,7 +124,7 @@ export const useAddCatalogueCategory = (): UseMutationResult<
         console.log('Got error ' + error.message);
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategories'] });
       },
     }
   );
@@ -162,7 +162,7 @@ export const useEditCatalogueCategory = (): UseMutationResult<
         console.log('Got error ' + error.message);
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategories'] });
         queryClient.invalidateQueries({ queryKey: ['CatalogueCategoryById'] });
       },
     }
@@ -219,7 +219,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
       if (successfulIds.length > 0) {
         queryClient.invalidateQueries({
           queryKey: [
-            'CatalogueCategory',
+            'CatalogueCategories',
             moveToCatalogueCategory.targetCategory?.id || 'null',
           ],
         });
@@ -227,7 +227,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
         const uniqueParentIds = new Set(successfulParentIds);
         uniqueParentIds.forEach((parentId: string) =>
           queryClient.invalidateQueries({
-            queryKey: ['CatalogueCategory', parentId],
+            queryKey: ['CatalogueCategories', parentId],
           })
         );
         queryClient.invalidateQueries({ queryKey: ['CatalogueBreadcrumbs'] });
@@ -328,7 +328,7 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
         // Only invalidate the unique parents
         new Set(successfulParentIds).forEach((parentId) =>
           queryClient.invalidateQueries({
-            queryKey: ['CatalogueCategory', parentId],
+            queryKey: ['CatalogueCategories', parentId],
           })
         );
 
@@ -369,7 +369,7 @@ export const useDeleteCatalogueCategory = (): UseMutationResult<
         console.log('Got error ' + error.message);
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategories'] });
       },
     }
   );

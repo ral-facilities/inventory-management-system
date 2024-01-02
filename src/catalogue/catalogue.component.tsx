@@ -15,7 +15,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   useCatalogueBreadcrumbs,
-  useCatalogueCategory,
+  useCatalogueCategories,
   useCatalogueCategoryById,
 } from '../api/catalogueCategory';
 import {
@@ -124,7 +124,7 @@ function Catalogue() {
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategory(
+  } = useCatalogueCategories(
     catalogueCategoryDetailLoading ? true : !!parentInfo && parentInfo.is_leaf,
     !catalogueId ? 'null' : catalogueId.replace('/', '')
   );

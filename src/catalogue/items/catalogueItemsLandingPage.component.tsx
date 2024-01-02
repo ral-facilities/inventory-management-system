@@ -13,8 +13,8 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useCatalogueCategoryById } from '../../api/catalogueCategory';
 import { useCatalogueItem } from '../../api/catalogueItem';
-import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import { useManufacturer } from '../../api/manufacturer';
+import CatalogueItemsDialog from './catalogueItemsDialog.component';
 
 function CatalogueItemsLandingPage() {
   const location = useLocation();

@@ -20,7 +20,7 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import {
   useCatalogueBreadcrumbs,
-  useCatalogueCategory,
+  useCatalogueCategories,
   useCatalogueCategoryById,
 } from '../../api/catalogueCategory';
 import {
@@ -117,7 +117,7 @@ const ObsoleteCatalogueItemDialog = (
   const {
     data: catalogueCategoryDataList,
     isLoading: catalogueCategoryDataListLoading,
-  } = useCatalogueCategory(false, catalogueCurrDirId ?? 'null');
+  } = useCatalogueCategories(false, catalogueCurrDirId ?? 'null');
 
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
     catalogueCurrDirId ?? ''
