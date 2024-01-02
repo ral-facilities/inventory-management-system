@@ -643,7 +643,7 @@ describe('Catalogue Items', () => {
             { name: 'Accuracy', value: '±0.5%', unit: '' },
           ],
           id: '89',
-          manufacturer_id: '3',
+          manufacturer_id: '1',
           cost_gbp: 500,
           cost_to_rework_gbp: null,
           days_to_replace: 7,
