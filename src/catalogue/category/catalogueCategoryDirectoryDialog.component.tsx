@@ -60,7 +60,7 @@ const CatalogueCategoryDirectoryDialog = (
   }, [onChangeCatalogueCurrDirId, onChangeSelectedCategories, onClose]);
 
   const { mutateAsync: moveToCatalogueCategory } = useMoveToCatalogueCategory();
-  const { mutateAsync: CopyToCatalogueCategory } = useCopyToCatalogueCategory();
+  const { mutateAsync: copyToCatalogueCategory } = useCopyToCatalogueCategory();
 
   const { data: targetCategory, isLoading: targetCategoryLoading } =
     useCatalogueCategory(catalogueCurrDirId ?? undefined);
@@ -97,7 +97,7 @@ const CatalogueCategoryDirectoryDialog = (
         (category) => category.code
       );
 
-      CopyToCatalogueCategory({
+      copyToCatalogueCategory({
         selectedCategories: selectedCategories,
         // Only reason for targetSystem to be undefined here is if not loading at all
         // which happens when at root
@@ -109,7 +109,7 @@ const CatalogueCategoryDirectoryDialog = (
       });
     }
   }, [
-    CopyToCatalogueCategory,
+    copyToCatalogueCategory,
     catalogueCategoryData,
     catalogueCurrDirId,
     handleClose,
