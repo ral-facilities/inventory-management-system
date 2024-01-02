@@ -319,13 +319,14 @@ export const useCopyToCatalogueItem = (): UseMutationResult<
 
     await Promise.all(promises);
 
-    if (successfulIds.length > 0)
-      queryClient.invalidateQueries({
-        queryKey: [
-          'CatalogueItems',
-          copyToCatalogueItem.targetCatalogueCategory?.id || 'null',
-        ],
-      });
+    if (successfulIds.length > 0) {
+      const uniqueSuccessfulIds = new Set(successfulIds);
+      uniqueSuccessfulIds.forEach((catalogueCategoryId: string) =>
+        queryClient.invalidateQueries({
+          queryKey: ['CatalogueItems', catalogueCategoryId],
+        })
+      );
+    }
 
     return transferStates;
   });
