@@ -1,4 +1,3 @@
-import axios, { AxiosError } from 'axios';
 import {
   useMutation,
   UseMutationResult,
@@ -6,19 +5,20 @@ import {
   useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
+import axios, { AxiosError } from 'axios';
 import {
   AddCatalogueCategory,
   BreadcrumbsInfo,
   CatalogueCategory,
-  TransferState,
   CopyToCatalogueCategory,
   EditCatalogueCategory,
   ErrorParsing,
   MoveToCatalogueCategory,
+  TransferState,
 } from '../app.types';
 import { settings } from '../settings';
 
-const fetchCatalogueCategory = async (
+const fetchCatalogueCategories = async (
   parent_id: string
 ): Promise<CatalogueCategory[]> => {
   let apiUrl: string;
@@ -40,14 +40,14 @@ const fetchCatalogueCategory = async (
     });
 };
 
-export const useCatalogueCategory = (
+export const useCatalogueCategories = (
   isLeaf: boolean,
   parent_id: string
 ): UseQueryResult<CatalogueCategory[], AxiosError> => {
   return useQuery<CatalogueCategory[], AxiosError>(
-    ['CatalogueCategory', parent_id],
+    ['CatalogueCategories', parent_id],
     (params) => {
-      return fetchCatalogueCategory(parent_id);
+      return fetchCatalogueCategories(parent_id);
     },
     {
       onError: (error) => {
@@ -123,8 +123,10 @@ export const useAddCatalogueCategory = (): UseMutationResult<
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+      onSuccess: (category) => {
+        queryClient.invalidateQueries({
+          queryKey: ['CatalogueCategories', category.parent_id ?? 'null'],
+        });
       },
     }
   );
@@ -161,9 +163,17 @@ export const useEditCatalogueCategory = (): UseMutationResult<
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategoryByID'] });
+      onSuccess: (category) => {
+        queryClient.invalidateQueries({
+          queryKey: ['CatalogueCategories', category.parent_id ?? 'null'],
+        });
+        queryClient.invalidateQueries({
+          // Don't use ID here as will also need to update any of its children as well
+          queryKey: ['CatalogueBreadcrumbs'],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['CatalogueCategory', category.id],
+        });
       },
     }
   );
@@ -175,66 +185,67 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
   MoveToCatalogueCategory
 > => {
   const queryClient = useQueryClient();
+
   return useMutation(
     async (moveToCatalogueCategory: MoveToCatalogueCategory) => {
       const transferStates: TransferState[] = [];
-      let hasSuccessfulEdit = false;
 
-      const targetLocationInfo = {
-        name: moveToCatalogueCategory.targetLocationCatalogueCategory.name,
-        id: moveToCatalogueCategory.targetLocationCatalogueCategory.id,
-      };
+      // Ids for invalidation (parentIds must be a string value of 'null' for invalidation)
+      const successfulIds: string[] = [];
+      const successfulParentIds: string[] = [];
 
-      const promises = moveToCatalogueCategory.catalogueCategories.map(
-        async (category: EditCatalogueCategory, index) => {
-          const { name, ...categoryWithoutName } = category;
-
-          if (
-            moveToCatalogueCategory.selectedCategories[index].parent_id ===
-            category.parent_id
-          ) {
-            const errorTransferState: TransferState = {
-              name: category.name ?? '',
-              message:
-                'The destination cannot be the same as the catalogue category itself',
-              state: 'error',
-            };
-            transferStates.push(errorTransferState);
-
-            return;
-          }
-          return editCatalogueCategory(categoryWithoutName)
+      const promises = moveToCatalogueCategory.selectedCategories.map(
+        async (category: CatalogueCategory) => {
+          return editCatalogueCategory({
+            id: category.id,
+            parent_id: moveToCatalogueCategory.targetCategory?.id || null,
+          })
             .then((result) => {
-              const successTransferState: TransferState = {
+              transferStates.push({
                 name: result.name ?? '',
-                message: `Successfully moved to ${targetLocationInfo.name}`,
+                message: `Successfully moved to ${
+                  moveToCatalogueCategory.targetCategory?.name || 'Root'
+                }`,
                 state: 'success',
-              };
-              transferStates.push(successTransferState);
-              hasSuccessfulEdit = true;
+              });
+
+              successfulIds.push(category.id);
+              successfulParentIds.push(category.parent_id || 'null');
             })
             .catch((error) => {
               const response = error.response?.data as ErrorParsing;
 
-              const selectedCategory =
-                moveToCatalogueCategory.selectedCategories.find(
-                  (selectedCategory) => selectedCategory.id === category.id
-                );
-              const errorTransferState: TransferState = {
-                name: selectedCategory?.name ?? '',
+              transferStates.push({
+                name: category.name,
                 message: response.detail,
                 state: 'error',
-              };
-              transferStates.push(errorTransferState);
+              });
             });
         }
       );
 
       await Promise.all(promises);
 
-      if (hasSuccessfulEdit) {
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+      if (successfulIds.length > 0) {
+        queryClient.invalidateQueries({
+          queryKey: [
+            'CatalogueCategories',
+            moveToCatalogueCategory.targetCategory?.id || 'null',
+          ],
+        });
+        // Also need to invalidate each parent we are moving from (likely just the one)
+        const uniqueParentIds = new Set(successfulParentIds);
+        uniqueParentIds.forEach((parentId: string) =>
+          queryClient.invalidateQueries({
+            queryKey: ['CatalogueCategories', parentId],
+          })
+        );
         queryClient.invalidateQueries({ queryKey: ['CatalogueBreadcrumbs'] });
+        successfulIds.forEach((id: string) =>
+          queryClient.invalidateQueries({
+            queryKey: ['CatalogueCategory', id],
+          })
+        );
       }
 
       return transferStates;
@@ -253,45 +264,83 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
   CopyToCatalogueCategory
 > => {
   const queryClient = useQueryClient();
+
   return useMutation(
     async (copyToCatalogueCategory: CopyToCatalogueCategory) => {
       const transferStates: TransferState[] = [];
-      let hasSuccessfulAdd = false;
 
-      const targetLocationInfo = {
-        name: copyToCatalogueCategory.targetLocationCatalogueCategory.name,
-        id: copyToCatalogueCategory.targetLocationCatalogueCategory.id,
-      };
+      // Ids for invalidation (must be a string value of 'null' if null
+      // for invalidation)
+      const successfulParentIds: string[] = [];
 
-      const promises = copyToCatalogueCategory.catalogueCategories.map(
-        async (category: AddCatalogueCategory, index) => {
-          return addCatalogueCategory(category)
+      const promises = copyToCatalogueCategory.selectedCategories.map(
+        async (category: CatalogueCategory) => {
+          // Data to post (backend will just ignore the extra here - only id and code)
+          // Also use Object.assign to copy the data otherwise will modify in place causing issues
+          // in tests
+          const categoryAdd: AddCatalogueCategory = Object.assign(
+            {},
+            category
+          ) as AddCatalogueCategory;
+
+          // Assign new parent
+          categoryAdd.parent_id =
+            copyToCatalogueCategory.targetCategory?.id || null;
+
+          // Avoid duplicates by appending _copy_n for nth copy
+          if (
+            copyToCatalogueCategory.existingCategoryCodes.includes(
+              category.code
+            )
+          ) {
+            let count = 1;
+            let newName = categoryAdd.name;
+            let newCode = category.code;
+
+            while (
+              copyToCatalogueCategory.existingCategoryCodes.includes(newCode)
+            ) {
+              newName = `${categoryAdd.name}_copy_${count}`;
+              newCode = `${category.code}_copy_${count}`;
+              count++;
+            }
+
+            categoryAdd.name = newName;
+          }
+
+          return addCatalogueCategory(categoryAdd)
             .then((result) => {
-              const successTransferState: TransferState = {
-                name: result.name ?? '',
-                message: `Successfully copied to ${targetLocationInfo.name}`,
+              const targetCategoryName =
+                copyToCatalogueCategory.targetCategory?.name || 'Root';
+              transferStates.push({
+                name: result.name,
+                message: `Successfully copied to ${targetCategoryName}`,
                 state: 'success',
-              };
-              transferStates.push(successTransferState);
-              hasSuccessfulAdd = true;
+              });
+
+              successfulParentIds.push(result.parent_id || 'null');
             })
             .catch((error) => {
               const response = error.response?.data as ErrorParsing;
-              const errorTransferState: TransferState = {
-                name: category.name ?? '',
+
+              transferStates.push({
+                name: category.name,
                 message: response.detail,
                 state: 'error',
-              };
-              transferStates.push(errorTransferState);
+              });
             });
         }
       );
 
       await Promise.all(promises);
 
-      if (hasSuccessfulAdd) {
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
-      }
+      if (successfulParentIds.length > 0)
+        // Only invalidate the unique parents
+        new Set(successfulParentIds).forEach((parentId) =>
+          queryClient.invalidateQueries({
+            queryKey: ['CatalogueCategories', parentId],
+          })
+        );
 
       return transferStates;
     },
@@ -330,13 +379,13 @@ export const useDeleteCatalogueCategory = (): UseMutationResult<
         console.log('Got error ' + error.message);
       },
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategory'] });
+        queryClient.invalidateQueries({ queryKey: ['CatalogueCategories'] });
       },
     }
   );
 };
 
-const fetchCatalogueCategoryById = async (
+const fetchCatalogueCategory = async (
   id: string | undefined
 ): Promise<CatalogueCategory> => {
   let apiUrl: string;
@@ -353,13 +402,13 @@ const fetchCatalogueCategoryById = async (
     });
 };
 
-export const useCatalogueCategoryById = (
+export const useCatalogueCategory = (
   id: string | undefined
 ): UseQueryResult<CatalogueCategory, AxiosError> => {
   return useQuery<CatalogueCategory, AxiosError>(
-    ['CatalogueCategoryByID', id],
+    ['CatalogueCategory', id],
     (params) => {
-      return fetchCatalogueCategoryById(id);
+      return fetchCatalogueCategory(id);
     },
     {
       onError: (error) => {

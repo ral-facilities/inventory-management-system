@@ -19,7 +19,7 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import {
   useAddCatalogueCategory,
-  useCatalogueCategoryById,
+  useCatalogueCategory,
   useEditCatalogueCategory,
 } from '../../api/catalogueCategory';
 import {
@@ -100,7 +100,7 @@ const CatalogueCategoryDialog = React.memo(
 
     const [errorFields, setErrorFields] = React.useState<number[]>([]);
 
-    const { data: selectedCatalogueCategoryData } = useCatalogueCategoryById(
+    const { data: selectedCatalogueCategoryData } = useCatalogueCategory(
       selectedCatalogueCategory?.id
     );
 

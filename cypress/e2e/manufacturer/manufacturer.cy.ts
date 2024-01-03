@@ -299,6 +299,51 @@ describe('Manufacturer', () => {
         cy.contains('Please enter a post code or zip code.');
       });
   });
+
+  it('navigates to landing page and navigates back to the table view', () => {
+    cy.findByText('Manufacturer A').click();
+    cy.findByText('Telephone number:').should('exist');
+
+    cy.findByRole('link', { name: 'Manufacturer table view' }).click();
+
+    cy.findByText('Manufacturer A').should('exist');
+    cy.findByText('Manufacturer B').should('exist');
+    cy.findByText('Manufacturer C').should('exist');
+  });
+
+  it('navigates to landing page, opens edit dialog and closes it', () => {
+    cy.findByText('Manufacturer A').click();
+    cy.findByText('Telephone number:').should('exist');
+
+    cy.findByRole('button', { name: 'Edit' }).click();
+    cy.findByLabelText('Name *').should('have.value', 'Manufacturer A');
+    cy.findByLabelText('URL').should('have.value', 'http://example.com');
+    cy.findByLabelText('Address Line *').should(
+      'have.value',
+      '1 Example Street'
+    );
+    cy.findByLabelText('Town').should('have.value', 'Oxford');
+    cy.findByLabelText('County').should('have.value', 'Oxfordshire');
+    cy.findByLabelText('Country *').should('have.value', 'United Kingdom');
+    cy.findByLabelText('Post/Zip code *').should('have.value', 'OX1 2AB');
+    cy.findByLabelText('Telephone number').should('have.value', '07334893348');
+
+    cy.findByRole('button', { name: 'Cancel' }).click();
+  });
+
+  it('displays expired landing page message and navigates back to manufacturer table view', () => {
+    cy.visit('/manufacturer/invalid');
+
+    cy.findByText(
+      `This manufacturer doesn't exist. Please click the Home button to navigate to the manufacturer table`
+    ).should('exist');
+
+    cy.findByRole('link', { name: 'Home' }).click();
+
+    cy.findByText('Manufacturer A').should('exist');
+    cy.findByText('Manufacturer B').should('exist');
+    cy.findByText('Manufacturer C').should('exist');
+  });
   it('sets the table filters and clears the table filters', () => {
     cy.findByText('Manufacturer A').should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');

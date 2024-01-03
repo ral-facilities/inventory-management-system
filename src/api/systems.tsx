@@ -278,7 +278,7 @@ export const useMoveToSystem = (): UseMutationResult<
 
     if (successfulIds.length > 0) {
       queryClient.invalidateQueries({
-        queryKey: ['Systems', moveToSystem.targetSystem?.id || null],
+        queryKey: ['Systems', moveToSystem.targetSystem?.id || 'null'],
       });
       queryClient.invalidateQueries({ queryKey: ['SystemBreadcrumbs'] });
       successfulIds.forEach((id: string) =>
@@ -297,19 +297,19 @@ export const useCopyToSystem = (): UseMutationResult<
 > => {
   const queryClient = useQueryClient();
 
-  const successfulIds: string[] = [];
-
   return useMutation(async (copyToSystem: CopyToSystem) => {
     const transferStates: TransferState[] = [];
 
+    const successfulIds: string[] = [];
+
     const promises = copyToSystem.selectedSystems.map(
       async (system: System) => {
-        // Information to post (backend will just ignore the extra here - only id and code)
+        // Data to post (backend will just ignore the extra here - only id and code)
         // Also use Object.assign to copy the data otherwise will modify in place causing issues
         // in tests
         const systemAdd: AddSystem = Object.assign({}, system) as AddSystem;
 
-        // Assing new parent
+        // Assign new parent
         systemAdd.parent_id = copyToSystem.targetSystem?.id || null;
 
         // Avoid duplicates by appending _copy_n for nth copy

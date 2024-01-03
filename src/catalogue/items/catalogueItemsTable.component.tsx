@@ -3,6 +3,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
+import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
+import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 import ClearIcon from '@mui/icons-material/Clear';
 import AddIcon from '@mui/icons-material/Add';
 import {
@@ -31,11 +33,14 @@ import {
   CatalogueCategory,
   CatalogueItem,
   CatalogueItemPropertyResponse,
+  Manufacturer,
 } from '../../app.types';
 import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
+import { useManufacturerIds } from '../../api/manufacturer';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
+import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 
 function findPropertyValue(
   properties: CatalogueItemPropertyResponse[],
@@ -56,7 +61,7 @@ function generateUniqueName(
   let copyIndex = 1;
 
   while (existingNames.includes(newName)) {
-    newName = `${originalName}_copy${copyIndex}`;
+    newName = `${originalName}_copy_${copyIndex}`;
     copyIndex++;
   }
 
@@ -87,6 +92,16 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const { data, isLoading } = useCatalogueItems(parentInfo.id);
 
+  const manufacturerIdSet = new Set<string>(
+    data?.map((obj) => obj.manufacturer_id) ?? []
+  );
+
+  const manufacturerList: (Manufacturer | undefined)[] = useManufacturerIds(
+    Array.from(manufacturerIdSet.values())
+  ).map((obj) => {
+    return obj.data;
+  });
+
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
     React.useState<boolean>(false);
 
@@ -104,11 +119,22 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     CatalogueItem | undefined
   >(undefined);
 
+  const [moveToItemDialogOpen, setMoveToItemDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [copyToItemDialogOpen, setCopyToItemDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
+    string | null
+  >(null);
+
   const catalogueCategoryNames: (string | undefined)[] =
     data?.map((item) => item.name) || [];
 
-  const noResultsTxt =
-    'No results found: Try adding an item by using the Add Catalogue Item button on the top left of your screen';
+  const noResultsTxt = dense
+    ? 'No catalogue items found'
+    : 'No results found: Try adding an item by using the Add Catalogue Item button on the top left of your screen';
   const [itemDialogType, setItemsDialogType] = React.useState<
     'create' | 'save as' | 'edit'
   >('create');
@@ -305,35 +331,132 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) => row.item_model_number ?? '',
         size: 250,
       },
-
       {
         header: 'Manufacturer Name',
-        accessorFn: (row) => row.manufacturer.name,
-        size: 250,
-        filterVariant: 'autocomplete',
-        filterFn: 'equals',
-      },
-      {
-        header: 'Manufacturer Address',
-        accessorFn: (row) => row.manufacturer.address,
-        size: 350,
+        accessorFn: (row) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer?.id === row.manufacturer_id;
+          })?.name,
+        Cell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            to={`/manufacturer/${row.original.manufacturer_id}`}
+          >
+            {
+              manufacturerList?.find((manufacturer) => {
+                return manufacturer?.id === row.original.manufacturer_id;
+              })?.name
+            }
+          </MuiLink>
+        ),
       },
       {
         header: 'Manufacturer URL',
-        accessorFn: (row) => row.manufacturer.url,
-        size: 300,
+        accessorFn: (row) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer?.id === row.manufacturer_id;
+          })?.url,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
             target="_blank"
-            href={row.original.manufacturer.url}
+            href={
+              manufacturerList?.find((manufacturer) => {
+                return manufacturer?.id === row.original.manufacturer_id;
+              })?.url ?? undefined
+            }
           >
-            {row.original.manufacturer.url}
+            {
+              manufacturerList?.find((manufacturer) => {
+                return manufacturer?.id === row.original.manufacturer_id;
+              })?.url
+            }
           </MuiLink>
         ),
       },
+      {
+        header: 'Manufacturer Address',
+        accessorFn: (row) =>
+          `${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.address_line
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.town
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.county
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.postcode
+          }${
+            manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.manufacturer_id;
+            })?.address.country
+          }`,
+        Cell: ({ row }) => (
+          <div style={{ display: 'inline-block' }}>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.address_line
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.town
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.county
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.postcode
+              }
+            </Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              {
+                manufacturerList?.find((manufacturer) => {
+                  return manufacturer?.id === row.original.manufacturer_id;
+                })?.address.country
+              }
+            </Typography>
+          </div>
+        ),
+      },
+      {
+        header: 'Manufacturer Telephone',
+        accessorFn: (row) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer?.id === row.manufacturer_id;
+          })?.telephone,
+        Cell: ({ row }) =>
+          manufacturerList?.find((manufacturer) => {
+            return manufacturer?.id === row.original.manufacturer_id;
+          })?.telephone,
+      },
     ];
-  }, [dense, isItemSelectable, parentInfo.catalogue_item_properties]);
+  }, [
+    dense,
+    isItemSelectable,
+    manufacturerList,
+    parentInfo.catalogue_item_properties,
+  ]);
 
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     selectedRowState ?? {}
@@ -370,32 +493,31 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     enableColumnOrdering: dense ? false : true,
     enableFacetedValues: true,
-    enableColumnResizing: true,
+    enableColumnResizing: dense ? false : true,
     enableRowActions: dense ? false : true,
     enableStickyHeader: true,
     enableDensityToggle: false,
-    enableRowSelection: dense ? true : false,
+    enableRowSelection: true,
     enableHiding: dense ? false : true,
     enableTopToolbar: dense ? false : true,
-    enableMultiRowSelection: false,
+    enableMultiRowSelection: dense ? false : true,
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
-    enableColumnVirtualization: true,
-    manualFiltering: false,
+    enableColumnVirtualization: dense ? false : true,
     onColumnFiltersChange: setColumnFilters,
-    columnVirtualizerOptions: {
-      overscan: 4,
-      estimateSize: () => 200,
-    },
+    columnVirtualizerOptions: dense
+      ? undefined
+      : {
+          overscan: 4,
+          estimateSize: () => 200,
+        },
+    manualFiltering: false,
     enablePagination: true,
     localization: {
       ...MRT_Localization_EN,
       noRecordsToDisplay: noResultsTxt,
     },
-    onRowSelectionChange: (value) => {
-      setRowSelection(value);
-    },
-
+    onRowSelectionChange: setRowSelection,
     muiTableBodyRowProps: dense
       ? ({ row }) => {
           return {
@@ -481,7 +603,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       <Box sx={{ display: 'flex' }}>
         <Button
           startIcon={<AddIcon />}
-          sx={{ mx: '4px' }}
+          sx={{ mx: 0.5 }}
           variant="outlined"
           onClick={() => {
             setItemsDialogType('create');
@@ -490,9 +612,35 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         >
           Add Catalogue Item
         </Button>
+        {Object.keys(rowSelection).length > 0 && (
+          <>
+            <Button
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              startIcon={<DriveFileMoveOutlinedIcon />}
+              onClick={() => {
+                setCatalogueCurrDirId(parentInfo.parent_id);
+                setMoveToItemDialogOpen(true);
+              }}
+            >
+              Move to
+            </Button>
+            <Button
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              startIcon={<FolderCopyOutlinedIcon />}
+              onClick={() => {
+                setCatalogueCurrDirId(parentInfo.parent_id);
+                setCopyToItemDialogOpen(true);
+              }}
+            >
+              Copy to
+            </Button>
+          </>
+        )}
         <Button
           startIcon={<ClearIcon />}
-          sx={{ mx: '4px' }}
+          sx={{ mx: 0.5 }}
           variant="outlined"
           disabled={columnFilters.length === 0}
           onClick={() => {
@@ -573,6 +721,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <CatalogueItemsDetailsPanel
             catalogueItemIdData={row.original}
             catalogueCategoryData={parentInfo}
+            manufacturerData={manufacturerList?.find((manufacturer) => {
+              return manufacturer?.id === row.original.manufacturer_id;
+            })}
           />
         )
       : undefined,
@@ -594,6 +745,34 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             open={obsoleteItemDialogOpen}
             onClose={() => setObsoleteItemDialogOpen(false)}
             catalogueItem={selectedCatalogueItem}
+          />
+          <CatalogueItemDirectoryDialog
+            open={moveToItemDialogOpen}
+            onClose={() => setMoveToItemDialogOpen(false)}
+            selectedItems={
+              data?.filter((catalogueItem) =>
+                Object.keys(rowSelection).includes(catalogueItem.id)
+              ) ?? []
+            }
+            onChangeSelectedItems={setRowSelection}
+            catalogueCurrDirId={catalogueCurrDirId}
+            onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
+            requestType={'moveTo'}
+            parentInfo={parentInfo}
+          />
+          <CatalogueItemDirectoryDialog
+            open={copyToItemDialogOpen}
+            onClose={() => setCopyToItemDialogOpen(false)}
+            selectedItems={
+              data?.filter((catalogueItem) =>
+                Object.keys(rowSelection).includes(catalogueItem.id)
+              ) ?? []
+            }
+            onChangeSelectedItems={setRowSelection}
+            catalogueCurrDirId={catalogueCurrDirId}
+            onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
+            requestType={'copyTo'}
+            parentInfo={parentInfo}
           />
         </>
       )}

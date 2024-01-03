@@ -208,4 +208,22 @@ describe('Catalogue Items Landing Page', () => {
       screen.getByRole('link', { name: 'Click here' })
     ).toBeInTheDocument();
   });
+
+  it('prints when the button is clicked', async () => {
+    const spy = jest.spyOn(window, 'print').mockImplementation(() => {});
+    createView('/catalogue/items/89');
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    const printButton = screen.getByRole('button', { name: 'Print' });
+
+    await user.click(printButton);
+    // Assert that the window.print() function was called
+    expect(spy).toHaveBeenCalled();
+
+    // Clean up the mock
+    spy.mockRestore();
+  });
 });

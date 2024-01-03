@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios';
 import {
   useMutation,
   UseMutationResult,
+  useQueries,
   useQuery,
   useQueryClient,
   UseQueryResult,
@@ -133,6 +134,17 @@ export const useManufacturer = (
   );
 };
 
+export const useManufacturerIds = (
+  ids: string[]
+): UseQueryResult<Manufacturer, unknown>[] => {
+  return useQueries({
+    queries: ids.map((id) => ({
+      queryKey: ['Manufacturer', id],
+      queryFn: () => fetchManufacturer(id),
+    })),
+  });
+};
+
 const editManufacturer = async (
   manufacturer: EditManufacturer
 ): Promise<Manufacturer> => {
@@ -163,8 +175,11 @@ export const useEditManufacturer = (): UseMutationResult<
       onError: (error) => {
         console.log('Got error ' + error.message);
       },
-      onSuccess: () => {
+      onSuccess: (manufacturerReturned) => {
         queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
+        queryClient.invalidateQueries({
+          queryKey: ['Manufacturer', manufacturerReturned.id],
+        });
       },
     }
   );

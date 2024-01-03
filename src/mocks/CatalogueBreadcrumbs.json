@@ -41,6 +41,14 @@
     "full_trail": true
   },
   {
+    "id": "8967",
+    "trail": [
+      ["1", "beam-characterization"],
+      ["8967", "energy-meters-v2"]
+    ],
+    "full_trail": true
+  },
+  {
     "id": "6",
     "trail": [
       ["1", "beam-characterization"],
