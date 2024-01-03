@@ -89,6 +89,26 @@
     ]
   },
   {
+    "id": "8967",
+    "name": "Energy Meters V2",
+    "parent_id": "1",
+    "code": "energy-meters-v2",
+    "is_leaf": true,
+    "catalogue_item_properties": [
+      {
+        "name": "Measurement Range",
+        "type": "number",
+        "unit": "Joules",
+        "mandatory": true
+      },
+      {
+        "name": "Accuracy",
+        "type": "string",
+        "mandatory": false
+      }
+    ]
+  },
+  {
     "id": "6",
     "name": "Wavefront Sensors",
     "parent_id": "1",

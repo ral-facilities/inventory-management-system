@@ -181,8 +181,10 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
       let hasSuccessfulEdit = false;
 
       const targetLocationInfo = {
-        name: moveToCatalogueCategory.targetLocationCatalogueCategory.name,
-        id: moveToCatalogueCategory.targetLocationCatalogueCategory.id,
+        name:
+          moveToCatalogueCategory.targetLocationCatalogueCategory?.name ??
+          'Root',
+        id: moveToCatalogueCategory.targetLocationCatalogueCategory?.id ?? null,
       };
 
       const promises = moveToCatalogueCategory.catalogueCategories.map(
@@ -222,7 +224,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
                 );
               const errorTransferState: TransferState = {
                 name: selectedCategory?.name ?? '',
-                message: response.detail,
+                message: response.detail ?? '',
                 state: 'error',
               };
               transferStates.push(errorTransferState);
@@ -259,8 +261,10 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
       let hasSuccessfulAdd = false;
 
       const targetLocationInfo = {
-        name: copyToCatalogueCategory.targetLocationCatalogueCategory.name,
-        id: copyToCatalogueCategory.targetLocationCatalogueCategory.id,
+        name:
+          copyToCatalogueCategory.targetLocationCatalogueCategory?.name ??
+          'Root',
+        id: copyToCatalogueCategory.targetLocationCatalogueCategory?.id ?? null,
       };
 
       const promises = copyToCatalogueCategory.catalogueCategories.map(
@@ -279,7 +283,7 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
               const response = error.response?.data as ErrorParsing;
               const errorTransferState: TransferState = {
                 name: category.name ?? '',
-                message: response.detail,
+                message: response.detail ?? '',
                 state: 'error',
               };
               transferStates.push(errorTransferState);
