@@ -325,7 +325,12 @@ const ObsoleteCatalogueItemDialog = (
           Back
         </Button>
         {activeStep === steps.length - 1 ? (
-          <Button onClick={handleFinish}>Finish</Button>
+          <Button
+            onClick={handleFinish}
+            disabled={formError !== undefined || otherError}
+          >
+            Finish
+          </Button>
         ) : (
           <Button onClick={handleNext}>Next</Button>
         )}

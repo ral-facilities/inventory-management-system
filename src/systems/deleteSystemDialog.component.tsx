@@ -64,7 +64,12 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleDeleteSystem}>Continue</Button>
+        <Button
+          onClick={handleDeleteSystem}
+          disabled={errorMessage !== undefined}
+        >
+          Continue
+        </Button>
       </DialogActions>
       {errorMessage !== undefined && (
         <Box

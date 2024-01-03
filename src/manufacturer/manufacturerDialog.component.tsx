@@ -552,6 +552,15 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                 ? handleAddManufacturer
                 : handleEditManufacturer
             }
+            disabled={
+              formError ||
+              catchAllError ||
+              nameError ||
+              urlError ||
+              addressLineError ||
+              addressPostcodeError ||
+              countryError
+            }
           >
             Save
           </Button>

@@ -43,6 +43,7 @@ describe('Catalogue Category', () => {
           'A catalogue category with the same name already exists within the parent catalogue category'
         );
       });
+    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
 
   it('adds a catalogue category where isLeaf is false', () => {
@@ -79,6 +80,7 @@ describe('Catalogue Category', () => {
           'Catalogue category has children elements and cannot be deleted, please delete the children elements first'
         );
       });
+    cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
   });
 
   it('delete a catalogue category', () => {
@@ -207,6 +209,7 @@ describe('Catalogue Category', () => {
       .within(() => {
         cy.contains('Please edit a form entry before clicking save');
       });
+    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
 
   it('displays error message if it received an unknown error from the api', () => {
@@ -224,7 +227,9 @@ describe('Catalogue Category', () => {
       .within(() => {
         cy.contains('Please refresh and try again');
       });
+    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
+
   it('edits a catalogue category with catalogue properties', () => {
     cy.visit('/catalogue/1');
     cy.findByRole('button', {
