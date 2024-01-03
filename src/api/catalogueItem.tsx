@@ -274,7 +274,7 @@ export const useCopyToCatalogueItem = (): UseMutationResult<
 > => {
   const queryClient = useQueryClient();
 
-  const successfulIds: string[] = [];
+  const successfulCatalogueCategoryIds: string[] = [];
 
   return useMutation(async (copyToCatalogueItem: TransferToCatalogueItem) => {
     const transferStates: TransferState[] = [];
@@ -303,7 +303,7 @@ export const useCopyToCatalogueItem = (): UseMutationResult<
               state: 'success',
             });
 
-            successfulIds.push(result.id);
+            successfulCatalogueCategoryIds.push(result.catalogue_category_id);
           })
           .catch((error) => {
             const response = error.response?.data as ErrorParsing;
@@ -319,9 +319,11 @@ export const useCopyToCatalogueItem = (): UseMutationResult<
 
     await Promise.all(promises);
 
-    if (successfulIds.length > 0) {
-      const uniqueSuccessfulIds = new Set(successfulIds);
-      uniqueSuccessfulIds.forEach((catalogueCategoryId: string) =>
+    if (successfulCatalogueCategoryIds.length > 0) {
+      const uniqueCatalogueCategoryIds = new Set(
+        successfulCatalogueCategoryIds
+      );
+      uniqueCatalogueCategoryIds.forEach((catalogueCategoryId: string) =>
         queryClient.invalidateQueries({
           queryKey: ['CatalogueItems', catalogueCategoryId],
         })
