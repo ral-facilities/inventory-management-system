@@ -169,7 +169,7 @@ const CatalogueCategoryDialog = React.memo(
       if (categoryData.catalogue_item_properties) {
         const listOfPropertyNames: string[] =
           categoryData.catalogue_item_properties.map((property) =>
-            property.name.toLowerCase()
+            property.name.toLowerCase().trim()
           );
         const uniqueNames = new Set();
         const duplicateNames: string[] = [];
