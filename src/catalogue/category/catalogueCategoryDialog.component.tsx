@@ -61,7 +61,18 @@ const CatalogueCategoryDialog = React.memo(
 
     React.useEffect(() => {
       if (selectedCatalogueCategory)
-        setCategoryData(selectedCatalogueCategory as AddCatalogueCategory);
+        setCategoryData(
+          // This is not ideal but fixes the properties being reset when closing the dialog
+          // The array itself is stored as a reference in typescript meaning that modifying
+          // categoryData.catalogue_item_properties without this will also modify
+          // selectedCatalogueCategory.catalogue_item_properties preventing any modified fields
+          // from being reset
+          // This ensures the array created is brand new with a different reference to fix it
+          // See https://stackoverflow.com/questions/9885821/copying-of-an-array-of-objects-to-another-array-without-object-reference-in-java
+          JSON.parse(
+            JSON.stringify(selectedCatalogueCategory)
+          ) as AddCatalogueCategory
+        );
     }, [selectedCatalogueCategory]);
 
     const [nameError, setNameError] = React.useState<string | undefined>(
