@@ -309,7 +309,7 @@ describe('catalogue items api functions', () => {
     });
   });
 
-  describe('useCopyoCatalogueItem', () => {
+  describe('useCopyToCatalogueItem', () => {
     let props: TransferToCatalogueItem;
 
     beforeEach(() => {
