@@ -226,6 +226,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               helperText={nameError}
               onChange={(event) => {
                 handleFormChange({ ...systemData, name: event.target.value });
+                setNameError(undefined);
               }}
               fullWidth
             />
@@ -317,6 +318,9 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
             onClick={type === 'add' ? handleAddSystem : handleEditSystem}
+            disabled={
+              formError !== undefined || otherError || nameError !== undefined
+            }
           >
             Save
           </Button>
