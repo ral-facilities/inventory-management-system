@@ -133,6 +133,11 @@ export interface AddCatalogueItem extends CatalogueItemDetails {
 export interface EditCatalogueItem extends Partial<AddCatalogueItem> {
   id: string;
 }
+
+export interface MoveToCatalogueItem {
+  selectedItems: CatalogueItem[];
+  targetCatalogueCategory: CatalogueCategory | null;
+}
 export interface ErrorParsing {
   detail: string;
 }

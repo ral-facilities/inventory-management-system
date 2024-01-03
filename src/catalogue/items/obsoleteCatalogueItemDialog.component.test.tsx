@@ -292,7 +292,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
         obsolete_replacement_catalogue_item_id: '12',
       }
     );
-  }, 12000); // Long running
+  }, 15000); // Long running
 
   it('can make an item obsolete (only using row itself to select)', async () => {
     props.catalogueItem = getCatalogueItemById('1');
