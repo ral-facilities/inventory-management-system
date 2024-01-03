@@ -65,6 +65,9 @@ function CatalogueItemsLandingPage() {
           backgroundColor: 'background.default',
           zIndex: 1000,
           width: '100%',
+          '@media print': {
+            display: 'none',
+          },
         }}
         item
       >
@@ -75,7 +78,7 @@ function CatalogueItemsLandingPage() {
               ? `/catalogue/${catalogueCategoryData.id}`
               : '/catalogue'
           }
-          sx={{ margin: 1 }}
+          sx={{ mx: 0.5 }}
           variant="outlined"
         >
           {catalogueItemIdData
@@ -84,13 +87,22 @@ function CatalogueItemsLandingPage() {
         </Button>
         <Button
           disabled={!catalogueItemIdData}
-          sx={{ margin: 1 }}
+          sx={{ mx: 0.5 }}
           variant="outlined"
           onClick={() => {
             setEditItemDialogOpen(true);
           }}
         >
           Edit
+        </Button>
+        <Button
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          onClick={() => {
+            window.print();
+          }}
+        >
+          Print
         </Button>
       </Grid>
       {catalogueItemIdData && (

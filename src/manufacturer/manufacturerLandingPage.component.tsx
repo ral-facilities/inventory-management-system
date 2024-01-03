@@ -25,7 +25,15 @@ function ManufacturerLandingPage() {
 
   return (
     <Grid container>
-      <Grid sx={{ padding: '8px' }} item>
+      <Grid
+        sx={{
+          mx: 0.5,
+          '@media print': {
+            display: 'none',
+          },
+        }}
+        item
+      >
         <Button
           component={Link}
           to={`/manufacturer/`}
@@ -36,13 +44,22 @@ function ManufacturerLandingPage() {
         </Button>
         <Button
           disabled={!manufacturerData}
-          sx={{ margin: '8px' }}
+          sx={{ mx: 0.5 }}
           variant="outlined"
           onClick={() => {
             setEditManufacturerDialogOpen(true);
           }}
         >
           Edit
+        </Button>
+        <Button
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          onClick={() => {
+            window.print();
+          }}
+        >
+          Print
         </Button>
       </Grid>
       {manufacturerData && (
