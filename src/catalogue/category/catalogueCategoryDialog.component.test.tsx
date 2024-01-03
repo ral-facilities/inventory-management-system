@@ -288,6 +288,31 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
+    it('display error if duplicate property names are entered', async () => {
+      createView();
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          { name: 'Field 1', type: 'text', unit: '', mandatory: false },
+          { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
+          { name: 'Field 1', type: 'boolean', mandatory: false },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const duplicatePropertyNameHelperText = screen.queryAllByText(
+        'Duplicate property name. Please change the name or remove the property'
+      );
+      expect(duplicatePropertyNameHelperText.length).toBe(2);
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
     it('clears formFields when catalogue content is catalogue categories', async () => {
       createView();
 
@@ -555,6 +580,33 @@ describe('Catalogue Category Dialog', () => {
 
       expect(nameHelperTexts.length).toBe(2);
       expect(typeHelperTexts.length).toBe(2);
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('display error if duplicate property names are entered', async () => {
+      props.selectedCatalogueCategory = {
+        ...mockData,
+        is_leaf: true,
+        catalogue_item_properties: [
+          { name: 'Field 1', type: 'text', unit: '', mandatory: false },
+          { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
+          { name: 'Field 1', type: 'boolean', mandatory: false },
+        ],
+      };
+      createView();
+
+      await modifyValues({ name: 'test' });
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      const duplicatePropertyNameHelperText = screen.queryAllByText(
+        'Duplicate property name. Please change the name or remove the property'
+      );
+      expect(duplicatePropertyNameHelperText.length).toBe(2);
 
       expect(onClose).not.toHaveBeenCalled();
     });
