@@ -309,7 +309,7 @@ export const useCopyToSystem = (): UseMutationResult<
         // in tests
         const systemAdd: AddSystem = Object.assign({}, system) as AddSystem;
 
-        // Assing new parent
+        // Assign new parent
         systemAdd.parent_id = copyToSystem.targetSystem?.id || null;
 
         // Avoid duplicates by appending _copy_n for nth copy
