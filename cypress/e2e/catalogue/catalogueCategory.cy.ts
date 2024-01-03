@@ -300,16 +300,16 @@ describe('Catalogue Category', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-categories',
-    }).should((patchRequests) => {
+    }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(3);
-      expect(JSON.stringify(patchRequests[0].body)).equal(
-        '{"name":"Cameras","is_leaf":true,"catalogue_item_properties":[{"name":"Resolution","type":"number","unit":"megapixels","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":false},{"name":"Sensor Type","type":"string","mandatory":true},{"name":"Sensor brand","type":"string","mandatory":false},{"name":"Broken","type":"boolean","mandatory":true},{"name":"Older than five years","type":"boolean","mandatory":false}]}'
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        '{"id":"4","name":"Cameras","parent_id":null,"code":"cameras","is_leaf":true,"catalogue_item_properties":[{"name":"Resolution","type":"number","unit":"megapixels","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":false},{"name":"Sensor Type","type":"string","mandatory":true},{"name":"Sensor brand","type":"string","mandatory":false},{"name":"Broken","type":"boolean","mandatory":true},{"name":"Older than five years","type":"boolean","mandatory":false}]}'
       );
-      expect(JSON.stringify(patchRequests[1].body)).equal(
-        '{"name":"test_dup","is_leaf":false}'
+      expect(JSON.stringify(await patchRequests[1].json())).equal(
+        '{"id":"79","name":"test_dup","parent_id":null,"code":"test_dup","is_leaf":false}'
       );
-      expect(JSON.stringify(patchRequests[2].body)).equal(
-        '{"name":"Amp Meters","is_leaf":false}'
+      expect(JSON.stringify(await patchRequests[2].json())).equal(
+        '{"id":"19","name":"Amp Meters","parent_id":null,"code":"amp-meters","is_leaf":false}'
       );
     });
   });
@@ -334,16 +334,16 @@ describe('Catalogue Category', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-categories',
-    }).should((patchRequests) => {
+    }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(3);
-      expect(JSON.stringify(patchRequests[0].body)).equal(
-        '{"name":"Cameras","is_leaf":true,"parent_id":"2","catalogue_item_properties":[{"name":"Resolution","type":"number","unit":"megapixels","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":false},{"name":"Sensor Type","type":"string","mandatory":true},{"name":"Sensor brand","type":"string","mandatory":false},{"name":"Broken","type":"boolean","mandatory":true},{"name":"Older than five years","type":"boolean","mandatory":false}]}'
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        '{"id":"4","name":"Cameras","parent_id":"2","code":"cameras","is_leaf":true,"catalogue_item_properties":[{"name":"Resolution","type":"number","unit":"megapixels","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":false},{"name":"Sensor Type","type":"string","mandatory":true},{"name":"Sensor brand","type":"string","mandatory":false},{"name":"Broken","type":"boolean","mandatory":true},{"name":"Older than five years","type":"boolean","mandatory":false}]}'
       );
-      expect(JSON.stringify(patchRequests[1].body)).equal(
-        '{"name":"test_dup","is_leaf":false,"parent_id":"2"}'
+      expect(JSON.stringify(await patchRequests[1].json())).equal(
+        '{"id":"79","name":"test_dup","parent_id":"2","code":"test_dup","is_leaf":false}'
       );
-      expect(JSON.stringify(patchRequests[2].body)).equal(
-        '{"name":"Amp Meters","is_leaf":false,"parent_id":"2"}'
+      expect(JSON.stringify(await patchRequests[2].json())).equal(
+        '{"id":"19","name":"Amp Meters","parent_id":"2","code":"amp-meters","is_leaf":false}'
       );
     });
   });

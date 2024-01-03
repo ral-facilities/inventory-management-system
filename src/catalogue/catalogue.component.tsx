@@ -15,8 +15,8 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   useCatalogueBreadcrumbs,
+  useCatalogueCategories,
   useCatalogueCategory,
-  useCatalogueCategoryById,
 } from '../api/catalogueCategory';
 import {
   CatalogueCategory,
@@ -108,7 +108,7 @@ function Catalogue() {
   const {
     data: catalogueCategoryDetail,
     isLoading: catalogueCategoryDetailLoading,
-  } = useCatalogueCategoryById(catalogueId.replace('/', ''));
+  } = useCatalogueCategory(catalogueId.replace('/', ''));
 
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
     catalogueId.replace('/', '')
@@ -124,7 +124,7 @@ function Catalogue() {
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategory(
+  } = useCatalogueCategories(
     catalogueCategoryDetailLoading ? true : !!parentInfo && parentInfo.is_leaf,
     !catalogueId ? 'null' : catalogueId.replace('/', '')
   );

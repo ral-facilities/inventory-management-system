@@ -14,8 +14,8 @@ import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import {
   useCatalogueBreadcrumbs,
+  useCatalogueCategories,
   useCatalogueCategory,
-  useCatalogueCategoryById,
 } from '../../api/catalogueCategory';
 import { useMoveToCatalogueItem } from '../../api/catalogueItem';
 import { CatalogueCategory, CatalogueItem } from '../../app.types';
@@ -50,7 +50,7 @@ const CatalogueItemDirectoryDialog = (
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategory(
+  } = useCatalogueCategories(
     false,
     !catalogueCurrDirId ? 'null' : catalogueCurrDirId
   );
@@ -68,7 +68,7 @@ const CatalogueItemDirectoryDialog = (
   }, [catalogueCurrDirId]);
   const { mutateAsync: moveToCatalogueItem } = useMoveToCatalogueItem();
 
-  const { data: targetCatalogueCategory } = useCatalogueCategoryById(
+  const { data: targetCatalogueCategory } = useCatalogueCategory(
     catalogueCurrDirId ?? undefined
   );
 

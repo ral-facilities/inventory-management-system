@@ -19,15 +19,18 @@ export interface EditCatalogueCategory {
 }
 
 export interface MoveToCatalogueCategory {
-  catalogueCategories: EditCatalogueCategory[];
   selectedCategories: CatalogueCategory[];
-  targetLocationCatalogueCategory: CatalogueCategory | null;
+  // Null if root
+  targetCategory: CatalogueCategory | null;
 }
 
 export interface CopyToCatalogueCategory {
-  catalogueCategories: AddCatalogueCategory[];
   selectedCategories: CatalogueCategory[];
-  targetLocationCatalogueCategory: CatalogueCategory | null;
+  // Null if root
+  targetCategory: CatalogueCategory | null;
+  // Existing known catalogue category codes at the destination
+  // (for appending to the names to avoid duplication)
+  existingCategoryCodes: string[];
 }
 
 export interface CatalogueCategory {
@@ -205,5 +208,5 @@ export interface CopyToSystem {
   targetSystem: System | null;
   // Existing known system codes at the destination
   // (for appending to the names to avoid duplication)
-  existingSystemCodes: String[];
+  existingSystemCodes: string[];
 }

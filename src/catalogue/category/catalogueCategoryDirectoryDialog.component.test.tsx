@@ -306,31 +306,13 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       const copyButton = screen.getByRole('button', { name: 'Copy here' });
       await user.click(copyButton);
 
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
-        is_leaf: false,
-        name: 'Beam Characterization',
-        parent_id: '3',
-      });
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
-        is_leaf: false,
-        name: 'Motion',
-        parent_id: '3',
-      });
-
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
-        catalogue_item_properties: [
-          {
-            mandatory: true,
-            name: 'Measurement Range',
-            type: 'number',
-            unit: 'Joules',
-          },
-          { mandatory: false, name: 'Accuracy', type: 'string' },
-        ],
-        is_leaf: true,
-        name: 'Energy Meters',
-        parent_id: '3',
-      });
+      props.selectedCategories.forEach((selectedCategory) =>
+        expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+          ...selectedCategory,
+          name: selectedCategory.name,
+          parent_id: '3',
+        })
+      );
       expect(onClose).toBeCalled();
     });
 
@@ -400,14 +382,12 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       const copyButton = screen.getByRole('button', { name: 'Copy here' });
       await user.click(copyButton);
 
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
-        is_leaf: false,
-        name: 'Beam Characterization_copy_1',
-      });
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
-        is_leaf: false,
-        name: 'Motion_copy_1',
-      });
+      props.selectedCategories.forEach((selectedCategory) =>
+        expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+          ...selectedCategory,
+          name: `${selectedCategory.name}_copy_1`,
+        })
+      );
       expect(onClose).toBeCalled();
     });
 
