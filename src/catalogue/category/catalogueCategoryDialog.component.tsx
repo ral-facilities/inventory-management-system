@@ -409,7 +409,8 @@ const CatalogueCategoryDialog = React.memo(
               disabled={
                 formError !== undefined ||
                 catchAllError ||
-                nameError !== undefined
+                nameError !== undefined ||
+                errorFields.length !== 0
               }
             >
               Save
