@@ -12,6 +12,7 @@ describe('catalogue item directory Dialog', () => {
   let props: CatalogueItemDirectoryDialogProps;
   let user;
   let axiosPatchSpy;
+  let axiosPostSpy;
   const onClose = jest.fn();
   const onChangeCatalogueCurrDirId = jest.fn();
   const onChangeSelectedItems = jest.fn();
@@ -212,9 +213,145 @@ describe('catalogue item directory Dialog', () => {
   describe('Copy to', () => {
     beforeEach(() => {
       props.requestType = 'copyTo';
+      axiosPostSpy = jest.spyOn(axios, 'post');
     });
     afterEach(() => {
       jest.clearAllMocks();
+    });
+
+    it('copies multiple catalogue items (new catalogue category)', async () => {
+      props.catalogueCurrDirId = '8967';
+      createView();
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('No catalogue items found')
+        ).toBeInTheDocument();
+      });
+      const moveButton = screen.getByRole('button', { name: 'Copy here' });
+
+      await user.click(moveButton);
+      expect(onClose).toHaveBeenCalled();
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
+        catalogue_category_id: '8967',
+        cost_gbp: 500,
+        cost_to_rework_gbp: null,
+        days_to_replace: 7,
+        days_to_rework: null,
+        description: 'Precision energy meters for accurate measurements. 26',
+        drawing_link: null,
+        drawing_number: null,
+        id: '89',
+        is_obsolete: true,
+        item_model_number: null,
+        manufacturer_id: '1',
+        name: 'Energy Meters 26',
+        obsolete_reason: 'The item is no longer being manufactured',
+        obsolete_replacement_catalogue_item_id: '6',
+        properties: [
+          { name: 'Measurement Range', unit: 'Joules', value: 1000 },
+          { name: 'Accuracy', unit: '', value: '±0.5%' },
+        ],
+      });
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
+        catalogue_category_id: '8967',
+        cost_gbp: 600,
+        cost_to_rework_gbp: 89,
+        days_to_replace: 7,
+        days_to_rework: 60,
+        description: 'Precision energy meters for accurate measurements. 27',
+        drawing_link: null,
+        drawing_number: null,
+        id: '6',
+        is_obsolete: false,
+        item_model_number: null,
+        manufacturer_id: '1',
+        name: 'Energy Meters 27',
+        obsolete_reason: null,
+        obsolete_replacement_catalogue_item_id: null,
+        properties: [
+          { name: 'Measurement Range', unit: 'Joules', value: 2000 },
+        ],
+      });
+    });
+
+    it('copies multiple catalogue items (same catalogue category)', async () => {
+      props.catalogueCurrDirId = '5';
+      createView();
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('No catalogue items found')
+        ).toBeInTheDocument();
+      });
+      const moveButton = screen.getByRole('button', { name: 'Copy here' });
+
+      await user.click(moveButton);
+      expect(onClose).toHaveBeenCalled();
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
+        catalogue_category_id: '5',
+        cost_gbp: 500,
+        cost_to_rework_gbp: null,
+        days_to_replace: 7,
+        days_to_rework: null,
+        description: 'Precision energy meters for accurate measurements. 26',
+        drawing_link: null,
+        drawing_number: null,
+        id: '89',
+        is_obsolete: true,
+        item_model_number: null,
+        manufacturer_id: '1',
+        name: 'Energy Meters 26',
+        obsolete_reason: 'The item is no longer being manufactured',
+        obsolete_replacement_catalogue_item_id: '6',
+        properties: [
+          { name: 'Measurement Range', unit: 'Joules', value: 1000 },
+          { name: 'Accuracy', unit: '', value: '±0.5%' },
+        ],
+      });
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
+        catalogue_category_id: '5',
+        cost_gbp: 600,
+        cost_to_rework_gbp: 89,
+        days_to_replace: 7,
+        days_to_rework: 60,
+        description: 'Precision energy meters for accurate measurements. 27',
+        drawing_link: null,
+        drawing_number: null,
+        id: '6',
+        is_obsolete: false,
+        item_model_number: null,
+        manufacturer_id: '1',
+        name: 'Energy Meters 27',
+        obsolete_reason: null,
+        obsolete_replacement_catalogue_item_id: null,
+        properties: [
+          { name: 'Measurement Range', unit: 'Joules', value: 2000 },
+        ],
+      });
+    });
+
+    it('copies multiple catalogue items to a catalogue category with different catalogue item properties and errors', async () => {
+      props.catalogueCurrDirId = '4';
+      createView();
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('No catalogue items found')
+        ).toBeInTheDocument();
+      });
+      const moveButton = screen.getByRole('button', { name: 'Copy here' });
+
+      await user.click(moveButton);
+      expect(onClose).not.toHaveBeenCalled();
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'The destination catalogue item properties must precisely match the current destination. Ensure identical attributes, order, and formatting, with no spacing variations.'
+          )
+        ).toBeInTheDocument();
+      });
     });
 
     it('displays copy warning tooltip', async () => {
