@@ -20,8 +20,8 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import {
   useCatalogueBreadcrumbs,
+  useCatalogueCategories,
   useCatalogueCategory,
-  useCatalogueCategoryById,
 } from '../../api/catalogueCategory';
 import {
   useCatalogueItem,
@@ -111,13 +111,13 @@ const ObsoleteCatalogueItemDialog = (
   }, [catalogueItem, handleObsoleteDetailChanged]);
 
   // Current category and its children
-  const { data: catalogueCategoryData } = useCatalogueCategoryById(
+  const { data: catalogueCategoryData } = useCatalogueCategory(
     catalogueCurrDirId ?? undefined
   );
   const {
     data: catalogueCategoryDataList,
     isLoading: catalogueCategoryDataListLoading,
-  } = useCatalogueCategory(false, catalogueCurrDirId ?? 'null');
+  } = useCatalogueCategories(false, catalogueCurrDirId ?? 'null');
 
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
     catalogueCurrDirId ?? ''

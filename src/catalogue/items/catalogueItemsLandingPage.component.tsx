@@ -11,10 +11,10 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useCatalogueCategoryById } from '../../api/catalogueCategory';
+import { useCatalogueCategory } from '../../api/catalogueCategory';
 import { useCatalogueItem } from '../../api/catalogueItem';
-import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import { useManufacturer } from '../../api/manufacturer';
+import CatalogueItemsDialog from './catalogueItemsDialog.component';
 
 function CatalogueItemsLandingPage() {
   const location = useLocation();
@@ -24,7 +24,7 @@ function CatalogueItemsLandingPage() {
   const { data: catalogueItemIdData, isLoading: catalogueItemIdDataLoading } =
     useCatalogueItem(catalogueItemId);
 
-  const { data: catalogueCategoryData } = useCatalogueCategoryById(
+  const { data: catalogueCategoryData } = useCatalogueCategory(
     catalogueItemIdData?.catalogue_category_id
   );
 
@@ -65,6 +65,9 @@ function CatalogueItemsLandingPage() {
           backgroundColor: 'background.default',
           zIndex: 1000,
           width: '100%',
+          '@media print': {
+            display: 'none',
+          },
         }}
         item
       >
@@ -75,7 +78,7 @@ function CatalogueItemsLandingPage() {
               ? `/catalogue/${catalogueCategoryData.id}`
               : '/catalogue'
           }
-          sx={{ margin: 1 }}
+          sx={{ mx: 0.5 }}
           variant="outlined"
         >
           {catalogueItemIdData
@@ -84,13 +87,22 @@ function CatalogueItemsLandingPage() {
         </Button>
         <Button
           disabled={!catalogueItemIdData}
-          sx={{ margin: 1 }}
+          sx={{ mx: 0.5 }}
           variant="outlined"
           onClick={() => {
             setEditItemDialogOpen(true);
           }}
         >
           Edit
+        </Button>
+        <Button
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          onClick={() => {
+            window.print();
+          }}
+        >
+          Print
         </Button>
       </Grid>
       {catalogueItemIdData && (

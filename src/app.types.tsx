@@ -19,15 +19,18 @@ export interface EditCatalogueCategory {
 }
 
 export interface MoveToCatalogueCategory {
-  catalogueCategories: EditCatalogueCategory[];
   selectedCategories: CatalogueCategory[];
-  targetLocationCatalogueCategory: CatalogueCategory;
+  // Null if root
+  targetCategory: CatalogueCategory | null;
 }
 
 export interface CopyToCatalogueCategory {
-  catalogueCategories: AddCatalogueCategory[];
   selectedCategories: CatalogueCategory[];
-  targetLocationCatalogueCategory: CatalogueCategory;
+  // Null if root
+  targetCategory: CatalogueCategory | null;
+  // Existing known catalogue category codes at the destination
+  // (for appending to the names to avoid duplication)
+  existingCategoryCodes: string[];
 }
 
 export interface CatalogueCategory {
@@ -130,6 +133,14 @@ export interface AddCatalogueItem extends CatalogueItemDetails {
 export interface EditCatalogueItem extends Partial<AddCatalogueItem> {
   id: string;
 }
+
+// Used for the move to and copy to
+export interface TransferToCatalogueItem {
+  selectedCatalogueItems: CatalogueItem[];
+  // Null if root
+  targetCatalogueCategory: CatalogueCategory | null;
+}
+
 export interface ErrorParsing {
   detail: string;
 }
@@ -200,5 +211,5 @@ export interface CopyToSystem {
   targetSystem: System | null;
   // Existing known system codes at the destination
   // (for appending to the names to avoid duplication)
-  existingSystemCodes: String[];
+  existingSystemCodes: string[];
 }

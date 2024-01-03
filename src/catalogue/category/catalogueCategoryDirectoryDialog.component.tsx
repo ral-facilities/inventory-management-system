@@ -1,3 +1,4 @@
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
   Box,
   Button,
@@ -8,22 +9,17 @@ import {
   Grid,
   Tooltip,
 } from '@mui/material';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import React from 'react';
 import {
-  AddCatalogueCategory,
-  CatalogueCategory,
-  EditCatalogueCategory,
-} from '../../app.types';
-import Breadcrumbs from '../../view/breadcrumbs.component';
-import {
   useCatalogueBreadcrumbs,
+  useCatalogueCategories,
   useCatalogueCategory,
-  useCatalogueCategoryById,
   useCopyToCatalogueCategory,
   useMoveToCatalogueCategory,
 } from '../../api/catalogueCategory';
+import { CatalogueCategory } from '../../app.types';
 import handleTransferState from '../../handleTransferState';
+import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from './catalogueCategoryTableView.component';
 
 export interface CatalogueCategoryDirectoryDialogProps {
@@ -52,7 +48,7 @@ const CatalogueCategoryDirectoryDialog = (
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategory(
+  } = useCatalogueCategories(
     false,
     !catalogueCurrDirId ? 'null' : catalogueCurrDirId
   );
@@ -64,113 +60,62 @@ const CatalogueCategoryDirectoryDialog = (
   }, [onChangeCatalogueCurrDirId, onChangeSelectedCategories, onClose]);
 
   const { mutateAsync: moveToCatalogueCategory } = useMoveToCatalogueCategory();
-  const { mutateAsync: CopyToCatalogueCategory } = useCopyToCatalogueCategory();
+  const { mutateAsync: copyToCatalogueCategory } = useCopyToCatalogueCategory();
 
-  const { data: targetLocationCatalogueCategory } = useCatalogueCategoryById(
-    catalogueCurrDirId ?? undefined
-  );
-
-  const handleCopyToCatalogueCategory = React.useCallback(() => {
-    const currId = catalogueCurrDirId === '' ? null : catalogueCurrDirId;
-    const catalogueCategoryCodes: string[] =
-      catalogueCategoryData?.map((category) => category.code) || [];
-
-    const catalogueCategory: AddCatalogueCategory[] = selectedCategories.map(
-      (category) => {
-        let reqAddInfo: AddCatalogueCategory = {
-          name: category.name,
-          is_leaf: category.is_leaf,
-        };
-        if (currId) {
-          reqAddInfo = {
-            ...reqAddInfo,
-            parent_id: currId,
-          };
-        }
-
-        // Check if the name already exists in the target location
-        if (catalogueCategoryCodes.includes(category.code)) {
-          let count = 1;
-          let newName = reqAddInfo.name;
-          let newCode = category.code;
-
-          while (catalogueCategoryCodes.includes(newCode)) {
-            newCode = `${category.code}_copy_${count}`;
-            newName = `${reqAddInfo.name}_copy_${count}`;
-            count++;
-          }
-
-          reqAddInfo.name = newName;
-        }
-
-        if (
-          category.catalogue_item_properties &&
-          category.catalogue_item_properties.length > 0
-        ) {
-          reqAddInfo = {
-            ...reqAddInfo,
-            catalogue_item_properties: category.catalogue_item_properties,
-          };
-        }
-
-        return reqAddInfo;
-      }
-    );
-
-    CopyToCatalogueCategory({
-      catalogueCategories: catalogueCategory,
-      selectedCategories: selectedCategories,
-      targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? {
-        name: 'Root',
-        id: '',
-        parent_id: null,
-        is_leaf: false,
-        code: '',
-      },
-    }).then((response) => {
-      handleTransferState(response);
-      handleClose();
-    });
-  }, [
-    CopyToCatalogueCategory,
-    catalogueCategoryData,
-    catalogueCurrDirId,
-    handleClose,
-    selectedCategories,
-    targetLocationCatalogueCategory,
-  ]);
+  const { data: targetCategory, isLoading: targetCategoryLoading } =
+    useCatalogueCategory(catalogueCurrDirId ?? undefined);
 
   const handleMoveToCatalogueCategory = React.useCallback(() => {
-    const currId = catalogueCurrDirId === '' ? null : catalogueCurrDirId;
-
-    const catalogueCategory: EditCatalogueCategory[] = selectedCategories.map(
-      (category) => ({
-        id: category.id,
-        parent_id: currId,
-        name: category.name,
-      })
-    );
-
-    moveToCatalogueCategory({
-      catalogueCategories: catalogueCategory,
-      selectedCategories: selectedCategories,
-      targetLocationCatalogueCategory: targetLocationCatalogueCategory ?? {
-        name: 'Root',
-        id: '',
-        parent_id: null,
-        is_leaf: false,
-        code: '',
-      },
-    }).then((response) => {
-      handleTransferState(response);
-      handleClose();
-    });
+    // Either ensure finished loading, or moving to root
+    // (where we don't need to load anything as the name is known)
+    if (!targetCategoryLoading || catalogueCurrDirId === null) {
+      moveToCatalogueCategory({
+        selectedCategories: selectedCategories,
+        // Only reason for targetSystem to be undefined here is if not loading at all
+        // which happens when at root
+        targetCategory: targetCategory || null,
+      }).then((response) => {
+        handleTransferState(response);
+        handleClose();
+      });
+    }
   }, [
     catalogueCurrDirId,
     handleClose,
     moveToCatalogueCategory,
     selectedCategories,
-    targetLocationCatalogueCategory,
+    targetCategory,
+    targetCategoryLoading,
+  ]);
+
+  const handleCopyToCatalogueCategory = React.useCallback(() => {
+    if (
+      (!targetCategoryLoading || catalogueCurrDirId === null) &&
+      catalogueCategoryData !== undefined
+    ) {
+      const existingCategoryCodes: string[] = catalogueCategoryData.map(
+        (category) => category.code
+      );
+
+      copyToCatalogueCategory({
+        selectedCategories: selectedCategories,
+        // Only reason for targetSystem to be undefined here is if not loading at all
+        // which happens when at root
+        targetCategory: targetCategory || null,
+        existingCategoryCodes: existingCategoryCodes,
+      }).then((response) => {
+        handleTransferState(response);
+        handleClose();
+      });
+    }
+  }, [
+    copyToCatalogueCategory,
+    catalogueCategoryData,
+    catalogueCurrDirId,
+    handleClose,
+    selectedCategories,
+    targetCategory,
+    targetCategoryLoading,
   ]);
 
   const onChangeNode = (newId: string): void => {
