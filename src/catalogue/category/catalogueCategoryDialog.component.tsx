@@ -268,29 +268,13 @@ const CatalogueCategoryDialog = React.memo(
             selectedCatalogueCategoryData?.catalogue_item_properties ?? null
           );
 
-        if (isNameUpdated) {
-          catalogueCategory = {
-            ...catalogueCategory,
-            name: categoryData.name,
-          };
-        }
+        isNameUpdated && (catalogueCategory.name = categoryData.name);
 
-        if (isIsLeafUpdated) {
-          catalogueCategory = {
-            ...catalogueCategory,
-            is_leaf: categoryData.is_leaf,
-          };
-        }
+        isIsLeafUpdated && (catalogueCategory.is_leaf = categoryData.is_leaf);
 
-        if (
-          !!categoryData.catalogue_item_properties &&
-          isCatalogueItemPropertiesUpdated
-        ) {
-          catalogueCategory = {
-            ...catalogueCategory,
-            catalogue_item_properties: categoryData.catalogue_item_properties,
-          };
-        }
+        isCatalogueItemPropertiesUpdated &&
+          (catalogueCategory.catalogue_item_properties =
+            categoryData.catalogue_item_properties);
 
         const { hasErrors } = handleErrorStates();
         if (hasErrors) {
