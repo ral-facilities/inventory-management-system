@@ -10,6 +10,7 @@ import {
   FormControlLabel,
   FormHelperText,
   FormLabel,
+  Grid,
   Radio,
   RadioGroup,
   TextField,
@@ -344,82 +345,91 @@ const CatalogueCategoryDialog = React.memo(
             : 'Add Catalogue Category'}
         </DialogTitle>
         <DialogContent>
-          <TextField
-            label="Name"
-            required={true}
-            sx={{ marginLeft: '4px', marginTop: '8px' }} // Adjusted the width and margin
-            value={categoryData.name}
-            error={nameError !== undefined}
-            helperText={nameError}
-            onChange={(event) => {
-              handleFormChange({ ...categoryData, name: event.target.value });
-            }}
-            fullWidth
-          />
-          <FormControl sx={{ margin: '8px' }}>
-            <FormLabel id="controlled-radio-buttons-group">
-              Catalogue Directory Content
-            </FormLabel>
-            <RadioGroup
-              aria-labelledby="controlled-radio-buttons-group"
-              name="controlled-radio-buttons-group"
-              value={categoryData.is_leaf ? 'true' : 'false'}
-              onChange={(event, value) => {
-                const newData = {
-                  ...categoryData,
-                  is_leaf: value === 'true' ? true : false,
-                };
-                if (value === 'false') {
-                  newData.catalogue_item_properties = undefined;
-                  setErrorFields([]);
-                  setNameFields([]);
-                  setTypeFields([]);
-                }
-                handleFormChange(newData);
-              }}
-            >
-              <FormControlLabel
-                value="false"
-                control={<Radio />}
-                label="Catalogue Categories"
+          <Grid container direction="column" spacing={1}>
+            <Grid item sx={{ mt: 1 }}>
+              <TextField
+                label="Name"
+                required={true}
+                sx={{ marginLeft: '4px', marginTop: '8px' }} // Adjusted the width and margin
+                value={categoryData.name}
+                error={nameError !== undefined}
+                helperText={nameError}
+                onChange={(event) => {
+                  handleFormChange({
+                    ...categoryData,
+                    name: event.target.value,
+                  });
+                }}
+                fullWidth
               />
-              <FormControlLabel
-                value="true"
-                control={<Radio />}
-                label="Catalogue Items"
-              />
-            </RadioGroup>
-          </FormControl>
-          {categoryData.is_leaf === true && (
-            <Box sx={{ alignItems: 'center', width: '100%' }}>
-              <Box>
-                <Divider sx={{ minWidth: '700px' }} />
-              </Box>
-              <Box sx={{ paddingLeft: '8px', paddingTop: '24px' }}>
-                <Typography variant="h6">Catalogue Item Fields</Typography>
-                <CataloguePropertiesForm
-                  formFields={categoryData.catalogue_item_properties ?? []}
-                  onChangeFormFields={(
-                    formFields: CatalogueCategoryFormData[]
-                  ) =>
-                    handleFormChange({
+            </Grid>
+            <Grid item>
+              <FormControl sx={{ margin: '8px' }}>
+                <FormLabel id="controlled-radio-buttons-group">
+                  Catalogue Directory Content
+                </FormLabel>
+                <RadioGroup
+                  aria-labelledby="controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  value={categoryData.is_leaf ? 'true' : 'false'}
+                  onChange={(event, value) => {
+                    const newData = {
                       ...categoryData,
-                      catalogue_item_properties: formFields,
-                    })
-                  }
-                  nameFields={nameFields}
-                  onChangeNameFields={setNameFields}
-                  typeFields={typeFields}
-                  onChangeTypeFields={setTypeFields}
-                  errorFields={errorFields}
-                  propertyNameError={duplicatePropertyError}
-                  onChangePropertyNameError={setDuplicatePropertyError}
-                  onChangeErrorFields={setErrorFields}
-                  resetFormError={() => setFormError(undefined)}
-                />
-              </Box>
-            </Box>
-          )}
+                      is_leaf: value === 'true' ? true : false,
+                    };
+                    if (value === 'false') {
+                      newData.catalogue_item_properties = undefined;
+                      setErrorFields([]);
+                      setNameFields([]);
+                      setTypeFields([]);
+                    }
+                    handleFormChange(newData);
+                  }}
+                >
+                  <FormControlLabel
+                    value="false"
+                    control={<Radio />}
+                    label="Catalogue Categories"
+                  />
+                  <FormControlLabel
+                    value="true"
+                    control={<Radio />}
+                    label="Catalogue Items"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+            {categoryData.is_leaf === true && (
+              <Grid item sx={{ alignItems: 'center', width: '100%' }}>
+                <Grid>
+                  <Divider sx={{ minWidth: '700px' }} />
+                </Grid>
+                <Grid item sx={{ paddingLeft: '8px', paddingTop: '24px' }}>
+                  <Typography variant="h6">Catalogue Item Fields</Typography>
+                  <CataloguePropertiesForm
+                    formFields={categoryData.catalogue_item_properties ?? []}
+                    onChangeFormFields={(
+                      formFields: CatalogueCategoryFormData[]
+                    ) =>
+                      handleFormChange({
+                        ...categoryData,
+                        catalogue_item_properties: formFields,
+                      })
+                    }
+                    nameFields={nameFields}
+                    onChangeNameFields={setNameFields}
+                    typeFields={typeFields}
+                    onChangeTypeFields={setTypeFields}
+                    errorFields={errorFields}
+                    propertyNameError={duplicatePropertyError}
+                    onChangePropertyNameError={setDuplicatePropertyError}
+                    onChangeErrorFields={setErrorFields}
+                    resetFormError={() => setFormError(undefined)}
+                  />
+                </Grid>
+              </Grid>
+            )}
+          </Grid>
         </DialogContent>
         <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
           <Box
