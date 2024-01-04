@@ -65,34 +65,28 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     if (selectedManufacturer) setManufacturerDetails(selectedManufacturer);
   }, [selectedManufacturer, open]);
 
-  const [nameErrorMessage, setNameErrorMessage] = React.useState<
+  const [nameError, setNameError] = React.useState<
     string | undefined
   >(undefined);
-  const nameError = nameErrorMessage !== undefined;
 
-  const [urlErrorMessage, setUrlErrorMessage] = React.useState<
+  const [urlError, setUrlError] = React.useState<
     string | undefined
   >(undefined);
-  const urlError = urlErrorMessage !== undefined;
 
-  const [addressLineErrorMessage, setAddressLineErrorMessage] = React.useState<
+  const [addressLineError, setAddressLineError] = React.useState<
     string | undefined
   >(undefined);
-  const addressLineError = addressLineErrorMessage !== undefined;
 
-  const [addressPostcodeErrorMessage, setAddressPostcodeErrorMessage] =
+  const [addressPostcodeError, setAddressPostcodeError] =
     React.useState<string | undefined>(undefined);
-  const addressPostcodeError = addressPostcodeErrorMessage !== undefined;
 
-  const [countryErrorMessage, setCountryErrorMessage] = React.useState<
+  const [countryError, setCountryError] = React.useState<
     string | undefined
   >(undefined);
-  const countryError = countryErrorMessage !== undefined;
 
-  const [formErrorMessage, setFormErrorMessage] = React.useState<
+  const [formError, setFormError] = React.useState<
     string | undefined
   >(undefined);
-  const formError = formErrorMessage !== undefined;
 
   const [catchAllError, setCatchAllError] = React.useState(false);
 
@@ -115,12 +109,12 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       },
       telephone: null,
     });
-    setNameErrorMessage(undefined);
-    setUrlErrorMessage(undefined);
-    setAddressLineErrorMessage(undefined);
-    setCountryErrorMessage(undefined);
-    setAddressPostcodeErrorMessage(undefined);
-    setFormErrorMessage(undefined);
+    setNameError(undefined);
+    setUrlError(undefined);
+    setAddressLineError(undefined);
+    setCountryError(undefined);
+    setAddressPostcodeError(undefined);
+    setFormError(undefined);
     onClose();
   }, [onClose, setManufacturerDetails]);
 
@@ -134,7 +128,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     ) {
       if (!isValidUrl(manufacturerDetails.url)) {
         hasErrors = true;
-        setUrlErrorMessage('Please enter a valid URL');
+        setUrlError('Please enter a valid URL');
       }
     }
 
@@ -144,7 +138,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       manufacturerDetails.name?.trim().length === 0
     ) {
       hasErrors = true;
-      setNameErrorMessage('Please enter a name.');
+      setNameError('Please enter a name.');
     }
     //check address line
     if (
@@ -153,7 +147,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     ) {
       hasErrors = true;
 
-      setAddressLineErrorMessage('Please enter an address.');
+      setAddressLineError('Please enter an address.');
     }
 
     //check post code
@@ -163,7 +157,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     ) {
       hasErrors = true;
 
-      setAddressPostcodeErrorMessage('Please enter a post code or zip code.');
+      setAddressPostcodeError('Please enter a post code or zip code.');
     }
     //check country
     if (
@@ -172,7 +166,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     ) {
       hasErrors = true;
 
-      setCountryErrorMessage('Please enter a country.');
+      setCountryError('Please enter a country.');
     }
 
     return hasErrors;
@@ -204,7 +198,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         console.log(error.response?.status, manufacturerDetails.name);
 
         if (error.response?.status === 409) {
-          setNameErrorMessage(
+          setNameError(
             'A manufacturer with the same name already exists.'
           );
           return;
@@ -322,7 +316,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             const response = error.response?.data as ErrorParsing;
             console.log(error);
             if (response && error.response?.status === 409) {
-              setNameErrorMessage(
+              setNameError(
                 'A manufacturer with the same name has been found. Please enter a different name'
               );
               return;
@@ -330,7 +324,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             setCatchAllError(true);
           });
       } else {
-        setFormErrorMessage(
+        setFormError(
           "There have been no changes made. Please change a field's value or press Cancel to exit"
         );
       }
@@ -361,11 +355,11 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                   ...manufacturerDetails,
                   name: event.target.value,
                 });
-                setNameErrorMessage(undefined);
-                setFormErrorMessage(undefined);
+                setNameError(undefined);
+                setFormError(undefined);
               }}
-              error={nameError}
-              helperText={nameError && nameErrorMessage}
+              error={nameError !== undefined}
+              helperText={nameError}
               fullWidth
             />
           </Grid>
@@ -381,12 +375,11 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                   url: event.target.value,
                 });
 
-                setUrlErrorMessage(undefined);
-
-                setFormErrorMessage(undefined);
+                setUrlError(undefined);
+                setFormError(undefined);
               }}
-              error={urlError}
-              helperText={urlError && urlErrorMessage}
+              error={urlError !== undefined}
+              helperText={urlError}
               fullWidth
             />
           </Grid>
@@ -409,12 +402,12 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                   },
                 });
 
-                setAddressLineErrorMessage(undefined);
+                setAddressLineError(undefined);
 
-                setFormErrorMessage(undefined);
+                setFormError(undefined);
               }}
-              error={addressLineError}
-              helperText={addressLineError && addressLineErrorMessage}
+              error={addressLineError !== undefined}
+              helperText={addressLineError && addressLineError}
               fullWidth
             />
           </Grid>
@@ -433,7 +426,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                   },
                 });
 
-                setFormErrorMessage(undefined);
+                setFormError(undefined);
               }}
               fullWidth
             />
@@ -453,7 +446,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                   },
                 });
 
-                setFormErrorMessage(undefined);
+                setFormError(undefined);
               }}
               fullWidth
             />
@@ -473,12 +466,12 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                   },
                 });
 
-                setCountryErrorMessage(undefined);
+                setCountryError(undefined);
 
-                setFormErrorMessage(undefined);
+                setFormError(undefined);
               }}
-              error={countryError}
-              helperText={countryError && countryErrorMessage}
+              error={countryError !== undefined}
+              helperText={countryError}
               fullWidth
             />
           </Grid>
@@ -497,12 +490,12 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                   },
                 });
 
-                setAddressPostcodeErrorMessage(undefined);
+                setAddressPostcodeError(undefined);
 
-                setFormErrorMessage(undefined);
+                setFormError(undefined);
               }}
-              error={addressPostcodeError}
-              helperText={addressPostcodeError && addressPostcodeErrorMessage}
+              error={addressPostcodeError !== undefined}
+              helperText={addressPostcodeError}
               fullWidth
             />
           </Grid>
@@ -518,7 +511,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                   telephone: event.target.value || null,
                 });
 
-                setFormErrorMessage(undefined);
+                setFormError(undefined);
               }}
               fullWidth
             />
@@ -553,13 +546,13 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
                 : handleEditManufacturer
             }
             disabled={
-              formError ||
+              formError !== undefined ||
               catchAllError ||
-              nameError ||
-              urlError ||
-              addressLineError ||
-              addressPostcodeError ||
-              countryError
+              nameError !== undefined ||
+              urlError !== undefined ||
+              addressLineError !== undefined ||
+              addressPostcodeError !== undefined ||
+              countryError !== undefined
             }
           >
             Save
@@ -567,7 +560,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         </Box>
         {formError && (
           <FormHelperText sx={{ marginBottom: '16px' }} error>
-            {formErrorMessage}
+            {formError}
           </FormHelperText>
         )}
         {catchAllError && (
