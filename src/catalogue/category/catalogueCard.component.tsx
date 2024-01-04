@@ -7,12 +7,15 @@ import {
   CardActions,
   IconButton,
   Checkbox,
+  MenuItem,
+  ListItemIcon,
+  Menu,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { CatalogueCategory } from '../../app.types';
 import { Link } from 'react-router-dom';
-
 export interface CatalogueCardProps extends CatalogueCategory {
   onChangeOpenDeleteDialog: (catalogueCategory: CatalogueCategory) => void;
   onChangeOpenEditDialog: (catalogueCategory: CatalogueCategory) => void;
@@ -33,10 +36,13 @@ function CatalogueCard(props: CatalogueCardProps) {
     onToggleSelect(catalogueCategory);
   };
 
+  const [menuOpen, setMenuOpen] = React.useState<boolean>(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
   return (
     <Button
       component={Link}
-      to={`${catalogueCategory.id}`}
+      to={menuOpen ? '' : `${catalogueCategory.id}`}
       fullWidth
       sx={{
         display: 'flex',
@@ -83,21 +89,51 @@ function CatalogueCard(props: CatalogueCardProps) {
           <IconButton
             onClick={(event) => {
               event.preventDefault();
-              onChangeOpenEditDialog(catalogueCategory);
+              setAnchorEl(event.currentTarget);
+              setMenuOpen(true);
             }}
-            aria-label={`edit ${catalogueCategory.name} catalogue category button`}
+            aria-label={`actions ${catalogueCategory.name} catalogue category button`}
           >
-            <EditIcon />
+            <MoreHorizIcon />
           </IconButton>
-          <IconButton
-            onClick={(event) => {
-              event.preventDefault();
-              onChangeOpenDeleteDialog(catalogueCategory);
+          <Menu
+            anchorEl={anchorEl}
+            open={menuOpen}
+            onClose={(event) => {
+              setMenuOpen(false);
             }}
-            aria-label={`delete ${catalogueCategory.name} catalogue category button`}
           >
-            <DeleteIcon />
-          </IconButton>
+            <MenuItem
+              key={0}
+              onClick={(event) => {
+                event.preventDefault();
+                onChangeOpenEditDialog(catalogueCategory);
+                setMenuOpen(false);
+              }}
+              aria-label={`edit ${catalogueCategory.name} catalogue category button`}
+              sx={{ m: 0 }}
+            >
+              <ListItemIcon>
+                <EditIcon />
+              </ListItemIcon>
+              Edit
+            </MenuItem>
+            <MenuItem
+              key={1}
+              onClick={(event) => {
+                event.preventDefault();
+                onChangeOpenDeleteDialog(catalogueCategory);
+                setMenuOpen(false);
+              }}
+              aria-label={`delete ${catalogueCategory.name} catalogue category button`}
+              sx={{ m: 0 }}
+            >
+              <ListItemIcon>
+                <DeleteIcon />
+              </ListItemIcon>
+              Delete
+            </MenuItem>
+          </Menu>
         </CardActions>
       </Card>
     </Button>
