@@ -384,11 +384,11 @@ const CatalogueCategoryDialog = React.memo(
               </FormControl>
             </Grid>
             {categoryData.is_leaf === true && (
-              <Grid item sx={{ alignItems: 'center', width: '100%' }}>
-                <Grid>
+              <>
+                <Grid item>
                   <Divider sx={{ minWidth: '700px' }} />
                 </Grid>
-                <Grid item sx={{ paddingLeft: '8px', paddingTop: '24px' }}>
+                <Grid item sx={{ paddingLeft: 1, paddingTop: 3 }}>
                   <Typography variant="h6">Catalogue Item Fields</Typography>
                   <CataloguePropertiesForm
                     formFields={categoryData.catalogue_item_properties ?? []}
@@ -411,7 +411,7 @@ const CatalogueCategoryDialog = React.memo(
                     resetFormError={() => setFormError(undefined)}
                   />
                 </Grid>
-              </Grid>
+              </>
             )}
           </Grid>
         </DialogContent>
