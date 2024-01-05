@@ -1,4 +1,3 @@
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
@@ -13,7 +12,6 @@ import {
 import { useState } from 'react';
 import { getSystemImportanceColour, useSystem } from '../api/systems';
 import { System } from '../app.types';
-import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDialog from './systemDialog.component';
 
 interface SystemButtonProps {
@@ -39,28 +37,6 @@ const EditSystemButton = (props: SystemButtonProps) => {
         onClose={() => setEditSystemDialogOpen(false)}
         type="edit"
         selectedSystem={props.system}
-      />
-    </>
-  );
-};
-
-const DeleteSystemButton = (props: SystemButtonProps) => {
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
-
-  return (
-    <>
-      <Tooltip title="Delete System">
-        <IconButton
-          sx={{ padding: 0 }}
-          onClick={() => setDeleteDialogOpen(true)}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </Tooltip>
-      <DeleteSystemDialog
-        open={deleteDialogOpen}
-        onClose={() => setDeleteDialogOpen(false)}
-        system={props.system}
       />
     </>
   );
@@ -100,13 +76,7 @@ function SystemDetails(props: SystemDetailsProps) {
             ? 'No system selected'
             : system.name}
         </Typography>
-        {system !== undefined && (
-          <>
-            <EditSystemButton system={system} />
-            <Box sx={{ px: 1 }} />
-            <DeleteSystemButton system={system} />
-          </>
-        )}
+        {system !== undefined && <EditSystemButton system={system} />}
       </Box>
       <Divider role="presentation" />
       {systemLoading || system === undefined ? (
