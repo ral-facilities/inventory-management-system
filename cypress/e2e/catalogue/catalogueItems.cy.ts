@@ -279,7 +279,7 @@ describe('Catalogue Items', () => {
   });
 
   it('displays the expired landing page message and navigates back to the catalogue home', () => {
-    cy.visit('/catalogue/items/1fds');
+    cy.visit('/catalogue/item/1fds');
 
     cy.findByText(
       `This item doesn't exist. Please click the Home button to navigate to the catalogue home`
@@ -546,7 +546,7 @@ describe('Catalogue Items', () => {
 
     cy.findAllByRole('link', { name: 'Click here' }).eq(0).click();
 
-    cy.url().should('contain', 'catalogue/items/6');
+    cy.url().should('contain', 'catalogue/item/6');
   });
 
   it('can move multiple catalogue items', () => {

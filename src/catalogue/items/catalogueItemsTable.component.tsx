@@ -169,11 +169,25 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             <MuiLink
               underline="hover"
               component={Link}
-              to={`items/${row.original.id}`}
+              to={`item/${row.original.id}`}
             >
               {renderedCellValue}
             </MuiLink>
           ),
+      },
+      {
+        header: 'View Items',
+        // accessorFn: (row) => row.name,
+        size: 200,
+        Cell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            to={`item/${row.original.id}/items`}
+          >
+            Click here
+          </MuiLink>
+        ),
       },
       {
         header: 'Description',
@@ -209,7 +223,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             <MuiLink
               underline="hover"
               component={Link}
-              to={`items/${row.original.obsolete_replacement_catalogue_item_id}`}
+              to={`item/${row.original.obsolete_replacement_catalogue_item_id}`}
             >
               Click here
             </MuiLink>
