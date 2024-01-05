@@ -236,11 +236,12 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
             </tr>
           </thead>
           <tbody
-            class="MuiTableBody-root css-1bgm22b-MuiTableBody-root"
+            class="MuiTableBody-root css-29nbga-MuiTableBody-root"
           >
             <tr
               aria-label="Energy Meters 26 row"
               class="MuiTableRow-root MuiTableRow-root css-rft7o0-MuiTableRow-root-MuiTableRow-root"
+              data-index="0"
               role="row"
             >
               <td
@@ -343,6 +344,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
             <tr
               aria-label="Energy Meters 27 row"
               class="MuiTableRow-root MuiTableRow-root css-rft7o0-MuiTableRow-root-MuiTableRow-root"
+              data-index="1"
               role="row"
             >
               <td
@@ -445,6 +447,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
             <tr
               aria-label="Energy Meters 28 row"
               class="MuiTableRow-root MuiTableRow-root css-rft7o0-MuiTableRow-root-MuiTableRow-root"
+              data-index="2"
               role="row"
             >
               <td
@@ -547,6 +550,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
             <tr
               aria-label="Energy Meters 29 row"
               class="MuiTableRow-root MuiTableRow-root css-rft7o0-MuiTableRow-root-MuiTableRow-root"
+              data-index="3"
               role="row"
             >
               <td
@@ -720,7 +724,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
             class="MuiBox-root css-qpxlqp"
           >
             <div
-              class="MuiBox-root css-8k4lth"
+              class="MuiTablePagination-root MuiBox-root css-8k4lth"
             >
               <div
                 class="MuiBox-root css-exd1zr"

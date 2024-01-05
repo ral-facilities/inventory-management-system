@@ -246,7 +246,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-1n7ptpu-MuiTable-root"
-          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-Name-size: 400; --col-Name-size: 400; --header-URL-size: 500; --col-URL-size: 500; --header-Address-size: 650; --col-Address-size: 650; --header-Telephone-size: 250; --col-Telephone-size: 250; --header-mrt_row_spacer-size: 180; --col-mrt_row_spacer-size: 180;"
+          style="--header-mrt_row_actions-size: 60; --col-mrt_row_actions-size: 60; --header-Name-size: 400; --col-Name-size: 400; --header-URL-size: 500; --col-URL-size: 500; --header-Address-size: 650; --col-Address-size: 650; --header-Telephone-size: 250; --col-Telephone-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
@@ -372,10 +372,10 @@ exports[`Manufacturer renders table data correctly 1`] = `
                     </button>
                   </div>
                   <div
-                    class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1j2qnm2"
+                    class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1ug570k"
                   >
                     <hr
-                      class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-e4az1k-MuiDivider-root"
+                      class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-f5y87h-MuiDivider-root"
                     />
                   </div>
                 </div>
@@ -543,10 +543,10 @@ exports[`Manufacturer renders table data correctly 1`] = `
                     </button>
                   </div>
                   <div
-                    class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1j2qnm2"
+                    class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1ug570k"
                   >
                     <hr
-                      class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-e4az1k-MuiDivider-root"
+                      class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-f5y87h-MuiDivider-root"
                     />
                   </div>
                 </div>
@@ -708,10 +708,10 @@ exports[`Manufacturer renders table data correctly 1`] = `
                     </button>
                   </div>
                   <div
-                    class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1j2qnm2"
+                    class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1ug570k"
                   >
                     <hr
-                      class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-e4az1k-MuiDivider-root"
+                      class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-f5y87h-MuiDivider-root"
                     />
                   </div>
                 </div>
@@ -873,10 +873,10 @@ exports[`Manufacturer renders table data correctly 1`] = `
                     </button>
                   </div>
                   <div
-                    class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1j2qnm2"
+                    class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1ug570k"
                   >
                     <hr
-                      class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-e4az1k-MuiDivider-root"
+                      class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-f5y87h-MuiDivider-root"
                     />
                   </div>
                 </div>
@@ -965,11 +965,12 @@ exports[`Manufacturer renders table data correctly 1`] = `
             </tr>
           </thead>
           <tbody
-            class="MuiTableBody-root css-1ri6w7s-MuiTableBody-root"
+            class="MuiTableBody-root css-129p5vw-MuiTableBody-root"
           >
             <tr
               aria-label="Manufacturer A row"
               class="MuiTableRow-root MuiTableRow-root css-n4v40q-MuiTableRow-root-MuiTableRow-root"
+              data-index="0"
               role="row"
             >
               <td
@@ -1064,6 +1065,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
             <tr
               aria-label="Manufacturer B row"
               class="MuiTableRow-root MuiTableRow-root css-n4v40q-MuiTableRow-root-MuiTableRow-root"
+              data-index="1"
               role="row"
             >
               <td
@@ -1158,6 +1160,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
             <tr
               aria-label="Manufacturer C row"
               class="MuiTableRow-root MuiTableRow-root css-n4v40q-MuiTableRow-root-MuiTableRow-root"
+              data-index="2"
               role="row"
             >
               <td
@@ -1323,7 +1326,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
             class="MuiBox-root css-qpxlqp"
           >
             <div
-              class="MuiBox-root css-8k4lth"
+              class="MuiTablePagination-root MuiBox-root css-8k4lth"
             >
               <div
                 class="MuiBox-root css-exd1zr"
