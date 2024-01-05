@@ -175,7 +175,7 @@ const SubsystemMenu = (props: {
       >
         <MenuItem
           aria-label={`Save ${props.subsystem.name} as new system`}
-          onClick={() => handleClick('edit')}
+          onClick={() => handleClick('save as')}
         >
           <ListItemIcon>
             <SaveAsIcon />
