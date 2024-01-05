@@ -164,6 +164,7 @@ const SubsystemMenu = (props: {
         aria-controls={open ? `${props.subsystem.id}-menu` : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
+        aria-label="Row Actions"
         onClick={handleOpen}
         sx={{ marginRight: 1 }}
       >

@@ -14,6 +14,14 @@ describe('Systems', () => {
     user = userEvent.setup();
   });
 
+  const clickRowAction = async (rowIndex: number, buttonText: string) => {
+    await user.click(screen.getAllByLabelText('Row Actions')[rowIndex]);
+    await waitFor(() => {
+      expect(screen.getByText(buttonText)).toBeInTheDocument();
+    });
+    await user.click(screen.getByText(buttonText));
+  };
+
   it('renders correctly', async () => {
     createView('/systems');
 
@@ -270,6 +278,76 @@ describe('Systems', () => {
 
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the edit dialog and close it again', async () => {
+    createView('/systems');
+
+    await waitFor(() => {
+      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+    await clickRowAction(0, 'Edit');
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Edit System')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the save as dialog and close it again', async () => {
+    createView('/systems');
+
+    await waitFor(() => {
+      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+    await clickRowAction(0, 'Save as');
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Add System')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the delete dialog and close it again', async () => {
+    createView('/systems');
+
+    await waitFor(() => {
+      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByTestId('delete-system-name')).not.toBeInTheDocument();
+
+    await clickRowAction(0, 'Delete');
+
+    await waitFor(() => {
+      expect(screen.getByTestId('delete-system-name')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId('delete-system-name')
+      ).not.toBeInTheDocument();
     });
   });
 });

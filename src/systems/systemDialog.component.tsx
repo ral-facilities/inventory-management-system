@@ -121,7 +121,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         owner: systemData.owner || undefined,
         importance: systemData.importance,
       };
-      if (parentId !== null) system.parent_id = parentId;
+      if (parentId !== undefined) system.parent_id = parentId;
       addSystem(system)
         .then((response) => handleClose())
         .catch((error: AxiosError) => {

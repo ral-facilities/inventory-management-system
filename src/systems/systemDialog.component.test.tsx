@@ -134,6 +134,7 @@ describe('Systems Dialog', () => {
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...values,
         importance: SystemImportanceType.MEDIUM,
+        parent_id: null,
       });
       expect(mockOnClose).toHaveBeenCalled();
     });
@@ -306,6 +307,180 @@ describe('Systems Dialog', () => {
     });
 
     it('displays error message when attempting to edit a system with a duplicate name', async () => {
+      createView();
+
+      const values = {
+        name: 'Error 409',
+      };
+
+      modifyValues(values);
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(
+        screen.getByText(
+          'A System with the same name already exists within the same parent System'
+        )
+      ).toBeInTheDocument();
+      expect(mockOnClose).not.toHaveBeenCalled();
+    });
+
+    it('displays error message when an unknown error occurs', async () => {
+      createView();
+
+      const values = {
+        name: 'Error 500',
+      };
+
+      modifyValues(values);
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(
+        screen.getByText('Please refresh and try again')
+      ).toBeInTheDocument();
+      expect(mockOnClose).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Save as', () => {
+    const MOCK_SELECTED_SYSTEM: System = {
+      name: 'Mock laser',
+      location: 'Location',
+      owner: 'Owner',
+      importance: SystemImportanceType.HIGH,
+      description: 'Description',
+      parent_id: null,
+      id: '65328f34a40ff5301575a4e3',
+      code: 'mock-laser',
+    };
+
+    const MOCK_SELECTED_SYSTEM_POST_DATA = JSON.parse(
+      JSON.stringify(MOCK_SELECTED_SYSTEM)
+    ) as Partial<System>;
+    delete MOCK_SELECTED_SYSTEM_POST_DATA.id;
+    delete MOCK_SELECTED_SYSTEM_POST_DATA.code;
+
+    beforeEach(() => {
+      props.type = 'save as';
+      props.parentId = null;
+      props.selectedSystem = MOCK_SELECTED_SYSTEM;
+    });
+
+    it('renders correctly when saving as', async () => {
+      createView();
+
+      expect(screen.getByText('Add System')).toBeInTheDocument();
+    });
+
+    it('renders correctly when saving as a subsystem', async () => {
+      props.parentId = 'parent-id';
+
+      createView();
+
+      expect(screen.getByText('Add Subsystem')).toBeInTheDocument();
+    });
+
+    it('calls onClose when cancel is clicked', async () => {
+      createView();
+
+      await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+      expect(mockOnClose).toHaveBeenCalled();
+      expect(axiosPatchSpy).not.toHaveBeenCalled();
+    });
+
+    it('saves as a system', async () => {
+      props.parentId = 'parent-id';
+
+      createView();
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
+        ...MOCK_SELECTED_SYSTEM_POST_DATA,
+        parent_id: 'parent-id',
+      });
+
+      expect(mockOnClose).toHaveBeenCalled();
+    });
+
+    it('saves as a system editing all fields', async () => {
+      props.parentId = 'parent-id';
+
+      createView();
+
+      const values = {
+        name: 'System name',
+        description: 'System description',
+        location: 'System location',
+        owner: 'System owner',
+        importance: SystemImportanceType.LOW,
+      };
+      modifyValues(values);
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
+        ...values,
+        parent_id: 'parent-id',
+      });
+
+      expect(mockOnClose).toHaveBeenCalled();
+    });
+
+    it('saves as a system removing non-manditory fields', async () => {
+      createView();
+
+      const values = {
+        description: '',
+        location: '',
+        owner: '',
+      };
+
+      modifyValues(values);
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/systems`, {
+        ...MOCK_SELECTED_SYSTEM_POST_DATA,
+        description: undefined,
+        location: undefined,
+        owner: undefined,
+      });
+      expect(mockOnClose).toHaveBeenCalled();
+    });
+
+    it('save as editing only a systems name', async () => {
+      createView();
+
+      const values = {
+        name: 'System name',
+      };
+      modifyValues(values);
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/systems`, {
+        ...MOCK_SELECTED_SYSTEM_POST_DATA,
+        ...values,
+      });
+
+      expect(mockOnClose).toHaveBeenCalled();
+    });
+
+    it('displays error message when name field is not filled in', async () => {
+      createView();
+
+      modifyValues({ name: '' });
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(screen.getByText('Please enter a name')).toBeInTheDocument();
+      expect(mockOnClose).not.toHaveBeenCalled();
+    });
+
+    it('displays error message when attempting to save as a system with a duplicate name', async () => {
       createView();
 
       const values = {
