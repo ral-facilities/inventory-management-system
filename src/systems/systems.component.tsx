@@ -1,8 +1,12 @@
 import { NavigateNext } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
+import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
   Button,
@@ -29,8 +33,7 @@ import Breadcrumbs from '../view/breadcrumbs.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog, { SystemDialogType } from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import SaveAsIcon from '@mui/icons-material/SaveAs';
+import { DeleteSystemDialog } from './deleteSystemDialog.component';
 
 /* Returns function that navigates to a specific system id (or to the root of all systems
    if given null) */
@@ -127,11 +130,13 @@ const CopySystemsButton = (props: {
   );
 };
 
+type MenuDialogType = SystemDialogType | 'delete';
+
 /* TODO: Remove this and use table menu items */
 const SubsystemMenu = (props: {
   subsystem: System;
   onOpen: () => void;
-  onItemClicked: (type: SystemDialogType) => void;
+  onItemClicked: (type: MenuDialogType) => void;
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -147,7 +152,7 @@ const SubsystemMenu = (props: {
     setAnchorEl(null);
   };
 
-  const handleClick = (type: SystemDialogType) => {
+  const handleClick = (type: MenuDialogType) => {
     props.onItemClicked(type);
     handleClose();
   };
@@ -174,13 +179,31 @@ const SubsystemMenu = (props: {
         }}
       >
         <MenuItem
-          aria-label={`Save ${props.subsystem.name} as new system`}
+          aria-label={`Edit system ${props.subsystem.name}`}
+          onClick={() => handleClick('edit')}
+        >
+          <ListItemIcon>
+            <EditIcon />
+          </ListItemIcon>
+          <ListItemText>Edit</ListItemText>
+        </MenuItem>
+        <MenuItem
+          aria-label={`Save system ${props.subsystem.name} as new system`}
           onClick={() => handleClick('save as')}
         >
           <ListItemIcon>
             <SaveAsIcon />
           </ListItemIcon>
           <ListItemText>Save as</ListItemText>
+        </MenuItem>
+        <MenuItem
+          aria-label={`Delete system ${props.subsystem.name}`}
+          onClick={() => handleClick('delete')}
+        >
+          <ListItemIcon>
+            <DeleteIcon />
+          </ListItemIcon>
+          <ListItemText>Delete</ListItemText>
         </MenuItem>
       </Menu>
     </>
@@ -214,7 +237,7 @@ function Systems() {
 
   // When all menu's closed will be undefined
   const [menuDialogType, setMenuDialogType] = React.useState<
-    SystemDialogType | undefined
+    MenuDialogType | undefined
   >(undefined);
 
   // Data
@@ -349,7 +372,7 @@ function Systems() {
                         <SubsystemMenu
                           subsystem={system}
                           onOpen={() => setSelectedSystemForMenu(system)}
-                          onItemClicked={(type: SystemDialogType) =>
+                          onItemClicked={(type: SystemDialogType | 'delete') =>
                             setMenuDialogType(type)
                           }
                         />
@@ -366,12 +389,20 @@ function Systems() {
         </Grid>
       </Grid>
       <SystemDialog
-        open={menuDialogType !== undefined}
-        onClose={() => {
-          setMenuDialogType(undefined);
-        }}
-        type={menuDialogType || 'edit'}
+        open={menuDialogType !== undefined && menuDialogType !== 'delete'}
+        onClose={() => setMenuDialogType(undefined)}
+        type={
+          menuDialogType !== undefined && menuDialogType !== 'delete'
+            ? menuDialogType
+            : 'edit'
+        }
         selectedSystem={selectedSystemForMenu}
+        parentId={systemId}
+      />
+      <DeleteSystemDialog
+        open={menuDialogType === 'delete'}
+        onClose={() => setMenuDialogType(undefined)}
+        system={selectedSystemForMenu}
       />
     </>
   );
