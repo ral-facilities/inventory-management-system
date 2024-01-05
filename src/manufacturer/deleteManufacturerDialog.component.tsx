@@ -70,7 +70,9 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleDeleteManufacturer}>Continue</Button>
+        <Button onClick={handleDeleteManufacturer} disabled={error}>
+          Continue
+        </Button>
       </DialogActions>
       {error && (
         <Box

@@ -22,6 +22,8 @@ export interface CataloguePropertiesFormProps {
   onChangeTypeFields: (typeFields: string[]) => void;
   errorFields: number[];
   onChangeErrorFields: (errorFields: number[]) => void;
+  propertyNameError: string[];
+  onChangePropertyNameError: (propertyNameError: string[]) => void;
   resetFormError: () => void;
 }
 
@@ -35,6 +37,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangeTypeFields,
     errorFields,
     onChangeErrorFields,
+    propertyNameError,
+    onChangePropertyNameError,
     resetFormError,
   } = props;
 
@@ -64,6 +68,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangeFormFields(updatedFormFields);
     onChangeNameFields(updatedNameFields);
     onChangeTypeFields(updatedTypeFields);
+    onChangePropertyNameError([]);
     resetFormError();
   };
 
@@ -97,6 +102,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangeFormFields(updatedFormFields);
     onChangeNameFields(updatedNameFields);
     onChangeTypeFields(updatedTypeFields);
+    onChangeErrorFields([]);
+    onChangePropertyNameError([]);
     resetFormError();
   };
 
@@ -111,10 +118,21 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             required={true}
             value={field.name}
             onChange={(e) => handleChange(index, 'name', e.target.value)}
-            error={errorFields.includes(index) && !nameFields[index].trim()}
+            error={
+              (errorFields.includes(index) && !nameFields[index].trim()) ||
+              (propertyNameError.length !== 0 &&
+                propertyNameError.find((name) => {
+                  return name === field.name.toLowerCase().trim();
+                }) === field.name.toLowerCase().trim())
+            }
             helperText={
               errorFields.includes(index) && !nameFields[index].trim()
                 ? 'Property Name is required'
+                : propertyNameError.length !== 0 &&
+                  propertyNameError.find((name) => {
+                    return name === field.name.toLowerCase().trim();
+                  }) === field.name.toLowerCase().trim()
+                ? 'Duplicate property name. Please change the name or remove the property'
                 : ''
             }
             sx={{ minWidth: '150px' }}

@@ -1,7 +1,7 @@
 # Dockerfile to build and serve inventory management system
 
 # Build stage
-FROM node:16.18-alpine3.15 as builder
+FROM node:18.12-alpine3.15 as builder
 
 WORKDIR /inventory-management-system-build
 

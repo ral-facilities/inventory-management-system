@@ -109,6 +109,7 @@ describe('Catalogue Items', () => {
       'Please choose a manufacturer, or add a new manufacturer'
     ).should('exist');
     cy.findByText('Please select either True or False').should('exist');
+    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
 
     cy.findByLabelText('Name *').type('test');
     cy.findByLabelText('Resolution (megapixels) *').type('18');
@@ -143,12 +144,12 @@ describe('Catalogue Items', () => {
     cy.findByRole('button', { name: 'Save' }).click();
 
     cy.findAllByText('Please enter a valid number').should('have.length', 4);
+    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
 
     cy.findByLabelText('Resolution (megapixels) *').clear();
     cy.findByLabelText('Resolution (megapixels) *').type('12');
     cy.findByLabelText('Frame Rate (fps)').clear();
     cy.findByLabelText('Frame Rate (fps)').type('12');
-    cy.findByLabelText('Resolution (megapixels) *').clear();
     cy.findByLabelText('Cost (£) *').clear();
     cy.findByLabelText('Cost (£) *').type('5000');
     cy.findByLabelText('Time to replace (days) *').clear();
@@ -162,6 +163,7 @@ describe('Catalogue Items', () => {
     cy.findAllByText(
       'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
     ).should('exist');
+    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
 
     cy.findByLabelText('Drawing link').clear();
 
@@ -304,6 +306,7 @@ describe('Catalogue Items', () => {
           'Catalogue item has children elements and cannot be deleted, please delete the children elements first'
         );
       });
+    cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
   });
 
   it('delete a catalogue item', () => {
@@ -331,6 +334,12 @@ describe('Catalogue Items', () => {
     cy.findByText('Edit').click();
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('Please edit a form entry before clicking save');
+      });
+    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
 
   it('displays error message if catalogue item has children elements', () => {
@@ -351,6 +360,7 @@ describe('Catalogue Items', () => {
           'Catalogue item has children elements and cannot be edited, please delete the children elements first'
         );
       });
+    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
 
   it('edit a catalogue item (Catalogue item details)', () => {

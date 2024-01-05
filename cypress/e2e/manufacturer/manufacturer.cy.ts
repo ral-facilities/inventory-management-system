@@ -177,6 +177,7 @@ describe('Manufacturer', () => {
           'The specified manufacturer is a part of a Catalogue Item. Please delete the Catalogue Item first.'
         );
       });
+    cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
   });
   it('Edits a manufacturer correctly', () => {
     cy.visit('/manufacturer');
@@ -235,6 +236,7 @@ describe('Manufacturer', () => {
           'A manufacturer with the same name has been found. Please enter a different name'
         );
       });
+    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
 
   it('Trying to edit with invalid url displays error message', () => {
@@ -251,6 +253,7 @@ describe('Manufacturer', () => {
       .within(() => {
         cy.contains('Please enter a valid URL');
       });
+    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
 
   it('Not changing any fields shows error', () => {
@@ -266,6 +269,7 @@ describe('Manufacturer', () => {
           "There have been no changes made. Please change a field's value or press Cancel to exit"
         );
       });
+    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
 
   it('Required fields that are cleared are not allowed and show error message', () => {
@@ -298,6 +302,7 @@ describe('Manufacturer', () => {
       .within(() => {
         cy.contains('Please enter a post code or zip code.');
       });
+    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
 
   it('navigates to landing page and navigates back to the table view', () => {

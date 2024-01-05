@@ -137,7 +137,7 @@ describe('System', () => {
       cy.findByRole('button', { name: 'add system' }).click();
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText('Please enter a name').should('be.visible');
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'add system' }).click();
       cy.findByText('Please enter a name').should('not.exist');
@@ -152,6 +152,7 @@ describe('System', () => {
       cy.findByText(
         'A System with the same name already exists within the same parent System'
       ).should('be.visible');
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'add system' }).click();
       cy.findByText(
@@ -166,6 +167,7 @@ describe('System', () => {
       cy.findByLabelText('Name *').type('Error 500');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText('Please refresh and try again').should('be.visible');
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'add system' }).click();
       cy.findByText('Please refresh and try again').should('not.exist');
@@ -237,6 +239,7 @@ describe('System', () => {
       cy.findByText('Please edit a form entry before clicking save').should(
         'be.visible'
       );
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByLabelText('Description').type('1');
       cy.findByText('Please edit a form entry before clicking save').should(
         'not.exist'
@@ -251,7 +254,7 @@ describe('System', () => {
       cy.findByLabelText('Name *').clear();
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText('Please enter a name').should('be.visible');
-      cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'Edit System' }).click();
       cy.findByText('Please enter a name').should('not.exist');
@@ -267,6 +270,7 @@ describe('System', () => {
       cy.findByText(
         'A System with the same name already exists within the same parent System'
       ).should('be.visible');
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'Edit System' }).click();
       cy.findByText(
@@ -282,6 +286,7 @@ describe('System', () => {
       cy.findByLabelText('Name *').clear().type('Error 500');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText('Please refresh and try again').should('be.visible');
+      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'Edit System' }).click();
       cy.findByText('Please refresh and try again').should('not.exist');
@@ -320,6 +325,7 @@ describe('System', () => {
           'System has child elements and cannot be deleted, please delete the child systems first'
         ).should('be.visible');
       });
+    cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
 
     cy.findByRole('button', { name: 'Cancel' }).click();
     cy.findByRole('button', { name: 'Delete System' }).click();

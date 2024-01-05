@@ -13,6 +13,7 @@ describe('Catalogue Properties Form', () => {
   const onChangeNameFields = jest.fn();
   const onChangeTypeFields = jest.fn();
   const onChangeErrorFields = jest.fn();
+  const onChangePropertyNameError = jest.fn();
   const resetFormError = jest.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(
@@ -30,6 +31,8 @@ describe('Catalogue Properties Form', () => {
       onChangeTypeFields: onChangeTypeFields,
       errorFields: [],
       onChangeErrorFields: onChangeErrorFields,
+      propertyNameError: [],
+      onChangePropertyNameError: onChangePropertyNameError,
       resetFormError: resetFormError,
     };
     user = userEvent.setup();
@@ -216,10 +219,10 @@ describe('Catalogue Properties Form', () => {
     const formFields = [
       { name: '', type: 'number', unit: '', mandatory: false },
       { name: '', type: '', unit: '', mandatory: false },
-      { name: 'raduis', type: '', unit: '', mandatory: false },
-      { name: 'raduis', type: 'number', unit: '', mandatory: false },
+      { name: 'raduis 1', type: '', unit: '', mandatory: false },
+      { name: 'raduis 2', type: 'number', unit: '', mandatory: false },
     ];
-    const nameFields = ['', '', 'raduis', 'raduis'];
+    const nameFields = ['', '', 'raduis 1', 'raduis 2'];
     const typeFields = ['number', '', '', 'number'];
     const errorFields = [0, 1, 2];
     props = {
@@ -256,8 +259,8 @@ describe('Catalogue Properties Form', () => {
     expect(onChangeNameFields).toHaveBeenCalledWith([
       'Updated Field',
       '',
-      'raduis',
-      'raduis',
+      'raduis 1',
+      'raduis 2',
     ]);
     expect(onChangeTypeFields).toHaveBeenCalledWith([
       'boolean',
@@ -265,5 +268,25 @@ describe('Catalogue Properties Form', () => {
       '',
       'number',
     ]);
+  });
+
+  it('display error if duplicate property names are entered', async () => {
+    const formFields = [
+      { name: 'Field', type: 'text', unit: '', mandatory: false },
+      { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
+      { name: 'Field', type: 'boolean', mandatory: false },
+    ];
+    const propertyNameError = ['field'];
+    props = {
+      ...props,
+      formFields: formFields,
+      propertyNameError: propertyNameError,
+    };
+    createView();
+
+    const duplicatePropertyNameHelperText = screen.queryAllByText(
+      'Duplicate property name. Please change the name or remove the property'
+    );
+    expect(duplicatePropertyNameHelperText.length).toBe(2);
   });
 });
