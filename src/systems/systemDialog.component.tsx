@@ -29,10 +29,12 @@ import {
   SystemImportanceType,
 } from '../app.types';
 
+export type SystemDialogType = 'add' | 'edit';
+
 export interface SystemDialogProps {
   open: boolean;
   onClose: () => void;
-  type: 'add' | 'edit';
+  type: SystemDialogType;
   // Only required for add
   parentId?: string | null;
   // Only required for prepopulating fields for an edit dialog
@@ -211,7 +213,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const systemText = parentId ? 'Subsystem' : 'System';
 
   return (
-    <Dialog open={open} maxWidth="md" fullWidth>
+    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogTitle>
         {type === 'add' ? `Add ${systemText}` : `Edit ${systemText}`}
       </DialogTitle>
