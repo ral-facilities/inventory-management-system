@@ -3220,12 +3220,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/match-sorter-utils@npm:8.8.4, @tanstack/match-sorter-utils@npm:^8.7.0":
-  version: 8.8.4
-  resolution: "@tanstack/match-sorter-utils@npm:8.8.4"
+"@tanstack/match-sorter-utils@npm:8.11.3, @tanstack/match-sorter-utils@npm:^8.7.0":
+  version: 8.11.3
+  resolution: "@tanstack/match-sorter-utils@npm:8.11.3"
   dependencies:
     remove-accents: 0.4.2
-  checksum: d005f500754f52ef94966cbbe4217f26e7e3c07291faa2578b06bca9a5abe01689569994c37a1d01c6e783addf5ffbb28fa82eba7961d36eabf43ec43d1e496b
+  checksum: 052b82635e86c98d8d40214d54f2098b29a79eacd238b8982e670ff25d343c5ec3f42c14d85d4466d76ba83d81f8ffc53214a8c5705022af9ccd30c7f6e2b1b2
   languageName: node
   linkType: hard
 
@@ -3270,41 +3270,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-table@npm:8.10.7":
-  version: 8.10.7
-  resolution: "@tanstack/react-table@npm:8.10.7"
+"@tanstack/react-table@npm:8.11.3":
+  version: 8.11.3
+  resolution: "@tanstack/react-table@npm:8.11.3"
   dependencies:
-    "@tanstack/table-core": 8.10.7
+    "@tanstack/table-core": 8.11.3
   peerDependencies:
     react: ">=16"
     react-dom: ">=16"
-  checksum: f8f19ae3ad8531e0f3cb838b61213d9acd0b64b27d1a8a05a699e6ed50e25c9d3c9478ae3f6d20883288f601eec06e8264fac9503b36122471c2f8778782e1e2
+  checksum: 8e99fb04c4e0f535795123ebb65d17331da78a1175d8d25474c9df1218c7af4c3b4ab897dce876b0e13727d338934b0bc68423ddc95898f56f08ef6552f0ba08
   languageName: node
   linkType: hard
 
-"@tanstack/react-virtual@npm:3.0.0-beta.68":
-  version: 3.0.0-beta.68
-  resolution: "@tanstack/react-virtual@npm:3.0.0-beta.68"
+"@tanstack/react-virtual@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@tanstack/react-virtual@npm:3.0.1"
   dependencies:
-    "@tanstack/virtual-core": 3.0.0-beta.68
+    "@tanstack/virtual-core": 3.0.0
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: e8d4110fde9eb7e27b7067a300ac8bb08622a19b7c25a3b1b313b61e76093f1c500a90723011584971a0f5c4c7832df0c90276d4cf2d43f06281199636e50c4a
+  checksum: 11534a23100de14a7e0a95da667381181e60a24e29a71246aeed174f8d5f6e176216de6639e6e1f403722ae30d8b92b21ed75ea131529b1417fb81f433468ef0
   languageName: node
   linkType: hard
 
-"@tanstack/table-core@npm:8.10.7":
-  version: 8.10.7
-  resolution: "@tanstack/table-core@npm:8.10.7"
-  checksum: 2a364917e7ab051ef3f33d6f18e5e1ddb75cfed4b5ee0e2b9c74a8cb72d3b86cdd4ffbab67565c68b4333f761b6fde9a7215196387a9a3b3d5811119d8859bad
+"@tanstack/table-core@npm:8.11.3":
+  version: 8.11.3
+  resolution: "@tanstack/table-core@npm:8.11.3"
+  checksum: c93e405b185362c68fd2d374f84f17f60a653633463c8ed5b0f1bdb45fcf0756a10b82a8a1247c1214bcb13f07f2e4001fd4b29e68b141ab78953520eb7f3b09
   languageName: node
   linkType: hard
 
-"@tanstack/virtual-core@npm:3.0.0-beta.68":
-  version: 3.0.0-beta.68
-  resolution: "@tanstack/virtual-core@npm:3.0.0-beta.68"
-  checksum: f06898afc6501e6a6240425f2bdbd0e2dc637f4f58cb4a9e13fca7e8e25b93be25543559c53b243bf70e386302844f419d9110010db964916a523495db114f51
+"@tanstack/virtual-core@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@tanstack/virtual-core@npm:3.0.0"
+  checksum: 7283d50fc7b7a56608c37a8e94a93b85890ff7e39c6281633a19c4d6f6f4fbf25f8418f1eec302a008a8746a0d1d0cd00630137b55e6cf019818d68af8ed16b6
   languageName: node
   linkType: hard
 
@@ -10978,12 +10978,12 @@ __metadata:
   linkType: hard
 
 "material-react-table@npm:^2.0.4":
-  version: 2.0.4
-  resolution: "material-react-table@npm:2.0.4"
+  version: 2.4.1
+  resolution: "material-react-table@npm:2.4.1"
   dependencies:
-    "@tanstack/match-sorter-utils": 8.8.4
-    "@tanstack/react-table": 8.10.7
-    "@tanstack/react-virtual": 3.0.0-beta.68
+    "@tanstack/match-sorter-utils": 8.11.3
+    "@tanstack/react-table": 8.11.3
+    "@tanstack/react-virtual": 3.0.1
     highlight-words: 1.2.2
   peerDependencies:
     "@emotion/react": ">=11.11"
@@ -10993,7 +10993,7 @@ __metadata:
     "@mui/x-date-pickers": ">=6.15.0"
     react: ">=18.0"
     react-dom: ">=18.0"
-  checksum: 21435bfa04388548500b4b4591de9a5b667a797770d6c5c36bd5a4f167695f7775a2924d031e12350dc38090767631599044da827bab7ca474b196277b1bb0b1
+  checksum: 7f4774128b916dddb13edcc4106cbf03755075280d6f8908a918ecec60c2889be94358bacb299ad70aa8dfd12343e9e2156b550f940f6bff22a2bc48cc0b25a7
   languageName: node
   linkType: hard
 
