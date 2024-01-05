@@ -11,7 +11,6 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import { useDeleteSystem } from '../api/systems';
 import { ErrorParsing, System } from '../app.types';
-import { useNavigateToSystem } from './systems.component';
 
 export interface DeleteSystemDialogProps {
   open: boolean;
@@ -28,8 +27,6 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
 
   const { mutateAsync: deleteSystem } = useDeleteSystem();
 
-  const navigateToSystem = useNavigateToSystem();
-
   const handleClose = () => {
     onClose();
     setErrorMessage(undefined);
@@ -40,8 +37,6 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
       deleteSystem(system.id)
         .then((response) => {
           onClose();
-          // Navigate to parent as current system no longer exists
-          navigateToSystem(system.parent_id);
         })
         .catch((error: AxiosError) => {
           const response = error.response?.data as ErrorParsing;
@@ -54,7 +49,7 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
           }
           setErrorMessage('Please refresh and try again');
         });
-  }, [deleteSystem, navigateToSystem, onClose, system]);
+  }, [deleteSystem, onClose, system]);
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">
