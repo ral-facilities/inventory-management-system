@@ -11,6 +11,7 @@ import {
   Box,
   Button,
   ListItemIcon,
+  ListItemText,
   MenuItem,
   Link as MuiLink,
   TableRow,
@@ -655,7 +656,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       return [
         <MenuItem
           key={0}
-          aria-label={`Edit ${row.original.name} catalogue item`}
+          aria-label={`Edit catalogue item ${row.original.name}`}
           onClick={() => {
             setItemsDialogType('edit');
             table.setCreatingRow(row);
@@ -666,11 +667,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <ListItemIcon>
             <EditIcon />
           </ListItemIcon>
-          Edit
+          <ListItemText>Edit</ListItemText>
         </MenuItem>,
         <MenuItem
           key={1}
-          aria-label={`Save as ${row.original.name} catalogue item`}
+          aria-label={`Save catalogue item ${row.original.name} as`}
           onClick={() => {
             setItemsDialogType('save as');
             table.setCreatingRow(row);
@@ -681,11 +682,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <ListItemIcon>
             <SaveAsIcon />
           </ListItemIcon>
-          Save as
+          <ListItemText>Save as</ListItemText>
         </MenuItem>,
         <MenuItem
           key={2}
-          aria-label={`Delete ${row.original.name} catalogue item`}
+          aria-label={`Delete catalogue item ${row.original.name}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
             setSelectedCatalogueItem(row.original);
@@ -696,11 +697,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <ListItemIcon>
             <DeleteIcon />
           </ListItemIcon>
-          <>Delete</>
+          <ListItemText>Delete</ListItemText>
         </MenuItem>,
         <MenuItem
           key={3}
-          aria-label={`Obsolete ${row.original.name} catalogue item`}
+          aria-label={`Obsolete catalogue item ${row.original.name}`}
           onClick={() => {
             setObsoleteItemDialogOpen(true);
             setSelectedCatalogueItem(row.original);
@@ -712,7 +713,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <ListItemIcon>
             <BlockIcon />
           </ListItemIcon>
-          <>Obsolete</>
+          <ListItemText>Obsolete</ListItemText>
         </MenuItem>,
       ];
     },

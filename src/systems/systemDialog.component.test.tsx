@@ -344,6 +344,9 @@ describe('Systems Dialog', () => {
   });
 
   describe('Save as', () => {
+    // Mostly tested above anyway, so only a few checks here to ensure
+    // correct logic (out of add/edit) is applied when the dialogue type is 'save as'
+
     const MOCK_SELECTED_SYSTEM: System = {
       name: 'Mock laser',
       location: 'Location',
@@ -381,79 +384,11 @@ describe('Systems Dialog', () => {
       expect(screen.getByText('Add Subsystem')).toBeInTheDocument();
     });
 
-    it('calls onClose when cancel is clicked', async () => {
-      createView();
-
-      await user.click(screen.getByRole('button', { name: 'Cancel' }));
-
-      expect(mockOnClose).toHaveBeenCalled();
-      expect(axiosPatchSpy).not.toHaveBeenCalled();
-    });
-
     it('saves as a system', async () => {
       props.parentId = 'parent-id';
 
       createView();
 
-      await user.click(screen.getByRole('button', { name: 'Save' }));
-
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
-        ...MOCK_SELECTED_SYSTEM_POST_DATA,
-        parent_id: 'parent-id',
-      });
-
-      expect(mockOnClose).toHaveBeenCalled();
-    });
-
-    it('saves as a system editing all fields', async () => {
-      props.parentId = 'parent-id';
-
-      createView();
-
-      const values = {
-        name: 'System name',
-        description: 'System description',
-        location: 'System location',
-        owner: 'System owner',
-        importance: SystemImportanceType.LOW,
-      };
-      modifyValues(values);
-
-      await user.click(screen.getByRole('button', { name: 'Save' }));
-
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
-        ...values,
-        parent_id: 'parent-id',
-      });
-
-      expect(mockOnClose).toHaveBeenCalled();
-    });
-
-    it('saves as a system removing non-manditory fields', async () => {
-      createView();
-
-      const values = {
-        description: '',
-        location: '',
-        owner: '',
-      };
-
-      modifyValues(values);
-
-      await user.click(screen.getByRole('button', { name: 'Save' }));
-
-      expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/systems`, {
-        ...MOCK_SELECTED_SYSTEM_POST_DATA,
-        description: undefined,
-        location: undefined,
-        owner: undefined,
-      });
-      expect(mockOnClose).toHaveBeenCalled();
-    });
-
-    it('save as editing only a systems name', async () => {
-      createView();
-
       const values = {
         name: 'System name',
       };
@@ -461,59 +396,13 @@ describe('Systems Dialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
-      expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/systems`, {
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...MOCK_SELECTED_SYSTEM_POST_DATA,
         ...values,
+        parent_id: 'parent-id',
       });
 
       expect(mockOnClose).toHaveBeenCalled();
-    });
-
-    it('displays error message when name field is not filled in', async () => {
-      createView();
-
-      modifyValues({ name: '' });
-
-      await user.click(screen.getByRole('button', { name: 'Save' }));
-
-      expect(screen.getByText('Please enter a name')).toBeInTheDocument();
-      expect(mockOnClose).not.toHaveBeenCalled();
-    });
-
-    it('displays error message when attempting to save as a system with a duplicate name', async () => {
-      createView();
-
-      const values = {
-        name: 'Error 409',
-      };
-
-      modifyValues(values);
-
-      await user.click(screen.getByRole('button', { name: 'Save' }));
-
-      expect(
-        screen.getByText(
-          'A System with the same name already exists within the same parent System'
-        )
-      ).toBeInTheDocument();
-      expect(mockOnClose).not.toHaveBeenCalled();
-    });
-
-    it('displays error message when an unknown error occurs', async () => {
-      createView();
-
-      const values = {
-        name: 'Error 500',
-      };
-
-      modifyValues(values);
-
-      await user.click(screen.getByRole('button', { name: 'Save' }));
-
-      expect(
-        screen.getByText('Please refresh and try again')
-      ).toBeInTheDocument();
-      expect(mockOnClose).not.toHaveBeenCalled();
     });
   });
 });

@@ -64,9 +64,8 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   // Ensure system data is updated when the selected system changes
   useEffect(() => {
     if (open) {
-      if ((type === 'edit' || type === 'save as') && selectedSystem)
-        setSystemData(selectedSystem as AddSystem);
-      else setSystemData(getEmptySystem());
+      if (type === 'add') setSystemData(getEmptySystem());
+      else if (selectedSystem) setSystemData(selectedSystem as AddSystem);
     }
   }, [selectedSystem, open, type]);
 
@@ -322,11 +321,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={
-              type === 'add' || type === 'save as'
-                ? handleAddSaveSystem
-                : handleEditSystem
-            }
+            onClick={type === 'edit' ? handleEditSystem : handleAddSaveSystem}
             disabled={
               formError !== undefined || otherError || nameError !== undefined
             }

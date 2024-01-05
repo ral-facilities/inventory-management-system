@@ -1,11 +1,12 @@
+import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import ClearIcon from '@mui/icons-material/Clear';
-import AddIcon from '@mui/icons-material/Add';
 import {
   Box,
   Button,
   ListItemIcon,
+  ListItemText,
   MenuItem,
   Link as MuiLink,
   TableRow,
@@ -17,13 +18,13 @@ import {
   type MRT_ColumnDef,
   type MRT_ColumnFiltersState,
 } from 'material-react-table';
+import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useManufacturers } from '../api/manufacturer';
 import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
-import { MRT_Localization_EN } from 'material-react-table/locales/en';
 
 function ManufacturerComponent() {
   const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
@@ -195,7 +196,7 @@ function ManufacturerComponent() {
       return [
         <MenuItem
           key={0}
-          aria-label={`Edit ${row.original.name} manufacturer`}
+          aria-label={`Edit manufacturer ${row.original.name}`}
           onClick={() => {
             setSelectedManufacturer(row.original);
             table.setCreatingRow(true);
@@ -206,11 +207,11 @@ function ManufacturerComponent() {
           <ListItemIcon>
             <EditIcon />
           </ListItemIcon>
-          Edit
+          <ListItemText>Edit</ListItemText>
         </MenuItem>,
         <MenuItem
           key={1}
-          aria-label={`Delete ${row.original.name} manufacturer`}
+          aria-label={`Delete manufacturer ${row.original.name}`}
           onClick={() => {
             setDeleteManufacturerDialog(true);
             setSelectedManufacturer(row.original);
@@ -220,7 +221,7 @@ function ManufacturerComponent() {
           <ListItemIcon>
             <DeleteIcon />
           </ListItemIcon>
-          Delete
+          <ListItemText>Delete</ListItemText>
         </MenuItem>,
       ];
     },

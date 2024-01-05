@@ -314,6 +314,8 @@ describe('System', () => {
   });
 
   describe('Save as', () => {
+    // Error checking is ommitted here as same logic as in add
+
     it('save as a system editing all fields (in root)', () => {
       cy.visit('/systems');
 
@@ -376,64 +378,6 @@ describe('System', () => {
           })
         );
       });
-    });
-
-    it('displays error message when name is not given that disappears once closed', () => {
-      cy.visit('/systems');
-
-      cy.findAllByLabelText('Row Actions').eq(1).click();
-      cy.findByText('Save as').click();
-
-      cy.findByLabelText('Name *').clear();
-      cy.findByRole('button', { name: 'Save' }).click();
-      cy.findByText('Please enter a name').should('be.visible');
-      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
-      cy.findByRole('button', { name: 'Cancel' }).click();
-
-      cy.findAllByLabelText('Row Actions').eq(1).click();
-      cy.findByText('Save as').click();
-
-      cy.findByText('Please enter a name').should('not.exist');
-    });
-
-    it('displays error message if the system has a duplicate name that disappears once closed', () => {
-      cy.visit('/systems');
-
-      cy.findAllByLabelText('Row Actions').eq(1).click();
-      cy.findByText('Save as').click();
-
-      cy.findByLabelText('Name *').clear().type('Error 409');
-      cy.findByRole('button', { name: 'Save' }).click();
-      cy.findByText(
-        'A System with the same name already exists within the same parent System'
-      ).should('be.visible');
-      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
-      cy.findByRole('button', { name: 'Cancel' }).click();
-
-      cy.findAllByLabelText('Row Actions').eq(1).click();
-      cy.findByText('Save as').click();
-
-      cy.findByText(
-        'A System with the same name already exists within the same parent System'
-      ).should('not.exist');
-    });
-
-    it('displays error message if any other error occurs that disappears once closed', () => {
-      cy.visit('/systems');
-
-      cy.findAllByLabelText('Row Actions').eq(1).click();
-      cy.findByText('Save as').click();
-
-      cy.findByLabelText('Name *').clear().type('Error 500');
-      cy.findByRole('button', { name: 'Save' }).click();
-      cy.findByText('Please refresh and try again').should('be.visible');
-      cy.findByRole('button', { name: 'Save' }).should('be.disabled');
-      cy.findByRole('button', { name: 'Cancel' }).click();
-
-      cy.findAllByLabelText('Row Actions').eq(1).click();
-      cy.findByText('Save as').click();
-
-      cy.findByText('Please refresh and try again').should('not.exist');
     });
   });
 
