@@ -551,12 +551,29 @@ describe('Catalogue Items', () => {
     cy.findAllByText('Manufacturer Name').should('exist');
   });
 
-  it('can navigate to an items replacement', () => {
+  it('can navigate to an catalogue items replacement', () => {
+    cy.visit('/catalogue/5');
+
+    cy.findAllByRole('link', { name: 'Click here' }).eq(1).click();
+
+    cy.url().should('contain', 'catalogue/item/6');
+  });
+
+  it('can navigate to an items page from the table view', () => {
     cy.visit('/catalogue/5');
 
     cy.findAllByRole('link', { name: 'Click here' }).eq(0).click();
 
-    cy.url().should('contain', 'catalogue/item/6');
+    cy.url().should('contain', 'catalogue/item/89/items');
+  });
+
+  it('can navigate to an items page from the landing page', () => {
+    cy.visit('/catalogue/5');
+    cy.findByText('Energy Meters 26').click();
+
+    cy.findAllByRole('link', { name: 'Items' }).eq(0).click();
+
+    cy.url().should('contain', 'catalogue/item/89/items');
   });
 
   it('can move multiple catalogue items', () => {

@@ -65,14 +65,16 @@ describe('ItemDialog', () => {
       });
 
     values.warrantyEndDate !== undefined &&
-      fireEvent.change(screen.getByLabelText('Warranty end date'), {
-        target: { value: values.warrantyEndDate },
-      });
+      (await user.type(
+        screen.getByLabelText('Warranty end date'),
+        values.warrantyEndDate
+      ));
 
     values.deliveredDate !== undefined &&
-      fireEvent.change(screen.getByLabelText('Delivered date'), {
-        target: { value: values.deliveredDate },
-      });
+      (await user.type(
+        screen.getByLabelText('Delivered date'),
+        values.deliveredDate
+      ));
 
     values.resolution !== undefined &&
       fireEvent.change(screen.getByLabelText('Resolution (megapixels) *'), {
@@ -198,9 +200,9 @@ describe('ItemDialog', () => {
         usage_status: 2,
         warranty_end_date: '2035-02-17T00:00:00.000Z',
       });
-    });
+    }, 10000);
 
-    it('adds a item (case empty string with spaces returns null and chnage propetery boolean values)', async () => {
+    it('adds a item (case empty string with spaces returns null and change property boolean values)', async () => {
       createView();
       await modifyValues({
         serialNumber: '   ',
@@ -240,7 +242,7 @@ describe('ItemDialog', () => {
         usage_status: 2,
         warranty_end_date: '2035-02-17T00:00:00.000Z',
       });
-    });
+    }, 10000);
 
     it('displays error message when mandatory property values missing', async () => {
       createView();
@@ -269,7 +271,7 @@ describe('ItemDialog', () => {
 
       expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
       expect(mandatoryFieldHelperText.length).toBe(2);
-    });
+    }, 10000);
 
     it('displays error message when property values type is incorrect', async () => {
       createView();
@@ -278,22 +280,28 @@ describe('ItemDialog', () => {
         assetNumber: 'test43',
         purchaseOrderNumber: 'test21',
         notes: 'test',
-        warrantyEndDate: '17/02/2035',
-        deliveredDate: '23/09/2045',
+        warrantyEndDate: '17',
+        deliveredDate: '23',
         isDefective: 'Yes',
         usageStatus: 'Used',
         resolution: 'rwererw',
         sensorType: '',
         broken: 'None',
       });
+      const validDateHelperText = screen.getAllByText(
+        'Date format: dd/MM/yyyy'
+      );
+      expect(validDateHelperText.length).toEqual(2);
+
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
       const validNumberHelperText = screen.getByText(
         'Please enter a valid number'
       );
+
       expect(validNumberHelperText).toBeInTheDocument();
-    });
+    }, 10000);
 
     it('displays warning message when an unknown error occurs', async () => {
       createView();

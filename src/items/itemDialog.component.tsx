@@ -14,6 +14,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  TextFieldProps,
   Tooltip,
   Typography,
 } from '@mui/material';
@@ -39,6 +40,25 @@ function isValidDateTime(date: string | null) {
   // Also, check if the original string is not equal to 'Invalid Date'
   return !isNaN(dateObj.getTime()) && dateObj.toString() !== 'Invalid Date';
 }
+
+const CustomTextField: React.FC<TextFieldProps> = (renderProps) => {
+  const { id, ...inputProps } = renderProps.inputProps ?? {};
+  let helperText = 'Date format: dd/MM/yyyy';
+
+  return (
+    <TextField
+      {...renderProps}
+      fullWidth
+      id={id}
+      size="small"
+      inputProps={{
+        ...inputProps,
+      }}
+      error={renderProps.error}
+      {...(renderProps.error && { helperText: helperText })}
+    />
+  );
+};
 
 export interface ItemDialogProps {
   open: boolean;
@@ -150,6 +170,18 @@ function ItemDialog(props: ItemDialogProps) {
 
   const handleClose = React.useCallback(() => {
     onClose();
+    setItemDetails({
+      catalogue_item_id: null,
+      system_id: null,
+      purchase_order_number: null,
+      is_defective: null,
+      usage_status: null,
+      warranty_end_date: null,
+      asset_number: null,
+      serial_number: null,
+      delivered_date: null,
+      notes: null,
+    });
     setPropertyValues([]);
     setPropertyErrors(
       new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
@@ -158,6 +190,20 @@ function ItemDialog(props: ItemDialogProps) {
 
   const handleFormErrorStates = React.useCallback(() => {
     let hasErrors = false;
+
+    if (
+      itemDetails.warranty_end_date &&
+      !isValidDateTime(itemDetails.warranty_end_date)
+    ) {
+      hasErrors = true;
+    }
+
+    if (
+      itemDetails.delivered_date &&
+      !isValidDateTime(itemDetails.delivered_date)
+    ) {
+      hasErrors = true;
+    }
 
     // Check properties
     const updatedPropertyErrors = [...propertyErrors];
@@ -222,7 +268,12 @@ function ItemDialog(props: ItemDialogProps) {
     setPropertyErrors(updatedPropertyErrors);
 
     return { hasErrors, updatedProperties };
-  }, [propertyErrors, parentCatalogueItemPropertiesInfo, propertyValues]);
+  }, [
+    propertyErrors,
+    parentCatalogueItemPropertiesInfo,
+    propertyValues,
+    itemDetails,
+  ]);
 
   const details = React.useMemo(() => {
     return {
@@ -333,9 +384,9 @@ function ItemDialog(props: ItemDialogProps) {
                     date ? date.toString() : null
                   )
                 }
+                slots={{ textField: CustomTextField }}
                 slotProps={{
                   actionBar: { actions: ['clear'] },
-                  textField: { size: 'small', fullWidth: true },
                 }}
               />
             </Grid>
@@ -355,8 +406,8 @@ function ItemDialog(props: ItemDialogProps) {
                 }
                 slotProps={{
                   actionBar: { actions: ['clear'] },
-                  textField: { size: 'small', fullWidth: true },
                 }}
+                slots={{ textField: CustomTextField }}
               />
             </Grid>
             <Grid item xs={12}>
