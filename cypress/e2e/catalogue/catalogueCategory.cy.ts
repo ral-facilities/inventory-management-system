@@ -66,8 +66,25 @@ describe('Catalogue Category', () => {
     });
   });
 
+  it('opens actions menu', () => {
+    cy.findByRole('button', {
+      name: 'actions Motion catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
+      name: 'delete Motion catalogue category button',
+    }).should('be.visible');
+    cy.findByRole('menuitem', {
+      name: 'delete Motion catalogue category button',
+    }).should('be.visible');
+  });
+
   it('displays error message when user tries to delete a catalogue category that has children elements', () => {
     cy.findByRole('button', {
+      name: 'actions Motion catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'delete Motion catalogue category button',
     }).click();
 
@@ -85,6 +102,10 @@ describe('Catalogue Category', () => {
 
   it('delete a catalogue category', () => {
     cy.findByRole('button', {
+      name: 'actions Beam Characterization catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'delete Beam Characterization catalogue category button',
     }).click();
 
@@ -178,6 +199,10 @@ describe('Catalogue Category', () => {
   it('edits a catalogue category (non leaf node)', () => {
     cy.visit('/catalogue/1');
     cy.findByRole('button', {
+      name: 'actions Amp Meters catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'edit Amp Meters catalogue category button',
     }).click();
     cy.findByLabelText('Name *').type('1');
@@ -199,6 +224,10 @@ describe('Catalogue Category', () => {
 
   it('displays error message if none of the fields have changed', () => {
     cy.findByRole('button', {
+      name: 'actions Beam Characterization catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'edit Beam Characterization catalogue category button',
     }).click();
 
@@ -215,6 +244,10 @@ describe('Catalogue Category', () => {
   it('displays error message if it received an unknown error from the api', () => {
     cy.visit('/catalogue/1');
     cy.findByRole('button', {
+      name: 'actions Cameras catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'edit Cameras catalogue category button',
     }).click();
     cy.findByLabelText('Name *').clear();
@@ -233,6 +266,10 @@ describe('Catalogue Category', () => {
   it('edits a catalogue category with catalogue properties', () => {
     cy.visit('/catalogue/1');
     cy.findByRole('button', {
+      name: 'actions Voltage Meters catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'edit Voltage Meters catalogue category button',
     }).click();
 
@@ -259,6 +296,10 @@ describe('Catalogue Category', () => {
   it('displays error message when duplicate names for properties are entered', () => {
     cy.visit('/catalogue/1');
     cy.findByRole('button', {
+      name: 'actions Voltage Meters catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'edit Voltage Meters catalogue category button',
     }).click();
 
@@ -280,6 +321,10 @@ describe('Catalogue Category', () => {
   it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
     cy.visit('/catalogue/1');
     cy.findByRole('button', {
+      name: 'actions Voltage Meters catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'edit Voltage Meters catalogue category button',
     }).click();
     cy.findByLabelText('Catalogue Categories').click();
