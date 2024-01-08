@@ -32,9 +32,10 @@ import {
   MRT_GlobalFilterTextField,
   MRT_RowSelectionState,
   MRT_TableBodyCellValue,
+  MRT_TablePagination,
   useMaterialReactTable,
 } from 'material-react-table';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { System } from '../app.types';
@@ -283,6 +284,10 @@ function Systems() {
     enableRowSelection: true,
     enableRowActions: true,
     positionActionsColumn: 'last',
+    paginationDisplayMode: 'pages',
+    muiPaginationProps: {
+      showRowsPerPage: false,
+    },
     initialState: {
       showGlobalFilter: true,
     },
@@ -427,8 +432,8 @@ function Systems() {
                     <MRT_GlobalFilterTextField table={subsystemsTable} />
                   </Box>
                   <TableContainer>
-                    <Table sx={{ display: 'block' }}>
-                      <TableBody>
+                    <Table sx={{ width: '100%' }}>
+                      <TableBody sx={{ width: '100%' }}>
                         {subsystemsTable.getRowModel().rows.map((row) => (
                           <TableRow
                             key={row.id}
@@ -437,27 +442,45 @@ function Systems() {
                             hover={true}
                             sx={{ cursor: 'pointer' }}
                           >
-                            {row.getVisibleCells().map((cell) => (
-                              <TableCell
-                                align="left"
-                                variant="body"
-                                key={cell.id}
-                                sx={{
-                                  margin: 0,
-                                  padding: 1,
-                                }}
-                              >
-                                <MRT_TableBodyCellValue
-                                  cell={cell}
-                                  table={subsystemsTable}
-                                />
-                              </TableCell>
-                            ))}
+                            {row.getVisibleCells().map((cell) => {
+                              console.log(cell.column.id);
+                              return (
+                                <TableCell
+                                  align={
+                                    cell.column.id === 'mrt-row-actions'
+                                      ? 'right'
+                                      : 'left'
+                                  }
+                                  variant="body"
+                                  key={cell.id}
+                                  sx={{
+                                    margin: 0,
+                                    padding: 1,
+                                    paddingRight:
+                                      cell.column.id === 'mrt-row-actions'
+                                        ? 1.5
+                                        : 0,
+                                    width:
+                                      // Make name take up as much space as possible to make other cells
+                                      // as small as possible
+                                      cell.column.id === 'name'
+                                        ? '100%'
+                                        : undefined,
+                                  }}
+                                >
+                                  <MRT_TableBodyCellValue
+                                    cell={cell}
+                                    table={subsystemsTable}
+                                  />
+                                </TableCell>
+                              );
+                            })}
                           </TableRow>
                         ))}
                       </TableBody>
                     </Table>
                   </TableContainer>
+                  <MRT_TablePagination table={subsystemsTable} />
                 </Stack>
               </>
             )}
