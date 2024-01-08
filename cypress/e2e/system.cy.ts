@@ -350,7 +350,7 @@ describe('System', () => {
       });
     });
 
-    it("save as a system eidting only a system's name (in subsystem)", () => {
+    it("save as a system editing only a system's name (in subsystem)", () => {
       cy.visit('/systems/65328f34a40ff5301575a4e3');
 
       cy.findAllByLabelText('Row Actions').eq(0).click();
