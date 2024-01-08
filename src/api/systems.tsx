@@ -244,7 +244,9 @@ export const useMoveToSystem = (): UseMutationResult<
   return useMutation(async (moveToSystem: MoveToSystem) => {
     const transferStates: TransferState[] = [];
 
+    // Ids for invalidation (parentIds must be a string value of 'null' for invalidation)
     const successfulIds: string[] = [];
+    const successfulParentIds: string[] = [];
 
     const promises = moveToSystem.selectedSystems.map(
       async (system: System) => {
@@ -261,6 +263,7 @@ export const useMoveToSystem = (): UseMutationResult<
             });
 
             successfulIds.push(system.id);
+            successfulParentIds.push(system.parent_id || 'null');
           })
           .catch((error) => {
             const response = error.response?.data as ErrorParsing;
@@ -280,6 +283,13 @@ export const useMoveToSystem = (): UseMutationResult<
       queryClient.invalidateQueries({
         queryKey: ['Systems', moveToSystem.targetSystem?.id || 'null'],
       });
+      // Also need to invalidate each parent we are moving from (likely just the one)
+      const uniqueParentIds = new Set(successfulParentIds);
+      uniqueParentIds.forEach((parentId: string) =>
+        queryClient.invalidateQueries({
+          queryKey: ['Systems', parentId],
+        })
+      );
       queryClient.invalidateQueries({ queryKey: ['SystemBreadcrumbs'] });
       successfulIds.forEach((id: string) =>
         queryClient.invalidateQueries({ queryKey: ['System', id] })
