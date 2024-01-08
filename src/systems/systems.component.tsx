@@ -10,30 +10,39 @@ import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
   Button,
-  Checkbox,
   CircularProgress,
   Divider,
   Grid,
   IconButton,
   LinearProgress,
-  List,
-  ListItem,
-  ListItemButton,
   ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import {
+  MRT_ColumnDef,
+  MRT_GlobalFilterTextField,
+  MRT_RowSelectionState,
+  MRT_TableBodyCellValue,
+  useMaterialReactTable,
+} from 'material-react-table';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { System } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog, { SystemDialogType } from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
-import { DeleteSystemDialog } from './deleteSystemDialog.component';
 
 /* Returns function that navigates to a specific system id (or to the root of all systems
    if given null) */
@@ -72,7 +81,7 @@ const AddSystemButton = (props: { systemId: string | null }) => {
 
 const MoveSystemsButton = (props: {
   selectedSystems: System[];
-  onChangeSelectedSystems: (selectedSystems: System[]) => void;
+  onChangeSelectedSystems: (selectedSystems: MRT_RowSelectionState) => void;
   parentSystemId: string | null;
 }) => {
   const [moveSystemsDialogOpen, setMoveSystemsDialogOpen] =
@@ -102,7 +111,7 @@ const MoveSystemsButton = (props: {
 
 const CopySystemsButton = (props: {
   selectedSystems: System[];
-  onChangeSelectedSystems: (selectedSystems: System[]) => void;
+  onChangeSelectedSystems: (selectedSystems: MRT_RowSelectionState) => void;
   parentSystemId: string | null;
 }) => {
   const [copySystemsDialogOpen, setCopySystemsDialogOpen] =
@@ -223,13 +232,19 @@ export const useSystemId = (): string | null => {
   }, [location.pathname]);
 };
 
+const columns: MRT_ColumnDef<System>[] = [
+  { accessorKey: 'name', header: 'Name' },
+];
+
 function Systems() {
   // Navigation
   const systemId = useSystemId();
   const navigateToSystem = useNavigateToSystem();
 
   // States
-  const [selectedSystems, setSelectedSystems] = React.useState<System[]>([]);
+  const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
+    {}
+  );
 
   // Specifically for the drop down menus/dialogues
   const [selectedSystemForMenu, setSelectedSystemForMenu] = React.useState<
@@ -249,20 +264,77 @@ function Systems() {
     systemId === null ? 'null' : systemId
   );
 
-  const handleSystemCheckboxChange = (checked: boolean, system: System) => {
-    if (checked) setSelectedSystems([...selectedSystems, system]);
-    else
-      setSelectedSystems(
-        selectedSystems.filter(
-          (selectedSystem: System) => selectedSystem.id !== system.id
-        )
-      );
-  };
+  // Obtain the selected system data, not just the selection state
+  const selectedRowIds = Object.keys(rowSelection);
+  const selectedSystems =
+    subsystemsData?.filter((subsystem) =>
+      selectedRowIds.includes(subsystem.id)
+    ) ?? [];
 
   // Clear selected system when user navigates to a different page
   React.useEffect(() => {
-    setSelectedSystems([]);
+    setRowSelection({});
   }, [systemId]);
+
+  const subsystemsTable = useMaterialReactTable({
+    columns: columns,
+    data: subsystemsData !== undefined ? subsystemsData : [],
+    getRowId: (system) => system.id,
+    enableRowSelection: true,
+    enableRowActions: true,
+    positionActionsColumn: 'last',
+    initialState: {
+      showGlobalFilter: true,
+    },
+    onRowSelectionChange: setRowSelection,
+    state: { rowSelection: rowSelection },
+    renderRowActionMenuItems: ({ closeMenu, row }) => {
+      return [
+        <MenuItem
+          key="edit"
+          aria-label={`Edit system ${row.original.name}`}
+          onClick={() => {
+            setMenuDialogType('edit');
+            setSelectedSystemForMenu(row.original);
+            closeMenu();
+          }}
+        >
+          <ListItemIcon>
+            <EditIcon />
+          </ListItemIcon>
+          <ListItemText>Edit</ListItemText>
+        </MenuItem>,
+        <MenuItem
+          key="save as"
+          aria-label={`Save system ${row.original.name} as new system`}
+          onClick={() => {
+            setMenuDialogType('save as');
+            setSelectedSystemForMenu(row.original);
+            closeMenu();
+          }}
+        >
+          <ListItemIcon>
+            <SaveAsIcon />
+          </ListItemIcon>
+          <ListItemText>Save as</ListItemText>
+        </MenuItem>,
+        <MenuItem
+          key="delete"
+          aria-label={`Delete system ${row.original.name}`}
+          onClick={() => {
+            setMenuDialogType('delete');
+            setSelectedSystemForMenu(row.original);
+            closeMenu();
+          }}
+        >
+          <ListItemIcon>
+            <DeleteIcon />
+          </ListItemIcon>
+          <ListItemText>Delete</ListItemText>
+        </MenuItem>,
+      ];
+    },
+  });
 
   return (
     <>
@@ -300,19 +372,19 @@ function Systems() {
               <Box>
                 <MoveSystemsButton
                   selectedSystems={selectedSystems}
-                  onChangeSelectedSystems={setSelectedSystems}
+                  onChangeSelectedSystems={setRowSelection}
                   parentSystemId={systemId}
                 />
                 <CopySystemsButton
                   selectedSystems={selectedSystems}
-                  onChangeSelectedSystems={setSelectedSystems}
+                  onChangeSelectedSystems={setRowSelection}
                   parentSystemId={systemId}
                 />
                 <Button
                   sx={{ mx: 1 }}
                   variant="outlined"
                   startIcon={<ClearIcon />}
-                  onClick={() => setSelectedSystems([])}
+                  onClick={() => setRowSelection({})}
                 >
                   {selectedSystems.length} selected
                 </Button>
@@ -344,43 +416,49 @@ function Systems() {
                   <AddSystemButton systemId={systemId} />
                 </Box>
                 <Divider role="presentation" />
-                <List sx={{ padding: 0 }}>
-                  {subsystemsData?.map((system, index) => {
-                    const selected = selectedSystems.some(
-                      (selectedSystem) => selectedSystem.id === system.id
-                    );
-                    return (
-                      <ListItem key={index} sx={{ padding: 0 }}>
-                        <ListItemButton
-                          sx={{ padding: 0 }}
-                          selected={selected}
-                          onClick={(event) => navigateToSystem(system.id)}
-                        >
-                          <Checkbox
-                            size="small"
-                            checked={selected}
-                            // Prevent button being triggered as well
-                            onClick={(event) => event.stopPropagation()}
-                            onChange={(event) =>
-                              handleSystemCheckboxChange(
-                                event.target.checked,
-                                system
-                              )
-                            }
-                          />
-                          <ListItemText>{system.name}</ListItemText>
-                        </ListItemButton>
-                        <SubsystemMenu
-                          subsystem={system}
-                          onOpen={() => setSelectedSystemForMenu(system)}
-                          onItemClicked={(type: SystemDialogType | 'delete') =>
-                            setMenuDialogType(type)
-                          }
-                        />
-                      </ListItem>
-                    );
-                  })}
-                </List>
+                <Stack sx={{ marginTop: 1, marginBottom: 'auto' }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'left',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <MRT_GlobalFilterTextField table={subsystemsTable} />
+                  </Box>
+                  <TableContainer>
+                    <Table sx={{ display: 'block' }}>
+                      <TableBody>
+                        {subsystemsTable.getRowModel().rows.map((row) => (
+                          <TableRow
+                            key={row.id}
+                            selected={row.getIsSelected()}
+                            onClick={() => navigateToSystem(row.id)}
+                            hover={true}
+                            sx={{ cursor: 'pointer' }}
+                          >
+                            {row.getVisibleCells().map((cell) => (
+                              <TableCell
+                                align="left"
+                                variant="body"
+                                key={cell.id}
+                                sx={{
+                                  margin: 0,
+                                  padding: 1,
+                                }}
+                              >
+                                <MRT_TableBodyCellValue
+                                  cell={cell}
+                                  table={subsystemsTable}
+                                />
+                              </TableCell>
+                            ))}
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Stack>
               </>
             )}
           </Grid>
