@@ -96,10 +96,10 @@ describe('Items', () => {
           purchase_order_number: 'test23',
           is_defective: true,
           usage_status: 3,
-          warranty_end_date: '2028-02-11T23:59:15.000Z',
+          warranty_end_date: '2028-02-11T00:00:00.000Z',
           asset_number: 'test13221',
           serial_number: 'test1234',
-          delivered_date: '2028-02-11T23:59:15.000Z',
+          delivered_date: '2028-02-11T00:00:00.000Z',
           notes: 'test',
           properties: [
             { name: 'Resolution', value: 1218 },
