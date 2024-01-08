@@ -236,7 +236,12 @@ describe('Catalogue', () => {
       expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
     });
 
-    const deleteButton = screen.getByRole('button', {
+    const actionsButton = screen.getByRole('button', {
+      name: 'actions Beam Characterization catalogue category button',
+    });
+    await user.click(actionsButton);
+
+    const deleteButton = screen.getByRole('menuitem', {
       name: 'delete Beam Characterization catalogue category button',
     });
     await user.click(deleteButton);
@@ -259,7 +264,12 @@ describe('Catalogue', () => {
       expect(screen.getByText('Amp Meters')).toBeInTheDocument();
     });
 
-    const editButton = screen.getByRole('button', {
+    const actionsButton = screen.getByRole('button', {
+      name: 'actions Amp Meters catalogue category button',
+    });
+    await user.click(actionsButton);
+
+    const editButton = screen.getByRole('menuitem', {
       name: 'edit Amp Meters catalogue category button',
     });
     await user.click(editButton);
