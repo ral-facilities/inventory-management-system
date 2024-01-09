@@ -21,7 +21,7 @@ describe('Items', () => {
     cy.findByText('Older than five years').should('be.visible');
   });
 
-  it('adds a item with only mandatory fields', () => {
+  it('adds an item with only mandatory fields', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
