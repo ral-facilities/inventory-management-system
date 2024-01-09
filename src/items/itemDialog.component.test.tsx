@@ -135,7 +135,7 @@ describe('ItemDialog', () => {
       axiosPostSpy = jest.spyOn(axios, 'post');
     });
 
-    it('adds a item with just the default values', async () => {
+    it('adds an item with just the default values', async () => {
       createView();
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
