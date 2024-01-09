@@ -66,17 +66,50 @@ describe('Catalogue Category', () => {
     });
   });
 
-  it('opens actions menu', () => {
+  it('opens actions menu and then closes', () => {
     cy.findByRole('button', {
       name: 'actions Motion catalogue category button',
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'delete Motion catalogue category button',
+      name: 'edit Motion catalogue category button',
+    }).should('be.visible');
+    cy.findByRole('menuitem', {
+      name: 'save as Motion catalogue category button',
     }).should('be.visible');
     cy.findByRole('menuitem', {
       name: 'delete Motion catalogue category button',
+    })
+      .should('be.visible')
+      .click();
+
+    cy.findByText('Cancel').click();
+
+    cy.findByRole('button', {
+      name: 'actions Motion catalogue category button',
     }).should('be.visible');
+  });
+
+  it('"save as" a catalogue category', () => {
+    cy.findByRole('button', {
+      name: 'actions Motion catalogue category button',
+    }).click();
+    cy.findByText('Save as').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-categories',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(request.body)).equal(
+        '{"name":"Motion_copy_1","is_leaf":false}'
+      );
+    });
   });
 
   it('displays error message when user tries to delete a catalogue category that has children elements', () => {
