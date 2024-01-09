@@ -290,7 +290,7 @@ describe('ItemDialog', () => {
       ).not.toBeInTheDocument();
     }, 10000);
 
-    it.only('displays error message when property values type is incorrect', async () => {
+    it('displays error message when property values type is incorrect', async () => {
       createView();
       await modifyValues({
         serialNumber: '   ',
