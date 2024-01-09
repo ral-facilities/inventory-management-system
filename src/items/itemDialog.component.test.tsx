@@ -202,7 +202,7 @@ describe('ItemDialog', () => {
       });
     }, 10000);
 
-    it('adds a item (case empty string with spaces returns null and change property boolean values)', async () => {
+    it('adds an item (case empty string with spaces returns null and change property boolean values)', async () => {
       createView();
       await modifyValues({
         serialNumber: '   ',
