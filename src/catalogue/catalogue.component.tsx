@@ -63,6 +63,21 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
   );
 };
 
+function generateUniqueName(
+  existingNames: (string | undefined)[],
+  originalName: string
+) {
+  let newName = originalName;
+  let copyIndex = 1;
+
+  while (existingNames.includes(newName)) {
+    newName = `${originalName}_copy_${copyIndex}`;
+    copyIndex++;
+  }
+
+  return newName;
+}
+
 export function matchCatalogueItemProperties(
   form: CatalogueCategoryFormData[],
   items: CatalogueItemProperty[]
@@ -128,6 +143,9 @@ function Catalogue() {
     catalogueCategoryDetailLoading ? true : !!parentInfo && parentInfo.is_leaf,
     !catalogueId ? 'null' : catalogueId.replace('/', '')
   );
+
+  const catalogueCategoryNames: (string | undefined)[] =
+    catalogueCategoryData?.map((item) => item.name) || [];
 
   const [deleteCategoryDialogOpen, setDeleteCategoryDialogOpen] =
     React.useState<boolean>(false);
@@ -340,7 +358,17 @@ function Catalogue() {
         onClose={() => setSaveAsCategoryDialogOpen(false)}
         parentId={parentId}
         type="save as"
-        selectedCatalogueCategory={selectedCatalogueCategory}
+        selectedCatalogueCategory={
+          selectedCatalogueCategory
+            ? {
+                ...selectedCatalogueCategory,
+                name: generateUniqueName(
+                  catalogueCategoryNames,
+                  selectedCatalogueCategory.name
+                ),
+              }
+            : undefined
+        }
         resetSelectedCatalogueCategory={() =>
           setSelectedCatalogueCategory(undefined)
         }
