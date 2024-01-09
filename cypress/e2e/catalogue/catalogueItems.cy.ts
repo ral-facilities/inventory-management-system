@@ -551,7 +551,7 @@ describe('Catalogue Items', () => {
     cy.findAllByText('Manufacturer Name').should('exist');
   });
 
-  it('can navigate to an catalogue items replacement', () => {
+  it('can navigate to a catalogue items replacement', () => {
     cy.visit('/catalogue/5');
 
     cy.findAllByRole('link', { name: 'Click here' }).eq(1).click();
