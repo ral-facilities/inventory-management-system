@@ -92,14 +92,14 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
       (!targetSystemLoading || parentSystemId === null) &&
       systemsData !== undefined
     ) {
-      const existingSystemCodes = systemsData.map((system) => system.code);
+      const existingSystemNames = systemsData.map((system) => system.name);
 
       copyToSystem({
         selectedSystems: selectedSystems,
         // Only reason for targetSystem to be undefined here is if not loading at all
         // which happens when at root
         targetSystem: targetSystem || null,
-        existingSystemCodes: existingSystemCodes,
+        existingSystemNames: existingSystemNames,
       }).then((response) => {
         handleTransferState(response);
         onChangeSelectedSystems({});

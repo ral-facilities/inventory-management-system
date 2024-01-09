@@ -17,6 +17,7 @@ import {
   TransferState,
 } from '../app.types';
 import { settings } from '../settings';
+import { generateUniqueName } from '../utils';
 
 const fetchCatalogueCategories = async (
   parent_id: string
@@ -287,26 +288,11 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
           categoryAdd.parent_id =
             copyToCatalogueCategory.targetCategory?.id || null;
 
-          // Avoid duplicates by appending _copy_n for nth copy
-          if (
-            copyToCatalogueCategory.existingCategoryCodes.includes(
-              category.code
-            )
-          ) {
-            let count = 1;
-            let newName = categoryAdd.name;
-            let newCode = category.code;
-
-            while (
-              copyToCatalogueCategory.existingCategoryCodes.includes(newCode)
-            ) {
-              newName = `${categoryAdd.name}_copy_${count}`;
-              newCode = `${category.code}_copy_${count}`;
-              count++;
-            }
-
-            categoryAdd.name = newName;
-          }
+          // Avoid duplicates
+          categoryAdd.name = generateUniqueName(
+            categoryAdd.name,
+            copyToCatalogueCategory.existingCategoryNames
+          );
 
           return addCatalogueCategory(categoryAdd)
             .then((result) => {
