@@ -160,7 +160,7 @@ describe('ItemDialog', () => {
       });
     });
 
-    it('adds a item (all input vales)', async () => {
+    it('adds an item (all input vales)', async () => {
       createView();
       await modifyValues({
         serialNumber: 'test12',
