@@ -135,6 +135,9 @@ function Catalogue() {
   const [editCategoryDialogOpen, setEditCategoryDialogOpen] =
     React.useState<boolean>(false);
 
+  const [saveAsCategoryDialogOpen, setSaveAsCategoryDialogOpen] =
+    React.useState<boolean>(false);
+
   const [selectedCatalogueCategory, setSelectedCatalogueCategory] =
     React.useState<CatalogueCategory | undefined>(undefined);
 
@@ -149,6 +152,11 @@ function Catalogue() {
     catalogueCategory: CatalogueCategory
   ) => {
     setEditCategoryDialogOpen(true);
+    setSelectedCatalogueCategory(catalogueCategory);
+  };
+
+  const onChangeOpenSaveAsDialog = (catalogueCategory: CatalogueCategory) => {
+    setSaveAsCategoryDialogOpen(true);
     setSelectedCatalogueCategory(catalogueCategory);
   };
 
@@ -302,6 +310,7 @@ function Catalogue() {
                   {...item}
                   onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
                   onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
+                  onChangeOpenSaveAsDialog={onChangeOpenSaveAsDialog}
                   onToggleSelect={handleToggleSelect}
                   isSelected={selectedCategories.some(
                     (selectedCategory: CatalogueCategory) =>
@@ -321,6 +330,16 @@ function Catalogue() {
         onClose={() => setEditCategoryDialogOpen(false)}
         parentId={parentId}
         type="edit"
+        selectedCatalogueCategory={selectedCatalogueCategory}
+        resetSelectedCatalogueCategory={() =>
+          setSelectedCatalogueCategory(undefined)
+        }
+      />
+      <CatalogueCategoryDialog
+        open={saveAsCategoryDialogOpen}
+        onClose={() => setSaveAsCategoryDialogOpen(false)}
+        parentId={parentId}
+        type="save as"
         selectedCatalogueCategory={selectedCatalogueCategory}
         resetSelectedCatalogueCategory={() =>
           setSelectedCatalogueCategory(undefined)

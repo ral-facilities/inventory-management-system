@@ -14,11 +14,13 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 import { CatalogueCategory } from '../../app.types';
 import { Link } from 'react-router-dom';
 export interface CatalogueCardProps extends CatalogueCategory {
   onChangeOpenDeleteDialog: (catalogueCategory: CatalogueCategory) => void;
   onChangeOpenEditDialog: (catalogueCategory: CatalogueCategory) => void;
+  onChangeOpenSaveAsDialog: (catalogueCategory: CatalogueCategory) => void;
   onToggleSelect: (catalogueCategory: CatalogueCategory) => void;
   isSelected: boolean;
 }
@@ -27,6 +29,7 @@ function CatalogueCard(props: CatalogueCardProps) {
   const {
     onChangeOpenDeleteDialog,
     onChangeOpenEditDialog,
+    onChangeOpenSaveAsDialog,
     onToggleSelect,
     isSelected,
     ...catalogueCategory
@@ -120,6 +123,21 @@ function CatalogueCard(props: CatalogueCardProps) {
             </MenuItem>
             <MenuItem
               key={1}
+              aria-label={`Save as ${catalogueCategory.name} catalogue category button`}
+              onClick={(event) => {
+                event.preventDefault();
+                onChangeOpenSaveAsDialog(catalogueCategory);
+                setMenuOpen(false);
+              }}
+              sx={{ m: 0 }}
+            >
+              <ListItemIcon>
+                <SaveAsIcon />
+              </ListItemIcon>
+              Save as
+            </MenuItem>
+            <MenuItem
+              key={2}
               onClick={(event) => {
                 event.preventDefault();
                 onChangeOpenDeleteDialog(catalogueCategory);
