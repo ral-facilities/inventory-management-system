@@ -57,7 +57,7 @@ describe('Items', () => {
     });
   });
 
-  it('adds a item with all fields altered', () => {
+  it('adds an item with all fields altered', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
 
     cy.findByLabelText('Serial number').type('test1234');
