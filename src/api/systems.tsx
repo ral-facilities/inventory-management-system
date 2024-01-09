@@ -18,6 +18,7 @@ import {
   TransferState,
 } from '../app.types';
 import { settings } from '../settings';
+import { generateUniqueName } from '../utils';
 
 /** Utility for turning an importance into an MUI palette colour to display */
 export const getSystemImportanceColour = (
@@ -322,20 +323,11 @@ export const useCopyToSystem = (): UseMutationResult<
         // Assign new parent
         systemAdd.parent_id = copyToSystem.targetSystem?.id || null;
 
-        // Avoid duplicates by appending _copy_n for nth copy
-        if (copyToSystem.existingSystemCodes.includes(system.code)) {
-          let count = 1;
-          let newName = systemAdd.name;
-          let newCode = system.code;
-
-          while (copyToSystem.existingSystemCodes.includes(newCode)) {
-            newName = `${systemAdd.name}_copy_${count}`;
-            newCode = `${system.code}_copy_${count}`;
-            count++;
-          }
-
-          systemAdd.name = newName;
-        }
+        // Avoid duplicates
+        systemAdd.name = generateUniqueName(
+          systemAdd.name,
+          copyToSystem.existingSystemNames
+        );
 
         return addSystem(systemAdd)
           .then((result: System) => {
