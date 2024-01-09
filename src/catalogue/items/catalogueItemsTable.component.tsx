@@ -177,7 +177,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'View Items',
-        // accessorFn: (row) => row.name,
         size: 200,
         Cell: ({ row }) => (
           <MuiLink
