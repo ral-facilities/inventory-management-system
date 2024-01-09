@@ -123,7 +123,7 @@ function CatalogueCard(props: CatalogueCardProps) {
             </MenuItem>
             <MenuItem
               key={1}
-              aria-label={`Save as ${catalogueCategory.name} catalogue category button`}
+              aria-label={`save as ${catalogueCategory.name} catalogue category button`}
               onClick={(event) => {
                 event.preventDefault();
                 onChangeOpenSaveAsDialog(catalogueCategory);
