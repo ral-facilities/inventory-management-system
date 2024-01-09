@@ -39,6 +39,10 @@ function CatalogueCard(props: CatalogueCardProps) {
     onToggleSelect(catalogueCategory);
   };
 
+  const handleActionsClose = () => {
+    setMenuOpen(false);
+  };
+
   const [menuOpen, setMenuOpen] = React.useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -102,9 +106,7 @@ function CatalogueCard(props: CatalogueCardProps) {
           <Menu
             anchorEl={anchorEl}
             open={menuOpen}
-            onClose={(event) => {
-              setMenuOpen(false);
-            }}
+            onClose={handleActionsClose}
           >
             <MenuItem
               key={0}

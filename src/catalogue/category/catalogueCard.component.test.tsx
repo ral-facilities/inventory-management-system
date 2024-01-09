@@ -64,7 +64,6 @@ describe('Catalogue Card', () => {
         name: 'actions Beam Characterization catalogue category button',
       })
     );
-
     expect(editButton).not.toBeVisible();
   });
 
