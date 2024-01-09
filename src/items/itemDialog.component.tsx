@@ -32,9 +32,9 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
 import { useAddItem } from '../api/item';
 import { AxiosError } from 'axios';
-function isValidDateTime(date: string | null) {
+function isValidDateTime(date: Date | null) {
   // Attempt to create a Date object from the string
-  let dateObj = new Date(date ?? '');
+  let dateObj = date ?? new Date('');
 
   // Check if the Date object is valid and the string was successfully parsed
   // Also, check if the original string is not equal to 'Invalid Date'
@@ -155,19 +155,29 @@ function ItemDialog(props: ItemDialogProps) {
   };
   const handleItemDetails = (
     field: keyof ItemDetailsPlaceholder,
-    value: string | null
+    value: string | Date | null
   ) => {
     const updatedItemDetails = { ...itemDetails };
 
-    if (value?.trim() === '') {
-      updatedItemDetails[field] = null;
-    } else {
-      updatedItemDetails[field] = value as string;
+    switch (field) {
+      case 'delivered_date':
+      case 'warranty_end_date':
+        updatedItemDetails[field] = value as Date | null;
+        break;
+      default:
+        if (
+          value === null ||
+          (typeof value === 'string' && value.trim() === '')
+        ) {
+          updatedItemDetails[field] = null;
+        } else {
+          updatedItemDetails[field] = value as string;
+        }
+        break;
     }
 
     setItemDetails(updatedItemDetails);
   };
-
   const handleClose = React.useCallback(() => {
     onClose();
     setItemDetails({
@@ -289,14 +299,14 @@ function ItemDialog(props: ItemDialogProps) {
       warranty_end_date:
         itemDetails.warranty_end_date &&
         isValidDateTime(itemDetails.warranty_end_date)
-          ? new Date(itemDetails.warranty_end_date).toISOString() ?? null
+          ? itemDetails.warranty_end_date.toISOString() ?? null
           : null,
       asset_number: itemDetails.asset_number,
       serial_number: itemDetails.serial_number,
       delivered_date:
         itemDetails.delivered_date &&
         isValidDateTime(itemDetails.delivered_date)
-          ? new Date(itemDetails.delivered_date).toISOString() ?? null
+          ? itemDetails.delivered_date.toISOString() ?? null
           : null,
       notes: itemDetails.notes,
     };
@@ -379,10 +389,7 @@ function ItemDialog(props: ItemDialogProps) {
                     : null
                 }
                 onChange={(date) =>
-                  handleItemDetails(
-                    'warranty_end_date',
-                    date ? date.toString() : null
-                  )
+                  handleItemDetails('warranty_end_date', date ? date : null)
                 }
                 slots={{ textField: CustomTextField }}
                 slotProps={{
@@ -399,10 +406,7 @@ function ItemDialog(props: ItemDialogProps) {
                     : null
                 }
                 onChange={(date) =>
-                  handleItemDetails(
-                    'delivered_date',
-                    date ? date.toString() : null
-                  )
+                  handleItemDetails('delivered_date', date ? date : null)
                 }
                 slotProps={{
                   actionBar: { actions: ['clear'] },

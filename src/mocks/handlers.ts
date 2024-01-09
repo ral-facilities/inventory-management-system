@@ -482,7 +482,7 @@ export const handlers = [
   rest.post('/v1/items/', async (req, res, ctx) => {
     const body = (await req.json()) as AddItem;
 
-    if (body.serial_number === 'error') {
+    if (body.serial_number === 'Error 500') {
       return res(ctx.status(500), ctx.json(''));
     }
 

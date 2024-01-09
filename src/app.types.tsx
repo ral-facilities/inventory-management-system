@@ -225,7 +225,9 @@ export interface ItemDetails {
   notes: string | null;
 }
 export type ItemDetailsPlaceholder = {
-  [K in keyof ItemDetails]: string | null;
+  [K in keyof ItemDetails]: K extends 'delivered_date' | 'warranty_end_date'
+    ? Date | null
+    : string | null;
 };
 
 export interface AddItem extends ItemDetails {

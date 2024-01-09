@@ -306,7 +306,7 @@ describe('ItemDialog', () => {
     it('displays warning message when an unknown error occurs', async () => {
       createView();
       await modifyValues({
-        serialNumber: 'error',
+        serialNumber: 'Error 500',
       });
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
