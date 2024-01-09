@@ -46,7 +46,7 @@ describe('catalogue items api functions', () => {
         ],
       };
     });
-    it('posts a request to add a user session and returns successful response', async () => {
+    it('posts a request to add an item and returns successful response', async () => {
       const { result } = renderHook(() => useAddItem(), {
         wrapper: hooksWrapperWithProviders(),
       });
