@@ -43,8 +43,8 @@
     "e2e:serve": "yarn build:e2e && node ./server/e2e-test-server.js",
     "e2e:interactive": "start-server-and-test e2e:serve http://localhost:3000 cy:open",
     "e2e": "start-server-and-test e2e:serve http://localhost:3000 cy:run",
-    "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:open": "TZ=UTC cypress open",
+    "cy:run": "TZ=UTC cypress run"
   },
   "eslintConfig": {
     "extends": [
@@ -68,7 +68,8 @@
     "resetMocks": false,
     "transformIgnorePatterns": [
       "node_modules/(?!axios)"
-    ]
+    ],
+    "globalSetup": "./global-setup.js"
   },
   "packageManager": "yarn@3.7.0",
   "devDependencies": {

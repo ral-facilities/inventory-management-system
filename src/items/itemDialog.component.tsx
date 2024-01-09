@@ -32,19 +32,31 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
 import { useAddItem } from '../api/item';
 import { AxiosError } from 'axios';
+const maxYear = 2100;
 function isValidDateTime(date: Date | null) {
   // Attempt to create a Date object from the string
   let dateObj = date ?? new Date('');
 
   // Check if the Date object is valid and the string was successfully parsed
   // Also, check if the original string is not equal to 'Invalid Date'
-  return !isNaN(dateObj.getTime()) && dateObj.toString() !== 'Invalid Date';
+  // Check if the date is larger the year 2100. The maximum date of the date picker
+  return (
+    !isNaN(dateObj.getTime()) &&
+    dateObj.toString() !== 'Invalid Date' &&
+    !(Number(dateObj.toLocaleDateString().split('/')[2]) >= maxYear)
+  );
 }
 
 const CustomTextField: React.FC<TextFieldProps> = (renderProps) => {
   const { id, ...inputProps } = renderProps.inputProps ?? {};
   let helperText = 'Date format: dd/MM/yyyy';
 
+  if (
+    renderProps.value &&
+    Number((renderProps.value as string).split('/')[2]) >= maxYear
+  ) {
+    helperText = 'Exceeded maximum date';
+  }
   return (
     <TextField
       {...renderProps}
@@ -299,14 +311,14 @@ function ItemDialog(props: ItemDialogProps) {
       warranty_end_date:
         itemDetails.warranty_end_date &&
         isValidDateTime(itemDetails.warranty_end_date)
-          ? itemDetails.warranty_end_date.toISOString() ?? null
+          ? itemDetails.warranty_end_date.toISOString()
           : null,
       asset_number: itemDetails.asset_number,
       serial_number: itemDetails.serial_number,
       delivered_date:
         itemDetails.delivered_date &&
         isValidDateTime(itemDetails.delivered_date)
-          ? itemDetails.delivered_date.toISOString() ?? null
+          ? itemDetails.delivered_date.toISOString()
           : null,
       notes: itemDetails.notes,
     };
@@ -383,11 +395,7 @@ function ItemDialog(props: ItemDialogProps) {
             <Grid item xs={12}>
               <DatePicker
                 label="Warranty end date"
-                value={
-                  itemDetails.warranty_end_date
-                    ? new Date(itemDetails.warranty_end_date)
-                    : null
-                }
+                value={itemDetails.warranty_end_date}
                 onChange={(date) =>
                   handleItemDetails('warranty_end_date', date ? date : null)
                 }
@@ -400,11 +408,7 @@ function ItemDialog(props: ItemDialogProps) {
             <Grid item xs={12}>
               <DatePicker
                 label="Delivered date"
-                value={
-                  itemDetails.delivered_date
-                    ? new Date(itemDetails.delivered_date)
-                    : null
-                }
+                value={itemDetails.delivered_date}
                 onChange={(date) =>
                   handleItemDetails('delivered_date', date ? date : null)
                 }
@@ -615,6 +619,16 @@ function ItemDialog(props: ItemDialogProps) {
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
             onClick={handleAddItem}
+            disabled={
+              catchAllError ||
+              propertyErrors.some((value) => {
+                return value === true;
+              }) ||
+              (!!itemDetails.warranty_end_date &&
+                !isValidDateTime(itemDetails.warranty_end_date)) ||
+              (!!itemDetails.delivered_date &&
+                !isValidDateTime(itemDetails.delivered_date))
+            }
           >
             Save
           </Button>

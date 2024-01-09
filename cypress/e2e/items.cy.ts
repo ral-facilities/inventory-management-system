@@ -125,9 +125,30 @@ describe('Items', () => {
     cy.findByLabelText('Broken *').click();
     cy.findByRole('option', { name: 'None' }).click();
 
+    cy.findAllByText('Date format: dd/MM/yyyy').should('have.length', 2);
+    cy.findByLabelText('Warranty end date').clear();
+    cy.findByLabelText('Delivered date').clear();
+
+    cy.findByLabelText('Warranty end date').type('12/02/4000');
+    cy.findByLabelText('Delivered date').type('12/02/4000');
+    cy.findAllByText('Exceeded maximum date').should('have.length', 2);
+
+    cy.findByLabelText('Warranty end date').type('12/02/2000');
+    cy.findByLabelText('Delivered date').type('12/02/2000');
+    cy.findByText('Exceeded maximum date').should('not.exist');
+    cy.findByText('Date format: dd/MM/yyyy').should('not.exist');
+
     cy.findByRole('button', { name: 'Save' }).click();
 
     cy.findAllByText('This field is mandatory').should('have.length', 2);
-    cy.findAllByText('Date format: dd/MM/yyyy').should('have.length', 2);
+    cy.findByText('Please select either True or False').should('exist');
+
+    cy.findByLabelText('Resolution (megapixels) *').type('test');
+    cy.findByLabelText('Sensor Type *').type('test');
+    cy.findByLabelText('Broken *').click();
+    cy.findByRole('option', { name: 'True' }).click();
+
+    cy.findByText('Please select either True or False').should('not.exist');
+    cy.findAllByText('This field is mandatory').should('not.exist');
   });
 });

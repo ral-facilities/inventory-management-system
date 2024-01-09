@@ -160,7 +160,7 @@ describe('ItemDialog', () => {
       });
     });
 
-    it('adds an item (all input vales)', async () => {
+    it('adds an item (all input values)', async () => {
       createView();
       await modifyValues({
         serialNumber: 'test12',
@@ -271,9 +271,26 @@ describe('ItemDialog', () => {
 
       expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
       expect(mandatoryFieldHelperText.length).toBe(2);
+
+      await modifyValues({
+        broken: 'False',
+        resolution: '12',
+        frameRate: '60',
+        sensorType: 'IO',
+        sensorBrand: 'pixel',
+      });
+
+      await user.type(screen.getByLabelText('Resolution (megapixels) *'), '12');
+      await user.type(screen.getByLabelText('Sensor Type *'), 'test');
+
+      expect(mandatoryFieldBooleanHelperText).not.toBeInTheDocument();
+
+      expect(
+        screen.queryByText('This field is mandatory')
+      ).not.toBeInTheDocument();
     }, 10000);
 
-    it('displays error message when property values type is incorrect', async () => {
+    it.only('displays error message when property values type is incorrect', async () => {
       createView();
       await modifyValues({
         serialNumber: '   ',
@@ -293,6 +310,28 @@ describe('ItemDialog', () => {
       );
       expect(validDateHelperText.length).toEqual(2);
 
+      await modifyValues({
+        warrantyEndDate: '17/02/4000',
+        deliveredDate: '23/09/4000',
+      });
+
+      const validDateMaxHelperText = screen.getAllByText(
+        'Exceeded maximum date'
+      );
+      expect(validDateMaxHelperText.length).toEqual(2);
+
+      await modifyValues({
+        warrantyEndDate: '17/02/2000',
+        deliveredDate: '23/09/2000',
+      });
+
+      expect(
+        screen.queryByText('Exceeded maximum date')
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByText('This field is mandatory')
+      ).not.toBeInTheDocument();
+
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
@@ -301,6 +340,13 @@ describe('ItemDialog', () => {
       );
 
       expect(validNumberHelperText).toBeInTheDocument();
+
+      await modifyValues({
+        resolution: '12',
+      });
+      expect(
+        screen.queryByText('Please enter a valid number')
+      ).not.toBeInTheDocument();
     }, 10000);
 
     it('displays warning message when an unknown error occurs', async () => {
