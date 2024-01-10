@@ -368,7 +368,9 @@ function Systems() {
                     marginBottom: 'auto',
                     flexWrap: 'no-wrap',
                     // Breadcrumbs and rest
-                    maxHeight: getPageHeightCalc('56px + 74px'),
+                    height: getPageHeightCalc('56px + 74px'),
+                    // To prevent no subsystems being visible
+                    minHeight: '200px',
                   }}
                 >
                   <Box
@@ -380,8 +382,8 @@ function Systems() {
                   >
                     <MRTGlobalFilterTextField table={subsystemsTable} />
                   </Box>
-                  <TableContainer>
-                    <Table sx={{ width: '100%' }}>
+                  <TableContainer sx={{ height: '100%' }}>
+                    <Table sx={{ width: '100%', height: '100%' }}>
                       <TableBody sx={{ width: '100%' }}>
                         {subsystemsTable.getRowModel().rows.map((row) => (
                           <TableRow
