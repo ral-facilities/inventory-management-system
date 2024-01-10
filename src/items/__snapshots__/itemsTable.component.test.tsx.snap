@@ -1470,7 +1470,7 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1gx8be0-MuiTableCell-root"
                 data-index="1"
               >
-                12
+                0
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1t0ctuh-MuiTableCell-root"
