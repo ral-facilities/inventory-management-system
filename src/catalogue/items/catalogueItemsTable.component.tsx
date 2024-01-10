@@ -1,16 +1,17 @@
+import AddIcon from '@mui/icons-material/Add';
 import BlockIcon from '@mui/icons-material/Block';
+import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
+import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
-import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
-import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
-import ClearIcon from '@mui/icons-material/Clear';
-import AddIcon from '@mui/icons-material/Add';
 import {
   Box,
   Button,
   ListItemIcon,
+  ListItemText,
   MenuItem,
   Link as MuiLink,
   TableRow,
@@ -22,25 +23,26 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
-  type MRT_RowSelectionState,
   type MRT_ColumnFiltersState,
+  type MRT_RowSelectionState,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCatalogueItems } from '../../api/catalogueItem';
+import { useManufacturerIds } from '../../api/manufacturer';
 import {
   CatalogueCategory,
   CatalogueItem,
   CatalogueItemPropertyResponse,
   Manufacturer,
 } from '../../app.types';
+import { generateUniqueName } from '../../utils';
 import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
+import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
-import { useManufacturerIds } from '../../api/manufacturer';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
-import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 
 function findPropertyValue(
   properties: CatalogueItemPropertyResponse[],
@@ -53,20 +55,6 @@ function findPropertyValue(
   return foundProperty ? foundProperty.value : '';
 }
 
-function generateUniqueName(
-  existingNames: (string | undefined)[],
-  originalName: string
-) {
-  let newName = originalName;
-  let copyIndex = 1;
-
-  while (existingNames.includes(newName)) {
-    newName = `${originalName}_copy_${copyIndex}`;
-    copyIndex++;
-  }
-
-  return newName;
-}
 export interface CatalogueItemsTableProps {
   parentInfo: CatalogueCategory;
   dense: boolean;
@@ -129,8 +117,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     string | null
   >(null);
 
-  const catalogueCategoryNames: (string | undefined)[] =
-    data?.map((item) => item.name) || [];
+  const catalogueCategoryNames: string[] = data?.map((item) => item.name) || [];
 
   const noResultsTxt = dense
     ? 'No catalogue items found'
@@ -589,8 +576,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                     name:
                       itemDialogType === 'save as'
                         ? generateUniqueName(
-                            catalogueCategoryNames,
-                            row.original.name
+                            row.original.name,
+                            catalogueCategoryNames
                           )
                         : row.original.name,
                   }
@@ -655,7 +642,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       return [
         <MenuItem
           key={0}
-          aria-label={`Edit ${row.original.name} catalogue item`}
+          aria-label={`Edit catalogue item ${row.original.name}`}
           onClick={() => {
             setItemsDialogType('edit');
             table.setCreatingRow(row);
@@ -666,11 +653,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <ListItemIcon>
             <EditIcon />
           </ListItemIcon>
-          Edit
+          <ListItemText>Edit</ListItemText>
         </MenuItem>,
         <MenuItem
           key={1}
-          aria-label={`Save as ${row.original.name} catalogue item`}
+          aria-label={`Save catalogue item ${row.original.name} as`}
           onClick={() => {
             setItemsDialogType('save as');
             table.setCreatingRow(row);
@@ -681,11 +668,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <ListItemIcon>
             <SaveAsIcon />
           </ListItemIcon>
-          Save as
+          <ListItemText>Save as</ListItemText>
         </MenuItem>,
         <MenuItem
           key={2}
-          aria-label={`Delete ${row.original.name} catalogue item`}
+          aria-label={`Delete catalogue item ${row.original.name}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
             setSelectedCatalogueItem(row.original);
@@ -696,11 +683,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <ListItemIcon>
             <DeleteIcon />
           </ListItemIcon>
-          <>Delete</>
+          <ListItemText>Delete</ListItemText>
         </MenuItem>,
         <MenuItem
           key={3}
-          aria-label={`Obsolete ${row.original.name} catalogue item`}
+          aria-label={`Obsolete catalogue item ${row.original.name}`}
           onClick={() => {
             setObsoleteItemDialogOpen(true);
             setSelectedCatalogueItem(row.original);
@@ -712,7 +699,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <ListItemIcon>
             <BlockIcon />
           </ListItemIcon>
-          <>Obsolete</>
+          <ListItemText>Obsolete</ListItemText>
         </MenuItem>,
       ];
     },

@@ -72,7 +72,11 @@ describe('System', () => {
       }).should(async (postRequests) => {
         expect(postRequests.length).equal(1);
         expect(JSON.stringify(await postRequests[0].json())).equal(
-          JSON.stringify({ name: 'System name', importance: 'medium' })
+          JSON.stringify({
+            name: 'System name',
+            importance: 'medium',
+            parent_id: null,
+          })
         );
       });
     });
@@ -102,6 +106,7 @@ describe('System', () => {
             location: 'System location',
             owner: 'System owner',
             importance: 'high',
+            parent_id: null,
           })
         );
       });
@@ -176,9 +181,10 @@ describe('System', () => {
 
   describe('Edit', () => {
     it("edits all of a system's fields", () => {
-      cy.visit('/systems/65328f34a40ff5301575a4e3');
+      cy.visit('/systems');
 
-      cy.findByRole('button', { name: 'Edit System' }).click();
+      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findByText('Edit').click();
 
       cy.findByLabelText('Name *').clear().type('System name');
       cy.findByLabelText('Description').clear().type('System description');
@@ -192,7 +198,7 @@ describe('System', () => {
 
       cy.findBrowserMockedRequests({
         method: 'PATCH',
-        url: '/v1/systems/65328f34a40ff5301575a4e3',
+        url: '/v1/systems/656da8ef9cba7a76c6f81a5d',
       }).should(async (patchRequests) => {
         expect(patchRequests.length).equal(1);
         expect(JSON.stringify(await patchRequests[0].json())).equal(
@@ -208,9 +214,10 @@ describe('System', () => {
     });
 
     it("edits only a system's name", () => {
-      cy.visit('/systems/65328f34a40ff5301575a4e3');
+      cy.visit('/systems');
 
-      cy.findByRole('button', { name: 'Edit System' }).click();
+      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findByText('Edit').click();
 
       cy.findByLabelText('Name *').clear().type('System name');
 
@@ -219,7 +226,7 @@ describe('System', () => {
 
       cy.findBrowserMockedRequests({
         method: 'PATCH',
-        url: '/v1/systems/65328f34a40ff5301575a4e3',
+        url: '/v1/systems/656da8ef9cba7a76c6f81a5d',
       }).should(async (patchRequests) => {
         expect(patchRequests.length).equal(1);
         expect(JSON.stringify(await patchRequests[0].json())).equal(
@@ -231,9 +238,10 @@ describe('System', () => {
     });
 
     it('displays error message when no field has been edited that disappears when description is edited', () => {
-      cy.visit('/systems/65328f34a40ff5301575a4e3');
+      cy.visit('/systems');
 
-      cy.findByRole('button', { name: 'Edit System' }).click();
+      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findByText('Edit').click();
 
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText('Please edit a form entry before clicking save').should(
@@ -247,23 +255,28 @@ describe('System', () => {
     });
 
     it('displays error message when name is not given that disappears once closed', () => {
-      cy.visit('/systems/65328f34a40ff5301575a4e3');
+      cy.visit('/systems');
 
-      cy.findByRole('button', { name: 'Edit System' }).click();
+      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findByText('Edit').click();
 
       cy.findByLabelText('Name *').clear();
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText('Please enter a name').should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
-      cy.findByRole('button', { name: 'Edit System' }).click();
+
+      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findByText('Edit').click();
+
       cy.findByText('Please enter a name').should('not.exist');
     });
 
     it('displays error message if the system has a duplicate name that disappears once closed', () => {
-      cy.visit('/systems/65328f34a40ff5301575a4e3');
+      cy.visit('/systems');
 
-      cy.findByRole('button', { name: 'Edit System' }).click();
+      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findByText('Edit').click();
 
       cy.findByLabelText('Name *').clear().type('Error 409');
       cy.findByRole('button', { name: 'Save' }).click();
@@ -272,49 +285,148 @@ describe('System', () => {
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
-      cy.findByRole('button', { name: 'Edit System' }).click();
+
+      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findByText('Edit').click();
+
       cy.findByText(
         'A System with the same name already exists within the same parent System'
       ).should('not.exist');
     });
 
     it('displays error message if any other error occurs that disappears once closed', () => {
-      cy.visit('/systems/65328f34a40ff5301575a4e3');
+      cy.visit('/systems');
 
-      cy.findByRole('button', { name: 'Edit System' }).click();
+      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findByText('Edit').click();
 
       cy.findByLabelText('Name *').clear().type('Error 500');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText('Please refresh and try again').should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
-      cy.findByRole('button', { name: 'Edit System' }).click();
+
+      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findByText('Edit').click();
+
       cy.findByText('Please refresh and try again').should('not.exist');
     });
   });
 
-  it('deletes a system', () => {
-    cy.visit('/systems/65328f34a40ff5301575a4e9');
+  describe('Save as', () => {
+    // Error checking is ommitted here as same logic as in add
 
-    cy.findByRole('button', { name: 'Delete System' }).click();
+    it('save as a system editing all fields (in root)', () => {
+      cy.visit('/systems');
+
+      cy.findAllByLabelText('Row Actions').eq(1).click();
+      cy.findByText('Save as').click();
+
+      cy.findByLabelText('Name *').clear().type('System name');
+      cy.findByLabelText('Description').clear().type('System description');
+      cy.findByLabelText('Location').clear().type('System location');
+      cy.findByLabelText('Owner').clear().type('System owner');
+      cy.findByLabelText('Importance').click();
+      cy.findByRole('option', { name: 'medium' }).click();
+
+      cy.startSnoopingBrowserMockedRequest();
+      cy.findByRole('button', { name: 'Save' }).click();
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/v1/systems',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).equal(1);
+        expect(JSON.stringify(await postRequests[0].json())).equal(
+          JSON.stringify({
+            name: 'System name',
+            description: 'System description',
+            location: 'System location',
+            owner: 'System owner',
+            importance: 'medium',
+            parent_id: null,
+          })
+        );
+      });
+    });
+
+    it("save as a system editing only a system's name (in subsystem)", () => {
+      cy.visit('/systems/65328f34a40ff5301575a4e3');
+
+      cy.findAllByLabelText('Row Actions').eq(0).click();
+      cy.findByText('Save as').click();
+
+      cy.findByLabelText('Name *').clear().type('System name');
+
+      cy.startSnoopingBrowserMockedRequest();
+      cy.findByRole('button', { name: 'Save' }).click();
+
+      cy.findBrowserMockedRequests({
+        method: 'POST',
+        url: '/v1/systems',
+      }).should(async (postRequests) => {
+        expect(postRequests.length).equal(1);
+        expect(JSON.stringify(await postRequests[0].json())).equal(
+          JSON.stringify({
+            name: 'System name',
+            description:
+              'Pretty speech spend mouth control skill. Fire together return message catch food wish.',
+            location: '848 James Lock Suite 863\nNew Robertbury, PW 17883',
+            owner: 'Daniel Morrison',
+            importance: 'low',
+            parent_id: '65328f34a40ff5301575a4e3',
+          })
+        );
+      });
+    });
+  });
+
+  it('edits a system from a landing page', () => {
+    cy.visit('/systems/65328f34a40ff5301575a4e3');
+
+    cy.findByRole('button', { name: 'Edit System' }).click();
+
+    cy.findByLabelText('Name *').clear().type('System name');
+
+    cy.startSnoopingBrowserMockedRequest();
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/systems/65328f34a40ff5301575a4e3',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({
+          name: 'System name',
+        })
+      );
+    });
+  });
+
+  it('deletes a system', () => {
+    cy.visit('/systems');
+
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByText('Delete').click();
+
     cy.startSnoopingBrowserMockedRequest();
     cy.findByRole('button', { name: 'Continue' }).click();
 
     cy.findBrowserMockedRequests({
       method: 'DELETE',
-      url: '/v1/systems/65328f34a40ff5301575a4e9',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
+      url: '/v1/systems/656da8ef9cba7a76c6f81a5d',
+    }).should((deleteRequests) => {
+      expect(deleteRequests.length).equal(1);
     });
-
-    // ID of the parent
-    cy.url().should('include', '/systems/65328f34a40ff5301575a4e8');
   });
 
   it('displays an error when attempting to delete a system with children that hides once closed', () => {
-    cy.visit('/systems/65328f34a40ff5301575a4e3');
+    cy.visit('/systems');
 
-    cy.findByRole('button', { name: 'Delete System' }).click();
+    cy.findAllByLabelText('Row Actions').eq(0).click();
+    cy.findByText('Delete').click();
+
     cy.startSnoopingBrowserMockedRequest();
     cy.findByRole('button', { name: 'Continue' }).click();
 
@@ -328,7 +440,10 @@ describe('System', () => {
     cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
 
     cy.findByRole('button', { name: 'Cancel' }).click();
-    cy.findByRole('button', { name: 'Delete System' }).click();
+
+    cy.findAllByLabelText('Row Actions').eq(0).click();
+    cy.findByText('Delete').click();
+
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
