@@ -14,13 +14,8 @@
     "properties": [
       {
         "name": "Resolution",
-        "value": 12,
+        "value": 0,
         "unit": "megapixels"
-      },
-      {
-        "name": "Frame Rate",
-        "value": 30,
-        "unit": "fps"
       },
       {
         "name": "Sensor Type",
@@ -99,7 +94,7 @@
       },
       {
         "name": "Frame Rate",
-        "value": 30,
+        "value": null,
         "unit": "fps"
       },
       {
@@ -109,7 +104,7 @@
       },
       {
         "name": "Broken",
-        "value": true,
+        "value": false,
         "unit": ""
       },
       {
