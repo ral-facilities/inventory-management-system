@@ -5,7 +5,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
@@ -17,7 +16,6 @@ import {
   LinearProgress,
   ListItemIcon,
   ListItemText,
-  Menu,
   MenuItem,
   Stack,
   Table,
@@ -29,16 +27,17 @@ import {
 } from '@mui/material';
 import {
   MRT_ColumnDef,
-  MRT_GlobalFilterTextField,
+  // To resolve react/jsx-pascal-case
+  MRT_GlobalFilterTextField as MRTGlobalFilterTextField,
   MRT_RowSelectionState,
-  MRT_TableBodyCellValue,
-  MRT_TablePagination,
+  MRT_TableBodyCellValue as MRTTableBodyCellValue,
   useMaterialReactTable,
 } from 'material-react-table';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { System } from '../app.types';
+import { getPageHeightCalc } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
@@ -142,85 +141,6 @@ const CopySystemsButton = (props: {
 
 type MenuDialogType = SystemDialogType | 'delete';
 
-/* TODO: Remove this and use table menu items */
-const SubsystemMenu = (props: {
-  subsystem: System;
-  onOpen: () => void;
-  onItemClicked: (type: MenuDialogType) => void;
-}) => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-
-  const handleOpen = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    props.onOpen();
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleClick = (type: MenuDialogType) => {
-    props.onItemClicked(type);
-    handleClose();
-  };
-
-  return (
-    <>
-      <IconButton
-        id={`${props.subsystem.id}-menu-button`}
-        aria-controls={open ? `${props.subsystem.id}-menu` : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        aria-label="Row Actions"
-        onClick={handleOpen}
-        sx={{ marginRight: 1 }}
-      >
-        <MoreHorizIcon />
-      </IconButton>
-      <Menu
-        id={`${props.subsystem.id}-menu`}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': `${props.subsystem.id}-menu-button`,
-        }}
-      >
-        <MenuItem
-          aria-label={`Edit system ${props.subsystem.name}`}
-          onClick={() => handleClick('edit')}
-        >
-          <ListItemIcon>
-            <EditIcon />
-          </ListItemIcon>
-          <ListItemText>Edit</ListItemText>
-        </MenuItem>
-        <MenuItem
-          aria-label={`Save system ${props.subsystem.name} as new system`}
-          onClick={() => handleClick('save as')}
-        >
-          <ListItemIcon>
-            <SaveAsIcon />
-          </ListItemIcon>
-          <ListItemText>Save as</ListItemText>
-        </MenuItem>
-        <MenuItem
-          aria-label={`Delete system ${props.subsystem.name}`}
-          onClick={() => handleClick('delete')}
-        >
-          <ListItemIcon>
-            <DeleteIcon />
-          </ListItemIcon>
-          <ListItemText>Delete</ListItemText>
-        </MenuItem>
-      </Menu>
-    </>
-  );
-};
-
 /* Returns the system id from the location pathname (null when not found) */
 export const useSystemId = (): string | null => {
   // Navigation setup
@@ -234,7 +154,10 @@ export const useSystemId = (): string | null => {
 };
 
 const columns: MRT_ColumnDef<System>[] = [
-  { accessorKey: 'name', header: 'Name' },
+  {
+    accessorKey: 'name',
+    header: 'Name',
+  },
 ];
 
 function Systems() {
@@ -343,19 +266,16 @@ function Systems() {
 
   return (
     <>
-      <Grid container>
+      <Box height="100%">
         {systemsBreadcrumbsLoading && systemId !== null ? (
           <LinearProgress sx={{ width: '100%' }} />
         ) : (
           <Grid
-            item
             container
             alignItems="center"
             justifyContent="space-between" // Align items and distribute space along the main axis
             sx={{
               display: 'flex',
-              height: '100%',
-              width: '100%',
               padding: 1, // Add some padding for spacing
             }}
           >
@@ -398,7 +318,15 @@ function Systems() {
           </Grid>
         )}
         <Grid container margin={0} direction="row" alignItems="stretch">
-          <Grid item xs={12} md={3} lg={2} textAlign="left" padding={1}>
+          <Grid
+            item
+            xs={12}
+            md={2}
+            minWidth="300px"
+            textAlign="left"
+            padding={1}
+            paddingBottom={0}
+          >
             {subsystemsDataLoading ? (
               <Box
                 sx={{
@@ -421,7 +349,15 @@ function Systems() {
                   <AddSystemButton systemId={systemId} />
                 </Box>
                 <Divider role="presentation" />
-                <Stack sx={{ marginTop: 1, marginBottom: 'auto' }}>
+                <Stack
+                  sx={{
+                    marginTop: 1,
+                    marginBottom: 'auto',
+                    flexWrap: 'no-wrap',
+                    // Breadcrumbs and header
+                    maxHeight: getPageHeightCalc('130px'),
+                  }}
+                >
                   <Box
                     sx={{
                       display: 'flex',
@@ -429,7 +365,7 @@ function Systems() {
                       alignItems: 'center',
                     }}
                   >
-                    <MRT_GlobalFilterTextField table={subsystemsTable} />
+                    <MRTGlobalFilterTextField table={subsystemsTable} />
                   </Box>
                   <TableContainer>
                     <Table sx={{ width: '100%' }}>
@@ -442,54 +378,50 @@ function Systems() {
                             hover={true}
                             sx={{ cursor: 'pointer' }}
                           >
-                            {row.getVisibleCells().map((cell) => {
-                              console.log(cell.column.id);
-                              return (
-                                <TableCell
-                                  align={
+                            {row.getVisibleCells().map((cell) => (
+                              <TableCell
+                                align={
+                                  cell.column.id === 'mrt-row-actions'
+                                    ? 'right'
+                                    : 'left'
+                                }
+                                variant="body"
+                                key={cell.id}
+                                sx={{
+                                  margin: 0,
+                                  padding: 1,
+                                  paddingRight:
                                     cell.column.id === 'mrt-row-actions'
-                                      ? 'right'
-                                      : 'left'
-                                  }
-                                  variant="body"
-                                  key={cell.id}
-                                  sx={{
-                                    margin: 0,
-                                    padding: 1,
-                                    paddingRight:
-                                      cell.column.id === 'mrt-row-actions'
-                                        ? 1.5
-                                        : 0,
-                                    width:
-                                      // Make name take up as much space as possible to make other cells
-                                      // as small as possible
-                                      cell.column.id === 'name'
-                                        ? '100%'
-                                        : undefined,
-                                  }}
-                                >
-                                  <MRT_TableBodyCellValue
-                                    cell={cell}
-                                    table={subsystemsTable}
-                                  />
-                                </TableCell>
-                              );
-                            })}
+                                      ? 1.5
+                                      : 0,
+                                  width:
+                                    // Make name take up as much space as possible to make other cells
+                                    // as small as possible
+                                    cell.column.id === 'name'
+                                      ? '100%'
+                                      : undefined,
+                                }}
+                              >
+                                <MRTTableBodyCellValue
+                                  cell={cell}
+                                  table={subsystemsTable}
+                                />
+                              </TableCell>
+                            ))}
                           </TableRow>
                         ))}
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  <MRT_TablePagination table={subsystemsTable} />
                 </Stack>
               </>
             )}
           </Grid>
-          <Grid item xs={12} md={9} lg={10} textAlign="left" padding={1}>
+          <Grid item textAlign="left" padding={1} xs>
             <SystemDetails id={systemId} />
           </Grid>
         </Grid>
-      </Grid>
+      </Box>
       <SystemDialog
         open={menuDialogType !== undefined && menuDialogType !== 'delete'}
         onClose={() => setMenuDialogType(undefined)}
