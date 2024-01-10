@@ -360,8 +360,8 @@ function Systems() {
                     marginTop: 1,
                     marginBottom: 'auto',
                     flexWrap: 'no-wrap',
-                    // Breadcrumbs and header - pagination component
-                    maxHeight: getPageHeightCalc('130px'),
+                    // Breadcrumbs and rest
+                    maxHeight: getPageHeightCalc('56px + 74px'),
                   }}
                 >
                   <Box

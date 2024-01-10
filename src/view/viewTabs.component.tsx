@@ -36,9 +36,10 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== label}
       id={`${label}-tabpanel`}
       aria-labelledby={`${label}-tab`}
+      style={{ height: '100%' }}
       {...other}
     >
-      {value === label && <Box>{children}</Box>}
+      {value === label && <Box height="100%">{children}</Box>}
     </div>
   );
 }

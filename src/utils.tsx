@@ -26,7 +26,9 @@ export const getSciGatewayPageHeightCalc = (
   additionalSubtraction?: string
 ): string => {
   // Page height - unknown - app bar height - footer height - additional
-  return `calc(100vh - 8px - 64px - 24px - ${additionalSubtraction || ''})`;
+  return `calc(100vh - 8px - 64px - 24px${
+    additionalSubtraction !== undefined ? ` - (${additionalSubtraction})` : ''
+  })`;
 };
 
 /* Returns a calc function giving the page height excluding the optional view tabs component
@@ -38,7 +40,7 @@ export const getPageHeightCalc = (additionalSubtraction?: string): string => {
   if (isRunningInDevelopment()) newAdditional = '48px';
   if (additionalSubtraction !== undefined) {
     if (newAdditional === undefined) newAdditional = additionalSubtraction;
-    else newAdditional += ' - ' + additionalSubtraction;
+    else newAdditional += ' + ' + additionalSubtraction;
   }
 
   return getSciGatewayPageHeightCalc(newAdditional);

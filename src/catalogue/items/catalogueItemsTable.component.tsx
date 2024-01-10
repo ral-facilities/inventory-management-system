@@ -37,7 +37,7 @@ import {
   CatalogueItemPropertyResponse,
   Manufacturer,
 } from '../../app.types';
-import { generateUniqueName } from '../../utils';
+import { generateUniqueName, getPageHeightCalc } from '../../utils';
 import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
@@ -75,8 +75,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     selectedRowState,
     isItemSelectable,
   } = props;
-  // SG header + SG footer + tabs #add breadcrumbs + Mui table V2
-  const tableHeight = `calc(100vh - (64px + 36px + 50px + 125px))`;
+  // Breadcrumbs + Mui table V2 + extra
+  const tableHeight = getPageHeightCalc('50px + 110px + 32px');
 
   const { data, isLoading } = useCatalogueItems(parentInfo.id);
 
