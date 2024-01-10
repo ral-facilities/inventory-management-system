@@ -47,23 +47,20 @@ describe('Systems', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('button', { name: 'Giant laser' })
+        screen.getByRole('cell', { name: 'Giant laser' })
       ).toBeInTheDocument();
     });
-    await user.click(screen.getByRole('button', { name: 'Giant laser' }));
+    await user.click(screen.getByRole('cell', { name: 'Giant laser' }));
 
     await waitFor(() => {
-      expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+      expect(
+        screen.getByRole('cell', { name: 'Smaller laser' })
+      ).toBeInTheDocument();
     });
 
     expect(screen.getAllByText('Giant laser').length).toBe(2);
 
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Smaller laser' })
-      ).toBeInTheDocument();
-    });
-    await user.click(screen.getByRole('button', { name: 'Smaller laser' }));
+    await user.click(screen.getByRole('cell', { name: 'Smaller laser' }));
 
     expect(
       screen.getByRole('link', { name: 'Giant laser' })
@@ -154,10 +151,10 @@ describe('Systems', () => {
     });
 
     const giantLaserCheckbox = within(
-      screen.getByRole('button', { name: 'Giant laser' })
+      screen.getByRole('row', { name: 'Toggle select row Giant laser' })
     ).getByRole('checkbox');
     const pulseLaserCheckbox = within(
-      screen.getByRole('button', { name: 'Pulse Laser' })
+      screen.getByRole('row', { name: 'Toggle select row Pulse Laser' })
     ).getByRole('checkbox');
 
     await user.click(giantLaserCheckbox);
@@ -191,10 +188,10 @@ describe('Systems', () => {
     });
 
     const giantLaserCheckbox = within(
-      screen.getByRole('button', { name: 'Giant laser' })
+      screen.getByRole('row', { name: 'Toggle select row Giant laser' })
     ).getByRole('checkbox');
     const pulseLaserCheckbox = within(
-      screen.getByRole('button', { name: 'Pulse Laser' })
+      screen.getByRole('row', { name: 'Toggle select row Pulse Laser' })
     ).getByRole('checkbox');
 
     await user.click(giantLaserCheckbox);
@@ -227,7 +224,7 @@ describe('Systems', () => {
     });
 
     const giantLaserCheckbox = within(
-      screen.getByRole('button', { name: 'Giant laser' })
+      screen.getByRole('row', { name: 'Toggle select row Giant laser' })
     ).getByRole('checkbox');
     await user.click(giantLaserCheckbox);
 
@@ -258,7 +255,7 @@ describe('Systems', () => {
     });
 
     const giantLaserCheckbox = within(
-      screen.getByRole('button', { name: 'Giant laser' })
+      screen.getByRole('row', { name: 'Toggle select row Giant laser' })
     ).getByRole('checkbox');
     await user.click(giantLaserCheckbox);
 
