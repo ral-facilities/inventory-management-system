@@ -360,7 +360,7 @@ describe('System', () => {
       cy.findByText('Save as').click();
 
       // Should default to having _copy_1 in the name
-      cy.findByLabelText('Name *').should('have.value', 'Pulse Laser_copy_1');
+      cy.findByLabelText('Name *').should('have.value', 'Smaller laser_copy_1');
 
       cy.findByLabelText('Name *').clear().type('System name');
 
