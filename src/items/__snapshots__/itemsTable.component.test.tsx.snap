@@ -673,7 +673,7 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-1n7ptpu-MuiTable-root"
-          style="--header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-Notes-size: 250; --col-Notes-size: 250; --header-Resolution__megapixels_-size: 250; --col-Resolution__megapixels_-size: 250; --header-Sensor_Type_-size: 250; --col-Sensor_Type_-size: 250; --header-Older_than_five_years_-size: 250; --col-Older_than_five_years_-size: 250;"
+          style="--header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-Notes-size: 250; --col-Notes-size: 250; --header-Frame_Rate__fps_-size: 250; --col-Frame_Rate__fps_-size: 250; --header-Sensor_Type_-size: 250; --col-Sensor_Type_-size: 250; --header-Broken_-size: 250; --col-Broken_-size: 250;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
@@ -847,7 +847,7 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1r0x6wr-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-e6ls72-MuiTableCell-root"
                 colspan="1"
                 scope="col"
               >
@@ -858,18 +858,18 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                     class="Mui-TableHeadCell-Content-Labels MuiBox-root css-68rqdf"
                   >
                     <div
-                      class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-1t5kuvk"
-                      title="Resolution (megapixels)"
+                      class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
+                      title="Frame Rate (fps)"
                     >
-                      Resolution (megapixels)
+                      Frame Rate (fps)
                     </div>
                     <span
-                      aria-label="Sort by Resolution (megapixels) descending"
+                      aria-label="Sort by Frame Rate (fps) descending"
                       class="MuiBadge-root css-1c32n2y-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
-                        aria-label="Sort by Resolution (megapixels) descending"
+                        aria-label="Sort by Frame Rate (fps) descending"
                         class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
@@ -1229,7 +1229,7 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-110wimo-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5v7b1y-MuiTableCell-root"
                 colspan="1"
                 scope="col"
               >
@@ -1240,18 +1240,18 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                     class="Mui-TableHeadCell-Content-Labels MuiBox-root css-68rqdf"
                   >
                     <div
-                      class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-1t5kuvk"
-                      title="Older than five years "
+                      class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
+                      title="Broken "
                     >
-                      Older than five years 
+                      Broken 
                     </div>
                     <span
-                      aria-label="Sort by Older than five years  ascending"
+                      aria-label="Sort by Broken  ascending"
                       class="MuiBadge-root css-1c32n2y-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
-                        aria-label="Sort by Older than five years  ascending"
+                        aria-label="Sort by Broken  ascending"
                         class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
@@ -1351,7 +1351,7 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                             aria-controls=":r2o:"
                             aria-expanded="false"
                             aria-haspopup="listbox"
-                            aria-label="Filter by Older than five years "
+                            aria-label="Filter by Broken "
                             aria-labelledby=":r2n:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
                             id=":r2n:"
@@ -1361,7 +1361,7 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                             <div
                               class="MuiBox-root css-1tzeee1"
                             >
-                              Filter by Older than five years 
+                              Filter by Broken 
                             </div>
                           </div>
                           <input
@@ -1370,7 +1370,7 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                             autocomplete="new-password"
                             class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                             tabindex="-1"
-                            title="Filter by Older than five years "
+                            title="Filter by Broken "
                             value=""
                           />
                           <svg
@@ -1467,11 +1467,9 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                 </svg>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1gx8be0-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-13lgqu6-MuiTableCell-root"
                 data-index="1"
-              >
-                0
-              </td>
+              />
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1t0ctuh-MuiTableCell-root"
                 data-index="2"
@@ -1479,10 +1477,10 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                 CMOS
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-syhyzq-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-53a1i-MuiTableCell-root"
                 data-index="3"
               >
-                No
+                Yes
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-axsrxv-MuiTableCell-root"
@@ -1512,10 +1510,10 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                 </svg>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1gx8be0-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-13lgqu6-MuiTableCell-root"
                 data-index="1"
               >
-                12
+                30
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1t0ctuh-MuiTableCell-root"
@@ -1524,10 +1522,10 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                 CMOS
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-syhyzq-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-53a1i-MuiTableCell-root"
                 data-index="3"
               >
-                No
+                Yes
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-axsrxv-MuiTableCell-root"
@@ -1557,11 +1555,9 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                 </svg>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1gx8be0-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-13lgqu6-MuiTableCell-root"
                 data-index="1"
-              >
-                12
-              </td>
+              />
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1t0ctuh-MuiTableCell-root"
                 data-index="2"
@@ -1569,7 +1565,7 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                 CMOS
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-syhyzq-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-53a1i-MuiTableCell-root"
                 data-index="3"
               >
                 No
@@ -1602,10 +1598,10 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                 </svg>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1gx8be0-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-13lgqu6-MuiTableCell-root"
                 data-index="1"
               >
-                12
+                30
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1t0ctuh-MuiTableCell-root"
@@ -1614,10 +1610,10 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
                 CMOS
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-syhyzq-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-53a1i-MuiTableCell-root"
                 data-index="3"
               >
-                No
+                Yes
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-axsrxv-MuiTableCell-root"

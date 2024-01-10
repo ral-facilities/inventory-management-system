@@ -55,9 +55,9 @@ describe('Items Table', () => {
     const view = createView();
     await ensureColumnsVisible([
       'Notes',
-      'Resolution (megapixels)',
+      'Frame Rate (fps)',
       'Sensor Type',
-      'Older than five years',
+      'Broken',
     ]);
     expect(view.asFragment()).toMatchSnapshot();
   });
