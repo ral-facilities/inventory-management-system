@@ -383,7 +383,7 @@ function Systems() {
                     <MRTGlobalFilterTextField table={subsystemsTable} />
                   </Box>
                   <TableContainer sx={{ height: '100%' }}>
-                    <Table sx={{ width: '100%', height: '100%' }}>
+                    <Table sx={{ width: '100%' }}>
                       <TableBody sx={{ width: '100%' }}>
                         {subsystemsTable.getRowModel().rows.map((row) => (
                           <TableRow
