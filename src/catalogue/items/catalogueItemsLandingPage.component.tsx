@@ -374,39 +374,19 @@ function CatalogueItemsLandingPage() {
 
                       <Grid item xs={12} sm={6} md={4}>
                         <Typography align="left" color="text.primary">
-                          Address Line
+                          Address
                         </Typography>
                         <Typography align="left" color="text.secondary">
                           {manufacturer?.address.address_line}
                         </Typography>
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={4}>
-                        <Typography align="left" color="text.primary">
-                          Town
-                        </Typography>
                         <Typography align="left" color="text.secondary">
                           {manufacturer?.address.town}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={4}>
-                        <Typography align="left" color="text.primary">
-                          County
                         </Typography>
                         <Typography align="left" color="text.secondary">
                           {manufacturer?.address.county}
                         </Typography>
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={4}>
-                        <Typography align="left" color="text.primary">
-                          Country
-                        </Typography>
                         <Typography align="left" color="text.secondary">
                           {manufacturer?.address.country}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} sm={6} md={4}>
-                        <Typography align="left" color="text.primary">
-                          Post/Zip code
                         </Typography>
                         <Typography align="left" color="text.secondary">
                           {manufacturer?.address.postcode}
