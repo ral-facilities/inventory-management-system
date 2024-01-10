@@ -26,11 +26,12 @@ import {
   Typography,
 } from '@mui/material';
 import {
-  MRT_ColumnDef,
   // To resolve react/jsx-pascal-case
   MRT_GlobalFilterTextField as MRTGlobalFilterTextField,
-  MRT_RowSelectionState,
   MRT_TableBodyCellValue as MRTTableBodyCellValue,
+  MRT_TablePagination as MRTTablePagination,
+  MRT_ColumnDef,
+  MRT_RowSelectionState,
   useMaterialReactTable,
 } from 'material-react-table';
 import React from 'react';
@@ -209,10 +210,15 @@ function Systems() {
     positionActionsColumn: 'last',
     paginationDisplayMode: 'pages',
     muiPaginationProps: {
-      showRowsPerPage: false,
+      showRowsPerPage: true,
+      rowsPerPageOptions: [10, 25, 50],
+      showFirstButton: false,
+      showLastButton: false,
+      size: 'small',
     },
     initialState: {
       showGlobalFilter: true,
+      pagination: { pageSize: 10, pageIndex: 0 },
     },
     onRowSelectionChange: setRowSelection,
     state: { rowSelection: rowSelection },
@@ -322,7 +328,7 @@ function Systems() {
             item
             xs={12}
             md={2}
-            minWidth="300px"
+            minWidth="320px"
             textAlign="left"
             padding={1}
             paddingBottom={0}
@@ -354,7 +360,7 @@ function Systems() {
                     marginTop: 1,
                     marginBottom: 'auto',
                     flexWrap: 'no-wrap',
-                    // Breadcrumbs and header
+                    // Breadcrumbs and header - pagination component
                     maxHeight: getPageHeightCalc('130px'),
                   }}
                 >
@@ -413,6 +419,7 @@ function Systems() {
                       </TableBody>
                     </Table>
                   </TableContainer>
+                  <MRTTablePagination table={subsystemsTable} />
                 </Stack>
               </>
             )}
