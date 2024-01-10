@@ -1,6 +1,10 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { useAddItem } from './item';
-import { hooksWrapperWithProviders } from '../setupTests';
+import { useAddItem, useItems } from './item';
+import {
+  getItemsByCatalogueItemId,
+  getItemsBySystemId,
+  hooksWrapperWithProviders,
+} from '../setupTests';
 import { AddItem } from '../app.types';
 
 describe('catalogue items api functions', () => {
@@ -75,6 +79,37 @@ describe('catalogue items api functions', () => {
         usage_status: 0,
         warranty_end_date: '2024-01-28T00:00:00.000Z',
       });
+    });
+  });
+
+  describe('useItems', () => {
+    it('sends request to fetch items data using catalogue category id and returns successful response', async () => {
+      const { result } = renderHook(() => useItems(undefined, '2'), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toEqual(getItemsByCatalogueItemId('2'));
+    });
+
+    it('sends request to fetch items data using system id and returns successful response', async () => {
+      const { result } = renderHook(
+        () => useItems('65328f34a40ff5301575a4e4', undefined),
+        {
+          wrapper: hooksWrapperWithProviders(),
+        }
+      );
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toEqual(
+        getItemsBySystemId('65328f34a40ff5301575a4e4')
+      );
     });
   });
 });

@@ -234,6 +234,7 @@ export interface AddItem extends ItemDetails {
   properties: CatalogueItemProperty[];
 }
 
-export interface Item extends AddItem {
+export interface Item extends ItemDetails {
+  properties: CatalogueItemPropertyResponse[];
   id: string;
 }
