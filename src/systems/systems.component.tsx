@@ -38,7 +38,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { System } from '../app.types';
-import { getPageHeightCalc } from '../utils';
+import { generateUniqueName, getPageHeightCalc } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
@@ -196,6 +196,10 @@ function Systems() {
       selectedRowIds.includes(subsystem.id)
     ) ?? [];
 
+  // Names for preventing duplicates in the save as dialog
+  const subsystemNames: string[] =
+    subsystemsData?.map((subsystem) => subsystem.name) || [];
+
   // Clear selected system when user navigates to a different page
   React.useEffect(() => {
     setRowSelection({});
@@ -243,7 +247,10 @@ function Systems() {
           aria-label={`Save system ${row.original.name} as new system`}
           onClick={() => {
             setMenuDialogType('save as');
-            setSelectedSystemForMenu(row.original);
+            setSelectedSystemForMenu({
+              ...row.original,
+              name: generateUniqueName(row.original.name, subsystemNames),
+            });
             closeMenu();
           }}
         >

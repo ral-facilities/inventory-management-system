@@ -322,6 +322,9 @@ describe('System', () => {
       cy.findAllByLabelText('Row Actions').eq(1).click();
       cy.findByText('Save as').click();
 
+      // Should default to having _copy_1 in the name
+      cy.findByLabelText('Name *').should('have.value', 'Pulse Laser_copy_1');
+
       cy.findByLabelText('Name *').clear().type('System name');
       cy.findByLabelText('Description').clear().type('System description');
       cy.findByLabelText('Location').clear().type('System location');
@@ -355,6 +358,9 @@ describe('System', () => {
 
       cy.findAllByLabelText('Row Actions').eq(0).click();
       cy.findByText('Save as').click();
+
+      // Should default to having _copy_1 in the name
+      cy.findByLabelText('Name *').should('have.value', 'Pulse Laser_copy_1');
 
       cy.findByLabelText('Name *').clear().type('System name');
 
