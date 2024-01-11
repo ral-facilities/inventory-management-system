@@ -23,14 +23,16 @@ import {
 } from '../app.types';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import { useItems } from '../api/item';
+import ItemsDetailsPanel from './ItemsDetailsPanel.component';
 
 export interface ItemTableProps {
   catalogueCategory: CatalogueCategory;
   catalogueItem: CatalogueItem;
+  dense: boolean;
 }
 
 export function ItemsTable(props: ItemTableProps) {
-  const { catalogueCategory, catalogueItem } = props;
+  const { catalogueCategory, catalogueItem, dense } = props;
 
   const noResultsTxt =
     'No results found: Try adding an item by using the Add Item button on the top left of your screen';
@@ -84,7 +86,6 @@ export function ItemsTable(props: ItemTableProps) {
           </Typography>
         ),
       },
-
       {
         header: 'Is Defective',
         accessorFn: (row) => (row.is_defective === true ? 'Yes' : 'No'),
@@ -181,24 +182,32 @@ export function ItemsTable(props: ItemTableProps) {
     React.useState<MRT_ColumnFiltersState>([]);
 
   const table = useMaterialReactTable({
-    columns: columns, // If dense only show the name column
+    columns: dense
+      ? [
+          { ...columns[0], size: 400 },
+          { ...columns[4], size: 400 },
+          { ...columns[5], size: 400 },
+          { ...columns[6], size: 400 },
+        ]
+      : columns, // If dense only show the name column
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
-    enableColumnOrdering: true,
+    enableColumnOrdering: dense ? false : true,
     enableFacetedValues: true,
-    enableColumnResizing: true,
-
+    enableColumnResizing: dense ? false : true,
     enableStickyHeader: true,
     enableDensityToggle: false,
-    enableHiding: true,
-    enableTopToolbar: true,
+    enableHiding: dense ? false : true,
+    enableTopToolbar: dense ? false : true,
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
-    enableColumnVirtualization: true,
+    enableColumnVirtualization: dense ? false : true,
     onColumnFiltersChange: setColumnFilters,
-    columnVirtualizerOptions: {
-      overscan: 4,
-      estimateSize: () => 200,
-    },
+    columnVirtualizerOptions: dense
+      ? undefined
+      : {
+          overscan: 4,
+          estimateSize: () => 200,
+        },
     manualFiltering: false,
     enablePagination: true,
     localization: {
@@ -208,11 +217,11 @@ export function ItemsTable(props: ItemTableProps) {
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      pagination: { pageSize: 15, pageIndex: 0 },
+      pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
     },
     getRowId: (row) => row.id,
     muiTableContainerProps: {
-      sx: { height: tableHeight },
+      sx: { height: dense ? '360.4px' : tableHeight },
     },
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
@@ -226,7 +235,7 @@ export function ItemsTable(props: ItemTableProps) {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [15, 30, 45],
+      rowsPerPageOptions: dense ? [5] : [15, 30, 45],
       shape: 'rounded',
       variant: 'outlined',
     },
@@ -271,6 +280,15 @@ export function ItemsTable(props: ItemTableProps) {
         </Button>
       </Box>
     ),
+    renderDetailPanel: dense
+      ? ({ row }) => (
+          <ItemsDetailsPanel
+            itemData={row.original}
+            catalogueItemIdData={catalogueItem}
+            catalogueCategoryData={catalogueCategory}
+          />
+        )
+      : undefined,
   });
   return (
     <div style={{ width: '100%' }}>
