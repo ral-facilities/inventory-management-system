@@ -11,6 +11,7 @@ import Systems from '../systems/systems.component';
 import Manufacturer from '../manufacturer/manufacturer.component';
 import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingPage.component';
 import ManufacturerLandingPage from '../manufacturer/manufacturerLandingPage.component';
+import Items from '../items/items.component';
 
 export const paths = {
   home: '/',
@@ -18,7 +19,8 @@ export const paths = {
   systems: '/systems/*',
   manufacturers: '/manufacturer',
   manufacturer: '/manufacturer/:id',
-  catalogueItems: '/catalogue/items/:id',
+  catalogueItem: '/catalogue/item/:id',
+  items: '/catalogue/item/:id/items',
 };
 
 interface TabPanelProps {
@@ -94,7 +96,7 @@ function ViewTabs() {
     <Routes location={location}>
       <Route path={paths.catalogue} element={<Catalogue />}></Route>
       <Route
-        path={paths.catalogueItems}
+        path={paths.catalogueItem}
         element={<CatalogueItemsLandingPage />}
       ></Route>
       <Route path={paths.systems} element={<Systems />}></Route>
@@ -103,6 +105,7 @@ function ViewTabs() {
         path={paths.manufacturer}
         element={<ManufacturerLandingPage />}
       ></Route>
+      <Route path={paths.items} element={<Items />}></Route>
     </Routes>
   );
 
@@ -127,12 +130,7 @@ function ViewTabs() {
               {...a11yProps('Manufacturer')}
             />
           </Tabs>
-          <Box
-            sx={{
-              borderBottom: 1,
-              borderColor: 'divider',
-            }}
-          >
+          <Box>
             <TabPanel value={value} label={value}>
               {routing}
             </TabPanel>
