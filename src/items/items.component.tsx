@@ -67,7 +67,7 @@ export function Items() {
         <ItemsTable
           catalogueCategory={catalogueCategory}
           catalogueItem={catalogueItem}
-          dense={true}
+          dense={false}
         />
       )}
     </Grid>
