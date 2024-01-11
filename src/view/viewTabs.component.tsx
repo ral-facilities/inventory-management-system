@@ -7,6 +7,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { TabValue } from '../app.types';
 import Catalogue from '../catalogue/catalogue.component';
 import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingPage.component';
+import Items from '../items/items.component';
 import Manufacturer from '../manufacturer/manufacturer.component';
 import ManufacturerLandingPage from '../manufacturer/manufacturerLandingPage.component';
 import Systems from '../systems/systems.component';
@@ -18,7 +19,8 @@ export const paths = {
   systems: '/systems/*',
   manufacturers: '/manufacturer',
   manufacturer: '/manufacturer/:id',
-  catalogueItems: '/catalogue/items/:id',
+  catalogueItem: '/catalogue/item/:id',
+  items: '/catalogue/item/:id/items',
 };
 
 interface TabPanelProps {
@@ -95,7 +97,7 @@ function ViewTabs() {
     <Routes location={location}>
       <Route path={paths.catalogue} element={<Catalogue />}></Route>
       <Route
-        path={paths.catalogueItems}
+        path={paths.catalogueItem}
         element={<CatalogueItemsLandingPage />}
       ></Route>
       <Route path={paths.systems} element={<Systems />}></Route>
@@ -104,6 +106,7 @@ function ViewTabs() {
         path={paths.manufacturer}
         element={<ManufacturerLandingPage />}
       ></Route>
+      <Route path={paths.items} element={<Items />}></Route>
     </Routes>
   );
 

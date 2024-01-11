@@ -480,8 +480,6 @@ describe('Catalogue Items Dialog', () => {
         manufacturer: '{delete}',
       });
 
-      // const manufacturerPopup = screen.getAllByRole('combobox')[0];
-      // await user.type(manufacturerPopup, '{delete}');
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 

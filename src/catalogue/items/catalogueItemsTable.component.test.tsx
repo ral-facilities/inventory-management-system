@@ -53,7 +53,6 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
     expect(screen.getByText('Description')).toBeInTheDocument();
-    expect(screen.getByText('Is Obsolete')).toBeInTheDocument();
   });
 
   it('renders table correctly (Cameras more details)', async () => {
@@ -176,7 +175,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await ensureColumnsVisible(['Manufacturer Address']);
+    await ensureColumnsVisible(['Manufacturer Address', 'Is Obsolete']);
   });
 
   it('displays descriptions tooltip on hover', async () => {
@@ -339,8 +338,20 @@ describe('Catalogue Items Table', () => {
     await ensureColumnsVisible(['Obsolete replacement link']);
 
     const url = screen.queryAllByText('Click here');
-    expect(url[0]).toHaveAttribute('href', '/items/6');
+    expect(url[0]).toHaveAttribute('href', '/item/6');
   });
+
+  it('navigates to items table', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    await ensureColumnsVisible(['View Items']);
+
+    const url = screen.queryAllByText('Click here');
+    expect(url[0]).toHaveAttribute('href', '/item/89/items');
+  });
+
   it('opens obsolete dialog and can close it again', async () => {
     createView();
 

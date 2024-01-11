@@ -16,6 +16,9 @@ import CatalogueCategoryJSON from './mocks/CatalogueCategory.json';
 import CatalogueItemJSON from './mocks/CatalogueItems.json';
 import ManufacturerJSON from './mocks/manufacturer.json';
 import { server } from './mocks/server';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import enGB from 'date-fns/locale/en-GB';
 
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
@@ -60,9 +63,11 @@ export function renderComponentWithBrowserRouter(
   }: React.PropsWithChildren<unknown>): JSX.Element {
     return (
       <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
+        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </LocalizationProvider>
       </BrowserRouter>
     );
   }
@@ -87,9 +92,11 @@ export function renderComponentWithMemoryRouter(
   }: React.PropsWithChildren<unknown>): JSX.Element {
     return (
       <MemoryRouter initialEntries={[path]}>
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
+        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </LocalizationProvider>
       </MemoryRouter>
     );
   }

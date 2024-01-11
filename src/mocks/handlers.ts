@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import {
+  AddItem,
   AddSystem,
   CatalogueItem,
   EditCatalogueCategory,
@@ -476,5 +477,21 @@ export const handlers = [
     } else {
       return res(ctx.status(404), ctx.json(''));
     }
+  }),
+  // ------------------------------------ ITEMS ------------------------------------------------
+  rest.post('/v1/items/', async (req, res, ctx) => {
+    const body = (await req.json()) as AddItem;
+
+    if (body.serial_number === 'Error 500') {
+      return res(ctx.status(500), ctx.json(''));
+    }
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        ...body,
+        id: '1',
+      })
+    );
   }),
 ];
