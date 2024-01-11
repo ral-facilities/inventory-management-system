@@ -45,7 +45,9 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
           const response = error.response?.data as ErrorParsing;
           if (response && error.response?.status === 409) {
             setError(true);
-            setErrorMessage(response.detail);
+            setErrorMessage(
+              `${response.detail}, please delete the children elements first`
+            );
             return;
           }
           setError(true);
