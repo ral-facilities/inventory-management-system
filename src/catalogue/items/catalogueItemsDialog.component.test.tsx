@@ -639,7 +639,7 @@ describe('Catalogue Items Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Catalogue item has child elements and cannot be updated'
+            'Catalogue item has child elements and cannot be edited'
           )
         ).toBeInTheDocument();
       });

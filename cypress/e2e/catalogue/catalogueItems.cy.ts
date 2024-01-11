@@ -356,9 +356,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains(
-          'Catalogue item has child elements and cannot be edited, please delete the children elements first'
-        );
+        cy.contains('Catalogue item has child elements and cannot be edited');
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
