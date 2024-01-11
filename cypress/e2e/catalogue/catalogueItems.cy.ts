@@ -303,7 +303,7 @@ describe('Catalogue Items', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'Catalogue item has children elements and cannot be deleted, please delete the children elements first'
+          'Catalogue item has child elements and cannot be deleted, please delete the children elements first'
         );
       });
     cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
@@ -357,7 +357,7 @@ describe('Catalogue Items', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'Catalogue item has children elements and cannot be edited, please delete the children elements first'
+          'Catalogue item has child elements and cannot be edited, please delete the children elements first'
         );
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
