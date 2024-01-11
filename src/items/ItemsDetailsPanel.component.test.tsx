@@ -35,6 +35,17 @@ describe('Catalogue Items details panel', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
+  it('renders details panel correctly (no dates)', async () => {
+    props.itemData = {
+      ...getItemById('wKsFzrSq'),
+      delivered_date: null,
+      warranty_end_date: null,
+    };
+    const view = createView();
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
   it('renders properties panel correctly', async () => {
     const view = createView();
 
