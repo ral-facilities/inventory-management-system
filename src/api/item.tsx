@@ -3,6 +3,7 @@ import {
   useMutation,
   UseMutationResult,
   useQuery,
+  useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
 import { AddItem, Item } from '../app.types';
@@ -22,7 +23,12 @@ const addItem = async (item: AddItem): Promise<Item> => {
 };
 
 export const useAddItem = (): UseMutationResult<Item, AxiosError, AddItem> => {
-  return useMutation((item: AddItem) => addItem(item));
+  const queryClient = useQueryClient();
+  return useMutation((item: AddItem) => addItem(item), {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['Items'] });
+    },
+  });
 };
 
 const fetchItems = async (
