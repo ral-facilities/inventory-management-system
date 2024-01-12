@@ -37,6 +37,7 @@ export function ItemsTable(props: ItemTableProps) {
     'No results found: Try adding an item by using the Add Item button on the top left of your screen';
   const { data, isLoading } = useItems(undefined, catalogueItem.id);
 
+   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 32px');
   const columns = React.useMemo<MRT_ColumnDef<Item>[]>(() => {
     const viewCatalogueItemProperties =
