@@ -1,6 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { useAddItem, useItems } from './item';
+import { useAddItem, useItem, useItems } from './item';
 import {
+  getItemById,
   getItemsByCatalogueItemId,
   getItemsBySystemId,
   hooksWrapperWithProviders,
@@ -110,6 +111,20 @@ describe('catalogue items api functions', () => {
       expect(result.current.data).toEqual(
         getItemsBySystemId('65328f34a40ff5301575a4e4')
       );
+    });
+  });
+
+  describe('useItem', () => {
+    it('sends request to fetch item data and returns successful response', async () => {
+      const { result } = renderHook(() => useItem('KvT2Ox7n'), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      expect(result.current.data).toEqual(getItemById('KvT2Ox7n'));
     });
   });
 });

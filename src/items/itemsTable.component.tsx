@@ -1,5 +1,12 @@
 import React from 'react';
-import { Box, Button, Tooltip, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Tooltip,
+  Typography,
+  Link as MuiLink,
+} from '@mui/material';
+import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import ItemDialog from './itemDialog.component';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -49,6 +56,16 @@ export function ItemsTable(props: ItemTableProps) {
       null: 'text',
     };
     return [
+      {
+        header: 'Landing Page',
+        size: 250,
+
+        Cell: ({ row }) => (
+          <MuiLink underline="hover" component={Link} to={row.original.id}>
+            Click here
+          </MuiLink>
+        ),
+      },
       {
         header: 'Serial Number',
         accessorFn: (row) => row.serial_number,
@@ -184,10 +201,10 @@ export function ItemsTable(props: ItemTableProps) {
   const table = useMaterialReactTable({
     columns: dense
       ? [
-          { ...columns[0], size: 400 },
-          { ...columns[4], size: 400 },
+          { ...columns[1], size: 400 },
           { ...columns[5], size: 400 },
           { ...columns[6], size: 400 },
+          { ...columns[7], size: 400 },
         ]
       : columns, // If dense only show the name column
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)

@@ -3,11 +3,21 @@ import { renderComponentWithMemoryRouter } from '../../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import CatalogueItemsLandingPage from './catalogueItemsLandingPage.component';
 import userEvent from '@testing-library/user-event';
+import { Route, Routes } from 'react-router-dom';
+import { paths } from '../../view/viewTabs.component';
 
 describe('Catalogue Items Landing Page', () => {
   let user;
   const createView = (path: string) => {
-    return renderComponentWithMemoryRouter(<CatalogueItemsLandingPage />, path);
+    return renderComponentWithMemoryRouter(
+      <Routes>
+        <Route
+          path={paths.catalogueItem}
+          element={<CatalogueItemsLandingPage />}
+        ></Route>
+      </Routes>,
+      path
+    );
   };
 
   beforeEach(() => {
@@ -250,6 +260,6 @@ describe('Catalogue Items Landing Page', () => {
     const url = screen.getByRole('link', {
       name: 'Items',
     });
-    expect(url).toHaveAttribute('href', '/items');
+    expect(url).toHaveAttribute('href', '/catalogue/item/89/items');
   });
 });

@@ -67,3 +67,33 @@ export const useItems = (
     }
   );
 };
+
+const fetchItem = async (id?: string): Promise<Item> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+  const queryParams = new URLSearchParams();
+
+  return axios
+    .get(`${apiUrl}/v1/items/${id}`, {
+      params: queryParams,
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
+
+export const useItem = (id?: string): UseQueryResult<Item, AxiosError> => {
+  return useQuery<Item, AxiosError>(
+    ['Item', id],
+    (params) => {
+      return fetchItem(id);
+    },
+    {
+      enabled: !!id,
+    }
+  );
+};

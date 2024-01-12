@@ -514,4 +514,11 @@ export const handlers = [
 
     return res(ctx.status(200), ctx.json(data));
   }),
+  rest.get('/v1/items/:id', (req, res, ctx) => {
+    const { id } = req.params;
+
+    const data = ItemsJSON.find((items) => items.id === id);
+
+    return res(ctx.status(200), ctx.json(data));
+  }),
 ];

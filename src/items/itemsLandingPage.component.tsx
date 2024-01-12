@@ -1,7 +1,6 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PrintIcon from '@mui/icons-material/Print';
-import EditIcon from '@mui/icons-material/Edit';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
   Box,
@@ -14,19 +13,19 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useCatalogueCategory } from '../../api/catalogueCategory';
-import { useCatalogueItem } from '../../api/catalogueItem';
-import { useManufacturer } from '../../api/manufacturer';
-import CatalogueItemsDialog from './catalogueItemsDialog.component';
 
-function CatalogueItemsLandingPage() {
-  const { id: catalogueItemId } = useParams();
+import { useCatalogueItem } from '../api/catalogueItem';
+import { useManufacturer } from '../api/manufacturer';
+import { useItem } from '../api/item';
+import { UsageStatusType } from '../app.types';
 
-  const { data: catalogueItemIdData, isLoading: catalogueItemIdDataLoading } =
-    useCatalogueItem(catalogueItemId);
+function ItemsLandingPage() {
+  const { id } = useParams();
 
-  const { data: catalogueCategoryData } = useCatalogueCategory(
-    catalogueItemIdData?.catalogue_category_id
+  const { data: itemData, isLoading: itemDataIsLoading } = useItem(id);
+
+  const { data: catalogueItemIdData } = useCatalogueItem(
+    itemData?.catalogue_item_id
   );
 
   const { data: manufacturer } = useManufacturer(
@@ -51,9 +50,6 @@ function CatalogueItemsLandingPage() {
     setShowDetails(!showDetails);
   };
 
-  const [editItemDialogOpen, setEditItemDialogOpen] =
-    React.useState<boolean>(false);
-
   return (
     <Grid container>
       <Grid
@@ -76,35 +72,16 @@ function CatalogueItemsLandingPage() {
           startIcon={<ArrowBackIcon />}
           component={Link}
           to={
-            catalogueCategoryData && catalogueCategoryData.id
-              ? `/catalogue/${catalogueCategoryData.id}`
+            catalogueItemIdData && catalogueItemIdData.id
+              ? `/catalogue/item/${catalogueItemIdData.id}/items`
               : '/catalogue'
           }
           sx={{ mx: 0.5 }}
           variant="outlined"
         >
           {catalogueItemIdData
-            ? `Back to ${catalogueCategoryData?.name} table view`
+            ? `Back to ${catalogueItemIdData.name} items table view`
             : 'Home'}
-        </Button>
-        <Button
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          component={Link}
-          to={'items'}
-        >
-          Items
-        </Button>
-        <Button
-          startIcon={<EditIcon />}
-          disabled={!catalogueItemIdData}
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          onClick={() => {
-            setEditItemDialogOpen(true);
-          }}
-        >
-          Edit
         </Button>
 
         <Button
@@ -118,7 +95,7 @@ function CatalogueItemsLandingPage() {
           Print
         </Button>
       </Grid>
-      {catalogueItemIdData && (
+      {catalogueItemIdData && itemData && (
         <Grid item xs={12}>
           <Grid container spacing={1} flexDirection="column">
             <Grid item xs={12}>
@@ -137,6 +114,7 @@ function CatalogueItemsLandingPage() {
                 {catalogueItemIdData.description}
               </Typography>
             </Grid>
+
             <Grid container spacing={1} sx={{ px: '192px' }}>
               <Grid
                 item
@@ -148,9 +126,7 @@ function CatalogueItemsLandingPage() {
                   alignItems: 'center',
                   cursor: 'pointer',
                 }}
-                aria-label={`${
-                  showDetails ? 'Close' : 'Show'
-                } catalogue item details`}
+                aria-label={`${showDetails ? 'Close' : 'Show'} item details`}
               >
                 {showDetails ? (
                   <>
@@ -170,107 +146,73 @@ function CatalogueItemsLandingPage() {
                   <Grid container spacing={1}>
                     <Grid item xs={12} sm={6} md={4}>
                       <Typography align="left" color="text.primary">
-                        Obsolete
+                        Serial Number
                       </Typography>
                       <Typography align="left" color="text.secondary">
-                        {catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}
+                        {itemData?.serial_number ?? 'None'}
                       </Typography>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
                       <Typography align="left" color="text.primary">
-                        Obsolete replacement link
+                        Asset Number
                       </Typography>
                       <Typography align="left" color="text.secondary">
-                        {catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
-                          <MuiLink
-                            component={Link}
-                            underline="hover"
-                            target="_blank"
-                            to={`/catalogue/item/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
-                          >
-                            Click here
-                          </MuiLink>
-                        ) : (
-                          'None'
-                        )}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <Typography align="left" color="text.primary">
-                        Obsolete reason
-                      </Typography>
-                      <Typography align="left" color="text.secondary">
-                        {catalogueItemIdData.obsolete_reason ?? 'None'}
+                        {itemData?.asset_number ?? 'None'}
                       </Typography>
                     </Grid>
 
                     <Grid item xs={12} sm={6} md={4}>
                       <Typography align="left" color="text.primary">
-                        Cost (£)
+                        Purchase Order Number
                       </Typography>
                       <Typography align="left" color="text.secondary">
-                        {catalogueItemIdData.cost_gbp ?? 'None'}
+                        {itemData?.purchase_order_number ?? 'None'}
                       </Typography>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
                       <Typography align="left" color="text.primary">
-                        Name
+                        Warranty End Date
                       </Typography>
                       <Typography align="left" color="text.secondary">
-                        {catalogueItemIdData.cost_to_rework_gbp ?? 'None'}
-                      </Typography>
-                    </Grid>
-
-                    <Grid item xs={12} sm={6} md={4}>
-                      <Typography align="left" color="text.primary">
-                        Time to replace (days)
-                      </Typography>
-                      <Typography align="left" color="text.secondary">
-                        {catalogueItemIdData.days_to_replace ?? 'None'}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <Typography align="left" color="text.primary">
-                        Time to rework (days)
-                      </Typography>
-                      <Typography align="left" color="text.secondary">
-                        {catalogueItemIdData.days_to_rework ?? 'None'}
+                        {itemData?.warranty_end_date
+                          ? new Date(
+                              itemData.warranty_end_date
+                            ).toLocaleDateString()
+                          : 'None'}
                       </Typography>
                     </Grid>
 
                     <Grid item xs={12} sm={6} md={4}>
                       <Typography align="left" color="text.primary">
-                        Drawing Number
+                        Delivered Date
                       </Typography>
                       <Typography align="left" color="text.secondary">
-                        {catalogueItemIdData.drawing_number ?? 'None'}
+                        {itemData?.delivered_date
+                          ? new Date(
+                              itemData.delivered_date
+                            ).toLocaleDateString()
+                          : 'None'}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Typography align="left" color="text.primary">
+                        Is Defective
+                      </Typography>
+                      <Typography align="left" color="text.secondary">
+                        {itemData?.is_defective ? 'Yes' : 'No'}
                       </Typography>
                     </Grid>
 
                     <Grid item xs={12} sm={6} md={4}>
                       <Typography align="left" color="text.primary">
-                        Drawing link
+                        Usage Status
                       </Typography>
                       <Typography align="left" color="text.secondary">
-                        {catalogueItemIdData.drawing_link ? (
-                          <MuiLink
-                            underline="hover"
-                            target="_blank"
-                            href={catalogueItemIdData.drawing_link}
-                          >
-                            {catalogueItemIdData.drawing_link}
-                          </MuiLink>
-                        ) : (
-                          'None'
-                        )}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <Typography align="left" color="text.primary">
-                        Model Number
-                      </Typography>
-                      <Typography align="left" color="text.secondary">
-                        {catalogueItemIdData.item_model_number ?? 'None'}
+                        {
+                          Object.values(UsageStatusType)[
+                            itemData?.usage_status ?? UsageStatusType.new
+                          ]
+                        }
                       </Typography>
                     </Grid>
                   </Grid>
@@ -288,7 +230,7 @@ function CatalogueItemsLandingPage() {
                 }}
                 aria-label={`${
                   showProperties ? 'Close' : 'Show'
-                } catalogue item properties`}
+                } item properties`}
               >
                 {showProperties ? (
                   <>
@@ -334,7 +276,7 @@ function CatalogueItemsLandingPage() {
                 }}
                 aria-label={`${
                   showManufacturer ? 'Close' : 'Show'
-                } catalogue item manufacturer details`}
+                } item manufacturer details`}
               >
                 {showManufacturer ? (
                   <>
@@ -426,11 +368,22 @@ function CatalogueItemsLandingPage() {
                 </Grid>
               )}
             </Grid>
+            <Grid item xs={12}>
+              <Typography sx={{ margin: 1, textAlign: 'center' }} variant="h6">
+                Notes:
+              </Typography>
+              <Typography
+                sx={{ margin: 1, textAlign: 'center' }}
+                variant="body1"
+              >
+                {itemData?.notes}
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
       )}
-      {!catalogueItemIdDataLoading ? (
-        !catalogueItemIdData && (
+      {!itemDataIsLoading ? (
+        !itemData && (
           <Box
             sx={{
               width: '100%',
@@ -450,16 +403,8 @@ function CatalogueItemsLandingPage() {
           <LinearProgress />
         </Box>
       )}
-
-      <CatalogueItemsDialog
-        open={editItemDialogOpen}
-        onClose={() => setEditItemDialogOpen(false)}
-        parentInfo={catalogueCategoryData}
-        selectedCatalogueItem={catalogueItemIdData}
-        type="edit"
-      />
     </Grid>
   );
 }
 
-export default CatalogueItemsLandingPage;
+export default ItemsLandingPage;

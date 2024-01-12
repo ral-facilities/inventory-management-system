@@ -12,6 +12,7 @@ import Manufacturer from '../manufacturer/manufacturer.component';
 import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingPage.component';
 import ManufacturerLandingPage from '../manufacturer/manufacturerLandingPage.component';
 import Items from '../items/items.component';
+import ItemsLandingPage from '../items/itemsLandingPage.component';
 
 export const paths = {
   home: '/',
@@ -21,6 +22,7 @@ export const paths = {
   manufacturer: '/manufacturer/:id',
   catalogueItem: '/catalogue/item/:id',
   items: '/catalogue/item/:id/items',
+  item: '/catalogue/item/:id/items/:id',
 };
 
 interface TabPanelProps {
@@ -106,6 +108,7 @@ function ViewTabs() {
         element={<ManufacturerLandingPage />}
       ></Route>
       <Route path={paths.items} element={<Items />}></Route>
+      <Route path={paths.item} element={<ItemsLandingPage />}></Route>
     </Routes>
   );
 
