@@ -1,15 +1,14 @@
 import React from 'react';
 import { Box, Button, Grid } from '@mui/material';
 import { useCatalogueItem } from '../api/catalogueItem';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useCatalogueCategory } from '../api/catalogueCategory';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import ItemsTable from './itemsTable.component';
 
 export function Items() {
-  const location = useLocation();
-  const catalogueItemId = location.pathname.split('/')[3];
+  const { id: catalogueItemId } = useParams();
   const { data: catalogueItem } = useCatalogueItem(catalogueItemId);
   const { data: catalogueCategory } = useCatalogueCategory(
     catalogueItem?.catalogue_category_id
@@ -23,7 +22,7 @@ export function Items() {
         style={{
           display: 'flex',
           justifyContent: 'left',
-          padding: 4,
+          padding: 22,
           position: 'sticky',
           top: 0,
           backgroundColor: 'background.default',
