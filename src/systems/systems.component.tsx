@@ -367,8 +367,10 @@ function Systems() {
                     marginTop: 1,
                     marginBottom: 'auto',
                     flexWrap: 'no-wrap',
-                    // Breadcrumbs and rest
-                    height: getPageHeightCalc('56px + 74px'),
+                    // Beadcrumbs loading bar/breadcrumbs + rest
+                    height: getPageHeightCalc(
+                      `${systemsBreadcrumbsLoading ? '4px' : '56px'} + 74px`
+                    ),
                     // To prevent no subsystems being visible
                     minHeight: '200px',
                   }}
