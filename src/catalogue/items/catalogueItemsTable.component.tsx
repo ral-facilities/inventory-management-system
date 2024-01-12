@@ -44,7 +44,7 @@ import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
 
-function findPropertyValue(
+export function findPropertyValue(
   properties: CatalogueItemPropertyResponse[],
   targetName: string | undefined
 ) {
@@ -66,6 +66,12 @@ export interface CatalogueItemsTableProps {
   // selectable or not
   isItemSelectable?: (item: CatalogueItem) => boolean;
 }
+export type PropertyFiltersType = {
+  boolean: 'select' | 'text' | 'range';
+  string: 'select' | 'text' | 'range';
+  number: 'select' | 'text' | 'range';
+  null: 'select' | 'text' | 'range';
+};
 
 const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const {
@@ -95,13 +101,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const [obsoleteItemDialogOpen, setObsoleteItemDialogOpen] =
     React.useState<boolean>(false);
-
-  type PropertyFiltersType = {
-    boolean: 'select' | 'text' | 'range';
-    string: 'select' | 'text' | 'range';
-    number: 'select' | 'text' | 'range';
-    null: 'select' | 'text' | 'range';
-  };
 
   const [selectedCatalogueItem, setSelectedCatalogueItem] = React.useState<
     CatalogueItem | undefined
@@ -272,8 +271,16 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                 null
               ? findPropertyValue(row.original.properties, property.name)
               : '';
-          } else
+          } else if (
+            typeof findPropertyValue(row.original.properties, property.name) ===
+            'boolean'
+          ) {
+            return findPropertyValue(row.original.properties, property.name)
+              ? 'Yes'
+              : 'No';
+          } else {
             return findPropertyValue(row.original.properties, property.name);
+          }
         },
       })),
       {

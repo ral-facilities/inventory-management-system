@@ -66,7 +66,7 @@ describe('Items', () => {
     cy.findByLabelText('Warranty end date').type('12/02/2028');
     cy.findByLabelText('Delivered date').type('12/02/2028');
     cy.findByLabelText('Is defective *').click();
-    cy.findByText('Yes').click();
+    cy.findByRole('option', { name: 'Yes' }).click();
     cy.findByLabelText('Usage status *').click();
     cy.findByText('Scrapped').click();
     cy.findByLabelText('Notes').type('test');
@@ -150,5 +150,22 @@ describe('Items', () => {
 
     cy.findByText('Please select either True or False').should('not.exist');
     cy.findAllByText('This field is mandatory').should('not.exist');
+  });
+
+  it('sets the table filters and clears the table filters', () => {
+    cy.findByText('5YUQDDjKpz2z').should('exist');
+    cy.findByText('vYs9Vxx6yWbn').should('exist');
+    cy.findByText('PcfCM1jp0SUV').should('exist');
+    cy.findByText('Zf7P8Qu8TD8c').should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+    cy.findByLabelText('Filter by Serial Number').type('5y');
+    cy.findByText('vYs9Vxx6yWbn').should('not.exist');
+    cy.findByText('PcfCM1jp0SUV').should('not.exist');
+    cy.findByText('Zf7P8Qu8TD8c').should('not.exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+    cy.findByText('5YUQDDjKpz2z').should('exist');
+    cy.findByText('vYs9Vxx6yWbn').should('exist');
+    cy.findByText('PcfCM1jp0SUV').should('exist');
+    cy.findByText('Zf7P8Qu8TD8c').should('exist');
   });
 });
