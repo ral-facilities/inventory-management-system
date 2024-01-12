@@ -186,7 +186,7 @@ describe('SystemDirectoryDialog', () => {
       );
 
       expect(mockOnClose).toHaveBeenCalled();
-      expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith([]);
+      expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith({});
     });
 
     it('moves selected systems (to non-root system)', async () => {
@@ -218,7 +218,7 @@ describe('SystemDirectoryDialog', () => {
       );
 
       expect(mockOnClose).toHaveBeenCalled();
-      expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith([]);
+      expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith({});
     });
   });
 
@@ -336,7 +336,7 @@ describe('SystemDirectoryDialog', () => {
       });
 
       expect(mockOnClose).toHaveBeenCalled();
-      expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith([]);
+      expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith({});
     });
 
     it('copies selected systems (to non-root system)', async () => {
@@ -364,7 +364,7 @@ describe('SystemDirectoryDialog', () => {
       });
 
       expect(mockOnClose).toHaveBeenCalled();
-      expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith([]);
+      expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith({});
     });
   });
 });

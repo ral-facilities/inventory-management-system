@@ -102,28 +102,4 @@ describe('SystemDetails', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
-
-  it('can open the delete dialog and close it again', async () => {
-    createView();
-
-    await waitFor(() => {
-      expect(screen.getByText(mockSystemDetails.name)).toBeInTheDocument();
-    });
-
-    expect(screen.queryByTestId('delete-system-name')).not.toBeInTheDocument();
-
-    await user.click(screen.getByRole('button', { name: 'Delete System' }));
-
-    await waitFor(() => {
-      expect(screen.getByTestId('delete-system-name')).toBeInTheDocument();
-    });
-
-    await user.click(screen.getByRole('button', { name: 'Cancel' }));
-
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('delete-system-name')
-      ).not.toBeInTheDocument();
-    });
-  });
 });

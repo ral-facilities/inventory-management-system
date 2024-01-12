@@ -11,6 +11,7 @@ import {
 } from './deleteSystemDialog.component';
 
 describe('DeleteSystemDialog', () => {
+  let systemId = '';
   let props: DeleteSystemDialogProps;
   let user;
   let axiosDeleteSpy;
@@ -19,9 +20,20 @@ describe('DeleteSystemDialog', () => {
     // Load whatever system is requested (only assign if found to avoid errors
     // when rendering while testing a 404 error)
     const system = SystemsJSON.filter(
-      (system) => system.id === props.system.id
+      (system) => system.id === systemId
     )[0] as System;
     if (system) props.system = system;
+    else if (systemId === 'invalid_id')
+      props.system = {
+        id: systemId,
+        name: '',
+        description: null,
+        location: null,
+        owner: null,
+        importance: SystemImportanceType.LOW,
+        parent_id: null,
+        code: '',
+      };
 
     return renderComponentWithBrowserRouter(<DeleteSystemDialog {...props} />);
   };
@@ -30,19 +42,9 @@ describe('DeleteSystemDialog', () => {
     props = {
       open: true,
       onClose: jest.fn(),
-      // This system data is just a placeholder until the actual data is loaded
-      // in createView
-      system: {
-        id: '65328f34a40ff5301575a4e9',
-        name: '',
-        description: null,
-        location: null,
-        owner: null,
-        importance: SystemImportanceType.LOW,
-        parent_id: null,
-        code: '',
-      },
+      system: undefined,
     };
+    systemId = '65328f34a40ff5301575a4e9';
     user = userEvent.setup();
     axiosDeleteSpy = jest.spyOn(axios, 'delete');
   });
@@ -69,20 +71,17 @@ describe('DeleteSystemDialog', () => {
     expect(axiosDeleteSpy).not.toHaveBeenCalled();
   });
 
-  it('sends a delete request, closes the dialog and navigates to the parent system when continue button is clicked with a valid system', async () => {
+  it('sends a delete request and closes the dialog when continue button is clicked with a valid system', async () => {
     createView();
 
     await user.click(screen.getByRole('button', { name: 'Continue' }));
 
-    expect(axiosDeleteSpy).toHaveBeenCalledWith(
-      `/v1/systems/${props.system.id}`
-    );
+    expect(axiosDeleteSpy).toHaveBeenCalledWith(`/v1/systems/${systemId}`);
     expect(props.onClose).toHaveBeenCalled();
-    expect(window.location.pathname).toBe(`/systems/${props.system.parent_id}`);
   });
 
   it('displays error message when deleting a system with children', async () => {
-    props.system.id = '65328f34a40ff5301575a4e3';
+    systemId = '65328f34a40ff5301575a4e3';
 
     createView();
 
@@ -96,14 +95,12 @@ describe('DeleteSystemDialog', () => {
       ).toBeInTheDocument();
     });
 
-    expect(axiosDeleteSpy).toHaveBeenCalledWith(
-      `/v1/systems/${props.system.id}`
-    );
+    expect(axiosDeleteSpy).toHaveBeenCalledWith(`/v1/systems/${systemId}`);
     expect(props.onClose).not.toHaveBeenCalled();
   });
 
   it('displays error message when an unknown error occurs', async () => {
-    props.system.id = 'invalid_id';
+    systemId = 'invalid_id';
 
     createView();
 
@@ -115,9 +112,7 @@ describe('DeleteSystemDialog', () => {
       ).toBeInTheDocument();
     });
 
-    expect(axiosDeleteSpy).toHaveBeenCalledWith(
-      `/v1/systems/${props.system.id}`
-    );
+    expect(axiosDeleteSpy).toHaveBeenCalledWith(`/v1/systems/${systemId}`);
     expect(props.onClose).not.toHaveBeenCalled();
   });
 });

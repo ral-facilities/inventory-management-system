@@ -28,9 +28,9 @@ export interface CopyToCatalogueCategory {
   selectedCategories: CatalogueCategory[];
   // Null if root
   targetCategory: CatalogueCategory | null;
-  // Existing known catalogue category codes at the destination
+  // Existing known catalogue category names at the destination
   // (for appending to the names to avoid duplication)
-  existingCategoryCodes: string[];
+  existingCategoryNames: string[];
 }
 
 export interface CatalogueCategory {
@@ -200,9 +200,9 @@ export interface CopyToSystem {
   selectedSystems: System[];
   // Null if root
   targetSystem: System | null;
-  // Existing known system codes at the destination
+  // Existing known system names at the destination
   // (for appending to the names to avoid duplication)
-  existingSystemCodes: string[];
+  existingSystemNames: string[];
 }
 
 export enum UsageStatusType {
