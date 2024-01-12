@@ -46,34 +46,6 @@ describe('Catalogue Items Landing Page', () => {
     expect(screen.getByText('Asset Number')).toBeInTheDocument();
   });
 
-  // it('renders text correctly (extra details given)', async () => {
-  //   createView('/catalogue/item/2');
-
-  //   await waitFor(() => {
-  //     expect(screen.getByText('Cameras 2')).toBeInTheDocument();
-  //   });
-
-  //   await waitFor(() => {
-  //     expect(
-  //       screen.getByRole('link', {
-  //         name: 'Back to Cameras table view',
-  //       })
-  //     ).toBeInTheDocument();
-  //   });
-
-  //   expect(screen.getByText('Description:')).toBeInTheDocument();
-  //   expect(
-  //     screen.getByText('High-resolution cameras for beam characterization. 2')
-  //   ).toBeInTheDocument();
-
-  //   expect(screen.getByText('http://example-drawing-link.com')).toHaveAttribute(
-  //     'href',
-  //     'http://example-drawing-link.com'
-  //   );
-
-  //   expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
-  // });
-
   it('renders no item page correctly', async () => {
     createView('/catalogue/item/1/items/KvT2');
     await waitFor(() => {
@@ -89,9 +61,9 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('toggles the properties so it is either visible or hidden', async () => {
-    createView('/catalogue/item/1/items/KvT2Ox7n');
+    createView('/catalogue/item/1/items/pZT8K0aP');
     await waitFor(() => {
-      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+      expect(screen.getByText('Wavefront Sensors 31')).toBeInTheDocument();
     });
 
     expect(screen.getByLabelText('Close item properties')).toBeInTheDocument();
