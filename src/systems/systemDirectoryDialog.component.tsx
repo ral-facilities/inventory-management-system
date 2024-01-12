@@ -21,12 +21,13 @@ import { System } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemsTableView } from './systemsTableView.component';
+import { MRT_RowSelectionState } from 'material-react-table';
 
 export interface SystemDirectoryDialogProps {
   open: boolean;
   onClose: () => void;
   selectedSystems: System[];
-  onChangeSelectedSystems: (selectedSystems: System[]) => void;
+  onChangeSelectedSystems: (selectedSystems: MRT_RowSelectionState) => void;
   parentSystemId: string | null;
   type: 'moveTo' | 'copyTo';
 }
@@ -72,7 +73,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
         targetSystem: targetSystem || null,
       }).then((response) => {
         handleTransferState(response);
-        onChangeSelectedSystems([]);
+        onChangeSelectedSystems({});
         handleClose();
       });
     }
@@ -101,7 +102,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
         existingSystemNames: existingSystemNames,
       }).then((response) => {
         handleTransferState(response);
-        onChangeSelectedSystems([]);
+        onChangeSelectedSystems({});
         handleClose();
       });
     }

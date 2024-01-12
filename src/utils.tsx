@@ -13,3 +13,35 @@ export const generateUniqueName = (
 
   return newName;
 };
+
+/* Returns whether running in development mode */
+export const isRunningInDevelopment = (): boolean => {
+  return process.env.NODE_ENV !== 'production';
+};
+
+/* Returns a calc function giving the page height excluding SciGateway related components
+  (header and footer) to use for CSS e.g. giving 48px it will return the calc(page height
+  - all SciGateway related heights - 48px)*/
+export const getSciGatewayPageHeightCalc = (
+  additionalSubtraction?: string
+): string => {
+  // Page height - unknown - app bar height - footer height - additional
+  return `calc(100vh - 8px - 64px - 24px${
+    additionalSubtraction !== undefined ? ` - (${additionalSubtraction})` : ''
+  })`;
+};
+
+/* Returns a calc function giving the page height excluding the optional view tabs component
+   that only appears in development */
+export const getPageHeightCalc = (additionalSubtraction?: string): string => {
+  // SciGateway heights - view tabs (if in development) - additional
+  let newAdditional = undefined;
+
+  if (isRunningInDevelopment()) newAdditional = '48px';
+  if (additionalSubtraction !== undefined) {
+    if (newAdditional === undefined) newAdditional = additionalSubtraction;
+    else newAdditional += ' + ' + additionalSubtraction;
+  }
+
+  return getSciGatewayPageHeightCalc(newAdditional);
+};

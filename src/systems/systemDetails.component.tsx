@@ -90,7 +90,7 @@ function SystemDetails(props: SystemDetailsProps) {
           <Typography variant="h3">Please select a system</Typography>
         </Box>
       ) : (
-        <Grid container direction="column" spacing={1.5} sx={{ margin: 0 }}>
+        <Grid container direction="column" sx={{ padding: 1.5 }}>
           <Grid
             container
             item
@@ -131,7 +131,7 @@ function SystemDetails(props: SystemDetailsProps) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item>
+          <Grid item sx={{ paddingTop: 1.5 }}>
             <Typography variant="h6">Description</Typography>
             <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
               {system.description ?? 'None'}
