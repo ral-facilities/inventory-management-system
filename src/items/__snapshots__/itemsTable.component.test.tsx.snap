@@ -242,7 +242,7 @@ exports[`Items Table renders correctly part 1 due column virtaulisation 1`] = `
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-e1o8rj-MuiTableContainer-root"
+        class="MuiTableContainer-root css-d4d85z-MuiTableContainer-root"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-1n7ptpu-MuiTable-root"
@@ -669,7 +669,7 @@ exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-e1o8rj-MuiTableContainer-root"
+        class="MuiTableContainer-root css-d4d85z-MuiTableContainer-root"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-1n7ptpu-MuiTable-root"
