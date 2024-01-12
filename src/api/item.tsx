@@ -64,6 +64,9 @@ export const useItems = (
     ['Items', system_id, catalogue_item_id],
     (params) => {
       return fetchItems(system_id, catalogue_item_id);
+    },
+    {
+      enabled: system_id !== undefined || catalogue_item_id !== undefined,
     }
   );
 };

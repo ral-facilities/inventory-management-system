@@ -18,6 +18,7 @@ import {
   TransferState,
 } from '../app.types';
 import { settings } from '../settings';
+import { generateUniqueName } from '../utils';
 
 /** Utility for turning an importance into an MUI palette colour to display */
 export const getSystemImportanceColour = (
@@ -244,7 +245,9 @@ export const useMoveToSystem = (): UseMutationResult<
   return useMutation(async (moveToSystem: MoveToSystem) => {
     const transferStates: TransferState[] = [];
 
+    // Ids for invalidation (parentIds must be a string value of 'null' for invalidation)
     const successfulIds: string[] = [];
+    const successfulParentIds: string[] = [];
 
     const promises = moveToSystem.selectedSystems.map(
       async (system: System) => {
@@ -261,6 +264,7 @@ export const useMoveToSystem = (): UseMutationResult<
             });
 
             successfulIds.push(system.id);
+            successfulParentIds.push(system.parent_id || 'null');
           })
           .catch((error) => {
             const response = error.response?.data as ErrorParsing;
@@ -280,6 +284,13 @@ export const useMoveToSystem = (): UseMutationResult<
       queryClient.invalidateQueries({
         queryKey: ['Systems', moveToSystem.targetSystem?.id || 'null'],
       });
+      // Also need to invalidate each parent we are moving from (likely just the one)
+      const uniqueParentIds = new Set(successfulParentIds);
+      uniqueParentIds.forEach((parentId: string) =>
+        queryClient.invalidateQueries({
+          queryKey: ['Systems', parentId],
+        })
+      );
       queryClient.invalidateQueries({ queryKey: ['SystemBreadcrumbs'] });
       successfulIds.forEach((id: string) =>
         queryClient.invalidateQueries({ queryKey: ['System', id] })
@@ -312,20 +323,11 @@ export const useCopyToSystem = (): UseMutationResult<
         // Assign new parent
         systemAdd.parent_id = copyToSystem.targetSystem?.id || null;
 
-        // Avoid duplicates by appending _copy_n for nth copy
-        if (copyToSystem.existingSystemCodes.includes(system.code)) {
-          let count = 1;
-          let newName = systemAdd.name;
-          let newCode = system.code;
-
-          while (copyToSystem.existingSystemCodes.includes(newCode)) {
-            newName = `${systemAdd.name}_copy_${count}`;
-            newCode = `${system.code}_copy_${count}`;
-            count++;
-          }
-
-          systemAdd.name = newName;
-        }
+        // Avoid duplicates
+        systemAdd.name = generateUniqueName(
+          systemAdd.name,
+          copyToSystem.existingSystemNames
+        );
 
         return addSystem(systemAdd)
           .then((result: System) => {

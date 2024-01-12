@@ -2,10 +2,17 @@ import React from 'react';
 import { renderComponentWithMemoryRouter } from '../setupTests';
 import Items from './items.component';
 import { waitFor, screen } from '@testing-library/react';
+import { Route, Routes } from 'react-router-dom';
+import { paths } from '../view/viewTabs.component';
 
 describe('Items', () => {
   const createView = (path: string) => {
-    return renderComponentWithMemoryRouter(<Items />, path);
+    return renderComponentWithMemoryRouter(
+      <Routes>
+        <Route path={paths.items} element={<Items />}></Route>
+      </Routes>,
+      path
+    );
   };
 
   it('navigates to catalogue category table view', async () => {

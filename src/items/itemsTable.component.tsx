@@ -31,6 +31,7 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import { useItems } from '../api/item';
 import ItemsDetailsPanel from './ItemsDetailsPanel.component';
+import { getPageHeightCalc } from '../utils';
 
 export interface ItemTableProps {
   catalogueCategory: CatalogueCategory;
@@ -44,8 +45,8 @@ export function ItemsTable(props: ItemTableProps) {
   const noResultsTxt =
     'No results found: Try adding an item by using the Add Item button on the top left of your screen';
   const { data, isLoading } = useItems(undefined, catalogueItem.id);
-  // SG header + SG footer + tabs #add breadcrumbs + Mui table V2
-  const tableHeight = `calc(100vh - (64px + 36px + 50px + 125px))`;
+
+  const tableHeight = getPageHeightCalc('50px + 110px + 32px');
   const columns = React.useMemo<MRT_ColumnDef<Item>[]>(() => {
     const viewCatalogueItemProperties =
       catalogueCategory?.catalogue_item_properties ?? [];

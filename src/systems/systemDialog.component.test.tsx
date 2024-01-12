@@ -134,6 +134,7 @@ describe('Systems Dialog', () => {
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...values,
         importance: SystemImportanceType.MEDIUM,
+        parent_id: null,
       });
       expect(mockOnClose).toHaveBeenCalled();
     });
@@ -339,6 +340,69 @@ describe('Systems Dialog', () => {
         screen.getByText('Please refresh and try again')
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Save as', () => {
+    // Mostly tested above anyway, so only a few checks here to ensure
+    // correct logic (out of add/edit) is applied when the dialogue type is 'save as'
+
+    const MOCK_SELECTED_SYSTEM: System = {
+      name: 'Mock laser',
+      location: 'Location',
+      owner: 'Owner',
+      importance: SystemImportanceType.HIGH,
+      description: 'Description',
+      parent_id: null,
+      id: '65328f34a40ff5301575a4e3',
+      code: 'mock-laser',
+    };
+
+    const MOCK_SELECTED_SYSTEM_POST_DATA = JSON.parse(
+      JSON.stringify(MOCK_SELECTED_SYSTEM)
+    ) as Partial<System>;
+    delete MOCK_SELECTED_SYSTEM_POST_DATA.id;
+    delete MOCK_SELECTED_SYSTEM_POST_DATA.code;
+
+    beforeEach(() => {
+      props.type = 'save as';
+      props.parentId = null;
+      props.selectedSystem = MOCK_SELECTED_SYSTEM;
+    });
+
+    it('renders correctly when saving as', async () => {
+      createView();
+
+      expect(screen.getByText('Add System')).toBeInTheDocument();
+    });
+
+    it('renders correctly when saving as a subsystem', async () => {
+      props.parentId = 'parent-id';
+
+      createView();
+
+      expect(screen.getByText('Add Subsystem')).toBeInTheDocument();
+    });
+
+    it('saves as a system', async () => {
+      props.parentId = 'parent-id';
+
+      createView();
+
+      const values = {
+        name: 'System name',
+      };
+      modifyValues(values);
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
+        ...MOCK_SELECTED_SYSTEM_POST_DATA,
+        ...values,
+        parent_id: 'parent-id',
+      });
+
+      expect(mockOnClose).toHaveBeenCalled();
     });
   });
 });
