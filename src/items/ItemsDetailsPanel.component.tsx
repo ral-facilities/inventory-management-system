@@ -77,7 +77,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
               <Typography sx={{ my: 1 }} variant="h6">
                 Description:
               </Typography>
-              <Typography sx={{ mb: 1 }} variant="body1">
+              <Typography sx={{ mb: 1 }} variant="body1" color="text.secondary">
                 {catalogueItemIdData.description ?? 'None'}
               </Typography>
             </Grid>
