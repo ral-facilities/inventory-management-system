@@ -211,7 +211,7 @@ describe('Items', () => {
   });
 
   it('navigates to the landing page, toggles the properties and navigates back to the table view', () => {
-    cy.findAllByText('Click here').first().click();
+    cy.findByText('KvT2Ox7n').click();
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'
     ).should('exist');
@@ -243,5 +243,23 @@ describe('Items', () => {
     cy.findByText('vYs9Vxx6yWbn').should('exist');
     cy.findByText('PcfCM1jp0SUV').should('exist');
     cy.findByText('Zf7P8Qu8TD8c').should('exist');
+  });
+
+  it('delete an item', () => {
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Delete').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/items/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(request.url.toString()).to.contain('KvT2Ox7n');
+    });
   });
 });

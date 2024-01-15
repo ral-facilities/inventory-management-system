@@ -4,11 +4,7 @@ import userEvent from '@testing-library/user-event';
 import DeleteItemDialog, {
   DeleteItemDialogProps,
 } from './deleteItemDialog.component';
-import {
-  getItemById,
-  getItemsByCatalogueItemId,
-  renderComponentWithBrowserRouter,
-} from '../setupTests';
+import { getItemById, renderComponentWithBrowserRouter } from '../setupTests';
 import { Item } from '../app.types';
 
 describe('delete item dialog', () => {
