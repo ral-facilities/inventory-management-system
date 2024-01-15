@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { getSystemImportanceColour, useSystem } from '../api/systems';
 import { System } from '../app.types';
 import SystemDialog from './systemDialog.component';
+import { SystemItemsTable } from './systemItemsTable.component';
 
 interface SystemButtonProps {
   system: System;
@@ -90,7 +91,7 @@ function SystemDetails(props: SystemDetailsProps) {
           <Typography variant="h3">Please select a system</Typography>
         </Box>
       ) : (
-        <Grid container direction="column" sx={{ padding: 1.5 }}>
+        <Grid container direction="column" sx={{ padding: 1.5 }} wrap="nowrap">
           <Grid
             container
             item
@@ -131,11 +132,22 @@ function SystemDetails(props: SystemDetailsProps) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item sx={{ paddingTop: 1.5 }}>
+          <Grid item sx={{ paddingY: 1.5 }}>
             <Typography variant="h6">Description</Typography>
             <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
               {system.description ?? 'None'}
             </Typography>
+          </Grid>
+          <Grid item sx={{ maxWidth: '100% !important' }}>
+            <Box
+            // sx={{
+            //   maxWidth: 'calc(100% - 320px)',
+            //   flexWrap: 'no-wrap',
+            //   overflow: 'hidden',
+            // }}
+            >
+              <SystemItemsTable system={system} />
+            </Box>
           </Grid>
         </Grid>
       )}
