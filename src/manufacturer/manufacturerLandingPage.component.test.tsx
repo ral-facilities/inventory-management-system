@@ -6,6 +6,11 @@ import userEvent from '@testing-library/user-event';
 import { Route, Routes } from 'react-router-dom';
 import { paths } from '../view/viewTabs.component';
 
+const mockedUseNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedUseNavigate,
+}));
 describe('Manufacturer Landing page', () => {
   let user;
   const createView = (path: string) => {
@@ -32,7 +37,9 @@ describe('Manufacturer Landing page', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('link', { name: 'Manufacturer table view' })
+        screen.getByRole('button', {
+          name: 'navigate to manufacturer home',
+        })
       ).toBeInTheDocument();
     });
     expect(screen.getByText('URL:')).toBeInTheDocument();
@@ -40,6 +47,23 @@ describe('Manufacturer Landing page', () => {
     expect(screen.getByText('Telephone number:')).toBeInTheDocument();
     expect(screen.getByText('07334893348')).toBeInTheDocument();
     expect(screen.getByText('Address:')).toBeInTheDocument();
+  });
+
+  it('navigates back to the root directory', async () => {
+    createView('/manufacturer/1');
+
+    await waitFor(() => {
+      expect(screen.queryByText('Manufacturer A')).not.toBeInTheDocument();
+    });
+
+    const homeButton = screen.getByRole('button', {
+      name: 'navigate to manufacturer home',
+    });
+
+    await user.click(homeButton);
+
+    expect(mockedUseNavigate).toBeCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturer');
   });
 
   it('shows no manufacturer page correctly', async () => {
@@ -52,10 +76,6 @@ describe('Manufacturer Landing page', () => {
         )
       ).toBeInTheDocument();
     });
-    const editButton = screen.getByRole('button', { name: 'Edit' });
-    expect(editButton).toBeDisabled();
-    const homeButton = screen.getByRole('link', { name: 'Home' });
-    expect(homeButton).toBeInTheDocument();
   });
 
   it('shows the loading indicator', async () => {

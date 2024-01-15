@@ -1,7 +1,6 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PrintIcon from '@mui/icons-material/Print';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
   Box,
   Button,
@@ -12,12 +11,14 @@ import {
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { useCatalogueItem } from '../api/catalogueItem';
 import { useManufacturer } from '../api/manufacturer';
 import { useItem } from '../api/item';
-import { UsageStatusType } from '../app.types';
+import { BreadcrumbsInfo, UsageStatusType } from '../app.types';
+import { useCatalogueBreadcrumbs } from '../api/catalogueCategory';
+import Breadcrumbs from '../view/breadcrumbs.component';
 
 function ItemsLandingPage() {
   const { id } = useParams();
@@ -27,6 +28,36 @@ function ItemsLandingPage() {
   const { data: catalogueItemIdData } = useCatalogueItem(
     itemData?.catalogue_item_id
   );
+
+  const navigate = useNavigate();
+  const onChangeNode = React.useCallback(
+    (newIdPath: string) => {
+      navigate(`/catalogue/${newIdPath}`);
+    },
+    [navigate]
+  );
+
+  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
+    catalogueItemIdData?.catalogue_category_id ?? ''
+  );
+
+  const [itemLandingBreadcrumbs, setItemLandingBreadcrumbs] = React.useState<
+    BreadcrumbsInfo | undefined
+  >(catalogueBreadcrumbs);
+
+  React.useEffect(() => {
+    catalogueBreadcrumbs &&
+      catalogueItemIdData &&
+      setItemLandingBreadcrumbs({
+        ...catalogueBreadcrumbs,
+        trail: [
+          ...catalogueBreadcrumbs.trail,
+          [`item/${catalogueItemIdData.id}`, `${catalogueItemIdData.name}`],
+          [`item/${catalogueItemIdData.id}/items`, 'Items'],
+          [`item/${catalogueItemIdData.id}/items/${id}`, 'Item'],
+        ],
+      });
+  }, [catalogueBreadcrumbs, catalogueItemIdData, id]);
 
   const { data: manufacturer } = useManufacturer(
     catalogueItemIdData?.manufacturer_id
@@ -54,9 +85,8 @@ function ItemsLandingPage() {
     <Grid container>
       <Grid
         sx={{
-          display: 'flex',
           justifyContent: 'left',
-          padding: 1,
+          paddingLeft: '4px',
           position: 'sticky',
           top: 0,
           backgroundColor: 'background.default',
@@ -68,32 +98,30 @@ function ItemsLandingPage() {
         }}
         item
       >
-        <Button
-          startIcon={<ArrowBackIcon />}
-          component={Link}
-          to={
-            catalogueItemIdData && catalogueItemIdData.id
-              ? `/catalogue/item/${catalogueItemIdData.id}/items`
-              : '/catalogue'
-          }
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-        >
-          {catalogueItemIdData
-            ? `Back to ${catalogueItemIdData.name} items table view`
-            : 'Home'}
-        </Button>
-
-        <Button
-          startIcon={<PrintIcon />}
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          onClick={() => {
-            window.print();
-          }}
-        >
-          Print
-        </Button>
+        <Grid item sx={{ py: '20px' }}>
+          <Breadcrumbs
+            onChangeNode={onChangeNode}
+            breadcrumbsInfo={itemLandingBreadcrumbs}
+            onChangeNavigateHome={() => {
+              navigate('/catalogue');
+            }}
+            navigateHomeAriaLabel={'navigate to catalogue home'}
+          />
+        </Grid>
+        {itemData && (
+          <Grid item container sx={{ display: 'flex', py: 2 }}>
+            <Button
+              startIcon={<PrintIcon />}
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              onClick={() => {
+                window.print();
+              }}
+            >
+              Print
+            </Button>
+          </Grid>
+        )}
       </Grid>
       {catalogueItemIdData && itemData && (
         <Grid item xs={12}>

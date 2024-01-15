@@ -2,7 +2,6 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PrintIcon from '@mui/icons-material/Print';
 import EditIcon from '@mui/icons-material/Edit';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
   Box,
   Button,
@@ -13,21 +12,51 @@ import {
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { useCatalogueCategory } from '../../api/catalogueCategory';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import {
+  useCatalogueBreadcrumbs,
+  useCatalogueCategory,
+} from '../../api/catalogueCategory';
 import { useCatalogueItem } from '../../api/catalogueItem';
 import { useManufacturer } from '../../api/manufacturer';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
+import Breadcrumbs from '../../view/breadcrumbs.component';
+import { BreadcrumbsInfo } from '../../app.types';
 
 function CatalogueItemsLandingPage() {
   const { id: catalogueItemId } = useParams();
+  const navigate = useNavigate();
+  const onChangeNode = React.useCallback(
+    (newIdPath: string) => {
+      navigate(`/catalogue/${newIdPath}`);
+    },
+    [navigate]
+  );
 
   const { data: catalogueItemIdData, isLoading: catalogueItemIdDataLoading } =
     useCatalogueItem(catalogueItemId);
 
+  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
+    catalogueItemIdData?.catalogue_category_id ?? ''
+  );
   const { data: catalogueCategoryData } = useCatalogueCategory(
     catalogueItemIdData?.catalogue_category_id
   );
+
+  const [catalogueLandingBreadcrumbs, setCatalogueLandingBreadcrumbs] =
+    React.useState<BreadcrumbsInfo | undefined>(catalogueBreadcrumbs);
+
+  React.useEffect(() => {
+    catalogueBreadcrumbs &&
+      catalogueItemIdData &&
+      setCatalogueLandingBreadcrumbs({
+        ...catalogueBreadcrumbs,
+        trail: [
+          ...catalogueBreadcrumbs.trail,
+          [`item/${catalogueItemIdData.id}`, catalogueItemIdData.name],
+        ],
+      });
+  }, [catalogueBreadcrumbs, catalogueItemIdData]);
 
   const { data: manufacturer } = useManufacturer(
     catalogueItemIdData?.manufacturer_id
@@ -58,9 +87,8 @@ function CatalogueItemsLandingPage() {
     <Grid container>
       <Grid
         sx={{
-          display: 'flex',
           justifyContent: 'left',
-          padding: 1,
+          paddingLeft: '4px',
           position: 'sticky',
           top: 0,
           backgroundColor: 'background.default',
@@ -72,51 +100,50 @@ function CatalogueItemsLandingPage() {
         }}
         item
       >
-        <Button
-          startIcon={<ArrowBackIcon />}
-          component={Link}
-          to={
-            catalogueCategoryData && catalogueCategoryData.id
-              ? `/catalogue/${catalogueCategoryData.id}`
-              : '/catalogue'
-          }
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-        >
-          {catalogueItemIdData
-            ? `Back to ${catalogueCategoryData?.name} table view`
-            : 'Home'}
-        </Button>
-        <Button
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          component={Link}
-          to={'items'}
-        >
-          Items
-        </Button>
-        <Button
-          startIcon={<EditIcon />}
-          disabled={!catalogueItemIdData}
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          onClick={() => {
-            setEditItemDialogOpen(true);
-          }}
-        >
-          Edit
-        </Button>
+        <Grid item sx={{ py: '20px' }}>
+          <Breadcrumbs
+            onChangeNode={onChangeNode}
+            breadcrumbsInfo={catalogueLandingBreadcrumbs}
+            onChangeNavigateHome={() => {
+              navigate('/catalogue');
+            }}
+            navigateHomeAriaLabel={'navigate to catalogue home'}
+          />
+        </Grid>
 
-        <Button
-          startIcon={<PrintIcon />}
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          onClick={() => {
-            window.print();
-          }}
-        >
-          Print
-        </Button>
+        {catalogueItemIdData && (
+          <Grid item container sx={{ display: 'flex', py: 2 }}>
+            <Button
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              component={Link}
+              to={'items'}
+            >
+              Items
+            </Button>
+            <Button
+              startIcon={<EditIcon />}
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              onClick={() => {
+                setEditItemDialogOpen(true);
+              }}
+            >
+              Edit
+            </Button>
+
+            <Button
+              startIcon={<PrintIcon />}
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              onClick={() => {
+                window.print();
+              }}
+            >
+              Print
+            </Button>
+          </Grid>
+        )}
       </Grid>
       {catalogueItemIdData && (
         <Grid item xs={12}>
@@ -440,8 +467,8 @@ function CatalogueItemsLandingPage() {
           >
             <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
             <Typography>
-              This item doesn't exist. Please click the Home button to navigate
-              to the catalogue home
+              This catalogue item doesn't exist. Please click the Home button on
+              the top left of you screen to navigate to the catalogue home
             </Typography>
           </Box>
         )

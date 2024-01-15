@@ -13,7 +13,6 @@ import {
   Divider,
   Grid,
   IconButton,
-  LinearProgress,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -182,8 +181,7 @@ function Systems() {
   >(undefined);
 
   // Data
-  const { data: systemsBreadcrumbs, isLoading: systemsBreadcrumbsLoading } =
-    useSystemsBreadcrumbs(systemId);
+  const { data: systemsBreadcrumbs } = useSystemsBreadcrumbs(systemId);
   const { data: subsystemsData, isLoading: subsystemsDataLoading } = useSystems(
     // String value of null for filtering root systems
     systemId === null ? 'null' : systemId
@@ -280,56 +278,62 @@ function Systems() {
   return (
     <>
       <Box height="100%">
-        {systemsBreadcrumbsLoading && systemId !== null ? (
-          <LinearProgress sx={{ width: '100%' }} />
-        ) : (
-          <Grid
-            container
-            alignItems="center"
-            justifyContent="space-between" // Align items and distribute space along the main axis
-            sx={{
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="space-between" // Align items and distribute space along the main axis
+          sx={{
+            display: 'flex',
+            paddingLeft: '4px', // Add some padding for spacing
+          }}
+        >
+          <div
+            style={{
               display: 'flex',
-              padding: 1, // Add some padding for spacing
+              alignItems: 'center',
+              paddingTop: '20px',
+              paddingBottom: '20px',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Breadcrumbs
-                breadcrumbsInfo={systemsBreadcrumbs}
-                onChangeNode={navigateToSystem}
-                onChangeNavigateHome={() => {
-                  navigateToSystem(null);
-                }}
-                navigateHomeAriaLabel={'navigate to systems home'}
-              />
+            <Breadcrumbs
+              breadcrumbsInfo={systemsBreadcrumbs}
+              onChangeNode={navigateToSystem}
+              onChangeNavigateHome={() => {
+                navigateToSystem(null);
+              }}
+              navigateHomeAriaLabel={'navigate to systems home'}
+            />
+            {systemsBreadcrumbs && (
               <NavigateNext
                 fontSize="small"
                 sx={{ color: 'text.secondary', margin: 1 }}
               />
-            </div>
-            {selectedSystems.length > 0 && (
-              <Box>
-                <MoveSystemsButton
-                  selectedSystems={selectedSystems}
-                  onChangeSelectedSystems={setRowSelection}
-                  parentSystemId={systemId}
-                />
-                <CopySystemsButton
-                  selectedSystems={selectedSystems}
-                  onChangeSelectedSystems={setRowSelection}
-                  parentSystemId={systemId}
-                />
-                <Button
-                  sx={{ mx: 1 }}
-                  variant="outlined"
-                  startIcon={<ClearIcon />}
-                  onClick={() => setRowSelection({})}
-                >
-                  {selectedSystems.length} selected
-                </Button>
-              </Box>
             )}
-          </Grid>
-        )}
+          </div>
+          {selectedSystems.length > 0 && (
+            <Box>
+              <MoveSystemsButton
+                selectedSystems={selectedSystems}
+                onChangeSelectedSystems={setRowSelection}
+                parentSystemId={systemId}
+              />
+              <CopySystemsButton
+                selectedSystems={selectedSystems}
+                onChangeSelectedSystems={setRowSelection}
+                parentSystemId={systemId}
+              />
+              <Button
+                sx={{ mx: 1 }}
+                variant="outlined"
+                startIcon={<ClearIcon />}
+                onClick={() => setRowSelection({})}
+              >
+                {selectedSystems.length} selected
+              </Button>
+            </Box>
+          )}
+        </Grid>
+
         <Grid container margin={0} direction="row" alignItems="stretch">
           <Grid
             item
@@ -368,7 +372,7 @@ function Systems() {
                     marginBottom: 'auto',
                     flexWrap: 'no-wrap',
                     // Breadcrumbs and rest
-                    height: getPageHeightCalc('56px + 74px'),
+                    height: getPageHeightCalc('96px + 74px'),
                     // To prevent no subsystems being visible
                     minHeight: '200px',
                   }}

@@ -6,11 +6,14 @@ import {
   Link as MuiLink,
   LinearProgress,
 } from '@mui/material';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useManufacturer } from '../api/manufacturer';
 
 import ManufacturerDialog from './manufacturerDialog.component';
 import React from 'react';
+import Breadcrumbs from '../view/breadcrumbs.component';
+import { paths } from '../view/viewTabs.component';
+import { BreadcrumbsInfo } from '../app.types';
 
 function ManufacturerLandingPage() {
   const { id: manufacturerId } = useParams();
@@ -20,6 +23,30 @@ function ManufacturerLandingPage() {
 
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
     React.useState<boolean>(false);
+
+  const navigate = useNavigate();
+  const onChangeNode = React.useCallback(
+    (id: string | null) => {
+      navigate(id ? `${paths.manufacturers}/id` : paths.manufacturers);
+    },
+    [navigate]
+  );
+
+  const [manufacturerLandingBreadcrumbs, setManufacturerLandingBreadcrumbs] =
+    React.useState<BreadcrumbsInfo | undefined>(undefined);
+
+  React.useEffect(() => {
+    manufacturerData &&
+      setManufacturerLandingBreadcrumbs({
+        full_trail: true,
+        trail: [
+          [
+            `${paths.manufacturer}/${manufacturerData.id}`,
+            manufacturerData.name,
+          ],
+        ],
+      });
+  }, [manufacturerData]);
 
   return (
     <Grid container>
@@ -32,33 +59,36 @@ function ManufacturerLandingPage() {
         }}
         item
       >
-        <Button
-          component={Link}
-          to={`/manufacturer/`}
-          sx={{ margin: '8px' }}
-          variant="outlined"
-        >
-          {manufacturerData ? 'Manufacturer table view' : 'Home'}
-        </Button>
-        <Button
-          disabled={!manufacturerData}
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          onClick={() => {
-            setEditManufacturerDialogOpen(true);
-          }}
-        >
-          Edit
-        </Button>
-        <Button
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          onClick={() => {
-            window.print();
-          }}
-        >
-          Print
-        </Button>
+        <Grid item sx={{ py: '20px' }}>
+          <Breadcrumbs
+            onChangeNode={onChangeNode}
+            onChangeNavigateHome={() => onChangeNode(null)}
+            breadcrumbsInfo={manufacturerLandingBreadcrumbs}
+            navigateHomeAriaLabel="navigate to manufacturer home"
+          />
+        </Grid>
+        {manufacturerData && (
+          <Grid item container sx={{ display: 'flex', py: 2 }}>
+            <Button
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              onClick={() => {
+                setEditManufacturerDialogOpen(true);
+              }}
+            >
+              Edit
+            </Button>
+            <Button
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              onClick={() => {
+                window.print();
+              }}
+            >
+              Print
+            </Button>
+          </Grid>
+        )}
       </Grid>
       {manufacturerData && (
         <Grid item xs={12}>
