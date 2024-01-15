@@ -312,7 +312,7 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      Travel Range (Joules)
+                      Travel Range (millimeters)
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
@@ -326,7 +326,7 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      Load Capacity 
+                      Load Capacity (kilograms)
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
