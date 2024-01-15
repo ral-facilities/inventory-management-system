@@ -221,7 +221,7 @@ describe('Catalogue Items', () => {
       'exist'
     );
 
-    cy.findByRole('link', { name: 'Back to Cameras table view' }).click();
+    cy.findByRole('link', { name: 'cameras' }).click();
 
     cy.findByText('Cameras 1').should('exist');
     cy.findByText('Cameras 2').should('exist');
@@ -284,10 +284,10 @@ describe('Catalogue Items', () => {
     cy.visit('/catalogue/item/1fds');
 
     cy.findByText(
-      `This item doesn't exist. Please click the Home button to navigate to the catalogue home`
+      `This catalogue item doesn't exist. Please click the Home button on the top left of you screen to navigate to the catalogue home`
     ).should('exist');
 
-    cy.findByRole('link', { name: 'Home' }).click();
+    cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
 
     cy.findByText('Motion').should('exist');
   });

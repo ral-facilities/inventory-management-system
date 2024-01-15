@@ -6,15 +6,56 @@ describe('Items', () => {
     cy.clearMocks();
   });
   it('should be able to navigate back to the catalogue catalogue item table view', () => {
-    cy.findByRole('link', { name: 'Back to Cameras table view' }).click();
+    cy.findByRole('link', { name: 'cameras' }).click();
     cy.findByText('Cameras 1').should('be.visible');
     cy.findByText('Cameras 2').should('be.visible');
     cy.findByText('Cameras 3').should('be.visible');
   });
 
+  it('should be able to navigate back to the catalogue home', () => {
+    cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+    cy.findByText('Motion').should('be.visible');
+    cy.findByText('Beam Characterization').should('be.visible');
+  });
+
+  it('should be able to navigate back to the catalogue home step by step', () => {
+    cy.visit('/catalogue/item/1/items/KvT2Ox7n');
+
+    cy.findByRole('link', { name: 'Items' }).click();
+
+    cy.findByText('5YUQDDjKpz2z').should('exist');
+    cy.findByText('vYs9Vxx6yWbn').should('exist');
+    cy.findByText('PcfCM1jp0SUV').should('exist');
+    cy.findByText('Zf7P8Qu8TD8c').should('exist');
+
+    cy.findByRole('link', { name: 'Cameras 1' }).click();
+
+    cy.findByText(
+      'High-resolution cameras for beam characterization. 1'
+    ).should('exist');
+    cy.findByText('Obsolete reason').should('exist');
+    cy.findByText('Drawing Number').should('exist');
+
+    cy.findByRole('link', { name: 'cameras' }).click();
+
+    cy.findByText('Cameras 1').should('exist');
+    cy.findByText('Cameras 2').should('exist');
+    cy.findByText('Cameras 3').should('exist');
+    cy.findByText('Cameras 4').should('exist');
+
+    cy.findByRole('link', { name: 'beam-characterization' }).click();
+
+    cy.findByText('Cameras').should('exist');
+    cy.findByText('Energy Meters').should('exist');
+
+    cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+    cy.findByText('Motion').should('be.visible');
+    cy.findByText('Beam Characterization').should('be.visible');
+  });
+
   it('should be able to navigate back to the catalogue catalogue item landing page', () => {
-    cy.findByRole('link', { name: 'Back to Cameras 1 landing page' }).click();
-    cy.findByText('Cameras 1').should('be.visible');
+    cy.findByRole('link', { name: 'Cameras 1' }).click();
+    cy.findByText('Obsolete reason').should('be.visible');
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'
     ).should('be.visible');
@@ -195,7 +236,7 @@ describe('Items', () => {
     cy.findByLabelText('Show item manufacturer details').should('exist');
 
     cy.findByRole('link', {
-      name: 'Back to Cameras 1 items table view',
+      name: 'Items',
     }).click();
 
     cy.findByText('5YUQDDjKpz2z').should('exist');
