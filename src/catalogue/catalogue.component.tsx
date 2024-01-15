@@ -29,6 +29,7 @@ import CatalogueCategoryDialog from './category/catalogueCategoryDialog.componen
 import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirectoryDialog.component';
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
+import { generateUniqueName } from '../utils';
 
 export interface AddCatalogueButtonProps {
   disabled: boolean;
@@ -63,20 +64,20 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
   );
 };
 
-function generateUniqueName(
-  existingNames: (string | undefined)[],
-  originalName: string
-) {
-  let newName = originalName;
-  let copyIndex = 1;
+// function generateUniqueName(
+//   existingNames: (string | undefined)[],
+//   originalName: string
+// ) {
+//   let newName = originalName;
+//   let copyIndex = 1;
 
-  while (existingNames.includes(newName)) {
-    newName = `${originalName}_copy_${copyIndex}`;
-    copyIndex++;
-  }
+//   while (existingNames.includes(newName)) {
+//     newName = `${originalName}_copy_${copyIndex}`;
+//     copyIndex++;
+//   }
 
-  return newName;
-}
+//   return newName;
+// }
 
 export function matchCatalogueItemProperties(
   form: CatalogueCategoryFormData[],
@@ -144,7 +145,7 @@ function Catalogue() {
     !catalogueId ? 'null' : catalogueId.replace('/', '')
   );
 
-  const catalogueCategoryNames: (string | undefined)[] =
+  const catalogueCategoryNames: string[] =
     catalogueCategoryData?.map((item) => item.name) || [];
 
   const [deleteCategoryDialogOpen, setDeleteCategoryDialogOpen] =
@@ -363,8 +364,8 @@ function Catalogue() {
             ? {
                 ...selectedCatalogueCategory,
                 name: generateUniqueName(
-                  catalogueCategoryNames,
-                  selectedCatalogueCategory.name
+                  selectedCatalogueCategory.name,
+                  catalogueCategoryNames
                 ),
               }
             : undefined
