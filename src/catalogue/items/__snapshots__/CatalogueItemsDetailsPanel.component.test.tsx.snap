@@ -309,48 +309,30 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Travel Range (Joules)
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          100
-                        </p>
-                      </div>
-                    </li>
+                      Travel Range (Joules)
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      100
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Load Capacity 
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          10
-                        </p>
-                      </div>
-                    </li>
+                      Load Capacity 
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      10
+                    </p>
                   </div>
                 </div>
               </div>
@@ -750,48 +732,30 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Measurement Range (Joules)
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          1000
-                        </p>
-                      </div>
-                    </li>
+                      Measurement Range (Joules)
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      1000
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Accuracy 
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          ±0.5%
-                        </p>
-                      </div>
-                    </li>
+                      Accuracy 
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      ±0.5%
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1201,48 +1165,30 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Measurement Range (Joules)
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          1000
-                        </p>
-                      </div>
-                    </li>
+                      Measurement Range (Joules)
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      1000
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Accuracy 
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          ±0.5%
-                        </p>
-                      </div>
-                    </li>
+                      Accuracy 
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      ±0.5%
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1650,48 +1596,30 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Measurement Range (Joules)
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          1000
-                        </p>
-                      </div>
-                    </li>
+                      Measurement Range (Joules)
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      1000
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
-                    <li
-                      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-1p823my-MuiListItem-root"
-                      style="justify-content: flex-start; display: flex; flex-direction: row; align-items: center; padding: 0px;"
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                     >
-                      <div
-                        class="MuiListItemText-root MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      >
-                        <span
-                          class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-10hburv-MuiTypography-root"
-                        >
-                          Accuracy 
-                        </span>
-                        <p
-                          class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                        >
-                          ±0.5%
-                        </p>
-                      </div>
-                    </li>
+                      Accuracy 
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      ±0.5%
+                    </p>
                   </div>
                 </div>
               </div>

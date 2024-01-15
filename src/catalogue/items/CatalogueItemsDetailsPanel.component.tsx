@@ -187,26 +187,15 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
             {catalogueItemIdData.properties &&
               catalogueItemIdData.properties.map((property, index) => (
                 <Grid item xs={12} sm={6} key={index}>
-                  <ListItem
-                    style={{
-                      justifyContent: 'flex-start',
-                      display: 'flex',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      padding: 0,
-                    }}
-                  >
-                    <ListItemText
-                      primary={`${property.name} ${
-                        catalogueCategoryData?.catalogue_item_properties?.[
-                          index
-                        ].unit
-                          ? `(${catalogueCategoryData?.catalogue_item_properties?.[index].unit})`
-                          : ''
-                      }`}
-                      secondary={String(property.value)}
-                    />
-                  </ListItem>
+                  <Typography color="text.primary">{`${property.name} ${
+                    catalogueCategoryData?.catalogue_item_properties?.[index]
+                      .unit
+                      ? `(${catalogueCategoryData?.catalogue_item_properties?.[index].unit})`
+                      : ''
+                  }`}</Typography>
+                  <Typography color="text.secondary">
+                    {String(property.value)}
+                  </Typography>
                 </Grid>
               ))}
           </Grid>
