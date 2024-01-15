@@ -64,21 +64,6 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
   );
 };
 
-// function generateUniqueName(
-//   existingNames: (string | undefined)[],
-//   originalName: string
-// ) {
-//   let newName = originalName;
-//   let copyIndex = 1;
-
-//   while (existingNames.includes(newName)) {
-//     newName = `${originalName}_copy_${copyIndex}`;
-//     copyIndex++;
-//   }
-
-//   return newName;
-// }
-
 export function matchCatalogueItemProperties(
   form: CatalogueCategoryFormData[],
   items: CatalogueItemProperty[]
