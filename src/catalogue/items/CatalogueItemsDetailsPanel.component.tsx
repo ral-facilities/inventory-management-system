@@ -186,10 +186,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               catalogueItemIdData.properties.map((property, index) => (
                 <Grid item xs={12} sm={6} key={index}>
                   <Typography color="text.primary">{`${property.name} ${
-                    catalogueCategoryData?.catalogue_item_properties?.[index]
-                      .unit
-                      ? `(${catalogueCategoryData?.catalogue_item_properties?.[index].unit})`
-                      : ''
+                    property.unit ? `(${property.unit})` : ''
                   }`}</Typography>
                   <Typography color="text.secondary">
                     {String(property.value)}
