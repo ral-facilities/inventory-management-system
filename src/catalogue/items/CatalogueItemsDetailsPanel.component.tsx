@@ -220,6 +220,14 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 )}
               </Typography>
             </Grid>
+            <Grid item xs={12} sm={6}>
+              <Typography align="left" color="text.primary">
+                Telephone
+              </Typography>
+              <Typography align="left" color="text.secondary">
+                {manufacturerData?.telephone}
+              </Typography>
+            </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <Typography align="left" color="text.primary">
                 Address

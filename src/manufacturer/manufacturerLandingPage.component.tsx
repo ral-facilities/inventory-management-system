@@ -81,15 +81,25 @@ function ManufacturerLandingPage() {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            {manufacturerData.url && (
+            {manufacturerData.url ? (
               <Typography
                 textAlign={'center'}
                 sx={{ mx: '8px' }}
                 variant="body1"
+                color="text.secondary"
               >
                 <MuiLink underline="hover" href={manufacturerData.url}>
                   {manufacturerData.url}
                 </MuiLink>
+              </Typography>
+            ) : (
+              <Typography
+                sx={{ mx: '8px' }}
+                textAlign={'center'}
+                variant="body1"
+                color="text.secondary"
+              >
+                {'None'}
               </Typography>
             )}
           </Grid>
@@ -99,8 +109,13 @@ function ManufacturerLandingPage() {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography sx={{ mx: '8px' }} textAlign={'center'} variant="body1">
-              {manufacturerData.telephone}
+            <Typography
+              sx={{ mx: '8px' }}
+              textAlign={'center'}
+              variant="body1"
+              color="text.secondary"
+            >
+              {manufacturerData.telephone ?? 'None'}
             </Typography>
           </Grid>
           <Grid item xs={12} my={2}>
@@ -109,20 +124,40 @@ function ManufacturerLandingPage() {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography align="center" sx={{ mx: '8px' }}>
-              {manufacturerData.address.address_line}
+            <Typography
+              align="center"
+              sx={{ mx: '8px' }}
+              color="text.secondary"
+            >
+              {manufacturerData.address.address_line ?? 'None'}
             </Typography>
-            <Typography align="center" sx={{ mx: '8px' }}>
-              {manufacturerData.address.town}
+            <Typography
+              align="center"
+              sx={{ mx: '8px' }}
+              color="text.secondary"
+            >
+              {manufacturerData.address.town ?? 'None'}
             </Typography>
-            <Typography align="center" sx={{ mx: '8px' }}>
-              {manufacturerData.address.county}
+            <Typography
+              align="center"
+              sx={{ mx: '8px' }}
+              color="text.secondary"
+            >
+              {manufacturerData.address.county ?? 'None'}
             </Typography>
-            <Typography align="center" sx={{ mx: '8px' }}>
-              {manufacturerData.address.postcode}
+            <Typography
+              align="center"
+              sx={{ mx: '8px' }}
+              color="text.secondary"
+            >
+              {manufacturerData.address.postcode ?? 'None'}
             </Typography>
-            <Typography align="center" sx={{ mx: '8px' }}>
-              {manufacturerData.address.country}
+            <Typography
+              align="center"
+              sx={{ mx: '8px' }}
+              color="text.secondary"
+            >
+              {manufacturerData.address.country ?? 'None'}
             </Typography>
           </Grid>
         </Grid>
