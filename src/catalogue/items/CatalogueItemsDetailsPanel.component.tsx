@@ -41,8 +41,7 @@ export interface CatalogueItemsDetailsPanelProps {
 }
 
 function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
-  const { catalogueItemIdData, catalogueCategoryData, manufacturerData } =
-    props;
+  const { catalogueItemIdData, manufacturerData } = props;
   const [tabValue, setTabValue] = React.useState(0);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
