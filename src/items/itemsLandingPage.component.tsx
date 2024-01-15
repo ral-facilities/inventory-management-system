@@ -54,7 +54,7 @@ function ItemsLandingPage() {
           ...catalogueBreadcrumbs.trail,
           [`item/${catalogueItemIdData.id}`, `${catalogueItemIdData.name}`],
           [`item/${catalogueItemIdData.id}/items`, 'Items'],
-          [`item/${catalogueItemIdData.id}/items/${id}`, 'Item'],
+          [`item/${catalogueItemIdData.id}/items/${id}`, id ?? ''],
         ],
       });
   }, [catalogueBreadcrumbs, catalogueItemIdData, id]);

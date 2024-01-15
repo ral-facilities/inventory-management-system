@@ -100,3 +100,28 @@ export const useItem = (id?: string): UseQueryResult<Item, AxiosError> => {
     }
   );
 };
+
+const deleteItem = async (item: Item): Promise<void> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+  return axios
+    .delete(`${apiUrl}/v1/items/${item.id}`, {})
+    .then((response) => response.data);
+};
+
+export const useDeleteItem = (): UseMutationResult<void, AxiosError, Item> => {
+  const queryClient = useQueryClient();
+  return useMutation((item: Item) => deleteItem(item), {
+    onError: (error) => {
+      console.log('Got error ' + error.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['Items'] });
+      queryClient.removeQueries({ queryKey: ['Item'] });
+    },
+  });
+};
