@@ -91,7 +91,13 @@ function SystemDetails(props: SystemDetailsProps) {
           <Typography variant="h3">Please select a system</Typography>
         </Box>
       ) : (
-        <Grid container direction="column" sx={{ padding: 1.5 }} wrap="nowrap">
+        <Grid
+          container
+          direction="column"
+          sx={{ padding: 1.5 }}
+          wrap="nowrap"
+          spacing={1}
+        >
           <Grid
             container
             item
@@ -99,21 +105,21 @@ function SystemDetails(props: SystemDetailsProps) {
             justifyContent="space-evenly"
             sx={{ margin: 0 }}
           >
-            <Grid item container direction="column" spacing={1.5} xs={6}>
+            <Grid item container direction="column" spacing={1} xs={6}>
               <Grid item>
                 <Typography variant="h6">Location</Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" color="text.secondary">
                   {system.location ?? 'None'}
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography variant="h6">Owner</Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" color="text.secondary">
                   {system.owner ?? 'None'}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item container direction="column" spacing={1.5} xs={6}>
+            <Grid item container direction="column" spacing={1} xs={6}>
               <Grid item sx={{ display: 'inline-flex', alignItems: 'center' }}>
                 <Typography variant="h6">Importance</Typography>
                 <Chip
@@ -132,22 +138,26 @@ function SystemDetails(props: SystemDetailsProps) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item sx={{ paddingY: 1.5 }}>
+          <Grid item>
             <Typography variant="h6">Description</Typography>
-            <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              sx={{ whiteSpace: 'pre-line' }}
+            >
               {system.description ?? 'None'}
             </Typography>
           </Grid>
-          <Grid item sx={{ maxWidth: '100% !important' }}>
-            <Box
-            // sx={{
-            //   maxWidth: 'calc(100% - 320px)',
-            //   flexWrap: 'no-wrap',
-            //   overflow: 'hidden',
-            // }}
-            >
-              <SystemItemsTable system={system} />
-            </Box>
+          <Grid item>
+            <Typography variant="h6" sx={{ paddingTop: 2 }}>
+              Items
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Divider />
+          </Grid>
+          <Grid item>
+            <SystemItemsTable system={system} />
           </Grid>
         </Grid>
       )}

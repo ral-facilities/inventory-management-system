@@ -30,7 +30,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     [selectedSystems]
   );
 
-  const noResultsText = 'No systems found';
+  const noResultsText = 'No systems found within the selected system';
   const columns = React.useMemo<MRT_ColumnDef<System>[]>(
     () => [
       {
