@@ -113,7 +113,7 @@ exports[`Catalogue Items details panel renders details panel correctly (no dates
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 1
                     </p>
@@ -650,7 +650,7 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 1
                     </p>
@@ -1179,7 +1179,7 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 1
                     </p>
@@ -1721,7 +1721,7 @@ exports[`Catalogue Items details panel renders notes panel correctly 1`] = `
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 1
                     </p>
@@ -2263,7 +2263,7 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 1
                     </p>

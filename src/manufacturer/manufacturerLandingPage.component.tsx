@@ -115,6 +115,7 @@ function ManufacturerLandingPage() {
                     textAlign={'center'}
                     sx={{ mx: '8px' }}
                     variant="body1"
+                    color="text.secondary"
                   >
                     <MuiLink underline="hover" href={manufacturerData.url}>
                       {manufacturerData.url}
@@ -126,7 +127,11 @@ function ManufacturerLandingPage() {
                 <Typography variant="h6">Telephone number:</Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography sx={{ mx: '8px' }} variant="body1">
+                <Typography
+                  sx={{ mx: '8px' }}
+                  variant="body1"
+                  color="text.secondary"
+                >
                   {manufacturerData.telephone}
                 </Typography>
               </Grid>
@@ -134,19 +139,39 @@ function ManufacturerLandingPage() {
                 <Typography variant="h6">Address:</Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography align="center" sx={{ mx: '8px' }}>
+                <Typography
+                  align="center"
+                  sx={{ mx: '8px' }}
+                  color="text.secondary"
+                >
                   {manufacturerData.address.address_line}
                 </Typography>
-                <Typography align="center" sx={{ mx: '8px' }}>
+                <Typography
+                  align="center"
+                  sx={{ mx: '8px' }}
+                  color="text.secondary"
+                >
                   {manufacturerData.address.town}
                 </Typography>
-                <Typography align="center" sx={{ mx: '8px' }}>
+                <Typography
+                  align="center"
+                  sx={{ mx: '8px' }}
+                  color="text.secondary"
+                >
                   {manufacturerData.address.county}
                 </Typography>
-                <Typography align="center" sx={{ mx: '8px' }}>
+                <Typography
+                  align="center"
+                  sx={{ mx: '8px' }}
+                  color="text.secondary"
+                >
                   {manufacturerData.address.postcode}
                 </Typography>
-                <Typography align="center" sx={{ mx: '8px' }}>
+                <Typography
+                  align="center"
+                  sx={{ mx: '8px' }}
+                  color="text.secondary"
+                >
                   {manufacturerData.address.country}
                 </Typography>
               </Grid>

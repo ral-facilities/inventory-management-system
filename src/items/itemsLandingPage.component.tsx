@@ -138,6 +138,7 @@ function ItemsLandingPage() {
               <Typography
                 sx={{ margin: 1, textAlign: 'center' }}
                 variant="body1"
+                color="text.secondary"
               >
                 {catalogueItemIdData.description}
               </Typography>
@@ -403,6 +404,7 @@ function ItemsLandingPage() {
               <Typography
                 sx={{ margin: 1, textAlign: 'center' }}
                 variant="body1"
+                color="text.secondary"
               >
                 {itemData?.notes}
               </Typography>
