@@ -17,7 +17,7 @@ import {
 import { settings } from '../settings';
 
 const addCatalogueItem = async (
-  catalogueCategory: AddCatalogueItem
+  catalogueItem: AddCatalogueItem
 ): Promise<CatalogueItem> => {
   let apiUrl: string;
   apiUrl = '';
@@ -27,7 +27,7 @@ const addCatalogueItem = async (
   }
 
   return axios
-    .post<CatalogueItem>(`${apiUrl}/v1/catalogue-items/`, catalogueCategory)
+    .post<CatalogueItem>(`${apiUrl}/v1/catalogue-items/`, catalogueItem)
     .then((response) => response.data);
 };
 

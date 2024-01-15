@@ -28,9 +28,9 @@ export interface CopyToCatalogueCategory {
   selectedCategories: CatalogueCategory[];
   // Null if root
   targetCategory: CatalogueCategory | null;
-  // Existing known catalogue category codes at the destination
+  // Existing known catalogue category names at the destination
   // (for appending to the names to avoid duplication)
-  existingCategoryCodes: string[];
+  existingCategoryNames: string[];
 }
 
 export interface CatalogueCategory {
@@ -98,18 +98,9 @@ export type CatalogueItemDetailsPlaceholder = {
   [K in keyof CatalogueItemDetails]: string | null;
 };
 
-export interface CatalogueDetailsErrorMessages {
-  name: string;
-  description: string;
-  cost_gbp: string;
-  cost_to_rework_gbp: string;
-  days_to_replace: string;
-  days_to_rework: string;
-  drawing_number: string;
-  drawing_link: string;
-  item_model_number: string;
-  manufacturer_id: string;
-}
+export type CatalogueDetailsErrorMessages = {
+  [K in keyof CatalogueItemDetails]: string;
+};
 
 export interface CatalogueItemProperty {
   name: string;
@@ -209,7 +200,41 @@ export interface CopyToSystem {
   selectedSystems: System[];
   // Null if root
   targetSystem: System | null;
-  // Existing known system codes at the destination
+  // Existing known system names at the destination
   // (for appending to the names to avoid duplication)
-  existingSystemCodes: string[];
+  existingSystemNames: string[];
+}
+
+export enum UsageStatusType {
+  new = 0,
+  inUse = 1,
+  used = 2,
+  scrapped = 3,
+}
+
+export interface ItemDetails {
+  catalogue_item_id: string;
+  system_id: string | null;
+  purchase_order_number: string | null;
+  is_defective: boolean;
+  usage_status: UsageStatusType;
+  warranty_end_date: string | null;
+  asset_number: string | null;
+  serial_number: string | null;
+  delivered_date: string | null;
+  notes: string | null;
+}
+export type ItemDetailsPlaceholder = {
+  [K in keyof ItemDetails]: K extends 'delivered_date' | 'warranty_end_date'
+    ? Date | null
+    : string | null;
+};
+
+export interface AddItem extends ItemDetails {
+  properties: CatalogueItemProperty[];
+}
+
+export interface Item extends ItemDetails {
+  properties: CatalogueItemPropertyResponse[];
+  id: string;
 }
