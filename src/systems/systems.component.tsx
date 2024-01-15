@@ -161,6 +161,8 @@ const columns: MRT_ColumnDef<System>[] = [
   },
 ];
 
+const MIN_SUBSYSTEMS_WIDTH = '320px';
+
 function Systems() {
   // Navigation
   const systemId = useSystemId();
@@ -335,7 +337,7 @@ function Systems() {
             item
             xs={12}
             md={2}
-            minWidth="320px"
+            minWidth={MIN_SUBSYSTEMS_WIDTH}
             textAlign="left"
             padding={1}
             paddingBottom={0}
@@ -433,7 +435,18 @@ function Systems() {
               </>
             )}
           </Grid>
-          <Grid item textAlign="left" padding={1} xs>
+          <Grid
+            item
+            textAlign="left"
+            padding={1}
+            xs
+            sx={{
+              maxWidth: {
+                xs: '100%',
+                md: `calc(100% - ${MIN_SUBSYSTEMS_WIDTH})`,
+              },
+            }}
+          >
             <SystemDetails id={systemId} />
           </Grid>
         </Grid>
