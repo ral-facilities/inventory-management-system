@@ -7,8 +7,6 @@ import {
   Tabs,
   Typography,
 } from '@mui/material';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import { Link } from 'react-router-dom';
 import {
   CatalogueCategory,
