@@ -35,7 +35,7 @@ describe('Catalogue Card', () => {
     expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
   });
 
-  it.only('opens the actions menu and closes it', async () => {
+  it('opens the actions menu and closes it', async () => {
     createView();
     const actionsButton = screen.getByRole('button', {
       name: 'actions Beam Characterization catalogue category button',

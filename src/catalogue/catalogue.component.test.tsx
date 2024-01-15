@@ -287,7 +287,7 @@ describe('Catalogue', () => {
     });
   });
 
-  it('opens the save as catalogue category dialog', async () => {
+  it('can open the save as catalogue category dialog and close it again', async () => {
     createView('/catalogue/1');
 
     await waitFor(() => {

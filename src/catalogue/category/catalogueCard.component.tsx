@@ -49,7 +49,7 @@ function CatalogueCard(props: CatalogueCardProps) {
   return (
     <Button
       component={Link}
-      to={menuOpen ? '' : `${catalogueCategory.id}`}
+      to={catalogueCategory.id}
       fullWidth
       sx={{
         display: 'flex',
@@ -106,6 +106,9 @@ function CatalogueCard(props: CatalogueCardProps) {
           <Menu
             anchorEl={anchorEl}
             open={menuOpen}
+            onClick={(event) => {
+              event.preventDefault();
+            }}
             onClose={handleActionsClose}
           >
             <MenuItem
@@ -113,7 +116,7 @@ function CatalogueCard(props: CatalogueCardProps) {
               onClick={(event) => {
                 event.preventDefault();
                 onChangeOpenEditDialog(catalogueCategory);
-                setMenuOpen(false);
+                handleActionsClose();
               }}
               aria-label={`edit ${catalogueCategory.name} catalogue category button`}
               sx={{ m: 0 }}
@@ -129,7 +132,7 @@ function CatalogueCard(props: CatalogueCardProps) {
               onClick={(event) => {
                 event.preventDefault();
                 onChangeOpenSaveAsDialog(catalogueCategory);
-                setMenuOpen(false);
+                handleActionsClose();
               }}
               sx={{ m: 0 }}
             >
@@ -143,7 +146,7 @@ function CatalogueCard(props: CatalogueCardProps) {
               onClick={(event) => {
                 event.preventDefault();
                 onChangeOpenDeleteDialog(catalogueCategory);
-                setMenuOpen(false);
+                handleActionsClose();
               }}
               aria-label={`delete ${catalogueCategory.name} catalogue category button`}
               sx={{ m: 0 }}
