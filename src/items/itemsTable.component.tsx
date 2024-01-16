@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 import ItemDialog from './itemDialog.component';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -57,6 +58,10 @@ export function ItemsTable(props: ItemTableProps) {
   const [selectedItem, setSelectedItem] = React.useState<Item | undefined>(
     undefined
   );
+
+  const [itemDialogType, setItemsDialogType] = React.useState<
+    'create' | 'save as' | 'edit'
+  >('create');
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 32px');
@@ -280,9 +285,20 @@ export function ItemsTable(props: ItemTableProps) {
             onClose={() => {
               table.setCreatingRow(null);
             }}
-            type="add"
+            type={itemDialogType}
             catalogueCategory={catalogueCategory}
             catalogueItem={catalogueItem}
+            selectedItem={
+              itemDialogType === 'create'
+                ? undefined
+                : {
+                    ...row.original,
+                    notes:
+                      itemDialogType === 'save as'
+                        ? `${row.original.notes}.\nThis is a copy of the item with this ID: ${row.original.id}`
+                        : row.original.notes,
+                  }
+            }
           />
         </>
       );
@@ -294,6 +310,7 @@ export function ItemsTable(props: ItemTableProps) {
           sx={{ mx: 0.5 }}
           variant="outlined"
           onClick={() => {
+            setItemsDialogType('create');
             table.setCreatingRow(true);
           }}
         >
@@ -316,8 +333,23 @@ export function ItemsTable(props: ItemTableProps) {
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
       return [
         <MenuItem
+          key={1}
+          aria-label={`Saveitem ${row.original.id} as`}
+          onClick={() => {
+            setItemsDialogType('save as');
+            table.setCreatingRow(row);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <SaveAsIcon />
+          </ListItemIcon>
+          <ListItemText>Save as</ListItemText>
+        </MenuItem>,
+        <MenuItem
           key={2}
-          aria-label={`Delete item ${row.original.serial_number}`}
+          aria-label={`Delete item ${row.original.id}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
             setSelectedItem(row.original);

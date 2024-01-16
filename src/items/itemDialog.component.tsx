@@ -24,6 +24,7 @@ import {
   CatalogueCategoryFormData,
   CatalogueItem,
   CatalogueItemProperty,
+  Item,
   ItemDetailsPlaceholder,
   UsageStatusType,
 } from '../app.types';
@@ -33,13 +34,21 @@ import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
 import { useAddItem } from '../api/item';
 import { AxiosError } from 'axios';
 const maxYear = 2100;
-function isValidDateTime(date: Date | null) {
-  // Attempt to create a Date object from the string
-  let dateObj = date ?? new Date('');
+function isValidDateTime(input: Date | string | null) {
+  // Attempt to create a Date object from the input
+  let dateObj: Date;
+  if (input instanceof Date) {
+    dateObj = input;
+  } else if (typeof input === 'string') {
+    dateObj = new Date(input);
+  } else {
+    // Handle null or other non-supported types
+    dateObj = new Date('');
+  }
 
   // Check if the Date object is valid and the string was successfully parsed
   // Also, check if the original string is not equal to 'Invalid Date'
-  // Check if the date is larger the year 2100. The maximum date of the date picker
+  // Check if the date is larger than the year 2100, the maximum date of the date picker
   return (
     !isNaN(dateObj.getTime()) &&
     dateObj.toString() !== 'Invalid Date' &&
@@ -75,13 +84,21 @@ const CustomTextField: React.FC<TextFieldProps> = (renderProps) => {
 export interface ItemDialogProps {
   open: boolean;
   onClose: () => void;
-  type: 'add' | 'edit';
+  type: 'create' | 'edit' | 'save as';
   catalogueItem?: CatalogueItem;
   catalogueCategory?: CatalogueCategory;
+  selectedItem?: Item;
 }
 
 function ItemDialog(props: ItemDialogProps) {
-  const { open, onClose, type, catalogueItem, catalogueCategory } = props;
+  const {
+    open,
+    onClose,
+    type,
+    catalogueItem,
+    catalogueCategory,
+    selectedItem,
+  } = props;
   const parentCatalogueItemPropertiesInfo = React.useMemo(
     () => catalogueCategory?.catalogue_item_properties ?? [],
     [catalogueCategory]
@@ -113,7 +130,7 @@ function ItemDialog(props: ItemDialogProps) {
   const { mutateAsync: addItem } = useAddItem();
 
   React.useEffect(() => {
-    if (type === 'add' && open) {
+    if (type === 'create' && open) {
       setPropertyValues(
         matchCatalogueItemProperties(
           parentCatalogueItemPropertiesInfo,
@@ -122,6 +139,38 @@ function ItemDialog(props: ItemDialogProps) {
       );
     }
   }, [parentCatalogueItemPropertiesInfo, catalogueItem, open, type]);
+
+  React.useEffect(() => {
+    if (selectedItem) {
+      setItemDetails({
+        catalogue_item_id: null,
+        system_id: null,
+        purchase_order_number: selectedItem.purchase_order_number,
+        is_defective: selectedItem.is_defective ? 'true' : 'false',
+        usage_status: UsageStatusType[selectedItem.usage_status],
+        warranty_end_date:
+          selectedItem.warranty_end_date &&
+          isValidDateTime(selectedItem.warranty_end_date)
+            ? new Date(selectedItem.warranty_end_date)
+            : null,
+        asset_number: selectedItem.asset_number,
+        serial_number: selectedItem.serial_number,
+        delivered_date:
+          selectedItem.delivered_date &&
+          isValidDateTime(selectedItem.delivered_date)
+            ? new Date(selectedItem.delivered_date)
+            : null,
+        notes: selectedItem.notes,
+      });
+
+      setPropertyValues(
+        matchCatalogueItemProperties(
+          parentCatalogueItemPropertiesInfo,
+          selectedItem.properties ?? []
+        )
+      );
+    }
+  }, [parentCatalogueItemPropertiesInfo, selectedItem]);
 
   const handlePropertyChange = (
     index: number,

@@ -63,6 +63,11 @@ describe('Items Table', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
+  it('renders correctly part 3 due column virtaulisation', async () => {
+    createView();
+    await ensureColumnsVisible(['Warranty End Date']);
+  });
+
   it('opens and closes the add item dialog', async () => {
     createView();
 
@@ -150,6 +155,34 @@ describe('Items Table', () => {
 
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens the add catalogue item dialog for save as', async () => {
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Save as')).toBeInTheDocument();
+    });
+
+    const saveAsButton = screen.getByText('Save as');
+    await user.click(saveAsButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });

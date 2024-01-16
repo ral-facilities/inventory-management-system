@@ -2068,7 +2068,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Serial Number"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r8p:"
+                            id=":rch:"
                             placeholder="Filter by Serial Number"
                             title="Filter by Serial Number"
                             type="text"
@@ -2206,7 +2206,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Delivered Date"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r8t:"
+                            id=":rcl:"
                             placeholder="Filter by Delivered Date"
                             title="Filter by Delivered Date"
                             type="text"
@@ -2340,13 +2340,13 @@ exports[`Items Table renders the dense table correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
                           <div
-                            aria-controls=":r92:"
+                            aria-controls=":rcq:"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Is Defective"
-                            aria-labelledby=":r91:"
+                            aria-labelledby=":rcp:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":r91:"
+                            id=":rcp:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -2504,13 +2504,13 @@ exports[`Items Table renders the dense table correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
                           <div
-                            aria-controls=":r97:"
+                            aria-controls=":rcv:"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Usage Status"
-                            aria-labelledby=":r96:"
+                            aria-labelledby=":rcu:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":r96:"
+                            id=":rcu:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -2945,7 +2945,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r99:"
+                    aria-controls=":rd1:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"

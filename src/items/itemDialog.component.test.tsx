@@ -2,6 +2,7 @@ import React from 'react';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
+  getItemById,
   renderComponentWithBrowserRouter,
 } from '../setupTests';
 import ItemDialog, { ItemDialogProps } from './itemDialog.component';
@@ -21,7 +22,7 @@ describe('ItemDialog', () => {
     props = {
       open: true,
       onClose: onClose,
-      type: 'add',
+      type: 'create',
       catalogueCategory: getCatalogueCategoryById('4'),
       catalogueItem: getCatalogueItemById('1'),
     };
@@ -363,5 +364,33 @@ describe('ItemDialog', () => {
       });
       expect(onClose).not.toHaveBeenCalled();
     });
+
+    it('save as an item', async () => {
+      props.selectedItem = getItemById('G463gOIA');
+      props.type = 'save as';
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
+        asset_number: '03MXnOfP5C',
+        catalogue_item_id: '1',
+        delivered_date: '2023-05-11T23:00:00.000Z',
+        is_defective: false,
+        notes: 'rRXBHQFbF3zts6XS279k',
+        properties: [
+          { name: 'Resolution', value: 12 },
+          { name: 'Frame Rate', value: 30 },
+          { name: 'Sensor Type', value: 'CMOS' },
+          { name: 'Broken', value: true },
+          { name: 'Older than five years', value: false },
+        ],
+        purchase_order_number: 'tIWiCOow',
+        serial_number: 'vYs9Vxx6yWbn',
+        system_id: null,
+        usage_status: 2,
+        warranty_end_date: '2023-05-18T23:00:00.000Z',
+      });
+    }, 10000);
   });
 });
