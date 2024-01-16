@@ -400,8 +400,8 @@ export const handlers = [
 
   rest.get('/v1/systems/:id', (req, res, ctx) => {
     const { id } = req.params;
-    const data = SystemsJSON.filter((system) => system.id === id);
-    if (data.length > 0) return res(ctx.status(200), ctx.json(data[0]));
+    const data = SystemsJSON.find((system) => system.id === id);
+    if (data !== undefined) return res(ctx.status(200), ctx.json(data));
     else
       return res(
         ctx.status(404),

@@ -144,7 +144,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         }))
       );
     }
-  }, [catalogueItemsData, isLoading, manufacturerList]);
+    // Purposefully leave out manufacturerList - this will never be the same due
+    // to the reference changing so instead am relying on isLoading to have changed to
+    // false and then back to true again for any refetches that occurr - only
+    // alternative I can see right now requires backend changes
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [catalogueItemsData, isLoading]);
 
   const catalogueCategoryNames: string[] =
     catalogueItemsData?.map((item) => item.name) || [];
