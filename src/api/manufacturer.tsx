@@ -136,7 +136,7 @@ export const useManufacturer = (
 
 export const useManufacturerIds = (
   ids: string[]
-): UseQueryResult<Manufacturer, unknown>[] => {
+): UseQueryResult<Manufacturer>[] => {
   return useQueries({
     queries: ids.map((id) => ({
       queryKey: ['Manufacturer', id],

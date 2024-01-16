@@ -1,5 +1,5 @@
 import ClearIcon from '@mui/icons-material/Clear';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Link as MuiLink, Typography } from '@mui/material';
 import {
   MRT_ColumnDef,
   MRT_ColumnFiltersState,
@@ -7,9 +7,11 @@ import {
   useMaterialReactTable,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useCatalogueItemIds } from '../api/catalogueItem';
 import { useItems } from '../api/item';
-import { Item, System, UsageStatusType } from '../app.types';
+import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 
 export interface SystemItemsTableProps {
   system: System;
@@ -23,8 +25,38 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     undefined
   );
 
-  const columns = React.useMemo<MRT_ColumnDef<Item>[]>(
-    () => [
+  // Fetch catalogue item names for each item to display in the table
+  const catalogueItemIdSet = new Set<string>(
+    itemsData?.map((item) => item.catalogue_item_id) ?? []
+  );
+  let isLoading = isLoadingItems;
+  const catalogueItemList: (CatalogueItem | undefined)[] = useCatalogueItemIds(
+    Array.from(catalogueItemIdSet.values())
+  ).map((obj) => {
+    isLoading = isLoading || obj.isLoading;
+    return obj.data;
+  });
+
+  const columns = React.useMemo<MRT_ColumnDef<Item>[]>(() => {
+    return [
+      {
+        header: 'Catalogue Item',
+        accessorFn: (row: Item) =>
+          catalogueItemList?.find(
+            (catalogueItem) => catalogueItem?.id === row.catalogue_item_id
+          )?.name,
+        id: 'catalogue_item_name',
+        Cell: ({ renderedCellValue, row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            to={`/catalogue/item/${row.original.catalogue_item_id}`}
+          >
+            {renderedCellValue}
+          </MuiLink>
+        ),
+        size: 250,
+      },
       {
         header: 'Serial Number',
         accessorFn: (row) => row.serial_number,
@@ -61,9 +93,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 200,
         filterVariant: 'select',
       },
-    ],
-    []
-  );
+    ];
+  }, [catalogueItemList]);
 
   const [columnFilters, setColumnFilters] =
     React.useState<MRT_ColumnFiltersState>([]);
@@ -101,8 +132,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     getRowId: (row) => row.id,
     muiTablePaperProps: {
       sx: { maxWidth: '100%' },
-      // Viewport width - subsystems - extra - app drawer
-      // sx: { maxWidth: 'calc(100vw - 320px - 32px - 280px)' },
     },
     muiTableContainerProps: {
       sx: { height: '360.4px' },
@@ -114,7 +143,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       variant: 'outlined',
     },
     state: {
-      showProgressBars: isLoadingItems,
+      showProgressBars: isLoading,
       columnFilters,
     },
     muiPaginationProps: {
@@ -139,6 +168,22 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       </Box>
     ),
   });
+
+  // See https://github.com/KevinVandy/material-react-table/issues/815 -
+  // For the loaded data to be visible have to remove the cache when loaded to
+  // force the accessor function to be called again
+  useEffect(() => {
+    if (!isLoading) {
+      // Only do this once all data has loaded
+      table.getRowModel().rows.forEach((row) => {
+        console.log(row._valuesCache);
+        // @ts-ignore
+        delete row._valuesCache['catalogue_item_name'];
+      });
+    }
+  }, [table, catalogueItemList, isLoading]);
+
+  console.log('RENDER');
 
   return <MaterialReactTable table={table} />;
 }
