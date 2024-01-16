@@ -53,12 +53,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   React.useEffect(() => {
     if (!isLoading && itemsData) {
       setTableRows(
-        itemsData.map((itemData) => ({
-          item: itemData,
-          catalogue_item: catalogueItemList?.find(
-            (catalogueItem) => catalogueItem?.id === itemData.catalogue_item_id
-          ),
-        }))
+        itemsData.map(
+          (itemData) =>
+            ({
+              item: itemData,
+              catalogueItem: catalogueItemList?.find(
+                (catalogueItem) =>
+                  catalogueItem?.id === itemData.catalogue_item_id
+              ),
+            } as TableRowData)
+        )
       );
     }
   }, [catalogueItemList, isLoading, itemsData]);
@@ -68,7 +72,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       {
         header: 'Catalogue Item',
         accessorFn: (row) => row.catalogueItem?.name,
-        id: 'catalogue_item_name',
+        id: 'catalogueItem.name',
         Cell: ({ renderedCellValue, row }) => (
           <MuiLink
             underline="hover"
