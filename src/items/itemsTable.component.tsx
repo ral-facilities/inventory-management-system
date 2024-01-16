@@ -193,9 +193,9 @@ export function ItemsTable(props: ItemTableProps) {
       ? [
           { ...columns[0], size: 400 },
           { ...columns[1], size: 400 },
-          { ...columns[4], size: 400 },
           { ...columns[5], size: 400 },
           { ...columns[6], size: 400 },
+          { ...columns[7], size: 400 },
         ]
       : columns,
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
