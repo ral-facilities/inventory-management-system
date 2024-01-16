@@ -52,6 +52,11 @@ export function ItemsTable(props: ItemTableProps) {
     };
     return [
       {
+        header: 'ID',
+        accessorFn: (row) => row.id,
+        size: 250,
+      },
+      {
         header: 'Serial Number',
         accessorFn: (row) => row.serial_number,
         size: 250,
@@ -187,6 +192,7 @@ export function ItemsTable(props: ItemTableProps) {
     columns: dense
       ? [
           { ...columns[0], size: 400 },
+          { ...columns[1], size: 400 },
           { ...columns[4], size: 400 },
           { ...columns[5], size: 400 },
           { ...columns[6], size: 400 },

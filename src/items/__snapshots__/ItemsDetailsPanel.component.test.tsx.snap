@@ -424,64 +424,36 @@ exports[`Catalogue Items details panel renders details panel correctly (no dates
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Manufacturer Address Line
+                      Telephone
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     />
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-4 css-11l5t4l-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Manufacturer Town
+                      Address
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    >
-                      None
-                    </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer County
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    >
-                      None
-                    </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer Country
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     />
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer Post/Zip code
-                    </p>
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    />
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    />
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     />
                   </div>
                 </div>
@@ -943,64 +915,36 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Manufacturer Address Line
+                      Telephone
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     />
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-4 css-11l5t4l-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Manufacturer Town
+                      Address
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    >
-                      None
-                    </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer County
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    >
-                      None
-                    </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer Country
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     />
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer Post/Zip code
-                    </p>
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    />
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    />
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     />
                   </div>
                 </div>
@@ -1479,68 +1423,46 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Manufacturer Address Line
+                      Telephone
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    >
+                      07334893348
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-4 css-11l5t4l-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Address
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       1 Example Street
                     </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer Town
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       Oxford
                     </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer County
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       Oxfordshire
                     </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer Country
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       United Kingdom
                     </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer Post/Zip code
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       OX1 2AB
                     </p>
@@ -2022,68 +1944,46 @@ exports[`Catalogue Items details panel renders notes panel correctly 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Manufacturer Address Line
+                      Telephone
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    >
+                      07334893348
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-4 css-11l5t4l-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Address
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       1 Example Street
                     </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer Town
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       Oxford
                     </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer County
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       Oxfordshire
                     </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer Country
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       United Kingdom
                     </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer Post/Zip code
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       OX1 2AB
                     </p>
@@ -2563,68 +2463,46 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Manufacturer Address Line
+                      Telephone
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    >
+                      07334893348
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-4 css-11l5t4l-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Address
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       1 Example Street
                     </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer Town
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       Oxford
                     </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer County
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       Oxfordshire
                     </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer Country
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       United Kingdom
                     </p>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                    >
-                      Manufacturer Post/Zip code
-                    </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
                       OX1 2AB
                     </p>
