@@ -74,12 +74,10 @@ export function matchCatalogueItemProperties(
     const matchingItem = items.find((item) => item.name === property.name);
     if (matchingItem) {
       // Type check and assign the value
-      if (property.type === 'number') {
-        result.push(matchingItem.value ? String(matchingItem.value) : null);
-      } else if (property.type === 'boolean') {
+      if (property.type === 'boolean') {
         result.push(
           typeof matchingItem.value === 'boolean'
-            ? String(Boolean(matchingItem.value))
+            ? String(matchingItem.value)
             : ''
         );
       } else {

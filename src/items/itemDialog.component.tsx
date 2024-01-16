@@ -133,7 +133,7 @@ function ItemDialog(props: ItemDialogProps) {
     if (value === null || (typeof value === 'string' && value.trim() === '')) {
       updatedPropertyValues[index] = null;
     } else {
-      updatedPropertyValues[index] = value as string;
+      updatedPropertyValues[index] = value;
     }
     setPropertyValues(updatedPropertyValues);
     // Clear the error state for the changed property
