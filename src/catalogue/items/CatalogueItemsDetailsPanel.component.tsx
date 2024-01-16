@@ -97,7 +97,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                         component={Link}
                         underline="hover"
                         target="_blank"
-                        to={`/catalogue/items/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
+                        to={`/catalogue/item/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
                       >
                         Click here
                       </MuiLink>

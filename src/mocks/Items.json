@@ -1,0 +1,6457 @@
+[
+  {
+    "id": "KvT2Ox7n",
+    "catalogue_item_id": "1",
+    "system_id": null,
+    "purchase_order_number": "6JYHEjwN",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-04-04T23:00:00.000Z",
+    "asset_number": "LyH8yp1FHf",
+    "serial_number": "5YUQDDjKpz2z",
+    "delivered_date": "2023-03-17T00:00:00.000Z",
+    "notes": "6Y5XTJfBrNNx8oltI9HE",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 0,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "G463gOIA",
+    "catalogue_item_id": "1",
+    "system_id": "656ef565ed0773f82e44bc6d",
+    "purchase_order_number": "tIWiCOow",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-05-18T23:00:00.000Z",
+    "asset_number": "03MXnOfP5C",
+    "serial_number": "vYs9Vxx6yWbn",
+    "delivered_date": "2023-05-11T23:00:00.000Z",
+    "notes": "rRXBHQFbF3zts6XS279k",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 12,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 30,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "9yh39Mcg",
+    "catalogue_item_id": "1",
+    "system_id": null,
+    "purchase_order_number": "Qf65nCwO",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-07-18T23:00:00.000Z",
+    "asset_number": "dvI4GyEsFt",
+    "serial_number": "PcfCM1jp0SUV",
+    "delivered_date": "2023-06-16T23:00:00.000Z",
+    "notes": "9Jgm0xJKSkmYG5fOdw6k",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 12,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": null,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "wKsFzrSq",
+    "catalogue_item_id": "1",
+    "system_id": "656ef565ed0773f82e44bc6d",
+    "purchase_order_number": "hpGBgi0d",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-10-04T23:00:00.000Z",
+    "asset_number": "75YWiLwy54",
+    "serial_number": "Zf7P8Qu8TD8c",
+    "delivered_date": "2023-12-05T00:00:00.000Z",
+    "notes": "zolZDKKuvAoTFRUWeZNA",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 12,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 30,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "Kb2N1rjS",
+    "catalogue_item_id": "2",
+    "system_id": null,
+    "purchase_order_number": "4IDCAjlE",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-04-08T23:00:00.000Z",
+    "asset_number": "045BVMjNkV",
+    "serial_number": "EUDhuOGj1J2J",
+    "delivered_date": "2023-09-26T23:00:00.000Z",
+    "notes": "NhACTn8uL9XgJiHznswD",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 16,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 60,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Sony",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "c83eBHj6",
+    "catalogue_item_id": "2",
+    "system_id": null,
+    "purchase_order_number": "PePzI6m6",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-07-20T23:00:00.000Z",
+    "asset_number": "2878dadh74",
+    "serial_number": "pTsW7MM5nek5",
+    "delivered_date": "2023-02-17T00:00:00.000Z",
+    "notes": "10MmJLdgSGSKaQpbz4TZ",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 16,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 60,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Sony",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "AB4EW0jz",
+    "catalogue_item_id": "2",
+    "system_id": null,
+    "purchase_order_number": "ehTZ7RHZ",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-03-24T00:00:00.000Z",
+    "asset_number": "Mnfg5bvySA",
+    "serial_number": "uuInZCcJbBOJ",
+    "delivered_date": "2023-08-12T23:00:00.000Z",
+    "notes": "emGGfSii3gp2rRsmWomw",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 16,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 60,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Sony",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "joumhhcn",
+    "catalogue_item_id": "2",
+    "system_id": null,
+    "purchase_order_number": "EvkShcrp",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-08-05T23:00:00.000Z",
+    "asset_number": "v8aXoBxIDq",
+    "serial_number": "XFcaJJZUzBUD",
+    "delivered_date": "2023-01-01T00:00:00.000Z",
+    "notes": "k2ctVPtLuVoo3zc9OqFL",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 16,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 60,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Sony",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "A5Hcs053",
+    "catalogue_item_id": "3",
+    "system_id": null,
+    "purchase_order_number": "oezdEN4l",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-11-26T00:00:00.000Z",
+    "asset_number": "9xOLIfl27X",
+    "serial_number": "fBfU9b3ySyKc",
+    "delivered_date": "2023-10-08T23:00:00.000Z",
+    "notes": "5HET2kx8Q5LtJ0eGyHdU",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 20,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 120,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Canon",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "cuycaDQs",
+    "catalogue_item_id": "3",
+    "system_id": null,
+    "purchase_order_number": "SDnch6La",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-09-18T23:00:00.000Z",
+    "asset_number": "Ri9R3gfzbs",
+    "serial_number": "LxYMBk8Mtemi",
+    "delivered_date": "2023-05-26T23:00:00.000Z",
+    "notes": "ovANeVeiBr1uouSsEjmz",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 20,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 120,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Canon",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "gzRcYqS9",
+    "catalogue_item_id": "3",
+    "system_id": "65328f34a40ff5301575a4e7",
+    "purchase_order_number": "OydlSt4Q",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-04-26T23:00:00.000Z",
+    "asset_number": "8hDOiGiper",
+    "serial_number": "ptqLlWg9zOdS",
+    "delivered_date": "2023-04-22T23:00:00.000Z",
+    "notes": "59AoR9rHnRPvwP2zuv1D",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 20,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 120,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Canon",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "Y0M2nhmz",
+    "catalogue_item_id": "3",
+    "system_id": null,
+    "purchase_order_number": "J2g8HQaO",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-12-20T00:00:00.000Z",
+    "asset_number": "rSPQyUaSSO",
+    "serial_number": "6LXwzWIBJxcK",
+    "delivered_date": "2023-04-01T23:00:00.000Z",
+    "notes": "JoXWN9tt0v0qRtJtmOeo",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 20,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 120,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Canon",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "zazFzgxp",
+    "catalogue_item_id": "90",
+    "system_id": "65328f34a40ff5301575a4e4",
+    "purchase_order_number": "14TPHyDr",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-10-26T23:00:00.000Z",
+    "asset_number": "DuxdXfxKnV",
+    "serial_number": "YLCc1mu6zPj8",
+    "delivered_date": "2023-03-10T00:00:00.000Z",
+    "notes": "tNtA8pJ8sU25DJWYsUz8",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 24,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Nikon",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "qWQ1yfec",
+    "catalogue_item_id": "90",
+    "system_id": null,
+    "purchase_order_number": "IeirlIcY",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-07-09T23:00:00.000Z",
+    "asset_number": "v2X1u0Zjgo",
+    "serial_number": "WdCHWLvdep9x",
+    "delivered_date": "2023-04-12T23:00:00.000Z",
+    "notes": "otmHgRQXhqoXaw4nAXZu",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 24,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Nikon",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "lRvn1Jnr",
+    "catalogue_item_id": "90",
+    "system_id": null,
+    "purchase_order_number": "snPvoMmj",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-03-12T00:00:00.000Z",
+    "asset_number": "TxzQrqxU4A",
+    "serial_number": "3svhB7xk9a3c",
+    "delivered_date": "2023-05-12T23:00:00.000Z",
+    "notes": "59MxciONt7Hc34WQR1Ta",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 24,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Nikon",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "0lzaqZ0w",
+    "catalogue_item_id": "90",
+    "system_id": null,
+    "purchase_order_number": "bhakMvmA",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-03-22T00:00:00.000Z",
+    "asset_number": "t4CkRDfRQl",
+    "serial_number": "NCLKOkd4udoo",
+    "delivered_date": "2023-05-20T23:00:00.000Z",
+    "notes": "Ktds2xzuTAsYoLdrS97u",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 24,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Nikon",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "MwLd0sYm",
+    "catalogue_item_id": "24",
+    "system_id": null,
+    "purchase_order_number": "J3mJFiJO",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-01-15T00:00:00.000Z",
+    "asset_number": "j89RnRapt6",
+    "serial_number": "TNeyG4W81AbG",
+    "delivered_date": "2023-06-18T23:00:00.000Z",
+    "notes": "faziBmjPjnLgFjUNPXFr",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 28,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 120,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Panasonic",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "z6Qt5NU4",
+    "catalogue_item_id": "24",
+    "system_id": null,
+    "purchase_order_number": "QNQTjgJt",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-05-14T23:00:00.000Z",
+    "asset_number": "NcvOMJS43j",
+    "serial_number": "aYezner3PO3F",
+    "delivered_date": "2023-10-14T23:00:00.000Z",
+    "notes": "QHRbcqwFSTMxLDcgswP0",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 28,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 120,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Panasonic",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "tWNDKaHR",
+    "catalogue_item_id": "24",
+    "system_id": null,
+    "purchase_order_number": "trYSktMj",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-03-08T00:00:00.000Z",
+    "asset_number": "WXI35E23yp",
+    "serial_number": "nUUTg1Q1VKsK",
+    "delivered_date": "2023-11-22T00:00:00.000Z",
+    "notes": "NMEcu8HzEIP39KYA6hZa",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 28,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 120,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Panasonic",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "YLqMwM3N",
+    "catalogue_item_id": "24",
+    "system_id": null,
+    "purchase_order_number": "cMZk2TXN",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-12-03T00:00:00.000Z",
+    "asset_number": "aC8GPh3aOr",
+    "serial_number": "T4yvzoeKoccA",
+    "delivered_date": "2023-12-03T00:00:00.000Z",
+    "notes": "6OPtp2zQmTZ5IHeBROX6",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 28,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 120,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Panasonic",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "APh1Ndbc",
+    "catalogue_item_id": "25",
+    "system_id": "65328f34a40ff5301575a4e6",
+    "purchase_order_number": "YP9zFms6",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-11-01T00:00:00.000Z",
+    "asset_number": "GmI9IDFUyB",
+    "serial_number": "339wVcXK7sGd",
+    "delivered_date": "2023-09-12T23:00:00.000Z",
+    "notes": "EppDIk2LPq4BXqSwWwZ0",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 32,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Olympus",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "ckPjb8V6",
+    "catalogue_item_id": "25",
+    "system_id": null,
+    "purchase_order_number": "sAV90AQO",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-06-12T23:00:00.000Z",
+    "asset_number": "FQRG6LEqIa",
+    "serial_number": "85cEMnVuohX9",
+    "delivered_date": "2023-01-21T00:00:00.000Z",
+    "notes": "1JyZN6clKt39NwbSJ13d",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 32,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Olympus",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "7Lrj9KVu",
+    "catalogue_item_id": "25",
+    "system_id": "65328f34a40ff5301575a4e4",
+    "purchase_order_number": "H8ySAmJ7",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-12-03T00:00:00.000Z",
+    "asset_number": "K9pDUxRicH",
+    "serial_number": "Gws8RHwYVLCQ",
+    "delivered_date": "2023-12-17T00:00:00.000Z",
+    "notes": "lIrWEywzMyGWxeDIEBIC",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 32,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Olympus",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "QQen23yW",
+    "catalogue_item_id": "25",
+    "system_id": null,
+    "purchase_order_number": "nZq3wlmN",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-05-24T23:00:00.000Z",
+    "asset_number": "39WNByny3H",
+    "serial_number": "uMMiTk14HzbX",
+    "delivered_date": "2023-06-07T23:00:00.000Z",
+    "notes": "FSnzaHN1CJXEArTES0qM",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 32,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Olympus",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "4SjSVQmP",
+    "catalogue_item_id": "26",
+    "system_id": null,
+    "purchase_order_number": "ap3y2ROb",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-03-09T00:00:00.000Z",
+    "asset_number": "HrdRfczPgP",
+    "serial_number": "mYASsvdQHX3I",
+    "delivered_date": "2023-05-20T23:00:00.000Z",
+    "notes": "l4RZnZG5Da4DmppHqtnB",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 36,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 360,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Fujifilm",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "35sMH894",
+    "catalogue_item_id": "26",
+    "system_id": null,
+    "purchase_order_number": "JAZMBKJA",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-09-19T23:00:00.000Z",
+    "asset_number": "UBxl9S7bkv",
+    "serial_number": "g8VFc2ueZ4UB",
+    "delivered_date": "2023-12-06T00:00:00.000Z",
+    "notes": "SBpsVRQX1r6tzoFlduYD",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 36,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 360,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Fujifilm",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "slwY94tc",
+    "catalogue_item_id": "26",
+    "system_id": null,
+    "purchase_order_number": "N0HoVrro",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-11-24T00:00:00.000Z",
+    "asset_number": "zYM32EelLw",
+    "serial_number": "W4cQL3af44p4",
+    "delivered_date": "2023-07-12T23:00:00.000Z",
+    "notes": "J8DDLjTdjFATRIJK4Wua",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 36,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 360,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Fujifilm",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "nylsu6gZ",
+    "catalogue_item_id": "26",
+    "system_id": null,
+    "purchase_order_number": "0G6nsrt3",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-01-13T00:00:00.000Z",
+    "asset_number": "OPi9uc8ZPA",
+    "serial_number": "m9SEm9j32WFv",
+    "delivered_date": "2023-02-28T00:00:00.000Z",
+    "notes": "H7UkdViPt1Hv4iWGNf22",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 36,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 360,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Fujifilm",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "a7aqmF5r",
+    "catalogue_item_id": "27",
+    "system_id": "65328f34a40ff5301575a4e6",
+    "purchase_order_number": "nC6L8gCv",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-01-17T00:00:00.000Z",
+    "asset_number": "SEMoP9HTdc",
+    "serial_number": "ZavEEOlGRi6w",
+    "delivered_date": "2023-08-08T23:00:00.000Z",
+    "notes": "SrkFRGCf7kE1rzevglLk",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 40,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 480,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "9Z7hdTSu",
+    "catalogue_item_id": "27",
+    "system_id": null,
+    "purchase_order_number": "8B9RssTv",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-01-09T00:00:00.000Z",
+    "asset_number": "dzBCVlaB5D",
+    "serial_number": "tj67Q5XjT4fG",
+    "delivered_date": "2023-09-18T23:00:00.000Z",
+    "notes": "Wb6brgHLdoGLHgS5gj02",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 40,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 480,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "AS9r1EQq",
+    "catalogue_item_id": "27",
+    "system_id": null,
+    "purchase_order_number": "K9Cf7Zoy",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-10-25T23:00:00.000Z",
+    "asset_number": "dZdmLQpl4K",
+    "serial_number": "SgEnbfb2W1yC",
+    "delivered_date": "2023-04-24T23:00:00.000Z",
+    "notes": "b54FfMW2M7A621XjyoVT",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 40,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 480,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "hoicQciP",
+    "catalogue_item_id": "27",
+    "system_id": null,
+    "purchase_order_number": "GXbPmx9G",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-11-23T00:00:00.000Z",
+    "asset_number": "YCQtUyUiBd",
+    "serial_number": "iL99Tit8XOAk",
+    "delivered_date": "2023-10-22T23:00:00.000Z",
+    "notes": "eB0HQjbPaRpRbg9uCrCn",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 40,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 480,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "loiykp5U",
+    "catalogue_item_id": "28",
+    "system_id": null,
+    "purchase_order_number": "aqSFbjVN",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-08-08T23:00:00.000Z",
+    "asset_number": "RdUjFYsWXY",
+    "serial_number": "D9LEiOzsEKrG",
+    "delivered_date": "2023-06-02T23:00:00.000Z",
+    "notes": "TOlaWXKwh2mappCGTvbo",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 48,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 600,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Pentax",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "9MeUulz3",
+    "catalogue_item_id": "28",
+    "system_id": "656ef565ed0773f82e44bc6d",
+    "purchase_order_number": "c4EUPYms",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-09-13T23:00:00.000Z",
+    "asset_number": "Gpy8qkLGGo",
+    "serial_number": "OE9gyMQTLMK5",
+    "delivered_date": "2023-08-31T23:00:00.000Z",
+    "notes": "0g2HeXdAu6sQgAThUpOk",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 48,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 600,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Pentax",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "z1hJvV8Z",
+    "catalogue_item_id": "28",
+    "system_id": null,
+    "purchase_order_number": "ah1FPEhq",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-08-03T23:00:00.000Z",
+    "asset_number": "xuNsb8qsAr",
+    "serial_number": "QnfSKahnQuze",
+    "delivered_date": "2023-08-10T23:00:00.000Z",
+    "notes": "mqfHIbzHVIgut8iWcKEE",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 48,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 600,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Pentax",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "4mYoI7pr",
+    "catalogue_item_id": "28",
+    "system_id": null,
+    "purchase_order_number": "SZv0K8eJ",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-11-27T00:00:00.000Z",
+    "asset_number": "g1fVgqkI6n",
+    "serial_number": "vDlT86oLEatk",
+    "delivered_date": "2023-03-17T00:00:00.000Z",
+    "notes": "6rb6SbFbPa4g2k14uwly",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 48,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 600,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Pentax",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "1udp6lRk",
+    "catalogue_item_id": "29",
+    "system_id": null,
+    "purchase_order_number": "FrSQbn1H",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-07-09T23:00:00.000Z",
+    "asset_number": "t8f8FVgO3q",
+    "serial_number": "qk14UTxpHArR",
+    "delivered_date": "2023-10-23T23:00:00.000Z",
+    "notes": "lo41WwSqJChzvp0W4ozn",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 52,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 720,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Sigma",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "NbL5aSAz",
+    "catalogue_item_id": "29",
+    "system_id": null,
+    "purchase_order_number": "4SAFrSAJ",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-12-25T00:00:00.000Z",
+    "asset_number": "gEeZQirWXW",
+    "serial_number": "A8piSndIIgqe",
+    "delivered_date": "2023-09-19T23:00:00.000Z",
+    "notes": "pbvZMcIMMkn4NZUHV1bP",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 52,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 720,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Sigma",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "OJWfE0Mp",
+    "catalogue_item_id": "29",
+    "system_id": null,
+    "purchase_order_number": "7AVIM9AY",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-02-04T00:00:00.000Z",
+    "asset_number": "jbT0fUj6jy",
+    "serial_number": "wFVfKWnafXPO",
+    "delivered_date": "2023-03-31T23:00:00.000Z",
+    "notes": "7zsvcjOZItM2om4IttzI",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 52,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 720,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Sigma",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "73FINwy7",
+    "catalogue_item_id": "29",
+    "system_id": null,
+    "purchase_order_number": "ZlWE25xT",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-08-15T23:00:00.000Z",
+    "asset_number": "Mhg4PNjLaC",
+    "serial_number": "Vuisgn2orN3y",
+    "delivered_date": "2023-03-20T00:00:00.000Z",
+    "notes": "19SOsha06iilt09uOmI3",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 52,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 720,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Sigma",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "hrUWznLY",
+    "catalogue_item_id": "30",
+    "system_id": "65328f34a40ff5301575a4e4",
+    "purchase_order_number": "wtlNZMyC",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-03-14T00:00:00.000Z",
+    "asset_number": "pqiH6KrPtV",
+    "serial_number": "A29moUCuvUyg",
+    "delivered_date": "2023-04-30T23:00:00.000Z",
+    "notes": "OgTpFwkby1xtrBeN3KkF",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 56,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 840,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "OjnE5C1W",
+    "catalogue_item_id": "30",
+    "system_id": "65328f34a40ff5301575a4e6",
+    "purchase_order_number": "gOU4C1EN",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-07-24T23:00:00.000Z",
+    "asset_number": "v4aOQlVsFL",
+    "serial_number": "NyDRnzDtOGKv",
+    "delivered_date": "2023-06-15T23:00:00.000Z",
+    "notes": "70XSDEmGWvrqeJspfwdq",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 56,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 840,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "z16LCpoR",
+    "catalogue_item_id": "30",
+    "system_id": "656ef565ed0773f82e44bc6d",
+    "purchase_order_number": "PSI1VcYn",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-12-02T00:00:00.000Z",
+    "asset_number": "K5BVFot8Oc",
+    "serial_number": "iG8Od1ZJwagi",
+    "delivered_date": "2023-03-08T00:00:00.000Z",
+    "notes": "TZU8dsiphO29cjjXJnj0",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 56,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 840,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "swUvB9bq",
+    "catalogue_item_id": "30",
+    "system_id": null,
+    "purchase_order_number": "46yHg8NI",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-06-08T23:00:00.000Z",
+    "asset_number": "k7pisKT3oK",
+    "serial_number": "MBpSxvq7NR6d",
+    "delivered_date": "2023-06-22T23:00:00.000Z",
+    "notes": "5Hxlc8wubaaCMJKyW2pe",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 56,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 840,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "rEff1Cl7",
+    "catalogue_item_id": "31",
+    "system_id": null,
+    "purchase_order_number": "efEem3FQ",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-09-24T23:00:00.000Z",
+    "asset_number": "76CU46exWG",
+    "serial_number": "gm49DraDkAgp",
+    "delivered_date": "2023-08-20T23:00:00.000Z",
+    "notes": "QlOySGHcMoCm0aIvx0dL",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 60,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 960,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Red",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "3UPBT0kW",
+    "catalogue_item_id": "31",
+    "system_id": "65328f34a40ff5301575a4e4",
+    "purchase_order_number": "GLmDSIak",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-11-05T00:00:00.000Z",
+    "asset_number": "sMhldy95TL",
+    "serial_number": "Ts65G0V2V8fz",
+    "delivered_date": "2023-10-03T23:00:00.000Z",
+    "notes": "m0eUVVC4pzO1BVca5bmE",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 60,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 960,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Red",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "TGdlRPP4",
+    "catalogue_item_id": "31",
+    "system_id": "65328f34a40ff5301575a4e4",
+    "purchase_order_number": "dP4XwASc",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-12-14T00:00:00.000Z",
+    "asset_number": "BiJ5SjV6Ik",
+    "serial_number": "4OoFLykH5hQ5",
+    "delivered_date": "2023-08-18T23:00:00.000Z",
+    "notes": "bN0cEZy2sGJigVU9EThg",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 60,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 960,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Red",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "F4dqMusW",
+    "catalogue_item_id": "31",
+    "system_id": null,
+    "purchase_order_number": "oz0MtvLC",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-05-26T23:00:00.000Z",
+    "asset_number": "F35bSEHEqa",
+    "serial_number": "7ClA2rtITNxZ",
+    "delivered_date": "2023-05-09T23:00:00.000Z",
+    "notes": "I6chLssP7qfvy0zi7ZqI",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 60,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 960,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Red",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": true,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": false,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "3lmRHP8q",
+    "catalogue_item_id": "32",
+    "system_id": null,
+    "purchase_order_number": "AjW0iYHn",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-03-06T00:00:00.000Z",
+    "asset_number": "0etHDZ3ehA",
+    "serial_number": "RncNJlDk1pXC",
+    "delivered_date": "2023-07-31T23:00:00.000Z",
+    "notes": "9xYJK0dCQBErydpCuTWn",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 64,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1080,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "ZQeuMbUX",
+    "catalogue_item_id": "32",
+    "system_id": null,
+    "purchase_order_number": "0zRyy0Hy",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-08-21T23:00:00.000Z",
+    "asset_number": "XasGoaPGES",
+    "serial_number": "XIFbuOf7x2JI",
+    "delivered_date": "2023-07-04T23:00:00.000Z",
+    "notes": "HO5uwc0jWJBLBpQzanYe",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 64,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1080,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "7BWe5x50",
+    "catalogue_item_id": "32",
+    "system_id": null,
+    "purchase_order_number": "yt1hTYxK",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-01-14T00:00:00.000Z",
+    "asset_number": "ppZwMpjLbZ",
+    "serial_number": "hLX8zMTw40cN",
+    "delivered_date": "2023-04-13T23:00:00.000Z",
+    "notes": "TiYK2dbSza2dhdimSogM",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 64,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1080,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "pxfWrsgQ",
+    "catalogue_item_id": "32",
+    "system_id": null,
+    "purchase_order_number": "yiihIvQa",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-04-17T23:00:00.000Z",
+    "asset_number": "esSaESREVM",
+    "serial_number": "ve5fG4wV2AXm",
+    "delivered_date": "2023-11-06T00:00:00.000Z",
+    "notes": "MJuSPgXEiXmBbf1Vlq4B",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 64,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1080,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "I26EJNJ0",
+    "catalogue_item_id": "33",
+    "system_id": "656da8ef9cba7a76c6f81a5d",
+    "purchase_order_number": "NL87uLiK",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-03-05T00:00:00.000Z",
+    "asset_number": "HCPbzzzanH",
+    "serial_number": "tWdvjircsEhc",
+    "delivered_date": "2023-01-14T00:00:00.000Z",
+    "notes": "TnB0SBoekEtWRijmClwV",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 68,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1440,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "HRgUTr7b",
+    "catalogue_item_id": "33",
+    "system_id": "65328f34a40ff5301575a4e6",
+    "purchase_order_number": "7EkVVNxQ",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-02-05T00:00:00.000Z",
+    "asset_number": "f1YUdE0xHZ",
+    "serial_number": "t8b8ayBNKPj2",
+    "delivered_date": "2023-01-25T00:00:00.000Z",
+    "notes": "3lgyY5z44oUOiG0gcKmW",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 68,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1440,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "7VTiQ1rN",
+    "catalogue_item_id": "33",
+    "system_id": null,
+    "purchase_order_number": "OsjVAyUs",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-09-14T23:00:00.000Z",
+    "asset_number": "iNbAd08N1f",
+    "serial_number": "WjCDOrcWjKSL",
+    "delivered_date": "2023-06-01T23:00:00.000Z",
+    "notes": "kOXtpKKRIpSAcGVTVCE7",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 68,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1440,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "I6oxdiEd",
+    "catalogue_item_id": "33",
+    "system_id": null,
+    "purchase_order_number": "WWV36Riv",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-01-03T00:00:00.000Z",
+    "asset_number": "1Z329kWMfP",
+    "serial_number": "KE9pTfWhDdI0",
+    "delivered_date": "2023-12-21T00:00:00.000Z",
+    "notes": "DsWPDuHRWxg6CmVAf9GR",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 68,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1440,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "zPfNASql",
+    "catalogue_item_id": "34",
+    "system_id": "65328f34a40ff5301575a4e6",
+    "purchase_order_number": "V9h2KWZ8",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-07-12T23:00:00.000Z",
+    "asset_number": "fA52G4qZbT",
+    "serial_number": "RBHV0wW4bp9o",
+    "delivered_date": "2023-02-16T00:00:00.000Z",
+    "notes": "oa4cODzQ2Tqy64F6ftzb",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 72,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1800,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "vTDcFzrG",
+    "catalogue_item_id": "34",
+    "system_id": null,
+    "purchase_order_number": "j69NFdmQ",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-06-01T23:00:00.000Z",
+    "asset_number": "sDMu5XJQAs",
+    "serial_number": "jnHUupj5uwqG",
+    "delivered_date": "2023-12-04T00:00:00.000Z",
+    "notes": "aaIyQyHJQZiOpfkeldM3",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 72,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1800,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "UPYt9ypT",
+    "catalogue_item_id": "34",
+    "system_id": "65328f34a40ff5301575a4e7",
+    "purchase_order_number": "tBxnvcVD",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-01-08T00:00:00.000Z",
+    "asset_number": "d9Gl4GJkM3",
+    "serial_number": "yVNyQ6iP56Pb",
+    "delivered_date": "2023-05-07T23:00:00.000Z",
+    "notes": "fcFJlCw60OHBnpppVuuy",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 72,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1800,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "OU1k4iY3",
+    "catalogue_item_id": "34",
+    "system_id": null,
+    "purchase_order_number": "E781OPmB",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-01-12T00:00:00.000Z",
+    "asset_number": "UX5EYGkY0r",
+    "serial_number": "1Ibr13NzphA2",
+    "delivered_date": "2023-09-12T23:00:00.000Z",
+    "notes": "cP3UeAmUXkLeraszAU2P",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 72,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 1800,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "xjEbEZOE",
+    "catalogue_item_id": "35",
+    "system_id": null,
+    "purchase_order_number": "W1FsE2Ir",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-12-14T00:00:00.000Z",
+    "asset_number": "RKUrdKtxXg",
+    "serial_number": "QrDADWQ0f9iB",
+    "delivered_date": "2023-10-12T23:00:00.000Z",
+    "notes": "FczfYKxdgJ1qjF3Pv37O",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 76,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2160,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "IJOYQrhH",
+    "catalogue_item_id": "35",
+    "system_id": null,
+    "purchase_order_number": "vRn3mMiT",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-06-14T23:00:00.000Z",
+    "asset_number": "RaAghChWnA",
+    "serial_number": "SBNwIdVkOgMf",
+    "delivered_date": "2023-11-30T00:00:00.000Z",
+    "notes": "Zdu7DBsagcmkNk6TBXNq",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 76,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2160,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "4aw4EUKQ",
+    "catalogue_item_id": "35",
+    "system_id": "656da8ef9cba7a76c6f81a5d",
+    "purchase_order_number": "psRhmXny",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-04-19T23:00:00.000Z",
+    "asset_number": "fzXT3sY5MO",
+    "serial_number": "qBg8g7vS0unH",
+    "delivered_date": "2023-08-31T23:00:00.000Z",
+    "notes": "MasqBVp9cqsVg6xxCGUN",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 76,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2160,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "gnA5hLb1",
+    "catalogue_item_id": "35",
+    "system_id": null,
+    "purchase_order_number": "b529kErE",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-09-24T23:00:00.000Z",
+    "asset_number": "V2sT9Kr4kS",
+    "serial_number": "7aMMWUo0x3sD",
+    "delivered_date": "2023-01-31T00:00:00.000Z",
+    "notes": "CysscJiHpAoMZcnxuxA5",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 76,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2160,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "ALHQQRJv",
+    "catalogue_item_id": "36",
+    "system_id": "65328f34a40ff5301575a4e7",
+    "purchase_order_number": "VuUvViC4",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-02-26T00:00:00.000Z",
+    "asset_number": "704zw8Zkz3",
+    "serial_number": "oaQ5DaWUAwvA",
+    "delivered_date": "2023-09-06T23:00:00.000Z",
+    "notes": "Jb7GI7gOgMuXtMQNRKrc",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 80,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2520,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "R3bEqVqM",
+    "catalogue_item_id": "36",
+    "system_id": null,
+    "purchase_order_number": "woBktCdl",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-08-22T23:00:00.000Z",
+    "asset_number": "EAEMp8MySD",
+    "serial_number": "rUtBAySjoXOl",
+    "delivered_date": "2023-11-08T00:00:00.000Z",
+    "notes": "dNN8rB1VGNPqamhN0lJF",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 80,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2520,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "bhTh5Ywf",
+    "catalogue_item_id": "36",
+    "system_id": "65328f34a40ff5301575a4e4",
+    "purchase_order_number": "kkccgV2S",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-06-02T23:00:00.000Z",
+    "asset_number": "PMcGeuQ7dU",
+    "serial_number": "6O5EHoFYA1ac",
+    "delivered_date": "2022-12-31T00:00:00.000Z",
+    "notes": "qeXF7Zz0hNG5VFL0G69w",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 80,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2520,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "zegJZcW2",
+    "catalogue_item_id": "36",
+    "system_id": null,
+    "purchase_order_number": "uzTjLzI8",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-08-17T23:00:00.000Z",
+    "asset_number": "pz437DyFAD",
+    "serial_number": "p327Mgp63eCc",
+    "delivered_date": "2023-11-14T00:00:00.000Z",
+    "notes": "P0KzleB9GtfPseJQh6wb",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 80,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2520,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "kCyH1V1J",
+    "catalogue_item_id": "37",
+    "system_id": null,
+    "purchase_order_number": "R1nIHp87",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-09-09T23:00:00.000Z",
+    "asset_number": "0wcG7meqmi",
+    "serial_number": "hvn1DWBvxlV9",
+    "delivered_date": "2023-02-21T00:00:00.000Z",
+    "notes": "tn0lbLTQvKSrEsidgjoF",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 84,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2880,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "DchobEDu",
+    "catalogue_item_id": "37",
+    "system_id": null,
+    "purchase_order_number": "j2o907u7",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-08-01T23:00:00.000Z",
+    "asset_number": "OXR7kCR7Rk",
+    "serial_number": "7lv3EYQEoN9Q",
+    "delivered_date": "2023-10-11T23:00:00.000Z",
+    "notes": "W8esG8PuOqb6uxzld57E",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 84,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2880,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "x2pHalX4",
+    "catalogue_item_id": "37",
+    "system_id": "65328f34a40ff5301575a4e4",
+    "purchase_order_number": "ezZWcSHY",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-08-16T23:00:00.000Z",
+    "asset_number": "FBr0hfc9rm",
+    "serial_number": "GgmfKFuaQ8fG",
+    "delivered_date": "2023-03-17T00:00:00.000Z",
+    "notes": "XQXwzMakopdmlfY7uxGU",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 84,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2880,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "fPBwKiMm",
+    "catalogue_item_id": "37",
+    "system_id": null,
+    "purchase_order_number": "QvV0hncu",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-09-15T23:00:00.000Z",
+    "asset_number": "9yXM4s2iWF",
+    "serial_number": "CvdqMwW4JgSG",
+    "delivered_date": "2023-07-26T23:00:00.000Z",
+    "notes": "zqtIgH3mpkgZShJFMYq4",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 84,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 2880,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "lLtHoej6",
+    "catalogue_item_id": "38",
+    "system_id": null,
+    "purchase_order_number": "lbDUnGoi",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-06-16T23:00:00.000Z",
+    "asset_number": "SrTFhdYgSv",
+    "serial_number": "jZF6EMG68teY",
+    "delivered_date": "2023-08-24T23:00:00.000Z",
+    "notes": "Dy4OXkjqN6PGE7w9Icpt",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 88,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "S7Aquw2x",
+    "catalogue_item_id": "38",
+    "system_id": null,
+    "purchase_order_number": "jJcVUTjo",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-11-11T00:00:00.000Z",
+    "asset_number": "C70UGm5jfM",
+    "serial_number": "55pemAkvPyol",
+    "delivered_date": "2023-07-23T23:00:00.000Z",
+    "notes": "UKEbzonQwCnD0F1iCXmr",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 88,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "jh58ibVS",
+    "catalogue_item_id": "38",
+    "system_id": null,
+    "purchase_order_number": "C9AogdlF",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-08-14T23:00:00.000Z",
+    "asset_number": "y8Qnfo1yfb",
+    "serial_number": "leIAOaq0jDmc",
+    "delivered_date": "2023-12-09T00:00:00.000Z",
+    "notes": "ePxKZbqyOYfdg2oUPZT2",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 88,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "4KmQ01dv",
+    "catalogue_item_id": "38",
+    "system_id": null,
+    "purchase_order_number": "NjXsWeIG",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-05-12T23:00:00.000Z",
+    "asset_number": "PsDMcKTLpv",
+    "serial_number": "ucHlT5szXSS8",
+    "delivered_date": "2023-11-06T00:00:00.000Z",
+    "notes": "7XP1xsEKkZeyx1bZ8QY2",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 88,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3240,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "QmLcA0kH",
+    "catalogue_item_id": "39",
+    "system_id": null,
+    "purchase_order_number": "kPlgsE1V",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-02-28T00:00:00.000Z",
+    "asset_number": "uIoPWYm7JJ",
+    "serial_number": "t637sUpzfeAR",
+    "delivered_date": "2023-02-14T00:00:00.000Z",
+    "notes": "np5yb0TW3Xc92NEp42UG",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 92,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3600,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "NH9SdVzu",
+    "catalogue_item_id": "39",
+    "system_id": "656da8ef9cba7a76c6f81a5d",
+    "purchase_order_number": "C2QJkjQd",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-04-25T23:00:00.000Z",
+    "asset_number": "W9d9jfaQ5v",
+    "serial_number": "1TFZy89UhYqi",
+    "delivered_date": "2023-06-04T23:00:00.000Z",
+    "notes": "L7JEBJQ6ENBFVihedd37",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 92,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3600,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "EZv8Qol3",
+    "catalogue_item_id": "39",
+    "system_id": "656ef565ed0773f82e44bc6d",
+    "purchase_order_number": "iKBfHkxE",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-03-10T00:00:00.000Z",
+    "asset_number": "wAyYKizgM0",
+    "serial_number": "K13kblTOlu1r",
+    "delivered_date": "2023-08-04T23:00:00.000Z",
+    "notes": "iRLEFGlpFqKBbgwQtbhz",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 92,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3600,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "wkYrA6wL",
+    "catalogue_item_id": "39",
+    "system_id": null,
+    "purchase_order_number": "ndeDm9s4",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-01-20T00:00:00.000Z",
+    "asset_number": "YTj79hjP32",
+    "serial_number": "vUOJuAIiLcb8",
+    "delivered_date": "2023-07-21T23:00:00.000Z",
+    "notes": "oaHsbxiD2w3w1owlDtrc",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 92,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3600,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "npBPwFLr",
+    "catalogue_item_id": "40",
+    "system_id": null,
+    "purchase_order_number": "etf44iEB",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-02-05T00:00:00.000Z",
+    "asset_number": "JmIS31Bj1D",
+    "serial_number": "l9cjmXh72muk",
+    "delivered_date": "2023-02-14T00:00:00.000Z",
+    "notes": "oAxASPzyj6o9qOoA1m26",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 96,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3960,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "RphQ48eV",
+    "catalogue_item_id": "40",
+    "system_id": null,
+    "purchase_order_number": "Xiny7qQM",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-06-19T23:00:00.000Z",
+    "asset_number": "qJ9XZS38hu",
+    "serial_number": "0Zlb9C5GU9uY",
+    "delivered_date": "2023-09-18T23:00:00.000Z",
+    "notes": "19MwwDn67hCxkKEulAiY",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 96,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3960,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "mtv5VOKi",
+    "catalogue_item_id": "40",
+    "system_id": null,
+    "purchase_order_number": "6Ysq59hT",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-07-17T23:00:00.000Z",
+    "asset_number": "aWzXoidRKd",
+    "serial_number": "bJMbHZ0Wmzvc",
+    "delivered_date": "2023-06-19T23:00:00.000Z",
+    "notes": "N8b9qSbVQOEKbhhKaoss",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 96,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3960,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "aeDDP3F9",
+    "catalogue_item_id": "40",
+    "system_id": null,
+    "purchase_order_number": "kNHVIeIJ",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-05-12T23:00:00.000Z",
+    "asset_number": "t8enN6SqOo",
+    "serial_number": "H4sJT1kh7587",
+    "delivered_date": "2023-10-25T23:00:00.000Z",
+    "notes": "M25QDk8ps1gpWaa7P0Zx",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 96,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 3960,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "j6dRBqob",
+    "catalogue_item_id": "41",
+    "system_id": null,
+    "purchase_order_number": "Uu9wGKNV",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-03-10T00:00:00.000Z",
+    "asset_number": "oZMmaiiJ7n",
+    "serial_number": "oLqfPXfXGOYP",
+    "delivered_date": "2023-06-14T23:00:00.000Z",
+    "notes": "fwGzmvs2XDBD3l25FuSF",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 100,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 4320,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "hRR4QLw0",
+    "catalogue_item_id": "41",
+    "system_id": "65328f34a40ff5301575a4e8",
+    "purchase_order_number": "4LYY9cC2",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-09-13T23:00:00.000Z",
+    "asset_number": "H6Pba9ueSv",
+    "serial_number": "tU96Bdx432FW",
+    "delivered_date": "2023-11-15T00:00:00.000Z",
+    "notes": "rbaSKsMVUq3MiwnjLVww",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 100,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 4320,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "R4TbmBiK",
+    "catalogue_item_id": "41",
+    "system_id": "65328f34a40ff5301575a4e6",
+    "purchase_order_number": "P2N14WJ3",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-06-21T23:00:00.000Z",
+    "asset_number": "H2Mm5EkOkl",
+    "serial_number": "kn3rfkSsqR38",
+    "delivered_date": "2023-12-04T00:00:00.000Z",
+    "notes": "paPSDnitwYuvVtxL5sQC",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 100,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 4320,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "x2YWmLk8",
+    "catalogue_item_id": "41",
+    "system_id": null,
+    "purchase_order_number": "JpgiNtU7",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-06-25T23:00:00.000Z",
+    "asset_number": "WffviNBr87",
+    "serial_number": "p7D7Yz9kk0WK",
+    "delivered_date": "2023-07-09T23:00:00.000Z",
+    "notes": "kmpVdVNR4JzGioRKLQxl",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 100,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 4320,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Hasselblad",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "U52r9dmR",
+    "catalogue_item_id": "42",
+    "system_id": "656da8ef9cba7a76c6f81a5d",
+    "purchase_order_number": "yMdZGbvZ",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-05-16T23:00:00.000Z",
+    "asset_number": "HTGstO62bW",
+    "serial_number": "Ze1gGXYcttas",
+    "delivered_date": "2023-03-26T00:00:00.000Z",
+    "notes": "r9D8b8fBQFRAW87GR121",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 104,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 4680,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "Ks6zj5Du",
+    "catalogue_item_id": "42",
+    "system_id": null,
+    "purchase_order_number": "w5KlKuV4",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-01-04T00:00:00.000Z",
+    "asset_number": "i9VmmBPt9y",
+    "serial_number": "Paq4h96AFKpc",
+    "delivered_date": "2023-12-10T00:00:00.000Z",
+    "notes": "HnmjJTblif32RvKTDk0Q",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 104,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 4680,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "gY2PnEvQ",
+    "catalogue_item_id": "42",
+    "system_id": null,
+    "purchase_order_number": "7PpjjWCK",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-03-16T00:00:00.000Z",
+    "asset_number": "OfNefMBIkG",
+    "serial_number": "R3QmpkSMiP9d",
+    "delivered_date": "2023-09-19T23:00:00.000Z",
+    "notes": "PZv76qeNiogTQigT4z6Q",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 104,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 4680,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "bJQkEJo1",
+    "catalogue_item_id": "42",
+    "system_id": "65328f34a40ff5301575a4e4",
+    "purchase_order_number": "Necswiol",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-08-16T23:00:00.000Z",
+    "asset_number": "3tqFQ4johk",
+    "serial_number": "PA03nyfbT1LQ",
+    "delivered_date": "2023-03-08T00:00:00.000Z",
+    "notes": "69AqXbZsEKsWDiBfiJCC",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 104,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 4680,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Mamiya",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "vInjjLmV",
+    "catalogue_item_id": "43",
+    "system_id": "65328f34a40ff5301575a4e7",
+    "purchase_order_number": "gGiTMY8c",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-12-02T00:00:00.000Z",
+    "asset_number": "NZCKQc7DqH",
+    "serial_number": "jIbE9HHkvPrT",
+    "delivered_date": "2023-04-16T23:00:00.000Z",
+    "notes": "VmRODDcssMkCvergWZfX",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 108,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 5040,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "pZo2U0zc",
+    "catalogue_item_id": "43",
+    "system_id": null,
+    "purchase_order_number": "nt4zWx0d",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-07-14T23:00:00.000Z",
+    "asset_number": "U7D4kZTjjY",
+    "serial_number": "ju3oKqeE7NJj",
+    "delivered_date": "2023-09-19T23:00:00.000Z",
+    "notes": "GmAKeRYp6z5vhRr4nVl9",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 108,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 5040,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "z5C7uMCm",
+    "catalogue_item_id": "43",
+    "system_id": null,
+    "purchase_order_number": "XQFMmRx3",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-11-30T00:00:00.000Z",
+    "asset_number": "jjalu69Dyo",
+    "serial_number": "8BkDWOabmXu9",
+    "delivered_date": "2023-09-14T23:00:00.000Z",
+    "notes": "Zu7xmpN4OBrSTuj9cvjU",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 108,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 5040,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "35v1D39M",
+    "catalogue_item_id": "43",
+    "system_id": null,
+    "purchase_order_number": "qCIxAuf7",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-12-08T00:00:00.000Z",
+    "asset_number": "dL5vRh5NcA",
+    "serial_number": "uDDtFVuSfPjp",
+    "delivered_date": "2023-11-10T00:00:00.000Z",
+    "notes": "TMfF4IVxciK9veXOuLoJ",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 108,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 5040,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Phase One",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "o0Bgwvxp",
+    "catalogue_item_id": "44",
+    "system_id": null,
+    "purchase_order_number": "yBOMAJxL",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-09-01T23:00:00.000Z",
+    "asset_number": "IsPWbfyDqp",
+    "serial_number": "Ud1zdU0jRAX4",
+    "delivered_date": "2023-07-10T23:00:00.000Z",
+    "notes": "I9X92SWzvVpmd1N1VJY0",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 112,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 5400,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "cxRPZi4Q",
+    "catalogue_item_id": "44",
+    "system_id": null,
+    "purchase_order_number": "I7nvnwQ2",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-07-14T23:00:00.000Z",
+    "asset_number": "NCYJ6dRWLL",
+    "serial_number": "GYBR5Jf9z24M",
+    "delivered_date": "2023-02-03T00:00:00.000Z",
+    "notes": "wE4ynT4wxnVybP9m76so",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 112,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 5400,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "BQUIXhWT",
+    "catalogue_item_id": "44",
+    "system_id": null,
+    "purchase_order_number": "wZruWEru",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-03-09T00:00:00.000Z",
+    "asset_number": "M3Hn516fQk",
+    "serial_number": "srpHdX9qAXGG",
+    "delivered_date": "2023-12-09T00:00:00.000Z",
+    "notes": "SWWPeu9KsgC8xJ5Z3T2j",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 112,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 5400,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "bJgTNX8H",
+    "catalogue_item_id": "44",
+    "system_id": null,
+    "purchase_order_number": "K4yLLv8q",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-04-24T23:00:00.000Z",
+    "asset_number": "o9YJkR9Dfd",
+    "serial_number": "8nnlIEE06rry",
+    "delivered_date": "2023-07-25T23:00:00.000Z",
+    "notes": "hlm1TXSd14GvCEpXjpaS",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 112,
+        "unit": "megapixels"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 5400,
+        "unit": "fps"
+      },
+      {
+        "name": "Sensor Type",
+        "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": "Leica",
+        "unit": ""
+      },
+      {
+        "name": "Broken",
+        "value": false,
+        "unit": ""
+      },
+      {
+        "name": "Older than five years",
+        "value": true,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "PdI5ckm3",
+    "catalogue_item_id": "89",
+    "system_id": null,
+    "purchase_order_number": "ieunJwl3",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-12-27T00:00:00.000Z",
+    "asset_number": "l0hshTahMz",
+    "serial_number": "0QcKayBCxRm4",
+    "delivered_date": "2023-06-11T23:00:00.000Z",
+    "notes": "XE7X5RfIo74INbYlSYlX",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 1000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.5%",
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "aJNKWM8o",
+    "catalogue_item_id": "89",
+    "system_id": "65328f34a40ff5301575a4e4",
+    "purchase_order_number": "wgTIbOOF",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-10-23T23:00:00.000Z",
+    "asset_number": "WFsVqmP6v2",
+    "serial_number": "AkeNZy9eKNrd",
+    "delivered_date": "2023-09-11T23:00:00.000Z",
+    "notes": "A9BbgQVzJPpGIchpylgD",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 1000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.5%",
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "hXfNBb6c",
+    "catalogue_item_id": "89",
+    "system_id": null,
+    "purchase_order_number": "q3Ty3beI",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-02-21T00:00:00.000Z",
+    "asset_number": "7QfQgFLdGv",
+    "serial_number": "NRbLRxbQU4Da",
+    "delivered_date": "2023-03-18T00:00:00.000Z",
+    "notes": "7yWecXdROPlQBBO9Opr0",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 1000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.5%",
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "fpuAzOVk",
+    "catalogue_item_id": "89",
+    "system_id": "65328f34a40ff5301575a4e6",
+    "purchase_order_number": "hRCqozhZ",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-12-21T00:00:00.000Z",
+    "asset_number": "povXLfE0LC",
+    "serial_number": "qKcw2send4S8",
+    "delivered_date": "2023-12-12T00:00:00.000Z",
+    "notes": "fPFug3zQLTlI2SzSeYoH",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 1000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.5%",
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "80IuBMnl",
+    "catalogue_item_id": "6",
+    "system_id": "656ef565ed0773f82e44bc6d",
+    "purchase_order_number": "SFk6pDOw",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-09-20T23:00:00.000Z",
+    "asset_number": "t9eMaje1Kk",
+    "serial_number": "yrWdBzgem974",
+    "delivered_date": "2023-08-01T23:00:00.000Z",
+    "notes": "nMTHY5q321cc3HKN6YV8",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 2000,
+        "unit": "Joules"
+      }
+    ]
+  },
+  {
+    "id": "DeL8AAzt",
+    "catalogue_item_id": "6",
+    "system_id": "65328f34a40ff5301575a4e4",
+    "purchase_order_number": "s8bi7IWP",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-10-13T23:00:00.000Z",
+    "asset_number": "UCxtx20PV1",
+    "serial_number": "rmI7fyfJ71kR",
+    "delivered_date": "2023-05-21T23:00:00.000Z",
+    "notes": "jUBNzZz7NWo6HYSFU2NE",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 2000,
+        "unit": "Joules"
+      }
+    ]
+  },
+  {
+    "id": "b7HetQHr",
+    "catalogue_item_id": "6",
+    "system_id": "656ef565ed0773f82e44bc6d",
+    "purchase_order_number": "a1vth8h6",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-12-23T00:00:00.000Z",
+    "asset_number": "UdZhUouSQZ",
+    "serial_number": "i9Ui6Dtx2yhM",
+    "delivered_date": "2023-01-23T00:00:00.000Z",
+    "notes": "XLSZVe0BtZuNzrNk1Yqn",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 2000,
+        "unit": "Joules"
+      }
+    ]
+  },
+  {
+    "id": "acnfRHxk",
+    "catalogue_item_id": "6",
+    "system_id": "65328f34a40ff5301575a4e4",
+    "purchase_order_number": "98ESabBI",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-09-30T23:00:00.000Z",
+    "asset_number": "FnGqKraQjR",
+    "serial_number": "xqQdiS6Eack5",
+    "delivered_date": "2023-04-02T23:00:00.000Z",
+    "notes": "aZQ98smccMGxE0UQnjgJ",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 2000,
+        "unit": "Joules"
+      }
+    ]
+  },
+  {
+    "id": "Di8XDNNT",
+    "catalogue_item_id": "7",
+    "system_id": null,
+    "purchase_order_number": "0LULNyj4",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-05-30T23:00:00.000Z",
+    "asset_number": "35gYMrHOic",
+    "serial_number": "uRNEPRjrC3Pu",
+    "delivered_date": "2023-10-06T23:00:00.000Z",
+    "notes": "6WZTM8lKdcpw4UCZeCLW",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 5000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.1%",
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "nexErJ2V",
+    "catalogue_item_id": "7",
+    "system_id": null,
+    "purchase_order_number": "GyG49mDK",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-07-19T23:00:00.000Z",
+    "asset_number": "xvi6mVpZ4f",
+    "serial_number": "6tht50p1oIzo",
+    "delivered_date": "2023-01-13T00:00:00.000Z",
+    "notes": "cL6Q2NTE6GqE5Sp7ePtk",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 5000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.1%",
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "KbSX3BPD",
+    "catalogue_item_id": "7",
+    "system_id": null,
+    "purchase_order_number": "CuakQVRB",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-11-11T00:00:00.000Z",
+    "asset_number": "w53yViuvXC",
+    "serial_number": "m96paPN4YTMg",
+    "delivered_date": "2023-03-16T00:00:00.000Z",
+    "notes": "WbNStiAdEtOv3LPWAEUF",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 5000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.1%",
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "uZ3KdrPV",
+    "catalogue_item_id": "7",
+    "system_id": null,
+    "purchase_order_number": "e3uYujLX",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-10-06T23:00:00.000Z",
+    "asset_number": "OhMFFcRsrU",
+    "serial_number": "ipUax25efRtk",
+    "delivered_date": "2023-12-22T00:00:00.000Z",
+    "notes": "O4cUeqVkNa7eFXH7YpSq",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 5000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.1%",
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "CgpXgwld",
+    "catalogue_item_id": "8",
+    "system_id": null,
+    "purchase_order_number": "aLqZQVhk",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-10-12T23:00:00.000Z",
+    "asset_number": "prTExHgpPW",
+    "serial_number": "waVg3NP9745x",
+    "delivered_date": "2023-06-15T23:00:00.000Z",
+    "notes": "c3ZcQIwtfhS7JGYETSaj",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 10000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.05%",
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "MfUrsGUc",
+    "catalogue_item_id": "8",
+    "system_id": null,
+    "purchase_order_number": "HNUGqXbe",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-02-12T00:00:00.000Z",
+    "asset_number": "uLuMI0o2xu",
+    "serial_number": "RF4B8pyFq6fE",
+    "delivered_date": "2023-04-03T23:00:00.000Z",
+    "notes": "Q2SXr0B4ZzxYnqjPlZYG",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 10000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.05%",
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "kGw3CHKA",
+    "catalogue_item_id": "8",
+    "system_id": null,
+    "purchase_order_number": "IVLYQ7jr",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-06-11T23:00:00.000Z",
+    "asset_number": "a2daotAPxx",
+    "serial_number": "4bZgk2nHa0Np",
+    "delivered_date": "2023-06-29T23:00:00.000Z",
+    "notes": "FTK9dhzrtGqQjPMrxID9",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 10000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.05%",
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "znRqHCkp",
+    "catalogue_item_id": "8",
+    "system_id": null,
+    "purchase_order_number": "ySztlM5v",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-06-03T23:00:00.000Z",
+    "asset_number": "HrMMDpTomS",
+    "serial_number": "WbSNegUNzsNp",
+    "delivered_date": "2023-01-17T00:00:00.000Z",
+    "notes": "r267SmNjpa5EE7p24pfI",
+    "properties": [
+      {
+        "name": "Measurement Range",
+        "value": 10000,
+        "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": "±0.05%",
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "5ox74xy9",
+    "catalogue_item_id": "9",
+    "system_id": null,
+    "purchase_order_number": "wPjLIeqR",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-08-03T23:00:00.000Z",
+    "asset_number": "Aywk6uL8rF",
+    "serial_number": "0xRfeqS9wA8G",
+    "delivered_date": "2023-09-09T23:00:00.000Z",
+    "notes": "MkNfDx3h49wRquYCsZ1a",
+    "properties": [
+      {
+        "name": "Wavefront Measurement Range",
+        "value": "0-10 micrometers",
+        "unit": ""
+      },
+      {
+        "name": "Spatial Resolution",
+        "value": 5,
+        "unit": "micrometers"
+      }
+    ]
+  },
+  {
+    "id": "7NX2p3IB",
+    "catalogue_item_id": "9",
+    "system_id": null,
+    "purchase_order_number": "by2qwBM0",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-07-26T23:00:00.000Z",
+    "asset_number": "DHJIsl1PVf",
+    "serial_number": "7D6pgSkBJzWa",
+    "delivered_date": "2023-03-17T00:00:00.000Z",
+    "notes": "HuxxAdajO5nkuY6d7tal",
+    "properties": [
+      {
+        "name": "Wavefront Measurement Range",
+        "value": "0-10 micrometers",
+        "unit": ""
+      },
+      {
+        "name": "Spatial Resolution",
+        "value": 5,
+        "unit": "micrometers"
+      }
+    ]
+  },
+  {
+    "id": "Bpd4mkpx",
+    "catalogue_item_id": "9",
+    "system_id": null,
+    "purchase_order_number": "9gKjT4fR",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-03-03T00:00:00.000Z",
+    "asset_number": "e69Vt1PpzE",
+    "serial_number": "SOMWBgZWrpjM",
+    "delivered_date": "2023-06-09T23:00:00.000Z",
+    "notes": "7ax4Qzsby2zvrbfEpnzM",
+    "properties": [
+      {
+        "name": "Wavefront Measurement Range",
+        "value": "0-10 micrometers",
+        "unit": ""
+      },
+      {
+        "name": "Spatial Resolution",
+        "value": 5,
+        "unit": "micrometers"
+      }
+    ]
+  },
+  {
+    "id": "hovxfZSy",
+    "catalogue_item_id": "9",
+    "system_id": null,
+    "purchase_order_number": "TmT7QOUq",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-05-08T23:00:00.000Z",
+    "asset_number": "7mRngDtH6V",
+    "serial_number": "QJVElgsW16Z9",
+    "delivered_date": "2023-10-23T23:00:00.000Z",
+    "notes": "4GSxE58WgBmqUumlkiSn",
+    "properties": [
+      {
+        "name": "Wavefront Measurement Range",
+        "value": "0-10 micrometers",
+        "unit": ""
+      },
+      {
+        "name": "Spatial Resolution",
+        "value": 5,
+        "unit": "micrometers"
+      }
+    ]
+  },
+  {
+    "id": "pZT8K0aP",
+    "catalogue_item_id": "10",
+    "system_id": null,
+    "purchase_order_number": "LtjJpdAT",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-08-09T23:00:00.000Z",
+    "asset_number": "02g22MjY2i",
+    "serial_number": "jAphNpoQdfoW",
+    "delivered_date": "2023-05-23T23:00:00.000Z",
+    "notes": "mGnfL5356frGo54nMqZo",
+    "properties": [
+      {
+        "name": "Wavefront Measurement Range",
+        "value": "0-20 micrometers",
+        "unit": ""
+      },
+      {
+        "name": "Spatial Resolution",
+        "value": 10,
+        "unit": "micrometers"
+      }
+    ]
+  },
+  {
+    "id": "er7KjEZx",
+    "catalogue_item_id": "10",
+    "system_id": null,
+    "purchase_order_number": "e5LMbJGF",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-06-25T23:00:00.000Z",
+    "asset_number": "GJDMPonl8K",
+    "serial_number": "MAha1fWLcYC6",
+    "delivered_date": "2023-08-24T23:00:00.000Z",
+    "notes": "y7s8pFWj0SupMlmwI4sG",
+    "properties": [
+      {
+        "name": "Wavefront Measurement Range",
+        "value": "0-20 micrometers",
+        "unit": ""
+      },
+      {
+        "name": "Spatial Resolution",
+        "value": 10,
+        "unit": "micrometers"
+      }
+    ]
+  },
+  {
+    "id": "6klWy2HB",
+    "catalogue_item_id": "10",
+    "system_id": null,
+    "purchase_order_number": "Qxvw7Ivr",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-11-06T00:00:00.000Z",
+    "asset_number": "L3fGkOZeTh",
+    "serial_number": "ZUvfW7i0k2Jz",
+    "delivered_date": "2023-02-05T00:00:00.000Z",
+    "notes": "afivPs2rgMEAC1oVqVPw",
+    "properties": [
+      {
+        "name": "Wavefront Measurement Range",
+        "value": "0-20 micrometers",
+        "unit": ""
+      },
+      {
+        "name": "Spatial Resolution",
+        "value": 10,
+        "unit": "micrometers"
+      }
+    ]
+  },
+  {
+    "id": "5iPpKKGv",
+    "catalogue_item_id": "10",
+    "system_id": "65328f34a40ff5301575a4e7",
+    "purchase_order_number": "HHNDVkLJ",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-02-06T00:00:00.000Z",
+    "asset_number": "gPI9uoz3IZ",
+    "serial_number": "RbqvXYE5B0PV",
+    "delivered_date": "2023-08-20T23:00:00.000Z",
+    "notes": "ACabG7FjejN5xJ6CTE01",
+    "properties": [
+      {
+        "name": "Wavefront Measurement Range",
+        "value": "0-20 micrometers",
+        "unit": ""
+      },
+      {
+        "name": "Spatial Resolution",
+        "value": 10,
+        "unit": "micrometers"
+      }
+    ]
+  },
+  {
+    "id": "RuUxShkg",
+    "catalogue_item_id": "11",
+    "system_id": "65328f34a40ff5301575a4e6",
+    "purchase_order_number": "wteR6vsp",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-04-01T23:00:00.000Z",
+    "asset_number": "DEAbxBGr2M",
+    "serial_number": "dfzqkOJbqifO",
+    "delivered_date": "2023-06-15T23:00:00.000Z",
+    "notes": "uaw8BqYE3vMI5CmOJgFP",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 100,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 10,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "JzzSH7LB",
+    "catalogue_item_id": "11",
+    "system_id": null,
+    "purchase_order_number": "L02XnDy2",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-06-26T23:00:00.000Z",
+    "asset_number": "lZsBiRCUUs",
+    "serial_number": "tenrMn1KOmIg",
+    "delivered_date": "2023-06-06T23:00:00.000Z",
+    "notes": "esdlch8Z8do7eCzUBkMM",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 100,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 10,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "SSqpnjRe",
+    "catalogue_item_id": "11",
+    "system_id": null,
+    "purchase_order_number": "C9u5gaXH",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-12-22T00:00:00.000Z",
+    "asset_number": "YRUe8yPL0K",
+    "serial_number": "eUc80U7FqJum",
+    "delivered_date": "2023-07-04T23:00:00.000Z",
+    "notes": "pJFVQDGwb4BuBsMt5upM",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 100,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 10,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "qWAdynAI",
+    "catalogue_item_id": "11",
+    "system_id": null,
+    "purchase_order_number": "0VD0B4Ec",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-04-23T23:00:00.000Z",
+    "asset_number": "uHs45w4E3T",
+    "serial_number": "WrgqAVk3qUQK",
+    "delivered_date": "2023-10-10T23:00:00.000Z",
+    "notes": "N2mwM2j2UNv3ODTyJsp8",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 100,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 10,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "L8r4nbEW",
+    "catalogue_item_id": "12",
+    "system_id": "656ef565ed0773f82e44bc6d",
+    "purchase_order_number": "1bDVcF8j",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-12-10T00:00:00.000Z",
+    "asset_number": "xcgARVjROT",
+    "serial_number": "IiMvRfRwgbpp",
+    "delivered_date": "2023-02-25T00:00:00.000Z",
+    "notes": "ZWO0b2rsLQaKvlNdt33q",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 200,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 20,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "GkgYQzYe",
+    "catalogue_item_id": "12",
+    "system_id": null,
+    "purchase_order_number": "jZDSYGUp",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-02-10T00:00:00.000Z",
+    "asset_number": "QwsqPQq8GD",
+    "serial_number": "J17ILkc1IBDF",
+    "delivered_date": "2023-09-14T23:00:00.000Z",
+    "notes": "OKpsFysikeIw0nhIlowt",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 200,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 20,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "dkve1K34",
+    "catalogue_item_id": "12",
+    "system_id": null,
+    "purchase_order_number": "s0gbxEdd",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-10-07T23:00:00.000Z",
+    "asset_number": "tSU6CAzHmc",
+    "serial_number": "UxDBotf7cgsi",
+    "delivered_date": "2023-01-10T00:00:00.000Z",
+    "notes": "CSv9YXp4MejhaoTCna0N",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 200,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 20,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "Lm32xoew",
+    "catalogue_item_id": "12",
+    "system_id": null,
+    "purchase_order_number": "oLG7S4IK",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-01-25T00:00:00.000Z",
+    "asset_number": "ihonHCeQvs",
+    "serial_number": "NOEjCgiPperh",
+    "delivered_date": "2023-01-20T00:00:00.000Z",
+    "notes": "aRfNiI7QIRy5WjaB1uPP",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 200,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 20,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "HDJdMjf5",
+    "catalogue_item_id": "13",
+    "system_id": null,
+    "purchase_order_number": "eaZo3Y6X",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-07-20T23:00:00.000Z",
+    "asset_number": "0ORclNoF7a",
+    "serial_number": "5R491SmALagI",
+    "delivered_date": "2023-05-30T23:00:00.000Z",
+    "notes": "RFPZIGLZmBxTebM1VLJp",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 300,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 30,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "m2RuT9Um",
+    "catalogue_item_id": "13",
+    "system_id": null,
+    "purchase_order_number": "MeDX069r",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-02-20T00:00:00.000Z",
+    "asset_number": "UYYvHKIN8B",
+    "serial_number": "r0msqDvF28Fm",
+    "delivered_date": "2023-02-13T00:00:00.000Z",
+    "notes": "IBgaqfKL613mnxykkGMn",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 300,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 30,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "uudvIi3i",
+    "catalogue_item_id": "13",
+    "system_id": "656ef565ed0773f82e44bc6d",
+    "purchase_order_number": "0VLl8pd6",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-02-20T00:00:00.000Z",
+    "asset_number": "RPrzu6wUi6",
+    "serial_number": "gFBfnr8i22ov",
+    "delivered_date": "2023-03-16T00:00:00.000Z",
+    "notes": "NRRRwaUu4SejaENtu5ST",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 300,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 30,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "C1If27Rp",
+    "catalogue_item_id": "13",
+    "system_id": null,
+    "purchase_order_number": "yjnudYOb",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-05-19T23:00:00.000Z",
+    "asset_number": "u6BT8U0Dop",
+    "serial_number": "SqEBTUww4vQ5",
+    "delivered_date": "2023-03-13T00:00:00.000Z",
+    "notes": "klvpXG7MJeTv9FGCavfe",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 300,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 30,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "wBEf8sP9",
+    "catalogue_item_id": "14",
+    "system_id": null,
+    "purchase_order_number": "Ap3GLESz",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-01-10T00:00:00.000Z",
+    "asset_number": "ZNBnINiagU",
+    "serial_number": "wfodMFnbXRID",
+    "delivered_date": "2023-09-05T23:00:00.000Z",
+    "notes": "EwUxqrneXd3WTgii6y2K",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 400,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 40,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "TytwM71h",
+    "catalogue_item_id": "14",
+    "system_id": null,
+    "purchase_order_number": "h4HElSE3",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-09-10T23:00:00.000Z",
+    "asset_number": "PnH2gufnS4",
+    "serial_number": "VYjycpi7fXhE",
+    "delivered_date": "2023-11-01T00:00:00.000Z",
+    "notes": "DGOQAv8mcFDzoFDavVs6",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 400,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 40,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "KAaXhv1x",
+    "catalogue_item_id": "14",
+    "system_id": null,
+    "purchase_order_number": "0n7D5uQW",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-05-14T23:00:00.000Z",
+    "asset_number": "6kMh3nmRON",
+    "serial_number": "MhibwZQ0nFPt",
+    "delivered_date": "2023-10-10T23:00:00.000Z",
+    "notes": "SidiG6iqyLiqR6msG3fF",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 400,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 40,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "zr0N0zKP",
+    "catalogue_item_id": "14",
+    "system_id": "65328f34a40ff5301575a4e6",
+    "purchase_order_number": "cYRDB933",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-08-19T23:00:00.000Z",
+    "asset_number": "gImjOsvWwC",
+    "serial_number": "VTNKXHAWFXdz",
+    "delivered_date": "2023-07-10T23:00:00.000Z",
+    "notes": "Z84XMNiGLKr0tUkdbRHz",
+    "properties": [
+      {
+        "name": "Travel Range",
+        "value": 400,
+        "unit": "millimeters"
+      },
+      {
+        "name": "Load Capacity",
+        "value": 40,
+        "unit": "kilograms"
+      }
+    ]
+  },
+  {
+    "id": "GDnO8BUW",
+    "catalogue_item_id": "15",
+    "system_id": null,
+    "purchase_order_number": "mWlyFYmp",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-04-29T23:00:00.000Z",
+    "asset_number": "sk1CtF6RkN",
+    "serial_number": "DOzbems9h6iV",
+    "delivered_date": "2023-05-26T23:00:00.000Z",
+    "notes": "q7LFuhHmqJnUnoXeP2Zz",
+    "properties": [
+      {
+        "name": "Cooldown Time",
+        "value": "2 hours",
+        "unit": ""
+      },
+      {
+        "name": "Pumping Speed",
+        "value": 50,
+        "unit": "liters per second"
+      }
+    ]
+  },
+  {
+    "id": "tVTBh78z",
+    "catalogue_item_id": "15",
+    "system_id": null,
+    "purchase_order_number": "GO2XiFKn",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-07-25T23:00:00.000Z",
+    "asset_number": "4TkqsJuRsG",
+    "serial_number": "ZftPea2rIEp6",
+    "delivered_date": "2023-02-28T00:00:00.000Z",
+    "notes": "ZMEFQ9fhzsY6UUhzjwj5",
+    "properties": [
+      {
+        "name": "Cooldown Time",
+        "value": "2 hours",
+        "unit": ""
+      },
+      {
+        "name": "Pumping Speed",
+        "value": 50,
+        "unit": "liters per second"
+      }
+    ]
+  },
+  {
+    "id": "euAEB5OY",
+    "catalogue_item_id": "15",
+    "system_id": "65328f34a40ff5301575a4e6",
+    "purchase_order_number": "c2VIjGGQ",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-01-25T00:00:00.000Z",
+    "asset_number": "N9r4KkGq73",
+    "serial_number": "J0kIBGvea0l3",
+    "delivered_date": "2023-04-15T23:00:00.000Z",
+    "notes": "lYXgbpvDBDdjXFqRqBbk",
+    "properties": [
+      {
+        "name": "Cooldown Time",
+        "value": "2 hours",
+        "unit": ""
+      },
+      {
+        "name": "Pumping Speed",
+        "value": 50,
+        "unit": "liters per second"
+      }
+    ]
+  },
+  {
+    "id": "cxUxtqv5",
+    "catalogue_item_id": "15",
+    "system_id": "656ef565ed0773f82e44bc6d",
+    "purchase_order_number": "w8Z4C7L6",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-06-15T23:00:00.000Z",
+    "asset_number": "n9xQx48ZBn",
+    "serial_number": "eHxlwTgIn0kU",
+    "delivered_date": "2023-05-23T23:00:00.000Z",
+    "notes": "HbCnhoN9t6ncfCwdiFQQ",
+    "properties": [
+      {
+        "name": "Cooldown Time",
+        "value": "2 hours",
+        "unit": ""
+      },
+      {
+        "name": "Pumping Speed",
+        "value": 50,
+        "unit": "liters per second"
+      }
+    ]
+  },
+  {
+    "id": "xYbx3mvf",
+    "catalogue_item_id": "16",
+    "system_id": "656da8ef9cba7a76c6f81a5d",
+    "purchase_order_number": "7QKjXCwf",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-04-10T23:00:00.000Z",
+    "asset_number": "827cdeGGMD",
+    "serial_number": "KtuD0GqmJZXh",
+    "delivered_date": "2023-02-01T00:00:00.000Z",
+    "notes": "8Cim8N0Ta9vEomqhIXz9",
+    "properties": [
+      {
+        "name": "Cooldown Time",
+        "value": "3 hours",
+        "unit": ""
+      },
+      {
+        "name": "Pumping Speed",
+        "value": 60,
+        "unit": "liters per second"
+      }
+    ]
+  },
+  {
+    "id": "2l0SVHgT",
+    "catalogue_item_id": "16",
+    "system_id": null,
+    "purchase_order_number": "EZlTUsa1",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-11-10T00:00:00.000Z",
+    "asset_number": "ivCDas6QSB",
+    "serial_number": "9fFhbzyG7pZB",
+    "delivered_date": "2023-03-21T00:00:00.000Z",
+    "notes": "azxaxoAtqDJRUMFCYdQC",
+    "properties": [
+      {
+        "name": "Cooldown Time",
+        "value": "3 hours",
+        "unit": ""
+      },
+      {
+        "name": "Pumping Speed",
+        "value": 60,
+        "unit": "liters per second"
+      }
+    ]
+  },
+  {
+    "id": "Xp5pZ8gX",
+    "catalogue_item_id": "16",
+    "system_id": null,
+    "purchase_order_number": "KONqtVd0",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-10-03T23:00:00.000Z",
+    "asset_number": "Y9Muih8aA8",
+    "serial_number": "F9oodz8dhZBx",
+    "delivered_date": "2023-09-03T23:00:00.000Z",
+    "notes": "q5XnQJ7fxG8JpxL6Hdc0",
+    "properties": [
+      {
+        "name": "Cooldown Time",
+        "value": "3 hours",
+        "unit": ""
+      },
+      {
+        "name": "Pumping Speed",
+        "value": 60,
+        "unit": "liters per second"
+      }
+    ]
+  },
+  {
+    "id": "7NLut0BN",
+    "catalogue_item_id": "16",
+    "system_id": null,
+    "purchase_order_number": "shfd4Lb0",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-09-22T23:00:00.000Z",
+    "asset_number": "2VxQzdndav",
+    "serial_number": "q1RFEd6EMt6M",
+    "delivered_date": "2023-12-22T00:00:00.000Z",
+    "notes": "GZOEMCrKmCJc11Tw17qt",
+    "properties": [
+      {
+        "name": "Cooldown Time",
+        "value": "3 hours",
+        "unit": ""
+      },
+      {
+        "name": "Pumping Speed",
+        "value": 60,
+        "unit": "liters per second"
+      }
+    ]
+  },
+  {
+    "id": "vvfJdzH0",
+    "catalogue_item_id": "17",
+    "system_id": null,
+    "purchase_order_number": "d3InYqMs",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-07-25T23:00:00.000Z",
+    "asset_number": "qyxpzStotS",
+    "serial_number": "fpPdJiYde390",
+    "delivered_date": "2023-01-03T00:00:00.000Z",
+    "notes": "Q8d89aVlAlaq8O7wkaNB",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 300,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.1,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "BHrItb4x",
+    "catalogue_item_id": "17",
+    "system_id": "65328f34a40ff5301575a4e8",
+    "purchase_order_number": "IyNGbLfp",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-09-09T23:00:00.000Z",
+    "asset_number": "DwNOtWZxmd",
+    "serial_number": "w2chFAwXR1OO",
+    "delivered_date": "2023-06-07T23:00:00.000Z",
+    "notes": "0ozhaRt89oKgGtBflaWC",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 300,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.1,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "GbHPLn8G",
+    "catalogue_item_id": "17",
+    "system_id": "65328f34a40ff5301575a4e9",
+    "purchase_order_number": "BIUPiwpg",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-06-30T23:00:00.000Z",
+    "asset_number": "nK9qTeYXBL",
+    "serial_number": "JYDcIbhmAK4I",
+    "delivered_date": "2023-03-25T00:00:00.000Z",
+    "notes": "y4PVjkQsdFYe5fCL67S4",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 300,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.1,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "FgSXg3uW",
+    "catalogue_item_id": "17",
+    "system_id": null,
+    "purchase_order_number": "gSquxh9V",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-09-19T23:00:00.000Z",
+    "asset_number": "zatQd41JcR",
+    "serial_number": "yZ1MBXOTK4ch",
+    "delivered_date": "2023-03-04T00:00:00.000Z",
+    "notes": "xiyI3Rx1bTI1U5RlBwVE",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 300,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.1,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "UoQeYZLb",
+    "catalogue_item_id": "18",
+    "system_id": null,
+    "purchase_order_number": "x70dBmF8",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-02-01T00:00:00.000Z",
+    "asset_number": "buhnU6tFhQ",
+    "serial_number": "0NPcNvp3QJTz",
+    "delivered_date": "2023-10-17T23:00:00.000Z",
+    "notes": "nTv79nT4h9EU4dGDEKDr",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 400,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.05,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "GXtvY5iQ",
+    "catalogue_item_id": "18",
+    "system_id": "65328f34a40ff5301575a4e9",
+    "purchase_order_number": "DCeHLpKQ",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-06-24T23:00:00.000Z",
+    "asset_number": "SK2hgydfxY",
+    "serial_number": "IhJbKTKvuC8r",
+    "delivered_date": "2023-10-19T23:00:00.000Z",
+    "notes": "lu6YLDaalxqGan2sFQkU",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 400,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.05,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "6lhdTuGi",
+    "catalogue_item_id": "18",
+    "system_id": "65328f34a40ff5301575a4e7",
+    "purchase_order_number": "vkWsO3yk",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-11-05T00:00:00.000Z",
+    "asset_number": "Gd8tPzVqS0",
+    "serial_number": "UFxhZMRAHpVC",
+    "delivered_date": "2023-01-24T00:00:00.000Z",
+    "notes": "4X1YkNmR1Is39DpDYQN6",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 400,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.05,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "kAQIPo23",
+    "catalogue_item_id": "18",
+    "system_id": "65328f34a40ff5301575a4e8",
+    "purchase_order_number": "vtwNi2KO",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-02-04T00:00:00.000Z",
+    "asset_number": "uVzmfTTFWl",
+    "serial_number": "BGpOgOpuSS26",
+    "delivered_date": "2023-03-08T00:00:00.000Z",
+    "notes": "3ETcDRsVc4R87LKJSs7b",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 400,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.05,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "3vsctR0N",
+    "catalogue_item_id": "19",
+    "system_id": "656da8ef9cba7a76c6f81a5d",
+    "purchase_order_number": "mSUFF5XV",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-08-13T23:00:00.000Z",
+    "asset_number": "FOwCqPXOGE",
+    "serial_number": "xUk0FJnCAe20",
+    "delivered_date": "2023-01-23T00:00:00.000Z",
+    "notes": "oxMzYyEQBVdG6EXzFyym",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 500,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.01,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "V32B9lj8",
+    "catalogue_item_id": "19",
+    "system_id": null,
+    "purchase_order_number": "OeP6Ims3",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-10-18T23:00:00.000Z",
+    "asset_number": "iNnyUUlbM6",
+    "serial_number": "tHwTQ3mPzYVY",
+    "delivered_date": "2023-02-18T00:00:00.000Z",
+    "notes": "19cSv9yHOXgzTPhK6OYw",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 500,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.01,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "uR5ICUYm",
+    "catalogue_item_id": "19",
+    "system_id": null,
+    "purchase_order_number": "RheE8D67",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-08-12T23:00:00.000Z",
+    "asset_number": "83EnZjYvlq",
+    "serial_number": "ncou9UruaRbz",
+    "delivered_date": "2023-10-24T23:00:00.000Z",
+    "notes": "POqplOixrqfkmKyIRWbQ",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 500,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.01,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "cH7NAwGc",
+    "catalogue_item_id": "19",
+    "system_id": null,
+    "purchase_order_number": "19AADJNL",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-04-14T23:00:00.000Z",
+    "asset_number": "1wgSBhhJU1",
+    "serial_number": "sZvN7k08CG9K",
+    "delivered_date": "2023-05-30T23:00:00.000Z",
+    "notes": "10gCy6XefVYzrmvlem7r",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 500,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.01,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "QIy544tc",
+    "catalogue_item_id": "20",
+    "system_id": null,
+    "purchase_order_number": "ZiOg5fDA",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-04-10T23:00:00.000Z",
+    "asset_number": "7HCD6cOz7q",
+    "serial_number": "VEZcSuMsPA9x",
+    "delivered_date": "2023-10-10T23:00:00.000Z",
+    "notes": "caaaVHgF7vNEYx4nNep6",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 300,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.1,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "h5nBh3tf",
+    "catalogue_item_id": "20",
+    "system_id": "65328f34a40ff5301575a4e6",
+    "purchase_order_number": "hLBmtom6",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-09-02T23:00:00.000Z",
+    "asset_number": "6bYTxauwq3",
+    "serial_number": "8Cj9TIHiRJMn",
+    "delivered_date": "2023-04-19T23:00:00.000Z",
+    "notes": "R6nGA7CvqeQAtqr3oNkV",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 300,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.1,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "YHIyqQHO",
+    "catalogue_item_id": "20",
+    "system_id": "656da8ef9cba7a76c6f81a5d",
+    "purchase_order_number": "2koGkHlu",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-05-07T23:00:00.000Z",
+    "asset_number": "ffUJvoGbjN",
+    "serial_number": "nFXndOMqAdtE",
+    "delivered_date": "2023-04-02T23:00:00.000Z",
+    "notes": "hwQoaUxxNyTbDFx1afH5",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 300,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.1,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "fkNiGPC2",
+    "catalogue_item_id": "20",
+    "system_id": null,
+    "purchase_order_number": "dHGYyOYc",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-12-25T00:00:00.000Z",
+    "asset_number": "hGrSPx4vUf",
+    "serial_number": "mfFQ8DklKrvy",
+    "delivered_date": "2023-02-17T00:00:00.000Z",
+    "notes": "XdZGJbNMOjmzZF9G5cGC",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 300,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Ultimate Pressure",
+        "value": 0.1,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "13h6TOX6",
+    "catalogue_item_id": "21",
+    "system_id": "65328f34a40ff5301575a4e5",
+    "purchase_order_number": "tk4yBheq",
+    "is_defective": false,
+    "usage_status": 1,
+    "warranty_end_date": "2023-02-10T00:00:00.000Z",
+    "asset_number": "WX3XYVFeEu",
+    "serial_number": "5xE1KSraISvu",
+    "delivered_date": "2023-09-05T23:00:00.000Z",
+    "notes": "ihwCjMdJ4n7KKcaM34Lj",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 700,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Compression Ratio",
+        "value": 100,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "3xgGk6uf",
+    "catalogue_item_id": "21",
+    "system_id": null,
+    "purchase_order_number": "Rt49PU94",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-07-07T23:00:00.000Z",
+    "asset_number": "RL06KWoFxU",
+    "serial_number": "i2L9NVrXgqvb",
+    "delivered_date": "2023-03-09T00:00:00.000Z",
+    "notes": "iucjXGWhQgL594qqpMg1",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 700,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Compression Ratio",
+        "value": 100,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "y669dgiz",
+    "catalogue_item_id": "21",
+    "system_id": null,
+    "purchase_order_number": "6NUGtP8l",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-11-25T00:00:00.000Z",
+    "asset_number": "LRhk6qS8Je",
+    "serial_number": "EUnvCuq0uxUn",
+    "delivered_date": "2023-07-26T23:00:00.000Z",
+    "notes": "qsg1lklCfv4T2d86rGYN",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 700,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Compression Ratio",
+        "value": 100,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "wtNJCvBR",
+    "catalogue_item_id": "21",
+    "system_id": "65328f34a40ff5301575a4e3",
+    "purchase_order_number": "CvOMwwiB",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-11-23T00:00:00.000Z",
+    "asset_number": "4vwy47IdmR",
+    "serial_number": "8bzXyk1DpGHf",
+    "delivered_date": "2023-09-22T23:00:00.000Z",
+    "notes": "Mk0E9IbPEiE3lFIgRKSQ",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 700,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Compression Ratio",
+        "value": 100,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "nWxqHM5w",
+    "catalogue_item_id": "22",
+    "system_id": null,
+    "purchase_order_number": "C8BTzhVf",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-06-24T23:00:00.000Z",
+    "asset_number": "4l8tOWtHJv",
+    "serial_number": "UyFW7jFKSniX",
+    "delivered_date": "2023-07-23T23:00:00.000Z",
+    "notes": "1G6lbRajvSyW9AY3PZu7",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 800,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Compression Ratio",
+        "value": 120,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "Kn0X1FRI",
+    "catalogue_item_id": "22",
+    "system_id": "65328f34a40ff5301575a4e5",
+    "purchase_order_number": "sY9rpnxM",
+    "is_defective": true,
+    "usage_status": 0,
+    "warranty_end_date": "2023-11-25T00:00:00.000Z",
+    "asset_number": "mz4fHfrSu7",
+    "serial_number": "yGmHZPkDDsXt",
+    "delivered_date": "2023-02-27T00:00:00.000Z",
+    "notes": "K8jKu1xe7SH7QxRH3bnK",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 800,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Compression Ratio",
+        "value": 120,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "8ir4YkZn",
+    "catalogue_item_id": "22",
+    "system_id": null,
+    "purchase_order_number": "7MYbACiP",
+    "is_defective": false,
+    "usage_status": 0,
+    "warranty_end_date": "2023-11-26T00:00:00.000Z",
+    "asset_number": "ubqONeeYFy",
+    "serial_number": "4yPdt6rQN67F",
+    "delivered_date": "2023-05-25T23:00:00.000Z",
+    "notes": "KH7HphnesrazL2UUX5mS",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 800,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Compression Ratio",
+        "value": 120,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "xHNXwBDB",
+    "catalogue_item_id": "22",
+    "system_id": "65328f34a40ff5301575a4e5",
+    "purchase_order_number": "gCcLsr4S",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-11-25T00:00:00.000Z",
+    "asset_number": "AFlcDSnsYV",
+    "serial_number": "Ux2V200jgsOS",
+    "delivered_date": "2023-09-09T23:00:00.000Z",
+    "notes": "72fS4ub2GFYZm5huoLC5",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 800,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Compression Ratio",
+        "value": 120,
+        "unit": ""
+      }
+    ]
+  },
+  {
+    "id": "yMJg6hNF",
+    "catalogue_item_id": "23",
+    "system_id": null,
+    "purchase_order_number": "woNqe6TW",
+    "is_defective": false,
+    "usage_status": 3,
+    "warranty_end_date": "2023-08-18T23:00:00.000Z",
+    "asset_number": "VQSeovQec9",
+    "serial_number": "dWnvzeKLqvyd",
+    "delivered_date": "2023-06-08T23:00:00.000Z",
+    "notes": "u1nV5yJ9mllLJngsx9Ow",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 500,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Backing Pressure",
+        "value": 0.2,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "EkGV4HS7",
+    "catalogue_item_id": "23",
+    "system_id": "65328f34a40ff5301575a4e4",
+    "purchase_order_number": "XGhTEhyj",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-06-24T23:00:00.000Z",
+    "asset_number": "t3hsMbxMrB",
+    "serial_number": "sA38Z7EoSB2A",
+    "delivered_date": "2023-12-12T00:00:00.000Z",
+    "notes": "1eqImgdxuj7UmGQ3aKWY",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 500,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Backing Pressure",
+        "value": 0.2,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "gnW5L9Nf",
+    "catalogue_item_id": "23",
+    "system_id": null,
+    "purchase_order_number": "ovSgZsVv",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-02-11T00:00:00.000Z",
+    "asset_number": "h792cv8tPH",
+    "serial_number": "PbtWpvUd7zgF",
+    "delivered_date": "2023-01-07T00:00:00.000Z",
+    "notes": "BdzIYfZOfKhqu7jDro7R",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 500,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Backing Pressure",
+        "value": 0.2,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "ZHHYPHbi",
+    "catalogue_item_id": "23",
+    "system_id": null,
+    "purchase_order_number": "5AJBbfo7",
+    "is_defective": true,
+    "usage_status": 1,
+    "warranty_end_date": "2023-05-21T23:00:00.000Z",
+    "asset_number": "9uFGhRPcIA",
+    "serial_number": "w9mxaiXIXAdC",
+    "delivered_date": "2023-01-19T00:00:00.000Z",
+    "notes": "uOU65qfPbEad6jNXe8st",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 500,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Backing Pressure",
+        "value": 0.2,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "j443wAMk",
+    "catalogue_item_id": "24",
+    "system_id": "65328f34a40ff5301575a4e7",
+    "purchase_order_number": "l8uRF5UF",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-12-11T00:00:00.000Z",
+    "asset_number": "oxekY3Oa0I",
+    "serial_number": "tos1yFVlbc59",
+    "delivered_date": "2023-03-01T00:00:00.000Z",
+    "notes": "DaZF7fXY2n6XzkUxuDtu",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 600,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Backing Pressure",
+        "value": 0.3,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "GPcmo9nN",
+    "catalogue_item_id": "24",
+    "system_id": null,
+    "purchase_order_number": "V8yGhIPF",
+    "is_defective": false,
+    "usage_status": 2,
+    "warranty_end_date": "2023-03-23T00:00:00.000Z",
+    "asset_number": "RHvPE85h5k",
+    "serial_number": "AhYikULrwO8a",
+    "delivered_date": "2023-01-07T00:00:00.000Z",
+    "notes": "3JWYt7hoZw2H3TLxtraW",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 600,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Backing Pressure",
+        "value": 0.3,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "tBEHaXez",
+    "catalogue_item_id": "24",
+    "system_id": "65328f34a40ff5301575a4e8",
+    "purchase_order_number": "hJ4zjNNA",
+    "is_defective": true,
+    "usage_status": 3,
+    "warranty_end_date": "2023-11-13T00:00:00.000Z",
+    "asset_number": "2iLdbazySf",
+    "serial_number": "F3nomgo4Fqei",
+    "delivered_date": "2023-05-04T23:00:00.000Z",
+    "notes": "vSAN2gQTyG8wd2KVAyQi",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 600,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Backing Pressure",
+        "value": 0.3,
+        "unit": "millibar"
+      }
+    ]
+  },
+  {
+    "id": "Mo4hx8uC",
+    "catalogue_item_id": "24",
+    "system_id": null,
+    "purchase_order_number": "Q35dU5TK",
+    "is_defective": true,
+    "usage_status": 2,
+    "warranty_end_date": "2023-04-09T23:00:00.000Z",
+    "asset_number": "PwOEzVGCjt",
+    "serial_number": "aygkOmoTamJk",
+    "delivered_date": "2023-09-05T23:00:00.000Z",
+    "notes": "AbYjlRBn4FiFXNVr3ltd",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 600,
+        "unit": "liters per second"
+      },
+      {
+        "name": "Backing Pressure",
+        "value": 0.3,
+        "unit": "millibar"
+      }
+    ]
+  }
+]

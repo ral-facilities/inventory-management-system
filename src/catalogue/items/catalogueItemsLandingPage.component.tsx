@@ -1,5 +1,8 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import PrintIcon from '@mui/icons-material/Print';
+import EditIcon from '@mui/icons-material/Edit';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
   Box,
   Button,
@@ -19,7 +22,7 @@ import CatalogueItemsDialog from './catalogueItemsDialog.component';
 function CatalogueItemsLandingPage() {
   const location = useLocation();
 
-  const catalogueItemId = location.pathname.replace('/catalogue/items/', '');
+  const catalogueItemId = location.pathname.replace('/catalogue/item/', '');
 
   const { data: catalogueItemIdData, isLoading: catalogueItemIdDataLoading } =
     useCatalogueItem(catalogueItemId);
@@ -72,6 +75,7 @@ function CatalogueItemsLandingPage() {
         item
       >
         <Button
+          startIcon={<ArrowBackIcon />}
           component={Link}
           to={
             catalogueCategoryData && catalogueCategoryData.id
@@ -86,6 +90,15 @@ function CatalogueItemsLandingPage() {
             : 'Home'}
         </Button>
         <Button
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          component={Link}
+          to={'items'}
+        >
+          Items
+        </Button>
+        <Button
+          startIcon={<EditIcon />}
           disabled={!catalogueItemIdData}
           sx={{ mx: 0.5 }}
           variant="outlined"
@@ -95,7 +108,9 @@ function CatalogueItemsLandingPage() {
         >
           Edit
         </Button>
+
         <Button
+          startIcon={<PrintIcon />}
           sx={{ mx: 0.5 }}
           variant="outlined"
           onClick={() => {
@@ -173,7 +188,7 @@ function CatalogueItemsLandingPage() {
                             component={Link}
                             underline="hover"
                             target="_blank"
-                            to={`/catalogue/items/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
+                            to={`/catalogue/item/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
                           >
                             Click here
                           </MuiLink>
@@ -298,11 +313,7 @@ function CatalogueItemsLandingPage() {
                           <Typography align="left" color="text.primary">{`${
                             property.name
                           } ${
-                            catalogueCategoryData?.catalogue_item_properties?.[
-                              index
-                            ].unit
-                              ? `(${catalogueCategoryData?.catalogue_item_properties?.[index].unit})`
-                              : ''
+                            property.unit ? `(${property.unit})` : ''
                           }`}</Typography>
                           <Typography align="left" color="text.secondary">
                             {String(property.value)}
