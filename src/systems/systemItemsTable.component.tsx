@@ -148,7 +148,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const [columnFilters, setColumnFilters] =
     React.useState<MRT_ColumnFiltersState>([]);
 
-  const noResultsTxt = 'No items found';
+  const noResultsText = 'No items found';
   const table = useMaterialReactTable({
     columns: columns,
     data: tableRows,
@@ -171,7 +171,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     enablePagination: true,
     localization: {
       ...MRT_Localization_EN,
-      noRecordsToDisplay: noResultsTxt,
+      noRecordsToDisplay: noResultsText,
     },
     initialState: {
       showColumnFilters: true,

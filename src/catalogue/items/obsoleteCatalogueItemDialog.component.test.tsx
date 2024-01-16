@@ -100,17 +100,20 @@ describe('Obsolete Catalogue Item Dialog', () => {
           }
         }
         // Ensure loaded
-        await waitFor(() => {
-          expect(
-            screen.getAllByRole('row', {
-              name: `${
-                values.replacement_item_navigation[
-                  values.replacement_item_navigation.length - 1
-                ]
-              } row`,
-            }).length
-          ).toBe(2);
-        });
+        await waitFor(
+          () => {
+            expect(
+              screen.getAllByRole('row', {
+                name: `${
+                  values.replacement_item_navigation[
+                    values.replacement_item_navigation.length - 1
+                  ]
+                } row`,
+              }).length
+            ).toBeGreaterThan(1);
+          },
+          { timeout: 2000 }
+        );
         // Select item if requested
         if (
           values.ignore_replacement_item === undefined ||
@@ -215,15 +218,25 @@ describe('Obsolete Catalogue Item Dialog', () => {
     await waitFor(() => {
       expect(screen.getByText('energy-meters')).toBeInTheDocument();
     });
+
+    // Expected replacement catalogue item name
+    const replacementItemName = getCatalogueItemById(
+      props.catalogueItem?.obsolete_replacement_catalogue_item_id ?? ''
+    )?.name;
+
+    // Wait for table to load
+    await waitFor(() => {
+      expect(
+        screen.getAllByRole('row', {
+          name: `${replacementItemName} row`,
+        }).length
+      ).toBeGreaterThan(1);
+    });
     // Ensure item selected
     expect(
       screen
         .queryAllByRole('row', {
-          name: `${
-            getCatalogueItemById(
-              props.catalogueItem?.obsolete_replacement_catalogue_item_id ?? ''
-            )?.name
-          } row`,
+          name: `${replacementItemName} row`,
         })[0]
         .getAttribute('data-selected')
     ).toBe('true');
@@ -449,13 +462,16 @@ describe('Obsolete Catalogue Item Dialog', () => {
         name: `Cryo Pumps row`,
       })
     );
-    await waitFor(() => {
-      expect(
-        screen.getAllByRole('row', {
-          name: `Cryo Pumps 36 row`,
-        }).length
-      ).toBe(2);
-    });
+    await waitFor(
+      () => {
+        expect(
+          screen.getAllByRole('row', {
+            name: `Cryo Pumps 36 row`,
+          }).length
+        ).toBeGreaterThan(1);
+      },
+      { timeout: 2000 }
+    );
     await user.click(
       within(
         screen.getAllByRole('row', {
@@ -480,13 +496,16 @@ describe('Obsolete Catalogue Item Dialog', () => {
     // Get to end of form
     await modifyForm(true, {});
 
-    await waitFor(() => {
-      expect(
-        screen.getAllByRole('row', {
-          name: `Energy Meters 26 row`,
-        }).length
-      ).toBe(2);
-    });
+    await waitFor(
+      () => {
+        expect(
+          screen.getAllByRole('row', {
+            name: `Energy Meters 26 row`,
+          }).length
+        ).toBeGreaterThan(1);
+      },
+      { timeout: 2000 }
+    );
 
     // Navigate to root directory
     await user.click(

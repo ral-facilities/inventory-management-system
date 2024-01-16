@@ -12,6 +12,15 @@ describe('Systems', () => {
 
   beforeEach(() => {
     user = userEvent.setup();
+
+    window.ResizeObserver = jest.fn().mockImplementation(() => ({
+      disconnect: jest.fn(),
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+    }));
+    window.Element.prototype.getBoundingClientRect = jest
+      .fn()
+      .mockReturnValue({ height: 100, width: 200 });
   });
 
   const clickRowAction = async (rowIndex: number, buttonText: string) => {
