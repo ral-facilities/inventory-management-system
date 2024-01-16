@@ -367,7 +367,7 @@ function Systems() {
                     marginTop: 1,
                     marginBottom: 'auto',
                     flexWrap: 'no-wrap',
-                    // Breadcrumbs and rest
+                    // Breadcrumbs + rest
                     height: getPageHeightCalc('56px + 74px'),
                     // To prevent no subsystems being visible
                     minHeight: '200px',
