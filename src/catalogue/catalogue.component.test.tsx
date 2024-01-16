@@ -236,7 +236,12 @@ describe('Catalogue', () => {
       expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
     });
 
-    const deleteButton = screen.getByRole('button', {
+    const actionsButton = screen.getByRole('button', {
+      name: 'actions Beam Characterization catalogue category button',
+    });
+    await user.click(actionsButton);
+
+    const deleteButton = screen.getByRole('menuitem', {
       name: 'delete Beam Characterization catalogue category button',
     });
     await user.click(deleteButton);
@@ -259,8 +264,43 @@ describe('Catalogue', () => {
       expect(screen.getByText('Amp Meters')).toBeInTheDocument();
     });
 
-    const editButton = screen.getByRole('button', {
+    const actionsButton = screen.getByRole('button', {
+      name: 'actions Amp Meters catalogue category button',
+    });
+    await user.click(actionsButton);
+
+    const editButton = screen.getByRole('menuitem', {
       name: 'edit Amp Meters catalogue category button',
+    });
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+
+    await user.type(screen.getByLabelText('Name *'), '1');
+    await user.click(saveButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the save as catalogue category dialog and close it again', async () => {
+    createView('/catalogue/1');
+
+    await waitFor(() => {
+      expect(screen.getByText('Amp Meters')).toBeInTheDocument();
+    });
+
+    const actionsButton = screen.getByRole('button', {
+      name: 'actions Amp Meters catalogue category button',
+    });
+    await user.click(actionsButton);
+
+    const editButton = screen.getByRole('menuitem', {
+      name: 'save as Amp Meters catalogue category button',
     });
     await user.click(editButton);
 
