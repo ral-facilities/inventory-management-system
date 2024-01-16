@@ -129,35 +129,35 @@ function ManufacturerLandingPage() {
               sx={{ mx: '8px' }}
               color="text.secondary"
             >
-              {manufacturerData.address.address_line ?? 'None'}
+              {manufacturerData.address.address_line}
             </Typography>
             <Typography
               align="center"
               sx={{ mx: '8px' }}
               color="text.secondary"
             >
-              {manufacturerData.address.town ?? 'None'}
+              {manufacturerData.address.town}
             </Typography>
             <Typography
               align="center"
               sx={{ mx: '8px' }}
               color="text.secondary"
             >
-              {manufacturerData.address.county ?? 'None'}
+              {manufacturerData.address.county}
             </Typography>
             <Typography
               align="center"
               sx={{ mx: '8px' }}
               color="text.secondary"
             >
-              {manufacturerData.address.postcode ?? 'None'}
+              {manufacturerData.address.postcode}
             </Typography>
             <Typography
               align="center"
               sx={{ mx: '8px' }}
               color="text.secondary"
             >
-              {manufacturerData.address.country ?? 'None'}
+              {manufacturerData.address.country}
             </Typography>
           </Grid>
         </Grid>
