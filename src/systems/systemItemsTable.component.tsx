@@ -7,16 +7,16 @@ import {
   useMaterialReactTable,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCatalogueItemIds } from '../api/catalogueItem';
 import { useItems } from '../api/item';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 
 /* Each table row needs the item and catalogue item */
-interface TableRow {
+interface TableRowData {
   item: Item;
-  catalogue_item?: CatalogueItem;
+  catalogueItem?: CatalogueItem;
 }
 
 export interface SystemItemsTableProps {
@@ -27,7 +27,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const { system } = props;
 
   // States
-  const [tableRows, setTableRows] = React.useState<TableRow[]>([]);
+  const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
 
   // Data
   const { data: itemsData, isLoading: isLoadingItems } = useItems(
@@ -50,7 +50,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   // Once loading has finished - pair up all data for the table rows
   // If performance becomes a problem with this should remove find and fetch catalogue
   // item for each item/implement a fullDetails or something in backend
-  useEffect(() => {
+  React.useEffect(() => {
     if (!isLoading && itemsData) {
       setTableRows(
         itemsData.map((itemData) => ({
@@ -63,11 +63,11 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     }
   }, [catalogueItemList, isLoading, itemsData]);
 
-  const columns = React.useMemo<MRT_ColumnDef<TableRow>[]>(() => {
+  const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     return [
       {
         header: 'Catalogue Item',
-        accessorFn: (row) => row.catalogue_item?.name,
+        accessorFn: (row) => row.catalogueItem?.name,
         id: 'catalogue_item_name',
         Cell: ({ renderedCellValue, row }) => (
           <MuiLink
