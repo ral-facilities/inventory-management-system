@@ -67,19 +67,17 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
 export function matchCatalogueItemProperties(
   form: CatalogueCategoryFormData[],
   items: CatalogueItemProperty[]
-): (string | number | boolean | null)[] {
-  const result: (string | number | boolean | null)[] = [];
+): (string | null)[] {
+  const result: (string | null)[] = [];
 
   for (const property of form) {
     const matchingItem = items.find((item) => item.name === property.name);
     if (matchingItem) {
       // Type check and assign the value
-      if (property.type === 'number') {
-        result.push(matchingItem.value ? Number(matchingItem.value) : null);
-      } else if (property.type === 'boolean') {
+      if (property.type === 'boolean') {
         result.push(
           typeof matchingItem.value === 'boolean'
-            ? String(Boolean(matchingItem.value))
+            ? String(matchingItem.value)
             : ''
         );
       } else {
@@ -93,7 +91,6 @@ export function matchCatalogueItemProperties(
 
   return result;
 }
-
 function Catalogue() {
   const navigate = useNavigate();
   const location = useLocation();

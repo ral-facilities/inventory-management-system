@@ -45,7 +45,7 @@ describe('matchCatalogueItemProperties', () => {
     const result = matchCatalogueItemProperties(formData, itemProperties);
 
     // Your assertions
-    expect(result).toEqual(['Value1', 42, 'true']);
+    expect(result).toEqual(['Value1', '42', 'true']);
   });
 
   it('should handle missing properties', () => {
