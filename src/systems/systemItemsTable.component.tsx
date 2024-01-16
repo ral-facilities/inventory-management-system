@@ -85,6 +85,20 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 250,
       },
       {
+        header: 'ID',
+        accessorKey: 'item.id',
+        Cell: ({ renderedCellValue, row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            to={`/catalogue/item/${row.original.item.catalogue_item_id}/items/${row.original.item.id}`}
+          >
+            {renderedCellValue}
+          </MuiLink>
+        ),
+        size: 250,
+      },
+      {
         header: 'Serial Number',
         accessorKey: 'item.serial_number',
         size: 250,
