@@ -102,9 +102,9 @@ function ItemDialog(props: ItemDialogProps) {
 
   const [catchAllError, setCatchAllError] = React.useState(false);
 
-  const [propertyValues, setPropertyValues] = React.useState<
-    (string | number | boolean | null)[]
-  >([]);
+  const [propertyValues, setPropertyValues] = React.useState<(string | null)[]>(
+    []
+  );
 
   const [propertyErrors, setPropertyErrors] = React.useState(
     new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
@@ -126,45 +126,22 @@ function ItemDialog(props: ItemDialogProps) {
   const handlePropertyChange = (
     index: number,
     name: string,
-    newValue: string | boolean | null
+    value: string | null
   ) => {
     const updatedPropertyValues = [...propertyValues];
-    updatedPropertyValues[index] = newValue;
-    setPropertyValues(updatedPropertyValues);
 
-    const updatedProperties: CatalogueItemProperty[] = [];
-    const propertyType =
-      parentCatalogueItemPropertiesInfo[index]?.type || 'string';
-
-    if (!updatedProperties[index]) {
-      // Initialize the property if it doesn't exist
-      updatedProperties[index] = { name: '', value: '' };
-    }
-
-    const updatedProperty = {
-      ...updatedProperties[index],
-      name: name,
-    };
-
-    if (propertyType === 'boolean') {
-      updatedProperty.value =
-        newValue === 'true' ? true : newValue === 'false' ? false : '';
-    } else if (propertyType === 'number') {
-      if (newValue !== null) {
-        const parsedValue = Number(newValue);
-        updatedProperty.value = isNaN(parsedValue) ? null : parsedValue;
-      }
+    if (value === null || (typeof value === 'string' && value.trim() === '')) {
+      updatedPropertyValues[index] = null;
     } else {
-      updatedProperty.value = newValue;
+      updatedPropertyValues[index] = value as string;
     }
-
-    updatedProperties[index] = updatedProperty;
-
+    setPropertyValues(updatedPropertyValues);
     // Clear the error state for the changed property
     const updatedPropertyErrors = [...propertyErrors];
     updatedPropertyErrors[index] = false;
     setPropertyErrors(updatedPropertyErrors);
   };
+
   const handleItemDetails = (
     field: keyof ItemDetailsPlaceholder,
     value: string | Date | null
@@ -240,7 +217,7 @@ function ItemDialog(props: ItemDialogProps) {
         }
 
         if (
-          propertyValues[index] !== undefined &&
+          propertyValues[index] &&
           property.type === 'number' &&
           isNaN(Number(propertyValues[index]))
         ) {
@@ -248,18 +225,7 @@ function ItemDialog(props: ItemDialogProps) {
           hasErrors = true;
         }
 
-        if (!propertyValues[index]) {
-          if (property.type === 'boolean') {
-            if (
-              propertyValues[index] === '' ||
-              propertyValues[index] === undefined
-            ) {
-              return null;
-            }
-          } else {
-            return null;
-          }
-        }
+        if (!propertyValues[index]) return null;
 
         let typedValue: string | number | boolean | null =
           propertyValues[index]; // Assume it's a string by default
@@ -267,15 +233,7 @@ function ItemDialog(props: ItemDialogProps) {
         // Check if the type of the 'property' is boolean
         if (property.type === 'boolean') {
           // If the type is boolean, then check the type of 'propertyValues[index]'
-          typedValue =
-            typeof propertyValues[index] !== 'boolean'
-              ? // If 'propertyValues[index]' is not a boolean, convert it based on string values 'true' or 'false',
-                // otherwise, assign 'propertyValues[index]' directly to 'typedValue'
-                propertyValues[index] === 'true'
-                ? true
-                : false
-              : // If 'propertyValues[index]' is already a boolean, assign it directly to 'typedValue'
-                propertyValues[index];
+          typedValue = propertyValues[index] === 'true' ? true : false;
         } else if (property.type === 'number') {
           typedValue = Number(propertyValues[index]);
         }
