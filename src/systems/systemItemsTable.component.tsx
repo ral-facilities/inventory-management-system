@@ -13,6 +13,12 @@ import { useCatalogueItemIds } from '../api/catalogueItem';
 import { useItems } from '../api/item';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 
+/* Each table row needs the item and catalogue item */
+interface TableRow {
+  item: Item;
+  catalogue_item?: CatalogueItem;
+}
+
 export interface SystemItemsTableProps {
   system: System;
 }
@@ -20,37 +26,54 @@ export interface SystemItemsTableProps {
 export function SystemItemsTable(props: SystemItemsTableProps) {
   const { system } = props;
 
+  // States
+  const [tableRows, setTableRows] = React.useState<TableRow[]>([]);
+
+  // Data
   const { data: itemsData, isLoading: isLoadingItems } = useItems(
     system.id,
     undefined
   );
 
-  // Fetch catalogue item names for each item to display in the table
+  // Fetch catalogue items for each item to display in the table
   const catalogueItemIdSet = new Set<string>(
     itemsData?.map((item) => item.catalogue_item_id) ?? []
   );
   let isLoading = isLoadingItems;
   const catalogueItemList: (CatalogueItem | undefined)[] = useCatalogueItemIds(
     Array.from(catalogueItemIdSet.values())
-  ).map((obj) => {
-    isLoading = isLoading || obj.isLoading;
-    return obj.data;
+  ).map((query) => {
+    isLoading = isLoading || query.isLoading;
+    return query.data;
   });
 
-  const columns = React.useMemo<MRT_ColumnDef<Item>[]>(() => {
+  // Once loading has finished - pair up all data for the table rows
+  // If performance becomes a problem with this should remove find and fetch catalogue
+  // item for each item/implement a fullDetails or something in backend
+  useEffect(() => {
+    if (!isLoading && itemsData) {
+      setTableRows(
+        itemsData.map((itemData) => ({
+          item: itemData,
+          catalogue_item: catalogueItemList?.find(
+            (catalogueItem) => catalogueItem?.id === itemData.catalogue_item_id
+          ),
+        }))
+      );
+    }
+  }, [catalogueItemList, isLoading, itemsData]);
+
+  const columns = React.useMemo<MRT_ColumnDef<TableRow>[]>(() => {
     return [
       {
         header: 'Catalogue Item',
-        accessorFn: (row: Item) =>
-          catalogueItemList?.find(
-            (catalogueItem) => catalogueItem?.id === row.catalogue_item_id
-          )?.name,
+        accessorFn: (row) => row.catalogue_item?.name,
         id: 'catalogue_item_name',
         Cell: ({ renderedCellValue, row }) => (
           <MuiLink
             underline="hover"
             component={Link}
-            to={`/catalogue/item/${row.original.catalogue_item_id}`}
+            to={`/catalogue/item/${row.original.item.catalogue_item_id}`}
           >
             {renderedCellValue}
           </MuiLink>
@@ -59,23 +82,24 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Serial Number',
-        accessorFn: (row) => row.serial_number,
+        accessorKey: 'item.serial_number',
         size: 250,
       },
       {
         header: 'Delivered Date',
-        accessorFn: (row) => row.delivered_date,
+        accessorKey: 'item.delivered_date',
         size: 250,
         Cell: ({ row }) => (
           <Typography>
-            {row.original.delivered_date &&
-              new Date(row.original.delivered_date).toLocaleDateString()}
+            {row.original.item.delivered_date &&
+              new Date(row.original.item.delivered_date).toLocaleDateString()}
           </Typography>
         ),
       },
       {
         header: 'Is Defective',
-        accessorFn: (row) => (row.is_defective === true ? 'Yes' : 'No'),
+        accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
+        id: 'item.is_defective',
         size: 200,
         filterVariant: 'select',
       },
@@ -86,15 +110,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           const status = Object.values(UsageStatusType).find(
             (value) =>
               UsageStatusType[value as keyof typeof UsageStatusType] ===
-              row.usage_status
+              row.item.usage_status
           );
           return status || 'Unknown';
         },
+        id: 'item.usage_status',
         size: 200,
         filterVariant: 'select',
       },
     ];
-  }, [catalogueItemList]);
+  }, []);
 
   const [columnFilters, setColumnFilters] =
     React.useState<MRT_ColumnFiltersState>([]);
@@ -102,7 +127,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const noResultsTxt = 'No items found';
   const table = useMaterialReactTable({
     columns: columns,
-    data: itemsData ?? [],
+    data: tableRows,
     enableColumnOrdering: true,
     enableFacetedValues: true,
     enableColumnResizing: true,
@@ -129,7 +154,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       showGlobalFilter: true,
       pagination: { pageSize: 15, pageIndex: 0 },
     },
-    getRowId: (row) => row.id,
+    getRowId: (row) => row.item.id,
     muiTablePaperProps: {
       sx: { maxWidth: '100%' },
     },
@@ -168,22 +193,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       </Box>
     ),
   });
-
-  // See https://github.com/KevinVandy/material-react-table/issues/815 -
-  // For the loaded data to be visible have to remove the cache when loaded to
-  // force the accessor function to be called again
-  useEffect(() => {
-    if (!isLoading) {
-      // Only do this once all data has loaded
-      table.getRowModel().rows.forEach((row) => {
-        console.log(row._valuesCache);
-        // @ts-ignore
-        delete row._valuesCache['catalogue_item_name'];
-      });
-    }
-  }, [table, catalogueItemList, isLoading]);
-
-  console.log('RENDER');
 
   return <MaterialReactTable table={table} />;
 }
