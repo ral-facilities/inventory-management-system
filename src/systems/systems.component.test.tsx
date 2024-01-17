@@ -5,6 +5,9 @@ import Systems from './systems.component';
 import userEvent from '@testing-library/user-event';
 
 describe('Systems', () => {
+  // Quite a few of these take more than 5 seconds on CI
+  jest.setTimeout(10000);
+
   let user;
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(<Systems />, path);

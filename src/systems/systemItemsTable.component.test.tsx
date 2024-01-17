@@ -38,13 +38,16 @@ describe('SystemItemsTable', () => {
     const view = createView();
 
     // Name (obtained from catalouge category item)
-    await waitFor(() => {
-      expect(
-        screen.getByRole('cell', {
-          name: `Turbomolecular Pumps 42`,
-        })
-      ).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 2000 }
+    );
 
     // Rest in a snapshot
     expect(view.asFragment()).toMatchSnapshot();

@@ -12,6 +12,9 @@ import ObsoleteCatalogueItemDialog, {
 } from './obsoleteCatalogueItemDialog.component';
 
 describe('Obsolete Catalogue Item Dialog', () => {
+  // Quite a few of these take more than 10 seconds on CI
+  jest.setTimeout(15000);
+
   let props: ObsoleteCatalogueItemDialogProps;
   let user;
   let axiosPatchSpy;
@@ -112,7 +115,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
               }).length
             ).toBeGreaterThan(1);
           },
-          { timeout: 2000 }
+          { timeout: 3000 }
         );
         // Select item if requested
         if (
@@ -305,7 +308,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
         obsolete_replacement_catalogue_item_id: '12',
       }
     );
-  }, 15000); // Long running
+  });
 
   it('can make an item obsolete (only using row itself to select)', async () => {
     props.catalogueItem = getCatalogueItemById('1');
@@ -332,7 +335,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
         obsolete_replacement_catalogue_item_id: '12',
       }
     );
-  }, 12000); // Long running
+  });
 
   it('cannot select self as obsolete item', async () => {
     props.catalogueItem = getCatalogueItemById('6');
@@ -406,7 +409,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
         obsolete_replacement_catalogue_item_id: null,
       }
     );
-  }, 7500); // Long running test
+  });
 
   it('displays error if nothing changed that disappears when the reason modified', async () => {
     createView();
@@ -470,7 +473,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
           }).length
         ).toBeGreaterThan(1);
       },
-      { timeout: 2000 }
+      { timeout: 3000 }
     );
     await user.click(
       within(
@@ -488,7 +491,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
         obsolete_replacement_catalogue_item_id: '15',
       }
     );
-  }, 10000); // Long running
+  });
 
   it('can navigate back to root when selecting an item, but resets on close', async () => {
     createView();
@@ -539,5 +542,5 @@ describe('Obsolete Catalogue Item Dialog', () => {
         }).length
       ).toBe(2);
     });
-  }, 10000); // Long running
+  });
 });
