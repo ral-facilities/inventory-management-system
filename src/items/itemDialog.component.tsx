@@ -34,7 +34,7 @@ import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
 import { useAddItem } from '../api/item';
 import { AxiosError } from 'axios';
 const maxYear = 2100;
-function isValidDateTime(input: Date | string | null) {
+export function isValidDateTime(input: Date | string | null) {
   // Attempt to create a Date object from the input
   let dateObj: Date;
   if (input instanceof Date) {

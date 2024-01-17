@@ -5,10 +5,39 @@ import {
   getItemById,
   renderComponentWithBrowserRouter,
 } from '../setupTests';
-import ItemDialog, { ItemDialogProps } from './itemDialog.component';
+import ItemDialog, {
+  ItemDialogProps,
+  isValidDateTime,
+} from './itemDialog.component';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
+
+describe('isValidDateTime', () => {
+  it('should return true for a valid date string', () => {
+    const validDateString = '2022-01-17T12:00:00Z';
+    expect(isValidDateTime(validDateString)).toBe(true);
+  });
+
+  it('should return false for an invalid date string', () => {
+    const invalidDateString = 'invalid-date';
+    expect(isValidDateTime(invalidDateString)).toBe(false);
+  });
+
+  it('should return true for a valid Date object', () => {
+    const validDateObject = new Date('2022-01-17T12:00:00Z');
+    expect(isValidDateTime(validDateObject)).toBe(true);
+  });
+
+  it('should return false for an invalid Date object', () => {
+    const invalidDateObject = new Date('invalid-date');
+    expect(isValidDateTime(invalidDateObject)).toBe(false);
+  });
+
+  it('should return false for null input', () => {
+    expect(isValidDateTime(null)).toBe(false);
+  });
+});
 
 describe('ItemDialog', () => {
   let props: ItemDialogProps;
