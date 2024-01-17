@@ -36,7 +36,7 @@ export interface CatalogueCategoryDialogProps {
   open: boolean;
   onClose: () => void;
   parentId: string | null;
-  type: 'add' | 'edit';
+  type: 'add' | 'edit' | 'save as';
   selectedCatalogueCategory?: CatalogueCategory;
   resetSelectedCatalogueCategory: () => void;
 }
@@ -438,9 +438,9 @@ const CatalogueCategoryDialog = React.memo(
               variant="outlined"
               sx={{ width: '50%', mx: 1 }}
               onClick={
-                type === 'add'
-                  ? handleAddCatalogueCategory
-                  : handleEditCatalogueCategory
+                type === 'edit'
+                  ? handleEditCatalogueCategory
+                  : handleAddCatalogueCategory
               }
               disabled={
                 formError !== undefined ||

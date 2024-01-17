@@ -36,6 +36,15 @@ describe('Catalogue Items details panel', () => {
 
   it('renders details panel correctly (with obsolete replacement link)', async () => {
     props.catalogueItemIdData = getCatalogueItemById('11');
+    props.catalogueCategoryData = getCatalogueCategoryById('9');
+    const view = createView();
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders details panel correctly (None values for telephone and url)', async () => {
+    props.catalogueCategoryData = getCatalogueCategoryById('4');
+    props.catalogueItemIdData = getCatalogueItemById('33');
     const view = createView();
 
     expect(view.asFragment()).toMatchSnapshot();

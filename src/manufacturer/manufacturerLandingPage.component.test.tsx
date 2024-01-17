@@ -65,6 +65,17 @@ describe('Manufacturer Landing page', () => {
     expect(mockedUseNavigate).toBeCalledTimes(1);
     expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturer');
   });
+  it('landing page renders data correctly when optional values are null', async () => {
+    createView('/manufacturer/4');
+
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer D')).toBeInTheDocument();
+    });
+    expect(screen.getByText('URL:')).toBeInTheDocument();
+    expect(screen.getAllByText('None')[0]).toBeInTheDocument();
+    expect(screen.getByText('Telephone number:')).toBeInTheDocument();
+    expect(screen.getAllByText('None')[1]).toBeInTheDocument();
+  });
 
   it('shows no manufacturer page correctly', async () => {
     createView('/manufacturer/invalid');

@@ -91,91 +91,102 @@ function ManufacturerLandingPage() {
         )}
       </Grid>
       {manufacturerData && (
-        <Grid item xs={12}>
-          <Grid container spacing={1} flexDirection="column">
-            <Grid item xs={12}>
-              <Typography sx={{ margin: 1, textAlign: 'center' }} variant="h4">
-                {manufacturerData.name}
+        <Grid
+          container
+          spacing={1}
+          sx={{ px: '192px' }}
+          alignContent={'center'}
+          flexDirection="row"
+        >
+          <Grid item xs={12}>
+            <Typography sx={{ margin: 1, textAlign: 'center' }} variant="h4">
+              {manufacturerData.name}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} my={2}>
+            <Typography textAlign={'center'} variant="h6">
+              URL:
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            {manufacturerData.url ? (
+              <Typography
+                textAlign={'center'}
+                sx={{ mx: '8px' }}
+                variant="body1"
+                color="text.secondary"
+              >
+                <MuiLink underline="hover" href={manufacturerData.url}>
+                  {manufacturerData.url}
+                </MuiLink>
               </Typography>
-            </Grid>
-            <Grid
-              container
-              spacing={1}
-              sx={{ px: '192px' }}
-              alignContent={'center'}
+            ) : (
+              <Typography
+                sx={{ mx: '8px' }}
+                textAlign={'center'}
+                variant="body1"
+                color="text.secondary"
+              >
+                {'None'}
+              </Typography>
+            )}
+          </Grid>
+          <Grid item xs={12} my={2}>
+            <Typography textAlign={'center'} variant="h6">
+              Telephone number:
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              sx={{ mx: '8px' }}
+              textAlign={'center'}
+              variant="body1"
+              color="text.secondary"
             >
-              <Grid item xs={12} my={2}>
-                <Typography textAlign={'center'} variant="h6">
-                  URL:
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                {manufacturerData.url && (
-                  <Typography
-                    textAlign={'center'}
-                    sx={{ mx: '8px' }}
-                    variant="body1"
-                    color="text.secondary"
-                  >
-                    <MuiLink underline="hover" href={manufacturerData.url}>
-                      {manufacturerData.url}
-                    </MuiLink>
-                  </Typography>
-                )}
-              </Grid>
-              <Grid item xs={12} my={2}>
-                <Typography variant="h6">Telephone number:</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography
-                  sx={{ mx: '8px' }}
-                  variant="body1"
-                  color="text.secondary"
-                >
-                  {manufacturerData.telephone}
-                </Typography>
-              </Grid>
-              <Grid item xs={12} my={2}>
-                <Typography variant="h6">Address:</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography
-                  align="center"
-                  sx={{ mx: '8px' }}
-                  color="text.secondary"
-                >
-                  {manufacturerData.address.address_line}
-                </Typography>
-                <Typography
-                  align="center"
-                  sx={{ mx: '8px' }}
-                  color="text.secondary"
-                >
-                  {manufacturerData.address.town}
-                </Typography>
-                <Typography
-                  align="center"
-                  sx={{ mx: '8px' }}
-                  color="text.secondary"
-                >
-                  {manufacturerData.address.county}
-                </Typography>
-                <Typography
-                  align="center"
-                  sx={{ mx: '8px' }}
-                  color="text.secondary"
-                >
-                  {manufacturerData.address.postcode}
-                </Typography>
-                <Typography
-                  align="center"
-                  sx={{ mx: '8px' }}
-                  color="text.secondary"
-                >
-                  {manufacturerData.address.country}
-                </Typography>
-              </Grid>
-            </Grid>
+              {manufacturerData.telephone ?? 'None'}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} my={2}>
+            <Typography textAlign={'center'} variant="h6">
+              Address:
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              align="center"
+              sx={{ mx: '8px' }}
+              color="text.secondary"
+            >
+              {manufacturerData.address.address_line}
+            </Typography>
+            <Typography
+              align="center"
+              sx={{ mx: '8px' }}
+              color="text.secondary"
+            >
+              {manufacturerData.address.town}
+            </Typography>
+            <Typography
+              align="center"
+              sx={{ mx: '8px' }}
+              color="text.secondary"
+            >
+              {manufacturerData.address.county}
+            </Typography>
+            <Typography
+              align="center"
+              sx={{ mx: '8px' }}
+              color="text.secondary"
+            >
+              {manufacturerData.address.postcode}
+            </Typography>
+            <Typography
+              align="center"
+              sx={{ mx: '8px' }}
+              color="text.secondary"
+            >
+              {manufacturerData.address.country}
+            </Typography>
           </Grid>
         </Grid>
       )}
