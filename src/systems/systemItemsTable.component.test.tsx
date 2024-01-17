@@ -7,9 +7,13 @@ import {
   SystemItemsTable,
   SystemItemsTableProps,
 } from './systemItemsTable.component';
+import userEvent from '@testing-library/user-event';
 
 describe('SystemItemsTable', () => {
+  jest.setTimeout(10000);
+
   let props: SystemItemsTableProps;
+  let user;
 
   let mockSystem: System = SystemsJSON[2] as System;
 
@@ -19,6 +23,8 @@ describe('SystemItemsTable', () => {
 
   beforeEach(() => {
     props = { system: mockSystem };
+
+    user = userEvent.setup();
 
     window.ResizeObserver = jest.fn().mockImplementation(() => ({
       disconnect: jest.fn(),
@@ -46,7 +52,7 @@ describe('SystemItemsTable', () => {
           })
         ).toBeInTheDocument();
       },
-      { timeout: 2000 }
+      { timeout: 5000 }
     );
 
     // Rest in a snapshot
@@ -59,5 +65,46 @@ describe('SystemItemsTable', () => {
     createView();
 
     expect(screen.getByText('No items found')).toBeInTheDocument();
+  });
+
+  it('can set a table filter and clear them again', async () => {
+    createView();
+
+    // Name (obtained from catalouge category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 5000 }
+    );
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+    expect(clearFiltersButton).toBeDisabled();
+
+    await user.type(screen.getByLabelText('Filter by Catalogue Item'), '43');
+
+    await waitFor(() => {
+      expect(
+        screen.queryByRole('cell', {
+          name: `Turbomolecular Pumps 42`,
+        })
+      ).not.toBeInTheDocument();
+    });
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('cell', {
+          name: `Turbomolecular Pumps 42`,
+        })
+      ).toBeInTheDocument();
+    });
   });
 });

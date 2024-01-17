@@ -162,12 +162,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     enableTopToolbar: true,
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
-    enableColumnVirtualization: true,
+    enableColumnVirtualization: false,
     onColumnFiltersChange: setColumnFilters,
-    columnVirtualizerOptions: {
-      overscan: 4,
-      estimateSize: () => 200,
-    },
     manualFiltering: false,
     enablePagination: true,
     localization: {
