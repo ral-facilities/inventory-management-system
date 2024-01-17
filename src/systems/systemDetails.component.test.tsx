@@ -65,6 +65,9 @@ describe('SystemDetails', () => {
         (_, element) => element?.textContent === mockSystemDetails.description
       )
     ).toBeInTheDocument();
+
+    // Items table
+    expect(screen.getByRole('table')).toBeInTheDocument();
   });
 
   it('renders correctly when a system is not found', async () => {
