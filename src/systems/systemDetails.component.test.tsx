@@ -67,6 +67,22 @@ describe('SystemDetails', () => {
     ).toBeInTheDocument();
   });
 
+  it('renders correctly when a system is not found', async () => {
+    props.id = 'invalid_id';
+
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('System not found')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByText(
+        'The system you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
+      )
+    ).toBeInTheDocument();
+  });
+
   it('renders correctly when a system with only required values is selected', async () => {
     props.id = '65328f34a40ff5301575a4e5';
     createView();
@@ -77,17 +93,6 @@ describe('SystemDetails', () => {
     expect(screen.queryByText('Please select a system')).toBeFalsy();
     // One for each of location, owner and description
     expect(await screen.findAllByText('None')).toHaveLength(3);
-  });
-
-  it('renders correctly when the system is not found', async () => {
-    props.id = 'invalid_id';
-
-    createView();
-
-    await waitFor(() => {
-      expect(screen.getByText('No system selected')).toBeInTheDocument();
-    });
-    expect(screen.getByText('Please select a system')).toBeInTheDocument();
   });
 
   it('can open the edit dialog and close it again', async () => {

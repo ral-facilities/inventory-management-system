@@ -73,14 +73,16 @@ function SystemDetails(props: SystemDetailsProps) {
         }}
       >
         <Typography variant="h6" fontWeight="bold">
-          {systemLoading || system === undefined
-            ? 'No system selected'
+          {system === undefined
+            ? !systemLoading && props.id !== null
+              ? 'System not found'
+              : 'No system selected'
             : system.name}
         </Typography>
         {system !== undefined && <EditSystemButton system={system} />}
       </Box>
       <Divider role="presentation" />
-      {systemLoading || system === undefined ? (
+      {system === undefined ? (
         <Box
           sx={{
             display: 'flex',
@@ -88,7 +90,14 @@ function SystemDetails(props: SystemDetailsProps) {
             margin: 1,
           }}
         >
-          <Typography variant="h3">Please select a system</Typography>
+          {!systemLoading && props.id !== null ? (
+            <Typography>
+              The system you searched for does not exist. Please navigate home
+              by pressing the home button at the top left of your screen.
+            </Typography>
+          ) : (
+            <Typography variant="h3">Please select a system</Typography>
+          )}
         </Box>
       ) : (
         <Grid

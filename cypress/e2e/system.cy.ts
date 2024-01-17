@@ -12,6 +12,16 @@ describe('System', () => {
     cy.findByText('Giant laser').should('be.visible');
   });
 
+  it('should eventually load displaying system not found when system does not exist', () => {
+    cy.visit('/systems/invalid_id');
+
+    // Can take a moment to load due to react-query retries
+    cy.findByText('System not found', { timeout: 10000 }).should('exist');
+    cy.findByText(
+      'The system you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
+    ).should('exist');
+  });
+
   it('should be able to navigate through subsystems', () => {
     cy.findByText('No system selected').should('be.visible');
     cy.findByText('Please select a system').should('be.visible');

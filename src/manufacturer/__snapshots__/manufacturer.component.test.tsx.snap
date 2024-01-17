@@ -1252,6 +1252,87 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-3p2jr3-MuiTableCell-root"
               />
             </tr>
+            <tr
+              aria-label="Manufacturer D row"
+              class="MuiTableRow-root MuiTableRow-root css-n4v40q-MuiTableRow-root-MuiTableRow-root"
+              data-index="3"
+              role="row"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-qe40e3-MuiTableCell-root"
+              >
+                <button
+                  aria-label="Row Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="MoreHorizIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-rqdd49-MuiTableCell-root"
+              >
+                <a
+                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                  href="/manufacturer/4"
+                >
+                  Manufacturer D
+                </a>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1pj26wl-MuiTableCell-root"
+              />
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-16b8hjp-MuiTableCell-root"
+              >
+                <div
+                  style="display: inline-block;"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  >
+                    3 Example Street
+                  </p>
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  />
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  />
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  >
+                    OX1 2AB
+                  </p>
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  >
+                    United Kingdom
+                  </p>
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-6y1yps-MuiTableCell-root"
+              />
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-3p2jr3-MuiTableCell-root"
+              />
+            </tr>
           </tbody>
           <tfoot
             class="MuiTableFooter-root css-mvygzy-MuiTableFooter-root"

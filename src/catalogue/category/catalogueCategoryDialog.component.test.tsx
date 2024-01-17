@@ -611,4 +611,54 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
   });
+
+  describe('Save as Catalogue Category Dialog', () => {
+    //All of actual logic is same as add so is tested above
+    //checks that the dialog renders/opens correctly for `save as`
+
+    let axiosPostSpy;
+    let mockData: CatalogueCategory = {
+      name: 'test',
+      parent_id: null,
+      id: '1',
+      code: 'test',
+      is_leaf: false,
+    };
+
+    beforeEach(() => {
+      props = {
+        open: true,
+        onClose: onClose,
+        parentId: null,
+        type: 'save as',
+        selectedCatalogueCategory: mockData,
+        resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
+      };
+      user = userEvent.setup();
+      axiosPostSpy = jest.spyOn(axios, 'post');
+    });
+
+    it('renders correctly when saving as', async () => {
+      createView();
+
+      expect(screen.getByText('Add Catalogue Category')).toBeInTheDocument();
+    });
+
+    it('saves as a catalogue category', async () => {
+      createView();
+
+      const values = {
+        name: 'Catalogue Category name',
+      };
+      await modifyValues(values);
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        ...values,
+        is_leaf: false,
+      });
+      expect(onClose).toHaveBeenCalled();
+    });
+  });
 });

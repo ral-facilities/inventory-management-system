@@ -77,7 +77,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
               <Typography sx={{ my: 1 }} variant="h6">
                 Description:
               </Typography>
-              <Typography sx={{ mb: 1 }} variant="body1">
+              <Typography sx={{ mb: 1 }} variant="body1" color="text.secondary">
                 {catalogueItemIdData.description ?? 'None'}
               </Typography>
             </Grid>
@@ -208,37 +208,31 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 )}
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6} key={2}>
-              <Typography color="text.primary">
-                Manufacturer Address Line
+            <Grid item xs={12} sm={6}>
+              <Typography align="left" color="text.primary">
+                Telephone
               </Typography>
-              <Typography color="text.secondary">
+              <Typography align="left" color="text.secondary">
+                {manufacturerData?.telephone}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography align="left" color="text.primary">
+                Address
+              </Typography>
+              <Typography align="left" color="text.secondary">
                 {manufacturerData?.address.address_line}
               </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} key={3}>
-              <Typography color="text.primary">Manufacturer Town</Typography>
-              <Typography color="text.secondary">
-                {manufacturerData?.address.town ?? 'None'}
+              <Typography align="left" color="text.secondary">
+                {manufacturerData?.address.town}
               </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} key={4}>
-              <Typography color="text.primary">Manufacturer County</Typography>
-              <Typography color="text.secondary">
-                {manufacturerData?.address.county ?? 'None'}
+              <Typography align="left" color="text.secondary">
+                {manufacturerData?.address.county}
               </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} key={5}>
-              <Typography color="text.primary">Manufacturer Country</Typography>
-              <Typography color="text.secondary">
+              <Typography align="left" color="text.secondary">
                 {manufacturerData?.address.country}
               </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} key={6}>
-              <Typography color="text.primary">
-                Manufacturer Post/Zip code
-              </Typography>
-              <Typography color="text.secondary">
+              <Typography align="left" color="text.secondary">
                 {manufacturerData?.address.postcode}
               </Typography>
             </Grid>
