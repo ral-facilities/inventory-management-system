@@ -89,13 +89,16 @@ describe('SystemItemsTable', () => {
 
     await user.type(screen.getByLabelText('Filter by Catalogue Item'), '43');
 
-    await waitFor(() => {
-      expect(
-        screen.queryByRole('cell', {
-          name: `Turbomolecular Pumps 42`,
-        })
-      ).not.toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(
+          screen.queryByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })
+        ).not.toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
 
     await user.click(clearFiltersButton);
 

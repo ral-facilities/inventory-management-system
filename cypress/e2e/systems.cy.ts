@@ -43,6 +43,26 @@ describe('Systems', () => {
     cy.findByText('Description').should('be.visible');
   });
 
+  it('should be able to navigate to an items catalogue item landing page', () => {
+    cy.findByRole('cell', { name: 'Pulse Laser' }).click();
+    cy.findByRole('link', { name: 'Cameras 14' }).click();
+
+    // Check now on landing page for the catalogue item
+    cy.url().should('include', '/catalogue/item/33');
+    cy.findByText('Properties').should('be.visible');
+  });
+
+  it.skip("should be able to navigate to an item's landing page", () => {
+    // TODO: Once landing page PR is in
+
+    cy.findByRole('cell', { name: 'Pulse Laser' }).click();
+    cy.findByRole('link', { name: 'I26EJNJ0' }).click();
+
+    // Check now on landing page for the item
+    cy.url().should('include', '/catalogue/item/33/items/I26EJNJ0');
+    // cy.findByText('Properties').should('be.visible');
+  });
+
   it('breadcrumbs should work correctly', () => {
     cy.visit('/systems/65328f34a40ff5301575a4e9');
 
