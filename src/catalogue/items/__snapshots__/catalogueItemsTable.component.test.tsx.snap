@@ -192,7 +192,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1in:"
+                            id=":r1ib:"
                             placeholder="Filter by Name"
                             title="Filter by Name"
                             type="text"
@@ -739,7 +739,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r1ip:"
+                    aria-controls=":r1id:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"

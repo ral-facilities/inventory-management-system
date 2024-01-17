@@ -47,12 +47,12 @@ describe('Items Table', () => {
     jest.clearAllMocks();
   });
 
-  it('renders correctly part 1 due column virtaulisation', async () => {
+  it('renders correctly part 1 due column virtualisation', async () => {
     const view = createView();
     expect(view.asFragment()).toMatchSnapshot();
   });
 
-  it('renders correctly part 2 due column virtaulisation', async () => {
+  it('renders correctly part 2 due column virtualisation', async () => {
     const view = createView();
     await ensureColumnsVisible([
       'Notes',

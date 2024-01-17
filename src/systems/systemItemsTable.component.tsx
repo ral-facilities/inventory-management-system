@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { useCatalogueItemIds } from '../api/catalogueItem';
 import { useItems } from '../api/item';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
+import ItemsDetailsPanel from '../items/ItemsDetailsPanel.component';
 
 /* Each table row needs the item and catalogue item */
 interface TableRowData {
@@ -216,6 +217,13 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         </Button>
       </Box>
     ),
+    renderDetailPanel: ({ row }) =>
+      row.original.catalogueItem !== undefined ? (
+        <ItemsDetailsPanel
+          itemData={row.original.item}
+          catalogueItemIdData={row.original.catalogueItem}
+        />
+      ) : undefined,
   });
 
   return <MaterialReactTable table={table} />;
