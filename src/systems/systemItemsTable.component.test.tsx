@@ -55,6 +55,11 @@ describe('SystemItemsTable', () => {
       { timeout: 4000 }
     );
 
+    // Ensure no loading bars visible
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     // Rest in a snapshot
     expect(view.asFragment()).toMatchSnapshot();
   });
