@@ -26,7 +26,7 @@ describe('Manufacturer', () => {
     expect(screen.getByText('Name')).toBeInTheDocument();
     expect(screen.getByText('URL')).toBeInTheDocument();
     expect(screen.getByText('Address')).toBeInTheDocument();
-    expect(screen.getByText('Telephone')).toBeInTheDocument();
+    expect(screen.getByText('Telephone number')).toBeInTheDocument();
   });
 
   it('renders table data correctly', async () => {

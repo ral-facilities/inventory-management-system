@@ -59,12 +59,12 @@ export function ItemsTable(props: ItemTableProps) {
     };
     return [
       {
-        header: 'Landing Page',
+        header: 'ID',
         size: 250,
-
+        accessorFn: (row) => row.id,
         Cell: ({ row }) => (
           <MuiLink underline="hover" component={Link} to={row.original.id}>
-            Click here
+            {row.original.id}
           </MuiLink>
         ),
       },
@@ -203,6 +203,7 @@ export function ItemsTable(props: ItemTableProps) {
   const table = useMaterialReactTable({
     columns: dense
       ? [
+          { ...columns[0], size: 400 },
           { ...columns[1], size: 400 },
           { ...columns[5], size: 400 },
           { ...columns[6], size: 400 },
@@ -304,7 +305,6 @@ export function ItemsTable(props: ItemTableProps) {
           <ItemsDetailsPanel
             itemData={row.original}
             catalogueItemIdData={catalogueItem}
-            catalogueCategoryData={catalogueCategory}
           />
         )
       : undefined,

@@ -120,10 +120,10 @@ describe('Items Table', () => {
     await waitFor(() => {
       expect(screen.getByText(serialNumber)).toBeInTheDocument();
     });
-    await ensureColumnsVisible(['Landing Page']);
+    await ensureColumnsVisible(['ID']);
 
-    const url = screen.queryAllByText('Click here');
-    expect(url[0]).toHaveAttribute('href', '/KvT2Ox7n');
+    const id = screen.getByText('KvT2Ox7n');
+    expect(id).toHaveAttribute('href', '/KvT2Ox7n');
   });
 
   it('renders the dense table correctly', async () => {

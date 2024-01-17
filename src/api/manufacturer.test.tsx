@@ -146,6 +146,16 @@ describe('manufacturer api functions', () => {
           },
           telephone: '07934303412',
         },
+        {
+          id: '4',
+          name: 'Manufacturer D',
+          code: 'manufacturer-d',
+          address: {
+            address_line: '3 Example Street',
+            postcode: 'OX1 2AB',
+            country: 'United Kingdom',
+          },
+        },
       ]);
     });
 

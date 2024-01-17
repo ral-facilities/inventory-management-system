@@ -7,8 +7,6 @@ import {
   Tabs,
   Typography,
 } from '@mui/material';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import { Link } from 'react-router-dom';
 import {
   CatalogueCategory,
@@ -43,8 +41,7 @@ export interface CatalogueItemsDetailsPanelProps {
 }
 
 function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
-  const { catalogueItemIdData, catalogueCategoryData, manufacturerData } =
-    props;
+  const { catalogueItemIdData, manufacturerData } = props;
   const [tabValue, setTabValue] = React.useState(0);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -187,26 +184,12 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
             {catalogueItemIdData.properties &&
               catalogueItemIdData.properties.map((property, index) => (
                 <Grid item xs={12} sm={6} key={index}>
-                  <ListItem
-                    style={{
-                      justifyContent: 'flex-start',
-                      display: 'flex',
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      padding: 0,
-                    }}
-                  >
-                    <ListItemText
-                      primary={`${property.name} ${
-                        catalogueCategoryData?.catalogue_item_properties?.[
-                          index
-                        ].unit
-                          ? `(${catalogueCategoryData?.catalogue_item_properties?.[index].unit})`
-                          : ''
-                      }`}
-                      secondary={String(property.value)}
-                    />
-                  </ListItem>
+                  <Typography color="text.primary">{`${property.name} ${
+                    property.unit ? `(${property.unit})` : ''
+                  }`}</Typography>
+                  <Typography color="text.secondary">
+                    {String(property.value)}
+                  </Typography>
                 </Grid>
               ))}
           </Grid>
@@ -237,37 +220,31 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 )}
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6} key={2}>
-              <Typography color="text.primary">
-                Manufacturer Address Line
+            <Grid item xs={12} sm={6}>
+              <Typography align="left" color="text.primary">
+                Telephone number
               </Typography>
-              <Typography color="text.secondary">
+              <Typography align="left" color="text.secondary">
+                {manufacturerData?.telephone ?? 'None'}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography align="left" color="text.primary">
+                Address
+              </Typography>
+              <Typography align="left" color="text.secondary">
                 {manufacturerData?.address.address_line}
               </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} key={3}>
-              <Typography color="text.primary">Manufacturer Town</Typography>
-              <Typography color="text.secondary">
-                {manufacturerData?.address.town ?? 'None'}
+              <Typography align="left" color="text.secondary">
+                {manufacturerData?.address.town}
               </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} key={4}>
-              <Typography color="text.primary">Manufacturer County</Typography>
-              <Typography color="text.secondary">
-                {manufacturerData?.address.county ?? 'None'}
+              <Typography align="left" color="text.secondary">
+                {manufacturerData?.address.county}
               </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} key={5}>
-              <Typography color="text.primary">Manufacturer Country</Typography>
-              <Typography color="text.secondary">
+              <Typography align="left" color="text.secondary">
                 {manufacturerData?.address.country}
               </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} key={6}>
-              <Typography color="text.primary">
-                Manufacturer Post/Zip code
-              </Typography>
-              <Typography color="text.secondary">
+              <Typography align="left" color="text.secondary">
                 {manufacturerData?.address.postcode}
               </Typography>
             </Grid>
