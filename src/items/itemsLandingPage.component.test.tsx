@@ -183,4 +183,33 @@ describe('Catalogue Items Landing Page', () => {
     expect(mockedUseNavigate).toBeCalledTimes(1);
     expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue');
   });
+  it('landing page renders data correctly when optional values are null', async () => {
+    createView('/catalogue/item/33/items/I26EJNJ0');
+
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 14')).toBeInTheDocument();
+    });
+
+    expect(screen.getByLabelText('Close item details')).toBeInTheDocument();
+
+    const toggleButtonDetails = screen.getByLabelText('Close item details');
+
+    await user.click(toggleButtonDetails);
+
+    expect(screen.getByLabelText('Close item properties')).toBeInTheDocument();
+
+    const toggleButtonProperties = screen.getByLabelText(
+      'Close item properties'
+    );
+
+    await user.click(toggleButtonProperties);
+
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer D')).toBeInTheDocument();
+    });
+    expect(screen.getByText('URL')).toBeInTheDocument();
+    expect(screen.getAllByText('None')[0]).toBeInTheDocument();
+    expect(screen.getByText('Telephone number')).toBeInTheDocument();
+    expect(screen.getAllByText('None')[1]).toBeInTheDocument();
+  });
 });

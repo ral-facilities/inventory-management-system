@@ -1,7 +1,6 @@
 import { screen } from '@testing-library/react';
 import React from 'react';
 import {
-  getCatalogueCategoryById,
   getCatalogueItemById,
   getItemById,
   renderComponentWithBrowserRouter,
@@ -22,7 +21,6 @@ describe('Catalogue Items details panel', () => {
   beforeEach(() => {
     props = {
       catalogueItemIdData: getCatalogueItemById('1'),
-      catalogueCategoryData: getCatalogueCategoryById('4'),
       itemData: getItemById('KvT2Ox7n'),
     };
 
@@ -50,6 +48,14 @@ describe('Catalogue Items details panel', () => {
     const view = createView();
 
     await user.click(screen.getByRole('tab', { name: 'Properties' }));
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders details panel correctly (None values for telephone and url)', async () => {
+    props.itemData = getItemById('I26EJNJ0');
+
+    const view = createView();
 
     expect(view.asFragment()).toMatchSnapshot();
   });

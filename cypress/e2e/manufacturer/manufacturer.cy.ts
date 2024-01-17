@@ -11,9 +11,9 @@ describe('Manufacturer', () => {
     cy.findByText('Actions').should('be.visible');
     cy.findByText('Name').should('be.visible');
     cy.findByText('URL').should('be.visible');
-    cy.findByText('Telephone').scrollIntoView();
+    cy.findByText('Telephone number').scrollIntoView();
     cy.findByText('Address').should('be.visible');
-    cy.findByText('Telephone').should('be.visible');
+    cy.findByText('Telephone number').should('be.visible');
   });
 
   it('should render manufacturer data', () => {
