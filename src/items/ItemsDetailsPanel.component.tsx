@@ -9,12 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import {
-  CatalogueCategory,
-  CatalogueItem,
-  Item,
-  UsageStatusType,
-} from '../app.types';
+import { CatalogueItem, Item, UsageStatusType } from '../app.types';
 import { useManufacturer } from '../api/manufacturer';
 
 function TabPanel(props: any) {
@@ -40,11 +35,10 @@ function TabPanel(props: any) {
 export interface ItemsDetailsPanelProps {
   itemData: Item;
   catalogueItemIdData: CatalogueItem;
-  catalogueCategoryData: CatalogueCategory;
 }
 
 function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
-  const { catalogueItemIdData, catalogueCategoryData, itemData } = props;
+  const { catalogueItemIdData, itemData } = props;
   const [tabValue, setTabValue] = React.useState(0);
   const { data: manufacturerData } = useManufacturer(
     catalogueItemIdData.manufacturer_id
@@ -163,15 +157,11 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
               itemData.properties.map((property, index) => {
                 return (
                   <Grid item xs={12} sm={6} key={index}>
-                    <Typography align="left" color="text.primary">
-                      {`${property.name} ${
-                        catalogueCategoryData?.catalogue_item_properties?.[
-                          index
-                        ].unit
-                          ? `(${catalogueCategoryData?.catalogue_item_properties?.[index].unit})  `
-                          : ''
-                      }`}
-                    </Typography>
+                    <Typography align="left" color="text.primary">{`${
+                      property.name
+                    } ${
+                      property.unit ? `(${property.unit})` : ''
+                    }`}</Typography>
                     <Box sx={{ display: 'flex' }}>
                       <Typography align="left" color="text.secondary">
                         {String(property.value)}
