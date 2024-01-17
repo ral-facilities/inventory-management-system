@@ -1,7 +1,6 @@
 import { screen } from '@testing-library/react';
 import React from 'react';
 import {
-  getCatalogueCategoryById,
   getCatalogueItemById,
   getItemById,
   renderComponentWithBrowserRouter,
@@ -22,7 +21,6 @@ describe('Catalogue Items details panel', () => {
   beforeEach(() => {
     props = {
       catalogueItemIdData: getCatalogueItemById('1'),
-      catalogueCategoryData: getCatalogueCategoryById('4'),
       itemData: getItemById('KvT2Ox7n'),
     };
 

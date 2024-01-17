@@ -305,7 +305,6 @@ export function ItemsTable(props: ItemTableProps) {
           <ItemsDetailsPanel
             itemData={row.original}
             catalogueItemIdData={catalogueItem}
-            catalogueCategoryData={catalogueCategory}
           />
         )
       : undefined,
