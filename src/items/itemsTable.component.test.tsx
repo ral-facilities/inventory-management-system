@@ -188,6 +188,36 @@ describe('Items Table', () => {
     });
   });
 
+  it('opens the add catalogue item dialog for save as (no delivered date or warranty date)', async () => {
+    props.catalogueCategory = getCatalogueCategoryById('4');
+    props.catalogueItem = getCatalogueItemById('3');
+    createView();
+
+    const serialNumber = 'A5Hcs053';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[3]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Save as')).toBeInTheDocument();
+    });
+
+    const saveAsButton = screen.getByText('Save as');
+    await user.click(saveAsButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
   it('renders the dense table correctly', async () => {
     props.dense = true;
     window.Element.prototype.getBoundingClientRect = jest

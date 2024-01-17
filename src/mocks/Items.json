@@ -476,10 +476,10 @@
     "purchase_order_number": "J2g8HQaO",
     "is_defective": true,
     "usage_status": 2,
-    "warranty_end_date": "2023-12-20T00:00:00.000Z",
+    "warranty_end_date": null,
     "asset_number": "rSPQyUaSSO",
     "serial_number": "6LXwzWIBJxcK",
-    "delivered_date": "2023-04-01T23:00:00.000Z",
+    "delivered_date": null,
     "notes": "JoXWN9tt0v0qRtJtmOeo",
     "properties": [
       {

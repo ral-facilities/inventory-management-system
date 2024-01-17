@@ -81,7 +81,9 @@ export function matchCatalogueItemProperties(
             : ''
         );
       } else {
-        result.push(matchingItem.value ? String(matchingItem.value) : null);
+        result.push(
+          matchingItem.value !== null ? String(matchingItem.value) : null
+        );
       }
     } else {
       // If there is no matching item, push null
