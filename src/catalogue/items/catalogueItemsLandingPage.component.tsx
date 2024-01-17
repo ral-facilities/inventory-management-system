@@ -383,10 +383,10 @@ function CatalogueItemsLandingPage() {
                       </Grid>
                       <Grid item xs={12} sm={6} md={4}>
                         <Typography align="left" color="text.primary">
-                          Telephone
+                          Telephone number
                         </Typography>
                         <Typography align="left" color="text.secondary">
-                          {manufacturer?.telephone}
+                          {manufacturer?.telephone ?? 'None'}
                         </Typography>
                       </Grid>
                       <Grid item xs={12} sm={6} md={4}>

@@ -52,6 +52,14 @@ describe('Catalogue Items details panel', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
+  it('renders details panel correctly (None values for telephone and url)', async () => {
+    props.itemData = getItemById('I26EJNJ0');
+
+    const view = createView();
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
   it('renders manufacturer panel correctly', async () => {
     const view = createView();
     await user.click(screen.getByRole('tab', { name: 'Manufacturer' }));
