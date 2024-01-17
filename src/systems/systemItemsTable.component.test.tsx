@@ -52,7 +52,7 @@ describe('SystemItemsTable', () => {
           })
         ).toBeInTheDocument();
       },
-      { timeout: 5000 }
+      { timeout: 4000 }
     );
 
     // Rest in a snapshot
@@ -60,7 +60,7 @@ describe('SystemItemsTable', () => {
   });
 
   it('renders correctly when there are no items to display', async () => {
-    props.system.id = 'random';
+    props.system = { ...props.system, id: 'invalid' };
 
     createView();
 
@@ -79,7 +79,7 @@ describe('SystemItemsTable', () => {
           })
         ).toBeInTheDocument();
       },
-      { timeout: 5000 }
+      { timeout: 4000 }
     );
 
     const clearFiltersButton = screen.getByRole('button', {
@@ -99,12 +99,15 @@ describe('SystemItemsTable', () => {
 
     await user.click(clearFiltersButton);
 
-    await waitFor(() => {
-      expect(
-        screen.getByRole('cell', {
-          name: `Turbomolecular Pumps 42`,
-        })
-      ).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
   });
 });

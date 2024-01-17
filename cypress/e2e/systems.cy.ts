@@ -1,4 +1,4 @@
-describe('System', () => {
+describe('Systems', () => {
   beforeEach(() => {
     cy.visit('/systems');
   });
