@@ -29,6 +29,7 @@ describe('Items Table', () => {
     props = {
       catalogueCategory: getCatalogueCategoryById('4'),
       catalogueItem: getCatalogueItemById('1'),
+      dense: false,
     };
     window.ResizeObserver = jest.fn().mockImplementation(() => ({
       disconnect: jest.fn(),
@@ -111,5 +112,19 @@ describe('Items Table', () => {
     await waitFor(() => {
       expect(screen.getByText('vYs9Vxx6yWbn')).toBeInTheDocument();
     });
+  });
+
+  it('renders the dense table correctly', async () => {
+    props.dense = true;
+    window.Element.prototype.getBoundingClientRect = jest
+      .fn()
+      .mockReturnValue({ height: 100, width: 400 });
+    const view = createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('5YUQDDjKpz2z')).toBeInTheDocument();
+    });
+
+    expect(view.asFragment()).toMatchSnapshot();
   });
 });
