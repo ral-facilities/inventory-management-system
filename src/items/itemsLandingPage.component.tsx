@@ -174,7 +174,7 @@ function ItemsLandingPage() {
                       Warranty End Date
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {itemData?.warranty_end_date
+                      {itemData.warranty_end_date
                         ? new Date(
                             itemData.warranty_end_date
                           ).toLocaleDateString()
