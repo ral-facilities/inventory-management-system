@@ -34,7 +34,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
         </button>
         <nav
           aria-label="breadcrumb"
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-h1b7t3-MuiTypography-root-MuiBreadcrumbs-root"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
         >
           <ol
             class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
