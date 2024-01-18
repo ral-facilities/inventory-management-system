@@ -55,8 +55,8 @@ export function Items() {
         sx={{
           display: 'flex',
           justifyContent: 'left',
-          paddingLeft: '4px',
-          py: '20px',
+          paddingLeft: 0.5,
+          py: 2.5,
           position: 'sticky',
           top: 0,
           backgroundColor: 'background.default',
