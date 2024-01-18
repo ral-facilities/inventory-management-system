@@ -11,7 +11,7 @@ describe('Catalogue Items Landing Page', () => {
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(
       <Routes>
-        <Route path={paths.item} element={<ItemsLandingPage />}></Route>
+        <Route path={paths.item} element={<ItemsLandingPage />} />
       </Routes>,
       path
     );
