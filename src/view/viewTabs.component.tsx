@@ -19,10 +19,10 @@ export const paths = {
   catalogue: '/catalogue/*',
   systems: '/systems/*',
   manufacturers: '/manufacturer',
-  manufacturer: '/manufacturer/:id',
-  catalogueItem: '/catalogue/item/:id',
-  items: '/catalogue/item/:id/items',
-  item: '/catalogue/item/:id/items/:id',
+  manufacturer: '/manufacturer/:manufacturer_id',
+  catalogueItem: '/catalogue/item/:catalogue_item_id',
+  items: '/catalogue/item/:catalogue_item_id/items',
+  item: '/catalogue/item/:catalogue_item_id/items/:item_id',
 };
 
 interface TabPanelProps {
@@ -97,19 +97,16 @@ function ViewTabs() {
 
   const routing = (
     <Routes location={location}>
-      <Route path={paths.catalogue} element={<Catalogue />}></Route>
+      <Route path={paths.catalogue} element={<Catalogue />} />
       <Route
         path={paths.catalogueItem}
         element={<CatalogueItemsLandingPage />}
-      ></Route>
-      <Route path={paths.systems} element={<Systems />}></Route>
-      <Route path={paths.manufacturers} element={<Manufacturer />}></Route>
-      <Route
-        path={paths.manufacturer}
-        element={<ManufacturerLandingPage />}
-      ></Route>
-      <Route path={paths.items} element={<Items />}></Route>
-      <Route path={paths.item} element={<ItemsLandingPage />}></Route>
+      />
+      <Route path={paths.systems} element={<Systems />} />
+      <Route path={paths.manufacturers} element={<Manufacturer />} />
+      <Route path={paths.manufacturer} element={<ManufacturerLandingPage />} />
+      <Route path={paths.items} element={<Items />} />
+      <Route path={paths.item} element={<ItemsLandingPage />} />
     </Routes>
   );
 

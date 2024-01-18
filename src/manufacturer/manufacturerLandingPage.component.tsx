@@ -16,7 +16,7 @@ import { paths } from '../view/viewTabs.component';
 import { BreadcrumbsInfo } from '../app.types';
 
 function ManufacturerLandingPage() {
-  const { id: manufacturerId } = useParams();
+  const { manufacturer_id: manufacturerId } = useParams();
 
   const { data: manufacturerData, isLoading: manufacturerDataLoading } =
     useManufacturer(manufacturerId);
@@ -92,6 +92,7 @@ function ManufacturerLandingPage() {
       </Grid>
       {manufacturerData && (
         <Grid
+          item
           container
           spacing={1}
           sx={{ px: '192px' }}

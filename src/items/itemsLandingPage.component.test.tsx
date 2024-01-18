@@ -15,7 +15,7 @@ describe('Catalogue Items Landing Page', () => {
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(
       <Routes>
-        <Route path={paths.item} element={<ItemsLandingPage />}></Route>
+        <Route path={paths.item} element={<ItemsLandingPage />} />
       </Routes>,
       path
     );
@@ -149,7 +149,7 @@ describe('Catalogue Items Landing Page', () => {
     spy.mockRestore();
   });
 
-  it('navigates to catalogue category table view', async () => {
+  it('navigates to items table view', async () => {
     createView('/catalogue/item/1/items/KvT2Ox7n');
     await waitFor(() => {
       expect(

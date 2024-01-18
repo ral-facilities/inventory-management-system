@@ -12,7 +12,7 @@ import { BreadcrumbsInfo } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
 export function Items() {
-  const { id: catalogueItemId } = useParams();
+  const { catalogue_item_id: catalogueItemId } = useParams();
   const { data: catalogueItem, isLoading: catalogueItemLoading } =
     useCatalogueItem(catalogueItemId);
   const { data: catalogueCategory } = useCatalogueCategory(
