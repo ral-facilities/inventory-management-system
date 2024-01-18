@@ -128,7 +128,7 @@ describe('catalogue items api functions', () => {
     });
   });
 
-  describe('useDeleteCatalogueItem', () => {
+  describe('useDeleteItem', () => {
     it('posts a request to delete a catalogue Item and returns successful response', async () => {
       const { result } = renderHook(() => useDeleteItem(), {
         wrapper: hooksWrapperWithProviders(),
