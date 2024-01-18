@@ -334,7 +334,7 @@ export function ItemsTable(props: ItemTableProps) {
       return [
         <MenuItem
           key={1}
-          aria-label={`Saveitem ${row.original.id} as`}
+          aria-label={`Save item ${row.original.id} as`}
           onClick={() => {
             setItemsDialogType('save as');
             table.setCreatingRow(row);
