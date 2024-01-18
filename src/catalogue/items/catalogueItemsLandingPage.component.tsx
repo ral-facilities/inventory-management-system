@@ -99,6 +99,7 @@ function CatalogueItemsLandingPage() {
           },
         }}
         item
+        container
       >
         <Grid item sx={{ py: '20px' }}>
           <Breadcrumbs

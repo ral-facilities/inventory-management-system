@@ -96,6 +96,7 @@ function ItemsLandingPage() {
             display: 'none',
           },
         }}
+        container
         item
       >
         <Grid item sx={{ py: 2.5 }}>
