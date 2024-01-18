@@ -3,11 +3,21 @@ import { renderComponentWithMemoryRouter } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import ManufacturerLandingPage from './manufacturerLandingPage.component';
 import userEvent from '@testing-library/user-event';
+import { Route, Routes } from 'react-router-dom';
+import { paths } from '../view/viewTabs.component';
 
 describe('Manufacturer Landing page', () => {
   let user;
   const createView = (path: string) => {
-    return renderComponentWithMemoryRouter(<ManufacturerLandingPage />, path);
+    return renderComponentWithMemoryRouter(
+      <Routes>
+        <Route
+          path={paths.manufacturer}
+          element={<ManufacturerLandingPage />}
+        />
+      </Routes>,
+      path
+    );
   };
   beforeEach(() => {
     user = userEvent.setup();

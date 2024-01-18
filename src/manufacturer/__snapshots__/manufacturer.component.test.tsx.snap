@@ -246,7 +246,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-1n7ptpu-MuiTable-root"
-          style="--header-mrt_row_actions-size: 60; --col-mrt_row_actions-size: 60; --header-Name-size: 400; --col-Name-size: 400; --header-URL-size: 500; --col-URL-size: 500; --header-Address-size: 650; --col-Address-size: 650; --header-Telephone-size: 250; --col-Telephone-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+          style="--header-mrt_row_actions-size: 60; --col-mrt_row_actions-size: 60; --header-Name-size: 400; --col-Name-size: 400; --header-URL-size: 500; --col-URL-size: 500; --header-Address-size: 650; --col-Address-size: 650; --header-Telephone_number-size: 250; --col-Telephone_number-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
@@ -778,7 +778,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1jksafi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1cms971-MuiTableCell-root"
                 colspan="1"
                 scope="col"
               >
@@ -790,17 +790,17 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   >
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
-                      title="Telephone"
+                      title="Telephone number"
                     >
-                      Telephone
+                      Telephone number
                     </div>
                     <span
-                      aria-label="Sort by Telephone ascending"
+                      aria-label="Sort by Telephone number ascending"
                       class="MuiBadge-root css-1c32n2y-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
-                        aria-label="Sort by Telephone ascending"
+                        aria-label="Sort by Telephone number ascending"
                         class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
@@ -898,12 +898,12 @@ exports[`Manufacturer renders table data correctly 1`] = `
                         >
                           <input
                             aria-invalid="false"
-                            aria-label="Filter by Telephone"
+                            aria-label="Filter by Telephone number"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                             id=":r1g:"
-                            placeholder="Filter by Telephone"
-                            title="Filter by Telephone"
+                            placeholder="Filter by Telephone number"
+                            title="Filter by Telephone number"
                             type="text"
                             value=""
                           />
@@ -1054,7 +1054,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-6y1yps-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1bv03c4-MuiTableCell-root"
               >
                 07334893348
               </td>
@@ -1149,7 +1149,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-6y1yps-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1bv03c4-MuiTableCell-root"
               >
                 07294958549
               </td>
@@ -1244,7 +1244,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-6y1yps-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1bv03c4-MuiTableCell-root"
               >
                 07934303412
               </td>
@@ -1327,7 +1327,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-6y1yps-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1bv03c4-MuiTableCell-root"
               />
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-3p2jr3-MuiTableCell-root"

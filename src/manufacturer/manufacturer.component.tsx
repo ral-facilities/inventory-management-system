@@ -97,7 +97,7 @@ function ManufacturerComponent() {
         ),
       },
       {
-        header: 'Telephone',
+        header: 'Telephone number',
         accessorFn: (row) => row.telephone,
         size: 250,
       },

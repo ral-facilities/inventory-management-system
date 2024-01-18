@@ -114,6 +114,18 @@ describe('Items Table', () => {
     });
   });
 
+  it('navigates to catalogue item landing page', async () => {
+    createView();
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    await ensureColumnsVisible(['ID']);
+
+    const id = screen.getByText('KvT2Ox7n');
+    expect(id).toHaveAttribute('href', '/KvT2Ox7n');
+  });
+
   it('renders the dense table correctly', async () => {
     props.dense = true;
     window.Element.prototype.getBoundingClientRect = jest

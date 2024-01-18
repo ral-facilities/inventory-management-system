@@ -6,16 +6,14 @@ import {
   Link as MuiLink,
   LinearProgress,
 } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useManufacturer } from '../api/manufacturer';
 
 import ManufacturerDialog from './manufacturerDialog.component';
 import React from 'react';
 
 function ManufacturerLandingPage() {
-  const location = useLocation();
-
-  const manufacturerId = location.pathname.replace('/manufacturer/', '');
+  const { manufacturer_id: manufacturerId } = useParams();
 
   const { data: manufacturerData, isLoading: manufacturerDataLoading } =
     useManufacturer(manufacturerId);
@@ -64,6 +62,7 @@ function ManufacturerLandingPage() {
       </Grid>
       {manufacturerData && (
         <Grid
+          item
           container
           spacing={1}
           sx={{ px: '192px' }}

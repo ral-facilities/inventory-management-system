@@ -200,10 +200,10 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography align="left" color="text.primary">
-                Telephone
+                Telephone number
               </Typography>
               <Typography align="left" color="text.secondary">
-                {manufacturerData?.telephone}
+                {manufacturerData?.telephone ?? 'None'}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
