@@ -139,7 +139,7 @@ describe('Catalogue Items Landing Page', () => {
     spy.mockRestore();
   });
 
-  it('navigates to catalogue category table view', async () => {
+  it('navigates to items table view', async () => {
     createView('/catalogue/item/1/items/KvT2Ox7n');
     await waitFor(() => {
       expect(
