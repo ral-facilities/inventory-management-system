@@ -86,7 +86,7 @@ function ItemsLandingPage() {
       <Grid
         sx={{
           justifyContent: 'left',
-          paddingLeft: '4px',
+          paddingLeft: 0.5,
           position: 'sticky',
           top: 0,
           backgroundColor: 'background.default',
