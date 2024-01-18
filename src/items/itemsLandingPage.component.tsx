@@ -358,7 +358,7 @@ function ItemsLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {itemData?.notes}
+              {itemData.notes}
             </Typography>
           </Grid>
         </Grid>
