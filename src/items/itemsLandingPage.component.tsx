@@ -150,7 +150,7 @@ function ItemsLandingPage() {
                         Serial Number
                       </Typography>
                       <Typography align="left" color="text.secondary">
-                        {itemData?.serial_number ?? 'None'}
+                        {itemData.serial_number ?? 'None'}
                       </Typography>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
