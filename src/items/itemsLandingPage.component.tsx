@@ -197,7 +197,7 @@ function ItemsLandingPage() {
                       Is Defective
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {itemData?.is_defective ? 'Yes' : 'No'}
+                      {itemData.is_defective ? 'Yes' : 'No'}
                     </Typography>
                   </Grid>
 
