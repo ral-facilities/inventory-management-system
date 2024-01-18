@@ -195,7 +195,7 @@ function ItemsLandingPage() {
                       Purchase Order Number
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {itemData?.purchase_order_number ?? 'None'}
+                      {itemData.purchase_order_number ?? 'None'}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
@@ -203,7 +203,7 @@ function ItemsLandingPage() {
                       Warranty End Date
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {itemData?.warranty_end_date
+                      {itemData.warranty_end_date
                         ? new Date(
                             itemData.warranty_end_date
                           ).toLocaleDateString()
@@ -216,7 +216,7 @@ function ItemsLandingPage() {
                       Delivered Date
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {itemData?.delivered_date
+                      {itemData.delivered_date
                         ? new Date(itemData.delivered_date).toLocaleDateString()
                         : 'None'}
                     </Typography>
@@ -226,7 +226,7 @@ function ItemsLandingPage() {
                       Is Defective
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {itemData?.is_defective ? 'Yes' : 'No'}
+                      {itemData.is_defective ? 'Yes' : 'No'}
                     </Typography>
                   </Grid>
 
@@ -387,7 +387,7 @@ function ItemsLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {itemData?.notes}
+              {itemData.notes}
             </Typography>
           </Grid>
         </Grid>
