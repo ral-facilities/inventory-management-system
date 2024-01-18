@@ -158,7 +158,7 @@ function ItemsLandingPage() {
                         Asset Number
                       </Typography>
                       <Typography align="left" color="text.secondary">
-                        {itemData?.asset_number ?? 'None'}
+                        {itemData.asset_number ?? 'None'}
                       </Typography>
                     </Grid>
 
