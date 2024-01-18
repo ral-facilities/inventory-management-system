@@ -14,7 +14,7 @@ describe('Catalogue Items Landing Page', () => {
         <Route
           path={paths.catalogueItem}
           element={<CatalogueItemsLandingPage />}
-        ></Route>
+        />
       </Routes>,
       path
     );
