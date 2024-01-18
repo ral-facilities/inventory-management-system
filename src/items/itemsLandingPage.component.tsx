@@ -166,7 +166,7 @@ function ItemsLandingPage() {
                       Purchase Order Number
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {itemData?.purchase_order_number ?? 'None'}
+                      {itemData.purchase_order_number ?? 'None'}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
