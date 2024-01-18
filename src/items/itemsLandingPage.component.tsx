@@ -116,7 +116,7 @@ function ItemsLandingPage() {
               </Typography>
             </Grid>
 
-            <Grid container spacing={1} sx={{ px: '192px' }}>
+            <Grid item container spacing={1} sx={{ px: '192px' }}>
               <Grid
                 item
                 xs={12}
