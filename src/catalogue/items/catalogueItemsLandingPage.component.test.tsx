@@ -5,7 +5,11 @@ import CatalogueItemsLandingPage from './catalogueItemsLandingPage.component';
 import userEvent from '@testing-library/user-event';
 import { Route, Routes } from 'react-router-dom';
 import { paths } from '../../view/viewTabs.component';
-
+const mockedUseNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedUseNavigate,
+}));
 describe('Catalogue Items Landing Page', () => {
   let user;
   const createView = (path: string) => {
@@ -23,6 +27,9 @@ describe('Catalogue Items Landing Page', () => {
   beforeEach(() => {
     user = userEvent.setup();
   });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('renders text correctly (only basic details given)', async () => {
     createView('/catalogue/item/1');
@@ -34,7 +41,7 @@ describe('Catalogue Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByRole('link', {
-          name: 'Back to Cameras table view',
+          name: 'cameras',
         })
       ).toBeInTheDocument();
     });
@@ -57,7 +64,7 @@ describe('Catalogue Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByRole('link', {
-          name: 'Back to Cameras table view',
+          name: 'cameras',
         })
       ).toBeInTheDocument();
     });
@@ -80,14 +87,10 @@ describe('Catalogue Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          `This item doesn't exist. Please click the Home button to navigate to the catalogue home`
+          `This catalogue item doesn't exist. Please click the Home button on the top left of you screen to navigate to the catalogue home`
         )
       ).toBeInTheDocument();
     });
-    const editButton = screen.getByRole('button', { name: 'Edit' });
-    expect(editButton).toBeDisabled();
-    const homeButton = screen.getByRole('link', { name: 'Home' });
-    expect(homeButton).toBeInTheDocument();
   });
 
   it('toggles the properties so it is either visible or hidden', async () => {
@@ -241,14 +244,37 @@ describe('Catalogue Items Landing Page', () => {
     createView('/catalogue/item/89');
     await waitFor(() => {
       expect(
-        screen.getByRole('link', { name: 'Back to Energy Meters table view' })
+        screen.getByRole('link', { name: 'energy-meters' })
       ).toBeInTheDocument();
     });
 
-    const url = screen.getByRole('link', {
-      name: 'Back to Energy Meters table view',
+    const breadcrumb = screen.getByRole('link', {
+      name: 'energy-meters',
     });
-    expect(url).toHaveAttribute('href', '/catalogue/5');
+
+    await user.click(breadcrumb);
+
+    expect(mockedUseNavigate).toBeCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue/5');
+  });
+
+  it('navigates back to the root directory', async () => {
+    createView('/catalogue/item/89');
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'energy-meters' })
+      ).toBeInTheDocument();
+    });
+
+    const homeButton = screen.getByRole('button', {
+      name: 'navigate to catalogue home',
+    });
+
+    await user.click(homeButton);
+
+    expect(mockedUseNavigate).toBeCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue');
   });
 
   it('navigates to items table view', async () => {

@@ -21,7 +21,9 @@ describe('Manufacturer', () => {
 
     cy.findByText('Manufacturer A').should('be.visible');
     cy.findByText('Manufacturer B').should('be.visible');
+    cy.findByText('Manufacturer C').scrollIntoView();
     cy.findByText('Manufacturer C').should('be.visible');
+    cy.findByText('http://example.com').scrollIntoView();
     cy.findByText('http://example.com').should('be.visible');
     cy.findByText('http://test.com').should('be.visible');
     cy.findByText('http://test.co.uk').scrollIntoView();
@@ -309,7 +311,7 @@ describe('Manufacturer', () => {
     cy.findByText('Manufacturer A').click();
     cy.findByText('Telephone number:').should('exist');
 
-    cy.findByRole('link', { name: 'Manufacturer table view' }).click();
+    cy.findByRole('button', { name: 'navigate to manufacturer home' }).click();
 
     cy.findByText('Manufacturer A').should('exist');
     cy.findByText('Manufacturer B').should('exist');
@@ -343,7 +345,7 @@ describe('Manufacturer', () => {
       `This manufacturer doesn't exist. Please click the Home button to navigate to the manufacturer table`
     ).should('exist');
 
-    cy.findByRole('link', { name: 'Home' }).click();
+    cy.findByRole('button', { name: 'navigate to manufacturer home' }).click();
 
     cy.findByText('Manufacturer A').should('exist');
     cy.findByText('Manufacturer B').should('exist');

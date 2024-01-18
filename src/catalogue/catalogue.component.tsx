@@ -221,7 +221,7 @@ function Catalogue() {
             />
             <NavigateNext
               fontSize="medium"
-              sx={{ color: 'rgba(0, 0, 0, 0.6)', mx: '4px', my: '8px' }}
+              sx={{ color: 'text.secondary', margin: 1 }}
             />
             <AddCategoryButton
               disabled={isLeafNode || (!parentInfo && catalogueId !== '')}
