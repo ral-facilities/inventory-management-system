@@ -62,7 +62,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
       <DialogContent>
         <div style={{ display: 'flex' }}>
           {systemData && (
-            <Typography sx={{ pr: '4px' }}>
+            <Typography sx={{ pr: 0.5 }}>
               This item is currently in the{' '}
               <MuiLink
                 underline="hover"
