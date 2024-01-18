@@ -13,7 +13,7 @@ import ManufacturerDialog from './manufacturerDialog.component';
 import React from 'react';
 
 function ManufacturerLandingPage() {
-  const { id: manufacturerId } = useParams();
+  const { manufacturer_id: manufacturerId } = useParams();
 
   const { data: manufacturerData, isLoading: manufacturerDataLoading } =
     useManufacturer(manufacturerId);
@@ -62,6 +62,7 @@ function ManufacturerLandingPage() {
       </Grid>
       {manufacturerData && (
         <Grid
+          item
           container
           spacing={1}
           sx={{ px: '192px' }}
