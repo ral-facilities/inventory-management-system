@@ -98,7 +98,7 @@ function ItemsLandingPage() {
         }}
         item
       >
-        <Grid item sx={{ py: '20px' }}>
+        <Grid item sx={{ py: 2.5 }}>
           <Breadcrumbs
             onChangeNode={onChangeNode}
             breadcrumbsInfo={itemLandingBreadcrumbs}
