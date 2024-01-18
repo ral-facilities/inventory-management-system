@@ -211,7 +211,7 @@ function ItemsLandingPage() {
                       <Typography align="left" color="text.secondary">
                         {
                           Object.values(UsageStatusType)[
-                            itemData?.usage_status ?? UsageStatusType.new
+                            itemData.usage_status
                           ]
                         }
                       </Typography>
