@@ -187,7 +187,7 @@ function ItemsLandingPage() {
                       Delivered Date
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {itemData?.delivered_date
+                      {itemData.delivered_date
                         ? new Date(itemData.delivered_date).toLocaleDateString()
                         : 'None'}
                     </Typography>
