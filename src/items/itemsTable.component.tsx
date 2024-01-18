@@ -1,5 +1,12 @@
 import React from 'react';
-import { Box, Button, Tooltip, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Tooltip,
+  Typography,
+  Link as MuiLink,
+} from '@mui/material';
+import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import ItemDialog from './itemDialog.component';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -53,8 +60,13 @@ export function ItemsTable(props: ItemTableProps) {
     return [
       {
         header: 'ID',
-        accessorFn: (row) => row.id,
         size: 250,
+        accessorFn: (row) => row.id,
+        Cell: ({ row }) => (
+          <MuiLink underline="hover" component={Link} to={row.original.id}>
+            {row.original.id}
+          </MuiLink>
+        ),
       },
       {
         header: 'Serial Number',

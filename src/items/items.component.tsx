@@ -8,7 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ItemsTable from './itemsTable.component';
 
 export function Items() {
-  const { id: catalogueItemId } = useParams();
+  const { catalogue_item_id: catalogueItemId } = useParams();
   const { data: catalogueItem } = useCatalogueItem(catalogueItemId);
   const { data: catalogueCategory } = useCatalogueCategory(
     catalogueItem?.catalogue_category_id

@@ -3,11 +3,21 @@ import { renderComponentWithMemoryRouter } from '../../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import CatalogueItemsLandingPage from './catalogueItemsLandingPage.component';
 import userEvent from '@testing-library/user-event';
+import { Route, Routes } from 'react-router-dom';
+import { paths } from '../../view/viewTabs.component';
 
 describe('Catalogue Items Landing Page', () => {
   let user;
   const createView = (path: string) => {
-    return renderComponentWithMemoryRouter(<CatalogueItemsLandingPage />, path);
+    return renderComponentWithMemoryRouter(
+      <Routes>
+        <Route
+          path={paths.catalogueItem}
+          element={<CatalogueItemsLandingPage />}
+        />
+      </Routes>,
+      path
+    );
   };
 
   beforeEach(() => {
@@ -250,6 +260,42 @@ describe('Catalogue Items Landing Page', () => {
     const url = screen.getByRole('link', {
       name: 'Items',
     });
-    expect(url).toHaveAttribute('href', '/items');
+    expect(url).toHaveAttribute('href', '/catalogue/item/89/items');
+  });
+
+  it('landing page renders data correctly when optional values are null', async () => {
+    createView('/catalogue/item/33');
+
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 14')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByLabelText('Close catalogue item details')
+    ).toBeInTheDocument();
+
+    const toggleButtonDetails = screen.getByLabelText(
+      'Close catalogue item details'
+    );
+
+    await user.click(toggleButtonDetails);
+
+    expect(
+      screen.getByLabelText('Close catalogue item properties')
+    ).toBeInTheDocument();
+
+    const toggleButtonProperties = screen.getByLabelText(
+      'Close catalogue item properties'
+    );
+
+    await user.click(toggleButtonProperties);
+
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer D')).toBeInTheDocument();
+    });
+    expect(screen.getByText('URL')).toBeInTheDocument();
+    expect(screen.getAllByText('None')[0]).toBeInTheDocument();
+    expect(screen.getByText('Telephone number')).toBeInTheDocument();
+    expect(screen.getAllByText('None')[1]).toBeInTheDocument();
   });
 });

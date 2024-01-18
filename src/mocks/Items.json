@@ -4961,10 +4961,10 @@
     "purchase_order_number": "LtjJpdAT",
     "is_defective": false,
     "usage_status": 1,
-    "warranty_end_date": "2023-08-09T23:00:00.000Z",
+    "warranty_end_date": null,
     "asset_number": "02g22MjY2i",
     "serial_number": "jAphNpoQdfoW",
-    "delivered_date": "2023-05-23T23:00:00.000Z",
+    "delivered_date": null,
     "notes": "mGnfL5356frGo54nMqZo",
     "properties": [
       {

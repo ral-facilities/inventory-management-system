@@ -341,6 +341,17 @@ describe('Catalogue Items Table', () => {
     expect(url[0]).toHaveAttribute('href', '/item/6');
   });
 
+  it('navigates to catalogue item landing page', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    await ensureColumnsVisible(['Name']);
+
+    const url = screen.getByText('Energy Meters 26');
+    expect(url).toHaveAttribute('href', '/item/89');
+  });
+
   it('navigates to items table', async () => {
     createView();
     await waitFor(() => {
