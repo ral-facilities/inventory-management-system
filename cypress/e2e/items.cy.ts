@@ -53,7 +53,7 @@ describe('Items', () => {
     cy.findByText('Beam Characterization').should('be.visible');
   });
 
-  it('should be able to navigate back to the catalogue catalogue item landing page', () => {
+  it('should be able to navigate back to the catalogue item landing page', () => {
     cy.findByRole('link', { name: 'Cameras 1' }).click();
     cy.findByText('Obsolete reason').should('be.visible');
     cy.findByText(
