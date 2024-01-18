@@ -92,8 +92,8 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
       {error && (
         <Box
           sx={{
-            mx: '24px',
-            marginBottom: '24px',
+            mx: 3,
+            marginBottom: 3,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
