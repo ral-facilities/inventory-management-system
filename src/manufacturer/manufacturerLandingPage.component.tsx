@@ -27,7 +27,7 @@ function ManufacturerLandingPage() {
   const navigate = useNavigate();
   const onChangeNode = React.useCallback(
     (id: string | null) => {
-      navigate(id ? `${paths.manufacturers}/id` : paths.manufacturers);
+      navigate(id ? `${paths.manufacturers}/${id}` : paths.manufacturers);
     },
     [navigate]
   );
