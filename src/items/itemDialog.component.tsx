@@ -148,7 +148,7 @@ function ItemDialog(props: ItemDialogProps) {
   }, [parentCatalogueItemPropertiesInfo, catalogueItem, open, type]);
 
   React.useEffect(() => {
-    if (selectedItem) {
+    if (selectedItem && open) {
       setItemDetails({
         catalogue_item_id: null,
         system_id: null,
@@ -177,7 +177,7 @@ function ItemDialog(props: ItemDialogProps) {
         )
       );
     }
-  }, [parentCatalogueItemPropertiesInfo, selectedItem]);
+  }, [parentCatalogueItemPropertiesInfo, selectedItem, open]);
 
   const handlePropertyChange = (
     index: number,

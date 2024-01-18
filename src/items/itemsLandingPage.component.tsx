@@ -1,6 +1,7 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PrintIcon from '@mui/icons-material/Print';
+import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
   Button,
@@ -17,16 +18,24 @@ import { useCatalogueItem } from '../api/catalogueItem';
 import { useManufacturer } from '../api/manufacturer';
 import { useItem } from '../api/item';
 import { BreadcrumbsInfo, UsageStatusType } from '../app.types';
-import { useCatalogueBreadcrumbs } from '../api/catalogueCategory';
+import {
+  useCatalogueBreadcrumbs,
+  useCatalogueCategory,
+} from '../api/catalogueCategory';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import ItemDialog from './itemDialog.component';
 
 function ItemsLandingPage() {
   const { id } = useParams();
 
   const { data: itemData, isLoading: itemDataIsLoading } = useItem(id);
 
-  const { data: catalogueItemIdData } = useCatalogueItem(
+  const { data: catalogueItemData } = useCatalogueItem(
     itemData?.catalogue_item_id
+  );
+
+  const { data: catalogueCategoryData } = useCatalogueCategory(
+    catalogueItemData?.catalogue_category_id
   );
 
   const navigate = useNavigate();
@@ -38,7 +47,7 @@ function ItemsLandingPage() {
   );
 
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
-    catalogueItemIdData?.catalogue_category_id ?? ''
+    catalogueItemData?.catalogue_category_id ?? ''
   );
 
   const [itemLandingBreadcrumbs, setItemLandingBreadcrumbs] = React.useState<
@@ -47,20 +56,20 @@ function ItemsLandingPage() {
 
   React.useEffect(() => {
     catalogueBreadcrumbs &&
-      catalogueItemIdData &&
+      catalogueItemData &&
       setItemLandingBreadcrumbs({
         ...catalogueBreadcrumbs,
         trail: [
           ...catalogueBreadcrumbs.trail,
-          [`item/${catalogueItemIdData.id}`, `${catalogueItemIdData.name}`],
-          [`item/${catalogueItemIdData.id}/items`, 'Items'],
-          [`item/${catalogueItemIdData.id}/items/${id}`, id ?? ''],
+          [`item/${catalogueItemData.id}`, `${catalogueItemData.name}`],
+          [`item/${catalogueItemData.id}/items`, 'Items'],
+          [`item/${catalogueItemData.id}/items/${id}`, id ?? ''],
         ],
       });
-  }, [catalogueBreadcrumbs, catalogueItemIdData, id]);
+  }, [catalogueBreadcrumbs, catalogueItemData, id]);
 
   const { data: manufacturer } = useManufacturer(
-    catalogueItemIdData?.manufacturer_id
+    catalogueItemData?.manufacturer_id
   );
 
   const [showProperties, setShowProperties] = useState(true);
@@ -80,6 +89,9 @@ function ItemsLandingPage() {
   const toggleDetails = () => {
     setShowDetails(!showDetails);
   };
+
+  const [editItemDialogOpen, setEditItemDialogOpen] =
+    React.useState<boolean>(false);
 
   return (
     <Grid container>
@@ -111,6 +123,16 @@ function ItemsLandingPage() {
         {itemData && (
           <Grid item container sx={{ display: 'flex', py: 2 }}>
             <Button
+              startIcon={<EditIcon />}
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              onClick={() => {
+                setEditItemDialogOpen(true);
+              }}
+            >
+              Edit
+            </Button>
+            <Button
               startIcon={<PrintIcon />}
               sx={{ mx: 0.5 }}
               variant="outlined"
@@ -123,12 +145,12 @@ function ItemsLandingPage() {
           </Grid>
         )}
       </Grid>
-      {catalogueItemIdData && itemData && (
+      {catalogueItemData && itemData && (
         <Grid item xs={12}>
           <Grid container spacing={1} flexDirection="column">
             <Grid item xs={12}>
               <Typography sx={{ margin: 1, textAlign: 'center' }} variant="h4">
-                {catalogueItemIdData.name}
+                {catalogueItemData.name}
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -140,7 +162,7 @@ function ItemsLandingPage() {
                 variant="body1"
                 color="text.secondary"
               >
-                {catalogueItemIdData.description}
+                {catalogueItemData.description}
               </Typography>
             </Grid>
 
@@ -276,8 +298,8 @@ function ItemsLandingPage() {
               <Grid item xs={12}>
                 <Collapse in={showProperties}>
                   <Grid container spacing={1}>
-                    {catalogueItemIdData.properties &&
-                      catalogueItemIdData.properties.map((property, index) => (
+                    {itemData.properties &&
+                      itemData.properties.map((property, index) => (
                         <Grid item xs={12} sm={6} md={4} key={index}>
                           <Typography align="left" color="text.primary">{`${
                             property.name
@@ -420,6 +442,17 @@ function ItemsLandingPage() {
           <LinearProgress />
         </Box>
       )}
+
+      <ItemDialog
+        open={editItemDialogOpen}
+        onClose={() => {
+          setEditItemDialogOpen(false);
+        }}
+        type="edit"
+        catalogueCategory={catalogueCategoryData}
+        catalogueItem={catalogueItemData}
+        selectedItem={itemData}
+      />
     </Grid>
   );
 }
