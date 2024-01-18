@@ -302,7 +302,7 @@ describe('Items', () => {
     });
   });
 
-  it('should display a link to the system page when the item has a system id', () => {
+  it('should display a link a system in the delete dialog when the item has a system id', () => {
     cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Delete').click();
 
