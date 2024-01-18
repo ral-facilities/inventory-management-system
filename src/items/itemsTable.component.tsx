@@ -16,6 +16,7 @@ import ItemDialog from './itemDialog.component';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import {
   PropertyFiltersType,
   findPropertyValue,
@@ -332,6 +333,21 @@ export function ItemsTable(props: ItemTableProps) {
     ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
       return [
+        <MenuItem
+          key={1}
+          aria-label={`Edit item ${row.original.id}`}
+          onClick={() => {
+            setItemsDialogType('edit');
+            table.setCreatingRow(row);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <EditIcon />
+          </ListItemIcon>
+          <ListItemText>Edit</ListItemText>
+        </MenuItem>,
         <MenuItem
           key={1}
           aria-label={`Save item ${row.original.id} as`}

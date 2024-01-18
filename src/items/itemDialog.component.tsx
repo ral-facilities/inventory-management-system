@@ -24,6 +24,7 @@ import {
   CatalogueCategoryFormData,
   CatalogueItem,
   CatalogueItemProperty,
+  EditItem,
   Item,
   ItemDetailsPlaceholder,
   UsageStatusType,
@@ -31,7 +32,7 @@ import {
 import { DatePicker } from '@mui/x-date-pickers';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
-import { useAddItem } from '../api/item';
+import { useAddItem, useEditItem } from '../api/item';
 import { AxiosError } from 'axios';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
@@ -127,7 +128,13 @@ function ItemDialog(props: ItemDialogProps) {
     new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
   );
 
+  const [formError, setFormError] = React.useState(false);
+  const [formErrorMessage, setFormErrorMessage] = React.useState<
+    string | undefined
+  >(undefined);
+
   const { mutateAsync: addItem } = useAddItem();
+  const { mutateAsync: editItem } = useEditItem();
 
   React.useEffect(() => {
     if (type === 'create' && open) {
@@ -353,6 +360,90 @@ function ItemDialog(props: ItemDialogProps) {
         setCatchAllError(true);
       });
   }, [addItem, handleClose, details, handleFormErrorStates]);
+
+  const handleEditItem = React.useCallback(() => {
+    if (selectedItem) {
+      const { hasErrors, updatedProperties } = handleFormErrorStates();
+
+      if (hasErrors) {
+        return; // Do not proceed with saving if there are errors
+      }
+
+      const filteredProperties = updatedProperties.filter(
+        (property) => property !== null
+      ) as CatalogueItemProperty[];
+
+      const isPurchaseOrderNumberUpdated =
+        details.purchase_order_number !== selectedItem.purchase_order_number;
+
+      const isIsDefectiveUpdated =
+        details.is_defective !== selectedItem.is_defective;
+
+      const isUsageStatusUpdated =
+        details.usage_status !== selectedItem.usage_status;
+
+      const isWarrantyEndDateUpdated =
+        details.warranty_end_date !== selectedItem.warranty_end_date;
+
+      const isAssetNumberUpdated =
+        details.asset_number !== selectedItem.asset_number;
+
+      const isSerialNumberUpdated =
+        details.serial_number !== selectedItem.serial_number;
+
+      const isDeliveredDateUpdated =
+        details.delivered_date !== selectedItem.delivered_date;
+
+      const isNotesUpdated = details.notes !== selectedItem.notes;
+
+      const isCatalogueItemPropertiesUpdated =
+        JSON.stringify(filteredProperties) !==
+        JSON.stringify(
+          selectedItem.properties.map(({ unit, ...rest }) => rest)
+        );
+
+      let item: EditItem = {
+        id: selectedItem.id,
+      };
+
+      isSerialNumberUpdated && (item.serial_number = details.serial_number);
+      isPurchaseOrderNumberUpdated &&
+        (item.purchase_order_number = details.purchase_order_number);
+      isIsDefectiveUpdated && (item.is_defective = details.is_defective);
+      isUsageStatusUpdated && (item.usage_status = details.usage_status);
+      isWarrantyEndDateUpdated &&
+        (item.warranty_end_date = details.warranty_end_date);
+      isAssetNumberUpdated && (item.asset_number = details.asset_number);
+      isSerialNumberUpdated && (item.serial_number = details.serial_number);
+      isDeliveredDateUpdated && (item.delivered_date = details.delivered_date);
+      isNotesUpdated && (item.notes = details.notes);
+      isCatalogueItemPropertiesUpdated &&
+        (item.properties = filteredProperties);
+
+      if (
+        item.id &&
+        (isSerialNumberUpdated ||
+          isPurchaseOrderNumberUpdated ||
+          isIsDefectiveUpdated ||
+          isUsageStatusUpdated ||
+          isWarrantyEndDateUpdated ||
+          isAssetNumberUpdated ||
+          isSerialNumberUpdated ||
+          isDeliveredDateUpdated ||
+          isNotesUpdated ||
+          isCatalogueItemPropertiesUpdated)
+      ) {
+        editItem(item)
+          .then((response) => handleClose())
+          .catch((error: AxiosError) => {
+            setCatchAllError(true);
+          });
+      } else {
+        setFormError(true);
+        setFormErrorMessage('Please edit a form entry before clicking save');
+      }
+    }
+  }, [editItem, handleClose, handleFormErrorStates, selectedItem, details]);
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
       <DialogTitle>{`${type === 'edit' ? 'Edit' : 'Add'} Item`}</DialogTitle>
@@ -625,7 +716,7 @@ function ItemDialog(props: ItemDialogProps) {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={handleAddItem}
+            onClick={type === 'edit' ? handleEditItem : handleAddItem}
             disabled={
               catchAllError ||
               propertyErrors.some((value) => {
@@ -640,6 +731,11 @@ function ItemDialog(props: ItemDialogProps) {
             Save
           </Button>
         </Box>
+        {formError && (
+          <FormHelperText sx={{ marginBottom: '16px' }} error>
+            {formErrorMessage}
+          </FormHelperText>
+        )}
         {catchAllError && (
           <FormHelperText sx={{ marginBottom: '16px' }} error>
             {'Please refresh and try again'}

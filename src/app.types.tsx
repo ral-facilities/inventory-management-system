@@ -238,3 +238,7 @@ export interface Item extends ItemDetails {
   properties: CatalogueItemPropertyResponse[];
   id: string;
 }
+
+export interface EditItem extends Partial<AddItem> {
+  id: string;
+}

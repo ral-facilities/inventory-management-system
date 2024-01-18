@@ -6,7 +6,7 @@ import {
   useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
-import { AddItem, Item } from '../app.types';
+import { AddItem, EditItem, Item } from '../app.types';
 import { settings } from '../settings';
 
 const addItem = async (item: AddItem): Promise<Item> => {
@@ -122,6 +122,38 @@ export const useDeleteItem = (): UseMutationResult<void, AxiosError, Item> => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['Items'] });
       queryClient.removeQueries({ queryKey: ['Item'] });
+    },
+  });
+};
+
+const editItem = async (item: EditItem): Promise<Item> => {
+  let apiUrl: string;
+  apiUrl = '';
+  const settingsResult = await settings;
+  if (settingsResult) {
+    apiUrl = settingsResult['apiUrl'];
+  }
+  const { id, ...updatedItem } = item;
+  return axios
+    .patch<Item>(`${apiUrl}/v1/items/${id}`, updatedItem)
+    .then((response) => response.data);
+};
+
+export const useEditItem = (): UseMutationResult<
+  Item,
+  AxiosError,
+  EditItem
+> => {
+  const queryClient = useQueryClient();
+  return useMutation((item: EditItem) => editItem(item), {
+    onError: (error) => {
+      console.log('Got error ' + error.message);
+    },
+    onSuccess: (itemResponse: Item) => {
+      queryClient.invalidateQueries({
+        queryKey: ['Items', itemResponse.catalogue_item_id],
+      });
+      queryClient.invalidateQueries({ queryKey: ['Item', itemResponse.id] });
     },
   });
 };

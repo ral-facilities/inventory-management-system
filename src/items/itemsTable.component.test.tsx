@@ -160,7 +160,7 @@ describe('Items Table', () => {
     });
   });
 
-  it('opens the add catalogue item dialog for save as', async () => {
+  it('opens the add item dialog for save as', async () => {
     createView();
 
     const serialNumber = '5YUQDDjKpz2z';
@@ -176,6 +176,34 @@ describe('Items Table', () => {
 
     const saveAsButton = screen.getByText('Save as');
     await user.click(saveAsButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('opens the edit item dialog for save as', async () => {
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Edit')).toBeInTheDocument();
+    });
+
+    const editButton = screen.getByText('Edit');
+    await user.click(editButton);
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
