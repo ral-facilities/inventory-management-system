@@ -6,11 +6,15 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
+  Typography,
+  Link as MuiLink,
 } from '@mui/material';
 import React from 'react';
 import { useDeleteItem } from '../api/item';
 import { Item } from '../app.types';
 import { AxiosError } from 'axios';
+import { useSystem } from '../api/systems';
+import { Link } from 'react-router-dom';
 
 export interface DeleteItemDialogProps {
   open: boolean;
@@ -27,6 +31,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
     undefined
   );
 
+  const { data: systemData } = useSystem(item?.system_id ?? null);
   const { mutateAsync: deleteItem } = useDeleteItem();
 
   const handleClose = React.useCallback(() => {
@@ -55,11 +60,28 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
     <Dialog open={open} onClose={onClose} maxWidth="lg">
       <DialogTitle>Delete Item</DialogTitle>
       <DialogContent>
-        Are you sure you want to delete this item with{' '}
-        <strong data-testid={`delete-item-${item?.id}`}>
-          {`ID: ${item?.id} `}
-        </strong>
-        ?
+        <div style={{ display: 'flex' }}>
+          {systemData && (
+            <Typography sx={{ pr: '4px' }}>
+              This item is currently in the{' '}
+              <MuiLink
+                underline="hover"
+                component={Link}
+                to={`/systems/${systemData.id}`}
+              >
+                {systemData.name}
+              </MuiLink>{' '}
+              system.
+            </Typography>
+          )}
+          <Typography>
+            Are you sure you want to delete this item with{' '}
+            <strong data-testid={`delete-item-${item?.id}`}>
+              {`ID: ${item?.id} `}
+            </strong>
+            ?
+          </Typography>
+        </div>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, RenderResult, waitFor } from '@testing-library/react';
+import { screen, RenderResult, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import DeleteItemDialog, {
   DeleteItemDialogProps,
@@ -33,10 +33,26 @@ describe('delete item dialog', () => {
   });
   it('renders correctly', async () => {
     createView();
-    expect(screen.getByText('Delete Item')).toBeInTheDocument();
-    expect(screen.getByTestId('delete-item-KvT2Ox7n')).toHaveTextContent(
-      'ID: KvT2Ox7n'
-    );
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
+    expect(baseElement).toMatchSnapshot();
+  });
+
+  it('renders correctly when the item has an system id', async () => {
+    props.item = getItemById('wKsFzrSq');
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'Pico Laser' })
+      ).toBeInTheDocument();
+    });
+    expect(baseElement).toMatchSnapshot();
   });
 
   it('calls onClose when Close button is clicked', async () => {

@@ -249,6 +249,8 @@ describe('Items', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Delete').click();
 
+    cy.findByText('ID: KvT2Ox7n').should('exist');
+
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Continue' }).click();
@@ -298,5 +300,12 @@ describe('Items', () => {
         })
       );
     });
+  });
+
+  it('should display a link to the system page when the item has a system id', () => {
+    cy.findAllByLabelText('Row Actions').last().click();
+    cy.findByText('Delete').click();
+
+    cy.findByRole('link', { name: 'Pico Laser' }).should('exist');
   });
 });
