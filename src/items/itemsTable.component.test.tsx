@@ -63,7 +63,7 @@ describe('Items Table', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
-  it('renders correctly part 3 due column virtaulisation', async () => {
+  it('renders correctly part 3 due column virtualisation', async () => {
     createView();
     await ensureColumnsVisible(['Warranty End Date']);
   });
