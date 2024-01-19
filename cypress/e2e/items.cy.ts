@@ -290,7 +290,7 @@ describe('Items', () => {
           serial_number: '5YUQDDjKpz2z',
           delivered_date: '2023-03-17T00:00:00.000Z',
           notes:
-            '6Y5XTJfBrNNx8oltI9HE.\nThis is a copy of the item with this ID: KvT2Ox7n',
+            '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this ID: KvT2Ox7n',
           properties: [
             { name: 'Resolution', value: 0 },
             { name: 'Sensor Type', value: 'CMOS' },
