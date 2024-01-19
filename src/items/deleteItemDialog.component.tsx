@@ -60,28 +60,26 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
     <Dialog open={open} onClose={onClose} maxWidth="lg">
       <DialogTitle>Delete Item</DialogTitle>
       <DialogContent>
-        <div style={{ display: 'flex' }}>
-          {systemData && (
-            <Typography sx={{ pr: 0.5 }}>
-              This item is currently in the{' '}
-              <MuiLink
-                underline="hover"
-                component={Link}
-                to={`/systems/${systemData.id}`}
-              >
-                {systemData.name}
-              </MuiLink>{' '}
-              system.
-            </Typography>
-          )}
-          <Typography>
-            Are you sure you want to delete this item with{' '}
-            <strong data-testid={`delete-item-${item?.id}`}>
-              {`ID: ${item?.id} `}
-            </strong>
-            ?
+        {systemData && (
+          <Typography sx={{ pr: 0.5, pb: 1 }}>
+            This item is currently in the{' '}
+            <MuiLink
+              underline="hover"
+              component={Link}
+              to={`/systems/${systemData.id}`}
+            >
+              {systemData.name}
+            </MuiLink>{' '}
+            system.
           </Typography>
-        </div>
+        )}
+        <Typography>
+          Are you sure you want to delete this item with{' '}
+          <strong data-testid={`delete-item-${item?.id}`}>
+            {`ID: ${item?.id} `}
+          </strong>
+          ?
+        </Typography>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
