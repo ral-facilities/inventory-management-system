@@ -128,10 +128,10 @@ declare global {
        * @example cy.findBrowserMockedRequests({
                     method: 'POST',
                     url: '/v1/catalogue-categories',
-                  }).should((patchRequests) => {
-                    expect(patchRequests.length).equal(1);
-                    const request = patchRequests[0];
-                    expect(JSON.stringify(request.body)).equal(
+                  }).should(async (postRequests) => {
+                    expect(postRequests.length).equal(1);
+                    const request = postRequests[0];
+                    expect(JSON.stringify(await request.json())).equal(
                       '{"name":"test","is_leaf":false}'
                     );
                   });
