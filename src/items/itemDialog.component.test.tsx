@@ -2,12 +2,52 @@ import React from 'react';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
+  getItemById,
   renderComponentWithBrowserRouter,
 } from '../setupTests';
-import ItemDialog, { ItemDialogProps } from './itemDialog.component';
+import ItemDialog, {
+  ItemDialogProps,
+  isValidDateTime,
+} from './itemDialog.component';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
+
+describe('isValidDateTime', () => {
+  it('should return true for a valid date string', () => {
+    const validDateString = '2022-01-17T12:00:00Z';
+    expect(isValidDateTime(validDateString)).toBe(true);
+  });
+
+  it('should return false for an invalid date string', () => {
+    const invalidDateString = 'invalid-date';
+    expect(isValidDateTime(invalidDateString)).toBe(false);
+  });
+
+  it('should return true for a valid Date object', () => {
+    const validDateObject = new Date('2022-01-17T12:00:00Z');
+    expect(isValidDateTime(validDateObject)).toBe(true);
+  });
+
+  it('should return false for an invalid Date object', () => {
+    const invalidDateObject = new Date('invalid-date');
+    expect(isValidDateTime(invalidDateObject)).toBe(false);
+  });
+
+  it('should return false for null input', () => {
+    expect(isValidDateTime(null)).toBe(false);
+  });
+
+  it('should return false if date year exceeds 2100', () => {
+    const validDateObject = new Date('2122-01-17T12:00:00Z');
+    expect(isValidDateTime(validDateObject)).toBe(false);
+  });
+
+  it('should return false if date year (string) exceeds 2100', () => {
+    const validDateObject = '2122-01-17T12:00:00Z';
+    expect(isValidDateTime(validDateObject)).toBe(false);
+  });
+});
 
 describe('ItemDialog', () => {
   let props: ItemDialogProps;
@@ -21,7 +61,7 @@ describe('ItemDialog', () => {
     props = {
       open: true,
       onClose: onClose,
-      type: 'add',
+      type: 'create',
       catalogueCategory: getCatalogueCategoryById('4'),
       catalogueItem: getCatalogueItemById('1'),
     };
@@ -363,5 +403,33 @@ describe('ItemDialog', () => {
       });
       expect(onClose).not.toHaveBeenCalled();
     });
+
+    it('save as an item', async () => {
+      props.selectedItem = getItemById('G463gOIA');
+      props.type = 'save as';
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
+        asset_number: '03MXnOfP5C',
+        catalogue_item_id: '1',
+        delivered_date: '2023-05-11T23:00:00.000Z',
+        is_defective: false,
+        notes: 'rRXBHQFbF3zts6XS279k',
+        properties: [
+          { name: 'Resolution', value: 12 },
+          { name: 'Frame Rate', value: 30 },
+          { name: 'Sensor Type', value: 'CMOS' },
+          { name: 'Broken', value: true },
+          { name: 'Older than five years', value: false },
+        ],
+        purchase_order_number: 'tIWiCOow',
+        serial_number: 'vYs9Vxx6yWbn',
+        system_id: null,
+        usage_status: 2,
+        warranty_end_date: '2023-05-18T23:00:00.000Z',
+      });
+    }, 10000);
   });
 });

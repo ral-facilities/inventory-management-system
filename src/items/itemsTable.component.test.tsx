@@ -63,6 +63,11 @@ describe('Items Table', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
+  it('renders correctly part 3 due column virtualisation', async () => {
+    createView();
+    await ensureColumnsVisible(['Warranty End Date']);
+  });
+
   it('opens and closes the add item dialog', async () => {
     createView();
 
@@ -150,6 +155,118 @@ describe('Items Table', () => {
 
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the save as dialog and close it again', async () => {
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Save as')).toBeInTheDocument();
+    });
+
+    const saveAsButton = screen.getByText('Save as');
+    await user.click(saveAsButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the save as dialog and checks that the notes have been updated', async () => {
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Save as')).toBeInTheDocument();
+    });
+
+    const saveAsButton = screen.getByText('Save as');
+    await user.click(saveAsButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    expect(screen.getByLabelText('Notes')).toHaveValue(
+      '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this ID: KvT2Ox7n'
+    );
+  });
+
+  it('can open the save as dialog and checks that the notes have been updated when notes is null', async () => {
+    props.catalogueCategory = getCatalogueCategoryById('4');
+    props.catalogueItem = getCatalogueItemById('32');
+    createView();
+
+    const serialNumber = 'RncNJlDk1pXC';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Save as')).toBeInTheDocument();
+    });
+
+    const saveAsButton = screen.getByText('Save as');
+    await user.click(saveAsButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    expect(screen.getByLabelText('Notes')).toHaveValue(
+      '\n\nThis is a copy of the item with this ID: 3lmRHP8q'
+    );
+  });
+
+  it('can open the save as dialog (no delivered date or warranty date) and close it again', async () => {
+    props.catalogueCategory = getCatalogueCategoryById('4');
+    props.catalogueItem = getCatalogueItemById('3');
+    createView();
+
+    const serialNumber = 'A5Hcs053';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[3]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Save as')).toBeInTheDocument();
+    });
+
+    const saveAsButton = screen.getByText('Save as');
+    await user.click(saveAsButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });

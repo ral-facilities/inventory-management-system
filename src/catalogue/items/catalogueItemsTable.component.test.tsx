@@ -296,7 +296,7 @@ describe('Catalogue Items Table', () => {
     });
   });
 
-  it('opens the add catalogue item dialog for save as', async () => {
+  it('opens and closes the catalogue item dialog for save as', async () => {
     createView();
 
     await waitFor(() => {
@@ -311,6 +311,15 @@ describe('Catalogue Items Table', () => {
 
     const saveAsButton = screen.getByText('Save as');
     await user.click(saveAsButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
   });
 
   it('opens the add catalogue item dialog for save as (more catalogue item details filled in)', async () => {

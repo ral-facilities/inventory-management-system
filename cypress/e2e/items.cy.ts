@@ -265,6 +265,43 @@ describe('Items', () => {
     });
   });
 
+  it('save as an item', () => {
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Save as').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/items/',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).eq(1);
+      expect(JSON.stringify(await postRequests[0].json())).equal(
+        JSON.stringify({
+          catalogue_item_id: '1',
+          system_id: null,
+          purchase_order_number: '6JYHEjwN',
+          is_defective: false,
+          usage_status: 1,
+          warranty_end_date: '2023-04-04T23:00:00.000Z',
+          asset_number: 'LyH8yp1FHf',
+          serial_number: '5YUQDDjKpz2z',
+          delivered_date: '2023-03-17T00:00:00.000Z',
+          notes:
+            '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this ID: KvT2Ox7n',
+          properties: [
+            { name: 'Resolution', value: 0 },
+            { name: 'Sensor Type', value: 'CMOS' },
+            { name: 'Broken', value: true },
+            { name: 'Older than five years', value: false },
+          ],
+        })
+      );
+    });
+  });
+
   it('should display a link a system in the delete dialog when the item has a system id', () => {
     cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Delete').click();
