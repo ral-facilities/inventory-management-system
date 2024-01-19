@@ -218,6 +218,7 @@ function ManufacturerLandingPage() {
         open={editManufacturerDialogOpen}
         onClose={() => setEditManufacturerDialogOpen(false)}
         selectedManufacturer={manufacturerData}
+        type="edit"
       />
     </Grid>
   );
