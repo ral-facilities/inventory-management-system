@@ -37,6 +37,16 @@ describe('isValidDateTime', () => {
   it('should return false for null input', () => {
     expect(isValidDateTime(null)).toBe(false);
   });
+
+  it('should return false if date year exceeds 2100', () => {
+    const validDateObject = new Date('2122-01-17T12:00:00Z');
+    expect(isValidDateTime(validDateObject)).toBe(false);
+  });
+
+  it('should return false if date year (string) exceeds 2100', () => {
+    const validDateObject = '2122-01-17T12:00:00Z';
+    expect(isValidDateTime(validDateObject)).toBe(false);
+  });
 });
 
 describe('ItemDialog', () => {

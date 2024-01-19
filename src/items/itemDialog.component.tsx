@@ -52,7 +52,7 @@ export function isValidDateTime(input: Date | string | null) {
   return (
     !isNaN(dateObj.getTime()) &&
     dateObj.toString() !== 'Invalid Date' &&
-    !(Number(dateObj.toLocaleDateString().split('/')[2]) >= maxYear)
+    !(dateObj.getUTCFullYear() >= maxYear)
   );
 }
 
