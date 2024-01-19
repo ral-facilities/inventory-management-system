@@ -1,8 +1,10 @@
+import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Box, Button, Link as MuiLink, Typography } from '@mui/material';
 import {
   MRT_ColumnDef,
   MRT_ColumnFiltersState,
+  MRT_RowSelectionState,
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
@@ -13,6 +15,31 @@ import { useCatalogueItemIds } from '../api/catalogueItem';
 import { useItems } from '../api/item';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 import ItemsDetailsPanel from '../items/ItemsDetailsPanel.component';
+import SystemItemsDialog from './systemItemsDialog.component';
+
+const MoveItemsButton = (props: { selectedItems: Item[] }) => {
+  const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
+    React.useState<boolean>(false);
+
+  return (
+    <>
+      <Button
+        startIcon={<AddIcon />}
+        sx={{ mx: 0.5 }}
+        variant="outlined"
+        disabled={props.selectedItems.length === 0}
+        onClick={() => setMoveItemsDialogOpen(true)}
+      >
+        Move to
+      </Button>
+      <SystemItemsDialog
+        open={moveItemsDialogOpen}
+        onClose={() => setMoveItemsDialogOpen(false)}
+        selectedItems={props.selectedItems}
+      />
+    </>
+  );
+};
 
 /* Each table row needs the item and catalogue item */
 interface TableRowData {
@@ -29,12 +56,20 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
+  const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
+    {}
+  );
 
   // Data
   const { data: itemsData, isLoading: isLoadingItems } = useItems(
     system.id,
     undefined
   );
+
+  // Obtain the selected system data, not just the selection state
+  const selectedRowIds = Object.keys(rowSelection);
+  const selectedItems =
+    itemsData?.filter((item) => selectedRowIds.includes(item.id)) ?? [];
 
   // Fetch catalogue items for each item to display in the table
   const catalogueItemIdSet = new Set<string>(
@@ -163,6 +198,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
     enableColumnVirtualization: false,
+    enableRowSelection: true,
     onColumnFiltersChange: setColumnFilters,
     manualFiltering: false,
     enablePagination: true,
@@ -175,6 +211,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       showGlobalFilter: true,
       pagination: { pageSize: 15, pageIndex: 0 },
     },
+    onRowSelectionChange: setRowSelection,
     getRowId: (row) => row.item.id,
     muiTablePaperProps: {
       sx: { maxWidth: '100%' },
@@ -190,7 +227,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     },
     state: {
       showProgressBars: isLoading,
-      columnFilters,
+      columnFilters: columnFilters,
+      rowSelection: rowSelection,
     },
     muiPaginationProps: {
       color: 'secondary',
@@ -211,6 +249,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         >
           Clear Filters
         </Button>
+        <MoveItemsButton selectedItems={selectedItems} />
       </Box>
     ),
     renderDetailPanel: ({ row }) =>
