@@ -3738,7 +3738,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:^20.0.0":
   version: 20.10.6
   resolution: "@types/node@npm:20.10.6"
   dependencies:
@@ -3747,7 +3747,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.0.0, @types/node@npm:^18.17.5":
+"@types/node@npm:^18.17.5":
   version: 18.19.4
   resolution: "@types/node@npm:18.19.4"
   dependencies:
@@ -9198,7 +9198,7 @@ __metadata:
     "@testing-library/react": ^14.0.0
     "@testing-library/user-event": ^14.4.3
     "@types/jest": ^29.0.0
-    "@types/node": ^18.0.0
+    "@types/node": ^20.0.0
     "@types/react": ^18.0.0
     "@types/react-dom": ^18.0.4
     "@types/react-router-dom": ^5.3.3
