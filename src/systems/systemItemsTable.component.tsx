@@ -17,7 +17,7 @@ import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 import ItemsDetailsPanel from '../items/ItemsDetailsPanel.component';
 import SystemItemsDialog from './systemItemsDialog.component';
 
-const MoveItemsButton = (props: { selectedItems: Item[] }) => {
+const MoveItemsButton = (props: { selectedItems: Item[]; system: System }) => {
   const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
     React.useState<boolean>(false);
 
@@ -36,6 +36,7 @@ const MoveItemsButton = (props: { selectedItems: Item[] }) => {
         open={moveItemsDialogOpen}
         onClose={() => setMoveItemsDialogOpen(false)}
         selectedItems={props.selectedItems}
+        parentSystem={props.system}
       />
     </>
   );
@@ -249,7 +250,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         >
           Clear Filters
         </Button>
-        <MoveItemsButton selectedItems={selectedItems} />
+        <MoveItemsButton selectedItems={selectedItems} system={system} />
       </Box>
     ),
     renderDetailPanel: ({ row }) =>
