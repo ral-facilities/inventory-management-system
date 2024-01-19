@@ -53,7 +53,7 @@ describe('Items', () => {
     cy.findByText('Beam Characterization').should('be.visible');
   });
 
-  it('should be able to navigate back to the catalogue catalogue item landing page', () => {
+  it('should be able to navigate back to the catalogue item landing page', () => {
     cy.findByRole('link', { name: 'Cameras 1' }).click();
     cy.findByText('Obsolete reason').should('be.visible');
     cy.findByText(
@@ -290,7 +290,7 @@ describe('Items', () => {
           serial_number: '5YUQDDjKpz2z',
           delivered_date: '2023-03-17T00:00:00.000Z',
           notes:
-            '6Y5XTJfBrNNx8oltI9HE.\nThis is a copy of the item with this ID: KvT2Ox7n',
+            '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this ID: KvT2Ox7n',
           properties: [
             { name: 'Resolution', value: 0 },
             { name: 'Sensor Type', value: 'CMOS' },
@@ -302,7 +302,7 @@ describe('Items', () => {
     });
   });
 
-  it('should display a link to the system page when the item has a system id', () => {
+  it('should display a link a system in the delete dialog when the item has a system id', () => {
     cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Delete').click();
 

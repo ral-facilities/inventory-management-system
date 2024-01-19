@@ -47,12 +47,12 @@ describe('Items Table', () => {
     jest.clearAllMocks();
   });
 
-  it('renders correctly part 1 due column virtaulisation', async () => {
+  it('renders correctly part 1 due column virtualisation', async () => {
     const view = createView();
     expect(view.asFragment()).toMatchSnapshot();
   });
 
-  it('renders correctly part 2 due column virtaulisation', async () => {
+  it('renders correctly part 2 due column virtualisation', async () => {
     const view = createView();
     await ensureColumnsVisible([
       'Notes',
@@ -63,7 +63,7 @@ describe('Items Table', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
-  it('renders correctly part 3 due column virtaulisation', async () => {
+  it('renders correctly part 3 due column virtualisation', async () => {
     createView();
     await ensureColumnsVisible(['Warranty End Date']);
   });
@@ -160,7 +160,7 @@ describe('Items Table', () => {
     });
   });
 
-  it('opens the add item dialog for save as', async () => {
+  it('can open the save as dialog and close it again', async () => {
     createView();
 
     const serialNumber = '5YUQDDjKpz2z';
@@ -188,7 +188,7 @@ describe('Items Table', () => {
     });
   });
 
-  it('opens the edit item dialog for save as', async () => {
+  it('can open the save as dialog and checks that the notes have been updated', async () => {
     createView();
 
     const serialNumber = '5YUQDDjKpz2z';
@@ -199,24 +199,50 @@ describe('Items Table', () => {
     await user.click(rowActionsButton[0]);
 
     await waitFor(() => {
-      expect(screen.getByText('Edit')).toBeInTheDocument();
+      expect(screen.getByText('Save as')).toBeInTheDocument();
     });
 
-    const editButton = screen.getByText('Edit');
-    await user.click(editButton);
+    const saveAsButton = screen.getByText('Save as');
+    await user.click(saveAsButton);
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument();
     });
 
-    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
-    await user.click(cancelButton);
-    await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
+    expect(screen.getByLabelText('Notes')).toHaveValue(
+      '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this ID: KvT2Ox7n'
+    );
   });
 
-  it('opens the add catalogue item dialog for save as (no delivered date or warranty date)', async () => {
+  it('can open the save as dialog and checks that the notes have been updated when notes is null', async () => {
+    props.catalogueCategory = getCatalogueCategoryById('4');
+    props.catalogueItem = getCatalogueItemById('32');
+    createView();
+
+    const serialNumber = 'RncNJlDk1pXC';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Save as')).toBeInTheDocument();
+    });
+
+    const saveAsButton = screen.getByText('Save as');
+    await user.click(saveAsButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    expect(screen.getByLabelText('Notes')).toHaveValue(
+      '\n\nThis is a copy of the item with this ID: 3lmRHP8q'
+    );
+  });
+
+  it('can open the save as dialog (no delivered date or warranty date) and close it again', async () => {
     props.catalogueCategory = getCatalogueCategoryById('4');
     props.catalogueItem = getCatalogueItemById('3');
     createView();

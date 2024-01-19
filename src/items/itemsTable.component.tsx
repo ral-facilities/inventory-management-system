@@ -296,7 +296,7 @@ export function ItemsTable(props: ItemTableProps) {
                     ...row.original,
                     notes:
                       itemDialogType === 'save as'
-                        ? `${row.original.notes}.\nThis is a copy of the item with this ID: ${row.original.id}`
+                        ? `${row.original.notes || ''}\n\nThis is a copy of the item with this ID: ${row.original.id}`
                         : row.original.notes,
                   }
             }

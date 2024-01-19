@@ -25,6 +25,15 @@ describe('SystemDetails', () => {
     };
 
     user = userEvent.setup();
+
+    window.ResizeObserver = jest.fn().mockImplementation(() => ({
+      disconnect: jest.fn(),
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+    }));
+    window.Element.prototype.getBoundingClientRect = jest
+      .fn()
+      .mockReturnValue({ height: 100, width: 200 });
   });
 
   it('renders correctly when no system is selected', async () => {
@@ -56,6 +65,9 @@ describe('SystemDetails', () => {
         (_, element) => element?.textContent === mockSystemDetails.description
       )
     ).toBeInTheDocument();
+
+    // Items table
+    expect(screen.getByRole('table')).toBeInTheDocument();
   });
 
   it('renders correctly when a system is not found', async () => {

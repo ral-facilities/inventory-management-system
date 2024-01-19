@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Items Table renders correctly part 1 due column virtaulisation 1`] = `
+exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
 <DocumentFragment>
   <div
     style="width: 100%;"
@@ -453,7 +453,7 @@ exports[`Items Table renders correctly part 1 due column virtaulisation 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Items Table renders correctly part 2 due column virtaulisation 1`] = `
+exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
 <DocumentFragment>
   <div
     style="width: 100%;"
@@ -2068,7 +2068,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by ID"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rft:"
+                            id=":rhj:"
                             placeholder="Filter by ID"
                             title="Filter by ID"
                             type="text"
@@ -2206,7 +2206,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Serial Number"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rg1:"
+                            id=":rhn:"
                             placeholder="Filter by Serial Number"
                             title="Filter by Serial Number"
                             type="text"
@@ -2344,7 +2344,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Delivered Date"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rg5:"
+                            id=":rhr:"
                             placeholder="Filter by Delivered Date"
                             title="Filter by Delivered Date"
                             type="text"
@@ -2478,13 +2478,13 @@ exports[`Items Table renders the dense table correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
                           <div
-                            aria-controls=":rga:"
+                            aria-controls=":ri0:"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Is Defective"
-                            aria-labelledby=":rg9:"
+                            aria-labelledby=":rhv:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":rg9:"
+                            id=":rhv:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -2642,13 +2642,13 @@ exports[`Items Table renders the dense table correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
                           <div
-                            aria-controls=":rgf:"
+                            aria-controls=":ri5:"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Usage Status"
-                            aria-labelledby=":rge:"
+                            aria-labelledby=":ri4:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":rge:"
+                            id=":ri4:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -3123,7 +3123,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":rgh:"
+                    aria-controls=":ri7:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"

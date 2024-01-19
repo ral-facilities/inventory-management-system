@@ -5,6 +5,7 @@ import {
   useQuery,
   UseQueryResult,
   useQueryClient,
+  useQueries,
 } from '@tanstack/react-query';
 import {
   AddCatalogueItem,
@@ -124,6 +125,17 @@ export const useCatalogueItem = (
       enabled: catalogueCategoryId !== undefined,
     }
   );
+};
+
+export const useCatalogueItemIds = (
+  ids: string[]
+): UseQueryResult<CatalogueItem>[] => {
+  return useQueries({
+    queries: ids.map((id) => ({
+      queryKey: ['CatalogueItem', id],
+      queryFn: () => fetchCatalogueItem(id),
+    })),
+  });
 };
 
 const deleteCatalogueItem = async (

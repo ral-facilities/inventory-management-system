@@ -55,6 +55,12 @@ export function findPropertyValue(
   return foundProperty ? foundProperty.value : '';
 }
 
+/* Each table row needs the catalogue item and manufacturer */
+interface TableRowData {
+  catalogueItem: CatalogueItem;
+  manufacturer?: Manufacturer;
+}
+
 export interface CatalogueItemsTableProps {
   parentInfo: CatalogueCategory;
   dense: boolean;
@@ -84,17 +90,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 32px');
 
-  const { data, isLoading } = useCatalogueItems(parentInfo.id);
+  const { data: catalogueItemsData, isLoading: isLoadingCatalogueItems } =
+    useCatalogueItems(parentInfo.id);
 
-  const manufacturerIdSet = new Set<string>(
-    data?.map((obj) => obj.manufacturer_id) ?? []
-  );
-
-  const manufacturerList: (Manufacturer | undefined)[] = useManufacturerIds(
-    Array.from(manufacturerIdSet.values())
-  ).map((obj) => {
-    return obj.data;
-  });
+  // States
+  const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
 
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
     React.useState<boolean>(false);
@@ -116,7 +116,44 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     string | null
   >(null);
 
-  const catalogueCategoryNames: string[] = data?.map((item) => item.name) || [];
+  const manufacturerIdSet = new Set<string>(
+    catalogueItemsData?.map(
+      (catalogue_item) => catalogue_item.manufacturer_id
+    ) ?? []
+  );
+  let isLoading = isLoadingCatalogueItems;
+  const manufacturerList: (Manufacturer | undefined)[] = useManufacturerIds(
+    Array.from(manufacturerIdSet.values())
+  ).map((query) => {
+    isLoading = isLoading || query.isLoading;
+    return query.data;
+  });
+
+  // Once loading has finished - pair up all data for the table rows
+  // If performance becomes a problem with this should remove find and fetch manufactuer
+  // for each catalogue item/implement a fullDetails or something in backend
+  React.useEffect(() => {
+    if (!isLoading && catalogueItemsData) {
+      setTableRows(
+        catalogueItemsData.map((catalogueItemData) => ({
+          catalogueItem: catalogueItemData,
+          manufacturer: manufacturerList?.find(
+            (manufacturer) =>
+              manufacturer?.id === catalogueItemData.manufacturer_id
+          ),
+        }))
+      );
+    }
+    // Purposefully leave out manufacturerList - this will never be the same due
+    // to the reference changing so instead am relying on isLoading to have changed to
+    // false and then back to true again for any refetches that occurr - only
+    // alternative I can see right now requires backend changes
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [catalogueItemsData, isLoading]);
+
+  const catalogueCategoryNames: string[] =
+    catalogueItemsData?.map((item) => item.name) || [];
 
   const noResultsTxt = dense
     ? 'No catalogue items found'
@@ -124,7 +161,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const [itemDialogType, setItemsDialogType] = React.useState<
     'create' | 'save as' | 'edit'
   >('create');
-  const columns = React.useMemo<MRT_ColumnDef<CatalogueItem>[]>(() => {
+  const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties =
       parentInfo.catalogue_item_properties ?? [];
     const propertyFilters: PropertyFiltersType = {
@@ -136,7 +173,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     return [
       {
         header: 'Name',
-        accessorFn: (row) => row.name,
+        accessorFn: (row) => row.catalogueItem.name,
         size: 200,
         Cell: ({ renderedCellValue, row }) =>
           dense ? (
@@ -144,7 +181,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               sx={{
                 color:
                   isItemSelectable === undefined ||
-                  isItemSelectable(row.original)
+                  isItemSelectable(row.original.catalogueItem)
                     ? 'inherit'
                     : 'action.disabled',
               }}
@@ -155,7 +192,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             <MuiLink
               underline="hover"
               component={Link}
-              to={`item/${row.original.id}`}
+              to={`item/${row.original.catalogueItem.id}`}
             >
               {renderedCellValue}
             </MuiLink>
@@ -168,7 +205,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <MuiLink
             underline="hover"
             component={Link}
-            to={`item/${row.original.id}/items`}
+            to={`item/${row.original.catalogueItem.id}/items`}
           >
             Click here
           </MuiLink>
@@ -176,16 +213,16 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Description',
-        accessorFn: (row) => row.description ?? '',
+        accessorFn: (row) => row.catalogueItem.description ?? '',
         size: 250,
         Cell: ({ row }) =>
-          row.original.description && (
+          row.original.catalogueItem.description && (
             <Tooltip
-              title={row.original.description}
+              title={row.original.catalogueItem.description}
               placement="top"
               enterTouchDelay={0}
               arrow
-              aria-label={`Catalogue item description: ${row.original.description}`}
+              aria-label={`Catalogue item description: ${row.original.catalogueItem.description}`}
             >
               <InfoOutlinedIcon />
             </Tooltip>
@@ -193,22 +230,24 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Is Obsolete',
-        accessorFn: (row) => (row.is_obsolete === true ? 'Yes' : 'No'),
+        accessorFn: (row) =>
+          row.catalogueItem.is_obsolete === true ? 'Yes' : 'No',
         size: 200,
         filterVariant: 'select',
       },
       {
         header: 'Obsolete replacement link',
-        accessorFn: (row) => row.obsolete_replacement_catalogue_item_id ?? '',
+        accessorFn: (row) =>
+          row.catalogueItem.obsolete_replacement_catalogue_item_id ?? '',
         size: 300,
         enableSorting: false,
         enableColumnFilter: false,
         Cell: ({ row }) =>
-          row.original.obsolete_replacement_catalogue_item_id && (
+          row.original.catalogueItem.obsolete_replacement_catalogue_item_id && (
             <MuiLink
               underline="hover"
               component={Link}
-              to={`item/${row.original.obsolete_replacement_catalogue_item_id}`}
+              to={`item/${row.original.catalogueItem.obsolete_replacement_catalogue_item_id}`}
             >
               Click here
             </MuiLink>
@@ -216,16 +255,16 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Obsolete Reason',
-        accessorFn: (row) => row.obsolete_reason ?? '',
+        accessorFn: (row) => row.catalogueItem.obsolete_reason ?? '',
         size: 250,
         Cell: ({ row }) =>
-          row.original.obsolete_reason && (
+          row.original.catalogueItem.obsolete_reason && (
             <Tooltip
-              title={row.original.obsolete_reason}
+              title={row.original.catalogueItem.obsolete_reason}
               placement="top"
               enterTouchDelay={0}
               arrow
-              aria-label={`Catalogue item obsolete reason: ${row.original.obsolete_reason}`}
+              aria-label={`Catalogue item obsolete reason: ${row.original.catalogueItem.obsolete_reason}`}
             >
               <InfoOutlinedIcon />
             </Tooltip>
@@ -233,24 +272,29 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       ...viewCatalogueItemProperties.map((property, index) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
-        accessorFn: (row: CatalogueItem) => {
+        accessorFn: (row: TableRowData) => {
           if (property.type === 'boolean') {
             return (findPropertyValue(
-              row.properties,
+              row.catalogueItem.properties,
               property.name
             ) as boolean) === true
               ? 'Yes'
               : 'No';
           } else if (property.type === 'number') {
-            return typeof findPropertyValue(row.properties, property.name) ===
-              'number'
-              ? findPropertyValue(row.properties, property.name)
+            return typeof findPropertyValue(
+              row.catalogueItem.properties,
+              property.name
+            ) === 'number'
+              ? findPropertyValue(row.catalogueItem.properties, property.name)
               : 0;
           } else {
             // if the value doesn't exist it return type "true" we need to change this
             // to '' to allow this column to be filterable
 
-            return findPropertyValue(row.properties, property.name);
+            return findPropertyValue(
+              row.catalogueItem.properties,
+              property.name
+            );
           }
         },
         size: 250,
@@ -259,211 +303,159 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             property.type as 'string' | 'boolean' | 'number' | 'null'
           ],
 
-        Cell: ({ row }: { row: MRT_Row<CatalogueItem> }) => {
+        Cell: ({ row }: { row: MRT_Row<TableRowData> }) => {
           if (
-            typeof findPropertyValue(row.original.properties, property.name) ===
-            'number'
+            typeof findPropertyValue(
+              row.original.catalogueItem.properties,
+              property.name
+            ) === 'number'
           ) {
-            return findPropertyValue(row.original.properties, property.name) ===
-              0
+            return findPropertyValue(
+              row.original.catalogueItem.properties,
+              property.name
+            ) === 0
               ? 0
-              : findPropertyValue(row.original.properties, property.name) !==
-                null
-              ? findPropertyValue(row.original.properties, property.name)
+              : findPropertyValue(
+                  row.original.catalogueItem.properties,
+                  property.name
+                ) !== null
+              ? findPropertyValue(
+                  row.original.catalogueItem.properties,
+                  property.name
+                )
               : '';
           } else if (
-            typeof findPropertyValue(row.original.properties, property.name) ===
-            'boolean'
+            typeof findPropertyValue(
+              row.original.catalogueItem.properties,
+              property.name
+            ) === 'boolean'
           ) {
-            return findPropertyValue(row.original.properties, property.name)
+            return findPropertyValue(
+              row.original.catalogueItem.properties,
+              property.name
+            )
               ? 'Yes'
               : 'No';
           } else {
-            return findPropertyValue(row.original.properties, property.name);
+            return findPropertyValue(
+              row.original.catalogueItem.properties,
+              property.name
+            );
           }
         },
       })),
       {
         header: 'Cost (£)',
-        accessorFn: (row) => row.cost_gbp,
+        accessorFn: (row) => row.catalogueItem.cost_gbp,
         size: 250,
         filterVariant: 'range',
       },
       {
         header: 'Cost to Rework (£)',
-        accessorFn: (row) => row.cost_to_rework_gbp ?? 0,
+        accessorFn: (row) => row.catalogueItem.cost_to_rework_gbp ?? 0,
         size: 300,
         filterVariant: 'range',
         Cell: ({ row }) => {
           // Logic to get the range slider to work with null values
-          return row.original.cost_to_rework_gbp === 0
+          return row.original.catalogueItem.cost_to_rework_gbp === 0
             ? 0
-            : row.original.cost_to_rework_gbp !== null
-            ? row.original.cost_to_rework_gbp
+            : row.original.catalogueItem.cost_to_rework_gbp !== null
+            ? row.original.catalogueItem.cost_to_rework_gbp
             : '';
         },
       },
       {
         header: 'Time to replace (days)',
-        accessorFn: (row) => row.days_to_replace,
+        accessorFn: (row) => row.catalogueItem.days_to_replace,
         size: 250,
         filterVariant: 'range',
       },
       {
         header: 'Days to Rework',
-        accessorFn: (row) => row.days_to_rework ?? 0,
+        accessorFn: (row) => row.catalogueItem.days_to_rework ?? 0,
         size: 250,
         filterVariant: 'range',
         Cell: ({ row }) => {
           // Logic to get the range slider to work with null values
-          return row.original.cost_to_rework_gbp === 0
+          return row.original.catalogueItem.cost_to_rework_gbp === 0
             ? 0
-            : row.original.cost_to_rework_gbp !== null
-            ? row.original.cost_to_rework_gbp
+            : row.original.catalogueItem.cost_to_rework_gbp !== null
+            ? row.original.catalogueItem.cost_to_rework_gbp
             : '';
         },
       },
       {
         header: 'Drawing Number',
-        accessorFn: (row) => row.drawing_number ?? '',
+        accessorFn: (row) => row.catalogueItem.drawing_number ?? '',
         size: 250,
       },
       {
         header: 'Drawing Link',
-        accessorFn: (row) => row.drawing_link ?? '',
+        accessorFn: (row) => row.catalogueItem.drawing_link ?? '',
         size: 250,
       },
       {
         header: 'Item Model Number',
-        accessorFn: (row) => row.item_model_number ?? '',
+        accessorFn: (row) => row.catalogueItem.item_model_number ?? '',
         size: 250,
       },
       {
         header: 'Manufacturer Name',
-        accessorFn: (row) =>
-          manufacturerList?.find((manufacturer) => {
-            return manufacturer?.id === row.manufacturer_id;
-          })?.name,
+        accessorFn: (row) => row.manufacturer?.name,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
             component={Link}
-            to={`/manufacturer/${row.original.manufacturer_id}`}
+            to={`/manufacturer/${row.original.catalogueItem.manufacturer_id}`}
           >
-            {
-              manufacturerList?.find((manufacturer) => {
-                return manufacturer?.id === row.original.manufacturer_id;
-              })?.name
-            }
+            {row.original.manufacturer?.name}
           </MuiLink>
         ),
       },
       {
         header: 'Manufacturer URL',
-        accessorFn: (row) =>
-          manufacturerList?.find((manufacturer) => {
-            return manufacturer?.id === row.manufacturer_id;
-          })?.url,
+        accessorFn: (row) => row.manufacturer?.url,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
             target="_blank"
-            href={
-              manufacturerList?.find((manufacturer) => {
-                return manufacturer?.id === row.original.manufacturer_id;
-              })?.url ?? undefined
-            }
+            href={row.original.manufacturer?.url ?? undefined}
           >
-            {
-              manufacturerList?.find((manufacturer) => {
-                return manufacturer?.id === row.original.manufacturer_id;
-              })?.url
-            }
+            {row.original.manufacturer?.url}
           </MuiLink>
         ),
       },
       {
         header: 'Manufacturer Address',
         accessorFn: (row) =>
-          `${
-            manufacturerList?.find((manufacturer) => {
-              return manufacturer?.id === row.manufacturer_id;
-            })?.address.address_line
-          }${
-            manufacturerList?.find((manufacturer) => {
-              return manufacturer?.id === row.manufacturer_id;
-            })?.address.town
-          }${
-            manufacturerList?.find((manufacturer) => {
-              return manufacturer?.id === row.manufacturer_id;
-            })?.address.county
-          }${
-            manufacturerList?.find((manufacturer) => {
-              return manufacturer?.id === row.manufacturer_id;
-            })?.address.postcode
-          }${
-            manufacturerList?.find((manufacturer) => {
-              return manufacturer?.id === row.manufacturer_id;
-            })?.address.country
-          }`,
+          `${row.manufacturer?.address.address_line}${row.manufacturer?.address.town}${row.manufacturer?.address.county}${row.manufacturer?.address.postcode}${row.manufacturer?.address.country}`,
         Cell: ({ row }) => (
           <div style={{ display: 'inline-block' }}>
             <Typography sx={{ fontSize: 'inherit' }}>
-              {
-                manufacturerList?.find((manufacturer) => {
-                  return manufacturer?.id === row.original.manufacturer_id;
-                })?.address.address_line
-              }
+              {row.original.manufacturer?.address.address_line}
             </Typography>
             <Typography sx={{ fontSize: 'inherit' }}>
-              {
-                manufacturerList?.find((manufacturer) => {
-                  return manufacturer?.id === row.original.manufacturer_id;
-                })?.address.town
-              }
+              {row.original.manufacturer?.address.town}
             </Typography>
             <Typography sx={{ fontSize: 'inherit' }}>
-              {
-                manufacturerList?.find((manufacturer) => {
-                  return manufacturer?.id === row.original.manufacturer_id;
-                })?.address.county
-              }
+              {row.original.manufacturer?.address.county}
             </Typography>
             <Typography sx={{ fontSize: 'inherit' }}>
-              {
-                manufacturerList?.find((manufacturer) => {
-                  return manufacturer?.id === row.original.manufacturer_id;
-                })?.address.postcode
-              }
+              {row.original.manufacturer?.address.postcode}
             </Typography>
             <Typography sx={{ fontSize: 'inherit' }}>
-              {
-                manufacturerList?.find((manufacturer) => {
-                  return manufacturer?.id === row.original.manufacturer_id;
-                })?.address.country
-              }
+              {row.original.manufacturer?.address.country}
             </Typography>
           </div>
         ),
       },
       {
         header: 'Manufacturer Telephone',
-        accessorFn: (row) =>
-          manufacturerList?.find((manufacturer) => {
-            return manufacturer?.id === row.manufacturer_id;
-          })?.telephone,
-        Cell: ({ row }) =>
-          manufacturerList?.find((manufacturer) => {
-            return manufacturer?.id === row.original.manufacturer_id;
-          })?.telephone,
+        accessorFn: (row) => row.manufacturer?.telephone,
+        Cell: ({ row }) => row.original.manufacturer?.telephone,
       },
     ];
-  }, [
-    dense,
-    isItemSelectable,
-    manufacturerList,
-    parentInfo.catalogue_item_properties,
-  ]);
+  }, [dense, isItemSelectable, parentInfo.catalogue_item_properties]);
 
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     selectedRowState ?? {}
@@ -473,10 +465,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     React.useState<MRT_ColumnFiltersState>([]);
 
   const handleRowSelection = React.useCallback(
-    (row: MRT_Row<CatalogueItem>) => {
+    (row: MRT_Row<TableRowData>) => {
       // Ensure selectable
-      if (isItemSelectable === undefined || isItemSelectable(row.original)) {
-        if (row.original.id === Object.keys(rowSelection)[0]) {
+      if (
+        isItemSelectable === undefined ||
+        isItemSelectable(row.original.catalogueItem)
+      ) {
+        if (row.original.catalogueItem.id === Object.keys(rowSelection)[0]) {
           // Deselect
           onChangeObsoleteReplacementId && onChangeObsoleteReplacementId(null);
 
@@ -484,7 +479,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         } else {
           // Select
           onChangeObsoleteReplacementId &&
-            onChangeObsoleteReplacementId(row.original.id);
+            onChangeObsoleteReplacementId(row.original.catalogueItem.id);
 
           setRowSelection((prev) => ({
             [row.id]: !prev[row.id],
@@ -497,7 +492,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const table = useMaterialReactTable({
     columns: dense ? [{ ...columns[0], size: 1135 }] : columns, // If dense only show the name column
-    data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data: tableRows ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     enableColumnOrdering: dense ? false : true,
     enableFacetedValues: true,
     enableColumnResizing: dense ? false : true,
@@ -534,11 +529,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             selected: rowSelection[row.id],
             sx: {
               cursor:
-                isItemSelectable === undefined || isItemSelectable(row.original)
+                isItemSelectable === undefined ||
+                isItemSelectable(row.original.catalogueItem)
                   ? 'pointer'
                   : 'not-allowed',
             },
-            'aria-label': `${row.original.name} row`,
+            'aria-label': `${row.original.catalogueItem.name} row`,
           };
         }
       : undefined,
@@ -547,7 +543,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           return {
             onClick: () => handleRowSelection(row),
             disabled: !(
-              isItemSelectable === undefined || isItemSelectable(row.original)
+              isItemSelectable === undefined ||
+              isItemSelectable(row.original.catalogueItem)
             ),
           };
         }
@@ -557,7 +554,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       showGlobalFilter: true,
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
     },
-    getRowId: (row) => row.id,
+    getRowId: (row) => row.catalogueItem.id,
     muiTableContainerProps: {
       sx: { height: dense ? '360.4px' : tableHeight },
     },
@@ -592,14 +589,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               itemDialogType === 'create'
                 ? undefined
                 : {
-                    ...row.original,
+                    ...row.original.catalogueItem,
                     name:
                       itemDialogType === 'save as'
                         ? generateUniqueName(
-                            row.original.name,
+                            row.original.catalogueItem.name,
                             catalogueCategoryNames
                           )
-                        : row.original.name,
+                        : row.original.catalogueItem.name,
                   }
             }
           />
@@ -662,7 +659,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       return [
         <MenuItem
           key={0}
-          aria-label={`Edit catalogue item ${row.original.name}`}
+          aria-label={`Edit catalogue item ${row.original.catalogueItem.name}`}
           onClick={() => {
             setItemsDialogType('edit');
             table.setCreatingRow(row);
@@ -677,7 +674,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         </MenuItem>,
         <MenuItem
           key={1}
-          aria-label={`Save catalogue item ${row.original.name} as`}
+          aria-label={`Save catalogue item ${row.original.catalogueItem.name} as`}
           onClick={() => {
             setItemsDialogType('save as');
             table.setCreatingRow(row);
@@ -692,10 +689,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         </MenuItem>,
         <MenuItem
           key={2}
-          aria-label={`Delete catalogue item ${row.original.name}`}
+          aria-label={`Delete catalogue item ${row.original.catalogueItem.name}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
-            setSelectedCatalogueItem(row.original);
+            setSelectedCatalogueItem(row.original.catalogueItem);
             closeMenu();
           }}
           sx={{ m: 0 }}
@@ -707,10 +704,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         </MenuItem>,
         <MenuItem
           key={3}
-          aria-label={`Obsolete catalogue item ${row.original.name}`}
+          aria-label={`Obsolete catalogue item ${row.original.catalogueItem.name}`}
           onClick={() => {
             setObsoleteItemDialogOpen(true);
-            setSelectedCatalogueItem(row.original);
+            setSelectedCatalogueItem(row.original.catalogueItem);
 
             closeMenu();
           }}
@@ -726,11 +723,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     renderDetailPanel: dense
       ? ({ row }) => (
           <CatalogueItemsDetailsPanel
-            catalogueItemIdData={row.original}
+            catalogueItemIdData={row.original.catalogueItem}
             catalogueCategoryData={parentInfo}
-            manufacturerData={manufacturerList?.find((manufacturer) => {
-              return manufacturer?.id === row.original.manufacturer_id;
-            })}
+            manufacturerData={row.original.manufacturer}
           />
         )
       : undefined,
@@ -757,7 +752,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             open={moveToItemDialogOpen}
             onClose={() => setMoveToItemDialogOpen(false)}
             selectedItems={
-              data?.filter((catalogueItem) =>
+              catalogueItemsData?.filter((catalogueItem) =>
                 Object.keys(rowSelection).includes(catalogueItem.id)
               ) ?? []
             }
@@ -771,7 +766,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             open={copyToItemDialogOpen}
             onClose={() => setCopyToItemDialogOpen(false)}
             selectedItems={
-              data?.filter((catalogueItem) =>
+              catalogueItemsData?.filter((catalogueItem) =>
                 Object.keys(rowSelection).includes(catalogueItem.id)
               ) ?? []
             }

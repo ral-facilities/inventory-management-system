@@ -66,10 +66,10 @@ describe('Manufacturer', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/manufacturers',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"name":"Manufacturer D","url":"http://test.co.uk","address":{"address_line":"4 Example Street","town":"Oxford","county":"Oxfordshire","postcode":"OX1 2AB","country":"United Kingdom"},"telephone":"07349612203"}'
       );
     });
@@ -89,10 +89,10 @@ describe('Manufacturer', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/manufacturers',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"name":"Manufacturer D","address":{"address_line":"4 Example Street","town":null,"county":null,"postcode":"OX1 2AB","country":"United Kingdom"},"telephone":null}'
       );
     });
@@ -213,10 +213,10 @@ describe('Manufacturer', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/manufacturers/:id',
-    }).should((patchRequests) => {
+    }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+      expect(JSON.stringify(await request.json())).equal(
         '{"name":"test","address":{"address_line":"test","town":"test","county":"test","postcode":"test","country":"test"},"telephone":"0000000000"}'
       );
     });

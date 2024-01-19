@@ -296,7 +296,7 @@ describe('Catalogue Items Table', () => {
     });
   });
 
-  it('opens the add catalogue item dialog for save as', async () => {
+  it('opens and closes the catalogue item dialog for save as', async () => {
     createView();
 
     await waitFor(() => {

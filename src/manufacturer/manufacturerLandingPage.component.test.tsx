@@ -19,7 +19,7 @@ describe('Manufacturer Landing page', () => {
         <Route
           path={paths.manufacturer}
           element={<ManufacturerLandingPage />}
-        ></Route>
+        />
       </Routes>,
       path
     );
