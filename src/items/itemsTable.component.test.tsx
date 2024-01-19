@@ -160,7 +160,7 @@ describe('Items Table', () => {
     });
   });
 
-  it('opens the add catalogue item dialog for save as', async () => {
+  it('can open the save as dialog and close it again', async () => {
     createView();
 
     const serialNumber = '5YUQDDjKpz2z';
