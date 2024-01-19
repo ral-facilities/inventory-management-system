@@ -34,10 +34,10 @@ describe('Catalogue Items', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-items',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"catalogue_category_id":"4","name":"test","cost_gbp":5000,"cost_to_rework_gbp":400,"days_to_replace":14,"days_to_rework":5,"description":"test Description","item_model_number":"MXtest","is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":"https://example.com","drawing_number":"MX43242","manufacturer_id":"1","properties":[{"name":"Resolution","value":18},{"name":"Frame Rate","value":60},{"name":"Sensor Type","value":"IO"},{"name":"Sensor brand","value":"pixel"},{"name":"Broken","value":true},{"name":"Older than five years","value":false}]}'
       );
     });
@@ -56,10 +56,10 @@ describe('Catalogue Items', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-items',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"catalogue_category_id":"5","name":"Energy Meters 27_copy_1","cost_gbp":600,"cost_to_rework_gbp":89,"days_to_replace":7,"days_to_rework":60,"description":"Precision energy meters for accurate measurements. 27","item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"manufacturer_id":"3","properties":[{"name":"Measurement Range","value":2000}]}'
       );
     });
@@ -86,10 +86,10 @@ describe('Catalogue Items', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-items',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"catalogue_category_id":"4","name":"test","cost_gbp":5000,"cost_to_rework_gbp":null,"days_to_replace":14,"days_to_rework":null,"description":null,"item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"manufacturer_id":"1","properties":[{"name":"Resolution","value":18},{"name":"Sensor Type","value":"IO"},{"name":"Broken","value":true}]}'
       );
     });
@@ -388,10 +388,10 @@ describe('Catalogue Items', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/catalogue-items/:id',
-    }).should((patchRequests) => {
+    }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+      expect(JSON.stringify(await request.json())).equal(
         '{"name":"test","description":null,"cost_gbp":6000,"cost_to_rework_gbp":894,"days_to_replace":71,"days_to_rework":605,"drawing_number":"MX43242","drawing_link":"https://example.com","item_model_number":"MXtest","manufacturer_id":"1"}'
       );
     });
@@ -411,10 +411,10 @@ describe('Catalogue Items', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/catalogue-items/:id',
-    }).should((patchRequests) => {
+    }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+      expect(JSON.stringify(await request.json())).equal(
         '{"properties":[{"name":"Measurement Range","value":20000}]}'
       );
     });
