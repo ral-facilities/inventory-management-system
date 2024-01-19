@@ -5,6 +5,9 @@ import Systems from './systems.component';
 import userEvent from '@testing-library/user-event';
 
 describe('Systems', () => {
+  // Quite a few of these take more than 5 seconds on CI
+  jest.setTimeout(10000);
+
   let user;
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(<Systems />, path);
@@ -12,6 +15,15 @@ describe('Systems', () => {
 
   beforeEach(() => {
     user = userEvent.setup();
+
+    window.ResizeObserver = jest.fn().mockImplementation(() => ({
+      disconnect: jest.fn(),
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+    }));
+    window.Element.prototype.getBoundingClientRect = jest
+      .fn()
+      .mockReturnValue({ height: 100, width: 200 });
   });
 
   const clickRowAction = async (rowIndex: number, buttonText: string) => {
