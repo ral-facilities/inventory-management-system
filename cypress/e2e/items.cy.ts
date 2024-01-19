@@ -244,4 +244,31 @@ describe('Items', () => {
     cy.findByText('PcfCM1jp0SUV').should('exist');
     cy.findByText('Zf7P8Qu8TD8c').should('exist');
   });
+
+  it('delete an item', () => {
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Delete').click();
+
+    cy.findByText('ID: KvT2Ox7n').should('exist');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Continue' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'DELETE',
+      url: '/v1/items/:id',
+    }).should((patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(request.url.toString()).to.contain('KvT2Ox7n');
+    });
+  });
+
+  it('should display a link a system in the delete dialog when the item has a system id', () => {
+    cy.findAllByLabelText('Row Actions').last().click();
+    cy.findByText('Delete').click();
+
+    cy.findByRole('link', { name: 'Pico Laser' }).should('exist');
+  });
 });

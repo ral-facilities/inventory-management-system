@@ -521,4 +521,11 @@ export const handlers = [
 
     return res(ctx.status(200), ctx.json(data));
   }),
+  rest.delete('/v1/items/:id', (req, res, ctx) => {
+    const { id } = req.params;
+
+    if (id === 'Error 500') return res(ctx.status(500));
+
+    return res(ctx.status(204));
+  }),
 ];
