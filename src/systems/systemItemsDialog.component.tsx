@@ -76,6 +76,14 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
+        <Button
+          disabled={
+            // Disable when not moving anywhere different
+            props.parentSystem.id === parentSystemId
+          }
+        >
+          Move here
+        </Button>
       </DialogActions>
     </Dialog>
   );
