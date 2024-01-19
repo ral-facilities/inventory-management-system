@@ -5,12 +5,16 @@ import {
   Tooltip,
   Typography,
   Link as MuiLink,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import ItemDialog from './itemDialog.component';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
   PropertyFiltersType,
   findPropertyValue,
@@ -32,6 +36,7 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import { useItems } from '../api/item';
 import ItemsDetailsPanel from './ItemsDetailsPanel.component';
 import { getPageHeightCalc } from '../utils';
+import DeleteItemDialog from './deleteItemDialog.component';
 
 export interface ItemTableProps {
   catalogueCategory: CatalogueCategory;
@@ -45,6 +50,13 @@ export function ItemsTable(props: ItemTableProps) {
   const noResultsTxt =
     'No results found: Try adding an item by using the Add Item button on the top left of your screen';
   const { data, isLoading } = useItems(undefined, catalogueItem.id);
+
+  const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [selectedItem, setSelectedItem] = React.useState<Item | undefined>(
+    undefined
+  );
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 32px');
@@ -214,6 +226,7 @@ export function ItemsTable(props: ItemTableProps) {
     enableColumnOrdering: dense ? false : true,
     enableFacetedValues: true,
     enableColumnResizing: dense ? false : true,
+    enableRowActions: dense ? false : true,
     enableStickyHeader: true,
     enableDensityToggle: false,
     enableHiding: dense ? false : true,
@@ -300,6 +313,25 @@ export function ItemsTable(props: ItemTableProps) {
         </Button>
       </Box>
     ),
+    renderRowActionMenuItems: ({ closeMenu, row, table }) => {
+      return [
+        <MenuItem
+          key={2}
+          aria-label={`Delete item ${row.original.serial_number}`}
+          onClick={() => {
+            setDeleteItemDialogOpen(true);
+            setSelectedItem(row.original);
+            closeMenu();
+          }}
+          sx={{ m: 0 }}
+        >
+          <ListItemIcon>
+            <DeleteIcon />
+          </ListItemIcon>
+          <ListItemText>Delete</ListItemText>
+        </MenuItem>,
+      ];
+    },
     renderDetailPanel: dense
       ? ({ row }) => (
           <ItemsDetailsPanel
@@ -312,6 +344,14 @@ export function ItemsTable(props: ItemTableProps) {
   return (
     <div style={{ width: '100%' }}>
       <MaterialReactTable table={table} />
+      {!dense && (
+        <DeleteItemDialog
+          open={deleteItemDialogOpen}
+          onClose={() => setDeleteItemDialogOpen(false)}
+          item={selectedItem}
+          onChangeItem={setSelectedItem}
+        />
+      )}
     </div>
   );
 }

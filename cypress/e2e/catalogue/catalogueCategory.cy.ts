@@ -57,10 +57,10 @@ describe('Catalogue Category', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-categories',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"name":"test","is_leaf":false}'
       );
     });
@@ -103,10 +103,10 @@ describe('Catalogue Category', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-categories',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"name":"Motion_copy_1","is_leaf":false}'
       );
     });
@@ -189,10 +189,10 @@ describe('Catalogue Category', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-categories',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"name":"test","is_leaf":true,"catalogue_item_properties":[{"name":"Updated Field 1","type":"boolean","mandatory":false},{"name":"Updated Field 2","type":"number","unit":"","mandatory":false}]}'
       );
     });
@@ -247,10 +247,12 @@ describe('Catalogue Category', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/catalogue-categories/:id',
-    }).should((patchRequests) => {
+    }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal('{"name":"Amp Meters1"}');
+      expect(JSON.stringify(await request.json())).equal(
+        '{"name":"Amp Meters1"}'
+      );
       expect(request.url.toString()).to.contain('1');
     });
   });
@@ -316,10 +318,10 @@ describe('Catalogue Category', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/catalogue-categories/:id',
-    }).should((patchRequests) => {
+    }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+      expect(JSON.stringify(await request.json())).equal(
         '{"catalogue_item_properties":[{"name":"Updated Field","type":"number","unit":"volts","mandatory":true},{"name":"Accuracy","type":"string","mandatory":true}]}'
       );
       expect(request.url.toString()).to.contain('1');
@@ -370,10 +372,10 @@ describe('Catalogue Category', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/catalogue-categories/:id',
-    }).should((patchRequests) => {
+    }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+      expect(JSON.stringify(await request.json())).equal(
         '{"name":"Voltage Meters1","is_leaf":false}'
       );
       expect(request.url.toString()).to.contain('1');

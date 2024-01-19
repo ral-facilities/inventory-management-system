@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { useAddItem, useItem, useItems } from './item';
+import { useAddItem, useDeleteItem, useItem, useItems } from './item';
 import {
   getItemById,
   getItemsByCatalogueItemId,
@@ -125,6 +125,20 @@ describe('catalogue items api functions', () => {
       });
 
       expect(result.current.data).toEqual(getItemById('KvT2Ox7n'));
+    });
+  });
+
+  describe('useDeleteItem', () => {
+    it('posts a request to delete an Item and returns successful response', async () => {
+      const { result } = renderHook(() => useDeleteItem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate(getItemById('KvT2Ox7n'));
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual('');
     });
   });
 });
