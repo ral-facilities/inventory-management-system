@@ -188,7 +188,7 @@ describe('Items Table', () => {
     });
   });
 
-  it('opens the add catalogue item dialog for save as (no delivered date or warranty date)', async () => {
+  it('can open the save as dialog (no delivered date or warranty date) and close it again', async () => {
     props.catalogueCategory = getCatalogueCategoryById('4');
     props.catalogueItem = getCatalogueItemById('3');
     createView();
