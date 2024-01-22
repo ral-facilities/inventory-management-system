@@ -15,6 +15,7 @@ import CatalogueItemJSON from './CatalogueItems.json';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import ManufacturerJSON from './manufacturer.json';
+import ItemsJSON from './Items.json';
 
 export const handlers = [
   // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
@@ -397,8 +398,8 @@ export const handlers = [
 
   rest.get('/v1/systems/:id', (req, res, ctx) => {
     const { id } = req.params;
-    const data = SystemsJSON.filter((system) => system.id === id);
-    if (data.length > 0) return res(ctx.status(200), ctx.json(data[0]));
+    const data = SystemsJSON.find((system) => system.id === id);
+    if (data !== undefined) return res(ctx.status(200), ctx.json(data));
     else
       return res(
         ctx.status(404),
@@ -491,5 +492,38 @@ export const handlers = [
         id: '1',
       })
     );
+  }),
+
+  rest.get('/v1/items/', (req, res, ctx) => {
+    const itemsParams = req.url.searchParams;
+    const catalogueItemId = itemsParams.get('catalogue_item_id');
+    const systemId = itemsParams.get('system_id');
+    let data;
+
+    if (catalogueItemId) {
+      data = ItemsJSON.filter(
+        (items) => items.catalogue_item_id === catalogueItemId
+      );
+    }
+
+    if (systemId) {
+      data = ItemsJSON.filter((items) => items.system_id === systemId);
+    }
+
+    return res(ctx.status(200), ctx.json(data));
+  }),
+  rest.get('/v1/items/:id', (req, res, ctx) => {
+    const { id } = req.params;
+
+    const data = ItemsJSON.find((items) => items.id === id);
+
+    return res(ctx.status(200), ctx.json(data));
+  }),
+  rest.delete('/v1/items/:id', (req, res, ctx) => {
+    const { id } = req.params;
+
+    if (id === 'Error 500') return res(ctx.status(500));
+
+    return res(ctx.status(204));
   }),
 ];

@@ -11,9 +11,9 @@ describe('Manufacturer', () => {
     cy.findByText('Actions').should('be.visible');
     cy.findByText('Name').should('be.visible');
     cy.findByText('URL').should('be.visible');
-    cy.findByText('Telephone').scrollIntoView();
+    cy.findByText('Telephone number').scrollIntoView();
     cy.findByText('Address').should('be.visible');
-    cy.findByText('Telephone').should('be.visible');
+    cy.findByText('Telephone number').should('be.visible');
   });
 
   it('should render manufacturer data', () => {
@@ -21,7 +21,9 @@ describe('Manufacturer', () => {
 
     cy.findByText('Manufacturer A').should('be.visible');
     cy.findByText('Manufacturer B').should('be.visible');
+    cy.findByText('Manufacturer C').scrollIntoView();
     cy.findByText('Manufacturer C').should('be.visible');
+    cy.findByText('http://example.com').scrollIntoView();
     cy.findByText('http://example.com').should('be.visible');
     cy.findByText('http://test.com').should('be.visible');
     cy.findByText('http://test.co.uk').scrollIntoView();
@@ -64,10 +66,10 @@ describe('Manufacturer', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/manufacturers',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"name":"Manufacturer D","url":"http://test.co.uk","address":{"address_line":"4 Example Street","town":"Oxford","county":"Oxfordshire","postcode":"OX1 2AB","country":"United Kingdom"},"telephone":"07349612203"}'
       );
     });
@@ -87,10 +89,10 @@ describe('Manufacturer', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/manufacturers',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"name":"Manufacturer D","address":{"address_line":"4 Example Street","town":null,"county":null,"postcode":"OX1 2AB","country":"United Kingdom"},"telephone":null}'
       );
     });
@@ -211,10 +213,10 @@ describe('Manufacturer', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/manufacturers/:id',
-    }).should((patchRequests) => {
+    }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+      expect(JSON.stringify(await request.json())).equal(
         '{"name":"test","address":{"address_line":"test","town":"test","county":"test","postcode":"test","country":"test"},"telephone":"0000000000"}'
       );
     });
@@ -309,7 +311,7 @@ describe('Manufacturer', () => {
     cy.findByText('Manufacturer A').click();
     cy.findByText('Telephone number:').should('exist');
 
-    cy.findByRole('link', { name: 'Manufacturer table view' }).click();
+    cy.findByRole('button', { name: 'navigate to manufacturer home' }).click();
 
     cy.findByText('Manufacturer A').should('exist');
     cy.findByText('Manufacturer B').should('exist');
@@ -343,7 +345,7 @@ describe('Manufacturer', () => {
       `This manufacturer doesn't exist. Please click the Home button to navigate to the manufacturer table`
     ).should('exist');
 
-    cy.findByRole('link', { name: 'Home' }).click();
+    cy.findByRole('button', { name: 'navigate to manufacturer home' }).click();
 
     cy.findByText('Manufacturer A').should('exist');
     cy.findByText('Manufacturer B').should('exist');

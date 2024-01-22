@@ -1,81 +1,109 @@
 import React from 'react';
-import { Box, Button } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import ItemDialog from './itemDialog.component';
+import { Box, Grid, LinearProgress, Typography } from '@mui/material';
 import { useCatalogueItem } from '../api/catalogueItem';
-import { Link, useLocation } from 'react-router-dom';
-import { useCatalogueCategory } from '../api/catalogueCategory';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  useCatalogueBreadcrumbs,
+  useCatalogueCategory,
+} from '../api/catalogueCategory';
+
+import ItemsTable from './itemsTable.component';
+import { BreadcrumbsInfo } from '../app.types';
+import Breadcrumbs from '../view/breadcrumbs.component';
 
 export function Items() {
-  const [addItemDialogOpen, setAddItemDialogOpen] =
-    React.useState<boolean>(false);
-  const location = useLocation();
-  const catalogueItemId = location.pathname.split('/')[3];
-  const { data: catalogueItem } = useCatalogueItem(catalogueItemId);
+  const { catalogue_item_id: catalogueItemId } = useParams();
+  const { data: catalogueItem, isLoading: catalogueItemLoading } =
+    useCatalogueItem(catalogueItemId);
   const { data: catalogueCategory } = useCatalogueCategory(
     catalogueItem?.catalogue_category_id
   );
+  const navigate = useNavigate();
+  const onChangeNode = React.useCallback(
+    (newIdPath: string) => {
+      navigate(`/catalogue/${newIdPath}`);
+    },
+    [navigate]
+  );
+
+  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
+    catalogueItem?.catalogue_category_id ?? ''
+  );
+
+  const [itemsBreadcrumbs, setItemsBreadcrumbs] = React.useState<
+    BreadcrumbsInfo | undefined
+  >(catalogueBreadcrumbs);
+
+  React.useEffect(() => {
+    catalogueBreadcrumbs &&
+      catalogueItem &&
+      setItemsBreadcrumbs({
+        ...catalogueBreadcrumbs,
+        trail: [
+          ...catalogueBreadcrumbs.trail,
+          [`item/${catalogueItem.id}`, `${catalogueItem.name}`],
+          [`item/${catalogueItem.id}/items`, 'Items'],
+        ],
+      });
+  }, [catalogueBreadcrumbs, catalogueItem]);
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'left',
-        padding: 4,
-        position: 'sticky',
-        top: 0,
-        backgroundColor: 'background.default',
-        zIndex: 1000,
-        width: '100%',
-      }}
-    >
-      <Button
-        sx={{ mx: 0.5 }}
-        component={Link}
-        startIcon={
-          <Box sx={{ alignItems: 'center', display: 'flex' }}>
-            <ArrowBackIcon fontSize="small" />{' '}
-            <ArrowBackIcon fontSize="small" />
+    <Grid container>
+      <Grid
+        container
+        item
+        sx={{
+          display: 'flex',
+          justifyContent: 'left',
+          paddingLeft: 0.5,
+          py: 2.5,
+          position: 'sticky',
+          top: 0,
+          backgroundColor: 'background.default',
+          zIndex: 1000,
+          width: '100%',
+        }}
+      >
+        <Breadcrumbs
+          onChangeNode={onChangeNode}
+          breadcrumbsInfo={itemsBreadcrumbs}
+          onChangeNavigateHome={() => {
+            navigate('/catalogue');
+          }}
+          navigateHomeAriaLabel={'navigate to catalogue home'}
+        />
+      </Grid>
+
+      {catalogueCategory && catalogueItem && (
+        <ItemsTable
+          catalogueCategory={catalogueCategory}
+          catalogueItem={catalogueItem}
+          dense={false}
+        />
+      )}
+
+      {!catalogueItemLoading ? (
+        !catalogueItem && (
+          <Box
+            sx={{
+              width: '100%',
+              justifyContent: 'center',
+              marginTop: 1,
+            }}
+          >
+            <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
+            <Typography>
+              These items don't exist. Please click the Home button on the top
+              left of you screen to navigate to the catalogue home
+            </Typography>
           </Box>
-        }
-        to={
-          catalogueCategory
-            ? `/catalogue/${catalogueCategory.id}`
-            : '/catalogue'
-        }
-        variant="outlined"
-      >
-        {catalogueCategory
-          ? `Back to ${catalogueCategory?.name} table view`
-          : 'Home'}
-      </Button>
-      <Button
-        startIcon={<ArrowBackIcon />}
-        sx={{ mx: 0.5 }}
-        component={Link}
-        to={
-          catalogueItem ? `/catalogue/item/${catalogueItem.id}` : '/catalogue'
-        }
-        variant="outlined"
-      >
-        Back to {`${catalogueItem?.name} landing page`}
-      </Button>
-      <Button
-        sx={{ mx: 0.5 }}
-        startIcon={<AddIcon />}
-        onClick={() => setAddItemDialogOpen(true)}
-        variant="outlined"
-      >
-        Add Item
-      </Button>
-      <ItemDialog
-        open={addItemDialogOpen}
-        onClose={() => setAddItemDialogOpen(false)}
-        type="add"
-        catalogueCategory={catalogueCategory}
-        catalogueItem={catalogueItem}
-      />
-    </div>
+        )
+      ) : (
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress />
+        </Box>
+      )}
+    </Grid>
   );
 }
 

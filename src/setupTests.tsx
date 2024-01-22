@@ -10,11 +10,13 @@ import {
   CatalogueCategory,
   CatalogueCategoryFormData,
   CatalogueItem,
+  Item,
   Manufacturer,
 } from './app.types';
 import CatalogueCategoryJSON from './mocks/CatalogueCategory.json';
 import CatalogueItemJSON from './mocks/CatalogueItems.json';
 import ManufacturerJSON from './mocks/manufacturer.json';
+import ItemsJSON from './mocks/Items.json';
 import { server } from './mocks/server';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -161,4 +163,16 @@ export const getManufacturerById = (id: string): Manufacturer | undefined => {
       (manufacturer) => manufacturer.id === id
     ) as Manufacturer) || undefined
   );
+};
+
+export const getItemsByCatalogueItemId = (catalogueItemId: string): Item[] => {
+  return ItemsJSON.filter((item) => item.catalogue_item_id === catalogueItemId);
+};
+
+export const getItemById = (itemId: string): Item | undefined => {
+  return ItemsJSON.find((item) => item.id === itemId);
+};
+
+export const getItemsBySystemId = (systemId: string): Item[] => {
+  return ItemsJSON.filter((item) => item.system_id === systemId);
 };

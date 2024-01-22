@@ -55,6 +55,18 @@ exports[`Catalogue Items details panel renders details panel correctly (None val
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Notes
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
           </div>
           <span
             class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
@@ -93,7 +105,7 @@ exports[`Catalogue Items details panel renders details panel correctly (None val
                     <h4
                       class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
                     >
-                      Cameras 14
+                      Cameras 1
                     </h4>
                     <h6
                       class="MuiTypography-root MuiTypography-h6 css-1iz74ne-MuiTypography-root"
@@ -101,9 +113,9 @@ exports[`Catalogue Items details panel renders details panel correctly (None val
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
-                      High-resolution cameras for beam characterization. 14
+                      High-resolution cameras for beam characterization. 1
                     </p>
                   </div>
                   <div
@@ -118,7 +130,97 @@ exports[`Catalogue Items details panel renders details panel correctly (None val
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Obsolete
+                          Serial Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          tWdvjircsEhc
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        >
+                          Asset Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          HCPbzzzanH
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        >
+                          Purchase Order Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          NL87uLiK
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        >
+                          Warranty End Date
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          3/5/2023
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        >
+                          Delivered Date
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          1/14/2023
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        >
+                          Is Defective
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
@@ -136,138 +238,12 @@ exports[`Catalogue Items details panel renders details panel correctly (None val
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Obsolete replacement link
+                          Usage Status
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          None
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Obsolete Reason
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Cost (£)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          1800
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Cost to rework (£)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Time to replace (days)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          7
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Time to rework (days)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Drawing Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Model Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
+                          scrapped
                         </p>
                       </div>
                     </div>
@@ -304,85 +280,109 @@ exports[`Catalogue Items details panel renders details panel correctly (None val
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
                       Resolution (megapixels)
                     </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    <div
+                      class="MuiBox-root css-k008qs"
                     >
-                      68
-                    </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        68
+                      </p>
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
                       Frame Rate (fps)
                     </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    <div
+                      class="MuiBox-root css-k008qs"
                     >
-                      1440
-                    </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        1440
+                      </p>
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
                       Sensor Type 
                     </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    <div
+                      class="MuiBox-root css-k008qs"
                     >
-                      CMOS
-                    </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        CMOS
+                      </p>
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
                       Sensor brand 
                     </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    <div
+                      class="MuiBox-root css-k008qs"
                     >
-                      Hasselblad
-                    </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        Hasselblad
+                      </p>
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
                       Broken 
                     </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    <div
+                      class="MuiBox-root css-k008qs"
                     >
-                      false
-                    </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        false
+                      </p>
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
                       Older than five years 
                     </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    <div
+                      class="MuiBox-root css-k008qs"
                     >
-                      true
-                    </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        true
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -482,12 +482,54 @@ exports[`Catalogue Items details panel renders details panel correctly (None val
           </div>
         </div>
       </div>
+      <div
+        aria-labelledby="tab-3"
+        hidden=""
+        id="tabpanel-3"
+        role="tabpanel"
+      >
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <h4
+                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                    >
+                      Notes
+                    </h4>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      TnB0SBoekEtWRijmClwV
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </DocumentFragment>
 `;
 
-exports[`Catalogue Items details panel renders details panel correctly (with obsolete replacement link) 1`] = `
+exports[`Catalogue Items details panel renders details panel correctly (no dates) 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid-root MuiGrid-container css-k6wrnl-MuiGrid-root"
@@ -542,6 +584,18 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Notes
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
           </div>
           <span
             class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
@@ -580,7 +634,7 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                     <h4
                       class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
                     >
-                      Motorized Actuators 32
+                      Cameras 1
                     </h4>
                     <h6
                       class="MuiTypography-root MuiTypography-h6 css-1iz74ne-MuiTypography-root"
@@ -588,9 +642,9 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
-                      Motorized actuators for controlled motion. 32
+                      High-resolution cameras for beam characterization. 1
                     </p>
                   </div>
                   <div
@@ -605,12 +659,12 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Obsolete
+                          Serial Number
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          No
+                          Zf7P8Qu8TD8c
                         </p>
                       </div>
                     </div>
@@ -623,18 +677,12 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Obsolete replacement link
+                          Asset Number
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                            href="/catalogue/item/10"
-                            target="_blank"
-                          >
-                            Click here
-                          </a>
+                          75YWiLwy54
                         </p>
                       </div>
                     </div>
@@ -647,7 +695,25 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Obsolete Reason
+                          Purchase Order Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          hpGBgi0d
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        >
+                          Warranty End Date
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
@@ -665,25 +731,7 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Cost (£)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          1100
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Cost to rework (£)
+                          Delivered Date
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
@@ -701,12 +749,12 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Time to replace (days)
+                          Is Defective
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          90
+                          Yes
                         </p>
                       </div>
                     </div>
@@ -719,48 +767,12 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Time to rework (days)
+                          Usage Status
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          None
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Drawing Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Model Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
+                          inUse
                         </p>
                       </div>
                     </div>
@@ -797,29 +809,91 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Travel Range (millimeters)
+                      Resolution (megapixels)
                     </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    <div
+                      class="MuiBox-root css-k008qs"
                     >
-                      100
-                    </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        12
+                      </p>
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Load Capacity (kilograms)
+                      Frame Rate (fps)
                     </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        30
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      10
+                      Sensor Type 
                     </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        CMOS
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Broken 
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        true
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Older than five years 
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        false
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -912,6 +986,48 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-labelledby="tab-3"
+        hidden=""
+        id="tabpanel-3"
+        role="tabpanel"
+      >
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <h4
+                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                    >
+                      Notes
+                    </h4>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      zolZDKKuvAoTFRUWeZNA
+                    </p>
                   </div>
                 </div>
               </div>
@@ -979,6 +1095,18 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Notes
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
           </div>
           <span
             class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
@@ -1017,7 +1145,7 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                     <h4
                       class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
                     >
-                      Energy Meters 26
+                      Cameras 1
                     </h4>
                     <h6
                       class="MuiTypography-root MuiTypography-h6 css-1iz74ne-MuiTypography-root"
@@ -1025,9 +1153,9 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
-                      Precision energy meters for accurate measurements. 26
+                      High-resolution cameras for beam characterization. 1
                     </p>
                   </div>
                   <div
@@ -1042,12 +1170,12 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Obsolete
+                          Serial Number
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          Yes
+                          5YUQDDjKpz2z
                         </p>
                       </div>
                     </div>
@@ -1060,18 +1188,12 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Obsolete replacement link
+                          Asset Number
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                            href="/catalogue/item/6"
-                            target="_blank"
-                          >
-                            Click here
-                          </a>
+                          LyH8yp1FHf
                         </p>
                       </div>
                     </div>
@@ -1084,12 +1206,12 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Obsolete Reason
+                          Purchase Order Number
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          The item is no longer being manufactured
+                          6JYHEjwN
                         </p>
                       </div>
                     </div>
@@ -1102,12 +1224,12 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Cost (£)
+                          Warranty End Date
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          500
+                          4/4/2023
                         </p>
                       </div>
                     </div>
@@ -1120,12 +1242,12 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Cost to rework (£)
+                          Delivered Date
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          None
+                          3/17/2023
                         </p>
                       </div>
                     </div>
@@ -1138,12 +1260,12 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Time to replace (days)
+                          Is Defective
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          7
+                          No
                         </p>
                       </div>
                     </div>
@@ -1156,48 +1278,12 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Time to rework (days)
+                          Usage Status
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          None
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Drawing Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Model Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
+                          inUse
                         </p>
                       </div>
                     </div>
@@ -1234,29 +1320,73 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Measurement Range (Joules)
+                      Resolution (megapixels)
                     </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    <div
+                      class="MuiBox-root css-k008qs"
                     >
-                      1000
-                    </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        0
+                      </p>
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Accuracy 
+                      Sensor Type 
                     </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        CMOS
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      ±0.5%
+                      Broken 
                     </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        true
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Older than five years 
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        false
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1349,6 +1479,48 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-labelledby="tab-3"
+        hidden=""
+        id="tabpanel-3"
+        role="tabpanel"
+      >
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <h4
+                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                    >
+                      Notes
+                    </h4>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      6Y5XTJfBrNNx8oltI9HE
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1425,6 +1597,18 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                 </span>
               </span>
             </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Notes
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
           </div>
           <span
             class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
@@ -1464,7 +1648,7 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                     <h4
                       class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
                     >
-                      Energy Meters 26
+                      Cameras 1
                     </h4>
                     <h6
                       class="MuiTypography-root MuiTypography-h6 css-1iz74ne-MuiTypography-root"
@@ -1472,9 +1656,9 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
-                      Precision energy meters for accurate measurements. 26
+                      High-resolution cameras for beam characterization. 1
                     </p>
                   </div>
                   <div
@@ -1489,12 +1673,12 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Obsolete
+                          Serial Number
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          Yes
+                          5YUQDDjKpz2z
                         </p>
                       </div>
                     </div>
@@ -1507,18 +1691,12 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Obsolete replacement link
+                          Asset Number
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                            href="/catalogue/item/6"
-                            target="_blank"
-                          >
-                            Click here
-                          </a>
+                          LyH8yp1FHf
                         </p>
                       </div>
                     </div>
@@ -1531,12 +1709,12 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Obsolete Reason
+                          Purchase Order Number
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          The item is no longer being manufactured
+                          6JYHEjwN
                         </p>
                       </div>
                     </div>
@@ -1549,12 +1727,12 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Cost (£)
+                          Warranty End Date
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          500
+                          4/4/2023
                         </p>
                       </div>
                     </div>
@@ -1567,12 +1745,12 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Cost to rework (£)
+                          Delivered Date
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          None
+                          3/17/2023
                         </p>
                       </div>
                     </div>
@@ -1585,12 +1763,12 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Time to replace (days)
+                          Is Defective
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          7
+                          No
                         </p>
                       </div>
                     </div>
@@ -1603,48 +1781,12 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Time to rework (days)
+                          Usage Status
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          None
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Drawing Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Model Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
+                          inUse
                         </p>
                       </div>
                     </div>
@@ -1681,29 +1823,73 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Measurement Range (Joules)
+                      Resolution (megapixels)
                     </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    <div
+                      class="MuiBox-root css-k008qs"
                     >
-                      1000
-                    </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        0
+                      </p>
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Accuracy 
+                      Sensor Type 
                     </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        CMOS
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      ±0.5%
+                      Broken 
                     </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        true
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Older than five years 
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        false
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1742,7 +1928,9 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    />
+                    >
+                      Manufacturer A
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1755,7 +1943,13 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                     >
-                      None
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="http://example.com"
+                        target="_blank"
+                      >
+                        http://example.com
+                      </a>
                     </p>
                   </div>
                   <div
@@ -1769,7 +1963,7 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
-                      None
+                      07334893348
                     </p>
                   </div>
                   <div
@@ -1782,19 +1976,591 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      1 Example Street
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      Oxford
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      Oxfordshire
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      United Kingdom
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      OX1 2AB
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-labelledby="tab-3"
+        hidden=""
+        id="tabpanel-3"
+        role="tabpanel"
+      >
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <h4
+                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                    >
+                      Notes
+                    </h4>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      6Y5XTJfBrNNx8oltI9HE
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Catalogue Items details panel renders notes panel correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiGrid-root MuiGrid-container css-k6wrnl-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1bc19ni-MuiGrid-root"
+    >
+      <div
+        class="MuiTabs-root css-1ujnqem-MuiTabs-root"
+      >
+        <div
+          class="MuiTabs-scroller MuiTabs-fixed css-jpln7h-MuiTabs-scroller"
+          style="overflow: hidden; margin-bottom: 0px;"
+        >
+          <div
+            class="MuiTabs-flexContainer css-heg063-MuiTabs-flexContainer"
+            role="tablist"
+          >
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Details
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Properties
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Manufacturer
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-selected="true"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="0"
+              type="button"
+            >
+              Notes
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              >
+                <span
+                  class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
+                  style="width: 2.8284271247461903px; height: 2.8284271247461903px; top: -1.4142135623730951px; left: -1.4142135623730951px;"
+                >
+                  <span
+                    class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+                  />
+                </span>
+              </span>
+            </button>
+          </div>
+          <span
+            class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
+            style="left: 0px; width: 0px;"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1kgdoxy-MuiGrid-root"
+    >
+      <div
+        aria-labelledby="tab-0"
+        hidden=""
+        id="tabpanel-0"
+        role="tabpanel"
+      >
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical css-1fkrdiv-MuiCollapse-root"
+          style="min-height: 0px; height: 0px; transition-duration: 300ms;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <h4
+                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                    >
+                      Cameras 1
+                    </h4>
+                    <h6
+                      class="MuiTypography-root MuiTypography-h6 css-1iz74ne-MuiTypography-root"
+                    >
+                      Description:
+                    </h6>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
+                    >
+                      High-resolution cameras for beam characterization. 1
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1k15kbj-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        >
+                          Serial Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          5YUQDDjKpz2z
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        >
+                          Asset Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          LyH8yp1FHf
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        >
+                          Purchase Order Number
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          6JYHEjwN
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        >
+                          Warranty End Date
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          4/4/2023
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        >
+                          Delivered Date
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          3/17/2023
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        >
+                          Is Defective
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          No
+                        </p>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      >
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        >
+                          Usage Status
+                        </p>
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        >
+                          inUse
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-labelledby="tab-1"
+        hidden=""
+        id="tabpanel-1"
+        role="tabpanel"
+      >
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Resolution (megapixels)
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        0
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Sensor Type 
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        CMOS
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Broken 
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        true
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Older than five years 
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        false
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-labelledby="tab-2"
+        hidden=""
+        id="tabpanel-2"
+        role="tabpanel"
+      >
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer Name
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      Manufacturer A
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                    >
+                      Manufacturer URL
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="http://example.com"
+                        target="_blank"
+                      >
+                        http://example.com
+                      </a>
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Telephone number
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    >
+                      07334893348
+                    </p>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-4 css-11l5t4l-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Address
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    >
+                      1 Example Street
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    >
+                      Oxford
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    >
+                      Oxfordshire
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    >
+                      United Kingdom
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                    >
+                      OX1 2AB
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-labelledby="tab-3"
+        id="tabpanel-3"
+        role="tabpanel"
+      >
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical css-1fkrdiv-MuiCollapse-root"
+          style="min-height: 0px; height: 0px; transition-duration: 300ms;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <h4
+                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                    >
+                      Notes
+                    </h4>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      6Y5XTJfBrNNx8oltI9HE
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1871,6 +2637,18 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
+            <button
+              aria-selected="false"
+              class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+              role="tab"
+              tabindex="-1"
+              type="button"
+            >
+              Notes
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
           </div>
           <span
             class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
@@ -1910,7 +2688,7 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                     <h4
                       class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
                     >
-                      Energy Meters 26
+                      Cameras 1
                     </h4>
                     <h6
                       class="MuiTypography-root MuiTypography-h6 css-1iz74ne-MuiTypography-root"
@@ -1918,9 +2696,9 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
-                      Precision energy meters for accurate measurements. 26
+                      High-resolution cameras for beam characterization. 1
                     </p>
                   </div>
                   <div
@@ -1935,12 +2713,12 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Obsolete
+                          Serial Number
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          Yes
+                          5YUQDDjKpz2z
                         </p>
                       </div>
                     </div>
@@ -1953,18 +2731,12 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Obsolete replacement link
+                          Asset Number
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                            href="/catalogue/item/6"
-                            target="_blank"
-                          >
-                            Click here
-                          </a>
+                          LyH8yp1FHf
                         </p>
                       </div>
                     </div>
@@ -1977,12 +2749,12 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Obsolete Reason
+                          Purchase Order Number
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          The item is no longer being manufactured
+                          6JYHEjwN
                         </p>
                       </div>
                     </div>
@@ -1995,12 +2767,12 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Cost (£)
+                          Warranty End Date
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          500
+                          4/4/2023
                         </p>
                       </div>
                     </div>
@@ -2013,12 +2785,12 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Cost to rework (£)
+                          Delivered Date
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          None
+                          3/17/2023
                         </p>
                       </div>
                     </div>
@@ -2031,12 +2803,12 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Time to replace (days)
+                          Is Defective
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          7
+                          No
                         </p>
                       </div>
                     </div>
@@ -2049,48 +2821,12 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                         >
-                          Time to rework (days)
+                          Usage Status
                         </p>
                         <p
                           class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                         >
-                          None
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Drawing Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
-                    >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
-                      >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Model Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
+                          inUse
                         </p>
                       </div>
                     </div>
@@ -2126,29 +2862,73 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Measurement Range (Joules)
+                      Resolution (megapixels)
                     </p>
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    <div
+                      class="MuiBox-root css-k008qs"
                     >
-                      1000
-                    </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        0
+                      </p>
+                    </div>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      Accuracy 
+                      Sensor Type 
                     </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        CMOS
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
-                      ±0.5%
+                      Broken 
                     </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        true
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Older than five years 
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        false
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2188,7 +2968,9 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    />
+                    >
+                      Manufacturer A
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -2201,7 +2983,13 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                     >
-                      None
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="http://example.com"
+                        target="_blank"
+                      >
+                        http://example.com
+                      </a>
                     </p>
                   </div>
                   <div
@@ -2215,7 +3003,7 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
-                      None
+                      07334893348
                     </p>
                   </div>
                   <div
@@ -2228,19 +3016,71 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      1 Example Street
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      Oxford
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      Oxfordshire
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      United Kingdom
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      OX1 2AB
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-labelledby="tab-3"
+        hidden=""
+        id="tabpanel-3"
+        role="tabpanel"
+      >
+        <div
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <h4
+                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                    >
+                      Notes
+                    </h4>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    >
+                      6Y5XTJfBrNNx8oltI9HE
+                    </p>
                   </div>
                 </div>
               </div>

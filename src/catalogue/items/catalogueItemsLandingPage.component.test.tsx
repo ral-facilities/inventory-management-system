@@ -3,15 +3,32 @@ import { renderComponentWithMemoryRouter } from '../../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import CatalogueItemsLandingPage from './catalogueItemsLandingPage.component';
 import userEvent from '@testing-library/user-event';
-
+import { Route, Routes } from 'react-router-dom';
+import { paths } from '../../view/viewTabs.component';
+const mockedUseNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedUseNavigate,
+}));
 describe('Catalogue Items Landing Page', () => {
   let user;
   const createView = (path: string) => {
-    return renderComponentWithMemoryRouter(<CatalogueItemsLandingPage />, path);
+    return renderComponentWithMemoryRouter(
+      <Routes>
+        <Route
+          path={paths.catalogueItem}
+          element={<CatalogueItemsLandingPage />}
+        />
+      </Routes>,
+      path
+    );
   };
 
   beforeEach(() => {
     user = userEvent.setup();
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('renders text correctly (only basic details given)', async () => {
@@ -24,7 +41,7 @@ describe('Catalogue Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByRole('link', {
-          name: 'Back to Cameras table view',
+          name: 'cameras',
         })
       ).toBeInTheDocument();
     });
@@ -47,7 +64,7 @@ describe('Catalogue Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByRole('link', {
-          name: 'Back to Cameras table view',
+          name: 'cameras',
         })
       ).toBeInTheDocument();
     });
@@ -70,14 +87,10 @@ describe('Catalogue Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          `This item doesn't exist. Please click the Home button to navigate to the catalogue home`
+          `This catalogue item doesn't exist. Please click the Home button on the top left of you screen to navigate to the catalogue home`
         )
       ).toBeInTheDocument();
     });
-    const editButton = screen.getByRole('button', { name: 'Edit' });
-    expect(editButton).toBeDisabled();
-    const homeButton = screen.getByRole('link', { name: 'Home' });
-    expect(homeButton).toBeInTheDocument();
   });
 
   it('toggles the properties so it is either visible or hidden', async () => {
@@ -231,14 +244,37 @@ describe('Catalogue Items Landing Page', () => {
     createView('/catalogue/item/89');
     await waitFor(() => {
       expect(
-        screen.getByRole('link', { name: 'Back to Energy Meters table view' })
+        screen.getByRole('link', { name: 'energy-meters' })
       ).toBeInTheDocument();
     });
 
-    const url = screen.getByRole('link', {
-      name: 'Back to Energy Meters table view',
+    const breadcrumb = screen.getByRole('link', {
+      name: 'energy-meters',
     });
-    expect(url).toHaveAttribute('href', '/catalogue/5');
+
+    await user.click(breadcrumb);
+
+    expect(mockedUseNavigate).toBeCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue/5');
+  });
+
+  it('navigates back to the root directory', async () => {
+    createView('/catalogue/item/89');
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'energy-meters' })
+      ).toBeInTheDocument();
+    });
+
+    const homeButton = screen.getByRole('button', {
+      name: 'navigate to catalogue home',
+    });
+
+    await user.click(homeButton);
+
+    expect(mockedUseNavigate).toBeCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue');
   });
 
   it('navigates to items table view', async () => {
@@ -250,6 +286,42 @@ describe('Catalogue Items Landing Page', () => {
     const url = screen.getByRole('link', {
       name: 'Items',
     });
-    expect(url).toHaveAttribute('href', '/items');
+    expect(url).toHaveAttribute('href', '/catalogue/item/89/items');
+  });
+
+  it('landing page renders data correctly when optional values are null', async () => {
+    createView('/catalogue/item/33');
+
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 14')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByLabelText('Close catalogue item details')
+    ).toBeInTheDocument();
+
+    const toggleButtonDetails = screen.getByLabelText(
+      'Close catalogue item details'
+    );
+
+    await user.click(toggleButtonDetails);
+
+    expect(
+      screen.getByLabelText('Close catalogue item properties')
+    ).toBeInTheDocument();
+
+    const toggleButtonProperties = screen.getByLabelText(
+      'Close catalogue item properties'
+    );
+
+    await user.click(toggleButtonProperties);
+
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer D')).toBeInTheDocument();
+    });
+    expect(screen.getByText('URL')).toBeInTheDocument();
+    expect(screen.getAllByText('None')[0]).toBeInTheDocument();
+    expect(screen.getByText('Telephone number')).toBeInTheDocument();
+    expect(screen.getAllByText('None')[1]).toBeInTheDocument();
   });
 });

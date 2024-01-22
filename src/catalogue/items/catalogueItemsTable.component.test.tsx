@@ -296,7 +296,7 @@ describe('Catalogue Items Table', () => {
     });
   });
 
-  it('opens the add catalogue item dialog for save as', async () => {
+  it('opens and closes the catalogue item dialog for save as', async () => {
     createView();
 
     await waitFor(() => {
@@ -311,6 +311,15 @@ describe('Catalogue Items Table', () => {
 
     const saveAsButton = screen.getByText('Save as');
     await user.click(saveAsButton);
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
   });
 
   it('opens the add catalogue item dialog for save as (more catalogue item details filled in)', async () => {
@@ -339,6 +348,17 @@ describe('Catalogue Items Table', () => {
 
     const url = screen.queryAllByText('Click here');
     expect(url[0]).toHaveAttribute('href', '/item/6');
+  });
+
+  it('navigates to catalogue item landing page', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    await ensureColumnsVisible(['Name']);
+
+    const url = screen.getByText('Energy Meters 26');
+    expect(url).toHaveAttribute('href', '/item/89');
   });
 
   it('navigates to items table', async () => {

@@ -22,7 +22,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
               class="MuiTableRow-root MuiTableRow-head css-r58cto-MuiTableRow-root"
             >
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-3nuf14-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1rnzr9j-MuiTableCell-root"
                 colspan="1"
                 scope="col"
               >
@@ -74,7 +74,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-iuy69q-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-zdyjsn-MuiTableCell-root"
                 colspan="1"
                 scope="col"
               >
@@ -96,7 +96,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-171jy95-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1r4aaie-MuiTableCell-root"
                 colspan="1"
                 scope="col"
               >
@@ -192,7 +192,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1in:"
+                            id=":r1kq:"
                             placeholder="Filter by Name"
                             title="Filter by Name"
                             type="text"
@@ -245,7 +245,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-zgov6i-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-zgov6i-MuiTableCell-root"
               >
                 <span
                   aria-label="Expand"
@@ -277,7 +277,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1j6p12v-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j6p12v-MuiTableCell-root"
               >
                 <span
                   aria-label="Toggle select row"
@@ -322,7 +322,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-gze5wi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-gze5wi-MuiTableCell-root"
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1mdftu-MuiTypography-root"
@@ -334,21 +334,22 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
             <tr
               aria-label="Energy Meters 26 row"
               class="MuiTableRow-root MuiTableRow-root Mui-TableBodyCell-DetailPanel css-1jlps88-MuiTableRow-root-MuiTableRow-root"
+              data-index="1"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-mxzj1q-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-1ycogj1-MuiTableCell-root"
                 colspan="3"
               />
             </tr>
             <tr
               aria-label="Energy Meters 27 row"
               class="MuiTableRow-root MuiTableRow-root css-rft7o0-MuiTableRow-root-MuiTableRow-root"
-              data-index="1"
+              data-index="2"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-zgov6i-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-zgov6i-MuiTableCell-root"
               >
                 <span
                   aria-label="Expand"
@@ -380,7 +381,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1j6p12v-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j6p12v-MuiTableCell-root"
               >
                 <span
                   aria-label="Toggle select row"
@@ -425,7 +426,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-gze5wi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-gze5wi-MuiTableCell-root"
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1mdftu-MuiTypography-root"
@@ -437,21 +438,22 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
             <tr
               aria-label="Energy Meters 27 row"
               class="MuiTableRow-root MuiTableRow-root Mui-TableBodyCell-DetailPanel css-1jlps88-MuiTableRow-root-MuiTableRow-root"
+              data-index="3"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-mxzj1q-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-1ycogj1-MuiTableCell-root"
                 colspan="3"
               />
             </tr>
             <tr
               aria-label="Energy Meters 28 row"
               class="MuiTableRow-root MuiTableRow-root css-rft7o0-MuiTableRow-root-MuiTableRow-root"
-              data-index="2"
+              data-index="4"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-zgov6i-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-zgov6i-MuiTableCell-root"
               >
                 <span
                   aria-label="Expand"
@@ -483,7 +485,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1j6p12v-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j6p12v-MuiTableCell-root"
               >
                 <span
                   aria-label="Toggle select row"
@@ -528,7 +530,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-gze5wi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-gze5wi-MuiTableCell-root"
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1mdftu-MuiTypography-root"
@@ -540,21 +542,22 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
             <tr
               aria-label="Energy Meters 28 row"
               class="MuiTableRow-root MuiTableRow-root Mui-TableBodyCell-DetailPanel css-1jlps88-MuiTableRow-root-MuiTableRow-root"
+              data-index="5"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-mxzj1q-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-1ycogj1-MuiTableCell-root"
                 colspan="3"
               />
             </tr>
             <tr
               aria-label="Energy Meters 29 row"
               class="MuiTableRow-root MuiTableRow-root css-rft7o0-MuiTableRow-root-MuiTableRow-root"
-              data-index="3"
+              data-index="6"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-zgov6i-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-zgov6i-MuiTableCell-root"
               >
                 <span
                   aria-label="Expand"
@@ -586,7 +589,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1j6p12v-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j6p12v-MuiTableCell-root"
               >
                 <span
                   aria-label="Toggle select row"
@@ -631,7 +634,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-gze5wi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-gze5wi-MuiTableCell-root"
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1mdftu-MuiTypography-root"
@@ -643,10 +646,11 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
             <tr
               aria-label="Energy Meters 29 row"
               class="MuiTableRow-root MuiTableRow-root Mui-TableBodyCell-DetailPanel css-1jlps88-MuiTableRow-root-MuiTableRow-root"
+              data-index="7"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-mxzj1q-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-1ycogj1-MuiTableCell-root"
                 colspan="3"
               />
             </tr>
@@ -739,7 +743,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r1ip:"
+                    aria-controls=":r1ks:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"

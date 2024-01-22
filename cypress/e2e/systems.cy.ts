@@ -1,4 +1,4 @@
-describe('System', () => {
+describe('Systems', () => {
   beforeEach(() => {
     cy.visit('/systems');
   });
@@ -12,25 +12,53 @@ describe('System', () => {
     cy.findByText('Giant laser').should('be.visible');
   });
 
+  it('should eventually load displaying system not found when system does not exist', () => {
+    cy.visit('/systems/invalid_id');
+
+    // Can take a moment to load due to react-query retries
+    cy.findByText('System not found', { timeout: 10000 }).should('exist');
+    cy.findByText(
+      'The system you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
+    ).should('exist');
+  });
+
   it('should be able to navigate through subsystems', () => {
     cy.findByText('No system selected').should('be.visible');
     cy.findByText('Please select a system').should('be.visible');
 
     // Navigate deeper
-    cy.findByRole('button', { name: 'Giant laser' }).click();
+    cy.findByRole('cell', { name: 'Giant laser' }).click();
     cy.url().should('include', '/systems/65328f34a40ff5301575a4e3');
     cy.findByText('No system selected').should('not.exist');
     cy.findByText('Please select a system').should('not.exist');
 
-    cy.findByText('Smaller laser').should('be.visible');
+    cy.findByRole('cell', { name: 'Smaller laser' }).should('be.visible');
     cy.findByText('Description').should('be.visible');
 
     // Navigate deeper again
-    cy.findByRole('button', { name: 'Smaller laser' }).click();
+    cy.findByRole('cell', { name: 'Smaller laser' }).click();
     cy.url().should('include', '/systems/65328f34a40ff5301575a4e4');
 
-    cy.findByText('Pulse Laser').should('be.visible');
+    cy.findByRole('cell', { name: 'Pulse Laser' }).should('be.visible');
     cy.findByText('Description').should('be.visible');
+  });
+
+  it('should be able to navigate to an items catalogue item landing page', () => {
+    cy.findByRole('cell', { name: 'Pulse Laser' }).click();
+    cy.findByRole('link', { name: 'Cameras 14' }).click();
+
+    // Check now on landing page for the catalogue item
+    cy.url().should('include', '/catalogue/item/33');
+    cy.findByText('Properties').should('be.visible');
+  });
+
+  it("should be able to navigate to an item's landing page", () => {
+    cy.findByRole('cell', { name: 'Pulse Laser' }).click();
+    cy.findByRole('link', { name: 'I26EJNJ0' }).click();
+
+    // Check now on landing page for the item
+    cy.url().should('include', '/catalogue/item/33/items/I26EJNJ0');
+    cy.findByText('Properties').should('be.visible');
   });
 
   it('breadcrumbs should work correctly', () => {
@@ -322,6 +350,9 @@ describe('System', () => {
       cy.findAllByLabelText('Row Actions').eq(1).click();
       cy.findByText('Save as').click();
 
+      // Should default to having _copy_1 in the name
+      cy.findByLabelText('Name *').should('have.value', 'Pulse Laser_copy_1');
+
       cy.findByLabelText('Name *').clear().type('System name');
       cy.findByLabelText('Description').clear().type('System description');
       cy.findByLabelText('Location').clear().type('System location');
@@ -355,6 +386,9 @@ describe('System', () => {
 
       cy.findAllByLabelText('Row Actions').eq(0).click();
       cy.findByText('Save as').click();
+
+      // Should default to having _copy_1 in the name
+      cy.findByLabelText('Name *').should('have.value', 'Smaller laser_copy_1');
 
       cy.findByLabelText('Name *').clear().type('System name');
 
@@ -456,10 +490,10 @@ describe('System', () => {
   it('moves systems', () => {
     cy.visit('/systems');
 
-    cy.findByRole('button', { name: 'Pulse Laser' })
+    cy.findByRole('row', { name: 'Toggle select row Pulse Laser' })
       .findByRole('checkbox')
       .click();
-    cy.findByRole('button', { name: 'Pico Laser' })
+    cy.findByRole('row', { name: 'Toggle select row Pico Laser' })
       .findByRole('checkbox')
       .click();
 
@@ -499,10 +533,10 @@ describe('System', () => {
   it('copies systems', () => {
     cy.visit('/systems');
 
-    cy.findByRole('button', { name: 'Pulse Laser' })
+    cy.findByRole('row', { name: 'Toggle select row Pulse Laser' })
       .findByRole('checkbox')
       .click();
-    cy.findByRole('button', { name: 'Pico Laser' })
+    cy.findByRole('row', { name: 'Toggle select row Pico Laser' })
       .findByRole('checkbox')
       .click();
 

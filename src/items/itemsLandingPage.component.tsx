@@ -1,7 +1,6 @@
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PrintIcon from '@mui/icons-material/Print';
-import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
   Button,
@@ -13,18 +12,23 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import {
-  useCatalogueBreadcrumbs,
-  useCatalogueCategory,
-} from '../../api/catalogueCategory';
-import { useCatalogueItem } from '../../api/catalogueItem';
-import { useManufacturer } from '../../api/manufacturer';
-import CatalogueItemsDialog from './catalogueItemsDialog.component';
-import Breadcrumbs from '../../view/breadcrumbs.component';
-import { BreadcrumbsInfo } from '../../app.types';
 
-function CatalogueItemsLandingPage() {
-  const { catalogue_item_id: catalogueItemId } = useParams();
+import { useCatalogueItem } from '../api/catalogueItem';
+import { useManufacturer } from '../api/manufacturer';
+import { useItem } from '../api/item';
+import { BreadcrumbsInfo, UsageStatusType } from '../app.types';
+import { useCatalogueBreadcrumbs } from '../api/catalogueCategory';
+import Breadcrumbs from '../view/breadcrumbs.component';
+
+function ItemsLandingPage() {
+  const { item_id: id } = useParams();
+
+  const { data: itemData, isLoading: itemDataIsLoading } = useItem(id);
+
+  const { data: catalogueItemIdData } = useCatalogueItem(
+    itemData?.catalogue_item_id
+  );
+
   const navigate = useNavigate();
   const onChangeNode = React.useCallback(
     (newIdPath: string) => {
@@ -33,30 +37,27 @@ function CatalogueItemsLandingPage() {
     [navigate]
   );
 
-  const { data: catalogueItemIdData, isLoading: catalogueItemIdDataLoading } =
-    useCatalogueItem(catalogueItemId);
-
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
     catalogueItemIdData?.catalogue_category_id ?? ''
   );
-  const { data: catalogueCategoryData } = useCatalogueCategory(
-    catalogueItemIdData?.catalogue_category_id
-  );
 
-  const [catalogueLandingBreadcrumbs, setCatalogueLandingBreadcrumbs] =
-    React.useState<BreadcrumbsInfo | undefined>(catalogueBreadcrumbs);
+  const [itemLandingBreadcrumbs, setItemLandingBreadcrumbs] = React.useState<
+    BreadcrumbsInfo | undefined
+  >(catalogueBreadcrumbs);
 
   React.useEffect(() => {
     catalogueBreadcrumbs &&
       catalogueItemIdData &&
-      setCatalogueLandingBreadcrumbs({
+      setItemLandingBreadcrumbs({
         ...catalogueBreadcrumbs,
         trail: [
           ...catalogueBreadcrumbs.trail,
-          [`item/${catalogueItemIdData.id}`, catalogueItemIdData.name],
+          [`item/${catalogueItemIdData.id}`, `${catalogueItemIdData.name}`],
+          [`item/${catalogueItemIdData.id}/items`, 'Items'],
+          [`item/${catalogueItemIdData.id}/items/${id}`, id ?? ''],
         ],
       });
-  }, [catalogueBreadcrumbs, catalogueItemIdData]);
+  }, [catalogueBreadcrumbs, catalogueItemIdData, id]);
 
   const { data: manufacturer } = useManufacturer(
     catalogueItemIdData?.manufacturer_id
@@ -80,15 +81,12 @@ function CatalogueItemsLandingPage() {
     setShowDetails(!showDetails);
   };
 
-  const [editItemDialogOpen, setEditItemDialogOpen] =
-    React.useState<boolean>(false);
-
   return (
     <Grid container flexDirection="column">
       <Grid
         sx={{
           justifyContent: 'left',
-          paddingLeft: '4px',
+          paddingLeft: 0.5,
           position: 'sticky',
           top: 0,
           backgroundColor: 'background.default',
@@ -98,41 +96,21 @@ function CatalogueItemsLandingPage() {
             display: 'none',
           },
         }}
-        item
         container
+        item
       >
-        <Grid item sx={{ py: '20px' }}>
+        <Grid item sx={{ py: 2.5 }}>
           <Breadcrumbs
             onChangeNode={onChangeNode}
-            breadcrumbsInfo={catalogueLandingBreadcrumbs}
+            breadcrumbsInfo={itemLandingBreadcrumbs}
             onChangeNavigateHome={() => {
               navigate('/catalogue');
             }}
             navigateHomeAriaLabel={'navigate to catalogue home'}
           />
         </Grid>
-
-        {catalogueItemIdData && (
+        {itemData && (
           <Grid item container sx={{ display: 'flex', py: 2 }}>
-            <Button
-              sx={{ mx: 0.5 }}
-              variant="outlined"
-              component={Link}
-              to={'items'}
-            >
-              Items
-            </Button>
-            <Button
-              startIcon={<EditIcon />}
-              sx={{ mx: 0.5 }}
-              variant="outlined"
-              onClick={() => {
-                setEditItemDialogOpen(true);
-              }}
-            >
-              Edit
-            </Button>
-
             <Button
               startIcon={<PrintIcon />}
               sx={{ mx: 0.5 }}
@@ -146,7 +124,7 @@ function CatalogueItemsLandingPage() {
           </Grid>
         )}
       </Grid>
-      {catalogueItemIdData && (
+      {catalogueItemIdData && itemData && (
         <Grid item container sx={{ px: '192px' }} xs={12} spacing={1}>
           <Grid item xs={12}>
             <Typography sx={{ margin: 1, textAlign: 'center' }} variant="h4">
@@ -165,6 +143,7 @@ function CatalogueItemsLandingPage() {
               {catalogueItemIdData.description}
             </Typography>
           </Grid>
+
           <Grid item container spacing={1} xs={12}>
             <Grid
               item
@@ -176,9 +155,7 @@ function CatalogueItemsLandingPage() {
                 alignItems: 'center',
                 cursor: 'pointer',
               }}
-              aria-label={`${
-                showDetails ? 'Close' : 'Show'
-              } catalogue item details`}
+              aria-label={`${showDetails ? 'Close' : 'Show'} item details`}
             >
               {showDetails ? (
                 <>
@@ -195,110 +172,70 @@ function CatalogueItemsLandingPage() {
 
             <Grid item container xs={12}>
               <Collapse sx={{ width: '100%' }} in={showDetails}>
-                <Grid container spacing={1}>
+                <Grid item container spacing={1}>
                   <Grid item xs={12} sm={6} md={4}>
                     <Typography align="left" color="text.primary">
-                      Obsolete
+                      Serial Number
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}
+                      {itemData.serial_number ?? 'None'}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
                     <Typography align="left" color="text.primary">
-                      Obsolete replacement link
+                      Asset Number
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
-                        <MuiLink
-                          component={Link}
-                          underline="hover"
-                          target="_blank"
-                          to={`/catalogue/item/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
-                        >
-                          Click here
-                        </MuiLink>
-                      ) : (
-                        'None'
-                      )}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Typography align="left" color="text.primary">
-                      Obsolete reason
-                    </Typography>
-                    <Typography align="left" color="text.secondary">
-                      {catalogueItemIdData.obsolete_reason ?? 'None'}
+                      {itemData.asset_number ?? 'None'}
                     </Typography>
                   </Grid>
 
                   <Grid item xs={12} sm={6} md={4}>
                     <Typography align="left" color="text.primary">
-                      Cost (£)
+                      Purchase Order Number
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {catalogueItemIdData.cost_gbp ?? 'None'}
+                      {itemData.purchase_order_number ?? 'None'}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
                     <Typography align="left" color="text.primary">
-                      Name
+                      Warranty End Date
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {catalogueItemIdData.cost_to_rework_gbp ?? 'None'}
-                    </Typography>
-                  </Grid>
-
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Typography align="left" color="text.primary">
-                      Time to replace (days)
-                    </Typography>
-                    <Typography align="left" color="text.secondary">
-                      {catalogueItemIdData.days_to_replace ?? 'None'}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Typography align="left" color="text.primary">
-                      Time to rework (days)
-                    </Typography>
-                    <Typography align="left" color="text.secondary">
-                      {catalogueItemIdData.days_to_rework ?? 'None'}
+                      {itemData.warranty_end_date
+                        ? new Date(
+                            itemData.warranty_end_date
+                          ).toLocaleDateString()
+                        : 'None'}
                     </Typography>
                   </Grid>
 
                   <Grid item xs={12} sm={6} md={4}>
                     <Typography align="left" color="text.primary">
-                      Drawing Number
+                      Delivered Date
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {catalogueItemIdData.drawing_number ?? 'None'}
+                      {itemData.delivered_date
+                        ? new Date(itemData.delivered_date).toLocaleDateString()
+                        : 'None'}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Typography align="left" color="text.primary">
+                      Is Defective
+                    </Typography>
+                    <Typography align="left" color="text.secondary">
+                      {itemData.is_defective ? 'Yes' : 'No'}
                     </Typography>
                   </Grid>
 
                   <Grid item xs={12} sm={6} md={4}>
                     <Typography align="left" color="text.primary">
-                      Drawing link
+                      Usage Status
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {catalogueItemIdData.drawing_link ? (
-                        <MuiLink
-                          underline="hover"
-                          target="_blank"
-                          href={catalogueItemIdData.drawing_link}
-                        >
-                          {catalogueItemIdData.drawing_link}
-                        </MuiLink>
-                      ) : (
-                        'None'
-                      )}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={4}>
-                    <Typography align="left" color="text.primary">
-                      Model Number
-                    </Typography>
-                    <Typography align="left" color="text.secondary">
-                      {catalogueItemIdData.item_model_number ?? 'None'}
+                      {Object.values(UsageStatusType)[itemData.usage_status]}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -316,7 +253,7 @@ function CatalogueItemsLandingPage() {
               }}
               aria-label={`${
                 showProperties ? 'Close' : 'Show'
-              } catalogue item properties`}
+              } item properties`}
             >
               {showProperties ? (
                 <>
@@ -332,7 +269,7 @@ function CatalogueItemsLandingPage() {
             </Grid>
             <Grid container item xs={12}>
               <Collapse sx={{ width: '100%' }} in={showProperties}>
-                <Grid container spacing={1}>
+                <Grid container item spacing={1}>
                   {catalogueItemIdData.properties &&
                     catalogueItemIdData.properties.map((property, index) => (
                       <Grid item xs={12} sm={6} md={4} key={index}>
@@ -362,7 +299,7 @@ function CatalogueItemsLandingPage() {
               }}
               aria-label={`${
                 showManufacturer ? 'Close' : 'Show'
-              } catalogue item manufacturer details`}
+              } item manufacturer details`}
             >
               {showManufacturer ? (
                 <>
@@ -380,7 +317,7 @@ function CatalogueItemsLandingPage() {
             {manufacturer && (
               <Grid item container xs={12}>
                 <Collapse sx={{ width: '100%' }} in={showManufacturer}>
-                  <Grid container spacing={1}>
+                  <Grid container item spacing={1} xs={12}>
                     <Grid item xs={12} sm={6} md={4}>
                       <Typography align="left" color="text.primary">
                         Name
@@ -441,10 +378,22 @@ function CatalogueItemsLandingPage() {
               </Grid>
             )}
           </Grid>
+          <Grid item xs={12}>
+            <Typography sx={{ margin: 1, textAlign: 'center' }} variant="h6">
+              Notes:
+            </Typography>
+            <Typography
+              sx={{ margin: 1, textAlign: 'center' }}
+              variant="body1"
+              color="text.secondary"
+            >
+              {itemData.notes}
+            </Typography>
+          </Grid>
         </Grid>
       )}
-      {!catalogueItemIdDataLoading ? (
-        !catalogueItemIdData && (
+      {!itemDataIsLoading ? (
+        !itemData && (
           <Box
             sx={{
               width: '100%',
@@ -454,8 +403,8 @@ function CatalogueItemsLandingPage() {
           >
             <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
             <Typography>
-              This catalogue item doesn't exist. Please click the Home button on
-              the top left of you screen to navigate to the catalogue home
+              This item doesn't exist. Please click the Home button to navigate
+              to the catalogue home
             </Typography>
           </Box>
         )
@@ -464,16 +413,8 @@ function CatalogueItemsLandingPage() {
           <LinearProgress />
         </Box>
       )}
-
-      <CatalogueItemsDialog
-        open={editItemDialogOpen}
-        onClose={() => setEditItemDialogOpen(false)}
-        parentInfo={catalogueCategoryData}
-        selectedCatalogueItem={catalogueItemIdData}
-        type="edit"
-      />
     </Grid>
   );
 }
 
-export default CatalogueItemsLandingPage;
+export default ItemsLandingPage;

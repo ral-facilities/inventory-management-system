@@ -29,6 +29,7 @@ import CatalogueCategoryDialog from './category/catalogueCategoryDialog.componen
 import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirectoryDialog.component';
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
+import { generateUniqueName } from '../utils';
 
 export interface AddCatalogueButtonProps {
   disabled: boolean;
@@ -66,23 +67,23 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
 export function matchCatalogueItemProperties(
   form: CatalogueCategoryFormData[],
   items: CatalogueItemProperty[]
-): (string | number | boolean | null)[] {
-  const result: (string | number | boolean | null)[] = [];
+): (string | null)[] {
+  const result: (string | null)[] = [];
 
   for (const property of form) {
     const matchingItem = items.find((item) => item.name === property.name);
     if (matchingItem) {
       // Type check and assign the value
-      if (property.type === 'number') {
-        result.push(matchingItem.value ? Number(matchingItem.value) : null);
-      } else if (property.type === 'boolean') {
+      if (property.type === 'boolean') {
         result.push(
           typeof matchingItem.value === 'boolean'
-            ? String(Boolean(matchingItem.value))
+            ? String(matchingItem.value)
             : ''
         );
       } else {
-        result.push(matchingItem.value ? String(matchingItem.value) : null);
+        result.push(
+          matchingItem.value !== null ? String(matchingItem.value) : null
+        );
       }
     } else {
       // If there is no matching item, push null
@@ -92,7 +93,6 @@ export function matchCatalogueItemProperties(
 
   return result;
 }
-
 function Catalogue() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -129,10 +129,16 @@ function Catalogue() {
     !catalogueId ? 'null' : catalogueId.replace('/', '')
   );
 
+  const catalogueCategoryNames: string[] =
+    catalogueCategoryData?.map((item) => item.name) || [];
+
   const [deleteCategoryDialogOpen, setDeleteCategoryDialogOpen] =
     React.useState<boolean>(false);
 
   const [editCategoryDialogOpen, setEditCategoryDialogOpen] =
+    React.useState<boolean>(false);
+
+  const [saveAsCategoryDialogOpen, setSaveAsCategoryDialogOpen] =
     React.useState<boolean>(false);
 
   const [selectedCatalogueCategory, setSelectedCatalogueCategory] =
@@ -149,6 +155,11 @@ function Catalogue() {
     catalogueCategory: CatalogueCategory
   ) => {
     setEditCategoryDialogOpen(true);
+    setSelectedCatalogueCategory(catalogueCategory);
+  };
+
+  const onChangeOpenSaveAsDialog = (catalogueCategory: CatalogueCategory) => {
+    setSaveAsCategoryDialogOpen(true);
     setSelectedCatalogueCategory(catalogueCategory);
   };
 
@@ -212,7 +223,7 @@ function Catalogue() {
             />
             <NavigateNext
               fontSize="medium"
-              sx={{ color: 'rgba(0, 0, 0, 0.6)', mx: '4px', my: '8px' }}
+              sx={{ color: 'text.secondary', margin: 1 }}
             />
             <AddCategoryButton
               disabled={isLeafNode || (!parentInfo && catalogueId !== '')}
@@ -302,6 +313,7 @@ function Catalogue() {
                   {...item}
                   onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
                   onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
+                  onChangeOpenSaveAsDialog={onChangeOpenSaveAsDialog}
                   onToggleSelect={handleToggleSelect}
                   isSelected={selectedCategories.some(
                     (selectedCategory: CatalogueCategory) =>
@@ -322,6 +334,26 @@ function Catalogue() {
         parentId={parentId}
         type="edit"
         selectedCatalogueCategory={selectedCatalogueCategory}
+        resetSelectedCatalogueCategory={() =>
+          setSelectedCatalogueCategory(undefined)
+        }
+      />
+      <CatalogueCategoryDialog
+        open={saveAsCategoryDialogOpen}
+        onClose={() => setSaveAsCategoryDialogOpen(false)}
+        parentId={parentId}
+        type="save as"
+        selectedCatalogueCategory={
+          selectedCatalogueCategory
+            ? {
+                ...selectedCatalogueCategory,
+                name: generateUniqueName(
+                  selectedCatalogueCategory.name,
+                  catalogueCategoryNames
+                ),
+              }
+            : undefined
+        }
         resetSelectedCatalogueCategory={() =>
           setSelectedCatalogueCategory(undefined)
         }

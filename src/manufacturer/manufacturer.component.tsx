@@ -20,11 +20,13 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useManufacturers } from '../api/manufacturer';
 import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
+import { getPageHeightCalc } from '../utils';
+import Breadcrumbs from '../view/breadcrumbs.component';
 
 function ManufacturerComponent() {
   const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
@@ -37,7 +39,7 @@ function ManufacturerComponent() {
     Manufacturer | undefined
   >(undefined);
 
-  const tableHeight = `calc(100vh - (64px + 36px + 111px))`;
+  const tableHeight = getPageHeightCalc('192px');
 
   const columns = React.useMemo<MRT_ColumnDef<Manufacturer>[]>(() => {
     return [
@@ -96,7 +98,7 @@ function ManufacturerComponent() {
         ),
       },
       {
-        header: 'Telephone',
+        header: 'Telephone number',
         accessorFn: (row) => row.telephone,
         size: 250,
       },
@@ -135,6 +137,7 @@ function ManufacturerComponent() {
     muiTableBodyRowProps: ({ row }) => {
       return { component: TableRow, 'aria-label': `${row.original.name} row` };
     },
+    muiTablePaperProps: { sx: { maxHeight: '100%' } },
     muiTableContainerProps: { sx: { height: tableHeight } },
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
@@ -227,10 +230,27 @@ function ManufacturerComponent() {
     },
   });
 
-  return (
-    <div style={{ width: '100%' }}>
-      <MaterialReactTable table={table} />
+  const navigate = useNavigate();
+  const onChangeNode = React.useCallback(() => {
+    navigate('/manufacturer');
+  }, [navigate]);
 
+  return (
+    <div style={{ width: '100%', height: '100%' }}>
+      <Box
+        sx={{
+          py: '20px',
+          paddingLeft: '4px',
+        }}
+      >
+        <Breadcrumbs
+          onChangeNode={onChangeNode}
+          onChangeNavigateHome={onChangeNode}
+          breadcrumbsInfo={undefined}
+          navigateHomeAriaLabel="navigate to manufacturer home"
+        />
+      </Box>
+      <MaterialReactTable table={table} />
       <DeleteManufacturerDialog
         open={deleteManufacturerDialog}
         onClose={() => setDeleteManufacturerDialog(false)}
