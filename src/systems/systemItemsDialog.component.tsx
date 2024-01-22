@@ -52,14 +52,14 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   }, [onClose]);
 
   const handleMoveTo = React.useCallback(() => {
-    // Either ensure finished loading, or moving to root
+    // Ensure finished loading and not moving to root
     // (where we don't need to load anything as the name is known)
-    if (!targetSystemLoading || parentSystemId === null) {
+    if (!targetSystemLoading && targetSystem !== undefined) {
       moveItemsToSystem({
         selectedItems: selectedItems,
         // Only reason for targetSystem to be undefined here is if not loading at all
         // which happens when at root
-        targetSystem: targetSystem || null,
+        targetSystem: targetSystem,
       }).then((response) => {
         handleTransferState(response);
         onChangeSelectedItems({});
@@ -70,7 +70,6 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     handleClose,
     moveItemsToSystem,
     onChangeSelectedItems,
-    parentSystemId,
     selectedItems,
     targetSystem,
     targetSystemLoading,

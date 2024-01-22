@@ -245,6 +245,5 @@ export interface EditItem extends Partial<AddItem> {
 
 export interface MoveItemsToSystem {
   selectedItems: Item[];
-  // Null if root
-  targetSystem: System | null;
+  targetSystem: System;
 }

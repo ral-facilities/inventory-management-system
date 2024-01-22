@@ -1,5 +1,5 @@
-import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
+import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import { Box, Button, Link as MuiLink, Typography } from '@mui/material';
 import {
   MRT_ColumnDef,
@@ -28,7 +28,7 @@ const MoveItemsButton = (props: {
   return (
     <>
       <Button
-        startIcon={<AddIcon />}
+        startIcon={<DriveFileMoveOutlinedIcon />}
         sx={{ mx: 0.5 }}
         variant="outlined"
         disabled={props.selectedItems.length === 0}
