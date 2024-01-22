@@ -128,7 +128,6 @@ function ItemDialog(props: ItemDialogProps) {
     new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
   );
 
-  const [formError, setFormError] = React.useState(false);
   const [formErrorMessage, setFormErrorMessage] = React.useState<
     string | undefined
   >(undefined);
@@ -196,6 +195,7 @@ function ItemDialog(props: ItemDialogProps) {
     const updatedPropertyErrors = [...propertyErrors];
     updatedPropertyErrors[index] = false;
     setPropertyErrors(updatedPropertyErrors);
+    setFormErrorMessage(undefined);
   };
 
   const handleItemDetails = (
@@ -222,6 +222,7 @@ function ItemDialog(props: ItemDialogProps) {
     }
 
     setItemDetails(updatedItemDetails);
+    setFormErrorMessage(undefined);
   };
   const handleClose = React.useCallback(() => {
     onClose();
@@ -439,7 +440,6 @@ function ItemDialog(props: ItemDialogProps) {
             setCatchAllError(true);
           });
       } else {
-        setFormError(true);
         setFormErrorMessage('Please edit a form entry before clicking save');
       }
     }
@@ -731,7 +731,7 @@ function ItemDialog(props: ItemDialogProps) {
             Save
           </Button>
         </Box>
-        {formError && (
+        {formErrorMessage && (
           <FormHelperText sx={{ marginBottom: '16px' }} error>
             {formErrorMessage}
           </FormHelperText>
