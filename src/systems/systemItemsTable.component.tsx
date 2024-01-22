@@ -41,7 +41,7 @@ const MoveItemsButton = (props: {
         onClose={() => setMoveItemsDialogOpen(false)}
         selectedItems={props.selectedItems}
         onChangeSelectedItems={props.onChangeSelectedItems}
-        parentSystem={props.system}
+        parentSystemId={props.system.id}
       />
     </>
   );
