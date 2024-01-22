@@ -148,7 +148,7 @@ describe('catalogue items api functions', () => {
     });
   });
 
-  describe('useEditCatalogueItem', () => {
+  describe('useEditItem', () => {
     let mockDataEdit: EditItem;
     beforeEach(() => {
       mockDataEdit = {

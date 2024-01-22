@@ -158,7 +158,20 @@ export const useEditItem = (): UseMutationResult<
     },
     onSuccess: (itemResponse: Item) => {
       queryClient.invalidateQueries({
-        queryKey: ['Items', itemResponse.catalogue_item_id],
+        queryKey: [
+          'Items',
+          itemResponse.system_id,
+          itemResponse.catalogue_item_id,
+        ],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['Items', undefined, itemResponse.catalogue_item_id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['Items', itemResponse.system_id, undefined],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['Items', undefined, undefined],
       });
       queryClient.invalidateQueries({ queryKey: ['Item', itemResponse.id] });
     },
