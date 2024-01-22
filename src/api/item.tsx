@@ -6,7 +6,14 @@ import {
   useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
-import { AddItem, EditItem, Item } from '../app.types';
+import {
+  AddItem,
+  EditItem,
+  ErrorParsing,
+  Item,
+  MoveItemsToSystem,
+  TransferState,
+} from '../app.types';
 import { settings } from '../settings';
 
 const addItem = async (item: AddItem): Promise<Item> => {
@@ -155,5 +162,70 @@ export const useEditItem = (): UseMutationResult<
       });
       queryClient.invalidateQueries({ queryKey: ['Item', itemResponse.id] });
     },
+  });
+};
+
+export const useMoveItemsToSystem = (): UseMutationResult<
+  TransferState[],
+  AxiosError,
+  MoveItemsToSystem
+> => {
+  const queryClient = useQueryClient();
+
+  return useMutation(async (moveItemsToSystem: MoveItemsToSystem) => {
+    const transferStates: TransferState[] = [];
+
+    // Ids for invalidation (system ids must be a string value of 'null' for invalidation)
+    const successfulIds: string[] = [];
+    const successfulSystemIds: string[] = [];
+
+    const promises = moveItemsToSystem.selectedItems.map(async (item: Item) => {
+      return editItem({
+        id: item.id,
+        system_id: moveItemsToSystem.targetSystem?.id || null,
+      })
+        .then((result: Item) => {
+          const targetSystemName =
+            moveItemsToSystem.targetSystem?.name || 'Root';
+          transferStates.push({
+            // Not technically a name, but will be displayed as ID: Message
+            name: item.id,
+            message: `Successfully moved to ${targetSystemName}`,
+            state: 'success',
+          });
+
+          successfulIds.push(result.id);
+          successfulSystemIds.push(item.system_id || 'null');
+        })
+        .catch((error) => {
+          const response = error.response?.data as ErrorParsing;
+
+          transferStates.push({
+            name: item.id,
+            message: response.detail,
+            state: 'error',
+          });
+        });
+    });
+
+    await Promise.all(promises);
+
+    if (successfulIds.length > 0) {
+      queryClient.invalidateQueries({
+        // Invalidate all queries of items that have the target system id
+        queryKey: ['Items', moveItemsToSystem.targetSystem?.id || 'null'],
+      });
+
+      // Also need to invalidate each parent system we are moving from (likely just the one)
+      const uniqueSystemIds = new Set(successfulSystemIds);
+      uniqueSystemIds.forEach((systemId: string) =>
+        queryClient.invalidateQueries({
+          // Invalidate all queries of items that have the target system id
+          queryKey: ['Items', systemId],
+        })
+      );
+    }
+
+    return transferStates;
   });
 };

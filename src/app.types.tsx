@@ -242,3 +242,9 @@ export interface Item extends ItemDetails {
 export interface EditItem extends Partial<AddItem> {
   id: string;
 }
+
+export interface MoveItemsToSystem {
+  selectedItems: Item[];
+  // Null if root
+  targetSystem: System | null;
+}
