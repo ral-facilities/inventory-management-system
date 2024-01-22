@@ -433,7 +433,7 @@ describe('Items', () => {
     );
   });
 
-  it('should display an error message there is an unknown error', () => {
+  it('should display an error message if there is an unknown error', () => {
     cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Edit').click();
 
