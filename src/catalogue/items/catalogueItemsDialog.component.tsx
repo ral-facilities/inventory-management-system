@@ -793,6 +793,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               <ManufacturerDialog
                 open={addManufacturerDialogOpen}
                 onClose={() => setAddManufacturerDialogOpen(false)}
+                type="create"
               />
             </Grid>
           </Grid>
