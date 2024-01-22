@@ -2792,8 +2792,8 @@ __metadata:
   linkType: hard
 
 "@mui/x-date-pickers@npm:^6.18.1":
-  version: 6.18.1
-  resolution: "@mui/x-date-pickers@npm:6.18.1"
+  version: 6.19.0
+  resolution: "@mui/x-date-pickers@npm:6.19.0"
   dependencies:
     "@babel/runtime": ^7.23.2
     "@mui/base": ^5.0.0-beta.22
@@ -2807,7 +2807,7 @@ __metadata:
     "@emotion/styled": ^11.8.1
     "@mui/material": ^5.8.6
     "@mui/system": ^5.8.0
-    date-fns: ^2.25.0
+    date-fns: ^2.25.0 || ^3.2.0
     date-fns-jalali: ^2.13.0-0
     dayjs: ^1.10.7
     luxon: ^3.0.2
@@ -2835,7 +2835,7 @@ __metadata:
       optional: true
     moment-jalaali:
       optional: true
-  checksum: b536b3fcb498d5b0c4c3e710e19cfc368e91b74c7815350de6332b17bb0975e128474caf2253586820ab9257fc73943bb9494858d46b0528f18301bf74822fb8
+  checksum: 65da961de3012c1453ce7589c836fac0808fdfe00aa90311d5e11b2a2197c2aa61930200fded61598e5ec86f6fef1c683951078a623e18ee5f4c129b5a760545
   languageName: node
   linkType: hard
 
@@ -3729,20 +3729,20 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:^20.0.0":
-  version: 20.10.6
-  resolution: "@types/node@npm:20.10.6"
+  version: 20.11.5
+  resolution: "@types/node@npm:20.11.5"
   dependencies:
     undici-types: ~5.26.4
-  checksum: ada40e4ccbda3697dca88f8d13f4c996c493be6fbc15f5f5d3b91096d56bd700786a2c148a92a2b4c5d1f133379e63f754a786b3aebfc6a7d09fc7ea16dc017b
+  checksum: a542727de1334ae20a3ca034b0ecf4b464a57ca01efc4f9cf43bd9ab93896125ab3c2de060ecd8f6ae23b86c6bf3463f681b643e69c032c6a662d376c98a6092
   languageName: node
   linkType: hard
 
 "@types/node@npm:^18.17.5":
-  version: 18.19.4
-  resolution: "@types/node@npm:18.19.4"
+  version: 18.19.8
+  resolution: "@types/node@npm:18.19.8"
   dependencies:
     undici-types: ~5.26.4
-  checksum: 3a32a31b2df85d4bebb5e3c91ec1a0908d587a2a2fd31ab4eeebd609d1c04bbcc9ba97e290e3230f843c9f43f17efb9f5cde56412b4b0f5acbfe5577179b23c8
+  checksum: fa291495d6157a9d9393b4c3bdbf1ce12a8f661dc9da6a4fa19bcdb19af1c62bb8dbf7fb66ae135f29cd788b618e9845b83e9c47edcf39f0953a8561fdacd9a3
   languageName: node
   linkType: hard
 
@@ -9358,7 +9358,7 @@ __metadata:
     single-spa-react: 5.1.4
     start-server-and-test: ^2.0.0
     typescript: ^5.0.0
-    web-vitals: ^2.1.0
+    web-vitals: ^3.0.0
   languageName: unknown
   linkType: soft
 
@@ -13072,11 +13072,11 @@ __metadata:
   linkType: hard
 
 "prettier@npm:^3.0.0":
-  version: 3.1.1
-  resolution: "prettier@npm:3.1.1"
+  version: 3.2.4
+  resolution: "prettier@npm:3.2.4"
   bin:
     prettier: bin/prettier.cjs
-  checksum: e386855e3a1af86a748e16953f168be555ce66d6233f4ba54eb6449b88eb0c6b2ca79441b11eae6d28a7f9a5c96440ce50864b9d5f6356d331d39d6bb66c648e
+  checksum: 6ec9385a836e0b9bac549e585101c086d1521c31d7b882d5c8bb7d7646da0693da5f31f4fff6dc080710e5e2d34c85e6fb2f8766876b3645c8be2f33b9c3d1a3
   languageName: node
   linkType: hard
 
@@ -13444,8 +13444,8 @@ __metadata:
   linkType: hard
 
 "react-redux@npm:^9.0.0":
-  version: 9.0.4
-  resolution: "react-redux@npm:9.0.4"
+  version: 9.1.0
+  resolution: "react-redux@npm:9.1.0"
   dependencies:
     "@types/use-sync-external-store": ^0.0.3
     use-sync-external-store: ^1.0.0
@@ -13461,7 +13461,7 @@ __metadata:
       optional: true
     redux:
       optional: true
-  checksum: acc69b85e003f4367e0fa9716ca441a2536aa513fcb1b9404e33188fa68938acf455806eba2ff639553fbba24c06b6e96982998178bb9a2669227e7e4bcd441e
+  checksum: 1b07714379ff0087b4fb43ffd138cc84efb7608c874d632a4e2162e1874f3e0f6b69a0a9b0f24f93cbf122c694ac9cfd315770676d4cabb167d159f1ef419560
   languageName: node
   linkType: hard
 
@@ -15941,10 +15941,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-vitals@npm:^2.1.0":
-  version: 2.1.4
-  resolution: "web-vitals@npm:2.1.4"
-  checksum: 03d3f47dbf55c3dce07beb0ff5de8ddd52e2d0a53a8df5c84e7a16dda93543341d67231fa79b1d9772b091419af4ec0fd395b8bcf451a0e26846e3f76b3d0efc
+"web-vitals@npm:^3.0.0":
+  version: 3.5.1
+  resolution: "web-vitals@npm:3.5.1"
+  checksum: aa680af45dca27aca08cb26a38194381c2a3b5067ba0eb89b48b8ffe0ef33aee018235cd0dc8b479bb0562750ebc6b6766043f65a57442dd33b1e21966c4c2be
   languageName: node
   linkType: hard
 
