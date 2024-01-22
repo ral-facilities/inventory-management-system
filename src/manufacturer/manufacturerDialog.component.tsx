@@ -31,6 +31,7 @@ export interface ManufacturerDialogProps {
   open: boolean;
   onClose: () => void;
   selectedManufacturer?: Manufacturer;
+  type: 'edit' | 'create';
 }
 function isValidUrl(url: string) {
   try {
@@ -45,7 +46,7 @@ function isValidUrl(url: string) {
 }
 
 function ManufacturerDialog(props: ManufacturerDialogProps) {
-  const { open, onClose, selectedManufacturer } = props;
+  const { open, onClose, selectedManufacturer, type } = props;
 
   const [manufacturerDetails, setManufacturerDetails] =
     React.useState<ManufacturerDetails>({
@@ -62,8 +63,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     });
 
   React.useEffect(() => {
-    if (selectedManufacturer) setManufacturerDetails(selectedManufacturer);
-  }, [selectedManufacturer, open]);
+    if (selectedManufacturer && type === 'edit')
+      setManufacturerDetails(selectedManufacturer);
+  }, [selectedManufacturer, open, type]);
 
   const [nameError, setNameError] = React.useState<string | undefined>(
     undefined
@@ -337,7 +339,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
       <DialogTitle>{`${
-        !selectedManufacturer ? 'Add' : 'Edit'
+        type === 'create' ? 'Add' : 'Edit'
       } Manufacturer`}</DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={1}>
@@ -538,9 +540,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
             onClick={
-              !selectedManufacturer
-                ? handleAddManufacturer
-                : handleEditManufacturer
+              type === 'create' ? handleAddManufacturer : handleEditManufacturer
             }
             disabled={
               formError !== undefined ||
