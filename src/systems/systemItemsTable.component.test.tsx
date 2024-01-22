@@ -1,4 +1,5 @@
-import { screen, waitFor, within } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
@@ -7,7 +8,6 @@ import {
   SystemItemsTable,
   SystemItemsTableProps,
 } from './systemItemsTable.component';
-import userEvent from '@testing-library/user-event';
 
 describe('SystemItemsTable', () => {
   jest.setTimeout(10000);

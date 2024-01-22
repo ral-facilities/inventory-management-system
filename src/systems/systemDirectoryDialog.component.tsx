@@ -182,7 +182,9 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
         <Button
           disabled={
             // Disable when not moving anywhere different
-            props.parentSystemId === parentSystemId && type === 'moveTo'
+            selectedSystems.length > 0 &&
+            selectedSystems[0].parent_id === parentSystemId &&
+            type === 'moveTo'
           }
           onClick={type === 'moveTo' ? handleMoveTo : handleCopyTo}
         >
