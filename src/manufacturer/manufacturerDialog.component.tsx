@@ -65,28 +65,27 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     if (selectedManufacturer) setManufacturerDetails(selectedManufacturer);
   }, [selectedManufacturer, open]);
 
-  const [nameError, setNameError] = React.useState<
-    string | undefined
-  >(undefined);
+  const [nameError, setNameError] = React.useState<string | undefined>(
+    undefined
+  );
 
-  const [urlError, setUrlError] = React.useState<
-    string | undefined
-  >(undefined);
+  const [urlError, setUrlError] = React.useState<string | undefined>(undefined);
 
   const [addressLineError, setAddressLineError] = React.useState<
     string | undefined
   >(undefined);
 
-  const [addressPostcodeError, setAddressPostcodeError] =
-    React.useState<string | undefined>(undefined);
-
-  const [countryError, setCountryError] = React.useState<
+  const [addressPostcodeError, setAddressPostcodeError] = React.useState<
     string | undefined
   >(undefined);
 
-  const [formError, setFormError] = React.useState<
-    string | undefined
-  >(undefined);
+  const [countryError, setCountryError] = React.useState<string | undefined>(
+    undefined
+  );
+
+  const [formError, setFormError] = React.useState<string | undefined>(
+    undefined
+  );
 
   const [catchAllError, setCatchAllError] = React.useState(false);
 
@@ -198,9 +197,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         console.log(error.response?.status, manufacturerDetails.name);
 
         if (error.response?.status === 409) {
-          setNameError(
-            'A manufacturer with the same name already exists.'
-          );
+          setNameError('A manufacturer with the same name already exists.');
           return;
         }
         setCatchAllError(true);

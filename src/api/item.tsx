@@ -24,7 +24,8 @@ const addItem = async (item: AddItem): Promise<Item> => {
 
 export const useAddItem = (): UseMutationResult<Item, AxiosError, AddItem> => {
   const queryClient = useQueryClient();
-  return useMutation((item: AddItem) => addItem(item), {
+  return useMutation({
+    mutationFn: (item: AddItem) => addItem(item),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['Items'] });
     },
@@ -60,15 +61,15 @@ export const useItems = (
   system_id?: string,
   catalogue_item_id?: string
 ): UseQueryResult<Item[], AxiosError> => {
-  return useQuery<Item[], AxiosError>(
-    ['Items', system_id, catalogue_item_id],
-    (params) => {
+  return useQuery({
+    queryKey: ['Items', system_id, catalogue_item_id],
+
+    queryFn: (params) => {
       return fetchItems(system_id, catalogue_item_id);
     },
-    {
-      enabled: system_id !== undefined || catalogue_item_id !== undefined,
-    }
-  );
+
+    enabled: system_id !== undefined || catalogue_item_id !== undefined,
+  });
 };
 
 const fetchItem = async (id?: string): Promise<Item> => {
@@ -90,15 +91,15 @@ const fetchItem = async (id?: string): Promise<Item> => {
 };
 
 export const useItem = (id?: string): UseQueryResult<Item, AxiosError> => {
-  return useQuery<Item, AxiosError>(
-    ['Item', id],
-    (params) => {
+  return useQuery({
+    queryKey: ['Item', id],
+
+    queryFn: (params) => {
       return fetchItem(id);
     },
-    {
-      enabled: !!id,
-    }
-  );
+
+    enabled: !!id,
+  });
 };
 
 const deleteItem = async (item: Item): Promise<void> => {
@@ -115,7 +116,8 @@ const deleteItem = async (item: Item): Promise<void> => {
 
 export const useDeleteItem = (): UseMutationResult<void, AxiosError, Item> => {
   const queryClient = useQueryClient();
-  return useMutation((item: Item) => deleteItem(item), {
+  return useMutation({
+    mutationFn: (item: Item) => deleteItem(item),
     onError: (error) => {
       console.log('Got error ' + error.message);
     },
