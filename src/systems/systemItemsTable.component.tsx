@@ -202,7 +202,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     enableHiding: true,
     enableTopToolbar: true,
     enableRowVirtualization: false,
-    enableFullScreenToggle: false,
+    enableFullScreenToggle: true,
     enableColumnVirtualization: false,
     enableRowSelection: true,
     onColumnFiltersChange: setColumnFilters,
@@ -219,9 +219,14 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     },
     onRowSelectionChange: setRowSelection,
     getRowId: (row) => row.item.id,
-    muiTablePaperProps: {
-      sx: { maxWidth: '100%' },
-    },
+    muiTablePaperProps: ({ table }) => ({
+      // sx doesn't work here currently - see https://www.material-react-table.com/docs/guides/full-screen-toggle
+      style: {
+        maxWidth: '100%',
+        // SciGateway navigation drawer is 1200, modal is 1300
+        zIndex: table.getState().isFullScreen ? 1210 : undefined,
+      },
+    }),
     muiTableContainerProps: {
       sx: { height: '360.4px' },
     },

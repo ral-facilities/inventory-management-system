@@ -3,7 +3,8 @@
 exports[`SystemItemsTable renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-78ctpu-MuiPaper-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1atu56z-MuiPaper-root"
+    style="max-width: 100%;"
   >
     <div
       class="MuiBox-root css-1tbggly"
@@ -200,6 +201,28 @@ exports[`SystemItemsTable renders correctly 1`] = `
               >
                 <path
                   d="M14.67 5v14H9.33V5h5.34zm1 14H21V5h-5.33v14zm-7.34 0V5H3v14h5.33z"
+                />
+              </svg>
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+            <button
+              aria-label="Toggle full screen"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+              data-mui-internal-clone-element="true"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="FullscreenIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"
                 />
               </svg>
               <span
@@ -446,7 +469,7 @@ exports[`SystemItemsTable renders correctly 1`] = `
                           aria-label="Filter by Catalogue Item"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":ra:"
+                          id=":rb:"
                           placeholder="Filter by Catalogue Item"
                           title="Filter by Catalogue Item"
                           type="text"
@@ -611,7 +634,7 @@ exports[`SystemItemsTable renders correctly 1`] = `
                           aria-label="Filter by ID"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":rf:"
+                          id=":rg:"
                           placeholder="Filter by ID"
                           title="Filter by ID"
                           type="text"
@@ -776,7 +799,7 @@ exports[`SystemItemsTable renders correctly 1`] = `
                           aria-label="Filter by Serial Number"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":rk:"
+                          id=":rl:"
                           placeholder="Filter by Serial Number"
                           title="Filter by Serial Number"
                           type="text"
@@ -941,7 +964,7 @@ exports[`SystemItemsTable renders correctly 1`] = `
                           aria-label="Filter by Delivered Date"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":rp:"
+                          id=":rq:"
                           placeholder="Filter by Delivered Date"
                           title="Filter by Delivered Date"
                           type="text"
@@ -1102,13 +1125,13 @@ exports[`SystemItemsTable renders correctly 1`] = `
                         class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                       >
                         <div
-                          aria-controls=":rv:"
+                          aria-controls=":r10:"
                           aria-expanded="false"
                           aria-haspopup="listbox"
                           aria-label="Filter by Is Defective"
-                          aria-labelledby=":ru:"
+                          aria-labelledby=":rv:"
                           class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                          id=":ru:"
+                          id=":rv:"
                           role="combobox"
                           tabindex="0"
                         >
@@ -1293,13 +1316,13 @@ exports[`SystemItemsTable renders correctly 1`] = `
                         class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                       >
                         <div
-                          aria-controls=":r15:"
+                          aria-controls=":r16:"
                           aria-expanded="false"
                           aria-haspopup="listbox"
                           aria-label="Filter by Usage Status"
-                          aria-labelledby=":r14:"
+                          aria-labelledby=":r15:"
                           class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                          id=":r14:"
+                          id=":r15:"
                           role="combobox"
                           tabindex="0"
                         >
@@ -1818,7 +1841,7 @@ exports[`SystemItemsTable renders correctly 1`] = `
                 class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
-                  aria-controls=":r17:"
+                  aria-controls=":r18:"
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-label="Rows per page"
