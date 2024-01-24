@@ -44,8 +44,11 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
         .catch((error: AxiosError) => {
           const response = error.response?.data as ErrorParsing;
           if (response && error.response?.status === 409) {
+            console.log(response.detail);
             setError(true);
-            setErrorMessage(response.detail);
+            setErrorMessage(
+              `${response.detail}, please delete the children elements first`
+            );
             return;
           }
           setError(true);

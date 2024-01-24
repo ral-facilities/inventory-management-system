@@ -239,8 +239,7 @@ export const handlers = [
         return res(
           ctx.status(409),
           ctx.json({
-            detail:
-              'Catalogue item has children elements and cannot be deleted, please delete the children elements first',
+            detail: 'Catalogue item has child elements and cannot be deleted',
           })
         );
       } else {
@@ -263,8 +262,7 @@ export const handlers = [
       return res(
         ctx.status(409),
         ctx.json({
-          detail:
-            'Catalogue item has children elements and cannot be edited, please delete the children elements first',
+          detail: 'Catalogue item has child elements and cannot be edited',
         })
       );
     }
