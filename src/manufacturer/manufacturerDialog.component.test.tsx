@@ -22,6 +22,7 @@ describe('Add manufacturer dialog', () => {
     props = {
       open: true,
       onClose: onClose,
+      type: 'create',
     };
     user = userEvent.setup();
   });
@@ -209,6 +210,7 @@ describe('Add manufacturer dialog', () => {
       props = {
         ...props,
         selectedManufacturer: getManufacturerById('1'),
+        type: 'edit',
       };
 
       axiosPatchSpy = jest.spyOn(axios, 'patch');

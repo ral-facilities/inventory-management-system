@@ -521,7 +521,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             const response = error.response?.data as ErrorParsing;
             console.log(error);
             if (response && error.response?.status === 409) {
-              if (response.detail.includes('children elements')) {
+              if (response.detail.includes('child elements')) {
                 setFormError(true);
                 setFormErrorMessage(response.detail);
               }
@@ -793,6 +793,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               <ManufacturerDialog
                 open={addManufacturerDialogOpen}
                 onClose={() => setAddManufacturerDialogOpen(false)}
+                type="create"
               />
             </Grid>
           </Grid>

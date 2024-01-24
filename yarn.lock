@@ -3291,15 +3291,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-table@npm:8.11.3":
-  version: 8.11.3
-  resolution: "@tanstack/react-table@npm:8.11.3"
+"@tanstack/react-table@npm:8.11.6":
+  version: 8.11.6
+  resolution: "@tanstack/react-table@npm:8.11.6"
   dependencies:
-    "@tanstack/table-core": 8.11.3
+    "@tanstack/table-core": 8.11.6
   peerDependencies:
     react: ">=16"
     react-dom: ">=16"
-  checksum: 8e99fb04c4e0f535795123ebb65d17331da78a1175d8d25474c9df1218c7af4c3b4ab897dce876b0e13727d338934b0bc68423ddc95898f56f08ef6552f0ba08
+  checksum: 8107e796b4dca2ed018d96937b989c83d2c3ae756646dabdf737a17b281217d7e21838764892764884b5211ce6787b425076c10195b25f8033af08b56ddd00fe
   languageName: node
   linkType: hard
 
@@ -3315,10 +3315,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/table-core@npm:8.11.3":
-  version: 8.11.3
-  resolution: "@tanstack/table-core@npm:8.11.3"
-  checksum: c93e405b185362c68fd2d374f84f17f60a653633463c8ed5b0f1bdb45fcf0756a10b82a8a1247c1214bcb13f07f2e4001fd4b29e68b141ab78953520eb7f3b09
+"@tanstack/table-core@npm:8.11.6":
+  version: 8.11.6
+  resolution: "@tanstack/table-core@npm:8.11.6"
+  checksum: 05c958980ef9b6897f56c2452ab2a8a25f9c8ff879a3a2646d7a5a9c8afc7f6cf774d49a1f6ba3b212af4736f799666cef71ed547f9837a70f8e05a5708ac5a0
   languageName: node
   linkType: hard
 
@@ -11137,11 +11137,11 @@ __metadata:
   linkType: hard
 
 "material-react-table@npm:^2.0.4":
-  version: 2.4.1
-  resolution: "material-react-table@npm:2.4.1"
+  version: 2.7.0
+  resolution: "material-react-table@npm:2.7.0"
   dependencies:
     "@tanstack/match-sorter-utils": 8.11.3
-    "@tanstack/react-table": 8.11.3
+    "@tanstack/react-table": 8.11.6
     "@tanstack/react-virtual": 3.0.1
     highlight-words: 1.2.2
   peerDependencies:
@@ -11152,7 +11152,7 @@ __metadata:
     "@mui/x-date-pickers": ">=6.15.0"
     react: ">=18.0"
     react-dom: ">=18.0"
-  checksum: 7f4774128b916dddb13edcc4106cbf03755075280d6f8908a918ecec60c2889be94358bacb299ad70aa8dfd12343e9e2156b550f940f6bff22a2bc48cc0b25a7
+  checksum: 9e702c8a4c4e827870e2d8f43a36186078c3a52ddec322824a1ee82a7c953658eabc128239d6bb6fba229a0c13ccb743c7effb2f6c63dddcaf759c7cad1b48b6
   languageName: node
   linkType: hard
 
