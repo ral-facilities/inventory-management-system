@@ -1,5 +1,9 @@
 import React from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { MicroFrontendId } from './app.types';
 import { requestPluginRerender } from './state/scigateway.actions';
@@ -11,8 +15,15 @@ import './App.css';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import enGB from 'date-fns/locale/en-GB';
+import handleIMS_APIError from './handleIMS_APIError';
+import { AxiosError } from 'axios';
 
 const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error, query) => {
+      handleIMS_APIError(error as AxiosError);
+    },
+  }),
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: true,

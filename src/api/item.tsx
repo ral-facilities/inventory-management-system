@@ -47,7 +47,6 @@ const fetchItems = async (
   system_id && queryParams.append('system_id', system_id);
   catalogue_item_id &&
     queryParams.append('catalogue_item_id', catalogue_item_id);
-
   return axios
     .get(`${apiUrl}/v1/items/`, {
       params: queryParams,
@@ -63,11 +62,9 @@ export const useItems = (
 ): UseQueryResult<Item[], AxiosError> => {
   return useQuery({
     queryKey: ['Items', system_id, catalogue_item_id],
-
     queryFn: (params) => {
       return fetchItems(system_id, catalogue_item_id);
     },
-
     enabled: system_id !== undefined || catalogue_item_id !== undefined,
   });
 };
@@ -93,11 +90,9 @@ const fetchItem = async (id?: string): Promise<Item> => {
 export const useItem = (id?: string): UseQueryResult<Item, AxiosError> => {
   return useQuery({
     queryKey: ['Item', id],
-
     queryFn: (params) => {
       return fetchItem(id);
     },
-
     enabled: !!id,
   });
 };
@@ -118,9 +113,6 @@ export const useDeleteItem = (): UseMutationResult<void, AxiosError, Item> => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (item: Item) => deleteItem(item),
-    onError: (error) => {
-      console.log('Got error ' + error.message);
-    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['Items'] });
       queryClient.removeQueries({ queryKey: ['Item'] });

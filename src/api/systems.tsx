@@ -57,7 +57,6 @@ export const useSystems = (
 ): UseQueryResult<System[], AxiosError> => {
   return useQuery({
     queryKey: ['Systems', parent_id],
-
     queryFn: () => {
       return fetchSystems(parent_id);
     },
@@ -83,11 +82,9 @@ export const useSystem = (
 ): UseQueryResult<System, AxiosError> => {
   return useQuery({
     queryKey: ['System', id],
-
     queryFn: () => {
       return fetchSystem(id ?? '');
     },
-
     enabled: id !== null,
   });
 };
@@ -114,11 +111,9 @@ export const useSystemsBreadcrumbs = (
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
   return useQuery({
     queryKey: ['SystemBreadcrumbs', id],
-
     queryFn: () => {
       return fetchSystemsBreadcrumbs(id ?? '');
     },
-
     enabled: id !== null,
   });
 };
@@ -144,9 +139,6 @@ export const useAddSystem = (): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (system: AddSystem) => addSystem(system),
-    onError: (error) => {
-      console.log(`Got error: '${error.message}'`);
-    },
     onSuccess: (systemResponse) => {
       queryClient.invalidateQueries({
         queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
@@ -178,9 +170,6 @@ export const useEditSystem = (): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (system: EditSystem) => editSystem(system),
-    onError: (error) => {
-      console.log('Got error ' + error.message);
-    },
     onSuccess: (systemResponse: System) => {
       queryClient.invalidateQueries({
         queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
@@ -218,9 +207,6 @@ export const useDeleteSystem = (): UseMutationResult<
 
   return useMutation({
     mutationFn: (systemId: string) => deleteSystem(systemId),
-    onError: (error) => {
-      console.log(`Got error: '${error.message}'`);
-    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['Systems'] });
       queryClient.removeQueries({ queryKey: ['System'] });

@@ -41,10 +41,6 @@ export const useAddCatalogueItem = (): UseMutationResult<
   return useMutation({
     mutationFn: (catalogueItem: AddCatalogueItem) =>
       addCatalogueItem(catalogueItem),
-
-    onError: (error) => {
-      console.log('Got error ' + error.message);
-    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['CatalogueItems'] });
     },
@@ -79,7 +75,6 @@ export const useCatalogueItems = (
 ): UseQueryResult<CatalogueItem[], AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueItems', catalogueCategoryId],
-
     queryFn: (params) => {
       return fetchCatalogueItems(catalogueCategoryId);
     },
@@ -111,11 +106,9 @@ export const useCatalogueItem = (
 ): UseQueryResult<CatalogueItem, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueItem', catalogueCategoryId],
-
     queryFn: (params) => {
       return fetchCatalogueItem(catalogueCategoryId);
     },
-
     enabled: catalogueCategoryId !== undefined,
   });
 };
@@ -154,10 +147,6 @@ export const useDeleteCatalogueItem = (): UseMutationResult<
   return useMutation({
     mutationFn: (catalogueItem: CatalogueItem) =>
       deleteCatalogueItem(catalogueItem),
-
-    onError: (error) => {
-      console.log('Got error ' + error.message);
-    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['CatalogueItems'] });
       queryClient.removeQueries({ queryKey: ['CatalogueItem'] });
@@ -189,10 +178,6 @@ export const useEditCatalogueItem = (): UseMutationResult<
   return useMutation({
     mutationFn: (catalogueItem: EditCatalogueItem) =>
       editCatalogueItem(catalogueItem),
-
-    onError: (error) => {
-      console.log('Got error ' + error.message);
-    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['CatalogueItems'] });
       queryClient.invalidateQueries({ queryKey: ['CatalogueItem'] });

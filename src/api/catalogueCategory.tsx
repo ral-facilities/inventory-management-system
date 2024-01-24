@@ -47,11 +47,9 @@ export const useCatalogueCategories = (
 ): UseQueryResult<CatalogueCategory[], AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueCategories', parent_id],
-
     queryFn: (params) => {
       return fetchCatalogueCategories(parent_id);
     },
-
     enabled: !isLeaf,
   });
 };
@@ -78,7 +76,6 @@ export const useCatalogueBreadcrumbs = (
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueBreadcrumbs', id],
-
     queryFn: (params) => {
       return fetchCatalogueBreadcrumbs(id);
     },
@@ -114,9 +111,6 @@ export const useAddCatalogueCategory = (): UseMutationResult<
   return useMutation({
     mutationFn: (catalogueCategory: AddCatalogueCategory) =>
       addCatalogueCategory(catalogueCategory),
-    onError: (error) => {
-      console.log('Got error ' + error.message);
-    },
     onSuccess: (category) => {
       queryClient.invalidateQueries({
         queryKey: ['CatalogueCategories', category.parent_id ?? 'null'],
@@ -152,10 +146,6 @@ export const useEditCatalogueCategory = (): UseMutationResult<
   return useMutation({
     mutationFn: (catalogueCategory: EditCatalogueCategory) =>
       editCatalogueCategory(catalogueCategory),
-
-    onError: (error) => {
-      console.log('Got error ' + error.message);
-    },
     onSuccess: (category) => {
       queryClient.invalidateQueries({
         queryKey: ['CatalogueCategories', category.parent_id ?? 'null'],
@@ -341,10 +331,6 @@ export const useDeleteCatalogueCategory = (): UseMutationResult<
   return useMutation({
     mutationFn: (catalogueCategory: CatalogueCategory) =>
       deleteCatalogueCategory(catalogueCategory),
-
-    onError: (error) => {
-      console.log('Got error ' + error.message);
-    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['CatalogueCategories'] });
     },
@@ -373,11 +359,9 @@ export const useCatalogueCategory = (
 ): UseQueryResult<CatalogueCategory, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueCategory', id],
-
     queryFn: (params) => {
       return fetchCatalogueCategory(id);
     },
-
     enabled: id !== undefined,
   });
 };
