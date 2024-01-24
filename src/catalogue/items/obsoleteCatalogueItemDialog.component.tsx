@@ -35,6 +35,7 @@ import {
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';
 import CatalogueItemsTable from './catalogueItemsTable.component';
+import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface ObsoleteCatalogueItemDialogProps {
   open: boolean;
@@ -66,9 +67,6 @@ const ObsoleteCatalogueItemDialog = (
   const [formError, setFormError] = React.useState<string | undefined>(
     undefined
   );
-
-  // For any unhandled error e.g. a connection issue/API error
-  const [otherError, setOtherError] = React.useState<boolean>(false);
 
   // Catalogue category id for table
   const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
@@ -151,7 +149,6 @@ const ObsoleteCatalogueItemDialog = (
     handleObsoleteDetailChanged(catalogueItem as ObsoleteDetails);
     setCatalogueCurrDirId(null);
     setFormError(undefined);
-    setOtherError(false);
     setDefaultCatalogueCurrDirId();
   }, [
     catalogueItem,
@@ -195,8 +192,7 @@ const ObsoleteCatalogueItemDialog = (
             handleClose();
           })
           .catch((error: AxiosError) => {
-            console.log(error);
-            setOtherError(true);
+            handleIMS_APIError(error);
           });
       } else
         setFormError(
@@ -325,10 +321,7 @@ const ObsoleteCatalogueItemDialog = (
           Back
         </Button>
         {activeStep === steps.length - 1 ? (
-          <Button
-            onClick={handleFinish}
-            disabled={formError !== undefined || otherError}
-          >
+          <Button onClick={handleFinish} disabled={formError !== undefined}>
             Finish
           </Button>
         ) : (
@@ -347,21 +340,6 @@ const ObsoleteCatalogueItemDialog = (
         >
           <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
             {formError}
-          </FormHelperText>
-        </Box>
-      )}
-      {otherError && (
-        <Box
-          sx={{
-            mx: 3,
-            marginBottom: 3,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-            Please refresh and try again
           </FormHelperText>
         </Box>
       )}

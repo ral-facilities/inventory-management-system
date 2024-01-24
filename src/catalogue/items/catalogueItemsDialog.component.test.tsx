@@ -16,6 +16,11 @@ import userEvent from '@testing-library/user-event';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
+
+import handleIMS_APIError from '../../handleIMS_APIError';
+
+jest.mock('../../handleIMS_APIError');
+
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
   let user;
@@ -372,11 +377,7 @@ describe('Catalogue Items Dialog', () => {
     const saveButton = screen.getByRole('button', { name: 'Save' });
     await user.click(saveButton);
 
-    await waitFor(() => {
-      expect(
-        screen.getByText('Please refresh and try again')
-      ).toBeInTheDocument();
-    });
+    expect(handleIMS_APIError).toHaveBeenCalled();
     expect(onClose).not.toHaveBeenCalled();
   }, 10000);
 
@@ -660,11 +661,7 @@ describe('Catalogue Items Dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
-      await waitFor(() => {
-        expect(
-          screen.getByText('Please refresh and try again')
-        ).toBeInTheDocument();
-      });
+      expect(handleIMS_APIError).toHaveBeenCalled();
       expect(onClose).not.toHaveBeenCalled();
     });
   });

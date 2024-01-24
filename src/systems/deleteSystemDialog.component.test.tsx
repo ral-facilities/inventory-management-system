@@ -9,6 +9,9 @@ import {
   DeleteSystemDialog,
   DeleteSystemDialogProps,
 } from './deleteSystemDialog.component';
+import handleIMS_APIError from '../handleIMS_APIError';
+
+jest.mock('../handleIMS_APIError');
 
 describe('DeleteSystemDialog', () => {
   let systemId = '';
@@ -106,12 +109,7 @@ describe('DeleteSystemDialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Continue' }));
 
-    await waitFor(() => {
-      expect(
-        screen.getByText('Please refresh and try again')
-      ).toBeInTheDocument();
-    });
-
+    expect(handleIMS_APIError).toHaveBeenCalled();
     expect(axiosDeleteSpy).toHaveBeenCalledWith(`/v1/systems/${systemId}`);
     expect(props.onClose).not.toHaveBeenCalled();
   });

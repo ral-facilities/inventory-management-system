@@ -9,6 +9,9 @@ import {
   renderComponentWithBrowserRouter,
 } from '../setupTests';
 import axios from 'axios';
+import handleIMS_APIError from '../handleIMS_APIError';
+
+jest.mock('../handleIMS_APIError');
 
 describe('Add manufacturer dialog', () => {
   const onClose = jest.fn();
@@ -202,6 +205,25 @@ describe('Add manufacturer dialog', () => {
       expect(screen.getByText('Please enter a valid URL')).toBeInTheDocument();
       expect(onClose).not.toHaveBeenCalled();
     });
+
+    it('CatchAllError request works correctly and displays refresh page message', async () => {
+      createView();
+      modifyManufacturerValues({
+        name: 'Error 500',
+        url: 'https://test.co.uk',
+        addressLine: 'test',
+        town: 'test',
+        county: 'test',
+        postcode: 'test',
+        country: 'test',
+        telephone: '0000000000',
+      });
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      expect(handleIMS_APIError).toHaveBeenCalled();
+    });
   });
 
   describe('Edit a manufacturer', () => {
@@ -348,9 +370,7 @@ describe('Add manufacturer dialog', () => {
 
       await user.click(saveButton);
 
-      expect(
-        screen.getByText('Please refresh and try again')
-      ).toBeInTheDocument();
+      expect(handleIMS_APIError).toHaveBeenCalled();
     });
 
     it('calls onClose when Close button is clicked', async () => {

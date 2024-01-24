@@ -313,6 +313,10 @@ export const handlers = [
       return res(ctx.status(409), ctx.json(''));
     }
 
+    if (body.name === 'Error 500') {
+      return res(ctx.status(500), ctx.json(''));
+    }
+
     return res(
       ctx.status(200),
       ctx.json({

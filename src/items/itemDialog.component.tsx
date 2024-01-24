@@ -33,6 +33,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
 import { useAddItem } from '../api/item';
 import { AxiosError } from 'axios';
+import handleIMS_APIError from '../handleIMS_APIError';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
   // Attempt to create a Date object from the input
@@ -116,8 +117,6 @@ function ItemDialog(props: ItemDialogProps) {
     delivered_date: null,
     notes: null,
   });
-
-  const [catchAllError, setCatchAllError] = React.useState(false);
 
   const [propertyValues, setPropertyValues] = React.useState<(string | null)[]>(
     []
@@ -350,7 +349,7 @@ function ItemDialog(props: ItemDialogProps) {
     addItem(item)
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
-        setCatchAllError(true);
+        handleIMS_APIError(error);
       });
   }, [addItem, handleClose, details, handleFormErrorStates]);
   return (
@@ -627,7 +626,6 @@ function ItemDialog(props: ItemDialogProps) {
             sx={{ width: '50%', mx: 1 }}
             onClick={handleAddItem}
             disabled={
-              catchAllError ||
               propertyErrors.some((value) => {
                 return value === true;
               }) ||
@@ -640,11 +638,6 @@ function ItemDialog(props: ItemDialogProps) {
             Save
           </Button>
         </Box>
-        {catchAllError && (
-          <FormHelperText sx={{ marginBottom: '16px' }} error>
-            {'Please refresh and try again'}
-          </FormHelperText>
-        )}
       </DialogActions>
     </Dialog>
   );

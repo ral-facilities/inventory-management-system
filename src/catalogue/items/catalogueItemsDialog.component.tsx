@@ -40,6 +40,7 @@ import { matchCatalogueItemProperties } from '../catalogue.component';
 import { Autocomplete } from '@mui/material';
 import { useManufacturers } from '../../api/manufacturer';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
+import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
@@ -100,8 +101,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const [formErrorMessage, setFormErrorMessage] = React.useState<
     string | undefined
   >(undefined);
-
-  const [catchAllError, setCatchAllError] = React.useState(false);
 
   const [propertyErrors, setPropertyErrors] = React.useState(
     new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
@@ -425,8 +424,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     addCatalogueItem(catalogueItem)
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
-        console.log(error);
-        setCatchAllError(true);
+        handleIMS_APIError(error);
       });
   }, [addCatalogueItem, handleClose, details, handleFormErrorStates]);
 
@@ -519,7 +517,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           .then((response) => handleClose())
           .catch((error: AxiosError) => {
             const response = error.response?.data as ErrorParsing;
-            console.log(error);
+
             if (response && error.response?.status === 409) {
               if (response.detail.includes('children elements')) {
                 setFormError(true);
@@ -527,7 +525,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               }
               return;
             }
-            setCatchAllError(true);
+            handleIMS_APIError(error);
           });
       } else {
         setFormError(true);
@@ -945,7 +943,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             }
             disabled={
               JSON.stringify(errorMessages) !== '{}' ||
-              catchAllError ||
               formError ||
               propertyErrors.some((value) => {
                 return value === true;
@@ -958,11 +955,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         {formError && (
           <FormHelperText sx={{ marginBottom: '16px' }} error>
             {formErrorMessage}
-          </FormHelperText>
-        )}
-        {catchAllError && (
-          <FormHelperText sx={{ marginBottom: '16px' }} error>
-            {'Please refresh and try again'}
           </FormHelperText>
         )}
       </DialogActions>

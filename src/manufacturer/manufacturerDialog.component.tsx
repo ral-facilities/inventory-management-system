@@ -26,6 +26,7 @@ import {
   useManufacturer,
 } from '../api/manufacturer';
 import { AxiosError } from 'axios';
+import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface ManufacturerDialogProps {
   open: boolean;
@@ -88,8 +89,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   const [formError, setFormError] = React.useState<string | undefined>(
     undefined
   );
-
-  const [catchAllError, setCatchAllError] = React.useState(false);
 
   const { mutateAsync: addManufacturer } = useAddManufacturer();
   const { mutateAsync: editManufacturer } = useEditManufacturer();
@@ -196,13 +195,11 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     addManufacturer(manufacturerToAdd)
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
-        console.log(error.response?.status, manufacturerDetails.name);
-
         if (error.response?.status === 409) {
           setNameError('A manufacturer with the same name already exists.');
           return;
         }
-        setCatchAllError(true);
+        handleIMS_APIError(error);
       });
   }, [handleErrors, manufacturerDetails, addManufacturer, handleClose]);
 
@@ -313,14 +310,14 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           .then((response) => handleClose())
           .catch((error: AxiosError) => {
             const response = error.response?.data as ErrorParsing;
-            console.log(error);
             if (response && error.response?.status === 409) {
               setNameError(
                 'A manufacturer with the same name has been found. Please enter a different name'
               );
               return;
             }
-            setCatchAllError(true);
+
+            handleIMS_APIError(error);
           });
       } else {
         setFormError(
@@ -544,7 +541,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             }
             disabled={
               formError !== undefined ||
-              catchAllError ||
               nameError !== undefined ||
               urlError !== undefined ||
               addressLineError !== undefined ||
@@ -558,11 +554,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         {formError && (
           <FormHelperText sx={{ marginBottom: '16px' }} error>
             {formError}
-          </FormHelperText>
-        )}
-        {catchAllError && (
-          <FormHelperText sx={{ marginBottom: '16px' }} error>
-            {'Please refresh and try again'}
           </FormHelperText>
         )}
       </DialogActions>

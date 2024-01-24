@@ -9,9 +9,12 @@ import ItemDialog, {
   ItemDialogProps,
   isValidDateTime,
 } from './itemDialog.component';
-import { fireEvent, screen, waitFor, within } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
+import handleIMS_APIError from '../handleIMS_APIError';
+
+jest.mock('../handleIMS_APIError');
 
 describe('isValidDateTime', () => {
   it('should return true for a valid date string', () => {
@@ -396,11 +399,7 @@ describe('ItemDialog', () => {
       });
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
-      await waitFor(() => {
-        expect(
-          screen.getByText('Please refresh and try again')
-        ).toBeInTheDocument();
-      });
+      expect(handleIMS_APIError).toHaveBeenCalled();
       expect(onClose).not.toHaveBeenCalled();
     });
 

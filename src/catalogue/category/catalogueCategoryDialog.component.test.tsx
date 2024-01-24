@@ -7,6 +7,9 @@ import { renderComponentWithBrowserRouter } from '../../setupTests';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
+import handleIMS_APIError from '../../handleIMS_APIError';
+
+jest.mock('../../handleIMS_APIError');
 
 describe('Catalogue Category Dialog', () => {
   const onClose = jest.fn();
@@ -162,12 +165,7 @@ describe('Catalogue Category Dialog', () => {
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
-
-      await waitFor(() => {
-        expect(
-          screen.getByText('Please refresh and try again')
-        ).toBeInTheDocument();
-      });
+      expect(handleIMS_APIError).toHaveBeenCalled();
       expect(onClose).not.toHaveBeenCalled();
     });
 
@@ -463,11 +461,7 @@ describe('Catalogue Category Dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
-      await waitFor(() => {
-        expect(
-          screen.getByText('Please refresh and try again')
-        ).toBeInTheDocument();
-      });
+      expect(handleIMS_APIError).toHaveBeenCalled();
       expect(onClose).not.toHaveBeenCalled();
     });
 

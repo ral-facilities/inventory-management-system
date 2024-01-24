@@ -11,6 +11,7 @@ import React from 'react';
 import { useDeleteCatalogueCategory } from '../../api/catalogueCategory';
 import { CatalogueCategory, ErrorParsing } from '../../app.types';
 import { AxiosError } from 'axios';
+import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteCatalogueCategoryDialogProps {
   open: boolean;
@@ -54,8 +55,7 @@ const DeleteCatalogueCategoryDialog = (
             );
             return;
           }
-          setError(true);
-          setErrorMessage('Please refresh and try again');
+          handleIMS_APIError(error);
         });
     } else {
       setError(true);

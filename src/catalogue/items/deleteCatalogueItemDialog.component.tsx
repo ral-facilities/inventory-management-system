@@ -11,6 +11,7 @@ import React from 'react';
 import { useDeleteCatalogueItem } from '../../api/catalogueItem';
 import { CatalogueItem, ErrorParsing } from '../../app.types';
 import { AxiosError } from 'axios';
+import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteCatalogueItemDialogProps {
   open: boolean;
@@ -48,8 +49,7 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
             setErrorMessage(response.detail);
             return;
           }
-          setError(true);
-          setErrorMessage('Please refresh and try again');
+          handleIMS_APIError(error);
         });
     } else {
       setError(true);

@@ -10,6 +10,9 @@ import axios from 'axios';
 import ObsoleteCatalogueItemDialog, {
   ObsoleteCatalogueItemDialogProps,
 } from './obsoleteCatalogueItemDialog.component';
+import handleIMS_APIError from '../../handleIMS_APIError';
+
+jest.mock('../../handleIMS_APIError');
 
 describe('Obsolete Catalogue Item Dialog', () => {
   // Quite a few of these take more than 10 seconds on CI
@@ -441,11 +444,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-    await waitFor(() => {
-      expect(
-        screen.getByText('Please refresh and try again')
-      ).toBeInTheDocument();
-    });
+    expect(handleIMS_APIError).toHaveBeenCalled();
   });
 
   it('can edit an obsolete replacement item having navigated using the breadcrumbs', async () => {
