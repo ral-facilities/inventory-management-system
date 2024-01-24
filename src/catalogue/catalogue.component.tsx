@@ -15,6 +15,7 @@ import {
   ListItem,
   MenuItem,
   Pagination,
+  Paper,
   Select,
   Typography,
 } from '@mui/material';
@@ -194,65 +195,9 @@ function Catalogue() {
     string | null
   >(null);
 
-  const CardViewPagination = (
-    page: number,
-    numPages: number,
-    setPage: (page: number) => void
-  ) => {
-    return (
-      <Pagination
-        size="large"
-        color="secondary"
-        sx={{ textAlign: 'center' }}
-        count={numPages}
-        page={page}
-        onChange={(e, p) => {
-          if (p !== page) {
-            setPage(p);
-          }
-        }}
-        showFirstButton
-        hidePrevButton={page === 1}
-        hideNextButton={page >= numPages}
-        showLastButton
-        aria-label="pagination"
-        className="catalogue-categories-pagination"
-      />
-    );
-  };
-
+  //Pagination
   const [page, setPage] = React.useState(1);
-
-  // Extract relevant entries from query
-  // const page = React.useMemo(() => {
-  //   return props.page && props.page > 0 ? props.page : 1;
-  // }, [props.page]);
-
-  // const results = React.useMemo(() => {
-  //   return props.results && resOptions.includes(props.results)
-  //     ? props.results
-  //     : resOptions[0];
-  // }, [resOptions, props.results]);
-
-  // Pagination.
-
-  const resOptions = React.useMemo(() => [2, 20, 30], []);
-  const [maxPage, setMaxPage] = React.useState(0);
-  const paginationPos = 'top';
-
-  const [paginationResults, setPaginationResults] = React.useState<number>(1);
-
-  // React.useEffect(() => {
-  //   if(!catalogueCategoryDataLoading){
-  //     const newMaxPage = ~~(1 + (catalogueCategoryData?.length ?? 0 - 1) / paginationResults)
-  //     if( newMaxPage !== maxPage){
-  //       setMaxPage(newMaxPage)
-  //     } else if (maxPage > 0 && page > newMaxPage){
-  //       on
-  //     }
-  //   }
-  // })
-
+  const [paginationResults, setPaginationResults] = React.useState<number>(5);
   const startIndex = (page - 1) * paginationResults;
   const endIndex = startIndex + paginationResults;
   const displayedCatalogueCategories = catalogueCategoryData?.slice(
@@ -369,78 +314,100 @@ function Catalogue() {
       {catalogueCategoryData &&
         !parentInfo?.is_leaf &&
         !catalogueCategoryDetailLoading && (
-          <Grid container spacing={2} alignContent={'center'}>
-            <Grid item xs={12} sm={6} md={4} flexDirection={'row'}>
-              <Pagination
-                count={Math.ceil(
-                  catalogueCategoryData?.length / paginationResults
-                )}
-                page={page}
-                onChange={(event, value) => {
-                  setPage(value);
-                }}
-                size="large"
-                color="secondary"
-                sx={{ textAlign: 'center' }}
-                showFirstButton
-                hidePrevButton={page === 1}
-                hideNextButton={
-                  page >=
-                  Math.ceil(catalogueCategoryData?.length / paginationResults)
-                }
-                showLastButton
-                aria-label="pagination"
-                className="catalogue-categories-pagination"
-              />
-
-              <FormControl
-                variant="standard"
-                sx={{ margin: 1, minWidth: '120px' }}
-              >
-                <InputLabel>{'Max Results'}</InputLabel>
-                <Select
-                  native
-                  value={paginationResults}
-                  inputProps={{
-                    name: 'Max Results',
-                    id: 'select-max-results',
-                  }}
-                  onChange={(event) => {
-                    setPaginationResults(+event.target.value);
-                    setPage(1);
-                  }}
+          <Grid container>
+            <Grid
+              container
+              item
+              xs={11}
+              maxWidth={'808px'}
+              maxHeight={'675px'}
+              overflow={'auto'}
+              padding={2}
+            >
+              {displayedCatalogueCategories?.map((item, index) => (
+                <Grid
+                  item
+                  key={index}
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  flexDirection={'column'}
+                  alignContent={'center'}
                 >
-                  <option>{1}</option>
-                  <option>{3}</option>
-                  <option>{5}</option>
-                </Select>
-              </FormControl>
+                  <CatalogueCard
+                    {...item}
+                    onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
+                    onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
+                    onToggleSelect={handleToggleSelect}
+                    isSelected={selectedCategories.some(
+                      (selectedCategory: CatalogueCategory) =>
+                        selectedCategory.id === item.id
+                    )}
+                  />
+                </Grid>
+              ))}
             </Grid>
-
-            {displayedCatalogueCategories?.map((item, index) => (
-              <Grid
-                item
-                key={index}
-                xs={12}
-                sm={6}
-                md={4}
-                flexDirection={'column'}
-                alignContent={'center'}
-              >
-                <CatalogueCard
-                  {...item}
-                  onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
-                  onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
-                  onToggleSelect={handleToggleSelect}
-                  isSelected={selectedCategories.some(
-                    (selectedCategory: CatalogueCategory) =>
-                      selectedCategory.id === item.id
+            <Grid
+              container
+              item
+              alignItems="center"
+              justifyContent="space-around"
+              xs={12}
+              padding={2}
+              position={'fixed'}
+              bottom={12}
+            >
+              <Grid item>
+                <Pagination
+                  count={Math.ceil(
+                    catalogueCategoryData?.length / paginationResults
                   )}
+                  page={page}
+                  onChange={(event, value) => {
+                    setPage(value);
+                  }}
+                  size="large"
+                  color="secondary"
+                  sx={{ textAlign: 'center' }}
+                  showFirstButton
+                  hidePrevButton={page === 1}
+                  hideNextButton={
+                    page >=
+                    Math.ceil(catalogueCategoryData?.length / paginationResults)
+                  }
+                  showLastButton
+                  aria-label="pagination"
+                  className="catalogue-categories-pagination"
                 />
               </Grid>
-            ))}
+              <Grid container item xs={12} md={1} justifyContent="flex-end">
+                <FormControl
+                  variant="standard"
+                  sx={{ margin: 1, minWidth: '120px' }}
+                >
+                  <InputLabel>{'Max Results'}</InputLabel>
+                  <Select
+                    native
+                    value={paginationResults}
+                    inputProps={{
+                      name: 'Max Results',
+                      id: 'select-max-results',
+                    }}
+                    onChange={(event) => {
+                      setPaginationResults(+event.target.value);
+                      setPage(1);
+                    }}
+                  >
+                    <option>{5}</option>
+                    <option>{10}</option>
+                    <option>{20}</option>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
           </Grid>
         )}
+
       {parentInfo && parentInfo.is_leaf && (
         <CatalogueItemsTable parentInfo={parentInfo} dense={false} />
       )}
