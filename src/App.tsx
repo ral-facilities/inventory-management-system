@@ -17,6 +17,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import enGB from 'date-fns/locale/en-GB';
 import handleIMS_APIError from './handleIMS_APIError';
 import { AxiosError } from 'axios';
+import retryIMS_APIErrors from './retryIMS_APIErrors';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -28,6 +29,9 @@ const queryClient = new QueryClient({
     queries: {
       refetchOnWindowFocus: true,
       staleTime: 300000,
+      retry: (failureCount, error) => {
+        return retryIMS_APIErrors(failureCount, error as AxiosError);
+      },
     },
   },
 });
