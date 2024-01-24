@@ -1,6 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import axios from 'axios';
 import React from 'react';
 import { System, SystemImportanceType } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
@@ -10,6 +9,7 @@ import {
   DeleteSystemDialogProps,
 } from './deleteSystemDialog.component';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { imsApi } from '../api/api';
 
 jest.mock('../handleIMS_APIError');
 
@@ -49,7 +49,7 @@ describe('DeleteSystemDialog', () => {
     };
     systemId = '65328f34a40ff5301575a4e9';
     user = userEvent.setup();
-    axiosDeleteSpy = jest.spyOn(axios, 'delete');
+    axiosDeleteSpy = jest.spyOn(imsApi, 'delete');
   });
 
   afterEach(() => {

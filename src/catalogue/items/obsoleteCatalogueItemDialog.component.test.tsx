@@ -6,11 +6,11 @@ import {
 
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import axios from 'axios';
 import ObsoleteCatalogueItemDialog, {
   ObsoleteCatalogueItemDialogProps,
 } from './obsoleteCatalogueItemDialog.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { imsApi } from '../../api/api';
 
 jest.mock('../../handleIMS_APIError');
 
@@ -159,7 +159,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
       catalogueItem: getCatalogueItemById('89'),
     };
     user = userEvent.setup();
-    axiosPatchSpy = jest.spyOn(axios, 'patch');
+    axiosPatchSpy = jest.spyOn(imsApi, 'patch');
 
     window.ResizeObserver = jest.fn().mockImplementation(() => ({
       disconnect: jest.fn(),

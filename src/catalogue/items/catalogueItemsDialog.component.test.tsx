@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import {
   renderComponentWithBrowserRouter,
   getCatalogueCategoryById,
@@ -18,6 +17,7 @@ import CatalogueItemsDialog, {
 } from './catalogueItemsDialog.component';
 
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { imsApi } from '../../api/api';
 
 jest.mock('../../handleIMS_APIError');
 
@@ -42,7 +42,7 @@ describe('Catalogue Items Dialog', () => {
     };
 
     user = userEvent.setup();
-    axiosPostSpy = jest.spyOn(axios, 'post');
+    axiosPostSpy = jest.spyOn(imsApi, 'post');
   });
   const modifyValues = async (values: {
     name?: string;
@@ -410,7 +410,7 @@ describe('Catalogue Items Dialog', () => {
         type: 'edit',
       };
 
-      axiosPatchSpy = jest.spyOn(axios, 'patch');
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
     });
 
     it('Edit a catalogue item (catalogue detail)', async () => {

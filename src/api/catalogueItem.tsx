@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import {
   useMutation,
   UseMutationResult,
@@ -15,20 +15,13 @@ import {
   ErrorParsing,
   TransferToCatalogueItem,
 } from '../app.types';
-import { settings } from '../settings';
+import { imsApi } from './api';
 
 const addCatalogueItem = async (
   catalogueItem: AddCatalogueItem
 ): Promise<CatalogueItem> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-
-  return axios
-    .post<CatalogueItem>(`${apiUrl}/v1/catalogue-items/`, catalogueItem)
+  return imsApi
+    .post<CatalogueItem>(`/v1/catalogue-items/`, catalogueItem)
     .then((response) => response.data);
 };
 
@@ -50,19 +43,13 @@ export const useAddCatalogueItem = (): UseMutationResult<
 const fetchCatalogueItems = async (
   catalogueCategoryId: string | null
 ): Promise<CatalogueItem[]> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
   const queryParams = new URLSearchParams();
 
   if (catalogueCategoryId)
     queryParams.append('catalogue_category_id', catalogueCategoryId);
 
-  return axios
-    .get(`${apiUrl}/v1/catalogue-items/`, {
+  return imsApi
+    .get(`/v1/catalogue-items/`, {
       params: queryParams,
     })
     .then((response) => {
@@ -84,16 +71,10 @@ export const useCatalogueItems = (
 const fetchCatalogueItem = async (
   catalogueCategoryId: string | undefined
 ): Promise<CatalogueItem> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
   const queryParams = new URLSearchParams();
 
-  return axios
-    .get(`${apiUrl}/v1/catalogue-items/${catalogueCategoryId ?? ''}`, {
+  return imsApi
+    .get(`/v1/catalogue-items/${catalogueCategoryId ?? ''}`, {
       params: queryParams,
     })
     .then((response) => {
@@ -127,14 +108,8 @@ export const useCatalogueItemIds = (
 const deleteCatalogueItem = async (
   catalogueItem: CatalogueItem
 ): Promise<void> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-  return axios
-    .delete(`${apiUrl}/v1/catalogue-items/${catalogueItem.id}`, {})
+  return imsApi
+    .delete(`/v1/catalogue-items/${catalogueItem.id}`, {})
     .then((response) => response.data);
 };
 
@@ -157,15 +132,9 @@ export const useDeleteCatalogueItem = (): UseMutationResult<
 const editCatalogueItem = async (
   catalogueItem: EditCatalogueItem
 ): Promise<CatalogueItem> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
   const { id, ...updatedItem } = catalogueItem;
-  return axios
-    .patch<CatalogueItem>(`${apiUrl}/v1/catalogue-items/${id}`, updatedItem)
+  return imsApi
+    .patch<CatalogueItem>(`/v1/catalogue-items/${id}`, updatedItem)
     .then((response) => response.data);
 };
 

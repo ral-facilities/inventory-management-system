@@ -5,7 +5,7 @@ import CatalogueCategoryDirectoryDialog, {
   CatalogueCategoryDirectoryDialogProps,
 } from './catalogueCategoryDirectoryDialog.component';
 import userEvent from '@testing-library/user-event';
-import axios from 'axios';
+import { imsApi } from '../../api/api';
 
 describe('CatalogueCategoryDirectoryDialog', () => {
   let props: CatalogueCategoryDirectoryDialogProps;
@@ -35,7 +35,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       user = userEvent.setup();
 
-      axiosPatchSpy = jest.spyOn(axios, 'patch');
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
@@ -211,7 +211,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       user = userEvent.setup();
 
-      axiosPostSpy = jest.spyOn(axios, 'post');
+      axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {

@@ -5,7 +5,7 @@ import {
   useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import {
   AddCatalogueCategory,
   BreadcrumbsInfo,
@@ -16,24 +16,19 @@ import {
   MoveToCatalogueCategory,
   TransferState,
 } from '../app.types';
-import { settings } from '../settings';
+
 import { generateUniqueName } from '../utils';
+import { imsApi } from './api';
 
 const fetchCatalogueCategories = async (
   parent_id: string
 ): Promise<CatalogueCategory[]> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
   const queryParams = new URLSearchParams();
 
   queryParams.append('parent_id', parent_id);
 
-  return axios
-    .get(`${apiUrl}/v1/catalogue-categories/`, {
+  return imsApi
+    .get(`/v1/catalogue-categories/`, {
       params: queryParams,
     })
     .then((response) => {
@@ -57,15 +52,8 @@ export const useCatalogueCategories = (
 const fetchCatalogueBreadcrumbs = async (
   id: string
 ): Promise<BreadcrumbsInfo> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-
-  return axios
-    .get(`${apiUrl}/v1/catalogue-categories/${id}/breadcrumbs`, {})
+  return imsApi
+    .get(`/v1/catalogue-categories/${id}/breadcrumbs`, {})
     .then((response) => {
       return response.data;
     });
@@ -87,18 +75,8 @@ export const useCatalogueBreadcrumbs = (
 const addCatalogueCategory = async (
   catalogueCategory: AddCatalogueCategory
 ): Promise<CatalogueCategory> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-
-  return axios
-    .post<CatalogueCategory>(
-      `${apiUrl}/v1/catalogue-categories`,
-      catalogueCategory
-    )
+  return imsApi
+    .post<CatalogueCategory>(`/v1/catalogue-categories`, catalogueCategory)
     .then((response) => response.data);
 };
 
@@ -122,18 +100,9 @@ export const useAddCatalogueCategory = (): UseMutationResult<
 const editCatalogueCategory = async (
   catalogueCategory: EditCatalogueCategory
 ): Promise<CatalogueCategory> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
   const { id, ...updatedCategory } = catalogueCategory;
-  return axios
-    .patch<CatalogueCategory>(
-      `${apiUrl}/v1/catalogue-categories/${id}`,
-      updatedCategory
-    )
+  return imsApi
+    .patch<CatalogueCategory>(`/v1/catalogue-categories/${id}`, updatedCategory)
     .then((response) => response.data);
 };
 
@@ -311,14 +280,8 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
 const deleteCatalogueCategory = async (
   catalogueCategory: CatalogueCategory
 ): Promise<void> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-  return axios
-    .delete(`${apiUrl}/v1/catalogue-categories/${catalogueCategory.id}`, {})
+  return imsApi
+    .delete(`/v1/catalogue-categories/${catalogueCategory.id}`, {})
     .then((response) => response.data);
 };
 
@@ -340,18 +303,9 @@ export const useDeleteCatalogueCategory = (): UseMutationResult<
 const fetchCatalogueCategory = async (
   id: string | undefined
 ): Promise<CatalogueCategory> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-
-  return axios
-    .get(`${apiUrl}/v1/catalogue-categories/${id}`, {})
-    .then((response) => {
-      return response.data;
-    });
+  return imsApi.get(`/v1/catalogue-categories/${id}`, {}).then((response) => {
+    return response.data;
+  });
 };
 
 export const useCatalogueCategory = (

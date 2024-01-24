@@ -11,8 +11,8 @@ import ItemDialog, {
 } from './itemDialog.component';
 import { fireEvent, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import axios from 'axios';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { imsApi } from '../api/api';
 
 jest.mock('../handleIMS_APIError');
 
@@ -175,7 +175,7 @@ describe('ItemDialog', () => {
     let axiosPostSpy;
 
     beforeEach(() => {
-      axiosPostSpy = jest.spyOn(axios, 'post');
+      axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
     it('adds an item with just the default values', async () => {

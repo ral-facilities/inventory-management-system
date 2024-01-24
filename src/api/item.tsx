@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import {
   useMutation,
   UseMutationResult,
@@ -7,18 +7,11 @@ import {
   UseQueryResult,
 } from '@tanstack/react-query';
 import { AddItem, Item } from '../app.types';
-import { settings } from '../settings';
+import { imsApi } from './api';
 
 const addItem = async (item: AddItem): Promise<Item> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-
-  return axios
-    .post<Item>(`${apiUrl}/v1/items/`, item)
+  return imsApi
+    .post<Item>(`/v1/items/`, item)
     .then((response) => response.data);
 };
 
@@ -36,19 +29,13 @@ const fetchItems = async (
   system_id?: string,
   catalogue_item_id?: string
 ): Promise<Item[]> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
   const queryParams = new URLSearchParams();
 
   system_id && queryParams.append('system_id', system_id);
   catalogue_item_id &&
     queryParams.append('catalogue_item_id', catalogue_item_id);
-  return axios
-    .get(`${apiUrl}/v1/items/`, {
+  return imsApi
+    .get(`/v1/items/`, {
       params: queryParams,
     })
     .then((response) => {
@@ -70,16 +57,10 @@ export const useItems = (
 };
 
 const fetchItem = async (id?: string): Promise<Item> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
   const queryParams = new URLSearchParams();
 
-  return axios
-    .get(`${apiUrl}/v1/items/${id}`, {
+  return imsApi
+    .get(`/v1/items/${id}`, {
       params: queryParams,
     })
     .then((response) => {
@@ -98,14 +79,8 @@ export const useItem = (id?: string): UseQueryResult<Item, AxiosError> => {
 };
 
 const deleteItem = async (item: Item): Promise<void> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-  return axios
-    .delete(`${apiUrl}/v1/items/${item.id}`, {})
+  return imsApi
+    .delete(`/v1/items/${item.id}`, {})
     .then((response) => response.data);
 };
 

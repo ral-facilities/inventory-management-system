@@ -1,6 +1,5 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import axios from 'axios';
 import React from 'react';
 import { CatalogueCategory, CatalogueCategoryFormData } from '../../app.types';
 import { renderComponentWithBrowserRouter } from '../../setupTests';
@@ -8,6 +7,7 @@ import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { imsApi } from '../../api/api';
 
 jest.mock('../../handleIMS_APIError');
 
@@ -116,7 +116,7 @@ describe('Catalogue Category Dialog', () => {
       };
       user = userEvent.setup();
 
-      axiosPostSpy = jest.spyOn(axios, 'post');
+      axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
@@ -355,7 +355,7 @@ describe('Catalogue Category Dialog', () => {
         resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
       };
       user = userEvent.setup();
-      axiosPatchSpy = jest.spyOn(axios, 'patch');
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
@@ -629,7 +629,7 @@ describe('Catalogue Category Dialog', () => {
         resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
       };
       user = userEvent.setup();
-      axiosPostSpy = jest.spyOn(axios, 'post');
+      axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
     it('renders correctly when saving as', async () => {

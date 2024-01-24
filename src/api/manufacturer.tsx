@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import {
   useMutation,
   UseMutationResult,
@@ -7,21 +7,12 @@ import {
   useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
-import { settings } from '../settings';
 
 import { AddManufacturer, Manufacturer, EditManufacturer } from '../app.types';
+import { imsApi } from './api';
 
 const getAllManufacturers = async (): Promise<Manufacturer[]> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-
-  return axios
-    .get(`${apiUrl}/v1/manufacturers`, {})
-    .then((response) => response.data);
+  return imsApi.get(`/v1/manufacturers`, {}).then((response) => response.data);
 };
 
 export const useManufacturers = (): UseQueryResult<
@@ -39,14 +30,8 @@ export const useManufacturers = (): UseQueryResult<
 const addManufacturer = async (
   manufacturer: AddManufacturer
 ): Promise<Manufacturer> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-  return axios
-    .post<Manufacturer>(`${apiUrl}/v1/manufacturers`, manufacturer)
+  return imsApi
+    .post<Manufacturer>(`/v1/manufacturers`, manufacturer)
     .then((response) => response.data);
 };
 
@@ -66,14 +51,8 @@ export const useAddManufacturer = (): UseMutationResult<
 };
 
 const deleteManufacturer = async (session: Manufacturer): Promise<void> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-  return axios
-    .delete(`${apiUrl}/v1/manufacturers/${session.id}`, {})
+  return imsApi
+    .delete(`/v1/manufacturers/${session.id}`, {})
     .then((response) => response.data);
 };
 
@@ -94,13 +73,7 @@ export const useDeleteManufacturer = (): UseMutationResult<
 const fetchManufacturer = async (
   id: string | undefined
 ): Promise<Manufacturer> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-  return axios.get(`${apiUrl}/v1/manufacturers/${id}`, {}).then((response) => {
+  return imsApi.get(`/v1/manufacturers/${id}`, {}).then((response) => {
     return response.data;
   });
 };
@@ -132,18 +105,9 @@ export const useManufacturerIds = (
 const editManufacturer = async (
   manufacturer: EditManufacturer
 ): Promise<Manufacturer> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
   const { id, ...updatedManufacturer } = manufacturer;
-  return axios
-    .patch<Manufacturer>(
-      `${apiUrl}/v1/manufacturers/${id}`,
-      updatedManufacturer
-    )
+  return imsApi
+    .patch<Manufacturer>(`/v1/manufacturers/${id}`, updatedManufacturer)
     .then((response) => response.data);
 };
 

@@ -20,7 +20,7 @@ import {
   useSystems,
   useSystemsBreadcrumbs,
 } from './systems';
-import axios from 'axios';
+import { imsApi } from './api';
 
 describe('System api functions', () => {
   afterEach(() => {
@@ -243,7 +243,7 @@ describe('System api functions', () => {
         targetSystem: null,
       };
 
-      axiosPatchSpy = jest.spyOn(axios, 'patch');
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
@@ -377,7 +377,7 @@ describe('System api functions', () => {
         existingSystemNames: [],
       };
 
-      axiosPostSpy = jest.spyOn(axios, 'post');
+      axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {

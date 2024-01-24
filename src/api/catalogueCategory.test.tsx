@@ -1,5 +1,4 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import axios from 'axios';
 import {
   AddCatalogueCategory,
   CatalogueCategory,
@@ -18,6 +17,7 @@ import {
   useEditCatalogueCategory,
   useMoveToCatalogueCategory,
 } from './catalogueCategory';
+import { imsApi } from './api';
 
 describe('catalogue category api functions', () => {
   afterEach(() => {
@@ -254,7 +254,7 @@ describe('catalogue category api functions', () => {
     let axiosPatchSpy;
 
     beforeEach(() => {
-      axiosPatchSpy = jest.spyOn(axios, 'patch');
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
 
       moveToCatalogueCategory = {
         selectedCategories: mockSelectedCatalogueCategories,
@@ -419,7 +419,7 @@ describe('catalogue category api functions', () => {
         existingCategoryNames: [],
       };
 
-      axiosPostSpy = jest.spyOn(axios, 'post');
+      axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {

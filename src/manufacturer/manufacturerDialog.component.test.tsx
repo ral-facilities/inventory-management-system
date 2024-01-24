@@ -8,8 +8,8 @@ import {
   getManufacturerById,
   renderComponentWithBrowserRouter,
 } from '../setupTests';
-import axios from 'axios';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { imsApi } from '../api/api';
 
 jest.mock('../handleIMS_APIError');
 
@@ -86,7 +86,7 @@ describe('Add manufacturer dialog', () => {
 
   describe('Add manufacturer', () => {
     beforeEach(() => {
-      axiosPostSpy = jest.spyOn(axios, 'post');
+      axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
@@ -235,7 +235,7 @@ describe('Add manufacturer dialog', () => {
         type: 'edit',
       };
 
-      axiosPatchSpy = jest.spyOn(axios, 'patch');
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
     });
 
     it('Edits a manufacturer correctly', async () => {

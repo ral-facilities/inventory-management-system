@@ -8,7 +8,7 @@ import {
   SystemDirectoryDialog,
   SystemDirectoryDialogProps,
 } from './systemDirectoryDialog.component';
-import axios from 'axios';
+import { imsApi } from '../api/api';
 
 describe('SystemDirectoryDialog', () => {
   let props: SystemDirectoryDialogProps;
@@ -41,8 +41,8 @@ describe('SystemDirectoryDialog', () => {
     };
 
     user = userEvent.setup();
-    axiosPatchSpy = jest.spyOn(axios, 'patch');
-    axiosPostSpy = jest.spyOn(axios, 'post');
+    axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+    axiosPostSpy = jest.spyOn(imsApi, 'post');
   });
 
   afterEach(() => {
