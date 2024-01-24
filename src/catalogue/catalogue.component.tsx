@@ -11,11 +11,7 @@ import {
   IconButton,
   InputLabel,
   LinearProgress,
-  List,
-  ListItem,
-  MenuItem,
   Pagination,
-  Paper,
   Select,
   Typography,
 } from '@mui/material';
@@ -197,7 +193,7 @@ function Catalogue() {
 
   //Pagination
   const [page, setPage] = React.useState(1);
-  const [paginationResults, setPaginationResults] = React.useState<number>(5);
+  const [paginationResults, setPaginationResults] = React.useState<number>(30);
   const startIndex = (page - 1) * paginationResults;
   const endIndex = startIndex + paginationResults;
   const displayedCatalogueCategories = catalogueCategoryData?.slice(
@@ -398,9 +394,9 @@ function Catalogue() {
                       setPage(1);
                     }}
                   >
-                    <option>{5}</option>
-                    <option>{10}</option>
-                    <option>{20}</option>
+                    <option>{30}</option>
+                    <option>{45}</option>
+                    <option>{60}</option>
                   </Select>
                 </FormControl>
               </Grid>
