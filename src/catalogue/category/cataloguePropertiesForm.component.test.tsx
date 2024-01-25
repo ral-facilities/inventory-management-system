@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import CataloguePropertiesForm, {
   CataloguePropertiesFormProps,
 } from './cataloguePropertiesForm.component';
+import { CatalogueCategoryFormData } from '../../app.types';
 
 describe('Catalogue Properties Form', () => {
   let props: CataloguePropertiesFormProps;
@@ -46,9 +47,23 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('renders correctly', async () => {
-    const formFields = [
+    const formFields: CatalogueCategoryFormData[] = [
       { name: 'Field 1', type: 'text', unit: '', mandatory: false },
       { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
+      {
+        name: 'Field 3',
+        type: 'number',
+        unit: 'cm',
+        allowed_values: { type: 'list', values: ['1', '2'] },
+        mandatory: true,
+      },
+      {
+        name: 'Field 4',
+        type: 'string',
+        unit: '',
+        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        mandatory: true,
+      },
     ];
 
     props = {
@@ -291,5 +306,494 @@ describe('Catalogue Properties Form', () => {
       'Duplicate property name. Please change the name or remove the property'
     );
     expect(duplicatePropertyNameHelperText.length).toBe(2);
+  });
+
+  it('should delete a list item when the delete icon is click', async () => {
+    const formFields: CatalogueCategoryFormData[] = [
+      {
+        name: 'Field 3',
+        type: 'number',
+        unit: 'cm',
+        allowed_values: { type: 'list', values: ['1', '2'] },
+        mandatory: true,
+      },
+      {
+        name: 'Field 4',
+        type: 'string',
+        unit: '',
+        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        mandatory: true,
+      },
+    ];
+
+    props = {
+      ...props,
+      formFields: formFields,
+    };
+    createView();
+
+    // Click on the add button
+    await user.click(
+      screen.getAllByRole('button', { name: 'Delete list item 0' })[0]
+    );
+
+    await waitFor(() => {
+      expect(onChangeFormFields).toHaveBeenCalledWith([
+        {
+          allowed_values: { type: 'list', values: ['2'] },
+          mandatory: true,
+          name: 'Field 3',
+          type: 'number',
+          unit: 'cm',
+        },
+        {
+          allowed_values: { type: 'list', values: ['top', 'bottom'] },
+          mandatory: true,
+          name: 'Field 4',
+          type: 'string',
+          unit: '',
+        },
+      ]);
+    });
+  });
+
+  it('should add a list item when the add icon is click', async () => {
+    const formFields: CatalogueCategoryFormData[] = [
+      {
+        name: 'Field 3',
+        type: 'number',
+        unit: 'cm',
+        allowed_values: { type: 'list', values: ['1', '2'] },
+        mandatory: true,
+      },
+      {
+        name: 'Field 4',
+        type: 'string',
+        unit: '',
+        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        mandatory: true,
+      },
+    ];
+
+    props = {
+      ...props,
+      formFields: formFields,
+    };
+    createView();
+
+    // Click on the add button
+    await user.click(
+      screen.getAllByRole('button', { name: 'Add list item 0' })[0]
+    );
+
+    await waitFor(() => {
+      expect(onChangeFormFields).toHaveBeenCalledWith([
+        {
+          allowed_values: { type: 'list', values: ['1', '2', ''] },
+          mandatory: true,
+          name: 'Field 3',
+          type: 'number',
+          unit: 'cm',
+        },
+        {
+          allowed_values: { type: 'list', values: ['top', 'bottom'] },
+          mandatory: true,
+          name: 'Field 4',
+          type: 'string',
+          unit: '',
+        },
+      ]);
+    });
+  });
+
+  it('should edit a list item when the add icon is click', async () => {
+    const formFields: CatalogueCategoryFormData[] = [
+      {
+        name: 'Field 3',
+        type: 'number',
+        unit: 'cm',
+        allowed_values: { type: 'list', values: ['1', '2'] },
+        mandatory: true,
+      },
+      {
+        name: 'Field 4',
+        type: 'string',
+        unit: '',
+        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        mandatory: true,
+      },
+    ];
+
+    props = {
+      ...props,
+      formFields: formFields,
+    };
+    createView();
+
+    // Click on the add button
+    const listItem1 = screen.getAllByLabelText('List Item 1');
+
+    fireEvent.change(within(listItem1[0]).getByLabelText('List Item'), {
+      target: { value: '6' },
+    });
+    await waitFor(() => {
+      expect(onChangeFormFields).toHaveBeenCalledWith([
+        {
+          allowed_values: { type: 'list', values: ['1', '6'] },
+          mandatory: true,
+          name: 'Field 3',
+          type: 'number',
+          unit: 'cm',
+        },
+        {
+          allowed_values: { type: 'list', values: ['top', 'bottom'] },
+          mandatory: true,
+          name: 'Field 4',
+          type: 'string',
+          unit: '',
+        },
+      ]);
+    });
+  });
+
+  it('should set the allowed values to undefined if switched to any', async () => {
+    const formFields: CatalogueCategoryFormData[] = [
+      {
+        name: 'Field 3',
+        type: 'number',
+        unit: 'cm',
+        allowed_values: { type: 'list', values: ['1', '2'] },
+        mandatory: true,
+      },
+      {
+        name: 'Field 4',
+        type: 'string',
+        unit: '',
+        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        mandatory: true,
+      },
+    ];
+
+    props = {
+      ...props,
+      formFields: formFields,
+    };
+    createView();
+
+    const select = screen.getAllByLabelText('Select Allowed values *');
+    await user.click(select[0]);
+
+    const dropdown = screen.getByRole('listbox', {
+      name: 'Select Allowed values',
+    });
+
+    await user.click(within(dropdown).getByRole('option', { name: 'Any' }));
+    await waitFor(() => {
+      expect(onChangeFormFields).toHaveBeenCalledWith([
+        {
+          mandatory: true,
+          name: 'Field 3',
+          type: 'number',
+          unit: 'cm',
+        },
+        {
+          allowed_values: { type: 'list', values: ['top', 'bottom'] },
+          mandatory: true,
+          name: 'Field 4',
+          type: 'string',
+          unit: '',
+        },
+      ]);
+    });
+  });
+
+  it('should set the allowed values to empty if switched to list from any', async () => {
+    const formFields: CatalogueCategoryFormData[] = [
+      {
+        name: 'Field 3',
+        type: 'number',
+        unit: 'cm',
+        mandatory: true,
+      },
+      {
+        name: 'Field 4',
+        type: 'string',
+        unit: '',
+        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        mandatory: true,
+      },
+    ];
+
+    props = {
+      ...props,
+      formFields: formFields,
+    };
+    createView();
+
+    const select = screen.getAllByLabelText('Select Allowed values *');
+    await user.click(select[0]);
+
+    const dropdown = screen.getByRole('listbox', {
+      name: 'Select Allowed values',
+    });
+
+    await user.click(within(dropdown).getByRole('option', { name: 'List' }));
+    await waitFor(() => {
+      expect(onChangeFormFields).toHaveBeenCalledWith([
+        {
+          allowed_values: { type: 'list', values: [] },
+          mandatory: true,
+          name: 'Field 3',
+          type: 'number',
+          unit: 'cm',
+        },
+        {
+          allowed_values: { type: 'list', values: ['top', 'bottom'] },
+          mandatory: true,
+          name: 'Field 4',
+          type: 'string',
+          unit: '',
+        },
+      ]);
+    });
+  });
+
+  it('should error for duplicate values and incorrect type values and the error should be remove if catalogue item property is deleted', async () => {
+    const formFields: CatalogueCategoryFormData[] = [
+      {
+        name: 'Field 3',
+        type: 'number',
+        unit: 'cm',
+        mandatory: true,
+        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+      },
+      {
+        name: 'Field 4',
+        type: 'string',
+        unit: '',
+        allowed_values: { type: 'list', values: [12, 11, '13', '13'] },
+        mandatory: true,
+      },
+    ];
+
+    const listItemErrors = [
+      {
+        index: 0,
+        valueIndex: [
+          {
+            index: 0,
+            errorMessage: 'Please enter a valid number',
+          },
+          {
+            index: 1,
+            errorMessage: 'Please enter a valid number',
+          },
+        ],
+      },
+      {
+        index: 1,
+        valueIndex: [
+          {
+            index: 0,
+            errorMessage: 'Please enter valid text',
+          },
+          {
+            index: 1,
+            errorMessage: 'Please enter valid text',
+          },
+          {
+            index: 2,
+            errorMessage: 'Duplicate value',
+          },
+          {
+            index: 3,
+            errorMessage: 'Duplicate value',
+          },
+        ],
+      },
+    ];
+
+    props = {
+      ...props,
+      formFields: formFields,
+      listItemErrors: listItemErrors,
+    };
+    createView();
+
+    const invalidTextHelperText = screen.getAllByText(
+      'Please enter valid text'
+    );
+    const invalidNumberHelperText = screen.getAllByText(
+      'Please enter a valid number'
+    );
+    const invalidDuplicateHelperText = screen.getAllByText('Duplicate value');
+
+    expect(invalidDuplicateHelperText.length).toEqual(2);
+    expect(invalidNumberHelperText.length).toEqual(2);
+    expect(invalidTextHelperText.length).toEqual(2);
+
+    await user.click(
+      screen.getAllByRole('button', {
+        name: 'Delete catalogue category field entry',
+      })[0]
+    );
+
+    await waitFor(() => {
+      expect(onChangeFormFields).toHaveBeenCalledWith([
+        {
+          allowed_values: { type: 'list', values: [12, 11, '13', '13'] },
+          mandatory: true,
+          name: 'Field 4',
+          type: 'string',
+          unit: '',
+        },
+      ]);
+    });
+
+    expect(onChangeListItemErrors).toHaveBeenCalledWith([
+      {
+        index: 1,
+        valueIndex: [
+          { errorMessage: 'Please enter valid text', index: 0 },
+          { errorMessage: 'Please enter valid text', index: 1 },
+          { errorMessage: 'Duplicate value', index: 2 },
+          { errorMessage: 'Duplicate value', index: 3 },
+        ],
+      },
+    ]);
+  });
+
+  it('should error for incorrect type values and remove error if a values has been changed for the specfic list item', async () => {
+    const formFields: CatalogueCategoryFormData[] = [
+      {
+        name: 'Field 3',
+        type: 'number',
+        unit: 'cm',
+        mandatory: true,
+        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+      },
+    ];
+
+    const listItemErrors = [
+      {
+        index: 0,
+        valueIndex: [
+          {
+            index: 0,
+            errorMessage: 'Please enter a valid number',
+          },
+          {
+            index: 1,
+            errorMessage: 'Please enter a valid number',
+          },
+        ],
+      },
+    ];
+
+    props = {
+      ...props,
+      formFields: formFields,
+      listItemErrors: listItemErrors,
+    };
+    createView();
+
+    const invalidNumberHelperText = screen.getAllByText(
+      'Please enter a valid number'
+    );
+
+    expect(invalidNumberHelperText.length).toEqual(2);
+
+    // Click on the add button
+    const listItem1 = screen.getAllByLabelText('List Item 1');
+
+    fireEvent.change(within(listItem1[0]).getByLabelText('List Item'), {
+      target: { value: '6' },
+    });
+
+    await waitFor(() => {
+      expect(onChangeFormFields).toHaveBeenCalledWith([
+        {
+          allowed_values: { type: 'list', values: ['top', '6'] },
+          mandatory: true,
+          name: 'Field 3',
+          type: 'number',
+          unit: 'cm',
+        },
+      ]);
+    });
+
+    expect(onChangeListItemErrors).toHaveBeenCalledWith([
+      {
+        index: 0,
+        valueIndex: [{ errorMessage: 'Please enter a valid number', index: 0 }],
+      },
+    ]);
+  });
+
+  it('should error for incorrect type values and remove error if the value has been deleted', async () => {
+    const formFields: CatalogueCategoryFormData[] = [
+      {
+        name: 'Field 3',
+        type: 'number',
+        unit: 'cm',
+        mandatory: true,
+        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+      },
+    ];
+
+    const listItemErrors = [
+      {
+        index: 0,
+        valueIndex: [
+          {
+            index: 0,
+            errorMessage: 'Please enter a valid number',
+          },
+          {
+            index: 1,
+            errorMessage: 'Please enter a valid number',
+          },
+        ],
+      },
+    ];
+
+    props = {
+      ...props,
+      formFields: formFields,
+      listItemErrors: listItemErrors,
+    };
+    createView();
+
+    const invalidNumberHelperText = screen.getAllByText(
+      'Please enter a valid number'
+    );
+
+    expect(invalidNumberHelperText.length).toEqual(2);
+
+    // Click on the add button
+    const listItemDelete = screen.getAllByRole('button', {
+      name: `Delete list item 1`,
+    });
+
+    await user.click(listItemDelete[0]);
+
+    await waitFor(() => {
+      expect(onChangeFormFields).toHaveBeenCalledWith([
+        {
+          allowed_values: { type: 'list', values: ['top'] },
+          mandatory: true,
+          name: 'Field 3',
+          type: 'number',
+          unit: 'cm',
+        },
+      ]);
+    });
+
+    expect(onChangeListItemErrors).toHaveBeenCalledWith([
+      {
+        index: 0,
+        valueIndex: [{ errorMessage: 'Please enter a valid number', index: 0 }],
+      },
+    ]);
   });
 });

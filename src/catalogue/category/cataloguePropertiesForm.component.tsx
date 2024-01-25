@@ -93,7 +93,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangePropertyNameError([]);
     resetFormError();
   };
-  // console.log(allowedValues);
+
   const handleChange = (
     index: number,
     field: keyof CatalogueCategoryFormData,
@@ -119,11 +119,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
         updatedNameFields[index] = value as string;
       }
     }
-    const updatedListItemErrors = listItemErrors.filter(
-      (item) => item.index !== index
-    );
 
-    onChangeListItemErrors(updatedListItemErrors);
     onChangeFormFields(updatedFormFields);
     onChangeNameFields(updatedNameFields);
     onChangeTypeFields(updatedTypeFields);
@@ -194,6 +190,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           (item) => item.index !== valueIndex
         ),
       };
+
+      console.log(updatedListItemErrors);
       onChangeListItemErrors(updatedListItemErrors);
     }
   };
@@ -321,10 +319,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
                 ];
                 const currentField = updatedFormFields[index];
                 if (e.target.value !== 'list') {
-                  updatedFormFields[index] = {
-                    ...currentField,
-                    allowed_values: undefined,
-                  };
+                  delete updatedFormFields[index].allowed_values;
                 } else {
                   updatedFormFields[index] = {
                     ...currentField,
@@ -349,67 +344,67 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               </FormHelperText>
             )}
           </FormControl>
-          <div data-testid="test">
-            {field.allowed_values?.type === 'list' && (
-              <Stack
-                direction="column"
-                sx={{
-                  width: '200px',
-                  minWidth: '200px',
-                  alignItems: 'center',
-                }}
-              >
-                {field.allowed_values?.values.map((listValue, valueIndex) => (
-                  <Stack
-                    key={valueIndex}
-                    direction="row"
-                    sx={{ alignItems: 'center' }}
-                    spacing={1}
-                  >
-                    <TextField
-                      label={`List Item`}
-                      aria-label={`List Item ${valueIndex}`}
-                      variant="outlined"
-                      sx={{ pb: 1 }}
-                      value={listValue as string}
-                      onChange={(e) =>
-                        field.allowed_values &&
-                        handleChangeListValues(
-                          index,
-                          valueIndex,
-                          e.target.value as string
-                        )
-                      }
-                      error={
-                        !!listItemErrors[index]?.valueIndex?.find(
-                          (item) => item.index === valueIndex
-                        )
-                      }
-                      helperText={
-                        listItemErrors[index]?.valueIndex?.find(
-                          (item) => item.index === valueIndex
-                        )?.errorMessage || ''
-                      }
-                    />
 
-                    <IconButton
-                      aria-label={`Delete list item ${valueIndex}`}
-                      onClick={() => handleDeleteListValue(index, valueIndex)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Stack>
-                ))}
-
-                <IconButton
-                  aria-label={`Add list item ${index}`}
-                  onClick={() => handleAddListValue(index)}
+          {field.allowed_values?.type === 'list' && (
+            <Stack
+              direction="column"
+              sx={{
+                width: '200px',
+                minWidth: '200px',
+                alignItems: 'center',
+              }}
+            >
+              {field.allowed_values?.values.map((listValue, valueIndex) => (
+                <Stack
+                  key={valueIndex}
+                  direction="row"
+                  sx={{ alignItems: 'center' }}
+                  spacing={1}
                 >
-                  <AddIcon />
-                </IconButton>
-              </Stack>
-            )}
-          </div>
+                  <TextField
+                    label={`List Item`}
+                    aria-label={`List Item ${valueIndex}`}
+                    variant="outlined"
+                    sx={{ pb: 1 }}
+                    value={listValue as string}
+                    onChange={(e) =>
+                      field.allowed_values &&
+                      handleChangeListValues(
+                        index,
+                        valueIndex,
+                        e.target.value as string
+                      )
+                    }
+                    error={
+                      !!listItemErrors[index]?.valueIndex?.find(
+                        (item) => item.index === valueIndex
+                      )
+                    }
+                    helperText={
+                      listItemErrors[index]?.valueIndex?.find(
+                        (item) => item.index === valueIndex
+                      )?.errorMessage || ''
+                    }
+                  />
+
+                  <IconButton
+                    aria-label={`Delete list item ${valueIndex}`}
+                    onClick={() => handleDeleteListValue(index, valueIndex)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Stack>
+              ))}
+
+              <IconButton
+                aria-label={`Add list item ${index}`}
+                onClick={() => handleAddListValue(index)}
+              >
+                <AddIcon />
+              </IconButton>
+            </Stack>
+          )}
+
           <FormControl
             sx={{ minWidth: '150px' }}
             disabled={field.type === 'boolean'}
@@ -440,7 +435,10 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               <MenuItem value="no">No</MenuItem>
             </Select>
           </FormControl>
-          <IconButton onClick={() => handleDeleteField(index)}>
+          <IconButton
+            aria-label={'Delete catalogue category field entry'}
+            onClick={() => handleDeleteField(index)}
+          >
             <DeleteIcon />
           </IconButton>
         </Stack>
