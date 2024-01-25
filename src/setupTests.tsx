@@ -2,9 +2,12 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '@testing-library/jest-dom';
 import { RenderOptions, render } from '@testing-library/react';
+import { enGB } from 'date-fns/locale/en-GB';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import {
   CatalogueCategory,
@@ -15,12 +18,9 @@ import {
 } from './app.types';
 import CatalogueCategoryJSON from './mocks/CatalogueCategory.json';
 import CatalogueItemJSON from './mocks/CatalogueItems.json';
-import ManufacturerJSON from './mocks/manufacturer.json';
 import ItemsJSON from './mocks/Items.json';
+import ManufacturerJSON from './mocks/manufacturer.json';
 import { server } from './mocks/server';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import enGB from 'date-fns/locale/en-GB';
 
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
