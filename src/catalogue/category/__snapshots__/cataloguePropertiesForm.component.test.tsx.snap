@@ -113,6 +113,70 @@ exports[`Catalogue Properties Form renders correctly 1`] = `
         </div>
       </div>
       <div
+        class="MuiFormControl-root css-yc4jcs-MuiFormControl-root"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="true"
+          id="catalogue-properties-form-select-allowed-values-label-0"
+        >
+          Select Allowed values
+          <span
+            aria-hidden="true"
+            class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
+          >
+             *
+          </span>
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+          required=""
+        >
+          <div
+            aria-controls=":r2:"
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            aria-labelledby="catalogue-properties-form-select-allowed-values-label-0"
+            class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+            role="combobox"
+            tabindex="0"
+          >
+            Any
+          </div>
+          <input
+            aria-hidden="true"
+            aria-invalid="false"
+            class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+            required=""
+            tabindex="-1"
+            value="any"
+          />
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+            data-testid="ArrowDropDownIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M7 10l5 5 5-5z"
+            />
+          </svg>
+          <fieldset
+            aria-hidden="true"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="css-14lo706"
+            >
+              <span>
+                Select Allowed values *
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <div
         class="MuiFormControl-root css-1lf2uee-MuiFormControl-root"
       >
         <div
@@ -121,8 +185,8 @@ exports[`Catalogue Properties Form renders correctly 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="false"
-            for=":r2:"
-            id=":r2:-label"
+            for=":r3:"
+            id=":r3:-label"
           >
             Select Unit
           </label>
@@ -132,7 +196,7 @@ exports[`Catalogue Properties Form renders correctly 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-              id=":r2:"
+              id=":r3:"
               type="text"
               value=""
             />
@@ -165,7 +229,7 @@ exports[`Catalogue Properties Form renders correctly 1`] = `
           class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
         >
           <div
-            aria-controls=":r3:"
+            aria-controls=":r4:"
             aria-expanded="false"
             aria-haspopup="listbox"
             aria-labelledby="catalogue-properties-form-select-mandatory-label-0"
@@ -208,7 +272,7 @@ exports[`Catalogue Properties Form renders correctly 1`] = `
         </div>
       </div>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
         type="button"
       >
@@ -294,7 +358,7 @@ exports[`Catalogue Properties Form renders correctly 1`] = `
           required=""
         >
           <div
-            aria-controls=":r5:"
+            aria-controls=":r6:"
             aria-expanded="false"
             aria-haspopup="listbox"
             aria-labelledby="catalogue-properties-form-select-type-label-1"
@@ -338,6 +402,70 @@ exports[`Catalogue Properties Form renders correctly 1`] = `
         </div>
       </div>
       <div
+        class="MuiFormControl-root css-yc4jcs-MuiFormControl-root"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="true"
+          id="catalogue-properties-form-select-allowed-values-label-1"
+        >
+          Select Allowed values
+          <span
+            aria-hidden="true"
+            class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
+          >
+             *
+          </span>
+        </label>
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
+          required=""
+        >
+          <div
+            aria-controls=":r7:"
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            aria-labelledby="catalogue-properties-form-select-allowed-values-label-1"
+            class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+            role="combobox"
+            tabindex="0"
+          >
+            Any
+          </div>
+          <input
+            aria-hidden="true"
+            aria-invalid="false"
+            class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+            required=""
+            tabindex="-1"
+            value="any"
+          />
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+            data-testid="ArrowDropDownIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M7 10l5 5 5-5z"
+            />
+          </svg>
+          <fieldset
+            aria-hidden="true"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="css-14lo706"
+            >
+              <span>
+                Select Allowed values *
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <div
         class="MuiFormControl-root css-1lf2uee-MuiFormControl-root"
       >
         <div
@@ -346,8 +474,8 @@ exports[`Catalogue Properties Form renders correctly 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for=":r6:"
-            id=":r6:-label"
+            for=":r8:"
+            id=":r8:-label"
           >
             Select Unit
           </label>
@@ -357,7 +485,7 @@ exports[`Catalogue Properties Form renders correctly 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-              id=":r6:"
+              id=":r8:"
               type="text"
               value="cm"
             />
@@ -390,7 +518,7 @@ exports[`Catalogue Properties Form renders correctly 1`] = `
           class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
         >
           <div
-            aria-controls=":r7:"
+            aria-controls=":r9:"
             aria-expanded="false"
             aria-haspopup="listbox"
             aria-labelledby="catalogue-properties-form-select-mandatory-label-1"
@@ -433,7 +561,7 @@ exports[`Catalogue Properties Form renders correctly 1`] = `
         </div>
       </div>
       <button
-        class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
         type="button"
       >
@@ -455,7 +583,7 @@ exports[`Catalogue Properties Form renders correctly 1`] = `
     </div>
     <button
       aria-label="Add catalogue category field entry"
-      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-qrfbyn-MuiButtonBase-root-MuiButton-root"
+      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1dlhym7-MuiButtonBase-root-MuiIconButton-root"
       tabindex="0"
       type="button"
     >

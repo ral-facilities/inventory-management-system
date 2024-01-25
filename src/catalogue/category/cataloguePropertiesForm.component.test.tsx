@@ -13,6 +13,7 @@ describe('Catalogue Properties Form', () => {
   const onChangeNameFields = jest.fn();
   const onChangeTypeFields = jest.fn();
   const onChangeErrorFields = jest.fn();
+  const onChangeListItemErrors = jest.fn();
   const onChangePropertyNameError = jest.fn();
   const resetFormError = jest.fn();
   const createView = () => {
@@ -33,6 +34,8 @@ describe('Catalogue Properties Form', () => {
       onChangeErrorFields: onChangeErrorFields,
       propertyNameError: [],
       onChangePropertyNameError: onChangePropertyNameError,
+      onChangeListItemErrors: onChangeListItemErrors,
+      listItemErrors: [],
       resetFormError: resetFormError,
     };
     user = userEvent.setup();
