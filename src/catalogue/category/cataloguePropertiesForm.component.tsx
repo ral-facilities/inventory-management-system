@@ -71,9 +71,6 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     resetFormError();
   };
 
-  const [allowedValues, setAllowedValues] = React.useState<
-    (string | undefined)[]
-  >(formFields.map(() => undefined));
   const handleDeleteField = (index: number) => {
     const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
     updatedFormFields.splice(index, 1);
@@ -96,7 +93,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangePropertyNameError([]);
     resetFormError();
   };
-
+  // console.log(allowedValues);
   const handleChange = (
     index: number,
     field: keyof CatalogueCategoryFormData,
@@ -114,12 +111,6 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       if (value === 'boolean') {
         delete updatedFormFields[index].unit;
         delete updatedFormFields[index].allowed_values;
-
-        setAllowedValues((prev) => {
-          const updatedAllowedValues = [...prev];
-          updatedAllowedValues[index] = undefined;
-          return updatedAllowedValues;
-        });
       }
       updatedTypeFields[index] = value;
     } else {
@@ -323,28 +314,25 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               Select Allowed values
             </InputLabel>
             <Select
-              value={allowedValues[index] ?? 'any'}
+              value={field.allowed_values?.type ?? 'any'}
               onChange={(e) => {
+                const updatedFormFields: CatalogueCategoryFormData[] = [
+                  ...formFields,
+                ];
+                const currentField = updatedFormFields[index];
                 if (e.target.value !== 'list') {
-                  const updatedFormFields: CatalogueCategoryFormData[] = [
-                    ...formFields,
-                  ];
-                  const currentField = updatedFormFields[index];
-
                   updatedFormFields[index] = {
                     ...currentField,
                     allowed_values: undefined,
                   };
-
-                  onChangeFormFields(updatedFormFields);
+                } else {
+                  updatedFormFields[index] = {
+                    ...currentField,
+                    allowed_values: { type: 'list', values: [] },
+                  };
                 }
 
-                setAllowedValues((prev) => {
-                  const updatedAllowedValues = [...prev];
-                  updatedAllowedValues[index] =
-                    e.target.value === 'list' ? 'list' : undefined;
-                  return updatedAllowedValues;
-                });
+                onChangeFormFields(updatedFormFields);
               }}
               error={errorFields.includes(index) && !typeFields[index].trim()}
               label="Select Allowed values"
@@ -361,61 +349,67 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               </FormHelperText>
             )}
           </FormControl>
-
-          {allowedValues[index] === 'list' && (
-            <Stack
-              direction="column"
-              sx={{
-                width: '200px',
-                minWidth: '200px',
-                alignItems: 'center',
-              }}
-            >
-              {field.allowed_values?.values.map((listValue, valueIndex) => (
-                <Stack
-                  key={valueIndex}
-                  direction="row"
-                  sx={{ alignItems: 'center' }}
-                  spacing={1}
-                >
-                  <TextField
-                    label="List Item"
-                    variant="outlined"
-                    sx={{ pb: 1 }}
-                    value={listValue as string}
-                    onChange={(e) =>
-                      field.allowed_values &&
-                      handleChangeListValues(
-                        index,
-                        valueIndex,
-                        e.target.value as string
-                      )
-                    }
-                    error={
-                      !!listItemErrors[index]?.valueIndex?.find(
-                        (item) => item.index === valueIndex
-                      )
-                    }
-                    helperText={
-                      listItemErrors[index]?.valueIndex?.find(
-                        (item) => item.index === valueIndex
-                      )?.errorMessage || ''
-                    }
-                  />
-
-                  <IconButton
-                    onClick={() => handleDeleteListValue(index, valueIndex)}
+          <div data-testid="test">
+            {field.allowed_values?.type === 'list' && (
+              <Stack
+                direction="column"
+                sx={{
+                  width: '200px',
+                  minWidth: '200px',
+                  alignItems: 'center',
+                }}
+              >
+                {field.allowed_values?.values.map((listValue, valueIndex) => (
+                  <Stack
+                    key={valueIndex}
+                    direction="row"
+                    sx={{ alignItems: 'center' }}
+                    spacing={1}
                   >
-                    <DeleteIcon />
-                  </IconButton>
-                </Stack>
-              ))}
+                    <TextField
+                      label={`List Item`}
+                      aria-label={`List Item ${valueIndex}`}
+                      variant="outlined"
+                      sx={{ pb: 1 }}
+                      value={listValue as string}
+                      onChange={(e) =>
+                        field.allowed_values &&
+                        handleChangeListValues(
+                          index,
+                          valueIndex,
+                          e.target.value as string
+                        )
+                      }
+                      error={
+                        !!listItemErrors[index]?.valueIndex?.find(
+                          (item) => item.index === valueIndex
+                        )
+                      }
+                      helperText={
+                        listItemErrors[index]?.valueIndex?.find(
+                          (item) => item.index === valueIndex
+                        )?.errorMessage || ''
+                      }
+                    />
 
-              <IconButton onClick={() => handleAddListValue(index)}>
-                <AddIcon />
-              </IconButton>
-            </Stack>
-          )}
+                    <IconButton
+                      aria-label={`Delete list item ${valueIndex}`}
+                      onClick={() => handleDeleteListValue(index, valueIndex)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Stack>
+                ))}
+
+                <IconButton
+                  aria-label={`Add list item ${index}`}
+                  onClick={() => handleAddListValue(index)}
+                >
+                  <AddIcon />
+                </IconButton>
+              </Stack>
+            )}
+          </div>
           <FormControl
             sx={{ minWidth: '150px' }}
             disabled={field.type === 'boolean'}

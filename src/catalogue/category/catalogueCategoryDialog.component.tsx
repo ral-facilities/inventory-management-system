@@ -163,7 +163,7 @@ const CatalogueCategoryDialog = React.memo(
         if (property.allowed_values?.type === 'list') {
           const listOfValues = property.allowed_values.values;
           const trimmedLowerCaseValues = listOfValues.map((value) =>
-            value.trim().toLowerCase()
+            String(value).trim().toLowerCase()
           );
 
           const duplicateIndexes: number[] = [];
