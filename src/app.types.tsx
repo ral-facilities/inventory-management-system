@@ -68,11 +68,18 @@ export interface Manufacturer extends ManufacturerDetails {
   id: string;
 }
 
+export interface AllowedValuesList {
+  type: 'list';
+  values: any[];
+}
+export type AllowedValues = AllowedValuesList;
+
 export interface CatalogueCategoryFormData {
   name: string;
   type: string;
   unit?: string;
   mandatory: boolean;
+  allowed_values?: AllowedValues;
 }
 
 export interface ObsoleteDetails {
