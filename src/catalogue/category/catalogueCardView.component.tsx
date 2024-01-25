@@ -2,6 +2,7 @@ import {
   FormControl,
   Grid,
   InputLabel,
+  MenuItem,
   Pagination,
   Select,
 } from '@mui/material';
@@ -31,7 +32,7 @@ function CardView(props: CardViewProps) {
   } = props;
 
   const [page, setPage] = React.useState(1);
-  const [paginationResults, setPaginationResults] = React.useState<number>(5);
+  const [paginationResults, setPaginationResults] = React.useState<number>(30);
   const startIndex = (page - 1) * paginationResults;
   const endIndex = startIndex + paginationResults;
   const displayedCatalogueCategories = catalogueCategoryData?.slice(
@@ -40,16 +41,8 @@ function CardView(props: CardViewProps) {
   );
 
   return (
-    <Grid container>
-      <Grid
-        container
-        item
-        xs={11}
-        maxWidth={'808px'}
-        maxHeight={'675px'}
-        overflow={'auto'}
-        padding={2}
-      >
+    <Grid container flexDirection={'column'}>
+      <Grid container item xs={12} maxHeight={'675px'} overflow={'auto'}>
         {displayedCatalogueCategories?.map((item, index) => (
           <Grid
             item
@@ -77,7 +70,7 @@ function CardView(props: CardViewProps) {
         container
         item
         alignItems="center"
-        justifyContent="space-around"
+        justifyContent="center"
         xs={12}
         padding={2}
         position={'fixed'}
@@ -108,7 +101,6 @@ function CardView(props: CardViewProps) {
           <FormControl variant="standard" sx={{ margin: 1, minWidth: '120px' }}>
             <InputLabel>{'Max Results'}</InputLabel>
             <Select
-              native
               value={paginationResults}
               inputProps={{
                 name: 'Max Results',
@@ -118,10 +110,11 @@ function CardView(props: CardViewProps) {
                 setPaginationResults(+event.target.value);
                 setPage(1);
               }}
+              label={'Max Results'}
             >
-              <option>{5}</option>
-              <option>{10}</option>
-              <option>{20}</option>
+              <MenuItem value={'30'}>30</MenuItem>
+              <MenuItem value={'45'}>45</MenuItem>
+              <MenuItem value={'60'}>60</MenuItem>
             </Select>
           </FormControl>
         </Grid>
