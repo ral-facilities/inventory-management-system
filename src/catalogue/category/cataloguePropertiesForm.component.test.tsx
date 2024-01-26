@@ -11,8 +11,6 @@ describe('Catalogue Properties Form', () => {
   let props: CataloguePropertiesFormProps;
   let user;
   const onChangeFormFields = jest.fn();
-  // const onChangeNameFields = jest.fn();
-  // const onChangeTypeFields = jest.fn();
   const onChangeErrorFields = jest.fn();
   const onChangeListItemErrors = jest.fn();
   const onChangePropertyNameError = jest.fn();
@@ -27,10 +25,6 @@ describe('Catalogue Properties Form', () => {
     props = {
       formFields: [],
       onChangeFormFields: onChangeFormFields,
-      // nameFields: [],
-      // onChangeNameFields: onChangeNameFields,
-      // typeFields: [],
-      // onChangeTypeFields: onChangeTypeFields,
       errorFields: [],
       onChangeErrorFields: onChangeErrorFields,
       propertyNameError: [],
@@ -62,6 +56,13 @@ describe('Catalogue Properties Form', () => {
         type: 'string',
         unit: '',
         allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        mandatory: true,
+      },
+      {
+        name: 'Field 5',
+        type: 'string',
+        unit: '',
+        allowed_values: { type: 'list', values: [] },
         mandatory: true,
       },
     ];
@@ -779,6 +780,120 @@ describe('Catalogue Properties Form', () => {
       {
         index: 0,
         valueIndex: [{ errorMessage: 'Please enter a valid number', index: 0 }],
+      },
+    ]);
+  });
+
+  it('should error for duplicate values and incorrect type values and the error should be if the type has changed', async () => {
+    const formFields: CatalogueCategoryFormData[] = [
+      {
+        name: 'Field 3',
+        type: 'number',
+        unit: 'cm',
+        mandatory: true,
+        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+      },
+      {
+        name: 'Field 4',
+        type: 'string',
+        unit: '',
+        allowed_values: { type: 'list', values: [12, 11, '13', '13'] },
+        mandatory: true,
+      },
+    ];
+
+    const listItemErrors = [
+      {
+        index: 0,
+        valueIndex: [
+          {
+            index: 0,
+            errorMessage: 'Please enter a valid number',
+          },
+          {
+            index: 1,
+            errorMessage: 'Please enter a valid number',
+          },
+        ],
+      },
+      {
+        index: 1,
+        valueIndex: [
+          {
+            index: 0,
+            errorMessage: 'Please enter valid text',
+          },
+          {
+            index: 1,
+            errorMessage: 'Please enter valid text',
+          },
+          {
+            index: 2,
+            errorMessage: 'Duplicate value',
+          },
+          {
+            index: 3,
+            errorMessage: 'Duplicate value',
+          },
+        ],
+      },
+    ];
+
+    props = {
+      ...props,
+      formFields: formFields,
+      listItemErrors: listItemErrors,
+    };
+    createView();
+
+    const invalidTextHelperText = screen.getAllByText(
+      'Please enter valid text'
+    );
+    const invalidNumberHelperText = screen.getAllByText(
+      'Please enter a valid number'
+    );
+    const invalidDuplicateHelperText = screen.getAllByText('Duplicate value');
+
+    expect(invalidDuplicateHelperText.length).toEqual(2);
+    expect(invalidNumberHelperText.length).toEqual(2);
+    expect(invalidTextHelperText.length).toEqual(2);
+
+    // Modify the type field
+    const select = screen.getAllByLabelText('Select Type *');
+    await user.click(select[0]);
+
+    const dropdown = screen.getByRole('listbox', {
+      name: 'Select Type',
+    });
+
+    await user.click(within(dropdown).getByRole('option', { name: 'Text' }));
+
+    expect(onChangeFormFields).toHaveBeenCalledWith([
+      {
+        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        mandatory: true,
+        name: 'Field 3',
+        type: 'string',
+        unit: 'cm',
+      },
+      {
+        allowed_values: { type: 'list', values: [12, 11, '13', '13'] },
+        mandatory: true,
+        name: 'Field 4',
+        type: 'string',
+        unit: '',
+      },
+    ]);
+
+    expect(onChangeListItemErrors).toHaveBeenCalledWith([
+      {
+        index: 1,
+        valueIndex: [
+          { errorMessage: 'Please enter valid text', index: 0 },
+          { errorMessage: 'Please enter valid text', index: 1 },
+          { errorMessage: 'Duplicate value', index: 2 },
+          { errorMessage: 'Duplicate value', index: 3 },
+        ],
       },
     ]);
   });
