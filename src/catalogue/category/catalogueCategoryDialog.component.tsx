@@ -220,8 +220,7 @@ const CatalogueCategoryDialog = React.memo(
               invalidNumberIndexes.push(valueIndex);
             } else if (
               property.type === 'string' &&
-              typeof value !== 'string' &&
-              !value
+              typeof value !== 'string'
             ) {
               invalidStringIndexes.push(valueIndex);
             }

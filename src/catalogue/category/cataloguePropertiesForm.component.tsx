@@ -120,6 +120,12 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       }
     }
 
+    const updatedListItemErrors = listItemErrors.filter(
+      (item) => item.index !== index
+    );
+
+    onChangeListItemErrors(updatedListItemErrors);
+
     onChangeFormFields(updatedFormFields);
     onChangeNameFields(updatedNameFields);
     onChangeTypeFields(updatedTypeFields);
