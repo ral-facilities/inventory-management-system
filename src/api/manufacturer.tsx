@@ -30,7 +30,6 @@ export const useManufacturers = (): UseQueryResult<
 > => {
   return useQuery({
     queryKey: ['Manufacturers'],
-
     queryFn: (params) => {
       return getAllManufacturers();
     },
@@ -60,7 +59,6 @@ export const useAddManufacturer = (): UseMutationResult<
   return useMutation({
     mutationFn: (manufacturer: AddManufacturer) =>
       addManufacturer(manufacturer),
-
     onError: (error) => {
       console.log('Got error ' + error.message);
     },
@@ -108,7 +106,6 @@ const fetchManufacturer = async (
   if (settingsResult) {
     apiUrl = settingsResult['apiUrl'];
   }
-
   return axios.get(`${apiUrl}/v1/manufacturers/${id}`, {}).then((response) => {
     return response.data;
   });
@@ -123,7 +120,6 @@ export const useManufacturer = (
     queryFn: (params) => {
       return fetchManufacturer(id);
     },
-
     enabled: id !== undefined,
   });
 };
@@ -166,7 +162,6 @@ export const useEditManufacturer = (): UseMutationResult<
   return useMutation({
     mutationFn: (manufacturer: EditManufacturer) =>
       editManufacturer(manufacturer),
-
     onError: (error) => {
       console.log('Got error ' + error.message);
     },

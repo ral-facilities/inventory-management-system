@@ -47,11 +47,9 @@ export const useCatalogueCategories = (
 ): UseQueryResult<CatalogueCategory[], AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueCategories', parent_id],
-
     queryFn: (params) => {
       return fetchCatalogueCategories(parent_id);
     },
-
     enabled: !isLeaf,
   });
 };
@@ -65,7 +63,6 @@ const fetchCatalogueBreadcrumbs = async (
   if (settingsResult) {
     apiUrl = settingsResult['apiUrl'];
   }
-
   return axios
     .get(`${apiUrl}/v1/catalogue-categories/${id}/breadcrumbs`, {})
     .then((response) => {
@@ -78,11 +75,9 @@ export const useCatalogueBreadcrumbs = (
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueBreadcrumbs', id],
-
     queryFn: (params) => {
       return fetchCatalogueBreadcrumbs(id);
     },
-
     enabled: id !== '',
   });
 };
@@ -96,7 +91,6 @@ const addCatalogueCategory = async (
   if (settingsResult) {
     apiUrl = settingsResult['apiUrl'];
   }
-
   return axios
     .post<CatalogueCategory>(
       `${apiUrl}/v1/catalogue-categories`,
@@ -341,7 +335,6 @@ export const useDeleteCatalogueCategory = (): UseMutationResult<
   return useMutation({
     mutationFn: (catalogueCategory: CatalogueCategory) =>
       deleteCatalogueCategory(catalogueCategory),
-
     onError: (error) => {
       console.log('Got error ' + error.message);
     },
@@ -373,11 +366,9 @@ export const useCatalogueCategory = (
 ): UseQueryResult<CatalogueCategory, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueCategory', id],
-
     queryFn: (params) => {
       return fetchCatalogueCategory(id);
     },
-
     enabled: id !== undefined,
   });
 };

@@ -57,7 +57,6 @@ export const useSystems = (
 ): UseQueryResult<System[], AxiosError> => {
   return useQuery({
     queryKey: ['Systems', parent_id],
-
     queryFn: () => {
       return fetchSystems(parent_id);
     },
@@ -83,11 +82,9 @@ export const useSystem = (
 ): UseQueryResult<System, AxiosError> => {
   return useQuery({
     queryKey: ['System', id],
-
     queryFn: () => {
       return fetchSystem(id ?? '');
     },
-
     enabled: id !== null,
   });
 };
@@ -114,11 +111,9 @@ export const useSystemsBreadcrumbs = (
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
   return useQuery({
     queryKey: ['SystemBreadcrumbs', id],
-
     queryFn: () => {
       return fetchSystemsBreadcrumbs(id ?? '');
     },
-
     enabled: id !== null,
   });
 };

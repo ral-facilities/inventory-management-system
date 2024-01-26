@@ -23,7 +23,6 @@ const addItem = async (item: AddItem): Promise<Item> => {
   if (settingsResult) {
     apiUrl = settingsResult['apiUrl'];
   }
-
   return axios
     .post<Item>(`${apiUrl}/v1/items/`, item)
     .then((response) => response.data);
@@ -70,11 +69,9 @@ export const useItems = (
 ): UseQueryResult<Item[], AxiosError> => {
   return useQuery({
     queryKey: ['Items', system_id, catalogue_item_id],
-
     queryFn: (params) => {
       return fetchItems(system_id, catalogue_item_id);
     },
-
     enabled: system_id !== undefined || catalogue_item_id !== undefined,
   });
 };
@@ -100,11 +97,9 @@ const fetchItem = async (id?: string): Promise<Item> => {
 export const useItem = (id?: string): UseQueryResult<Item, AxiosError> => {
   return useQuery({
     queryKey: ['Item', id],
-
     queryFn: (params) => {
       return fetchItem(id);
     },
-
     enabled: !!id,
   });
 };
@@ -156,7 +151,6 @@ export const useEditItem = (): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (item: EditItem) => editItem(item),
-
     onSuccess: (itemResponse: Item) => {
       queryClient.invalidateQueries({
         queryKey: [

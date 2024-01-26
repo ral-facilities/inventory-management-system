@@ -26,7 +26,6 @@ const addCatalogueItem = async (
   if (settingsResult) {
     apiUrl = settingsResult['apiUrl'];
   }
-
   return axios
     .post<CatalogueItem>(`${apiUrl}/v1/catalogue-items/`, catalogueItem)
     .then((response) => response.data);
@@ -41,7 +40,6 @@ export const useAddCatalogueItem = (): UseMutationResult<
   return useMutation({
     mutationFn: (catalogueItem: AddCatalogueItem) =>
       addCatalogueItem(catalogueItem),
-
     onError: (error) => {
       console.log('Got error ' + error.message);
     },
@@ -79,7 +77,6 @@ export const useCatalogueItems = (
 ): UseQueryResult<CatalogueItem[], AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueItems', catalogueCategoryId],
-
     queryFn: (params) => {
       return fetchCatalogueItems(catalogueCategoryId);
     },
@@ -111,11 +108,9 @@ export const useCatalogueItem = (
 ): UseQueryResult<CatalogueItem, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueItem', catalogueCategoryId],
-
     queryFn: (params) => {
       return fetchCatalogueItem(catalogueCategoryId);
     },
-
     enabled: catalogueCategoryId !== undefined,
   });
 };
@@ -154,7 +149,6 @@ export const useDeleteCatalogueItem = (): UseMutationResult<
   return useMutation({
     mutationFn: (catalogueItem: CatalogueItem) =>
       deleteCatalogueItem(catalogueItem),
-
     onError: (error) => {
       console.log('Got error ' + error.message);
     },
@@ -189,7 +183,6 @@ export const useEditCatalogueItem = (): UseMutationResult<
   return useMutation({
     mutationFn: (catalogueItem: EditCatalogueItem) =>
       editCatalogueItem(catalogueItem),
-
     onError: (error) => {
       console.log('Got error ' + error.message);
     },
