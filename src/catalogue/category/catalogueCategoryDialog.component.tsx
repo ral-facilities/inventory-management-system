@@ -105,23 +105,6 @@ const CatalogueCategoryDialog = React.memo(
     const { mutateAsync: addCatalogueCategory } = useAddCatalogueCategory();
     const { mutateAsync: editCatalogueCategory } = useEditCatalogueCategory();
 
-    const [nameFields, setNameFields] = React.useState<string[]>([]);
-    const [typeFields, setTypeFields] = React.useState<string[]>([]);
-
-    React.useEffect(() => {
-      // When the catalogue category name changes, update the nameFields and typeFields.
-      if (categoryData.catalogue_item_properties) {
-        const newNames = categoryData.catalogue_item_properties.map(
-          (field) => field.name
-        );
-        const newTypes = categoryData.catalogue_item_properties.map(
-          (field) => field.type
-        );
-        setNameFields(newNames);
-        setTypeFields(newTypes);
-      }
-    }, [categoryData.catalogue_item_properties, categoryData.name]);
-
     const [errorFields, setErrorFields] = React.useState<number[]>([]);
 
     const { data: selectedCatalogueCategoryData } = useCatalogueCategory(
@@ -138,8 +121,6 @@ const CatalogueCategoryDialog = React.memo(
         catalogue_item_properties: undefined,
       });
       setErrorFields([]);
-      setNameFields([]);
-      setTypeFields([]);
       setDuplicatePropertyError([]);
       setListItemErrors([]);
       setFormError(undefined);
@@ -268,7 +249,10 @@ const CatalogueCategoryDialog = React.memo(
           i < categoryData.catalogue_item_properties.length;
           i++
         ) {
-          if (!nameFields[i].trim() || !typeFields[i].trim())
+          if (
+            !categoryData.catalogue_item_properties[i].name.trim() ||
+            !categoryData.catalogue_item_properties[i].type.trim()
+          )
             errorIndexes.push(i);
         }
       }
@@ -276,13 +260,11 @@ const CatalogueCategoryDialog = React.memo(
 
       setErrorFields(errorIndexes);
       return errorIndexes;
-    }, [categoryData.catalogue_item_properties, nameFields, typeFields]);
+    }, [categoryData.catalogue_item_properties]);
 
     const clearFormFields = React.useCallback(() => {
       setErrorFields([]);
-      setNameFields([...nameFields, '']);
-      setTypeFields([...typeFields, '']);
-    }, [nameFields, typeFields]);
+    }, []);
 
     const handleErrorStates = React.useCallback(() => {
       let hasErrors = false;
@@ -547,8 +529,6 @@ const CatalogueCategoryDialog = React.memo(
                     if (value === 'false') {
                       newData.catalogue_item_properties = undefined;
                       setErrorFields([]);
-                      setNameFields([]);
-                      setTypeFields([]);
                     }
                     handleFormChange(newData);
                   }}
@@ -583,10 +563,6 @@ const CatalogueCategoryDialog = React.memo(
                         catalogue_item_properties: formFields,
                       })
                     }
-                    nameFields={nameFields}
-                    onChangeNameFields={setNameFields}
-                    typeFields={typeFields}
-                    onChangeTypeFields={setTypeFields}
                     errorFields={errorFields}
                     propertyNameError={duplicatePropertyError}
                     onChangePropertyNameError={setDuplicatePropertyError}

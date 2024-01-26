@@ -11,8 +11,8 @@ describe('Catalogue Properties Form', () => {
   let props: CataloguePropertiesFormProps;
   let user;
   const onChangeFormFields = jest.fn();
-  const onChangeNameFields = jest.fn();
-  const onChangeTypeFields = jest.fn();
+  // const onChangeNameFields = jest.fn();
+  // const onChangeTypeFields = jest.fn();
   const onChangeErrorFields = jest.fn();
   const onChangeListItemErrors = jest.fn();
   const onChangePropertyNameError = jest.fn();
@@ -27,10 +27,10 @@ describe('Catalogue Properties Form', () => {
     props = {
       formFields: [],
       onChangeFormFields: onChangeFormFields,
-      nameFields: [],
-      onChangeNameFields: onChangeNameFields,
-      typeFields: [],
-      onChangeTypeFields: onChangeTypeFields,
+      // nameFields: [],
+      // onChangeNameFields: onChangeNameFields,
+      // typeFields: [],
+      // onChangeTypeFields: onChangeTypeFields,
       errorFields: [],
       onChangeErrorFields: onChangeErrorFields,
       propertyNameError: [],
@@ -87,12 +87,6 @@ describe('Catalogue Properties Form', () => {
         { mandatory: false, name: '', type: '', unit: '' },
       ]);
     });
-
-    expect(onChangeNameFields).toHaveBeenCalledTimes(1);
-    expect(onChangeNameFields).toHaveBeenCalledWith(['']);
-
-    expect(onChangeTypeFields).toHaveBeenCalledTimes(1);
-    expect(onChangeTypeFields).toHaveBeenCalledWith(['']);
   });
 
   it('should add a delete a field when clicking on the bin button', async () => {
@@ -240,14 +234,11 @@ describe('Catalogue Properties Form', () => {
       { name: 'raduis 1', type: '', unit: '', mandatory: false },
       { name: 'raduis 2', type: 'number', unit: '', mandatory: false },
     ];
-    const nameFields = ['', '', 'raduis 1', 'raduis 2'];
-    const typeFields = ['number', '', '', 'number'];
+
     const errorFields = [0, 1, 2];
     props = {
       ...props,
       formFields: formFields,
-      nameFields: nameFields,
-      typeFields: typeFields,
       errorFields: errorFields,
     };
     createView();
@@ -274,17 +265,12 @@ describe('Catalogue Properties Form', () => {
 
     await user.click(within(dropdown).getByRole('option', { name: 'Boolean' }));
 
-    expect(onChangeNameFields).toHaveBeenCalledWith([
-      'Updated Field',
-      '',
-      'raduis 1',
-      'raduis 2',
-    ]);
-    expect(onChangeTypeFields).toHaveBeenCalledWith([
-      'boolean',
-      '',
-      '',
-      'number',
+    expect(onChangeFormFields).toHaveBeenCalledTimes(2);
+    expect(onChangeFormFields).toHaveBeenCalledWith([
+      { mandatory: false, name: 'Updated Field', type: 'boolean' },
+      { mandatory: false, name: '', type: '', unit: '' },
+      { mandatory: false, name: 'raduis 1', type: '', unit: '' },
+      { mandatory: false, name: 'raduis 2', type: 'number', unit: '' },
     ]);
   });
 

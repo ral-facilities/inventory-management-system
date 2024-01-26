@@ -16,10 +16,6 @@ import { AllowedValuesList, CatalogueCategoryFormData } from '../../app.types';
 export interface CataloguePropertiesFormProps {
   formFields: CatalogueCategoryFormData[];
   onChangeFormFields: (formFields: CatalogueCategoryFormData[]) => void;
-  nameFields: string[];
-  onChangeNameFields: (nameFields: string[]) => void;
-  typeFields: string[];
-  onChangeTypeFields: (typeFields: string[]) => void;
   errorFields: number[];
   onChangeErrorFields: (errorFields: number[]) => void;
   propertyNameError: string[];
@@ -41,10 +37,6 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   const {
     formFields,
     onChangeFormFields,
-    nameFields,
-    onChangeNameFields,
-    typeFields,
-    onChangeTypeFields,
     errorFields,
     onChangeErrorFields,
     propertyNameError,
@@ -66,20 +58,12 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
         allowed_values: undefined,
       },
     ]);
-    onChangeNameFields([...nameFields, '']);
-    onChangeTypeFields([...typeFields, '']);
     resetFormError();
   };
 
   const handleDeleteField = (index: number) => {
     const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
     updatedFormFields.splice(index, 1);
-
-    const updatedNameFields: string[] = [...nameFields];
-    updatedNameFields.splice(index, 1);
-
-    const updatedTypeFields: string[] = [...typeFields];
-    updatedTypeFields.splice(index, 1);
 
     const updatedListItemErrors = listItemErrors.filter(
       (item) => item.index !== index
@@ -88,8 +72,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangeListItemErrors(updatedListItemErrors);
 
     onChangeFormFields(updatedFormFields);
-    onChangeNameFields(updatedNameFields);
-    onChangeTypeFields(updatedTypeFields);
+
     onChangePropertyNameError([]);
     resetFormError();
   };
@@ -100,8 +83,6 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     value: string | boolean | null
   ) => {
     const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
-    const updatedNameFields: string[] = [...nameFields];
-    const updatedTypeFields: string[] = [...typeFields];
 
     if (
       field === 'type' &&
@@ -112,11 +93,11 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
         delete updatedFormFields[index].unit;
         delete updatedFormFields[index].allowed_values;
       }
-      updatedTypeFields[index] = value;
+      updatedFormFields[index].type = value;
     } else {
       (updatedFormFields[index][field] as boolean | string | null) = value;
       if (field === 'name') {
-        updatedNameFields[index] = value as string;
+        updatedFormFields[index].name = value as string;
       }
     }
 
@@ -127,8 +108,6 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     onChangeListItemErrors(updatedListItemErrors);
 
     onChangeFormFields(updatedFormFields);
-    onChangeNameFields(updatedNameFields);
-    onChangeTypeFields(updatedTypeFields);
     onChangeErrorFields([]);
     onChangePropertyNameError([]);
 
@@ -257,14 +236,14 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             value={field.name}
             onChange={(e) => handleChange(index, 'name', e.target.value)}
             error={
-              (errorFields.includes(index) && !nameFields[index].trim()) ||
+              (errorFields.includes(index) && !formFields[index].name.trim()) ||
               (propertyNameError.length !== 0 &&
                 propertyNameError.find((name) => {
                   return name === field.name.toLowerCase().trim();
                 }) === field.name.toLowerCase().trim())
             }
             helperText={
-              errorFields.includes(index) && !nameFields[index].trim()
+              errorFields.includes(index) && !formFields[index].name.trim()
                 ? 'Property Name is required'
                 : propertyNameError.length !== 0 &&
                     propertyNameError.find((name) => {
@@ -277,7 +256,9 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           />
           <FormControl sx={{ width: '150px', minWidth: '150px' }}>
             <InputLabel
-              error={errorFields.includes(index) && !typeFields[index].trim()}
+              error={
+                errorFields.includes(index) && !formFields[index].type.trim()
+              }
               required={true}
               id={`catalogue-properties-form-select-type-label-${index}`}
             >
@@ -292,7 +273,9 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
                   e.target.value === 'text' ? 'string' : e.target.value
                 );
               }}
-              error={errorFields.includes(index) && !typeFields[index].trim()}
+              error={
+                errorFields.includes(index) && !formFields[index].type.trim()
+              }
               label="Select Type"
               labelId={`catalogue-properties-form-select-type-label-${index}`}
               required={true}
@@ -301,7 +284,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               <MenuItem value="number">Number</MenuItem>
               <MenuItem value="text">Text</MenuItem>
             </Select>
-            {errorFields.includes(index) && !typeFields[index].trim() && (
+            {errorFields.includes(index) && !formFields[index].type.trim() && (
               <FormHelperText error>Select Type is required</FormHelperText>
             )}
           </FormControl>
@@ -311,7 +294,9 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             sx={{ width: '200px', minWidth: '200px' }}
           >
             <InputLabel
-              error={errorFields.includes(index) && !typeFields[index].trim()}
+              error={
+                errorFields.includes(index) && !formFields[index].type.trim()
+              }
               required={true}
               id={`catalogue-properties-form-select-allowed-values-label-${index}`}
             >
@@ -335,20 +320,13 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
 
                 onChangeFormFields(updatedFormFields);
               }}
-              error={errorFields.includes(index) && !typeFields[index].trim()}
               label="Select Allowed values"
               labelId={`catalogue-properties-form-select-allowed-values-label-${index}`}
               required={true}
             >
-              {' '}
               <MenuItem value="any">Any</MenuItem>
               <MenuItem value="list">List</MenuItem>
             </Select>
-            {errorFields.includes(index) && !typeFields[index].trim() && (
-              <FormHelperText error>
-                Select Data Type is required
-              </FormHelperText>
-            )}
           </FormControl>
 
           {field.allowed_values?.type === 'list' && (
