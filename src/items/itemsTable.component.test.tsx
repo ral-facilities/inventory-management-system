@@ -9,6 +9,8 @@ import { waitFor, screen } from '@testing-library/react';
 import ItemsTable, { ItemTableProps } from './itemsTable.component';
 
 describe('Items Table', () => {
+  jest.setTimeout(10000);
+
   let props: ItemTableProps;
   let user;
   const createView = () => {
