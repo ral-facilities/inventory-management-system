@@ -1,12 +1,18 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { useAddItem, useDeleteItem, useItem, useItems } from './item';
+import {
+  useAddItem,
+  useDeleteItem,
+  useEditItem,
+  useItem,
+  useItems,
+} from './item';
 import {
   getItemById,
   getItemsByCatalogueItemId,
   getItemsBySystemId,
   hooksWrapperWithProviders,
 } from '../setupTests';
-import { AddItem } from '../app.types';
+import { AddItem, EditItem } from '../app.types';
 
 describe('catalogue items api functions', () => {
   afterEach(() => {
@@ -139,6 +145,45 @@ describe('catalogue items api functions', () => {
         expect(result.current.isSuccess).toBeTruthy();
       });
       expect(result.current.data).toEqual('');
+    });
+  });
+
+  describe('useEditItem', () => {
+    let mockDataEdit: EditItem;
+    beforeEach(() => {
+      mockDataEdit = {
+        serial_number: 'test',
+        id: 'KvT2Ox7n',
+      };
+    });
+    it('posts a request to edit an item and returns successful response', async () => {
+      const { result } = renderHook(() => useEditItem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate(mockDataEdit);
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual({
+        asset_number: 'LyH8yp1FHf',
+        catalogue_item_id: '1',
+        delivered_date: '2023-03-17T00:00:00.000Z',
+        id: 'KvT2Ox7n',
+        is_defective: false,
+        notes: '6Y5XTJfBrNNx8oltI9HE',
+        properties: [
+          { name: 'Resolution', unit: 'megapixels', value: 0 },
+          { name: 'Sensor Type', unit: '', value: 'CMOS' },
+          { name: 'Broken', unit: '', value: true },
+          { name: 'Older than five years', unit: '', value: false },
+        ],
+        purchase_order_number: '6JYHEjwN',
+        serial_number: 'test',
+        system_id: null,
+        usage_status: 1,
+        warranty_end_date: '2023-04-04T23:00:00.000Z',
+      });
     });
   });
 });

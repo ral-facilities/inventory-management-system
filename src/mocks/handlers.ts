@@ -5,6 +5,7 @@ import {
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
+  EditItem,
   EditManufacturer,
   EditSystem,
   Manufacturer,
@@ -525,5 +526,23 @@ export const handlers = [
     if (id === 'Error 500') return res(ctx.status(500));
 
     return res(ctx.status(204));
+  }),
+  rest.patch('/v1/items/:id', async (req, res, ctx) => {
+    const body = (await req.json()) as EditItem;
+    const { id } = req.params;
+
+    const validItem = ItemsJSON.find((value) => value.id === id);
+
+    if (body.serial_number === 'Error 500')
+      return res(ctx.status(500), ctx.json(''));
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        ...validItem,
+        ...body,
+        id: id,
+      })
+    );
   }),
 ];
