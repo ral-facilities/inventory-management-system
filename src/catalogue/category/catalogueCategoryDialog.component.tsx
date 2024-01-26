@@ -193,24 +193,15 @@ const CatalogueCategoryDialog = React.memo(
 
         if (property.allowed_values?.type === 'list') {
           const invalidNumberIndexes: number[] = [];
-          const invalidStringIndexes: number[] = [];
 
           // Check each value in the list
           property.allowed_values.values.forEach((value, valueIndex) => {
             if (property.type === 'number' && (isNaN(value) || !value)) {
               invalidNumberIndexes.push(valueIndex);
-            } else if (
-              property.type === 'string' &&
-              typeof value !== 'string'
-            ) {
-              invalidStringIndexes.push(valueIndex);
             }
           });
 
-          if (
-            invalidNumberIndexes.length > 0 ||
-            invalidStringIndexes.length > 0
-          ) {
+          if (invalidNumberIndexes.length > 0) {
             // Update listItemErrors state with the error indexes
             setListItemErrors((prev) => [
               ...prev.slice(0, index), // Keep the previous items before the current index
@@ -221,10 +212,6 @@ const CatalogueCategoryDialog = React.memo(
                   ...invalidNumberIndexes.map((i) => ({
                     index: i,
                     errorMessage: 'Please enter a valid number',
-                  })),
-                  ...invalidStringIndexes.map((i) => ({
-                    index: i,
-                    errorMessage: 'Please enter valid text',
                   })),
                 ],
               },
