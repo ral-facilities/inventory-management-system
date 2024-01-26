@@ -118,7 +118,8 @@ describe('Catalogue Category Dialog', () => {
 
           if (field.allowed_values.type === 'list') {
             // Add list items if allowed_values is of type 'list'
-            field.allowed_values.values.forEach(async (value, index) => {
+            // eslint-disable-next-line no-loop-func
+            field.allowed_values.values.forEach(async () => {
               await user.click(
                 screen.getByRole('button', {
                   name: `Add list item ${i + numberOfCurrentFields}`,
