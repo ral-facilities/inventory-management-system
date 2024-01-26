@@ -531,6 +531,15 @@ export const handlers = [
     const body = (await req.json()) as EditItem;
     const { id } = req.params;
 
+    if (id === 'Error 409')
+      return res(
+        ctx.status(409),
+        ctx.json({
+          detail:
+            'The specified system ID does not exist',
+        })
+      );
+
     const validItem = ItemsJSON.find((value) => value.id === id);
 
     if (body.serial_number === 'Error 500')

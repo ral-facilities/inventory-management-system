@@ -5,6 +5,7 @@ import {
   useEditItem,
   useItem,
   useItems,
+  useMoveItemsToSystem,
 } from './item';
 import {
   getItemById,
@@ -12,7 +13,15 @@ import {
   getItemsBySystemId,
   hooksWrapperWithProviders,
 } from '../setupTests';
-import { AddItem, EditItem } from '../app.types';
+import {
+  AddItem,
+  EditItem,
+  Item,
+  MoveItemsToSystem,
+  System,
+} from '../app.types';
+import axios from 'axios';
+import SystemsJSON from '../mocks/Systems.json';
 
 describe('catalogue items api functions', () => {
   afterEach(() => {
@@ -184,6 +193,104 @@ describe('catalogue items api functions', () => {
         usage_status: 1,
         warranty_end_date: '2023-04-04T23:00:00.000Z',
       });
+    });
+  });
+
+  describe('useMoveItemsToSystem', () => {
+    const mockItems: Item[] = [
+      getItemById('KvT2Ox7n'),
+      getItemById('G463gOIA'),
+    ];
+
+    let moveItemsToSystem: MoveItemsToSystem;
+
+    // Use patch spy for testing since response is not actual data in this case
+    // so can't test the underlying use of editSystem otherwise
+    let axiosPatchSpy;
+
+    beforeEach(() => {
+      moveItemsToSystem = {
+        selectedItems: mockItems,
+        targetSystem: SystemsJSON[0] as System,
+      };
+
+      axiosPatchSpy = jest.spyOn(axios, 'patch');
+    });
+
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+
+    it('sends requests to move multiple items to a system and returns a successful response for each', async () => {
+      const { result } = renderHook(() => useMoveItemsToSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      result.current.mutate(moveItemsToSystem);
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      moveItemsToSystem.selectedItems.map((item) =>
+        expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
+          system_id: moveItemsToSystem.targetSystem.id,
+        })
+      );
+      expect(result.current.data).toEqual(
+        moveItemsToSystem.selectedItems.map((item) => ({
+          message: `Successfully moved to Giant laser`,
+          name: item.id,
+          state: 'success',
+        }))
+      );
+    });
+
+    it('handles a failed request to move items to a system correctly', async () => {
+      moveItemsToSystem.targetSystem = {
+        ...(SystemsJSON[0] as System),
+        name: 'New system name',
+        id: 'new_system_id',
+      };
+
+      // Fail just the 1st system
+      moveItemsToSystem.selectedItems[0].id = 'Error 409';
+
+      const { result } = renderHook(() => useMoveItemsToSystem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      result.current.mutate(moveItemsToSystem);
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      moveItemsToSystem.selectedItems.map((item) =>
+        expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
+          system_id: 'new_system_id',
+        })
+      );
+      expect(result.current.data).toEqual(
+        moveItemsToSystem.selectedItems
+          .map((item, index) =>
+            index === 0
+              ? {
+                  message: 'The specified system ID does not exist',
+                  name: item.id,
+                  state: 'error',
+                }
+              : {
+                  message: 'Successfully moved to New system name',
+                  name: item.id,
+                  state: 'success',
+                }
+          )
+          // Exception takes longer to resolve so it gets added last
+          .reverse()
+      );
     });
   });
 });
