@@ -1,8 +1,10 @@
 import ClearIcon from '@mui/icons-material/Clear';
+import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import { Box, Button, Link as MuiLink, Typography } from '@mui/material';
 import {
   MRT_ColumnDef,
   MRT_ColumnFiltersState,
+  MRT_RowSelectionState,
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
@@ -13,6 +15,37 @@ import { useCatalogueItemIds } from '../api/catalogueItem';
 import { useItems } from '../api/item';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 import ItemsDetailsPanel from '../items/ItemsDetailsPanel.component';
+import SystemItemsDialog from './systemItemsDialog.component';
+
+const MoveItemsButton = (props: {
+  selectedItems: Item[];
+  system: System;
+  onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
+}) => {
+  const [moveItemsDialogOpen, setMoveItemsDialogOpen] =
+    React.useState<boolean>(false);
+
+  return (
+    <>
+      <Button
+        startIcon={<DriveFileMoveOutlinedIcon />}
+        sx={{ mx: 0.5 }}
+        variant="outlined"
+        disabled={props.selectedItems.length === 0}
+        onClick={() => setMoveItemsDialogOpen(true)}
+      >
+        Move to
+      </Button>
+      <SystemItemsDialog
+        open={moveItemsDialogOpen}
+        onClose={() => setMoveItemsDialogOpen(false)}
+        selectedItems={props.selectedItems}
+        onChangeSelectedItems={props.onChangeSelectedItems}
+        parentSystemId={props.system.id}
+      />
+    </>
+  );
+};
 
 /* Each table row needs the item and catalogue item */
 interface TableRowData {
@@ -29,12 +62,20 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
+  const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
+    {}
+  );
 
   // Data
   const { data: itemsData, isLoading: isLoadingItems } = useItems(
     system.id,
     undefined
   );
+
+  // Obtain the selected system data, not just the selection state
+  const selectedRowIds = Object.keys(rowSelection);
+  const selectedItems =
+    itemsData?.filter((item) => selectedRowIds.includes(item.id)) ?? [];
 
   // Fetch catalogue items for each item to display in the table
   const catalogueItemIdSet = new Set<string>(
@@ -62,7 +103,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 (catalogueItem) =>
                   catalogueItem?.id === itemData.catalogue_item_id
               ),
-            } as TableRowData)
+            }) as TableRowData
         )
       );
     }
@@ -161,8 +202,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     enableHiding: true,
     enableTopToolbar: true,
     enableRowVirtualization: false,
-    enableFullScreenToggle: false,
+    enableFullScreenToggle: true,
     enableColumnVirtualization: false,
+    enableRowSelection: true,
     onColumnFiltersChange: setColumnFilters,
     manualFiltering: false,
     enablePagination: true,
@@ -175,10 +217,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       showGlobalFilter: true,
       pagination: { pageSize: 15, pageIndex: 0 },
     },
+    onRowSelectionChange: setRowSelection,
     getRowId: (row) => row.item.id,
-    muiTablePaperProps: {
-      sx: { maxWidth: '100%' },
-    },
+    muiTablePaperProps: ({ table }) => ({
+      // sx doesn't work here currently - see https://www.material-react-table.com/docs/guides/full-screen-toggle
+      style: {
+        maxWidth: '100%',
+        // SciGateway navigation drawer is 1200, modal is 1300
+        zIndex: table.getState().isFullScreen ? 1210 : undefined,
+      },
+    }),
     muiTableContainerProps: {
       sx: { height: '360.4px' },
     },
@@ -190,7 +238,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     },
     state: {
       showProgressBars: isLoading,
-      columnFilters,
+      columnFilters: columnFilters,
+      rowSelection: rowSelection,
     },
     muiPaginationProps: {
       color: 'secondary',
@@ -211,6 +260,11 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         >
           Clear Filters
         </Button>
+        <MoveItemsButton
+          selectedItems={selectedItems}
+          system={system}
+          onChangeSelectedItems={setRowSelection}
+        />
       </Box>
     ),
     renderDetailPanel: ({ row }) =>

@@ -1,4 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
@@ -7,7 +8,6 @@ import {
   SystemItemsTable,
   SystemItemsTableProps,
 } from './systemItemsTable.component';
-import userEvent from '@testing-library/user-event';
 
 describe('SystemItemsTable', () => {
   jest.setTimeout(10000);
@@ -117,5 +117,80 @@ describe('SystemItemsTable', () => {
       },
       { timeout: 4000 }
     );
+  });
+
+  it('can select and deselect items', async () => {
+    createView();
+
+    // Name (obtained from catalouge category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    expect(screen.getByRole('button', { name: 'Move to' })).toBeDisabled();
+
+    const checkboxes = screen.getAllByRole('checkbox', {
+      name: 'Toggle select row',
+    });
+
+    await user.click(checkboxes[0]);
+    await user.click(checkboxes[1]);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Move to' })).toBeEnabled();
+    });
+
+    await user.click(checkboxes[0]);
+    await user.click(checkboxes[1]);
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Move to' })).toBeDisabled();
+    });
+  });
+
+  it('can open and close the move items dialog', async () => {
+    createView();
+
+    // Name (obtained from catalouge category item)
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole('cell', {
+            name: `Turbomolecular Pumps 42`,
+          })
+        ).toBeInTheDocument();
+      },
+      { timeout: 4000 }
+    );
+
+    expect(screen.getByRole('button', { name: 'Move to' })).toBeDisabled();
+
+    const checkboxes = screen.getAllByRole('checkbox', {
+      name: 'Toggle select row',
+    });
+
+    await user.click(checkboxes[0]);
+
+    const moveToButton = screen.getByRole('button', { name: 'Move to' });
+    await waitFor(() => {
+      expect(moveToButton).toBeEnabled();
+    });
+
+    await user.click(moveToButton);
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
   });
 });
