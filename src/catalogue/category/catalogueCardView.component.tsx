@@ -70,34 +70,14 @@ function CardView(props: CardViewProps) {
         container
         item
         alignItems="center"
-        justifyContent="center"
+        justifyContent="right"
         xs={12}
         padding={2}
         position={'fixed'}
         bottom={12}
+        right={0}
       >
         <Grid item>
-          <Pagination
-            count={Math.ceil(catalogueCategoryData?.length / paginationResults)}
-            page={page}
-            onChange={(event, value) => {
-              setPage(value);
-            }}
-            size="large"
-            color="secondary"
-            sx={{ textAlign: 'center' }}
-            showFirstButton
-            hidePrevButton={page === 1}
-            hideNextButton={
-              page >=
-              Math.ceil(catalogueCategoryData?.length / paginationResults)
-            }
-            showLastButton
-            aria-label="pagination"
-            className="catalogue-categories-pagination"
-          />
-        </Grid>
-        <Grid container item xs={12} md={1} justifyContent="flex-end">
           <FormControl variant="standard" sx={{ margin: 1, minWidth: '120px' }}>
             <InputLabel>{'Max Results'}</InputLabel>
             <Select
@@ -117,6 +97,30 @@ function CardView(props: CardViewProps) {
               <MenuItem value={'60'}>60</MenuItem>
             </Select>
           </FormControl>
+        </Grid>
+
+        <Grid item>
+          <Pagination
+            variant="outlined"
+            shape="rounded"
+            count={Math.ceil(catalogueCategoryData?.length / paginationResults)}
+            page={page}
+            onChange={(event, value) => {
+              setPage(value);
+            }}
+            size="large"
+            color="secondary"
+            sx={{ textAlign: 'center' }}
+            showFirstButton
+            hidePrevButton={page === 1}
+            hideNextButton={
+              page >=
+              Math.ceil(catalogueCategoryData?.length / paginationResults)
+            }
+            showLastButton
+            aria-label="pagination"
+            className="catalogue-categories-pagination"
+          />
         </Grid>
       </Grid>
     </Grid>
