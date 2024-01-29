@@ -54,6 +54,9 @@ describe('Catalogue Category', () => {
 
     cy.findByRole('button', { name: 'Save' }).click();
 
+    // Doesn't seem to wait for save to click on CI, so allowing an extra pause here
+    cy.findByRole('dialog').should('not.exist');
+
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-categories',
