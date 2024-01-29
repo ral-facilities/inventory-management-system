@@ -6,13 +6,9 @@ import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
 import {
   Box,
   Button,
-  FormControl,
   Grid,
   IconButton,
-  InputLabel,
   LinearProgress,
-  Pagination,
-  Select,
   Typography,
 } from '@mui/material';
 import React from 'react';
@@ -28,7 +24,6 @@ import {
   CatalogueItemProperty,
 } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import CatalogueCard from './category/catalogueCard.component';
 import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
 import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirectoryDialog.component';
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
@@ -202,16 +197,6 @@ function Catalogue() {
   const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
     string | null
   >(null);
-
-  //Pagination
-  const [page, setPage] = React.useState(1);
-  const [paginationResults, setPaginationResults] = React.useState<number>(30);
-  const startIndex = (page - 1) * paginationResults;
-  const endIndex = startIndex + paginationResults;
-  const displayedCatalogueCategories = catalogueCategoryData?.slice(
-    startIndex,
-    endIndex
-  );
 
   return (
     <Grid container>

@@ -1,12 +1,9 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
 import {
   renderComponentWithBrowserRouter,
-  renderComponentWithMemoryRouter,
 } from '../../setupTests';
-import Catalogue from '../catalogue.component';
 import CardView, { CardViewProps } from './catalogueCardView.component';
 import { CatalogueCategory } from '../../app.types';
 
@@ -15,6 +12,7 @@ describe('CardView', () => {
   let props: CardViewProps;
   const onChangeOpenDeleteCategoryDialog = jest.fn();
   const onChangeOpenEditCategoryDialog = jest.fn();
+  const onChangeOpenSaveAsDialog = jest.fn();
   const handleToggleSelect = jest.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(<CardView {...props} />);
@@ -39,6 +37,7 @@ describe('CardView', () => {
       catalogueCategoryData: [],
       onChangeOpenDeleteCategoryDialog: onChangeOpenDeleteCategoryDialog,
       onChangeOpenEditCategoryDialog: onChangeOpenEditCategoryDialog,
+      onChangeOpenSaveAsDialog: onChangeOpenSaveAsDialog,
       handleToggleSelect: handleToggleSelect,
       selectedCategories: [],
     };
