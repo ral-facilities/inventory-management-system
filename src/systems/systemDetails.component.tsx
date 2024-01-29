@@ -1,4 +1,3 @@
-import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
@@ -13,8 +12,8 @@ import {
 import { useState } from 'react';
 import { getSystemImportanceColour, useSystem } from '../api/systems';
 import { System } from '../app.types';
-import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDialog from './systemDialog.component';
+import { SystemItemsTable } from './systemItemsTable.component';
 
 interface SystemButtonProps {
   system: System;
@@ -39,28 +38,6 @@ const EditSystemButton = (props: SystemButtonProps) => {
         onClose={() => setEditSystemDialogOpen(false)}
         type="edit"
         selectedSystem={props.system}
-      />
-    </>
-  );
-};
-
-const DeleteSystemButton = (props: SystemButtonProps) => {
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
-
-  return (
-    <>
-      <Tooltip title="Delete System">
-        <IconButton
-          sx={{ padding: 0 }}
-          onClick={() => setDeleteDialogOpen(true)}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </Tooltip>
-      <DeleteSystemDialog
-        open={deleteDialogOpen}
-        onClose={() => setDeleteDialogOpen(false)}
-        system={props.system}
       />
     </>
   );
@@ -96,20 +73,16 @@ function SystemDetails(props: SystemDetailsProps) {
         }}
       >
         <Typography variant="h6" fontWeight="bold">
-          {systemLoading || system === undefined
-            ? 'No system selected'
+          {system === undefined
+            ? !systemLoading && props.id !== null
+              ? 'System not found'
+              : 'No system selected'
             : system.name}
         </Typography>
-        {system !== undefined && (
-          <>
-            <EditSystemButton system={system} />
-            <Box sx={{ px: 1 }} />
-            <DeleteSystemButton system={system} />
-          </>
-        )}
+        {system !== undefined && <EditSystemButton system={system} />}
       </Box>
       <Divider role="presentation" />
-      {systemLoading || system === undefined ? (
+      {system === undefined ? (
         <Box
           sx={{
             display: 'flex',
@@ -117,10 +90,23 @@ function SystemDetails(props: SystemDetailsProps) {
             margin: 1,
           }}
         >
-          <Typography variant="h3">Please select a system</Typography>
+          {!systemLoading && props.id !== null ? (
+            <Typography>
+              The system you searched for does not exist. Please navigate home
+              by pressing the home button at the top left of your screen.
+            </Typography>
+          ) : (
+            <Typography variant="h3">Please select a system</Typography>
+          )}
         </Box>
       ) : (
-        <Grid container direction="column" spacing={1.5} sx={{ margin: 0 }}>
+        <Grid
+          container
+          direction="column"
+          sx={{ padding: 1.5 }}
+          wrap="nowrap"
+          spacing={1}
+        >
           <Grid
             container
             item
@@ -128,21 +114,21 @@ function SystemDetails(props: SystemDetailsProps) {
             justifyContent="space-evenly"
             sx={{ margin: 0 }}
           >
-            <Grid item container direction="column" spacing={1.5} xs={6}>
+            <Grid item container direction="column" spacing={1} xs={6}>
               <Grid item>
                 <Typography variant="h6">Location</Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" color="text.secondary">
                   {system.location ?? 'None'}
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography variant="h6">Owner</Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" color="text.secondary">
                   {system.owner ?? 'None'}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item container direction="column" spacing={1.5} xs={6}>
+            <Grid item container direction="column" spacing={1} xs={6}>
               <Grid item sx={{ display: 'inline-flex', alignItems: 'center' }}>
                 <Typography variant="h6">Importance</Typography>
                 <Chip
@@ -163,9 +149,24 @@ function SystemDetails(props: SystemDetailsProps) {
           </Grid>
           <Grid item>
             <Typography variant="h6">Description</Typography>
-            <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              sx={{ whiteSpace: 'pre-line' }}
+            >
               {system.description ?? 'None'}
             </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="h6" sx={{ paddingTop: 2 }}>
+              Items
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Divider />
+          </Grid>
+          <Grid item>
+            <SystemItemsTable system={system} />
           </Grid>
         </Grid>
       )}

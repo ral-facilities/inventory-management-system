@@ -29,10 +29,24 @@ import {
   SystemImportanceType,
 } from '../app.types';
 
+export type SystemDialogType = 'add' | 'edit' | 'save as';
+
+const getEmptySystem = (): AddSystem => {
+  return {
+    // Here using null for optional values only, so that types for isUpdated parameters
+    // can match
+    name: '',
+    description: null,
+    location: null,
+    owner: null,
+    importance: SystemImportanceType.MEDIUM,
+  } as AddSystem;
+};
+
 export interface SystemDialogProps {
   open: boolean;
   onClose: () => void;
-  type: 'add' | 'edit';
+  type: SystemDialogType;
   // Only required for add
   parentId?: string | null;
   // Only required for prepopulating fields for an edit dialog
@@ -43,20 +57,17 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const { open, onClose, parentId, type, selectedSystem } = props;
 
   // User entered properties
-  const [systemData, setSystemData] = React.useState<AddSystem>({
-    // Here using null for optional values only, so that types for isUpdated parameters
-    // can match
-    name: '',
-    description: null,
-    location: null,
-    owner: null,
-    importance: SystemImportanceType.MEDIUM,
-  });
+  const [systemData, setSystemData] = React.useState<AddSystem>(
+    getEmptySystem()
+  );
 
   // Ensure system data is updated when the selected system changes
   useEffect(() => {
-    if (selectedSystem) setSystemData(selectedSystem as AddSystem);
-  }, [selectedSystem]);
+    if (open) {
+      if (type === 'add') setSystemData(getEmptySystem());
+      else if (selectedSystem) setSystemData(selectedSystem as AddSystem);
+    }
+  }, [selectedSystem, open, type]);
 
   // Error messages for the above properties (undefined means no error)
   const [nameError, setNameError] = React.useState<string | undefined>(
@@ -72,14 +83,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const [otherError, setOtherError] = React.useState<boolean>(false);
 
   const handleClose = React.useCallback(() => {
-    if (type === 'add')
-      setSystemData({
-        name: '',
-        description: null,
-        location: null,
-        owner: null,
-        importance: SystemImportanceType.MEDIUM,
-      });
+    if (type === 'add') setSystemData(getEmptySystem());
     // Reset for edit
     else setSystemData(selectedSystem as AddSystem);
 
@@ -104,7 +108,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     return true;
   }, [systemData.name]);
 
-  const handleAddSystem = React.useCallback(() => {
+  const handleAddSaveSystem = React.useCallback(() => {
     // Validate the entered fields
     if (validateFields()) {
       // Should be valid so add the system
@@ -116,7 +120,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         owner: systemData.owner || undefined,
         importance: systemData.importance,
       };
-      if (parentId !== null) system.parent_id = parentId;
+      if (parentId !== undefined) system.parent_id = parentId;
       addSystem(system)
         .then((response) => handleClose())
         .catch((error: AxiosError) => {
@@ -211,9 +215,9 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const systemText = parentId ? 'Subsystem' : 'System';
 
   return (
-    <Dialog open={open} maxWidth="md" fullWidth>
+    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogTitle>
-        {type === 'add' ? `Add ${systemText}` : `Edit ${systemText}`}
+        {type === 'edit' ? `Edit ${systemText}` : `Add ${systemText}`}
       </DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={2}>
@@ -317,7 +321,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={type === 'add' ? handleAddSystem : handleEditSystem}
+            onClick={type === 'edit' ? handleEditSystem : handleAddSaveSystem}
             disabled={
               formError !== undefined || otherError || nameError !== undefined
             }

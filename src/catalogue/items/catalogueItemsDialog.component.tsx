@@ -92,9 +92,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       manufacturer_id: null,
     });
 
-  const [propertyValues, setPropertyValues] = React.useState<
-    (string | number | boolean | null)[]
-  >([]);
+  const [propertyValues, setPropertyValues] = React.useState<(string | null)[]>(
+    []
+  );
 
   const [formError, setFormError] = React.useState(false);
   const [formErrorMessage, setFormErrorMessage] = React.useState<
@@ -180,42 +180,16 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const handlePropertyChange = (
     index: number,
     name: string,
-    newValue: string | boolean | null
+    value: string | null
   ) => {
-    setFormError(false);
-    setFormErrorMessage(undefined);
     const updatedPropertyValues = [...propertyValues];
-    updatedPropertyValues[index] = newValue;
-    setPropertyValues(updatedPropertyValues);
 
-    const updatedProperties: CatalogueItemProperty[] = [];
-    const propertyType =
-      parentCatalogueItemPropertiesInfo[index]?.type || 'string';
-
-    if (!updatedProperties[index]) {
-      // Initialize the property if it doesn't exist
-      updatedProperties[index] = { name: '', value: '' };
-    }
-
-    const updatedProperty = {
-      ...updatedProperties[index],
-      name: name,
-    };
-
-    if (propertyType === 'boolean') {
-      updatedProperty.value =
-        newValue === 'true' ? true : newValue === 'false' ? false : '';
-    } else if (propertyType === 'number') {
-      if (newValue !== null) {
-        const parsedValue = Number(newValue);
-        updatedProperty.value = isNaN(parsedValue) ? null : parsedValue;
-      }
+    if (value === null || (typeof value === 'string' && value.trim() === '')) {
+      updatedPropertyValues[index] = null;
     } else {
-      updatedProperty.value = newValue;
+      updatedPropertyValues[index] = value;
     }
-
-    updatedProperties[index] = updatedProperty;
-
+    setPropertyValues(updatedPropertyValues);
     // Clear the error state for the changed property
     const updatedPropertyErrors = [...propertyErrors];
     updatedPropertyErrors[index] = false;
@@ -363,7 +337,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         }
 
         if (
-          propertyValues[index] !== undefined &&
+          propertyValues[index] &&
           property.type === 'number' &&
           isNaN(Number(propertyValues[index]))
         ) {
@@ -371,18 +345,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           hasErrors = true;
         }
 
-        if (!propertyValues[index]) {
-          if (property.type === 'boolean') {
-            if (
-              propertyValues[index] === '' ||
-              propertyValues[index] === undefined
-            ) {
-              return null;
-            }
-          } else {
-            return null;
-          }
-        }
+        if (!propertyValues[index]) return null;
 
         let typedValue: string | number | boolean | null =
           propertyValues[index]; // Assume it's a string by default
@@ -390,15 +353,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         // Check if the type of the 'property' is boolean
         if (property.type === 'boolean') {
           // If the type is boolean, then check the type of 'propertyValues[index]'
-          typedValue =
-            typeof propertyValues[index] !== 'boolean'
-              ? // If 'propertyValues[index]' is not a boolean, convert it based on string values 'true' or 'false',
-                // otherwise, assign 'propertyValues[index]' directly to 'typedValue'
-                propertyValues[index] === 'true'
-                ? true
-                : false
-              : // If 'propertyValues[index]' is already a boolean, assign it directly to 'typedValue'
-                propertyValues[index];
+          typedValue = propertyValues[index] === 'true' ? true : false;
         } else if (property.type === 'number') {
           typedValue = Number(propertyValues[index]);
         }
@@ -566,7 +521,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             const response = error.response?.data as ErrorParsing;
             console.log(error);
             if (response && error.response?.status === 409) {
-              if (response.detail.includes('children elements')) {
+              if (response.detail.includes('child elements')) {
                 setFormError(true);
                 setFormErrorMessage(response.detail);
               }
@@ -838,6 +793,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               <ManufacturerDialog
                 open={addManufacturerDialogOpen}
                 onClose={() => setAddManufacturerDialogOpen(false)}
+                type="create"
               />
             </Grid>
           </Grid>

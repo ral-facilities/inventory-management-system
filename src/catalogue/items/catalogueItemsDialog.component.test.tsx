@@ -480,8 +480,6 @@ describe('Catalogue Items Dialog', () => {
         manufacturer: '{delete}',
       });
 
-      // const manufacturerPopup = screen.getAllByRole('combobox')[0];
-      // await user.type(manufacturerPopup, '{delete}');
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
@@ -641,7 +639,7 @@ describe('Catalogue Items Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Catalogue item has children elements and cannot be edited, please delete the children elements first'
+            'Catalogue item has child elements and cannot be edited'
           )
         ).toBeInTheDocument();
       });

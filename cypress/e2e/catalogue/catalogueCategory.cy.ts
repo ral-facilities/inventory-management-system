@@ -99,17 +99,67 @@ describe('Catalogue Category', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-categories',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"name":"test","is_leaf":false}'
+      );
+    });
+  });
+
+  it('opens actions menu and then closes', () => {
+    cy.findByRole('button', {
+      name: 'actions Motion catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
+      name: 'edit Motion catalogue category button',
+    }).should('be.visible');
+    cy.findByRole('menuitem', {
+      name: 'save as Motion catalogue category button',
+    }).should('be.visible');
+    cy.findByRole('menuitem', {
+      name: 'delete Motion catalogue category button',
+    })
+      .should('be.visible')
+      .click();
+
+    cy.findByText('Cancel').click();
+
+    cy.findByRole('button', {
+      name: 'actions Motion catalogue category button',
+    }).should('be.visible');
+  });
+
+  it('"save as" a catalogue category', () => {
+    cy.findByRole('button', {
+      name: 'actions Motion catalogue category button',
+    }).click();
+    cy.findByText('Save as').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-categories',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
+        '{"name":"Motion_copy_1","is_leaf":false}'
       );
     });
   });
 
   it('displays error message when user tries to delete a catalogue category that has children elements', () => {
     cy.findByRole('button', {
+      name: 'actions Motion catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'delete Motion catalogue category button',
     }).click();
 
@@ -127,6 +177,10 @@ describe('Catalogue Category', () => {
 
   it('delete a catalogue category', () => {
     cy.findByRole('button', {
+      name: 'actions Beam Characterization catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'delete Beam Characterization catalogue category button',
     }).click();
 
@@ -177,10 +231,10 @@ describe('Catalogue Category', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-categories',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"name":"test","is_leaf":true,"catalogue_item_properties":[{"name":"Updated Field 1","type":"boolean","mandatory":false},{"name":"Updated Field 2","type":"number","unit":"","mandatory":false}]}'
       );
     });
@@ -220,6 +274,10 @@ describe('Catalogue Category', () => {
   it('edits a catalogue category (non leaf node)', () => {
     cy.visit('/catalogue/1');
     cy.findByRole('button', {
+      name: 'actions Amp Meters catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'edit Amp Meters catalogue category button',
     }).click();
     cy.findByLabelText('Name *').type('1');
@@ -231,16 +289,22 @@ describe('Catalogue Category', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/catalogue-categories/:id',
-    }).should((patchRequests) => {
+    }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal('{"name":"Amp Meters1"}');
+      expect(JSON.stringify(await request.json())).equal(
+        '{"name":"Amp Meters1"}'
+      );
       expect(request.url.toString()).to.contain('1');
     });
   });
 
   it('displays error message if none of the fields have changed', () => {
     cy.findByRole('button', {
+      name: 'actions Beam Characterization catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'edit Beam Characterization catalogue category button',
     }).click();
 
@@ -257,6 +321,10 @@ describe('Catalogue Category', () => {
   it('displays error message if it received an unknown error from the api', () => {
     cy.visit('/catalogue/1');
     cy.findByRole('button', {
+      name: 'actions Cameras catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'edit Cameras catalogue category button',
     }).click();
     cy.findByLabelText('Name *').clear();
@@ -275,6 +343,10 @@ describe('Catalogue Category', () => {
   it('edits a catalogue category with catalogue properties', () => {
     cy.visit('/catalogue/1');
     cy.findByRole('button', {
+      name: 'actions Voltage Meters catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'edit Voltage Meters catalogue category button',
     }).click();
 
@@ -288,10 +360,10 @@ describe('Catalogue Category', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/catalogue-categories/:id',
-    }).should((patchRequests) => {
+    }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+      expect(JSON.stringify(await request.json())).equal(
         '{"catalogue_item_properties":[{"name":"Updated Field","type":"number","unit":"volts","mandatory":true},{"name":"Accuracy","type":"string","mandatory":true}]}'
       );
       expect(request.url.toString()).to.contain('1');
@@ -301,6 +373,10 @@ describe('Catalogue Category', () => {
   it('displays error message when duplicate names for properties are entered', () => {
     cy.visit('/catalogue/1');
     cy.findByRole('button', {
+      name: 'actions Voltage Meters catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'edit Voltage Meters catalogue category button',
     }).click();
 
@@ -322,6 +398,10 @@ describe('Catalogue Category', () => {
   it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
     cy.visit('/catalogue/1');
     cy.findByRole('button', {
+      name: 'actions Voltage Meters catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
       name: 'edit Voltage Meters catalogue category button',
     }).click();
     cy.findByLabelText('Catalogue Categories').click();
@@ -334,10 +414,10 @@ describe('Catalogue Category', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/catalogue-categories/:id',
-    }).should((patchRequests) => {
+    }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+      expect(JSON.stringify(await request.json())).equal(
         '{"name":"Voltage Meters1","is_leaf":false}'
       );
       expect(request.url.toString()).to.contain('1');

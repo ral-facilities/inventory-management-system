@@ -5,6 +5,9 @@ import Systems from './systems.component';
 import userEvent from '@testing-library/user-event';
 
 describe('Systems', () => {
+  // Quite a few of these take more than 5 seconds on CI
+  jest.setTimeout(12000);
+
   let user;
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(<Systems />, path);
@@ -12,7 +15,24 @@ describe('Systems', () => {
 
   beforeEach(() => {
     user = userEvent.setup();
+
+    window.ResizeObserver = jest.fn().mockImplementation(() => ({
+      disconnect: jest.fn(),
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+    }));
+    window.Element.prototype.getBoundingClientRect = jest
+      .fn()
+      .mockReturnValue({ height: 100, width: 200 });
   });
+
+  const clickRowAction = async (rowIndex: number, buttonText: string) => {
+    await user.click(screen.getAllByLabelText('Row Actions')[rowIndex]);
+    await waitFor(() => {
+      expect(screen.getByText(buttonText)).toBeInTheDocument();
+    });
+    await user.click(screen.getByText(buttonText));
+  };
 
   it('renders correctly', async () => {
     createView('/systems');
@@ -39,23 +59,20 @@ describe('Systems', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('button', { name: 'Giant laser' })
+        screen.getByRole('cell', { name: 'Giant laser' })
       ).toBeInTheDocument();
     });
-    await user.click(screen.getByRole('button', { name: 'Giant laser' }));
+    await user.click(screen.getByRole('cell', { name: 'Giant laser' }));
 
     await waitFor(() => {
-      expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+      expect(
+        screen.getByRole('cell', { name: 'Smaller laser' })
+      ).toBeInTheDocument();
     });
 
     expect(screen.getAllByText('Giant laser').length).toBe(2);
 
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Smaller laser' })
-      ).toBeInTheDocument();
-    });
-    await user.click(screen.getByRole('button', { name: 'Smaller laser' }));
+    await user.click(screen.getByRole('cell', { name: 'Smaller laser' }));
 
     expect(
       screen.getByRole('link', { name: 'Giant laser' })
@@ -146,10 +163,10 @@ describe('Systems', () => {
     });
 
     const giantLaserCheckbox = within(
-      screen.getByRole('button', { name: 'Giant laser' })
+      screen.getByRole('row', { name: 'Toggle select row Giant laser' })
     ).getByRole('checkbox');
     const pulseLaserCheckbox = within(
-      screen.getByRole('button', { name: 'Pulse Laser' })
+      screen.getByRole('row', { name: 'Toggle select row Pulse Laser' })
     ).getByRole('checkbox');
 
     await user.click(giantLaserCheckbox);
@@ -183,10 +200,10 @@ describe('Systems', () => {
     });
 
     const giantLaserCheckbox = within(
-      screen.getByRole('button', { name: 'Giant laser' })
+      screen.getByRole('row', { name: 'Toggle select row Giant laser' })
     ).getByRole('checkbox');
     const pulseLaserCheckbox = within(
-      screen.getByRole('button', { name: 'Pulse Laser' })
+      screen.getByRole('row', { name: 'Toggle select row Pulse Laser' })
     ).getByRole('checkbox');
 
     await user.click(giantLaserCheckbox);
@@ -219,7 +236,7 @@ describe('Systems', () => {
     });
 
     const giantLaserCheckbox = within(
-      screen.getByRole('button', { name: 'Giant laser' })
+      screen.getByRole('row', { name: 'Toggle select row Giant laser' })
     ).getByRole('checkbox');
     await user.click(giantLaserCheckbox);
 
@@ -250,7 +267,7 @@ describe('Systems', () => {
     });
 
     const giantLaserCheckbox = within(
-      screen.getByRole('button', { name: 'Giant laser' })
+      screen.getByRole('row', { name: 'Toggle select row Giant laser' })
     ).getByRole('checkbox');
     await user.click(giantLaserCheckbox);
 
@@ -270,6 +287,76 @@ describe('Systems', () => {
 
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the edit dialog and close it again', async () => {
+    createView('/systems');
+
+    await waitFor(() => {
+      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+    await clickRowAction(0, 'Edit');
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Edit System')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the save as dialog and close it again', async () => {
+    createView('/systems');
+
+    await waitFor(() => {
+      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+    await clickRowAction(0, 'Save as');
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Add System')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the delete dialog and close it again', async () => {
+    createView('/systems');
+
+    await waitFor(() => {
+      expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByTestId('delete-system-name')).not.toBeInTheDocument();
+
+    await clickRowAction(0, 'Delete');
+
+    await waitFor(() => {
+      expect(screen.getByTestId('delete-system-name')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId('delete-system-name')
+      ).not.toBeInTheDocument();
     });
   });
 });

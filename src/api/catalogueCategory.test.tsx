@@ -416,7 +416,7 @@ describe('catalogue category api functions', () => {
       copyToCatalogueCategory = {
         selectedCategories: mockCatalogueCategories,
         targetCategory: null,
-        existingCategoryCodes: [],
+        existingCategoryNames: [],
       };
 
       axiosPostSpy = jest.spyOn(axios, 'post');
@@ -436,7 +436,7 @@ describe('catalogue category api functions', () => {
       result.current.mutate({
         selectedCategories: mockCatalogueCategories,
         targetCategory: null,
-        existingCategoryCodes: [''],
+        existingCategoryNames: [''],
       });
 
       await waitFor(() => {
@@ -487,7 +487,7 @@ describe('catalogue category api functions', () => {
       result.current.mutate({
         selectedCategories: mockCatalogueCategories,
         targetCategory: targetCategory,
-        existingCategoryCodes: [''],
+        existingCategoryNames: [''],
       });
 
       await waitFor(() => {
@@ -526,9 +526,9 @@ describe('catalogue category api functions', () => {
 
       expect(result.current.isIdle).toBe(true);
 
-      copyToCatalogueCategory.existingCategoryCodes = [
-        ...mockCatalogueCategories.map((category) => category.code),
-        mockCatalogueCategories[1].code + '_copy_1',
+      copyToCatalogueCategory.existingCategoryNames = [
+        ...mockCatalogueCategories.map((category) => category.name),
+        mockCatalogueCategories[1].name + '_copy_1',
       ];
       result.current.mutate(copyToCatalogueCategory);
 

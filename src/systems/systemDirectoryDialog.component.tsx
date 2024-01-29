@@ -21,12 +21,13 @@ import { System } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemsTableView } from './systemsTableView.component';
+import { MRT_RowSelectionState } from 'material-react-table';
 
 export interface SystemDirectoryDialogProps {
   open: boolean;
   onClose: () => void;
   selectedSystems: System[];
-  onChangeSelectedSystems: (selectedSystems: System[]) => void;
+  onChangeSelectedSystems: (selectedSystems: MRT_RowSelectionState) => void;
   parentSystemId: string | null;
   type: 'moveTo' | 'copyTo';
 }
@@ -72,7 +73,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
         targetSystem: targetSystem || null,
       }).then((response) => {
         handleTransferState(response);
-        onChangeSelectedSystems([]);
+        onChangeSelectedSystems({});
         handleClose();
       });
     }
@@ -91,17 +92,17 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
       (!targetSystemLoading || parentSystemId === null) &&
       systemsData !== undefined
     ) {
-      const existingSystemCodes = systemsData.map((system) => system.code);
+      const existingSystemNames = systemsData.map((system) => system.name);
 
       copyToSystem({
         selectedSystems: selectedSystems,
         // Only reason for targetSystem to be undefined here is if not loading at all
         // which happens when at root
         targetSystem: targetSystem || null,
-        existingSystemCodes: existingSystemCodes,
+        existingSystemNames: existingSystemNames,
       }).then((response) => {
         handleTransferState(response);
-        onChangeSelectedSystems([]);
+        onChangeSelectedSystems({});
         handleClose();
       });
     }
@@ -181,9 +182,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
         <Button
           disabled={
             // Disable when not moving anywhere different
-            selectedSystems.length > 0 &&
-            selectedSystems[0].parent_id === parentSystemId &&
-            type === 'moveTo'
+            props.parentSystemId === parentSystemId && type === 'moveTo'
           }
           onClick={type === 'moveTo' ? handleMoveTo : handleCopyTo}
         >

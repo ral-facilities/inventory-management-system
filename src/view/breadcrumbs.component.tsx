@@ -20,7 +20,7 @@ export interface BreadcrumbsProps {
 }
 
 const StyledBreadcrumbs = styled(MuiBreadcrumbs)(({ theme }) => ({
-  color: 'rgba(0, 0, 0, 0.6)',
+  color: 'text.secondary',
 }));
 
 const Breadcrumbs = (props: BreadcrumbsProps) => {

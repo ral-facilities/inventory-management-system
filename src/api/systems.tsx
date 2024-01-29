@@ -18,6 +18,7 @@ import {
   TransferState,
 } from '../app.types';
 import { settings } from '../settings';
+import { generateUniqueName } from '../utils';
 
 /** Utility for turning an importance into an MUI palette colour to display */
 export const getSystemImportanceColour = (
@@ -54,17 +55,12 @@ const fetchSystems = async (parent_id?: string): Promise<System[]> => {
 export const useSystems = (
   parent_id?: string
 ): UseQueryResult<System[], AxiosError> => {
-  return useQuery<System[], AxiosError>(
-    ['Systems', parent_id],
-    () => {
+  return useQuery({
+    queryKey: ['Systems', parent_id],
+    queryFn: () => {
       return fetchSystems(parent_id);
     },
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-    }
-  );
+  });
 };
 
 const fetchSystem = async (id: string): Promise<System> => {
@@ -84,18 +80,13 @@ const fetchSystem = async (id: string): Promise<System> => {
 export const useSystem = (
   id: string | null
 ): UseQueryResult<System, AxiosError> => {
-  return useQuery<System, AxiosError>(
-    ['System', id],
-    () => {
+  return useQuery({
+    queryKey: ['System', id],
+    queryFn: () => {
       return fetchSystem(id ?? '');
     },
-    {
-      enabled: id !== null,
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-    }
-  );
+    enabled: id !== null,
+  });
 };
 
 const fetchSystemsBreadcrumbs = async (
@@ -118,18 +109,13 @@ const fetchSystemsBreadcrumbs = async (
 export const useSystemsBreadcrumbs = (
   id: string | null
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
-  return useQuery<BreadcrumbsInfo, AxiosError>(
-    ['SystemBreadcrumbs', id],
-    () => {
+  return useQuery({
+    queryKey: ['SystemBreadcrumbs', id],
+    queryFn: () => {
       return fetchSystemsBreadcrumbs(id ?? '');
     },
-    {
-      enabled: id !== null,
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-    }
-  );
+    enabled: id !== null,
+  });
 };
 
 const addSystem = async (system: AddSystem): Promise<System> => {
@@ -151,7 +137,8 @@ export const useAddSystem = (): UseMutationResult<
   AddSystem
 > => {
   const queryClient = useQueryClient();
-  return useMutation((system: AddSystem) => addSystem(system), {
+  return useMutation({
+    mutationFn: (system: AddSystem) => addSystem(system),
     onError: (error) => {
       console.log(`Got error: '${error.message}'`);
     },
@@ -184,7 +171,8 @@ export const useEditSystem = (): UseMutationResult<
   EditSystem
 > => {
   const queryClient = useQueryClient();
-  return useMutation((system: EditSystem) => editSystem(system), {
+  return useMutation({
+    mutationFn: (system: EditSystem) => editSystem(system),
     onError: (error) => {
       console.log('Got error ' + error.message);
     },
@@ -223,7 +211,8 @@ export const useDeleteSystem = (): UseMutationResult<
 > => {
   const queryClient = useQueryClient();
 
-  return useMutation((systemId: string) => deleteSystem(systemId), {
+  return useMutation({
+    mutationFn: (systemId: string) => deleteSystem(systemId),
     onError: (error) => {
       console.log(`Got error: '${error.message}'`);
     },
@@ -241,52 +230,65 @@ export const useMoveToSystem = (): UseMutationResult<
 > => {
   const queryClient = useQueryClient();
 
-  return useMutation(async (moveToSystem: MoveToSystem) => {
-    const transferStates: TransferState[] = [];
+  return useMutation({
+    mutationFn: async (moveToSystem: MoveToSystem) => {
+      const transferStates: TransferState[] = [];
 
-    const successfulIds: string[] = [];
+      // Ids for invalidation (parentIds must be a string value of 'null' for invalidation)
+      const successfulIds: string[] = [];
+      const successfulParentIds: string[] = [];
 
-    const promises = moveToSystem.selectedSystems.map(
-      async (system: System) => {
-        return editSystem({
-          id: system.id,
-          parent_id: moveToSystem.targetSystem?.id || null,
-        })
-          .then((result: System) => {
-            const targetSystemName = moveToSystem.targetSystem?.name || 'Root';
-            transferStates.push({
-              name: system.name,
-              message: `Successfully moved to ${targetSystemName}`,
-              state: 'success',
-            });
-
-            successfulIds.push(system.id);
+      const promises = moveToSystem.selectedSystems.map(
+        async (system: System) => {
+          return editSystem({
+            id: system.id,
+            parent_id: moveToSystem.targetSystem?.id || null,
           })
-          .catch((error) => {
-            const response = error.response?.data as ErrorParsing;
+            .then((result: System) => {
+              const targetSystemName =
+                moveToSystem.targetSystem?.name || 'Root';
+              transferStates.push({
+                name: system.name,
+                message: `Successfully moved to ${targetSystemName}`,
+                state: 'success',
+              });
 
-            transferStates.push({
-              name: system.name,
-              message: response.detail,
-              state: 'error',
+              successfulIds.push(system.id);
+              successfulParentIds.push(system.parent_id || 'null');
+            })
+            .catch((error) => {
+              const response = error.response?.data as ErrorParsing;
+
+              transferStates.push({
+                name: system.name,
+                message: response.detail,
+                state: 'error',
+              });
             });
-          });
-      }
-    );
-
-    await Promise.all(promises);
-
-    if (successfulIds.length > 0) {
-      queryClient.invalidateQueries({
-        queryKey: ['Systems', moveToSystem.targetSystem?.id || 'null'],
-      });
-      queryClient.invalidateQueries({ queryKey: ['SystemBreadcrumbs'] });
-      successfulIds.forEach((id: string) =>
-        queryClient.invalidateQueries({ queryKey: ['System', id] })
+        }
       );
-    }
 
-    return transferStates;
+      await Promise.all(promises);
+
+      if (successfulIds.length > 0) {
+        queryClient.invalidateQueries({
+          queryKey: ['Systems', moveToSystem.targetSystem?.id || 'null'],
+        });
+        // Also need to invalidate each parent we are moving from (likely just the one)
+        const uniqueParentIds = new Set(successfulParentIds);
+        uniqueParentIds.forEach((parentId: string) =>
+          queryClient.invalidateQueries({
+            queryKey: ['Systems', parentId],
+          })
+        );
+        queryClient.invalidateQueries({ queryKey: ['SystemBreadcrumbs'] });
+        successfulIds.forEach((id: string) =>
+          queryClient.invalidateQueries({ queryKey: ['System', id] })
+        );
+      }
+
+      return transferStates;
+    },
   });
 };
 
@@ -297,66 +299,60 @@ export const useCopyToSystem = (): UseMutationResult<
 > => {
   const queryClient = useQueryClient();
 
-  return useMutation(async (copyToSystem: CopyToSystem) => {
-    const transferStates: TransferState[] = [];
+  return useMutation({
+    mutationFn: async (copyToSystem: CopyToSystem) => {
+      const transferStates: TransferState[] = [];
 
-    const successfulIds: string[] = [];
+      const successfulIds: string[] = [];
 
-    const promises = copyToSystem.selectedSystems.map(
-      async (system: System) => {
-        // Data to post (backend will just ignore the extra here - only id and code)
-        // Also use Object.assign to copy the data otherwise will modify in place causing issues
-        // in tests
-        const systemAdd: AddSystem = Object.assign({}, system) as AddSystem;
+      const promises = copyToSystem.selectedSystems.map(
+        async (system: System) => {
+          // Data to post (backend will just ignore the extra here - only id and code)
+          // Also use Object.assign to copy the data otherwise will modify in place causing issues
+          // in tests
+          const systemAdd: AddSystem = Object.assign({}, system) as AddSystem;
 
-        // Assign new parent
-        systemAdd.parent_id = copyToSystem.targetSystem?.id || null;
+          // Assign new parent
+          systemAdd.parent_id = copyToSystem.targetSystem?.id || null;
 
-        // Avoid duplicates by appending _copy_n for nth copy
-        if (copyToSystem.existingSystemCodes.includes(system.code)) {
-          let count = 1;
-          let newName = systemAdd.name;
-          let newCode = system.code;
+          // Avoid duplicates
+          systemAdd.name = generateUniqueName(
+            systemAdd.name,
+            copyToSystem.existingSystemNames
+          );
 
-          while (copyToSystem.existingSystemCodes.includes(newCode)) {
-            newName = `${systemAdd.name}_copy_${count}`;
-            newCode = `${system.code}_copy_${count}`;
-            count++;
-          }
+          return addSystem(systemAdd)
+            .then((result: System) => {
+              const targetSystemName =
+                copyToSystem.targetSystem?.name || 'Root';
+              transferStates.push({
+                name: system.name,
+                message: `Successfully copied to ${targetSystemName}`,
+                state: 'success',
+              });
 
-          systemAdd.name = newName;
+              successfulIds.push(result.id);
+            })
+            .catch((error) => {
+              const response = error.response?.data as ErrorParsing;
+
+              transferStates.push({
+                name: system.name,
+                message: response.detail,
+                state: 'error',
+              });
+            });
         }
+      );
 
-        return addSystem(systemAdd)
-          .then((result: System) => {
-            const targetSystemName = copyToSystem.targetSystem?.name || 'Root';
-            transferStates.push({
-              name: system.name,
-              message: `Successfully copied to ${targetSystemName}`,
-              state: 'success',
-            });
+      await Promise.all(promises);
 
-            successfulIds.push(result.id);
-          })
-          .catch((error) => {
-            const response = error.response?.data as ErrorParsing;
+      if (successfulIds.length > 0)
+        queryClient.invalidateQueries({
+          queryKey: ['Systems', copyToSystem.targetSystem?.id || 'null'],
+        });
 
-            transferStates.push({
-              name: system.name,
-              message: response.detail,
-              state: 'error',
-            });
-          });
-      }
-    );
-
-    await Promise.all(promises);
-
-    if (successfulIds.length > 0)
-      queryClient.invalidateQueries({
-        queryKey: ['Systems', copyToSystem.targetSystem?.id || 'null'],
-      });
-
-    return transferStates;
+      return transferStates;
+    },
   });
 };

@@ -1,13 +1,16 @@
-import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React from 'react';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { MicroFrontendId } from './app.types';
-import { requestPluginRerender } from './state/scigateway.actions';
-import Preloader from './preloader/preloader.component';
-import IMSThemeProvider from './imsThemeProvider.component';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import { enGB } from 'date-fns/locale/en-GB';
 import { BrowserRouter } from 'react-router-dom';
-import ViewTabs from './view/viewTabs.component';
 import './App.css';
+import { MicroFrontendId } from './app.types';
+import IMSThemeProvider from './imsThemeProvider.component';
+import Preloader from './preloader/preloader.component';
+import { requestPluginRerender } from './state/scigateway.actions';
+import ViewTabs from './view/viewTabs.component';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,16 +46,20 @@ const App: React.FunctionComponent = () => {
   return (
     <div className="App">
       <BrowserRouter>
-        <IMSThemeProvider>
-          <QueryClientProvider client={queryClient}>
-            <React.Suspense
-              fallback={<Preloader loading={true}>Finished loading</Preloader>}
-            >
-              <ViewTabs />
-              {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-            </React.Suspense>
-          </QueryClientProvider>
-        </IMSThemeProvider>
+        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
+          <IMSThemeProvider>
+            <QueryClientProvider client={queryClient}>
+              <React.Suspense
+                fallback={
+                  <Preloader loading={true}>Finished loading</Preloader>
+                }
+              >
+                <ViewTabs />
+                {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+              </React.Suspense>
+            </QueryClientProvider>
+          </IMSThemeProvider>
+        </LocalizationProvider>
       </BrowserRouter>
     </div>
   );

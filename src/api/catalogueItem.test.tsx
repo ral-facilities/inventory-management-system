@@ -2,6 +2,7 @@ import { renderHook, waitFor } from '@testing-library/react';
 import {
   useAddCatalogueItem,
   useCatalogueItem,
+  useCatalogueItemIds,
   useCatalogueItems,
   useCopyToCatalogueItem,
   useDeleteCatalogueItem,
@@ -15,13 +16,14 @@ import {
   EditCatalogueItem,
   TransferToCatalogueItem,
 } from '../app.types';
+import CatalogueItemJSON from '../mocks/CatalogueItems.json';
 
 describe('catalogue items api functions', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  describe('useAddCatalogueCategory', () => {
+  describe('useAddCatalogueItem', () => {
     let mockDataAdd: AddCatalogueItem;
     beforeEach(() => {
       mockDataAdd = {
@@ -35,7 +37,7 @@ describe('catalogue items api functions', () => {
         ],
       };
     });
-    it('posts a request to add a user session and returns successful response', async () => {
+    it('posts a request to add a catalogue item and returns successful response', async () => {
       const { result } = renderHook(() => useAddCatalogueItem(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -90,35 +92,33 @@ describe('catalogue items api functions', () => {
         expect(result.current.isSuccess).toBeTruthy();
       });
 
-      expect(result.current.data).toEqual({
-        catalogue_category_id: '4',
-        cost_gbp: 500,
-        cost_to_rework_gbp: null,
-        days_to_replace: 7,
-        days_to_rework: null,
-        description: 'High-resolution cameras for beam characterization. 1',
-        drawing_link: null,
-        drawing_number: null,
-        id: '1',
-        is_obsolete: false,
-        manufacturer_id: '1',
-        item_model_number: null,
-        name: 'Cameras 1',
-        obsolete_reason: null,
-        obsolete_replacement_catalogue_item_id: null,
-        properties: [
-          { name: 'Resolution', unit: 'megapixels', value: 12 },
-          { name: 'Frame Rate', unit: 'fps', value: 30 },
-          { name: 'Sensor Type', unit: '', value: 'CMOS' },
-          { name: 'Broken', unit: '', value: true },
-          { name: 'Older than five years', unit: '', value: false },
-        ],
-      });
+      expect(result.current.data).toEqual(
+        CatalogueItemJSON.filter((catalogueItem) => catalogueItem.id === '1')[0]
+      );
     });
 
     it.todo(
       'sends axios request to fetch catalogue item and throws an appropriate error on failure'
     );
+  });
+
+  describe('useCatalogueItemIds', () => {
+    it('sends requests to fetch multiple catalogue items data and returns successful response for each', async () => {
+      const { result } = renderHook(() => useCatalogueItemIds(['1', '2']), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      await waitFor(() => {
+        result.current.forEach((query) => expect(query.isSuccess).toBeTruthy());
+      });
+
+      expect(result.current[0].data).toEqual(
+        CatalogueItemJSON.filter((catalogueItem) => catalogueItem.id === '1')[0]
+      );
+      expect(result.current[1].data).toEqual(
+        CatalogueItemJSON.filter((catalogueItem) => catalogueItem.id === '2')[0]
+      );
+    });
   });
 
   describe('useDeleteCatalogueItem', () => {

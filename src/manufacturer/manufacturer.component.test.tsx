@@ -3,7 +3,11 @@ import { renderComponentWithBrowserRouter } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import Manufacturer from './manufacturer.component';
 import userEvent from '@testing-library/user-event';
-
+const mockedUseNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedUseNavigate,
+}));
 describe('Manufacturer', () => {
   let user;
   const createView = () => {
@@ -22,7 +26,7 @@ describe('Manufacturer', () => {
     expect(screen.getByText('Name')).toBeInTheDocument();
     expect(screen.getByText('URL')).toBeInTheDocument();
     expect(screen.getByText('Address')).toBeInTheDocument();
-    expect(screen.getByText('Telephone')).toBeInTheDocument();
+    expect(screen.getByText('Telephone number')).toBeInTheDocument();
   });
 
   it('renders table data correctly', async () => {
@@ -130,4 +134,21 @@ describe('Manufacturer', () => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
     });
   }, 10000);
+
+  it('navigates back to the root directory', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.queryByText('Manufacturer A')).not.toBeInTheDocument();
+    });
+
+    const homeButton = screen.getByRole('button', {
+      name: 'navigate to manufacturer home',
+    });
+
+    await user.click(homeButton);
+
+    expect(mockedUseNavigate).toBeCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturer');
+  });
 });

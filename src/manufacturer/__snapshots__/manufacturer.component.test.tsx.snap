@@ -3,10 +3,47 @@
 exports[`Manufacturer renders table data correctly 1`] = `
 <DocumentFragment>
   <div
-    style="width: 100%;"
+    style="width: 100%; height: 100%;"
   >
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1atu56z-MuiPaper-root"
+      class="MuiBox-root css-1n998dz"
+    >
+      <div
+        class="MuiBox-root css-70qvj9"
+      >
+        <button
+          aria-label="navigate to manufacturer home"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+          tabindex="0"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="HomeIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+            />
+          </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+        <nav
+          aria-label="breadcrumb"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1mc59t7-MuiTypography-root-MuiBreadcrumbs-root"
+        >
+          <ol
+            class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
+          />
+        </nav>
+      </div>
+    </div>
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 css-1s80a98-MuiPaper-root"
     >
       <div
         class="MuiBox-root css-1tbggly"
@@ -90,7 +127,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   class="MuiCollapse-wrapperInner MuiCollapse-horizontal css-14vyde3-MuiCollapse-wrapperInner"
                 >
                   <div
-                    class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+                    class="MuiFormControl-root MuiTextField-root css-11sh9fj-MuiFormControl-root-MuiTextField-root"
                   >
                     <div
                       class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedStart MuiInputBase-adornedEnd css-1v8abvc-MuiInputBase-root-MuiOutlinedInput-root"
@@ -242,21 +279,22 @@ exports[`Manufacturer renders table data correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-rjqh4v-MuiTableContainer-root"
+        class="MuiTableContainer-root css-1ujn6lp-MuiTableContainer-root"
       >
         <table
-          class="MuiTable-root MuiTable-stickyHeader css-1n7ptpu-MuiTable-root"
-          style="--header-mrt_row_actions-size: 60; --col-mrt_row_actions-size: 60; --header-Name-size: 400; --col-Name-size: 400; --header-URL-size: 500; --col-URL-size: 500; --header-Address-size: 650; --col-Address-size: 650; --header-Telephone-size: 250; --col-Telephone-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+          class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
+          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-Name-size: 400; --col-Name-size: 400; --header-URL-size: 500; --col-URL-size: 500; --header-Address-size: 650; --col-Address-size: 650; --header-Telephone_number-size: 250; --col-Telephone_number-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
           >
             <tr
-              class="MuiTableRow-root MuiTableRow-head css-1bxhrg6-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-head css-ssspk8-MuiTableRow-root"
             >
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mkg172-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14og0m0-MuiTableCell-root"
                 colspan="1"
+                data-index="0"
                 scope="col"
               >
                 <div
@@ -277,8 +315,9 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17apda8-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19rdpif-MuiTableCell-root"
                 colspan="1"
+                data-index="1"
                 scope="col"
               >
                 <div
@@ -448,8 +487,9 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dotwzc-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-zercz-MuiTableCell-root"
                 colspan="1"
+                data-index="2"
                 scope="col"
               >
                 <div
@@ -613,8 +653,9 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-r0b5tg-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ry1ov7-MuiTableCell-root"
                 colspan="1"
+                data-index="3"
                 scope="col"
               >
                 <div
@@ -778,8 +819,9 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1jksafi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wvu87s-MuiTableCell-root"
                 colspan="1"
+                data-index="4"
                 scope="col"
               >
                 <div
@@ -790,17 +832,17 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   >
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
-                      title="Telephone"
+                      title="Telephone number"
                     >
-                      Telephone
+                      Telephone number
                     </div>
                     <span
-                      aria-label="Sort by Telephone ascending"
+                      aria-label="Sort by Telephone number ascending"
                       class="MuiBadge-root css-1c32n2y-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
-                        aria-label="Sort by Telephone ascending"
+                        aria-label="Sort by Telephone number ascending"
                         class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
@@ -898,12 +940,12 @@ exports[`Manufacturer renders table data correctly 1`] = `
                         >
                           <input
                             aria-invalid="false"
-                            aria-label="Filter by Telephone"
+                            aria-label="Filter by Telephone number"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                             id=":r1g:"
-                            placeholder="Filter by Telephone"
-                            title="Filter by Telephone"
+                            placeholder="Filter by Telephone number"
+                            title="Filter by Telephone number"
                             type="text"
                             value=""
                           />
@@ -943,8 +985,9 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-9ojxfo-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mc0kk9-MuiTableCell-root"
                 colspan="1"
+                data-index="5"
                 scope="col"
               >
                 <div
@@ -969,12 +1012,13 @@ exports[`Manufacturer renders table data correctly 1`] = `
           >
             <tr
               aria-label="Manufacturer A row"
-              class="MuiTableRow-root MuiTableRow-root css-n4v40q-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
               data-index="0"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-qe40e3-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17uev31-MuiTableCell-root"
+                data-index="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -1000,7 +1044,8 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-rqdd49-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6dxmqa-MuiTableCell-root"
+                data-index="1"
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
@@ -1010,7 +1055,8 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1pj26wl-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l704eh-MuiTableCell-root"
+                data-index="2"
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
@@ -1021,7 +1067,8 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-16b8hjp-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a8lg3o-MuiTableCell-root"
+                data-index="3"
               >
                 <div
                   style="display: inline-block;"
@@ -1054,22 +1101,25 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-6y1yps-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dkz66n-MuiTableCell-root"
+                data-index="4"
               >
                 07334893348
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-3p2jr3-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l7gk3r-MuiTableCell-root"
+                data-index="5"
               />
             </tr>
             <tr
               aria-label="Manufacturer B row"
-              class="MuiTableRow-root MuiTableRow-root css-n4v40q-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
               data-index="1"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-qe40e3-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17uev31-MuiTableCell-root"
+                data-index="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -1095,7 +1145,8 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-rqdd49-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6dxmqa-MuiTableCell-root"
+                data-index="1"
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
@@ -1105,7 +1156,8 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1pj26wl-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l704eh-MuiTableCell-root"
+                data-index="2"
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
@@ -1116,7 +1168,8 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-16b8hjp-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a8lg3o-MuiTableCell-root"
+                data-index="3"
               >
                 <div
                   style="display: inline-block;"
@@ -1149,22 +1202,25 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-6y1yps-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dkz66n-MuiTableCell-root"
+                data-index="4"
               >
                 07294958549
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-3p2jr3-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l7gk3r-MuiTableCell-root"
+                data-index="5"
               />
             </tr>
             <tr
               aria-label="Manufacturer C row"
-              class="MuiTableRow-root MuiTableRow-root css-n4v40q-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
               data-index="2"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-qe40e3-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17uev31-MuiTableCell-root"
+                data-index="0"
               >
                 <button
                   aria-label="Row Actions"
@@ -1190,7 +1246,8 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-rqdd49-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6dxmqa-MuiTableCell-root"
+                data-index="1"
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
@@ -1200,7 +1257,8 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1pj26wl-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l704eh-MuiTableCell-root"
+                data-index="2"
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
@@ -1211,7 +1269,8 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-16b8hjp-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a8lg3o-MuiTableCell-root"
+                data-index="3"
               >
                 <div
                   style="display: inline-block;"
@@ -1244,17 +1303,106 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-6y1yps-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dkz66n-MuiTableCell-root"
+                data-index="4"
               >
                 07934303412
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-3p2jr3-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l7gk3r-MuiTableCell-root"
+                data-index="5"
+              />
+            </tr>
+            <tr
+              aria-label="Manufacturer D row"
+              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              data-index="3"
+              role="row"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17uev31-MuiTableCell-root"
+                data-index="0"
+              >
+                <button
+                  aria-label="Row Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="MoreHorizIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6dxmqa-MuiTableCell-root"
+                data-index="1"
+              >
+                <a
+                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                  href="/manufacturer/4"
+                >
+                  Manufacturer D
+                </a>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l704eh-MuiTableCell-root"
+                data-index="2"
+              />
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a8lg3o-MuiTableCell-root"
+                data-index="3"
+              >
+                <div
+                  style="display: inline-block;"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  >
+                    3 Example Street
+                  </p>
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  />
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  />
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  >
+                    OX1 2AB
+                  </p>
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  >
+                    United Kingdom
+                  </p>
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dkz66n-MuiTableCell-root"
+                data-index="4"
+              />
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l7gk3r-MuiTableCell-root"
+                data-index="5"
               />
             </tr>
           </tbody>
           <tfoot
-            class="MuiTableFooter-root css-mvygzy-MuiTableFooter-root"
+            class="MuiTableFooter-root css-4ar9ic-MuiTableFooter-root"
           />
         </table>
       </div>
@@ -1345,9 +1493,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
-                    aria-labelledby="mrt-rows-per-page"
                     class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                    id="mrt-rows-per-page"
                     role="combobox"
                     tabindex="0"
                   >
@@ -1357,6 +1503,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                     aria-hidden="true"
                     aria-invalid="false"
                     class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                    id="mrt-rows-per-page"
                     tabindex="-1"
                     value="25"
                   />

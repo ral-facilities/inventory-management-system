@@ -17,6 +17,7 @@ import {
   TransferState,
 } from '../app.types';
 import { settings } from '../settings';
+import { generateUniqueName } from '../utils';
 
 const fetchCatalogueCategories = async (
   parent_id: string
@@ -44,18 +45,13 @@ export const useCatalogueCategories = (
   isLeaf: boolean,
   parent_id: string
 ): UseQueryResult<CatalogueCategory[], AxiosError> => {
-  return useQuery<CatalogueCategory[], AxiosError>(
-    ['CatalogueCategories', parent_id],
-    (params) => {
+  return useQuery({
+    queryKey: ['CatalogueCategories', parent_id],
+    queryFn: (params) => {
       return fetchCatalogueCategories(parent_id);
     },
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-      enabled: !isLeaf,
-    }
-  );
+    enabled: !isLeaf,
+  });
 };
 
 const fetchCatalogueBreadcrumbs = async (
@@ -67,7 +63,6 @@ const fetchCatalogueBreadcrumbs = async (
   if (settingsResult) {
     apiUrl = settingsResult['apiUrl'];
   }
-
   return axios
     .get(`${apiUrl}/v1/catalogue-categories/${id}/breadcrumbs`, {})
     .then((response) => {
@@ -78,18 +73,13 @@ const fetchCatalogueBreadcrumbs = async (
 export const useCatalogueBreadcrumbs = (
   id: string
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
-  return useQuery<BreadcrumbsInfo, AxiosError>(
-    ['CatalogueBreadcrumbs', id],
-    (params) => {
+  return useQuery({
+    queryKey: ['CatalogueBreadcrumbs', id],
+    queryFn: (params) => {
       return fetchCatalogueBreadcrumbs(id);
     },
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-      enabled: id !== '',
-    }
-  );
+    enabled: id !== '',
+  });
 };
 
 const addCatalogueCategory = async (
@@ -101,7 +91,6 @@ const addCatalogueCategory = async (
   if (settingsResult) {
     apiUrl = settingsResult['apiUrl'];
   }
-
   return axios
     .post<CatalogueCategory>(
       `${apiUrl}/v1/catalogue-categories`,
@@ -116,20 +105,18 @@ export const useAddCatalogueCategory = (): UseMutationResult<
   AddCatalogueCategory
 > => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (catalogueCategory: AddCatalogueCategory) =>
+  return useMutation({
+    mutationFn: (catalogueCategory: AddCatalogueCategory) =>
       addCatalogueCategory(catalogueCategory),
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-      onSuccess: (category) => {
-        queryClient.invalidateQueries({
-          queryKey: ['CatalogueCategories', category.parent_id ?? 'null'],
-        });
-      },
-    }
-  );
+    onError: (error) => {
+      console.log('Got error ' + error.message);
+    },
+    onSuccess: (category) => {
+      queryClient.invalidateQueries({
+        queryKey: ['CatalogueCategories', category.parent_id ?? 'null'],
+      });
+    },
+  });
 };
 
 const editCatalogueCategory = async (
@@ -156,27 +143,26 @@ export const useEditCatalogueCategory = (): UseMutationResult<
   EditCatalogueCategory
 > => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (catalogueCategory: EditCatalogueCategory) =>
+  return useMutation({
+    mutationFn: (catalogueCategory: EditCatalogueCategory) =>
       editCatalogueCategory(catalogueCategory),
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-      onSuccess: (category) => {
-        queryClient.invalidateQueries({
-          queryKey: ['CatalogueCategories', category.parent_id ?? 'null'],
-        });
-        queryClient.invalidateQueries({
-          // Don't use ID here as will also need to update any of its children as well
-          queryKey: ['CatalogueBreadcrumbs'],
-        });
-        queryClient.invalidateQueries({
-          queryKey: ['CatalogueCategory', category.id],
-        });
-      },
-    }
-  );
+
+    onError: (error) => {
+      console.log('Got error ' + error.message);
+    },
+    onSuccess: (category) => {
+      queryClient.invalidateQueries({
+        queryKey: ['CatalogueCategories', category.parent_id ?? 'null'],
+      });
+      queryClient.invalidateQueries({
+        // Don't use ID here as will also need to update any of its children as well
+        queryKey: ['CatalogueBreadcrumbs'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['CatalogueCategory', category.id],
+      });
+    },
+  });
 };
 
 export const useMoveToCatalogueCategory = (): UseMutationResult<
@@ -186,8 +172,8 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
 > => {
   const queryClient = useQueryClient();
 
-  return useMutation(
-    async (moveToCatalogueCategory: MoveToCatalogueCategory) => {
+  return useMutation({
+    mutationFn: async (moveToCatalogueCategory: MoveToCatalogueCategory) => {
       const transferStates: TransferState[] = [];
 
       // Ids for invalidation (parentIds must be a string value of 'null' for invalidation)
@@ -250,12 +236,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
 
       return transferStates;
     },
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-    }
-  );
+  });
 };
 
 export const useCopyToCatalogueCategory = (): UseMutationResult<
@@ -265,8 +246,8 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
 > => {
   const queryClient = useQueryClient();
 
-  return useMutation(
-    async (copyToCatalogueCategory: CopyToCatalogueCategory) => {
+  return useMutation({
+    mutationFn: async (copyToCatalogueCategory: CopyToCatalogueCategory) => {
       const transferStates: TransferState[] = [];
 
       // Ids for invalidation (must be a string value of 'null' if null
@@ -287,26 +268,11 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
           categoryAdd.parent_id =
             copyToCatalogueCategory.targetCategory?.id || null;
 
-          // Avoid duplicates by appending _copy_n for nth copy
-          if (
-            copyToCatalogueCategory.existingCategoryCodes.includes(
-              category.code
-            )
-          ) {
-            let count = 1;
-            let newName = categoryAdd.name;
-            let newCode = category.code;
-
-            while (
-              copyToCatalogueCategory.existingCategoryCodes.includes(newCode)
-            ) {
-              newName = `${categoryAdd.name}_copy_${count}`;
-              newCode = `${category.code}_copy_${count}`;
-              count++;
-            }
-
-            categoryAdd.name = newName;
-          }
+          // Avoid duplicates
+          categoryAdd.name = generateUniqueName(
+            categoryAdd.name,
+            copyToCatalogueCategory.existingCategoryNames
+          );
 
           return addCatalogueCategory(categoryAdd)
             .then((result) => {
@@ -344,12 +310,7 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
 
       return transferStates;
     },
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-    }
-  );
+  });
 };
 const deleteCatalogueCategory = async (
   catalogueCategory: CatalogueCategory
@@ -371,18 +332,16 @@ export const useDeleteCatalogueCategory = (): UseMutationResult<
   CatalogueCategory
 > => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (catalogueCategory: CatalogueCategory) =>
+  return useMutation({
+    mutationFn: (catalogueCategory: CatalogueCategory) =>
       deleteCatalogueCategory(catalogueCategory),
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['CatalogueCategories'] });
-      },
-    }
-  );
+    onError: (error) => {
+      console.log('Got error ' + error.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['CatalogueCategories'] });
+    },
+  });
 };
 
 const fetchCatalogueCategory = async (
@@ -405,16 +364,11 @@ const fetchCatalogueCategory = async (
 export const useCatalogueCategory = (
   id: string | undefined
 ): UseQueryResult<CatalogueCategory, AxiosError> => {
-  return useQuery<CatalogueCategory, AxiosError>(
-    ['CatalogueCategory', id],
-    (params) => {
+  return useQuery({
+    queryKey: ['CatalogueCategory', id],
+    queryFn: (params) => {
       return fetchCatalogueCategory(id);
     },
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-      enabled: id !== undefined,
-    }
-  );
+    enabled: id !== undefined,
+  });
 };

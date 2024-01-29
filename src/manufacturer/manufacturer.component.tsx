@@ -1,11 +1,12 @@
+import AddIcon from '@mui/icons-material/Add';
+import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import ClearIcon from '@mui/icons-material/Clear';
-import AddIcon from '@mui/icons-material/Add';
 import {
   Box,
   Button,
   ListItemIcon,
+  ListItemText,
   MenuItem,
   Link as MuiLink,
   TableRow,
@@ -17,13 +18,15 @@ import {
   type MRT_ColumnDef,
   type MRT_ColumnFiltersState,
 } from 'material-react-table';
+import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useManufacturers } from '../api/manufacturer';
 import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
-import { MRT_Localization_EN } from 'material-react-table/locales/en';
+import { getPageHeightCalc } from '../utils';
+import Breadcrumbs from '../view/breadcrumbs.component';
 
 function ManufacturerComponent() {
   const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
@@ -36,7 +39,11 @@ function ManufacturerComponent() {
     Manufacturer | undefined
   >(undefined);
 
-  const tableHeight = `calc(100vh - (64px + 36px + 111px))`;
+  const tableHeight = getPageHeightCalc('192px');
+
+  const [maufacturerDialogType, setMaufacturerDialogType] = React.useState<
+    'edit' | 'create'
+  >('create');
 
   const columns = React.useMemo<MRT_ColumnDef<Manufacturer>[]>(() => {
     return [
@@ -95,7 +102,7 @@ function ManufacturerComponent() {
         ),
       },
       {
-        header: 'Telephone',
+        header: 'Telephone number',
         accessorFn: (row) => row.telephone,
         size: 250,
       },
@@ -134,6 +141,7 @@ function ManufacturerComponent() {
     muiTableBodyRowProps: ({ row }) => {
       return { component: TableRow, 'aria-label': `${row.original.name} row` };
     },
+    muiTablePaperProps: { sx: { maxHeight: '100%' } },
     muiTableContainerProps: { sx: { height: tableHeight } },
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
@@ -157,8 +165,10 @@ function ManufacturerComponent() {
           <ManufacturerDialog
             open={true}
             onClose={() => {
+              setMaufacturerDialogType('create');
               table.setCreatingRow(null);
             }}
+            type={maufacturerDialogType}
             selectedManufacturer={
               selectedManufacturer ? selectedManufacturer : undefined
             }
@@ -195,8 +205,9 @@ function ManufacturerComponent() {
       return [
         <MenuItem
           key={0}
-          aria-label={`Edit ${row.original.name} manufacturer`}
+          aria-label={`Edit manufacturer ${row.original.name}`}
           onClick={() => {
+            setMaufacturerDialogType('edit');
             setSelectedManufacturer(row.original);
             table.setCreatingRow(true);
             closeMenu();
@@ -206,11 +217,11 @@ function ManufacturerComponent() {
           <ListItemIcon>
             <EditIcon />
           </ListItemIcon>
-          Edit
+          <ListItemText>Edit</ListItemText>
         </MenuItem>,
         <MenuItem
           key={1}
-          aria-label={`Delete ${row.original.name} manufacturer`}
+          aria-label={`Delete manufacturer ${row.original.name}`}
           onClick={() => {
             setDeleteManufacturerDialog(true);
             setSelectedManufacturer(row.original);
@@ -220,16 +231,33 @@ function ManufacturerComponent() {
           <ListItemIcon>
             <DeleteIcon />
           </ListItemIcon>
-          Delete
+          <ListItemText>Delete</ListItemText>
         </MenuItem>,
       ];
     },
   });
 
-  return (
-    <div style={{ width: '100%' }}>
-      <MaterialReactTable table={table} />
+  const navigate = useNavigate();
+  const onChangeNode = React.useCallback(() => {
+    navigate('/manufacturer');
+  }, [navigate]);
 
+  return (
+    <div style={{ width: '100%', height: '100%' }}>
+      <Box
+        sx={{
+          py: '20px',
+          paddingLeft: '4px',
+        }}
+      >
+        <Breadcrumbs
+          onChangeNode={onChangeNode}
+          onChangeNavigateHome={onChangeNode}
+          breadcrumbsInfo={undefined}
+          navigateHomeAriaLabel="navigate to manufacturer home"
+        />
+      </Box>
+      <MaterialReactTable table={table} />
       <DeleteManufacturerDialog
         open={deleteManufacturerDialog}
         onClose={() => setDeleteManufacturerDialog(false)}

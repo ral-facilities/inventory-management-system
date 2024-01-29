@@ -28,17 +28,12 @@ export const useManufacturers = (): UseQueryResult<
   Manufacturer[],
   AxiosError
 > => {
-  return useQuery<Manufacturer[], AxiosError>(
-    ['Manufacturers'],
-    (params) => {
+  return useQuery({
+    queryKey: ['Manufacturers'],
+    queryFn: (params) => {
       return getAllManufacturers();
     },
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-    }
-  );
+  });
 };
 
 const addManufacturer = async (
@@ -61,17 +56,16 @@ export const useAddManufacturer = (): UseMutationResult<
   AddManufacturer
 > => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (manufacturer: AddManufacturer) => addManufacturer(manufacturer),
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
-      },
-    }
-  );
+  return useMutation({
+    mutationFn: (manufacturer: AddManufacturer) =>
+      addManufacturer(manufacturer),
+    onError: (error) => {
+      console.log('Got error ' + error.message);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
+    },
+  });
 };
 
 const deleteManufacturer = async (session: Manufacturer): Promise<void> => {
@@ -92,7 +86,8 @@ export const useDeleteManufacturer = (): UseMutationResult<
   Manufacturer
 > => {
   const queryClient = useQueryClient();
-  return useMutation((session: Manufacturer) => deleteManufacturer(session), {
+  return useMutation({
+    mutationFn: (session: Manufacturer) => deleteManufacturer(session),
     onError: (error) => {
       console.log('Got error ' + error.message);
     },
@@ -111,7 +106,6 @@ const fetchManufacturer = async (
   if (settingsResult) {
     apiUrl = settingsResult['apiUrl'];
   }
-
   return axios.get(`${apiUrl}/v1/manufacturers/${id}`, {}).then((response) => {
     return response.data;
   });
@@ -120,23 +114,19 @@ const fetchManufacturer = async (
 export const useManufacturer = (
   id: string | undefined
 ): UseQueryResult<Manufacturer, AxiosError> => {
-  return useQuery<Manufacturer, AxiosError>(
-    ['Manufacturer', id],
-    (params) => {
+  return useQuery({
+    queryKey: ['Manufacturer', id],
+
+    queryFn: (params) => {
       return fetchManufacturer(id);
     },
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-      enabled: id !== undefined,
-    }
-  );
+    enabled: id !== undefined,
+  });
 };
 
 export const useManufacturerIds = (
   ids: string[]
-): UseQueryResult<Manufacturer, unknown>[] => {
+): UseQueryResult<Manufacturer>[] => {
   return useQueries({
     queries: ids.map((id) => ({
       queryKey: ['Manufacturer', id],
@@ -169,18 +159,17 @@ export const useEditManufacturer = (): UseMutationResult<
   EditManufacturer
 > => {
   const queryClient = useQueryClient();
-  return useMutation(
-    (manufacturer: EditManufacturer) => editManufacturer(manufacturer),
-    {
-      onError: (error) => {
-        console.log('Got error ' + error.message);
-      },
-      onSuccess: (manufacturerReturned) => {
-        queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
-        queryClient.invalidateQueries({
-          queryKey: ['Manufacturer', manufacturerReturned.id],
-        });
-      },
-    }
-  );
+  return useMutation({
+    mutationFn: (manufacturer: EditManufacturer) =>
+      editManufacturer(manufacturer),
+    onError: (error) => {
+      console.log('Got error ' + error.message);
+    },
+    onSuccess: (manufacturerReturned: Manufacturer) => {
+      queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
+      queryClient.invalidateQueries({
+        queryKey: ['Manufacturer', manufacturerReturned.id],
+      });
+    },
+  });
 };

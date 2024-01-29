@@ -2,18 +2,23 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '@testing-library/jest-dom';
 import { RenderOptions, render } from '@testing-library/react';
+import { enGB } from 'date-fns/locale/en-GB';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import {
   CatalogueCategory,
   CatalogueCategoryFormData,
   CatalogueItem,
+  Item,
   Manufacturer,
 } from './app.types';
 import CatalogueCategoryJSON from './mocks/CatalogueCategory.json';
 import CatalogueItemJSON from './mocks/CatalogueItems.json';
+import ItemsJSON from './mocks/Items.json';
 import ManufacturerJSON from './mocks/manufacturer.json';
 import { server } from './mocks/server';
 
@@ -60,9 +65,11 @@ export function renderComponentWithBrowserRouter(
   }: React.PropsWithChildren<unknown>): JSX.Element {
     return (
       <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
+        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </LocalizationProvider>
       </BrowserRouter>
     );
   }
@@ -87,9 +94,11 @@ export function renderComponentWithMemoryRouter(
   }: React.PropsWithChildren<unknown>): JSX.Element {
     return (
       <MemoryRouter initialEntries={[path]}>
-        <QueryClientProvider client={queryClient}>
-          {children}
-        </QueryClientProvider>
+        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </LocalizationProvider>
       </MemoryRouter>
     );
   }
@@ -154,4 +163,16 @@ export const getManufacturerById = (id: string): Manufacturer | undefined => {
       (manufacturer) => manufacturer.id === id
     ) as Manufacturer) || undefined
   );
+};
+
+export const getItemsByCatalogueItemId = (catalogueItemId: string): Item[] => {
+  return ItemsJSON.filter((item) => item.catalogue_item_id === catalogueItemId);
+};
+
+export const getItemById = (itemId: string): Item | undefined => {
+  return ItemsJSON.find((item) => item.id === itemId);
+};
+
+export const getItemsBySystemId = (systemId: string): Item[] => {
+  return ItemsJSON.filter((item) => item.system_id === systemId);
 };

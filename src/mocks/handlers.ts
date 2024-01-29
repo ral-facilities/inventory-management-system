@@ -1,9 +1,11 @@
 import { rest } from 'msw';
 import {
+  AddItem,
   AddSystem,
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
+  EditItem,
   EditManufacturer,
   EditSystem,
   Manufacturer,
@@ -14,6 +16,7 @@ import CatalogueItemJSON from './CatalogueItems.json';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import ManufacturerJSON from './manufacturer.json';
+import ItemsJSON from './Items.json';
 
 export const handlers = [
   // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
@@ -236,8 +239,7 @@ export const handlers = [
         return res(
           ctx.status(409),
           ctx.json({
-            detail:
-              'Catalogue item has children elements and cannot be deleted, please delete the children elements first',
+            detail: 'Catalogue item has child elements and cannot be deleted',
           })
         );
       } else {
@@ -260,8 +262,7 @@ export const handlers = [
       return res(
         ctx.status(409),
         ctx.json({
-          detail:
-            'Catalogue item has children elements and cannot be edited, please delete the children elements first',
+          detail: 'Catalogue item has child elements and cannot be edited',
         })
       );
     }
@@ -398,8 +399,8 @@ export const handlers = [
 
   rest.get('/v1/systems/:id', (req, res, ctx) => {
     const { id } = req.params;
-    const data = SystemsJSON.filter((system) => system.id === id);
-    if (data.length > 0) return res(ctx.status(200), ctx.json(data[0]));
+    const data = SystemsJSON.find((system) => system.id === id);
+    if (data !== undefined) return res(ctx.status(200), ctx.json(data));
     else
       return res(
         ctx.status(404),
@@ -476,5 +477,81 @@ export const handlers = [
     } else {
       return res(ctx.status(404), ctx.json(''));
     }
+  }),
+  // ------------------------------------ ITEMS ------------------------------------------------
+  rest.post('/v1/items/', async (req, res, ctx) => {
+    const body = (await req.json()) as AddItem;
+
+    if (body.serial_number === 'Error 500') {
+      return res(ctx.status(500), ctx.json(''));
+    }
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        ...body,
+        id: '1',
+      })
+    );
+  }),
+
+  rest.get('/v1/items/', (req, res, ctx) => {
+    const itemsParams = req.url.searchParams;
+    const catalogueItemId = itemsParams.get('catalogue_item_id');
+    const systemId = itemsParams.get('system_id');
+    let data;
+
+    if (catalogueItemId) {
+      data = ItemsJSON.filter(
+        (items) => items.catalogue_item_id === catalogueItemId
+      );
+    }
+
+    if (systemId) {
+      data = ItemsJSON.filter((items) => items.system_id === systemId);
+    }
+
+    return res(ctx.status(200), ctx.json(data));
+  }),
+  rest.get('/v1/items/:id', (req, res, ctx) => {
+    const { id } = req.params;
+
+    const data = ItemsJSON.find((items) => items.id === id);
+
+    return res(ctx.status(200), ctx.json(data));
+  }),
+  rest.delete('/v1/items/:id', (req, res, ctx) => {
+    const { id } = req.params;
+
+    if (id === 'Error 500') return res(ctx.status(500));
+
+    return res(ctx.status(204));
+  }),
+  rest.patch('/v1/items/:id', async (req, res, ctx) => {
+    const body = (await req.json()) as EditItem;
+    const { id } = req.params;
+
+    if (id === 'Error 409')
+      return res(
+        ctx.status(409),
+        ctx.json({
+          detail:
+            'The specified system ID does not exist',
+        })
+      );
+
+    const validItem = ItemsJSON.find((value) => value.id === id);
+
+    if (body.serial_number === 'Error 500')
+      return res(ctx.status(500), ctx.json(''));
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        ...validItem,
+        ...body,
+        id: id,
+      })
+    );
   }),
 ];

@@ -34,10 +34,10 @@ describe('Catalogue Items', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-items',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"catalogue_category_id":"4","name":"test","cost_gbp":5000,"cost_to_rework_gbp":400,"days_to_replace":14,"days_to_rework":5,"description":"test Description","item_model_number":"MXtest","is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":"https://example.com","drawing_number":"MX43242","manufacturer_id":"1","properties":[{"name":"Resolution","value":18},{"name":"Frame Rate","value":60},{"name":"Sensor Type","value":"IO"},{"name":"Sensor brand","value":"pixel"},{"name":"Broken","value":true},{"name":"Older than five years","value":false}]}'
       );
     });
@@ -56,10 +56,10 @@ describe('Catalogue Items', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-items',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"catalogue_category_id":"5","name":"Energy Meters 27_copy_1","cost_gbp":600,"cost_to_rework_gbp":89,"days_to_replace":7,"days_to_rework":60,"description":"Precision energy meters for accurate measurements. 27","item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"manufacturer_id":"3","properties":[{"name":"Measurement Range","value":2000}]}'
       );
     });
@@ -86,10 +86,10 @@ describe('Catalogue Items', () => {
     cy.findBrowserMockedRequests({
       method: 'POST',
       url: '/v1/catalogue-items',
-    }).should((patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
         '{"catalogue_category_id":"4","name":"test","cost_gbp":5000,"cost_to_rework_gbp":null,"days_to_replace":14,"days_to_rework":null,"description":null,"item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"manufacturer_id":"1","properties":[{"name":"Resolution","value":18},{"name":"Sensor Type","value":"IO"},{"name":"Broken","value":true}]}'
       );
     });
@@ -221,7 +221,7 @@ describe('Catalogue Items', () => {
       'exist'
     );
 
-    cy.findByRole('link', { name: 'Back to Cameras table view' }).click();
+    cy.findByRole('link', { name: 'cameras' }).click();
 
     cy.findByText('Cameras 1').should('exist');
     cy.findByText('Cameras 2').should('exist');
@@ -281,13 +281,13 @@ describe('Catalogue Items', () => {
   });
 
   it('displays the expired landing page message and navigates back to the catalogue home', () => {
-    cy.visit('/catalogue/items/1fds');
+    cy.visit('/catalogue/item/1fds');
 
     cy.findByText(
-      `This item doesn't exist. Please click the Home button to navigate to the catalogue home`
+      `This catalogue item doesn't exist. Please click the Home button on the top left of you screen to navigate to the catalogue home`
     ).should('exist');
 
-    cy.findByRole('link', { name: 'Home' }).click();
+    cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
 
     cy.findByText('Motion').should('exist');
   });
@@ -303,7 +303,7 @@ describe('Catalogue Items', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'Catalogue item has children elements and cannot be deleted, please delete the children elements first'
+          'Catalogue item has child elements and cannot be deleted, please delete the children elements first'
         );
       });
     cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
@@ -356,9 +356,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains(
-          'Catalogue item has children elements and cannot be edited, please delete the children elements first'
-        );
+        cy.contains('Catalogue item has child elements and cannot be edited');
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
@@ -388,11 +386,11 @@ describe('Catalogue Items', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/catalogue-items/:id',
-    }).should((patchRequests) => {
+    }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
-        '{"name":"test","description":null,"cost_gbp":6000,"cost_to_rework_gbp":894,"days_to_replace":71,"days_to_rework":605,"drawing_number":"MX43242","drawing_link":"https://example.com","item_model_number":"MXtest","manufacturer_id":"2"}'
+      expect(JSON.stringify(await request.json())).equal(
+        '{"name":"test","description":null,"cost_gbp":6000,"cost_to_rework_gbp":894,"days_to_replace":71,"days_to_rework":605,"drawing_number":"MX43242","drawing_link":"https://example.com","item_model_number":"MXtest","manufacturer_id":"1"}'
       );
     });
   });
@@ -411,10 +409,10 @@ describe('Catalogue Items', () => {
     cy.findBrowserMockedRequests({
       method: 'PATCH',
       url: '/v1/catalogue-items/:id',
-    }).should((patchRequests) => {
+    }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
-      expect(JSON.stringify(request.body)).equal(
+      expect(JSON.stringify(await request.json())).equal(
         '{"properties":[{"name":"Measurement Range","value":20000}]}'
       );
     });
@@ -551,12 +549,29 @@ describe('Catalogue Items', () => {
     cy.findAllByText('Manufacturer Name').should('exist');
   });
 
-  it('can navigate to an items replacement', () => {
+  it('can navigate to a catalogue items replacement', () => {
+    cy.visit('/catalogue/5');
+
+    cy.findAllByRole('link', { name: 'Click here' }).eq(1).click();
+
+    cy.url().should('contain', 'catalogue/item/6');
+  });
+
+  it('can navigate to an items page from the table view', () => {
     cy.visit('/catalogue/5');
 
     cy.findAllByRole('link', { name: 'Click here' }).eq(0).click();
 
-    cy.url().should('contain', 'catalogue/items/6');
+    cy.url().should('contain', 'catalogue/item/89/items');
+  });
+
+  it('can navigate to an items page from the landing page', () => {
+    cy.visit('/catalogue/5');
+    cy.findByText('Energy Meters 26').click();
+
+    cy.findAllByRole('link', { name: 'Items' }).eq(0).click();
+
+    cy.url().should('contain', 'catalogue/item/89/items');
   });
 
   it('can move multiple catalogue items', () => {
