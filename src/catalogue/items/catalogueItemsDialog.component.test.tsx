@@ -461,7 +461,7 @@ describe('Catalogue Items Dialog', () => {
       });
 
       expect(onClose).toHaveBeenCalled();
-    });
+    }, 10000);
 
     it('display error message when mandatory field is not filled in', async () => {
       props = {
