@@ -18,6 +18,7 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Drawing link').type('https://example.com');
     cy.findByLabelText('Model number').type('MXtest');
     cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
+    cy.findByLabelText('Notes').click().type('This is a test note')
     cy.findByLabelText('Resolution (megapixels) *').type('18');
     cy.findByLabelText('Frame Rate (fps)').type('60');
     cy.findByLabelText('Sensor Type *').type('IO');
@@ -38,7 +39,7 @@ describe('Catalogue Items', () => {
       expect(postRequests.length).equal(1);
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
-        '{"catalogue_category_id":"4","name":"test","cost_gbp":5000,"cost_to_rework_gbp":400,"days_to_replace":14,"days_to_rework":5,"description":"test Description","item_model_number":"MXtest","is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":"https://example.com","drawing_number":"MX43242","manufacturer_id":"1","properties":[{"name":"Resolution","value":18},{"name":"Frame Rate","value":60},{"name":"Sensor Type","value":"IO"},{"name":"Sensor brand","value":"pixel"},{"name":"Broken","value":true},{"name":"Older than five years","value":false}]}'
+        '{"catalogue_category_id":"4","name":"test","cost_gbp":5000,"cost_to_rework_gbp":400,"days_to_replace":14,"days_to_rework":5,"description":"test Description","item_model_number":"MXtest","is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":"https://example.com","drawing_number":"MX43242","manufacturer_id":"1","notes":"This is a test note","properties":[{"name":"Resolution","value":18},{"name":"Frame Rate","value":60},{"name":"Sensor Type","value":"IO"},{"name":"Sensor brand","value":"pixel"},{"name":"Broken","value":true},{"name":"Older than five years","value":false}]}'
       );
     });
   });
@@ -60,7 +61,7 @@ describe('Catalogue Items', () => {
       expect(postRequests.length).equal(1);
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
-        '{"catalogue_category_id":"5","name":"Energy Meters 27_copy_1","cost_gbp":600,"cost_to_rework_gbp":89,"days_to_replace":7,"days_to_rework":60,"description":"Precision energy meters for accurate measurements. 27","item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"manufacturer_id":"3","properties":[{"name":"Measurement Range","value":2000}]}'
+        '{"catalogue_category_id":"5","name":"Energy Meters 27_copy_1","cost_gbp":600,"cost_to_rework_gbp":89,"days_to_replace":7,"days_to_rework":60,"description":"Precision energy meters for accurate measurements. 27","item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"manufacturer_id":"3","notes":"Need to find new manufacturer. 27","properties":[{"name":"Measurement Range","value":2000}]}'
       );
     });
   });
@@ -90,7 +91,7 @@ describe('Catalogue Items', () => {
       expect(postRequests.length).equal(1);
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
-        '{"catalogue_category_id":"4","name":"test","cost_gbp":5000,"cost_to_rework_gbp":null,"days_to_replace":14,"days_to_rework":null,"description":null,"item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"manufacturer_id":"1","properties":[{"name":"Resolution","value":18},{"name":"Sensor Type","value":"IO"},{"name":"Broken","value":true}]}'
+        '{"catalogue_category_id":"4","name":"test","cost_gbp":5000,"cost_to_rework_gbp":null,"days_to_replace":14,"days_to_rework":null,"description":null,"item_model_number":null,"is_obsolete":false,"obsolete_reason":null,"obsolete_replacement_catalogue_item_id":null,"drawing_link":null,"drawing_number":null,"manufacturer_id":"1","notes":null,"properties":[{"name":"Resolution","value":18},{"name":"Sensor Type","value":"IO"},{"name":"Broken","value":true}]}'
       );
     });
   });
@@ -245,6 +246,7 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Sensor Type *').should('have.value', 'CMOS');
     cy.findByLabelText('Manufacturer *').should('have.value', 'Manufacturer A');
 
+
     cy.findByRole('button', { name: 'Cancel' }).click();
   });
 
@@ -379,6 +381,7 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Manufacturer *')
       .click()
       .type('Man{downArrow}{downArrow}{enter}');
+    cy.findAllByLabelText('Notes').clear().type("This is an updated note")
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
@@ -390,7 +393,7 @@ describe('Catalogue Items', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(await request.json())).equal(
-        '{"name":"test","description":null,"cost_gbp":6000,"cost_to_rework_gbp":894,"days_to_replace":71,"days_to_rework":605,"drawing_number":"MX43242","drawing_link":"https://example.com","item_model_number":"MXtest","manufacturer_id":"1"}'
+        '{"name":"test","description":null,"cost_gbp":6000,"cost_to_rework_gbp":894,"days_to_replace":71,"days_to_rework":605,"drawing_number":"MX43242","drawing_link":"https://example.com","item_model_number":"MXtest","manufacturer_id":"1","notes":"This is an updated note"}'
       );
     });
   });
@@ -679,6 +682,7 @@ describe('Catalogue Items', () => {
           is_obsolete: true,
           obsolete_replacement_catalogue_item_id: '6',
           obsolete_reason: 'The item is no longer being manufactured',
+          notes: 'Need to find new manufacturer. 26',
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -701,6 +705,7 @@ describe('Catalogue Items', () => {
           is_obsolete: false,
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
+          notes: 'Need to find new manufacturer. 27',
         })
       );
     });
