@@ -139,7 +139,7 @@ const CatalogueCategoryDialog = React.memo(
       setFormError(undefined);
     };
 
-    const checkDuplicateListItems = (
+    const validateCatalogueItems = (
       catalogueItemProperties: CatalogueCategoryFormData[]
     ): boolean => {
       let hasErrors = false;
@@ -152,6 +152,8 @@ const CatalogueCategoryDialog = React.memo(
           );
 
           const duplicateIndexes: number[] = [];
+          const invalidNumberIndexes: number[] = [];
+          const missingValueIndexes: number[] = [];
 
           trimmedLowerCaseValues.forEach((value, i) => {
             for (let j = i + 1; j < trimmedLowerCaseValues.length; j++) {
@@ -159,66 +161,30 @@ const CatalogueCategoryDialog = React.memo(
                 duplicateIndexes.push(i, j);
               }
             }
-          });
 
-          if (Array.from(new Set(duplicateIndexes)).length > 0) {
-            // Update listItemErrors state with the error indexes
-            setListItemErrors((prev) => [
-              ...prev.slice(0, index),
-              {
-                index,
-                valueIndex: [
-                  ...(prev[index]?.valueIndex || []),
-                  ...Array.from(new Set(duplicateIndexes)).map((i) => ({
-                    index: i,
-                    errorMessage: 'Duplicate value',
-                  })),
-                ],
-              },
-              ...prev.slice(index + 1),
-            ]);
-
-            hasErrors = true;
-          }
-        }
-      });
-
-      return hasErrors;
-    };
-
-    const checkListValuesType = (
-      catalogueItemProperties: CatalogueCategoryFormData[]
-    ): boolean => {
-      let hasErrors = false;
-
-      // Use a traditional for loop to iterate over the array
-      for (let index = 0; index < catalogueItemProperties.length; index++) {
-        const property = catalogueItemProperties[index];
-
-        if (property.allowed_values?.type === 'list') {
-          const invalidNumberIndexes: number[] = [];
-          const missingValueIndexes: number[] = [];
-
-          // Check each value in the list
-          property.allowed_values.values.forEach((value, valueIndex) => {
             if (!value) {
-              missingValueIndexes.push(valueIndex);
-            } else if (property.type === 'number' && (isNaN(value) || !value)) {
-              invalidNumberIndexes.push(valueIndex);
+              missingValueIndexes.push(i);
+            } else if (
+              property.type === 'number' &&
+              (isNaN(+value) || !value)
+            ) {
+              invalidNumberIndexes.push(i);
             }
           });
 
           if (
+            Array.from(new Set(duplicateIndexes)).length > 0 ||
             Array.from(new Set(invalidNumberIndexes)).length > 0 ||
             Array.from(new Set(missingValueIndexes)).length > 0
           ) {
             // Update listItemErrors state with the error indexes
             setListItemErrors((prev) => [
-              ...prev.slice(0, index), // Keep the previous items before the current index
+              ...prev,
               {
                 index,
                 valueIndex: [
                   ...(prev[index]?.valueIndex || []),
+
                   ...Array.from(new Set(invalidNumberIndexes)).map((i) => ({
                     index: i,
                     errorMessage: 'Please enter a valid number',
@@ -227,15 +193,18 @@ const CatalogueCategoryDialog = React.memo(
                     index: i,
                     errorMessage: 'Please enter a value',
                   })),
+                  ...Array.from(new Set(duplicateIndexes)).map((i) => ({
+                    index: i,
+                    errorMessage: 'Duplicate value',
+                  })),
                 ],
               },
-              ...prev.slice(index + 1), // Keep the items after the current index
             ]);
 
             hasErrors = true;
           }
         }
-      }
+      });
 
       return hasErrors;
     };
@@ -327,15 +296,11 @@ const CatalogueCategoryDialog = React.memo(
           hasErrors = true;
         }
 
-        const hasListValuesTypeErrors = checkListValuesType(
+        const hasAllowedValuesListErrors = validateCatalogueItems(
           categoryData.catalogue_item_properties
         );
 
-        const hasDuplicateListValues = checkDuplicateListItems(
-          categoryData.catalogue_item_properties
-        );
-
-        if (hasListValuesTypeErrors || hasDuplicateListValues) {
+        if (hasAllowedValuesListErrors) {
           hasErrors = true;
         }
       }
