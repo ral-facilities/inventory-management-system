@@ -431,6 +431,30 @@ describe('ItemDialog', () => {
         warranty_end_date: '2023-05-18T23:00:00.000Z',
       });
     }, 10000);
+
+    it('Displays catalogue item notes tooltip on hover', async () => {
+      createView();
+      await waitFor(() => {
+        expect(
+          screen.getByLabelText('Catalogue item note: null')
+        ).toBeInTheDocument();
+      });
+
+      const infoIcon = screen.getByLabelText('Catalogue item note: null');
+
+      await user.hover(infoIcon);
+
+      await waitFor(() => {
+        expect(screen.getByText('Catalogue item note:')).toBeInTheDocument();
+      });
+      expect(screen.getByText('No note')).toBeInTheDocument();
+
+      await user.unhover(infoIcon);
+
+      await waitFor(() => {
+        expect(screen.queryByText('No note')).not.toBeInTheDocument();
+      });
+    });
   });
 
   describe('Edit Item', () => {

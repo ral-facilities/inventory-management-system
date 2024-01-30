@@ -56,6 +56,7 @@ describe('Catalogue Items Dialog', () => {
     broken?: string;
     older?: string;
     manufacturer?: string;
+    notes?: string;
   }) => {
     values.name !== undefined &&
       fireEvent.change(screen.getByLabelText('Name *'), {
@@ -106,6 +107,11 @@ describe('Catalogue Items Dialog', () => {
       const manufacturerPopup = screen.getAllByRole('combobox')[0];
       await user.type(manufacturerPopup, values.manufacturer);
     }
+
+    values.notes !== undefined &&
+      fireEvent.change(screen.getByLabelText('Notes'), {
+        target: { value: values.notes },
+      });
 
     values.resolution !== undefined &&
       fireEvent.change(screen.getByLabelText('Resolution (megapixels) *'), {
@@ -181,6 +187,7 @@ describe('Catalogue Items Dialog', () => {
       broken: 'True',
       older: 'False',
       manufacturer: 'Man{arrowdown}{enter}',
+      notes: 'Test note',
     });
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
@@ -197,6 +204,7 @@ describe('Catalogue Items Dialog', () => {
       drawing_number: 'mk4324',
       is_obsolete: false,
       manufacturer_id: '1',
+      notes: 'Test note',
       item_model_number: 'mk4324',
       name: 'test',
       obsolete_reason: null,
@@ -244,6 +252,7 @@ describe('Catalogue Items Dialog', () => {
       drawing_number: null,
       is_obsolete: false,
       manufacturer_id: '1',
+      notes: null,
       item_model_number: null,
       name: 'test',
       obsolete_reason: null,
@@ -432,6 +441,7 @@ describe('Catalogue Items Dialog', () => {
         itemModelNumber: 'test1',
         name: 'test',
         manufacturer: 'Man{arrowdown}{arrowdown}{enter}',
+        notes: 'test',
       });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
@@ -447,6 +457,7 @@ describe('Catalogue Items Dialog', () => {
         item_model_number: 'test1',
         name: 'test',
         manufacturer_id: '3',
+        notes: 'test',
       });
 
       expect(onClose).toHaveBeenCalled();
@@ -478,6 +489,7 @@ describe('Catalogue Items Dialog', () => {
         broken: 'None',
         older: 'None',
         manufacturer: '{delete}',
+        notes: '',
       });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });

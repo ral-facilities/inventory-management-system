@@ -82,6 +82,19 @@ describe('Catalogue Items Landing Page', () => {
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
   });
 
+  it('renders notes text correctly', async () => {
+    createView('/catalogue/item/89');
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Notes:')).toBeInTheDocument();
+    expect(
+      screen.getByText('Need to find new manufacturer')
+    ).toBeInTheDocument();
+  });
+
   it('renders no item page correctly', async () => {
     createView('/catalogue/item/1fds');
     await waitFor(() => {

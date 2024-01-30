@@ -450,7 +450,7 @@ function CatalogueItemsLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {catalogueItemIdData.notes ?? 'No notes'}
+              {catalogueItemIdData.notes ?? 'None'}
             </Typography>
           </Grid>
         </Grid>

@@ -272,6 +272,20 @@ exports[`Catalogue Items details panel renders details panel correctly (None val
                       </div>
                     </div>
                   </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <h6
+                      class="MuiTypography-root MuiTypography-h6 css-1iz74ne-MuiTypography-root"
+                    >
+                      Notes:
+                    </h6>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                    >
+                      None
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -765,6 +779,20 @@ exports[`Catalogue Items details panel renders details panel correctly (with obs
                       </div>
                     </div>
                   </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <h6
+                      class="MuiTypography-root MuiTypography-h6 css-1iz74ne-MuiTypography-root"
+                    >
+                      Notes:
+                    </h6>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                    >
+                      None
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1201,6 +1229,20 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                         </p>
                       </div>
                     </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <h6
+                      class="MuiTypography-root MuiTypography-h6 css-1iz74ne-MuiTypography-root"
+                    >
+                      Notes:
+                    </h6>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                    >
+                      Need to find new manufacturer. 26
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1649,6 +1691,20 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                       </div>
                     </div>
                   </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <h6
+                      class="MuiTypography-root MuiTypography-h6 css-1iz74ne-MuiTypography-root"
+                    >
+                      Notes:
+                    </h6>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                    >
+                      Need to find new manufacturer. 26
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -2094,6 +2150,20 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                         </p>
                       </div>
                     </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  >
+                    <h6
+                      class="MuiTypography-root MuiTypography-h6 css-1iz74ne-MuiTypography-root"
+                    >
+                      Notes:
+                    </h6>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                    >
+                      Need to find new manufacturer. 26
+                    </p>
                   </div>
                 </div>
               </div>

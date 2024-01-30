@@ -176,6 +176,15 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Grid>
               </Grid>
             </Grid>
+
+            <Grid item xs={12}>
+              <Typography sx={{ my: 1 }} variant="h6">
+                Notes:
+              </Typography>
+              <Typography sx={{ mb: 1 }} variant="body1">
+                {catalogueItemIdData.notes ?? 'None'}
+              </Typography>
+            </Grid>
           </Grid>
         </TabPanel>
 

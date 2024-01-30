@@ -587,6 +587,7 @@ function ItemDialog(props: ItemDialogProps) {
                   }
                   placement="right"
                   enterTouchDelay={0}
+                  aria-label={`Catalogue item note: ${catalogueItem?.notes}`}
                 >
                   <IconButton size="small">
                     <InfoOutlinedIcon />
