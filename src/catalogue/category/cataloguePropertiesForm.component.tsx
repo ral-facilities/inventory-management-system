@@ -193,77 +193,82 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   ) => {
     const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
     const currentField = updatedFormFields[index];
-
-    const updatedAllowedValues: AllowedValuesList = {
-      type: 'list',
-      values:
-        currentField.allowed_values?.values.map((val, i) =>
+    if (currentField.allowed_values) {
+      const updatedAllowedValues: AllowedValuesList = {
+        type: 'list',
+        values: currentField.allowed_values.values.map((val, i) =>
           i === valueIndex ? value : val
-        ) || [],
-    };
+        ),
+      };
 
-    updatedFormFields[index] = {
-      ...currentField,
-      allowed_values: updatedAllowedValues,
-    };
+      updatedFormFields[index] = {
+        ...currentField,
+        allowed_values: updatedAllowedValues,
+      };
 
-    onChangeFormFields(updatedFormFields);
+      onChangeFormFields(updatedFormFields);
 
-    // Remove the error when the value is changed
+      // Remove the error when the value is changed
 
-    const updatedListItemErrors = [...listItemErrors];
+      const updatedListItemErrors = [...listItemErrors];
 
-    const errorIndex = updatedListItemErrors.findIndex(
-      (error) => error.index === index
-    );
+      const errorIndex = updatedListItemErrors.findIndex(
+        (error) => error.index === index
+      );
 
-    updatedListItemErrors[errorIndex] = {
-      index: index,
-      valueIndex: (updatedListItemErrors[errorIndex]?.valueIndex ?? [])
-        .filter((item) => item.index !== valueIndex)
-        .filter((item) => item.errorMessage !== 'Duplicate value'),
-    };
+      updatedListItemErrors[errorIndex] = {
+        index: index,
+        valueIndex: (updatedListItemErrors[errorIndex]?.valueIndex ?? [])
+          .filter((item) => item.index !== valueIndex)
+          .filter((item) => item.errorMessage !== 'Duplicate value'),
+      };
 
-    onChangeListItemErrors(
-      updatedListItemErrors.filter((item) => (item.valueIndex?.length ?? 0) > 0)
-    );
+      onChangeListItemErrors(
+        updatedListItemErrors.filter(
+          (item) => (item.valueIndex?.length ?? 0) > 0
+        )
+      );
+    }
   };
 
   const handleDeleteListValue = (index: number, valueIndex: number) => {
     const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
     const currentField = updatedFormFields[index];
 
-    const updatedAllowedValues: AllowedValuesList = {
-      type: 'list',
-      values:
-        currentField.allowed_values?.values.filter(
+    if (currentField.allowed_values) {
+      const updatedAllowedValues: AllowedValuesList = {
+        type: 'list',
+        values: currentField.allowed_values.values.filter(
           (_, i) => i !== valueIndex
-        ) || [],
-    };
+        ),
+      };
 
-    updatedFormFields[index] = {
-      ...currentField,
-      allowed_values: updatedAllowedValues,
-    };
+      updatedFormFields[index] = {
+        ...currentField,
+        allowed_values: updatedAllowedValues,
+      };
 
-    onChangeFormFields(updatedFormFields);
+      onChangeFormFields(updatedFormFields);
 
-    // Remove the error when the value is deleted
-    const updatedListItemErrors = [...listItemErrors];
-    const errorIndex = updatedListItemErrors.findIndex(
-      (error) => error.index === index
-    );
+      // Remove the error when the value is deleted
+      const updatedListItemErrors = [...listItemErrors];
+      const errorIndex = updatedListItemErrors.findIndex(
+        (error) => error.index === index
+      );
 
-    updatedListItemErrors[errorIndex] = {
-      index: index,
-      valueIndex: (updatedListItemErrors[errorIndex]?.valueIndex ?? [])
-        .filter((item) => item.index !== valueIndex)
-        .filter((item) => item.errorMessage !== 'Duplicate value'),
-    };
+      updatedListItemErrors[errorIndex] = {
+        index: index,
+        valueIndex: (updatedListItemErrors[errorIndex]?.valueIndex ?? [])
+          .filter((item) => item.index !== valueIndex)
+          .filter((item) => item.errorMessage !== 'Duplicate value'),
+      };
 
-    onChangeListItemErrors(
-      updatedListItemErrors.filter((item) => (item.valueIndex?.length ?? 0) > 0)
-    );
+      onChangeListItemErrors(
+        updatedListItemErrors.filter(
+          (item) => (item.valueIndex?.length ?? 0) > 0
+        )
+      );
+    }
   };
 
   const isError = React.useCallback(
