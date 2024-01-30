@@ -182,8 +182,8 @@ describe('Catalogue Category', () => {
 
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findByText('Property Name is required').should('exist');
-    cy.findByText('Select Type is required').should('exist');
+    cy.findByText('Please enter a property name').should('exist');
+    cy.findByText('Please select a type').should('exist');
 
     cy.findAllByLabelText('Property Name *').last().type('Updated Field 2');
     cy.findAllByLabelText('Select Type *').last().click();
@@ -202,6 +202,184 @@ describe('Catalogue Category', () => {
         '{"name":"test","is_leaf":true,"catalogue_item_properties":[{"name":"Updated Field 1","type":"boolean","mandatory":false},{"name":"Updated Field 2","type":"number","unit":"","mandatory":false}]}'
       );
     });
+  });
+
+  it('adds a catalogue category where isLeaf is true with a list of allowed values', () => {
+    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByLabelText('Name *').type('test');
+
+    cy.findByLabelText('Catalogue Items').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+    cy.findByLabelText('Property Name *').type('Updated Field 1');
+    cy.findByLabelText('Select Type *').click();
+    cy.findByText('Boolean').click();
+
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findByText('Please enter a property name').should('exist');
+    cy.findByText('Please select a type').should('exist');
+
+    cy.findAllByLabelText('Property Name *').last().type('Updated Field 2');
+    cy.findAllByLabelText('Select Type *').last().click();
+    cy.findByText('Number').click();
+    cy.findAllByLabelText('Select Allowed values *').last().click();
+    cy.findByRole('option', { name: 'List' }).click();
+    cy.findByRole('button', { name: 'Add list item 1' }).click();
+    cy.findByLabelText('List Item 0').type('10');
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-categories',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
+        JSON.stringify({
+          name: 'test',
+          is_leaf: true,
+          catalogue_item_properties: [
+            { name: 'Updated Field 1', type: 'boolean', mandatory: false },
+            {
+              name: 'Updated Field 2',
+              type: 'number',
+              unit: '',
+              mandatory: false,
+              allowed_values: { type: 'list', values: [10] },
+            },
+          ],
+        })
+      );
+    });
+  });
+
+  it('displays the allowed values list error states (Text)', () => {
+    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByLabelText('Name *').type('test');
+
+    cy.findByLabelText('Catalogue Items').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+    cy.findByLabelText('Property Name *').type('Updated Field 1');
+    cy.findByLabelText('Select Type *').click();
+    cy.findByText('Text').click();
+    cy.findAllByLabelText('Select Allowed values *').last().click();
+    cy.findByRole('option', { name: 'List' }).click();
+    cy.findByRole('button', { name: 'Add list item 0' }).click();
+    cy.findByRole('button', { name: 'Add list item 0' }).click();
+
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+
+    cy.findAllByLabelText('Property Name *').last().type('Updated Field 2');
+    cy.findAllByLabelText('Select Type *').last().click();
+    cy.findByRole('option', { name: 'Text' }).click();
+    cy.findAllByLabelText('Select Allowed values *').last().click();
+    cy.findByRole('option', { name: 'List' }).click();
+    cy.findByRole('button', { name: 'Add list item 1' }).click();
+    cy.findByRole('button', { name: 'Add list item 1' }).click();
+    cy.findAllByLabelText('List Item 0').last().type('10');
+    cy.findAllByLabelText('List Item 1').last().type('10');
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findAllByText('Please enter a value').should('have.length', 2);
+    cy.findAllByText('Duplicate value').should('have.length', 2);
+
+    // Clearing the errors
+
+    cy.findAllByLabelText('List Item 1').last().clear();
+    cy.findAllByLabelText('List Item 1').last().type('11');
+    cy.findAllByText('Duplicate value').should('have.length', 0);
+
+    cy.findAllByLabelText('List Item 0').first().type('10');
+    cy.findAllByLabelText('List Item 1').first().type('11');
+    cy.findAllByText('Please enter a value').should('have.length', 0);
+  });
+
+  it('displays the allowed values list error states (number)', () => {
+    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByLabelText('Name *').type('test');
+
+    cy.findByLabelText('Catalogue Items').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+    cy.findByLabelText('Property Name *').type('Updated Field 1');
+    cy.findByLabelText('Select Type *').click();
+    cy.findByText('Number').click();
+    cy.findAllByLabelText('Select Allowed values *').last().click();
+    cy.findByRole('option', { name: 'List' }).click();
+    cy.findByRole('button', { name: 'Add list item 0' }).click();
+    cy.findByRole('button', { name: 'Add list item 0' }).click();
+
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+
+    cy.findAllByLabelText('Property Name *').eq(1).type('Updated Field 2');
+    cy.findAllByLabelText('Select Type *').eq(1).click();
+    cy.findByRole('option', { name: 'Number' }).click();
+    cy.findAllByLabelText('Select Allowed values *').eq(1).click();
+    cy.findByRole('option', { name: 'List' }).click();
+    cy.findByRole('button', { name: 'Add list item 1' }).click();
+    cy.findByRole('button', { name: 'Add list item 1' }).click();
+    cy.findAllByLabelText('List Item 0').eq(1).type('10');
+    cy.findAllByLabelText('List Item 1').eq(1).type('10');
+
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+
+    cy.findAllByLabelText('Property Name *').last().type('Updated Field 3');
+    cy.findAllByLabelText('Select Type *').last().click();
+    cy.findByRole('option', { name: 'Number' }).click();
+    cy.findAllByLabelText('Select Allowed values *').last().click();
+    cy.findByRole('option', { name: 'List' }).click();
+    cy.findByRole('button', { name: 'Add list item 2' }).click();
+    cy.findByRole('button', { name: 'Add list item 2' }).click();
+    cy.findAllByLabelText('List Item 0').last().type('10b');
+    cy.findAllByLabelText('List Item 1').last().type('10c');
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findAllByText('Please enter a value').should('have.length', 2);
+    cy.findAllByText('Duplicate value').should('have.length', 2);
+    cy.findAllByText('Please enter a valid number').should('have.length', 2);
+
+    // Clearing the errors
+
+    cy.findAllByLabelText('List Item 1').last().clear();
+    cy.findAllByLabelText('List Item 1').last().type('11');
+    cy.findAllByLabelText('List Item 1').last().clear();
+    cy.findAllByLabelText('List Item 1').last().type('12');
+    cy.findAllByText('Please enter a valid number').should('have.length', 0);
+
+    cy.findAllByLabelText('List Item 1').eq(1).clear();
+    cy.findAllByLabelText('List Item 1').eq(1).type('11');
+    cy.findAllByText('Duplicate value').should('have.length', 0);
+
+    cy.findAllByLabelText('List Item 0').first().type('10');
+    cy.findAllByLabelText('List Item 1').first().type('11');
+    cy.findAllByText('Please enter a value').should('have.length', 0);
   });
 
   it('displays error message when duplicate names for properties are entered', () => {
