@@ -11,9 +11,9 @@ describe('Catalogue Properties Form', () => {
   let props: CataloguePropertiesFormProps;
   let user;
   const onChangeFormFields = jest.fn();
-  const onChangeErrorFields = jest.fn();
+  const onChangeCatalogueItemPropertiesErrors = jest.fn();
   const onChangeListItemErrors = jest.fn();
-  const onChangePropertyNameError = jest.fn();
+
   const resetFormError = jest.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(
@@ -25,10 +25,9 @@ describe('Catalogue Properties Form', () => {
     props = {
       formFields: [],
       onChangeFormFields: onChangeFormFields,
-      errorFields: [],
-      onChangeErrorFields: onChangeErrorFields,
-      propertyNameError: [],
-      onChangePropertyNameError: onChangePropertyNameError,
+      catalogueItemPropertiesErrors: [],
+      onChangeCatalogueItemPropertiesErrors:
+        onChangeCatalogueItemPropertiesErrors,
       onChangeListItemErrors: onChangeListItemErrors,
       listItemErrors: [],
       resetFormError: resetFormError,
@@ -229,26 +228,78 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('display error message for type and name if they are not filled in', async () => {
-    const formFields = [
+    const formFields: CatalogueCategoryFormData[] = [
       { name: '', type: 'number', unit: '', mandatory: false },
       { name: '', type: '', unit: '', mandatory: false },
       { name: 'raduis 1', type: '', unit: '', mandatory: false },
-      { name: 'raduis 2', type: 'number', unit: '', mandatory: false },
+      {
+        name: 'raduis 2',
+        type: 'number',
+        unit: '',
+        allowed_values: { type: 'list', values: [] },
+        mandatory: false,
+      },
+    ];
+    const catalogueItemPropertiesErrors: {
+      index: number;
+      valueIndex: {
+        index: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
+        errorMessage: string;
+      } | null;
+    }[] = [
+      {
+        index: 0,
+        valueIndex: {
+          index: 'name',
+          errorMessage: 'Please enter a property name',
+        },
+      },
+      {
+        index: 1,
+        valueIndex: {
+          index: 'name',
+          errorMessage: 'Please enter a property name',
+        },
+      },
+      {
+        index: 1,
+        valueIndex: {
+          index: 'type',
+          errorMessage: 'Please select a type',
+        },
+      },
+      {
+        index: 3,
+        valueIndex: {
+          index: 'list',
+          errorMessage: 'Please create a valid list item',
+        },
+      },
     ];
 
-    const errorFields = [0, 1, 2];
     props = {
       ...props,
       formFields: formFields,
-      errorFields: errorFields,
+      catalogueItemPropertiesErrors: catalogueItemPropertiesErrors,
     };
     createView();
 
-    const nameHelperTexts = screen.queryAllByText('Select Type is required');
-    const typeHelperTexts = screen.queryAllByText('Property Name is required');
+    const nameHelperTexts = screen.queryAllByText(
+      'Please enter a property name'
+    );
+    const typeHelperTexts = screen.queryAllByText('Please select a type');
+    const listHelperTexts = screen.queryAllByText(
+      'Please create a valid list item'
+    );
 
     expect(nameHelperTexts.length).toBe(2);
-    expect(typeHelperTexts.length).toBe(2);
+    expect(typeHelperTexts.length).toBe(1);
+    expect(listHelperTexts.length).toBe(1);
+
+    // Click on the add button
+    await user.click(
+      await screen.getAllByRole('button', { name: 'Add list item 3' })[0]
+    );
 
     const formName = screen.getAllByLabelText('Property Name *');
     const formType = screen.getAllByLabelText('Select Type *');
@@ -264,28 +315,58 @@ describe('Catalogue Properties Form', () => {
       name: 'Select Type',
     });
 
-    await user.click(within(dropdown).getByRole('option', { name: 'Boolean' }));
+    await user.click(within(dropdown).getByRole('option', { name: 'Text' }));
 
-    expect(onChangeFormFields).toHaveBeenCalledTimes(2);
+    expect(onChangeFormFields).toHaveBeenCalledTimes(3);
     expect(onChangeFormFields).toHaveBeenCalledWith([
-      { mandatory: false, name: 'Updated Field', type: 'boolean' },
+      { mandatory: false, name: 'Updated Field', type: 'string', unit: '' },
       { mandatory: false, name: '', type: '', unit: '' },
       { mandatory: false, name: 'raduis 1', type: '', unit: '' },
-      { mandatory: false, name: 'raduis 2', type: 'number', unit: '' },
+      {
+        mandatory: false,
+        name: 'raduis 2',
+        allowed_values: { type: 'list', values: [''] },
+        type: 'number',
+        unit: '',
+      },
     ]);
   });
 
-  it('display error if duplicate property names are entered', async () => {
+  it('display error if duplicate property names are entered and clears when a name is change', async () => {
     const formFields = [
       { name: 'Field', type: 'text', unit: '', mandatory: false },
       { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
       { name: 'Field', type: 'boolean', mandatory: false },
     ];
-    const propertyNameError = ['field'];
+    const catalogueItemPropertiesErrors: {
+      index: number;
+      valueIndex: {
+        index: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
+        errorMessage: string;
+      } | null;
+    }[] = [
+      {
+        index: 0,
+        valueIndex: {
+          index: 'name',
+          errorMessage:
+            'Duplicate property name. Please change the name or remove the property',
+        },
+      },
+      {
+        index: 2,
+        valueIndex: {
+          index: 'name',
+          errorMessage:
+            'Duplicate property name. Please change the name or remove the property',
+        },
+      },
+    ];
+
     props = {
       ...props,
       formFields: formFields,
-      propertyNameError: propertyNameError,
+      catalogueItemPropertiesErrors: catalogueItemPropertiesErrors,
     };
     createView();
 
@@ -293,8 +374,65 @@ describe('Catalogue Properties Form', () => {
       'Duplicate property name. Please change the name or remove the property'
     );
     expect(duplicatePropertyNameHelperText.length).toBe(2);
+
+    const formName = screen.getAllByLabelText('Property Name *');
+
+    // Modify the name field using userEvent
+    fireEvent.change(formName[0], {
+      target: { value: 'Updated Field' },
+    });
+
+    expect(onChangeCatalogueItemPropertiesErrors).toHaveBeenCalledWith([]);
   });
 
+  it('display error if duplicate property names are entered and clears property is deleted', async () => {
+    const formFields = [
+      { name: 'Field', type: 'text', unit: '', mandatory: false },
+      { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
+      { name: 'Field', type: 'boolean', mandatory: false },
+    ];
+    const catalogueItemPropertiesErrors: {
+      index: number;
+      valueIndex: {
+        index: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
+        errorMessage: string;
+      } | null;
+    }[] = [
+      {
+        index: 0,
+        valueIndex: {
+          index: 'name',
+          errorMessage:
+            'Duplicate property name. Please change the name or remove the property',
+        },
+      },
+      {
+        index: 2,
+        valueIndex: {
+          index: 'name',
+          errorMessage:
+            'Duplicate property name. Please change the name or remove the property',
+        },
+      },
+    ];
+
+    props = {
+      ...props,
+      formFields: formFields,
+      catalogueItemPropertiesErrors: catalogueItemPropertiesErrors,
+    };
+    createView();
+
+    const duplicatePropertyNameHelperText = screen.queryAllByText(
+      'Duplicate property name. Please change the name or remove the property'
+    );
+    expect(duplicatePropertyNameHelperText.length).toBe(2);
+
+    // Click on the add button
+    await user.click(screen.getAllByTestId('DeleteIcon')[0]);
+
+    expect(onChangeCatalogueItemPropertiesErrors).toHaveBeenCalledWith([]);
+  });
   it('should delete a list item when the delete icon is click', async () => {
     const formFields: CatalogueCategoryFormData[] = [
       {

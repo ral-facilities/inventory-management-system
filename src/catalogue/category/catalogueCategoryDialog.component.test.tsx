@@ -37,10 +37,6 @@ describe('Catalogue Category Dialog', () => {
       const numberOfCurrentFields = currentNameFields
         ? currentNameFields.length
         : 0;
-      // const currentNameFields = screen.queryAllByLabelText('Property Name *');
-      // const numberOfCurrentFields = currentNameFields
-      // ? currentNameFields.length
-      // : 0;
 
       // Assume want a leaf now
       await user.click(screen.getByLabelText('Catalogue Items'));
@@ -407,9 +403,9 @@ describe('Catalogue Category Dialog', () => {
 
       await waitFor(() => user.click(saveButton));
 
-      const nameHelperTexts = screen.queryAllByText('Select Type is required');
+      const nameHelperTexts = screen.queryAllByText('Please select a type');
       const typeHelperTexts = screen.queryAllByText(
-        'Property Name is required'
+        'Please enter a property name'
       );
 
       expect(nameHelperTexts.length).toBe(2);
@@ -495,6 +491,66 @@ describe('Catalogue Category Dialog', () => {
 
       expect(duplicateHelperTexts.length).toEqual(2);
       expect(incorrectTypeHelperTexts.length).toEqual(1);
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays error if the allowed values list is empty', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'mm',
+            allowed_values: { type: 'list', values: [] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const listHelperTexts = screen.queryAllByText(
+        'Please create a valid list item'
+      );
+
+      expect(listHelperTexts.length).toEqual(1);
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays error type is undefined and a list item is undefined', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: '',
+            unit: 'mm',
+            allowed_values: { type: 'list', values: ['', ''] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const listHelperTexts = screen.queryAllByText('Please enter a value');
+
+      expect(listHelperTexts.length).toEqual(2);
 
       expect(onClose).not.toHaveBeenCalled();
     });
@@ -882,9 +938,9 @@ describe('Catalogue Category Dialog', () => {
 
       await user.click(saveButton);
 
-      const nameHelperTexts = screen.queryAllByText('Select Type is required');
+      const nameHelperTexts = screen.queryAllByText('Please select a type');
       const typeHelperTexts = screen.queryAllByText(
-        'Property Name is required'
+        'Please enter a property name'
       );
 
       expect(nameHelperTexts.length).toBe(2);
