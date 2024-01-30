@@ -441,6 +441,18 @@ function CatalogueItemsLandingPage() {
               </Grid>
             )}
           </Grid>
+          <Grid item xs={12}>
+            <Typography sx={{ margin: 1, textAlign: 'center' }} variant="h6">
+              Notes:
+            </Typography>
+            <Typography
+              sx={{ margin: 1, textAlign: 'center' }}
+              variant="body1"
+              color="text.secondary"
+            >
+              {catalogueItemIdData.notes ?? 'No notes'}
+            </Typography>
+          </Grid>
         </Grid>
       )}
       {!catalogueItemIdDataLoading ? (
