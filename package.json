@@ -71,7 +71,7 @@
     ],
     "globalSetup": "./global-setup.js"
   },
-  "packageManager": "yarn@3.7.0",
+  "packageManager": "yarn@4.0.2",
   "devDependencies": {
     "@babel/eslint-parser": "^7.21.8",
     "@testing-library/cypress": "^10.0.0",
