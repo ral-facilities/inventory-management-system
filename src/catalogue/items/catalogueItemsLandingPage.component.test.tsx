@@ -91,7 +91,7 @@ describe('Catalogue Items Landing Page', () => {
 
     expect(screen.getByText('Notes:')).toBeInTheDocument();
     expect(
-      screen.getByText('Need to find new manufacturer')
+      screen.getByText('Need to find new manufacturer. 26')
     ).toBeInTheDocument();
   });
 
