@@ -62,6 +62,7 @@ describe('Manufacturer', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -85,6 +86,7 @@ describe('Manufacturer', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -209,6 +211,7 @@ describe('Manufacturer', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',

@@ -89,10 +89,12 @@ describe('Systems', () => {
   describe('Add', () => {
     it('adds a root system with only required parameters', () => {
       cy.findByRole('button', { name: 'add system' }).click();
-
       cy.findByLabelText('Name *').type('System name');
+
       cy.startSnoopingBrowserMockedRequest();
+
       cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
         method: 'POST',
@@ -120,7 +122,9 @@ describe('Systems', () => {
       cy.findByRole('option', { name: 'high' }).click();
 
       cy.startSnoopingBrowserMockedRequest();
+
       cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
         method: 'POST',
@@ -144,10 +148,12 @@ describe('Systems', () => {
       cy.visit('/systems/65328f34a40ff5301575a4e3');
 
       cy.findByRole('button', { name: 'add subsystem' }).click();
-
       cy.findByLabelText('Name *').type('System name');
+
       cy.startSnoopingBrowserMockedRequest();
+
       cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
         method: 'POST',
@@ -222,7 +228,9 @@ describe('Systems', () => {
       cy.findByRole('option', { name: 'medium' }).click();
 
       cy.startSnoopingBrowserMockedRequest();
+
       cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
         method: 'PATCH',
@@ -250,7 +258,9 @@ describe('Systems', () => {
       cy.findByLabelText('Name *').clear().type('System name');
 
       cy.startSnoopingBrowserMockedRequest();
+
       cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
         method: 'PATCH',
@@ -361,7 +371,9 @@ describe('Systems', () => {
       cy.findByRole('option', { name: 'medium' }).click();
 
       cy.startSnoopingBrowserMockedRequest();
+
       cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
         method: 'POST',
@@ -393,7 +405,9 @@ describe('Systems', () => {
       cy.findByLabelText('Name *').clear().type('System name');
 
       cy.startSnoopingBrowserMockedRequest();
+
       cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
         method: 'POST',
@@ -423,7 +437,9 @@ describe('Systems', () => {
     cy.findByLabelText('Name *').clear().type('System name');
 
     cy.startSnoopingBrowserMockedRequest();
+
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',

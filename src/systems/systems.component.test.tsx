@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 
 describe('Systems', () => {
   // Quite a few of these take more than 5 seconds on CI
-  jest.setTimeout(12000);
+  jest.setTimeout(14000);
 
   let user;
   const createView = (path: string) => {
