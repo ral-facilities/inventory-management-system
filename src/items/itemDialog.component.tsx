@@ -38,6 +38,8 @@ import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
 import { useAddItem, useEditItem } from '../api/item';
 import { AxiosError } from 'axios';
 import { Label } from '@mui/icons-material';
+import { SystemsTableView } from '../systems/systemsTableView.component';
+import { useSystems } from '../api/systems';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
   // Attempt to create a Date object from the input
@@ -471,6 +473,15 @@ function ItemDialog(props: ItemDialogProps) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  //move to systems
+  const [parentSystemId, setParentSystemId] = React.useState<string | null>(
+    selectedItem?.system_id ?? null
+  );
+
+  const { data: systemsData, isLoading: systemsDataLoading } = useSystems(
+    parentSystemId === null ? 'null' : parentSystemId
+  );
+
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
@@ -725,7 +736,14 @@ function ItemDialog(props: ItemDialogProps) {
       case 2:
         return (
           <Grid item xs={12}>
-            <Typography>System Id table here</Typography>
+            <SystemsTableView
+              systemsData={systemsData}
+              systemsDataLoading={systemsDataLoading}
+              onChangeParentId={setParentSystemId}
+              // Use most unrestricted variant (i.e. copy with no selection)
+              selectedSystems={[]}
+              type="copyTo"
+            />
           </Grid>
         );
     }
