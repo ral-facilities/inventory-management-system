@@ -245,7 +245,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         manufacturerDetails.telephone !== selectedManufacturerData.telephone;
 
       let ManufacturerToEdit: EditManufacturer = {
-        id: selectedManufacturerData?.id,
+        id: selectedManufacturerData.id,
       };
 
       isNameUpdated && (ManufacturerToEdit.name = manufacturerDetails.name);
@@ -301,7 +301,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         (ManufacturerToEdit.telephone = manufacturerDetails.telephone);
 
       if (
-        (selectedManufacturerData.id && isNameUpdated) ||
+        isNameUpdated ||
+        isURLUpdated ||
         isAddressLineUpdated ||
         isTownUpdated ||
         isCountyUpdated ||
