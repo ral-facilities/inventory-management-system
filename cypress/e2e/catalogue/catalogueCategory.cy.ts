@@ -367,8 +367,8 @@ describe('Catalogue Category', () => {
 
     // Clearing the errors
 
-    cy.findAllByLabelText('List Item 1').last().clear();
-    cy.findAllByLabelText('List Item 1').last().type('11');
+    cy.findAllByLabelText('List Item 0').last().clear();
+    cy.findAllByLabelText('List Item 0').last().type('11');
     cy.findAllByLabelText('List Item 1').last().clear();
     cy.findAllByLabelText('List Item 1').last().type('12');
     cy.findAllByText('Please enter a valid number').should('have.length', 0);
