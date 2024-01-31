@@ -160,6 +160,12 @@ export function ItemsTable(props: ItemTableProps) {
             </Tooltip>
           ),
       },
+      {
+        header: 'System ID',
+        accessorFn: (row) => row.system_id,
+        size: 200,
+        filterVariant: 'select',
+      },
       ...viewCatalogueItemProperties.map((property, index) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
         accessorFn: (row: Item) => {
@@ -197,9 +203,9 @@ export function ItemsTable(props: ItemTableProps) {
               0
               ? 0
               : findPropertyValue(row.original.properties, property.name) !==
-                null
-              ? findPropertyValue(row.original.properties, property.name)
-              : '';
+                  null
+                ? findPropertyValue(row.original.properties, property.name)
+                : '';
           } else if (
             typeof findPropertyValue(row.original.properties, property.name) ===
             'boolean'
