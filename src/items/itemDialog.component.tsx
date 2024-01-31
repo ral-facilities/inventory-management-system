@@ -35,11 +35,12 @@ import {
 import { DatePicker } from '@mui/x-date-pickers';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
-import { useAddItem, useEditItem } from '../api/item';
+import { useAddItem, useEditItem, useMoveItemsToSystem } from '../api/item';
 import { AxiosError } from 'axios';
 import { Label } from '@mui/icons-material';
 import { SystemsTableView } from '../systems/systemsTableView.component';
-import { useSystems } from '../api/systems';
+import { useSystem, useSystems, useSystemsBreadcrumbs } from '../api/systems';
+import Breadcrumbs from '../view/breadcrumbs.component';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
   // Attempt to create a Date object from the input
@@ -204,32 +205,32 @@ function ItemDialog(props: ItemDialogProps) {
     setFormErrorMessage(undefined);
   };
 
-  const handleItemDetails = (
-    field: keyof ItemDetailsPlaceholder,
-    value: string | Date | null
-  ) => {
-    const updatedItemDetails = { ...itemDetails };
+  const handleItemDetails = React.useCallback(
+    (field: keyof ItemDetailsPlaceholder, value: string | Date | null) => {
+      const updatedItemDetails = { ...itemDetails };
 
-    switch (field) {
-      case 'delivered_date':
-      case 'warranty_end_date':
-        updatedItemDetails[field] = value as Date | null;
-        break;
-      default:
-        if (
-          value === null ||
-          (typeof value === 'string' && value.trim() === '')
-        ) {
-          updatedItemDetails[field] = null;
-        } else {
-          updatedItemDetails[field] = value as string;
-        }
-        break;
-    }
+      switch (field) {
+        case 'delivered_date':
+        case 'warranty_end_date':
+          updatedItemDetails[field] = value as Date | null;
+          break;
+        default:
+          if (
+            value === null ||
+            (typeof value === 'string' && value.trim() === '')
+          ) {
+            updatedItemDetails[field] = null;
+          } else {
+            updatedItemDetails[field] = value as string;
+          }
+          break;
+      }
 
-    setItemDetails(updatedItemDetails);
-    setFormErrorMessage(undefined);
-  };
+      setItemDetails(updatedItemDetails);
+      setFormErrorMessage(undefined);
+    },
+    [itemDetails]
+  );
   const handleClose = React.useCallback(() => {
     onClose();
     setItemDetails({
@@ -321,7 +322,7 @@ function ItemDialog(props: ItemDialogProps) {
   const details = React.useMemo(() => {
     return {
       catalogue_item_id: catalogueItem?.id ?? '',
-      system_id: null,
+      system_id: itemDetails.system_id ?? null,
       purchase_order_number: itemDetails.purchase_order_number,
       is_defective: itemDetails.is_defective === 'true' ? true : false,
       usage_status: itemDetails.usage_status
@@ -345,7 +346,22 @@ function ItemDialog(props: ItemDialogProps) {
     };
   }, [itemDetails, catalogueItem]);
 
+  //move to systems
+  const [parentSystemId, setParentSystemId] = React.useState<string | null>(
+    selectedItem?.system_id ?? null
+  );
+
+  const { data: systemsData, isLoading: systemsDataLoading } = useSystems(
+    parentSystemId === null ? 'null' : parentSystemId
+  );
+
+  const { data: parentSystemBreadcrumbs } =
+    useSystemsBreadcrumbs(parentSystemId);
+
+  const { data: targetSystem } = useSystem(parentSystemId);
+
   const handleAddItem = React.useCallback(() => {
+    console.log('add');
     const { hasErrors, updatedProperties } = handleFormErrorStates();
 
     if (hasErrors) {
@@ -361,12 +377,14 @@ function ItemDialog(props: ItemDialogProps) {
       properties: filteredProperties,
     };
 
+    console.log(item);
+
     addItem(item)
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
         setCatchAllError(true);
       });
-  }, [addItem, handleClose, details, handleFormErrorStates]);
+  }, [handleFormErrorStates, details, addItem, handleClose]);
 
   const handleEditItem = React.useCallback(() => {
     if (selectedItem) {
@@ -409,6 +427,8 @@ function ItemDialog(props: ItemDialogProps) {
           selectedItem.properties.map(({ unit, ...rest }) => rest)
         );
 
+      const isSystemIdUpdated = details.system_id !== selectedItem.system_id;
+
       let item: EditItem = {
         id: selectedItem.id,
       };
@@ -426,6 +446,7 @@ function ItemDialog(props: ItemDialogProps) {
       isNotesUpdated && (item.notes = details.notes);
       isCatalogueItemPropertiesUpdated &&
         (item.properties = filteredProperties);
+      isSystemIdUpdated && (item.system_id = details.system_id);
 
       if (
         item.id &&
@@ -438,7 +459,8 @@ function ItemDialog(props: ItemDialogProps) {
           isSerialNumberUpdated ||
           isDeliveredDateUpdated ||
           isNotesUpdated ||
-          isCatalogueItemPropertiesUpdated)
+          isCatalogueItemPropertiesUpdated ||
+          isSystemIdUpdated)
       ) {
         editItem(item)
           .then((response) => handleClose())
@@ -449,7 +471,7 @@ function ItemDialog(props: ItemDialogProps) {
         setFormErrorMessage('Please edit a form entry before clicking save');
       }
     }
-  }, [editItem, handleClose, handleFormErrorStates, selectedItem, details]);
+  }, [selectedItem, handleFormErrorStates, details, editItem, handleClose]);
 
   // Stepper
   const STEPS = [
@@ -458,6 +480,7 @@ function ItemDialog(props: ItemDialogProps) {
     'Move into system',
   ];
   const [activeStep, setActiveStep] = React.useState<number>(0);
+  const [systemSelected, setSystemSelected] = React.useState<boolean>(false);
 
   const handleNext = () => {
     const { hasErrors } = handleFormErrorStates();
@@ -472,15 +495,6 @@ function ItemDialog(props: ItemDialogProps) {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-
-  //move to systems
-  const [parentSystemId, setParentSystemId] = React.useState<string | null>(
-    selectedItem?.system_id ?? null
-  );
-
-  const { data: systemsData, isLoading: systemsDataLoading } = useSystems(
-    parentSystemId === null ? 'null' : parentSystemId
-  );
 
   const renderStepContent = (step: number) => {
     switch (step) {
@@ -757,55 +771,59 @@ function ItemDialog(props: ItemDialogProps) {
       PaperProps={{ sx: { height: '658px' } }}
       fullWidth
     >
-      <DialogTitle>{`${type === 'edit' ? 'Edit' : 'Add'} Item`}</DialogTitle>
+      <DialogTitle>
+        <Grid item xs={12}>{`${type === 'edit' ? 'Edit' : 'Add'} Item`}</Grid>
 
-      {type === 'edit' ? (
-        <>
-          <DialogContent>
-            <Stepper
-              nonLinear
-              activeStep={activeStep}
-              orientation="horizontal"
-              sx={{ marginTop: 2 }}
-            >
-              {STEPS.map((label, index) => (
-                <Step key={label}>
-                  <StepButton onClick={() => setActiveStep(index)}>
-                    {label}
-                  </StepButton>
-                </Step>
-              ))}
-            </Stepper>
-            <Box sx={{ textAlign: 'center', marginTop: 2 }}>
-              {renderStepContent(activeStep)}
-            </Box>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} sx={{ mr: 'auto' }}>
-              Cancel
-            </Button>
-            <Button
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 2 }}
-            >
-              Back
-            </Button>
-            {activeStep === STEPS.length - 1 ? (
+        {activeStep === 2 && (
+          <Grid item xs={12}>
+            <Breadcrumbs
+              breadcrumbsInfo={parentSystemBreadcrumbs}
+              onChangeNode={setParentSystemId}
+              onChangeNavigateHome={() => {
+                setParentSystemId(null);
+              }}
+              navigateHomeAriaLabel={'navigate to systems home'}
+            />
+          </Grid>
+        )}
+      </DialogTitle>
+      <DialogContent>
+        <Stepper
+          nonLinear
+          activeStep={activeStep}
+          orientation="horizontal"
+          sx={{ marginTop: 2 }}
+        >
+          {STEPS.map((label, index) => (
+            <Step key={label}>
+              <StepButton onClick={() => setActiveStep(index)}>
+                {label}
+              </StepButton>
+            </Step>
+          ))}
+        </Stepper>
+        <Box sx={{ textAlign: 'center', marginTop: 2 }}>
+          {renderStepContent(activeStep)}
+        </Box>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} sx={{ mr: 'auto' }}>
+          Cancel
+        </Button>
+        <Button disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 2 }}>
+          Back
+        </Button>
+
+        {activeStep === STEPS.length - 1 ? (
+          <>
+            {!systemSelected ? (
               <Button
-                disabled={
-                  catchAllError ||
-                  propertyErrors.some((value) => {
-                    return value === true;
-                  }) ||
-                  (!!itemDetails.warranty_end_date &&
-                    !isValidDateTime(itemDetails.warranty_end_date)) ||
-                  (!!itemDetails.delivered_date &&
-                    !isValidDateTime(itemDetails.delivered_date))
-                }
-                onClick={handleEditItem}
+                onClick={(event) => {
+                  handleItemDetails('system_id', targetSystem?.id ?? null);
+                  setSystemSelected(true);
+                }}
               >
-                Finish
+                Move here
               </Button>
             ) : (
               <Button
@@ -819,358 +837,65 @@ function ItemDialog(props: ItemDialogProps) {
                   (!!itemDetails.delivered_date &&
                     !isValidDateTime(itemDetails.delivered_date))
                 }
-                onClick={handleNext}
-              >
-                Next
-              </Button>
-            )}
-            {formErrorMessage && (
-              <Box
-                sx={{
-                  mx: 3,
-                  marginBottom: 3,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                //onClick={type === 'edit' ? handleEditItem : handleAddItem}
+                onClick={(event) => {
+                  handleItemDetails('system_id', targetSystem?.id ?? null);
+                  type === 'edit' ? handleEditItem() : handleAddItem();
                 }}
               >
-                <FormHelperText
-                  sx={{ maxWidth: '100%', fontSize: '1rem' }}
-                  error
-                >
-                  {formErrorMessage}
-                </FormHelperText>
-              </Box>
-            )}
-            {catchAllError && (
-              <Box
-                sx={{
-                  mx: 3,
-                  marginBottom: 3,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <FormHelperText
-                  sx={{ maxWidth: '100%', fontSize: '1rem' }}
-                  error
-                >
-                  Please refresh and try again
-                </FormHelperText>
-              </Box>
-            )}
-          </DialogActions>
-        </>
-      ) : (
-        <>
-          <DialogContent>
-            <Grid container spacing={1.5}>
-              <Grid item container spacing={1.5} xs={6}>
-                <Grid item xs={12}>
-                  <Typography variant="h6">Details</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Serial number"
-                    size="small"
-                    value={itemDetails.serial_number ?? ''}
-                    onChange={(event) => {
-                      handleItemDetails('serial_number', event.target.value);
-                    }}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Asset number"
-                    size="small"
-                    value={itemDetails.asset_number ?? ''}
-                    onChange={(event) => {
-                      handleItemDetails('asset_number', event.target.value);
-                    }}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Purchase order number"
-                    size="small"
-                    value={itemDetails.purchase_order_number ?? ''}
-                    onChange={(event) => {
-                      handleItemDetails(
-                        'purchase_order_number',
-                        event.target.value
-                      );
-                    }}
-                    fullWidth
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <DatePicker
-                    label="Warranty end date"
-                    value={itemDetails.warranty_end_date}
-                    onChange={(date) =>
-                      handleItemDetails('warranty_end_date', date ? date : null)
-                    }
-                    slots={{ textField: CustomTextField }}
-                    slotProps={{
-                      actionBar: { actions: ['clear'] },
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <DatePicker
-                    label="Delivered date"
-                    value={itemDetails.delivered_date}
-                    onChange={(date) =>
-                      handleItemDetails('delivered_date', date ? date : null)
-                    }
-                    slotProps={{
-                      actionBar: { actions: ['clear'] },
-                    }}
-                    slots={{ textField: CustomTextField }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl fullWidth>
-                    <InputLabel required={true} size="small" id="is-defective">
-                      Is defective
-                    </InputLabel>
-
-                    <Select
-                      labelId="is-defective"
-                      value={itemDetails.is_defective ?? 'false'}
-                      size="small"
-                      onChange={(e) =>
-                        handleItemDetails('is_defective', e.target.value)
-                      }
-                      required={true}
-                      label="Is defective"
-                    >
-                      <MenuItem value={'true'}>Yes</MenuItem>
-                      <MenuItem value={'false'}>No</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12}>
-                  <FormControl size="small" fullWidth>
-                    <InputLabel required={true} id="usage-status">
-                      Usage status
-                    </InputLabel>
-                    <Select
-                      required={true}
-                      labelId="usage-status"
-                      value={itemDetails.usage_status ?? 'new'}
-                      size="small"
-                      onChange={(e) =>
-                        handleItemDetails('usage_status', e.target.value)
-                      }
-                      label="Usage status"
-                    >
-                      <MenuItem value={'new'}>New</MenuItem>
-                      <MenuItem value={'inUse'}>In Use</MenuItem>
-                      <MenuItem value={'used'}>Used</MenuItem>
-                      <MenuItem value={'scrapped'}>Scrapped</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField
-                    label="Notes"
-                    size="small"
-                    multiline
-                    minRows={5}
-                    value={itemDetails.notes ?? ''}
-                    onChange={(event) => {
-                      handleItemDetails('notes', event.target.value);
-                    }}
-                    fullWidth
-                  />
-                </Grid>
-              </Grid>
-              <Grid item xs={6}>
-                {parentCatalogueItemPropertiesInfo.length >= 1 && (
-                  <Grid container spacing={1.5}>
-                    <Grid item xs={12}>
-                      <Typography variant="h6">Properties</Typography>
-                    </Grid>
-                    {parentCatalogueItemPropertiesInfo.map(
-                      (property: CatalogueCategoryFormData, index: number) => (
-                        <Grid item xs={12} key={index}>
-                          <Grid container spacing={1.5}>
-                            <Grid item xs={11} sx={{ display: 'flex' }}>
-                              {property.type === 'boolean' ? (
-                                <FormControl fullWidth>
-                                  <InputLabel
-                                    required={property.mandatory ?? false}
-                                    error={propertyErrors[index]}
-                                    id={`catalogue-item-property-${property.name.replace(
-                                      /\s+/g,
-                                      '-'
-                                    )}`}
-                                    size="small"
-                                    sx={{ alignItems: 'center' }}
-                                  >
-                                    {property.name}
-                                  </InputLabel>
-                                  <Select
-                                    value={
-                                      (propertyValues[index] as string) ?? ''
-                                    }
-                                    required={property.mandatory ?? false}
-                                    size="small"
-                                    error={propertyErrors[index]}
-                                    labelId={`catalogue-item-property-${property.name.replace(
-                                      /\s+/g,
-                                      '-'
-                                    )}`}
-                                    onChange={(event) =>
-                                      handlePropertyChange(
-                                        index,
-                                        property.name,
-                                        event.target.value as string
-                                      )
-                                    }
-                                    label={property.name}
-                                    sx={{ alignItems: 'center' }}
-                                    fullWidth
-                                  >
-                                    <MenuItem value="">None</MenuItem>
-                                    <MenuItem value="true">True</MenuItem>
-                                    <MenuItem value="false">False</MenuItem>
-                                  </Select>
-                                  {propertyErrors[index] && (
-                                    <FormHelperText error>
-                                      Please select either True or False
-                                    </FormHelperText>
-                                  )}
-                                </FormControl>
-                              ) : (
-                                <TextField
-                                  label={`${property.name} ${property.unit ? `(${property.unit})` : ''}`}
-                                  size="small"
-                                  required={property.mandatory ?? false}
-                                  value={propertyValues[index] || ''}
-                                  onChange={(event) =>
-                                    handlePropertyChange(
-                                      index,
-                                      property.name,
-                                      event.target.value
-                                        ? event.target.value
-                                        : null
-                                    )
-                                  }
-                                  fullWidth
-                                  error={propertyErrors[index]}
-                                  helperText={
-                                    // Check if 'propertyErrors[index]' exists and evaluate its value
-                                    propertyErrors[index]
-                                      ? // If 'propertyErrors[index]' is truthy, perform the following checks:
-                                        property.mandatory &&
-                                        !propertyValues[index]
-                                        ? // If 'property' is mandatory and 'propertyValues[index]' is empty, return a mandatory field error message
-                                          'This field is mandatory'
-                                        : property.type === 'number' &&
-                                          isNaN(
-                                            Number(propertyValues[index])
-                                          ) &&
-                                          'Please enter a valid number' // If 'property' is of type 'number' and 'propertyValues[index]' is not a valid number, return an invalid number error message
-                                      : // If 'propertyErrors[index]' is falsy, return an empty string (no error)
-                                        ''
-                                  }
-                                />
-                              )}
-                            </Grid>
-                            <Grid item xs={1} sx={{ display: 'flex' }}>
-                              <Tooltip
-                                sx={{ alignItems: 'center' }}
-                                title={
-                                  <div>
-                                    <Typography>
-                                      Name: {property.name}
-                                    </Typography>
-                                    <Typography>
-                                      Unit: {property.unit}
-                                    </Typography>
-                                    <Typography>
-                                      Type:{' '}
-                                      {property.type === 'string'
-                                        ? 'text'
-                                        : property.type}
-                                    </Typography>
-                                  </div>
-                                }
-                                placement="right"
-                                enterTouchDelay={0}
-                              >
-                                <IconButton size="small">
-                                  <InfoOutlinedIcon />
-                                </IconButton>
-                              </Tooltip>
-                            </Grid>
-                          </Grid>
-                        </Grid>
-                      )
-                    )}
-                  </Grid>
-                )}
-              </Grid>
-            </Grid>
-          </DialogContent>
-          <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
-            <Box
-              sx={{ display: 'flex', alignItems: 'center', width: '100%' }}
-            ></Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                width: '100%',
-                my: 2,
-              }}
-            >
-              <Button
-                variant="outlined"
-                sx={{ width: '50%', mx: 1 }}
-                onClick={handleClose}
-              >
-                Cancel
+                Finish
               </Button>
-              <Button
-                variant="outlined"
-                sx={{ width: '50%', mx: 1 }}
-                onClick={handleAddItem}
-                disabled={
-                  catchAllError ||
-                  propertyErrors.some((value) => {
-                    return value === true;
-                  }) ||
-                  (!!itemDetails.warranty_end_date &&
-                    !isValidDateTime(itemDetails.warranty_end_date)) ||
-                  (!!itemDetails.delivered_date &&
-                    !isValidDateTime(itemDetails.delivered_date))
-                }
-              >
-                Save
-              </Button>
-            </Box>
-            {formErrorMessage && (
-              <FormHelperText sx={{ marginBottom: '16px' }} error>
-                {formErrorMessage}
-              </FormHelperText>
             )}
-            {catchAllError && (
-              <FormHelperText sx={{ marginBottom: '16px' }} error>
-                {'Please refresh and try again'}
-              </FormHelperText>
-            )}
-          </DialogActions>
-        </>
-      )}
+          </>
+        ) : (
+          <Button
+            disabled={
+              catchAllError ||
+              propertyErrors.some((value) => {
+                return value === true;
+              }) ||
+              (!!itemDetails.warranty_end_date &&
+                !isValidDateTime(itemDetails.warranty_end_date)) ||
+              (!!itemDetails.delivered_date &&
+                !isValidDateTime(itemDetails.delivered_date))
+            }
+            onClick={handleNext}
+          >
+            Next
+          </Button>
+        )}
+        {formErrorMessage && (
+          <Box
+            sx={{
+              mx: 3,
+              marginBottom: 3,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+              {formErrorMessage}
+            </FormHelperText>
+          </Box>
+        )}
+        {catchAllError && (
+          <Box
+            sx={{
+              mx: 3,
+              marginBottom: 3,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+              Please refresh and try again
+            </FormHelperText>
+          </Box>
+        )}
+      </DialogActions>
     </Dialog>
   );
 }
