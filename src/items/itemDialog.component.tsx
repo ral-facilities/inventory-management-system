@@ -472,9 +472,9 @@ function ItemDialog(props: ItemDialogProps) {
 
   // Stepper
   const STEPS = [
-    'Edit item details',
-    'Edit item properties',
-    'Move into system',
+    (type === 'edit' ? 'Edit' : 'Add') + ' item details',
+    (type === 'edit' ? 'Edit' : 'Add') + ' item properties',
+    'Select system',
   ];
   const [activeStep, setActiveStep] = React.useState<number>(0);
   const [systemSelected, setSystemSelected] = React.useState<boolean>(false);
@@ -823,6 +823,7 @@ function ItemDialog(props: ItemDialogProps) {
                     setFormErrorMessage('Please select a system');
                   }
                 }}
+                sx={{ mr: 3 }}
               >
                 Move here
               </Button>
@@ -839,6 +840,7 @@ function ItemDialog(props: ItemDialogProps) {
                     !isValidDateTime(itemDetails.delivered_date))
                 }
                 onClick={type === 'edit' ? handleEditItem : handleAddItem}
+                sx={{ mr: 3 }}
               >
                 Finish
               </Button>
@@ -857,42 +859,42 @@ function ItemDialog(props: ItemDialogProps) {
                 !isValidDateTime(itemDetails.delivered_date))
             }
             onClick={handleNext}
+            sx={{ mr: 3 }}
           >
             Next
           </Button>
         )}
-        {formErrorMessage && (
-          <Box
-            sx={{
-              mx: 3,
-              marginBottom: 3,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-              {formErrorMessage}
-            </FormHelperText>
-          </Box>
-        )}
-        {catchAllError && (
-          <Box
-            sx={{
-              mx: 3,
-              marginBottom: 3,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-              Please refresh and try again
-            </FormHelperText>
-          </Box>
-        )}
       </DialogActions>
+      {formErrorMessage && (
+        <Box
+          sx={{
+            mx: 3,
+            marginBottom: 3,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+            {formErrorMessage}
+          </FormHelperText>
+        </Box>
+      )}
+      {catchAllError && (
+        <Box
+          sx={{
+            mx: 3,
+            marginBottom: 3,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+            Please refresh and try again
+          </FormHelperText>
+        </Box>
+      )}
     </Dialog>
   );
 }
