@@ -5,7 +5,6 @@ import {
   MenuItem,
   Pagination,
   Select,
-  TablePagination,
 } from '@mui/material';
 import CatalogueCard from './catalogueCard.component';
 import React from 'react';
