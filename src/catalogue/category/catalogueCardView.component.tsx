@@ -1,7 +1,6 @@
 import {
   FormControl,
   Grid,
-  InputLabel,
   MenuItem,
   Pagination,
   Select,
