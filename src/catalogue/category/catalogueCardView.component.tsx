@@ -5,6 +5,7 @@ import {
   MenuItem,
   Pagination,
   Select,
+  Typography,
 } from '@mui/material';
 import CatalogueCard from './catalogueCard.component';
 import React from 'react';
@@ -88,9 +89,24 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
         right={0}
       >
         <Grid item>
-          <FormControl variant="standard" sx={{ margin: 1, minWidth: '120px' }}>
-            <InputLabel>{'Max Results'}</InputLabel>
+          <FormControl
+            variant="standard"
+            sx={{
+              margin: 1,
+              minWidth: '120px',
+              display: 'flex',
+              flexDirection: 'row',
+            }}
+          >
+            <Typography
+              sx={{
+                padding: 2,
+              }}
+            >
+              {'Cards per page'}
+            </Typography>
             <Select
+              disableUnderline
               value={paginationResults}
               inputProps={{
                 name: 'Max Results',
