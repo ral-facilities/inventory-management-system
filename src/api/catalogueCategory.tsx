@@ -67,7 +67,6 @@ export const useCatalogueBreadcrumbs = (
     queryFn: (params) => {
       return fetchCatalogueBreadcrumbs(id);
     },
-
     enabled: id !== '',
   });
 };

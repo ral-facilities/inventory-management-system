@@ -86,7 +86,6 @@ export const useManufacturer = (
     queryFn: (params) => {
       return fetchManufacturer(id);
     },
-
     enabled: id !== undefined,
   });
 };

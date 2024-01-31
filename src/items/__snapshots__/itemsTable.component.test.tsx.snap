@@ -43,7 +43,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
                   />
                 </svg>
               </span>
@@ -104,7 +104,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                          d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"
                         />
                       </svg>
                       <input
@@ -182,7 +182,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M10.83 8H21V6H8.83l2 2zm5 5H18v-2h-4.17l2 2zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41L14 16.83z"
+                    d="M10.83 8H21V6H8.83zm5 5H18v-2h-4.17zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41z"
                   />
                 </svg>
                 <span
@@ -204,7 +204,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M14.67 5v14H9.33V5h5.34zm1 14H21V5h-5.33v14zm-7.34 0V5H3v14h5.33z"
+                    d="M14.67 5v14H9.33V5zm1 14H21V5h-5.33zm-7.34 0V5H3v14z"
                   />
                 </svg>
                 <span
@@ -245,18 +245,19 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
         class="MuiTableContainer-root css-d4d85z-MuiTableContainer-root"
       >
         <table
-          class="MuiTable-root MuiTable-stickyHeader css-1n7ptpu-MuiTable-root"
-          style="--header-mrt_row_actions-size: 60; --col-mrt_row_actions-size: 60; --header-ID-size: 250; --col-ID-size: 250; --header-Serial_Number-size: 250; --col-Serial_Number-size: 250; --header-Asset_Number-size: 250; --col-Asset_Number-size: 250; --header-Purchase_Order_Number-size: 350; --col-Purchase_Order_Number-size: 350; --header-Warranty_End_Date-size: 250; --col-Warranty_End_Date-size: 250; --header-Delivered_Date-size: 250; --col-Delivered_Date-size: 250; --header-Is_Defective-size: 200; --col-Is_Defective-size: 200; --header-Usage_Status-size: 200; --col-Usage_Status-size: 200; --header-Notes-size: 250; --col-Notes-size: 250; --header-Resolution__megapixels_-size: 250; --col-Resolution__megapixels_-size: 250; --header-Frame_Rate__fps_-size: 250; --col-Frame_Rate__fps_-size: 250; --header-Sensor_Type_-size: 250; --col-Sensor_Type_-size: 250; --header-Sensor_brand_-size: 250; --col-Sensor_brand_-size: 250; --header-Broken_-size: 250; --col-Broken_-size: 250; --header-Older_than_five_years_-size: 250; --col-Older_than_five_years_-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+          class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
+          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-ID-size: 250; --col-ID-size: 250; --header-Serial_Number-size: 250; --col-Serial_Number-size: 250; --header-Asset_Number-size: 250; --col-Asset_Number-size: 250; --header-Purchase_Order_Number-size: 350; --col-Purchase_Order_Number-size: 350; --header-Warranty_End_Date-size: 250; --col-Warranty_End_Date-size: 250; --header-Delivered_Date-size: 250; --col-Delivered_Date-size: 250; --header-Is_Defective-size: 200; --col-Is_Defective-size: 200; --header-Usage_Status-size: 200; --col-Usage_Status-size: 200; --header-Notes-size: 250; --col-Notes-size: 250; --header-Resolution__megapixels_-size: 250; --col-Resolution__megapixels_-size: 250; --header-Frame_Rate__fps_-size: 250; --col-Frame_Rate__fps_-size: 250; --header-Sensor_Type_-size: 250; --col-Sensor_Type_-size: 250; --header-Sensor_brand_-size: 250; --col-Sensor_brand_-size: 250; --header-Broken_-size: 250; --col-Broken_-size: 250; --header-Older_than_five_years_-size: 250; --col-Older_than_five_years_-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
           >
             <tr
-              class="MuiTableRow-root MuiTableRow-head css-1bxhrg6-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-head css-ssspk8-MuiTableRow-root"
             >
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-egv6tn-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-87lrtp-MuiTableCell-root"
                 colspan="1"
+                data-index="0"
                 scope="col"
               >
                 <div
@@ -277,8 +278,9 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w7b1w-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-d3gedb-MuiTableCell-root"
                 colspan="1"
+                data-index="1"
                 scope="col"
               >
                 <div
@@ -343,7 +345,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M20 9H4v2h16V9zM4 15h16v-2H4v2z"
+                          d="M20 9H4v2h16zM4 15h16v-2H4z"
                         />
                       </svg>
                     </button>
@@ -363,7 +365,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
                       <span
@@ -442,8 +444,9 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-x1g1yb-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1guls95-MuiTableCell-root"
                 colspan="1"
+                data-index="2"
                 scope="col"
               >
                 <div
@@ -508,7 +511,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M20 9H4v2h16V9zM4 15h16v-2H4v2z"
+                          d="M20 9H4v2h16zM4 15h16v-2H4z"
                         />
                       </svg>
                     </button>
@@ -528,7 +531,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
                       <span
@@ -607,8 +610,9 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-n62ti4-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-zk5w12-MuiTableCell-root"
                 colspan="1"
+                data-index="3"
                 scope="col"
               >
                 <div
@@ -673,7 +677,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M20 9H4v2h16V9zM4 15h16v-2H4v2z"
+                          d="M20 9H4v2h16zM4 15h16v-2H4z"
                         />
                       </svg>
                     </button>
@@ -693,7 +697,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
                       <span
@@ -772,8 +776,9 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-kplijz-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1d8vlvl-MuiTableCell-root"
                 colspan="1"
+                data-index="4"
                 scope="col"
               >
                 <div
@@ -838,7 +843,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M20 9H4v2h16V9zM4 15h16v-2H4v2z"
+                          d="M20 9H4v2h16zM4 15h16v-2H4z"
                         />
                       </svg>
                     </button>
@@ -858,7 +863,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
                       <span
@@ -960,7 +965,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
             </tr>
           </tbody>
           <tfoot
-            class="MuiTableFooter-root css-mvygzy-MuiTableFooter-root"
+            class="MuiTableFooter-root css-4ar9ic-MuiTableFooter-root"
           />
         </table>
       </div>
@@ -1051,9 +1056,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
-                    aria-labelledby="mrt-rows-per-page"
                     class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                    id="mrt-rows-per-page"
                     role="combobox"
                     tabindex="0"
                   >
@@ -1063,6 +1066,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                     aria-hidden="true"
                     aria-invalid="false"
                     class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                    id="mrt-rows-per-page"
                     tabindex="-1"
                     value="15"
                   />
@@ -1089,7 +1093,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                   <li>
                     <button
                       aria-label="Go to previous page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -1110,7 +1114,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
                   <li>
                     <button
                       aria-label="Go to next page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -1182,7 +1186,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
                   />
                 </svg>
               </span>
@@ -1243,7 +1247,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                          d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"
                         />
                       </svg>
                       <input
@@ -1321,7 +1325,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M10.83 8H21V6H8.83l2 2zm5 5H18v-2h-4.17l2 2zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41L14 16.83z"
+                    d="M10.83 8H21V6H8.83zm5 5H18v-2h-4.17zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41z"
                   />
                 </svg>
                 <span
@@ -1343,7 +1347,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M14.67 5v14H9.33V5h5.34zm1 14H21V5h-5.33v14zm-7.34 0V5H3v14h5.33z"
+                    d="M14.67 5v14H9.33V5zm1 14H21V5h-5.33zm-7.34 0V5H3v14z"
                   />
                 </svg>
                 <span
@@ -1358,18 +1362,19 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
         class="MuiTableContainer-root css-d4d85z-MuiTableContainer-root"
       >
         <table
-          class="MuiTable-root MuiTable-stickyHeader css-1n7ptpu-MuiTable-root"
-          style="--header-mrt_row_actions-size: 60; --col-mrt_row_actions-size: 60; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-Notes-size: 250; --col-Notes-size: 250; --header-Frame_Rate__fps_-size: 250; --col-Frame_Rate__fps_-size: 250; --header-Sensor_Type_-size: 250; --col-Sensor_Type_-size: 250; --header-Broken_-size: 250; --col-Broken_-size: 250;"
+          class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
+          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-Notes-size: 250; --col-Notes-size: 250; --header-Frame_Rate__fps_-size: 250; --col-Frame_Rate__fps_-size: 250; --header-Sensor_Type_-size: 250; --col-Sensor_Type_-size: 250; --header-Broken_-size: 250; --col-Broken_-size: 250;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
           >
             <tr
-              class="MuiTableRow-root MuiTableRow-head css-1bxhrg6-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-head css-ssspk8-MuiTableRow-root"
             >
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-egv6tn-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-87lrtp-MuiTableCell-root"
                 colspan="1"
+                data-index="0"
                 scope="col"
               >
                 <div
@@ -1390,8 +1395,9 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1e87h5i-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a3bty9-MuiTableCell-root"
                 colspan="1"
+                data-index="1"
                 scope="col"
               >
                 <div
@@ -1456,7 +1462,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M20 9H4v2h16V9zM4 15h16v-2H4v2z"
+                          d="M20 9H4v2h16zM4 15h16v-2H4z"
                         />
                       </svg>
                     </button>
@@ -1476,7 +1482,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
                       <span
@@ -1555,8 +1561,9 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1j4n4a-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1rucjxx-MuiTableCell-root"
                 colspan="1"
+                data-index="2"
                 scope="col"
               >
                 <div
@@ -1621,7 +1628,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M20 9H4v2h16V9zM4 15h16v-2H4v2z"
+                          d="M20 9H4v2h16zM4 15h16v-2H4z"
                         />
                       </svg>
                     </button>
@@ -1641,7 +1648,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
                       <span
@@ -1772,8 +1779,9 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1r3e8vz-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-80mj4h-MuiTableCell-root"
                 colspan="1"
+                data-index="3"
                 scope="col"
               >
                 <div
@@ -1838,7 +1846,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M20 9H4v2h16V9zM4 15h16v-2H4v2z"
+                          d="M20 9H4v2h16zM4 15h16v-2H4z"
                         />
                       </svg>
                     </button>
@@ -1858,7 +1866,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
                       <span
@@ -1937,8 +1945,9 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-155umw9-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14vqz47-MuiTableCell-root"
                 colspan="1"
+                data-index="4"
                 scope="col"
               >
                 <div
@@ -2003,7 +2012,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M20 9H4v2h16V9zM4 15h16v-2H4v2z"
+                          d="M20 9H4v2h16zM4 15h16v-2H4z"
                         />
                       </svg>
                     </button>
@@ -2023,7 +2032,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
                       <span
@@ -2136,11 +2145,11 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
             class="MuiTableBody-root css-129p5vw-MuiTableBody-root"
           >
             <tr
-              class="MuiTableRow-root css-bye78u-MuiTableRow-root"
+              class="MuiTableRow-root css-1hdg57s-MuiTableRow-root"
               data-index="0"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xxw0iu-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-891i9k-MuiTableCell-root"
                 data-index="0"
               >
                 <button
@@ -2158,7 +2167,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
                   <span
@@ -2167,7 +2176,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tfsrmq-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tvhp73-MuiTableCell-root"
                 data-index="1"
               >
                 <svg
@@ -2180,22 +2189,22 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                    d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
                   />
                 </svg>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13lgqu6-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-97iukg-MuiTableCell-root"
                 data-index="2"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1t0ctuh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a33x68-MuiTableCell-root"
                 data-index="3"
               >
                 CMOS
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-53a1i-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1gcp9p5-MuiTableCell-root"
                 data-index="4"
               >
                 Yes
@@ -2205,11 +2214,11 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
               />
             </tr>
             <tr
-              class="MuiTableRow-root css-bye78u-MuiTableRow-root"
+              class="MuiTableRow-root css-1hdg57s-MuiTableRow-root"
               data-index="1"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xxw0iu-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-891i9k-MuiTableCell-root"
                 data-index="0"
               >
                 <button
@@ -2227,7 +2236,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
                   <span
@@ -2236,7 +2245,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tfsrmq-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tvhp73-MuiTableCell-root"
                 data-index="1"
               >
                 <svg
@@ -2249,24 +2258,24 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                    d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
                   />
                 </svg>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13lgqu6-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-97iukg-MuiTableCell-root"
                 data-index="2"
               >
                 30
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1t0ctuh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a33x68-MuiTableCell-root"
                 data-index="3"
               >
                 CMOS
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-53a1i-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1gcp9p5-MuiTableCell-root"
                 data-index="4"
               >
                 Yes
@@ -2276,11 +2285,11 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
               />
             </tr>
             <tr
-              class="MuiTableRow-root css-bye78u-MuiTableRow-root"
+              class="MuiTableRow-root css-1hdg57s-MuiTableRow-root"
               data-index="2"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xxw0iu-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-891i9k-MuiTableCell-root"
                 data-index="0"
               >
                 <button
@@ -2298,7 +2307,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
                   <span
@@ -2307,7 +2316,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tfsrmq-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tvhp73-MuiTableCell-root"
                 data-index="1"
               >
                 <svg
@@ -2320,22 +2329,22 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                    d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
                   />
                 </svg>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13lgqu6-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-97iukg-MuiTableCell-root"
                 data-index="2"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1t0ctuh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a33x68-MuiTableCell-root"
                 data-index="3"
               >
                 CMOS
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-53a1i-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1gcp9p5-MuiTableCell-root"
                 data-index="4"
               >
                 No
@@ -2345,11 +2354,11 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
               />
             </tr>
             <tr
-              class="MuiTableRow-root css-bye78u-MuiTableRow-root"
+              class="MuiTableRow-root css-1hdg57s-MuiTableRow-root"
               data-index="3"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-xxw0iu-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-891i9k-MuiTableCell-root"
                 data-index="0"
               >
                 <button
@@ -2367,7 +2376,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                     />
                   </svg>
                   <span
@@ -2376,7 +2385,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tfsrmq-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tvhp73-MuiTableCell-root"
                 data-index="1"
               >
                 <svg
@@ -2389,24 +2398,24 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"
+                    d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
                   />
                 </svg>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13lgqu6-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-97iukg-MuiTableCell-root"
                 data-index="2"
               >
                 30
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1t0ctuh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a33x68-MuiTableCell-root"
                 data-index="3"
               >
                 CMOS
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-53a1i-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1gcp9p5-MuiTableCell-root"
                 data-index="4"
               >
                 Yes
@@ -2417,7 +2426,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
             </tr>
           </tbody>
           <tfoot
-            class="MuiTableFooter-root css-mvygzy-MuiTableFooter-root"
+            class="MuiTableFooter-root css-4ar9ic-MuiTableFooter-root"
           />
         </table>
       </div>
@@ -2482,9 +2491,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
-                    aria-labelledby="mrt-rows-per-page"
                     class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                    id="mrt-rows-per-page"
                     role="combobox"
                     tabindex="0"
                   >
@@ -2494,6 +2501,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                     aria-hidden="true"
                     aria-invalid="false"
                     class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                    id="mrt-rows-per-page"
                     tabindex="-1"
                     value="15"
                   />
@@ -2520,7 +2528,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                   <li>
                     <button
                       aria-label="Go to previous page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -2542,7 +2550,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                     <button
                       aria-current="true"
                       aria-label="page 1"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
                       tabindex="0"
                       type="button"
                     >
@@ -2555,7 +2563,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
                   <li>
                     <button
                       aria-label="Go to next page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -2596,18 +2604,19 @@ exports[`Items Table renders the dense table correctly 1`] = `
         class="MuiTableContainer-root css-14c53ac-MuiTableContainer-root"
       >
         <table
-          class="MuiTable-root MuiTable-stickyHeader css-lxa89b-MuiTable-root"
+          class="MuiTable-root MuiTable-stickyHeader css-1y6k1sx-MuiTable-root"
           style="--header-mrt_row_expand-size: 60; --col-mrt_row_expand-size: 60; --header-ID-size: 400; --col-ID-size: 400; --header-Serial_Number-size: 400; --col-Serial_Number-size: 400; --header-Delivered_Date-size: 400; --col-Delivered_Date-size: 400; --header-Is_Defective-size: 400; --col-Is_Defective-size: 400; --header-Usage_Status-size: 400; --col-Usage_Status-size: 400;"
         >
           <thead
             class="MuiTableHead-root css-dk8izd-MuiTableHead-root"
           >
             <tr
-              class="MuiTableRow-root MuiTableRow-head css-r58cto-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-head css-7sv680-MuiTableRow-root"
             >
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1rnzr9j-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14ibfyy-MuiTableCell-root"
                 colspan="1"
+                data-index="0"
                 scope="col"
               >
                 <div
@@ -2658,8 +2667,9 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-cdg31m-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-h3f6ji-MuiTableCell-root"
                 colspan="1"
+                data-index="1"
                 scope="col"
               >
                 <div
@@ -2724,7 +2734,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
                       <span
@@ -2754,7 +2764,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by ID"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":ri7:"
+                            id=":rjt:"
                             placeholder="Filter by ID"
                             title="Filter by ID"
                             type="text"
@@ -2796,8 +2806,9 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-egadpy-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-k1fp9e-MuiTableCell-root"
                 colspan="1"
+                data-index="2"
                 scope="col"
               >
                 <div
@@ -2862,7 +2873,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
                       <span
@@ -2892,7 +2903,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Serial Number"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rib:"
+                            id=":rk1:"
                             placeholder="Filter by Serial Number"
                             title="Filter by Serial Number"
                             type="text"
@@ -2934,8 +2945,9 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-feuo1x-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-kkq0o9-MuiTableCell-root"
                 colspan="1"
+                data-index="3"
                 scope="col"
               >
                 <div
@@ -3000,7 +3012,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
                       <span
@@ -3030,7 +3042,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Delivered Date"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rif:"
+                            id=":rk5:"
                             placeholder="Filter by Delivered Date"
                             title="Filter by Delivered Date"
                             type="text"
@@ -3072,8 +3084,9 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1jrlw7z-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-stl6bz-MuiTableCell-root"
                 colspan="1"
+                data-index="4"
                 scope="col"
               >
                 <div
@@ -3138,7 +3151,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
                       <span
@@ -3164,13 +3177,13 @@ exports[`Items Table renders the dense table correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
                           <div
-                            aria-controls=":rik:"
+                            aria-controls=":rka:"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Is Defective"
-                            aria-labelledby=":rij:"
+                            aria-labelledby=":rk9:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":rij:"
+                            id=":rk9:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -3236,8 +3249,9 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1anhtly-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-deooa7-MuiTableCell-root"
                 colspan="1"
+                data-index="5"
                 scope="col"
               >
                 <div
@@ -3302,7 +3316,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
                       <span
@@ -3328,13 +3342,13 @@ exports[`Items Table renders the dense table correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
                           <div
-                            aria-controls=":rip:"
+                            aria-controls=":rkf:"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Usage Status"
-                            aria-labelledby=":rio:"
+                            aria-labelledby=":rke:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":rio:"
+                            id=":rke:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -3405,11 +3419,12 @@ exports[`Items Table renders the dense table correctly 1`] = `
             class="MuiTableBody-root css-29nbga-MuiTableBody-root"
           >
             <tr
-              class="MuiTableRow-root css-1sdw5na-MuiTableRow-root"
+              class="MuiTableRow-root css-hsi95o-MuiTableRow-root"
               data-index="0"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-zgov6i-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4ezobj-MuiTableCell-root"
+                data-index="0"
               >
                 <span
                   aria-label="Expand"
@@ -3418,7 +3433,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 >
                   <button
                     aria-label="Expand"
-                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1bc3xuc-MuiButtonBase-root-MuiIconButton-root"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-ejxhte-MuiButtonBase-root-MuiIconButton-root"
                     tabindex="0"
                     type="button"
                   >
@@ -3441,7 +3456,8 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hs3gtg-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-a1cvto-MuiTableCell-root"
+                data-index="1"
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
@@ -3451,12 +3467,14 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pln1wp-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-s7qeow-MuiTableCell-root"
+                data-index="2"
               >
                 5YUQDDjKpz2z
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-omktxg-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1578h1x-MuiTableCell-root"
+                data-index="3"
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
@@ -3465,12 +3483,14 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </p>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1kh3bgq-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1goxqfx-MuiTableCell-root"
+                data-index="4"
               >
                 No
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1p040x1-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tkt3ov-MuiTableCell-root"
+                data-index="5"
               >
                 inUse
               </td>
@@ -3485,11 +3505,12 @@ exports[`Items Table renders the dense table correctly 1`] = `
               />
             </tr>
             <tr
-              class="MuiTableRow-root css-1sdw5na-MuiTableRow-root"
+              class="MuiTableRow-root css-hsi95o-MuiTableRow-root"
               data-index="2"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-zgov6i-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4ezobj-MuiTableCell-root"
+                data-index="0"
               >
                 <span
                   aria-label="Expand"
@@ -3498,7 +3519,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 >
                   <button
                     aria-label="Expand"
-                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1bc3xuc-MuiButtonBase-root-MuiIconButton-root"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-ejxhte-MuiButtonBase-root-MuiIconButton-root"
                     tabindex="0"
                     type="button"
                   >
@@ -3521,7 +3542,8 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hs3gtg-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-a1cvto-MuiTableCell-root"
+                data-index="1"
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
@@ -3531,12 +3553,14 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pln1wp-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-s7qeow-MuiTableCell-root"
+                data-index="2"
               >
                 vYs9Vxx6yWbn
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-omktxg-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1578h1x-MuiTableCell-root"
+                data-index="3"
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
@@ -3545,12 +3569,14 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </p>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1kh3bgq-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1goxqfx-MuiTableCell-root"
+                data-index="4"
               >
                 No
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1p040x1-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tkt3ov-MuiTableCell-root"
+                data-index="5"
               >
                 used
               </td>
@@ -3565,11 +3591,12 @@ exports[`Items Table renders the dense table correctly 1`] = `
               />
             </tr>
             <tr
-              class="MuiTableRow-root css-1sdw5na-MuiTableRow-root"
+              class="MuiTableRow-root css-hsi95o-MuiTableRow-root"
               data-index="4"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-zgov6i-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4ezobj-MuiTableCell-root"
+                data-index="0"
               >
                 <span
                   aria-label="Expand"
@@ -3578,7 +3605,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 >
                   <button
                     aria-label="Expand"
-                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1bc3xuc-MuiButtonBase-root-MuiIconButton-root"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-ejxhte-MuiButtonBase-root-MuiIconButton-root"
                     tabindex="0"
                     type="button"
                   >
@@ -3601,7 +3628,8 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hs3gtg-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-a1cvto-MuiTableCell-root"
+                data-index="1"
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
@@ -3611,12 +3639,14 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pln1wp-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-s7qeow-MuiTableCell-root"
+                data-index="2"
               >
                 PcfCM1jp0SUV
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-omktxg-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1578h1x-MuiTableCell-root"
+                data-index="3"
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
@@ -3625,12 +3655,14 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </p>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1kh3bgq-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1goxqfx-MuiTableCell-root"
+                data-index="4"
               >
                 No
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1p040x1-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tkt3ov-MuiTableCell-root"
+                data-index="5"
               >
                 used
               </td>
@@ -3645,11 +3677,12 @@ exports[`Items Table renders the dense table correctly 1`] = `
               />
             </tr>
             <tr
-              class="MuiTableRow-root css-1sdw5na-MuiTableRow-root"
+              class="MuiTableRow-root css-hsi95o-MuiTableRow-root"
               data-index="6"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-zgov6i-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4ezobj-MuiTableCell-root"
+                data-index="0"
               >
                 <span
                   aria-label="Expand"
@@ -3658,7 +3691,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 >
                   <button
                     aria-label="Expand"
-                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1bc3xuc-MuiButtonBase-root-MuiIconButton-root"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-ejxhte-MuiButtonBase-root-MuiIconButton-root"
                     tabindex="0"
                     type="button"
                   >
@@ -3681,7 +3714,8 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hs3gtg-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-a1cvto-MuiTableCell-root"
+                data-index="1"
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
@@ -3691,12 +3725,14 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pln1wp-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-s7qeow-MuiTableCell-root"
+                data-index="2"
               >
                 Zf7P8Qu8TD8c
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-omktxg-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1578h1x-MuiTableCell-root"
+                data-index="3"
               >
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
@@ -3705,12 +3741,14 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 </p>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1kh3bgq-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1goxqfx-MuiTableCell-root"
+                data-index="4"
               >
                 Yes
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1p040x1-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tkt3ov-MuiTableCell-root"
+                data-index="5"
               >
                 inUse
               </td>
@@ -3726,7 +3764,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
             </tr>
           </tbody>
           <tfoot
-            class="MuiTableFooter-root css-9cgc89-MuiTableFooter-root"
+            class="MuiTableFooter-root css-131pszo-MuiTableFooter-root"
           />
         </table>
       </div>
@@ -3813,13 +3851,11 @@ exports[`Items Table renders the dense table correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":rir:"
+                    aria-controls=":rkh:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
-                    aria-labelledby="mrt-rows-per-page"
                     class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input css-1rxz5jq-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                    id="mrt-rows-per-page"
                     role="combobox"
                     tabindex="0"
                   >
@@ -3829,6 +3865,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                     aria-hidden="true"
                     aria-invalid="false"
                     class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                    id="mrt-rows-per-page"
                     tabindex="-1"
                     value="5"
                   />
@@ -3855,7 +3892,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                   <li>
                     <button
                       aria-label="Go to previous page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -3877,7 +3914,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                     <button
                       aria-current="true"
                       aria-label="page 1"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
                       tabindex="0"
                       type="button"
                     >
@@ -3890,7 +3927,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                   <li>
                     <button
                       aria-label="Go to next page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"

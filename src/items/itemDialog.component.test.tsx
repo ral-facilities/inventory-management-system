@@ -9,7 +9,7 @@ import ItemDialog, {
   ItemDialogProps,
   isValidDateTime,
 } from './itemDialog.component';
-import { fireEvent, screen, within } from '@testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { imsApi } from '../api/api';
@@ -430,5 +430,101 @@ describe('ItemDialog', () => {
         warranty_end_date: '2023-05-18T23:00:00.000Z',
       });
     }, 10000);
+  });
+
+  describe('Edit Item', () => {
+    let axiosPatchSpy;
+
+    beforeEach(() => {
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      props.selectedItem = getItemById('G463gOIA');
+      props.type = 'edit';
+    });
+
+    it('edit an item (all input values)', async () => {
+      createView();
+      await modifyValues({
+        serialNumber: 'test12',
+        assetNumber: 'test43',
+        purchaseOrderNumber: 'test21',
+        notes: 'test',
+        warrantyEndDate: '17/02/2035',
+        deliveredDate: '23/09/2045',
+        isDefective: 'Yes',
+        usageStatus: 'Used',
+        resolution: '12',
+        frameRate: '60',
+        sensorType: 'IO',
+        sensorBrand: 'pixel',
+        broken: 'True',
+        older: 'False',
+      });
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
+        asset_number: 'test43',
+        delivered_date: '2045-09-23T23:00:00.000Z',
+        is_defective: true,
+        notes: 'test',
+        properties: [
+          { name: 'Resolution', value: 12 },
+          { name: 'Frame Rate', value: 60 },
+          { name: 'Sensor Type', value: 'IO' },
+          { name: 'Sensor brand', value: 'pixel' },
+          { name: 'Broken', value: true },
+          { name: 'Older than five years', value: false },
+        ],
+        purchase_order_number: 'test21',
+        serial_number: 'test12',
+        warranty_end_date: '2035-02-17T23:00:00.000Z',
+      });
+    }, 10000);
+
+    it('displays error message when property values type is incorrect', async () => {
+      createView();
+      await modifyValues({
+        serialNumber: '   ',
+        assetNumber: 'test43',
+        purchaseOrderNumber: 'test21',
+        notes: 'test',
+        warrantyEndDate: '17',
+        deliveredDate: '23',
+        isDefective: 'Yes',
+        usageStatus: 'Used',
+        resolution: 'rwererw',
+        sensorType: '',
+        broken: 'None',
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      const validNumberHelperText = screen.getByText(
+        'Please enter a valid number'
+      );
+
+      expect(validNumberHelperText).toBeInTheDocument();
+
+      await modifyValues({
+        resolution: '12',
+      });
+      expect(
+        screen.queryByText('Please enter a valid number')
+      ).not.toBeInTheDocument();
+    }, 10000);
+
+    it('displays error message if no fields have been changed (when they are no catalogue property fields)', async () => {
+      createView();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText('Please edit a form entry before clicking save')
+        ).toBeInTheDocument();
+      });
+    });
   });
 });

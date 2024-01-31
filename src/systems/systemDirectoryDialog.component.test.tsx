@@ -164,7 +164,16 @@ describe('SystemDirectoryDialog', () => {
     });
 
     it('moves selected systems (to root system)', async () => {
+      // Ensure starting from a different system
+      props.parentSystemId = '65328f34a40ff5301575a4e4';
+
       createView();
+
+      await waitFor(() => {
+        expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByLabelText('navigate to systems home'));
 
       await waitFor(() => {
         expect(screen.getByText('Giant laser')).toBeInTheDocument();

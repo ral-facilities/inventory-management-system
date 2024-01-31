@@ -9,6 +9,8 @@ import { waitFor, screen } from '@testing-library/react';
 import ItemsTable, { ItemTableProps } from './itemsTable.component';
 
 describe('Items Table', () => {
+  jest.setTimeout(10000);
+
   let props: ItemTableProps;
   let user;
   const createView = () => {
@@ -155,6 +157,34 @@ describe('Items Table', () => {
 
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('can open the edit dialog and close it again', async () => {
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Edit')).toBeInTheDocument();
+    });
+
+    const editButton = screen.getByText('Edit');
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });

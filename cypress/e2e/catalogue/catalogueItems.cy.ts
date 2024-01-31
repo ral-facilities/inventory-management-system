@@ -30,6 +30,7 @@ describe('Catalogue Items', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -52,6 +53,7 @@ describe('Catalogue Items', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -82,6 +84,7 @@ describe('Catalogue Items', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -303,7 +306,7 @@ describe('Catalogue Items', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'Catalogue item has children elements and cannot be deleted, please delete the children elements first'
+          'Catalogue item has child elements and cannot be deleted, please delete the children elements first'
         );
       });
     cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
@@ -356,9 +359,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.contains(
-          'Catalogue item has children elements and cannot be edited, please delete the children elements first'
-        );
+        cy.contains('Catalogue item has child elements and cannot be edited');
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
@@ -384,6 +385,7 @@ describe('Catalogue Items', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',
@@ -407,6 +409,7 @@ describe('Catalogue Items', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',

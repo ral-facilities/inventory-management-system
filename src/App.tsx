@@ -5,19 +5,20 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { MicroFrontendId } from './app.types';
-import { requestPluginRerender } from './state/scigateway.actions';
-import Preloader from './preloader/preloader.component';
-import IMSThemeProvider from './imsThemeProvider.component';
-import { BrowserRouter } from 'react-router-dom';
-import ViewTabs from './view/viewTabs.component';
-import './App.css';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import enGB from 'date-fns/locale/en-GB';
+
 import handleIMS_APIError from './handleIMS_APIError';
 import { AxiosError } from 'axios';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import { enGB } from 'date-fns/locale/en-GB';
+import { BrowserRouter } from 'react-router-dom';
+import './App.css';
+import { MicroFrontendId } from './app.types';
+import IMSThemeProvider from './imsThemeProvider.component';
+import Preloader from './preloader/preloader.component';
+import { requestPluginRerender } from './state/scigateway.actions';
+import ViewTabs from './view/viewTabs.component';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({

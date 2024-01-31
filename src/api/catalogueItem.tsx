@@ -147,9 +147,16 @@ export const useEditCatalogueItem = (): UseMutationResult<
   return useMutation({
     mutationFn: (catalogueItem: EditCatalogueItem) =>
       editCatalogueItem(catalogueItem),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['CatalogueItems'] });
-      queryClient.invalidateQueries({ queryKey: ['CatalogueItem'] });
+    onSuccess: (catalogueItemResponse: CatalogueItem) => {
+      queryClient.invalidateQueries({
+        queryKey: [
+          'CatalogueItems',
+          catalogueItemResponse.catalogue_category_id,
+        ],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['CatalogueItem', catalogueItemResponse.id],
+      });
     },
   });
 };

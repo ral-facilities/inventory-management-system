@@ -53,6 +53,10 @@ describe('Catalogue Category', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    // Doesn't seem to wait for save to click on CI, so allowing an extra pause here
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -99,6 +103,7 @@ describe('Catalogue Category', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -185,6 +190,7 @@ describe('Catalogue Category', () => {
     cy.findByText('Number').click();
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -243,6 +249,7 @@ describe('Catalogue Category', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',
@@ -292,6 +299,7 @@ describe('Catalogue Category', () => {
     cy.findAllByLabelText('Property Name *').first().type('Updated Field');
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',
@@ -346,6 +354,7 @@ describe('Catalogue Category', () => {
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',

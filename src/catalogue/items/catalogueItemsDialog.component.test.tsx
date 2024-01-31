@@ -640,7 +640,7 @@ describe('Catalogue Items Dialog', () => {
       await waitFor(() => {
         expect(
           screen.getByText(
-            'Catalogue item has children elements and cannot be edited, please delete the children elements first'
+            'Catalogue item has child elements and cannot be edited'
           )
         ).toBeInTheDocument();
       });

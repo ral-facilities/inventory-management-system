@@ -212,4 +212,26 @@ describe('Catalogue Items Landing Page', () => {
     expect(screen.getByText('Telephone number')).toBeInTheDocument();
     expect(screen.getAllByText('None')[1]).toBeInTheDocument();
   });
+
+  it('opens the edit item dialog for save as', async () => {
+    createView('/catalogue/item/1/items/KvT2Ox7n');
+
+    const serialNumber = '5YUQDDjKpz2z';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+
+    const editButton = screen.getByText('Edit');
+    await user.click(editButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    await user.click(cancelButton);
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
 });

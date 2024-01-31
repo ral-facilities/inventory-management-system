@@ -94,7 +94,7 @@ describe('delete Catalogue Category dialogue', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'Catalogue item has children elements and cannot be deleted, please delete the children elements first'
+          'Catalogue item has child elements and cannot be deleted, please delete the children elements first'
         )
       ).toBeInTheDocument();
     });

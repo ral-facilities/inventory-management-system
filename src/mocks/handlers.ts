@@ -5,6 +5,7 @@ import {
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
+  EditItem,
   EditManufacturer,
   EditSystem,
   Manufacturer,
@@ -238,8 +239,7 @@ export const handlers = [
         return res(
           ctx.status(409),
           ctx.json({
-            detail:
-              'Catalogue item has children elements and cannot be deleted, please delete the children elements first',
+            detail: 'Catalogue item has child elements and cannot be deleted',
           })
         );
       } else {
@@ -262,8 +262,7 @@ export const handlers = [
       return res(
         ctx.status(409),
         ctx.json({
-          detail:
-            'Catalogue item has children elements and cannot be edited, please delete the children elements first',
+          detail: 'Catalogue item has child elements and cannot be edited',
         })
       );
     }
@@ -531,5 +530,32 @@ export const handlers = [
     if (id === 'Error 500') return res(ctx.status(500));
 
     return res(ctx.status(204));
+  }),
+  rest.patch('/v1/items/:id', async (req, res, ctx) => {
+    const body = (await req.json()) as EditItem;
+    const { id } = req.params;
+
+    if (id === 'Error 409')
+      return res(
+        ctx.status(409),
+        ctx.json({
+          detail:
+            'The specified system ID does not exist',
+        })
+      );
+
+    const validItem = ItemsJSON.find((value) => value.id === id);
+
+    if (body.serial_number === 'Error 500')
+      return res(ctx.status(500), ctx.json(''));
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        ...validItem,
+        ...body,
+        id: id,
+      })
+    );
   }),
 ];

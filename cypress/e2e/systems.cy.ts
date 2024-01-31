@@ -89,10 +89,12 @@ describe('Systems', () => {
   describe('Add', () => {
     it('adds a root system with only required parameters', () => {
       cy.findByRole('button', { name: 'add system' }).click();
-
       cy.findByLabelText('Name *').type('System name');
+
       cy.startSnoopingBrowserMockedRequest();
+
       cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
         method: 'POST',
@@ -120,7 +122,9 @@ describe('Systems', () => {
       cy.findByRole('option', { name: 'high' }).click();
 
       cy.startSnoopingBrowserMockedRequest();
+
       cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
         method: 'POST',
@@ -144,10 +148,12 @@ describe('Systems', () => {
       cy.visit('/systems/65328f34a40ff5301575a4e3');
 
       cy.findByRole('button', { name: 'add subsystem' }).click();
-
       cy.findByLabelText('Name *').type('System name');
+
       cy.startSnoopingBrowserMockedRequest();
+
       cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
         method: 'POST',
@@ -209,7 +215,9 @@ describe('Systems', () => {
       cy.findByRole('option', { name: 'medium' }).click();
 
       cy.startSnoopingBrowserMockedRequest();
+
       cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
         method: 'PATCH',
@@ -237,7 +245,9 @@ describe('Systems', () => {
       cy.findByLabelText('Name *').clear().type('System name');
 
       cy.startSnoopingBrowserMockedRequest();
+
       cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
         method: 'PATCH',
@@ -330,7 +340,9 @@ describe('Systems', () => {
       cy.findByRole('option', { name: 'medium' }).click();
 
       cy.startSnoopingBrowserMockedRequest();
+
       cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
         method: 'POST',
@@ -362,7 +374,9 @@ describe('Systems', () => {
       cy.findByLabelText('Name *').clear().type('System name');
 
       cy.startSnoopingBrowserMockedRequest();
+
       cy.findByRole('button', { name: 'Save' }).click();
+      cy.findByRole('dialog').should('not.exist');
 
       cy.findBrowserMockedRequests({
         method: 'POST',
@@ -392,7 +406,9 @@ describe('Systems', () => {
     cy.findByLabelText('Name *').clear().type('System name');
 
     cy.startSnoopingBrowserMockedRequest();
+
     cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',
@@ -550,6 +566,55 @@ describe('Systems', () => {
           id: '656ef565ed0773f82e44bc6d',
           code: 'pico-laser',
         })
+      );
+    });
+  });
+
+  it('moves items', () => {
+    cy.findByRole('cell', { name: 'Pulse Laser' }).click();
+
+    // Second table, first checkbox
+    cy.findAllByRole('table')
+      .eq(1)
+      .within(() => {
+        cy.findAllByRole('checkbox', {
+          name: 'Toggle select row',
+        })
+          .eq(0)
+          .click();
+        cy.findAllByRole('checkbox', {
+          name: 'Toggle select row',
+        })
+          .eq(1)
+          .click();
+      });
+
+    cy.findByRole('button', { name: 'Move to' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByRole('button', { name: 'navigate to systems home' }).click();
+        cy.findByLabelText('Giant laser row').click();
+        cy.findByRole('button', { name: 'Move here' }).click();
+      });
+
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/items/:id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).eq(2);
+      expect(patchRequests[0].url.toString()).to.contain('/I26EJNJ0');
+      expect(JSON.stringify(await patchRequests[0].json())).equal(
+        JSON.stringify({ system_id: '65328f34a40ff5301575a4e3' })
+      );
+      expect(patchRequests[1].url.toString()).to.contain('/4aw4EUKQ');
+      expect(JSON.stringify(await patchRequests[1].json())).equal(
+        JSON.stringify({ system_id: '65328f34a40ff5301575a4e3' })
       );
     });
   });
