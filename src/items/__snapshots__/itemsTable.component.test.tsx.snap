@@ -2764,7 +2764,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by ID"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rk3:"
+                            id=":rjo:"
                             placeholder="Filter by ID"
                             title="Filter by ID"
                             type="text"
@@ -2903,7 +2903,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Serial Number"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rk7:"
+                            id=":rjs:"
                             placeholder="Filter by Serial Number"
                             title="Filter by Serial Number"
                             type="text"
@@ -3042,7 +3042,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Delivered Date"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rkb:"
+                            id=":rk0:"
                             placeholder="Filter by Delivered Date"
                             title="Filter by Delivered Date"
                             type="text"
@@ -3177,13 +3177,13 @@ exports[`Items Table renders the dense table correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
                           <div
-                            aria-controls=":rkg:"
+                            aria-controls=":rk5:"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Is Defective"
-                            aria-labelledby=":rkf:"
+                            aria-labelledby=":rk4:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":rkf:"
+                            id=":rk4:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -3342,13 +3342,13 @@ exports[`Items Table renders the dense table correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
                           <div
-                            aria-controls=":rkl:"
+                            aria-controls=":rka:"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Usage Status"
-                            aria-labelledby=":rkk:"
+                            aria-labelledby=":rk9:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":rkk:"
+                            id=":rk9:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -3479,7 +3479,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                 >
-                  3/17/2023
+                  17/03/2023
                 </p>
               </td>
               <td
@@ -3565,7 +3565,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                 >
-                  5/11/2023
+                  11/05/2023
                 </p>
               </td>
               <td
@@ -3651,7 +3651,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                 >
-                  6/16/2023
+                  16/06/2023
                 </p>
               </td>
               <td
@@ -3737,7 +3737,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                 >
-                  12/5/2023
+                  05/12/2023
                 </p>
               </td>
               <td
@@ -3851,7 +3851,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":rkn:"
+                    aria-controls=":rkc:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
