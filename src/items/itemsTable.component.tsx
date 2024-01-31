@@ -163,8 +163,16 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'System ID',
         accessorFn: (row) => row.system_id,
-        size: 200,
-        filterVariant: 'select',
+        size: 250,
+        Cell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            to={'/systems/' + row.original.system_id}
+          >
+            {row.original.system_id}
+          </MuiLink>
+        ),
       },
       ...viewCatalogueItemProperties.map((property, index) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
