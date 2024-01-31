@@ -80,7 +80,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
                   />
                 </svg>
               </span>
@@ -141,7 +141,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"
+                          d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
                         />
                       </svg>
                       <input
@@ -219,7 +219,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M10.83 8H21V6H8.83zm5 5H18v-2h-4.17zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41z"
+                    d="M10.83 8H21V6H8.83l2 2zm5 5H18v-2h-4.17l2 2zM14 16.83V18h-4v-2h3.17l-3-3H6v-2h2.17l-3-3H3V6h.17L1.39 4.22 2.8 2.81l18.38 18.38-1.41 1.41L14 16.83z"
                   />
                 </svg>
                 <span
@@ -241,7 +241,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   viewBox="0 0 24 24"
                 >
                   <path
-                    d="M14.67 5v14H9.33V5zm1 14H21V5h-5.33zm-7.34 0V5H3v14z"
+                    d="M14.67 5v14H9.33V5h5.34zm1 14H21V5h-5.33v14zm-7.34 0V5H3v14h5.33z"
                   />
                 </svg>
                 <span
@@ -382,7 +382,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M20 9H4v2h16zM4 15h16v-2H4z"
+                          d="M20 9H4v2h16V9zM4 15h16v-2H4v2z"
                         />
                       </svg>
                     </button>
@@ -402,7 +402,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
                         />
                       </svg>
                       <span
@@ -554,7 +554,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M20 9H4v2h16zM4 15h16v-2H4z"
+                          d="M20 9H4v2h16V9zM4 15h16v-2H4v2z"
                         />
                       </svg>
                     </button>
@@ -574,7 +574,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
                         />
                       </svg>
                       <span
@@ -720,7 +720,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M20 9H4v2h16zM4 15h16v-2H4z"
+                          d="M20 9H4v2h16V9zM4 15h16v-2H4v2z"
                         />
                       </svg>
                     </button>
@@ -740,7 +740,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
                         />
                       </svg>
                       <span
@@ -886,7 +886,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M20 9H4v2h16zM4 15h16v-2H4z"
+                          d="M20 9H4v2h16V9zM4 15h16v-2H4v2z"
                         />
                       </svg>
                     </button>
@@ -906,7 +906,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
                         />
                       </svg>
                       <span
@@ -1035,7 +1035,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
                     />
                   </svg>
                   <span
@@ -1136,7 +1136,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
                     />
                   </svg>
                   <span
@@ -1237,7 +1237,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
                     />
                   </svg>
                   <span
@@ -1338,7 +1338,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                     viewBox="0 0 24 24"
                   >
                     <path
-                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
                     />
                   </svg>
                   <span
@@ -1530,7 +1530,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   <li>
                     <button
                       aria-label="Go to previous page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -1552,7 +1552,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                     <button
                       aria-current="true"
                       aria-label="page 1"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
                       tabindex="0"
                       type="button"
                     >
@@ -1565,7 +1565,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   <li>
                     <button
                       aria-label="Go to next page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
