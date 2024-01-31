@@ -306,7 +306,7 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
-    it('create a catalogue category with content being catalogue items (list of numbers)', async () => {
+    it('create a catalogue category with content being catalogue items (allowed_values list of numbers)', async () => {
       createView();
 
       await modifyValues({
@@ -345,7 +345,7 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
-    it('create a catalogue category with content being catalogue items (list of strings)', async () => {
+    it('create a catalogue category with content being catalogue items (allowed_values list of strings)', async () => {
       createView();
 
       await modifyValues({
@@ -461,7 +461,7 @@ describe('Catalogue Category Dialog', () => {
       expect(screen.queryByText('Yes')).not.toBeInTheDocument();
     });
 
-    it('displays duplicate values and incorrect type error  (list of numbers)', async () => {
+    it('displays duplicate values and incorrect type error (allowed_values list of numbers)', async () => {
       createView();
 
       await modifyValues({
@@ -554,7 +554,7 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
-    it('displays duplicate values error  (list of string)', async () => {
+    it('displays duplicate values error (allowed_values list of string)', async () => {
       createView();
 
       await modifyValues({
@@ -699,7 +699,7 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
-    it('edits a catalogue category with content being catalogue items (list of numbers)', async () => {
+    it('edits a catalogue category with content being catalogue items (allowed_values list of numbers)', async () => {
       props = {
         ...props,
         parentId: '1',
@@ -756,7 +756,7 @@ describe('Catalogue Category Dialog', () => {
       });
     });
 
-    it('edits a catalogue category with content being catalogue items (list of strings)', async () => {
+    it('edits a catalogue category with content being catalogue items (allowed_values list of strings)', async () => {
       props = {
         ...props,
         parentId: '1',
