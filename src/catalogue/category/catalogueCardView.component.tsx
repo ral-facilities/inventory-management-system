@@ -111,23 +111,7 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
         </Grid>
 
         <Grid item>
-          <TablePagination
-            count={Math.ceil(catalogueCategoryData?.length / paginationResults)}
-            onPageChange={(event, value) => {
-              setPage(value);
-            }}
-            page={page}
-            rowsPerPage={Math.ceil(
-              catalogueCategoryData?.length / paginationResults / 3
-            )}
-            // color="secondary"
-            // sx={{ textAlign: 'center' }}
-            // showFirstButton
-            // showLastButton
-            // aria-label="pagination"
-            // className="catalogue-categories-pagination"
-          />
-          {/* <Pagination
+          <Pagination
             variant="outlined"
             shape="rounded"
             count={Math.ceil(catalogueCategoryData?.length / paginationResults)}
@@ -147,7 +131,7 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
             showLastButton
             aria-label="pagination"
             className="catalogue-categories-pagination"
-          /> */}
+          />
         </Grid>
       </Grid>
     </Grid>
