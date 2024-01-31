@@ -260,6 +260,20 @@ function ItemsLandingPage() {
                       {Object.values(UsageStatusType)[itemData.usage_status]}
                     </Typography>
                   </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Typography align="left" color="text.primary">
+                      System ID
+                    </Typography>
+                    <Typography align="left" color="text.secondary">
+                      <MuiLink
+                        underline="hover"
+                        component={Link}
+                        to={'/systems/' + itemData.system_id}
+                      >
+                        {itemData.system_id}
+                      </MuiLink>
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Collapse>
             </Grid>
