@@ -165,7 +165,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                         viewBox="0 0 24 24"
                       >
                         <path
-                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                          d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
                         />
                       </svg>
                       <span
@@ -195,7 +195,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1lq:"
+                            id=":r1nn:"
                             placeholder="Filter by Name"
                             title="Filter by Name"
                             type="text"
@@ -679,32 +679,6 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
         class="MuiBox-root css-10gei56"
       >
         <div
-          class="MuiCollapse-root MuiCollapse-vertical css-nly5v0-MuiCollapse-root"
-          style="min-height: 0px; height: 0px; transition-duration: 300ms;"
-        >
-          <div
-            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
-          >
-            <div
-              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
-            >
-              <span
-                aria-busy="true"
-                aria-label="Loading"
-                class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate css-qprkun-MuiLinearProgress-root"
-                role="progressbar"
-              >
-                <span
-                  class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate css-5ir5xx-MuiLinearProgress-bar1"
-                />
-                <span
-                  class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate css-1r8wrcl-MuiLinearProgress-bar2"
-                />
-              </span>
-            </div>
-          </div>
-        </div>
-        <div
           class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
           style="min-height: 0px;"
         >
@@ -758,7 +732,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r1ls:"
+                    aria-controls=":r1np:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
@@ -799,7 +773,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                   <li>
                     <button
                       aria-label="Go to previous page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
@@ -821,7 +795,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                     <button
                       aria-current="true"
                       aria-label="page 1"
-                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-selected MuiPaginationItem-page css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
                       tabindex="0"
                       type="button"
                     >
@@ -834,7 +808,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                   <li>
                     <button
                       aria-label="Go to next page"
-                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
+                      class="MuiButtonBase-root Mui-disabled MuiPaginationItem-root MuiPaginationItem-sizeMedium MuiPaginationItem-outlined MuiPaginationItem-rounded MuiPaginationItem-colorSecondary MuiPaginationItem-outlinedSecondary Mui-disabled MuiPaginationItem-previousNext css-iqeo3-MuiButtonBase-root-MuiPaginationItem-root"
                       disabled=""
                       tabindex="-1"
                       type="button"
