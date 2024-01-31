@@ -560,7 +560,7 @@ function ItemDialog(props: ItemDialogProps) {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} sx={{ display: 'flex' }}>
+            <Grid item container xs={12} sx={{ display: 'flex' }}>
               <Grid item xs={11}>
                 <TextField
                   label="Notes"
@@ -580,14 +580,12 @@ function ItemDialog(props: ItemDialogProps) {
                   title={
                     <div>
                       <Typography>Catalogue item note:</Typography>
-                      <Typography>
-                        {catalogueItem?.notes ?? 'No note'}
-                      </Typography>
+                      <Typography>{catalogueItem?.notes ?? 'None'}</Typography>
                     </div>
                   }
                   placement="right"
                   enterTouchDelay={0}
-                  aria-label={`Catalogue item note: ${catalogueItem?.notes}`}
+                  aria-label={`Catalogue item note: ${catalogueItem?.notes ?? 'None'}`}
                 >
                   <IconButton size="small">
                     <InfoOutlinedIcon />

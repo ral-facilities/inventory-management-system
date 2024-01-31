@@ -52,6 +52,8 @@ describe('Catalogue Items Landing Page', () => {
     ).toBeInTheDocument();
 
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
+
+    expect(screen.getByText('Notes:')).toBeInTheDocument();
   });
 
   it('renders text correctly (extra details given)', async () => {
@@ -80,19 +82,8 @@ describe('Catalogue Items Landing Page', () => {
     );
 
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
-  });
-
-  it('renders notes text correctly', async () => {
-    createView('/catalogue/item/89');
-
-    await waitFor(() => {
-      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
-    });
 
     expect(screen.getByText('Notes:')).toBeInTheDocument();
-    expect(
-      screen.getByText('Need to find new manufacturer. 26')
-    ).toBeInTheDocument();
   });
 
   it('renders no item page correctly', async () => {

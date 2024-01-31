@@ -218,7 +218,7 @@ describe('Catalogue Items Table', () => {
     });
   });
 
-  it('Displays notes tooltip on hover', async () => {
+  it('displays notes tooltip on hover', async () => {
     createView();
 
     await ensureColumnsVisible(['Notes']);

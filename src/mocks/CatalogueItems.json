@@ -1716,7 +1716,8 @@
     "item_model_number": null,
     "is_obsolete": true,
     "obsolete_replacement_catalogue_item_id": "19",
-    "obsolete_reason": "The item is no longer being manufactured"
+    "obsolete_reason": "The item is no longer being manufactured",
+    "notes": null
   },
   {
     "catalogue_category_id": "13",

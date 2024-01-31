@@ -432,27 +432,27 @@ describe('ItemDialog', () => {
       });
     }, 10000);
 
-    it('Displays catalogue item notes tooltip on hover', async () => {
+    it('displays catalogue item notes tooltip on hover', async () => {
       createView();
       await waitFor(() => {
         expect(
-          screen.getByLabelText('Catalogue item note: null')
+          screen.getByLabelText('Catalogue item note: None')
         ).toBeInTheDocument();
       });
 
-      const infoIcon = screen.getByLabelText('Catalogue item note: null');
+      const infoIcon = screen.getByLabelText('Catalogue item note: None');
 
       await user.hover(infoIcon);
 
       await waitFor(() => {
         expect(screen.getByText('Catalogue item note:')).toBeInTheDocument();
       });
-      expect(screen.getByText('No note')).toBeInTheDocument();
+      expect(screen.getByText('None')).toBeInTheDocument();
 
       await user.unhover(infoIcon);
 
       await waitFor(() => {
-        expect(screen.queryByText('No note')).not.toBeInTheDocument();
+        expect(screen.queryByText('None')).not.toBeInTheDocument();
       });
     });
   });
