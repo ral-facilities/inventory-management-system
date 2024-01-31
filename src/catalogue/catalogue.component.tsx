@@ -28,8 +28,8 @@ import CatalogueCategoryDialog from './category/catalogueCategoryDialog.componen
 import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirectoryDialog.component';
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
-import CardView from './category/catalogueCardView.component';
 import { generateUniqueName } from '../utils';
+import CatalogueCardView from './category/catalogueCardView.component';
 
 export interface AddCatalogueButtonProps {
   disabled: boolean;
@@ -307,7 +307,7 @@ function Catalogue() {
       {catalogueCategoryData &&
         !parentInfo?.is_leaf &&
         !catalogueCategoryDetailLoading && (
-          <CardView
+          <CatalogueCardView
             catalogueCategoryData={catalogueCategoryData}
             onChangeOpenDeleteCategoryDialog={onChangeOpenDeleteCategoryDialog}
             onChangeOpenEditCategoryDialog={onChangeOpenEditCategoryDialog}

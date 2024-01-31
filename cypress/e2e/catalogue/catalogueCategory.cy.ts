@@ -62,6 +62,7 @@ describe('Catalogue Category', () => {
     });
 
     cy.findByText('Test 1').should('exist');
+    cy.findByText('Test 45').should('not.exist');
     cy.findByRole('combobox').click();
     cy.findByRole('option', { name: '45' }).click();
 

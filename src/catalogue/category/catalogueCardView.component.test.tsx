@@ -1,9 +1,7 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {
-  renderComponentWithBrowserRouter,
-} from '../../setupTests';
+import { renderComponentWithBrowserRouter } from '../../setupTests';
 import CardView, { CardViewProps } from './catalogueCardView.component';
 import { CatalogueCategory } from '../../app.types';
 
@@ -69,13 +67,15 @@ describe('CardView', () => {
     expect(screen.getByText('Max Results')).toBeInTheDocument();
   });
 
-  it('change page correctly changes and rerenders data', async () => {
+  it('changes page correctly and rerenders data', async () => {
     props.catalogueCategoryData = createData();
     createView();
 
     await waitFor(() => {
       expect(screen.getByText('Test 1')).toBeInTheDocument();
     });
+
+    expect(screen.queryByText('Test 31')).not.toBeInTheDocument();
 
     const page2 = screen.getByRole('button', { name: 'Go to page 2' });
     user.click(page2);

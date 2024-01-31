@@ -5,12 +5,14 @@ import {
   MenuItem,
   Pagination,
   Select,
+  TablePagination,
 } from '@mui/material';
 import CatalogueCard from './catalogueCard.component';
 import React from 'react';
 import { CatalogueCategory } from '../../app.types';
+import { getPageHeightCalc } from '../../utils';
 
-export interface CardViewProps {
+export interface CatalogueCardViewProps {
   catalogueCategoryData: CatalogueCategory[];
   onChangeOpenDeleteCategoryDialog: (
     catalogueCategory: CatalogueCategory
@@ -23,7 +25,7 @@ export interface CardViewProps {
   selectedCategories: CatalogueCategory[];
 }
 
-function CardView(props: CardViewProps) {
+function CatalogueCardView(props: CatalogueCardViewProps) {
   const {
     catalogueCategoryData,
     onChangeOpenDeleteCategoryDialog,
@@ -44,7 +46,13 @@ function CardView(props: CardViewProps) {
 
   return (
     <Grid container flexDirection={'column'}>
-      <Grid container item xs={12} maxHeight={'675px'} overflow={'auto'}>
+      <Grid
+        container
+        item
+        xs={12}
+        maxHeight={getPageHeightCalc('150px')}
+        overflow={'auto'}
+      >
         {displayedCatalogueCategories?.map((item, index) => (
           <Grid
             item
@@ -103,7 +111,23 @@ function CardView(props: CardViewProps) {
         </Grid>
 
         <Grid item>
-          <Pagination
+          <TablePagination
+            count={Math.ceil(catalogueCategoryData?.length / paginationResults)}
+            onPageChange={(event, value) => {
+              setPage(value);
+            }}
+            page={page}
+            rowsPerPage={Math.ceil(
+              catalogueCategoryData?.length / paginationResults / 3
+            )}
+            // color="secondary"
+            // sx={{ textAlign: 'center' }}
+            // showFirstButton
+            // showLastButton
+            // aria-label="pagination"
+            // className="catalogue-categories-pagination"
+          />
+          {/* <Pagination
             variant="outlined"
             shape="rounded"
             count={Math.ceil(catalogueCategoryData?.length / paginationResults)}
@@ -123,11 +147,11 @@ function CardView(props: CardViewProps) {
             showLastButton
             aria-label="pagination"
             className="catalogue-categories-pagination"
-          />
+          /> */}
         </Grid>
       </Grid>
     </Grid>
   );
 }
 
-export default CardView;
+export default CatalogueCardView;
