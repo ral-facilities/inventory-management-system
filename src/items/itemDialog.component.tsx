@@ -361,7 +361,6 @@ function ItemDialog(props: ItemDialogProps) {
   const { data: targetSystem } = useSystem(parentSystemId);
 
   const handleAddItem = React.useCallback(() => {
-    console.log('add');
     const { hasErrors, updatedProperties } = handleFormErrorStates();
 
     if (hasErrors) {
@@ -376,8 +375,6 @@ function ItemDialog(props: ItemDialogProps) {
       ...details,
       properties: filteredProperties,
     };
-
-    console.log(item);
 
     addItem(item)
       .then((response) => handleClose())
@@ -819,8 +816,12 @@ function ItemDialog(props: ItemDialogProps) {
             {!systemSelected ? (
               <Button
                 onClick={(event) => {
-                  handleItemDetails('system_id', targetSystem?.id ?? null);
-                  setSystemSelected(true);
+                  if (targetSystem) {
+                    handleItemDetails('system_id', targetSystem.id);
+                    setSystemSelected(true);
+                  } else {
+                    setFormErrorMessage('Please select a system');
+                  }
                 }}
               >
                 Move here
@@ -837,11 +838,7 @@ function ItemDialog(props: ItemDialogProps) {
                   (!!itemDetails.delivered_date &&
                     !isValidDateTime(itemDetails.delivered_date))
                 }
-                //onClick={type === 'edit' ? handleEditItem : handleAddItem}
-                onClick={(event) => {
-                  handleItemDetails('system_id', targetSystem?.id ?? null);
-                  type === 'edit' ? handleEditItem() : handleAddItem();
-                }}
+                onClick={type === 'edit' ? handleEditItem : handleAddItem}
               >
                 Finish
               </Button>
