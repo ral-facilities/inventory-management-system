@@ -24,12 +24,12 @@ import {
   CatalogueItemProperty,
 } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import CatalogueCard from './category/catalogueCard.component';
 import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
 import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirectoryDialog.component';
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import { generateUniqueName } from '../utils';
+import CatalogueCardView from './category/catalogueCardView.component';
 
 export interface AddCatalogueButtonProps {
   disabled: boolean;
@@ -197,6 +197,7 @@ function Catalogue() {
   const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
     string | null
   >(null);
+
   return (
     <Grid container>
       <Grid container>
@@ -306,24 +307,16 @@ function Catalogue() {
       {catalogueCategoryData &&
         !parentInfo?.is_leaf &&
         !catalogueCategoryDetailLoading && (
-          <Grid container spacing={2}>
-            {catalogueCategoryData.map((item, index) => (
-              <Grid item key={index} xs={12} sm={6} md={4}>
-                <CatalogueCard
-                  {...item}
-                  onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
-                  onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
-                  onChangeOpenSaveAsDialog={onChangeOpenSaveAsDialog}
-                  onToggleSelect={handleToggleSelect}
-                  isSelected={selectedCategories.some(
-                    (selectedCategory: CatalogueCategory) =>
-                      selectedCategory.id === item.id
-                  )}
-                />
-              </Grid>
-            ))}
-          </Grid>
+          <CatalogueCardView
+            catalogueCategoryData={catalogueCategoryData}
+            onChangeOpenDeleteCategoryDialog={onChangeOpenDeleteCategoryDialog}
+            onChangeOpenEditCategoryDialog={onChangeOpenEditCategoryDialog}
+            onChangeOpenSaveAsDialog={onChangeOpenSaveAsDialog}
+            handleToggleSelect={handleToggleSelect}
+            selectedCategories={selectedCategories}
+          />
         )}
+
       {parentInfo && parentInfo.is_leaf && (
         <CatalogueItemsTable parentInfo={parentInfo} dense={false} />
       )}

@@ -611,18 +611,38 @@ function ItemDialog(props: ItemDialogProps) {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                label="Notes"
-                size="small"
-                multiline
-                minRows={5}
-                value={itemDetails.notes ?? ''}
-                onChange={(event) => {
-                  handleItemDetails('notes', event.target.value);
-                }}
-                fullWidth
-              />
+            <Grid item container xs={12} sx={{ display: 'flex' }}>
+              <Grid item xs={11}>
+                <TextField
+                  label="Notes"
+                  size="small"
+                  multiline
+                  minRows={5}
+                  value={itemDetails.notes ?? ''}
+                  onChange={(event) => {
+                    handleItemDetails('notes', event.target.value);
+                  }}
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={1}>
+                <Tooltip
+                  sx={{ alignItems: 'center' }}
+                  title={
+                    <div>
+                      <Typography>Catalogue item note:</Typography>
+                      <Typography>{catalogueItem?.notes ?? 'None'}</Typography>
+                    </div>
+                  }
+                  placement="right"
+                  enterTouchDelay={0}
+                  aria-label={`Catalogue item note: ${catalogueItem?.notes ?? 'None'}`}
+                >
+                  <IconButton size="small">
+                    <InfoOutlinedIcon />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
             </Grid>
           </Grid>
         );
