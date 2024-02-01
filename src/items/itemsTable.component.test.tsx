@@ -67,7 +67,7 @@ describe('Items Table', () => {
 
   it('renders correctly part 3 due column virtualisation', async () => {
     createView();
-    await ensureColumnsVisible(['Warranty End Date']);
+    await ensureColumnsVisible(['Warranty End Date', 'System ID']);
   });
 
   it('opens and closes the add item dialog', async () => {

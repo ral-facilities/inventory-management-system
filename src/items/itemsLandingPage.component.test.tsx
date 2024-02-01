@@ -52,6 +52,8 @@ describe('Catalogue Items Landing Page', () => {
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
 
     expect(screen.getByText('Asset Number')).toBeInTheDocument();
+
+    expect(screen.getByText('System ID')).toBeInTheDocument();
   });
 
   it('renders no item page correctly', async () => {
