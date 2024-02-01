@@ -490,7 +490,11 @@ function ItemDialog(props: ItemDialogProps) {
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if (activeStep === 2 && targetSystem !== undefined) {
+      setSystemSelected(false);
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    }
   };
 
   const renderStepContent = (step: number) => {
