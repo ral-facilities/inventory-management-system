@@ -25,8 +25,10 @@ import {
 } from '../../api/catalogueCategory';
 import {
   AddCatalogueCategory,
+  AllowedValuesListErrorsType,
   CatalogueCategory,
   CatalogueCategoryFormData,
+  CatalogueItemPropertiesErrorsType,
   EditCatalogueCategory,
   ErrorParsing,
 } from '../../app.types';
@@ -89,12 +91,8 @@ const CatalogueCategoryDialog = React.memo(
     );
 
     // State to manage list item errors
-    const [listItemErrors, setListItemErrors] = React.useState<
-      {
-        index: number | null;
-        valueIndex: { index: number; errorMessage: string }[] | null;
-      }[]
-    >([]);
+    const [allowedValuesListErrors, setAllowedValuesListErrors] =
+      React.useState<AllowedValuesListErrorsType[]>([]);
 
     const [catchAllError, setCatchAllError] = React.useState(false);
 
@@ -102,15 +100,7 @@ const CatalogueCategoryDialog = React.memo(
     const { mutateAsync: editCatalogueCategory } = useEditCatalogueCategory();
 
     const [catalogueItemPropertiesErrors, setCatalogueItemPropertiesErrors] =
-      React.useState<
-        {
-          index: number;
-          valueIndex: {
-            index: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
-            errorMessage: string;
-          } | null;
-        }[]
-      >([]);
+      React.useState<CatalogueItemPropertiesErrorsType[]>([]);
 
     const { data: selectedCatalogueCategoryData } = useCatalogueCategory(
       selectedCatalogueCategory?.id
@@ -126,7 +116,7 @@ const CatalogueCategoryDialog = React.memo(
         catalogue_item_properties: undefined,
       });
       setCatalogueItemPropertiesErrors([]);
-      setListItemErrors([]);
+      setAllowedValuesListErrors([]);
       setFormError(undefined);
       resetSelectedCatalogueCategory();
     }, [onClose, resetSelectedCatalogueCategory]);
@@ -139,7 +129,7 @@ const CatalogueCategoryDialog = React.memo(
       setFormError(undefined);
     };
 
-    const validateCatalogueItems = (
+    const validateAllowedValuesList = (
       catalogueItemProperties: CatalogueCategoryFormData[]
     ): boolean => {
       let hasErrors = false;
@@ -174,22 +164,26 @@ const CatalogueCategoryDialog = React.memo(
 
           if (
             Array.from(new Set(duplicateIndexes)).length > 0 ||
-            Array.from(new Set(invalidNumberIndexes)).length > 0 ||
-            Array.from(new Set(missingValueIndexes)).length > 0
+            // If there are more than 2 instances of the same duplicate value, it adds the index multiple times.
+            // The set removes the repeated indexes.
+            invalidNumberIndexes.length > 0 ||
+            missingValueIndexes.length > 0
           ) {
             // Update listItemErrors state with the error indexes
-            setListItemErrors((prev) => [
+            // The useState below is order-dependent since the duplicate error could occur simultaneously with the errors above.
+            // The error above should be displayed first.
+
+            setAllowedValuesListErrors((prev) => [
               ...prev,
               {
                 index,
-                valueIndex: [
-                  ...(prev[index]?.valueIndex || []),
-
-                  ...Array.from(new Set(invalidNumberIndexes)).map((i) => ({
+                errors: [
+                  ...(prev[index]?.errors || []),
+                  ...invalidNumberIndexes.map((i) => ({
                     index: i,
                     errorMessage: 'Please enter a valid number',
                   })),
-                  ...Array.from(new Set(missingValueIndexes)).map((i) => ({
+                  ...missingValueIndexes.map((i) => ({
                     index: i,
                     errorMessage: 'Please enter a value',
                   })),
@@ -222,8 +216,8 @@ const CatalogueCategoryDialog = React.memo(
               ...prev,
               {
                 index: i,
-                valueIndex: {
-                  index: 'name',
+                errors: {
+                  fieldName: 'name',
                   errorMessage: 'Please enter a property name',
                 },
               },
@@ -236,8 +230,8 @@ const CatalogueCategoryDialog = React.memo(
               ...prev,
               {
                 index: i,
-                valueIndex: {
-                  index: 'type',
+                errors: {
+                  fieldName: 'type',
                   errorMessage: 'Please select a type',
                 },
               },
@@ -254,8 +248,8 @@ const CatalogueCategoryDialog = React.memo(
               ...prev,
               {
                 index: i,
-                valueIndex: {
-                  index: 'list',
+                errors: {
+                  fieldName: 'list',
                   errorMessage: 'Please create a valid list item',
                 },
               },
@@ -286,8 +280,8 @@ const CatalogueCategoryDialog = React.memo(
             ...prev,
             {
               index: uniqueDuplicateIndexes[i],
-              valueIndex: {
-                index: 'name',
+              errors: {
+                fieldName: 'name',
                 errorMessage:
                   'Duplicate property name. Please change the name or remove the property',
               },
@@ -296,7 +290,7 @@ const CatalogueCategoryDialog = React.memo(
           hasErrors = true;
         }
 
-        const hasAllowedValuesListErrors = validateCatalogueItems(
+        const hasAllowedValuesListErrors = validateAllowedValuesList(
           categoryData.catalogue_item_properties
         );
 
@@ -319,13 +313,13 @@ const CatalogueCategoryDialog = React.memo(
       }
       const formFieldErrors = validateFormFields();
 
-      if (catalogueItemPropertiesErrors.length !== 0 || formFieldErrors) {
+      if (formFieldErrors) {
         hasErrors = true;
       }
 
       //add error handling here?
       return { hasErrors };
-    }, [catalogueItemPropertiesErrors, categoryData, validateFormFields]);
+    }, [categoryData, validateFormFields]);
 
     const handleAddCatalogueCategory = React.useCallback(() => {
       let catalogueCategory: AddCatalogueCategory;
@@ -582,8 +576,8 @@ const CatalogueCategoryDialog = React.memo(
                     catalogueItemPropertiesErrors={
                       catalogueItemPropertiesErrors
                     }
-                    listItemErrors={listItemErrors}
-                    onChangeListItemErrors={setListItemErrors}
+                    allowedValuesListErrors={allowedValuesListErrors}
+                    onChangeAllowedValuesListErrors={setAllowedValuesListErrors}
                     resetFormError={() => setFormError(undefined)}
                   />
                 </Grid>
@@ -623,7 +617,7 @@ const CatalogueCategoryDialog = React.memo(
                 catchAllError ||
                 nameError !== undefined ||
                 catalogueItemPropertiesErrors.length !== 0 ||
-                listItemErrors.length !== 0
+                allowedValuesListErrors.length !== 0
               }
             >
               Save

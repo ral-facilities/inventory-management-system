@@ -120,28 +120,23 @@ describe('Catalogue Category Dialog', () => {
                   name: `Add list item ${i + numberOfCurrentFields}`,
                 })
               );
+
+              await waitFor(() => {
+                screen.getAllByLabelText(`List Item ${j}`);
+              });
+              const listItems = screen.getAllByLabelText(`List Item ${j}`);
+
+              await fireEvent.change(
+                within(
+                  listItems[
+                    i + numberOfCurrentFields - allowedValuesSelects.length + 1
+                  ]
+                ).getByLabelText('List Item'),
+                {
+                  target: { value: field.allowed_values.values[j] },
+                }
+              );
             }
-          }
-        }
-
-        // Modify allowed values if present
-        if (field.allowed_values?.type === 'list') {
-          for (let j = 0; j < field.allowed_values.values.length; j++) {
-            await waitFor(() => {
-              screen.getAllByLabelText(`List Item ${j}`);
-            });
-            const listItems = screen.getAllByLabelText(`List Item ${j}`);
-
-            await fireEvent.change(
-              within(
-                listItems[
-                  i + numberOfCurrentFields - allowedValuesSelects.length + 1
-                ]
-              ).getByLabelText('List Item'),
-              {
-                target: { value: field.allowed_values.values[j] },
-              }
-            );
           }
         }
       }

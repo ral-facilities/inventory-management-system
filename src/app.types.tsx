@@ -254,3 +254,16 @@ export interface MoveItemsToSystem {
   selectedItems: Item[];
   targetSystem: System;
 }
+
+export interface CatalogueItemPropertiesErrorsType {
+  index: number;
+  errors: {
+    fieldName: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
+    errorMessage: string;
+  } | null;
+}
+
+export interface AllowedValuesListErrorsType {
+  index: number | null;
+  errors: { index: number; errorMessage: string }[] | null;
+}

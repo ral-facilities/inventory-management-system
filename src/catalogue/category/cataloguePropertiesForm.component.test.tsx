@@ -5,14 +5,17 @@ import userEvent from '@testing-library/user-event';
 import CataloguePropertiesForm, {
   CataloguePropertiesFormProps,
 } from './cataloguePropertiesForm.component';
-import { CatalogueCategoryFormData } from '../../app.types';
+import {
+  CatalogueCategoryFormData,
+  CatalogueItemPropertiesErrorsType,
+} from '../../app.types';
 
 describe('Catalogue Properties Form', () => {
   let props: CataloguePropertiesFormProps;
   let user;
   const onChangeFormFields = jest.fn();
   const onChangeCatalogueItemPropertiesErrors = jest.fn();
-  const onChangeListItemErrors = jest.fn();
+  const onChangeAllowedValuesListErrors = jest.fn();
 
   const resetFormError = jest.fn();
   const createView = () => {
@@ -28,8 +31,8 @@ describe('Catalogue Properties Form', () => {
       catalogueItemPropertiesErrors: [],
       onChangeCatalogueItemPropertiesErrors:
         onChangeCatalogueItemPropertiesErrors,
-      onChangeListItemErrors: onChangeListItemErrors,
-      listItemErrors: [],
+      onChangeAllowedValuesListErrors: onChangeAllowedValuesListErrors,
+      allowedValuesListErrors: [],
       resetFormError: resetFormError,
     };
     user = userEvent.setup();
@@ -240,38 +243,32 @@ describe('Catalogue Properties Form', () => {
         mandatory: false,
       },
     ];
-    const catalogueItemPropertiesErrors: {
-      index: number;
-      valueIndex: {
-        index: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
-        errorMessage: string;
-      } | null;
-    }[] = [
+    const catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[] = [
       {
         index: 0,
-        valueIndex: {
-          index: 'name',
+        errors: {
+          fieldName: 'name',
           errorMessage: 'Please enter a property name',
         },
       },
       {
         index: 1,
-        valueIndex: {
-          index: 'name',
+        errors: {
+          fieldName: 'name',
           errorMessage: 'Please enter a property name',
         },
       },
       {
         index: 1,
-        valueIndex: {
-          index: 'type',
+        errors: {
+          fieldName: 'type',
           errorMessage: 'Please select a type',
         },
       },
       {
         index: 3,
-        valueIndex: {
-          index: 'list',
+        errors: {
+          fieldName: 'list',
           errorMessage: 'Please create a valid list item',
         },
       },
@@ -338,25 +335,19 @@ describe('Catalogue Properties Form', () => {
       { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
       { name: 'Field', type: 'boolean', mandatory: false },
     ];
-    const catalogueItemPropertiesErrors: {
-      index: number;
-      valueIndex: {
-        index: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
-        errorMessage: string;
-      } | null;
-    }[] = [
+    const catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[] = [
       {
         index: 0,
-        valueIndex: {
-          index: 'name',
+        errors: {
+          fieldName: 'name',
           errorMessage:
             'Duplicate property name. Please change the name or remove the property',
         },
       },
       {
         index: 2,
-        valueIndex: {
-          index: 'name',
+        errors: {
+          fieldName: 'name',
           errorMessage:
             'Duplicate property name. Please change the name or remove the property',
         },
@@ -391,25 +382,19 @@ describe('Catalogue Properties Form', () => {
       { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
       { name: 'Field', type: 'boolean', mandatory: false },
     ];
-    const catalogueItemPropertiesErrors: {
-      index: number;
-      valueIndex: {
-        index: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
-        errorMessage: string;
-      } | null;
-    }[] = [
+    const catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[] = [
       {
         index: 0,
-        valueIndex: {
-          index: 'name',
+        errors: {
+          fieldName: 'name',
           errorMessage:
             'Duplicate property name. Please change the name or remove the property',
         },
       },
       {
         index: 2,
-        valueIndex: {
-          index: 'name',
+        errors: {
+          fieldName: 'name',
           errorMessage:
             'Duplicate property name. Please change the name or remove the property',
         },
@@ -701,10 +686,10 @@ describe('Catalogue Properties Form', () => {
       },
     ];
 
-    const listItemErrors = [
+    const allowedValuesListErrors = [
       {
         index: 0,
-        valueIndex: [
+        errors: [
           {
             index: 0,
             errorMessage: 'Please enter a valid number',
@@ -717,7 +702,7 @@ describe('Catalogue Properties Form', () => {
       },
       {
         index: 1,
-        valueIndex: [
+        errors: [
           {
             index: 0,
             errorMessage: 'Please enter valid text',
@@ -741,7 +726,7 @@ describe('Catalogue Properties Form', () => {
     props = {
       ...props,
       formFields: formFields,
-      listItemErrors: listItemErrors,
+      allowedValuesListErrors: allowedValuesListErrors,
     };
     createView();
 
@@ -775,10 +760,10 @@ describe('Catalogue Properties Form', () => {
       ]);
     });
 
-    expect(onChangeListItemErrors).toHaveBeenCalledWith([
+    expect(onChangeAllowedValuesListErrors).toHaveBeenCalledWith([
       {
         index: 1,
-        valueIndex: [
+        errors: [
           { errorMessage: 'Please enter valid text', index: 0 },
           { errorMessage: 'Please enter valid text', index: 1 },
           { errorMessage: 'Duplicate value', index: 2 },
@@ -799,10 +784,10 @@ describe('Catalogue Properties Form', () => {
       },
     ];
 
-    const listItemErrors = [
+    const allowedValuesListErrors = [
       {
         index: 0,
-        valueIndex: [
+        errors: [
           {
             index: 0,
             errorMessage: 'Please enter a valid number',
@@ -818,7 +803,7 @@ describe('Catalogue Properties Form', () => {
     props = {
       ...props,
       formFields: formFields,
-      listItemErrors: listItemErrors,
+      allowedValuesListErrors: allowedValuesListErrors,
     };
     createView();
 
@@ -847,10 +832,10 @@ describe('Catalogue Properties Form', () => {
       ]);
     });
 
-    expect(onChangeListItemErrors).toHaveBeenCalledWith([
+    expect(onChangeAllowedValuesListErrors).toHaveBeenCalledWith([
       {
         index: 0,
-        valueIndex: [{ errorMessage: 'Please enter a valid number', index: 0 }],
+        errors: [{ errorMessage: 'Please enter a valid number', index: 0 }],
       },
     ]);
   });
@@ -866,10 +851,10 @@ describe('Catalogue Properties Form', () => {
       },
     ];
 
-    const listItemErrors = [
+    const allowedValuesListErrors = [
       {
         index: 0,
-        valueIndex: [
+        errors: [
           {
             index: 0,
             errorMessage: 'Please enter a valid number',
@@ -885,7 +870,7 @@ describe('Catalogue Properties Form', () => {
     props = {
       ...props,
       formFields: formFields,
-      listItemErrors: listItemErrors,
+      allowedValuesListErrors: allowedValuesListErrors,
     };
     createView();
 
@@ -914,10 +899,10 @@ describe('Catalogue Properties Form', () => {
       ]);
     });
 
-    expect(onChangeListItemErrors).toHaveBeenCalledWith([
+    expect(onChangeAllowedValuesListErrors).toHaveBeenCalledWith([
       {
         index: 0,
-        valueIndex: [{ errorMessage: 'Please enter a valid number', index: 0 }],
+        errors: [{ errorMessage: 'Please enter a valid number', index: 0 }],
       },
     ]);
   });
@@ -940,10 +925,10 @@ describe('Catalogue Properties Form', () => {
       },
     ];
 
-    const listItemErrors = [
+    const allowedValuesListErrors = [
       {
         index: 0,
-        valueIndex: [
+        errors: [
           {
             index: 0,
             errorMessage: 'Please enter a valid number',
@@ -956,7 +941,7 @@ describe('Catalogue Properties Form', () => {
       },
       {
         index: 1,
-        valueIndex: [
+        errors: [
           {
             index: 0,
             errorMessage: 'Please enter valid text',
@@ -980,7 +965,7 @@ describe('Catalogue Properties Form', () => {
     props = {
       ...props,
       formFields: formFields,
-      listItemErrors: listItemErrors,
+      allowedValuesListErrors: allowedValuesListErrors,
     };
     createView();
 
@@ -1023,10 +1008,10 @@ describe('Catalogue Properties Form', () => {
       },
     ]);
 
-    expect(onChangeListItemErrors).toHaveBeenCalledWith([
+    expect(onChangeAllowedValuesListErrors).toHaveBeenCalledWith([
       {
         index: 1,
-        valueIndex: [
+        errors: [
           { errorMessage: 'Please enter valid text', index: 0 },
           { errorMessage: 'Please enter valid text', index: 1 },
           { errorMessage: 'Duplicate value', index: 2 },

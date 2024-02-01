@@ -8,39 +8,27 @@ import {
   Stack,
   IconButton,
   FormHelperText,
+  Box,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { AllowedValuesList, CatalogueCategoryFormData } from '../../app.types';
+import {
+  AllowedValuesList,
+  CatalogueCategoryFormData,
+  CatalogueItemPropertiesErrorsType,
+  AllowedValuesListErrorsType,
+} from '../../app.types';
 
 export interface CataloguePropertiesFormProps {
   formFields: CatalogueCategoryFormData[];
   onChangeFormFields: (formFields: CatalogueCategoryFormData[]) => void;
-  catalogueItemPropertiesErrors: {
-    index: number;
-    valueIndex: {
-      index: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
-      errorMessage: string;
-    } | null;
-  }[];
+  catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[];
   onChangeCatalogueItemPropertiesErrors: (
-    catalogueItemPropertiesErrors: {
-      index: number;
-      valueIndex: {
-        index: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
-        errorMessage: string;
-      } | null;
-    }[]
+    catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[]
   ) => void;
-  listItemErrors: {
-    index: number | null;
-    valueIndex: { index: number; errorMessage: string }[] | null;
-  }[];
-  onChangeListItemErrors: (
-    listItemErrors: {
-      index: number | null;
-      valueIndex: { index: number; errorMessage: string }[] | null;
-    }[]
+  allowedValuesListErrors: AllowedValuesListErrorsType[];
+  onChangeAllowedValuesListErrors: (
+    allowedValuesListErrors: AllowedValuesListErrorsType[]
   ) => void;
   resetFormError: () => void;
 }
@@ -49,10 +37,10 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   const {
     formFields,
     onChangeFormFields,
-    onChangeListItemErrors,
+    onChangeAllowedValuesListErrors,
     onChangeCatalogueItemPropertiesErrors,
     catalogueItemPropertiesErrors,
-    listItemErrors,
+    allowedValuesListErrors,
     resetFormError,
   } = props;
 
@@ -74,7 +62,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
     updatedFormFields.splice(index, 1);
 
-    const updatedListItemErrors = listItemErrors.filter(
+    // When a catalogue item property is deleted it removes the list errors
+    const updatedallowedValuesListErrors = allowedValuesListErrors.filter(
       (item) => item.index !== index
     );
 
@@ -82,11 +71,11 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       .filter((item) => item.index !== index)
       .filter(
         (item) =>
-          item.valueIndex?.errorMessage !==
+          item.errors?.errorMessage !==
           'Duplicate property name. Please change the name or remove the property'
       );
 
-    onChangeListItemErrors(updatedListItemErrors);
+    onChangeAllowedValuesListErrors(updatedallowedValuesListErrors);
     onChangeFormFields(updatedFormFields);
     onChangeCatalogueItemPropertiesErrors(updatedCatalogueItemPropertiesErrors);
     resetFormError();
@@ -107,11 +96,10 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
 
       const updatedCatalogueItemPropertiesErrors =
         catalogueItemPropertiesErrors.filter((item) => {
-          // Check if the index is not equal to the specified index and if the valueIndex index is not "type"
           return !(
             item.index === index &&
-            item.valueIndex &&
-            item.valueIndex.index === 'type'
+            item.errors &&
+            item.errors.fieldName === 'type'
           );
         });
       onChangeCatalogueItemPropertiesErrors(
@@ -125,16 +113,15 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     } else if (field === 'name') {
       const updatedCatalogueItemPropertiesErrors = catalogueItemPropertiesErrors
         .filter((item) => {
-          // Check if the index is not equal to the specified index and if the valueIndex index is not "type"
           return !(
             item.index === index &&
-            item.valueIndex &&
-            item.valueIndex.index === 'name'
+            item.errors &&
+            item.errors.fieldName === 'name'
           );
         })
         .filter(
           (item) =>
-            item.valueIndex?.errorMessage !==
+            item.errors?.errorMessage !==
             'Duplicate property name. Please change the name or remove the property'
         );
 
@@ -147,11 +134,11 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       (updatedFormFields[index][field] as boolean | string | null) = value;
     }
 
-    const updatedListItemErrors = listItemErrors.filter(
+    const updatedallowedValuesListErrors = allowedValuesListErrors.filter(
       (item) => item.index !== index
     );
 
-    onChangeListItemErrors(updatedListItemErrors);
+    onChangeAllowedValuesListErrors(updatedallowedValuesListErrors);
 
     onChangeFormFields(updatedFormFields);
 
@@ -176,11 +163,10 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
 
     const updatedCatalogueItemPropertiesErrors =
       catalogueItemPropertiesErrors.filter((item) => {
-        // Check if the index is not equal to the specified index and if the valueIndex index is not "type"
         return !(
           item.index === index &&
-          item.valueIndex &&
-          item.valueIndex.index === 'list'
+          item.errors &&
+          item.errors.fieldName === 'list'
         );
       });
     onChangeCatalogueItemPropertiesErrors(updatedCatalogueItemPropertiesErrors);
@@ -210,22 +196,22 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
 
       // Remove the error when the value is changed
 
-      const updatedListItemErrors = [...listItemErrors];
+      const updatedallowedValuesListErrors = [...allowedValuesListErrors];
 
-      const errorIndex = updatedListItemErrors.findIndex(
+      const errorIndex = updatedallowedValuesListErrors.findIndex(
         (error) => error.index === index
       );
 
-      updatedListItemErrors[errorIndex] = {
+      updatedallowedValuesListErrors[errorIndex] = {
         index: index,
-        valueIndex: (updatedListItemErrors[errorIndex]?.valueIndex ?? [])
+        errors: (updatedallowedValuesListErrors[errorIndex]?.errors ?? [])
           .filter((item) => item.index !== valueIndex)
           .filter((item) => item.errorMessage !== 'Duplicate value'),
       };
 
-      onChangeListItemErrors(
-        updatedListItemErrors.filter(
-          (item) => (item.valueIndex?.length ?? 0) > 0
+      onChangeAllowedValuesListErrors(
+        updatedallowedValuesListErrors.filter(
+          (item) => (item.errors?.length ?? 0) > 0
         )
       );
     }
@@ -251,45 +237,27 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       onChangeFormFields(updatedFormFields);
 
       // Remove the error when the value is deleted
-      const updatedListItemErrors = [...listItemErrors];
-      const errorIndex = updatedListItemErrors.findIndex(
+      const updatedallowedValuesListErrors = [...allowedValuesListErrors];
+      const errorIndex = updatedallowedValuesListErrors.findIndex(
         (error) => error.index === index
       );
 
-      updatedListItemErrors[errorIndex] = {
+      updatedallowedValuesListErrors[errorIndex] = {
         index: index,
-        valueIndex: (updatedListItemErrors[errorIndex]?.valueIndex ?? [])
+        errors: (updatedallowedValuesListErrors[errorIndex]?.errors ?? [])
           .filter((item) => item.index !== valueIndex)
           .filter((item) => item.errorMessage !== 'Duplicate value'),
       };
 
-      onChangeListItemErrors(
-        updatedListItemErrors.filter(
-          (item) => (item.valueIndex?.length ?? 0) > 0
+      onChangeAllowedValuesListErrors(
+        updatedallowedValuesListErrors.filter(
+          (item) => (item.errors?.length ?? 0) > 0
         )
       );
     }
   };
 
-  const isError = React.useCallback(
-    (
-      index: number,
-      column: 'name' | 'type' | 'unit' | 'mandatory' | 'list'
-    ) => {
-      return (
-        catalogueItemPropertiesErrors.filter((item) => {
-          return (
-            item.index === index &&
-            item.valueIndex &&
-            item.valueIndex.index === column
-          );
-        }).length >= 1
-      );
-    },
-    [catalogueItemPropertiesErrors]
-  );
-
-  const errorMessage = React.useCallback(
+  const catalogueItemPropertyMessage = React.useCallback(
     (
       index: number,
       column: 'name' | 'type' | 'unit' | 'mandatory' | 'list'
@@ -297,8 +265,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       const errors = catalogueItemPropertiesErrors.filter((item) => {
         return (
           item.index === index &&
-          item.valueIndex &&
-          item.valueIndex.index === column
+          item.errors &&
+          item.errors.fieldName === column
         );
       });
 
@@ -309,24 +277,11 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     [catalogueItemPropertiesErrors]
   );
 
-  const isListError = React.useCallback(
-    (index: number, listIndex: number) => {
-      const atIndex = listItemErrors.find(
-        (item) => item.index === index
-      )?.valueIndex;
-      return (
-        (atIndex?.filter((item) => {
-          return item.index === listIndex;
-        }).length ?? 0) >= 1
-      );
-    },
-    [listItemErrors]
-  );
-
-  const listErrorMessage = React.useCallback(
+  const allowedValuesListErrorMessage = React.useCallback(
     (index: number, listIndex: number) => {
       const atIndex =
-        listItemErrors.find((item) => item.index === index)?.valueIndex ?? [];
+        allowedValuesListErrors.find((item) => item.index === index)?.errors ??
+        [];
       if (atIndex.length >= 1) {
         const filteredItems = atIndex.filter((item) => {
           return item.index === listIndex;
@@ -337,7 +292,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       }
       return '';
     },
-    [listItemErrors]
+    [allowedValuesListErrors]
   );
 
   return (
@@ -351,13 +306,15 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             required={true}
             value={field.name}
             onChange={(e) => handleChange(index, 'name', e.target.value)}
-            error={isError(index, 'name')}
-            helperText={errorMessage(index, 'name')?.valueIndex?.errorMessage}
+            error={!!catalogueItemPropertyMessage(index, 'name')}
+            helperText={
+              catalogueItemPropertyMessage(index, 'name')?.errors?.errorMessage
+            }
             sx={{ minWidth: '150px' }}
           />
           <FormControl sx={{ width: '150px', minWidth: '150px' }}>
             <InputLabel
-              error={isError(index, 'type')}
+              error={!!catalogueItemPropertyMessage(index, 'type')}
               required={true}
               id={`catalogue-properties-form-select-type-label-${index}`}
             >
@@ -372,7 +329,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
                   e.target.value === 'text' ? 'string' : e.target.value
                 );
               }}
-              error={isError(index, 'type')}
+              error={!!catalogueItemPropertyMessage(index, 'type')}
               label="Select Type"
               labelId={`catalogue-properties-form-select-type-label-${index}`}
               required={true}
@@ -381,9 +338,12 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               <MenuItem value="number">Number</MenuItem>
               <MenuItem value="text">Text</MenuItem>
             </Select>
-            {isError(index, 'type') && (
+            {catalogueItemPropertyMessage(index, 'type') && (
               <FormHelperText error>
-                {errorMessage(index, 'type')?.valueIndex?.errorMessage}
+                {
+                  catalogueItemPropertyMessage(index, 'type')?.errors
+                    ?.errorMessage
+                }
               </FormHelperText>
             )}
           </FormControl>
@@ -432,20 +392,21 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
                 width: '200px',
                 minWidth: '200px',
                 alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center',
               }}
             >
               {field.allowed_values?.values.map((listValue, valueIndex) => (
                 <Stack
                   key={valueIndex}
                   direction="row"
-                  sx={{ alignItems: 'center' }}
+                  sx={{ alignItems: 'center', justifyContent: 'center', mb: 1 }}
                   spacing={1}
                 >
                   <TextField
                     label={`List Item`}
                     aria-label={`List Item ${valueIndex}`}
                     variant="outlined"
-                    sx={{ pb: 1 }}
                     value={listValue as string}
                     onChange={(e) =>
                       field.allowed_values &&
@@ -455,8 +416,11 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
                         e.target.value as string
                       )
                     }
-                    error={isListError(index, valueIndex)}
-                    helperText={listErrorMessage(index, valueIndex)}
+                    error={!!allowedValuesListErrorMessage(index, valueIndex)}
+                    helperText={allowedValuesListErrorMessage(
+                      index,
+                      valueIndex
+                    )}
                   />
 
                   <IconButton
@@ -474,9 +438,12 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               >
                 <AddIcon />
               </IconButton>
-              {isError(index, 'list') && (
+              {catalogueItemPropertyMessage(index, 'list') && (
                 <FormHelperText error>
-                  {errorMessage(index, 'list')?.valueIndex?.errorMessage}
+                  {
+                    catalogueItemPropertyMessage(index, 'list')?.errors
+                      ?.errorMessage
+                  }
                 </FormHelperText>
               )}
             </Stack>
@@ -512,14 +479,23 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               <MenuItem value="no">No</MenuItem>
             </Select>
           </FormControl>
-          <IconButton
-            aria-label={'Delete catalogue category field entry'}
-            onClick={() => handleDeleteField(index)}
+
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
           >
-            <DeleteIcon />
-          </IconButton>
+            <IconButton
+              aria-label={'Delete catalogue category field entry'}
+              onClick={() => handleDeleteField(index)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Box>
         </Stack>
       ))}
+
       <IconButton
         sx={{ margin: '8px' }}
         onClick={handleAddField}
