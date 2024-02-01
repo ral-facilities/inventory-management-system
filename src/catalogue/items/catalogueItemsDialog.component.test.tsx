@@ -268,6 +268,46 @@ describe('Catalogue Items Dialog', () => {
     });
   }, 10000);
 
+  it('displays an error if a mandatory catalogue item property is not defined (allowed list of values )', async () => {
+    props = {
+      ...props,
+      parentInfo: getCatalogueCategoryById('12'),
+    };
+
+    createView();
+
+    await modifyValues({
+      costGbp: '1200',
+      costToReworkGbp: '400',
+      daysToReplace: '20',
+      daysToRework: '2',
+      description: '',
+      drawingLink: 'https://example.com',
+      drawingNumber: 'mk4324',
+      itemModelNumber: 'mk4324',
+      name: 'test',
+      manufacturer: 'Man{arrowdown}{enter}',
+    });
+
+    await fireEvent.change(
+      screen.getByLabelText('Ultimate Pressure (millibar) *'),
+      {
+        target: { value: '10' },
+      }
+    );
+
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+    await user.click(saveButton);
+
+    const mandatoryFieldHelperText = screen.getAllByText(
+      'Please enter a valid value as this field is mandatory'
+    );
+
+    expect(mandatoryFieldHelperText[0]).toHaveTextContent(
+      'Please enter a valid value as this field is mandatory'
+    );
+  }, 10000);
+
   it('adds a catalogue item (just mandatory fields)', async () => {
     props = {
       ...props,

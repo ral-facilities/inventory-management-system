@@ -679,12 +679,6 @@ function ItemDialog(props: ItemDialogProps) {
                                   )
                                 )}
                               </Select>
-                              {propertyErrors[index] && (
-                                <FormHelperText error>
-                                  Please enter a valid value as this field is
-                                  mandatory
-                                </FormHelperText>
-                              )}
                             </FormControl>
                           ) : (
                             <TextField
