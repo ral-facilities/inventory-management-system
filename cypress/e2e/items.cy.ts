@@ -67,7 +67,12 @@ describe('Items', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByText('Giant laser').click();
+
+    cy.findByRole('button', { name: 'Move here' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -77,7 +82,7 @@ describe('Items', () => {
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
           catalogue_item_id: '1',
-          system_id: null,
+          system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: null,
           is_defective: false,
           usage_status: 0,
@@ -112,6 +117,8 @@ describe('Items', () => {
     cy.findByText('Scrapped').click();
     cy.findByLabelText('Notes').type('test');
 
+    cy.findByRole('button', { name: 'Next' }).click();
+
     cy.findByLabelText('Resolution (megapixels) *').type('18');
     cy.findByLabelText('Frame Rate (fps)').type('60');
     cy.findByLabelText('Sensor Type *').type('IO');
@@ -121,9 +128,14 @@ describe('Items', () => {
     cy.findByLabelText('Older than five years').click();
     cy.findByRole('option', { name: 'True' }).click();
 
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByText('Giant laser').click();
+    cy.findByRole('button', { name: 'Move here' }).click();
+
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -133,7 +145,7 @@ describe('Items', () => {
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
           catalogue_item_id: '1',
-          system_id: null,
+          system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: 'test23',
           is_defective: true,
           usage_status: 3,
@@ -161,11 +173,6 @@ describe('Items', () => {
     cy.findByLabelText('Warranty end date').type('12/02/');
     cy.findByLabelText('Delivered date').type('12/02/');
 
-    cy.findByLabelText('Resolution (megapixels) *').clear();
-    cy.findByLabelText('Sensor Type *').clear();
-    cy.findByLabelText('Broken *').click();
-    cy.findByRole('option', { name: 'None' }).click();
-
     cy.findAllByText('Date format: dd/MM/yyyy').should('have.length', 2);
     cy.findByLabelText('Warranty end date').clear();
     cy.findByLabelText('Delivered date').clear();
@@ -179,7 +186,14 @@ describe('Items', () => {
     cy.findByText('Exceeded maximum date').should('not.exist');
     cy.findByText('Date format: dd/MM/yyyy').should('not.exist');
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByLabelText('Resolution (megapixels) *').clear();
+    cy.findByLabelText('Sensor Type *').clear();
+    cy.findByLabelText('Broken *').click();
+    cy.findByRole('option', { name: 'None' }).click();
+
+    cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findAllByText('This field is mandatory').should('have.length', 2);
     cy.findByText('Please select either True or False').should('exist');
@@ -271,7 +285,10 @@ describe('Items', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Move here' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -281,7 +298,7 @@ describe('Items', () => {
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
           catalogue_item_id: '1',
-          system_id: null,
+          system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: '6JYHEjwN',
           is_defective: false,
           usage_status: 1,
@@ -324,6 +341,8 @@ describe('Items', () => {
     cy.findByText('Scrapped').click();
     cy.findByLabelText('Notes').type('test');
 
+    cy.findByRole('button', { name: 'Next' }).click();
+
     cy.findByLabelText('Resolution (megapixels) *').type('18');
     cy.findByLabelText('Frame Rate (fps)').type('60');
     cy.findByLabelText('Sensor Type *').type('IO');
@@ -333,9 +352,16 @@ describe('Items', () => {
     cy.findByLabelText('Older than five years').click();
     cy.findByRole('option', { name: 'True' }).click();
 
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByRole('button', { name: 'navigate to systems home' }).click();
+    cy.findByText('Giant laser').click();
+
+    cy.findByRole('button', { name: 'Move here' }).click();
+
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',
@@ -345,6 +371,7 @@ describe('Items', () => {
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
           serial_number: 'Zf7P8Qu8TD8ctest1234',
+          system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: 'hpGBgi0dtest23',
           usage_status: 3,
           warranty_end_date: '2028-02-12T23:00:00.000Z',
@@ -370,9 +397,13 @@ describe('Items', () => {
 
     cy.findByLabelText('Serial number').type('test1234');
 
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Move here' }).click();
+
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',
@@ -389,6 +420,8 @@ describe('Items', () => {
     cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Edit').click();
 
+    cy.findByRole('button', { name: 'Next' }).click();
+
     cy.findByLabelText('Resolution (megapixels) *').type('18');
     cy.findByLabelText('Frame Rate (fps)').type('60');
     cy.findByLabelText('Sensor Type *').type('IO');
@@ -398,9 +431,12 @@ describe('Items', () => {
     cy.findByLabelText('Older than five years').click();
     cy.findByRole('option', { name: 'True' }).click();
 
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Move here' }).click();
+
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',
@@ -426,7 +462,10 @@ describe('Items', () => {
     cy.findAllByLabelText('Row Actions').last().click();
     cy.findByText('Edit').click();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Move here' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
 
     cy.findByText('Please edit a form entry before clicking save').should(
       'exist'
@@ -440,7 +479,10 @@ describe('Items', () => {
     cy.findByLabelText('Serial number').clear();
     cy.findByLabelText('Serial number').type('Error 500');
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Move here' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
 
     cy.findByText('Please refresh and try again').should('exist');
   });
