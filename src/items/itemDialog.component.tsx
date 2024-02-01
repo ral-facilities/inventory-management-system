@@ -35,9 +35,8 @@ import {
 import { DatePicker } from '@mui/x-date-pickers';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
-import { useAddItem, useEditItem, useMoveItemsToSystem } from '../api/item';
+import { useAddItem, useEditItem } from '../api/item';
 import { AxiosError } from 'axios';
-import { Label } from '@mui/icons-material';
 import { SystemsTableView } from '../systems/systemsTableView.component';
 import { useSystem, useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
