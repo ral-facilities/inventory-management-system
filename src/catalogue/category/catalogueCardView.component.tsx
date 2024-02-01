@@ -82,7 +82,8 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
         alignItems="center"
         justifyContent="right"
         xs={12}
-        padding={2}
+        px={1}
+        py={1.5}
         position={'fixed'}
         bottom={12}
         right={0}
@@ -100,16 +101,17 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
             <Typography
               sx={{
                 padding: 2,
+                color: 'text.secondary',
               }}
             >
-              {'Cards per page'}
+              {'Categories per page'}
             </Typography>
             <Select
               disableUnderline
               value={paginationResults}
               inputProps={{
                 name: 'Max Results',
-                id: 'select-max-results',
+                labelId: 'select-max-results',
               }}
               onChange={(event) => {
                 setPaginationResults(+event.target.value);
@@ -133,16 +135,9 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
             onChange={(event, value) => {
               setPage(value);
             }}
-            size="large"
+            size="medium"
             color="secondary"
             sx={{ textAlign: 'center' }}
-            showFirstButton
-            hidePrevButton={page === 1}
-            hideNextButton={
-              page >=
-              Math.ceil(catalogueCategoryData?.length / paginationResults)
-            }
-            showLastButton
             aria-label="pagination"
             className="catalogue-categories-pagination"
           />

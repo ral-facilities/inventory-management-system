@@ -64,7 +64,7 @@ describe('CardView', () => {
     });
 
     expect(screen.getByLabelText('pagination')).toBeInTheDocument();
-    expect(screen.getByText('Cards per page')).toBeInTheDocument();
+    expect(screen.getByText('Categories per page')).toBeInTheDocument();
   });
 
   it('changes page correctly and rerenders data', async () => {
