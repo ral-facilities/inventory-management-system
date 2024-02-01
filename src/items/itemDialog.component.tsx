@@ -814,6 +814,7 @@ function ItemDialog(props: ItemDialogProps) {
           <>
             {!systemSelected ? (
               <Button
+                disabled={targetSystem === undefined}
                 onClick={(event) => {
                   if (targetSystem) {
                     handleItemDetails('system_id', targetSystem.id);
