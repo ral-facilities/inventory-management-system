@@ -282,17 +282,25 @@ function ItemDialog(props: ItemDialogProps) {
           hasErrors = true;
         }
 
-        if (!propertyValues[index]) return null;
-
         let typedValue: string | number | boolean | null =
           propertyValues[index]; // Assume it's a string by default
+
+        if (!propertyValues[index]) {
+          typedValue = null;
+        }
 
         // Check if the type of the 'property' is boolean
         if (property.type === 'boolean') {
           // If the type is boolean, then check the type of 'propertyValues[index]'
-          typedValue = propertyValues[index] === 'true' ? true : false;
+          typedValue = propertyValues[index]
+            ? propertyValues[index] === 'true'
+              ? true
+              : false
+            : null;
         } else if (property.type === 'number') {
-          typedValue = Number(propertyValues[index]);
+          typedValue = propertyValues[index]
+            ? Number(propertyValues[index])
+            : null;
         }
 
         return {
@@ -371,7 +379,7 @@ function ItemDialog(props: ItemDialogProps) {
       }
 
       const filteredProperties = updatedProperties.filter(
-        (property) => property !== null
+        (property) => property.value !== null
       ) as CatalogueItemProperty[];
 
       const isPurchaseOrderNumberUpdated =
@@ -629,6 +637,55 @@ function ItemDialog(props: ItemDialogProps) {
                                 </FormHelperText>
                               )}
                             </FormControl>
+                          ) : property.allowed_values ? (
+                            <FormControl fullWidth>
+                              <InputLabel
+                                required={property.mandatory ?? false}
+                                error={propertyErrors[index]}
+                                id={`catalogue-item-property-${property.name.replace(
+                                  /\s+/g,
+                                  '-'
+                                )}`}
+                                size="small"
+                                sx={{ alignItems: 'center' }}
+                              >
+                                {property.name}
+                              </InputLabel>
+                              <Select
+                                value={(propertyValues[index] as string) ?? ''}
+                                required={property.mandatory ?? false}
+                                size="small"
+                                error={propertyErrors[index]}
+                                labelId={`catalogue-item-property-${property.name.replace(
+                                  /\s+/g,
+                                  '-'
+                                )}`}
+                                onChange={(event) =>
+                                  handlePropertyChange(
+                                    index,
+                                    property.name,
+                                    event.target.value as string
+                                  )
+                                }
+                                label={property.name}
+                                sx={{ alignItems: 'center' }}
+                                fullWidth
+                              >
+                                {property.allowed_values.values.map(
+                                  (value, index) => (
+                                    <MenuItem key={index} value={value}>
+                                      {value}
+                                    </MenuItem>
+                                  )
+                                )}
+                              </Select>
+                              {propertyErrors[index] && (
+                                <FormHelperText error>
+                                  Please enter a valid value as this field is
+                                  mandatory
+                                </FormHelperText>
+                              )}
+                            </FormControl>
                           ) : (
                             <TextField
                               label={`${property.name} ${
@@ -652,7 +709,7 @@ function ItemDialog(props: ItemDialogProps) {
                                   ? // If 'propertyErrors[index]' is truthy, perform the following checks:
                                     property.mandatory && !propertyValues[index]
                                     ? // If 'property' is mandatory and 'propertyValues[index]' is empty, return a mandatory field error message
-                                      'This field is mandatory'
+                                      'Please enter a valid value as this field is mandatory'
                                     : property.type === 'number' &&
                                       isNaN(Number(propertyValues[index])) &&
                                       'Please enter a valid number' // If 'property' is of type 'number' and 'propertyValues[index]' is not a valid number, return an invalid number error message

@@ -183,7 +183,9 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findAllByText('This field is mandatory').should('have.length', 2);
+    cy.findAllByText(
+      'Please enter a valid value as this field is mandatory'
+    ).should('have.length', 2);
     cy.findByText('Please select either True or False').should('exist');
 
     cy.findByLabelText('Resolution (megapixels) *').type('test');
@@ -192,7 +194,9 @@ describe('Items', () => {
     cy.findByRole('option', { name: 'True' }).click();
 
     cy.findByText('Please select either True or False').should('not.exist');
-    cy.findAllByText('This field is mandatory').should('not.exist');
+    cy.findAllByText(
+      'Please enter a valid value as this field is mandatory'
+    ).should('not.exist');
   });
 
   it('sets the table filters and clears the table filters', () => {

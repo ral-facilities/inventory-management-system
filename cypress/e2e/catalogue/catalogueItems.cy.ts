@@ -102,7 +102,9 @@ describe('Catalogue Items', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findAllByText('This field is mandatory').should('have.length', 2);
+    cy.findAllByText(
+      'Please enter a valid value as this field is mandatory'
+    ).should('have.length', 2);
     cy.findByText('Please enter a name').should('exist');
     cy.findByText('Please enter a cost').should('exist');
     cy.findByText('Please enter how many days it would take to replace').should(
@@ -123,7 +125,9 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Time to replace (days) *').type('14');
     cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
 
-    cy.findAllByText('This field is mandatory').should('have.length', 0);
+    cy.findAllByText(
+      'Please enter a valid value as this field is mandatory'
+    ).should('have.length', 0);
     cy.findByText('Please enter name').should('not.exist');
     cy.findByText('Please select either True or False').should('not.exist');
     cy.findByText('Please enter a cost').should('not.exist');

@@ -212,6 +212,62 @@ describe('Catalogue Items Dialog', () => {
     });
   }, 10000);
 
+  it('adds a catalogue item where the catalogue item property has an allowed list of values', async () => {
+    props = {
+      ...props,
+      parentInfo: getCatalogueCategoryById('12'),
+    };
+
+    createView();
+
+    await modifyValues({
+      costGbp: '1200',
+      costToReworkGbp: '400',
+      daysToReplace: '20',
+      daysToRework: '2',
+      description: '',
+      drawingLink: 'https://example.com',
+      drawingNumber: 'mk4324',
+      itemModelNumber: 'mk4324',
+      name: 'test',
+      manufacturer: 'Man{arrowdown}{enter}',
+    });
+
+    await fireEvent.change(
+      screen.getByLabelText('Ultimate Pressure (millibar) *'),
+      {
+        target: { value: '10' },
+      }
+    );
+
+    await fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+    await fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+    await user.click(saveButton);
+
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
+      catalogue_category_id: '12',
+      cost_gbp: 1200,
+      cost_to_rework_gbp: 400,
+      days_to_replace: 20,
+      days_to_rework: 2,
+      description: null,
+      drawing_link: 'https://example.com',
+      drawing_number: 'mk4324',
+      is_obsolete: false,
+      item_model_number: 'mk4324',
+      manufacturer_id: '1',
+      name: 'test',
+      obsolete_reason: null,
+      obsolete_replacement_catalogue_item_id: null,
+      properties: [
+        { name: 'Pumping Speed', value: 400 },
+        { name: 'Ultimate Pressure', value: 10 },
+      ],
+    });
+  }, 10000);
+
   it('adds a catalogue item (just mandatory fields)', async () => {
     props = {
       ...props,
@@ -269,7 +325,7 @@ describe('Catalogue Items Dialog', () => {
     await user.click(saveButton);
 
     const mandatoryFieldHelperText = screen.getAllByText(
-      'This field is mandatory'
+      'Please enter a valid value as this field is mandatory'
     );
 
     const mandatoryFieldBooleanHelperText = screen.getByText(
@@ -288,7 +344,7 @@ describe('Catalogue Items Dialog', () => {
     expect(daysToReplaceHelperText).toBeInTheDocument();
     expect(mandatoryFieldHelperText.length).toBe(2);
     expect(mandatoryFieldHelperText[0]).toHaveTextContent(
-      'This field is mandatory'
+      'Please enter a valid value as this field is mandatory'
     );
 
     expect(
@@ -452,6 +508,38 @@ describe('Catalogue Items Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
+    it('edits a catalogue item where the catalogue item property has an allowed list of values', async () => {
+      props = {
+        ...props,
+        parentInfo: getCatalogueCategoryById('12'),
+        selectedCatalogueItem: getCatalogueItemById('17'),
+      };
+
+      createView();
+
+      await fireEvent.change(
+        screen.getByLabelText('Ultimate Pressure (millibar) *'),
+        {
+          target: { value: '10' },
+        }
+      );
+
+      await fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      await fireEvent.click(
+        within(screen.getByRole('listbox')).getByText('400')
+      );
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/17', {
+        properties: [
+          { name: 'Pumping Speed', value: 400 },
+          { name: 'Ultimate Pressure', value: 10 },
+        ],
+      });
+    }, 10000);
+
     it('display error message when mandatory field is not filled in', async () => {
       props = {
         ...props,
@@ -484,7 +572,7 @@ describe('Catalogue Items Dialog', () => {
       await user.click(saveButton);
 
       const mandatoryFieldHelperText = screen.getAllByText(
-        'This field is mandatory'
+        'Please enter a valid value as this field is mandatory'
       );
 
       const mandatoryFieldBooleanHelperText = screen.getByText(
@@ -503,7 +591,7 @@ describe('Catalogue Items Dialog', () => {
       expect(daysToReplaceHelperText).toBeInTheDocument();
       expect(mandatoryFieldHelperText.length).toBe(2);
       expect(mandatoryFieldHelperText[0]).toHaveTextContent(
-        'This field is mandatory'
+        'Please enter a valid value as this field is mandatory'
       );
 
       expect(
