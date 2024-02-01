@@ -33,7 +33,7 @@ describe('catalogue items api functions', () => {
     beforeEach(() => {
       mockDataAdd = {
         catalogue_item_id: '1',
-        system_id: null,
+        system_id: '65328f34a40ff5301575a4e3',
         purchase_order_number: 'fdsfdfs',
         is_defective: false,
         usage_status: 0,
@@ -91,7 +91,7 @@ describe('catalogue items api functions', () => {
         ],
         purchase_order_number: 'fdsfdfs',
         serial_number: 'mxewe',
-        system_id: null,
+        system_id: '65328f34a40ff5301575a4e3',
         usage_status: 0,
         warranty_end_date: '2024-01-28T00:00:00.000Z',
       });
@@ -189,7 +189,7 @@ describe('catalogue items api functions', () => {
         ],
         purchase_order_number: '6JYHEjwN',
         serial_number: 'test',
-        system_id: null,
+        system_id: '65328f34a40ff5301575a4e3',
         usage_status: 1,
         warranty_end_date: '2023-04-04T23:00:00.000Z',
       });
