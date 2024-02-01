@@ -5,6 +5,21 @@ describe('Catalogue Category', () => {
   afterEach(() => {
     cy.clearMocks();
   });
+
+  function createMockData() {
+    let data = [];
+    for (let index = 1; index < 50; index++) {
+      data.push({
+        id: index.toString(),
+        name: 'Test ' + index.toString(),
+        parent_id: null,
+        code: index.toString(),
+        is_leaf: true,
+      });
+    }
+    return data;
+  }
+
   it('should create the breadcrumbs when navigating to a non root catalogue category', () => {
     cy.visit('/catalogue/8');
     cy.findByRole('link', { name: 'motion' }).should('be.visible');
@@ -24,6 +39,34 @@ describe('Catalogue Category', () => {
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
     cy.findByRole('link', { name: 'motion' }).should('not.exist');
     cy.findByText('actuators').should('not.exist');
+  });
+
+  it('should be able to change page', () => {
+    cy.editEndpointResponse({
+      url: '/v1/catalogue-categories/',
+      data: createMockData(),
+      statusCode: 200,
+    });
+
+    cy.findByText('Test 1').should('exist');
+    cy.findByRole('button', { name: 'Go to page 2' }).click();
+
+    cy.findByText('Test 31').should('exist');
+  });
+
+  it('should be able to change max results', () => {
+    cy.editEndpointResponse({
+      url: '/v1/catalogue-categories/',
+      data: createMockData(),
+      statusCode: 200,
+    });
+
+    cy.findByText('Test 1').should('exist');
+    cy.findByText('Test 45').should('not.exist');
+    cy.findByRole('combobox').click();
+    cy.findByRole('option', { name: '45' }).click();
+
+    cy.findByText('Test 45').should('exist');
   });
 
   it('display error message when there is no name when adding a catalogue category', () => {

@@ -90,6 +90,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       obsolete_replacement_catalogue_item_id: null,
       obsolete_reason: null,
       manufacturer_id: null,
+      notes: null,
     });
 
   const [propertyValues, setPropertyValues] = React.useState<(string | null)[]>(
@@ -128,6 +129,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       obsolete_replacement_catalogue_item_id: null,
       obsolete_reason: null,
       manufacturer_id: null,
+      notes: null,
     });
 
     setPropertyValues([]);
@@ -167,6 +169,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           selectedCatalogueItem.obsolete_replacement_catalogue_item_id,
         obsolete_reason: selectedCatalogueItem.obsolete_reason,
         manufacturer_id: selectedCatalogueItem.manufacturer_id,
+        notes: selectedCatalogueItem.notes,
       });
       setPropertyValues(
         matchCatalogueItemProperties(
@@ -402,6 +405,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       drawing_link: catalogueItemDetails.drawing_link,
       drawing_number: catalogueItemDetails.drawing_number,
       manufacturer_id: catalogueItemDetails.manufacturer_id ?? '',
+      notes: catalogueItemDetails.notes,
     }),
     [catalogueItemDetails, parentId]
   );
@@ -481,6 +485,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         id: selectedCatalogueItem.id,
       };
 
+      const isNotesUpdated = details.notes !== selectedCatalogueItem.notes;
+
       isNameUpdated && (catalogueItem.name = details.name);
       isDescriptionUpdated && (catalogueItem.description = details.description);
       isCostGbpUpdated && (catalogueItem.cost_gbp = details.cost_gbp);
@@ -500,6 +506,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         (catalogueItem.properties = filteredProperties);
       isManufacturerUpdated &&
         (catalogueItem.manufacturer_id = details.manufacturer_id);
+      isNotesUpdated && (catalogueItem.notes = details.notes);
 
       if (
         catalogueItem.id &&
@@ -513,7 +520,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           isDrawingLinkUpdated ||
           isModelNumberUpdated ||
           isCatalogueItemPropertiesUpdated ||
-          isManufacturerUpdated)
+          isManufacturerUpdated ||
+          isNotesUpdated)
       ) {
         editCatalogueItem(catalogueItem)
           .then((response) => handleClose())
@@ -795,6 +803,20 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 onClose={() => setAddManufacturerDialogOpen(false)}
                 type="create"
               />
+
+              <Grid item xs={12}>
+                <TextField
+                  label="Notes"
+                  size="small"
+                  multiline
+                  minRows={5}
+                  value={catalogueItemDetails.notes ?? ''}
+                  onChange={(event) => {
+                    handleCatalogueDetails('notes', event.target.value);
+                  }}
+                  fullWidth
+                />
+              </Grid>
             </Grid>
           </Grid>
 

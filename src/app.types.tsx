@@ -99,6 +99,7 @@ export interface CatalogueItemDetails extends ObsoleteDetails {
   drawing_link: string | null;
   item_model_number: string | null;
   manufacturer_id: string;
+  notes: string | null;
 }
 // need so we can cast string to number e.g for 10.50
 export type CatalogueItemDetailsPlaceholder = {
