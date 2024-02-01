@@ -1524,7 +1524,7 @@ exports[`SystemItemsTable renders correctly 1`] = `
               <p
                 class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
               >
-                05/09/2023
+                9/5/2023
               </p>
             </td>
             <td
@@ -1656,7 +1656,7 @@ exports[`SystemItemsTable renders correctly 1`] = `
               <p
                 class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
               >
-                27/02/2023
+                2/27/2023
               </p>
             </td>
             <td
@@ -1788,7 +1788,7 @@ exports[`SystemItemsTable renders correctly 1`] = `
               <p
                 class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
               >
-                09/09/2023
+                9/9/2023
               </p>
             </td>
             <td
