@@ -316,14 +316,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             ) === 0
               ? 0
               : findPropertyValue(
-                  row.original.catalogueItem.properties,
-                  property.name
-                ) !== null
-              ? findPropertyValue(
-                  row.original.catalogueItem.properties,
-                  property.name
-                )
-              : '';
+                    row.original.catalogueItem.properties,
+                    property.name
+                  ) !== null
+                ? findPropertyValue(
+                    row.original.catalogueItem.properties,
+                    property.name
+                  )
+                : '';
           } else if (
             typeof findPropertyValue(
               row.original.catalogueItem.properties,
@@ -360,8 +360,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           return row.original.catalogueItem.cost_to_rework_gbp === 0
             ? 0
             : row.original.catalogueItem.cost_to_rework_gbp !== null
-            ? row.original.catalogueItem.cost_to_rework_gbp
-            : '';
+              ? row.original.catalogueItem.cost_to_rework_gbp
+              : '';
         },
       },
       {
@@ -380,8 +380,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           return row.original.catalogueItem.cost_to_rework_gbp === 0
             ? 0
             : row.original.catalogueItem.cost_to_rework_gbp !== null
-            ? row.original.catalogueItem.cost_to_rework_gbp
-            : '';
+              ? row.original.catalogueItem.cost_to_rework_gbp
+              : '';
         },
       },
       {
@@ -453,6 +453,23 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Manufacturer Telephone',
         accessorFn: (row) => row.manufacturer?.telephone,
         Cell: ({ row }) => row.original.manufacturer?.telephone,
+      },
+      {
+        header: 'Notes',
+        accessorFn: (row) => row.catalogueItem.notes ?? '',
+        size: 250,
+        Cell: ({ row }) =>
+          row.original.catalogueItem.notes && (
+            <Tooltip
+              title={row.original.catalogueItem.notes}
+              placement="top"
+              enterTouchDelay={0}
+              arrow
+              aria-label={`Catalogue item note: ${row.original.catalogueItem.notes}`}
+            >
+              <InfoOutlinedIcon />
+            </Tooltip>
+          ),
       },
     ];
   }, [dense, isItemSelectable, parentInfo.catalogue_item_properties]);

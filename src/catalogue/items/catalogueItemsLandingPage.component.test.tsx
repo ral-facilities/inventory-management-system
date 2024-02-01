@@ -52,6 +52,8 @@ describe('Catalogue Items Landing Page', () => {
     ).toBeInTheDocument();
 
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
+
+    expect(screen.getByText('Notes:')).toBeInTheDocument();
   });
 
   it('renders text correctly (extra details given)', async () => {
@@ -80,6 +82,8 @@ describe('Catalogue Items Landing Page', () => {
     );
 
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
+
+    expect(screen.getByText('Notes:')).toBeInTheDocument();
   });
 
   it('renders no item page correctly', async () => {
