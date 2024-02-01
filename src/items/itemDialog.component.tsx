@@ -282,25 +282,17 @@ function ItemDialog(props: ItemDialogProps) {
           hasErrors = true;
         }
 
+        if (!propertyValues[index]) return null;
+
         let typedValue: string | number | boolean | null =
           propertyValues[index]; // Assume it's a string by default
-
-        if (!propertyValues[index]) {
-          typedValue = null;
-        }
 
         // Check if the type of the 'property' is boolean
         if (property.type === 'boolean') {
           // If the type is boolean, then check the type of 'propertyValues[index]'
-          typedValue = propertyValues[index]
-            ? propertyValues[index] === 'true'
-              ? true
-              : false
-            : null;
+          typedValue = propertyValues[index] === 'true' ? true : false;
         } else if (property.type === 'number') {
-          typedValue = propertyValues[index]
-            ? Number(propertyValues[index])
-            : null;
+          typedValue = Number(propertyValues[index]);
         }
 
         return {
@@ -379,7 +371,7 @@ function ItemDialog(props: ItemDialogProps) {
       }
 
       const filteredProperties = updatedProperties.filter(
-        (property) => property.value !== null
+        (property) => property !== null
       ) as CatalogueItemProperty[];
 
       const isPurchaseOrderNumberUpdated =

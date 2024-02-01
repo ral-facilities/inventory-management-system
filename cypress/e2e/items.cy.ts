@@ -91,7 +91,6 @@ describe('Items', () => {
             { name: 'Resolution', value: 12 },
             { name: 'Frame Rate', value: 30 },
             { name: 'Sensor Type', value: 'CMOS' },
-            { name: 'Sensor brand', value: null },
             { name: 'Broken', value: true },
             { name: 'Older than five years', value: false },
           ],
@@ -301,9 +300,7 @@ describe('Items', () => {
             '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this ID: KvT2Ox7n',
           properties: [
             { name: 'Resolution', value: 0 },
-            { name: 'Frame Rate', value: null },
             { name: 'Sensor Type', value: 'CMOS' },
-            { name: 'Sensor brand', value: null },
             { name: 'Broken', value: true },
             { name: 'Older than five years', value: false },
           ],

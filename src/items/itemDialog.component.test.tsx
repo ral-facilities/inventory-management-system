@@ -189,10 +189,6 @@ describe('ItemDialog', () => {
           { name: 'Resolution', value: 12 },
           { name: 'Frame Rate', value: 30 },
           { name: 'Sensor Type', value: 'CMOS' },
-          {
-            name: 'Sensor brand',
-            value: null,
-          },
           { name: 'Broken', value: true },
           { name: 'Older than five years', value: false },
         ],
@@ -468,10 +464,6 @@ describe('ItemDialog', () => {
           { name: 'Resolution', value: 12 },
           { name: 'Frame Rate', value: 30 },
           { name: 'Sensor Type', value: 'CMOS' },
-          {
-            name: 'Sensor brand',
-            value: null,
-          },
           { name: 'Broken', value: true },
           { name: 'Older than five years', value: false },
         ],
