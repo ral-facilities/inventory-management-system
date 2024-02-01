@@ -770,19 +770,6 @@ function ItemDialog(props: ItemDialogProps) {
     >
       <DialogTitle>
         <Grid item xs={12}>{`${type === 'edit' ? 'Edit' : 'Add'} Item`}</Grid>
-
-        {activeStep === 2 && (
-          <Grid item xs={12}>
-            <Breadcrumbs
-              breadcrumbsInfo={parentSystemBreadcrumbs}
-              onChangeNode={setParentSystemId}
-              onChangeNavigateHome={() => {
-                setParentSystemId(null);
-              }}
-              navigateHomeAriaLabel={'navigate to systems home'}
-            />
-          </Grid>
-        )}
       </DialogTitle>
       <DialogContent>
         <Stepper
@@ -799,6 +786,18 @@ function ItemDialog(props: ItemDialogProps) {
             </Step>
           ))}
         </Stepper>
+        {activeStep === 2 && (
+          <Grid item xs={12}>
+            <Breadcrumbs
+              breadcrumbsInfo={parentSystemBreadcrumbs}
+              onChangeNode={setParentSystemId}
+              onChangeNavigateHome={() => {
+                setParentSystemId(null);
+              }}
+              navigateHomeAriaLabel={'navigate to systems home'}
+            />
+          </Grid>
+        )}
         <Box sx={{ textAlign: 'center', marginTop: 2 }}>
           {renderStepContent(activeStep)}
         </Box>
