@@ -45,19 +45,19 @@ describe('Systems', () => {
 
   it('should be able to navigate to an items catalogue item landing page', () => {
     cy.findByRole('cell', { name: 'Pulse Laser' }).click();
-    cy.findByRole('link', { name: 'Cameras 14' }).click();
+    cy.findByRole('link', { name: 'Cameras 8' }).click();
 
     // Check now on landing page for the catalogue item
-    cy.url().should('include', '/catalogue/item/33');
+    cy.url().should('include', '/catalogue/item/27');
     cy.findByText('Properties').should('be.visible');
   });
 
   it("should be able to navigate to an item's landing page", () => {
     cy.findByRole('cell', { name: 'Pulse Laser' }).click();
-    cy.findByRole('link', { name: 'I26EJNJ0' }).click();
+    cy.findByRole('link', { name: 'AS9r1EQq' }).click();
 
     // Check now on landing page for the item
-    cy.url().should('include', '/catalogue/item/33/items/I26EJNJ0');
+    cy.url().should('include', '/catalogue/item/27/items/AS9r1EQq');
     cy.findByText('Properties').should('be.visible');
   });
 

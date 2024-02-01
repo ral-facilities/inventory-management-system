@@ -375,7 +375,6 @@ describe('Items', () => {
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
           serial_number: 'Zf7P8Qu8TD8ctest1234',
-          system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: 'hpGBgi0dtest23',
           usage_status: 3,
           warranty_end_date: '2028-02-12T23:00:00.000Z',
@@ -390,6 +389,7 @@ describe('Items', () => {
             { name: 'Broken', value: false },
             { name: 'Older than five years', value: true },
           ],
+          system_id: '65328f34a40ff5301575a4e3',
         })
       );
     });
