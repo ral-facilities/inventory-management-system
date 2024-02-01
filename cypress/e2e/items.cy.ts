@@ -99,6 +99,45 @@ describe('Items', () => {
     });
   });
 
+  it('adds an item with only mandatory fields (allowed list of values)', () => {
+    cy.visit('/catalogue/item/17/items');
+    cy.findByRole('button', { name: 'Add Item' }).click();
+    cy.findByLabelText('Ultimate Pressure (millibar) *').clear();
+    cy.findByLabelText('Ultimate Pressure (millibar) *').type('0.2');
+    cy.findByLabelText('Pumping Speed *').click();
+    cy.findByRole('option', { name: '400' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/items/',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).eq(1);
+      expect(JSON.stringify(await postRequests[0].json())).equal(
+        JSON.stringify({
+          catalogue_item_id: '17',
+          system_id: null,
+          purchase_order_number: null,
+          is_defective: false,
+          usage_status: 0,
+          warranty_end_date: null,
+          asset_number: null,
+          serial_number: null,
+          delivered_date: null,
+          notes: null,
+          properties: [
+            { name: 'Pumping Speed', value: 400 },
+            { name: 'Ultimate Pressure', value: 0.2 },
+          ],
+        })
+      );
+    });
+  });
+
   it('adds an item with all fields altered', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
 

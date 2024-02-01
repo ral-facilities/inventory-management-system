@@ -98,6 +98,55 @@ describe('Catalogue Items', () => {
     });
   });
 
+  it('adds a catalogue item only mandatory fields (allowed list of values)', () => {
+    cy.visit('/catalogue/12');
+    cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
+    cy.findByLabelText('Name *').type('test');
+    cy.findByLabelText('Ultimate Pressure (millibar) *').type('0.2');
+    cy.findByLabelText('Pumping Speed *').click();
+    cy.findByRole('option', { name: '400' }).click();
+
+    cy.findByLabelText('Cost (£) *').type('5000');
+    cy.findByLabelText('Time to replace (days) *').type('14');
+
+    cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-items',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
+        JSON.stringify({
+          catalogue_category_id: '12',
+          name: 'test',
+          cost_gbp: 5000,
+          cost_to_rework_gbp: null,
+          days_to_replace: 14,
+          days_to_rework: null,
+          description: null,
+          item_model_number: null,
+          is_obsolete: false,
+          obsolete_reason: null,
+          obsolete_replacement_catalogue_item_id: null,
+          drawing_link: null,
+          drawing_number: null,
+          manufacturer_id: '1',
+          properties: [
+            { name: 'Pumping Speed', value: 400 },
+            { name: 'Ultimate Pressure', value: 0.2 },
+          ],
+        })
+      );
+    });
+  });
+
   it('displays the error messages and clears when values are changed', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
     cy.findByRole('button', { name: 'Save' }).click();
