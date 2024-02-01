@@ -169,13 +169,17 @@ describe('Catalogue Items Table', () => {
     ]);
   });
 
-  it('renders table correctly (section5 due to column virtualisation )', async () => {
+  it('renders table correctly (section 6 due to column virtualisation )', async () => {
     createView();
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await ensureColumnsVisible(['Manufacturer Address', 'Is Obsolete']);
+    await ensureColumnsVisible([
+      'Manufacturer Address',
+      'Is Obsolete',
+      'Notes',
+    ]);
   });
 
   it('displays descriptions tooltip on hover', async () => {
@@ -210,6 +214,40 @@ describe('Catalogue Items Table', () => {
         screen.queryByText(
           'Precision energy meters for accurate measurements. 26'
         )
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it('displays notes tooltip on hover', async () => {
+    createView();
+
+    await ensureColumnsVisible(['Notes']);
+
+    await waitFor(() => {
+      expect(
+        screen.getByLabelText(
+          'Catalogue item note: Need to find new manufacturer. 26'
+        )
+      ).toBeInTheDocument();
+    });
+
+    const infoIcon = screen.getByLabelText(
+      'Catalogue item note: Need to find new manufacturer. 26'
+    );
+
+    await user.hover(infoIcon);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Need to find new manufacturer. 26')
+      ).toBeInTheDocument();
+    });
+
+    await user.unhover(infoIcon);
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText('Need to find new manufacturer. 26')
       ).not.toBeInTheDocument();
     });
   });
