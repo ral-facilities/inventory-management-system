@@ -18,7 +18,7 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Drawing link').type('https://example.com');
     cy.findByLabelText('Model number').type('MXtest');
     cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
-    cy.findByLabelText('Notes').click().type('This is a test note')
+    cy.findByLabelText('Notes').click().type('This is a test note');
     cy.findByLabelText('Resolution (megapixels) *').type('18');
     cy.findByLabelText('Frame Rate (fps)').type('60');
     cy.findByLabelText('Sensor Type *').type('IO');
@@ -139,6 +139,7 @@ describe('Catalogue Items', () => {
           drawing_link: null,
           drawing_number: null,
           manufacturer_id: '1',
+          notes: null,
           properties: [
             { name: 'Pumping Speed', value: 400 },
             { name: 'Ultimate Pressure', value: 0.2 },
@@ -302,7 +303,6 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Sensor Type *').should('have.value', 'CMOS');
     cy.findByLabelText('Manufacturer *').should('have.value', 'Manufacturer A');
 
-
     cy.findByRole('button', { name: 'Cancel' }).click();
   });
 
@@ -437,7 +437,7 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Manufacturer *')
       .click()
       .type('Man{downArrow}{downArrow}{enter}');
-    cy.findAllByLabelText('Notes').clear().type("This is an updated note")
+    cy.findAllByLabelText('Notes').clear().type('This is an updated note');
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();

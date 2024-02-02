@@ -265,6 +265,7 @@ describe('Catalogue Items Dialog', () => {
       drawing_number: 'mk4324',
       is_obsolete: false,
       item_model_number: 'mk4324',
+      notes: null,
       manufacturer_id: '1',
       name: 'test',
       obsolete_reason: null,
