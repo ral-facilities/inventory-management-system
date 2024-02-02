@@ -206,7 +206,7 @@ describe('Add manufacturer dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
-    it('CatchAllError request works correctly and displays refresh page message', async () => {
+    it('displays error message when unknown error occurs', async () => {
       createView();
       modifyManufacturerValues({
         name: 'Error 500',
