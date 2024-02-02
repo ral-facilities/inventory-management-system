@@ -163,9 +163,9 @@ const CatalogueCategoryDialog = React.memo(
           });
 
           if (
-            Array.from(new Set(duplicateIndexes)).length > 0 ||
             // If there are more than 2 instances of the same duplicate value, it adds the index multiple times.
             // The set removes the repeated indexes.
+            Array.from(new Set(duplicateIndexes)).length > 0 ||
             invalidNumberIndexes.length > 0 ||
             missingValueIndexes.length > 0
           ) {
