@@ -1,29 +1,35 @@
 import React from 'react';
 import {
   TextField,
-  Button,
   Select,
   MenuItem,
   FormControl,
   InputLabel,
   Stack,
+  IconButton,
   FormHelperText,
+  Box,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { CatalogueCategoryFormData } from '../../app.types';
+import {
+  AllowedValuesList,
+  CatalogueCategoryFormData,
+  CatalogueItemPropertiesErrorsType,
+  AllowedValuesListErrorsType,
+} from '../../app.types';
 
 export interface CataloguePropertiesFormProps {
   formFields: CatalogueCategoryFormData[];
   onChangeFormFields: (formFields: CatalogueCategoryFormData[]) => void;
-  nameFields: string[];
-  onChangeNameFields: (nameFields: string[]) => void;
-  typeFields: string[];
-  onChangeTypeFields: (typeFields: string[]) => void;
-  errorFields: number[];
-  onChangeErrorFields: (errorFields: number[]) => void;
-  propertyNameError: string[];
-  onChangePropertyNameError: (propertyNameError: string[]) => void;
+  catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[];
+  onChangeCatalogueItemPropertiesErrors: (
+    catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[]
+  ) => void;
+  allowedValuesListErrors: AllowedValuesListErrorsType[];
+  onChangeAllowedValuesListErrors: (
+    allowedValuesListErrors: AllowedValuesListErrorsType[]
+  ) => void;
   resetFormError: () => void;
 }
 
@@ -31,25 +37,24 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   const {
     formFields,
     onChangeFormFields,
-    nameFields,
-    onChangeNameFields,
-    typeFields,
-    onChangeTypeFields,
-    errorFields,
-    onChangeErrorFields,
-    propertyNameError,
-    onChangePropertyNameError,
+    onChangeAllowedValuesListErrors,
+    onChangeCatalogueItemPropertiesErrors,
+    catalogueItemPropertiesErrors,
+    allowedValuesListErrors,
     resetFormError,
   } = props;
 
   const handleAddField = () => {
-    onChangeErrorFields([]);
     onChangeFormFields([
       ...formFields,
-      { name: '', type: '', unit: '', mandatory: false }, // Initialize mandatory as null for new fields
+      {
+        name: '',
+        type: '',
+        unit: '',
+        mandatory: false,
+        allowed_values: undefined,
+      },
     ]);
-    onChangeNameFields([...nameFields, '']);
-    onChangeTypeFields([...typeFields, '']);
     resetFormError();
   };
 
@@ -57,55 +62,238 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
     updatedFormFields.splice(index, 1);
 
-    // Update nameFields and typeFields after deleting the field
-    const updatedNameFields: string[] = [...nameFields];
-    updatedNameFields.splice(index, 1);
+    // When a catalogue item property is deleted it removes the list errors
+    const updatedallowedValuesListErrors = allowedValuesListErrors.filter(
+      (item) => item.index !== index
+    );
 
-    const updatedTypeFields: string[] = [...typeFields];
-    updatedTypeFields.splice(index, 1);
+    const updatedCatalogueItemPropertiesErrors = catalogueItemPropertiesErrors
+      .filter((item) => item.index !== index)
+      .filter(
+        (item) =>
+          item.errors?.errorMessage !==
+          'Duplicate property name. Please change the name or remove the property'
+      );
 
-    // Set the updated arrays and form fields
+    onChangeAllowedValuesListErrors(updatedallowedValuesListErrors);
     onChangeFormFields(updatedFormFields);
-    onChangeNameFields(updatedNameFields);
-    onChangeTypeFields(updatedTypeFields);
-    onChangePropertyNameError([]);
+    onChangeCatalogueItemPropertiesErrors(updatedCatalogueItemPropertiesErrors);
     resetFormError();
   };
 
   const handleChange = (
     index: number,
     field: keyof CatalogueCategoryFormData,
-    value: string | boolean | null // Allow null as a value
+    value: string | boolean | null
   ) => {
     const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
-    const updatedNameFields: string[] = [...nameFields]; // Keep nameFields in sync
-    const updatedTypeFields: string[] = [...typeFields]; // Keep typeFields in sync
 
     if (
       field === 'type' &&
       (value === 'boolean' || value === 'number' || value === 'string')
     ) {
-      // For boolean type, remove the 'unit' field
+      updatedFormFields[index].type = value;
+
+      const updatedCatalogueItemPropertiesErrors =
+        catalogueItemPropertiesErrors.filter((item) => {
+          return !(
+            item.index === index &&
+            item.errors &&
+            item.errors.fieldName === 'type'
+          );
+        });
+      onChangeCatalogueItemPropertiesErrors(
+        updatedCatalogueItemPropertiesErrors
+      );
       updatedFormFields[index][field] = value;
       if (value === 'boolean') {
         delete updatedFormFields[index].unit;
+        delete updatedFormFields[index].allowed_values;
       }
-      updatedTypeFields[index] = value; // Update typeFields
+    } else if (field === 'name') {
+      const updatedCatalogueItemPropertiesErrors = catalogueItemPropertiesErrors
+        .filter((item) => {
+          return !(
+            item.index === index &&
+            item.errors &&
+            item.errors.fieldName === 'name'
+          );
+        })
+        .filter(
+          (item) =>
+            item.errors?.errorMessage !==
+            'Duplicate property name. Please change the name or remove the property'
+        );
+
+      onChangeCatalogueItemPropertiesErrors(
+        updatedCatalogueItemPropertiesErrors
+      );
+
+      updatedFormFields[index].name = value as string;
     } else {
-      // Handle other fields if needed
       (updatedFormFields[index][field] as boolean | string | null) = value;
-      if (field === 'name') {
-        updatedNameFields[index] = value as string; // Update nameFields
-      }
     }
 
+    const updatedallowedValuesListErrors = allowedValuesListErrors.filter(
+      (item) => item.index !== index
+    );
+
+    onChangeAllowedValuesListErrors(updatedallowedValuesListErrors);
+
     onChangeFormFields(updatedFormFields);
-    onChangeNameFields(updatedNameFields);
-    onChangeTypeFields(updatedTypeFields);
-    onChangeErrorFields([]);
-    onChangePropertyNameError([]);
+
     resetFormError();
   };
+
+  const handleAddListValue = (index: number) => {
+    const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
+    const currentField = updatedFormFields[index];
+
+    const updatedAllowedValues: AllowedValuesList = {
+      type: 'list',
+      values: [...(currentField.allowed_values?.values || []), ''],
+    };
+
+    updatedFormFields[index] = {
+      ...currentField,
+      allowed_values: updatedAllowedValues,
+    };
+
+    onChangeFormFields(updatedFormFields);
+
+    const updatedCatalogueItemPropertiesErrors =
+      catalogueItemPropertiesErrors.filter((item) => {
+        return !(
+          item.index === index &&
+          item.errors &&
+          item.errors.fieldName === 'list'
+        );
+      });
+    onChangeCatalogueItemPropertiesErrors(updatedCatalogueItemPropertiesErrors);
+  };
+
+  const handleChangeListValues = (
+    index: number,
+    valueIndex: number,
+    value: string
+  ) => {
+    const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
+    const currentField = updatedFormFields[index];
+    if (currentField.allowed_values) {
+      const updatedAllowedValues: AllowedValuesList = {
+        type: 'list',
+        values: currentField.allowed_values.values.map((val, i) =>
+          i === valueIndex ? value : val
+        ),
+      };
+
+      updatedFormFields[index] = {
+        ...currentField,
+        allowed_values: updatedAllowedValues,
+      };
+
+      onChangeFormFields(updatedFormFields);
+
+      // Remove the error when the value is changed
+
+      const updatedallowedValuesListErrors = [...allowedValuesListErrors];
+
+      const errorIndex = updatedallowedValuesListErrors.findIndex(
+        (error) => error.index === index
+      );
+
+      updatedallowedValuesListErrors[errorIndex] = {
+        index: index,
+        errors: (updatedallowedValuesListErrors[errorIndex]?.errors ?? [])
+          .filter((item) => item.index !== valueIndex)
+          .filter((item) => item.errorMessage !== 'Duplicate value'),
+      };
+
+      onChangeAllowedValuesListErrors(
+        updatedallowedValuesListErrors.filter(
+          (item) => (item.errors?.length ?? 0) > 0
+        )
+      );
+    }
+  };
+
+  const handleDeleteListValue = (index: number, valueIndex: number) => {
+    const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
+    const currentField = updatedFormFields[index];
+
+    if (currentField.allowed_values) {
+      const updatedAllowedValues: AllowedValuesList = {
+        type: 'list',
+        values: currentField.allowed_values.values.filter(
+          (_, i) => i !== valueIndex
+        ),
+      };
+
+      updatedFormFields[index] = {
+        ...currentField,
+        allowed_values: updatedAllowedValues,
+      };
+
+      onChangeFormFields(updatedFormFields);
+
+      // Remove the error when the value is deleted
+      const updatedallowedValuesListErrors = [...allowedValuesListErrors];
+      const errorIndex = updatedallowedValuesListErrors.findIndex(
+        (error) => error.index === index
+      );
+
+      updatedallowedValuesListErrors[errorIndex] = {
+        index: index,
+        errors: (updatedallowedValuesListErrors[errorIndex]?.errors ?? [])
+          .filter((item) => item.index !== valueIndex)
+          .filter((item) => item.errorMessage !== 'Duplicate value'),
+      };
+
+      onChangeAllowedValuesListErrors(
+        updatedallowedValuesListErrors.filter(
+          (item) => (item.errors?.length ?? 0) > 0
+        )
+      );
+    }
+  };
+
+  const catalogueItemPropertyMessage = React.useCallback(
+    (
+      index: number,
+      column: 'name' | 'type' | 'unit' | 'mandatory' | 'list'
+    ) => {
+      const errors = catalogueItemPropertiesErrors.filter((item) => {
+        return (
+          item.index === index &&
+          item.errors &&
+          item.errors.fieldName === column
+        );
+      });
+
+      if (errors.length >= 1) {
+        return errors[0];
+      }
+    },
+    [catalogueItemPropertiesErrors]
+  );
+
+  const allowedValuesListErrorMessage = React.useCallback(
+    (index: number, listIndex: number) => {
+      const atIndex =
+        allowedValuesListErrors.find((item) => item.index === index)?.errors ??
+        [];
+      if (atIndex.length >= 1) {
+        const filteredItems = atIndex.filter((item) => {
+          return item.index === listIndex;
+        });
+        if (filteredItems.length > 0) {
+          return filteredItems[0].errorMessage;
+        }
+      }
+      return '';
+    },
+    [allowedValuesListErrors]
+  );
 
   return (
     <div>
@@ -118,28 +306,15 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             required={true}
             value={field.name}
             onChange={(e) => handleChange(index, 'name', e.target.value)}
-            error={
-              (errorFields.includes(index) && !nameFields[index].trim()) ||
-              (propertyNameError.length !== 0 &&
-                propertyNameError.find((name) => {
-                  return name === field.name.toLowerCase().trim();
-                }) === field.name.toLowerCase().trim())
-            }
+            error={!!catalogueItemPropertyMessage(index, 'name')}
             helperText={
-              errorFields.includes(index) && !nameFields[index].trim()
-                ? 'Property Name is required'
-                : propertyNameError.length !== 0 &&
-                  propertyNameError.find((name) => {
-                    return name === field.name.toLowerCase().trim();
-                  }) === field.name.toLowerCase().trim()
-                ? 'Duplicate property name. Please change the name or remove the property'
-                : ''
+              catalogueItemPropertyMessage(index, 'name')?.errors?.errorMessage
             }
             sx={{ minWidth: '150px' }}
           />
           <FormControl sx={{ width: '150px', minWidth: '150px' }}>
             <InputLabel
-              error={errorFields.includes(index) && !typeFields[index].trim()}
+              error={!!catalogueItemPropertyMessage(index, 'type')}
               required={true}
               id={`catalogue-properties-form-select-type-label-${index}`}
             >
@@ -154,7 +329,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
                   e.target.value === 'text' ? 'string' : e.target.value
                 );
               }}
-              error={errorFields.includes(index) && !typeFields[index].trim()}
+              error={!!catalogueItemPropertyMessage(index, 'type')}
               label="Select Type"
               labelId={`catalogue-properties-form-select-type-label-${index}`}
               required={true}
@@ -163,10 +338,117 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               <MenuItem value="number">Number</MenuItem>
               <MenuItem value="text">Text</MenuItem>
             </Select>
-            {errorFields.includes(index) && !typeFields[index].trim() && (
-              <FormHelperText error>Select Type is required</FormHelperText>
+            {catalogueItemPropertyMessage(index, 'type') && (
+              <FormHelperText error>
+                {
+                  catalogueItemPropertyMessage(index, 'type')?.errors
+                    ?.errorMessage
+                }
+              </FormHelperText>
             )}
           </FormControl>
+
+          <FormControl
+            disabled={field.type === 'boolean'}
+            sx={{ width: '200px', minWidth: '200px' }}
+          >
+            <InputLabel
+              required={true}
+              id={`catalogue-properties-form-select-allowed-values-label-${index}`}
+            >
+              Select Allowed values
+            </InputLabel>
+            <Select
+              value={field.allowed_values?.type ?? 'any'}
+              onChange={(e) => {
+                const updatedFormFields: CatalogueCategoryFormData[] = [
+                  ...formFields,
+                ];
+                const currentField = updatedFormFields[index];
+                if (e.target.value !== 'list') {
+                  delete updatedFormFields[index].allowed_values;
+                } else {
+                  updatedFormFields[index] = {
+                    ...currentField,
+                    allowed_values: { type: 'list', values: [] },
+                  };
+                }
+
+                onChangeFormFields(updatedFormFields);
+              }}
+              label="Select Allowed values"
+              labelId={`catalogue-properties-form-select-allowed-values-label-${index}`}
+              required={true}
+            >
+              <MenuItem value="any">Any</MenuItem>
+              <MenuItem value="list">List</MenuItem>
+            </Select>
+          </FormControl>
+
+          {field.allowed_values?.type === 'list' && (
+            <Stack
+              direction="column"
+              sx={{
+                width: '200px',
+                minWidth: '200px',
+                alignItems: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              {field.allowed_values?.values.map((listValue, valueIndex) => (
+                <Stack
+                  key={valueIndex}
+                  direction="row"
+                  sx={{ alignItems: 'center', justifyContent: 'center', mb: 1 }}
+                  spacing={1}
+                >
+                  <TextField
+                    label={`List Item`}
+                    aria-label={`List Item ${valueIndex}`}
+                    variant="outlined"
+                    value={listValue as string}
+                    onChange={(e) =>
+                      field.allowed_values &&
+                      handleChangeListValues(
+                        index,
+                        valueIndex,
+                        e.target.value as string
+                      )
+                    }
+                    error={!!allowedValuesListErrorMessage(index, valueIndex)}
+                    helperText={allowedValuesListErrorMessage(
+                      index,
+                      valueIndex
+                    )}
+                  />
+
+                  <IconButton
+                    aria-label={`Delete list item ${valueIndex}`}
+                    onClick={() => handleDeleteListValue(index, valueIndex)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Stack>
+              ))}
+
+              <IconButton
+                aria-label={`Add list item ${index}`}
+                onClick={() => handleAddListValue(index)}
+              >
+                <AddIcon />
+              </IconButton>
+              {catalogueItemPropertyMessage(index, 'list') && (
+                <FormHelperText error>
+                  {
+                    catalogueItemPropertyMessage(index, 'list')?.errors
+                      ?.errorMessage
+                  }
+                </FormHelperText>
+              )}
+            </Stack>
+          )}
+
           <FormControl
             sx={{ minWidth: '150px' }}
             disabled={field.type === 'boolean'}
@@ -174,7 +456,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             <TextField
               label="Select Unit"
               variant="outlined"
-              value={field.unit}
+              value={field.unit ?? ''}
               onChange={(e) => handleChange(index, 'unit', e.target.value)}
               disabled={field.type === 'boolean'}
             />
@@ -197,18 +479,30 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               <MenuItem value="no">No</MenuItem>
             </Select>
           </FormControl>
-          <Button onClick={() => handleDeleteField(index)}>
-            <DeleteIcon />
-          </Button>
+
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <IconButton
+              aria-label={'Delete catalogue category field entry'}
+              onClick={() => handleDeleteField(index)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Box>
         </Stack>
       ))}
-      <Button
+
+      <IconButton
         sx={{ margin: '8px' }}
         onClick={handleAddField}
         aria-label={'Add catalogue category field entry'}
       >
         <AddIcon />
-      </Button>
+      </IconButton>
     </div>
   );
 }

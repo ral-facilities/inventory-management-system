@@ -59,6 +59,9 @@ describe('Catalogue Category Dialog', () => {
       // Modify
       const nameFields = screen.getAllByLabelText('Property Name *');
       const typeSelects = screen.getAllByLabelText('Select Type *');
+      const allowedValuesSelects = screen.getAllByLabelText(
+        'Select Allowed values *'
+      );
       const unitFields = screen.getAllByLabelText('Select Unit');
       const mandatorySelect = screen.getAllByLabelText('Select is mandatory?');
 
@@ -97,6 +100,45 @@ describe('Catalogue Category Dialog', () => {
             name: field.mandatory ? 'Yes' : 'No',
           })
         );
+
+        if (field.allowed_values) {
+          await user.click(allowedValuesSelects[i + numberOfCurrentFields]);
+          const allowedValuesDropdown = screen.getByRole('listbox', {
+            name: 'Select Allowed values',
+          });
+          await user.click(
+            within(allowedValuesDropdown).getByRole('option', {
+              name: field.allowed_values.type === 'list' ? 'List' : 'Any',
+            })
+          );
+
+          if (field.allowed_values.type === 'list') {
+            // Add list items if allowed_values is of type 'list'
+            for (let j = 0; j < field.allowed_values.values.length; j++) {
+              await user.click(
+                screen.getByRole('button', {
+                  name: `Add list item ${i + numberOfCurrentFields}`,
+                })
+              );
+
+              await waitFor(() => {
+                screen.getAllByLabelText(`List Item ${j}`);
+              });
+              const listItems = screen.getAllByLabelText(`List Item ${j}`);
+
+              await fireEvent.change(
+                within(
+                  listItems[
+                    i + numberOfCurrentFields - allowedValuesSelects.length + 1
+                  ]
+                ).getByLabelText('List Item'),
+                {
+                  target: { value: field.allowed_values.values[j] },
+                }
+              );
+            }
+          }
+        }
       }
     }
   };
@@ -259,6 +301,84 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
+    it('create a catalogue category with content being catalogue items (allowed_values list of numbers)', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'mm',
+            allowed_values: { type: 'list', values: [1, 2, 8] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        catalogue_item_properties: [
+          {
+            allowed_values: { type: 'list', values: [1, 2, 8] },
+            mandatory: true,
+            name: 'radius',
+            type: 'number',
+            unit: 'mm',
+          },
+        ],
+        is_leaf: true,
+        name: 'test',
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    });
+
+    it('create a catalogue category with content being catalogue items (allowed_values list of strings)', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'text',
+            unit: 'mm',
+            allowed_values: { type: 'list', values: ['1', '2', '8'] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        catalogue_item_properties: [
+          {
+            allowed_values: { type: 'list', values: ['1', '2', '8'] },
+            mandatory: true,
+            name: 'radius',
+            type: 'string',
+            unit: 'mm',
+          },
+        ],
+        is_leaf: true,
+        name: 'test',
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    });
+
     it('displays an error message when the type or name field are not filled', async () => {
       createView();
 
@@ -277,9 +397,9 @@ describe('Catalogue Category Dialog', () => {
 
       await waitFor(() => user.click(saveButton));
 
-      const nameHelperTexts = screen.queryAllByText('Select Type is required');
+      const nameHelperTexts = screen.queryAllByText('Please select a type');
       const typeHelperTexts = screen.queryAllByText(
-        'Property Name is required'
+        'Please enter a property name'
       );
 
       expect(nameHelperTexts.length).toBe(2);
@@ -334,6 +454,131 @@ describe('Catalogue Category Dialog', () => {
       expect(screen.queryByDisplayValue('radius')).not.toBeInTheDocument();
       expect(screen.queryByDisplayValue('mm')).not.toBeInTheDocument();
       expect(screen.queryByText('Yes')).not.toBeInTheDocument();
+    });
+
+    it('displays duplicate values and incorrect type error (allowed_values list of numbers)', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'mm',
+            allowed_values: { type: 'list', values: [1, 1, 'dsa'] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const duplicateHelperTexts = screen.queryAllByText('Duplicate value');
+      const incorrectTypeHelperTexts = screen.queryAllByText(
+        'Please enter a valid number'
+      );
+
+      expect(duplicateHelperTexts.length).toEqual(2);
+      expect(incorrectTypeHelperTexts.length).toEqual(1);
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays error if the allowed values list is empty', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'mm',
+            allowed_values: { type: 'list', values: [] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const listHelperTexts = screen.queryAllByText(
+        'Please create a valid list item'
+      );
+
+      expect(listHelperTexts.length).toEqual(1);
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays error type is undefined and a list item is undefined', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: '',
+            unit: 'mm',
+            allowed_values: { type: 'list', values: ['', ''] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const listHelperTexts = screen.queryAllByText('Please enter a value');
+
+      expect(listHelperTexts.length).toEqual(2);
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays duplicate values error (allowed_values list of string)', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'text',
+            unit: 'mm',
+            allowed_values: {
+              type: 'list',
+              values: [1, 1, 'dsa', 'sa', '$%^&*()'],
+            },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const duplicateHelperTexts = screen.queryAllByText('Duplicate value');
+
+      expect(duplicateHelperTexts.length).toEqual(2);
+
+      expect(onClose).not.toHaveBeenCalled();
     });
   });
 
@@ -447,6 +692,120 @@ describe('Catalogue Category Dialog', () => {
         ).toBeInTheDocument();
       });
       expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('edits a catalogue category with content being catalogue items (allowed_values list of numbers)', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+        selectedCatalogueCategory: {
+          id: '4',
+          name: 'Cameras',
+          parent_id: '1',
+          code: 'cameras',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Resolution',
+              type: 'number',
+              unit: 'megapixels',
+              mandatory: true,
+            },
+          ],
+        },
+      };
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'mm',
+            allowed_values: { type: 'list', values: [1, 2, 8] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
+        catalogue_item_properties: [
+          {
+            mandatory: true,
+            name: 'Resolution',
+            type: 'number',
+            unit: 'megapixels',
+          },
+          {
+            allowed_values: { type: 'list', values: [1, 2, 8] },
+            mandatory: true,
+            name: 'radius',
+            type: 'number',
+            unit: 'mm',
+          },
+        ],
+        name: 'test',
+      });
+    });
+
+    it('edits a catalogue category with content being catalogue items (allowed_values list of strings)', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+        selectedCatalogueCategory: {
+          id: '4',
+          name: 'Cameras',
+          parent_id: '1',
+          code: 'cameras',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Resolution',
+              type: 'number',
+              unit: 'megapixels',
+              mandatory: true,
+            },
+          ],
+        },
+      };
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'text',
+            unit: 'mm',
+            allowed_values: { type: 'list', values: ['1', '2', '8'] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
+        catalogue_item_properties: [
+          {
+            mandatory: true,
+            name: 'Resolution',
+            type: 'number',
+            unit: 'megapixels',
+          },
+          {
+            allowed_values: { type: 'list', values: ['1', '2', '8'] },
+            mandatory: true,
+            name: 'radius',
+            type: 'string',
+            unit: 'mm',
+          },
+        ],
+        name: 'test',
+      });
     });
 
     it('displays warning message when an unknown error occurs', async () => {
@@ -573,9 +932,9 @@ describe('Catalogue Category Dialog', () => {
 
       await user.click(saveButton);
 
-      const nameHelperTexts = screen.queryAllByText('Select Type is required');
+      const nameHelperTexts = screen.queryAllByText('Please select a type');
       const typeHelperTexts = screen.queryAllByText(
-        'Property Name is required'
+        'Please enter a property name'
       );
 
       expect(nameHelperTexts.length).toBe(2);
