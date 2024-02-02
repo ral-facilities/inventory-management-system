@@ -516,7 +516,7 @@ describe('Catalogue Properties Form', () => {
     });
   });
 
-  it('should edit a list item when the add icon is click', async () => {
+  it('should edit a list item when the add icon is clicked', async () => {
     const formFields: CatalogueCategoryFormData[] = [
       {
         name: 'Field 3',
