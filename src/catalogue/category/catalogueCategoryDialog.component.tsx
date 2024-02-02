@@ -140,6 +140,7 @@ const CatalogueCategoryDialog = React.memo(
             String(value).trim().toLowerCase()
           );
 
+
           const duplicateIndexes: number[] = [];
           const invalidNumberIndexes: number[] = [];
           const missingValueIndexes: number[] = [];

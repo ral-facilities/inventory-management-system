@@ -806,6 +806,120 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
+    it('edits a catalogue category with content being catalogue items (allowed_values list of numbers)', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+        selectedCatalogueCategory: {
+          id: '4',
+          name: 'Cameras',
+          parent_id: '1',
+          code: 'cameras',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Resolution',
+              type: 'number',
+              unit: 'megapixels',
+              mandatory: true,
+            },
+          ],
+        },
+      };
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'mm',
+            allowed_values: { type: 'list', values: [1, 2, 8] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
+        catalogue_item_properties: [
+          {
+            mandatory: true,
+            name: 'Resolution',
+            type: 'number',
+            unit: 'megapixels',
+          },
+          {
+            allowed_values: { type: 'list', values: [1, 2, 8] },
+            mandatory: true,
+            name: 'radius',
+            type: 'number',
+            unit: 'mm',
+          },
+        ],
+        name: 'test',
+      });
+    });
+
+    it('edits a catalogue category with content being catalogue items (allowed_values list of strings)', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+        selectedCatalogueCategory: {
+          id: '4',
+          name: 'Cameras',
+          parent_id: '1',
+          code: 'cameras',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Resolution',
+              type: 'number',
+              unit: 'megapixels',
+              mandatory: true,
+            },
+          ],
+        },
+      };
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'text',
+            unit: 'mm',
+            allowed_values: { type: 'list', values: ['1', '2', '8'] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
+        catalogue_item_properties: [
+          {
+            mandatory: true,
+            name: 'Resolution',
+            type: 'number',
+            unit: 'megapixels',
+          },
+          {
+            allowed_values: { type: 'list', values: ['1', '2', '8'] },
+            mandatory: true,
+            name: 'radius',
+            type: 'string',
+            unit: 'mm',
+          },
+        ],
+        name: 'test',
+      });
+    });
+
     it('displays warning message when an unknown error occurs', async () => {
       props = {
         ...props,
