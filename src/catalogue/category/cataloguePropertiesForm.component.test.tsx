@@ -840,7 +840,7 @@ describe('Catalogue Properties Form', () => {
     ]);
   });
 
-  it('should error for incorrect type values and remove error if the value has been deleted', async () => {
+  it('should display error for incorrect type values and remove the error if the value has been deleted', async () => {
     const formFields: CatalogueCategoryFormData[] = [
       {
         name: 'Field 3',
