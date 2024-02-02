@@ -71,7 +71,6 @@ describe('Items', () => {
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByText('Giant laser').click();
 
-    cy.findByRole('button', { name: 'Move here' }).click();
     cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -132,7 +131,6 @@ describe('Items', () => {
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByText('Giant laser').click();
-    cy.findByRole('button', { name: 'Move here' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -289,7 +287,6 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Move here' }).click();
     cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -360,8 +357,6 @@ describe('Items', () => {
     cy.findByRole('button', { name: 'navigate to systems home' }).click();
     cy.findByText('Giant laser').click();
 
-    cy.findByRole('button', { name: 'Move here' }).click();
-
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Finish' }).click();
@@ -403,7 +398,6 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Move here' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -437,7 +431,6 @@ describe('Items', () => {
     cy.findByRole('option', { name: 'True' }).click();
 
     cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Move here' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -470,7 +463,6 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Move here' }).click();
     cy.findByRole('button', { name: 'Finish' }).click();
 
     cy.findByText('Please edit a form entry before clicking save').should(
@@ -487,7 +479,6 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
     cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Move here' }).click();
     cy.findByRole('button', { name: 'Finish' }).click();
 
     cy.findByText('Please refresh and try again').should('exist');
