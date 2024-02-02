@@ -329,7 +329,7 @@ describe('Catalogue Properties Form', () => {
     ]);
   });
 
-  it('display error if duplicate property names are entered and clears when a name is change', async () => {
+  it('display error if duplicate property names are entered and clears when a name is changed', async () => {
     const formFields = [
       { name: 'Field', type: 'text', unit: '', mandatory: false },
       { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
