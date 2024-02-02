@@ -907,7 +907,7 @@ describe('Catalogue Properties Form', () => {
     ]);
   });
 
-  it('should error for duplicate values and incorrect type values and the error should be if the type has changed', async () => {
+  it('should display error for duplicate values and incorrect type values and the error should be removed if the type is changed', async () => {
     const formFields: CatalogueCategoryFormData[] = [
       {
         name: 'Field 3',
