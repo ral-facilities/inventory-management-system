@@ -196,7 +196,6 @@ describe('ItemDialog', () => {
         system: 'Giant laser',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Move here' }));
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
@@ -217,6 +216,56 @@ describe('ItemDialog', () => {
         system_id: '65328f34a40ff5301575a4e3',
         usage_status: 0,
         warranty_end_date: null,
+      });
+    });
+
+    it('navigates through the stepper using the labels', async () => {
+      createView();
+
+      //navigate through stepper
+      await user.click(
+        screen.getByRole('button', { name: 'Add item properties' })
+      );
+
+      await waitFor(() => {
+        expect(
+          screen.getByLabelText('Resolution (megapixels) *')
+        ).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Select system' }));
+
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      await user.click(
+        screen.getByRole('button', { name: 'Add item details' })
+      );
+
+      await waitFor(() => {
+        expect(screen.getByLabelText('Serial number')).toBeInTheDocument();
+      });
+    });
+
+    it('should navigate back using the back button', async () => {
+      createView();
+
+      //navigate through stepper
+      await user.click(
+        screen.getByRole('button', { name: 'Add item properties' })
+      );
+
+      await waitFor(() => {
+        expect(
+          screen.getByLabelText('Resolution (megapixels) *')
+        ).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Back' }));
+
+      await waitFor(() => {
+        expect(screen.getByLabelText('Serial number')).toBeInTheDocument();
       });
     });
 
@@ -251,7 +300,6 @@ describe('ItemDialog', () => {
         system: 'Giant laser',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Move here' }));
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
@@ -307,7 +355,6 @@ describe('ItemDialog', () => {
         system: 'Giant laser',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Move here' }));
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
@@ -470,7 +517,6 @@ describe('ItemDialog', () => {
         system: 'Giant laser',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Move here' }));
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       await waitFor(() => {
@@ -488,7 +534,6 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Move here' }));
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
@@ -582,7 +627,6 @@ describe('ItemDialog', () => {
         system: 'Giant laser',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Move here' }));
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
@@ -654,7 +698,6 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Move here' }));
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       await waitFor(() => {
@@ -671,7 +714,6 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Move here' }));
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       await waitFor(() => {

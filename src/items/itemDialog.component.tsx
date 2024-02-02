@@ -38,7 +38,7 @@ import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
 import { useAddItem, useEditItem } from '../api/item';
 import { AxiosError } from 'axios';
 import { SystemsTableView } from '../systems/systemsTableView.component';
-import { useSystem, useSystems, useSystemsBreadcrumbs } from '../api/systems';
+import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
@@ -357,14 +357,8 @@ function ItemDialog(props: ItemDialogProps) {
   const { data: parentSystemBreadcrumbs } =
     useSystemsBreadcrumbs(parentSystemId);
 
-  const { data: targetSystem } = useSystem(parentSystemId);
-
   const handleAddItem = React.useCallback(() => {
-    const { hasErrors, updatedProperties } = handleFormErrorStates();
-
-    if (hasErrors) {
-      return; // Do not proceed with saving if there are errors
-    }
+    const { updatedProperties } = handleFormErrorStates();
 
     const filteredProperties = updatedProperties.filter(
       (property) => property !== null
@@ -384,11 +378,7 @@ function ItemDialog(props: ItemDialogProps) {
 
   const handleEditItem = React.useCallback(() => {
     if (selectedItem) {
-      const { hasErrors, updatedProperties } = handleFormErrorStates();
-
-      if (hasErrors) {
-        return; // Do not proceed with saving if there are errors
-      }
+      const { updatedProperties } = handleFormErrorStates();
 
       const filteredProperties = updatedProperties.filter(
         (property) => property !== null
@@ -476,7 +466,6 @@ function ItemDialog(props: ItemDialogProps) {
     'Select system',
   ];
   const [activeStep, setActiveStep] = React.useState<number>(0);
-  const [systemSelected, setSystemSelected] = React.useState<boolean>(false);
 
   const handleNext = () => {
     const { hasErrors } = handleFormErrorStates();
@@ -489,21 +478,20 @@ function ItemDialog(props: ItemDialogProps) {
   };
 
   const handleBack = () => {
-    if (activeStep === 2 && targetSystem !== undefined) {
-      setSystemSelected(false);
-    } else {
-      setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    }
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+  React.useEffect(() => {
+    setItemDetails((prev) => ({
+      ...prev,
+      system_id: parentSystemId,
+    }));
+  }, [parentSystemId]);
 
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
         return (
           <Grid item container spacing={1.5} xs={12}>
-            <Grid item xs={12}>
-              <Typography variant="h6">Details</Typography>
-            </Grid>
             <Grid item xs={12}>
               <TextField
                 label="Serial number"
@@ -651,9 +639,6 @@ function ItemDialog(props: ItemDialogProps) {
           <Grid item xs={12}>
             {parentCatalogueItemPropertiesInfo.length >= 1 && (
               <Grid container spacing={1.5}>
-                <Grid item xs={12}>
-                  <Typography variant="h6">Properties</Typography>
-                </Grid>
                 {parentCatalogueItemPropertiesInfo.map(
                   (property: CatalogueCategoryFormData, index: number) => (
                     <Grid item xs={12} key={index}>
@@ -787,8 +772,8 @@ function ItemDialog(props: ItemDialogProps) {
     <Dialog
       open={open}
       onClose={handleClose}
-      maxWidth="xl"
-      PaperProps={{ sx: { height: '658px' } }}
+      maxWidth="lg"
+      PaperProps={{ sx: { height: '705px' } }}
       fullWidth
     >
       <DialogTitle>
@@ -834,41 +819,22 @@ function ItemDialog(props: ItemDialogProps) {
         </Button>
 
         {activeStep === STEPS.length - 1 ? (
-          <>
-            {!systemSelected ? (
-              <Button
-                disabled={targetSystem === undefined}
-                onClick={(event) => {
-                  if (targetSystem) {
-                    handleItemDetails('system_id', targetSystem.id);
-                    setSystemSelected(true);
-                  } else {
-                    setFormErrorMessage('Please select a system');
-                  }
-                }}
-                sx={{ mr: 3 }}
-              >
-                Move here
-              </Button>
-            ) : (
-              <Button
-                disabled={
-                  catchAllError ||
-                  propertyErrors.some((value) => {
-                    return value === true;
-                  }) ||
-                  (!!itemDetails.warranty_end_date &&
-                    !isValidDateTime(itemDetails.warranty_end_date)) ||
-                  (!!itemDetails.delivered_date &&
-                    !isValidDateTime(itemDetails.delivered_date))
-                }
-                onClick={type === 'edit' ? handleEditItem : handleAddItem}
-                sx={{ mr: 3 }}
-              >
-                Finish
-              </Button>
-            )}
-          </>
+          <Button
+            disabled={
+              !itemDetails.system_id ||
+              catchAllError ||
+              formErrorMessage !== undefined ||
+              propertyErrors.some((value) => value === true) ||
+              (!!itemDetails.warranty_end_date &&
+                !isValidDateTime(itemDetails.warranty_end_date)) ||
+              (!!itemDetails.delivered_date &&
+                !isValidDateTime(itemDetails.delivered_date))
+            }
+            onClick={type === 'edit' ? handleEditItem : handleAddItem}
+            sx={{ mr: 3 }}
+          >
+            Finish
+          </Button>
         ) : (
           <Button
             disabled={
