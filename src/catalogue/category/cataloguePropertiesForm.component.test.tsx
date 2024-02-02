@@ -668,7 +668,7 @@ describe('Catalogue Properties Form', () => {
     });
   });
 
-  it('should error for duplicate values and incorrect type values and the error should be remove if catalogue item property is deleted', async () => {
+  it('should display error for duplicate values and incorrect type values and the error should be removed if the catalogue item property is deleted', async () => {
     const formFields: CatalogueCategoryFormData[] = [
       {
         name: 'Field 3',
