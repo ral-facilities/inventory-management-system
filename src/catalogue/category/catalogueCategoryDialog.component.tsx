@@ -25,14 +25,20 @@ import {
 } from '../../api/catalogueCategory';
 import {
   AddCatalogueCategory,
+  AllowedValuesListErrorsType,
   CatalogueCategory,
   CatalogueCategoryFormData,
+  CatalogueItemPropertiesErrorsType,
   EditCatalogueCategory,
   ErrorParsing,
 } from '../../app.types';
 import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
+// Function to convert a list of strings to a list of numbers
+const convertListToNumbers = (values: string[]): number[] => {
+  return values.map((value) => parseFloat(value));
+};
 export interface CatalogueCategoryDialogProps {
   open: boolean;
   onClose: () => void;
@@ -85,30 +91,15 @@ const CatalogueCategoryDialog = React.memo(
       undefined
     );
 
-    const [duplicatePropertyError, setDuplicatePropertyError] = React.useState<
-      string[]
-    >([]);
+    // State to manage list item errors
+    const [allowedValuesListErrors, setAllowedValuesListErrors] =
+      React.useState<AllowedValuesListErrorsType[]>([]);
 
     const { mutateAsync: addCatalogueCategory } = useAddCatalogueCategory();
     const { mutateAsync: editCatalogueCategory } = useEditCatalogueCategory();
-    const [nameFields, setNameFields] = React.useState<string[]>([]);
-    const [typeFields, setTypeFields] = React.useState<string[]>([]);
 
-    React.useEffect(() => {
-      // When the catalogue category name changes, update the nameFields and typeFields.
-      if (categoryData.catalogue_item_properties) {
-        const newNames = categoryData.catalogue_item_properties.map(
-          (field) => field.name
-        );
-        const newTypes = categoryData.catalogue_item_properties.map(
-          (field) => field.type
-        );
-        setNameFields(newNames);
-        setTypeFields(newTypes);
-      }
-    }, [categoryData.catalogue_item_properties, categoryData.name]);
-
-    const [errorFields, setErrorFields] = React.useState<number[]>([]);
+    const [catalogueItemPropertiesErrors, setCatalogueItemPropertiesErrors] =
+      React.useState<CatalogueItemPropertiesErrorsType[]>([]);
 
     const { data: selectedCatalogueCategoryData } = useCatalogueCategory(
       selectedCatalogueCategory?.id
@@ -123,10 +114,8 @@ const CatalogueCategoryDialog = React.memo(
         is_leaf: false,
         catalogue_item_properties: undefined,
       });
-      setErrorFields([]);
-      setNameFields([]);
-      setTypeFields([]);
-      setDuplicatePropertyError([]);
+      setCatalogueItemPropertiesErrors([]);
+      setAllowedValuesListErrors([]);
       setFormError(undefined);
       resetSelectedCatalogueCategory();
     }, [onClose, resetSelectedCatalogueCategory]);
@@ -139,31 +128,181 @@ const CatalogueCategoryDialog = React.memo(
       setFormError(undefined);
     };
 
-    const validateFormFields = React.useCallback(() => {
-      const errorIndexes = [];
+    const validateAllowedValuesList = (
+      catalogueItemProperties: CatalogueCategoryFormData[]
+    ): boolean => {
+      let hasErrors = false;
 
-      // Check if each form field has a name and type
+      catalogueItemProperties.forEach((property, index) => {
+        if (property.allowed_values?.type === 'list') {
+          const listOfValues = property.allowed_values.values;
+          const trimmedLowerCaseValues = listOfValues.map((value) =>
+            String(value).trim().toLowerCase()
+          );
+
+          const duplicateIndexes: number[] = [];
+          const invalidNumberIndexes: number[] = [];
+          const missingValueIndexes: number[] = [];
+
+          trimmedLowerCaseValues.forEach((value, i) => {
+            for (let j = i + 1; j < trimmedLowerCaseValues.length; j++) {
+              if (value === trimmedLowerCaseValues[j] && value) {
+                duplicateIndexes.push(i, j);
+              }
+            }
+
+            if (!value) {
+              missingValueIndexes.push(i);
+            } else if (
+              property.type === 'number' &&
+              (isNaN(+value) || !value)
+            ) {
+              invalidNumberIndexes.push(i);
+            }
+          });
+
+          if (
+            // If there are more than 2 instances of the same duplicate value, it adds the index multiple times.
+            // The set removes the repeated indexes.
+            Array.from(new Set(duplicateIndexes)).length > 0 ||
+            invalidNumberIndexes.length > 0 ||
+            missingValueIndexes.length > 0
+          ) {
+            // Update listItemErrors state with the error indexes
+            // The useState below is order-dependent since the duplicate error could occur simultaneously with the errors above.
+            // The error above should be displayed first.
+
+            setAllowedValuesListErrors((prev) => [
+              ...prev,
+              {
+                index,
+                errors: [
+                  ...(prev[index]?.errors || []),
+                  ...invalidNumberIndexes.map((i) => ({
+                    index: i,
+                    errorMessage: 'Please enter a valid number',
+                  })),
+                  ...missingValueIndexes.map((i) => ({
+                    index: i,
+                    errorMessage: 'Please enter a value',
+                  })),
+                  ...Array.from(new Set(duplicateIndexes)).map((i) => ({
+                    index: i,
+                    errorMessage: 'Duplicate value',
+                  })),
+                ],
+              },
+            ]);
+
+            hasErrors = true;
+          }
+        }
+      });
+
+      return hasErrors;
+    };
+
+    const validateFormFields = React.useCallback(() => {
+      let hasErrors;
       if (categoryData.catalogue_item_properties) {
         for (
           let i = 0;
           i < categoryData.catalogue_item_properties.length;
           i++
         ) {
-          if (!nameFields[i].trim() || !typeFields[i].trim())
-            errorIndexes.push(i);
+          if (!categoryData.catalogue_item_properties[i].name.trim()) {
+            setCatalogueItemPropertiesErrors((prev) => [
+              ...prev,
+              {
+                index: i,
+                errors: {
+                  fieldName: 'name',
+                  errorMessage: 'Please enter a property name',
+                },
+              },
+            ]);
+            hasErrors = true;
+          }
+
+          if (!categoryData.catalogue_item_properties[i].type.trim()) {
+            setCatalogueItemPropertiesErrors((prev) => [
+              ...prev,
+              {
+                index: i,
+                errors: {
+                  fieldName: 'type',
+                  errorMessage: 'Please select a type',
+                },
+              },
+            ]);
+
+            hasErrors = true;
+          }
+
+          if (
+            categoryData.catalogue_item_properties[i].allowed_values?.values
+              .length === 0
+          ) {
+            setCatalogueItemPropertiesErrors((prev) => [
+              ...prev,
+              {
+                index: i,
+                errors: {
+                  fieldName: 'list',
+                  errorMessage: 'Please create a valid list item',
+                },
+              },
+            ]);
+
+            hasErrors = true;
+          }
+        }
+
+        const listOfPropertyNames: string[] =
+          categoryData.catalogue_item_properties.map((property) =>
+            property.name.toLowerCase().trim()
+          );
+
+        const duplicateIndexes: number[] = [];
+
+        listOfPropertyNames.forEach((value, i) => {
+          for (let j = i + 1; j < listOfPropertyNames.length; j++) {
+            if (value === listOfPropertyNames[j]) {
+              duplicateIndexes.push(i, j);
+            }
+          }
+        });
+
+        const uniqueDuplicateIndexes = Array.from(new Set(duplicateIndexes));
+        for (let i = 0; i < uniqueDuplicateIndexes.length; i++) {
+          setCatalogueItemPropertiesErrors((prev) => [
+            ...prev,
+            {
+              index: uniqueDuplicateIndexes[i],
+              errors: {
+                fieldName: 'name',
+                errorMessage:
+                  'Duplicate property name. Please change the name or remove the property',
+              },
+            },
+          ]);
+          hasErrors = true;
+        }
+
+        const hasAllowedValuesListErrors = validateAllowedValuesList(
+          categoryData.catalogue_item_properties
+        );
+
+        if (hasAllowedValuesListErrors) {
+          hasErrors = true;
         }
       }
-      //add error handling here?
-
-      setErrorFields(errorIndexes);
-      return errorIndexes;
-    }, [categoryData.catalogue_item_properties, nameFields, typeFields]);
+      return hasErrors;
+    }, [categoryData]);
 
     const clearFormFields = React.useCallback(() => {
-      setErrorFields([]);
-      setNameFields([...nameFields, '']);
-      setTypeFields([...typeFields, '']);
-    }, [nameFields, typeFields]);
+      setCatalogueItemPropertiesErrors([]);
+    }, []);
 
     const handleErrorStates = React.useCallback(() => {
       let hasErrors = false;
@@ -171,30 +310,10 @@ const CatalogueCategoryDialog = React.memo(
         setNameError('Please enter a name.');
         hasErrors = true;
       }
-      const errorIndexes = validateFormFields();
-      if (errorIndexes.length !== 0) {
+      const formFieldErrors = validateFormFields();
+
+      if (formFieldErrors) {
         hasErrors = true;
-      }
-
-      if (categoryData.catalogue_item_properties) {
-        const listOfPropertyNames: string[] =
-          categoryData.catalogue_item_properties.map((property) =>
-            property.name.toLowerCase().trim()
-          );
-        const uniqueNames = new Set();
-        const duplicateNames: string[] = [];
-
-        for (const name of listOfPropertyNames) {
-          if (uniqueNames.has(name)) {
-            duplicateNames.push(name);
-          } else {
-            uniqueNames.add(name);
-          }
-        }
-        if (duplicateNames.length > 0) {
-          setDuplicatePropertyError(duplicateNames);
-          hasErrors = true;
-        }
       }
 
       //add error handling here?
@@ -212,6 +331,34 @@ const CatalogueCategoryDialog = React.memo(
       if (hasErrors) {
         return;
       }
+
+      let updatedProperties: CatalogueCategoryFormData[] | undefined;
+      // Inside your component or wherever you're processing the data
+      if (categoryData.catalogue_item_properties) {
+        updatedProperties = categoryData.catalogue_item_properties.map(
+          (property) => {
+            if (
+              property.type === 'number' &&
+              property.allowed_values?.type === 'list'
+            ) {
+              // Assuming values are strings, convert them to numbers
+              const convertedValues = convertListToNumbers(
+                property.allowed_values.values || []
+              );
+
+              // Update the property with the converted values
+              return {
+                ...property,
+                allowed_values: {
+                  ...property.allowed_values,
+                  values: convertedValues,
+                },
+              };
+            }
+            return property;
+          }
+        );
+      }
       clearFormFields();
 
       if (parentId !== null) {
@@ -220,10 +367,10 @@ const CatalogueCategoryDialog = React.memo(
           parent_id: parentId,
         };
       }
-      if (!!categoryData.catalogue_item_properties) {
+      if (!!updatedProperties) {
         catalogueCategory = {
           ...catalogueCategory,
-          catalogue_item_properties: categoryData.catalogue_item_properties,
+          catalogue_item_properties: updatedProperties,
         };
       }
 
@@ -251,6 +398,41 @@ const CatalogueCategoryDialog = React.memo(
       let catalogueCategory: EditCatalogueCategory;
 
       if (selectedCatalogueCategory && selectedCatalogueCategoryData) {
+        const { hasErrors } = handleErrorStates();
+        if (hasErrors) {
+          return;
+        }
+
+        let updatedProperties: CatalogueCategoryFormData[] | undefined;
+        // Inside your component or wherever you're processing the data
+        if (categoryData.catalogue_item_properties) {
+          updatedProperties = categoryData.catalogue_item_properties.map(
+            (property) => {
+              if (
+                property.type === 'number' &&
+                property.allowed_values?.type === 'list'
+              ) {
+                // Assuming values are strings, convert them to numbers
+                const convertedValues = convertListToNumbers(
+                  property.allowed_values.values || []
+                );
+
+                // Update the property with the converted values
+                return {
+                  ...property,
+                  allowed_values: {
+                    ...property.allowed_values,
+                    values: convertedValues,
+                  },
+                };
+              }
+              return property;
+            }
+          );
+        }
+        // Clear the error state and add a new field
+        clearFormFields();
+
         catalogueCategory = {
           id: selectedCatalogueCategory.id,
         };
@@ -261,7 +443,7 @@ const CatalogueCategoryDialog = React.memo(
         const isIsLeafUpdated =
           categoryData.is_leaf !== selectedCatalogueCategoryData?.is_leaf;
         const isCatalogueItemPropertiesUpdated =
-          JSON.stringify(categoryData.catalogue_item_properties) !==
+          JSON.stringify(updatedProperties) !==
           JSON.stringify(
             selectedCatalogueCategoryData?.catalogue_item_properties ?? null
           );
@@ -271,21 +453,12 @@ const CatalogueCategoryDialog = React.memo(
         isIsLeafUpdated && (catalogueCategory.is_leaf = categoryData.is_leaf);
 
         isCatalogueItemPropertiesUpdated &&
-          (catalogueCategory.catalogue_item_properties =
-            categoryData.catalogue_item_properties);
-
-        const { hasErrors } = handleErrorStates();
-        if (hasErrors) {
-          return;
-        }
-        // Clear the error state and add a new field
-        clearFormFields();
+          (catalogueCategory.catalogue_item_properties = updatedProperties);
 
         if (
           catalogueCategory.id && // Check if id is present
           (isNameUpdated ||
-            (!!categoryData.catalogue_item_properties &&
-              isCatalogueItemPropertiesUpdated) ||
+            (!!updatedProperties && isCatalogueItemPropertiesUpdated) ||
             isIsLeafUpdated) // Check if any of these properties have been updated
         ) {
           // Only call editCatalogueCategory if id is present and at least one of the properties has been updated
@@ -361,9 +534,7 @@ const CatalogueCategoryDialog = React.memo(
                     };
                     if (value === 'false') {
                       newData.catalogue_item_properties = undefined;
-                      setErrorFields([]);
-                      setNameFields([]);
-                      setTypeFields([]);
+                      setCatalogueItemPropertiesErrors([]);
                     }
                     handleFormChange(newData);
                   }}
@@ -398,14 +569,14 @@ const CatalogueCategoryDialog = React.memo(
                         catalogue_item_properties: formFields,
                       })
                     }
-                    nameFields={nameFields}
-                    onChangeNameFields={setNameFields}
-                    typeFields={typeFields}
-                    onChangeTypeFields={setTypeFields}
-                    errorFields={errorFields}
-                    propertyNameError={duplicatePropertyError}
-                    onChangePropertyNameError={setDuplicatePropertyError}
-                    onChangeErrorFields={setErrorFields}
+                    onChangeCatalogueItemPropertiesErrors={
+                      setCatalogueItemPropertiesErrors
+                    }
+                    catalogueItemPropertiesErrors={
+                      catalogueItemPropertiesErrors
+                    }
+                    allowedValuesListErrors={allowedValuesListErrors}
+                    onChangeAllowedValuesListErrors={setAllowedValuesListErrors}
                     resetFormError={() => setFormError(undefined)}
                   />
                 </Grid>
@@ -443,8 +614,8 @@ const CatalogueCategoryDialog = React.memo(
               disabled={
                 formError !== undefined ||
                 nameError !== undefined ||
-                errorFields.length !== 0 ||
-                duplicatePropertyError.length !== 0
+                catalogueItemPropertiesErrors.length !== 0 ||
+                allowedValuesListErrors.length !== 0
               }
             >
               Save

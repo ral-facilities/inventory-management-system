@@ -16,7 +16,7 @@ jest.mock('../../handleIMS_APIError');
 
 describe('Obsolete Catalogue Item Dialog', () => {
   // Quite a few of these take more than 10 seconds on CI
-  jest.setTimeout(15000);
+  jest.setTimeout(20000);
 
   let props: ObsoleteCatalogueItemDialogProps;
   let user;

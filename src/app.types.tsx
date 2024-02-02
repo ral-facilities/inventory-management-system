@@ -68,11 +68,18 @@ export interface Manufacturer extends ManufacturerDetails {
   id: string;
 }
 
+export interface AllowedValuesList {
+  type: 'list';
+  values: any[];
+}
+export type AllowedValues = AllowedValuesList;
+
 export interface CatalogueCategoryFormData {
   name: string;
   type: string;
   unit?: string;
   mandatory: boolean;
+  allowed_values?: AllowedValues;
 }
 
 export interface ObsoleteDetails {
@@ -247,4 +254,17 @@ export interface EditItem extends Partial<AddItem> {
 export interface MoveItemsToSystem {
   selectedItems: Item[];
   targetSystem: System;
+}
+
+export interface CatalogueItemPropertiesErrorsType {
+  index: number;
+  errors: {
+    fieldName: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
+    errorMessage: string;
+  } | null;
+}
+
+export interface AllowedValuesListErrorsType {
+  index: number | null;
+  errors: { index: number; errorMessage: string }[] | null;
 }
