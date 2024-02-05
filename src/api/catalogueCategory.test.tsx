@@ -328,7 +328,7 @@ describe('catalogue category api functions', () => {
       ]);
     });
 
-    it('sends requests to move a single or multiple catalogue categories data to another category and returns 403 error', async () => {
+    it('sends requests to move multiple catalogue categories to another category and returns 403 errors for each', async () => {
       const { result } = renderHook(() => useMoveToCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
