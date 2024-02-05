@@ -210,7 +210,8 @@ describe('catalogue items api functions', () => {
 
     beforeEach(() => {
       moveItemsToSystem = {
-        selectedItems: mockItems,
+        // Prevent test interference if modifying the selected items
+        selectedItems: JSON.parse(JSON.stringify(mockItems)),
         targetSystem: SystemsJSON[0] as System,
       };
 
@@ -317,7 +318,7 @@ describe('catalogue items api functions', () => {
         })
       );
       expect(result.current.data).toEqual([
-        { message: '403', name: 'Error 409', state: 'error' },
+        { message: '403', name: 'KvT2Ox7n', state: 'error' },
         { message: '403', name: 'G463gOIA', state: 'error' },
       ]);
     });
