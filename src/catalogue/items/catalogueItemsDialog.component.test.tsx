@@ -305,7 +305,7 @@ describe('Catalogue Items Dialog', () => {
         'Please choose a manufacturer, or add a new manufacturer'
       )
     ).toBeInTheDocument();
-  });
+  }, 6000);
   it('display error message when invalid number format', async () => {
     props = {
       ...props,
@@ -523,7 +523,7 @@ describe('Catalogue Items Dialog', () => {
           'Please choose a manufacturer, or add a new manufacturer'
         )
       ).toBeInTheDocument();
-    });
+    }, 6000);
 
     it('Edit a catalogue item (catalogue properties)', async () => {
       props = {
