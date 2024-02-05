@@ -164,7 +164,9 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                     }`}</Typography>
                     <Box sx={{ display: 'flex' }}>
                       <Typography align="left" color="text.secondary">
-                        {String(property.value)}
+                        {String(property.value).trim() !== 'null'
+                          ? String(property.value)
+                          : 'None'}
                       </Typography>
                     </Box>
                   </Grid>

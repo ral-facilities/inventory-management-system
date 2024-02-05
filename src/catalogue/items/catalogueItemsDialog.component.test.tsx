@@ -251,16 +251,19 @@ describe('Catalogue Items Dialog', () => {
       drawing_link: null,
       drawing_number: null,
       is_obsolete: false,
-      manufacturer_id: '1',
-      notes: null,
       item_model_number: null,
+      manufacturer_id: '1',
       name: 'test',
+      notes: null,
       obsolete_reason: null,
       obsolete_replacement_catalogue_item_id: null,
       properties: [
         { name: 'Resolution', value: 12 },
+        { name: 'Frame Rate', value: null },
         { name: 'Sensor Type', value: 'IO' },
+        { name: 'Sensor brand', value: null },
         { name: 'Broken', value: true },
+        { name: 'Older than five years', value: null },
       ],
     });
   });

@@ -197,7 +197,9 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                     property.unit ? `(${property.unit})` : ''
                   }`}</Typography>
                   <Typography color="text.secondary">
-                    {String(property.value)}
+                    {String(property.value).trim() !== 'null'
+                      ? String(property.value)
+                      : 'None'}
                   </Typography>
                 </Grid>
               ))}

@@ -18,8 +18,18 @@
         "unit": "megapixels"
       },
       {
+        "name": "Frame Rate",
+        "value": null,
+        "unit": "fps"
+      },
+      {
         "name": "Sensor Type",
         "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": null,
         "unit": ""
       },
       {
@@ -63,6 +73,11 @@
         "unit": ""
       },
       {
+        "name": "Sensor brand",
+        "value": null,
+        "unit": ""
+      },
+      {
         "name": "Broken",
         "value": true,
         "unit": ""
@@ -100,6 +115,11 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": null,
         "unit": ""
       },
       {
@@ -143,6 +163,11 @@
         "unit": ""
       },
       {
+        "name": "Sensor brand",
+        "value": null,
+        "unit": ""
+      },
+      {
         "name": "Broken",
         "value": true,
         "unit": ""
@@ -180,6 +205,11 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": null,
         "unit": ""
       },
       {

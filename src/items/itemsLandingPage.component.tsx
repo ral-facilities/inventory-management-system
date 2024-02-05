@@ -301,7 +301,9 @@ function ItemsLandingPage() {
                           property.unit ? `(${property.unit})` : ''
                         }`}</Typography>
                         <Typography align="left" color="text.secondary">
-                          {String(property.value)}
+                          {String(property.value).trim() !== 'null'
+                            ? String(property.value)
+                            : 'None'}
                         </Typography>
                       </Grid>
                     ))}

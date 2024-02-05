@@ -277,7 +277,7 @@ describe('Catalogue Items Landing Page', () => {
 
     await user.click(homeButton);
 
-    expect(mockedUseNavigate).toBeCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
     expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue');
   });
 

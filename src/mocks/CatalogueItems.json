@@ -20,6 +20,11 @@
         "unit": ""
       },
       {
+        "name": "Sensor brand",
+        "value": null,
+        "unit": ""
+      },
+      {
         "name": "Broken",
         "value": true,
         "unit": ""

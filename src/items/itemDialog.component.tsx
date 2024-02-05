@@ -23,7 +23,6 @@ import {
   CatalogueCategory,
   CatalogueCategoryFormData,
   CatalogueItem,
-  CatalogueItemProperty,
   EditItem,
   Item,
   ItemDetailsPlaceholder,
@@ -282,7 +281,11 @@ function ItemDialog(props: ItemDialogProps) {
           hasErrors = true;
         }
 
-        if (!propertyValues[index]) return null;
+        if (!propertyValues[index])
+          return {
+            name: property.name,
+            value: null,
+          };
 
         let typedValue: string | number | boolean | null =
           propertyValues[index]; // Assume it's a string by default
@@ -346,13 +349,9 @@ function ItemDialog(props: ItemDialogProps) {
       return; // Do not proceed with saving if there are errors
     }
 
-    const filteredProperties = updatedProperties.filter(
-      (property) => property !== null
-    ) as CatalogueItemProperty[];
-
     const item: AddItem = {
       ...details,
-      properties: filteredProperties,
+      properties: updatedProperties,
     };
 
     addItem(item)
@@ -369,10 +368,6 @@ function ItemDialog(props: ItemDialogProps) {
       if (hasErrors) {
         return; // Do not proceed with saving if there are errors
       }
-
-      const filteredProperties = updatedProperties.filter(
-        (property) => property !== null
-      ) as CatalogueItemProperty[];
 
       const isPurchaseOrderNumberUpdated =
         details.purchase_order_number !== selectedItem.purchase_order_number;
@@ -398,7 +393,7 @@ function ItemDialog(props: ItemDialogProps) {
       const isNotesUpdated = details.notes !== selectedItem.notes;
 
       const isCatalogueItemPropertiesUpdated =
-        JSON.stringify(filteredProperties) !==
+        JSON.stringify(updatedProperties) !==
         JSON.stringify(
           selectedItem.properties.map(({ unit, ...rest }) => rest)
         );
@@ -418,8 +413,7 @@ function ItemDialog(props: ItemDialogProps) {
       isSerialNumberUpdated && (item.serial_number = details.serial_number);
       isDeliveredDateUpdated && (item.delivered_date = details.delivered_date);
       isNotesUpdated && (item.notes = details.notes);
-      isCatalogueItemPropertiesUpdated &&
-        (item.properties = filteredProperties);
+      isCatalogueItemPropertiesUpdated && (item.properties = updatedProperties);
 
       if (
         item.id &&
