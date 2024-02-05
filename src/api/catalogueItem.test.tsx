@@ -58,10 +58,6 @@ describe('catalogue items api functions', () => {
         ],
       });
     });
-
-    it.todo(
-      'sends axios request to fetch records and throws an appropriate error on failure'
-    );
   });
 
   describe('useCatalogueItems', () => {
@@ -76,10 +72,6 @@ describe('catalogue items api functions', () => {
 
       expect(result.current.data).toEqual(catalogueItemData('5'));
     });
-
-    it.todo(
-      'sends axios request to fetch catalogue items and throws an appropriate error on failure'
-    );
   });
 
   describe('useCatalogueItem', () => {
@@ -96,10 +88,6 @@ describe('catalogue items api functions', () => {
         CatalogueItemJSON.filter((catalogueItem) => catalogueItem.id === '1')[0]
       );
     });
-
-    it.todo(
-      'sends axios request to fetch catalogue item and throws an appropriate error on failure'
-    );
   });
 
   describe('useCatalogueItemIds', () => {
@@ -143,10 +131,6 @@ describe('catalogue items api functions', () => {
       });
       expect(result.current.data).toEqual('');
     });
-
-    it.todo(
-      'sends axios request to delete a catalogue Item and throws an appropriate error on failure'
-    );
   });
 
   describe('useEditCatalogueItem', () => {
@@ -181,10 +165,6 @@ describe('catalogue items api functions', () => {
         id: '90',
       });
     });
-
-    it.todo(
-      'sends axios request to edit a catalogue item and throws an appropriate error on failure'
-    );
   });
 
   describe('useMoveToCatalogueItem', () => {
