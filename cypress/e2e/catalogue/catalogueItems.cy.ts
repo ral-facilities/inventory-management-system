@@ -107,6 +107,9 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Pumping Speed *').click();
     cy.findByRole('option', { name: '400' }).click();
 
+    cy.findByLabelText('Axis').click();
+    cy.findByRole('option', { name: 'y' }).click();
+
     cy.findByLabelText('Cost (£) *').type('5000');
     cy.findByLabelText('Time to replace (days) *').type('14');
 
@@ -143,6 +146,7 @@ describe('Catalogue Items', () => {
           properties: [
             { name: 'Pumping Speed', value: 400 },
             { name: 'Ultimate Pressure', value: 0.2 },
+            { name: 'Axis', value: 'y' },
           ],
         })
       );

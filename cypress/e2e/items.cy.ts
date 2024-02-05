@@ -106,6 +106,8 @@ describe('Items', () => {
     cy.findByLabelText('Ultimate Pressure (millibar) *').type('0.2');
     cy.findByLabelText('Pumping Speed *').click();
     cy.findByRole('option', { name: '400' }).click();
+    cy.findByLabelText('Axis').click();
+    cy.findByRole('option', { name: 'y' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -132,6 +134,7 @@ describe('Items', () => {
           properties: [
             { name: 'Pumping Speed', value: 400 },
             { name: 'Ultimate Pressure', value: 0.2 },
+            { name: 'Axis', value: 'y' },
           ],
         })
       );
