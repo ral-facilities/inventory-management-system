@@ -206,6 +206,7 @@ describe('catalogue items api functions', () => {
             drawing_link: null,
             item_model_number: null,
             is_obsolete: false,
+            notes: null,
             obsolete_reason: null,
             obsolete_replacement_catalogue_item_id: null,
             properties: [
@@ -230,6 +231,7 @@ describe('catalogue items api functions', () => {
             drawing_link: null,
             item_model_number: null,
             is_obsolete: false,
+            notes: null,
             obsolete_reason: null,
             obsolete_replacement_catalogue_item_id: null,
             properties: [
@@ -307,6 +309,27 @@ describe('catalogue items api functions', () => {
         { message: undefined, name: 'test_copy1', state: 'error' },
       ]);
     });
+
+    it('sends requests to move a single catalogue item and returns 403 error', async () => {
+      props.targetCatalogueCategory = {
+        ...props.targetCatalogueCategory,
+        id: 'Error 403',
+      };
+
+      const { result } = renderHook(() => useMoveToCatalogueItem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate(props);
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual([
+        { message: '403', name: 'test', state: 'error' },
+        { message: '403', name: 'test_copy1', state: 'error' },
+      ]);
+    });
   });
 
   describe('useCopyToCatalogueItem', () => {
@@ -317,11 +340,8 @@ describe('catalogue items api functions', () => {
         selectedCatalogueItems: [
           {
             catalogue_category_id: '657305a01e468454e97b6389',
-            manufacturer: {
-              name: 'test',
-              url: 'https://exampple.com/',
-              address: 'test',
-            },
+            manufacturer_id: '1',
+            notes: null,
             name: 'test',
             description: null,
             cost_gbp: 20,
@@ -345,11 +365,7 @@ describe('catalogue items api functions', () => {
           },
           {
             catalogue_category_id: '657305a01e468454e97b6389',
-            manufacturer: {
-              name: 'test',
-              url: 'https://exampple.com/',
-              address: 'test',
-            },
+            manufacturer_id: '1',
             name: 'test_copy1',
             description: null,
             cost_gbp: 20,
@@ -359,6 +375,7 @@ describe('catalogue items api functions', () => {
             drawing_number: null,
             drawing_link: null,
             item_model_number: null,
+            notes: null,
             is_obsolete: false,
             obsolete_reason: null,
             obsolete_replacement_catalogue_item_id: null,
@@ -417,7 +434,7 @@ describe('catalogue items api functions', () => {
       ]);
     });
 
-    it('sends requests to copy a mutiple catalogue item and returns unsuccessful response as the catalogue_category_id has not changed', async () => {
+    it('sends requests to copy a multiple catalogue item and returns unsuccessful response as the catalogue_category_id has not changed', async () => {
       props.targetCatalogueCategory = {
         ...props.targetCatalogueCategory,
         id: 'Error 500',
@@ -435,6 +452,27 @@ describe('catalogue items api functions', () => {
       expect(result.current.data).toEqual([
         { message: undefined, name: 'test', state: 'error' },
         { message: undefined, name: 'test_copy1', state: 'error' },
+      ]);
+    });
+
+    it('sends requests to copy a multiple catalogue item and returns 403 error', async () => {
+      props.targetCatalogueCategory = {
+        ...props.targetCatalogueCategory,
+        id: 'Error 403',
+      };
+
+      const { result } = renderHook(() => useCopyToCatalogueItem(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate(props);
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual([
+        { message: '403', name: 'test', state: 'error' },
+        { message: '403', name: 'test_copy1', state: 'error' },
       ]);
     });
   });

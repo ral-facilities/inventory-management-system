@@ -199,7 +199,10 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
 
               transferStates.push({
                 name: catalogueItem.name,
-                message: response.detail,
+                message:
+                  error.response?.status === 403
+                    ? String(error.response.status)
+                    : response.detail,
                 state: 'error',
               });
             });
@@ -279,7 +282,10 @@ export const useCopyToCatalogueItem = (): UseMutationResult<
 
               transferStates.push({
                 name: catalogueItem.name,
-                message: response.detail,
+                message:
+                  error.response?.status === 403
+                    ? String(error.response.status)
+                    : response.detail,
                 state: 'error',
               });
             });

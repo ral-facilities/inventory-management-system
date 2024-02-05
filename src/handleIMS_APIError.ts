@@ -46,10 +46,7 @@ const handleIMS_APIError = (error: AxiosError, broadcast = true): void => {
             ? {
                 payload: {
                   severity: 'error',
-                  message:
-                    localStorage.getItem('autoLogin') === 'true'
-                      ? 'Your session has expired, please reload the page'
-                      : 'Your session has expired, please login again',
+                  message: 'Your session has expired, please login again',
                 },
               }
             : {}),

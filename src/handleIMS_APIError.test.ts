@@ -117,11 +117,6 @@ describe('handleIMS_APIError', () => {
   });
 
   describe('sends messages to SciGateway on authentication error', () => {
-    const localStorageGetItemMock = jest.spyOn(
-      window.localStorage.__proto__,
-      'getItem'
-    );
-
     afterAll(() => {
       jest.clearAllMocks();
     });
@@ -139,59 +134,20 @@ describe('handleIMS_APIError', () => {
       });
     });
 
-    describe('sends invalidate token message and notifies user to reload the page if autoLogin true', () => {
-      beforeEach(() => {
-        localStorageGetItemMock.mockImplementation(() => 'true');
-      });
+    it('just sends invalidate token message if broadcast is true', () => {
+      error.response.status = 403;
+      handleIMS_APIError(error, true);
 
-      afterEach(() => {
-        jest.clearAllMocks();
-      });
-
-      it('if error code is 403', () => {
-        error.response.status = 403;
-        handleIMS_APIError(error);
-
-        expect(log.error).toHaveBeenCalledWith(
-          'Test error message (response data)'
-        );
-        expect(localStorage.getItem).toBeCalledWith('autoLogin');
-        expect(events.length).toBe(1);
-        expect(events[0].detail).toEqual({
-          type: InvalidateTokenType,
-          payload: {
-            severity: 'error',
-            message: 'Your session has expired, please reload the page',
-          },
-        });
-      });
-    });
-
-    describe('sends invalidate token message and notifies user to login again if autoLogin false', () => {
-      beforeEach(() => {
-        localStorageGetItemMock.mockImplementation(() => 'false');
-      });
-
-      afterEach(() => {
-        jest.clearAllMocks();
-      });
-
-      it('if error code is 403', () => {
-        error.response.status = 403;
-        handleIMS_APIError(error);
-
-        expect(log.error).toHaveBeenCalledWith(
-          'Test error message (response data)'
-        );
-        expect(localStorage.getItem).toBeCalledWith('autoLogin');
-        expect(events.length).toBe(1);
-        expect(events[0].detail).toEqual({
-          type: InvalidateTokenType,
-          payload: {
-            severity: 'error',
-            message: 'Your session has expired, please login again',
-          },
-        });
+      expect(log.error).toHaveBeenCalledWith(
+        'Test error message (response data)'
+      );
+      expect(events.length).toBe(1);
+      expect(events[0].detail).toEqual({
+        type: InvalidateTokenType,
+        payload: {
+          message: 'Your session has expired, please login again',
+          severity: 'error',
+        },
       });
     });
   });

@@ -23,6 +23,10 @@ export const handlers = [
   rest.post('/v1/catalogue-categories', async (req, res, ctx) => {
     let body = await req.json();
 
+    if (body.parent_id === 'Error 403') {
+      return res(ctx.status(403), ctx.json(''));
+    }
+
     if (body.name === 'test_dup') {
       return res(
         ctx.status(409),
@@ -68,6 +72,10 @@ export const handlers = [
     const body = (await req.json()) as EditCatalogueCategory;
 
     const fullBody = { ...obj, ...body };
+
+    if (fullBody.parent_id === 'Error 403') {
+      return res(ctx.status(403), ctx.json(''));
+    }
     if (fullBody.name === 'test_dup') {
       return res(
         ctx.status(409),
@@ -189,6 +197,9 @@ export const handlers = [
   rest.post('/v1/catalogue-items/', async (req, res, ctx) => {
     const body = (await req.json()) as CatalogueItem;
 
+    if (body.catalogue_category_id === 'Error 403') {
+      return res(ctx.status(403), ctx.json(''));
+    }
     if (
       body.name === 'Error 500' ||
       body.catalogue_category_id === 'Error 500'
@@ -258,6 +269,18 @@ export const handlers = [
       (value) => value.id === id
     );
 
+    const newBody = {
+      catalogue_category_id:
+        body.catalogue_category_id ?? validCatalogueItem?.catalogue_category_id,
+      name: body.name ?? validCatalogueItem?.name,
+      description: body.description ?? validCatalogueItem?.description,
+      properties: body.properties ?? validCatalogueItem?.properties,
+    };
+
+    if (newBody.catalogue_category_id === 'Error 403') {
+      return res(ctx.status(403), ctx.json(''));
+    }
+
     if (body.name === 'test_has_children_elements') {
       return res(
         ctx.status(409),
@@ -272,13 +295,6 @@ export const handlers = [
       body.catalogue_category_id === 'Error 500'
     )
       return res(ctx.status(500), ctx.json(''));
-
-    const newBody = {
-      catalogue_category_id: validCatalogueItem?.catalogue_category_id,
-      name: body.name ?? validCatalogueItem?.name,
-      description: body.description ?? validCatalogueItem?.description,
-      properties: body.properties ?? validCatalogueItem?.properties,
-    };
 
     return res(
       ctx.status(200),
@@ -423,6 +439,10 @@ export const handlers = [
   rest.post('/v1/systems', async (req, res, ctx) => {
     const body = (await req.json()) as AddSystem;
 
+    if (body.parent_id === 'Error 403') {
+      return res(ctx.status(403), ctx.json(''));
+    }
+
     if (body.name === 'Error 409') {
       return res(
         ctx.status(409),
@@ -446,6 +466,11 @@ export const handlers = [
     const body = (await req.json()) as EditSystem;
 
     const { id } = req.params;
+
+    if (body.parent_id === 'Error 403') {
+      return res(ctx.status(403), ctx.json(''));
+    }
+
     if (body.name === 'Error 409' || id === 'Error 409') {
       return res(
         ctx.status(409),
@@ -535,12 +560,15 @@ export const handlers = [
     const body = (await req.json()) as EditItem;
     const { id } = req.params;
 
+    if (body.system_id === 'Error 403') {
+      return res(ctx.status(403), ctx.json(''));
+    }
+
     if (id === 'Error 409')
       return res(
         ctx.status(409),
         ctx.json({
-          detail:
-            'The specified system ID does not exist',
+          detail: 'The specified system ID does not exist',
         })
       );
 

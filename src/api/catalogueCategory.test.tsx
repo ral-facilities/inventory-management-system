@@ -352,6 +352,41 @@ describe('catalogue category api functions', () => {
       ]);
     });
 
+    it('sends requests to move a single or multiple catalogue categories data to another category and returns 403 error', async () => {
+      const { result } = renderHook(() => useMoveToCatalogueCategory(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      const targetCategory: CatalogueCategory = {
+        id: 'Error 403',
+        name: 'Vacuum Pumps',
+        parent_id: '3',
+        code: 'vacuum-pumps',
+        is_leaf: false,
+      };
+      moveToCatalogueCategory.targetCategory = targetCategory;
+
+      result.current.mutate(moveToCatalogueCategory);
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      moveToCatalogueCategory.selectedCategories.map((category) =>
+        expect(axiosPatchSpy).toHaveBeenCalledWith(
+          `/v1/catalogue-categories/${category.id}`,
+          {
+            parent_id: targetCategory.id,
+          }
+        )
+      );
+      expect(result.current.data).toEqual([
+        { message: '403', name: 'test_dup', state: 'error' },
+        { message: '403', name: 'Wavefront Sensors', state: 'error' },
+        { message: '403', name: 'Energy Meters', state: 'error' },
+      ]);
+    });
+
     it.todo(
       'sends axios request to fetch a single catalogue category and throws an appropriate error on failure'
     );
@@ -516,6 +551,44 @@ describe('catalogue category api functions', () => {
           name: 'test_dup',
           state: 'error',
         },
+      ]);
+    });
+
+    it('sends requests to copy multiple catalogue categories to another category and returns 403 error', async () => {
+      const { result } = renderHook(() => useCopyToCatalogueCategory(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      const targetCategory: CatalogueCategory = {
+        id: 'Error 403',
+        name: 'Vacuum Pumps',
+        parent_id: '3',
+        code: 'vacuum-pumps',
+        is_leaf: false,
+      };
+      copyToCatalogueCategory.targetCategory = targetCategory;
+
+      result.current.mutate({
+        selectedCategories: mockCatalogueCategories,
+        targetCategory: targetCategory,
+        existingCategoryNames: [''],
+      });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      copyToCatalogueCategory.selectedCategories.map((category) =>
+        expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/catalogue-categories`, {
+          ...category,
+          parent_id: targetCategory.id,
+        })
+      );
+      expect(result.current.data).toEqual([
+        { message: '403', name: 'test_dup', state: 'error' },
+        { message: '403', name: 'Wavefront Sensors', state: 'error' },
+        { message: '403', name: 'Energy Meters', state: 'error' },
       ]);
     });
 
