@@ -215,7 +215,8 @@ describe('System api functions', () => {
 
     beforeEach(() => {
       moveToSystem = {
-        selectedSystems: mockSystems,
+        // Prevent test interference if modifying the selected systems
+        selectedSystems: JSON.parse(JSON.stringify(mockSystems)),
         targetSystem: null,
       };
 
@@ -377,7 +378,8 @@ describe('System api functions', () => {
 
     beforeEach(() => {
       copyToSystem = {
-        selectedSystems: mockSystems,
+        // Prevent test interference if modifying the selected systems
+        selectedSystems: JSON.parse(JSON.stringify(mockSystems)),
         targetSystem: null,
         existingSystemNames: [],
       };
@@ -565,7 +567,7 @@ describe('System api functions', () => {
         })
       );
       expect(result.current.data).toEqual([
-        { message: '403', name: 'Error 409', state: 'error' },
+        { message: '403', name: 'Giant laser', state: 'error' },
         { message: '403', name: 'Smaller laser', state: 'error' },
       ]);
     });
