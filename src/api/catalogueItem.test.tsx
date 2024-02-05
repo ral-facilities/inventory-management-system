@@ -414,7 +414,7 @@ describe('catalogue items api functions', () => {
       ]);
     });
 
-    it('sends requests to copy a multiple catalogue item and returns unsuccessful response as the catalogue_category_id has not changed', async () => {
+    it('sends requests to copy multiple catalogue items and returns unsuccessful response when the catalogue_category_id has not changed', async () => {
       props.targetCatalogueCategory = {
         ...props.targetCatalogueCategory,
         id: 'Error 500',
