@@ -957,9 +957,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                             />
                           )}
                         </Grid>
-                        <Grid item xs={1} sx={{ display: 'flex' }}>
+                        <Grid
+                          item
+                          xs={1}
+                          sx={{ display: 'flex', alignItems: 'center' }}
+                        >
                           <Tooltip
-                            sx={{ alignItems: 'center' }}
                             title={
                               <div>
                                 <Typography>Name: {property.name}</Typography>

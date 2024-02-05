@@ -230,6 +230,13 @@
         "type": "number",
         "unit": "millibar",
         "mandatory": true
+      },
+      {
+        "name": "Axis",
+        "type": "string",
+        "unit": "",
+        "mandatory": false,
+        "allowed_values": { "type": "list", "values": ["y", "x", "z"] }
       }
     ]
   },

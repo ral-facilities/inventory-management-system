@@ -251,6 +251,9 @@ describe('Catalogue Items Dialog', () => {
     await fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
     await fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
 
+    await fireEvent.mouseDown(screen.getByLabelText('Axis'));
+    await fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
+
     const saveButton = screen.getByRole('button', { name: 'Save' });
     await user.click(saveButton);
 
@@ -273,6 +276,10 @@ describe('Catalogue Items Dialog', () => {
       properties: [
         { name: 'Pumping Speed', value: 400 },
         { name: 'Ultimate Pressure', value: 10 },
+        {
+          name: 'Axis',
+          value: 'y',
+        },
       ],
     });
   }, 10000);
@@ -581,6 +588,9 @@ describe('Catalogue Items Dialog', () => {
         within(screen.getByRole('listbox')).getByText('400')
       );
 
+      await fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      await fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
+
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
@@ -588,6 +598,10 @@ describe('Catalogue Items Dialog', () => {
         properties: [
           { name: 'Pumping Speed', value: 400 },
           { name: 'Ultimate Pressure', value: 10 },
+          {
+            name: 'Axis',
+            value: 'y',
+          },
         ],
       });
     }, 10000);

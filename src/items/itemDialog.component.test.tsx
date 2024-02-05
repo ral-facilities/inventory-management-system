@@ -219,6 +219,10 @@ describe('ItemDialog', () => {
       await fireEvent.click(
         within(screen.getByRole('listbox')).getByText('400')
       );
+
+      await fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      await fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
+
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
@@ -230,6 +234,10 @@ describe('ItemDialog', () => {
         properties: [
           { name: 'Pumping Speed', value: 400 },
           { name: 'Ultimate Pressure', value: 10 },
+          {
+            name: 'Axis',
+            value: 'z',
+          },
         ],
         purchase_order_number: null,
         serial_number: null,
@@ -567,12 +575,19 @@ describe('ItemDialog', () => {
       await fireEvent.click(
         within(screen.getByRole('listbox')).getByText('400')
       );
+
+      await fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      await fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         properties: [
           { name: 'Pumping Speed', value: 400 },
           { name: 'Ultimate Pressure', value: 10 },
+          {
+            name: 'Axis',
+            value: 'z',
+          },
         ],
       });
     });

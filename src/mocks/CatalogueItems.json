@@ -1613,6 +1613,11 @@
         "name": "Ultimate Pressure",
         "value": 0.1,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "x",
+        "unit": ""
       }
     ],
     "id": "17",
@@ -1643,6 +1648,11 @@
         "name": "Ultimate Pressure",
         "value": 0.05,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "y",
+        "unit": ""
       }
     ],
     "id": "18",
@@ -1673,6 +1683,11 @@
         "name": "Ultimate Pressure",
         "value": 0.01,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "x",
+        "unit": ""
       }
     ],
     "id": "19",
@@ -1703,6 +1718,11 @@
         "name": "Ultimate Pressure",
         "value": 0.1,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "z",
+        "unit": ""
       }
     ],
     "id": "20",
