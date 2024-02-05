@@ -290,7 +290,7 @@ describe('catalogue items api functions', () => {
       ]);
     });
 
-    it('sends requests to move a single catalogue item and returns 403 error', async () => {
+    it('sends requests to move a multiple catalogue items into a different category and returns 403 error for each', async () => {
       props.targetCatalogueCategory = {
         ...props.targetCatalogueCategory,
         id: 'Error 403',
