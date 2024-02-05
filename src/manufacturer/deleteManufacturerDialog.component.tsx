@@ -1,3 +1,4 @@
+import WarningIcon from '@mui/icons-material/Warning';
 import {
   Box,
   Button,
@@ -7,10 +8,10 @@ import {
   DialogTitle,
   FormHelperText,
 } from '@mui/material';
-import React from 'react';
-import { ErrorParsing, Manufacturer } from '../app.types';
 import { AxiosError } from 'axios';
+import React from 'react';
 import { useDeleteManufacturer } from '../api/manufacturer';
+import { ErrorParsing, Manufacturer } from '../app.types';
 
 export interface DeleteManufacturerProps {
   open: boolean;
@@ -60,9 +61,12 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">
-      <DialogTitle>Delete Manufacturer</DialogTitle>
+      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        Delete Manufacturer
+        <WarningIcon sx={{ marginLeft: 0.5 }} />
+      </DialogTitle>
       <DialogContent>
-        Are you sure you want to delete{' '}
+        Are you sure you want to permanently delete{' '}
         <strong data-testid="delete-manufacturer-name">
           {manufacturer?.name}
         </strong>

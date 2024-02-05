@@ -1,3 +1,4 @@
+import WarningIcon from '@mui/icons-material/Warning';
 import {
   Box,
   Button,
@@ -7,10 +8,10 @@ import {
   DialogTitle,
   FormHelperText,
 } from '@mui/material';
+import { AxiosError } from 'axios';
 import React from 'react';
 import { useDeleteCatalogueItem } from '../../api/catalogueItem';
 import { CatalogueItem, ErrorParsing } from '../../app.types';
-import { AxiosError } from 'axios';
 
 export interface DeleteCatalogueItemDialogProps {
   open: boolean;
@@ -62,9 +63,12 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">
-      <DialogTitle>Delete Catalogue Item</DialogTitle>
+      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        Delete Catalogue Item
+        <WarningIcon sx={{ marginLeft: 0.5 }} />
+      </DialogTitle>
       <DialogContent>
-        Are you sure you want to delete{' '}
+        Are you sure you want to permanently delete{' '}
         <strong data-testid="delete-catalogue-category-name">
           {catalogueItem?.name}
         </strong>
