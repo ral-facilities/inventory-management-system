@@ -435,7 +435,7 @@ describe('catalogue items api functions', () => {
       ]);
     });
 
-    it('sends requests to copy a multiple catalogue item and returns 403 error', async () => {
+    it('sends requests to copy multiple catalogue items and returns 403 error for each', async () => {
       props.targetCatalogueCategory = {
         ...props.targetCatalogueCategory,
         id: 'Error 403',
