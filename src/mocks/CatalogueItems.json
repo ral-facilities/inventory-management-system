@@ -1288,6 +1288,11 @@
         "name": "Measurement Range",
         "value": 2000,
         "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": null,
+        "unit": ""
       }
     ],
     "id": "6",
