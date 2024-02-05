@@ -294,7 +294,7 @@ describe('catalogue items api functions', () => {
       );
     });
 
-    it('handles a 403 error request to move items to a system correctly', async () => {
+    it('sends requests to move multiple items into a system and returns 403 error for each', async () => {
       moveItemsToSystem.targetSystem = {
         ...(SystemsJSON[0] as System),
         name: 'New system name',
