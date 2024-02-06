@@ -36,10 +36,9 @@ exports[`delete item dialog renders correctly 1`] = `
           class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-1t6uuec-MuiTypography-root-MuiDialogTitle-root"
           id=":r0:"
         >
-          Delete Item
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-o90ly8-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-elhp89-MuiSvgIcon-root"
             data-testid="WarningIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -48,6 +47,7 @@ exports[`delete item dialog renders correctly 1`] = `
               d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"
             />
           </svg>
+          Delete Item
         </h2>
         <div
           class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
@@ -127,10 +127,9 @@ exports[`delete item dialog renders correctly 1`] = `
           class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-1t6uuec-MuiTypography-root-MuiDialogTitle-root"
           id=":r1:"
         >
-          Delete Item
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-o90ly8-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-elhp89-MuiSvgIcon-root"
             data-testid="WarningIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -139,6 +138,7 @@ exports[`delete item dialog renders correctly 1`] = `
               d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"
             />
           </svg>
+          Delete Item
         </h2>
         <div
           class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
@@ -225,10 +225,9 @@ exports[`delete item dialog renders correctly when the item has an system id 1`]
           class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-1t6uuec-MuiTypography-root-MuiDialogTitle-root"
           id=":r2:"
         >
-          Delete Item
           <svg
             aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-o90ly8-MuiSvgIcon-root"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-elhp89-MuiSvgIcon-root"
             data-testid="WarningIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -237,6 +236,7 @@ exports[`delete item dialog renders correctly when the item has an system id 1`]
               d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"
             />
           </svg>
+          Delete Item
         </h2>
         <div
           class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"

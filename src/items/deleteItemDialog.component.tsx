@@ -60,8 +60,8 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        <WarningIcon sx={{ marginRight: 1 }} />
         Delete Item
-        <WarningIcon sx={{ marginLeft: 0.5 }} />
       </DialogTitle>
       <DialogContent>
         {systemData && (

@@ -55,8 +55,8 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        <WarningIcon sx={{ marginRight: 1 }} />
         Delete System
-        <WarningIcon sx={{ marginLeft: 0.5 }} />
       </DialogTitle>
       <DialogContent>
         Are you sure you want to permanently delete{' '}

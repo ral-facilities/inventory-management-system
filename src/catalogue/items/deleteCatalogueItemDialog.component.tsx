@@ -64,8 +64,8 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        <WarningIcon sx={{ marginRight: 1 }} />
         Delete Catalogue Item
-        <WarningIcon sx={{ marginLeft: 0.5 }} />
       </DialogTitle>
       <DialogContent>
         Are you sure you want to permanently delete{' '}
