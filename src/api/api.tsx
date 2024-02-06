@@ -28,7 +28,7 @@ export const retryFailedAuthRequests = () => {
 /* This should be called when SciGateway logs out as would occurr if a token refresh fails
    due to the refresh token being out of date - it rejects all active request promises that
    were awaiting a token refresh */
-export const clearFailedAuthRequestsQueue = (reject?: boolean) => {
+export const clearFailedAuthRequestsQueue = () => {
   isFetchingAccessToken = false;
   failedAuthRequestQueue.filter((callback) => callback(true));
 };
@@ -63,9 +63,8 @@ imsApi.interceptors.response.use(
           else resolve(imsApi(originalRequest));
         });
       });
-    } else {
-      // Any other error
-      Promise.reject(error);
     }
+    // Any other error
+    else return Promise.reject(error);
   }
 );
