@@ -31,7 +31,6 @@ import {
   CatalogueDetailsErrorMessages,
   CatalogueItem,
   CatalogueItemDetailsPlaceholder,
-  CatalogueItemProperty,
   EditCatalogueItem,
   ErrorParsing,
   Manufacturer,
@@ -348,7 +347,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           hasErrors = true;
         }
 
-        if (!propertyValues[index]) return null;
+        if (!propertyValues[index])
+          return {
+            name: property.name,
+            value: null,
+          };
 
         let typedValue: string | number | boolean | null =
           propertyValues[index]; // Assume it's a string by default
@@ -416,13 +419,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       return; // Do not proceed with saving if there are errors
     }
 
-    const filteredProperties = updatedProperties.filter(
-      (property) => property !== null
-    ) as CatalogueItemProperty[];
-
     const catalogueItem: AddCatalogueItem = {
       ...details,
-      properties: filteredProperties,
+      properties: updatedProperties,
       name: details.name,
     };
 
@@ -441,10 +440,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       if (hasErrors) {
         return; // Do not proceed with saving if there are errors
       }
-
-      const filteredProperties = updatedProperties.filter(
-        (property) => property !== null
-      ) as CatalogueItemProperty[];
 
       const isNameUpdated = details.name !== selectedCatalogueItem.name;
 
@@ -473,7 +468,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         details.item_model_number !== selectedCatalogueItem.item_model_number;
 
       const isCatalogueItemPropertiesUpdated =
-        JSON.stringify(filteredProperties) !==
+        JSON.stringify(updatedProperties) !==
         JSON.stringify(
           selectedCatalogueItem.properties.map(({ unit, ...rest }) => rest)
         );
@@ -503,7 +498,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       isModelNumberUpdated &&
         (catalogueItem.item_model_number = details.item_model_number);
       isCatalogueItemPropertiesUpdated &&
-        (catalogueItem.properties = filteredProperties);
+        (catalogueItem.properties = updatedProperties);
       isManufacturerUpdated &&
         (catalogueItem.manufacturer_id = details.manufacturer_id);
       isNotesUpdated && (catalogueItem.notes = details.notes);
