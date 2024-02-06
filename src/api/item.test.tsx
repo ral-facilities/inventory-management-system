@@ -293,34 +293,5 @@ describe('catalogue items api functions', () => {
           .reverse()
       );
     });
-
-    it('sends requests to move multiple items into a system and returns 403 error for each', async () => {
-      moveItemsToSystem.targetSystem = {
-        ...(SystemsJSON[0] as System),
-        name: 'New system name',
-        id: 'Error 403',
-      };
-
-      const { result } = renderHook(() => useMoveItemsToSystem(), {
-        wrapper: hooksWrapperWithProviders(),
-      });
-
-      expect(result.current.isIdle).toBe(true);
-
-      result.current.mutate(moveItemsToSystem);
-
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBeTruthy();
-      });
-      moveItemsToSystem.selectedItems.map((item) =>
-        expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
-          system_id: 'Error 403',
-        })
-      );
-      expect(result.current.data).toEqual([
-        { message: '403', name: 'KvT2Ox7n', state: 'error' },
-        { message: '403', name: 'G463gOIA', state: 'error' },
-      ]);
-    });
   });
 });

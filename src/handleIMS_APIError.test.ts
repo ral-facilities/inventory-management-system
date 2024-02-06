@@ -115,40 +115,4 @@ describe('handleIMS_APIError', () => {
     );
     expect(events.length).toBe(0);
   });
-
-  describe('sends messages to SciGateway on authentication error', () => {
-    afterAll(() => {
-      jest.clearAllMocks();
-    });
-
-    it('just sends invalidate token message if broadcast is false', () => {
-      error.response.status = 403;
-      handleIMS_APIError(error, false);
-
-      expect(log.error).toHaveBeenCalledWith(
-        'Test error message (response data)'
-      );
-      expect(events.length).toBe(1);
-      expect(events[0].detail).toEqual({
-        type: InvalidateTokenType,
-      });
-    });
-
-    it('just sends invalidate token message if broadcast is true', () => {
-      error.response.status = 403;
-      handleIMS_APIError(error, true);
-
-      expect(log.error).toHaveBeenCalledWith(
-        'Test error message (response data)'
-      );
-      expect(events.length).toBe(1);
-      expect(events[0].detail).toEqual({
-        type: InvalidateTokenType,
-        payload: {
-          message: 'Your session has expired, please login again',
-          severity: 'error',
-        },
-      });
-    });
-  });
 });

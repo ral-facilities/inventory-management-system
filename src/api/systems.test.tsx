@@ -333,35 +333,6 @@ describe('System api functions', () => {
           .reverse()
       );
     });
-
-    it('handles a 403 error request to move a system correctly', async () => {
-      moveToSystem.targetSystem = {
-        ...(SystemsJSON[0] as System),
-        name: 'New system name',
-        id: 'Error 403',
-      };
-
-      const { result } = renderHook(() => useMoveToSystem(), {
-        wrapper: hooksWrapperWithProviders(),
-      });
-
-      expect(result.current.isIdle).toBe(true);
-
-      result.current.mutate(moveToSystem);
-
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBeTruthy();
-      });
-      moveToSystem.selectedSystems.map((system) =>
-        expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/systems/${system.id}`, {
-          parent_id: 'Error 403',
-        })
-      );
-      expect(result.current.data).toEqual([
-        { message: '403', name: 'Giant laser', state: 'error' },
-        { message: '403', name: 'Smaller laser', state: 'error' },
-      ]);
-    });
   });
 
   describe('useCopyToSystem', () => {
@@ -540,36 +511,6 @@ describe('System api functions', () => {
           // Exception takes longer to resolve so it gets added last
           .reverse()
       );
-    });
-
-    it('handles a 403 error request to copy a system correctly', async () => {
-      copyToSystem.targetSystem = {
-        ...(SystemsJSON[0] as System),
-        name: 'New system name',
-        id: 'Error 403',
-      };
-
-      const { result } = renderHook(() => useCopyToSystem(), {
-        wrapper: hooksWrapperWithProviders(),
-      });
-
-      expect(result.current.isIdle).toBe(true);
-
-      result.current.mutate(copyToSystem);
-
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBeTruthy();
-      });
-      copyToSystem.selectedSystems.map((system) =>
-        expect(axiosPostSpy).toHaveBeenCalledWith(`/v1/systems`, {
-          ...system,
-          parent_id: 'Error 403',
-        })
-      );
-      expect(result.current.data).toEqual([
-        { message: '403', name: 'Giant laser', state: 'error' },
-        { message: '403', name: 'Smaller laser', state: 'error' },
-      ]);
     });
   });
 });

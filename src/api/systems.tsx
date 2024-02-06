@@ -207,10 +207,7 @@ export const useMoveToSystem = (): UseMutationResult<
 
               transferStates.push({
                 name: system.name,
-                message:
-                  error.response?.status === 403
-                    ? String(error.response.status)
-                    : response.detail,
+                message: response.detail,
                 state: 'error',
               });
             });
@@ -287,10 +284,7 @@ export const useCopyToSystem = (): UseMutationResult<
 
               transferStates.push({
                 name: system.name,
-                message:
-                  error.response?.status === 403
-                    ? String(error.response.status)
-                    : response.detail,
+                message: response.detail,
                 state: 'error',
               });
             });

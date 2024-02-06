@@ -289,27 +289,6 @@ describe('catalogue items api functions', () => {
         { message: undefined, name: 'test_copy1', state: 'error' },
       ]);
     });
-
-    it('sends requests to move a multiple catalogue items into a different category and returns 403 error for each', async () => {
-      props.targetCatalogueCategory = {
-        ...props.targetCatalogueCategory,
-        id: 'Error 403',
-      };
-
-      const { result } = renderHook(() => useMoveToCatalogueItem(), {
-        wrapper: hooksWrapperWithProviders(),
-      });
-
-      expect(result.current.isIdle).toBe(true);
-      result.current.mutate(props);
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBeTruthy();
-      });
-      expect(result.current.data).toEqual([
-        { message: '403', name: 'test', state: 'error' },
-        { message: '403', name: 'test_copy1', state: 'error' },
-      ]);
-    });
   });
 
   describe('useCopyToCatalogueItem', () => {
@@ -432,27 +411,6 @@ describe('catalogue items api functions', () => {
       expect(result.current.data).toEqual([
         { message: undefined, name: 'test', state: 'error' },
         { message: undefined, name: 'test_copy1', state: 'error' },
-      ]);
-    });
-
-    it('sends requests to copy multiple catalogue items and returns 403 error for each', async () => {
-      props.targetCatalogueCategory = {
-        ...props.targetCatalogueCategory,
-        id: 'Error 403',
-      };
-
-      const { result } = renderHook(() => useCopyToCatalogueItem(), {
-        wrapper: hooksWrapperWithProviders(),
-      });
-
-      expect(result.current.isIdle).toBe(true);
-      result.current.mutate(props);
-      await waitFor(() => {
-        expect(result.current.isSuccess).toBeTruthy();
-      });
-      expect(result.current.data).toEqual([
-        { message: '403', name: 'test', state: 'error' },
-        { message: '403', name: 'test_copy1', state: 'error' },
       ]);
     });
   });
