@@ -368,7 +368,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               label="URL"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturerDetails.url}
+              value={manufacturerDetails.url ?? ''}
               onChange={(event) => {
                 setManufacturerDetails({
                   ...manufacturerDetails,
@@ -416,7 +416,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               label="Town"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturerDetails.address.town}
+              value={manufacturerDetails.address.town ?? ''}
               onChange={(event) => {
                 setManufacturerDetails({
                   ...manufacturerDetails,
@@ -436,7 +436,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               label="County"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturerDetails.address.county}
+              value={manufacturerDetails.address.county ?? ''}
               onChange={(event) => {
                 setManufacturerDetails({
                   ...manufacturerDetails,
@@ -504,7 +504,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               label="Telephone number"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturerDetails.telephone}
+              value={manufacturerDetails.telephone ?? ''}
               onChange={(event) => {
                 setManufacturerDetails({
                   ...manufacturerDetails,
