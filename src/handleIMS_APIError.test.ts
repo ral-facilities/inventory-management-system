@@ -1,11 +1,8 @@
 import { AxiosError } from 'axios';
 import log from 'loglevel';
-import handleIMS_APIError from './handleIMS_APIError';
 import { UnknownAction } from 'redux';
-import {
-  NotificationType,
-  InvalidateTokenType,
-} from './state/actions/actions.types';
+import handleIMS_APIError from './handleIMS_APIError';
+import { NotificationType } from './state/actions/actions.types';
 
 jest.mock('loglevel');
 
