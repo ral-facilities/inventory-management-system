@@ -328,7 +328,6 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   >
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
-                      title="Name"
                     >
                       Name
                     </div>
@@ -368,7 +367,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   >
                     <button
                       aria-label="Move"
-                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-azlldr-MuiButtonBase-root-MuiIconButton-root"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1uxkzex-MuiButtonBase-root-MuiIconButton-root"
                       data-mui-internal-clone-element="true"
                       draggable="true"
                       tabindex="0"
@@ -500,7 +499,6 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   >
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-chb057"
-                      title="URL"
                     >
                       URL
                     </div>
@@ -540,7 +538,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   >
                     <button
                       aria-label="Move"
-                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-azlldr-MuiButtonBase-root-MuiIconButton-root"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1uxkzex-MuiButtonBase-root-MuiIconButton-root"
                       data-mui-internal-clone-element="true"
                       draggable="true"
                       tabindex="0"
@@ -666,7 +664,6 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   >
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
-                      title="Address"
                     >
                       Address
                     </div>
@@ -706,7 +703,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   >
                     <button
                       aria-label="Move"
-                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-azlldr-MuiButtonBase-root-MuiIconButton-root"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1uxkzex-MuiButtonBase-root-MuiIconButton-root"
                       data-mui-internal-clone-element="true"
                       draggable="true"
                       tabindex="0"
@@ -832,7 +829,6 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   >
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
-                      title="Telephone number"
                     >
                       Telephone number
                     </div>
@@ -872,7 +868,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                   >
                     <button
                       aria-label="Move"
-                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-azlldr-MuiButtonBase-root-MuiIconButton-root"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1uxkzex-MuiButtonBase-root-MuiIconButton-root"
                       data-mui-internal-clone-element="true"
                       draggable="true"
                       tabindex="0"
@@ -1017,7 +1013,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17uev31-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w172ft-MuiTableCell-root"
                 data-index="0"
               >
                 <button
@@ -1044,7 +1040,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6dxmqa-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1d9ff5m-MuiTableCell-root"
                 data-index="1"
               >
                 <a
@@ -1055,7 +1051,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l704eh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19vv21z-MuiTableCell-root"
                 data-index="2"
               >
                 <a
@@ -1067,7 +1063,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a8lg3o-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1o95lg9-MuiTableCell-root"
                 data-index="3"
               >
                 <div
@@ -1101,13 +1097,13 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dkz66n-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wfkhz3-MuiTableCell-root"
                 data-index="4"
               >
                 07334893348
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l7gk3r-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
                 data-index="5"
               />
             </tr>
@@ -1118,7 +1114,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17uev31-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w172ft-MuiTableCell-root"
                 data-index="0"
               >
                 <button
@@ -1145,7 +1141,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6dxmqa-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1d9ff5m-MuiTableCell-root"
                 data-index="1"
               >
                 <a
@@ -1156,7 +1152,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l704eh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19vv21z-MuiTableCell-root"
                 data-index="2"
               >
                 <a
@@ -1168,7 +1164,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a8lg3o-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1o95lg9-MuiTableCell-root"
                 data-index="3"
               >
                 <div
@@ -1202,13 +1198,13 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dkz66n-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wfkhz3-MuiTableCell-root"
                 data-index="4"
               >
                 07294958549
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l7gk3r-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
                 data-index="5"
               />
             </tr>
@@ -1219,7 +1215,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17uev31-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w172ft-MuiTableCell-root"
                 data-index="0"
               >
                 <button
@@ -1246,7 +1242,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6dxmqa-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1d9ff5m-MuiTableCell-root"
                 data-index="1"
               >
                 <a
@@ -1257,7 +1253,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l704eh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19vv21z-MuiTableCell-root"
                 data-index="2"
               >
                 <a
@@ -1269,7 +1265,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a8lg3o-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1o95lg9-MuiTableCell-root"
                 data-index="3"
               >
                 <div
@@ -1303,13 +1299,13 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dkz66n-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wfkhz3-MuiTableCell-root"
                 data-index="4"
               >
                 07934303412
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l7gk3r-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
                 data-index="5"
               />
             </tr>
@@ -1320,7 +1316,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17uev31-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w172ft-MuiTableCell-root"
                 data-index="0"
               >
                 <button
@@ -1347,7 +1343,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6dxmqa-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1d9ff5m-MuiTableCell-root"
                 data-index="1"
               >
                 <a
@@ -1358,11 +1354,11 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </a>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l704eh-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19vv21z-MuiTableCell-root"
                 data-index="2"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1a8lg3o-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1o95lg9-MuiTableCell-root"
                 data-index="3"
               >
                 <div
@@ -1392,11 +1388,11 @@ exports[`Manufacturer renders table data correctly 1`] = `
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1dkz66n-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-wfkhz3-MuiTableCell-root"
                 data-index="4"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1l7gk3r-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
                 data-index="5"
               />
             </tr>

@@ -18,7 +18,7 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Drawing link').type('https://example.com');
     cy.findByLabelText('Model number').type('MXtest');
     cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
-    cy.findByLabelText('Notes').click().type('This is a test note')
+    cy.findByLabelText('Notes').click().type('This is a test note');
     cy.findByLabelText('Resolution (megapixels) *').type('18');
     cy.findByLabelText('Frame Rate (fps)').type('60');
     cy.findByLabelText('Sensor Type *').type('IO');
@@ -99,11 +99,67 @@ describe('Catalogue Items', () => {
     });
   });
 
+  it('adds a catalogue item only mandatory fields (allowed list of values)', () => {
+    cy.visit('/catalogue/12');
+    cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
+    cy.findByLabelText('Name *').type('test');
+    cy.findByLabelText('Ultimate Pressure (millibar) *').type('0.2');
+    cy.findByLabelText('Pumping Speed *').click();
+    cy.findByRole('option', { name: '400' }).click();
+
+    cy.findByLabelText('Axis').click();
+    cy.findByRole('option', { name: 'y' }).click();
+
+    cy.findByLabelText('Cost (£) *').type('5000');
+    cy.findByLabelText('Time to replace (days) *').type('14');
+
+    cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-items',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
+        JSON.stringify({
+          catalogue_category_id: '12',
+          name: 'test',
+          cost_gbp: 5000,
+          cost_to_rework_gbp: null,
+          days_to_replace: 14,
+          days_to_rework: null,
+          description: null,
+          item_model_number: null,
+          is_obsolete: false,
+          obsolete_reason: null,
+          obsolete_replacement_catalogue_item_id: null,
+          drawing_link: null,
+          drawing_number: null,
+          manufacturer_id: '1',
+          notes: null,
+          properties: [
+            { name: 'Pumping Speed', value: 400 },
+            { name: 'Ultimate Pressure', value: 0.2 },
+            { name: 'Axis', value: 'y' },
+          ],
+        })
+      );
+    });
+  });
+
   it('displays the error messages and clears when values are changed', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findAllByText('This field is mandatory').should('have.length', 2);
+    cy.findAllByText(
+      'Please enter a valid value as this field is mandatory'
+    ).should('have.length', 2);
     cy.findByText('Please enter a name').should('exist');
     cy.findByText('Please enter a cost').should('exist');
     cy.findByText('Please enter how many days it would take to replace').should(
@@ -124,7 +180,9 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Time to replace (days) *').type('14');
     cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
 
-    cy.findAllByText('This field is mandatory').should('have.length', 0);
+    cy.findAllByText(
+      'Please enter a valid value as this field is mandatory'
+    ).should('have.length', 0);
     cy.findByText('Please enter name').should('not.exist');
     cy.findByText('Please select either True or False').should('not.exist');
     cy.findByText('Please enter a cost').should('not.exist');
@@ -248,7 +306,6 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Frame Rate (fps)').should('have.value', '30');
     cy.findByLabelText('Sensor Type *').should('have.value', 'CMOS');
     cy.findByLabelText('Manufacturer *').should('have.value', 'Manufacturer A');
-
 
     cy.findByRole('button', { name: 'Cancel' }).click();
   });
@@ -384,7 +441,7 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Manufacturer *')
       .click()
       .type('Man{downArrow}{downArrow}{enter}');
-    cy.findAllByLabelText('Notes').clear().type("This is an updated note")
+    cy.findAllByLabelText('Notes').clear().type('This is an updated note');
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Save' }).click();

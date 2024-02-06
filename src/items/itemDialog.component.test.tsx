@@ -292,6 +292,62 @@ describe('ItemDialog', () => {
         expect(screen.getByLabelText('Serial number')).toBeInTheDocument();
       });
     });
+    it('adds an item where the item property has an allowed list of values', async () => {
+      props = {
+        ...props,
+        catalogueCategory: getCatalogueCategoryById('12'),
+        catalogueItem: getCatalogueItemById('17'),
+      };
+      createView();
+
+      await user.click(
+        screen.getByRole('button', { name: 'Add item properties' })
+      );
+
+      await fireEvent.change(
+        screen.getByLabelText('Ultimate Pressure (millibar) *'),
+        {
+          target: { value: '10' },
+        }
+      );
+
+      await fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      await fireEvent.click(
+        within(screen.getByRole('listbox')).getByText('400')
+      );
+
+      await fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      await fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifySystemValue({
+        system: 'Giant laser',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
+        asset_number: null,
+        catalogue_item_id: '17',
+        delivered_date: null,
+        is_defective: false,
+        notes: null,
+        properties: [
+          { name: 'Pumping Speed', value: 400 },
+          { name: 'Ultimate Pressure', value: 10 },
+          {
+            name: 'Axis',
+            value: 'z',
+          },
+        ],
+        purchase_order_number: null,
+        serial_number: null,
+        system_id: '65328f34a40ff5301575a4e3',
+        usage_status: 0,
+        warranty_end_date: null,
+      });
+    });
 
     it('adds an item (all input values)', async () => {
       createView();
@@ -428,7 +484,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const mandatoryFieldHelperText = screen.getAllByText(
-        'This field is mandatory'
+        'Please enter a valid value as this field is mandatory'
       );
 
       const mandatoryFieldBooleanHelperText = screen.getByText(
@@ -451,7 +507,9 @@ describe('ItemDialog', () => {
       expect(mandatoryFieldBooleanHelperText).not.toBeInTheDocument();
 
       expect(
-        screen.queryByText('This field is mandatory')
+        screen.queryByText(
+          'Please enter a valid value as this field is mandatory'
+        )
       ).not.toBeInTheDocument();
 
       expect(screen.getByRole('button', { name: 'Next' })).not.toBeDisabled();
@@ -499,7 +557,9 @@ describe('ItemDialog', () => {
         screen.queryByText('Exceeded maximum date')
       ).not.toBeInTheDocument();
       expect(
-        screen.queryByText('This field is mandatory')
+        screen.queryByText(
+          'Please enter a valid value as this field is mandatory'
+        )
       ).not.toBeInTheDocument();
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -672,6 +732,47 @@ describe('ItemDialog', () => {
         system_id: '65328f34a40ff5301575a4e3',
       });
     }, 10000);
+
+    it('edits an item where the item property has an allowed list of values', async () => {
+      props = {
+        ...props,
+        catalogueCategory: getCatalogueCategoryById('12'),
+        catalogueItem: getCatalogueItemById('17'),
+      };
+      createView();
+
+      await user.click(
+        screen.getByRole('button', { name: 'Edit item properties' })
+      );
+
+      await fireEvent.change(
+        screen.getByLabelText('Ultimate Pressure (millibar) *'),
+        {
+          target: { value: '10' },
+        }
+      );
+
+      await fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      await fireEvent.click(
+        within(screen.getByRole('listbox')).getByText('400')
+      );
+
+      await fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      await fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
+        properties: [
+          { name: 'Pumping Speed', value: 400 },
+          { name: 'Ultimate Pressure', value: 10 },
+          {
+            name: 'Axis',
+            value: 'z',
+          },
+        ],
+      });
+    });
 
     it('displays error message when property values type is incorrect', async () => {
       createView();
