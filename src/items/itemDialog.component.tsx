@@ -649,6 +649,49 @@ function ItemDialog(props: ItemDialogProps) {
                                 </FormHelperText>
                               )}
                             </FormControl>
+                          ) : property.allowed_values ? (
+                            <FormControl fullWidth>
+                              <InputLabel
+                                required={property.mandatory ?? false}
+                                error={propertyErrors[index]}
+                                id={`catalogue-item-property-${property.name.replace(
+                                  /\s+/g,
+                                  '-'
+                                )}`}
+                                size="small"
+                                sx={{ alignItems: 'center' }}
+                              >
+                                {property.name}
+                              </InputLabel>
+                              <Select
+                                value={(propertyValues[index] as string) ?? ''}
+                                required={property.mandatory ?? false}
+                                size="small"
+                                error={propertyErrors[index]}
+                                labelId={`catalogue-item-property-${property.name.replace(
+                                  /\s+/g,
+                                  '-'
+                                )}`}
+                                onChange={(event) =>
+                                  handlePropertyChange(
+                                    index,
+                                    property.name,
+                                    event.target.value as string
+                                  )
+                                }
+                                label={property.name}
+                                sx={{ alignItems: 'center' }}
+                                fullWidth
+                              >
+                                {property.allowed_values.values.map(
+                                  (value, index) => (
+                                    <MenuItem key={index} value={value}>
+                                      {value}
+                                    </MenuItem>
+                                  )
+                                )}
+                              </Select>
+                            </FormControl>
                           ) : (
                             <TextField
                               label={`${property.name} ${
@@ -672,7 +715,7 @@ function ItemDialog(props: ItemDialogProps) {
                                   ? // If 'propertyErrors[index]' is truthy, perform the following checks:
                                     property.mandatory && !propertyValues[index]
                                     ? // If 'property' is mandatory and 'propertyValues[index]' is empty, return a mandatory field error message
-                                      'This field is mandatory'
+                                      'Please enter a valid value as this field is mandatory'
                                     : property.type === 'number' &&
                                       isNaN(Number(propertyValues[index])) &&
                                       'Please enter a valid number' // If 'property' is of type 'number' and 'propertyValues[index]' is not a valid number, return an invalid number error message
@@ -682,9 +725,12 @@ function ItemDialog(props: ItemDialogProps) {
                             />
                           )}
                         </Grid>
-                        <Grid item xs={1} sx={{ display: 'flex' }}>
+                        <Grid
+                          item
+                          xs={1}
+                          sx={{ display: 'flex', alignItems: 'center' }}
+                        >
                           <Tooltip
-                            sx={{ alignItems: 'center' }}
                             title={
                               <div>
                                 <Typography>Name: {property.name}</Typography>
