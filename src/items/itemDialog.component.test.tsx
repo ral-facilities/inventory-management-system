@@ -185,6 +185,30 @@ describe('ItemDialog', () => {
       axiosPostSpy = jest.spyOn(axios, 'post');
     });
 
+    it('displays no item properties message', async () => {
+      props.catalogueCategory = {
+        ...props.catalogueCategory,
+        catalogue_item_properties: [],
+      };
+
+      props.catalogueItem = {
+        ...props.catalogueItem,
+        properties: [],
+      };
+
+      createView();
+
+      await user.click(
+        screen.getByRole('button', { name: 'Add item properties' })
+      );
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            `Please navigate to the next step to select a system`
+          )
+        ).toBeInTheDocument();
+      });
+    });
     it('adds an item with just the default values', async () => {
       createView();
 

@@ -192,7 +192,7 @@ export const useMoveItemsToSystem = (): UseMutationResult<
         async (item: Item) => {
           return editItem({
             id: item.id,
-            system_id: moveItemsToSystem.targetSystem?.id || null,
+            system_id: moveItemsToSystem.targetSystem?.id || '',
           })
             .then((result: Item) => {
               const targetSystemName =

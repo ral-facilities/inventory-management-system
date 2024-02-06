@@ -29,6 +29,7 @@ import {
   CatalogueItemProperty,
   EditItem,
   Item,
+  ItemDetails,
   ItemDetailsPlaceholder,
   UsageStatusType,
 } from '../app.types';
@@ -318,10 +319,10 @@ function ItemDialog(props: ItemDialogProps) {
     itemDetails,
   ]);
 
-  const details = React.useMemo(() => {
+  const details: ItemDetails = React.useMemo(() => {
     return {
       catalogue_item_id: catalogueItem?.id ?? '',
-      system_id: itemDetails.system_id ?? null,
+      system_id: itemDetails.system_id ?? '',
       purchase_order_number: itemDetails.purchase_order_number,
       is_defective: itemDetails.is_defective === 'true' ? true : false,
       usage_status: itemDetails.usage_status
@@ -637,7 +638,7 @@ function ItemDialog(props: ItemDialogProps) {
       case 1:
         return (
           <Grid item xs={12}>
-            {parentCatalogueItemPropertiesInfo.length >= 1 && (
+            {parentCatalogueItemPropertiesInfo.length >= 1 ? (
               <Grid container spacing={1.5}>
                 {parentCatalogueItemPropertiesInfo.map(
                   (property: CatalogueCategoryFormData, index: number) => (
@@ -749,6 +750,22 @@ function ItemDialog(props: ItemDialogProps) {
                   )
                 )}
               </Grid>
+            ) : (
+              <Box
+                sx={{
+                  width: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 3,
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+                  No item properties
+                </Typography>
+                <Typography sx={{ textAlign: 'center' }}>
+                  Please navigate to the next step to select a system
+                </Typography>
+              </Box>
             )}
           </Grid>
         );
@@ -806,9 +823,7 @@ function ItemDialog(props: ItemDialogProps) {
             />
           </Grid>
         )}
-        <Box sx={{ textAlign: 'center', marginTop: 2 }}>
-          {renderStepContent(activeStep)}
-        </Box>
+        <Box sx={{ marginTop: 2 }}>{renderStepContent(activeStep)}</Box>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} sx={{ mr: 'auto' }}>
