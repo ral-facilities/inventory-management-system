@@ -18,8 +18,18 @@
         "unit": "megapixels"
       },
       {
+        "name": "Frame Rate",
+        "value": null,
+        "unit": "fps"
+      },
+      {
         "name": "Sensor Type",
         "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": null,
         "unit": ""
       },
       {
@@ -63,6 +73,11 @@
         "unit": ""
       },
       {
+        "name": "Sensor brand",
+        "value": null,
+        "unit": ""
+      },
+      {
         "name": "Broken",
         "value": true,
         "unit": ""
@@ -100,6 +115,11 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": null,
         "unit": ""
       },
       {
@@ -143,6 +163,11 @@
         "unit": ""
       },
       {
+        "name": "Sensor brand",
+        "value": null,
+        "unit": ""
+      },
+      {
         "name": "Broken",
         "value": true,
         "unit": ""
@@ -180,6 +205,11 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
+        "unit": ""
+      },
+      {
+        "name": "Sensor brand",
+        "value": null,
         "unit": ""
       },
       {
@@ -5676,6 +5706,11 @@
         "name": "Ultimate Pressure",
         "value": 0.1,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "x",
+        "unit": ""
       }
     ]
   },
@@ -5701,6 +5736,11 @@
         "name": "Ultimate Pressure",
         "value": 0.1,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "x",
+        "unit": ""
       }
     ]
   },
@@ -5726,6 +5766,11 @@
         "name": "Ultimate Pressure",
         "value": 0.1,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "x",
+        "unit": ""
       }
     ]
   },
@@ -5751,6 +5796,11 @@
         "name": "Ultimate Pressure",
         "value": 0.1,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "x",
+        "unit": ""
       }
     ]
   },
@@ -5776,6 +5826,11 @@
         "name": "Ultimate Pressure",
         "value": 0.05,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "y",
+        "unit": ""
       }
     ]
   },
@@ -5801,6 +5856,11 @@
         "name": "Ultimate Pressure",
         "value": 0.05,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "y",
+        "unit": ""
       }
     ]
   },
@@ -5826,6 +5886,11 @@
         "name": "Ultimate Pressure",
         "value": 0.05,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "y",
+        "unit": ""
       }
     ]
   },
@@ -5851,6 +5916,11 @@
         "name": "Ultimate Pressure",
         "value": 0.05,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "y",
+        "unit": ""
       }
     ]
   },
@@ -5876,6 +5946,11 @@
         "name": "Ultimate Pressure",
         "value": 0.01,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "x",
+        "unit": ""
       }
     ]
   },
@@ -5901,6 +5976,11 @@
         "name": "Ultimate Pressure",
         "value": 0.01,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "x",
+        "unit": ""
       }
     ]
   },
@@ -5926,6 +6006,11 @@
         "name": "Ultimate Pressure",
         "value": 0.01,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "x",
+        "unit": ""
       }
     ]
   },
@@ -5951,6 +6036,11 @@
         "name": "Ultimate Pressure",
         "value": 0.01,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "x",
+        "unit": ""
       }
     ]
   },
@@ -5976,6 +6066,11 @@
         "name": "Ultimate Pressure",
         "value": 0.1,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "z",
+        "unit": ""
       }
     ]
   },
@@ -6001,6 +6096,11 @@
         "name": "Ultimate Pressure",
         "value": 0.1,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "z",
+        "unit": ""
       }
     ]
   },
@@ -6026,6 +6126,11 @@
         "name": "Ultimate Pressure",
         "value": 0.1,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "z",
+        "unit": ""
       }
     ]
   },
@@ -6051,6 +6156,11 @@
         "name": "Ultimate Pressure",
         "value": 0.1,
         "unit": "millibar"
+      },
+      {
+        "name": "Axis",
+        "value": "z",
+        "unit": ""
       }
     ]
   },

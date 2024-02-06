@@ -31,7 +31,6 @@ import {
   CatalogueDetailsErrorMessages,
   CatalogueItem,
   CatalogueItemDetailsPlaceholder,
-  CatalogueItemProperty,
   EditCatalogueItem,
   ErrorParsing,
   Manufacturer,
@@ -347,7 +346,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           hasErrors = true;
         }
 
-        if (!propertyValues[index]) return null;
+        if (!propertyValues[index])
+          return {
+            name: property.name,
+            value: null,
+          };
 
         let typedValue: string | number | boolean | null =
           propertyValues[index]; // Assume it's a string by default
@@ -415,13 +418,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       return; // Do not proceed with saving if there are errors
     }
 
-    const filteredProperties = updatedProperties.filter(
-      (property) => property !== null
-    ) as CatalogueItemProperty[];
-
     const catalogueItem: AddCatalogueItem = {
       ...details,
-      properties: filteredProperties,
+      properties: updatedProperties,
       name: details.name,
     };
 
@@ -439,10 +438,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       if (hasErrors) {
         return; // Do not proceed with saving if there are errors
       }
-
-      const filteredProperties = updatedProperties.filter(
-        (property) => property !== null
-      ) as CatalogueItemProperty[];
 
       const isNameUpdated = details.name !== selectedCatalogueItem.name;
 
@@ -471,7 +466,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         details.item_model_number !== selectedCatalogueItem.item_model_number;
 
       const isCatalogueItemPropertiesUpdated =
-        JSON.stringify(filteredProperties) !==
+        JSON.stringify(updatedProperties) !==
         JSON.stringify(
           selectedCatalogueItem.properties.map(({ unit, ...rest }) => rest)
         );
@@ -501,7 +496,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       isModelNumberUpdated &&
         (catalogueItem.item_model_number = details.item_model_number);
       isCatalogueItemPropertiesUpdated &&
-        (catalogueItem.properties = filteredProperties);
+        (catalogueItem.properties = updatedProperties);
       isManufacturerUpdated &&
         (catalogueItem.manufacturer_id = details.manufacturer_id);
       isNotesUpdated && (catalogueItem.notes = details.notes);
@@ -873,6 +868,55 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 </FormHelperText>
                               )}
                             </FormControl>
+                          ) : property.allowed_values ? (
+                            <FormControl fullWidth>
+                              <InputLabel
+                                required={property.mandatory ?? false}
+                                error={propertyErrors[index]}
+                                id={`catalogue-item-property-${property.name.replace(
+                                  /\s+/g,
+                                  '-'
+                                )}`}
+                                size="small"
+                                sx={{ alignItems: 'center' }}
+                              >
+                                {property.name}
+                              </InputLabel>
+                              <Select
+                                value={(propertyValues[index] as string) ?? ''}
+                                required={property.mandatory ?? false}
+                                size="small"
+                                error={propertyErrors[index]}
+                                labelId={`catalogue-item-property-${property.name.replace(
+                                  /\s+/g,
+                                  '-'
+                                )}`}
+                                onChange={(event) =>
+                                  handlePropertyChange(
+                                    index,
+                                    property.name,
+                                    event.target.value as string
+                                  )
+                                }
+                                label={property.name}
+                                sx={{ alignItems: 'center' }}
+                                fullWidth
+                              >
+                                {property.allowed_values.values.map(
+                                  (value, index) => (
+                                    <MenuItem key={index} value={value}>
+                                      {value}
+                                    </MenuItem>
+                                  )
+                                )}
+                              </Select>
+                              {propertyErrors[index] && (
+                                <FormHelperText error>
+                                  Please enter a valid value as this field is
+                                  mandatory
+                                </FormHelperText>
+                              )}
+                            </FormControl>
                           ) : (
                             <TextField
                               label={`${property.name} ${
@@ -896,7 +940,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                   ? // If 'propertyErrors[index]' is truthy, perform the following checks:
                                     property.mandatory && !propertyValues[index]
                                     ? // If 'property' is mandatory and 'propertyValues[index]' is empty, return a mandatory field error message
-                                      'This field is mandatory'
+                                      'Please enter a valid value as this field is mandatory'
                                     : property.type === 'number' &&
                                       isNaN(Number(propertyValues[index])) &&
                                       'Please enter a valid number' // If 'property' is of type 'number' and 'propertyValues[index]' is not a valid number, return an invalid number error message
@@ -906,9 +950,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                             />
                           )}
                         </Grid>
-                        <Grid item xs={1} sx={{ display: 'flex' }}>
+                        <Grid
+                          item
+                          xs={1}
+                          sx={{ display: 'flex', alignItems: 'center' }}
+                        >
                           <Tooltip
-                            sx={{ alignItems: 'center' }}
                             title={
                               <div>
                                 <Typography>Name: {property.name}</Typography>

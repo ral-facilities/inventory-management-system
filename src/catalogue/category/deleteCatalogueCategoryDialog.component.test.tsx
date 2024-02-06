@@ -38,6 +38,7 @@ describe('delete Catalogue Category dialogue', () => {
     };
     user = userEvent.setup(); // Assigning userEvent to 'user'
   });
+
   afterEach(() => {
     jest.clearAllMocks();
   });

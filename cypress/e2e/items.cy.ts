@@ -91,8 +91,51 @@ describe('Items', () => {
             { name: 'Resolution', value: 12 },
             { name: 'Frame Rate', value: 30 },
             { name: 'Sensor Type', value: 'CMOS' },
+            { name: 'Sensor brand', value: null },
             { name: 'Broken', value: true },
             { name: 'Older than five years', value: false },
+          ],
+        })
+      );
+    });
+  });
+
+  it('adds an item with only mandatory fields (allowed list of values)', () => {
+    cy.visit('/catalogue/item/17/items');
+    cy.findByRole('button', { name: 'Add Item' }).click();
+    cy.findByLabelText('Ultimate Pressure (millibar) *').clear();
+    cy.findByLabelText('Ultimate Pressure (millibar) *').type('0.2');
+    cy.findByLabelText('Pumping Speed *').click();
+    cy.findByRole('option', { name: '400' }).click();
+    cy.findByLabelText('Axis').click();
+    cy.findByRole('option', { name: 'y' }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/items/',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).eq(1);
+      expect(JSON.stringify(await postRequests[0].json())).equal(
+        JSON.stringify({
+          catalogue_item_id: '17',
+          system_id: null,
+          purchase_order_number: null,
+          is_defective: false,
+          usage_status: 0,
+          warranty_end_date: null,
+          asset_number: null,
+          serial_number: null,
+          delivered_date: null,
+          notes: null,
+          properties: [
+            { name: 'Pumping Speed', value: 400 },
+            { name: 'Ultimate Pressure', value: 0.2 },
+            { name: 'Axis', value: 'y' },
           ],
         })
       );
@@ -183,7 +226,9 @@ describe('Items', () => {
 
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findAllByText('This field is mandatory').should('have.length', 2);
+    cy.findAllByText(
+      'Please enter a valid value as this field is mandatory'
+    ).should('have.length', 2);
     cy.findByText('Please select either True or False').should('exist');
 
     cy.findByLabelText('Resolution (megapixels) *').type('test');
@@ -192,7 +237,9 @@ describe('Items', () => {
     cy.findByRole('option', { name: 'True' }).click();
 
     cy.findByText('Please select either True or False').should('not.exist');
-    cy.findAllByText('This field is mandatory').should('not.exist');
+    cy.findAllByText(
+      'Please enter a valid value as this field is mandatory'
+    ).should('not.exist');
   });
 
   it('sets the table filters and clears the table filters', () => {
@@ -296,7 +343,9 @@ describe('Items', () => {
             '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this ID: KvT2Ox7n',
           properties: [
             { name: 'Resolution', value: 0 },
+            { name: 'Frame Rate', value: null },
             { name: 'Sensor Type', value: 'CMOS' },
+            { name: 'Sensor brand', value: null },
             { name: 'Broken', value: true },
             { name: 'Older than five years', value: false },
           ],

@@ -242,7 +242,7 @@ function CatalogueItemsLandingPage() {
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
                     <Typography align="left" color="text.primary">
-                      Name
+                      Cost to rework (£)
                     </Typography>
                     <Typography align="left" color="text.secondary">
                       {catalogueItemIdData.cost_to_rework_gbp ?? 'None'}
@@ -342,7 +342,7 @@ function CatalogueItemsLandingPage() {
                           property.unit ? `(${property.unit})` : ''
                         }`}</Typography>
                         <Typography align="left" color="text.secondary">
-                          {String(property.value)}
+                          {property.value !== null ? String(property.value) : 'None'}
                         </Typography>
                       </Grid>
                     ))}

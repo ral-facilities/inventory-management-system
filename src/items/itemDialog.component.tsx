@@ -23,7 +23,6 @@ import {
   CatalogueCategory,
   CatalogueCategoryFormData,
   CatalogueItem,
-  CatalogueItemProperty,
   EditItem,
   Item,
   ItemDetailsPlaceholder,
@@ -281,7 +280,11 @@ function ItemDialog(props: ItemDialogProps) {
           hasErrors = true;
         }
 
-        if (!propertyValues[index]) return null;
+        if (!propertyValues[index])
+          return {
+            name: property.name,
+            value: null,
+          };
 
         let typedValue: string | number | boolean | null =
           propertyValues[index]; // Assume it's a string by default
@@ -345,13 +348,9 @@ function ItemDialog(props: ItemDialogProps) {
       return; // Do not proceed with saving if there are errors
     }
 
-    const filteredProperties = updatedProperties.filter(
-      (property) => property !== null
-    ) as CatalogueItemProperty[];
-
     const item: AddItem = {
       ...details,
-      properties: filteredProperties,
+      properties: updatedProperties,
     };
 
     addItem(item)
@@ -368,10 +367,6 @@ function ItemDialog(props: ItemDialogProps) {
       if (hasErrors) {
         return; // Do not proceed with saving if there are errors
       }
-
-      const filteredProperties = updatedProperties.filter(
-        (property) => property !== null
-      ) as CatalogueItemProperty[];
 
       const isPurchaseOrderNumberUpdated =
         details.purchase_order_number !== selectedItem.purchase_order_number;
@@ -397,7 +392,7 @@ function ItemDialog(props: ItemDialogProps) {
       const isNotesUpdated = details.notes !== selectedItem.notes;
 
       const isCatalogueItemPropertiesUpdated =
-        JSON.stringify(filteredProperties) !==
+        JSON.stringify(updatedProperties) !==
         JSON.stringify(
           selectedItem.properties.map(({ unit, ...rest }) => rest)
         );
@@ -417,8 +412,7 @@ function ItemDialog(props: ItemDialogProps) {
       isSerialNumberUpdated && (item.serial_number = details.serial_number);
       isDeliveredDateUpdated && (item.delivered_date = details.delivered_date);
       isNotesUpdated && (item.notes = details.notes);
-      isCatalogueItemPropertiesUpdated &&
-        (item.properties = filteredProperties);
+      isCatalogueItemPropertiesUpdated && (item.properties = updatedProperties);
 
       if (
         item.id &&
@@ -648,6 +642,49 @@ function ItemDialog(props: ItemDialogProps) {
                                 </FormHelperText>
                               )}
                             </FormControl>
+                          ) : property.allowed_values ? (
+                            <FormControl fullWidth>
+                              <InputLabel
+                                required={property.mandatory ?? false}
+                                error={propertyErrors[index]}
+                                id={`catalogue-item-property-${property.name.replace(
+                                  /\s+/g,
+                                  '-'
+                                )}`}
+                                size="small"
+                                sx={{ alignItems: 'center' }}
+                              >
+                                {property.name}
+                              </InputLabel>
+                              <Select
+                                value={(propertyValues[index] as string) ?? ''}
+                                required={property.mandatory ?? false}
+                                size="small"
+                                error={propertyErrors[index]}
+                                labelId={`catalogue-item-property-${property.name.replace(
+                                  /\s+/g,
+                                  '-'
+                                )}`}
+                                onChange={(event) =>
+                                  handlePropertyChange(
+                                    index,
+                                    property.name,
+                                    event.target.value as string
+                                  )
+                                }
+                                label={property.name}
+                                sx={{ alignItems: 'center' }}
+                                fullWidth
+                              >
+                                {property.allowed_values.values.map(
+                                  (value, index) => (
+                                    <MenuItem key={index} value={value}>
+                                      {value}
+                                    </MenuItem>
+                                  )
+                                )}
+                              </Select>
+                            </FormControl>
                           ) : (
                             <TextField
                               label={`${property.name} ${
@@ -671,7 +708,7 @@ function ItemDialog(props: ItemDialogProps) {
                                   ? // If 'propertyErrors[index]' is truthy, perform the following checks:
                                     property.mandatory && !propertyValues[index]
                                     ? // If 'property' is mandatory and 'propertyValues[index]' is empty, return a mandatory field error message
-                                      'This field is mandatory'
+                                      'Please enter a valid value as this field is mandatory'
                                     : property.type === 'number' &&
                                       isNaN(Number(propertyValues[index])) &&
                                       'Please enter a valid number' // If 'property' is of type 'number' and 'propertyValues[index]' is not a valid number, return an invalid number error message
@@ -681,9 +718,12 @@ function ItemDialog(props: ItemDialogProps) {
                             />
                           )}
                         </Grid>
-                        <Grid item xs={1} sx={{ display: 'flex' }}>
+                        <Grid
+                          item
+                          xs={1}
+                          sx={{ display: 'flex', alignItems: 'center' }}
+                        >
                           <Tooltip
-                            sx={{ alignItems: 'center' }}
                             title={
                               <div>
                                 <Typography>Name: {property.name}</Typography>
