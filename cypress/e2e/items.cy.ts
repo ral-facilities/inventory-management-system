@@ -107,16 +107,19 @@ describe('Items', () => {
   it('adds an item with only mandatory fields (allowed list of values)', () => {
     cy.visit('/catalogue/item/17/items');
     cy.findByRole('button', { name: 'Add Item' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+
     cy.findByLabelText('Ultimate Pressure (millibar) *').clear();
     cy.findByLabelText('Ultimate Pressure (millibar) *').type('0.2');
     cy.findByLabelText('Pumping Speed *').click();
     cy.findByRole('option', { name: '400' }).click();
     cy.findByLabelText('Axis').click();
     cy.findByRole('option', { name: 'y' }).click();
-
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByText('Giant laser').click();
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -127,7 +130,7 @@ describe('Items', () => {
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
           catalogue_item_id: '17',
-          system_id: null,
+          system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: null,
           is_defective: false,
           usage_status: 0,
@@ -425,6 +428,7 @@ describe('Items', () => {
           asset_number: '75YWiLwy54test13221',
           delivered_date: '2028-02-12T00:00:00.000Z',
           notes: 'zolZDKKuvAoTFRUWeZNAtest',
+          system_id: '65328f34a40ff5301575a4e3',
           properties: [
             { name: 'Resolution', value: 1218 },
             { name: 'Frame Rate', value: 3060 },
@@ -433,7 +437,6 @@ describe('Items', () => {
             { name: 'Broken', value: false },
             { name: 'Older than five years', value: true },
           ],
-          system_id: '65328f34a40ff5301575a4e3',
         })
       );
     });
