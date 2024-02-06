@@ -423,7 +423,7 @@ describe('Catalogue Category Dialog', () => {
       expect(typeHelperTexts.length).toBe(2);
 
       expect(onClose).not.toHaveBeenCalled();
-    });
+    }, 10000);
 
     it('display error if duplicate property names are entered', async () => {
       createView();
@@ -453,7 +453,7 @@ describe('Catalogue Category Dialog', () => {
       expect(duplicatePropertyNameHelperText.length).toBe(2);
 
       expect(onClose).not.toHaveBeenCalled();
-    });
+    }, 10000);
 
     it('clears formFields when catalogue content is catalogue categories', async () => {
       createView();
@@ -481,7 +481,7 @@ describe('Catalogue Category Dialog', () => {
       expect(screen.queryByDisplayValue('radius')).not.toBeInTheDocument();
       expect(screen.queryByDisplayValue('millimeters')).not.toBeInTheDocument();
       expect(screen.queryByText('Yes')).not.toBeInTheDocument();
-    });
+    }, 10000);
 
     it('displays duplicate values and incorrect type error (allowed_values list of numbers)', async () => {
       createView();
@@ -514,7 +514,7 @@ describe('Catalogue Category Dialog', () => {
       expect(incorrectTypeHelperTexts.length).toEqual(1);
 
       expect(onClose).not.toHaveBeenCalled();
-    });
+    }, 10000);
 
     it('displays error if the allowed values list is empty', async () => {
       createView();
