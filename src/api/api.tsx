@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { MicroFrontendId } from '../app.types';
 import { readSciGatewayToken } from '../parseTokens';
 import { settings } from '../settings';
@@ -16,33 +16,36 @@ imsApi.interceptors.request.use(async (config) => {
 // These are for ensuring refresh request is only sent once when multiple requests
 // are failing due to 403's at the same time
 let isFetchingAccessToken = false;
-let accessTokenSubscribers: ((error?: AxiosError) => any)[] = [];
+let failedAuthRequestQueue: ((reject?: boolean) => any)[] = [];
+
+/* This should be called when SciGateway successfully refreshes the access token - it retries
+   all requests that failed due to an invalid token */
+export const retryFailedAuthRequests = () => {
+  isFetchingAccessToken = false;
+  failedAuthRequestQueue.filter((callback) => callback());
+};
+
+/* This should be called when SciGateway logs out as would occurr if a token refresh fails
+   due to the refresh token being out of date - it rejects all active request promises that
+   were awaiting a token refresh */
+export const clearFailedAuthRequestsQueue = (reject?: boolean) => {
+  isFetchingAccessToken = false;
+  failedAuthRequestQueue.filter((callback) => callback(true));
+};
 
 imsApi.interceptors.response.use(
   (response) => response,
-  async (error) => {
+  (error) => {
     const originalRequest = error.config;
 
-    // For first 403 assume token expired and attempt to retry, but also currently have
-    // not method of awaiting refresh so for now just retry a few more times
-    if (
-      error.response.status === 403 &&
-      (originalRequest._retries === undefined || originalRequest._retries < 3)
-    ) {
-      originalRequest._retries =
-        originalRequest._retries === undefined
-          ? 0
-          : (originalRequest._retries += 1);
-
-      // Prevent other requests from also attempting to refresh while waiting for the
-      // refresh token response
+    // Here assume 403 => the token is invalid and needs refreshing
+    if (error.response.status === 403) {
+      // Prevent other requests from also attempting to refresh while waiting for
+      // SciGateway to refresh the token
       if (!isFetchingAccessToken) {
         isFetchingAccessToken = true;
 
-        // Use this to only retry the original request that triggered the refresh
-        originalRequest._hasRequestedRefresh = true;
-
-        // Attempt to refresh token via SciGateway
+        // Request SciGateway to refresh the token
         document.dispatchEvent(
           new CustomEvent(MicroFrontendId, {
             detail: {
@@ -50,29 +53,18 @@ imsApi.interceptors.response.use(
             },
           })
         );
-
-        // Retry the request (with the new token)
-        return imsApi(originalRequest).then((response) => {
-          isFetchingAccessToken = false;
-          // Retry all the requests that may have occurred prior to this
-          accessTokenSubscribers.filter((callback) => callback());
-        });
-      } else if (originalRequest._hasRequestedRefresh) {
-        // Retry the original request (with the new token)
-        return imsApi(originalRequest);
-      } else {
-        // Already have requested a refresh, so add request to a list to be resolved later once the
-        // new token is obtained
-        return new Promise((resolve) => {
-          accessTokenSubscribers.push((error?: AxiosError) => {
-            if (error !== undefined) resolve(Promise.reject(error));
-            else resolve(imsApi(originalRequest));
-          });
-        });
       }
+
+      // Add request to queue to be resolved only once SciGateway has successfully
+      // refreshed the token
+      return new Promise((resolve) => {
+        failedAuthRequestQueue.push((reject?: boolean) => {
+          if (reject) resolve(Promise.reject());
+          else resolve(imsApi(originalRequest));
+        });
+      });
     } else {
-      // Still unable to refresh
-      accessTokenSubscribers.filter((callback) => callback(error));
+      // Any other error
       Promise.reject(error);
     }
   }

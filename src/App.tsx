@@ -1,23 +1,31 @@
-import React from 'react';
 import {
   QueryCache,
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
+import React from 'react';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 
-import handleIMS_APIError from './handleIMS_APIError';
-import { AxiosError } from 'axios';
-import retryIMS_APIErrors from './retryIMS_APIErrors';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
+import {
+  clearFailedAuthRequestsQueue,
+  retryFailedAuthRequests,
+} from './api/api';
 import { MicroFrontendId } from './app.types';
+import handleIMS_APIError from './handleIMS_APIError';
 import IMSThemeProvider from './imsThemeProvider.component';
 import Preloader from './preloader/preloader.component';
-import { requestPluginRerender } from './state/scigateway.actions';
+import retryIMS_APIErrors from './retryIMS_APIErrors';
+import {
+  broadcastSignOut,
+  requestPluginRerender,
+  tokenRefreshed,
+} from './state/scigateway.actions';
 import ViewTabs from './view/viewTabs.component';
 
 const queryClient = new QueryClient({
@@ -47,9 +55,9 @@ const App: React.FunctionComponent = () => {
   function handler(e: Event): void {
     // attempt to re-render the plugin if we get told to
     const action = (e as CustomEvent).detail;
-    if (requestPluginRerender.match(action)) {
-      forceUpdate();
-    }
+    if (requestPluginRerender.match(action)) forceUpdate();
+    else if (tokenRefreshed.match(action)) retryFailedAuthRequests();
+    else if (broadcastSignOut.match(action)) clearFailedAuthRequestsQueue();
   }
 
   React.useEffect(() => {
