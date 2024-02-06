@@ -1,3 +1,4 @@
+import WarningIcon from '@mui/icons-material/Warning';
 import {
   Box,
   Button,
@@ -53,9 +54,12 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">
-      <DialogTitle>Delete System</DialogTitle>
+      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        <WarningIcon sx={{ marginRight: 1 }} />
+        Delete System
+      </DialogTitle>
       <DialogContent>
-        Are you sure you want to delete{' '}
+        Are you sure you want to permanently delete{' '}
         <strong data-testid="delete-system-name">{system?.name}</strong>?
       </DialogContent>
       <DialogActions>
