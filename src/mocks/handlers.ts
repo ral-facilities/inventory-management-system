@@ -17,6 +17,7 @@ import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import ManufacturerJSON from './manufacturer.json';
 import ItemsJSON from './Items.json';
+import unitsJSON from './units.json';
 
 export const handlers = [
   // ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
@@ -535,8 +536,7 @@ export const handlers = [
       return res(
         ctx.status(409),
         ctx.json({
-          detail:
-            'The specified system ID does not exist',
+          detail: 'The specified system ID does not exist',
         })
       );
 
@@ -553,5 +553,10 @@ export const handlers = [
         id: id,
       })
     );
+  }),
+  // ------------------------------------ Units ------------------------------------------------
+
+  rest.get('/v1/units', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(unitsJSON));
   }),
 ];

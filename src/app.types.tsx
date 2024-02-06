@@ -268,3 +268,8 @@ export interface AllowedValuesListErrorsType {
   index: number | null;
   errors: { index: number; errorMessage: string }[] | null;
 }
+
+export interface Unit {
+  id: string;
+  value: string;
+}

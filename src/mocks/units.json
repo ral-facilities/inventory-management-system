@@ -1,0 +1,11 @@
+[
+  { "id": "1", "value": "megapixels" },
+  { "id": "2", "value": "fps" },
+  { "id": "3", "value": "Joules" },
+  { "id": "4", "value": "micrometers" },
+  { "id": "5", "value": "millimeters" },
+  { "id": "6", "value": "kilograms" },
+  { "id": "7", "value": "liters per second" },
+  { "id": "8", "value": "millibar" },
+  { "id": "9", "value": "volts" }
+]
