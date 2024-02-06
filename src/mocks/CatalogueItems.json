@@ -20,6 +20,11 @@
         "unit": ""
       },
       {
+        "name": "Sensor brand",
+        "value": null,
+        "unit": ""
+      },
+      {
         "name": "Broken",
         "value": true,
         "unit": ""
@@ -1283,6 +1288,11 @@
         "name": "Measurement Range",
         "value": 2000,
         "unit": "Joules"
+      },
+      {
+        "name": "Accuracy",
+        "value": null,
+        "unit": ""
       }
     ],
     "id": "6",

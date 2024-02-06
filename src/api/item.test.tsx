@@ -183,7 +183,9 @@ describe('catalogue items api functions', () => {
         notes: '6Y5XTJfBrNNx8oltI9HE',
         properties: [
           { name: 'Resolution', unit: 'megapixels', value: 0 },
+          { name: 'Frame Rate', unit: 'fps', value: null },
           { name: 'Sensor Type', unit: '', value: 'CMOS' },
+          { name: 'Sensor brand', unit: '', value: null },
           { name: 'Broken', unit: '', value: true },
           { name: 'Older than five years', unit: '', value: false },
         ],

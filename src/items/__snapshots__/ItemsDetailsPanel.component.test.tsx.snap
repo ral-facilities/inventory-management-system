@@ -865,6 +865,24 @@ exports[`Catalogue Items details panel renders details panel correctly (no dates
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
+                      Sensor brand 
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        None
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
                       Broken 
                     </p>
                     <div
@@ -1340,6 +1358,24 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
+                      Frame Rate (fps)
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        None
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
                       Sensor Type 
                     </p>
                     <div
@@ -1349,6 +1385,24 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                       >
                         CMOS
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Sensor brand 
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        None
                       </p>
                     </div>
                   </div>
@@ -1843,6 +1897,24 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
+                      Frame Rate (fps)
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        None
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
                       Sensor Type 
                     </p>
                     <div
@@ -1852,6 +1924,24 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                       >
                         CMOS
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Sensor brand 
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        None
                       </p>
                     </div>
                   </div>
@@ -2363,6 +2453,24 @@ exports[`Catalogue Items details panel renders notes panel correctly 1`] = `
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
+                      Frame Rate (fps)
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        None
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
                       Sensor Type 
                     </p>
                     <div
@@ -2372,6 +2480,24 @@ exports[`Catalogue Items details panel renders notes panel correctly 1`] = `
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                       >
                         CMOS
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Sensor brand 
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        None
                       </p>
                     </div>
                   </div>
@@ -2882,6 +3008,24 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
                     >
+                      Frame Rate (fps)
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        None
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
                       Sensor Type 
                     </p>
                     <div
@@ -2891,6 +3035,24 @@ exports[`Catalogue Items details panel renders properties panel correctly 1`] = 
                         class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                       >
                         CMOS
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1mye6xq-MuiTypography-root"
+                    >
+                      Sensor brand 
+                    </p>
+                    <div
+                      class="MuiBox-root css-k008qs"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      >
+                        None
                       </p>
                     </div>
                   </div>
