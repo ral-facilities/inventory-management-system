@@ -198,9 +198,7 @@ describe('ItemDialog', () => {
 
       createView();
 
-      await user.click(
-        screen.getByRole('button', { name: 'Add item properties' })
-      );
+      await user.click(screen.getByText('Add item properties'));
       await waitFor(() => {
         expect(
           screen.getByText(
@@ -248,9 +246,7 @@ describe('ItemDialog', () => {
       createView();
 
       //navigate through stepper
-      await user.click(
-        screen.getByRole('button', { name: 'Add item properties' })
-      );
+      await user.click(screen.getByText('Add item properties'));
 
       await waitFor(() => {
         expect(
@@ -258,17 +254,13 @@ describe('ItemDialog', () => {
         ).toBeInTheDocument();
       });
 
-      await user.click(
-        screen.getByRole('button', { name: 'Place into a system' })
-      );
+      await user.click(screen.getByText('Place into a system'));
 
       await waitFor(() => {
         expect(screen.getByText('Giant laser')).toBeInTheDocument();
       });
 
-      await user.click(
-        screen.getByRole('button', { name: 'Add item details' })
-      );
+      await user.click(screen.getByText('Add item details'));
 
       await waitFor(() => {
         expect(screen.getByLabelText('Serial number')).toBeInTheDocument();
@@ -279,9 +271,7 @@ describe('ItemDialog', () => {
       createView();
 
       //navigate through stepper
-      await user.click(
-        screen.getByRole('button', { name: 'Add item properties' })
-      );
+      await user.click(screen.getByText('Add item properties'));
 
       await waitFor(() => {
         expect(
@@ -303,9 +293,7 @@ describe('ItemDialog', () => {
       };
       createView();
 
-      await user.click(
-        screen.getByRole('button', { name: 'Add item properties' })
-      );
+      await user.click(screen.getByText('Add item properties'));
 
       await fireEvent.change(
         screen.getByLabelText('Ultimate Pressure (millibar) *'),
@@ -745,9 +733,7 @@ describe('ItemDialog', () => {
       };
       createView();
 
-      await user.click(
-        screen.getByRole('button', { name: 'Edit item properties' })
-      );
+      await user.click(screen.getByText('Edit item properties'));
 
       await fireEvent.change(
         screen.getByLabelText('Ultimate Pressure (millibar) *'),

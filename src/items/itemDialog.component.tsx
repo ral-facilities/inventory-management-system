@@ -14,7 +14,7 @@ import {
   MenuItem,
   Select,
   Step,
-  StepButton,
+  StepLabel,
   Stepper,
   TextField,
   TextFieldProps,
@@ -486,6 +486,20 @@ function ItemDialog(props: ItemDialogProps) {
     }));
   }, [parentSystemId]);
 
+  const isStepFailed = React.useCallback(
+    (step: number) => {
+      switch (step) {
+        case 0:
+          return false;
+        case 1:
+          return propertyErrors.some((value) => value === true);
+        case 2:
+          return false;
+      }
+    },
+    [propertyErrors]
+  );
+
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
@@ -816,6 +830,14 @@ function ItemDialog(props: ItemDialogProps) {
       case 2:
         return (
           <Grid item xs={12}>
+            <Breadcrumbs
+              breadcrumbsInfo={parentSystemBreadcrumbs}
+              onChangeNode={setParentSystemId}
+              onChangeNavigateHome={() => {
+                setParentSystemId(null);
+              }}
+              navigateHomeAriaLabel={'navigate to systems home'}
+            />
             <SystemsTableView
               systemsData={systemsData}
               systemsDataLoading={systemsDataLoading}
@@ -847,26 +869,31 @@ function ItemDialog(props: ItemDialogProps) {
           orientation="horizontal"
           sx={{ marginTop: 2 }}
         >
-          {STEPS.map((label, index) => (
-            <Step key={label}>
-              <StepButton onClick={() => setActiveStep(index)}>
-                {label}
-              </StepButton>
-            </Step>
-          ))}
+          {STEPS.map((label, index) => {
+            const labelProps: {
+              optional?: React.ReactNode;
+              error?: boolean;
+            } = {};
+
+            if (isStepFailed(index)) {
+              labelProps.optional = (
+                <Typography variant="caption" color="error">
+                  {index === 1 && 'Invalid item properties'}
+                </Typography>
+              );
+              labelProps.error = true;
+            }
+
+            return (
+              <Step sx={{ cursor: 'pointer' }} key={label}>
+                <StepLabel {...labelProps} onClick={() => setActiveStep(index)}>
+                  {label}
+                </StepLabel>
+              </Step>
+            );
+          })}
         </Stepper>
-        {activeStep === 2 && (
-          <Grid item xs={12}>
-            <Breadcrumbs
-              breadcrumbsInfo={parentSystemBreadcrumbs}
-              onChangeNode={setParentSystemId}
-              onChangeNavigateHome={() => {
-                setParentSystemId(null);
-              }}
-              navigateHomeAriaLabel={'navigate to systems home'}
-            />
-          </Grid>
-        )}
+
         <Box sx={{ marginTop: 2 }}>{renderStepContent(activeStep)}</Box>
       </DialogContent>
       <DialogActions>
