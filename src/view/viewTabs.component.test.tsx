@@ -5,13 +5,17 @@ import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 describe('View Tabs', () => {
+  let user;
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(<ViewTabs />, path);
   };
 
+  beforeEach(() => {
+    user = userEvent.setup();
+  });
+
   it('lets users switch between tabs', async () => {
-    const user = userEvent.setup();
-    createView('/');
+    createView('/catalogue');
     const viewTabs = within(screen.getByRole('tablist', { name: 'view tabs' }));
 
     expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
@@ -62,10 +66,13 @@ describe('View Tabs', () => {
     ).toHaveTextContent('Systems');
   });
 
-  it('navigates to catalogue if the url is /', async () => {
+  it('navigates to catalogue when the "Browse the catalogue" link is clicked', async () => {
     createView('/');
-    const viewTabs = within(screen.getByRole('tablist', { name: 'view tabs' }));
+    await user.click(
+      screen.getByRole('link', { name: 'Browse the catalogue' })
+    );
 
+    const viewTabs = within(screen.getByRole('tablist', { name: 'view tabs' }));
     expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
       'Catalogue'
     );
