@@ -258,7 +258,9 @@ describe('ItemDialog', () => {
         ).toBeInTheDocument();
       });
 
-      await user.click(screen.getByRole('button', { name: 'Select system' }));
+      await user.click(
+        screen.getByRole('button', { name: 'Place into a system' })
+      );
 
       await waitFor(() => {
         expect(screen.getByText('Giant laser')).toBeInTheDocument();

@@ -362,7 +362,9 @@ function ItemDialog(props: ItemDialogProps) {
     useSystemsBreadcrumbs(parentSystemId);
 
   const handleAddItem = React.useCallback(() => {
-    const { updatedProperties } = handleFormErrorStates();
+    const { updatedProperties, hasErrors } = handleFormErrorStates();
+
+    if (hasErrors) return;
 
     const item: AddItem = {
       ...details,
@@ -378,7 +380,9 @@ function ItemDialog(props: ItemDialogProps) {
 
   const handleEditItem = React.useCallback(() => {
     if (selectedItem) {
-      const { updatedProperties } = handleFormErrorStates();
+      const { updatedProperties, hasErrors } = handleFormErrorStates();
+
+      if (hasErrors) return;
 
       const isPurchaseOrderNumberUpdated =
         details.purchase_order_number !== selectedItem.purchase_order_number;
@@ -458,7 +462,7 @@ function ItemDialog(props: ItemDialogProps) {
   const STEPS = [
     (type === 'edit' ? 'Edit' : 'Add') + ' item details',
     (type === 'edit' ? 'Edit' : 'Add') + ' item properties',
-    'Select system',
+    'Place into a system',
   ];
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
