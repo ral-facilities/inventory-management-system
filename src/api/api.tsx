@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MicroFrontendId } from '../app.types';
+import { ErrorParsing, MicroFrontendId } from '../app.types';
 import { readSciGatewayToken } from '../parseTokens';
 import { settings } from '../settings';
 import { InvalidateTokenType } from '../state/actions/actions.types';
@@ -37,9 +37,20 @@ imsApi.interceptors.response.use(
   (response) => response,
   (error) => {
     const originalRequest = error.config;
+    const errorMessage: string = error.response?.data
+      ? (error.response.data as ErrorParsing).detail.toLocaleLowerCase() ??
+        error.message
+      : error.message;
 
-    // Here assume 403 => the token is invalid and needs refreshing
-    if (error.response.status === 403) {
+    // Check if the token is invalid and needs refreshing
+    // only allow a request to be retried once
+    if (
+      error.response.status === 403 &&
+      errorMessage.includes('expired token') &&
+      !originalRequest._retried
+    ) {
+      originalRequest._retried = true;
+
       // Prevent other requests from also attempting to refresh while waiting for
       // SciGateway to refresh the token
       if (!isFetchingAccessToken) {
