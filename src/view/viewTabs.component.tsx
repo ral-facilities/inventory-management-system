@@ -3,7 +3,13 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { styled } from '@mui/material/styles';
 import React from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Link,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { TabValue } from '../app.types';
 import Catalogue from '../catalogue/catalogue.component';
 import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingPage.component';
@@ -83,12 +89,6 @@ function ViewTabs() {
       }
     }
   }, [location.pathname, value]);
-  // navigate to the catalogue only used for developement and e2e testing
-  React.useEffect(() => {
-    if (location.pathname === '/' && process.env.NODE_ENV !== 'production') {
-      navigate('/catalogue');
-    }
-  }, [location.pathname, navigate]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: TabValue) => {
     setValue(newValue);
@@ -97,6 +97,10 @@ function ViewTabs() {
 
   const routing = (
     <Routes location={location}>
+      <Route
+        path={paths.home}
+        element={<Link to={'/catalogue'}>Browse the catalogue</Link>}
+      />
       <Route path={paths.catalogue} element={<Catalogue />} />
       <Route
         path={paths.catalogueItem}

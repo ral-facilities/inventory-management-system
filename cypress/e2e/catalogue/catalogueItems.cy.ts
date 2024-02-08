@@ -19,6 +19,8 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Model number').type('MXtest');
     cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
     cy.findByLabelText('Notes').click().type('This is a test note');
+
+    cy.findByRole('button', { name: 'Next' }).click();
     cy.findByLabelText('Resolution (megapixels) *').type('18');
     cy.findByLabelText('Frame Rate (fps)').type('60');
     cy.findByLabelText('Sensor Type *').type('IO');
@@ -30,7 +32,7 @@ describe('Catalogue Items', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -77,7 +79,8 @@ describe('Catalogue Items', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -116,19 +119,21 @@ describe('Catalogue Items', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
 
     cy.findByLabelText('Name *').type('test');
-    cy.findByLabelText('Resolution (megapixels) *').type('18');
-    cy.findByLabelText('Sensor Type *').type('IO');
-    cy.findByLabelText('Broken *').click();
-    cy.findByText('True').click();
 
     cy.findByLabelText('Cost (£) *').type('5000');
     cy.findByLabelText('Time to replace (days) *').type('14');
 
     cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
 
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByLabelText('Resolution (megapixels) *').type('18');
+    cy.findByLabelText('Sensor Type *').type('IO');
+    cy.findByLabelText('Broken *').click();
+    cy.findByText('True').click();
+
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -171,6 +176,14 @@ describe('Catalogue Items', () => {
     cy.visit('/catalogue/12');
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
     cy.findByLabelText('Name *').type('test');
+
+    cy.findByLabelText('Cost (£) *').type('5000');
+    cy.findByLabelText('Time to replace (days) *').type('14');
+
+    cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
     cy.findByLabelText('Ultimate Pressure (millibar) *').type('0.2');
     cy.findByLabelText('Pumping Speed *').click();
     cy.findByRole('option', { name: '400' }).click();
@@ -178,14 +191,9 @@ describe('Catalogue Items', () => {
     cy.findByLabelText('Axis').click();
     cy.findByRole('option', { name: 'y' }).click();
 
-    cy.findByLabelText('Cost (£) *').type('5000');
-    cy.findByLabelText('Time to replace (days) *').type('14');
-
-    cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
-
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -223,11 +231,8 @@ describe('Catalogue Items', () => {
 
   it('displays the error messages and clears when values are changed', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findAllByText(
-      'Please enter a valid value as this field is mandatory'
-    ).should('have.length', 2);
     cy.findByText('Please enter a name').should('exist');
     cy.findByText('Please enter a cost').should('exist');
     cy.findByText('Please enter how many days it would take to replace').should(
@@ -236,21 +241,15 @@ describe('Catalogue Items', () => {
     cy.findByText(
       'Please choose a manufacturer, or add a new manufacturer'
     ).should('exist');
-    cy.findByText('Please select either True or False').should('exist');
-    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+
+    cy.findByRole('button', { name: 'Next' }).should('be.disabled');
 
     cy.findByLabelText('Name *').type('test');
-    cy.findByLabelText('Resolution (megapixels) *').type('18');
-    cy.findByLabelText('Sensor Type *').type('IO');
-    cy.findByLabelText('Broken *').click();
-    cy.findByText('True').click();
+
     cy.findByLabelText('Cost (£) *').type('5000');
     cy.findByLabelText('Time to replace (days) *').type('14');
     cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
 
-    cy.findAllByText(
-      'Please enter a valid value as this field is mandatory'
-    ).should('have.length', 0);
     cy.findByText('Please enter name').should('not.exist');
     cy.findByText('Please select either True or False').should('not.exist');
     cy.findByText('Please enter a cost').should('not.exist');
@@ -261,48 +260,62 @@ describe('Catalogue Items', () => {
       'Please chose a manufacturer, or add a new manufacturer'
     ).should('not.exist');
 
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
+
+    cy.findByText('Please select either True or False').should('exist');
+
+    cy.findAllByText(
+      'Please enter a valid value as this field is mandatory'
+    ).should('have.length', 2);
+    cy.findByLabelText('Resolution (megapixels) *').type('18');
+    cy.findByLabelText('Sensor Type *').type('IO');
+    cy.findByLabelText('Broken *').click();
+    cy.findByText('True').click();
+
+    cy.findAllByText(
+      'Please enter a valid value as this field is mandatory'
+    ).should('have.length', 0);
+
     // value error from number field
 
-    cy.findByLabelText('Resolution (megapixels) *').clear();
+    cy.findByRole('button', { name: 'Back' }).click();
+
     cy.findByLabelText('Cost (£) *').clear();
     cy.findByLabelText('Time to replace (days) *').clear();
-    cy.findByLabelText('Resolution (megapixels) *').type('dsfs');
-    cy.findByLabelText('Frame Rate (fps)').type('fdsfsd');
     cy.findByLabelText('Cost (£) *').type('gfdg');
     cy.findByLabelText('Time to replace (days) *').type('32gf');
+    cy.findByLabelText('Drawing link').type('test.co.uk');
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findAllByText('Please enter a valid number').should('have.length', 4);
-    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+    cy.findAllByText('Please enter a valid number').should('have.length', 2);
+    cy.findAllByText(
+      'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
+    ).should('exist');
+    cy.findByRole('button', { name: 'Next' }).should('be.disabled');
+    cy.findByLabelText('Cost (£) *').clear();
+    cy.findByLabelText('Cost (£) *').type('5000');
+    cy.findByLabelText('Time to replace (days) *').clear();
+    cy.findByLabelText('Time to replace (days) *').type('14');
+    cy.findByLabelText('Drawing link').clear();
+    cy.findByLabelText('Drawing link').type('https://test.co.uk');
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByLabelText('Resolution (megapixels) *').clear();
+    cy.findByLabelText('Resolution (megapixels) *').type('dsfs');
+    cy.findByLabelText('Frame Rate (fps)').type('fdsfsd');
+    cy.findByRole('button', { name: 'Finish' }).click();
+
+    cy.findAllByText('Please enter a valid number').should('have.length', 2);
 
     cy.findByLabelText('Resolution (megapixels) *').clear();
     cy.findByLabelText('Resolution (megapixels) *').type('12');
     cy.findByLabelText('Frame Rate (fps)').clear();
     cy.findByLabelText('Frame Rate (fps)').type('12');
-    cy.findByLabelText('Cost (£) *').clear();
-    cy.findByLabelText('Cost (£) *').type('5000');
-    cy.findByLabelText('Time to replace (days) *').clear();
-    cy.findByLabelText('Time to replace (days) *').type('14');
 
-    cy.findAllByText('Please enter a valid number').should('have.length', 0);
-    cy.findByLabelText('Drawing link').type('test.co.uk');
-
-    cy.findByRole('button', { name: 'Save' }).click();
-
-    cy.findAllByText(
-      'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
-    ).should('exist');
-    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
-
-    cy.findByLabelText('Drawing link').clear();
-
-    cy.findByLabelText('Drawing link').type('https://test.co.uk');
-    cy.findByRole('button', { name: 'Save' }).click();
-
-    cy.findAllByText(
-      'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
-    ).should('not.exist');
+    cy.findByRole('button', { name: 'Finish' }).should('not.disabled');
   });
 
   it('opens add manufacturer dialog and closes it back to catalogue item dialog', () => {
@@ -315,8 +328,6 @@ describe('Catalogue Items', () => {
     cy.findByRole('button', { name: 'Cancel' }).click();
 
     cy.findByText('Add Manufacturer').should('not.exist');
-
-    cy.findByText('Details').should('exist');
   });
 
   it('displays the table view correctly', () => {
@@ -370,10 +381,11 @@ describe('Catalogue Items', () => {
       'have.value',
       'High-resolution cameras for beam characterization. 1'
     );
+    cy.findByLabelText('Manufacturer *').should('have.value', 'Manufacturer A');
+    cy.findByRole('button', { name: 'Next' }).click();
     cy.findByLabelText('Resolution (megapixels) *').should('have.value', '12');
     cy.findByLabelText('Frame Rate (fps)').should('have.value', '30');
     cy.findByLabelText('Sensor Type *').should('have.value', 'CMOS');
-    cy.findByLabelText('Manufacturer *').should('have.value', 'Manufacturer A');
 
     cy.findByRole('button', { name: 'Cancel' }).click();
   });
@@ -463,13 +475,14 @@ describe('Catalogue Items', () => {
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Edit').click();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
         cy.contains('Please edit a form entry before clicking save');
       });
-    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+    cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
   });
 
   it('displays error message if catalogue item has children elements', () => {
@@ -479,16 +492,17 @@ describe('Catalogue Items', () => {
 
     cy.findByLabelText('Name *').clear();
     cy.findByLabelText('Name *').type('test_has_children_elements');
+    cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByLabelText('Measurement Range (Joules) *').type('0');
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
         cy.contains('Catalogue item has child elements and cannot be edited');
       });
-    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
+    cy.findByRole('button', { name: 'Finish' }).should('be.disabled');
   });
 
   it('edit a catalogue item (Catalogue item details)', () => {
@@ -512,7 +526,8 @@ describe('Catalogue Items', () => {
     cy.findAllByLabelText('Notes').clear().type('This is an updated note');
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -543,12 +558,13 @@ describe('Catalogue Items', () => {
     cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Edit').click();
+    cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByLabelText('Measurement Range (Joules) *').type('0');
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('button', { name: 'Finish' }).click();
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -567,6 +583,7 @@ describe('Catalogue Items', () => {
       );
     });
   });
+
   it('checks the href property of the manufacturer link', () => {
     cy.findByRole('button', { name: 'Show/Hide columns' }).click();
     cy.findByText('Hide all').click();

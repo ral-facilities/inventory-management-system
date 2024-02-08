@@ -33,9 +33,20 @@ exports[`delete item dialog renders correctly 1`] = `
         role="dialog"
       >
         <h2
-          class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-bdhsul-MuiTypography-root-MuiDialogTitle-root"
+          class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-1t6uuec-MuiTypography-root-MuiDialogTitle-root"
           id=":r0:"
         >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-elhp89-MuiSvgIcon-root"
+            data-testid="WarningIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"
+            />
+          </svg>
           Delete Item
         </h2>
         <div
@@ -44,7 +55,7 @@ exports[`delete item dialog renders correctly 1`] = `
           <p
             class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
           >
-            Are you sure you want to delete this item with
+            Are you sure you want to permanently delete this item with
              
             <strong
               data-testid="delete-item-KvT2Ox7n"
@@ -113,9 +124,20 @@ exports[`delete item dialog renders correctly 1`] = `
         role="dialog"
       >
         <h2
-          class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-bdhsul-MuiTypography-root-MuiDialogTitle-root"
+          class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-1t6uuec-MuiTypography-root-MuiDialogTitle-root"
           id=":r1:"
         >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-elhp89-MuiSvgIcon-root"
+            data-testid="WarningIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"
+            />
+          </svg>
           Delete Item
         </h2>
         <div
@@ -124,7 +146,7 @@ exports[`delete item dialog renders correctly 1`] = `
           <p
             class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
           >
-            Are you sure you want to delete this item with
+            Are you sure you want to permanently delete this item with
              
             <strong
               data-testid="delete-item-KvT2Ox7n"
@@ -200,9 +222,20 @@ exports[`delete item dialog renders correctly when the item has an system id 1`]
         role="dialog"
       >
         <h2
-          class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-bdhsul-MuiTypography-root-MuiDialogTitle-root"
+          class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-1t6uuec-MuiTypography-root-MuiDialogTitle-root"
           id=":r2:"
         >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-elhp89-MuiSvgIcon-root"
+            data-testid="WarningIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M1 21h22L12 2zm12-3h-2v-2h2zm0-4h-2v-4h2z"
+            />
+          </svg>
           Delete Item
         </h2>
         <div
@@ -225,7 +258,7 @@ exports[`delete item dialog renders correctly when the item has an system id 1`]
           <p
             class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
           >
-            Are you sure you want to delete this item with
+            Are you sure you want to permanently delete this item with
              
             <strong
               data-testid="delete-item-wKsFzrSq"

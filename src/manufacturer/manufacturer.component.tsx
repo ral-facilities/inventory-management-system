@@ -204,7 +204,7 @@ function ManufacturerComponent() {
     renderRowActionMenuItems: ({ closeMenu, row }) => {
       return [
         <MenuItem
-          key={0}
+          key="edit"
           aria-label={`Edit manufacturer ${row.original.name}`}
           onClick={() => {
             setMaufacturerDialogType('edit');
@@ -220,7 +220,7 @@ function ManufacturerComponent() {
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
         <MenuItem
-          key={1}
+          key="delete"
           aria-label={`Delete manufacturer ${row.original.name}`}
           onClick={() => {
             setDeleteManufacturerDialog(true);

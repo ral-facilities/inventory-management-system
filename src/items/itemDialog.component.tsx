@@ -13,6 +13,9 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Step,
+  StepLabel,
+  Stepper,
   TextField,
   TextFieldProps,
   Tooltip,
@@ -25,6 +28,7 @@ import {
   CatalogueItem,
   EditItem,
   Item,
+  ItemDetails,
   ItemDetailsPlaceholder,
   UsageStatusType,
 } from '../app.types';
@@ -33,6 +37,9 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
 import { useAddItem, useEditItem } from '../api/item';
 import { AxiosError } from 'axios';
+import { SystemsTableView } from '../systems/systemsTableView.component';
+import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
+import Breadcrumbs from '../view/breadcrumbs.component';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
   // Attempt to create a Date object from the input
@@ -117,6 +124,11 @@ function ItemDialog(props: ItemDialogProps) {
     notes: null,
   });
 
+  const [hasDateErrors, setHasDateErrors] = React.useState<{
+    warranty_end_date: boolean;
+    delivered_date: boolean;
+  }>({ warranty_end_date: false, delivered_date: false });
+
   const [catchAllError, setCatchAllError] = React.useState(false);
 
   const [propertyValues, setPropertyValues] = React.useState<(string | null)[]>(
@@ -153,18 +165,14 @@ function ItemDialog(props: ItemDialogProps) {
         purchase_order_number: selectedItem.purchase_order_number,
         is_defective: selectedItem.is_defective ? 'true' : 'false',
         usage_status: UsageStatusType[selectedItem.usage_status],
-        warranty_end_date:
-          selectedItem.warranty_end_date &&
-          isValidDateTime(selectedItem.warranty_end_date)
-            ? new Date(selectedItem.warranty_end_date)
-            : null,
+        warranty_end_date: selectedItem.warranty_end_date
+          ? new Date(selectedItem.warranty_end_date)
+          : null,
         asset_number: selectedItem.asset_number,
         serial_number: selectedItem.serial_number,
-        delivered_date:
-          selectedItem.delivered_date &&
-          isValidDateTime(selectedItem.delivered_date)
-            ? new Date(selectedItem.delivered_date)
-            : null,
+        delivered_date: selectedItem.delivered_date
+          ? new Date(selectedItem.delivered_date)
+          : null,
         notes: selectedItem.notes,
       });
 
@@ -197,32 +205,32 @@ function ItemDialog(props: ItemDialogProps) {
     setFormErrorMessage(undefined);
   };
 
-  const handleItemDetails = (
-    field: keyof ItemDetailsPlaceholder,
-    value: string | Date | null
-  ) => {
-    const updatedItemDetails = { ...itemDetails };
+  const handleItemDetails = React.useCallback(
+    (field: keyof ItemDetailsPlaceholder, value: string | Date | null) => {
+      const updatedItemDetails = { ...itemDetails };
 
-    switch (field) {
-      case 'delivered_date':
-      case 'warranty_end_date':
-        updatedItemDetails[field] = value as Date | null;
-        break;
-      default:
-        if (
-          value === null ||
-          (typeof value === 'string' && value.trim() === '')
-        ) {
-          updatedItemDetails[field] = null;
-        } else {
-          updatedItemDetails[field] = value as string;
-        }
-        break;
-    }
+      switch (field) {
+        case 'delivered_date':
+        case 'warranty_end_date':
+          updatedItemDetails[field] = value as Date | null;
+          break;
+        default:
+          if (
+            value === null ||
+            (typeof value === 'string' && value.trim() === '')
+          ) {
+            updatedItemDetails[field] = null;
+          } else {
+            updatedItemDetails[field] = value as string;
+          }
+          break;
+      }
 
-    setItemDetails(updatedItemDetails);
-    setFormErrorMessage(undefined);
-  };
+      setItemDetails(updatedItemDetails);
+      setFormErrorMessage(undefined);
+    },
+    [itemDetails]
+  );
   const handleClose = React.useCallback(() => {
     onClose();
     setItemDetails({
@@ -243,22 +251,8 @@ function ItemDialog(props: ItemDialogProps) {
     );
   }, [onClose, parentCatalogueItemPropertiesInfo]);
 
-  const handleFormErrorStates = React.useCallback(() => {
-    let hasErrors = false;
-
-    if (
-      itemDetails.warranty_end_date &&
-      !isValidDateTime(itemDetails.warranty_end_date)
-    ) {
-      hasErrors = true;
-    }
-
-    if (
-      itemDetails.delivered_date &&
-      !isValidDateTime(itemDetails.delivered_date)
-    ) {
-      hasErrors = true;
-    }
+  const handleFormPropertiesErrorStates = React.useCallback(() => {
+    let hasPropertiesErrors = false;
 
     // Check properties
     const updatedPropertyErrors = [...propertyErrors];
@@ -267,7 +261,7 @@ function ItemDialog(props: ItemDialogProps) {
       (property, index) => {
         if (property.mandatory && !propertyValues[index]) {
           updatedPropertyErrors[index] = true;
-          hasErrors = true;
+          hasPropertiesErrors = true;
         } else {
           updatedPropertyErrors[index] = false;
         }
@@ -278,7 +272,7 @@ function ItemDialog(props: ItemDialogProps) {
           isNaN(Number(propertyValues[index]))
         ) {
           updatedPropertyErrors[index] = true;
-          hasErrors = true;
+          hasPropertiesErrors = true;
         }
 
         if (!propertyValues[index])
@@ -307,18 +301,13 @@ function ItemDialog(props: ItemDialogProps) {
 
     setPropertyErrors(updatedPropertyErrors);
 
-    return { hasErrors, updatedProperties };
-  }, [
-    propertyErrors,
-    parentCatalogueItemPropertiesInfo,
-    propertyValues,
-    itemDetails,
-  ]);
+    return { hasPropertiesErrors, updatedProperties };
+  }, [propertyErrors, parentCatalogueItemPropertiesInfo, propertyValues]);
 
-  const details = React.useMemo(() => {
+  const details: ItemDetails = React.useMemo(() => {
     return {
       catalogue_item_id: catalogueItem?.id ?? '',
-      system_id: null,
+      system_id: itemDetails.system_id ?? '',
       purchase_order_number: itemDetails.purchase_order_number,
       is_defective: itemDetails.is_defective === 'true' ? true : false,
       usage_status: itemDetails.usage_status
@@ -342,12 +331,23 @@ function ItemDialog(props: ItemDialogProps) {
     };
   }, [itemDetails, catalogueItem]);
 
-  const handleAddItem = React.useCallback(() => {
-    const { hasErrors, updatedProperties } = handleFormErrorStates();
+  //move to systems
+  const [parentSystemId, setParentSystemId] = React.useState<string | null>(
+    selectedItem?.system_id ?? null
+  );
 
-    if (hasErrors) {
-      return; // Do not proceed with saving if there are errors
-    }
+  const { data: systemsData, isLoading: systemsDataLoading } = useSystems(
+    parentSystemId === null ? 'null' : parentSystemId
+  );
+
+  const { data: parentSystemBreadcrumbs } =
+    useSystemsBreadcrumbs(parentSystemId);
+
+  const handleAddItem = React.useCallback(() => {
+    const { updatedProperties, hasPropertiesErrors } =
+      handleFormPropertiesErrorStates();
+
+    if (hasPropertiesErrors) return;
 
     const item: AddItem = {
       ...details,
@@ -359,15 +359,14 @@ function ItemDialog(props: ItemDialogProps) {
       .catch((error: AxiosError) => {
         setCatchAllError(true);
       });
-  }, [addItem, handleClose, details, handleFormErrorStates]);
+  }, [handleFormPropertiesErrorStates, details, addItem, handleClose]);
 
   const handleEditItem = React.useCallback(() => {
     if (selectedItem) {
-      const { hasErrors, updatedProperties } = handleFormErrorStates();
+      const { updatedProperties, hasPropertiesErrors } =
+        handleFormPropertiesErrorStates();
 
-      if (hasErrors) {
-        return; // Do not proceed with saving if there are errors
-      }
+      if (hasPropertiesErrors) return;
 
       const isPurchaseOrderNumberUpdated =
         details.purchase_order_number !== selectedItem.purchase_order_number;
@@ -398,6 +397,8 @@ function ItemDialog(props: ItemDialogProps) {
           selectedItem.properties.map(({ unit, ...rest }) => rest)
         );
 
+      const isSystemIdUpdated = details.system_id !== selectedItem.system_id;
+
       let item: EditItem = {
         id: selectedItem.id,
       };
@@ -413,6 +414,7 @@ function ItemDialog(props: ItemDialogProps) {
       isSerialNumberUpdated && (item.serial_number = details.serial_number);
       isDeliveredDateUpdated && (item.delivered_date = details.delivered_date);
       isNotesUpdated && (item.notes = details.notes);
+      isSystemIdUpdated && (item.system_id = details.system_id);
       isCatalogueItemPropertiesUpdated && (item.properties = updatedProperties);
 
       if (
@@ -426,7 +428,8 @@ function ItemDialog(props: ItemDialogProps) {
           isSerialNumberUpdated ||
           isDeliveredDateUpdated ||
           isNotesUpdated ||
-          isCatalogueItemPropertiesUpdated)
+          isCatalogueItemPropertiesUpdated ||
+          isSystemIdUpdated)
       ) {
         editItem(item)
           .then((response) => handleClose())
@@ -437,16 +440,70 @@ function ItemDialog(props: ItemDialogProps) {
         setFormErrorMessage('Please edit a form entry before clicking save');
       }
     }
-  }, [editItem, handleClose, handleFormErrorStates, selectedItem, details]);
-  return (
-    <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
-      <DialogTitle>{`${type === 'edit' ? 'Edit' : 'Add'} Item`}</DialogTitle>
-      <DialogContent>
-        <Grid container spacing={1.5}>
-          <Grid item container spacing={1.5} xs={6}>
-            <Grid item xs={12}>
-              <Typography variant="h6">Details</Typography>
-            </Grid>
+  }, [
+    selectedItem,
+    handleFormPropertiesErrorStates,
+    details,
+    editItem,
+    handleClose,
+  ]);
+
+  // Stepper
+  const STEPS = [
+    (type === 'edit' ? 'Edit' : 'Add') + ' item details',
+    (type === 'edit' ? 'Edit' : 'Add') + ' item properties',
+    'Place into a system',
+  ];
+  const [activeStep, setActiveStep] = React.useState<number>(0);
+
+  const handleNext = React.useCallback(
+    (step: number) => {
+      switch (step) {
+        case 1:
+          const { hasPropertiesErrors } = handleFormPropertiesErrorStates();
+          return (
+            !hasPropertiesErrors &&
+            setActiveStep((prevActiveStep) => prevActiveStep + 1)
+          );
+        default:
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      }
+    },
+    [handleFormPropertiesErrorStates]
+  );
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+  React.useEffect(() => {
+    setItemDetails((prev) => ({
+      ...prev,
+      system_id: parentSystemId,
+    }));
+    setFormErrorMessage(undefined);
+  }, [parentSystemId]);
+
+  const isStepFailed = React.useCallback(
+    (step: number) => {
+      switch (step) {
+        case 0:
+          return Object.values(hasDateErrors).some(
+            (value: boolean) => value === true
+          );
+        case 1:
+          return propertyErrors.some((value) => value === true);
+        case 2:
+          return false;
+      }
+    },
+    [hasDateErrors, propertyErrors]
+  );
+
+  const renderStepContent = (step: number) => {
+    switch (step) {
+      case 0:
+        return (
+          <Grid item container spacing={1.5} xs={12}>
             <Grid item xs={12}>
               <TextField
                 label="Serial number"
@@ -495,6 +552,12 @@ function ItemDialog(props: ItemDialogProps) {
                 slotProps={{
                   actionBar: { actions: ['clear'] },
                 }}
+                onError={(error) => {
+                  setHasDateErrors((prev) => ({
+                    ...prev,
+                    warranty_end_date: error ? true : false,
+                  }));
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -508,6 +571,12 @@ function ItemDialog(props: ItemDialogProps) {
                   actionBar: { actions: ['clear'] },
                 }}
                 slots={{ textField: CustomTextField }}
+                onError={(error) => {
+                  setHasDateErrors((prev) => ({
+                    ...prev,
+                    delivered_date: error ? true : false,
+                  }));
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -588,12 +657,12 @@ function ItemDialog(props: ItemDialogProps) {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={6}>
-            {parentCatalogueItemPropertiesInfo.length >= 1 && (
+        );
+      case 1:
+        return (
+          <Grid item xs={12}>
+            {parentCatalogueItemPropertiesInfo.length >= 1 ? (
               <Grid container spacing={1.5}>
-                <Grid item xs={12}>
-                  <Typography variant="h6">Properties</Typography>
-                </Grid>
                 {parentCatalogueItemPropertiesInfo.map(
                   (property: CatalogueCategoryFormData, index: number) => (
                     <Grid item xs={12} key={index}>
@@ -750,58 +819,167 @@ function ItemDialog(props: ItemDialogProps) {
                   )
                 )}
               </Grid>
+            ) : (
+              <Box
+                sx={{
+                  width: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 3,
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+                  No item properties
+                </Typography>
+                <Typography sx={{ textAlign: 'center' }}>
+                  Please navigate to the next step to select a system
+                </Typography>
+              </Box>
             )}
           </Grid>
-        </Grid>
-      </DialogContent>
-      <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
-        <Box
-          sx={{ display: 'flex', alignItems: 'center', width: '100%' }}
-        ></Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            width: '100%',
-            my: 2,
-          }}
+        );
+      case 2:
+        return (
+          <Grid item xs={12}>
+            <Breadcrumbs
+              breadcrumbsInfo={parentSystemBreadcrumbs}
+              onChangeNode={setParentSystemId}
+              onChangeNavigateHome={() => {
+                setParentSystemId(null);
+              }}
+              navigateHomeAriaLabel={'navigate to systems home'}
+            />
+            <SystemsTableView
+              systemsData={systemsData}
+              systemsDataLoading={systemsDataLoading}
+              onChangeParentId={setParentSystemId}
+              // Use most unrestricted variant (i.e. copy with no selection)
+              selectedSystems={[]}
+              type="copyTo"
+            />
+          </Grid>
+        );
+    }
+  };
+
+  return (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      maxWidth="lg"
+      PaperProps={{ sx: { height: '705px' } }}
+      fullWidth
+    >
+      <DialogTitle>
+        <Grid item xs={12}>{`${type === 'edit' ? 'Edit' : 'Add'} Item`}</Grid>
+      </DialogTitle>
+      <DialogContent>
+        <Stepper
+          nonLinear
+          activeStep={activeStep}
+          orientation="horizontal"
+          sx={{ marginTop: 2 }}
         >
+          {STEPS.map((label, index) => {
+            const labelProps: {
+              optional?: React.ReactNode;
+              error?: boolean;
+            } = {};
+
+            if (isStepFailed(index)) {
+              labelProps.optional = (
+                <Typography variant="caption" color="error">
+                  {index === 1 && 'Invalid item properties'}
+                  {index === 0 && 'Invalid date'}
+                </Typography>
+              );
+              labelProps.error = true;
+            }
+
+            return (
+              <Step sx={{ cursor: 'pointer' }} key={label}>
+                <StepLabel {...labelProps} onClick={() => setActiveStep(index)}>
+                  {label}
+                </StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+
+        <Box sx={{ marginTop: 2 }}>{renderStepContent(activeStep)}</Box>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} sx={{ mr: 'auto' }}>
+          Cancel
+        </Button>
+        <Button disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 2 }}>
+          Back
+        </Button>
+
+        {activeStep === STEPS.length - 1 ? (
           <Button
-            variant="outlined"
-            sx={{ width: '50%', mx: 1 }}
-            onClick={handleClose}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="outlined"
-            sx={{ width: '50%', mx: 1 }}
+            disabled={
+              !itemDetails.system_id ||
+              catchAllError ||
+              formErrorMessage !== undefined ||
+              propertyErrors.some((value) => value === true) ||
+              Object.values(hasDateErrors).some(
+                (value: boolean) => value === true
+              )
+            }
             onClick={type === 'edit' ? handleEditItem : handleAddItem}
+            sx={{ mr: 3 }}
+          >
+            Finish
+          </Button>
+        ) : (
+          <Button
             disabled={
               catchAllError ||
-              propertyErrors.some((value) => {
-                return value === true;
-              }) ||
-              (!!itemDetails.warranty_end_date &&
-                !isValidDateTime(itemDetails.warranty_end_date)) ||
-              (!!itemDetails.delivered_date &&
-                !isValidDateTime(itemDetails.delivered_date))
+              (activeStep === 1 &&
+                propertyErrors.some((value) => value === true)) ||
+              (activeStep === 0 &&
+                Object.values(hasDateErrors).some(
+                  (value: boolean) => value === true
+                ))
             }
+            onClick={() => handleNext(activeStep)}
+            sx={{ mr: 3 }}
           >
-            Save
+            Next
           </Button>
-        </Box>
-        {formErrorMessage && (
-          <FormHelperText sx={{ marginBottom: '16px' }} error>
-            {formErrorMessage}
-          </FormHelperText>
-        )}
-        {catchAllError && (
-          <FormHelperText sx={{ marginBottom: '16px' }} error>
-            {'Please refresh and try again'}
-          </FormHelperText>
         )}
       </DialogActions>
+      {formErrorMessage && (
+        <Box
+          sx={{
+            mx: 3,
+            marginBottom: 3,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+            {formErrorMessage}
+          </FormHelperText>
+        </Box>
+      )}
+      {catchAllError && (
+        <Box
+          sx={{
+            mx: 3,
+            marginBottom: 3,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
+            Please refresh and try again
+          </FormHelperText>
+        </Box>
+      )}
     </Dialog>
   );
 }

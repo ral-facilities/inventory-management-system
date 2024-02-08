@@ -222,7 +222,7 @@ export enum UsageStatusType {
 
 export interface ItemDetails {
   catalogue_item_id: string;
-  system_id: string | null;
+  system_id: string;
   purchase_order_number: string | null;
   is_defective: boolean;
   usage_status: UsageStatusType;

@@ -1,3 +1,4 @@
+import WarningIcon from '@mui/icons-material/Warning';
 import {
   Box,
   Button,
@@ -6,15 +7,15 @@ import {
   DialogContent,
   DialogTitle,
   FormHelperText,
-  Typography,
   Link as MuiLink,
+  Typography,
 } from '@mui/material';
-import React from 'react';
-import { useDeleteItem } from '../api/item';
-import { Item } from '../app.types';
 import { AxiosError } from 'axios';
-import { useSystem } from '../api/systems';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDeleteItem } from '../api/item';
+import { useSystem } from '../api/systems';
+import { Item } from '../app.types';
 
 export interface DeleteItemDialogProps {
   open: boolean;
@@ -58,7 +59,10 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">
-      <DialogTitle>Delete Item</DialogTitle>
+      <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
+        <WarningIcon sx={{ marginRight: 1 }} />
+        Delete Item
+      </DialogTitle>
       <DialogContent>
         {systemData && (
           <Typography sx={{ pr: 0.5, pb: 1 }}>
@@ -74,7 +78,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
           </Typography>
         )}
         <Typography>
-          Are you sure you want to delete this item with{' '}
+          Are you sure you want to permanently delete this item with{' '}
           <strong data-testid={`delete-item-${item?.id}`}>
             {`ID: ${item?.id} `}
           </strong>
