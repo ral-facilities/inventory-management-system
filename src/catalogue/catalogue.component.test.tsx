@@ -341,7 +341,7 @@ describe('Catalogue', () => {
     expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
 
     const beamButton = screen.getByText('Beam Characterization');
-    user.click(beamButton);
+    await user.click(beamButton);
     await waitFor(() => {
       expect(screen.getByText('Cameras')).toBeInTheDocument();
     });

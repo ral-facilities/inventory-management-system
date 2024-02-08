@@ -197,9 +197,9 @@ export function ItemsTable(props: ItemTableProps) {
               0
               ? 0
               : findPropertyValue(row.original.properties, property.name) !==
-                null
-              ? findPropertyValue(row.original.properties, property.name)
-              : '';
+                  null
+                ? findPropertyValue(row.original.properties, property.name)
+                : '';
           } else if (
             typeof findPropertyValue(row.original.properties, property.name) ===
             'boolean'
@@ -334,7 +334,7 @@ export function ItemsTable(props: ItemTableProps) {
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
       return [
         <MenuItem
-          key={1}
+          key="edit"
           aria-label={`Edit item ${row.original.id}`}
           onClick={() => {
             setItemsDialogType('edit');
@@ -349,7 +349,7 @@ export function ItemsTable(props: ItemTableProps) {
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
         <MenuItem
-          key={1}
+          key="save as"
           aria-label={`Save item ${row.original.id} as`}
           onClick={() => {
             setItemsDialogType('save as');
@@ -364,7 +364,7 @@ export function ItemsTable(props: ItemTableProps) {
           <ListItemText>Save as</ListItemText>
         </MenuItem>,
         <MenuItem
-          key={2}
+          key="delete"
           aria-label={`Delete item ${row.original.id}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
