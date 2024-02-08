@@ -675,7 +675,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
       return [
         <MenuItem
-          key={0}
+          key="edit"
           aria-label={`Edit catalogue item ${row.original.catalogueItem.name}`}
           onClick={() => {
             setItemsDialogType('edit');
@@ -690,7 +690,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <ListItemText>Edit</ListItemText>
         </MenuItem>,
         <MenuItem
-          key={1}
+          key="save as"
           aria-label={`Save catalogue item ${row.original.catalogueItem.name} as`}
           onClick={() => {
             setItemsDialogType('save as');
@@ -705,7 +705,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <ListItemText>Save as</ListItemText>
         </MenuItem>,
         <MenuItem
-          key={2}
+          key="delete"
           aria-label={`Delete catalogue item ${row.original.catalogueItem.name}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
@@ -720,7 +720,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <ListItemText>Delete</ListItemText>
         </MenuItem>,
         <MenuItem
-          key={3}
+          key="obsolete"
           aria-label={`Obsolete catalogue item ${row.original.catalogueItem.name}`}
           onClick={() => {
             setObsoleteItemDialogOpen(true);

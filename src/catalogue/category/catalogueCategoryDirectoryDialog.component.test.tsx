@@ -89,7 +89,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
     it('calls onClose when Close button is clicked', async () => {
       createView();
       const closeButton = screen.getByRole('button', { name: 'Cancel' });
-      user.click(closeButton);
+      await user.click(closeButton);
 
       await waitFor(() => {
         expect(onClose).toHaveBeenCalled();

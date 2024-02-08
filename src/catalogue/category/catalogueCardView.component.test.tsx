@@ -78,7 +78,7 @@ describe('CardView', () => {
     expect(screen.queryByText('Test 31')).not.toBeInTheDocument();
 
     const page2 = screen.getByRole('button', { name: 'Go to page 2' });
-    user.click(page2);
+    await user.click(page2);
 
     await waitFor(() => {
       expect(screen.getByText('Test 31')).toBeInTheDocument();
