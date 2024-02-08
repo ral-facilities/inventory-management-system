@@ -52,6 +52,21 @@ describe('Catalogue Items Landing Page', () => {
     expect(screen.getByText('Resolution (megapixels)')).toBeInTheDocument();
 
     expect(screen.getByText('Asset Number')).toBeInTheDocument();
+
+    expect(screen.getByText('System ID')).toBeInTheDocument();
+  });
+
+  it('navigates to the system when the system id is clicked', async () => {
+    createView('/catalogue/item/1/items/KvT2Ox7n');
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+    });
+
+    const systemID = screen.getByText('65328f34a40ff5301575a4e3');
+    expect(systemID).toHaveAttribute(
+      'href',
+      '/systems/65328f34a40ff5301575a4e3'
+    );
   });
 
   it('renders no item page correctly', async () => {

@@ -65,9 +65,15 @@ describe('Items Table', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
-  it('renders correctly part 3 due column virtualisation', async () => {
+  it('renders correctly part 3 due column virtualisation and checks that the href is correct for the system ID', async () => {
     createView();
-    await ensureColumnsVisible(['Warranty End Date']);
+    await ensureColumnsVisible(['Warranty End Date', 'System ID']);
+
+    const systemID = screen.getAllByText('65328f34a40ff5301575a4e3');
+    expect(systemID[0]).toHaveAttribute(
+      'href',
+      '/systems/65328f34a40ff5301575a4e3'
+    );
   });
 
   it('opens and closes the add item dialog', async () => {
