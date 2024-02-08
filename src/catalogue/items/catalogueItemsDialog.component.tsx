@@ -15,7 +15,7 @@ import {
   MenuItem,
   Select,
   Step,
-  StepButton,
+  StepLabel,
   Stepper,
   TextField,
   Tooltip,
@@ -593,6 +593,18 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const isStepFailed = React.useCallback(
+    (step: number) => {
+      switch (step) {
+        case 0:
+          return JSON.stringify(errorMessages) !== '{}';
+        case 1:
+          return propertyErrors.some((value) => value === true);
+      }
+    },
+    [errorMessages, propertyErrors]
+  );
+
   const renderStepContent = (step: number) => {
     switch (step) {
       case 0:
@@ -1033,13 +1045,29 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           orientation="horizontal"
           sx={{ marginTop: 2 }}
         >
-          {STEPS.map((label, index) => (
-            <Step key={label}>
-              <StepButton onClick={() => setActiveStep(index)}>
-                {label}
-              </StepButton>
-            </Step>
-          ))}
+          {STEPS.map((label, index) => {
+            const labelProps: {
+              optional?: React.ReactNode;
+              error?: boolean;
+            } = {};
+
+            if (isStepFailed(index)) {
+              labelProps.optional = (
+                <Typography variant="caption" color="error">
+                  {index === 1 && 'Invalid catalogue item properties'}
+                  {index === 0 && 'Invalid details'}
+                </Typography>
+              );
+              labelProps.error = true;
+            }
+            return (
+              <Step sx={{ cursor: 'pointer' }} key={label}>
+                <StepLabel {...labelProps} onClick={() => setActiveStep(index)}>
+                  {label}
+                </StepLabel>
+              </Step>
+            );
+          })}
         </Stepper>
         <Box sx={{ marginTop: 2 }}>{renderStepContent(activeStep)}</Box>
       </DialogContent>

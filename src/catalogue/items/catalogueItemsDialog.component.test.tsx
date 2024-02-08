@@ -170,9 +170,7 @@ describe('Catalogue Items Dialog', () => {
       baseElement = createView().baseElement;
     });
 
-    await user.click(
-      screen.getByRole('button', { name: 'Add catalogue item properties' })
-    );
+    await user.click(screen.getByText('Add catalogue item properties'));
     expect(baseElement).toMatchSnapshot();
   });
 
@@ -301,6 +299,50 @@ describe('Catalogue Items Dialog', () => {
         },
       ],
     });
+  }, 10000);
+
+  it('displays an error message if a step is has errored and clears the errors until the finish button is enabled', async () => {
+    props = {
+      ...props,
+      parentInfo: getCatalogueCategoryById('4'),
+    };
+
+    createView();
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+    expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+    expect(screen.getByText('Invalid details')).toBeInTheDocument();
+
+    await user.click(screen.getByText('Add catalogue item properties'));
+    expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+
+    await user.click(screen.getByText('Add catalogue item details'));
+    await modifyValues({
+      costGbp: '1200',
+      costToReworkGbp: '400',
+      daysToReplace: '20',
+      daysToRework: '2',
+      description: '',
+      drawingLink: 'https://example.com',
+      drawingNumber: 'mk4324',
+      itemModelNumber: 'mk4324',
+      name: 'test',
+      manufacturer: 'Man{arrowdown}{enter}',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+    expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+
+    await modifyValues({
+      resolution: '12',
+      frameRate: '60',
+      sensorType: 'IO',
+      sensorBrand: 'pixel',
+      broken: 'True',
+      older: 'False',
+    });
+    expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
   }, 10000);
 
   it('displays an error if a mandatory catalogue item property is not defined (allowed list of values )', async () => {

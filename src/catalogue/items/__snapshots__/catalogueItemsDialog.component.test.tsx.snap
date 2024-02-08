@@ -44,56 +44,46 @@ exports[`Catalogue Items Dialog renders details step correctly 1`] = `
             class="MuiStepper-root MuiStepper-horizontal css-r3cjyt-MuiStepper-root"
           >
             <div
-              class="MuiStep-root MuiStep-horizontal css-1bw0nnu-MuiStep-root"
+              class="MuiStep-root MuiStep-horizontal css-179wqtw-MuiStep-root"
             >
-              <button
-                aria-current="step"
-                class="MuiButtonBase-root MuiStepButton-root MuiStepButton-horizontal css-mjpk2e-MuiButtonBase-root-MuiStepButton-root"
-                tabindex="0"
-                type="button"
+              <span
+                class="MuiStepLabel-root MuiStepLabel-horizontal css-ascpo7-MuiStepLabel-root"
               >
                 <span
-                  class="MuiStepLabel-root MuiStepLabel-horizontal css-ascpo7-MuiStepLabel-root"
+                  class="MuiStepLabel-iconContainer Mui-active css-vnkopk-MuiStepLabel-iconContainer"
                 >
-                  <span
-                    class="MuiStepLabel-iconContainer Mui-active css-vnkopk-MuiStepLabel-iconContainer"
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root Mui-active css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root Mui-active css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root"
-                      focusable="false"
-                      viewBox="0 0 24 24"
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="12"
+                    />
+                    <text
+                      class="MuiStepIcon-text css-117w1su-MuiStepIcon-text"
+                      dominant-baseline="central"
+                      text-anchor="middle"
+                      x="12"
+                      y="12"
                     >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="12"
-                      />
-                      <text
-                        class="MuiStepIcon-text css-117w1su-MuiStepIcon-text"
-                        dominant-baseline="central"
-                        text-anchor="middle"
-                        x="12"
-                        y="12"
-                      >
-                        1
-                      </text>
-                    </svg>
-                  </span>
-                  <span
-                    class="MuiStepLabel-labelContainer css-1vyamtt-MuiStepLabel-labelContainer"
-                  >
-                    <span
-                      class="MuiStepLabel-label Mui-active css-1hv8oq8-MuiStepLabel-label"
-                    >
-                      Add catalogue item details
-                    </span>
-                  </span>
+                      1
+                    </text>
+                  </svg>
                 </span>
                 <span
-                  class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
-                />
-              </button>
+                  class="MuiStepLabel-labelContainer css-1vyamtt-MuiStepLabel-labelContainer"
+                >
+                  <span
+                    class="MuiStepLabel-label Mui-active css-1hv8oq8-MuiStepLabel-label"
+                  >
+                    Add catalogue item details
+                  </span>
+                </span>
+              </span>
             </div>
             <div
               class="MuiStepConnector-root MuiStepConnector-horizontal css-j5w0w9-MuiStepConnector-root"
@@ -103,55 +93,46 @@ exports[`Catalogue Items Dialog renders details step correctly 1`] = `
               />
             </div>
             <div
-              class="MuiStep-root MuiStep-horizontal css-1bw0nnu-MuiStep-root"
+              class="MuiStep-root MuiStep-horizontal css-179wqtw-MuiStep-root"
             >
-              <button
-                class="MuiButtonBase-root MuiStepButton-root MuiStepButton-horizontal css-mjpk2e-MuiButtonBase-root-MuiStepButton-root"
-                tabindex="0"
-                type="button"
+              <span
+                class="MuiStepLabel-root MuiStepLabel-horizontal css-ascpo7-MuiStepLabel-root"
               >
                 <span
-                  class="MuiStepLabel-root MuiStepLabel-horizontal css-ascpo7-MuiStepLabel-root"
+                  class="MuiStepLabel-iconContainer css-vnkopk-MuiStepLabel-iconContainer"
                 >
-                  <span
-                    class="MuiStepLabel-iconContainer css-vnkopk-MuiStepLabel-iconContainer"
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root"
-                      focusable="false"
-                      viewBox="0 0 24 24"
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="12"
+                    />
+                    <text
+                      class="MuiStepIcon-text css-117w1su-MuiStepIcon-text"
+                      dominant-baseline="central"
+                      text-anchor="middle"
+                      x="12"
+                      y="12"
                     >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="12"
-                      />
-                      <text
-                        class="MuiStepIcon-text css-117w1su-MuiStepIcon-text"
-                        dominant-baseline="central"
-                        text-anchor="middle"
-                        x="12"
-                        y="12"
-                      >
-                        2
-                      </text>
-                    </svg>
-                  </span>
-                  <span
-                    class="MuiStepLabel-labelContainer css-1vyamtt-MuiStepLabel-labelContainer"
-                  >
-                    <span
-                      class="MuiStepLabel-label css-1hv8oq8-MuiStepLabel-label"
-                    >
-                      Add catalogue item properties
-                    </span>
-                  </span>
+                      2
+                    </text>
+                  </svg>
                 </span>
                 <span
-                  class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
-                />
-              </button>
+                  class="MuiStepLabel-labelContainer css-1vyamtt-MuiStepLabel-labelContainer"
+                >
+                  <span
+                    class="MuiStepLabel-label css-1hv8oq8-MuiStepLabel-label"
+                  >
+                    Add catalogue item properties
+                  </span>
+                </span>
+              </span>
             </div>
           </div>
           <div
@@ -799,55 +780,46 @@ exports[`Catalogue Items Dialog renders properties step correctly 1`] = `
             class="MuiStepper-root MuiStepper-horizontal css-r3cjyt-MuiStepper-root"
           >
             <div
-              class="MuiStep-root MuiStep-horizontal css-1bw0nnu-MuiStep-root"
+              class="MuiStep-root MuiStep-horizontal css-179wqtw-MuiStep-root"
             >
-              <button
-                class="MuiButtonBase-root MuiStepButton-root MuiStepButton-horizontal css-mjpk2e-MuiButtonBase-root-MuiStepButton-root"
-                tabindex="0"
-                type="button"
+              <span
+                class="MuiStepLabel-root MuiStepLabel-horizontal css-ascpo7-MuiStepLabel-root"
               >
                 <span
-                  class="MuiStepLabel-root MuiStepLabel-horizontal css-ascpo7-MuiStepLabel-root"
+                  class="MuiStepLabel-iconContainer css-vnkopk-MuiStepLabel-iconContainer"
                 >
-                  <span
-                    class="MuiStepLabel-iconContainer css-vnkopk-MuiStepLabel-iconContainer"
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root"
-                      focusable="false"
-                      viewBox="0 0 24 24"
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="12"
+                    />
+                    <text
+                      class="MuiStepIcon-text css-117w1su-MuiStepIcon-text"
+                      dominant-baseline="central"
+                      text-anchor="middle"
+                      x="12"
+                      y="12"
                     >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="12"
-                      />
-                      <text
-                        class="MuiStepIcon-text css-117w1su-MuiStepIcon-text"
-                        dominant-baseline="central"
-                        text-anchor="middle"
-                        x="12"
-                        y="12"
-                      >
-                        1
-                      </text>
-                    </svg>
-                  </span>
-                  <span
-                    class="MuiStepLabel-labelContainer css-1vyamtt-MuiStepLabel-labelContainer"
-                  >
-                    <span
-                      class="MuiStepLabel-label css-1hv8oq8-MuiStepLabel-label"
-                    >
-                      Add catalogue item details
-                    </span>
-                  </span>
+                      1
+                    </text>
+                  </svg>
                 </span>
                 <span
-                  class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
-                />
-              </button>
+                  class="MuiStepLabel-labelContainer css-1vyamtt-MuiStepLabel-labelContainer"
+                >
+                  <span
+                    class="MuiStepLabel-label css-1hv8oq8-MuiStepLabel-label"
+                  >
+                    Add catalogue item details
+                  </span>
+                </span>
+              </span>
             </div>
             <div
               class="MuiStepConnector-root MuiStepConnector-horizontal Mui-active css-j5w0w9-MuiStepConnector-root"
@@ -857,65 +829,46 @@ exports[`Catalogue Items Dialog renders properties step correctly 1`] = `
               />
             </div>
             <div
-              class="MuiStep-root MuiStep-horizontal css-1bw0nnu-MuiStep-root"
+              class="MuiStep-root MuiStep-horizontal css-179wqtw-MuiStep-root"
             >
-              <button
-                aria-current="step"
-                class="MuiButtonBase-root MuiStepButton-root MuiStepButton-horizontal css-mjpk2e-MuiButtonBase-root-MuiStepButton-root"
-                tabindex="0"
-                type="button"
+              <span
+                class="MuiStepLabel-root MuiStepLabel-horizontal css-ascpo7-MuiStepLabel-root"
               >
                 <span
-                  class="MuiStepLabel-root MuiStepLabel-horizontal css-ascpo7-MuiStepLabel-root"
+                  class="MuiStepLabel-iconContainer Mui-active css-vnkopk-MuiStepLabel-iconContainer"
                 >
-                  <span
-                    class="MuiStepLabel-iconContainer Mui-active css-vnkopk-MuiStepLabel-iconContainer"
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root Mui-active css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root Mui-active css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root"
-                      focusable="false"
-                      viewBox="0 0 24 24"
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="12"
+                    />
+                    <text
+                      class="MuiStepIcon-text css-117w1su-MuiStepIcon-text"
+                      dominant-baseline="central"
+                      text-anchor="middle"
+                      x="12"
+                      y="12"
                     >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="12"
-                      />
-                      <text
-                        class="MuiStepIcon-text css-117w1su-MuiStepIcon-text"
-                        dominant-baseline="central"
-                        text-anchor="middle"
-                        x="12"
-                        y="12"
-                      >
-                        2
-                      </text>
-                    </svg>
-                  </span>
-                  <span
-                    class="MuiStepLabel-labelContainer css-1vyamtt-MuiStepLabel-labelContainer"
-                  >
-                    <span
-                      class="MuiStepLabel-label Mui-active css-1hv8oq8-MuiStepLabel-label"
-                    >
-                      Add catalogue item properties
-                    </span>
-                  </span>
+                      2
+                    </text>
+                  </svg>
                 </span>
                 <span
-                  class="MuiTouchRipple-root MuiStepButton-touchRipple css-8je8zh-MuiTouchRipple-root"
+                  class="MuiStepLabel-labelContainer css-1vyamtt-MuiStepLabel-labelContainer"
                 >
                   <span
-                    class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
-                    style="width: 2.8284271247461903px; height: 2.8284271247461903px; top: -1.4142135623730951px; left: -1.4142135623730951px;"
+                    class="MuiStepLabel-label Mui-active css-1hv8oq8-MuiStepLabel-label"
                   >
-                    <span
-                      class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
-                    />
+                    Add catalogue item properties
                   </span>
                 </span>
-              </button>
+              </span>
             </div>
           </div>
           <div
