@@ -157,13 +157,25 @@ describe('Catalogue Items Dialog', () => {
     jest.clearAllMocks();
   });
 
-  it('renders text correctly', async () => {
+  it('renders details step correctly', async () => {
     props.parentInfo = getCatalogueCategoryById('4');
 
     let baseElement;
     await act(async () => {
       baseElement = createView().baseElement;
     });
+    expect(baseElement).toMatchSnapshot();
+  });
+
+  it('renders properties step correctly', async () => {
+    props.parentInfo = getCatalogueCategoryById('4');
+
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
+
+    await user.click(screen.getByText('Add catalogue item properties'));
     expect(baseElement).toMatchSnapshot();
   });
 
@@ -185,18 +197,22 @@ describe('Catalogue Items Dialog', () => {
       drawingNumber: 'mk4324',
       itemModelNumber: 'mk4324',
       name: 'test',
+      manufacturer: 'Man{arrowdown}{enter}',
+      notes: 'Test note',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+
+    await modifyValues({
       resolution: '12',
       frameRate: '60',
       sensorType: 'IO',
       sensorBrand: 'pixel',
       broken: 'True',
       older: 'False',
-      manufacturer: 'Man{arrowdown}{enter}',
-      notes: 'Test note',
     });
 
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-    await user.click(saveButton);
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '4',
@@ -246,6 +262,8 @@ describe('Catalogue Items Dialog', () => {
       manufacturer: 'Man{arrowdown}{enter}',
     });
 
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+
     await fireEvent.change(
       screen.getByLabelText('Ultimate Pressure (millibar) *'),
       {
@@ -259,8 +277,7 @@ describe('Catalogue Items Dialog', () => {
     await fireEvent.mouseDown(screen.getByLabelText('Axis'));
     await fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
 
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-    await user.click(saveButton);
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '12',
@@ -289,6 +306,50 @@ describe('Catalogue Items Dialog', () => {
     });
   }, 10000);
 
+  it('displays an error message if a step has errored and clears the errors until the finish button is enabled', async () => {
+    props = {
+      ...props,
+      parentInfo: getCatalogueCategoryById('4'),
+    };
+
+    createView();
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+    expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+    expect(screen.getByText('Invalid details')).toBeInTheDocument();
+
+    await user.click(screen.getByText('Add catalogue item properties'));
+    expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+
+    await user.click(screen.getByText('Add catalogue item details'));
+    await modifyValues({
+      costGbp: '1200',
+      costToReworkGbp: '400',
+      daysToReplace: '20',
+      daysToRework: '2',
+      description: '',
+      drawingLink: 'https://example.com',
+      drawingNumber: 'mk4324',
+      itemModelNumber: 'mk4324',
+      name: 'test',
+      manufacturer: 'Man{arrowdown}{enter}',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+    expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+
+    await modifyValues({
+      resolution: '12',
+      frameRate: '60',
+      sensorType: 'IO',
+      sensorBrand: 'pixel',
+      broken: 'True',
+      older: 'False',
+    });
+    expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
+  }, 10000);
+
   it('displays an error if a mandatory catalogue item property is not defined (allowed list of values )', async () => {
     props = {
       ...props,
@@ -310,6 +371,8 @@ describe('Catalogue Items Dialog', () => {
       manufacturer: 'Man{arrowdown}{enter}',
     });
 
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+
     await fireEvent.change(
       screen.getByLabelText('Ultimate Pressure (millibar) *'),
       {
@@ -317,8 +380,7 @@ describe('Catalogue Items Dialog', () => {
       }
     );
 
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-    await user.click(saveButton);
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
 
     const mandatoryFieldHelperText = screen.getAllByText(
       'Please enter a valid value as this field is mandatory'
@@ -341,14 +403,18 @@ describe('Catalogue Items Dialog', () => {
       costGbp: '200',
       daysToReplace: '5',
       name: 'test',
-      resolution: '12',
-      sensorType: 'IO',
-      broken: 'True',
       manufacturer: 'Man{arrowdown}{enter}',
     });
 
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-    await user.click(saveButton);
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+
+    await modifyValues({
+      resolution: '12',
+      sensorType: 'IO',
+      broken: 'True',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
 
     expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
       catalogue_category_id: '4',
@@ -385,9 +451,32 @@ describe('Catalogue Items Dialog', () => {
 
     createView();
 
-    const saveButton = screen.getByRole('button', { name: 'Save' });
+    await user.click(screen.getByRole('button', { name: 'Next' }));
 
-    await user.click(saveButton);
+    expect(
+      screen.getByText(
+        'Please choose a manufacturer, or add a new manufacturer'
+      )
+    ).toBeInTheDocument();
+
+    const nameHelperText = screen.getByText('Please enter a name');
+    const costHelperText = screen.getByText('Please enter a cost');
+    const daysToReplaceHelperText = screen.getByText(
+      'Please enter how many days it would take to replace'
+    );
+    expect(nameHelperText).toBeInTheDocument();
+    expect(costHelperText).toBeInTheDocument();
+    expect(daysToReplaceHelperText).toBeInTheDocument();
+
+    await modifyValues({
+      costGbp: '200',
+      daysToReplace: '5',
+      name: 'test',
+      manufacturer: 'Man{arrowdown}{enter}',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
 
     const mandatoryFieldHelperText = screen.getAllByText(
       'Please enter a valid value as this field is mandatory'
@@ -397,27 +486,14 @@ describe('Catalogue Items Dialog', () => {
       'Please select either True or False'
     );
 
-    const nameHelperText = screen.getByText('Please enter a name');
-    const costHelperText = screen.getByText('Please enter a cost');
-    const daysToReplaceHelperText = screen.getByText(
-      'Please enter how many days it would take to replace'
-    );
-
     expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
-    expect(nameHelperText).toBeInTheDocument();
-    expect(costHelperText).toBeInTheDocument();
-    expect(daysToReplaceHelperText).toBeInTheDocument();
+
     expect(mandatoryFieldHelperText.length).toBe(2);
     expect(mandatoryFieldHelperText[0]).toHaveTextContent(
       'Please enter a valid value as this field is mandatory'
     );
-
-    expect(
-      screen.getByText(
-        'Please choose a manufacturer, or add a new manufacturer'
-      )
-    ).toBeInTheDocument();
   }, 6000);
+
   it('display error message when invalid number format', async () => {
     props = {
       ...props,
@@ -436,24 +512,16 @@ describe('Catalogue Items Dialog', () => {
       drawingNumber: 'mk4324',
       itemModelNumber: 'mk4324',
       name: 'test',
-      resolution: '12a',
-      frameRate: '60a',
-      sensorType: 'IO',
-      sensorBrand: 'pixel',
-      broken: 'True',
-      older: 'False',
       manufacturer: 'Man{arrowdown}{enter}',
     });
 
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-    await user.click(saveButton);
-
-    const validNumberHelperText = screen.getAllByText(
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+    const validNumberDetailsHelperText = screen.getAllByText(
       'Please enter a valid number'
     );
 
-    expect(validNumberHelperText.length).toBe(6);
-    expect(validNumberHelperText[0]).toHaveTextContent(
+    expect(validNumberDetailsHelperText.length).toBe(4);
+    expect(validNumberDetailsHelperText[0]).toHaveTextContent(
       'Please enter a valid number'
     );
 
@@ -462,6 +530,35 @@ describe('Catalogue Items Dialog', () => {
         'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
       )
     ).toBeInTheDocument();
+
+    await modifyValues({
+      costGbp: '1200',
+      costToReworkGbp: '400',
+      daysToReplace: '20',
+      daysToRework: '2',
+      drawingLink: 'https://example.com',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+
+    await modifyValues({
+      resolution: '12a',
+      frameRate: '60a',
+      sensorType: 'IO',
+      sensorBrand: 'pixel',
+      broken: 'True',
+      older: 'False',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+    const validNumberPropertiesHelperText = screen.getAllByText(
+      'Please enter a valid number'
+    );
+    expect(validNumberPropertiesHelperText.length).toBe(2);
+    expect(validNumberPropertiesHelperText[0]).toHaveTextContent(
+      'Please enter a valid number'
+    );
   }, 10000);
 
   it('displays warning message when an unknown error occurs', async () => {
@@ -481,17 +578,21 @@ describe('Catalogue Items Dialog', () => {
       drawingNumber: 'mk4324',
       itemModelNumber: 'mk4324',
       name: 'Error 500',
+      manufacturer: 'Man{arrowdown}{enter}',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+
+    await modifyValues({
       resolution: '12',
       frameRate: '60',
       sensorType: 'IO',
       sensorBrand: 'pixel',
       broken: 'True',
       older: 'False',
-      manufacturer: 'Man{arrowdown}{enter}',
     });
 
-    const saveButton = screen.getByRole('button', { name: 'Save' });
-    await user.click(saveButton);
+    await user.click(screen.getByRole('button', { name: 'Finish' }));
 
     expect(handleIMS_APIError).toHaveBeenCalled();
     expect(onClose).not.toHaveBeenCalled();
@@ -552,8 +653,9 @@ describe('Catalogue Items Dialog', () => {
         notes: 'test',
       });
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         cost_gbp: 687,
         cost_to_rework_gbp: 89,
@@ -579,6 +681,7 @@ describe('Catalogue Items Dialog', () => {
       };
 
       createView();
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await fireEvent.change(
         screen.getByLabelText('Ultimate Pressure (millibar) *'),
@@ -595,8 +698,7 @@ describe('Catalogue Items Dialog', () => {
       await fireEvent.mouseDown(screen.getByLabelText('Axis'));
       await fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/17', {
         properties: [
@@ -629,18 +731,47 @@ describe('Catalogue Items Dialog', () => {
         drawingNumber: '',
         itemModelNumber: '',
         name: '',
+        manufacturer: '{delete}',
+        notes: '',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      const nameHelperText = screen.getByText('Please enter a name');
+      const costHelperText = screen.getByText('Please enter a cost');
+      const daysToReplaceHelperText = screen.getByText(
+        'Please enter how many days it would take to replace'
+      );
+
+      expect(nameHelperText).toBeInTheDocument();
+      expect(costHelperText).toBeInTheDocument();
+      expect(daysToReplaceHelperText).toBeInTheDocument();
+
+      expect(
+        screen.getByText(
+          'Please choose a manufacturer, or add a new manufacturer'
+        )
+      ).toBeInTheDocument();
+
+      await modifyValues({
+        costGbp: '200',
+        daysToReplace: '5',
+        name: 'test',
+        manufacturer: '{arrowdown}{enter}',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifyValues({
         resolution: '',
         frameRate: '',
         sensorType: '',
         sensorBrand: '',
         broken: 'None',
         older: 'None',
-        manufacturer: '{delete}',
-        notes: '',
       });
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       const mandatoryFieldHelperText = screen.getAllByText(
         'Please enter a valid value as this field is mandatory'
@@ -650,26 +781,12 @@ describe('Catalogue Items Dialog', () => {
         'Please select either True or False'
       );
 
-      const nameHelperText = screen.getByText('Please enter a name');
-      const costHelperText = screen.getByText('Please enter a cost');
-      const daysToReplaceHelperText = screen.getByText(
-        'Please enter how many days it would take to replace'
-      );
-
       expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
-      expect(nameHelperText).toBeInTheDocument();
-      expect(costHelperText).toBeInTheDocument();
-      expect(daysToReplaceHelperText).toBeInTheDocument();
+
       expect(mandatoryFieldHelperText.length).toBe(2);
       expect(mandatoryFieldHelperText[0]).toHaveTextContent(
         'Please enter a valid value as this field is mandatory'
       );
-
-      expect(
-        screen.getByText(
-          'Please choose a manufacturer, or add a new manufacturer'
-        )
-      ).toBeInTheDocument();
     }, 6000);
 
     it('Edit a catalogue item (catalogue properties)', async () => {
@@ -680,6 +797,8 @@ describe('Catalogue Items Dialog', () => {
       };
 
       createView();
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
       await modifyValues({
         resolution: '24',
         frameRate: '240',
@@ -688,9 +807,7 @@ describe('Catalogue Items Dialog', () => {
         broken: 'True',
         older: 'True',
       });
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-
-      await user.click(saveButton);
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         properties: [
           { name: 'Resolution', value: 24 },
@@ -718,8 +835,9 @@ describe('Catalogue Items Dialog', () => {
         manufacturer: 'Man{arrowdown}{arrowdown}{enter}',
       });
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         manufacturer_id: '3',
@@ -737,9 +855,9 @@ describe('Catalogue Items Dialog', () => {
 
       createView();
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-      await user.click(saveButton);
       expect(axiosPatchSpy).not.toHaveBeenCalled();
 
       await waitFor(() => {
@@ -764,9 +882,11 @@ describe('Catalogue Items Dialog', () => {
 
       createView();
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-
-      await user.click(saveButton);
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      // checks the back button works as expected
+      await user.click(screen.getByRole('button', { name: 'Back' }));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       await waitFor(() => {
         expect(
@@ -788,9 +908,9 @@ describe('Catalogue Items Dialog', () => {
         name: 'test_has_children_elements',
       });
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-      await user.click(saveButton);
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         name: 'test_has_children_elements',
       });
@@ -816,8 +936,9 @@ describe('Catalogue Items Dialog', () => {
         name: 'Error 500',
       });
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(handleIMS_APIError).toHaveBeenCalled();
       expect(onClose).not.toHaveBeenCalled();

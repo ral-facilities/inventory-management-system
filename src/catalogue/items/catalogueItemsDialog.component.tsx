@@ -14,6 +14,9 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Step,
+  StepLabel,
+  Stepper,
   TextField,
   Tooltip,
   Typography,
@@ -203,8 +206,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const { data: manufacturerList } = useManufacturers();
   const selectedCatalogueItemManufacturer =
     manufacturerList?.find(
-      (manufactuerer) =>
-        manufactuerer.id === selectedCatalogueItem?.manufacturer_id
+      (manufacturer) =>
+        manufacturer.id === selectedCatalogueItem?.manufacturer_id
     ) || null;
   const [selectedManufacturer, setSelectedManufacturer] =
     React.useState<Manufacturer | null>(null);
@@ -216,8 +219,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const [addManufacturerDialogOpen, setAddManufacturerDialogOpen] =
     React.useState<boolean>(false);
 
-  const handleFormErrorStates = React.useCallback(() => {
-    let hasErrors = false;
+  const handleDetailsFormErrorStates = React.useCallback(() => {
+    let hasDetailsErrors = false;
 
     if (
       !catalogueItemDetails.days_to_replace ||
@@ -227,14 +230,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         ...prevErrorMessages,
         days_to_replace: 'Please enter how many days it would take to replace',
       }));
-      hasErrors = true;
+      hasDetailsErrors = true;
     } else {
       if (!isValidNumber(catalogueItemDetails.days_to_replace)) {
         setErrorMessages((prevErrorMessages) => ({
           ...prevErrorMessages,
           days_to_replace: 'Please enter a valid number',
         }));
-        hasErrors = true;
+        hasDetailsErrors = true;
       }
     }
 
@@ -244,7 +247,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         ...prevErrorMessages,
         name: 'Please enter a name',
       }));
-      hasErrors = true;
+      hasDetailsErrors = true;
     }
     // Check the catalogue item cost is not falsy and is a valid number
 
@@ -256,14 +259,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         ...prevErrorMessages,
         cost_gbp: 'Please enter a cost',
       }));
-      hasErrors = true;
+      hasDetailsErrors = true;
     } else {
       if (!isValidNumber(catalogueItemDetails.cost_gbp)) {
         setErrorMessages((prevErrorMessages) => ({
           ...prevErrorMessages,
           cost_gbp: 'Please enter a valid number',
         }));
-        hasErrors = true;
+        hasDetailsErrors = true;
       }
     }
 
@@ -278,7 +281,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           ...prevErrorMessages,
           cost_to_rework_gbp: 'Please enter a valid number',
         }));
-        hasErrors = true;
+        hasDetailsErrors = true;
       }
     }
 
@@ -293,7 +296,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           ...prevErrorMessages,
           days_to_rework: 'Please enter a valid number',
         }));
-        hasErrors = true;
+        hasDetailsErrors = true;
       }
     }
 
@@ -309,7 +312,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           drawing_link:
             'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted',
         }));
-        hasErrors = true;
+        hasDetailsErrors = true;
       }
     }
     // Check Manufacturer
@@ -322,8 +325,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         manufacturer_id:
           'Please choose a manufacturer, or add a new manufacturer',
       }));
-      hasErrors = true;
+      hasDetailsErrors = true;
     }
+
+    return { hasDetailsErrors };
+  }, [catalogueItemDetails, selectedManufacturer]);
+
+  const handlePropertiesFormErrorStates = React.useCallback(() => {
+    let hasPropertiesErrors = false;
 
     // Check properties
     const updatedPropertyErrors = [...propertyErrors];
@@ -332,7 +341,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       (property, index) => {
         if (property.mandatory && !propertyValues[index]) {
           updatedPropertyErrors[index] = true;
-          hasErrors = true;
+          hasPropertiesErrors = true;
         } else {
           updatedPropertyErrors[index] = false;
         }
@@ -343,7 +352,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           isNaN(Number(propertyValues[index]))
         ) {
           updatedPropertyErrors[index] = true;
-          hasErrors = true;
+          hasPropertiesErrors = true;
         }
 
         if (!propertyValues[index])
@@ -372,14 +381,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
     setPropertyErrors(updatedPropertyErrors);
 
-    return { hasErrors, updatedProperties };
-  }, [
-    catalogueItemDetails,
-    selectedManufacturer,
-    propertyErrors,
-    parentCatalogueItemPropertiesInfo,
-    propertyValues,
-  ]);
+    return { hasPropertiesErrors, updatedProperties };
+  }, [propertyErrors, parentCatalogueItemPropertiesInfo, propertyValues]);
   const details = React.useMemo(
     () => ({
       catalogue_category_id: parentId ?? '',
@@ -412,11 +415,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     [catalogueItemDetails, parentId]
   );
   const handleAddCatalogueItem = React.useCallback(() => {
-    const { hasErrors, updatedProperties } = handleFormErrorStates();
+    const { updatedProperties, hasPropertiesErrors } =
+      handlePropertiesFormErrorStates();
+    const { hasDetailsErrors } = handleDetailsFormErrorStates();
 
-    if (hasErrors) {
-      return; // Do not proceed with saving if there are errors
-    }
+    if (hasPropertiesErrors || hasDetailsErrors) return;
 
     const catalogueItem: AddCatalogueItem = {
       ...details,
@@ -429,15 +432,21 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       .catch((error: AxiosError) => {
         handleIMS_APIError(error);
       });
-  }, [addCatalogueItem, handleClose, details, handleFormErrorStates]);
+  }, [
+    handlePropertiesFormErrorStates,
+    handleDetailsFormErrorStates,
+    details,
+    addCatalogueItem,
+    handleClose,
+  ]);
 
   const handleEditCatalogueItem = React.useCallback(() => {
     if (selectedCatalogueItem) {
-      const { hasErrors, updatedProperties } = handleFormErrorStates();
+      const { updatedProperties, hasPropertiesErrors } =
+        handlePropertiesFormErrorStates();
+      const { hasDetailsErrors } = handleDetailsFormErrorStates();
 
-      if (hasErrors) {
-        return; // Do not proceed with saving if there are errors
-      }
+      if (hasPropertiesErrors || hasDetailsErrors) return;
 
       const isNameUpdated = details.name !== selectedCatalogueItem.name;
 
@@ -536,11 +545,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       }
     }
   }, [
-    editCatalogueItem,
-    handleClose,
-    handleFormErrorStates,
     selectedCatalogueItem,
+    handlePropertiesFormErrorStates,
     details,
+    editCatalogueItem,
+    handleDetailsFormErrorStates,
+    handleClose,
   ]);
 
   const handleCatalogueDetails = (
@@ -562,263 +572,276 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     setCatalogueItemDetails(updatedDetails);
   };
 
-  return (
-    <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
-      <DialogTitle>{`${
-        type === 'edit' ? 'Edit' : 'Add'
-      } Catalogue Item`}</DialogTitle>
-      <DialogContent>
-        <Grid container spacing={1.5}>
-          <Grid item xs={6}>
-            <Grid container spacing={1.5}>
-              <Grid item xs={12}>
-                <Typography variant="h6">Details</Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Name"
-                  size="small"
-                  required={true}
-                  value={catalogueItemDetails.name ?? ''}
-                  onChange={(event) => {
-                    handleCatalogueDetails('name', event.target.value);
-                  }}
-                  fullWidth
-                  error={errorMessages.name !== undefined}
-                  helperText={
-                    errorMessages.name !== undefined ? errorMessages.name : ''
-                  }
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Description"
-                  size="small"
-                  value={catalogueItemDetails.description ?? ''}
-                  onChange={(event) => {
-                    handleCatalogueDetails('description', event.target.value);
-                  }}
-                  fullWidth
-                  multiline
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Cost (£)"
-                  size="small"
-                  required={true}
-                  value={catalogueItemDetails.cost_gbp ?? ''}
-                  onChange={(event) => {
-                    handleCatalogueDetails('cost_gbp', event.target.value);
-                  }}
-                  error={errorMessages.cost_gbp !== undefined}
-                  helperText={
-                    errorMessages.cost_gbp !== undefined
-                      ? errorMessages.cost_gbp
-                      : ''
-                  }
-                  fullWidth
-                />
-              </Grid>
+  // Stepper
+  const STEPS = [
+    (type === 'edit' ? 'Edit' : 'Add') + ' catalogue item details',
+    (type === 'edit' ? 'Edit' : 'Add') + ' catalogue item properties',
+  ];
+  const [activeStep, setActiveStep] = React.useState<number>(0);
 
-              <Grid item xs={12}>
-                <TextField
-                  label="Cost to rework (£)"
-                  size="small"
-                  value={catalogueItemDetails.cost_to_rework_gbp ?? ''}
-                  onChange={(event) => {
-                    handleCatalogueDetails(
-                      'cost_to_rework_gbp',
-                      event.target.value
-                    );
-                  }}
-                  error={errorMessages.cost_to_rework_gbp !== undefined}
-                  helperText={
-                    errorMessages.cost_to_rework_gbp !== undefined
-                      ? errorMessages.cost_to_rework_gbp
-                      : ''
-                  }
-                  fullWidth
-                />
-              </Grid>
+  const handleNext = (activeStep: number) => {
+    if (activeStep === 0) {
+      const { hasDetailsErrors } = handleDetailsFormErrorStates();
+      if (hasDetailsErrors) return; // Do not proceed with next if there are errors
+    }
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
 
-              <Grid item xs={12}>
-                <TextField
-                  label="Time to replace (days)"
-                  size="small"
-                  required={true}
-                  value={catalogueItemDetails.days_to_replace ?? ''}
-                  onChange={(event) => {
-                    handleCatalogueDetails(
-                      'days_to_replace',
-                      event.target.value
-                    );
-                  }}
-                  error={errorMessages.days_to_replace !== undefined}
-                  helperText={
-                    errorMessages.days_to_replace !== undefined
-                      ? errorMessages.days_to_replace
-                      : ''
-                  }
-                  fullWidth
-                />
-              </Grid>
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
 
-              <Grid item xs={12}>
-                <TextField
-                  label="Time to rework (days)"
-                  size="small"
-                  value={catalogueItemDetails.days_to_rework ?? ''}
-                  onChange={(event) => {
-                    handleCatalogueDetails(
-                      'days_to_rework',
-                      event.target.value
-                    );
-                  }}
-                  error={errorMessages.days_to_rework !== undefined}
-                  helperText={
-                    errorMessages.days_to_rework !== undefined
-                      ? errorMessages.days_to_rework
-                      : ''
-                  }
-                  fullWidth
-                />
-              </Grid>
+  const isStepFailed = React.useCallback(
+    (step: number) => {
+      switch (step) {
+        case 0:
+          return JSON.stringify(errorMessages) !== '{}';
+        case 1:
+          return propertyErrors.some((value) => value === true);
+      }
+    },
+    [errorMessages, propertyErrors]
+  );
 
-              <Grid item xs={12}>
-                <TextField
-                  label="Drawing number"
-                  size="small"
-                  value={catalogueItemDetails.drawing_number ?? ''}
-                  onChange={(event) => {
-                    handleCatalogueDetails(
-                      'drawing_number',
-                      event.target.value
-                    );
-                  }}
-                  fullWidth
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  label="Drawing link"
-                  size="small"
-                  value={catalogueItemDetails.drawing_link ?? ''}
-                  onChange={(event) => {
-                    handleCatalogueDetails('drawing_link', event.target.value);
-                  }}
-                  error={errorMessages.drawing_link !== undefined}
-                  helperText={
-                    errorMessages.drawing_link !== undefined
-                      ? errorMessages.drawing_link
-                      : ''
-                  }
-                  fullWidth
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  label="Model number"
-                  size="small"
-                  value={catalogueItemDetails.item_model_number ?? ''}
-                  onChange={(event) => {
-                    handleCatalogueDetails(
-                      'item_model_number',
-                      event.target.value
-                    );
-                  }}
-                  fullWidth
-                />
-              </Grid>
-
-              <Grid item xs={12} style={{ display: 'flex' }}>
-                <Grid item xs={11}>
-                  <Autocomplete
-                    value={
-                      //logic means that current manufacturer renders in edit dialog, but behaves the same as add dialog (so can be changed/cleared)
-                      selectedCatalogueItemManufacturer &&
-                      selectedManufacturer === null &&
-                      inputValue !== ''
-                        ? selectedCatalogueItemManufacturer
-                        : selectedManufacturer
-                    }
-                    inputValue={inputValue ?? ''}
-                    onInputChange={(event, newInputValue) =>
-                      setInputValue(newInputValue)
-                    }
-                    onChange={(
-                      event: any,
-                      newManufacturer: Manufacturer | null
-                    ) => {
-                      setSelectedManufacturer(newManufacturer ?? null);
-                      setInputValue(newManufacturer?.name ?? '');
-                      handleCatalogueDetails(
-                        'manufacturer_id',
-                        newManufacturer?.id ?? null
-                      );
-                    }}
-                    id="manufacturer-autocomplete"
-                    options={manufacturerList ?? []}
-                    size="small"
-                    isOptionEqualToValue={(option, value) =>
-                      option.name === value.name
-                    }
-                    getOptionLabel={(option) => option.name}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        required={true}
-                        label="Manufacturer"
-                        error={errorMessages.manufacturer_id !== undefined}
-                        helperText={
-                          errorMessages.manufacturer_id !== undefined
-                            ? errorMessages.manufacturer_id
-                            : ''
-                        }
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={1}>
-                  <IconButton
-                    sx={{ mx: '4px', my: '2px' }}
-                    onClick={() => setAddManufacturerDialogOpen(true)}
-                    aria-label="add manufacturer"
-                  >
-                    <AddIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-              <ManufacturerDialog
-                open={addManufacturerDialogOpen}
-                onClose={() => setAddManufacturerDialogOpen(false)}
-                type="create"
+  const renderStepContent = (step: number) => {
+    switch (step) {
+      case 0:
+        return (
+          <Grid item container spacing={1.5} xs={12}>
+            <Grid item xs={12}>
+              <TextField
+                label="Name"
+                size="small"
+                required={true}
+                value={catalogueItemDetails.name ?? ''}
+                onChange={(event) => {
+                  handleCatalogueDetails('name', event.target.value);
+                }}
+                fullWidth
+                error={errorMessages.name !== undefined}
+                helperText={
+                  errorMessages.name !== undefined ? errorMessages.name : ''
+                }
               />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Description"
+                size="small"
+                value={catalogueItemDetails.description ?? ''}
+                onChange={(event) => {
+                  handleCatalogueDetails('description', event.target.value);
+                }}
+                fullWidth
+                multiline
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Cost (£)"
+                size="small"
+                required={true}
+                value={catalogueItemDetails.cost_gbp ?? ''}
+                onChange={(event) => {
+                  handleCatalogueDetails('cost_gbp', event.target.value);
+                }}
+                error={errorMessages.cost_gbp !== undefined}
+                helperText={
+                  errorMessages.cost_gbp !== undefined
+                    ? errorMessages.cost_gbp
+                    : ''
+                }
+                fullWidth
+              />
+            </Grid>
 
-              <Grid item xs={12}>
-                <TextField
-                  label="Notes"
-                  size="small"
-                  multiline
-                  minRows={5}
-                  value={catalogueItemDetails.notes ?? ''}
-                  onChange={(event) => {
-                    handleCatalogueDetails('notes', event.target.value);
+            <Grid item xs={12}>
+              <TextField
+                label="Cost to rework (£)"
+                size="small"
+                value={catalogueItemDetails.cost_to_rework_gbp ?? ''}
+                onChange={(event) => {
+                  handleCatalogueDetails(
+                    'cost_to_rework_gbp',
+                    event.target.value
+                  );
+                }}
+                error={errorMessages.cost_to_rework_gbp !== undefined}
+                helperText={
+                  errorMessages.cost_to_rework_gbp !== undefined
+                    ? errorMessages.cost_to_rework_gbp
+                    : ''
+                }
+                fullWidth
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                label="Time to replace (days)"
+                size="small"
+                required={true}
+                value={catalogueItemDetails.days_to_replace ?? ''}
+                onChange={(event) => {
+                  handleCatalogueDetails('days_to_replace', event.target.value);
+                }}
+                error={errorMessages.days_to_replace !== undefined}
+                helperText={
+                  errorMessages.days_to_replace !== undefined
+                    ? errorMessages.days_to_replace
+                    : ''
+                }
+                fullWidth
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                label="Time to rework (days)"
+                size="small"
+                value={catalogueItemDetails.days_to_rework ?? ''}
+                onChange={(event) => {
+                  handleCatalogueDetails('days_to_rework', event.target.value);
+                }}
+                error={errorMessages.days_to_rework !== undefined}
+                helperText={
+                  errorMessages.days_to_rework !== undefined
+                    ? errorMessages.days_to_rework
+                    : ''
+                }
+                fullWidth
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                label="Drawing number"
+                size="small"
+                value={catalogueItemDetails.drawing_number ?? ''}
+                onChange={(event) => {
+                  handleCatalogueDetails('drawing_number', event.target.value);
+                }}
+                fullWidth
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                label="Drawing link"
+                size="small"
+                value={catalogueItemDetails.drawing_link ?? ''}
+                onChange={(event) => {
+                  handleCatalogueDetails('drawing_link', event.target.value);
+                }}
+                error={errorMessages.drawing_link !== undefined}
+                helperText={
+                  errorMessages.drawing_link !== undefined
+                    ? errorMessages.drawing_link
+                    : ''
+                }
+                fullWidth
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                label="Model number"
+                size="small"
+                value={catalogueItemDetails.item_model_number ?? ''}
+                onChange={(event) => {
+                  handleCatalogueDetails(
+                    'item_model_number',
+                    event.target.value
+                  );
+                }}
+                fullWidth
+              />
+            </Grid>
+
+            <Grid item xs={12} style={{ display: 'flex' }}>
+              <Grid item xs={11}>
+                <Autocomplete
+                  value={
+                    //logic means that current manufacturer renders in edit dialog, but behaves the same as add dialog (so can be changed/cleared)
+                    selectedCatalogueItemManufacturer &&
+                    selectedManufacturer === null &&
+                    inputValue !== ''
+                      ? selectedCatalogueItemManufacturer
+                      : selectedManufacturer
+                  }
+                  inputValue={inputValue ?? ''}
+                  onInputChange={(event, newInputValue) =>
+                    setInputValue(newInputValue)
+                  }
+                  onChange={(
+                    event: any,
+                    newManufacturer: Manufacturer | null
+                  ) => {
+                    setSelectedManufacturer(newManufacturer ?? null);
+                    setInputValue(newManufacturer?.name ?? '');
+                    handleCatalogueDetails(
+                      'manufacturer_id',
+                      newManufacturer?.id ?? null
+                    );
                   }}
-                  fullWidth
+                  id="manufacturer-autocomplete"
+                  options={manufacturerList ?? []}
+                  size="small"
+                  isOptionEqualToValue={(option, value) =>
+                    option.name === value.name
+                  }
+                  getOptionLabel={(option) => option.name}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      required={true}
+                      label="Manufacturer"
+                      error={errorMessages.manufacturer_id !== undefined}
+                      helperText={
+                        errorMessages.manufacturer_id !== undefined
+                          ? errorMessages.manufacturer_id
+                          : ''
+                      }
+                    />
+                  )}
                 />
+              </Grid>
+              <Grid item xs={1}>
+                <IconButton
+                  sx={{ mx: '4px', my: '2px' }}
+                  onClick={() => setAddManufacturerDialogOpen(true)}
+                  aria-label="add manufacturer"
+                >
+                  <AddIcon />
+                </IconButton>
               </Grid>
             </Grid>
-          </Grid>
+            <ManufacturerDialog
+              open={addManufacturerDialogOpen}
+              onClose={() => setAddManufacturerDialogOpen(false)}
+              type="create"
+            />
 
-          <Grid item xs={6}>
-            {parentCatalogueItemPropertiesInfo.length >= 1 && (
+            <Grid item xs={12}>
+              <TextField
+                label="Notes"
+                size="small"
+                multiline
+                minRows={5}
+                value={catalogueItemDetails.notes ?? ''}
+                onChange={(event) => {
+                  handleCatalogueDetails('notes', event.target.value);
+                }}
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+        );
+      case 1:
+        return (
+          <Grid item xs={12}>
+            {parentCatalogueItemPropertiesInfo.length >= 1 ? (
               <Grid container spacing={1.5}>
-                <Grid item xs={12}>
-                  <Typography variant="h6">Properties</Typography>
-                </Grid>
                 {parentCatalogueItemPropertiesInfo.map(
                   (property: CatalogueCategoryFormData, index: number) => (
                     <Grid item xs={12} key={index}>
@@ -981,35 +1004,81 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   )
                 )}
               </Grid>
+            ) : (
+              <Box
+                sx={{
+                  width: '100%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 3,
+                }}
+              >
+                <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+                  No catalogue item properties
+                </Typography>
+                <Typography sx={{ textAlign: 'center' }}>
+                  Please click the Finish button
+                </Typography>
+              </Box>
             )}
           </Grid>
-        </Grid>
-      </DialogContent>
-      <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
-        <Box
-          sx={{ display: 'flex', alignItems: 'center', width: '100%' }}
-        ></Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            width: '100%',
-            my: 2,
-          }}
+        );
+    }
+  };
+  return (
+    <Dialog
+      PaperProps={{ sx: { height: '850px' } }}
+      open={open}
+      onClose={handleClose}
+      maxWidth="lg"
+      fullWidth
+    >
+      <DialogTitle>{`${
+        type === 'edit' ? 'Edit' : 'Add'
+      } Catalogue Item`}</DialogTitle>
+      <DialogContent>
+        <Stepper
+          nonLinear
+          activeStep={activeStep}
+          orientation="horizontal"
+          sx={{ marginTop: 2 }}
         >
-          <Button
-            variant="outlined"
-            sx={{ width: '50%', mx: 1 }}
-            onClick={handleClose}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="outlined"
-            sx={{ width: '50%', mx: 1 }}
-            onClick={
-              type === 'edit' ? handleEditCatalogueItem : handleAddCatalogueItem
+          {STEPS.map((label, index) => {
+            const labelProps: {
+              optional?: React.ReactNode;
+              error?: boolean;
+            } = {};
+
+            if (isStepFailed(index)) {
+              labelProps.optional = (
+                <Typography variant="caption" color="error">
+                  {index === 1 && 'Invalid catalogue item properties'}
+                  {index === 0 && 'Invalid details'}
+                </Typography>
+              );
+              labelProps.error = true;
             }
+            return (
+              <Step sx={{ cursor: 'pointer' }} key={label}>
+                <StepLabel {...labelProps} onClick={() => setActiveStep(index)}>
+                  {label}
+                </StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+        <Box sx={{ marginTop: 2 }}>{renderStepContent(activeStep)}</Box>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} sx={{ mr: 'auto' }}>
+          Cancel
+        </Button>
+        <Button disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 2 }}>
+          Back
+        </Button>
+
+        {activeStep === STEPS.length - 1 ? (
+          <Button
             disabled={
               JSON.stringify(errorMessages) !== '{}' ||
               formError ||
@@ -1017,16 +1086,39 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                 return value === true;
               })
             }
+            onClick={
+              type === 'edit' ? handleEditCatalogueItem : handleAddCatalogueItem
+            }
+            sx={{ mr: 3 }}
           >
-            Save
+            Finish
           </Button>
-        </Box>
+        ) : (
+          <Button
+            disabled={JSON.stringify(errorMessages) !== '{}' || formError}
+            onClick={() => handleNext(activeStep)}
+            sx={{ mr: 3 }}
+          >
+            Next
+          </Button>
+        )}
+      </DialogActions>
+      <Box
+        sx={{
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         {formError && (
-          <FormHelperText sx={{ marginBottom: '16px' }} error>
+          <FormHelperText
+            sx={{ marginBottom: '16px', textAlign: 'center' }}
+            error
+          >
             {formErrorMessage}
           </FormHelperText>
         )}
-      </DialogActions>
+      </Box>
     </Dialog>
   );
 }
