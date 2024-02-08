@@ -91,7 +91,7 @@ describe('Delete Manufacturer Dialog', () => {
     manufacturer.id = '2';
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
-    user.click(continueButton);
+    await user.click(continueButton);
 
     await waitFor(() => {
       expect(
