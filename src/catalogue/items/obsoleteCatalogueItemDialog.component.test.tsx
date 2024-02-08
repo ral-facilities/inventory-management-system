@@ -261,9 +261,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     ).not.toBeInTheDocument();
 
     // Skip to third step
-    await user.click(
-      screen.getByRole('button', { name: 'Obsolete Replacement' })
-    );
+    await user.click(screen.getByText('Obsolete Replacement'));
 
     expect(screen.getByRole('button', { name: 'Finish' })).toBeInTheDocument();
   });

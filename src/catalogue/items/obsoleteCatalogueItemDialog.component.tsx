@@ -11,7 +11,7 @@ import {
   MenuItem,
   Select,
   Step,
-  StepButton,
+  StepLabel,
   Stepper,
   TextField,
   Typography,
@@ -302,10 +302,10 @@ const ObsoleteCatalogueItemDialog = (
           sx={{ marginTop: 2 }}
         >
           {steps.map((label, index) => (
-            <Step key={label}>
-              <StepButton onClick={() => setActiveStep(index)}>
+            <Step sx={{ cursor: 'pointer' }} key={label}>
+              <StepLabel onClick={() => setActiveStep(index)}>
                 {label}
-              </StepButton>
+              </StepLabel>
             </Step>
           ))}
         </Stepper>

@@ -71,21 +71,15 @@ describe('ItemDialog', () => {
     user = userEvent.setup();
   });
 
-  const modifyValues = async (values: {
+  const modifyDetailsValues = async (values: {
     serialNumber?: string;
     assetNumber?: string;
     purchaseOrderNumber?: string;
     warrantyEndDate?: string;
     deliveredDate?: string;
     isDefective?: string;
-    notes?: string;
-    resolution?: string;
-    frameRate?: string;
-    sensorType?: string;
-    sensorBrand?: string;
-    broken?: string;
-    older?: string;
     usageStatus?: string;
+    notes?: string;
   }) => {
     values.serialNumber !== undefined &&
       fireEvent.change(screen.getByLabelText('Serial number'), {
@@ -119,6 +113,29 @@ describe('ItemDialog', () => {
         values.deliveredDate
       ));
 
+    if (values.isDefective !== undefined) {
+      fireEvent.mouseDown(screen.getByLabelText('Is defective *'));
+      fireEvent.click(
+        within(screen.getByRole('listbox')).getByText(values.isDefective)
+      );
+    }
+
+    if (values.usageStatus !== undefined) {
+      fireEvent.mouseDown(screen.getByLabelText('Usage status *'));
+      fireEvent.click(
+        within(screen.getByRole('listbox')).getByText(values.usageStatus)
+      );
+    }
+  };
+
+  const modifyPropertiesValues = async (values: {
+    resolution?: string;
+    frameRate?: string;
+    sensorType?: string;
+    sensorBrand?: string;
+    broken?: string;
+    older?: string;
+  }) => {
     values.resolution !== undefined &&
       fireEvent.change(screen.getByLabelText('Resolution (megapixels) *'), {
         target: { value: values.resolution },
@@ -152,18 +169,11 @@ describe('ItemDialog', () => {
       fireEvent.change(screen.getByLabelText('Sensor Type *'), {
         target: { value: values.sensorType },
       });
-    if (values.isDefective !== undefined) {
-      fireEvent.mouseDown(screen.getByLabelText('Is defective *'));
-      fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.isDefective)
-      );
-    }
+  };
 
-    if (values.usageStatus !== undefined) {
-      fireEvent.mouseDown(screen.getByLabelText('Usage status *'));
-      fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.usageStatus)
-      );
+  const modifySystemValue = async (values: { system?: string }) => {
+    if (values.system !== undefined) {
+      await user.click(screen.getByText(values.system));
     }
   };
 
@@ -178,10 +188,41 @@ describe('ItemDialog', () => {
       axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
+    it('displays no item properties message', async () => {
+      props.catalogueCategory = {
+        ...props.catalogueCategory,
+        catalogue_item_properties: [],
+      };
+
+      props.catalogueItem = {
+        ...props.catalogueItem,
+        properties: [],
+      };
+
+      createView();
+
+      await user.click(screen.getByText('Add item properties'));
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            `Please navigate to the next step to select a system`
+          )
+        ).toBeInTheDocument();
+      });
+    });
     it('adds an item with just the default values', async () => {
       createView();
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+
+      //navigate through stepper
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifySystemValue({
+        system: 'Giant laser',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
         asset_number: null,
         catalogue_item_id: '1',
@@ -198,12 +239,55 @@ describe('ItemDialog', () => {
         ],
         purchase_order_number: null,
         serial_number: null,
-        system_id: null,
+        system_id: '65328f34a40ff5301575a4e3',
         usage_status: 0,
         warranty_end_date: null,
       });
     });
 
+    it('navigates through the stepper using the labels', async () => {
+      createView();
+
+      //navigate through stepper
+      await user.click(screen.getByText('Add item properties'));
+
+      await waitFor(() => {
+        expect(
+          screen.getByLabelText('Resolution (megapixels) *')
+        ).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByText('Place into a system'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByText('Add item details'));
+
+      await waitFor(() => {
+        expect(screen.getByLabelText('Serial number')).toBeInTheDocument();
+      });
+    });
+
+    it('should navigate back using the back button', async () => {
+      createView();
+
+      //navigate through stepper
+      await user.click(screen.getByText('Add item properties'));
+
+      await waitFor(() => {
+        expect(
+          screen.getByLabelText('Resolution (megapixels) *')
+        ).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Back' }));
+
+      await waitFor(() => {
+        expect(screen.getByLabelText('Serial number')).toBeInTheDocument();
+      });
+    });
     it('adds an item where the item property has an allowed list of values', async () => {
       props = {
         ...props,
@@ -211,6 +295,8 @@ describe('ItemDialog', () => {
         catalogueItem: getCatalogueItemById('17'),
       };
       createView();
+
+      await user.click(screen.getByText('Add item properties'));
 
       await fireEvent.change(
         screen.getByLabelText('Ultimate Pressure (millibar) *'),
@@ -227,8 +313,14 @@ describe('ItemDialog', () => {
       await fireEvent.mouseDown(screen.getByLabelText('Axis'));
       await fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifySystemValue({
+        system: 'Giant laser',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
         asset_number: null,
         catalogue_item_id: '17',
@@ -245,7 +337,7 @@ describe('ItemDialog', () => {
         ],
         purchase_order_number: null,
         serial_number: null,
-        system_id: null,
+        system_id: '65328f34a40ff5301575a4e3',
         usage_status: 0,
         warranty_end_date: null,
       });
@@ -253,7 +345,8 @@ describe('ItemDialog', () => {
 
     it('adds an item (all input values)', async () => {
       createView();
-      await modifyValues({
+
+      await modifyDetailsValues({
         serialNumber: 'test12',
         assetNumber: 'test43',
         purchaseOrderNumber: 'test21',
@@ -262,6 +355,11 @@ describe('ItemDialog', () => {
         deliveredDate: '23/09/2045',
         isDefective: 'Yes',
         usageStatus: 'Used',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifyPropertiesValues({
         resolution: '12',
         frameRate: '60',
         sensorType: 'IO',
@@ -269,8 +367,15 @@ describe('ItemDialog', () => {
         broken: 'True',
         older: 'False',
       });
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifySystemValue({
+        system: 'Giant laser',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
         asset_number: 'test43',
         catalogue_item_id: '1',
@@ -287,15 +392,72 @@ describe('ItemDialog', () => {
         ],
         purchase_order_number: 'test21',
         serial_number: 'test12',
-        system_id: null,
+        system_id: '65328f34a40ff5301575a4e3',
         usage_status: 2,
         warranty_end_date: '2035-02-17T00:00:00.000Z',
       });
     }, 10000);
 
+    it('displays an error message if a step is disabled and clears the errors until the finish button is enabled', async () => {
+      createView();
+
+      await modifyDetailsValues({
+        serialNumber: 'test12',
+        assetNumber: 'test43',
+        purchaseOrderNumber: 'test21',
+        notes: 'test',
+        warrantyEndDate: '17/02/',
+        deliveredDate: '23/09/',
+        isDefective: 'Yes',
+        usageStatus: 'Used',
+      });
+
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByText('Invalid date')).toBeInTheDocument();
+
+      await user.click(screen.getByText('Add item properties'));
+
+      await modifyPropertiesValues({
+        resolution: 'ds',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByText('Invalid item properties')).toBeInTheDocument();
+
+      await user.click(screen.getByText('Place into a system'));
+
+      await modifySystemValue({
+        system: 'Giant laser',
+      });
+
+      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+
+      await user.click(screen.getByText('Add item properties'));
+
+      await modifyPropertiesValues({
+        resolution: '12',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+
+      await user.click(screen.getByText('Add item details'));
+      await modifyDetailsValues({
+        warrantyEndDate: '17/02/2000',
+        deliveredDate: '23/09/2000',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
+    }, 10000);
+
     it('adds an item (case empty string with spaces returns null and change property boolean values)', async () => {
       createView();
-      await modifyValues({
+
+      await modifyDetailsValues({
         serialNumber: '   ',
         assetNumber: 'test43',
         purchaseOrderNumber: 'test21',
@@ -304,6 +466,11 @@ describe('ItemDialog', () => {
         deliveredDate: '23/09/2045',
         isDefective: 'Yes',
         usageStatus: 'Used',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifyPropertiesValues({
         resolution: '12',
         frameRate: '60',
         sensorType: 'IO',
@@ -311,8 +478,15 @@ describe('ItemDialog', () => {
         broken: 'False',
         older: 'True',
       });
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifySystemValue({
+        system: 'Giant laser',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
         asset_number: 'test43',
         catalogue_item_id: '1',
@@ -329,7 +503,7 @@ describe('ItemDialog', () => {
         ],
         purchase_order_number: 'test21',
         serial_number: null,
-        system_id: null,
+        system_id: '65328f34a40ff5301575a4e3',
         usage_status: 2,
         warranty_end_date: '2035-02-17T00:00:00.000Z',
       });
@@ -337,7 +511,8 @@ describe('ItemDialog', () => {
 
     it('displays error message when mandatory property values missing', async () => {
       createView();
-      await modifyValues({
+
+      await modifyDetailsValues({
         serialNumber: '   ',
         assetNumber: 'test43',
         purchaseOrderNumber: 'test21',
@@ -346,12 +521,18 @@ describe('ItemDialog', () => {
         deliveredDate: '23/09/2045',
         isDefective: 'Yes',
         usageStatus: 'Used',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifyPropertiesValues({
         resolution: '',
         sensorType: '',
         broken: 'None',
       });
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
       const mandatoryFieldHelperText = screen.getAllByText(
         'Please enter a valid value as this field is mandatory'
       );
@@ -363,16 +544,15 @@ describe('ItemDialog', () => {
       expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
       expect(mandatoryFieldHelperText.length).toBe(2);
 
-      await modifyValues({
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+
+      await modifyPropertiesValues({
         broken: 'False',
         resolution: '12',
         frameRate: '60',
         sensorType: 'IO',
         sensorBrand: 'pixel',
       });
-
-      await user.type(screen.getByLabelText('Resolution (megapixels) *'), '12');
-      await user.type(screen.getByLabelText('Sensor Type *'), 'test');
 
       expect(mandatoryFieldBooleanHelperText).not.toBeInTheDocument();
 
@@ -381,11 +561,14 @@ describe('ItemDialog', () => {
           'Please enter a valid value as this field is mandatory'
         )
       ).not.toBeInTheDocument();
+
+      expect(screen.getByRole('button', { name: 'Next' })).not.toBeDisabled();
     }, 10000);
 
     it('displays error message when property values type is incorrect', async () => {
       createView();
-      await modifyValues({
+
+      await modifyDetailsValues({
         serialNumber: '   ',
         assetNumber: 'test43',
         purchaseOrderNumber: 'test21',
@@ -394,16 +577,16 @@ describe('ItemDialog', () => {
         deliveredDate: '23',
         isDefective: 'Yes',
         usageStatus: 'Used',
-        resolution: 'rwererw',
-        sensorType: '',
-        broken: 'None',
       });
+
       const validDateHelperText = screen.getAllByText(
         'Date format: dd/MM/yyyy'
       );
       expect(validDateHelperText.length).toEqual(2);
 
-      await modifyValues({
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+
+      await modifyDetailsValues({
         warrantyEndDate: '17/02/4000',
         deliveredDate: '23/09/4000',
       });
@@ -413,7 +596,9 @@ describe('ItemDialog', () => {
       );
       expect(validDateMaxHelperText.length).toEqual(2);
 
-      await modifyValues({
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+
+      await modifyDetailsValues({
         warrantyEndDate: '17/02/2000',
         deliveredDate: '23/09/2000',
       });
@@ -427,8 +612,15 @@ describe('ItemDialog', () => {
         )
       ).not.toBeInTheDocument();
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifyPropertiesValues({
+        resolution: 'rwererw',
+        sensorType: '',
+        broken: 'None',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const validNumberHelperText = screen.getByText(
         'Please enter a valid number'
@@ -436,7 +628,9 @@ describe('ItemDialog', () => {
 
       expect(validNumberHelperText).toBeInTheDocument();
 
-      await modifyValues({
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+
+      await modifyPropertiesValues({
         resolution: '12',
       });
       expect(
@@ -446,11 +640,15 @@ describe('ItemDialog', () => {
 
     it('displays warning message when an unknown error occurs', async () => {
       createView();
-      await modifyValues({
+      await modifyDetailsValues({
         serialNumber: 'Error 500',
       });
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await modifySystemValue({
+        system: 'Giant laser',
+      });
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
       expect(handleIMS_APIError).toHaveBeenCalled();
       expect(onClose).not.toHaveBeenCalled();
     });
@@ -460,8 +658,10 @@ describe('ItemDialog', () => {
       props.type = 'save as';
       createView();
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
         asset_number: '03MXnOfP5C',
         catalogue_item_id: '1',
@@ -478,7 +678,7 @@ describe('ItemDialog', () => {
         ],
         purchase_order_number: 'tIWiCOow',
         serial_number: 'vYs9Vxx6yWbn',
-        system_id: null,
+        system_id: '656ef565ed0773f82e44bc6d',
         usage_status: 2,
         warranty_end_date: '2023-05-18T23:00:00.000Z',
       });
@@ -520,7 +720,8 @@ describe('ItemDialog', () => {
 
     it('edit an item (all input values)', async () => {
       createView();
-      await modifyValues({
+
+      await modifyDetailsValues({
         serialNumber: 'test12',
         assetNumber: 'test43',
         purchaseOrderNumber: 'test21',
@@ -529,6 +730,11 @@ describe('ItemDialog', () => {
         deliveredDate: '23/09/2045',
         isDefective: 'Yes',
         usageStatus: 'Used',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifyPropertiesValues({
         resolution: '12',
         frameRate: '60',
         sensorType: 'IO',
@@ -536,8 +742,20 @@ describe('ItemDialog', () => {
         broken: 'True',
         older: 'False',
       });
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      //navigate to home for systems table to then be able to change system
+      await user.click(
+        screen.getByRole('button', { name: 'navigate to systems home' })
+      );
+
+      await modifySystemValue({
+        system: 'Giant laser',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         asset_number: 'test43',
         delivered_date: '2045-09-23T23:00:00.000Z',
@@ -554,6 +772,7 @@ describe('ItemDialog', () => {
         purchase_order_number: 'test21',
         serial_number: 'test12',
         warranty_end_date: '2035-02-17T23:00:00.000Z',
+        system_id: '65328f34a40ff5301575a4e3',
       });
     }, 10000);
 
@@ -564,6 +783,8 @@ describe('ItemDialog', () => {
         catalogueItem: getCatalogueItemById('17'),
       };
       createView();
+
+      await user.click(screen.getByText('Edit item properties'));
 
       await fireEvent.change(
         screen.getByLabelText('Ultimate Pressure (millibar) *'),
@@ -579,8 +800,9 @@ describe('ItemDialog', () => {
 
       await fireEvent.mouseDown(screen.getByLabelText('Axis'));
       await fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         properties: [
           { name: 'Pumping Speed', value: 400 },
@@ -595,7 +817,8 @@ describe('ItemDialog', () => {
 
     it('displays error message when property values type is incorrect', async () => {
       createView();
-      await modifyValues({
+
+      await modifyDetailsValues({
         serialNumber: '   ',
         assetNumber: 'test43',
         purchaseOrderNumber: 'test21',
@@ -604,13 +827,17 @@ describe('ItemDialog', () => {
         deliveredDate: '23',
         isDefective: 'Yes',
         usageStatus: 'Used',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifyPropertiesValues({
         resolution: 'rwererw',
         sensorType: '',
         broken: 'None',
       });
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
+      await user.click(screen.getByRole('button', { name: 'Next' }));
 
       const validNumberHelperText = screen.getByText(
         'Please enter a valid number'
@@ -618,7 +845,9 @@ describe('ItemDialog', () => {
 
       expect(validNumberHelperText).toBeInTheDocument();
 
-      await modifyValues({
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+
+      await modifyPropertiesValues({
         resolution: '12',
       });
       expect(
@@ -629,15 +858,28 @@ describe('ItemDialog', () => {
     it('displays error message if no fields have been changed (when they are no catalogue property fields)', async () => {
       createView();
 
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-
-      await user.click(saveButton);
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       await waitFor(() => {
         expect(
           screen.getByText('Please edit a form entry before clicking save')
         ).toBeInTheDocument();
       });
+    });
+
+    it('displays warning message when an unknown error occurs', async () => {
+      createView();
+      await modifyDetailsValues({
+        serialNumber: 'Error 500',
+      });
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(handleIMS_APIError).toHaveBeenCalled();
+      expect(onClose).not.toHaveBeenCalled();
     });
   });
 });
