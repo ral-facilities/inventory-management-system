@@ -301,7 +301,7 @@ describe('Catalogue Items Dialog', () => {
     });
   }, 10000);
 
-  it('displays an error message if a step is has errored and clears the errors until the finish button is enabled', async () => {
+  it('displays an error message if a step has errored and clears the errors until the finish button is enabled', async () => {
     props = {
       ...props,
       parentInfo: getCatalogueCategoryById('4'),
