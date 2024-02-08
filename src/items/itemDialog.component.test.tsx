@@ -395,6 +395,62 @@ describe('ItemDialog', () => {
       });
     }, 10000);
 
+    it('displays an error message if a step is disabled and clears the errors until the finish button is enabled', async () => {
+      createView();
+
+      await modifyDetailsValues({
+        serialNumber: 'test12',
+        assetNumber: 'test43',
+        purchaseOrderNumber: 'test21',
+        notes: 'test',
+        warrantyEndDate: '17/02/',
+        deliveredDate: '23/09/',
+        isDefective: 'Yes',
+        usageStatus: 'Used',
+      });
+
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByText('Invalid date')).toBeInTheDocument();
+
+      await user.click(screen.getByText('Add item properties'));
+
+      await modifyPropertiesValues({
+        resolution: 'ds',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByText('Invalid item properties')).toBeInTheDocument();
+
+      await user.click(screen.getByText('Place into a system'));
+
+      await modifySystemValue({
+        system: 'Giant laser',
+      });
+
+      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+
+      await user.click(screen.getByText('Add item properties'));
+
+      await modifyPropertiesValues({
+        resolution: '12',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
+
+      await user.click(screen.getByText('Add item details'));
+      await modifyDetailsValues({
+        warrantyEndDate: '17/02/2000',
+        deliveredDate: '23/09/2000',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
+    }, 10000);
+
     it('adds an item (case empty string with spaces returns null and change property boolean values)', async () => {
       createView();
 
