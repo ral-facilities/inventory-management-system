@@ -480,6 +480,7 @@ function ItemDialog(props: ItemDialogProps) {
       ...prev,
       system_id: parentSystemId,
     }));
+    setFormErrorMessage(undefined);
   }, [parentSystemId]);
 
   const isStepFailed = React.useCallback(
