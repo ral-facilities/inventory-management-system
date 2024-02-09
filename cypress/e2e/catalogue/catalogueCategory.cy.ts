@@ -43,7 +43,7 @@ describe('Catalogue Category', () => {
 
   it('should be able to change page', () => {
     cy.editEndpointResponse({
-      url: '/v1/catalogue-categories/',
+      url: '/v1/catalogue-categories',
       data: createMockData(),
       statusCode: 200,
     });
@@ -56,7 +56,7 @@ describe('Catalogue Category', () => {
 
   it('should be able to change max results', () => {
     cy.editEndpointResponse({
-      url: '/v1/catalogue-categories/',
+      url: '/v1/catalogue-categories',
       data: createMockData(),
       statusCode: 200,
     });
@@ -746,7 +746,7 @@ describe('Catalogue Category', () => {
 
   it('when root has no data it displays no catagories error message', () => {
     cy.editEndpointResponse({
-      url: '/v1/catalogue-categories/',
+      url: '/v1/catalogue-categories',
       data: [],
       statusCode: 200,
     });

@@ -33,7 +33,7 @@ const fetchCatalogueCategories = async (
   queryParams.append('parent_id', parent_id);
 
   return axios
-    .get(`${apiUrl}/v1/catalogue-categories/`, {
+    .get(`${apiUrl}/v1/catalogue-categories`, {
       params: queryParams,
     })
     .then((response) => {

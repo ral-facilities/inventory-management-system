@@ -24,7 +24,7 @@ const addItem = async (item: AddItem): Promise<Item> => {
     apiUrl = settingsResult['apiUrl'];
   }
   return axios
-    .post<Item>(`${apiUrl}/v1/items/`, item)
+    .post<Item>(`${apiUrl}/v1/items`, item)
     .then((response) => response.data);
 };
 
@@ -55,7 +55,7 @@ const fetchItems = async (
     queryParams.append('catalogue_item_id', catalogue_item_id);
 
   return axios
-    .get(`${apiUrl}/v1/items/`, {
+    .get(`${apiUrl}/v1/items`, {
       params: queryParams,
     })
     .then((response) => {
