@@ -108,7 +108,7 @@ describe('Catalogue Category', () => {
       expect(postRequests.length).equal(1);
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
-        '{"name":"test","is_leaf":false}'
+        JSON.stringify({ name: 'test', is_leaf: false })
       );
     });
   });
@@ -155,7 +155,7 @@ describe('Catalogue Category', () => {
       expect(postRequests.length).equal(1);
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
-        '{"name":"Motion_copy_1","is_leaf":false}'
+        JSON.stringify({ name: 'Motion_copy_1', is_leaf: false })
       );
     });
   });
@@ -231,6 +231,8 @@ describe('Catalogue Category', () => {
     cy.findAllByLabelText('Property Name *').last().type('Updated Field 2');
     cy.findAllByLabelText('Select Type *').last().click();
     cy.findByText('Number').click();
+    cy.findAllByLabelText('Select Unit').last().click();
+    cy.findByRole('option', { name: 'millimeters' }).click();
 
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog').should('not.exist');
@@ -242,7 +244,19 @@ describe('Catalogue Category', () => {
       expect(postRequests.length).equal(1);
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
-        '{"name":"test","is_leaf":true,"catalogue_item_properties":[{"name":"Updated Field 1","type":"boolean","mandatory":false},{"name":"Updated Field 2","type":"number","unit":"","mandatory":false}]}'
+        JSON.stringify({
+          name: 'test',
+          is_leaf: true,
+          catalogue_item_properties: [
+            { name: 'Updated Field 1', type: 'boolean', mandatory: false },
+            {
+              name: 'Updated Field 2',
+              type: 'number',
+              unit: 'millimeters',
+              mandatory: false,
+            },
+          ],
+        })
       );
     });
   });
@@ -479,7 +493,7 @@ describe('Catalogue Category', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(await request.json())).equal(
-        '{"name":"Amp Meters1"}'
+        JSON.stringify({ name: 'Amp Meters1' })
       );
       expect(request.url.toString()).to.contain('1');
     });
@@ -529,7 +543,17 @@ describe('Catalogue Category', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(await request.json())).equal(
-        '{"catalogue_item_properties":[{"name":"Updated Field","type":"number","unit":"volts","mandatory":true},{"name":"Accuracy","type":"string","mandatory":true}]}'
+        JSON.stringify({
+          catalogue_item_properties: [
+            {
+              name: 'Updated Field',
+              type: 'number',
+              unit: 'volts',
+              mandatory: true,
+            },
+            { name: 'Accuracy', type: 'string', mandatory: true },
+          ],
+        })
       );
       expect(request.url.toString()).to.contain('1');
     });
@@ -584,7 +608,7 @@ describe('Catalogue Category', () => {
       expect(patchRequests.length).equal(1);
       const request = patchRequests[0];
       expect(JSON.stringify(await request.json())).equal(
-        '{"name":"Voltage Meters1","is_leaf":false}'
+        JSON.stringify({ name: 'Voltage Meters1', is_leaf: false })
       );
       expect(request.url.toString()).to.contain('1');
     });
@@ -612,15 +636,15 @@ describe('Catalogue Category', () => {
     }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(3);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
-        '{"parent_id":null}'
+        JSON.stringify({ parent_id: null })
       );
       expect(patchRequests[0].url.toString()).to.contain('/4');
       expect(JSON.stringify(await patchRequests[1].json())).equal(
-        '{"parent_id":null}'
+        JSON.stringify({ parent_id: null })
       );
       expect(patchRequests[1].url.toString()).to.contain('/79');
       expect(JSON.stringify(await patchRequests[2].json())).equal(
-        '{"parent_id":null}'
+        JSON.stringify({ parent_id: null })
       );
       expect(patchRequests[2].url.toString()).to.contain('/19');
     });
@@ -648,13 +672,53 @@ describe('Catalogue Category', () => {
     }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(3);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
-        '{"id":"4","name":"Cameras","parent_id":null,"code":"cameras","is_leaf":true,"catalogue_item_properties":[{"name":"Resolution","type":"number","unit":"megapixels","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":false},{"name":"Sensor Type","type":"string","mandatory":true},{"name":"Sensor brand","type":"string","mandatory":false},{"name":"Broken","type":"boolean","mandatory":true},{"name":"Older than five years","type":"boolean","mandatory":false}]}'
+        JSON.stringify({
+          id: '4',
+          name: 'Cameras',
+          parent_id: null,
+          code: 'cameras',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Resolution',
+              type: 'number',
+              unit: 'megapixels',
+              mandatory: true,
+            },
+            {
+              name: 'Frame Rate',
+              type: 'number',
+              unit: 'fps',
+              mandatory: false,
+            },
+            { name: 'Sensor Type', type: 'string', mandatory: true },
+            { name: 'Sensor brand', type: 'string', mandatory: false },
+            { name: 'Broken', type: 'boolean', mandatory: true },
+            {
+              name: 'Older than five years',
+              type: 'boolean',
+              mandatory: false,
+            },
+          ],
+        })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
-        '{"id":"79","name":"test_dup","parent_id":null,"code":"test_dup","is_leaf":false}'
+        JSON.stringify({
+          id: '79',
+          name: 'test_dup',
+          parent_id: null,
+          code: 'test_dup',
+          is_leaf: false,
+        })
       );
       expect(JSON.stringify(await patchRequests[2].json())).equal(
-        '{"id":"19","name":"Amp Meters","parent_id":null,"code":"amp-meters","is_leaf":false}'
+        JSON.stringify({
+          id: '19',
+          name: 'Amp Meters',
+          parent_id: null,
+          code: 'amp-meters',
+          is_leaf: false,
+        })
       );
     });
   });
@@ -682,13 +746,53 @@ describe('Catalogue Category', () => {
     }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(3);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
-        '{"id":"4","name":"Cameras","parent_id":"2","code":"cameras","is_leaf":true,"catalogue_item_properties":[{"name":"Resolution","type":"number","unit":"megapixels","mandatory":true},{"name":"Frame Rate","type":"number","unit":"fps","mandatory":false},{"name":"Sensor Type","type":"string","mandatory":true},{"name":"Sensor brand","type":"string","mandatory":false},{"name":"Broken","type":"boolean","mandatory":true},{"name":"Older than five years","type":"boolean","mandatory":false}]}'
+        JSON.stringify({
+          id: '4',
+          name: 'Cameras',
+          parent_id: '2',
+          code: 'cameras',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Resolution',
+              type: 'number',
+              unit: 'megapixels',
+              mandatory: true,
+            },
+            {
+              name: 'Frame Rate',
+              type: 'number',
+              unit: 'fps',
+              mandatory: false,
+            },
+            { name: 'Sensor Type', type: 'string', mandatory: true },
+            { name: 'Sensor brand', type: 'string', mandatory: false },
+            { name: 'Broken', type: 'boolean', mandatory: true },
+            {
+              name: 'Older than five years',
+              type: 'boolean',
+              mandatory: false,
+            },
+          ],
+        })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
-        '{"id":"79","name":"test_dup","parent_id":"2","code":"test_dup","is_leaf":false}'
+        JSON.stringify({
+          id: '79',
+          name: 'test_dup',
+          parent_id: '2',
+          code: 'test_dup',
+          is_leaf: false,
+        })
       );
       expect(JSON.stringify(await patchRequests[2].json())).equal(
-        '{"id":"19","name":"Amp Meters","parent_id":"2","code":"amp-meters","is_leaf":false}'
+        JSON.stringify({
+          id: '19',
+          name: 'Amp Meters',
+          parent_id: '2',
+          code: 'amp-meters',
+          is_leaf: false,
+        })
       );
     });
   });

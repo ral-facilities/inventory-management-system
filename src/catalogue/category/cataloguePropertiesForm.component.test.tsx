@@ -186,13 +186,19 @@ describe('Catalogue Properties Form', () => {
 
     // Modify the Unit field
 
-    fireEvent.change(screen.getByLabelText('Select Unit'), {
-      target: { value: 'mm' },
+    const select = screen.getByLabelText('Select Unit');
+    await user.click(select);
+
+    const dropdown = screen.getByRole('listbox', {
+      name: 'Select Unit',
     });
 
+    await user.click(
+      within(dropdown).getByRole('option', { name: 'millimeters' })
+    );
     // Modified mandatory should be called in the handleChange function
     expect(onChangeFormFields).toHaveBeenCalledWith([
-      { name: 'Field 1', type: 'text', unit: 'mm', mandatory: false },
+      { name: 'Field 1', type: 'text', unit: 'millimeters', mandatory: false },
     ]);
   });
 
