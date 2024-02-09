@@ -30,9 +30,9 @@ describe('Catalogue Category Dialog', () => {
     newFormFields?: CatalogueCategoryFormData[];
   }) => {
     values.name &&
-      fireEvent.change(screen.getByLabelText('Name *'), {
+      (await fireEvent.change(screen.getByLabelText('Name *'), {
         target: { value: values.name },
-      });
+      }));
 
     if (values.newFormFields) {
       // Check how many there are now
@@ -259,7 +259,7 @@ describe('Catalogue Category Dialog', () => {
     it('calls onClose when Close button is clicked', async () => {
       createView();
       const closeButton = screen.getByRole('button', { name: 'Cancel' });
-      user.click(closeButton);
+      await user.click(closeButton);
 
       await waitFor(() => {
         expect(onClose).toHaveBeenCalled();
@@ -806,7 +806,12 @@ describe('Catalogue Category Dialog', () => {
 
       await modifyValues({
         newFormFields: [
-          { name: 'radius', type: 'number', unit: 'mm', mandatory: true },
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: true,
+          },
         ],
       });
 
@@ -820,7 +825,12 @@ describe('Catalogue Category Dialog', () => {
             unit: 'megapixels',
             mandatory: true,
           },
-          { mandatory: true, name: 'radius', type: 'number', unit: 'mm' },
+          {
+            mandatory: true,
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+          },
         ],
       });
       await waitFor(() => {
@@ -889,7 +899,7 @@ describe('Catalogue Category Dialog', () => {
       const formName = screen.getAllByLabelText('Property Name *');
 
       // Modify the name field using userEvent
-      fireEvent.change(formName[0], {
+      await fireEvent.change(formName[0], {
         target: { value: 'Updated Field' },
       });
 
