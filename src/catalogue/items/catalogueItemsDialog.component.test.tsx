@@ -209,7 +209,7 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
       catalogue_category_id: '4',
       cost_gbp: 1200,
       cost_to_rework_gbp: 400,
@@ -274,7 +274,7 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
       catalogue_category_id: '12',
       cost_gbp: 1200,
       cost_to_rework_gbp: 400,
@@ -411,7 +411,7 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
       catalogue_category_id: '4',
       cost_gbp: 200,
       cost_to_rework_gbp: null,
