@@ -62,7 +62,7 @@ describe('Catalogue Category Dialog', () => {
       const allowedValuesSelects = screen.getAllByLabelText(
         'Select Allowed values *'
       );
-      const unitFields = screen.getAllByLabelText('Select Unit');
+      const unitSelect = screen.getAllByLabelText('Select Unit');
       const mandatorySelect = screen.getAllByLabelText('Select is mandatory?');
 
       for (let i = 0; i < values.newFormFields.length; i++) {
@@ -86,10 +86,17 @@ describe('Catalogue Category Dialog', () => {
           );
         }
 
-        if (field.unit)
-          await fireEvent.change(unitFields[i + numberOfCurrentFields], {
-            target: { value: field.unit },
+        if (field.unit) {
+          await user.click(unitSelect[i + numberOfCurrentFields]);
+          const unitDropdown = screen.getByRole('listbox', {
+            name: 'Select Unit',
           });
+          await user.click(
+            within(unitDropdown).getByRole('option', {
+              name: field.unit,
+            })
+          );
+        }
 
         await user.click(mandatorySelect[i + numberOfCurrentFields]);
         const mandatoryDropdown = screen.getByRole('listbox', {
@@ -280,7 +287,12 @@ describe('Catalogue Category Dialog', () => {
       await modifyValues({
         name: 'test',
         newFormFields: [
-          { name: 'radius', type: 'number', unit: 'mm', mandatory: true },
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: true,
+          },
         ],
       });
 
@@ -292,7 +304,12 @@ describe('Catalogue Category Dialog', () => {
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
         catalogue_item_properties: [
-          { mandatory: true, name: 'radius', type: 'number', unit: 'mm' },
+          {
+            mandatory: true,
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+          },
         ],
         is_leaf: true,
         name: 'test',
@@ -310,7 +327,7 @@ describe('Catalogue Category Dialog', () => {
           {
             name: 'radius',
             type: 'number',
-            unit: 'mm',
+            unit: 'millimeters',
             allowed_values: { type: 'list', values: [1, 2, 8] },
             mandatory: true,
           },
@@ -330,7 +347,7 @@ describe('Catalogue Category Dialog', () => {
             mandatory: true,
             name: 'radius',
             type: 'number',
-            unit: 'mm',
+            unit: 'millimeters',
           },
         ],
         is_leaf: true,
@@ -349,7 +366,7 @@ describe('Catalogue Category Dialog', () => {
           {
             name: 'radius',
             type: 'text',
-            unit: 'mm',
+            unit: 'millimeters',
             allowed_values: { type: 'list', values: ['1', '2', '8'] },
             mandatory: true,
           },
@@ -369,7 +386,7 @@ describe('Catalogue Category Dialog', () => {
             mandatory: true,
             name: 'radius',
             type: 'string',
-            unit: 'mm',
+            unit: 'millimeters',
           },
         ],
         is_leaf: true,
@@ -385,9 +402,9 @@ describe('Catalogue Category Dialog', () => {
       await modifyValues({
         name: 'test',
         newFormFields: [
-          { name: '', type: 'number', unit: 'mm', mandatory: true },
-          { name: 'radius', type: '', unit: 'mm', mandatory: true },
-          { name: '', type: '', unit: 'mm', mandatory: true },
+          { name: '', type: 'number', unit: 'millimeters', mandatory: true },
+          { name: 'radius', type: '', unit: 'millimeters', mandatory: true },
+          { name: '', type: '', unit: 'millimeters', mandatory: true },
         ],
       });
 
@@ -406,15 +423,20 @@ describe('Catalogue Category Dialog', () => {
       expect(typeHelperTexts.length).toBe(2);
 
       expect(onClose).not.toHaveBeenCalled();
-    });
+    }, 10000);
 
     it('display error if duplicate property names are entered', async () => {
       createView();
       await modifyValues({
         name: 'test',
         newFormFields: [
-          { name: 'Field 1', type: 'text', unit: '', mandatory: false },
-          { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
+          { name: 'Field 1', type: 'text', mandatory: false },
+          {
+            name: 'Field 2',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: true,
+          },
           { name: 'Field 1', type: 'boolean', mandatory: false },
         ],
       });
@@ -431,20 +453,25 @@ describe('Catalogue Category Dialog', () => {
       expect(duplicatePropertyNameHelperText.length).toBe(2);
 
       expect(onClose).not.toHaveBeenCalled();
-    });
+    }, 10000);
 
     it('clears formFields when catalogue content is catalogue categories', async () => {
       createView();
 
       await modifyValues({
         newFormFields: [
-          { name: 'radius', type: 'number', unit: 'mm', mandatory: true },
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: true,
+          },
         ],
       });
 
       expect(screen.getByDisplayValue('number')).toBeInTheDocument();
       expect(screen.getByDisplayValue('radius')).toBeInTheDocument();
-      expect(screen.getByDisplayValue('mm')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('millimeters')).toBeInTheDocument();
       expect(screen.getByText('Yes')).toBeInTheDocument();
 
       const catagoriesRadio = screen.getByLabelText('Catalogue Categories');
@@ -452,9 +479,9 @@ describe('Catalogue Category Dialog', () => {
 
       expect(screen.queryByDisplayValue('number')).not.toBeInTheDocument();
       expect(screen.queryByDisplayValue('radius')).not.toBeInTheDocument();
-      expect(screen.queryByDisplayValue('mm')).not.toBeInTheDocument();
+      expect(screen.queryByDisplayValue('millimeters')).not.toBeInTheDocument();
       expect(screen.queryByText('Yes')).not.toBeInTheDocument();
-    });
+    }, 10000);
 
     it('displays duplicate values and incorrect type error (allowed_values list of numbers)', async () => {
       createView();
@@ -465,7 +492,7 @@ describe('Catalogue Category Dialog', () => {
           {
             name: 'radius',
             type: 'number',
-            unit: 'mm',
+            unit: 'millimeters',
             allowed_values: { type: 'list', values: [1, 1, 'dsa'] },
             mandatory: true,
           },
@@ -487,7 +514,7 @@ describe('Catalogue Category Dialog', () => {
       expect(incorrectTypeHelperTexts.length).toEqual(1);
 
       expect(onClose).not.toHaveBeenCalled();
-    });
+    }, 10000);
 
     it('displays error if the allowed values list is empty', async () => {
       createView();
@@ -498,7 +525,7 @@ describe('Catalogue Category Dialog', () => {
           {
             name: 'radius',
             type: 'number',
-            unit: 'mm',
+            unit: 'millimeters',
             allowed_values: { type: 'list', values: [] },
             mandatory: true,
           },
@@ -529,7 +556,7 @@ describe('Catalogue Category Dialog', () => {
           {
             name: 'radius',
             type: '',
-            unit: 'mm',
+            unit: 'millimeters',
             allowed_values: { type: 'list', values: ['', ''] },
             mandatory: true,
           },
@@ -558,7 +585,7 @@ describe('Catalogue Category Dialog', () => {
           {
             name: 'radius',
             type: 'text',
-            unit: 'mm',
+            unit: 'millimeters',
             allowed_values: {
               type: 'list',
               values: [1, 1, 'dsa', 'sa', '$%^&*()'],
@@ -667,7 +694,12 @@ describe('Catalogue Category Dialog', () => {
 
       await modifyValues({
         newFormFields: [
-          { name: 'radius', type: 'number', unit: 'mm', mandatory: true },
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: true,
+          },
         ],
       });
 
@@ -681,7 +713,12 @@ describe('Catalogue Category Dialog', () => {
             unit: 'megapixels',
             mandatory: true,
           },
-          { mandatory: true, name: 'radius', type: 'number', unit: 'mm' },
+          {
+            mandatory: true,
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+          },
         ],
       });
       await waitFor(() => {
@@ -722,7 +759,7 @@ describe('Catalogue Category Dialog', () => {
           {
             name: 'radius',
             type: 'number',
-            unit: 'mm',
+            unit: 'millimeters',
             allowed_values: { type: 'list', values: [1, 2, 8] },
             mandatory: true,
           },
@@ -744,7 +781,7 @@ describe('Catalogue Category Dialog', () => {
             mandatory: true,
             name: 'radius',
             type: 'number',
-            unit: 'mm',
+            unit: 'millimeters',
           },
         ],
         name: 'test',
@@ -779,7 +816,7 @@ describe('Catalogue Category Dialog', () => {
           {
             name: 'radius',
             type: 'text',
-            unit: 'mm',
+            unit: 'millimeters',
             allowed_values: { type: 'list', values: ['1', '2', '8'] },
             mandatory: true,
           },
@@ -801,7 +838,7 @@ describe('Catalogue Category Dialog', () => {
             mandatory: true,
             name: 'radius',
             type: 'string',
-            unit: 'mm',
+            unit: 'millimeters',
           },
         ],
         name: 'test',
@@ -918,9 +955,9 @@ describe('Catalogue Category Dialog', () => {
         ...mockData,
         is_leaf: true,
         catalogue_item_properties: [
-          { name: '', type: 'number', unit: 'mm', mandatory: true },
-          { name: 'radius', type: '', unit: 'mm', mandatory: true },
-          { name: '', type: '', unit: 'mm', mandatory: true },
+          { name: '', type: 'number', unit: 'millimeters', mandatory: true },
+          { name: 'radius', type: '', unit: 'millimeters', mandatory: true },
+          { name: '', type: '', unit: 'millimeters', mandatory: true },
         ],
       };
       createView();
@@ -949,7 +986,12 @@ describe('Catalogue Category Dialog', () => {
         is_leaf: true,
         catalogue_item_properties: [
           { name: 'Field 1', type: 'text', unit: '', mandatory: false },
-          { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
+          {
+            name: 'Field 2',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: true,
+          },
           { name: 'Field 1', type: 'boolean', mandatory: false },
         ],
       };

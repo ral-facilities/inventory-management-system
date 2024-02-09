@@ -9,6 +9,7 @@ import {
   IconButton,
   FormHelperText,
   Box,
+  Autocomplete,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -17,7 +18,9 @@ import {
   CatalogueCategoryFormData,
   CatalogueItemPropertiesErrorsType,
   AllowedValuesListErrorsType,
+  Unit,
 } from '../../app.types';
+import { useUnits } from '../../api/units';
 
 export interface CataloguePropertiesFormProps {
   formFields: CatalogueCategoryFormData[];
@@ -43,6 +46,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     allowedValuesListErrors,
     resetFormError,
   } = props;
+
+  const { data: units } = useUnits();
 
   const handleAddField = () => {
     onChangeFormFields([
@@ -450,15 +455,25 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           )}
 
           <FormControl
-            sx={{ minWidth: '150px' }}
+            sx={{ minWidth: '200px' }}
             disabled={field.type === 'boolean'}
           >
-            <TextField
-              label="Select Unit"
-              variant="outlined"
-              value={field.unit ?? ''}
-              onChange={(e) => handleChange(index, 'unit', e.target.value)}
+            <Autocomplete
+              options={units ?? []}
+              getOptionLabel={(option) => option.value}
+              value={units?.find((unit) => unit.value === field.unit) || null}
               disabled={field.type === 'boolean'}
+              onChange={(event: any, newValue: Unit | null) => {
+                handleChange(index, 'unit', newValue?.value || '');
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Select Unit"
+                  variant="outlined"
+                  disabled={field.type === 'boolean'}
+                />
+              )}
             />
           </FormControl>
           <FormControl sx={{ width: '150px', minWidth: '150px' }}>
