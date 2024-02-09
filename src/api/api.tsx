@@ -22,7 +22,8 @@ let failedAuthRequestQueue: ((reject?: boolean) => any)[] = [];
    all requests that failed due to an invalid token */
 export const retryFailedAuthRequests = () => {
   isFetchingAccessToken = false;
-  failedAuthRequestQueue.filter((callback) => callback());
+  failedAuthRequestQueue.forEach((callback) => callback());
+  failedAuthRequestQueue = [];
 };
 
 /* This should be called when SciGateway logs out as would occurr if a token refresh fails
@@ -30,7 +31,8 @@ export const retryFailedAuthRequests = () => {
    were awaiting a token refresh */
 export const clearFailedAuthRequestsQueue = () => {
   isFetchingAccessToken = false;
-  failedAuthRequestQueue.filter((callback) => callback(true));
+  failedAuthRequestQueue.forEach((callback) => callback(true));
+  failedAuthRequestQueue = [];
 };
 
 imsApi.interceptors.response.use(
