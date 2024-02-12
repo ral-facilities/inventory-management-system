@@ -1,13 +1,18 @@
-import { fireEvent, screen, waitFor, within } from '@testing-library/react';
+import {
+  fireEvent,
+  screen,
+  waitFor,
+  within
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { imsApi } from '../../api/api';
 import { CatalogueCategory, CatalogueCategoryFormData } from '../../app.types';
+import handleIMS_APIError from '../../handleIMS_APIError';
 import { renderComponentWithBrowserRouter } from '../../setupTests';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
-import handleIMS_APIError from '../../handleIMS_APIError';
-import { imsApi } from '../../api/api';
 
 jest.mock('../../handleIMS_APIError');
 
@@ -30,9 +35,9 @@ describe('Catalogue Category Dialog', () => {
     newFormFields?: CatalogueCategoryFormData[];
   }) => {
     values.name &&
-      (await fireEvent.change(screen.getByLabelText('Name *'), {
+      fireEvent.change(screen.getByLabelText('Name *'), {
         target: { value: values.name },
-      }));
+      });
 
     if (values.newFormFields) {
       // Check how many there are now
@@ -53,26 +58,28 @@ describe('Catalogue Category Dialog', () => {
         );
       });
 
-      await waitFor(() =>
-        expect(screen.getAllByLabelText('Property Name *').length).toBe(
-          numberOfCurrentFields + values.newFormFields?.length
-        )
+      await waitFor(async () =>
+        expect(
+          (await screen.findAllByLabelText('Property Name *')).length
+        ).toBe(numberOfCurrentFields + values.newFormFields?.length)
       );
 
       // Modify
-      const nameFields = screen.getAllByLabelText('Property Name *');
-      const typeSelects = screen.getAllByLabelText('Select Type *');
-      const allowedValuesSelects = screen.getAllByLabelText(
+      const nameFields = await screen.findAllByLabelText('Property Name *');
+      const typeSelects = await screen.findAllByLabelText('Select Type *');
+      const allowedValuesSelects = await screen.findAllByLabelText(
         'Select Allowed values *'
       );
-      const unitSelect = screen.getAllByLabelText('Select Unit');
-      const mandatorySelect = screen.getAllByLabelText('Select is mandatory?');
+      const unitSelect = await screen.findAllByLabelText('Select Unit');
+      const mandatorySelect = await screen.findAllByLabelText(
+        'Select is mandatory?'
+      );
 
       for (let i = 0; i < values.newFormFields.length; i++) {
         const field = values.newFormFields[i];
 
         if (field.name)
-          await fireEvent.change(nameFields[i + numberOfCurrentFields], {
+          fireEvent.change(nameFields[i + numberOfCurrentFields], {
             target: { value: field.name },
           });
 
