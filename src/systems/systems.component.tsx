@@ -214,6 +214,9 @@ function Systems() {
     positionActionsColumn: 'last',
     paginationDisplayMode: 'pages',
     muiPaginationProps: {
+      color: 'secondary',
+      shape: 'rounded',
+      variant: 'outlined',
       showRowsPerPage: true,
       rowsPerPageOptions: [10, 25, 50],
       showFirstButton: false,
