@@ -178,10 +178,7 @@ export const useMoveItemsToSystem = (): UseMutationResult<
 
               transferStates.push({
                 name: item.id,
-                message:
-                  error.response?.status === 403
-                    ? String(error.response.status)
-                    : response.detail,
+                message: response.detail,
                 state: 'error',
               });
             });
