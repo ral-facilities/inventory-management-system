@@ -73,9 +73,8 @@ const CatalogueItemDirectoryDialog = (
   const { mutateAsync: moveToCatalogueItem } = useMoveToCatalogueItem();
   const { mutateAsync: copyToCatalogueItem } = useCopyToCatalogueItem();
 
-  const { data: targetCatalogueCategory } = useCatalogueCategory(
-    catalogueCurrDirId ?? undefined
-  );
+  const { data: targetCatalogueCategory } =
+    useCatalogueCategory(catalogueCurrDirId);
 
   const [errorMessage, setErrorMessage] = React.useState<string>('');
 
@@ -135,9 +134,8 @@ const CatalogueItemDirectoryDialog = (
     onChangeCatalogueCurrDirId(newId);
   };
 
-  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
-    catalogueCurrDirId ?? ''
-  );
+  const { data: catalogueBreadcrumbs } =
+    useCatalogueBreadcrumbs(catalogueCurrDirId);
 
   return (
     <Dialog

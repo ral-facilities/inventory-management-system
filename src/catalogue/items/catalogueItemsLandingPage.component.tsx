@@ -1,7 +1,7 @@
+import EditIcon from '@mui/icons-material/Edit';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PrintIcon from '@mui/icons-material/Print';
-import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
   Button,
@@ -12,35 +12,30 @@ import {
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
 } from '../../api/catalogueCategory';
 import { useCatalogueItem } from '../../api/catalogueItem';
 import { useManufacturer } from '../../api/manufacturer';
-import CatalogueItemsDialog from './catalogueItemsDialog.component';
-import Breadcrumbs from '../../view/breadcrumbs.component';
 import { BreadcrumbsInfo } from '../../app.types';
+import Breadcrumbs from '../../view/breadcrumbs.component';
+import { useNavigateToCatalogueCategory } from '../catalogue.component';
+import CatalogueItemsDialog from './catalogueItemsDialog.component';
 
 function CatalogueItemsLandingPage() {
   const { catalogue_item_id: catalogueItemId } = useParams();
-  const navigate = useNavigate();
-  const onChangeNode = React.useCallback(
-    (newIdPath: string) => {
-      navigate(`/catalogue/${newIdPath}`);
-    },
-    [navigate]
-  );
+  const navigateToCatalogueCategory = useNavigateToCatalogueCategory();
 
   const { data: catalogueItemIdData, isLoading: catalogueItemIdDataLoading } =
     useCatalogueItem(catalogueItemId);
 
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
-    catalogueItemIdData?.catalogue_category_id ?? ''
+    catalogueItemIdData?.catalogue_category_id ?? null
   );
   const { data: catalogueCategoryData } = useCatalogueCategory(
-    catalogueItemIdData?.catalogue_category_id
+    catalogueItemIdData?.catalogue_category_id ?? null
   );
 
   const [catalogueLandingBreadcrumbs, setCatalogueLandingBreadcrumbs] =
@@ -103,11 +98,9 @@ function CatalogueItemsLandingPage() {
       >
         <Grid item sx={{ py: '20px' }}>
           <Breadcrumbs
-            onChangeNode={onChangeNode}
+            onChangeNode={navigateToCatalogueCategory}
             breadcrumbsInfo={catalogueLandingBreadcrumbs}
-            onChangeNavigateHome={() => {
-              navigate('/catalogue');
-            }}
+            onChangeNavigateHome={() => navigateToCatalogueCategory(null)}
             navigateHomeAriaLabel={'navigate to catalogue home'}
           />
         </Grid>
@@ -342,7 +335,9 @@ function CatalogueItemsLandingPage() {
                           property.unit ? `(${property.unit})` : ''
                         }`}</Typography>
                         <Typography align="left" color="text.secondary">
-                          {property.value !== null ? String(property.value) : 'None'}
+                          {property.value !== null
+                            ? String(property.value)
+                            : 'None'}
                         </Typography>
                       </Grid>
                     ))}

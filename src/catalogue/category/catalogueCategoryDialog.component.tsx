@@ -20,7 +20,6 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import {
   useAddCatalogueCategory,
-  useCatalogueCategory,
   useEditCatalogueCategory,
 } from '../../api/catalogueCategory';
 import {
@@ -101,10 +100,6 @@ const CatalogueCategoryDialog = React.memo(
 
     const [catalogueItemPropertiesErrors, setCatalogueItemPropertiesErrors] =
       React.useState<CatalogueItemPropertiesErrorsType[]>([]);
-
-    const { data: selectedCatalogueCategoryData } = useCatalogueCategory(
-      selectedCatalogueCategory?.id
-    );
 
     const handleClose = React.useCallback(() => {
       onClose();
@@ -398,7 +393,7 @@ const CatalogueCategoryDialog = React.memo(
     const handleEditCatalogueCategory = React.useCallback(() => {
       let catalogueCategory: EditCatalogueCategory;
 
-      if (selectedCatalogueCategory && selectedCatalogueCategoryData) {
+      if (selectedCatalogueCategory) {
         const { hasErrors } = handleErrorStates();
         if (hasErrors) {
           return;
@@ -439,14 +434,14 @@ const CatalogueCategoryDialog = React.memo(
         };
 
         const isNameUpdated =
-          categoryData.name !== selectedCatalogueCategoryData?.name;
+          categoryData.name !== selectedCatalogueCategory?.name;
 
         const isIsLeafUpdated =
-          categoryData.is_leaf !== selectedCatalogueCategoryData?.is_leaf;
+          categoryData.is_leaf !== selectedCatalogueCategory?.is_leaf;
         const isCatalogueItemPropertiesUpdated =
           JSON.stringify(updatedProperties) !==
           JSON.stringify(
-            selectedCatalogueCategoryData?.catalogue_item_properties ?? null
+            selectedCatalogueCategory?.catalogue_item_properties ?? null
           );
 
         isNameUpdated && (catalogueCategory.name = categoryData.name);
@@ -490,7 +485,6 @@ const CatalogueCategoryDialog = React.memo(
       handleErrorStates,
       resetSelectedCatalogueCategory,
       selectedCatalogueCategory,
-      selectedCatalogueCategoryData,
     ]);
 
     return (

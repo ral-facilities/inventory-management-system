@@ -35,7 +35,7 @@ function ItemsLandingPage() {
   );
 
   const { data: catalogueCategoryData } = useCatalogueCategory(
-    catalogueItemData?.catalogue_category_id
+    catalogueItemData?.catalogue_category_id ?? null
   );
 
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ function ItemsLandingPage() {
   );
 
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
-    catalogueItemData?.catalogue_category_id ?? ''
+    catalogueItemData?.catalogue_category_id ?? null
   );
 
   const [itemLandingBreadcrumbs, setItemLandingBreadcrumbs] = React.useState<
@@ -315,7 +315,9 @@ function ItemsLandingPage() {
                           property.unit ? `(${property.unit})` : ''
                         }`}</Typography>
                         <Typography align="left" color="text.secondary">
-                          {property.value !== null ? String(property.value) : 'None'}
+                          {property.value !== null
+                            ? String(property.value)
+                            : 'None'}
                         </Typography>
                       </Grid>
                     ))}

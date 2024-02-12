@@ -57,6 +57,18 @@ export const useNavigateToSystem = () => {
   );
 };
 
+/* Returns the system id from the location pathname (null when not found) */
+export const useSystemId = (): string | null => {
+  // Navigation setup
+  const location = useLocation();
+
+  return React.useMemo(() => {
+    let systemId: string | null = location.pathname.replace('/systems', '');
+    systemId = systemId === '' ? null : systemId.replace('/', '');
+    return systemId;
+  }, [location.pathname]);
+};
+
 const AddSystemButton = (props: { systemId: string | null }) => {
   const [addSystemDialogOpen, setAddSystemDialogOpen] =
     React.useState<boolean>(false);
@@ -140,18 +152,6 @@ const CopySystemsButton = (props: {
 };
 
 type MenuDialogType = SystemDialogType | 'delete';
-
-/* Returns the system id from the location pathname (null when not found) */
-export const useSystemId = (): string | null => {
-  // Navigation setup
-  const location = useLocation();
-
-  return React.useMemo(() => {
-    let systemId: string | null = location.pathname.replace('/systems', '');
-    systemId = systemId === '' ? null : systemId.replace('/', '');
-    return systemId;
-  }, [location.pathname]);
-};
 
 const columns: MRT_ColumnDef<System>[] = [
   {
@@ -300,9 +300,7 @@ function Systems() {
             <Breadcrumbs
               breadcrumbsInfo={systemsBreadcrumbs}
               onChangeNode={navigateToSystem}
-              onChangeNavigateHome={() => {
-                navigateToSystem(null);
-              }}
+              onChangeNavigateHome={() => navigateToSystem(null)}
               navigateHomeAriaLabel={'navigate to systems home'}
             />
             {systemsBreadcrumbs && (
