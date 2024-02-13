@@ -11,11 +11,14 @@ const handleIMS_APIError = (error: AxiosError, broadcast = true): void => {
   log.error(message);
   if (broadcast) {
     // 403 errors should be handled by the axios intercept, so shouldnt need to be checked here
-    let broadcastMessage = message;
+    let broadcastMessage;
     // no reponse so it's a network error
     if (!error.response)
       broadcastMessage =
         'Network Error, please reload the page or try again later';
+    else
+      broadcastMessage =
+        'Something went wrong, please contact the system administrator';
     document.dispatchEvent(
       new CustomEvent(MicroFrontendId, {
         detail: {
