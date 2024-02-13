@@ -29,7 +29,7 @@ describe('Catalogue Category Dialog', () => {
     // New fields to add (if any)
     newFormFields?: CatalogueCategoryFormData[];
   }) => {
-    values.name &&
+    values.name !== undefined &&
       fireEvent.change(screen.getByLabelText('Name *'), {
         target: { value: values.name },
       });
@@ -184,8 +184,10 @@ describe('Catalogue Category Dialog', () => {
 
     it('displays warning message when name field is not defined', async () => {
       createView();
+
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
+
       const helperTexts = screen.getByText('Please enter a name.');
       expect(helperTexts).toBeInTheDocument();
       expect(onClose).not.toHaveBeenCalled();
@@ -751,25 +753,22 @@ describe('Catalogue Category Dialog', () => {
     });
 
     it('displays warning message when name field is not defined', async () => {
-      props.selectedCatalogueCategory = {
-        ...mockData,
-        name: '',
-      };
       createView();
+
+      modifyValues({ name: '' });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
+
       const helperTexts = screen.getByText('Please enter a name.');
       expect(helperTexts).toBeInTheDocument();
       expect(onClose).not.toHaveBeenCalled();
     });
 
     it('displays warning message when name already exists within the parent catalogue category', async () => {
-      props.selectedCatalogueCategory = {
-        ...mockData,
-        name: 'test_dup',
-      };
       createView();
+
+      modifyValues({ name: 'test_dup' });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
