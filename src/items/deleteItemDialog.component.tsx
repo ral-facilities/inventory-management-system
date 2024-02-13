@@ -32,7 +32,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
     undefined
   );
 
-  const { data: systemData } = useSystem(item?.system_id ?? null);
+  const { data: systemData } = useSystem(item?.system_id);
   const { mutateAsync: deleteItem } = useDeleteItem();
 
   const handleClose = React.useCallback(() => {

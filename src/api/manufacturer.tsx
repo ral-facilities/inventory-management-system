@@ -97,9 +97,7 @@ export const useDeleteManufacturer = (): UseMutationResult<
   });
 };
 
-const fetchManufacturer = async (
-  id: string | undefined
-): Promise<Manufacturer> => {
+const fetchManufacturer = async (id: string): Promise<Manufacturer> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -112,15 +110,15 @@ const fetchManufacturer = async (
 };
 
 export const useManufacturer = (
-  id: string | undefined
+  id?: string | null
 ): UseQueryResult<Manufacturer, AxiosError> => {
   return useQuery({
     queryKey: ['Manufacturer', id],
 
     queryFn: (params) => {
-      return fetchManufacturer(id);
+      return fetchManufacturer(id ?? '');
     },
-    enabled: id !== undefined,
+    enabled: !!id,
   });
 };
 

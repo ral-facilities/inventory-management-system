@@ -213,7 +213,7 @@ describe('Catalogue', () => {
 
   it('root has no categories so there is no results page', async () => {
     server.use(
-      rest.get('/v1/catalogue-categories/', (req, res, ctx) => {
+      rest.get('/v1/catalogue-categories', (req, res, ctx) => {
         return res(ctx.status(200), ctx.json([]));
       })
     );

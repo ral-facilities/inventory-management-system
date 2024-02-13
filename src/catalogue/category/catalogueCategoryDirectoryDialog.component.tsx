@@ -63,7 +63,7 @@ const CatalogueCategoryDirectoryDialog = (
   const { mutateAsync: copyToCatalogueCategory } = useCopyToCatalogueCategory();
 
   const { data: targetCategory, isLoading: targetCategoryLoading } =
-    useCatalogueCategory(catalogueCurrDirId ?? undefined);
+    useCatalogueCategory(catalogueCurrDirId);
 
   const handleMoveToCatalogueCategory = React.useCallback(() => {
     // Either ensure finished loading, or moving to root
@@ -122,9 +122,8 @@ const CatalogueCategoryDirectoryDialog = (
     onChangeCatalogueCurrDirId(newId);
   };
 
-  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
-    catalogueCurrDirId ?? ''
-  );
+  const { data: catalogueBreadcrumbs } =
+    useCatalogueBreadcrumbs(catalogueCurrDirId);
 
   return (
     <Dialog

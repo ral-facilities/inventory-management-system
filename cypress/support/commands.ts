@@ -114,7 +114,7 @@ declare global {
        * Edits the response of the endpoint request 
        * 
        * @example  cy.editEndpointResponse({
-                    url: '/v1/catalogue-categories/',
+                    url: '/v1/catalogue-categories',
                     data: [],
                     statusCode: 200,
                    });

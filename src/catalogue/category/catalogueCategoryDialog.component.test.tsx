@@ -651,11 +651,9 @@ describe('Catalogue Category Dialog', () => {
     });
 
     it('displays warning message when name already exists within the parent catalogue category', async () => {
-      props.selectedCatalogueCategory = {
-        ...mockData,
-        name: 'test_dup',
-      };
       createView();
+
+      await modifyValues({ name: 'test_dup' });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
@@ -851,10 +849,11 @@ describe('Catalogue Category Dialog', () => {
         selectedCatalogueCategory: {
           ...mockData,
           id: '4',
-          name: 'Error 500',
         },
       };
       createView();
+
+      await modifyValues({ name: 'Error 500' });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
@@ -920,17 +919,18 @@ describe('Catalogue Category Dialog', () => {
       props.selectedCatalogueCategory = {
         ...mockData,
         id: '4',
-        name: 'test',
       };
 
       createView();
+
+      await modifyValues({ name: 'test2' });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
-        name: 'test',
-        is_leaf: false,
+        name: 'test2',
+        catalogue_item_properties: undefined,
       });
 
       expect(onClose).toHaveBeenCalled();
@@ -939,12 +939,12 @@ describe('Catalogue Category Dialog', () => {
     it('edits a new catalogue category at sub level ("/catalogue/*")', async () => {
       createView();
 
-      await modifyValues({ name: 'test' });
+      await modifyValues({ name: 'test2' });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/1', {
-        name: 'test',
+        name: 'test2',
       });
 
       expect(onClose).toHaveBeenCalled();

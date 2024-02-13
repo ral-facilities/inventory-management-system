@@ -76,7 +76,7 @@ describe('Items', () => {
 
     cy.findBrowserMockedRequests({
       method: 'POST',
-      url: '/v1/items/',
+      url: '/v1/items',
     }).should(async (postRequests) => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
@@ -124,7 +124,7 @@ describe('Items', () => {
 
     cy.findBrowserMockedRequests({
       method: 'POST',
-      url: '/v1/items/',
+      url: '/v1/items',
     }).should(async (postRequests) => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
@@ -185,7 +185,7 @@ describe('Items', () => {
 
     cy.findBrowserMockedRequests({
       method: 'POST',
-      url: '/v1/items/',
+      url: '/v1/items',
     }).should(async (postRequests) => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
@@ -342,7 +342,7 @@ describe('Items', () => {
 
     cy.findBrowserMockedRequests({
       method: 'POST',
-      url: '/v1/items/',
+      url: '/v1/items',
     }).should(async (postRequests) => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(

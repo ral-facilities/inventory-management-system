@@ -33,7 +33,7 @@ const fetchCatalogueCategories = async (
   queryParams.append('parent_id', parent_id);
 
   return axios
-    .get(`${apiUrl}/v1/catalogue-categories/`, {
+    .get(`${apiUrl}/v1/catalogue-categories`, {
       params: queryParams,
     })
     .then((response) => {
@@ -71,14 +71,14 @@ const fetchCatalogueBreadcrumbs = async (
 };
 
 export const useCatalogueBreadcrumbs = (
-  id: string
+  id?: string | null
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueBreadcrumbs', id],
     queryFn: (params) => {
-      return fetchCatalogueBreadcrumbs(id);
+      return fetchCatalogueBreadcrumbs(id ?? '');
     },
-    enabled: id !== '',
+    enabled: !!id,
   });
 };
 
@@ -362,13 +362,13 @@ const fetchCatalogueCategory = async (
 };
 
 export const useCatalogueCategory = (
-  id: string | undefined
+  id?: string | null
 ): UseQueryResult<CatalogueCategory, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueCategory', id],
     queryFn: (params) => {
-      return fetchCatalogueCategory(id);
+      return fetchCatalogueCategory(id ?? '');
     },
-    enabled: id !== undefined,
+    enabled: !!id,
   });
 };
