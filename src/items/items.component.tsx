@@ -1,16 +1,16 @@
-import React from 'react';
 import { Box, Grid, LinearProgress, Typography } from '@mui/material';
-import { useCatalogueItem } from '../api/catalogueItem';
-import { useNavigate, useParams } from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
 } from '../api/catalogueCategory';
+import { useCatalogueItem } from '../api/catalogueItem';
 
-import ItemsTable from './itemsTable.component';
 import { BreadcrumbsInfo } from '../app.types';
-import Breadcrumbs from '../view/breadcrumbs.component';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
+import Breadcrumbs from '../view/breadcrumbs.component';
+import ItemsTable from './itemsTable.component';
 
 export function Items() {
   // Navigation
