@@ -32,10 +32,10 @@ function CatalogueItemsLandingPage() {
     useCatalogueItem(catalogueItemId);
 
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
-    catalogueItemIdData?.catalogue_category_id ?? null
+    catalogueItemIdData?.catalogue_category_id
   );
   const { data: catalogueCategoryData } = useCatalogueCategory(
-    catalogueItemIdData?.catalogue_category_id ?? null
+    catalogueItemIdData?.catalogue_category_id
   );
 
   const [catalogueLandingBreadcrumbs, setCatalogueLandingBreadcrumbs] =

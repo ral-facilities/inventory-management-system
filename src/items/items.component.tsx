@@ -16,7 +16,7 @@ export function Items() {
   const { data: catalogueItem, isLoading: catalogueItemLoading } =
     useCatalogueItem(catalogueItemId);
   const { data: catalogueCategory } = useCatalogueCategory(
-    catalogueItem?.catalogue_category_id ?? null
+    catalogueItem?.catalogue_category_id
   );
   const navigate = useNavigate();
   const onChangeNode = React.useCallback(
@@ -27,7 +27,7 @@ export function Items() {
   );
 
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
-    catalogueItem?.catalogue_category_id ?? ''
+    catalogueItem?.catalogue_category_id
   );
 
   const [itemsBreadcrumbs, setItemsBreadcrumbs] = React.useState<

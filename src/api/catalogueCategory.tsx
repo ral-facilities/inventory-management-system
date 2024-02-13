@@ -71,14 +71,14 @@ const fetchCatalogueBreadcrumbs = async (
 };
 
 export const useCatalogueBreadcrumbs = (
-  id: string | null
+  id?: string | null
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueBreadcrumbs', id],
     queryFn: (params) => {
       return fetchCatalogueBreadcrumbs(id ?? '');
     },
-    enabled: id !== null,
+    enabled: !!id,
   });
 };
 
@@ -362,13 +362,13 @@ const fetchCatalogueCategory = async (
 };
 
 export const useCatalogueCategory = (
-  id: string | null
+  id?: string | null
 ): UseQueryResult<CatalogueCategory, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueCategory', id],
     queryFn: (params) => {
       return fetchCatalogueCategory(id ?? '');
     },
-    enabled: id !== null,
+    enabled: !!id,
   });
 };

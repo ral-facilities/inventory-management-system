@@ -35,7 +35,7 @@ function ItemsLandingPage() {
   );
 
   const { data: catalogueCategoryData } = useCatalogueCategory(
-    catalogueItemData?.catalogue_category_id ?? null
+    catalogueItemData?.catalogue_category_id
   );
 
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ function ItemsLandingPage() {
   );
 
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
-    catalogueItemData?.catalogue_category_id ?? null
+    catalogueItemData?.catalogue_category_id
   );
 
   const [itemLandingBreadcrumbs, setItemLandingBreadcrumbs] = React.useState<
