@@ -206,13 +206,23 @@ function Systems() {
   }, [systemId]);
 
   const subsystemsTable = useMaterialReactTable({
+    // Data
     columns: columns,
     data: subsystemsData !== undefined ? subsystemsData : [],
-    getRowId: (system) => system.id,
+    // Enables
     enableRowSelection: true,
     enableRowActions: true,
+    // Other settings
     positionActionsColumn: 'last',
     paginationDisplayMode: 'pages',
+    autoResetPageIndex: false,
+    // State
+    initialState: {
+      showGlobalFilter: true,
+      pagination: { pageSize: 10, pageIndex: 0 },
+    },
+    state: { rowSelection: rowSelection },
+    // MUI
     muiPaginationProps: {
       showRowsPerPage: true,
       rowsPerPageOptions: [10, 25, 50],
@@ -220,12 +230,9 @@ function Systems() {
       showLastButton: false,
       size: 'small',
     },
-    initialState: {
-      showGlobalFilter: true,
-      pagination: { pageSize: 10, pageIndex: 0 },
-    },
+    // Functions
+    getRowId: (system) => system.id,
     onRowSelectionChange: setRowSelection,
-    state: { rowSelection: rowSelection },
     renderRowActionMenuItems: ({ closeMenu, row }) => {
       return [
         <MenuItem

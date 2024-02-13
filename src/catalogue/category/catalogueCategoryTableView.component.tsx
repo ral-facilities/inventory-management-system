@@ -57,8 +57,10 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
   }, [requestType, selectedCatalogueCategoryIds]);
 
   const table = useMaterialReactTable({
+    // Data
     columns: columns, // If dense only show the name column
     data: catalogueCategoryData ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    // Features
     enableColumnOrdering: false,
     enableColumnPinning: false,
     enableTopToolbar: false,
@@ -72,6 +74,26 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     enableColumnFilters: true,
     enableHiding: false,
     enableFullScreenToggle: false,
+    enablePagination: true,
+    // Other settings
+    paginationDisplayMode: 'pages',
+    positionToolbarAlertBanner: 'bottom',
+    autoResetPageIndex: false,
+    // Localisation
+    localization: {
+      ...MRT_Localization_EN,
+      noRecordsToDisplay: noResultsTxt,
+    },
+    // State
+    initialState: {
+      showColumnFilters: true,
+      showGlobalFilter: true,
+      pagination: { pageSize: 5, pageIndex: 0 },
+    },
+    state: {
+      showProgressBars: catalogueCategoryDataLoading, //or showSkeletons
+    },
+    // MUI
     muiTableBodyRowProps: ({ row }) => {
       const canPlaceHere =
         (!row.original.is_leaf &&
@@ -90,24 +112,9 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       };
     },
     muiTableContainerProps: { sx: { height: '360.4px' } },
-    localization: {
-      ...MRT_Localization_EN,
-      noRecordsToDisplay: noResultsTxt,
-    },
-    enablePagination: true,
-    initialState: {
-      showColumnFilters: true,
-      showGlobalFilter: true,
-      pagination: { pageSize: 5, pageIndex: 0 },
-    },
-    paginationDisplayMode: 'pages',
-    positionToolbarAlertBanner: 'bottom',
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
-    },
-    state: {
-      showProgressBars: catalogueCategoryDataLoading, //or showSkeletons
     },
     muiPaginationProps: {
       color: 'secondary',

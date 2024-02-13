@@ -54,8 +54,10 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     [selectedSystemIds, type]
   );
   const table = useMaterialReactTable({
+    // Data
     columns: columns,
     data: systemsData ?? [],
+    // Features
     enableColumnOrdering: false,
     enableColumnPinning: false,
     enableTopToolbar: false,
@@ -69,12 +71,15 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     enableColumnFilters: true,
     enableHiding: false,
     enableFullScreenToggle: false,
-    muiTableContainerProps: { sx: { height: '360.4px' } },
+    enablePagination: true,
+    // Other settings
+    autoResetPageIndex: false,
+    // Localisation
     localization: {
       ...MRT_Localization_EN,
       noRecordsToDisplay: noResultsText,
     },
-    enablePagination: true,
+    // State
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
@@ -83,12 +88,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     state: {
       showProgressBars: systemsDataLoading,
     },
-    muiPaginationProps: {
-      color: 'secondary',
-      rowsPerPageOptions: [5],
-      shape: 'rounded',
-      variant: 'outlined',
-    },
+    // MUI
     muiTableBodyRowProps: ({ row }) => {
       const canPlaceHere =
         type === 'copyTo' || !selectedSystemIds.includes(row.original.id);
@@ -100,6 +100,13 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
           cursor: canPlaceHere ? 'pointer' : 'not-allowed',
         },
       };
+    },
+    muiTableContainerProps: { sx: { height: '360.4px' } },
+    muiPaginationProps: {
+      color: 'secondary',
+      rowsPerPageOptions: [5],
+      shape: 'rounded',
+      variant: 'outlined',
     },
   });
 
