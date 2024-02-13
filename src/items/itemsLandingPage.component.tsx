@@ -1,7 +1,7 @@
+import EditIcon from '@mui/icons-material/Edit';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PrintIcon from '@mui/icons-material/Print';
-import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
   Button,
@@ -12,21 +12,24 @@ import {
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-import { useCatalogueItem } from '../api/catalogueItem';
-import { useManufacturer } from '../api/manufacturer';
-import { useItem } from '../api/item';
-import { BreadcrumbsInfo, UsageStatusType } from '../app.types';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
 } from '../api/catalogueCategory';
+import { useCatalogueItem } from '../api/catalogueItem';
+import { useItem } from '../api/item';
+import { useManufacturer } from '../api/manufacturer';
+import { BreadcrumbsInfo, UsageStatusType } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ItemDialog from './itemDialog.component';
+import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 
 function ItemsLandingPage() {
+  // Navigation
   const { item_id: id } = useParams();
+  const navigateToCatalogue = useNavigateToCatalogue();
 
   const { data: itemData, isLoading: itemDataIsLoading } = useItem(id);
 
@@ -36,14 +39,6 @@ function ItemsLandingPage() {
 
   const { data: catalogueCategoryData } = useCatalogueCategory(
     catalogueItemData?.catalogue_category_id
-  );
-
-  const navigate = useNavigate();
-  const onChangeNode = React.useCallback(
-    (newIdPath: string) => {
-      navigate(`/catalogue/${newIdPath}`);
-    },
-    [navigate]
   );
 
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
@@ -113,11 +108,9 @@ function ItemsLandingPage() {
       >
         <Grid item sx={{ py: 2.5 }}>
           <Breadcrumbs
-            onChangeNode={onChangeNode}
+            onChangeNode={navigateToCatalogue}
             breadcrumbsInfo={itemLandingBreadcrumbs}
-            onChangeNavigateHome={() => {
-              navigate('/catalogue');
-            }}
+            onChangeNavigateHome={() => navigateToCatalogue(null)}
             navigateHomeAriaLabel={'navigate to catalogue home'}
           />
         </Grid>

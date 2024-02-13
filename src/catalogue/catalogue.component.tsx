@@ -31,14 +31,14 @@ import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import { generateUniqueName } from '../utils';
 import CatalogueCardView from './category/catalogueCardView.component';
 
-/* Returns function that navigates to a specific catalogue category id (or to the root of all categories
-   if given null) */
-export const useNavigateToCatalogueCategory = () => {
+/* Returns function that navigates to a specific catalogue category id or catalogue path (or to the root of
+   all categories if given null) */
+export const useNavigateToCatalogue = () => {
   const navigate = useNavigate();
 
   return React.useCallback(
-    (newId: string | null) => {
-      navigate(`/catalogue${newId ? `/${newId}` : ''}`);
+    (newIdPath: string | null) => {
+      navigate(`/catalogue${newIdPath ? `/${newIdPath}` : ''}`);
     },
     [navigate]
   );
@@ -126,7 +126,7 @@ export function matchCatalogueItemProperties(
 function Catalogue() {
   // Navigation
   const catalogueCategoryId = useCatalogueCategoryId();
-  const navigateToCatalogueCategory = useNavigateToCatalogueCategory();
+  const navigateToCatalogue = useNavigateToCatalogue();
 
   const {
     data: catalogueCategoryDetail,
@@ -238,9 +238,9 @@ function Catalogue() {
         >
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Breadcrumbs
-              onChangeNode={navigateToCatalogueCategory}
+              onChangeNode={navigateToCatalogue}
               breadcrumbsInfo={catalogueBreadcrumbs}
-              onChangeNavigateHome={() => navigateToCatalogueCategory(null)}
+              onChangeNavigateHome={() => navigateToCatalogue(null)}
               navigateHomeAriaLabel={'navigate to catalogue home'}
             />
             <NavigateNext

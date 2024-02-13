@@ -10,20 +10,17 @@ import {
 import ItemsTable from './itemsTable.component';
 import { BreadcrumbsInfo } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 
 export function Items() {
+  // Navigation
   const { catalogue_item_id: catalogueItemId } = useParams();
+  const navigateToCatalogue = useNavigateToCatalogue();
+
   const { data: catalogueItem, isLoading: catalogueItemLoading } =
     useCatalogueItem(catalogueItemId);
   const { data: catalogueCategory } = useCatalogueCategory(
     catalogueItem?.catalogue_category_id
-  );
-  const navigate = useNavigate();
-  const onChangeNode = React.useCallback(
-    (newIdPath: string) => {
-      navigate(`/catalogue/${newIdPath}`);
-    },
-    [navigate]
   );
 
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
@@ -65,11 +62,9 @@ export function Items() {
         }}
       >
         <Breadcrumbs
-          onChangeNode={onChangeNode}
+          onChangeNode={navigateToCatalogue}
           breadcrumbsInfo={itemsBreadcrumbs}
-          onChangeNavigateHome={() => {
-            navigate('/catalogue');
-          }}
+          onChangeNavigateHome={() => navigateToCatalogue(null)}
           navigateHomeAriaLabel={'navigate to catalogue home'}
         />
       </Grid>

@@ -21,12 +21,12 @@ import { useCatalogueItem } from '../../api/catalogueItem';
 import { useManufacturer } from '../../api/manufacturer';
 import { BreadcrumbsInfo } from '../../app.types';
 import Breadcrumbs from '../../view/breadcrumbs.component';
-import { useNavigateToCatalogueCategory } from '../catalogue.component';
+import { useNavigateToCatalogue } from '../catalogue.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 
 function CatalogueItemsLandingPage() {
   const { catalogue_item_id: catalogueItemId } = useParams();
-  const navigateToCatalogueCategory = useNavigateToCatalogueCategory();
+  const navigateToCatalogue = useNavigateToCatalogue();
 
   const { data: catalogueItemIdData, isLoading: catalogueItemIdDataLoading } =
     useCatalogueItem(catalogueItemId);
@@ -98,9 +98,9 @@ function CatalogueItemsLandingPage() {
       >
         <Grid item sx={{ py: '20px' }}>
           <Breadcrumbs
-            onChangeNode={navigateToCatalogueCategory}
+            onChangeNode={navigateToCatalogue}
             breadcrumbsInfo={catalogueLandingBreadcrumbs}
-            onChangeNavigateHome={() => navigateToCatalogueCategory(null)}
+            onChangeNavigateHome={() => navigateToCatalogue(null)}
             navigateHomeAriaLabel={'navigate to catalogue home'}
           />
         </Grid>

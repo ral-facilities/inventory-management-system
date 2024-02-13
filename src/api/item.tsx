@@ -76,7 +76,7 @@ export const useItems = (
   });
 };
 
-const fetchItem = async (id?: string): Promise<Item> => {
+const fetchItem = async (id: string): Promise<Item> => {
   let apiUrl: string;
   apiUrl = '';
   const settingsResult = await settings;
@@ -94,11 +94,13 @@ const fetchItem = async (id?: string): Promise<Item> => {
     });
 };
 
-export const useItem = (id?: string): UseQueryResult<Item, AxiosError> => {
+export const useItem = (
+  id?: string | null
+): UseQueryResult<Item, AxiosError> => {
   return useQuery({
     queryKey: ['Item', id],
     queryFn: (params) => {
-      return fetchItem(id);
+      return fetchItem(id ?? '');
     },
     enabled: !!id,
   });
