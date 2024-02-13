@@ -21,7 +21,7 @@ const addCatalogueItem = async (
   catalogueItem: AddCatalogueItem
 ): Promise<CatalogueItem> => {
   return imsApi
-    .post<CatalogueItem>(`/v1/catalogue-items/`, catalogueItem)
+    .post<CatalogueItem>(`/v1/catalogue-items`, catalogueItem)
     .then((response) => response.data);
 };
 
@@ -49,7 +49,7 @@ const fetchCatalogueItems = async (
     queryParams.append('catalogue_category_id', catalogueCategoryId);
 
   return imsApi
-    .get(`/v1/catalogue-items/`, {
+    .get(`/v1/catalogue-items`, {
       params: queryParams,
     })
     .then((response) => {

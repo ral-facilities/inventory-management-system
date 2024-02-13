@@ -223,7 +223,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
         asset_number: null,
         catalogue_item_id: '1',
         delivered_date: null,
@@ -321,7 +321,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
         asset_number: null,
         catalogue_item_id: '17',
         delivered_date: null,
@@ -376,7 +376,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
         asset_number: 'test43',
         catalogue_item_id: '1',
         delivered_date: '2045-09-23T00:00:00.000Z',
@@ -487,7 +487,7 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
         asset_number: 'test43',
         catalogue_item_id: '1',
         delivered_date: '2045-09-23T00:00:00.000Z',
@@ -662,7 +662,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items/', {
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
         asset_number: '03MXnOfP5C',
         catalogue_item_id: '1',
         delivered_date: '2023-05-11T23:00:00.000Z',

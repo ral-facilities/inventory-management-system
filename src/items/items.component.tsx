@@ -1,33 +1,30 @@
-import React from 'react';
 import { Box, Grid, LinearProgress, Typography } from '@mui/material';
-import { useCatalogueItem } from '../api/catalogueItem';
-import { useNavigate, useParams } from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
 } from '../api/catalogueCategory';
+import { useCatalogueItem } from '../api/catalogueItem';
 
-import ItemsTable from './itemsTable.component';
 import { BreadcrumbsInfo } from '../app.types';
+import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import ItemsTable from './itemsTable.component';
 
 export function Items() {
+  // Navigation
   const { catalogue_item_id: catalogueItemId } = useParams();
+  const navigateToCatalogue = useNavigateToCatalogue();
+
   const { data: catalogueItem, isLoading: catalogueItemLoading } =
     useCatalogueItem(catalogueItemId);
   const { data: catalogueCategory } = useCatalogueCategory(
     catalogueItem?.catalogue_category_id
   );
-  const navigate = useNavigate();
-  const onChangeNode = React.useCallback(
-    (newIdPath: string) => {
-      navigate(`/catalogue/${newIdPath}`);
-    },
-    [navigate]
-  );
 
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
-    catalogueItem?.catalogue_category_id ?? ''
+    catalogueItem?.catalogue_category_id
   );
 
   const [itemsBreadcrumbs, setItemsBreadcrumbs] = React.useState<
@@ -65,11 +62,9 @@ export function Items() {
         }}
       >
         <Breadcrumbs
-          onChangeNode={onChangeNode}
+          onChangeNode={navigateToCatalogue}
           breadcrumbsInfo={itemsBreadcrumbs}
-          onChangeNavigateHome={() => {
-            navigate('/catalogue');
-          }}
+          onChangeNavigateHome={() => navigateToCatalogue(null)}
           navigateHomeAriaLabel={'navigate to catalogue home'}
         />
       </Grid>

@@ -1,9 +1,4 @@
-import {
-  fireEvent,
-  screen,
-  waitFor,
-  within
-} from '@testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { imsApi } from '../../api/api';
@@ -856,10 +851,11 @@ describe('Catalogue Category Dialog', () => {
         selectedCatalogueCategory: {
           ...mockData,
           id: '4',
-          name: 'Error 500',
         },
       };
       createView();
+
+      await modifyValues({ name: 'Error 500' });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
@@ -921,17 +917,18 @@ describe('Catalogue Category Dialog', () => {
       props.selectedCatalogueCategory = {
         ...mockData,
         id: '4',
-        name: 'test',
       };
 
       createView();
+
+      await modifyValues({ name: 'test2' });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
-        name: 'test',
-        is_leaf: false,
+        name: 'test2',
+        catalogue_item_properties: undefined,
       });
 
       expect(onClose).toHaveBeenCalled();
@@ -940,12 +937,12 @@ describe('Catalogue Category Dialog', () => {
     it('edits a new catalogue category at sub level ("/catalogue/*")', async () => {
       createView();
 
-      await modifyValues({ name: 'test' });
+      await modifyValues({ name: 'test2' });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/1', {
-        name: 'test',
+        name: 'test2',
       });
 
       expect(onClose).toHaveBeenCalled();

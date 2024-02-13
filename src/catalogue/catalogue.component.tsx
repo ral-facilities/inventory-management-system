@@ -31,6 +31,35 @@ import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import { generateUniqueName } from '../utils';
 import CatalogueCardView from './category/catalogueCardView.component';
 
+/* Returns function that navigates to a specific catalogue category id or catalogue path (or to the root of
+   all categories if given null) */
+export const useNavigateToCatalogue = () => {
+  const navigate = useNavigate();
+
+  return React.useCallback(
+    (newIdPath: string | null) => {
+      navigate(`/catalogue${newIdPath ? `/${newIdPath}` : ''}`);
+    },
+    [navigate]
+  );
+};
+
+/* Returns the catalogue category id from the location pathname (null when not found) */
+export const useCatalogueCategoryId = (): string | null => {
+  // Navigation setup
+  const location = useLocation();
+
+  return React.useMemo(() => {
+    let catalogueCategoryId: string | null = location.pathname.replace(
+      '/catalogue',
+      ''
+    );
+    catalogueCategoryId =
+      catalogueCategoryId === '' ? null : catalogueCategoryId.replace('/', '');
+    return catalogueCategoryId;
+  }, [location.pathname]);
+};
+
 export interface AddCatalogueButtonProps {
   disabled: boolean;
   parentId: string | null;
@@ -93,26 +122,19 @@ export function matchCatalogueItemProperties(
 
   return result;
 }
-function Catalogue() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const onChangeNode = React.useCallback(
-    (newId: string) => {
-      navigate(`/catalogue/${newId}`);
-    },
-    [navigate]
-  );
 
-  const catalogueId = location.pathname.replace('/catalogue', '');
+function Catalogue() {
+  // Navigation
+  const catalogueCategoryId = useCatalogueCategoryId();
+  const navigateToCatalogue = useNavigateToCatalogue();
 
   const {
     data: catalogueCategoryDetail,
     isLoading: catalogueCategoryDetailLoading,
-  } = useCatalogueCategory(catalogueId.replace('/', ''));
+  } = useCatalogueCategory(catalogueCategoryId);
 
-  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
-    catalogueId.replace('/', '')
-  );
+  const { data: catalogueBreadcrumbs } =
+    useCatalogueBreadcrumbs(catalogueCategoryId);
 
   const parentInfo = React.useMemo(
     () => catalogueCategoryDetail,
@@ -126,7 +148,8 @@ function Catalogue() {
     isLoading: catalogueCategoryDataLoading,
   } = useCatalogueCategories(
     catalogueCategoryDetailLoading ? true : !!parentInfo && parentInfo.is_leaf,
-    !catalogueId ? 'null' : catalogueId.replace('/', '')
+    // String value of null for filtering root catalogue category
+    catalogueCategoryId === null ? 'null' : catalogueCategoryId
   );
 
   const catalogueCategoryNames: string[] =
@@ -215,11 +238,9 @@ function Catalogue() {
         >
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Breadcrumbs
-              onChangeNode={onChangeNode}
+              onChangeNode={navigateToCatalogue}
               breadcrumbsInfo={catalogueBreadcrumbs}
-              onChangeNavigateHome={() => {
-                navigate('/catalogue');
-              }}
+              onChangeNavigateHome={() => navigateToCatalogue(null)}
               navigateHomeAriaLabel={'navigate to catalogue home'}
             />
             <NavigateNext
@@ -227,7 +248,9 @@ function Catalogue() {
               sx={{ color: 'text.secondary', margin: 1 }}
             />
             <AddCategoryButton
-              disabled={isLeafNode || (!parentInfo && catalogueId !== '')}
+              disabled={
+                isLeafNode || (!parentInfo && catalogueCategoryId !== null)
+              }
               parentId={parentId}
               type="add"
               resetSelectedCatalogueCategory={() =>
@@ -297,7 +320,7 @@ function Catalogue() {
               No results found
             </Typography>
             <Typography sx={{ textAlign: 'center' }}>
-              {!parentInfo && catalogueId !== ''
+              {!parentInfo && catalogueCategoryId !== null
                 ? 'The category you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
                 : 'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'}
             </Typography>

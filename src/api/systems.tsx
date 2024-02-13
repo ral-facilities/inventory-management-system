@@ -61,16 +61,16 @@ const fetchSystem = async (id: string): Promise<System> => {
   });
 };
 
-// Allows a value of null to disable
+// Allows a value of undefined or null to disable
 export const useSystem = (
-  id: string | null
+  id?: string | null
 ): UseQueryResult<System, AxiosError> => {
   return useQuery({
     queryKey: ['System', id],
     queryFn: () => {
       return fetchSystem(id ?? '');
     },
-    enabled: id !== null,
+    enabled: !!id,
   });
 };
 
@@ -83,14 +83,14 @@ const fetchSystemsBreadcrumbs = async (
 };
 
 export const useSystemsBreadcrumbs = (
-  id: string | null
+  id?: string | null
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
   return useQuery({
     queryKey: ['SystemBreadcrumbs', id],
     queryFn: () => {
       return fetchSystemsBreadcrumbs(id ?? '');
     },
-    enabled: id !== null,
+    enabled: !!id,
   });
 };
 

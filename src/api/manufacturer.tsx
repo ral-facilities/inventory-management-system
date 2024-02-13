@@ -70,23 +70,21 @@ export const useDeleteManufacturer = (): UseMutationResult<
   });
 };
 
-const fetchManufacturer = async (
-  id: string | undefined
-): Promise<Manufacturer> => {
-  return imsApi.get(`/v1/manufacturers/${id}`, {}).then((response) => {
+const fetchManufacturer = async (id: string): Promise<Manufacturer> => {
+  return imsApi.get(`/v1/manufacturers/${id}`).then((response) => {
     return response.data;
   });
 };
 
 export const useManufacturer = (
-  id: string | undefined
+  id?: string | null
 ): UseQueryResult<Manufacturer, AxiosError> => {
   return useQuery({
     queryKey: ['Manufacturer', id],
     queryFn: (params) => {
-      return fetchManufacturer(id);
+      return fetchManufacturer(id ?? '');
     },
-    enabled: id !== undefined,
+    enabled: !!id,
   });
 };
 

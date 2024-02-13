@@ -232,7 +232,7 @@ describe('catalogue item directory Dialog', () => {
 
       await user.click(moveButton);
       expect(onClose).toHaveBeenCalled();
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
         catalogue_category_id: '8967',
         cost_gbp: 500,
         cost_to_rework_gbp: null,
@@ -253,7 +253,7 @@ describe('catalogue item directory Dialog', () => {
           { name: 'Accuracy', unit: '', value: '±0.5%' },
         ],
       });
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
         catalogue_category_id: '8967',
         cost_gbp: 600,
         cost_to_rework_gbp: 89,
@@ -288,7 +288,7 @@ describe('catalogue item directory Dialog', () => {
 
       await user.click(moveButton);
       expect(onClose).toHaveBeenCalled();
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
         catalogue_category_id: '5',
         cost_gbp: 500,
         cost_to_rework_gbp: null,
@@ -309,7 +309,7 @@ describe('catalogue item directory Dialog', () => {
           { name: 'Accuracy', unit: '', value: '±0.5%' },
         ],
       });
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items/', {
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
         catalogue_category_id: '5',
         cost_gbp: 600,
         cost_to_rework_gbp: 89,

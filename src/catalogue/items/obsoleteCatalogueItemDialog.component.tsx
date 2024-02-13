@@ -109,17 +109,15 @@ const ObsoleteCatalogueItemDialog = (
   }, [catalogueItem, handleObsoleteDetailChanged]);
 
   // Current category and its children
-  const { data: catalogueCategoryData } = useCatalogueCategory(
-    catalogueCurrDirId ?? undefined
-  );
+  const { data: catalogueCategoryData } =
+    useCatalogueCategory(catalogueCurrDirId);
   const {
     data: catalogueCategoryDataList,
     isLoading: catalogueCategoryDataListLoading,
   } = useCatalogueCategories(false, catalogueCurrDirId ?? 'null');
 
-  const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
-    catalogueCurrDirId ?? ''
-  );
+  const { data: catalogueBreadcrumbs } =
+    useCatalogueBreadcrumbs(catalogueCurrDirId);
   const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
 
   // Removes parameters when is_obsolete changed to false

@@ -115,7 +115,7 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(data));
   }),
 
-  rest.get('/v1/catalogue-categories/', (req, res, ctx) => {
+  rest.get('/v1/catalogue-categories', (req, res, ctx) => {
     const catalogueCategoryParams = req.url.searchParams;
     const parentId = catalogueCategoryParams.get('parent_id');
     let data;
@@ -188,7 +188,7 @@ export const handlers = [
       return res(ctx.status(400), ctx.json(''));
     }
   }),
-  rest.post('/v1/catalogue-items/', async (req, res, ctx) => {
+  rest.post('/v1/catalogue-items', async (req, res, ctx) => {
     const body = (await req.json()) as CatalogueItem;
 
     if (
@@ -207,7 +207,7 @@ export const handlers = [
     );
   }),
 
-  rest.get('/v1/catalogue-items/', async (req, res, ctx) => {
+  rest.get('/v1/catalogue-items', async (req, res, ctx) => {
     const catalogueItemsParams = req.url.searchParams;
     const id = catalogueItemsParams.get('catalogue_category_id');
 
@@ -487,7 +487,7 @@ export const handlers = [
     }
   }),
   // ------------------------------------ ITEMS ------------------------------------------------
-  rest.post('/v1/items/', async (req, res, ctx) => {
+  rest.post('/v1/items', async (req, res, ctx) => {
     const body = (await req.json()) as AddItem;
 
     if (body.serial_number === 'Error 500') {
@@ -503,7 +503,7 @@ export const handlers = [
     );
   }),
 
-  rest.get('/v1/items/', (req, res, ctx) => {
+  rest.get('/v1/items', (req, res, ctx) => {
     const itemsParams = req.url.searchParams;
     const catalogueItemId = itemsParams.get('catalogue_item_id');
     const systemId = itemsParams.get('system_id');

@@ -17,9 +17,7 @@ import {
 import { imsApi } from './api';
 
 const addItem = async (item: AddItem): Promise<Item> => {
-  return imsApi
-    .post<Item>(`/v1/items/`, item)
-    .then((response) => response.data);
+  return imsApi.post<Item>(`/v1/items`, item).then((response) => response.data);
 };
 
 export const useAddItem = (): UseMutationResult<Item, AxiosError, AddItem> => {
@@ -42,7 +40,7 @@ const fetchItems = async (
   catalogue_item_id &&
     queryParams.append('catalogue_item_id', catalogue_item_id);
   return imsApi
-    .get(`/v1/items/`, {
+    .get(`/v1/items`, {
       params: queryParams,
     })
     .then((response) => {
@@ -63,7 +61,7 @@ export const useItems = (
   });
 };
 
-const fetchItem = async (id?: string): Promise<Item> => {
+const fetchItem = async (id: string): Promise<Item> => {
   const queryParams = new URLSearchParams();
 
   return imsApi
@@ -75,11 +73,13 @@ const fetchItem = async (id?: string): Promise<Item> => {
     });
 };
 
-export const useItem = (id?: string): UseQueryResult<Item, AxiosError> => {
+export const useItem = (
+  id?: string | null
+): UseQueryResult<Item, AxiosError> => {
   return useQuery({
     queryKey: ['Item', id],
     queryFn: (params) => {
-      return fetchItem(id);
+      return fetchItem(id ?? '');
     },
     enabled: !!id,
   });
