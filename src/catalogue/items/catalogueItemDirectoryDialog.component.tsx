@@ -193,7 +193,7 @@ const CatalogueItemDirectoryDialog = (
         ) : (
           <CatalogueCategoryTableView
             selectedCategories={[]}
-            onChangeCatalogueCurrDirId={onChangeCatalogueCurrDirId}
+            onChangeParentCategoryId={onChangeCatalogueCurrDirId}
             requestType={'standard'}
             catalogueCategoryData={catalogueCategoryData}
             catalogueCategoryDataLoading={catalogueCategoryDataLoading}

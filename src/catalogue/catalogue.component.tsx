@@ -93,6 +93,66 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
   );
 };
 
+const MoveCategoriesButton = (props: {
+  selectedCategories: CatalogueCategory[];
+  onChangeSelectedCategories: (selectedCategories: CatalogueCategory[]) => void;
+  parentCategoryId: string | null;
+}) => {
+  const [moveToCategoryDialogOpen, setMoveToCategoryDialogOpen] =
+    React.useState<boolean>(false);
+
+  return (
+    <>
+      <Button
+        sx={{ mx: '4px' }}
+        variant="outlined"
+        startIcon={<DriveFileMoveOutlinedIcon />}
+        onClick={() => setMoveToCategoryDialogOpen(true)}
+      >
+        Move to
+      </Button>
+      <CatalogueCategoryDirectoryDialog
+        open={moveToCategoryDialogOpen}
+        onClose={() => setMoveToCategoryDialogOpen(false)}
+        selectedCategories={props.selectedCategories}
+        onChangeSelectedCategories={props.onChangeSelectedCategories}
+        parentCategoryId={props.parentCategoryId}
+        requestType="moveTo"
+      />
+    </>
+  );
+};
+
+const CopyCategoriesButton = (props: {
+  selectedCategories: CatalogueCategory[];
+  onChangeSelectedCategories: (selectedCategories: CatalogueCategory[]) => void;
+  parentCategoryId: string | null;
+}) => {
+  const [copyToCategoryDialogOpen, setCopyToCategoryDialogOpen] =
+    React.useState<boolean>(false);
+
+  return (
+    <>
+      <Button
+        sx={{ mx: '4px' }}
+        variant="outlined"
+        startIcon={<FolderCopyOutlinedIcon />}
+        onClick={() => setCopyToCategoryDialogOpen(true)}
+      >
+        Copy to
+      </Button>
+      <CatalogueCategoryDirectoryDialog
+        open={copyToCategoryDialogOpen}
+        onClose={() => setCopyToCategoryDialogOpen(false)}
+        selectedCategories={props.selectedCategories}
+        onChangeSelectedCategories={props.onChangeSelectedCategories}
+        parentCategoryId={props.parentCategoryId}
+        requestType="copyTo"
+      />
+    </>
+  );
+};
+
 export function matchCatalogueItemProperties(
   form: CatalogueCategoryFormData[],
   items: CatalogueItemProperty[]
@@ -208,18 +268,10 @@ function Catalogue() {
     }
   };
 
-  const [moveToCategoryDialogOpen, setMoveToCategoryDialogOpen] =
-    React.useState<boolean>(false);
-  const [copyToCategoryDialogOpen, setCopyToCategoryDialogOpen] =
-    React.useState<boolean>(false);
   // Clears the selected categories when the user navigates toa different page
   React.useEffect(() => {
     setSelectedCategories([]);
   }, [parentId]);
-
-  const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
-    string | null
-  >(null);
 
   return (
     <Grid container>
@@ -261,29 +313,16 @@ function Catalogue() {
 
           {!isLeafNode && selectedCategories.length >= 1 && (
             <Box>
-              <Button
-                sx={{ mx: '4px' }}
-                variant="outlined"
-                startIcon={<DriveFileMoveOutlinedIcon />}
-                onClick={() => {
-                  setCatalogueCurrDirId(parentId ?? null);
-                  setMoveToCategoryDialogOpen(true);
-                }}
-              >
-                Move to
-              </Button>
-
-              <Button
-                sx={{ mx: '4px' }}
-                variant="outlined"
-                startIcon={<FolderCopyOutlinedIcon />}
-                onClick={() => {
-                  setCatalogueCurrDirId(parentId ?? null);
-                  setCopyToCategoryDialogOpen(true);
-                }}
-              >
-                Copy to
-              </Button>
+              <MoveCategoriesButton
+                selectedCategories={selectedCategories}
+                onChangeSelectedCategories={setSelectedCategories}
+                parentCategoryId={catalogueCategoryId}
+              />
+              <CopyCategoriesButton
+                selectedCategories={selectedCategories}
+                onChangeSelectedCategories={setSelectedCategories}
+                parentCategoryId={catalogueCategoryId}
+              />
 
               <Button
                 sx={{ mx: '4px' }}
@@ -379,25 +418,6 @@ function Catalogue() {
         onClose={() => setDeleteCategoryDialogOpen(false)}
         catalogueCategory={selectedCatalogueCategory}
         onChangeCatalogueCategory={setSelectedCatalogueCategory}
-      />
-
-      <CatalogueCategoryDirectoryDialog
-        open={moveToCategoryDialogOpen}
-        onClose={() => setMoveToCategoryDialogOpen(false)}
-        selectedCategories={selectedCategories}
-        onChangeSelectedCategories={setSelectedCategories}
-        catalogueCurrDirId={catalogueCurrDirId}
-        onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
-        requestType="moveTo"
-      />
-      <CatalogueCategoryDirectoryDialog
-        open={copyToCategoryDialogOpen}
-        onClose={() => setCopyToCategoryDialogOpen(false)}
-        selectedCategories={selectedCategories}
-        onChangeSelectedCategories={setSelectedCategories}
-        catalogueCurrDirId={catalogueCurrDirId}
-        onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
-        requestType="copyTo"
       />
     </Grid>
   );
