@@ -48,8 +48,7 @@ describe('handleIMS_APIError', () => {
       type: NotificationType,
       payload: {
         severity: 'error',
-        message:
-          'Something went wrong, please contact the system administrator',
+        message: 'Test error message (response data)',
       },
     });
   });
@@ -78,8 +77,7 @@ describe('handleIMS_APIError', () => {
       type: NotificationType,
       payload: {
         severity: 'error',
-        message:
-          'Something went wrong, please contact the system administrator',
+        message: 'Test error message',
       },
     });
   });

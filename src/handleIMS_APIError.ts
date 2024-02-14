@@ -16,9 +16,10 @@ const handleIMS_APIError = (error: AxiosError, broadcast = true): void => {
     if (!error.response)
       broadcastMessage =
         'Network Error, please reload the page or try again later';
-    else
+    else if (error.status === 500)
       broadcastMessage =
         'Something went wrong, please contact the system administrator';
+    else broadcastMessage = message;
     document.dispatchEvent(
       new CustomEvent(MicroFrontendId, {
         detail: {
