@@ -74,6 +74,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     enablePagination: true,
     // Other settings
     autoResetPageIndex: false,
+    paginationDisplayMode: 'pages',
     // Localisation
     localization: {
       ...MRT_Localization_EN,

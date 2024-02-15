@@ -224,6 +224,9 @@ function Systems() {
     state: { rowSelection: rowSelection },
     // MUI
     muiPaginationProps: {
+      color: 'secondary',
+      shape: 'rounded',
+      variant: 'outlined',
       showRowsPerPage: true,
       rowsPerPageOptions: [10, 25, 50],
       showFirstButton: false,
