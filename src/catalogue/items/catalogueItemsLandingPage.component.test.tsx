@@ -258,7 +258,7 @@ describe('Catalogue Items Landing Page', () => {
 
     await user.click(breadcrumb);
 
-    expect(mockedUseNavigate).toBeCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
     expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue/5');
   });
 
