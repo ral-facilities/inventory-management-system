@@ -83,6 +83,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     state: {
       showProgressBars: systemsDataLoading,
     },
+    paginationDisplayMode: 'pages',
     muiPaginationProps: {
       color: 'secondary',
       rowsPerPageOptions: [5],
