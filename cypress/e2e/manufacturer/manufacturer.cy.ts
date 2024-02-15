@@ -183,7 +183,8 @@ describe('Manufacturer', () => {
       });
     cy.findByRole('button', { name: 'Continue' }).should('be.disabled');
   });
-  it('Edits a manufacturer correctly', () => {
+
+  it('edits a manufacturer correctly', () => {
     cy.visit('/manufacturer');
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
@@ -225,7 +226,7 @@ describe('Manufacturer', () => {
     });
   });
 
-  it('Trying to edit with duplicate name displays error message', () => {
+  it('trying to edit with duplicate name displays error message', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
 
@@ -244,7 +245,7 @@ describe('Manufacturer', () => {
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
 
-  it('Trying to edit with invalid url displays error message', () => {
+  it('trying to edit with invalid url displays error message', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
 
@@ -261,7 +262,7 @@ describe('Manufacturer', () => {
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
 
-  it('Not changing any fields shows error', () => {
+  it('not changing any fields shows error', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
 
