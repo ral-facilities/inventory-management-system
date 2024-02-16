@@ -569,8 +569,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   );
 
   const table = useMaterialReactTable({
+    // Data
     columns: dense ? [{ ...columns[0], size: 1135 }] : columns, // If dense only show the name column
     data: tableRows ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    // Features
     enableColumnOrdering: dense ? false : true,
     enableFacetedValues: true,
     enableColumnResizing: dense ? false : true,
@@ -584,7 +586,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
     enableColumnVirtualization: dense ? false : true,
-    onColumnFiltersChange: setColumnFilters,
+    enablePagination: true,
+    // Other settings
     columnVirtualizerOptions: dense
       ? undefined
       : {
@@ -592,12 +595,26 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           estimateSize: () => 200,
         },
     manualFiltering: false,
-    enablePagination: true,
+    paginationDisplayMode: 'pages',
+    autoResetPageIndex: false,
+    positionToolbarAlertBanner: 'bottom',
+    // Localisation
     localization: {
       ...MRT_Localization_EN,
       noRecordsToDisplay: noResultsTxt,
     },
-    onRowSelectionChange: setRowSelection,
+    // State
+    initialState: {
+      showColumnFilters: true,
+      showGlobalFilter: true,
+      pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+    },
+    state: {
+      showProgressBars: isLoading, //or showSkeletons
+      rowSelection,
+      columnFilters,
+    },
+    // MUI
     muiTableBodyRowProps: dense
       ? ({ row }) => {
           return {
@@ -616,6 +633,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           };
         }
       : undefined,
+    muiTableContainerProps: {
+      sx: { height: dense ? '360.4px' : tableHeight },
+    },
     muiSelectCheckboxProps: dense
       ? ({ row }) => {
           return {
@@ -627,32 +647,20 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           };
         }
       : undefined,
-    initialState: {
-      showColumnFilters: true,
-      showGlobalFilter: true,
-      pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
-    },
-    getRowId: (row) => row.catalogueItem.id,
-    muiTableContainerProps: {
-      sx: { height: dense ? '360.4px' : tableHeight },
-    },
-    paginationDisplayMode: 'pages',
-    positionToolbarAlertBanner: 'bottom',
-    muiSearchTextFieldProps: {
-      size: 'small',
-      variant: 'outlined',
-    },
-    state: {
-      showProgressBars: isLoading, //or showSkeletons
-      rowSelection,
-      columnFilters,
-    },
     muiPaginationProps: {
       color: 'secondary',
       rowsPerPageOptions: dense ? [5] : [15, 30, 45],
       shape: 'rounded',
       variant: 'outlined',
     },
+    muiSearchTextFieldProps: {
+      size: 'small',
+      variant: 'outlined',
+    },
+    //Functions
+    getRowId: (row) => row.catalogueItem.id,
+    onColumnFiltersChange: setColumnFilters,
+    onRowSelectionChange: setRowSelection,
     renderCreateRowDialogContent: ({ table, row }) => {
       return (
         <>
