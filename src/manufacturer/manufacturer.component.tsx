@@ -116,8 +116,10 @@ function ManufacturerComponent() {
     React.useState<MRT_ColumnFiltersState>([]);
 
   const table = useMaterialReactTable({
+    // Data
     columns: columns, // If dense only show the name column
     data: ManufacturerData ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    // Features
     enableColumnOrdering: true,
     enableColumnResizing: true,
     enableFacetedValues: true,
@@ -127,31 +129,35 @@ function ManufacturerComponent() {
     enableDensityToggle: false,
     enableFullScreenToggle: false,
     enablePagination: true,
+    // Other settings
     manualFiltering: false,
-    onColumnFiltersChange: setColumnFilters,
+    paginationDisplayMode: 'pages',
+    positionToolbarAlertBanner: 'bottom',
+    autoResetPageIndex: false,
+    // Localisation
     localization: {
       ...MRT_Localization_EN,
       noRecordsToDisplay: noResultsTxt,
     },
+    // State
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
       pagination: { pageSize: 25, pageIndex: 0 },
     },
+    state: {
+      columnFilters,
+      showProgressBars: ManufacturerDataLoading, //or showSkeletons
+    },
+    // MUI
     muiTableBodyRowProps: ({ row }) => {
       return { component: TableRow, 'aria-label': `${row.original.name} row` };
     },
     muiTablePaperProps: { sx: { maxHeight: '100%' } },
     muiTableContainerProps: { sx: { height: tableHeight } },
-    paginationDisplayMode: 'pages',
-    positionToolbarAlertBanner: 'bottom',
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
-    },
-    state: {
-      columnFilters,
-      showProgressBars: ManufacturerDataLoading, //or showSkeletons
     },
     muiPaginationProps: {
       color: 'secondary',
@@ -159,6 +165,8 @@ function ManufacturerComponent() {
       shape: 'rounded',
       variant: 'outlined',
     },
+    // Functions
+    onColumnFiltersChange: setColumnFilters,
     renderCreateRowDialogContent: ({ table }) => {
       return (
         <>
