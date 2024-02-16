@@ -192,8 +192,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
 
   const noResultsText = 'No items found';
   const table = useMaterialReactTable({
+    // Data
     columns: columns,
     data: tableRows,
+    // Features
     enableColumnOrdering: true,
     enableFacetedValues: true,
     enableColumnResizing: true,
@@ -205,20 +207,29 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     enableFullScreenToggle: true,
     enableColumnVirtualization: false,
     enableRowSelection: true,
-    onColumnFiltersChange: setColumnFilters,
-    manualFiltering: false,
     enablePagination: true,
+    // Other settings
+    manualFiltering: false,
+    paginationDisplayMode: 'pages',
+    positionToolbarAlertBanner: 'bottom',
+    autoResetPageIndex: false,
+    // Localisation
     localization: {
       ...MRT_Localization_EN,
       noRecordsToDisplay: noResultsText,
     },
+    // State
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
       pagination: { pageSize: 15, pageIndex: 0 },
     },
-    onRowSelectionChange: setRowSelection,
-    getRowId: (row) => row.item.id,
+    state: {
+      showProgressBars: isLoading,
+      columnFilters: columnFilters,
+      rowSelection: rowSelection,
+    },
+    // MUI
     muiTablePaperProps: ({ table }) => ({
       // sx doesn't work here currently - see https://www.material-react-table.com/docs/guides/full-screen-toggle
       style: {
@@ -230,16 +241,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     muiTableContainerProps: {
       sx: { height: '360.4px' },
     },
-    paginationDisplayMode: 'pages',
-    positionToolbarAlertBanner: 'bottom',
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
-    },
-    state: {
-      showProgressBars: isLoading,
-      columnFilters: columnFilters,
-      rowSelection: rowSelection,
     },
     muiPaginationProps: {
       color: 'secondary',
@@ -247,6 +251,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       shape: 'rounded',
       variant: 'outlined',
     },
+    // Functions
+    getRowId: (row) => row.item.id,
+    onColumnFiltersChange: setColumnFilters,
+    onRowSelectionChange: setRowSelection,
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
         <Button

@@ -233,6 +233,7 @@ export function ItemsTable(props: ItemTableProps) {
     React.useState<MRT_ColumnFiltersState>([]);
 
   const table = useMaterialReactTable({
+    // Data
     columns: dense
       ? [
           { ...columns[0], size: 400 },
@@ -243,6 +244,7 @@ export function ItemsTable(props: ItemTableProps) {
         ]
       : columns,
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    // Features
     enableColumnOrdering: dense ? false : true,
     enableFacetedValues: true,
     enableColumnResizing: dense ? false : true,
@@ -254,7 +256,8 @@ export function ItemsTable(props: ItemTableProps) {
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
     enableColumnVirtualization: dense ? false : true,
-    onColumnFiltersChange: setColumnFilters,
+    enablePagination: true,
+    // Other settings
     columnVirtualizerOptions: dense
       ? undefined
       : {
@@ -262,29 +265,31 @@ export function ItemsTable(props: ItemTableProps) {
           estimateSize: () => 200,
         },
     manualFiltering: false,
-    enablePagination: true,
+    paginationDisplayMode: 'pages',
+    positionToolbarAlertBanner: 'bottom',
+    autoResetPageIndex: false,
+    // Localisation
     localization: {
       ...MRT_Localization_EN,
       noRecordsToDisplay: noResultsTxt,
     },
+    //State
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
     },
-    getRowId: (row) => row.id,
-    muiTableContainerProps: {
-      sx: { height: dense ? '360.4px' : tableHeight },
-    },
-    paginationDisplayMode: 'pages',
-    positionToolbarAlertBanner: 'bottom',
-    muiSearchTextFieldProps: {
-      size: 'small',
-      variant: 'outlined',
-    },
     state: {
       showProgressBars: isLoading, //or showSkeletons
       columnFilters,
+    },
+    // MUI
+    muiTableContainerProps: {
+      sx: { height: dense ? '360.4px' : tableHeight },
+    },
+    muiSearchTextFieldProps: {
+      size: 'small',
+      variant: 'outlined',
     },
     muiPaginationProps: {
       color: 'secondary',
@@ -292,6 +297,9 @@ export function ItemsTable(props: ItemTableProps) {
       shape: 'rounded',
       variant: 'outlined',
     },
+    // Functions
+    getRowId: (row) => row.id,
+    onColumnFiltersChange: setColumnFilters,
     renderCreateRowDialogContent: ({ table, row }) => {
       return (
         <>
