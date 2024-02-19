@@ -68,7 +68,8 @@ const CatalogueItemDirectoryDialog = (
   const handleClose = React.useCallback(() => {
     onClose();
     setErrorMessage('');
-  }, [onClose]);
+    setParentCategoryId(props.parentCategoryId);
+  }, [onClose, props.parentCategoryId]);
 
   // reset error message when catalogue catagory id changes
   React.useEffect(() => {
