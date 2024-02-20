@@ -3,13 +3,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { styled } from '@mui/material/styles';
 import React from 'react';
-import {
-  Link,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { TabValue } from '../app.types';
 import Catalogue from '../catalogue/catalogue.component';
 import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingPage.component';
