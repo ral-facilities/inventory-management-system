@@ -1,5 +1,5 @@
 {
-  "apiUrl": "",
+  "apiUrl": "http://localhost:8000",
   "routes": [
     {
       "section": "Inventory Management System",
