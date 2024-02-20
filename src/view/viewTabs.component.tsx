@@ -19,9 +19,19 @@ import Manufacturer from '../manufacturer/manufacturer.component';
 import ManufacturerLandingPage from '../manufacturer/manufacturerLandingPage.component';
 import Systems from '../systems/systems.component';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
+import HomePage from '../homePage/homePage.component';
+import DGLogo from '../images/scigateway-white-text-blue-mark-logo.svg';
+import BackgroundImage from '../images/background.jpg';
+import GreenSwirl1Image from '../images/green-swirl1.png';
+import GreenSwirl2Image from '../images/green-swirl2.png';
+import Decal1Image from '../images/decal1.svg';
+import Decal2Image from '../images/decal2.svg';
+import Decal2DarkImage from '../images/decal2-dark.svg';
+import Decal2DarkHCImage from '../images/decal2-darkhc.svg';
+import FacilityImage from '../images/facility.jpg';
 
 export const paths = {
-  home: '/',
+  home: '/ims',
   catalogue: '/catalogue/*',
   systems: '/systems/*',
   manufacturers: '/manufacturer',
@@ -99,7 +109,19 @@ function ViewTabs() {
     <Routes location={location}>
       <Route
         path={paths.home}
-        element={<Link to={'/catalogue'}>Browse the catalogue</Link>}
+        element={
+          <HomePage
+            logo={DGLogo}
+            backgroundImage={BackgroundImage}
+            greenSwirl1Image={GreenSwirl1Image}
+            greenSwirl2Image={GreenSwirl2Image}
+            decal1Image={Decal1Image}
+            decal2Image={Decal2Image}
+            decal2DarkImage={Decal2DarkImage}
+            decal2DarkHCImage={Decal2DarkHCImage}
+            facilityImage={FacilityImage}
+          />
+        }
       />
       <Route path={paths.catalogue} element={<Catalogue />} />
       <Route
