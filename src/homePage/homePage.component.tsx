@@ -238,7 +238,7 @@ const HomePage = (props: HomePageProps): React.ReactElement => {
           <Grid item sm={12} md={4}>
             <Paper sx={paperStyles} elevation={1}>
               <Box sx={paperContentStyles}>
-                <PaperHeading variant="h4">{'Manufactures'}</PaperHeading>
+                <PaperHeading variant="h4">{'Manufacturers'}</PaperHeading>
                 <PaperDescription variant="body1">
                   {'View the manufacturers and supplies used by EPAC.'}
                 </PaperDescription>

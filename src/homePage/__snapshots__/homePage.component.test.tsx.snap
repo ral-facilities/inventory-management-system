@@ -141,7 +141,7 @@ exports[`Home page component homepage renders correctly 1`] = `
               <h4
                 class="MuiTypography-root MuiTypography-h4 css-rspydk-MuiTypography-root"
               >
-                Manufactures
+                Manufacturers
               </h4>
               <p
                 class="MuiTypography-root MuiTypography-body1 css-16w7kz2-MuiTypography-root"
