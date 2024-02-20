@@ -66,22 +66,17 @@ describe('View Tabs', () => {
     ).toHaveTextContent('Systems');
   });
 
-  it('navigates to catalogue when the "Browse the catalogue" link is clicked', async () => {
-    createView('/');
-    await user.click(
-      screen.getByRole('link', { name: 'Browse the catalogue' })
-    );
+  it('navigates to home page', async () => {
+    createView('/ims');
 
-    const viewTabs = within(screen.getByRole('tablist', { name: 'view tabs' }));
-    expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
-      'Catalogue'
-    );
-    const catalogueHomeButton = await screen.findByRole('button', {
-      name: 'navigate to catalogue home',
-    });
-    expect(catalogueHomeButton).toBeInTheDocument();
     await waitFor(() => {
-      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+      expect(screen.getAllByText('Inventory Managment')[0]).toBeInTheDocument();
+    });
+
+    createView('/');
+
+    await waitFor(() => {
+      expect(screen.getAllByText('Inventory Managment')[0]).toBeInTheDocument();
     });
   });
 

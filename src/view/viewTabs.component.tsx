@@ -26,6 +26,7 @@ import FacilityImage from '../images/facility.jpg';
 
 export const paths = {
   home: '/ims',
+  defaulthome: '/',
   catalogue: '/catalogue/*',
   systems: '/systems/*',
   manufacturers: '/manufacturer',
@@ -79,11 +80,11 @@ function ViewTabs() {
   // because that is when the tabs are visible
   React.useEffect(() => {
     if (process.env.NODE_ENV !== 'production') {
-      const prefixIndex = location.pathname.indexOf(paths.home);
+      const prefixIndex = location.pathname.indexOf(paths.defaulthome);
       let tabValue =
         prefixIndex !== -1
           ? location.pathname
-              .substring(prefixIndex + paths.home.length)
+              .substring(prefixIndex + paths.defaulthome.length)
               .split('/')[0]
           : '';
 
@@ -103,6 +104,22 @@ function ViewTabs() {
     <Routes location={location}>
       <Route
         path={paths.home}
+        element={
+          <HomePage
+            logo={DGLogo}
+            backgroundImage={BackgroundImage}
+            greenSwirl1Image={GreenSwirl1Image}
+            greenSwirl2Image={GreenSwirl2Image}
+            decal1Image={Decal1Image}
+            decal2Image={Decal2Image}
+            decal2DarkImage={Decal2DarkImage}
+            decal2DarkHCImage={Decal2DarkHCImage}
+            facilityImage={FacilityImage}
+          />
+        }
+      />
+      <Route
+        path={paths.defaulthome}
         element={
           <HomePage
             logo={DGLogo}
