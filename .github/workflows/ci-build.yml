@@ -73,7 +73,7 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      api:
+      ims-api:
         image: harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
         ports:
           - 8000:8000
@@ -82,14 +82,20 @@ jobs:
           API__TITLE: Inventory Management System API
           API__DESCRIPTION: This is the API for the Inventory Management System
           API__ROOT_PATH: /inventory-management-system-api
-          AUTHENTICATION__PUBLIC_KEY_PATH: ./keys/jwt-key.pub
-          AUTHENTICATION__JWT_ALGORITHM: RS256
           DATABASE__PROTOCOL: mongodb
           DATABASE__USERNAME: root
           DATABASE__PASSWORD: example
           DATABASE__HOSTNAME: mongo-db
           DATABASE__PORT: 27017
           DATABASE__NAME: ims
+
+      mongodb:
+        image: nginx:1.21.6-alpine
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
 
     steps:
       - name: Checkout repo
@@ -105,6 +111,8 @@ jobs:
         run: |
           sudo apt-get install libgconf-2-4
           yarn --immutable
+      - name: Test
+        run: curl http://localhost:8000/inventory-management-system-api
 
       - name: Run e2e tests
         run: yarn e2e:api
