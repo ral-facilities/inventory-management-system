@@ -11,7 +11,7 @@ describe('CatalogueCategoryTableView', () => {
   let props: CatalogueCategoryTableViewProps;
   let user;
 
-  const onChangeCatalogueCurrDirId = jest.fn();
+  const onChangeParentCategoryId = jest.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(
       <CatalogueCategoryTableView {...props} />
@@ -42,7 +42,7 @@ describe('CatalogueCategoryTableView', () => {
           ],
         },
       ],
-      onChangeCatalogueCurrDirId: onChangeCatalogueCurrDirId,
+      onChangeParentCategoryId: onChangeParentCategoryId,
       requestType: 'standard',
       catalogueCategoryData: [
         {
@@ -195,7 +195,7 @@ describe('CatalogueCategoryTableView', () => {
     });
   });
 
-  it('changes the CatalogueCurrDirId on click on a Table row (standard)', async () => {
+  it('calls onChangeParentCategoryId when clicking on a Table row (standard)', async () => {
     createView();
 
     await waitFor(() => {
@@ -205,10 +205,10 @@ describe('CatalogueCategoryTableView', () => {
     const camerasRow = screen.getByRole('row', { name: 'Cameras row' });
     await user.click(camerasRow);
 
-    expect(onChangeCatalogueCurrDirId).toBeCalledWith('4');
+    expect(onChangeParentCategoryId).toHaveBeenCalledWith('4');
   });
 
-  it('changes the CatalogueCurrDirId on click on a Table row (CopyTo)', async () => {
+  it('calls onChangeParentCategoryId when clicking on a Table row (CopyTo)', async () => {
     props.requestType = 'copyTo';
     createView();
 
@@ -225,7 +225,7 @@ describe('CatalogueCategoryTableView', () => {
     const AmpMetersRow = screen.getByRole('row', { name: 'Amp Meters row' });
     await user.click(AmpMetersRow);
 
-    expect(onChangeCatalogueCurrDirId).toBeCalledWith('19');
+    expect(onChangeParentCategoryId).toHaveBeenCalledWith('19');
   });
 
   it('disables the leaf categories and the selected categories', async () => {
@@ -283,6 +283,6 @@ describe('CatalogueCategoryTableView', () => {
     await user.click(wavefrontSensorsRow);
     await user.click(voltageMetersRow);
 
-    expect(onChangeCatalogueCurrDirId).not.toBeCalled();
+    expect(onChangeParentCategoryId).not.toHaveBeenCalled();
   });
 });

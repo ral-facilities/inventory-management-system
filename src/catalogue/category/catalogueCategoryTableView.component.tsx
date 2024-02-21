@@ -10,7 +10,7 @@ import { CatalogueCategory } from '../../app.types';
 
 export interface CatalogueCategoryTableViewProps {
   selectedCategories: CatalogueCategory[];
-  onChangeCatalogueCurrDirId: (catalogueCurrDirId: string | null) => void;
+  onChangeParentCategoryId: (catalogueCurrDirId: string | null) => void;
   requestType: 'moveTo' | 'copyTo' | 'standard';
   catalogueCategoryData: CatalogueCategory[] | undefined;
   catalogueCategoryDataLoading: boolean;
@@ -20,7 +20,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
   const {
     selectedCategories,
     requestType,
-    onChangeCatalogueCurrDirId,
+    onChangeParentCategoryId,
     catalogueCategoryDataLoading,
     catalogueCategoryData,
   } = props;
@@ -103,7 +103,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       return {
         component: TableRow,
         onClick: () => {
-          canPlaceHere && onChangeCatalogueCurrDirId(row.original.id);
+          canPlaceHere && onChangeParentCategoryId(row.original.id);
         },
         'aria-label': `${row.original.name} row`,
         style: {

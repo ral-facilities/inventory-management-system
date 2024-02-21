@@ -31,8 +31,7 @@ export interface CatalogueItemDirectoryDialogProps {
   onClose: () => void;
   selectedItems: CatalogueItem[];
   onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
-  catalogueCurrDirId: string | null;
-  onChangeCatalogueCurrDirId: (catalogueCurrDirId: string | null) => void;
+  parentCategoryId: string | null;
   parentInfo: CatalogueCategory;
   requestType: 'moveTo' | 'copyTo';
 }
@@ -46,35 +45,42 @@ const CatalogueItemDirectoryDialog = (
     selectedItems,
     onChangeSelectedItems,
     requestType,
-    catalogueCurrDirId,
-    onChangeCatalogueCurrDirId,
     parentInfo,
   } = props;
+
+  // Store here and update only if changed to reduce re-renders and allow
+  // navigation
+  const [parentCategoryId, setParentCategoryId] = React.useState<string | null>(
+    props.parentCategoryId
+  );
+  React.useEffect(() => {
+    setParentCategoryId(props.parentCategoryId);
+  }, [props.parentCategoryId]);
+
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
   } = useCatalogueCategories(
     false,
-    !catalogueCurrDirId ? 'null' : catalogueCurrDirId
+    parentCategoryId === null ? 'null' : parentCategoryId
   );
 
   const handleClose = React.useCallback(() => {
     onClose();
-    onChangeSelectedItems({});
-    onChangeCatalogueCurrDirId('');
     setErrorMessage('');
-  }, [onChangeCatalogueCurrDirId, onChangeSelectedItems, onClose]);
+    setParentCategoryId(props.parentCategoryId);
+  }, [onClose, props.parentCategoryId]);
 
   // reset error message when catalogue catagory id changes
   React.useEffect(() => {
     setErrorMessage('');
-  }, [catalogueCurrDirId]);
+  }, [parentCategoryId]);
 
   const { mutateAsync: moveToCatalogueItem } = useMoveToCatalogueItem();
   const { mutateAsync: copyToCatalogueItem } = useCopyToCatalogueItem();
 
   const { data: targetCatalogueCategory } =
-    useCatalogueCategory(catalogueCurrDirId);
+    useCatalogueCategory(parentCategoryId);
 
   const [errorMessage, setErrorMessage] = React.useState<string>('');
 
@@ -94,12 +100,14 @@ const CatalogueItemDirectoryDialog = (
       targetCatalogueCategory: targetCatalogueCategory ?? null,
     }).then((response) => {
       handleTransferState(response);
+      onChangeSelectedItems({});
       handleClose();
     });
   }, [
     handleClose,
     moveToCatalogueItem,
-    parentInfo,
+    onChangeSelectedItems,
+    parentInfo.catalogue_item_properties,
     selectedItems,
     targetCatalogueCategory,
   ]);
@@ -120,22 +128,20 @@ const CatalogueItemDirectoryDialog = (
       targetCatalogueCategory: targetCatalogueCategory ?? null,
     }).then((response) => {
       handleTransferState(response);
+      onChangeSelectedItems({});
       handleClose();
     });
   }, [
     copyToCatalogueItem,
     handleClose,
+    onChangeSelectedItems,
     parentInfo.catalogue_item_properties,
     selectedItems,
     targetCatalogueCategory,
   ]);
 
-  const onChangeNode = (newId: string): void => {
-    onChangeCatalogueCurrDirId(newId);
-  };
-
   const { data: catalogueBreadcrumbs } =
-    useCatalogueBreadcrumbs(catalogueCurrDirId);
+    useCatalogueBreadcrumbs(parentCategoryId);
 
   return (
     <Dialog
@@ -173,11 +179,9 @@ const CatalogueItemDirectoryDialog = (
           </Grid>
           <Grid item xs={12}>
             <Breadcrumbs
-              onChangeNode={onChangeNode}
               breadcrumbsInfo={catalogueBreadcrumbs}
-              onChangeNavigateHome={() => {
-                onChangeCatalogueCurrDirId(null);
-              }}
+              onChangeNode={setParentCategoryId}
+              onChangeNavigateHome={() => setParentCategoryId(null)}
               navigateHomeAriaLabel="navigate to catalogue home"
             />
           </Grid>
@@ -193,7 +197,7 @@ const CatalogueItemDirectoryDialog = (
         ) : (
           <CatalogueCategoryTableView
             selectedCategories={[]}
-            onChangeCatalogueCurrDirId={onChangeCatalogueCurrDirId}
+            onChangeParentCategoryId={setParentCategoryId}
             requestType={'standard'}
             catalogueCategoryData={catalogueCategoryData}
             catalogueCategoryDataLoading={catalogueCategoryDataLoading}
@@ -207,7 +211,7 @@ const CatalogueItemDirectoryDialog = (
             requestType === 'moveTo'
               ? !(
                   (targetCatalogueCategory?.is_leaf ?? false) &&
-                  catalogueCurrDirId !== parentInfo.id
+                  parentCategoryId !== parentInfo.id
                 )
               : !(targetCatalogueCategory?.is_leaf ?? false)
           }
