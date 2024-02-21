@@ -7,7 +7,7 @@ describe('App', () => {
     cy.get('#inventory-management-system').should('be.visible');
   });
 
-  it.only('displays no categories error message at root', () => {
+  it('displays no categories error message at root', () => {
     cy.intercept({
       method: 'GET',
       url: '**/catalogue-categories?parent_id=null',
