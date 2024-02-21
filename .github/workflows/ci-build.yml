@@ -73,6 +73,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       AUTHENTICATION__ENABLED: false
+    services:
+      api:
+        image: harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
+        ports:
+          - 8000:8000
 
     steps:
       - name: Checkout repo
@@ -84,12 +89,6 @@ jobs:
           registry: harbor.stfc.ac.uk/inventory-management-system
           username: ${{ secrets.HARBOR_USERNAME }}
           password: ${{ secrets.HARBOR_TOKEN }}
-
-      - name: Pull API Docker image
-        run: docker pull harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
-
-      - name: Run API Docker container
-        run: docker run -d --name harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
 
       - name: Setup Node.js
         uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
