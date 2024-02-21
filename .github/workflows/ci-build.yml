@@ -90,7 +90,7 @@ jobs:
           DATABASE__NAME: ims
 
       mongodb:
-        image: nginx:1.21.6-alpine
+        image: mongo:6.0-jammy
         ports:
           - 27017:27017
         env:
@@ -111,8 +111,6 @@ jobs:
         run: |
           sudo apt-get install libgconf-2-4
           yarn --immutable
-      - name: Test
-        run: curl http://localhost:8000/inventory-management-system-api
 
       - name: Run e2e tests
         run: yarn e2e:api
