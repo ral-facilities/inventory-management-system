@@ -176,7 +176,7 @@ describe('Catalogue Items Landing Page', () => {
       name: 'Cameras 1',
     });
     await user.click(breadcrumb);
-    expect(mockedUseNavigate).toBeCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
     expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue/item/1');
   });
 
@@ -195,7 +195,7 @@ describe('Catalogue Items Landing Page', () => {
 
     await user.click(homeButton);
 
-    expect(mockedUseNavigate).toBeCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
     expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue');
   });
   it('landing page renders data correctly when optional values are null', async () => {

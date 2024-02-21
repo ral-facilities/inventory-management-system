@@ -749,13 +749,17 @@ describe('Catalogue Items', () => {
 
     cy.findByRole('button', { name: 'Move to' }).click();
 
-    cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
 
-    cy.findByText('Energy Meters V2').click();
+        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByText('Energy Meters V2').click();
 
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findByRole('button', { name: 'Move here' }).click();
+        cy.startSnoopingBrowserMockedRequest();
+        cy.findByRole('button', { name: 'Move here' }).click();
+      });
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',
@@ -779,19 +783,21 @@ describe('Catalogue Items', () => {
 
     cy.findByRole('button', { name: 'Move to' }).click();
 
-    cy.findByText('Cameras').click();
-
-    cy.findByRole('button', { name: 'Move here' }).click();
-
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
+        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByText('Cameras').click();
+
+        cy.findByRole('button', { name: 'Move here' }).click();
+
         cy.contains(
           'The destination catalogue item properties must precisely match the current destination. Ensure identical attributes, order, and formatting, with no spacing variations.'
         );
       });
   });
-  it('Move here button is disabled when trying to move to the current location', () => {
+
+  it('move here button is disabled when trying to move to the current location', () => {
     cy.visit('/catalogue/5');
 
     cy.findAllByLabelText('Toggle select row').first().click();
@@ -799,9 +805,15 @@ describe('Catalogue Items', () => {
 
     cy.findByRole('button', { name: 'Move to' }).click();
 
-    cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
-    cy.findByText('Energy Meters').click();
-    cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
+        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
+        cy.findByText('Energy Meters').click();
+        cy.findByRole('button', { name: 'Move here' }).should('be.disabled');
+      });
   });
 
   it('can copy multiple catalogue items', () => {
@@ -812,13 +824,18 @@ describe('Catalogue Items', () => {
 
     cy.findByRole('button', { name: 'Copy to' }).click();
 
-    cy.findByRole('button', { name: 'Copy here' }).should('be.disabled');
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByRole('link', { name: 'beam-characterization' }).click();
 
-    cy.findByText('Energy Meters V2').click();
+        cy.findByRole('button', { name: 'Copy here' }).should('be.disabled');
 
-    cy.startSnoopingBrowserMockedRequest();
+        cy.findByText('Energy Meters V2').click();
 
-    cy.findByRole('button', { name: 'Copy here' }).click();
+        cy.startSnoopingBrowserMockedRequest();
+        cy.findByRole('button', { name: 'Copy here' }).click();
+      });
 
     cy.findBrowserMockedRequests({
       method: 'POST',
@@ -888,13 +905,14 @@ describe('Catalogue Items', () => {
 
     cy.findByRole('button', { name: 'Copy to' }).click();
 
-    cy.findByText('Cameras').click();
-
-    cy.findByRole('button', { name: 'Copy here' }).click();
-
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
+        cy.findByRole('link', { name: 'beam-characterization' }).click();
+        cy.findByText('Cameras').click();
+
+        cy.findByRole('button', { name: 'Copy here' }).click();
+
         cy.contains(
           'The destination catalogue item properties must precisely match the current destination. Ensure identical attributes, order, and formatting, with no spacing variations.'
         );

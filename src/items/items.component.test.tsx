@@ -50,7 +50,7 @@ describe('Items', () => {
     });
     await user.click(breadcrumb);
 
-    expect(mockedUseNavigate).toBeCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
     expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue/4');
   });
 
@@ -67,7 +67,7 @@ describe('Items', () => {
     });
     await user.click(breadcrumb);
 
-    expect(mockedUseNavigate).toBeCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
     expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue/item/1');
   });
 
@@ -86,7 +86,7 @@ describe('Items', () => {
 
     await user.click(homeButton);
 
-    expect(mockedUseNavigate).toBeCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
     expect(mockedUseNavigate).toHaveBeenCalledWith('/catalogue');
   });
 

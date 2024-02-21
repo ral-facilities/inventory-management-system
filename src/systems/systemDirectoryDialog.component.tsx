@@ -60,7 +60,8 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
 
   const handleClose = React.useCallback(() => {
     onClose();
-  }, [onClose]);
+    setParentSystemId(props.parentSystemId);
+  }, [onClose, props.parentSystemId]);
 
   const handleMoveTo = React.useCallback(() => {
     // Either ensure finished loading, or moving to root
@@ -160,9 +161,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
             <Breadcrumbs
               breadcrumbsInfo={parentSystemBreadcrumbs}
               onChangeNode={setParentSystemId}
-              onChangeNavigateHome={() => {
-                setParentSystemId(null);
-              }}
+              onChangeNavigateHome={() => setParentSystemId(null)}
               navigateHomeAriaLabel={'navigate to systems home'}
             />
           </Grid>

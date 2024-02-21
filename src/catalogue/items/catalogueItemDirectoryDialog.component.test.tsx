@@ -14,7 +14,6 @@ describe('catalogue item directory Dialog', () => {
   let axiosPatchSpy;
   let axiosPostSpy;
   const onClose = jest.fn();
-  const onChangeCatalogueCurrDirId = jest.fn();
   const onChangeSelectedItems = jest.fn();
 
   const createView = () => {
@@ -27,10 +26,9 @@ describe('catalogue item directory Dialog', () => {
     props = {
       open: true,
       onClose: onClose,
-      onChangeCatalogueCurrDirId: onChangeCatalogueCurrDirId,
       onChangeSelectedItems: onChangeSelectedItems,
+      parentCategoryId: '1',
       requestType: 'moveTo',
-      catalogueCurrDirId: '1',
       parentInfo: {
         id: '5',
         name: 'Energy Meters',
@@ -135,39 +133,56 @@ describe('catalogue item directory Dialog', () => {
 
       expect(onClose).toHaveBeenCalled();
     });
+
     it('navigates to home when the home button is clicked', async () => {
       createView();
+
       await waitFor(() => {
         expect(screen.getByText('Cameras')).toBeInTheDocument();
       });
+
       await user.click(screen.getByLabelText('navigate to catalogue home'));
 
-      expect(onChangeCatalogueCurrDirId).toBeCalledWith(null);
+      await waitFor(() => {
+        expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+      });
     });
 
     it('navigates to a new to a new location', async () => {
       createView();
+
       await waitFor(() => {
         expect(screen.getByText('Cameras')).toBeInTheDocument();
       });
-      await user.click(screen.getByText('Energy Meters V2'));
-      expect(onChangeCatalogueCurrDirId).toBeCalledWith('8967');
+
+      await user.click(screen.getByText('Wavefront Sensors'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Wavefront Sensors 30')).toBeInTheDocument();
+      });
     });
 
     it('navigates to a new to a new location using the breadcrumbs', async () => {
-      props.catalogueCurrDirId = '5';
+      props.parentCategoryId = '5';
+
       createView();
+
       await waitFor(() => {
         expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
       });
+
       await user.click(
         screen.getByRole('link', { name: 'beam-characterization' })
       );
-      expect(onChangeCatalogueCurrDirId).toBeCalledWith('1');
+
+      await waitFor(() => {
+        expect(screen.getByText('Cameras')).toBeInTheDocument();
+      });
     });
 
     it('moves multiple catalogue items', async () => {
-      props.catalogueCurrDirId = '8967';
+      props.parentCategoryId = '8967';
+
       createView();
 
       await waitFor(() => {
@@ -178,6 +193,7 @@ describe('catalogue item directory Dialog', () => {
       const moveButton = screen.getByRole('button', { name: 'Move here' });
 
       await user.click(moveButton);
+
       expect(onClose).toHaveBeenCalled();
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/89', {
         catalogue_category_id: '8967',
@@ -188,7 +204,8 @@ describe('catalogue item directory Dialog', () => {
     });
 
     it('moves multiple catalogue items to a catalogue category with different catalogue item properties and errors', async () => {
-      props.catalogueCurrDirId = '4';
+      props.parentCategoryId = '4';
+
       createView();
 
       await waitFor(() => {
@@ -196,11 +213,11 @@ describe('catalogue item directory Dialog', () => {
           screen.getByText('No catalogue items found')
         ).toBeInTheDocument();
       });
+
       const moveButton = screen.getByRole('button', { name: 'Move here' });
-
       await user.click(moveButton);
-      expect(onClose).not.toHaveBeenCalled();
 
+      expect(onClose).not.toHaveBeenCalled();
       await waitFor(() => {
         expect(
           screen.getByText(
@@ -210,17 +227,20 @@ describe('catalogue item directory Dialog', () => {
       });
     });
   });
+
   describe('Copy to', () => {
     beforeEach(() => {
       props.requestType = 'copyTo';
       axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
+
     afterEach(() => {
       jest.clearAllMocks();
     });
 
     it('copies multiple catalogue items (new catalogue category)', async () => {
-      props.catalogueCurrDirId = '8967';
+      props.parentCategoryId = '8967';
+
       createView();
 
       await waitFor(() => {
@@ -228,9 +248,10 @@ describe('catalogue item directory Dialog', () => {
           screen.getByText('No catalogue items found')
         ).toBeInTheDocument();
       });
-      const moveButton = screen.getByRole('button', { name: 'Copy here' });
 
+      const moveButton = screen.getByRole('button', { name: 'Copy here' });
       await user.click(moveButton);
+
       expect(onClose).toHaveBeenCalled();
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
         catalogue_category_id: '8967',
@@ -276,7 +297,8 @@ describe('catalogue item directory Dialog', () => {
     });
 
     it('copies multiple catalogue items (same catalogue category)', async () => {
-      props.catalogueCurrDirId = '5';
+      props.parentCategoryId = '5';
+
       createView();
 
       await waitFor(() => {
@@ -284,9 +306,10 @@ describe('catalogue item directory Dialog', () => {
           screen.getByText('No catalogue items found')
         ).toBeInTheDocument();
       });
-      const moveButton = screen.getByRole('button', { name: 'Copy here' });
 
+      const moveButton = screen.getByRole('button', { name: 'Copy here' });
       await user.click(moveButton);
+
       expect(onClose).toHaveBeenCalled();
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
         catalogue_category_id: '5',
@@ -332,7 +355,8 @@ describe('catalogue item directory Dialog', () => {
     });
 
     it('copies multiple catalogue items to a catalogue category with different catalogue item properties and errors', async () => {
-      props.catalogueCurrDirId = '4';
+      props.parentCategoryId = '4';
+
       createView();
 
       await waitFor(() => {
@@ -340,11 +364,11 @@ describe('catalogue item directory Dialog', () => {
           screen.getByText('No catalogue items found')
         ).toBeInTheDocument();
       });
+
       const moveButton = screen.getByRole('button', { name: 'Copy here' });
-
       await user.click(moveButton);
-      expect(onClose).not.toHaveBeenCalled();
 
+      expect(onClose).not.toHaveBeenCalled();
       await waitFor(() => {
         expect(
           screen.getByText(

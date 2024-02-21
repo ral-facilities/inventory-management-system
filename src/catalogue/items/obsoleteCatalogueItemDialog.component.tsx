@@ -271,7 +271,7 @@ const ObsoleteCatalogueItemDialog = (
             ) : (
               <CatalogueCategoryTableView
                 selectedCategories={[]}
-                onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
+                onChangeParentCategoryId={setCatalogueCurrDirId}
                 requestType={'standard'}
                 catalogueCategoryData={catalogueCategoryDataList}
                 catalogueCategoryDataLoading={catalogueCategoryDataListLoading}

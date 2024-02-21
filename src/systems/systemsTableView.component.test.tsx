@@ -73,7 +73,7 @@ describe('SystemsTableView', () => {
       screen.getByRole('row', { name: `${mockSystemsData[0].name} row` })
     );
 
-    expect(mockOnChangeParentId).toBeCalledWith(mockSystemsData[0].id);
+    expect(mockOnChangeParentId).toHaveBeenCalledWith(mockSystemsData[0].id);
   });
 
   it('disables clicking of systems that are already selected for moveTo', async () => {

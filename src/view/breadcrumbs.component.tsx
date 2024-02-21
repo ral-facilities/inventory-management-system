@@ -13,8 +13,8 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import HomeIcon from '@mui/icons-material/Home';
 
 export interface BreadcrumbsProps {
+  breadcrumbsInfo?: BreadcrumbsInfo;
   onChangeNode: (newId: string) => void;
-  breadcrumbsInfo: BreadcrumbsInfo | undefined;
   onChangeNavigateHome: () => void;
   navigateHomeAriaLabel: string;
 }
@@ -25,8 +25,8 @@ const StyledBreadcrumbs = styled(MuiBreadcrumbs)(({ theme }) => ({
 
 const Breadcrumbs = (props: BreadcrumbsProps) => {
   const {
-    onChangeNode,
     breadcrumbsInfo,
+    onChangeNode,
     onChangeNavigateHome,
     navigateHomeAriaLabel,
   } = props;
