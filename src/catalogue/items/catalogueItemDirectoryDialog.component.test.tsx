@@ -3,10 +3,10 @@ import { renderComponentWithBrowserRouter } from '../../setupTests';
 
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import axios from 'axios';
 import CatalogueItemDirectoryDialog, {
   CatalogueItemDirectoryDialogProps,
 } from './catalogueItemDirectoryDialog.component';
+import { imsApi } from '../../api/api';
 
 describe('catalogue item directory Dialog', () => {
   let props: CatalogueItemDirectoryDialogProps;
@@ -119,7 +119,7 @@ describe('catalogue item directory Dialog', () => {
   });
   describe('Move to', () => {
     beforeEach(() => {
-      axiosPatchSpy = jest.spyOn(axios, 'patch');
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
@@ -231,7 +231,7 @@ describe('catalogue item directory Dialog', () => {
   describe('Copy to', () => {
     beforeEach(() => {
       props.requestType = 'copyTo';
-      axiosPostSpy = jest.spyOn(axios, 'post');
+      axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {

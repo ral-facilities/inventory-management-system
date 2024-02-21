@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import { useDeleteItem } from '../api/item';
 import { useSystem } from '../api/systems';
 import { Item } from '../app.types';
+import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface DeleteItemDialogProps {
   open: boolean;
@@ -48,8 +49,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
           onChangeItem(undefined);
         })
         .catch((error: AxiosError) => {
-          setError(true);
-          setErrorMessage('Please refresh and try again');
+          handleIMS_APIError(error);
         });
     } else {
       setError(true);

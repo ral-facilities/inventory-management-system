@@ -11,7 +11,10 @@ import ItemDialog, {
 } from './itemDialog.component';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import axios from 'axios';
+import handleIMS_APIError from '../handleIMS_APIError';
+import { imsApi } from '../api/api';
+
+jest.mock('../handleIMS_APIError');
 
 describe('isValidDateTime', () => {
   it('should return true for a valid date string', () => {
@@ -182,7 +185,7 @@ describe('ItemDialog', () => {
     let axiosPostSpy;
 
     beforeEach(() => {
-      axiosPostSpy = jest.spyOn(axios, 'post');
+      axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
     it('displays no item properties message', async () => {
@@ -640,21 +643,13 @@ describe('ItemDialog', () => {
       await modifyDetailsValues({
         serialNumber: 'Error 500',
       });
-
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
-
       await modifySystemValue({
         system: 'Giant laser',
       });
-
       await user.click(screen.getByRole('button', { name: 'Finish' }));
-
-      await waitFor(() => {
-        expect(
-          screen.getByText('Please refresh and try again')
-        ).toBeInTheDocument();
-      });
+      expect(handleIMS_APIError).toHaveBeenCalled();
       expect(onClose).not.toHaveBeenCalled();
     });
 
@@ -718,7 +713,7 @@ describe('ItemDialog', () => {
     let axiosPatchSpy;
 
     beforeEach(() => {
-      axiosPatchSpy = jest.spyOn(axios, 'patch');
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
       props.selectedItem = getItemById('G463gOIA');
       props.type = 'edit';
     });
@@ -860,26 +855,6 @@ describe('ItemDialog', () => {
       ).not.toBeInTheDocument();
     }, 10000);
 
-    it('displays warning message when an unknown error occurs', async () => {
-      createView();
-
-      await modifyDetailsValues({
-        serialNumber: 'Error 500',
-      });
-
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-      await user.click(screen.getByRole('button', { name: 'Finish' }));
-
-      await waitFor(() => {
-        expect(
-          screen.getByText('Please refresh and try again')
-        ).toBeInTheDocument();
-      });
-      expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
-      expect(onClose).not.toHaveBeenCalled();
-    });
-
     it('displays error message if no fields have been changed (when they are no catalogue property fields)', async () => {
       createView();
 
@@ -892,6 +867,19 @@ describe('ItemDialog', () => {
           screen.getByText('Please edit a form entry before clicking save')
         ).toBeInTheDocument();
       });
+    });
+
+    it('displays warning message when an unknown error occurs', async () => {
+      createView();
+      await modifyDetailsValues({
+        serialNumber: 'Error 500',
+      });
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(handleIMS_APIError).toHaveBeenCalled();
+      expect(onClose).not.toHaveBeenCalled();
     });
   });
 });

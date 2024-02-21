@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import {
   useMutation,
   UseMutationResult,
@@ -14,18 +14,10 @@ import {
   MoveItemsToSystem,
   TransferState,
 } from '../app.types';
-import { settings } from '../settings';
+import { imsApi } from './api';
 
 const addItem = async (item: AddItem): Promise<Item> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-  return axios
-    .post<Item>(`${apiUrl}/v1/items`, item)
-    .then((response) => response.data);
+  return imsApi.post<Item>(`/v1/items`, item).then((response) => response.data);
 };
 
 export const useAddItem = (): UseMutationResult<Item, AxiosError, AddItem> => {
@@ -42,20 +34,13 @@ const fetchItems = async (
   system_id?: string,
   catalogue_item_id?: string
 ): Promise<Item[]> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
   const queryParams = new URLSearchParams();
 
   system_id && queryParams.append('system_id', system_id);
   catalogue_item_id &&
     queryParams.append('catalogue_item_id', catalogue_item_id);
-
-  return axios
-    .get(`${apiUrl}/v1/items`, {
+  return imsApi
+    .get(`/v1/items`, {
       params: queryParams,
     })
     .then((response) => {
@@ -77,16 +62,10 @@ export const useItems = (
 };
 
 const fetchItem = async (id: string): Promise<Item> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
   const queryParams = new URLSearchParams();
 
-  return axios
-    .get(`${apiUrl}/v1/items/${id}`, {
+  return imsApi
+    .get(`/v1/items/${id}`, {
       params: queryParams,
     })
     .then((response) => {
@@ -107,14 +86,8 @@ export const useItem = (
 };
 
 const deleteItem = async (item: Item): Promise<void> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-  return axios
-    .delete(`${apiUrl}/v1/items/${item.id}`, {})
+  return imsApi
+    .delete(`/v1/items/${item.id}`, {})
     .then((response) => response.data);
 };
 
@@ -122,9 +95,6 @@ export const useDeleteItem = (): UseMutationResult<void, AxiosError, Item> => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (item: Item) => deleteItem(item),
-    onError: (error) => {
-      console.log('Got error ' + error.message);
-    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['Items'] });
       queryClient.removeQueries({ queryKey: ['Item'] });
@@ -133,15 +103,9 @@ export const useDeleteItem = (): UseMutationResult<void, AxiosError, Item> => {
 };
 
 const editItem = async (item: EditItem): Promise<Item> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
   const { id, ...updatedItem } = item;
-  return axios
-    .patch<Item>(`${apiUrl}/v1/items/${id}`, updatedItem)
+  return imsApi
+    .patch<Item>(`/v1/items/${id}`, updatedItem)
     .then((response) => response.data);
 };
 
@@ -228,7 +192,6 @@ export const useMoveItemsToSystem = (): UseMutationResult<
           // Invalidate all queries of items that have the target system id
           queryKey: ['Items', moveItemsToSystem.targetSystem?.id || 'null'],
         });
-
         // Also need to invalidate each parent system we are moving from (likely just the one)
         const uniqueSystemIds = new Set(successfulSystemIds);
         uniqueSystemIds.forEach((systemId: string) =>

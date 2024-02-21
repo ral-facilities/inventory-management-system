@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import {
   renderComponentWithBrowserRouter,
   getCatalogueCategoryById,
@@ -16,6 +15,12 @@ import userEvent from '@testing-library/user-event';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
+
+import handleIMS_APIError from '../../handleIMS_APIError';
+import { imsApi } from '../../api/api';
+
+jest.mock('../../handleIMS_APIError');
+
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
   let user;
@@ -37,7 +42,7 @@ describe('Catalogue Items Dialog', () => {
     };
 
     user = userEvent.setup();
-    axiosPostSpy = jest.spyOn(axios, 'post');
+    axiosPostSpy = jest.spyOn(imsApi, 'post');
   });
   const modifyValues = async (values: {
     name?: string;
@@ -589,11 +594,7 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-    await waitFor(() => {
-      expect(
-        screen.getByText('Please refresh and try again')
-      ).toBeInTheDocument();
-    });
+    expect(handleIMS_APIError).toHaveBeenCalled();
     expect(onClose).not.toHaveBeenCalled();
   }, 10000);
 
@@ -626,7 +627,7 @@ describe('Catalogue Items Dialog', () => {
         type: 'edit',
       };
 
-      axiosPatchSpy = jest.spyOn(axios, 'patch');
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
     });
 
     it('Edit a catalogue item (catalogue detail)', async () => {
@@ -939,11 +940,7 @@ describe('Catalogue Items Dialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-      await waitFor(() => {
-        expect(
-          screen.getByText('Please refresh and try again')
-        ).toBeInTheDocument();
-      });
+      expect(handleIMS_APIError).toHaveBeenCalled();
       expect(onClose).not.toHaveBeenCalled();
     });
   });

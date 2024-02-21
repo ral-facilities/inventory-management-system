@@ -28,6 +28,7 @@ import {
   System,
   SystemImportanceType,
 } from '../app.types';
+import handleIMS_APIError from '../handleIMS_APIError';
 
 export type SystemDialogType = 'add' | 'edit' | 'save as';
 
@@ -57,9 +58,8 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const { open, onClose, parentId, type, selectedSystem } = props;
 
   // User entered properties
-  const [systemData, setSystemData] = React.useState<AddSystem>(
-    getEmptySystem()
-  );
+  const [systemData, setSystemData] =
+    React.useState<AddSystem>(getEmptySystem());
 
   // Ensure system data is updated when the selected system changes
   useEffect(() => {
@@ -79,19 +79,14 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     undefined
   );
 
-  // For any unhandled error e.g. a connection issue/API error
-  const [otherError, setOtherError] = React.useState<boolean>(false);
-
   const handleClose = React.useCallback(() => {
     if (type === 'add') setSystemData(getEmptySystem());
     // Reset for edit
     else setSystemData(selectedSystem as AddSystem);
 
-    // Remove all errors - event though otherError says it requires a refresh,
-    // we don't want it showing if you move somewhere else or change the values
+    // Remove all errors
     setNameError(undefined);
     setFormError(undefined);
-    setOtherError(false);
 
     onClose();
   }, [onClose, selectedSystem, type]);
@@ -125,13 +120,12 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         .then((response) => handleClose())
         .catch((error: AxiosError) => {
           const response = error.response?.data as ErrorParsing;
-          console.log(error);
 
           // 409 occurs when there is a system with a duplicate name with the
           // same parent
           if (response && error.response?.status === 409)
             setNameError(response.detail);
-          else setOtherError(true);
+          else handleIMS_APIError(error);
         });
     }
   }, [
@@ -183,13 +177,12 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           })
           .catch((error: AxiosError) => {
             const response = error.response?.data as ErrorParsing;
-            console.log(error);
 
             // 409 occurs when there is a system with a duplicate name with the
             // same parent
             if (response && error.response?.status === 409)
               setNameError(response.detail);
-            else setOtherError(true);
+            else handleIMS_APIError(error);
           });
       } else setFormError('Please edit a form entry before clicking save');
     }
@@ -322,9 +315,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
             onClick={type === 'edit' ? handleEditSystem : handleAddSaveSystem}
-            disabled={
-              formError !== undefined || otherError || nameError !== undefined
-            }
+            disabled={formError !== undefined || nameError !== undefined}
           >
             Save
           </Button>
@@ -332,11 +323,6 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         {formError && (
           <FormHelperText sx={{ marginTop: 4 }} error>
             {formError}
-          </FormHelperText>
-        )}
-        {otherError && (
-          <FormHelperText sx={{ marginTop: 4 }} error>
-            Please refresh and try again
           </FormHelperText>
         )}
       </DialogActions>

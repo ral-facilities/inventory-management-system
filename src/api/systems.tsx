@@ -5,7 +5,7 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import {
   AddSystem,
   BreadcrumbsInfo,
@@ -17,8 +17,8 @@ import {
   SystemImportanceType,
   TransferState,
 } from '../app.types';
-import { settings } from '../settings';
 import { generateUniqueName } from '../utils';
+import { imsApi } from './api';
 
 /** Utility for turning an importance into an MUI palette colour to display */
 export const getSystemImportanceColour = (
@@ -35,21 +35,13 @@ export const getSystemImportanceColour = (
 };
 
 const fetchSystems = async (parent_id?: string): Promise<System[]> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
   const queryParams = new URLSearchParams();
 
   if (parent_id) queryParams.append('parent_id', parent_id);
 
-  return axios
-    .get(`${apiUrl}/v1/systems`, { params: queryParams })
-    .then((response) => {
-      return response.data;
-    });
+  return imsApi.get(`/v1/systems`, { params: queryParams }).then((response) => {
+    return response.data;
+  });
 };
 
 export const useSystems = (
@@ -64,14 +56,7 @@ export const useSystems = (
 };
 
 const fetchSystem = async (id: string): Promise<System> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-
-  return axios.get(`${apiUrl}/v1/systems/${id}`).then((response) => {
+  return imsApi.get(`/v1/systems/${id}`).then((response) => {
     return response.data;
   });
 };
@@ -92,18 +77,9 @@ export const useSystem = (
 const fetchSystemsBreadcrumbs = async (
   id: string
 ): Promise<BreadcrumbsInfo> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-
-  return axios
-    .get(`${apiUrl}/v1/systems/${id}/breadcrumbs`, {})
-    .then((response) => {
-      return response.data;
-    });
+  return imsApi.get(`/v1/systems/${id}/breadcrumbs`, {}).then((response) => {
+    return response.data;
+  });
 };
 
 export const useSystemsBreadcrumbs = (
@@ -119,15 +95,8 @@ export const useSystemsBreadcrumbs = (
 };
 
 const addSystem = async (system: AddSystem): Promise<System> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-
-  return axios
-    .post<System>(`${apiUrl}/v1/systems`, system)
+  return imsApi
+    .post<System>(`/v1/systems`, system)
     .then((response) => response.data);
 };
 
@@ -139,9 +108,6 @@ export const useAddSystem = (): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (system: AddSystem) => addSystem(system),
-    onError: (error) => {
-      console.log(`Got error: '${error.message}'`);
-    },
     onSuccess: (systemResponse) => {
       queryClient.invalidateQueries({
         queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
@@ -151,17 +117,10 @@ export const useAddSystem = (): UseMutationResult<
 };
 
 const editSystem = async (system: EditSystem): Promise<System> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-
   const { id, ...updateData } = system;
 
-  return axios
-    .patch<System>(`${apiUrl}/v1/systems/${id}`, updateData)
+  return imsApi
+    .patch<System>(`/v1/systems/${id}`, updateData)
     .then((response) => response.data);
 };
 
@@ -173,9 +132,6 @@ export const useEditSystem = (): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (system: EditSystem) => editSystem(system),
-    onError: (error) => {
-      console.log('Got error ' + error.message);
-    },
     onSuccess: (systemResponse: System) => {
       queryClient.invalidateQueries({
         queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
@@ -192,15 +148,8 @@ export const useEditSystem = (): UseMutationResult<
 };
 
 const deleteSystem = async (systemId: string): Promise<void> => {
-  let apiUrl: string;
-  apiUrl = '';
-  const settingsResult = await settings;
-  if (settingsResult) {
-    apiUrl = settingsResult['apiUrl'];
-  }
-
-  return axios
-    .delete(`${apiUrl}/v1/systems/${systemId}`)
+  return imsApi
+    .delete(`/v1/systems/${systemId}`)
     .then((response) => response.data);
 };
 
@@ -213,9 +162,6 @@ export const useDeleteSystem = (): UseMutationResult<
 
   return useMutation({
     mutationFn: (systemId: string) => deleteSystem(systemId),
-    onError: (error) => {
-      console.log(`Got error: '${error.message}'`);
-    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['Systems'] });
       queryClient.removeQueries({ queryKey: ['System'] });
