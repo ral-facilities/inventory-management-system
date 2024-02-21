@@ -1,6 +1,6 @@
 import log from 'loglevel';
+import { MicroFrontendId, TransferState } from './app.types';
 import { NotificationType } from './state/actions/actions.types';
-import { TransferState, MicroFrontendId } from './app.types';
 
 const handleTransferState = (
   transferStates: TransferState[],
@@ -13,7 +13,7 @@ const handleTransferState = (
       document.dispatchEvent(
         new CustomEvent(MicroFrontendId, {
           detail: {
-            type: NotificationType, // You might want to provide a valid type here.
+            type: NotificationType,
             payload: {
               severity: singleTransferState.state,
               message: `${singleTransferState.name}: ${singleTransferState.message}`,

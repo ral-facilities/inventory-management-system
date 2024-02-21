@@ -12,6 +12,7 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import { useDeleteSystem } from '../api/systems';
 import { ErrorParsing, System } from '../app.types';
+import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface DeleteSystemDialogProps {
   open: boolean;
@@ -48,7 +49,7 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
             );
             return;
           }
-          setErrorMessage('Please refresh and try again');
+          handleIMS_APIError(error);
         });
   }, [deleteSystem, onClose, system]);
 

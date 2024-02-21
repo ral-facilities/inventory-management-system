@@ -55,10 +55,6 @@ describe('manufacturer api functions', () => {
         id: '4',
       });
     });
-
-    it.todo(
-      'sends axios request to fetch records and throws an appropiate error on failure'
-    );
   });
 
   describe('useDeleteManufacturer', () => {
@@ -89,10 +85,6 @@ describe('manufacturer api functions', () => {
       });
       expect(result.current.data).toEqual('');
     });
-
-    it.todo(
-      'sends axios request to fetch records and throws an appropriate error on fetch'
-    );
   });
 
   describe('useManufacturer', () => {
@@ -107,10 +99,6 @@ describe('manufacturer api functions', () => {
 
       expect(result.current.data).toEqual(ManufacturerJSON);
     });
-
-    it.todo(
-      'sends axios request to fetch records and throws an appropriate error on failure'
-    );
   });
 
   describe('useManufacturerIds', () => {
@@ -130,9 +118,5 @@ describe('manufacturer api functions', () => {
         ManufacturerJSON.filter((manufacturer) => manufacturer.id === '2')[0]
       );
     });
-
-    it.todo(
-      'sends axios request to fetch records and throws an appropriate error on failure'
-    );
   });
 });

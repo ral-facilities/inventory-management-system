@@ -1,6 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import axios from 'axios';
 import React from 'react';
 import { Item } from '../app.types';
 import ItemsJSON from '../mocks/Items.json';
@@ -8,6 +7,7 @@ import { renderComponentWithBrowserRouter } from '../setupTests';
 import SystemItemsDialog, {
   SystemItemsDialogProps,
 } from './systemItemsDialog.component';
+import { imsApi } from '../api/api';
 
 describe('SystemItemsDialog', () => {
   let props: SystemItemsDialogProps;
@@ -36,7 +36,7 @@ describe('SystemItemsDialog', () => {
     };
 
     user = userEvent.setup();
-    axiosPatchSpy = jest.spyOn(axios, 'patch');
+    axiosPatchSpy = jest.spyOn(imsApi, 'patch');
   });
 
   afterEach(() => {

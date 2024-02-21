@@ -12,6 +12,7 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import { useDeleteCatalogueItem } from '../../api/catalogueItem';
 import { CatalogueItem, ErrorParsing } from '../../app.types';
+import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteCatalogueItemDialogProps {
   open: boolean;
@@ -45,15 +46,13 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
         .catch((error: AxiosError) => {
           const response = error.response?.data as ErrorParsing;
           if (response && error.response?.status === 409) {
-            console.log(response.detail);
             setError(true);
             setErrorMessage(
               `${response.detail}, please delete the children elements first`
             );
             return;
           }
-          setError(true);
-          setErrorMessage('Please refresh and try again');
+          handleIMS_APIError(error);
         });
     } else {
       setError(true);
