@@ -119,7 +119,7 @@ jobs:
       - name: test hostname
         run: echo $HOSTNAME
 
-      - name: test hostname
+      - name: test hostnamev
         run: netstat -lt
       - name: Run e2e tests
         run: yarn e2e:api
