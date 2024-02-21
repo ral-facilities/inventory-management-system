@@ -73,6 +73,14 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
+      mongodb:
+        image: mongo:6.0-jammy
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
+
       ims-api:
         image: harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
         ports:
@@ -88,14 +96,6 @@ jobs:
           DATABASE__HOSTNAME: mongo-db
           DATABASE__PORT: 27017
           DATABASE__NAME: ims
-
-      mongodb:
-        image: mongo:6.0-jammy
-        ports:
-          - 27017:27017
-        env:
-          MONGO_INITDB_ROOT_USERNAME: root
-          MONGO_INITDB_ROOT_PASSWORD: example
 
     steps:
       - name: Checkout repo
