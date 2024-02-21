@@ -40,7 +40,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
   e2e-tests:
-    name: End-to-End Tests
+    name: End-to-End (with mock data) Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -65,13 +65,57 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4
         with:
-          name: Inventory mangement system Screenshots
+          name: Inventory management system Screenshots
+          path: cypress/screenshots
+
+  e2e-tests-api:
+    name: End-to-End (with api) Tests
+    runs-on: ubuntu-latest
+    env:
+      AUTHENTICATION__ENABLED: false
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - name: Login to Harbor
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
+        with:
+          registry: harbor.stfc.ac.uk/inventory-management-system
+          username: ${{ secrets.HARBOR_USERNAME }}
+          password: ${{ secrets.HARBOR_TOKEN }}
+
+      - name: Pull API Docker image
+        run: docker pull harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
+
+      - name: Run API Docker container
+        run: docker run -d --name harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
+
+      - name: Setup Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install libgconf-2-4
+          yarn --immutable
+
+      - name: Run e2e tests
+        run: yarn e2e:api
+
+      - name: Upload Cypress screenshots
+        if: failure()
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4
+        with:
+          name: Inventory management system (with api) Screenshots
           path: cypress/screenshots
 
   docker:
     # This job triggers only if all the other jobs succeed. It builds the Docker image and if successful,
     # it pushes it to Harbor.
-    needs: [lint-and-unit-test, e2e-tests]
+    needs: [lint-and-unit-test, e2e-tests, e2e-tests-api]
     name: Docker
     runs-on: ubuntu-latest
     steps:
