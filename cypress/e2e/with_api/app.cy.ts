@@ -5,6 +5,7 @@ describe('App', () => {
   });
 
   it('displays no catagories error message at root', () => {
+    cy.visit('/catalogue');
     cy.findByText(
       'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
     ).should('exist');
