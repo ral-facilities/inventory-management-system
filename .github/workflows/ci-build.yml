@@ -118,6 +118,9 @@ jobs:
         run: curl http://localhost:8000/inventory-management-system-api
       - name: test hostname
         run: echo $HOSTNAME
+
+      - name: test hostname
+        run: netstat -lt
       - name: Run e2e tests
         run: yarn e2e:api
 
