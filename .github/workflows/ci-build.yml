@@ -112,6 +112,10 @@ jobs:
           sudo apt-get install libgconf-2-4
           yarn --immutable
 
+      - name: test curl
+        run: curl http://localhost:8000/inventory-management-system-api
+      - name: test hostname
+        run: echo $HOSTNAME
       - name: Run e2e tests
         run: yarn e2e:api
 
