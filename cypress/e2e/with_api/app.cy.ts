@@ -1,11 +1,18 @@
 describe('App', () => {
+  beforeEach(() => {
+    cy.intercept('**/v1/catalogue-categories?parent_id=null').as(
+      'getCatalogueCategoryData'
+    );
+
+    cy.visit('/catalogue').wait(['@getCatalogueCategoryData'], {
+      timeout: 10000,
+    });
+  });
   it('should load correctly', () => {
-    cy.visit('/catalogue');
     cy.get('#inventory-management-system').should('be.visible');
   });
 
   it('displays no catagories error message at root', () => {
-    cy.visit('/catalogue');
     cy.findByText(
       'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
     ).should('exist');
