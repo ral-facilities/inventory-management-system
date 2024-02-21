@@ -71,25 +71,25 @@ jobs:
   e2e-tests-api:
     name: End-to-End (with api) Tests
     runs-on: ubuntu-latest
-    env:
-      AUTHENTICATION__ENABLED: false
-      API__TITLE: Inventory Management System API
-      API__DESCRIPTION: This is the API for the Inventory Management System
-      API__ROOT_PATH: /inventory-management-system-api
-      AUTHENTICATION__PUBLIC_KEY_PATH: ./keys/jwt-key.pub
-      AUTHENTICATION__JWT_ALGORITHM: RS256
-      DATABASE__PROTOCOL: mongodb
-      DATABASE__USERNAME: root
-      DATABASE__PASSWORD: example
-      DATABASE__HOSTNAME: mongo-db
-      DATABASE__PORT: 27017
-      DATABASE__NAME: ims
 
     services:
       api:
         image: harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
         ports:
           - 8000:8000
+        env:
+          AUTHENTICATION__ENABLED: false
+          API__TITLE: Inventory Management System API
+          API__DESCRIPTION: This is the API for the Inventory Management System
+          API__ROOT_PATH: /inventory-management-system-api
+          AUTHENTICATION__PUBLIC_KEY_PATH: ./keys/jwt-key.pub
+          AUTHENTICATION__JWT_ALGORITHM: RS256
+          DATABASE__PROTOCOL: mongodb
+          DATABASE__USERNAME: root
+          DATABASE__PASSWORD: example
+          DATABASE__HOSTNAME: mongo-db
+          DATABASE__PORT: 27017
+          DATABASE__NAME: ims
 
     steps:
       - name: Checkout repo
