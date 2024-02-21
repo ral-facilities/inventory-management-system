@@ -1,6 +1,6 @@
-import { Theme } from "@mui/material";
-import { createAction } from "@reduxjs/toolkit";
-import { MicroFrontendId } from "../app.types";
+import { Theme } from '@mui/material';
+import { createAction } from '@reduxjs/toolkit';
+import { MicroFrontendId } from '../app.types';
 
 export const CustomFrontendMessageType = `${MicroFrontendId}:api`;
 // parent app actions
@@ -12,6 +12,9 @@ export const requestPluginRerender = createAction(
 );
 export const sendThemeOptions = createAction<{ theme: Theme }>(
   `${CustomFrontendMessageType}:send_themeoptions`
+);
+export const tokenRefreshed = createAction(
+  `${CustomFrontendMessageType}:token_refreshed`
 );
 export const broadcastSignOut = createAction(
   `${CustomFrontendMessageType}:signout`

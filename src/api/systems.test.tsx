@@ -20,7 +20,7 @@ import {
   useSystems,
   useSystemsBreadcrumbs,
 } from './systems';
-import axios from 'axios';
+import { imsApi } from './api';
 
 describe('System api functions', () => {
   afterEach(() => {
@@ -74,10 +74,6 @@ describe('System api functions', () => {
         )
       );
     });
-
-    it.todo(
-      'sends request to all systems and throws an appropriate error on failure'
-    );
   });
 
   describe('useSystem', () => {
@@ -108,10 +104,6 @@ describe('System api functions', () => {
         )[0]
       );
     });
-
-    it.todo(
-      'sends request to fetch a system and throws an appropriate error on failure'
-    );
   });
 
   describe('useSystemsBreadcrumbs', () => {
@@ -143,10 +135,6 @@ describe('System api functions', () => {
         )
       );
     });
-
-    it.todo(
-      'sends request to add a system and throws an appropriate error on failure'
-    );
   });
 
   describe('useAddSystem', () => {
@@ -169,10 +157,6 @@ describe('System api functions', () => {
 
       expect(result.current.data).toEqual({ ...MOCK_SYSTEM_POST, id: '1' });
     });
-
-    it.todo(
-      'sends request to add a system and throws an appropriate error on failure'
-    );
   });
 
   describe('useEditSystem', () => {
@@ -202,10 +186,6 @@ describe('System api functions', () => {
         ...MOCK_SYSTEM_PATCH,
       });
     });
-
-    it.todo(
-      'sends patch request to edit a system and throws an appropriate error on failure'
-    );
   });
 
   describe('useDeleteSystem', () => {
@@ -219,10 +199,6 @@ describe('System api functions', () => {
 
       expect(result.current.data).toEqual('');
     });
-
-    it.todo(
-      'sends request to delete a system and throws an appropriate error on failure'
-    );
   });
 
   describe('useMoveToSystem', () => {
@@ -239,11 +215,12 @@ describe('System api functions', () => {
 
     beforeEach(() => {
       moveToSystem = {
-        selectedSystems: mockSystems,
+        // Prevent test interference if modifying the selected systems
+        selectedSystems: JSON.parse(JSON.stringify(mockSystems)),
         targetSystem: null,
       };
 
-      axiosPatchSpy = jest.spyOn(axios, 'patch');
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
@@ -372,12 +349,13 @@ describe('System api functions', () => {
 
     beforeEach(() => {
       copyToSystem = {
-        selectedSystems: mockSystems,
+        // Prevent test interference if modifying the selected systems
+        selectedSystems: JSON.parse(JSON.stringify(mockSystems)),
         targetSystem: null,
         existingSystemNames: [],
       };
 
-      axiosPostSpy = jest.spyOn(axios, 'post');
+      axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {

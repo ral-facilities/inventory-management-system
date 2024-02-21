@@ -6,6 +6,9 @@ import DeleteItemDialog, {
 } from './deleteItemDialog.component';
 import { getItemById, renderComponentWithBrowserRouter } from '../setupTests';
 import { Item } from '../app.types';
+import handleIMS_APIError from '../handleIMS_APIError';
+
+jest.mock('../handleIMS_APIError');
 
 describe('delete item dialog', () => {
   let props: DeleteItemDialogProps;
@@ -95,10 +98,7 @@ describe('delete item dialog', () => {
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
 
-    await waitFor(() => {
-      expect(
-        screen.getByText('Please refresh and try again')
-      ).toBeInTheDocument();
-    });
+    expect(handleIMS_APIError).toHaveBeenCalled();
+    expect(onClose).not.toHaveBeenCalled();
   });
 });

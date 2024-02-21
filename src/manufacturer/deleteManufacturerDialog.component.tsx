@@ -12,6 +12,7 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import { useDeleteManufacturer } from '../api/manufacturer';
 import { ErrorParsing, Manufacturer } from '../app.types';
+import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface DeleteManufacturerProps {
   open: boolean;
@@ -50,8 +51,7 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
             );
             return;
           }
-          setError(true);
-          setErrorMessage('Please refresh and try again');
+          handleIMS_APIError(error);
         });
     } else {
       setError(true);

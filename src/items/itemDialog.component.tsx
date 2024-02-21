@@ -37,6 +37,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
 import { useAddItem, useEditItem } from '../api/item';
 import { AxiosError } from 'axios';
+import handleIMS_APIError from '../handleIMS_APIError';
 import { SystemsTableView } from '../systems/systemsTableView.component';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
@@ -128,8 +129,6 @@ function ItemDialog(props: ItemDialogProps) {
     warranty_end_date: boolean;
     delivered_date: boolean;
   }>({ warranty_end_date: false, delivered_date: false });
-
-  const [catchAllError, setCatchAllError] = React.useState(false);
 
   const [propertyValues, setPropertyValues] = React.useState<(string | null)[]>(
     []
@@ -357,7 +356,7 @@ function ItemDialog(props: ItemDialogProps) {
     addItem(item)
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
-        setCatchAllError(true);
+        handleIMS_APIError(error);
       });
   }, [handleFormPropertiesErrorStates, details, addItem, handleClose]);
 
@@ -434,7 +433,7 @@ function ItemDialog(props: ItemDialogProps) {
         editItem(item)
           .then((response) => handleClose())
           .catch((error: AxiosError) => {
-            setCatchAllError(true);
+            handleIMS_APIError(error);
           });
       } else {
         setFormErrorMessage('Please edit a form entry before clicking save');
@@ -920,7 +919,6 @@ function ItemDialog(props: ItemDialogProps) {
           <Button
             disabled={
               !itemDetails.system_id ||
-              catchAllError ||
               formErrorMessage !== undefined ||
               propertyErrors.some((value) => value === true) ||
               Object.values(hasDateErrors).some(
@@ -935,7 +933,6 @@ function ItemDialog(props: ItemDialogProps) {
         ) : (
           <Button
             disabled={
-              catchAllError ||
               (activeStep === 1 &&
                 propertyErrors.some((value) => value === true)) ||
               (activeStep === 0 &&
@@ -962,21 +959,6 @@ function ItemDialog(props: ItemDialogProps) {
         >
           <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
             {formErrorMessage}
-          </FormHelperText>
-        </Box>
-      )}
-      {catchAllError && (
-        <Box
-          sx={{
-            mx: 3,
-            marginBottom: 3,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-            Please refresh and try again
           </FormHelperText>
         </Box>
       )}

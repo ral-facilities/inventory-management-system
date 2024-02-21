@@ -521,18 +521,4 @@ describe('Items', () => {
       'exist'
     );
   });
-
-  it('should display an error message if there is an unknown error', () => {
-    cy.findAllByLabelText('Row Actions').last().click();
-    cy.findByText('Edit').click();
-
-    cy.findByLabelText('Serial number').clear();
-    cy.findByLabelText('Serial number').type('Error 500');
-
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Finish' }).click();
-
-    cy.findByText('Please refresh and try again').should('exist');
-  });
 });

@@ -1,10 +1,13 @@
 import { fireEvent, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import axios from 'axios';
 import React from 'react';
 import { renderComponentWithBrowserRouter } from '../setupTests';
 import SystemDialog, { SystemDialogProps } from './systemDialog.component';
 import { System, SystemImportanceType } from '../app.types';
+import handleIMS_APIError from '../handleIMS_APIError';
+import { imsApi } from '../api/api';
+
+jest.mock('../handleIMS_APIError');
 
 describe('Systems Dialog', () => {
   let props: SystemDialogProps;
@@ -59,8 +62,8 @@ describe('Systems Dialog', () => {
       type: 'add',
     };
     user = userEvent.setup();
-    axiosPostSpy = jest.spyOn(axios, 'post');
-    axiosPatchSpy = jest.spyOn(axios, 'patch');
+    axiosPostSpy = jest.spyOn(imsApi, 'post');
+    axiosPatchSpy = jest.spyOn(imsApi, 'patch');
   });
 
   afterEach(() => {
@@ -178,9 +181,8 @@ describe('Systems Dialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
-      expect(
-        screen.getByText('Please refresh and try again')
-      ).toBeInTheDocument();
+      expect(handleIMS_APIError).toHaveBeenCalled();
+
       expect(mockOnClose).not.toHaveBeenCalled();
     });
   });
@@ -336,9 +338,8 @@ describe('Systems Dialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
-      expect(
-        screen.getByText('Please refresh and try again')
-      ).toBeInTheDocument();
+      expect(handleIMS_APIError).toHaveBeenCalled();
+
       expect(mockOnClose).not.toHaveBeenCalled();
     });
   });

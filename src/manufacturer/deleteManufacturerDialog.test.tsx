@@ -5,6 +5,9 @@ import { renderComponentWithBrowserRouter } from '../setupTests';
 import { DeleteManufacturerProps } from './deleteManufacturerDialog.component';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import { Manufacturer } from '../app.types';
+import handleIMS_APIError from '../handleIMS_APIError';
+
+jest.mock('../handleIMS_APIError');
 
 describe('Delete Manufacturer Dialog', () => {
   const onClose = jest.fn();
@@ -88,7 +91,7 @@ describe('Delete Manufacturer Dialog', () => {
     manufacturer.id = '2';
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
-    user.click(continueButton);
+    await user.click(continueButton);
 
     await waitFor(() => {
       expect(
@@ -103,12 +106,8 @@ describe('Delete Manufacturer Dialog', () => {
     manufacturer.id = '100';
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
-    user.click(continueButton);
+    await user.click(continueButton);
 
-    await waitFor(() => {
-      expect(
-        screen.getByText('Please refresh and try again')
-      ).toBeInTheDocument();
-    });
+    expect(handleIMS_APIError).toHaveBeenCalled();
   });
 });

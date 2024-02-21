@@ -518,28 +518,6 @@ describe('Catalogue Category', () => {
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
 
-  it('displays error message if it received an unknown error from the api', () => {
-    cy.visit('/catalogue/1');
-    cy.findByRole('button', {
-      name: 'actions Cameras catalogue category button',
-    }).click();
-
-    cy.findByRole('menuitem', {
-      name: 'edit Cameras catalogue category button',
-    }).click();
-    cy.findByLabelText('Name *').clear();
-    cy.findByLabelText('Name *').type('Error 500');
-
-    cy.findByRole('button', { name: 'Save' }).click();
-
-    cy.findByRole('dialog')
-      .should('be.visible')
-      .within(() => {
-        cy.contains('Please refresh and try again');
-      });
-    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
-  });
-
   it('edits a catalogue category with catalogue properties', () => {
     cy.visit('/catalogue/1');
     cy.findByRole('button', {
