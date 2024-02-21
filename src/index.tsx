@@ -210,7 +210,15 @@ if (
 
   log.setDefaultLevel(log.levels.DEBUG);
 } else if (process.env.REACT_APP_E2E_TESTING === 'true') {
-  prepare().then(() => render());
+  settings
+    .then((settings) => {
+      if (settings && settings.apiUrl !== '') {
+        render();
+      } else {
+        prepare().then(() => render());
+      }
+    })
+    .catch((error) => log.error(`Got error: ${error.message}`));
   log.setDefaultLevel(log.levels.DEBUG);
 } else {
   log.setDefaultLevel(log.levels.ERROR);
