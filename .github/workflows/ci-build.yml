@@ -97,6 +97,8 @@ jobs:
           DATABASE__PORT: 27017
           DATABASE__NAME: ims
 
+          options: --name inventory-management-system-api
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
@@ -111,6 +113,9 @@ jobs:
         run: |
           sudo apt-get install libgconf-2-4
           yarn --immutable
+
+      - name: docker ps
+        run: docker ps
 
       - name: Download unit data
         run: wget https://raw.githubusercontent.com/ral-facilities/inventory-management-system-api/develop/data/units.json
