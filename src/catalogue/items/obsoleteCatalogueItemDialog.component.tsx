@@ -118,7 +118,8 @@ const ObsoleteCatalogueItemDialog = (
 
   const { data: catalogueBreadcrumbs } =
     useCatalogueBreadcrumbs(catalogueCurrDirId);
-  const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
+  const { mutateAsync: editCatalogueItem, isPending: isEditPending } =
+    useEditCatalogueItem();
 
   // Removes parameters when is_obsolete changed to false
   const handleObsoleteChange = (isObsolete: boolean) => {
@@ -319,7 +320,10 @@ const ObsoleteCatalogueItemDialog = (
           Back
         </Button>
         {activeStep === steps.length - 1 ? (
-          <Button onClick={handleFinish} disabled={formError !== undefined}>
+          <Button
+            onClick={handleFinish}
+            disabled={isEditPending || formError !== undefined}
+          >
             Finish
           </Button>
         ) : (
