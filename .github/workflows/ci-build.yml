@@ -112,8 +112,8 @@ jobs:
           sudo apt-get install libgconf-2-4
           yarn --immutable
 
-      - name: docker ps
-        run: docker ps
+      - name: Get unit data
+        run: git clone git@github.com:ral-facilities/inventory-management-system-api.git:data/units.json
 
       - name: Run e2e tests
         run: yarn e2e:api
