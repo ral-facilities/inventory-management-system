@@ -80,7 +80,6 @@ jobs:
         env:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: example
-        options: --hostname localhost
 
       ims-api:
         image: harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
@@ -94,10 +93,9 @@ jobs:
           DATABASE__PROTOCOL: mongodb
           DATABASE__USERNAME: root
           DATABASE__PASSWORD: example
-          DATABASE__HOSTNAME: mongo-db
+          DATABASE__HOSTNAME: 127.0.0.1
           DATABASE__PORT: 27017
           DATABASE__NAME: ims
-        options: --hostname localhost
 
     steps:
       - name: Checkout repo
