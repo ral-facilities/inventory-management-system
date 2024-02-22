@@ -2,6 +2,15 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import { Grid, Box, Paper, Button, alpha, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
+import DGLogo from '../images/scigateway-white-text-blue-mark-logo.svg';
+import BackgroundImage from '../images/background.jpg';
+import GreenSwirl1Image from '../images/green-swirl1.png';
+import GreenSwirl2Image from '../images/green-swirl2.png';
+import Decal1Image from '../images/decal1.svg';
+import Decal2Image from '../images/decal2.svg';
+import Decal2DarkImage from '../images/decal2-dark.svg';
+import Decal2DarkHCImage from '../images/decal2-darkhc.svg';
+import FacilityImage from '../images/facility.jpg';
 
 export interface HomePageProps {
   logo: string;
@@ -112,9 +121,7 @@ const LightBlueButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const HomePage = (props: HomePageProps): React.ReactElement => {
-  //const [t] = useTranslation();
-
+const baseHomePage = (props: HomePageProps): React.ReactElement => {
   return (
     <div id="dg-homepage">
       <div
@@ -299,4 +306,19 @@ const HomePage = (props: HomePageProps): React.ReactElement => {
   );
 };
 
-export default HomePage;
+export const HomePage = React.memo((): React.ReactElement => {
+  const HomePage = baseHomePage;
+  return (
+    <HomePage
+      logo={DGLogo}
+      backgroundImage={BackgroundImage}
+      greenSwirl1Image={GreenSwirl1Image}
+      greenSwirl2Image={GreenSwirl2Image}
+      decal1Image={Decal1Image}
+      decal2Image={Decal2Image}
+      decal2DarkImage={Decal2DarkImage}
+      decal2DarkHCImage={Decal2DarkHCImage}
+      facilityImage={FacilityImage}
+    />
+  );
+});
