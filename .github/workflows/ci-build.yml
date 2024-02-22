@@ -117,8 +117,8 @@ jobs:
       - name: test hostname1
         run: netstat -lt
 
-      - name: Change hostname to localhost
-        run: sudo hostname -b localhost
+      - name: look at hosts
+        run: ls /etc/hosts
 
       - name: test curl
         run: curl http://0.0.0.0:8000/inventory-management-system-api
