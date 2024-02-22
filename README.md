@@ -118,3 +118,27 @@ To learn React, check out the [React documentation](https://reactjs.org/).
    ```bash
    yarn inventory-management-system
    ```
+
+### End-to-End Testing (Locally)
+
+This guide outlines the steps to perform end-to-end testing for the Inventory Management System (IMS) locally. You have two options: testing with the actual API and testing with mocked data.
+
+#### Testing with API
+
+1. **Set up IMS-API with an Empty Database**: Begin by setting up the IMS-API using the instructions provided in the [IMS-API repository](https://github.com/ral-facilities/inventory-management-system-api). Ensure that the database is empty to maintain test consistency.
+
+2. **Configure IMS-API URL**: Add the IMS-API URL to the `inventory-management-system-settings.json` file. This file likely contains various settings for your IMS application.
+
+3. **Host IMS-API and IMS-Frontend Together**: To prevent CORS errors during testing, ensure both IMS-API and IMS-Frontend (production build) are hosted on the same machine.
+
+4. **Run Testing Scripts**:
+   - Execute `yarn e2e:api` or `yarn e2e:interactive` depending on your preferred testing mode. These scripts are configured to perform end-to-end testing with the API.
+
+#### Testing without API (Using MSW Mock Data)
+
+1. **Run Testing Scripts**:
+   - Execute `yarn e2e` or `yarn e2e:interactive` to perform end-to-end testing without relying on the actual API. This setup utilizes MSW (Mock Service Worker) to simulate API responses.
+
+By following these instructions, you can effectively conduct end-to-end testing for the Inventory Management System. Choose the method that best suits your testing requirements and development environment.
+
+**Note:** On the CI environment, the IMS-API is hosted on `127.0.0.1` due to issues with `localhost`.
