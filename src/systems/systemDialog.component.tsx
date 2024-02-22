@@ -29,6 +29,7 @@ import {
   SystemImportanceType,
 } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { trimStringValues } from '../utils';
 
 export type SystemDialogType = 'add' | 'edit' | 'save as';
 
@@ -116,7 +117,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         importance: systemData.importance,
       };
       if (parentId !== undefined) system.parent_id = parentId;
-      addSystem(system)
+      addSystem(trimStringValues(system))
         .then((response) => handleClose())
         .catch((error: AxiosError) => {
           const response = error.response?.data as ErrorParsing;
@@ -170,7 +171,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         isImportanceUpdated &&
           (editSystemData.importance = systemData.importance);
 
-        editSystem(editSystemData)
+        editSystem(trimStringValues(editSystemData))
           .then((response) => {
             setSystemData(response);
             handleClose();

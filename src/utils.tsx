@@ -45,3 +45,29 @@ export const getPageHeightCalc = (additionalSubtraction?: string): string => {
 
   return getSciGatewayPageHeightCalc(newAdditional);
 };
+
+/* Trims all the string values in an object, and then returns the object */
+export const trimStringValues = (object: any): any => {
+  if (object !== null) {
+    for (const prop in object) {
+      if (prop === 'warranty_end_date') {
+        continue;
+      }
+
+      if (object.hasOwnProperty(prop)) {
+        if (Array.isArray(object[prop])) {
+          object[prop] = object[prop].map((element: any) =>
+            trimStringValues(element)
+          );
+        } else if (typeof object[prop] === 'string') {
+          object[prop] = object[prop].trim();
+        } else if (typeof object[prop] === 'object') {
+          object[prop] = trimStringValues(object[prop]);
+        }
+      }
+    }
+    return object;
+  } else {
+    return object;
+  }
+};

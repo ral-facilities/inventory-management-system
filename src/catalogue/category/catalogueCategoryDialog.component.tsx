@@ -33,6 +33,7 @@ import {
 } from '../../app.types';
 import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { trimStringValues } from '../../utils';
 
 // Function to convert a list of strings to a list of numbers
 const convertListToNumbers = (values: string[]): number[] => {
@@ -134,7 +135,6 @@ const CatalogueCategoryDialog = React.memo(
           const trimmedLowerCaseValues = listOfValues.map((value) =>
             String(value).trim().toLowerCase()
           );
-
 
           const duplicateIndexes: number[] = [];
           const invalidNumberIndexes: number[] = [];
@@ -370,7 +370,7 @@ const CatalogueCategoryDialog = React.memo(
         };
       }
 
-      addCatalogueCategory(catalogueCategory)
+      addCatalogueCategory(trimStringValues(catalogueCategory))
         .then((response) => handleClose())
         .catch((error) => {
           const response = error.response?.data as ErrorParsing;
@@ -458,7 +458,7 @@ const CatalogueCategoryDialog = React.memo(
             isIsLeafUpdated) // Check if any of these properties have been updated
         ) {
           // Only call editCatalogueCategory if id is present and at least one of the properties has been updated
-          editCatalogueCategory(catalogueCategory)
+          editCatalogueCategory(trimStringValues(catalogueCategory))
             .then((response) => {
               resetSelectedCatalogueCategory();
               handleClose();
