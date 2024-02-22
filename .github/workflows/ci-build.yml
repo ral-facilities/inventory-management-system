@@ -93,7 +93,7 @@ jobs:
           DATABASE__PROTOCOL: mongodb
           DATABASE__USERNAME: root
           DATABASE__PASSWORD: example
-          DATABASE__HOSTNAME: 127.0.0.1
+          DATABASE__HOSTNAME: mongodb
           DATABASE__PORT: 27017
           DATABASE__NAME: ims
 
