@@ -112,11 +112,18 @@ jobs:
           sudo apt-get install libgconf-2-4
           yarn --immutable
 
+      - name: test hostname1
+        run: netstat -lt
+
       - name: Change hostname to localhost
         run: sudo hostname -b localhost
 
       - name: test curl
         run: curl http://localhost:8000/inventory-management-system-api
+
+      - name: test hostname3
+        run: netstat -lt
+
       - name: test hostname
         run: echo $HOSTNAME
 
