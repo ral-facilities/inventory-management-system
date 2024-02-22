@@ -1,7 +1,18 @@
 describe('App', () => {
-  afterEach(() => {
-    cy.clearMocks();
+  afterEach(() => {});
+
+  let spyErrorLog;
+  before(() => {
+    Cypress.on('window:before:load', (win) => {
+      spyErrorLog = cy.spy(win.console, 'error'); // can be: log, warn
+    });
   });
+
+  after(() => {
+    cy.clearMocks();
+    expect(spyErrorLog).not.to.be.called;
+  });
+
   it('should load correctly', () => {
     cy.visit('/catalogue');
     cy.get('#inventory-management-system').should('be.visible');
