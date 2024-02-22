@@ -75,7 +75,6 @@ jobs:
     services:
       mongodb:
         image: mongo:6.0-jammy
-        network_mode: 'host'
         ports:
           - 27017:27017
         env:
@@ -84,7 +83,6 @@ jobs:
 
       ims-api:
         image: harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
-        network_mode: 'host'
         ports:
           - 8000:8000
         env:
@@ -113,6 +111,9 @@ jobs:
         run: |
           sudo apt-get install libgconf-2-4
           yarn --immutable
+
+      - name: Change hostname to localhost
+        run: sudo hostname -b localhost
 
       - name: test curl
         run: curl http://localhost:8000/inventory-management-system-api
