@@ -80,6 +80,7 @@ jobs:
         env:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: example
+        options: --hostname localhost
 
       ims-api:
         image: harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
@@ -96,6 +97,7 @@ jobs:
           DATABASE__HOSTNAME: mongo-db
           DATABASE__PORT: 27017
           DATABASE__NAME: ims
+        options: --hostname localhost
 
     steps:
       - name: Checkout repo
@@ -120,6 +122,10 @@ jobs:
 
       - name: test curl
         run: curl http://0.0.0.0:8000/inventory-management-system-api
+      - name: test curl 1
+        run: curl http://localhost:8000/inventory-management-system-api
+      - name: test curl 32
+        run: curl http://ims-api:8000
 
       - name: test hostname3
         run: netstat -lt
