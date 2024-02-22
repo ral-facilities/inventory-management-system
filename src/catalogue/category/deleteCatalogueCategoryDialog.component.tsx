@@ -33,7 +33,8 @@ const DeleteCatalogueCategoryDialog = (
     undefined
   );
 
-  const { mutateAsync: deleteCatalogueCategory } = useDeleteCatalogueCategory();
+  const { mutateAsync: deleteCatalogueCategory, isPending: isDeletePending } =
+    useDeleteCatalogueCategory();
 
   const handleClose = React.useCallback(() => {
     onClose();
@@ -84,7 +85,10 @@ const DeleteCatalogueCategoryDialog = (
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleDeleteCatalogueCategory} disabled={error}>
+        <Button
+          onClick={handleDeleteCatalogueCategory}
+          disabled={isDeletePending || error}
+        >
           Continue
         </Button>
       </DialogActions>
