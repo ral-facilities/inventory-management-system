@@ -46,7 +46,7 @@
     "e2e:api": "cross-env USE_API_SETTINGS=true start-server-and-test e2e:serve http://localhost:3000 cy:run:api",
     "cy:open": "TZ=UTC cypress open",
     "cy:run": "TZ=UTC cypress run --spec \"./cypress/e2e/with_mock_data/*.cy.ts\"",
-    "cy:run:api": "TZ=UTC ELECTRON_ENABLE_LOGGING=1 cypress run --spec \"./cypress/e2e/with_api/*.cy.ts\""
+    "cy:run:api": "TZ=UTC cypress run --spec \"./cypress/e2e/with_api/*.cy.ts\""
   },
   "eslintConfig": {
     "extends": [
