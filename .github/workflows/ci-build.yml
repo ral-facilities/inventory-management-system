@@ -113,7 +113,7 @@ jobs:
           yarn --immutable
 
       - name: Get unit data
-        run: git clone git@github.com:ral-facilities/inventory-management-system-api.git:data/units.json
+        run: git clone https://github.com/ral-facilities/inventory-management-system-api.git:data/units.json
 
       - name: Run e2e tests
         run: yarn e2e:api
