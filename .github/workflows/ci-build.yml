@@ -118,7 +118,7 @@ jobs:
         run: netstat -lt
 
       - name: look at hosts
-        run: ls /etc/hosts
+        run: cat /etc/hosts
 
       - name: test curl
         run: curl http://0.0.0.0:8000/inventory-management-system-api
