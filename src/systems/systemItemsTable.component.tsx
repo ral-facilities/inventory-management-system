@@ -126,6 +126,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             underline="hover"
             component={Link}
             to={`/catalogue/item/${row.original.item.catalogue_item_id}`}
+            sx={{ paddingRight: 0.5 }}
           >
             {renderedCellValue}
           </MuiLink>
@@ -207,12 +208,20 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     enableFullScreenToggle: true,
     enableColumnVirtualization: false,
     enableRowSelection: true,
+    enableGrouping: true,
     enablePagination: true,
     // Other settings
     manualFiltering: false,
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
     autoResetPageIndex: false,
+    layoutMode: 'grid',
+    displayColumnDefOptions: {
+      'mrt-row-expand': {
+        enableResizing: true,
+        size: 100,
+      },
+    },
     // Localisation
     localization: {
       ...MRT_Localization_EN,
@@ -222,6 +231,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
+      grouping: ['catalogueItem.name'],
       pagination: { pageSize: 15, pageIndex: 0 },
     },
     state: {
@@ -239,7 +249,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
     }),
     muiTableContainerProps: {
-      sx: { height: '360.4px' },
+      sx: { minHeight: '360.4px' },
     },
     muiSearchTextFieldProps: {
       size: 'small',
