@@ -125,7 +125,7 @@ jobs:
       - name: test curl 1
         run: curl http://localhost:8000/inventory-management-system-api
       - name: test curl 32
-        run: curl http://ims-api:8000
+        run: curl http://127.0.0.1:8000
 
       - name: test hostname3
         run: netstat -lt
