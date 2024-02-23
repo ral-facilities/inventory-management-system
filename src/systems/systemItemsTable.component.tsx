@@ -221,7 +221,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
     autoResetPageIndex: false,
-    layoutMode: 'grid',
     displayColumnDefOptions: {
       'mrt-row-expand': {
         enableResizing: true,
