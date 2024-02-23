@@ -606,7 +606,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
     enableColumnVirtualization: dense ? false : true,
-    enableGrouping: true,
+    enableGrouping: !dense,
     enablePagination: true,
     // Other settings
     columnVirtualizerOptions: dense
@@ -619,12 +619,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     paginationDisplayMode: 'pages',
     autoResetPageIndex: false,
     positionToolbarAlertBanner: 'bottom',
-    displayColumnDefOptions: {
-      'mrt-row-expand': {
-        enableResizing: true,
-        size: 100,
-      },
-    },
+    displayColumnDefOptions: dense
+      ? undefined
+      : {
+          'mrt-row-expand': {
+            enableResizing: true,
+            size: 100,
+          },
+        },
     // Localisation
     localization: {
       ...MRT_Localization_EN,
