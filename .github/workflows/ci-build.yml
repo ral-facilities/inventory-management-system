@@ -114,12 +114,6 @@ jobs:
           sudo apt-get install libgconf-2-4
           yarn --immutable
 
-      - name: docker ps
-        run: docker ps
-
-      - name: find container name
-        run: docker ps -qf "ancestor=mongo:6.0-jammy"
-
       - name: Download unit data
         run: wget https://raw.githubusercontent.com/ral-facilities/inventory-management-system-api/develop/data/units.json
 
