@@ -279,7 +279,9 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
 const deleteCatalogueCategory = async (
   catalogueCategory: CatalogueCategory
 ): Promise<void> => {
-  return imsApi.delete(`/v1/catalogue-categories/${catalogueCategory.id}`);
+  return imsApi
+    .delete(`/v1/catalogue-categories/${catalogueCategory.id}`)
+    .then((response) => response.data);
 };
 
 export const useDeleteCatalogueCategory = (): UseMutationResult<
