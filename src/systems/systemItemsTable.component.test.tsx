@@ -48,7 +48,7 @@ describe('SystemItemsTable', () => {
       () => {
         expect(
           screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42`,
+            name: `Turbomolecular Pumps 42 (1)`,
           })
         ).toBeInTheDocument();
       },
@@ -80,7 +80,7 @@ describe('SystemItemsTable', () => {
       () => {
         expect(
           screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42`,
+            name: `Turbomolecular Pumps 42 (1)`,
           })
         ).toBeInTheDocument();
       },
@@ -98,7 +98,7 @@ describe('SystemItemsTable', () => {
       () => {
         expect(
           screen.queryByRole('cell', {
-            name: `Turbomolecular Pumps 42`,
+            name: `Turbomolecular Pumps 42 (1)`,
           })
         ).not.toBeInTheDocument();
       },
@@ -111,7 +111,7 @@ describe('SystemItemsTable', () => {
       () => {
         expect(
           screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42`,
+            name: `Turbomolecular Pumps 42 (1)`,
           })
         ).toBeInTheDocument();
       },
@@ -127,7 +127,7 @@ describe('SystemItemsTable', () => {
       () => {
         expect(
           screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42`,
+            name: `Turbomolecular Pumps 42 (1)`,
           })
         ).toBeInTheDocument();
       },
@@ -163,7 +163,7 @@ describe('SystemItemsTable', () => {
       () => {
         expect(
           screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42`,
+            name: `Turbomolecular Pumps 42 (1)`,
           })
         ).toBeInTheDocument();
       },
