@@ -153,7 +153,7 @@ declare global {
 
       dropIMSDB(): Chainable<unknown>;
       /**
-       * Deletes the IMS databases
+       * Deletes the IMS database
        *
        * @example cy.dropIMSDB();
        */

@@ -192,55 +192,12 @@ const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
 
 const addCatalogueCategories = () => {
   modifyCatalogueCategory({
-    name: 'Lensess',
-  });
-
-  cy.findByText('Lensess').click();
-
-  modifyCatalogueCategory({
-    name: 'Spherical Lenses2',
-    newFormFields: [
-      {
-        name: 'Substrate',
-        type: 'text',
-        mandatory: true,
-        allowed_values: {
-          type: 'list',
-          values: ['N-BK7', 'UV Fused Siilica', 'Fused Silica'],
-        },
-      },
-      {
-        name: 'Diameter2',
-        type: 'number',
-        unit: 'mm',
-        mandatory: false,
-      },
-      {
-        name: 'Wavelength Range',
-        type: 'text',
-        unit: 'nm',
-        mandatory: true,
-      },
-      {
-        name: 'Broken3',
-        type: 'boolean',
-        mandatory: false,
-      },
-    ],
-  });
-};
-
-const editCatalogueCategories = () => {
-  cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-  modifyCatalogueCategory({
-    editCatalogueCategoryName: 'Lensess',
     name: 'Lenses',
   });
 
   cy.findByText('Lenses').click();
 
   modifyCatalogueCategory({
-    editCatalogueCategoryName: 'Spherical Lenses2',
     name: 'Spherical Lenses',
     newFormFields: [
       {
@@ -273,33 +230,76 @@ const editCatalogueCategories = () => {
   });
 };
 
+const editCatalogueCategories = () => {
+  cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  modifyCatalogueCategory({
+    editCatalogueCategoryName: 'Lenses',
+    name: 'Lenses 2',
+  });
+
+  cy.findByText('Lenses 2').click();
+
+  modifyCatalogueCategory({
+    editCatalogueCategoryName: 'Spherical Lenses',
+    name: 'Spherical Lenses 2',
+    newFormFields: [
+      {
+        name: 'Substrate',
+        type: 'text',
+        mandatory: true,
+        allowed_values: {
+          type: 'list',
+          values: ['N-BK7', 'UV Fused Siilica', 'Fused Silica'],
+        },
+      },
+      {
+        name: 'Diameters',
+        type: 'number',
+        unit: 'mm',
+        mandatory: false,
+      },
+      {
+        name: 'Wavelength Range3',
+        type: 'text',
+        unit: 'nm',
+        mandatory: true,
+      },
+      {
+        name: 'Broken4',
+        type: 'boolean',
+        mandatory: false,
+      },
+    ],
+  });
+};
+
 const saveAsCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-  saveAsCatalogueCategory('Lenses');
-  cy.findByText('Lenses').click();
-  saveAsCatalogueCategory('Spherical Lenses');
+  saveAsCatalogueCategory('Lenses 2');
+  cy.findByText('Lenses 2').click();
+  saveAsCatalogueCategory('Spherical Lenses 2');
 };
 
 const copyToCatalogueCategories = () => {
   copyToCatalogueCategory({
-    checkedCategories: ['Spherical Lenses', 'Spherical Lenses_copy_1'],
+    checkedCategories: ['Spherical Lenses 2', 'Spherical Lenses 2_copy_1'],
   });
 };
 
 const moveToCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-  cy.findByText('Lenses').click();
+  cy.findByText('Lenses 2').click();
   moveToCatalogueCategory({
-    checkedCategories: ['Spherical Lenses', 'Spherical Lenses_copy_1'],
+    checkedCategories: ['Spherical Lenses 2', 'Spherical Lenses 2_copy_1'],
   });
 };
 
 const deleteCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-  deleteCatalogueCategory('Spherical Lenses');
-  deleteCatalogueCategory('Spherical Lenses_copy_1');
-  deleteCatalogueCategory('Lenses');
-  deleteCatalogueCategory('Lenses_copy_1');
+  deleteCatalogueCategory('Spherical Lenses 2');
+  deleteCatalogueCategory('Spherical Lenses 2_copy_1');
+  deleteCatalogueCategory('Lenses 2');
+  deleteCatalogueCategory('Lenses 2_copy_1');
 };
 
 describe('Catalogue Category', () => {
