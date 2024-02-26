@@ -141,4 +141,4 @@ This guide outlines the steps to perform end-to-end testing for the Inventory Ma
 
 By following these instructions, you can effectively conduct end-to-end testing for the Inventory Management System. Choose the method that best suits your testing requirements and development environment.
 
-**Note:** On the CI environment, the IMS-API is hosted on `127.0.0.1` due to issues with `localhost`.
+**Note:** On the CI environment, the IMS-API is accessed via `127.0.0.1` due to issues with `localhost`.
