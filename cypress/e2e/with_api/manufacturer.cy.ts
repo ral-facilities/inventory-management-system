@@ -77,20 +77,6 @@ const deleteManufacturer = (name: string) => {
 
 const addManufacturer = () => {
   modifyManufacturer({
-    name: 'ThorsLab',
-    url: 'https://www.thorlabser.com/',
-    country: 'United Kingdom',
-    address_line: '234 Kew Court Pynes Hill Office Campus',
-    town: 'Rydon Lane4',
-    county: 'Exeters',
-    postcode: 'EX2 5PZ',
-    telephone_number: '0744932088487',
-  });
-};
-
-const editManufacturer = () => {
-  modifyManufacturer({
-    editManufacturerName: 'ThorsLab',
     name: 'ThorsLabs',
     url: 'https://www.thorlabs.com/',
     country: 'United Kingdom',
@@ -99,6 +85,20 @@ const editManufacturer = () => {
     county: 'Exeter',
     postcode: 'EX2 5AZ',
     telephone_number: '074493208487',
+  });
+};
+
+const editManufacturer = () => {
+  modifyManufacturer({
+    editManufacturerName: 'ThorsLabs',
+    name: 'ThorsLab',
+    url: 'https://www.thorlabser.com/',
+    country: 'United Kingdom',
+    address_line: '234 Kew Court Pynes Hill Office Campus',
+    town: 'Rydon Lane4',
+    county: 'Exeters',
+    postcode: 'EX2 5PZ',
+    telephone_number: '0744932088487',
   });
 };
 
@@ -115,6 +115,6 @@ describe('Manufacturer', () => {
   it('CRUD for Manufacturer', () => {
     addManufacturer();
     editManufacturer();
-    deleteManufacturer('ThorsLabs');
+    deleteManufacturer('ThorsLab');
   });
 });
