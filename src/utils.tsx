@@ -1,5 +1,3 @@
-import { ListFormat } from 'typescript';
-
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
   name: string,
