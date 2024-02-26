@@ -60,6 +60,10 @@ describe('SystemItemsTable', () => {
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
 
+    // Expand a group so all columns are rendered to improve test coverage
+    // (expanding all causes an infinite loop due to an issue with details panels)
+    await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
+
     // Rest in a snapshot
     expect(view.asFragment()).toMatchSnapshot();
   });

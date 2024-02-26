@@ -442,7 +442,7 @@ exports[`SystemItemsTable renders correctly 1`] = `
                           class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
                           data-testid="KeyboardDoubleArrowDownIcon"
                           focusable="false"
-                          style="transform: rotate(0deg); transition: transform 150ms;"
+                          style="transform: rotate(-90deg); transition: transform 150ms;"
                           viewBox="0 0 24 24"
                         >
                           <path
@@ -1443,7 +1443,7 @@ exports[`SystemItemsTable renders correctly 1`] = `
               data-index="1"
             >
               <span
-                aria-label="Expand"
+                aria-label="Collapse"
                 class=""
                 data-mui-internal-clone-element="true"
               >
@@ -1458,7 +1458,7 @@ exports[`SystemItemsTable renders correctly 1`] = `
                     class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
                     data-testid="ExpandMoreIcon"
                     focusable="false"
-                    style="transform: rotate(0deg); transition: transform 150ms;"
+                    style="transform: rotate(-180deg); transition: transform 150ms;"
                     viewBox="0 0 24 24"
                   >
                     <path
@@ -1467,7 +1467,16 @@ exports[`SystemItemsTable renders correctly 1`] = `
                   </svg>
                   <span
                     class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                  />
+                  >
+                    <span
+                      class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
+                      style="width: 173.20508075688772px; height: 173.20508075688772px; top: -36.60254037844386px; left: 13.397459621556138px;"
+                    >
+                      <span
+                        class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+                      />
+                    </span>
+                  </span>
                 </button>
               </span>
             </td>
@@ -1530,6 +1539,131 @@ exports[`SystemItemsTable renders correctly 1`] = `
           <tr
             class="MuiTableRow-root css-1hdg57s-MuiTableRow-root"
             data-index="2"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qa3y6f-MuiTableCell-root"
+              data-index="0"
+            />
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lcy7n-MuiTableCell-root"
+              data-index="1"
+            >
+              <span
+                aria-label="Expand"
+                class=""
+                data-mui-internal-clone-element="true"
+              >
+                <button
+                  aria-label="Expand"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1b3fgzj-MuiButtonBase-root-MuiIconButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="ExpandMoreIcon"
+                    focusable="false"
+                    style="transform: rotate(0deg); transition: transform 150ms;"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </span>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-123c2sw-MuiTableCell-root"
+              data-index="2"
+            >
+              <span
+                aria-label="Toggle select row"
+                class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-h5odmr-MuiButtonBase-root-MuiCheckbox-root"
+                data-mui-internal-clone-element="true"
+              >
+                <input
+                  aria-label="Toggle select row"
+                  class="PrivateSwitchBase-input css-1m9pwf3"
+                  data-indeterminate="false"
+                  type="checkbox"
+                />
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="CheckBoxOutlineBlankIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                  />
+                </svg>
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </span>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-8bgmer-MuiTableCell-root"
+              data-index="3"
+            >
+              <a
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-lden2s-MuiTypography-root-MuiLink-root"
+                href="/catalogue/item/21/items/13h6TOX6"
+              >
+                13h6TOX6
+              </a>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-dxw051-MuiTableCell-root"
+              data-index="4"
+            >
+              5xE1KSraISvu
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-43qbe1-MuiTableCell-root"
+              data-index="5"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
+              >
+                9/5/2023
+              </p>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19ykz2l-MuiTableCell-root"
+              data-index="6"
+            >
+              No
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-9g11ld-MuiTableCell-root"
+              data-index="7"
+            >
+              inUse
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
+              data-index="8"
+            />
+          </tr>
+          <tr
+            class="MuiTableRow-root Mui-TableBodyCell-DetailPanel css-cvwpbq-MuiTableRow-root"
+            data-index="3"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-70l1lt-MuiTableCell-root"
+              colspan="9"
+            />
+          </tr>
+          <tr
+            class="MuiTableRow-root css-1hdg57s-MuiTableRow-root"
+            data-index="4"
           >
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qa3y6f-MuiTableCell-root"
