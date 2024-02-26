@@ -91,8 +91,8 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     onClose();
   }, [onClose, selectedSystem, type]);
 
-  const { mutateAsync: addSystem } = useAddSystem();
-  const { mutateAsync: editSystem } = useEditSystem();
+  const { mutateAsync: addSystem, isPending: isAddPending } = useAddSystem();
+  const { mutateAsync: editSystem, isPending: isEditPending } = useEditSystem();
 
   // Returns true when all fields valid
   const validateFields = React.useCallback((): boolean => {
@@ -315,7 +315,12 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
             onClick={type === 'edit' ? handleEditSystem : handleAddSaveSystem}
-            disabled={formError !== undefined || nameError !== undefined}
+            disabled={
+              isAddPending ||
+              isEditPending ||
+              formError !== undefined ||
+              nameError !== undefined
+            }
           >
             Save
           </Button>
