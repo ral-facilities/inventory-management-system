@@ -404,6 +404,24 @@ describe('Catalogue Items', () => {
     cy.url().should('contain', '/manufacturer/1');
   });
 
+  it('checks the href property of the drawing link link', () => {
+    cy.findByRole('button', { name: 'Show/Hide columns' }).click();
+    cy.findByText('Hide all').click();
+
+    cy.findByText('Drawing Link').click();
+
+    // Find the link element
+    cy.findAllByText('http://example-drawing-link.com')
+      .first()
+      .should('have.attr', 'href')
+      .should('include', 'http://example-drawing-link.com'); // Check href attribute value
+
+    cy.findAllByText('http://example-drawing-link.com')
+      .first()
+      .should('have.attr', 'target')
+      .should('include', '_blank'); // Check target attribute value
+  });
+
   it('checks the href property of the manufacturer link', () => {
     cy.findByRole('button', { name: 'Show/Hide columns' }).click();
     cy.findByText('Hide all').click();
@@ -858,7 +876,7 @@ describe('Catalogue Items', () => {
           days_to_replace: 7,
           days_to_rework: null,
           drawing_number: null,
-          drawing_link: null,
+          drawing_link: 'http://example-drawing-link.com',
           item_model_number: null,
           is_obsolete: true,
           obsolete_replacement_catalogue_item_id: '6',

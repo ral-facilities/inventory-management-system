@@ -455,6 +455,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           row.original.catalogueItem.drawing_link && (
             <MuiLink
               underline="hover"
+              target="_blank"
               href={row.original.catalogueItem.drawing_link}
               // For ensuring space when grouping
               sx={{ marginRight: 0.5 }}
