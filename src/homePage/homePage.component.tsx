@@ -121,7 +121,7 @@ const LightBlueButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const baseHomePage = (props: HomePageProps): React.ReactElement => {
+const BaseHomePage = (props: HomePageProps): React.ReactElement => {
   return (
     <div id="dg-homepage">
       <div
@@ -153,7 +153,7 @@ const baseHomePage = (props: HomePageProps): React.ReactElement => {
               <strong>Inventory Managment</strong>
             </Typography>
             <Typography variant="h2" sx={backgroundTitleStyles}>
-              for <strong>EPAC</strong> facilities
+              for <strong>EPAC</strong>
             </Typography>
           </Box>
         </div>
@@ -183,7 +183,7 @@ const baseHomePage = (props: HomePageProps): React.ReactElement => {
                 </Typography>
                 <PaperDescription variant="body1">
                   {
-                    'Browse catalogue categories, sub categories and catalogue items.'
+                    'Browse catalogue categories, sub categories and catalogue items to locate specific items or add new ones.'
                   }
                 </PaperDescription>
                 <Box marginTop="16px">
@@ -191,7 +191,7 @@ const baseHomePage = (props: HomePageProps): React.ReactElement => {
                     color="primary"
                     variant="contained"
                     component={Link}
-                    to={'/catalogue/*'}
+                    to={'/catalogue'}
                     data-testid="catalogue-button"
                   >
                     {'Explore'}
@@ -226,14 +226,16 @@ const baseHomePage = (props: HomePageProps): React.ReactElement => {
               <Box sx={paperContentStyles}>
                 <PaperHeading variant="h4">{'Systems'}</PaperHeading>
                 <PaperDescription variant="body1">
-                  {'Navigate different systems and their sub systems.'}
+                  {
+                    'Navigate through systems and their sub systems to view their component items.'
+                  }
                 </PaperDescription>
                 <Box marginTop="auto">
                   <Button
                     color="primary"
                     variant="contained"
                     component={Link}
-                    to={'/systems/*'}
+                    to={'/systems'}
                     data-testid="systems-button"
                   >
                     {'Explore'}
@@ -247,7 +249,7 @@ const baseHomePage = (props: HomePageProps): React.ReactElement => {
               <Box sx={paperContentStyles}>
                 <PaperHeading variant="h4">{'Manufacturers'}</PaperHeading>
                 <PaperDescription variant="body1">
-                  {'View the manufacturers and supplies used by EPAC.'}
+                  {'View the manufacturers of parts used by EPAC.'}
                 </PaperDescription>
                 <Box marginTop="auto">
                   <Button
@@ -307,7 +309,7 @@ const baseHomePage = (props: HomePageProps): React.ReactElement => {
 };
 
 export const HomePage = React.memo((): React.ReactElement => {
-  const HomePage = baseHomePage;
+  const HomePage = BaseHomePage;
   return (
     <HomePage
       logo={DGLogo}

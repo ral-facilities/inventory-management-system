@@ -28,7 +28,6 @@ exports[`Home page component homepage renders correctly 1`] = `
             <strong>
               EPAC
             </strong>
-             facilities
           </h2>
         </div>
       </div>
@@ -57,7 +56,7 @@ exports[`Home page component homepage renders correctly 1`] = `
               <p
                 class="MuiTypography-root MuiTypography-body1 css-16w7kz2-MuiTypography-root"
               >
-                Browse catalogue categories, sub categories and catalogue items.
+                Browse catalogue categories, sub categories and catalogue items to locate specific items or add new ones.
               </p>
               <div
                 class="MuiBox-root css-1yuhvjn"
@@ -65,7 +64,7 @@ exports[`Home page component homepage renders correctly 1`] = `
                 <a
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
                   data-testid="catalogue-button"
-                  href="/catalogue/*"
+                  href="/catalogue"
                   tabindex="0"
                 >
                   Explore
@@ -109,7 +108,7 @@ exports[`Home page component homepage renders correctly 1`] = `
               <p
                 class="MuiTypography-root MuiTypography-body1 css-16w7kz2-MuiTypography-root"
               >
-                Navigate different systems and their sub systems.
+                Navigate through systems and their sub systems to view their component items.
               </p>
               <div
                 class="MuiBox-root css-8xl60i"
@@ -117,7 +116,7 @@ exports[`Home page component homepage renders correctly 1`] = `
                 <a
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
                   data-testid="systems-button"
-                  href="/systems/*"
+                  href="/systems"
                   tabindex="0"
                 >
                   Explore
@@ -146,7 +145,7 @@ exports[`Home page component homepage renders correctly 1`] = `
               <p
                 class="MuiTypography-root MuiTypography-body1 css-16w7kz2-MuiTypography-root"
               >
-                View the manufacturers and supplies used by EPAC.
+                View the manufacturers of parts used by EPAC.
               </p>
               <div
                 class="MuiBox-root css-8xl60i"

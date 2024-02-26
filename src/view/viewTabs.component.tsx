@@ -16,8 +16,8 @@ import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
 import { HomePage } from '../homePage/homePage.component';
 
 export const paths = {
-  home: '/ims',
-  defaulthome: '/',
+  root: '/',
+  homepage: '/ims',
   catalogue: '/catalogue/*',
   systems: '/systems/*',
   manufacturers: '/manufacturer',
@@ -71,11 +71,11 @@ function ViewTabs() {
   // because that is when the tabs are visible
   React.useEffect(() => {
     if (process.env.NODE_ENV !== 'production') {
-      const prefixIndex = location.pathname.indexOf(paths.defaulthome);
+      const prefixIndex = location.pathname.indexOf(paths.root);
       let tabValue =
         prefixIndex !== -1
           ? location.pathname
-              .substring(prefixIndex + paths.defaulthome.length)
+              .substring(prefixIndex + paths.root.length)
               .split('/')[0]
           : '';
 
@@ -93,8 +93,8 @@ function ViewTabs() {
 
   const routing = (
     <Routes location={location}>
-      <Route path={paths.home} element={<HomePage />} />
-      <Route path={paths.defaulthome} element={<HomePage />} />
+      <Route path={paths.root} element={<HomePage />} />
+      <Route path={paths.homepage} element={<HomePage />} />
       <Route path={paths.catalogue} element={<Catalogue />} />
       <Route
         path={paths.catalogueItem}
