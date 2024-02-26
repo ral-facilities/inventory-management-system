@@ -64,8 +64,10 @@ const CatalogueCategoryDirectoryDialog = (
     setParentCategoryId(props.parentCategoryId);
   }, [onClose, props.parentCategoryId]);
 
-  const { mutateAsync: moveToCatalogueCategory } = useMoveToCatalogueCategory();
-  const { mutateAsync: copyToCatalogueCategory } = useCopyToCatalogueCategory();
+  const { mutateAsync: moveToCatalogueCategory, isPending: isMoveToPending } =
+    useMoveToCatalogueCategory();
+  const { mutateAsync: copyToCatalogueCategory, isPending: isCopyToPending } =
+    useCopyToCatalogueCategory();
 
   const { data: targetCategory, isLoading: targetCategoryLoading } =
     useCatalogueCategory(parentCategoryId);
@@ -193,7 +195,7 @@ const CatalogueCategoryDirectoryDialog = (
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           disabled={
-            requestType === 'moveTo'
+            isCopyToPending || isMoveToPending || requestType === 'moveTo'
               ? selectedCategories.length > 0
                 ? parentCategoryId === selectedCategories[0].parent_id
                 : false
