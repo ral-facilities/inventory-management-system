@@ -1,3 +1,5 @@
+import { ListFormat } from 'typescript';
+
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
   name: string,
@@ -48,26 +50,27 @@ export const getPageHeightCalc = (additionalSubtraction?: string): string => {
 
 /* Trims all the string values in an object, and then returns the object */
 export const trimStringValues = (object: any): any => {
-  if (object !== null) {
-    for (const prop in object) {
-      if (prop === 'warranty_end_date') {
-        continue;
-      }
+  if (typeof object !== 'object' || object === null) {
+    if (typeof object === 'string') {
+      return object.trim();
+    } else {
+      return object;
+    }
+  }
 
-      if (object.hasOwnProperty(prop)) {
-        if (Array.isArray(object[prop])) {
-          object[prop] = object[prop].map((element: any) =>
-            trimStringValues(element)
-          );
-        } else if (typeof object[prop] === 'string') {
-          object[prop] = object[prop].trim();
-        } else if (typeof object[prop] === 'object') {
-          object[prop] = trimStringValues(object[prop]);
-        }
+  for (const prop in object) {
+    if (object.hasOwnProperty(prop)) {
+      if (Array.isArray(object[prop])) {
+        //console.log('object[prop]' + object[prop]);
+        object[prop] = object[prop].map((element: any) =>
+          trimStringValues(element)
+        );
+      } else if (typeof object[prop] === 'string') {
+        object[prop] = object[prop].trim();
+      } else if (typeof object[prop] === 'object') {
+        object[prop] = trimStringValues(object[prop]);
       }
     }
-    return object;
-  } else {
-    return object;
   }
+  return object;
 };

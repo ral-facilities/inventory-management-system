@@ -36,6 +36,7 @@ describe('Utility functions', () => {
         test_array: Array(['test   ', 'test', false]),
         test_object: { test_string: 'test_string   ', test_string2: 'test2' },
         test_bool: true,
+        test_list: ['test_string   ', 'test_string2'],
       };
 
       const result = trimStringValues(object);
@@ -45,6 +46,7 @@ describe('Utility functions', () => {
         test_array: Array(['test', 'test', false]),
         test_object: { test_string: 'test_string', test_string2: 'test2' },
         test_bool: true,
+        test_list: ['test_string', 'test_string2'],
       });
     });
   });
