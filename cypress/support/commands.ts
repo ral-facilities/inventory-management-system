@@ -70,6 +70,9 @@ Cypress.Commands.add('dropIMSDB', () => {
   cy.exec(
     `docker exec -i $(docker ps | grep mongo | awk '{ print $1 }') mongosh ims --username "root" --password "example" --authenticationDatabase=admin --eval "db.catalogue_categories.drop()"`
   );
+  cy.exec(
+    `docker exec -i $(docker ps | grep mongo | awk '{ print $1 }') mongosh ims --username "root" --password "example" --authenticationDatabase=admin --eval "db.manufacturers.drop()"`
+  );
   //Todo remove other collections
 });
 
