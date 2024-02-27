@@ -41,6 +41,7 @@ import handleIMS_APIError from '../handleIMS_APIError';
 import { SystemsTableView } from '../systems/systemsTableView.component';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import { trimStringValues } from '../utils';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
   // Attempt to create a Date object from the input
@@ -353,7 +354,7 @@ function ItemDialog(props: ItemDialogProps) {
       properties: updatedProperties,
     };
 
-    addItem(item)
+    addItem(trimStringValues(item))
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
         handleIMS_APIError(error);
@@ -430,7 +431,7 @@ function ItemDialog(props: ItemDialogProps) {
           isCatalogueItemPropertiesUpdated ||
           isSystemIdUpdated)
       ) {
-        editItem(item)
+        editItem(trimStringValues(item))
           .then((response) => handleClose())
           .catch((error: AxiosError) => {
             handleIMS_APIError(error);

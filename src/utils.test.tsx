@@ -1,4 +1,4 @@
-import { generateUniqueName } from './utils';
+import { generateUniqueName, trimStringValues } from './utils';
 
 describe('Utility functions', () => {
   afterEach(() => {
@@ -28,6 +28,34 @@ describe('Utility functions', () => {
       ]);
 
       expect(result).toEqual(`${mockName}_copy_2`);
+    });
+
+    it('returns an object with all string values trimmed correctly', () => {
+      const object = {
+        test_string: 'test_string    ',
+        test_array: Array(['test   ', 'test', false]),
+        test_object: { test_string: 'test_string   ', test_string2: 'test2' },
+        test_bool: true,
+        test_list: ['test_string   ', 'test_string2'],
+        test_nested_object: {
+          test_string: 'test_string   ',
+          test_object: { test_string: 'test_string   ', test_string2: 'test2' },
+        },
+      };
+
+      const result = trimStringValues(object);
+
+      expect(result).toEqual({
+        test_string: 'test_string',
+        test_array: Array(['test', 'test', false]),
+        test_object: { test_string: 'test_string', test_string2: 'test2' },
+        test_bool: true,
+        test_list: ['test_string', 'test_string2'],
+        test_nested_object: {
+          test_string: 'test_string',
+          test_object: { test_string: 'test_string', test_string2: 'test2' },
+        },
+      });
     });
   });
 });
