@@ -212,6 +212,9 @@ if (
 } else if (process.env.REACT_APP_E2E_TESTING === 'true') {
   prepare().then(() => render());
   log.setDefaultLevel(log.levels.DEBUG);
+} else if (process.env.REACT_APP_E2E_TESTING_API === 'true') {
+  render();
+  log.setDefaultLevel(log.levels.DEBUG);
 } else {
   log.setDefaultLevel(log.levels.ERROR);
 }

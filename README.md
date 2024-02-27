@@ -132,7 +132,7 @@ This guide outlines the steps to perform end-to-end testing for the Inventory Ma
 3. **Host IMS-API and IMS-Frontend Together**: To prevent CORS errors during testing, ensure both IMS-API and IMS-Frontend (production build) are hosted on the same machine.
 
 4. **Run Testing Scripts**:
-   - Execute `yarn e2e:api` or `yarn e2e:interactive` depending on your preferred testing mode. These scripts are configured to perform end-to-end testing with the API.
+   - Execute `yarn e2e:api` or `yarn e2e:interactive:api` depending on your preferred testing mode. These scripts are configured to perform end-to-end testing with the API.
 
 #### Testing without API (Using MSW Mock Data)
 
