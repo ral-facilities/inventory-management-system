@@ -93,8 +93,14 @@ function ViewTabs() {
 
   const routing = (
     <Routes location={location}>
-      <Route path={paths.root} element={<HomePage />} />
-      <Route path={paths.homepage} element={<HomePage />} />
+      <Route
+        path={paths.root}
+        element={<HomePage pluginHost={'http://localhost:5001'} />}
+      />
+      <Route
+        path={paths.homepage}
+        element={<HomePage pluginHost={'http://localhost:5001'} />}
+      />
       <Route path={paths.catalogue} element={<Catalogue />} />
       <Route
         path={paths.catalogueItem}

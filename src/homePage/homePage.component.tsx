@@ -12,7 +12,7 @@ import Decal2DarkImage from '../images/decal2-dark.svg';
 import Decal2DarkHCImage from '../images/decal2-darkhc.svg';
 import FacilityImage from '../images/facility.jpg';
 
-export interface HomePageProps {
+export interface BaseHomePageProps {
   logo: string;
   backgroundImage: string;
   greenSwirl1Image: string;
@@ -121,7 +121,7 @@ const LightBlueButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const BaseHomePage = (props: HomePageProps): React.ReactElement => {
+const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
   return (
     <div id="dg-homepage">
       <div
@@ -308,19 +308,25 @@ const BaseHomePage = (props: HomePageProps): React.ReactElement => {
   );
 };
 
-export const HomePage = React.memo((): React.ReactElement => {
-  const HomePage = BaseHomePage;
-  return (
-    <HomePage
-      logo={DGLogo}
-      backgroundImage={BackgroundImage}
-      greenSwirl1Image={GreenSwirl1Image}
-      greenSwirl2Image={GreenSwirl2Image}
-      decal1Image={Decal1Image}
-      decal2Image={Decal2Image}
-      decal2DarkImage={Decal2DarkImage}
-      decal2DarkHCImage={Decal2DarkHCImage}
-      facilityImage={FacilityImage}
-    />
-  );
-});
+export interface HomePageProps {
+  pluginHost: String;
+}
+
+export const HomePage = React.memo(
+  (props: HomePageProps): React.ReactElement => {
+    const HomePage = BaseHomePage;
+    return (
+      <HomePage
+        logo={props.pluginHost + DGLogo}
+        backgroundImage={props.pluginHost + BackgroundImage}
+        greenSwirl1Image={props.pluginHost + GreenSwirl1Image}
+        greenSwirl2Image={props.pluginHost + GreenSwirl2Image}
+        decal1Image={props.pluginHost + Decal1Image}
+        decal2Image={props.pluginHost + Decal2Image}
+        decal2DarkImage={props.pluginHost + Decal2DarkImage}
+        decal2DarkHCImage={props.pluginHost + Decal2DarkHCImage}
+        facilityImage={props.pluginHost + FacilityImage}
+      />
+    );
+  }
+);
