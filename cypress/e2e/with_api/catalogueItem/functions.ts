@@ -224,14 +224,13 @@ const deleteCatalogueItem = (name: string) => {
 export const copyToCatalogueItems = (values: { checkedItems: string[] }) => {
   cy.intercept({
     method: 'POST',
-    url: '**/catalogue-items/*',
+    url: '**/catalogue-items',
   }).as('postCatalogueItems');
   cy.intercept({
     method: 'GET',
     url: '**/catalogue-categories/*',
   }).as('getCatalogueCategoryData');
 
-  cy.wait('@postCatalogueItems', { timeout: 10000 });
   for (let i = 0; i < values.checkedItems.length; i++) {
     cy.findByLabelText(`${values.checkedItems[i]} row`).within(() => {
       cy.findAllByLabelText('Toggle select row').first().click();
