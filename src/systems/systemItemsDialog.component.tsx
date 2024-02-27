@@ -45,7 +45,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const { data: targetSystem, isLoading: targetSystemLoading } =
     useSystem(parentSystemId);
 
-  const { mutateAsync: moveItemsToSystem } = useMoveItemsToSystem();
+  const { mutateAsync: moveItemsToSystem, isPending: isMovePending } =
+    useMoveItemsToSystem();
 
   const handleClose = React.useCallback(() => {
     onClose();
@@ -112,9 +113,11 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         <Button onClick={onClose}>Cancel</Button>
         <Button
           disabled={
+            isMovePending ||
             // Disable when not moving anywhere different
             // or when attempting to move to root i.e. no system
-            props.parentSystemId === parentSystemId || parentSystemId === null
+            props.parentSystemId === parentSystemId ||
+            parentSystemId === null
           }
           onClick={handleMoveTo}
         >

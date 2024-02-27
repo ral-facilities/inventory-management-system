@@ -69,6 +69,7 @@ export const handlers = [
     const body = (await req.json()) as EditCatalogueCategory;
 
     const fullBody = { ...obj, ...body };
+
     if (fullBody.name === 'test_dup') {
       return res(
         ctx.status(409),
@@ -259,6 +260,14 @@ export const handlers = [
       (value) => value.id === id
     );
 
+    const newBody = {
+      catalogue_category_id:
+        body.catalogue_category_id ?? validCatalogueItem?.catalogue_category_id,
+      name: body.name ?? validCatalogueItem?.name,
+      description: body.description ?? validCatalogueItem?.description,
+      properties: body.properties ?? validCatalogueItem?.properties,
+    };
+
     if (body.name === 'test_has_children_elements') {
       return res(
         ctx.status(409),
@@ -273,13 +282,6 @@ export const handlers = [
       body.catalogue_category_id === 'Error 500'
     )
       return res(ctx.status(500), ctx.json(''));
-
-    const newBody = {
-      catalogue_category_id: validCatalogueItem?.catalogue_category_id,
-      name: body.name ?? validCatalogueItem?.name,
-      description: body.description ?? validCatalogueItem?.description,
-      properties: body.properties ?? validCatalogueItem?.properties,
-    };
 
     return res(
       ctx.status(200),
@@ -311,6 +313,10 @@ export const handlers = [
 
     if (body.name === 'Manufacturer A') {
       return res(ctx.status(409), ctx.json(''));
+    }
+
+    if (body.name === 'Error 500') {
+      return res(ctx.status(500), ctx.json(''));
     }
 
     return res(
@@ -443,6 +449,7 @@ export const handlers = [
     const body = (await req.json()) as EditSystem;
 
     const { id } = req.params;
+
     if (body.name === 'Error 409' || id === 'Error 409') {
       return res(
         ctx.status(409),

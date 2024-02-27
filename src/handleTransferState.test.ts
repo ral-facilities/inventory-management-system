@@ -1,8 +1,8 @@
 import log from 'loglevel';
-import handleTransferState from './handleTransferState';
 import { AnyAction } from 'redux';
-import { NotificationType } from './state/actions/actions.types';
 import { TransferState } from './app.types';
+import handleTransferState from './handleTransferState';
+import { NotificationType } from './state/actions/actions.types';
 
 jest.mock('loglevel');
 
@@ -21,7 +21,7 @@ describe('handleTransferStates', () => {
     transferStates = [];
   });
 
-  it('logs an error and sends a notification to SciGateway', () => {
+  it('logs an error and sends a notification to SciGateway if broadcast is true', () => {
     transferStates = [
       {
         name: 'test_dup',
@@ -57,5 +57,27 @@ describe('handleTransferStates', () => {
         message: 'Wavefront Sensors: Successfully moved to',
       },
     });
+  });
+
+  it('logs an error and sends a notification to SciGateway if broadcast is false', () => {
+    transferStates = [
+      {
+        name: 'test_dup',
+        message:
+          'A catalogue category with the same name already exists within the parent catalogue category',
+        state: 'error',
+      },
+      {
+        name: 'Wavefront Sensors',
+        message: 'Successfully moved to',
+        state: 'success',
+      },
+    ];
+    handleTransferState(transferStates, false);
+
+    expect(log.error).toHaveBeenCalledWith(
+      'A catalogue category with the same name already exists within the parent catalogue category'
+    );
+    expect(events.length).toBe(0);
   });
 });

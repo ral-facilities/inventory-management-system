@@ -1,5 +1,4 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import axios from 'axios';
 import {
   AddCatalogueCategory,
   CatalogueCategory,
@@ -18,6 +17,7 @@ import {
   useEditCatalogueCategory,
   useMoveToCatalogueCategory,
 } from './catalogueCategory';
+import { imsApi } from './api';
 
 describe('catalogue category api functions', () => {
   afterEach(() => {
@@ -48,10 +48,6 @@ describe('catalogue category api functions', () => {
         parent_id: null,
       });
     });
-
-    it.todo(
-      'sends axios request to fetch records and throws an appropriate error on failure'
-    );
   });
 
   describe('useEditCatalogueCategory', () => {
@@ -92,10 +88,6 @@ describe('catalogue category api functions', () => {
         parent_id: '1',
       });
     });
-
-    it.todo(
-      'sends axios request to fetch records and throws an appropriate error on failure'
-    );
   });
 
   describe('useDeleteCatalogueCategory', () => {
@@ -120,10 +112,6 @@ describe('catalogue category api functions', () => {
       });
       expect(result.current.data).toEqual('');
     });
-
-    it.todo(
-      'sends axios request to fetch records and throws an appropriate error on failure'
-    );
   });
 
   describe('useCatalogueCategories', () => {
@@ -146,10 +134,6 @@ describe('catalogue category api functions', () => {
         },
       ]);
     });
-
-    it.todo(
-      'sends axios request to fetch parent catalogue category data and throws an appropriate error on failure'
-    );
   });
 
   describe('useCatalogueBreadcrumbs', () => {
@@ -168,10 +152,6 @@ describe('catalogue category api functions', () => {
         trail: [['2', 'motion']],
       });
     });
-
-    it.todo(
-      'sends axios request to fetch catalogue breadcrumbs data and throws an appropriate error on failure'
-    );
   });
 
   describe('useCatalogueCategory', () => {
@@ -192,10 +172,6 @@ describe('catalogue category api functions', () => {
         parent_id: null,
       });
     });
-
-    it.todo(
-      'sends axios request to fetch a single catalogue category and throws an appropriate error on failure'
-    );
   });
 
   describe('useMoveToCatalogueCategory', () => {
@@ -254,7 +230,7 @@ describe('catalogue category api functions', () => {
     let axiosPatchSpy;
 
     beforeEach(() => {
-      axiosPatchSpy = jest.spyOn(axios, 'patch');
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
 
       moveToCatalogueCategory = {
         selectedCategories: mockSelectedCatalogueCategories,
@@ -351,10 +327,6 @@ describe('catalogue category api functions', () => {
         },
       ]);
     });
-
-    it.todo(
-      'sends axios request to fetch a single catalogue category and throws an appropriate error on failure'
-    );
   });
 
   describe('useCopyToCatalogueCategory', () => {
@@ -419,7 +391,7 @@ describe('catalogue category api functions', () => {
         existingCategoryNames: [],
       };
 
-      axiosPostSpy = jest.spyOn(axios, 'post');
+      axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
@@ -561,9 +533,5 @@ describe('catalogue category api functions', () => {
         },
       ]);
     });
-
-    it.todo(
-      'sends axios request to copy catalogue category and throws an appropriate error on failure'
-    );
   });
 });

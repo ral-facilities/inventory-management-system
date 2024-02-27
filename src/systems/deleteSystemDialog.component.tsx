@@ -12,6 +12,7 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import { useDeleteSystem } from '../api/systems';
 import { ErrorParsing, System } from '../app.types';
+import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface DeleteSystemDialogProps {
   open: boolean;
@@ -26,7 +27,8 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
     undefined
   );
 
-  const { mutateAsync: deleteSystem } = useDeleteSystem();
+  const { mutateAsync: deleteSystem, isPending: isDeletePending } =
+    useDeleteSystem();
 
   const handleClose = () => {
     onClose();
@@ -48,7 +50,7 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
             );
             return;
           }
-          setErrorMessage('Please refresh and try again');
+          handleIMS_APIError(error);
         });
   }, [deleteSystem, onClose, system]);
 
@@ -66,7 +68,7 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           onClick={handleDeleteSystem}
-          disabled={errorMessage !== undefined}
+          disabled={isDeletePending || errorMessage !== undefined}
         >
           Continue
         </Button>

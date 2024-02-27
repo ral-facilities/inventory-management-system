@@ -1,12 +1,15 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import axios from 'axios';
 import React from 'react';
+import { imsApi } from '../../api/api';
 import { CatalogueCategory, CatalogueCategoryFormData } from '../../app.types';
+import handleIMS_APIError from '../../handleIMS_APIError';
 import { renderComponentWithBrowserRouter } from '../../setupTests';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
+
+jest.mock('../../handleIMS_APIError');
 
 describe('Catalogue Category Dialog', () => {
   const onClose = jest.fn();
@@ -26,7 +29,7 @@ describe('Catalogue Category Dialog', () => {
     // New fields to add (if any)
     newFormFields?: CatalogueCategoryFormData[];
   }) => {
-    values.name &&
+    values.name !== undefined &&
       fireEvent.change(screen.getByLabelText('Name *'), {
         target: { value: values.name },
       });
@@ -50,26 +53,28 @@ describe('Catalogue Category Dialog', () => {
         );
       });
 
-      await waitFor(() =>
-        expect(screen.getAllByLabelText('Property Name *').length).toBe(
-          numberOfCurrentFields + values.newFormFields?.length
-        )
+      await waitFor(async () =>
+        expect(
+          (await screen.findAllByLabelText('Property Name *')).length
+        ).toBe(numberOfCurrentFields + values.newFormFields?.length)
       );
 
       // Modify
-      const nameFields = screen.getAllByLabelText('Property Name *');
-      const typeSelects = screen.getAllByLabelText('Select Type *');
-      const allowedValuesSelects = screen.getAllByLabelText(
+      const nameFields = await screen.findAllByLabelText('Property Name *');
+      const typeSelects = await screen.findAllByLabelText('Select Type *');
+      const allowedValuesSelects = await screen.findAllByLabelText(
         'Select Allowed values *'
       );
-      const unitSelect = screen.getAllByLabelText('Select Unit');
-      const mandatorySelect = screen.getAllByLabelText('Select is mandatory?');
+      const unitSelect = await screen.findAllByLabelText('Select Unit');
+      const mandatorySelect = await screen.findAllByLabelText(
+        'Select is mandatory?'
+      );
 
       for (let i = 0; i < values.newFormFields.length; i++) {
         const field = values.newFormFields[i];
 
         if (field.name)
-          await fireEvent.change(nameFields[i + numberOfCurrentFields], {
+          fireEvent.change(nameFields[i + numberOfCurrentFields], {
             target: { value: field.name },
           });
 
@@ -162,7 +167,7 @@ describe('Catalogue Category Dialog', () => {
       };
       user = userEvent.setup();
 
-      axiosPostSpy = jest.spyOn(axios, 'post');
+      axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
@@ -179,8 +184,10 @@ describe('Catalogue Category Dialog', () => {
 
     it('displays warning message when name field is not defined', async () => {
       createView();
+
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
+
       const helperTexts = screen.getByText('Please enter a name.');
       expect(helperTexts).toBeInTheDocument();
       expect(onClose).not.toHaveBeenCalled();
@@ -211,12 +218,7 @@ describe('Catalogue Category Dialog', () => {
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
-
-      await waitFor(() => {
-        expect(
-          screen.getByText('Please refresh and try again')
-        ).toBeInTheDocument();
-      });
+      expect(handleIMS_APIError).toHaveBeenCalled();
       expect(onClose).not.toHaveBeenCalled();
     });
 
@@ -261,7 +263,7 @@ describe('Catalogue Category Dialog', () => {
     it('calls onClose when Close button is clicked', async () => {
       createView();
       const closeButton = screen.getByRole('button', { name: 'Cancel' });
-      user.click(closeButton);
+      await user.click(closeButton);
 
       await waitFor(() => {
         expect(onClose).toHaveBeenCalled();
@@ -629,104 +631,11 @@ describe('Catalogue Category Dialog', () => {
         resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
       };
       user = userEvent.setup();
-      axiosPatchSpy = jest.spyOn(axios, 'patch');
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
       jest.clearAllMocks();
-    });
-
-    it('displays warning message when name field is not defined', async () => {
-      props.selectedCatalogueCategory = {
-        ...mockData,
-        name: '',
-      };
-      createView();
-
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
-      const helperTexts = screen.getByText('Please enter a name.');
-      expect(helperTexts).toBeInTheDocument();
-      expect(onClose).not.toHaveBeenCalled();
-    });
-
-    it('displays warning message when name already exists within the parent catalogue category', async () => {
-      createView();
-
-      await modifyValues({ name: 'test_dup' });
-
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(
-            'A catalogue category with the same name already exists within the parent catalogue category'
-          )
-        ).toBeInTheDocument();
-      });
-      expect(onClose).not.toHaveBeenCalled();
-    });
-
-    it('displays child elements warning message', async () => {
-      props = {
-        ...props,
-        parentId: '1',
-        selectedCatalogueCategory: {
-          id: '4',
-          name: 'Cameras',
-          parent_id: '1',
-          code: 'cameras',
-          is_leaf: true,
-          catalogue_item_properties: [
-            {
-              name: 'Resolution',
-              type: 'number',
-              unit: 'megapixels',
-              mandatory: true,
-            },
-          ],
-        },
-      };
-      createView();
-
-      await modifyValues({
-        newFormFields: [
-          {
-            name: 'radius',
-            type: 'number',
-            unit: 'millimeters',
-            mandatory: true,
-          },
-        ],
-      });
-
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
-        catalogue_item_properties: [
-          {
-            name: 'Resolution',
-            type: 'number',
-            unit: 'megapixels',
-            mandatory: true,
-          },
-          {
-            mandatory: true,
-            name: 'radius',
-            type: 'number',
-            unit: 'millimeters',
-          },
-        ],
-      });
-      await waitFor(() => {
-        expect(
-          screen.getByText(
-            'Catalogue category has child elements and cannot be updated'
-          )
-        ).toBeInTheDocument();
-      });
-      expect(onClose).not.toHaveBeenCalled();
     });
 
     it('edits a catalogue category with content being catalogue items (allowed_values list of numbers)', async () => {
@@ -843,6 +752,98 @@ describe('Catalogue Category Dialog', () => {
       });
     });
 
+    it('displays warning message when name field is not defined', async () => {
+      createView();
+
+      modifyValues({ name: '' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      const helperTexts = screen.getByText('Please enter a name.');
+      expect(helperTexts).toBeInTheDocument();
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays warning message when name already exists within the parent catalogue category', async () => {
+      createView();
+
+      modifyValues({ name: 'test_dup' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'A catalogue category with the same name already exists within the parent catalogue category'
+          )
+        ).toBeInTheDocument();
+      });
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays child elements warning message', async () => {
+      props = {
+        ...props,
+        parentId: '1',
+        selectedCatalogueCategory: {
+          id: '4',
+          name: 'Cameras',
+          parent_id: '1',
+          code: 'cameras',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Resolution',
+              type: 'number',
+              unit: 'megapixels',
+              mandatory: true,
+            },
+          ],
+        },
+      };
+      createView();
+
+      await modifyValues({
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: true,
+          },
+        ],
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
+        catalogue_item_properties: [
+          {
+            name: 'Resolution',
+            type: 'number',
+            unit: 'megapixels',
+            mandatory: true,
+          },
+          {
+            mandatory: true,
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+          },
+        ],
+      });
+      await waitFor(() => {
+        expect(
+          screen.getByText(
+            'Catalogue category has child elements and cannot be updated'
+          )
+        ).toBeInTheDocument();
+      });
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
     it('displays warning message when an unknown error occurs', async () => {
       props = {
         ...props,
@@ -858,11 +859,7 @@ describe('Catalogue Category Dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
-      await waitFor(() => {
-        expect(
-          screen.getByText('Please refresh and try again')
-        ).toBeInTheDocument();
-      });
+      expect(handleIMS_APIError).toHaveBeenCalled();
       expect(onClose).not.toHaveBeenCalled();
     });
 
@@ -904,7 +901,7 @@ describe('Catalogue Category Dialog', () => {
       const formName = screen.getAllByLabelText('Property Name *');
 
       // Modify the name field using userEvent
-      fireEvent.change(formName[0], {
+      await fireEvent.change(formName[0], {
         target: { value: 'Updated Field' },
       });
 
@@ -1036,7 +1033,7 @@ describe('Catalogue Category Dialog', () => {
         resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
       };
       user = userEvent.setup();
-      axiosPostSpy = jest.spyOn(axios, 'post');
+      axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
     it('renders correctly when saving as', async () => {

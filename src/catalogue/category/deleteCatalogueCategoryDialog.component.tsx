@@ -12,6 +12,7 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import { useDeleteCatalogueCategory } from '../../api/catalogueCategory';
 import { CatalogueCategory, ErrorParsing } from '../../app.types';
+import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteCatalogueCategoryDialogProps {
   open: boolean;
@@ -32,7 +33,8 @@ const DeleteCatalogueCategoryDialog = (
     undefined
   );
 
-  const { mutateAsync: deleteCatalogueCategory } = useDeleteCatalogueCategory();
+  const { mutateAsync: deleteCatalogueCategory, isPending: isDeletePending } =
+    useDeleteCatalogueCategory();
 
   const handleClose = React.useCallback(() => {
     onClose();
@@ -55,8 +57,7 @@ const DeleteCatalogueCategoryDialog = (
             );
             return;
           }
-          setError(true);
-          setErrorMessage('Please refresh and try again');
+          handleIMS_APIError(error);
         });
     } else {
       setError(true);
@@ -84,7 +85,10 @@ const DeleteCatalogueCategoryDialog = (
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleDeleteCatalogueCategory} disabled={error}>
+        <Button
+          onClick={handleDeleteCatalogueCategory}
+          disabled={isDeletePending || error}
+        >
           Continue
         </Button>
       </DialogActions>

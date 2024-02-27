@@ -32,6 +32,7 @@ import {
   ErrorParsing,
 } from '../../app.types';
 import CataloguePropertiesForm from './cataloguePropertiesForm.component';
+import handleIMS_APIError from '../../handleIMS_APIError';
 
 // Function to convert a list of strings to a list of numbers
 const convertListToNumbers = (values: string[]): number[] => {
@@ -93,10 +94,10 @@ const CatalogueCategoryDialog = React.memo(
     const [allowedValuesListErrors, setAllowedValuesListErrors] =
       React.useState<AllowedValuesListErrorsType[]>([]);
 
-    const [catchAllError, setCatchAllError] = React.useState(false);
-
-    const { mutateAsync: addCatalogueCategory } = useAddCatalogueCategory();
-    const { mutateAsync: editCatalogueCategory } = useEditCatalogueCategory();
+    const { mutateAsync: addCatalogueCategory, isPending: isAddPending } =
+      useAddCatalogueCategory();
+    const { mutateAsync: editCatalogueCategory, isPending: isEditPending } =
+      useEditCatalogueCategory();
 
     const [catalogueItemPropertiesErrors, setCatalogueItemPropertiesErrors] =
       React.useState<CatalogueItemPropertiesErrorsType[]>([]);
@@ -372,14 +373,14 @@ const CatalogueCategoryDialog = React.memo(
 
       addCatalogueCategory(catalogueCategory)
         .then((response) => handleClose())
-        .catch((error: AxiosError) => {
+        .catch((error) => {
           const response = error.response?.data as ErrorParsing;
-          console.log(error);
           if (response && error.response?.status === 409) {
             setNameError(response.detail);
             return;
           }
-          setCatchAllError(true);
+
+          handleIMS_APIError(error);
         });
     }, [
       addCatalogueCategory,
@@ -464,7 +465,6 @@ const CatalogueCategoryDialog = React.memo(
               handleClose();
             })
             .catch((error: AxiosError) => {
-              console.log(error.response);
               const response = error.response?.data as ErrorParsing;
               if (response && error.response?.status === 409) {
                 if (response.detail.includes('child elements'))
@@ -473,7 +473,8 @@ const CatalogueCategoryDialog = React.memo(
 
                 return;
               }
-              setCatchAllError(true);
+
+              handleIMS_APIError(error);
             });
         } else setFormError('Please edit a form entry before clicking save');
       }
@@ -607,8 +608,9 @@ const CatalogueCategoryDialog = React.memo(
                   : handleAddCatalogueCategory
               }
               disabled={
+                isEditPending ||
+                isAddPending ||
                 formError !== undefined ||
-                catchAllError ||
                 nameError !== undefined ||
                 catalogueItemPropertiesErrors.length !== 0 ||
                 allowedValuesListErrors.length !== 0
@@ -620,11 +622,6 @@ const CatalogueCategoryDialog = React.memo(
           {formError && (
             <FormHelperText sx={{ marginBottom: '16px' }} error>
               {formError}
-            </FormHelperText>
-          )}
-          {catchAllError && (
-            <FormHelperText sx={{ marginBottom: '16px' }} error>
-              {'Please refresh and try again'}
             </FormHelperText>
           )}
         </DialogActions>

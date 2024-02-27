@@ -5,7 +5,7 @@ import CatalogueCategoryDirectoryDialog, {
   CatalogueCategoryDirectoryDialogProps,
 } from './catalogueCategoryDirectoryDialog.component';
 import userEvent from '@testing-library/user-event';
-import axios from 'axios';
+import { imsApi } from '../../api/api';
 
 describe('CatalogueCategoryDirectoryDialog', () => {
   let props: CatalogueCategoryDirectoryDialogProps;
@@ -14,7 +14,6 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   let axiosPostSpy;
   const onChangeSelectedCategories = jest.fn();
   const onClose = jest.fn();
-  const onChangeCatalogueCurrDirId = jest.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(
       <CatalogueCategoryDirectoryDialog {...props} />
@@ -28,14 +27,13 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         onClose: onClose,
         selectedCategories: [],
         onChangeSelectedCategories: onChangeSelectedCategories,
-        onChangeCatalogueCurrDirId: onChangeCatalogueCurrDirId,
-        catalogueCurrDirId: null,
+        parentCategoryId: null,
         requestType: 'moveTo',
       };
 
       user = userEvent.setup();
 
-      axiosPatchSpy = jest.spyOn(axios, 'patch');
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
@@ -96,7 +94,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       });
     });
 
-    it('renders the breadcrumbs and navigate to another directory', async () => {
+    it('renders the breadcrumbs and can navigate to another directory', async () => {
       props.selectedCategories = [
         {
           id: '1',
@@ -114,22 +112,25 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         },
       ];
 
-      props.catalogueCurrDirId = '8';
+      props.parentCategoryId = '8';
 
       createView();
 
       await waitFor(() => {
-        expect(
-          screen.getByRole('link', { name: 'motion' })
-        ).toBeInTheDocument();
+        expect(screen.getByText('Motorized Actuators')).toBeInTheDocument();
       });
+
       await user.click(screen.getByRole('link', { name: 'motion' }));
 
-      expect(onChangeCatalogueCurrDirId).toBeCalledWith('2');
+      await waitFor(() => {
+        expect(screen.getByText('Actuators')).toBeInTheDocument();
+      });
 
       await user.click(screen.getByLabelText('navigate to catalogue home'));
 
-      expect(onChangeCatalogueCurrDirId).toBeCalledWith(null);
+      await waitFor(() => {
+        expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
+      });
     });
 
     it('navigates through the directory table', async () => {
@@ -150,7 +151,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         },
       ];
 
-      props.catalogueCurrDirId = null;
+      props.parentCategoryId = null;
 
       createView();
 
@@ -160,7 +161,9 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       await user.click(screen.getByText('Vacuum Technology'));
 
-      expect(onChangeCatalogueCurrDirId).toBeCalledWith('3');
+      await waitFor(() => {
+        expect(screen.getByText('Vacuum Pumps')).toBeInTheDocument();
+      });
     });
 
     it('moves multiple catalogue categories', async () => {
@@ -181,7 +184,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         },
       ];
 
-      props.catalogueCurrDirId = '3';
+      props.parentCategoryId = '3';
       createView();
 
       const moveButton = screen.getByRole('button', { name: 'Move here' });
@@ -193,7 +196,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/2', {
         parent_id: '3',
       });
-      expect(onClose).toBeCalled();
+      expect(onClose).toHaveBeenCalled();
     });
   });
 
@@ -204,14 +207,13 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         onClose: onClose,
         selectedCategories: [],
         onChangeSelectedCategories: onChangeSelectedCategories,
-        onChangeCatalogueCurrDirId: onChangeCatalogueCurrDirId,
-        catalogueCurrDirId: null,
+        parentCategoryId: null,
         requestType: 'copyTo',
       };
 
       user = userEvent.setup();
 
-      axiosPostSpy = jest.spyOn(axios, 'post');
+      axiosPostSpy = jest.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
@@ -300,7 +302,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         },
       ];
 
-      props.catalogueCurrDirId = '3';
+      props.parentCategoryId = '3';
       createView();
 
       const copyButton = screen.getByRole('button', { name: 'Copy here' });
@@ -313,7 +315,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: '3',
         })
       );
-      expect(onClose).toBeCalled();
+      expect(onClose).toHaveBeenCalled();
     });
 
     it('displays descriptions tooltip on hover', async () => {
@@ -388,7 +390,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           name: `${selectedCategory.name}_copy_1`,
         })
       );
-      expect(onClose).toBeCalled();
+      expect(onClose).toHaveBeenCalled();
     });
 
     it('navigates through the directory table', async () => {
@@ -409,17 +411,9 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         },
       ];
 
-      props.catalogueCurrDirId = null;
+      props.parentCategoryId = null;
 
       createView();
-
-      await waitFor(() => {
-        expect(screen.getByText('Motion')).toBeInTheDocument();
-      });
-
-      await waitFor(() => {
-        expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
-      });
 
       await waitFor(() => {
         expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
@@ -427,7 +421,9 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       await user.click(screen.getByText('Vacuum Technology'));
 
-      expect(onChangeCatalogueCurrDirId).toBeCalledWith('3');
+      await waitFor(() => {
+        expect(screen.getByText('Vacuum Pumps')).toBeInTheDocument();
+      });
     });
   });
 });

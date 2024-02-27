@@ -518,28 +518,6 @@ describe('Catalogue Category', () => {
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
 
-  it('displays error message if it received an unknown error from the api', () => {
-    cy.visit('/catalogue/1');
-    cy.findByRole('button', {
-      name: 'actions Cameras catalogue category button',
-    }).click();
-
-    cy.findByRole('menuitem', {
-      name: 'edit Cameras catalogue category button',
-    }).click();
-    cy.findByLabelText('Name *').clear();
-    cy.findByLabelText('Name *').type('Error 500');
-
-    cy.findByRole('button', { name: 'Save' }).click();
-
-    cy.findByRole('dialog')
-      .should('be.visible')
-      .within(() => {
-        cy.contains('Please refresh and try again');
-      });
-    cy.findByRole('button', { name: 'Save' }).should('be.disabled');
-  });
-
   it('edits a catalogue category with catalogue properties', () => {
     cy.visit('/catalogue/1');
     cy.findByRole('button', {
@@ -636,19 +614,20 @@ describe('Catalogue Category', () => {
     });
   });
 
-  it('moves multiple catalogue category', () => {
+  it('can move multiple catalogue categories', () => {
     cy.visit('/catalogue/1');
     cy.findByLabelText('Cameras checkbox').click();
     cy.findByLabelText('test_dup checkbox').click();
     cy.findByLabelText('Amp Meters checkbox').click();
     cy.findByRole('button', { name: 'Move to' }).click();
 
-    cy.startSnoopingBrowserMockedRequest();
-
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
         cy.findByLabelText('navigate to catalogue home').click();
+        cy.findByText('Motion').click();
+
+        cy.startSnoopingBrowserMockedRequest();
         cy.findByRole('button', { name: 'Move here' }).click();
       });
 
@@ -658,15 +637,15 @@ describe('Catalogue Category', () => {
     }).should(async (patchRequests) => {
       expect(patchRequests.length).equal(3);
       expect(JSON.stringify(await patchRequests[0].json())).equal(
-        JSON.stringify({ parent_id: null })
+        JSON.stringify({ parent_id: '2' })
       );
       expect(patchRequests[0].url.toString()).to.contain('/4');
       expect(JSON.stringify(await patchRequests[1].json())).equal(
-        JSON.stringify({ parent_id: null })
+        JSON.stringify({ parent_id: '2' })
       );
       expect(patchRequests[1].url.toString()).to.contain('/79');
       expect(JSON.stringify(await patchRequests[2].json())).equal(
-        JSON.stringify({ parent_id: null })
+        JSON.stringify({ parent_id: '2' })
       );
       expect(patchRequests[2].url.toString()).to.contain('/19');
     });
@@ -679,12 +658,12 @@ describe('Catalogue Category', () => {
     cy.findByLabelText('Amp Meters checkbox').click();
     cy.findByRole('button', { name: 'Copy to' }).click();
 
-    cy.startSnoopingBrowserMockedRequest();
-
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
         cy.findByLabelText('navigate to catalogue home').click();
+
+        cy.startSnoopingBrowserMockedRequest();
         cy.findByRole('button', { name: 'Copy here' }).click();
       });
 
@@ -752,13 +731,13 @@ describe('Catalogue Category', () => {
     cy.findByLabelText('Amp Meters checkbox').click();
     cy.findByRole('button', { name: 'Copy to' }).click();
 
-    cy.startSnoopingBrowserMockedRequest();
-
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
         cy.findByLabelText('navigate to catalogue home').click();
         cy.findByText('Motion').click();
+
+        cy.startSnoopingBrowserMockedRequest();
         cy.findByRole('button', { name: 'Copy here' }).click();
       });
 

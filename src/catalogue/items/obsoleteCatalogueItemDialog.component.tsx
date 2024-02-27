@@ -35,6 +35,7 @@ import {
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';
 import CatalogueItemsTable from './catalogueItemsTable.component';
+import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface ObsoleteCatalogueItemDialogProps {
   open: boolean;
@@ -66,9 +67,6 @@ const ObsoleteCatalogueItemDialog = (
   const [formError, setFormError] = React.useState<string | undefined>(
     undefined
   );
-
-  // For any unhandled error e.g. a connection issue/API error
-  const [otherError, setOtherError] = React.useState<boolean>(false);
 
   // Catalogue category id for table
   const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
@@ -120,7 +118,8 @@ const ObsoleteCatalogueItemDialog = (
 
   const { data: catalogueBreadcrumbs } =
     useCatalogueBreadcrumbs(catalogueCurrDirId);
-  const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
+  const { mutateAsync: editCatalogueItem, isPending: isEditPending } =
+    useEditCatalogueItem();
 
   // Removes parameters when is_obsolete changed to false
   const handleObsoleteChange = (isObsolete: boolean) => {
@@ -149,7 +148,6 @@ const ObsoleteCatalogueItemDialog = (
     handleObsoleteDetailChanged(catalogueItem as ObsoleteDetails);
     setCatalogueCurrDirId(null);
     setFormError(undefined);
-    setOtherError(false);
     setDefaultCatalogueCurrDirId();
   }, [
     catalogueItem,
@@ -193,8 +191,7 @@ const ObsoleteCatalogueItemDialog = (
             handleClose();
           })
           .catch((error: AxiosError) => {
-            console.log(error);
-            setOtherError(true);
+            handleIMS_APIError(error);
           });
       } else
         setFormError(
@@ -275,7 +272,7 @@ const ObsoleteCatalogueItemDialog = (
             ) : (
               <CatalogueCategoryTableView
                 selectedCategories={[]}
-                onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
+                onChangeParentCategoryId={setCatalogueCurrDirId}
                 requestType={'standard'}
                 catalogueCategoryData={catalogueCategoryDataList}
                 catalogueCategoryDataLoading={catalogueCategoryDataListLoading}
@@ -325,7 +322,7 @@ const ObsoleteCatalogueItemDialog = (
         {activeStep === steps.length - 1 ? (
           <Button
             onClick={handleFinish}
-            disabled={formError !== undefined || otherError}
+            disabled={isEditPending || formError !== undefined}
           >
             Finish
           </Button>
@@ -345,21 +342,6 @@ const ObsoleteCatalogueItemDialog = (
         >
           <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
             {formError}
-          </FormHelperText>
-        </Box>
-      )}
-      {otherError && (
-        <Box
-          sx={{
-            mx: 3,
-            marginBottom: 3,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <FormHelperText sx={{ maxWidth: '100%', fontSize: '1rem' }} error>
-            Please refresh and try again
           </FormHelperText>
         </Box>
       )}

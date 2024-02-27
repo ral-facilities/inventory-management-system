@@ -20,8 +20,8 @@ import {
   MoveItemsToSystem,
   System,
 } from '../app.types';
-import axios from 'axios';
 import SystemsJSON from '../mocks/Systems.json';
+import { imsApi } from './api';
 
 describe('catalogue items api functions', () => {
   afterEach(() => {
@@ -212,11 +212,12 @@ describe('catalogue items api functions', () => {
 
     beforeEach(() => {
       moveItemsToSystem = {
-        selectedItems: mockItems,
+        // Prevent test interference if modifying the selected items
+        selectedItems: JSON.parse(JSON.stringify(mockItems)),
         targetSystem: SystemsJSON[0] as System,
       };
 
-      axiosPatchSpy = jest.spyOn(axios, 'patch');
+      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {

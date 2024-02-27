@@ -44,6 +44,70 @@ import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
 
+const MoveCatalogueItemsButton = (props: {
+  selectedItems: CatalogueItem[];
+  onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
+  parentCategoryId: string | null;
+  parentInfo: CatalogueCategory;
+}) => {
+  const [moveCatalogueItemsDialogOpen, setMoveCatalogueItemsDialogOpen] =
+    React.useState<boolean>(false);
+
+  return (
+    <>
+      <Button
+        sx={{ mx: 0.5 }}
+        variant="outlined"
+        startIcon={<DriveFileMoveOutlinedIcon />}
+        onClick={() => setMoveCatalogueItemsDialogOpen(true)}
+      >
+        Move to
+      </Button>
+      <CatalogueItemDirectoryDialog
+        open={moveCatalogueItemsDialogOpen}
+        onClose={() => setMoveCatalogueItemsDialogOpen(false)}
+        selectedItems={props.selectedItems}
+        onChangeSelectedItems={props.onChangeSelectedItems}
+        parentCategoryId={props.parentCategoryId}
+        requestType={'moveTo'}
+        parentInfo={props.parentInfo}
+      />
+    </>
+  );
+};
+
+const CopyCatalogueItemsButton = (props: {
+  selectedItems: CatalogueItem[];
+  onChangeSelectedItems: (selectedItems: MRT_RowSelectionState) => void;
+  parentCategoryId: string | null;
+  parentInfo: CatalogueCategory;
+}) => {
+  const [copyCatalogueItemsDialogOpen, setCopyCatalogueItemsDialogOpen] =
+    React.useState<boolean>(false);
+
+  return (
+    <>
+      <Button
+        sx={{ mx: 0.5 }}
+        variant="outlined"
+        startIcon={<FolderCopyOutlinedIcon />}
+        onClick={() => setCopyCatalogueItemsDialogOpen(true)}
+      >
+        Copy to
+      </Button>
+      <CatalogueItemDirectoryDialog
+        open={copyCatalogueItemsDialogOpen}
+        onClose={() => setCopyCatalogueItemsDialogOpen(false)}
+        selectedItems={props.selectedItems}
+        onChangeSelectedItems={props.onChangeSelectedItems}
+        parentCategoryId={props.parentCategoryId}
+        requestType={'copyTo'}
+        parentInfo={props.parentInfo}
+      />
+    </>
+  );
+};
+
 export function findPropertyValue(
   properties: CatalogueItemPropertyResponse[],
   targetName: string | undefined
@@ -105,16 +169,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const [selectedCatalogueItem, setSelectedCatalogueItem] = React.useState<
     CatalogueItem | undefined
   >(undefined);
-
-  const [moveToItemDialogOpen, setMoveToItemDialogOpen] =
-    React.useState<boolean>(false);
-
-  const [copyToItemDialogOpen, setCopyToItemDialogOpen] =
-    React.useState<boolean>(false);
-
-  const [catalogueCurrDirId, setCatalogueCurrDirId] = React.useState<
-    string | null
-  >(null);
 
   const manufacturerIdSet = new Set<string>(
     catalogueItemsData?.map(
@@ -478,6 +532,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     selectedRowState ?? {}
   );
 
+  // Obtain the selected catalogue items data, not just the selection state
+  const selectedRowIds = Object.keys(rowSelection);
+  const selectedCatalogueItems =
+    catalogueItemsData?.filter((catalogueItem) =>
+      selectedRowIds.includes(catalogueItem.id)
+    ) ?? [];
+
   const [columnFilters, setColumnFilters] =
     React.useState<MRT_ColumnFiltersState>([]);
 
@@ -488,7 +549,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         isItemSelectable === undefined ||
         isItemSelectable(row.original.catalogueItem)
       ) {
-        if (row.original.catalogueItem.id === Object.keys(rowSelection)[0]) {
+        if (row.original.catalogueItem.id === selectedRowIds[0]) {
           // Deselect
           onChangeObsoleteReplacementId && onChangeObsoleteReplacementId(null);
 
@@ -504,7 +565,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         }
       }
     },
-    [isItemSelectable, onChangeObsoleteReplacementId, rowSelection]
+    [isItemSelectable, onChangeObsoleteReplacementId, selectedRowIds]
   );
 
   const table = useMaterialReactTable({
@@ -641,30 +702,20 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         >
           Add Catalogue Item
         </Button>
-        {Object.keys(rowSelection).length > 0 && (
+        {selectedRowIds.length > 0 && (
           <>
-            <Button
-              sx={{ mx: 0.5 }}
-              variant="outlined"
-              startIcon={<DriveFileMoveOutlinedIcon />}
-              onClick={() => {
-                setCatalogueCurrDirId(parentInfo.parent_id);
-                setMoveToItemDialogOpen(true);
-              }}
-            >
-              Move to
-            </Button>
-            <Button
-              sx={{ mx: 0.5 }}
-              variant="outlined"
-              startIcon={<FolderCopyOutlinedIcon />}
-              onClick={() => {
-                setCatalogueCurrDirId(parentInfo.parent_id);
-                setCopyToItemDialogOpen(true);
-              }}
-            >
-              Copy to
-            </Button>
+            <MoveCatalogueItemsButton
+              selectedItems={selectedCatalogueItems}
+              onChangeSelectedItems={setRowSelection}
+              parentCategoryId={parentInfo.id}
+              parentInfo={parentInfo}
+            />
+            <CopyCatalogueItemsButton
+              selectedItems={selectedCatalogueItems}
+              onChangeSelectedItems={setRowSelection}
+              parentCategoryId={parentInfo.id}
+              parentInfo={parentInfo}
+            />
           </>
         )}
         <Button
@@ -772,34 +823,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             open={obsoleteItemDialogOpen}
             onClose={() => setObsoleteItemDialogOpen(false)}
             catalogueItem={selectedCatalogueItem}
-          />
-          <CatalogueItemDirectoryDialog
-            open={moveToItemDialogOpen}
-            onClose={() => setMoveToItemDialogOpen(false)}
-            selectedItems={
-              catalogueItemsData?.filter((catalogueItem) =>
-                Object.keys(rowSelection).includes(catalogueItem.id)
-              ) ?? []
-            }
-            onChangeSelectedItems={setRowSelection}
-            catalogueCurrDirId={catalogueCurrDirId}
-            onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
-            requestType={'moveTo'}
-            parentInfo={parentInfo}
-          />
-          <CatalogueItemDirectoryDialog
-            open={copyToItemDialogOpen}
-            onClose={() => setCopyToItemDialogOpen(false)}
-            selectedItems={
-              catalogueItemsData?.filter((catalogueItem) =>
-                Object.keys(rowSelection).includes(catalogueItem.id)
-              ) ?? []
-            }
-            onChangeSelectedItems={setRowSelection}
-            catalogueCurrDirId={catalogueCurrDirId}
-            onChangeCatalogueCurrDirId={setCatalogueCurrDirId}
-            requestType={'copyTo'}
-            parentInfo={parentInfo}
           />
         </>
       )}

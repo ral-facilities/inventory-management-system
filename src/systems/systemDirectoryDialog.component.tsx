@@ -55,12 +55,15 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   const { data: targetSystem, isLoading: targetSystemLoading } =
     useSystem(parentSystemId);
 
-  const { mutateAsync: moveToSystem } = useMoveToSystem();
-  const { mutateAsync: copyToSystem } = useCopyToSystem();
+  const { mutateAsync: moveToSystem, isPending: isMovePending } =
+    useMoveToSystem();
+  const { mutateAsync: copyToSystem, isPending: isCopyPending } =
+    useCopyToSystem();
 
   const handleClose = React.useCallback(() => {
     onClose();
-  }, [onClose]);
+    setParentSystemId(props.parentSystemId);
+  }, [onClose, props.parentSystemId]);
 
   const handleMoveTo = React.useCallback(() => {
     // Either ensure finished loading, or moving to root
@@ -160,9 +163,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
             <Breadcrumbs
               breadcrumbsInfo={parentSystemBreadcrumbs}
               onChangeNode={setParentSystemId}
-              onChangeNavigateHome={() => {
-                setParentSystemId(null);
-              }}
+              onChangeNavigateHome={() => setParentSystemId(null)}
               navigateHomeAriaLabel={'navigate to systems home'}
             />
           </Grid>
@@ -181,8 +182,10 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           disabled={
+            isCopyPending ||
+            isMovePending ||
             // Disable when not moving anywhere different
-            props.parentSystemId === parentSystemId && type === 'moveTo'
+            (props.parentSystemId === parentSystemId && type === 'moveTo')
           }
           onClick={type === 'moveTo' ? handleMoveTo : handleCopyTo}
         >

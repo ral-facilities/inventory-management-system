@@ -12,6 +12,7 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import { useDeleteManufacturer } from '../api/manufacturer';
 import { ErrorParsing, Manufacturer } from '../app.types';
+import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface DeleteManufacturerProps {
   open: boolean;
@@ -27,7 +28,8 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
     undefined
   );
 
-  const { mutateAsync: deleteManufacturer } = useDeleteManufacturer();
+  const { mutateAsync: deleteManufacturer, isPending: isDeletePending } =
+    useDeleteManufacturer();
 
   const handleClose = React.useCallback(() => {
     onClose();
@@ -50,8 +52,7 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
             );
             return;
           }
-          setError(true);
-          setErrorMessage('Please refresh and try again');
+          handleIMS_APIError(error);
         });
     } else {
       setError(true);
@@ -74,7 +75,10 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleDeleteManufacturer} disabled={error}>
+        <Button
+          onClick={handleDeleteManufacturer}
+          disabled={isDeletePending || error}
+        >
           Continue
         </Button>
       </DialogActions>

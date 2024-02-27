@@ -6,6 +6,9 @@ import DeleteCatalogueItemDialog, {
 } from './deleteCatalogueItemDialog.component';
 import { renderComponentWithBrowserRouter } from '../../setupTests';
 import { CatalogueItem } from '../../app.types';
+import handleIMS_APIError from '../../handleIMS_APIError';
+
+jest.mock('../../handleIMS_APIError');
 
 describe('delete Catalogue Category dialogue', () => {
   let props: DeleteCatalogueItemDialogProps;
@@ -101,12 +104,8 @@ describe('delete Catalogue Category dialogue', () => {
     catalogueItem.id = '1190';
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
-    user.click(continueButton);
+    await user.click(continueButton);
 
-    await waitFor(() => {
-      expect(
-        screen.getByText('Please refresh and try again')
-      ).toBeInTheDocument();
-    });
+    expect(handleIMS_APIError).toHaveBeenCalled();
   });
 });
