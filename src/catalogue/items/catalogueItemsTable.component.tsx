@@ -255,6 +255,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'View Items',
         size: 200,
+        enableGrouping: false,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
@@ -269,6 +270,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Description',
         accessorFn: (row) => row.catalogueItem.description ?? '',
         size: 250,
+        enableGrouping: false,
         Cell: ({ row }) =>
           row.original.catalogueItem.description && (
             <Tooltip
@@ -296,6 +298,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         size: 300,
         enableSorting: false,
         enableColumnFilter: false,
+        enableGrouping: false,
         Cell: ({ row }) =>
           row.original.catalogueItem.obsolete_replacement_catalogue_item_id && (
             <MuiLink
@@ -311,6 +314,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Obsolete Reason',
         accessorFn: (row) => row.catalogueItem.obsolete_reason ?? '',
         size: 250,
+        enableGrouping: false,
         Cell: ({ row }) =>
           row.original.catalogueItem.obsolete_reason && (
             <Tooltip
@@ -447,6 +451,18 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Drawing Link',
         accessorFn: (row) => row.catalogueItem.drawing_link ?? '',
         size: 250,
+        Cell: ({ row }) =>
+          row.original.catalogueItem.drawing_link && (
+            <MuiLink
+              underline="hover"
+              target="_blank"
+              href={row.original.catalogueItem.drawing_link}
+              // For ensuring space when grouping
+              sx={{ marginRight: 0.5 }}
+            >
+              {row.original.catalogueItem.drawing_link}
+            </MuiLink>
+          ),
       },
       {
         header: 'Item Model Number',
@@ -461,6 +477,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             underline="hover"
             component={Link}
             to={`/manufacturer/${row.original.catalogueItem.manufacturer_id}`}
+            // For ensuring space when grouping
+            sx={{ marginRight: 0.5 }}
           >
             {row.original.manufacturer?.name}
           </MuiLink>
@@ -474,6 +492,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             underline="hover"
             target="_blank"
             href={row.original.manufacturer?.url ?? undefined}
+            // For ensuring space when grouping
+            sx={{ marginRight: 0.5 }}
           >
             {row.original.manufacturer?.url}
           </MuiLink>
@@ -512,6 +532,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Notes',
         accessorFn: (row) => row.catalogueItem.notes ?? '',
         size: 250,
+        enableGrouping: false,
         Cell: ({ row }) =>
           row.original.catalogueItem.notes && (
             <Tooltip
@@ -586,6 +607,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
     enableColumnVirtualization: dense ? false : true,
+    enableGrouping: !dense,
     enablePagination: true,
     // Other settings
     columnVirtualizerOptions: dense
@@ -598,6 +620,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     paginationDisplayMode: 'pages',
     autoResetPageIndex: false,
     positionToolbarAlertBanner: 'bottom',
+    displayColumnDefOptions: dense
+      ? undefined
+      : {
+          'mrt-row-expand': {
+            enableResizing: true,
+            size: 100,
+          },
+        },
     // Localisation
     localization: {
       ...MRT_Localization_EN,

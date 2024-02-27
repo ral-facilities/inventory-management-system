@@ -54,10 +54,11 @@ describe('Systems', () => {
 
   it("should be able to navigate to an item's landing page", () => {
     cy.findByRole('cell', { name: 'Pulse Laser' }).click();
-    cy.findByRole('link', { name: 'AS9r1EQq' }).click();
+    cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
+    cy.findByRole('link', { name: 'z1hJvV8Z' }).click();
 
     // Check now on landing page for the item
-    cy.url().should('include', '/catalogue/item/27/items/AS9r1EQq');
+    cy.url().should('include', '/catalogue/item/28/items/z1hJvV8Z');
     cy.findByText('Properties').should('be.visible');
   });
 
@@ -593,6 +594,7 @@ describe('Systems', () => {
 
   it('moves items', () => {
     cy.findByRole('cell', { name: 'Pulse Laser' }).click();
+    cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
 
     // Second table, first checkbox
     cy.findAllByRole('table')
@@ -601,12 +603,12 @@ describe('Systems', () => {
         cy.findAllByRole('checkbox', {
           name: 'Toggle select row',
         })
-          .eq(0)
+          .eq(1)
           .click();
         cy.findAllByRole('checkbox', {
           name: 'Toggle select row',
         })
-          .eq(1)
+          .eq(2)
           .click();
       });
 
@@ -629,11 +631,11 @@ describe('Systems', () => {
       url: '/v1/items/:id',
     }).should(async (patchRequests) => {
       expect(patchRequests.length).eq(2);
-      expect(patchRequests[0].url.toString()).to.contain('/AS9r1EQq');
+      expect(patchRequests[0].url.toString()).to.contain('/z1hJvV8Z');
       expect(JSON.stringify(await patchRequests[0].json())).equal(
         JSON.stringify({ system_id: '65328f34a40ff5301575a4e3' })
       );
-      expect(patchRequests[1].url.toString()).to.contain('/hoicQciP');
+      expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
       expect(JSON.stringify(await patchRequests[1].json())).equal(
         JSON.stringify({ system_id: '65328f34a40ff5301575a4e3' })
       );

@@ -66,6 +66,16 @@ Cypress.Commands.add('startSnoopingBrowserMockedRequest', () => {
   });
 });
 
+Cypress.Commands.add('dropIMSDB', () => {
+  cy.exec(
+    `docker exec -i $(docker ps | grep mongo | awk '{ print $1 }') mongosh ims --username "root" --password "example" --authenticationDatabase=admin --eval "db.catalogue_categories.drop()"`
+  );
+  cy.exec(
+    `docker exec -i $(docker ps | grep mongo | awk '{ print $1 }') mongosh ims --username "root" --password "example" --authenticationDatabase=admin --eval "db.manufacturers.drop()"`
+  );
+  //Todo remove other collections
+});
+
 /**
  * URL is a pattern matching URL that uses the same behavior as handlers URL matching
  * e.g. '* /events/groups/:groupId' without the space
@@ -140,6 +150,13 @@ declare global {
         method,
         url,
       }: any): Chainable<MockedRequest[]>;
+
+      dropIMSDB(): Chainable<unknown>;
+      /**
+       * Deletes the IMS database
+       *
+       * @example cy.dropIMSDB();
+       */
     }
   }
 }

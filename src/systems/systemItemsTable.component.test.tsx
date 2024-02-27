@@ -48,7 +48,7 @@ describe('SystemItemsTable', () => {
       () => {
         expect(
           screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42`,
+            name: `Turbomolecular Pumps 42 (1)`,
           })
         ).toBeInTheDocument();
       },
@@ -59,6 +59,10 @@ describe('SystemItemsTable', () => {
     await waitFor(() =>
       expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
     );
+
+    // Expand a group so all columns are rendered to improve test coverage
+    // (expanding all causes an infinite loop due to an issue with details panels)
+    await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
 
     // Rest in a snapshot
     expect(view.asFragment()).toMatchSnapshot();
@@ -80,7 +84,7 @@ describe('SystemItemsTable', () => {
       () => {
         expect(
           screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42`,
+            name: `Turbomolecular Pumps 42 (1)`,
           })
         ).toBeInTheDocument();
       },
@@ -98,7 +102,7 @@ describe('SystemItemsTable', () => {
       () => {
         expect(
           screen.queryByRole('cell', {
-            name: `Turbomolecular Pumps 42`,
+            name: `Turbomolecular Pumps 42 (1)`,
           })
         ).not.toBeInTheDocument();
       },
@@ -111,7 +115,7 @@ describe('SystemItemsTable', () => {
       () => {
         expect(
           screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42`,
+            name: `Turbomolecular Pumps 42 (1)`,
           })
         ).toBeInTheDocument();
       },
@@ -127,7 +131,7 @@ describe('SystemItemsTable', () => {
       () => {
         expect(
           screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42`,
+            name: `Turbomolecular Pumps 42 (1)`,
           })
         ).toBeInTheDocument();
       },
@@ -163,7 +167,7 @@ describe('SystemItemsTable', () => {
       () => {
         expect(
           screen.getByRole('cell', {
-            name: `Turbomolecular Pumps 42`,
+            name: `Turbomolecular Pumps 42 (1)`,
           })
         ).toBeInTheDocument();
       },
