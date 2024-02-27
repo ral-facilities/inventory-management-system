@@ -4,7 +4,7 @@ import { addManufacturer } from '../manufacturer/functions';
 import { addSystems } from '../systems/functions';
 import { addItem, deleteItem, editItem, saveAsItem } from './functions';
 
-describe('catalogue items', () => {
+describe('items', () => {
   beforeEach(() => {
     cy.dropIMSDB();
     // Prepare relevant data for items
