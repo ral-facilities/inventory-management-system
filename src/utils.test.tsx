@@ -37,6 +37,10 @@ describe('Utility functions', () => {
         test_object: { test_string: 'test_string   ', test_string2: 'test2' },
         test_bool: true,
         test_list: ['test_string   ', 'test_string2'],
+        test_nested_object: {
+          test_string: 'test_string   ',
+          test_object: { test_string: 'test_string   ', test_string2: 'test2' },
+        },
       };
 
       const result = trimStringValues(object);
@@ -47,6 +51,10 @@ describe('Utility functions', () => {
         test_object: { test_string: 'test_string', test_string2: 'test2' },
         test_bool: true,
         test_list: ['test_string', 'test_string2'],
+        test_nested_object: {
+          test_string: 'test_string',
+          test_object: { test_string: 'test_string', test_string2: 'test2' },
+        },
       });
     });
   });

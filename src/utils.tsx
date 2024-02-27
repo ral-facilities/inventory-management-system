@@ -59,7 +59,6 @@ export const trimStringValues = (object: any): any => {
   for (const prop in object) {
     if (object.hasOwnProperty(prop)) {
       if (Array.isArray(object[prop])) {
-        //console.log('object[prop]' + object[prop]);
         object[prop] = object[prop].map((element: any) =>
           trimStringValues(element)
         );
