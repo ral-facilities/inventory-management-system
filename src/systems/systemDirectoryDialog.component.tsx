@@ -173,6 +173,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
         <SystemsTableView
           systemsData={systemsData}
           systemsDataLoading={systemsDataLoading}
+          systemParentId={parentSystemId ?? undefined}
           onChangeParentId={setParentSystemId}
           selectedSystems={selectedSystems}
           type={type}
