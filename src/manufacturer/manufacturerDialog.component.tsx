@@ -91,8 +91,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     undefined
   );
 
-  const { mutateAsync: addManufacturer } = useAddManufacturer();
-  const { mutateAsync: editManufacturer } = useEditManufacturer();
+  const { mutateAsync: addManufacturer, isPending: isAddPending } =
+    useAddManufacturer();
+  const { mutateAsync: editManufacturer, isPending: isEditPending } =
+    useEditManufacturer();
   const { data: selectedManufacturerData } = useManufacturer(
     selectedManufacturer?.id
   );
@@ -542,6 +544,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               type === 'create' ? handleAddManufacturer : handleEditManufacturer
             }
             disabled={
+              isAddPending ||
+              isEditPending ||
               formError !== undefined ||
               nameError !== undefined ||
               urlError !== undefined ||

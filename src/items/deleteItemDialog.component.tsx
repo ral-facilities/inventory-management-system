@@ -34,7 +34,8 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
   );
 
   const { data: systemData } = useSystem(item?.system_id);
-  const { mutateAsync: deleteItem } = useDeleteItem();
+  const { mutateAsync: deleteItem, isPending: isDeletePending } =
+    useDeleteItem();
 
   const handleClose = React.useCallback(() => {
     onClose();
@@ -87,7 +88,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleDeleteItem} disabled={error}>
+        <Button onClick={handleDeleteItem} disabled={isDeletePending || error}>
           Continue
         </Button>
       </DialogActions>

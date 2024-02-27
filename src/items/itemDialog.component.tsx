@@ -143,8 +143,8 @@ function ItemDialog(props: ItemDialogProps) {
     string | undefined
   >(undefined);
 
-  const { mutateAsync: addItem } = useAddItem();
-  const { mutateAsync: editItem } = useEditItem();
+  const { mutateAsync: addItem, isPending: isAddPending } = useAddItem();
+  const { mutateAsync: editItem, isPending: isEditPending } = useEditItem();
 
   React.useEffect(() => {
     if (type === 'create' && open) {
@@ -919,6 +919,8 @@ function ItemDialog(props: ItemDialogProps) {
         {activeStep === STEPS.length - 1 ? (
           <Button
             disabled={
+              isAddPending ||
+              isEditPending ||
               !itemDetails.system_id ||
               formErrorMessage !== undefined ||
               propertyErrors.some((value) => value === true) ||

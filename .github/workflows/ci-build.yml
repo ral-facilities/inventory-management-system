@@ -8,8 +8,8 @@ on:
       - develop
 
 jobs:
-  test:
-    name: Tests
+  lint-and-unit-test:
+    name: Lint & Unit Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -35,9 +35,28 @@ jobs:
 
       - name: Upload coverage reports to Codecov
         if: success()
-        uses: codecov/codecov-action@e0b68c6749509c5f83f984dd99a76a1c1a231044 # v4
+        uses: codecov/codecov-action@0cfda1dd0a4ad9efc75517f399d859cd1ea4ced1 # v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
+  e2e-tests:
+    name: End-to-End (with mock data) Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install libgconf-2-4
+          yarn --immutable
 
       - name: Run e2e tests
         run: yarn e2e
@@ -46,37 +65,99 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4
         with:
-          name: OperationsGateway Screenshots
+          name: Inventory management system Screenshots
+          path: cypress/screenshots
+
+  e2e-tests-api:
+    name: End-to-End (with api) Tests
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:7.0-jammy
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
+
+      ims-api:
+        image: harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
+        ports:
+          - 8000:8000
+        env:
+          AUTHENTICATION__ENABLED: false
+          API__TITLE: Inventory Management System API
+          API__DESCRIPTION: This is the API for the Inventory Management System
+          API__ROOT_PATH: /inventory-management-system-api
+          DATABASE__PROTOCOL: mongodb
+          DATABASE__USERNAME: root
+          DATABASE__PASSWORD: example
+          DATABASE__HOSTNAME: mongodb
+          DATABASE__PORT: 27017
+          DATABASE__NAME: ims
+
+          options: --name inventory-management-system-api
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get install libgconf-2-4
+          yarn --immutable
+
+      - name: Download unit data
+        run: wget https://raw.githubusercontent.com/ral-facilities/inventory-management-system-api/develop/data/units.json
+
+      - name: Import unit data to ims api
+        run: docker exec -i $(docker ps | grep mongo | awk '{ print $1 }') mongoimport --username 'root' --password 'example' --authenticationDatabase=admin --db ims --collection units --type=json --jsonArray --drop < units.json
+
+      - name: Run e2e tests
+        run: yarn e2e:api
+
+      - name: Upload Cypress screenshots
+        if: failure()
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4
+        with:
+          name: Inventory management system (with api) Screenshots
           path: cypress/screenshots
 
   docker:
     # This job triggers only if all the other jobs succeed. It builds the Docker image and if successful,
     # it pushes it to Harbor.
-    needs: [test]
+    needs: [lint-and-unit-test, e2e-tests, e2e-tests-api]
     name: Docker
     runs-on: ubuntu-latest
     steps:
-    - name: Check out repo
-      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - name: Check out repo
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
-    - name: Login to Harbor
-      uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
-      with:
-        registry: harbor.stfc.ac.uk/inventory-management-system
-        username: ${{ secrets.HARBOR_USERNAME }}
-        password: ${{ secrets.HARBOR_TOKEN }}
+      - name: Login to Harbor
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
+        with:
+          registry: harbor.stfc.ac.uk/inventory-management-system
+          username: ${{ secrets.HARBOR_USERNAME }}
+          password: ${{ secrets.HARBOR_TOKEN }}
 
-    - name: Extract metadata (tags, labels) for Docker
-      id: meta
-      uses: docker/metadata-action@dbef88086f6cef02e264edb7dbf63250c17cef6c # v5.5.0
-      with:
-        images: harbor.stfc.ac.uk/inventory-management-system/ims
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@dbef88086f6cef02e264edb7dbf63250c17cef6c # v5.5.0
+        with:
+          images: harbor.stfc.ac.uk/inventory-management-system/ims
 
-    - name: Build and push Docker image to Harbor
-      uses: docker/build-push-action@4a13e500e55cf31b7a5d59a38ab2040ab0f42f56 # v5.1.0
-      with:
-        context: .
-        file: ./Dockerfile.prod
-        push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+      - name: Build and push Docker image to Harbor
+        uses: docker/build-push-action@4a13e500e55cf31b7a5d59a38ab2040ab0f42f56 # v5.1.0
+        with:
+          context: .
+          file: ./Dockerfile.prod
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}

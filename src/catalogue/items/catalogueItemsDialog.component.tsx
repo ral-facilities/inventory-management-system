@@ -201,8 +201,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     setPropertyErrors(updatedPropertyErrors);
   };
 
-  const { mutateAsync: addCatalogueItem } = useAddCatalogueItem();
-  const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
+  const { mutateAsync: addCatalogueItem, isPending: isAddPending } =
+    useAddCatalogueItem();
+  const { mutateAsync: editCatalogueItem, isPending: isEditPending } =
+    useEditCatalogueItem();
 
   const { data: manufacturerList } = useManufacturers();
   const selectedCatalogueItemManufacturer =
@@ -1081,6 +1083,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         {activeStep === STEPS.length - 1 ? (
           <Button
             disabled={
+              isEditPending ||
+              isAddPending ||
               JSON.stringify(errorMessages) !== '{}' ||
               formError ||
               propertyErrors.some((value) => {

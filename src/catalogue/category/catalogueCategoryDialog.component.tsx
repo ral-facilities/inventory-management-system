@@ -95,8 +95,10 @@ const CatalogueCategoryDialog = React.memo(
     const [allowedValuesListErrors, setAllowedValuesListErrors] =
       React.useState<AllowedValuesListErrorsType[]>([]);
 
-    const { mutateAsync: addCatalogueCategory } = useAddCatalogueCategory();
-    const { mutateAsync: editCatalogueCategory } = useEditCatalogueCategory();
+    const { mutateAsync: addCatalogueCategory, isPending: isAddPending } =
+      useAddCatalogueCategory();
+    const { mutateAsync: editCatalogueCategory, isPending: isEditPending } =
+      useEditCatalogueCategory();
 
     const [catalogueItemPropertiesErrors, setCatalogueItemPropertiesErrors] =
       React.useState<CatalogueItemPropertiesErrorsType[]>([]);
@@ -607,6 +609,8 @@ const CatalogueCategoryDialog = React.memo(
                   : handleAddCatalogueCategory
               }
               disabled={
+                isEditPending ||
+                isAddPending ||
                 formError !== undefined ||
                 nameError !== undefined ||
                 catalogueItemPropertiesErrors.length !== 0 ||

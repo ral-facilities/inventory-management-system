@@ -55,8 +55,10 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   const { data: targetSystem, isLoading: targetSystemLoading } =
     useSystem(parentSystemId);
 
-  const { mutateAsync: moveToSystem } = useMoveToSystem();
-  const { mutateAsync: copyToSystem } = useCopyToSystem();
+  const { mutateAsync: moveToSystem, isPending: isMovePending } =
+    useMoveToSystem();
+  const { mutateAsync: copyToSystem, isPending: isCopyPending } =
+    useCopyToSystem();
 
   const handleClose = React.useCallback(() => {
     onClose();
@@ -180,8 +182,10 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           disabled={
+            isCopyPending ||
+            isMovePending ||
             // Disable when not moving anywhere different
-            props.parentSystemId === parentSystemId && type === 'moveTo'
+            (props.parentSystemId === parentSystemId && type === 'moveTo')
           }
           onClick={type === 'moveTo' ? handleMoveTo : handleCopyTo}
         >
