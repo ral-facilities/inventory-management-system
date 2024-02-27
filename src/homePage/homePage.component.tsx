@@ -11,6 +11,7 @@ import Decal2Image from '../images/decal2.svg';
 import Decal2DarkImage from '../images/decal2-dark.svg';
 import Decal2DarkHCImage from '../images/decal2-darkhc.svg';
 import FacilityImage from '../images/facility.jpg';
+import { settings } from '../settings';
 
 export interface BaseHomePageProps {
   logo: string;
@@ -308,25 +309,27 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
   );
 };
 
-export interface HomePageProps {
-  pluginHost: String;
-}
+export const HomePage = React.memo((): React.ReactElement => {
+  // TODO: Replace this with redux if it ends up being used elsewhere
+  const [pluginHost, setPluginHost] = React.useState<string>('');
+  React.useEffect(() => {
+    const loadPluginHost = async () =>
+      setPluginHost((await settings)?.pluginHost || '');
+    loadPluginHost();
+  }, []);
 
-export const HomePage = React.memo(
-  (props: HomePageProps): React.ReactElement => {
-    const HomePage = BaseHomePage;
-    return (
-      <HomePage
-        logo={props.pluginHost + DGLogo}
-        backgroundImage={props.pluginHost + BackgroundImage}
-        greenSwirl1Image={props.pluginHost + GreenSwirl1Image}
-        greenSwirl2Image={props.pluginHost + GreenSwirl2Image}
-        decal1Image={props.pluginHost + Decal1Image}
-        decal2Image={props.pluginHost + Decal2Image}
-        decal2DarkImage={props.pluginHost + Decal2DarkImage}
-        decal2DarkHCImage={props.pluginHost + Decal2DarkHCImage}
-        facilityImage={props.pluginHost + FacilityImage}
-      />
-    );
-  }
-);
+  const HomePage = BaseHomePage;
+  return (
+    <HomePage
+      logo={pluginHost + DGLogo}
+      backgroundImage={pluginHost + BackgroundImage}
+      greenSwirl1Image={pluginHost + GreenSwirl1Image}
+      greenSwirl2Image={pluginHost + GreenSwirl2Image}
+      decal1Image={pluginHost + Decal1Image}
+      decal2Image={pluginHost + Decal2Image}
+      decal2DarkImage={pluginHost + Decal2DarkImage}
+      decal2DarkHCImage={pluginHost + Decal2DarkHCImage}
+      facilityImage={pluginHost + FacilityImage}
+    />
+  );
+});
