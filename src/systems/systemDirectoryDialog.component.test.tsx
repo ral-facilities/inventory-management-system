@@ -112,6 +112,18 @@ describe('SystemDirectoryDialog', () => {
     expect(screen.getByText('Smaller laser')).toBeInTheDocument();
   });
 
+  it('renders add dialog when button is clicked', async () => {
+    props.parentSystemId = '65328f34a40ff5301575a4e4';
+    createView();
+
+    const addButton = screen.getByRole('button', {
+      name: 'Add System',
+    });
+    await user.click(addButton);
+    //Used 'Name*' as 'Add System is the same as button name
+    expect(screen.getByText('Name *')).toBeInTheDocument();
+  });
+
   describe('Move to', () => {
     it('renders dialog correctly with multiple selected systems', () => {
       createView();

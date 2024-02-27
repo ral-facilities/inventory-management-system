@@ -34,9 +34,6 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     [selectedSystems]
   );
 
-  const [addSystemDialogOpen, setAddSystemDialogOpen] =
-    React.useState<boolean>(false);
-
   const noResultsText = 'No systems found';
   const columns = React.useMemo<MRT_ColumnDef<System>[]>(
     () => [
@@ -121,8 +118,8 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       return (
         <>
           <SystemDialog
-            open={addSystemDialogOpen}
-            onClose={() => setAddSystemDialogOpen(false)}
+            open={true}
+            onClose={() => table.setCreatingRow(null)}
             parentId={systemParentId}
             type="add"
           />
@@ -136,7 +133,6 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
           sx={{ mx: 0.5 }}
           variant="outlined"
           onClick={() => {
-            setAddSystemDialogOpen(true);
             table.setCreatingRow(true);
           }}
         >
