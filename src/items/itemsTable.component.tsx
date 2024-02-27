@@ -80,6 +80,7 @@ export function ItemsTable(props: ItemTableProps) {
         header: 'ID',
         size: 250,
         accessorFn: (row) => row.id,
+        enableGrouping: false,
         Cell: ({ row }) => (
           <MuiLink underline="hover" component={Link} to={row.original.id}>
             {row.original.id}
@@ -106,7 +107,10 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) => row.warranty_end_date,
         size: 250,
         Cell: ({ row }) => (
-          <Typography>
+          <Typography
+            // For ensuring space when grouping
+            sx={{ marginRight: 0.5 }}
+          >
             {row.original.warranty_end_date &&
               new Date(row.original.warranty_end_date).toLocaleDateString()}
           </Typography>
@@ -117,7 +121,10 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) => row.delivered_date,
         size: 250,
         Cell: ({ row }) => (
-          <Typography>
+          <Typography
+            // For ensuring space when grouping
+            sx={{ marginRight: 0.5 }}
+          >
             {row.original.delivered_date &&
               new Date(row.original.delivered_date).toLocaleDateString()}
           </Typography>
@@ -147,6 +154,7 @@ export function ItemsTable(props: ItemTableProps) {
         header: 'Notes',
         accessorFn: (row) => row.notes ?? '',
         size: 250,
+        enableGrouping: false,
         Cell: ({ row }) =>
           row.original.notes && (
             <Tooltip
@@ -169,6 +177,8 @@ export function ItemsTable(props: ItemTableProps) {
             underline="hover"
             component={Link}
             to={'/systems/' + row.original.system_id}
+            // For ensuring space when grouping
+            sx={{ marginRight: 0.5 }}
           >
             {row.original.system_id}
           </MuiLink>
@@ -256,6 +266,7 @@ export function ItemsTable(props: ItemTableProps) {
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
     enableColumnVirtualization: dense ? false : true,
+    enableGrouping: !dense,
     enablePagination: true,
     // Other settings
     columnVirtualizerOptions: dense
@@ -268,6 +279,14 @@ export function ItemsTable(props: ItemTableProps) {
     paginationDisplayMode: 'pages',
     positionToolbarAlertBanner: 'bottom',
     autoResetPageIndex: false,
+    displayColumnDefOptions: dense
+      ? undefined
+      : {
+          'mrt-row-expand': {
+            enableResizing: true,
+            size: 100,
+          },
+        },
     // Localisation
     localization: {
       ...MRT_Localization_EN,

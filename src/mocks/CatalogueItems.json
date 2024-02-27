@@ -1272,7 +1272,7 @@
     "days_to_replace": 7,
     "days_to_rework": null,
     "drawing_number": null,
-    "drawing_link": null,
+    "drawing_link": "http://example-drawing-link.com",
     "item_model_number": null,
     "is_obsolete": true,
     "obsolete_replacement_catalogue_item_id": "6",

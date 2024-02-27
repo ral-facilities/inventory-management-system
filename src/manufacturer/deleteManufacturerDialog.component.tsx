@@ -28,7 +28,8 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
     undefined
   );
 
-  const { mutateAsync: deleteManufacturer } = useDeleteManufacturer();
+  const { mutateAsync: deleteManufacturer, isPending: isDeletePending } =
+    useDeleteManufacturer();
 
   const handleClose = React.useCallback(() => {
     onClose();
@@ -74,7 +75,10 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleDeleteManufacturer} disabled={error}>
+        <Button
+          onClick={handleDeleteManufacturer}
+          disabled={isDeletePending || error}
+        >
           Continue
         </Button>
       </DialogActions>

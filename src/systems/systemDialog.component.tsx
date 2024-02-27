@@ -29,6 +29,7 @@ import {
   SystemImportanceType,
 } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { trimStringValues } from '../utils';
 
 export type SystemDialogType = 'add' | 'edit' | 'save as';
 
@@ -91,8 +92,8 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     onClose();
   }, [onClose, selectedSystem, type]);
 
-  const { mutateAsync: addSystem } = useAddSystem();
-  const { mutateAsync: editSystem } = useEditSystem();
+  const { mutateAsync: addSystem, isPending: isAddPending } = useAddSystem();
+  const { mutateAsync: editSystem, isPending: isEditPending } = useEditSystem();
 
   // Returns true when all fields valid
   const validateFields = React.useCallback((): boolean => {
@@ -116,7 +117,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         importance: systemData.importance,
       };
       if (parentId !== undefined) system.parent_id = parentId;
-      addSystem(system)
+      addSystem(trimStringValues(system))
         .then((response) => handleClose())
         .catch((error: AxiosError) => {
           const response = error.response?.data as ErrorParsing;
@@ -170,7 +171,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         isImportanceUpdated &&
           (editSystemData.importance = systemData.importance);
 
-        editSystem(editSystemData)
+        editSystem(trimStringValues(editSystemData))
           .then((response) => {
             setSystemData(response);
             handleClose();
@@ -315,7 +316,12 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
             onClick={type === 'edit' ? handleEditSystem : handleAddSaveSystem}
-            disabled={formError !== undefined || nameError !== undefined}
+            disabled={
+              isAddPending ||
+              isEditPending ||
+              formError !== undefined ||
+              nameError !== undefined
+            }
           >
             Save
           </Button>

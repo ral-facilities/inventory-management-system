@@ -43,6 +43,7 @@ import { Autocomplete } from '@mui/material';
 import { useManufacturers } from '../../api/manufacturer';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { trimStringValues } from '../../utils';
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
@@ -200,8 +201,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     setPropertyErrors(updatedPropertyErrors);
   };
 
-  const { mutateAsync: addCatalogueItem } = useAddCatalogueItem();
-  const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
+  const { mutateAsync: addCatalogueItem, isPending: isAddPending } =
+    useAddCatalogueItem();
+  const { mutateAsync: editCatalogueItem, isPending: isEditPending } =
+    useEditCatalogueItem();
 
   const { data: manufacturerList } = useManufacturers();
   const selectedCatalogueItemManufacturer =
@@ -427,7 +430,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       name: details.name,
     };
 
-    addCatalogueItem(catalogueItem)
+    addCatalogueItem(trimStringValues(catalogueItem))
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
         handleIMS_APIError(error);
@@ -525,7 +528,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           isManufacturerUpdated ||
           isNotesUpdated)
       ) {
-        editCatalogueItem(catalogueItem)
+        editCatalogueItem(trimStringValues(catalogueItem))
           .then((response) => handleClose())
           .catch((error: AxiosError) => {
             const response = error.response?.data as ErrorParsing;
@@ -547,9 +550,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   }, [
     selectedCatalogueItem,
     handlePropertiesFormErrorStates,
+    handleDetailsFormErrorStates,
     details,
     editCatalogueItem,
-    handleDetailsFormErrorStates,
     handleClose,
   ]);
 
@@ -1080,6 +1083,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         {activeStep === STEPS.length - 1 ? (
           <Button
             disabled={
+              isEditPending ||
+              isAddPending ||
               JSON.stringify(errorMessages) !== '{}' ||
               formError ||
               propertyErrors.some((value) => {

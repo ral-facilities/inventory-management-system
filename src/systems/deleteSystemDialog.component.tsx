@@ -27,7 +27,8 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
     undefined
   );
 
-  const { mutateAsync: deleteSystem } = useDeleteSystem();
+  const { mutateAsync: deleteSystem, isPending: isDeletePending } =
+    useDeleteSystem();
 
   const handleClose = () => {
     onClose();
@@ -67,7 +68,7 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           onClick={handleDeleteSystem}
-          disabled={errorMessage !== undefined}
+          disabled={isDeletePending || errorMessage !== undefined}
         >
           Continue
         </Button>

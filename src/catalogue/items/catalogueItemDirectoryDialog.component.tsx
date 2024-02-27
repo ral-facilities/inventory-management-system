@@ -76,8 +76,10 @@ const CatalogueItemDirectoryDialog = (
     setErrorMessage('');
   }, [parentCategoryId]);
 
-  const { mutateAsync: moveToCatalogueItem } = useMoveToCatalogueItem();
-  const { mutateAsync: copyToCatalogueItem } = useCopyToCatalogueItem();
+  const { mutateAsync: moveToCatalogueItem, isPending: isMoveToPending } =
+    useMoveToCatalogueItem();
+  const { mutateAsync: copyToCatalogueItem, isPending: isCopyToPending } =
+    useCopyToCatalogueItem();
 
   const { data: targetCatalogueCategory } =
     useCatalogueCategory(parentCategoryId);
@@ -208,7 +210,7 @@ const CatalogueItemDirectoryDialog = (
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           disabled={
-            requestType === 'moveTo'
+            isCopyToPending || isMoveToPending || requestType === 'moveTo'
               ? !(
                   (targetCatalogueCategory?.is_leaf ?? false) &&
                   parentCategoryId !== parentInfo.id

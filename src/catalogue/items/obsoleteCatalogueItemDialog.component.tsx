@@ -36,6 +36,7 @@ import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';
 import CatalogueItemsTable from './catalogueItemsTable.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { trimStringValues } from '../../utils';
 
 export interface ObsoleteCatalogueItemDialogProps {
   open: boolean;
@@ -118,7 +119,8 @@ const ObsoleteCatalogueItemDialog = (
 
   const { data: catalogueBreadcrumbs } =
     useCatalogueBreadcrumbs(catalogueCurrDirId);
-  const { mutateAsync: editCatalogueItem } = useEditCatalogueItem();
+  const { mutateAsync: editCatalogueItem, isPending: isEditPending } =
+    useEditCatalogueItem();
 
   // Removes parameters when is_obsolete changed to false
   const handleObsoleteChange = (isObsolete: boolean) => {
@@ -185,7 +187,7 @@ const ObsoleteCatalogueItemDialog = (
           isObsoleteReasonUpdated ||
           isReplacementIdUpdated)
       ) {
-        editCatalogueItem(editObsoleteCatalogueItem)
+        editCatalogueItem(trimStringValues(editObsoleteCatalogueItem))
           .then(() => {
             handleClose();
           })
@@ -319,7 +321,10 @@ const ObsoleteCatalogueItemDialog = (
           Back
         </Button>
         {activeStep === steps.length - 1 ? (
-          <Button onClick={handleFinish} disabled={formError !== undefined}>
+          <Button
+            onClick={handleFinish}
+            disabled={isEditPending || formError !== undefined}
+          >
             Finish
           </Button>
         ) : (

@@ -3464,7 +3464,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 data-index="3"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
                 >
                   3/17/2023
                 </p>
@@ -3550,7 +3550,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 data-index="3"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
                 >
                   5/11/2023
                 </p>
@@ -3636,7 +3636,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 data-index="3"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
                 >
                   6/16/2023
                 </p>
@@ -3722,7 +3722,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 data-index="3"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
                 >
                   12/5/2023
                 </p>

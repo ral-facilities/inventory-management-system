@@ -27,6 +27,7 @@ import {
 } from '../api/manufacturer';
 import { AxiosError } from 'axios';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { trimStringValues } from '../utils';
 
 export interface ManufacturerDialogProps {
   open: boolean;
@@ -90,8 +91,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     undefined
   );
 
-  const { mutateAsync: addManufacturer } = useAddManufacturer();
-  const { mutateAsync: editManufacturer } = useEditManufacturer();
+  const { mutateAsync: addManufacturer, isPending: isAddPending } =
+    useAddManufacturer();
+  const { mutateAsync: editManufacturer, isPending: isEditPending } =
+    useEditManufacturer();
   const { data: selectedManufacturerData } = useManufacturer(
     selectedManufacturer?.id
   );
@@ -192,7 +195,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       telephone: manufacturerDetails.telephone ?? null,
     };
 
-    addManufacturer(manufacturerToAdd)
+    addManufacturer(trimStringValues(manufacturerToAdd))
       .then((response) => handleClose())
       .catch((error: AxiosError) => {
         if (error.response?.status === 409) {
@@ -241,16 +244,16 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       const isTelephoneUpdated =
         manufacturerDetails.telephone !== selectedManufacturerData.telephone;
 
-      let ManufacturerToEdit: EditManufacturer = {
+      let manufacturerToEdit: EditManufacturer = {
         id: selectedManufacturerData.id,
       };
 
-      isNameUpdated && (ManufacturerToEdit.name = manufacturerDetails.name);
-      isURLUpdated && (ManufacturerToEdit.url = manufacturerDetails.url);
+      isNameUpdated && (manufacturerToEdit.name = manufacturerDetails.name);
+      isURLUpdated && (manufacturerToEdit.url = manufacturerDetails.url);
 
       if (isAddressLineUpdated) {
-        ManufacturerToEdit = {
-          ...ManufacturerToEdit,
+        manufacturerToEdit = {
+          ...manufacturerToEdit,
           address: {
             ...manufacturerDetails.address,
             address_line: manufacturerDetails.address?.address_line,
@@ -258,8 +261,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         };
       }
       if (isTownUpdated) {
-        ManufacturerToEdit = {
-          ...ManufacturerToEdit,
+        manufacturerToEdit = {
+          ...manufacturerToEdit,
           address: {
             ...manufacturerDetails.address,
             town: manufacturerDetails.address?.town,
@@ -267,8 +270,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         };
       }
       if (isCountyUpdated) {
-        ManufacturerToEdit = {
-          ...ManufacturerToEdit,
+        manufacturerToEdit = {
+          ...manufacturerToEdit,
           address: {
             ...manufacturerDetails.address,
             county: manufacturerDetails.address?.county,
@@ -276,8 +279,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         };
       }
       if (isPostcodeUpdated) {
-        ManufacturerToEdit = {
-          ...ManufacturerToEdit,
+        manufacturerToEdit = {
+          ...manufacturerToEdit,
           address: {
             ...manufacturerDetails.address,
             postcode: manufacturerDetails.address?.postcode,
@@ -285,8 +288,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         };
       }
       if (isCountryUpdated) {
-        ManufacturerToEdit = {
-          ...ManufacturerToEdit,
+        manufacturerToEdit = {
+          ...manufacturerToEdit,
           address: {
             ...manufacturerDetails.address,
             country: manufacturerDetails.address?.country,
@@ -295,7 +298,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       }
 
       isTelephoneUpdated &&
-        (ManufacturerToEdit.telephone = manufacturerDetails.telephone);
+        (manufacturerToEdit.telephone = manufacturerDetails.telephone);
 
       if (
         isNameUpdated ||
@@ -307,7 +310,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         isCountryUpdated ||
         isTelephoneUpdated
       ) {
-        editManufacturer(ManufacturerToEdit)
+        editManufacturer(trimStringValues(manufacturerToEdit))
           .then((response) => handleClose())
           .catch((error: AxiosError) => {
             const response = error.response?.data as ErrorParsing;
@@ -541,6 +544,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               type === 'create' ? handleAddManufacturer : handleEditManufacturer
             }
             disabled={
+              isAddPending ||
+              isEditPending ||
               formError !== undefined ||
               nameError !== undefined ||
               urlError !== undefined ||

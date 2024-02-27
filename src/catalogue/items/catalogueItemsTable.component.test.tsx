@@ -410,6 +410,17 @@ describe('Catalogue Items Table', () => {
     expect(url[0]).toHaveAttribute('href', '/item/89/items');
   });
 
+  it('navigates to drawing link', async () => {
+    createView();
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    await ensureColumnsVisible(['Drawing Link']);
+
+    const url = screen.queryAllByText('http://example-drawing-link.com');
+    expect(url[0]).toHaveAttribute('href', 'http://example-drawing-link.com');
+  });
+
   it('opens obsolete dialog and can close it again', async () => {
     createView();
 
