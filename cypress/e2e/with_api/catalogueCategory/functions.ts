@@ -120,7 +120,7 @@ const deleteCatalogueCategory = (name: string) => {
   cy.intercept({
     method: 'DELETE',
     url: '**/catalogue-categories/*',
-  }).as('getCatalogueCategoryData');
+  }).as('deleteCatalogueCategoryData');
   cy.findByRole('button', {
     name: `actions ${name} catalogue category button`,
   }).click();
@@ -130,14 +130,10 @@ const deleteCatalogueCategory = (name: string) => {
   }).click();
 
   cy.findByRole('button', { name: 'Continue' }).click();
-  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
+  cy.wait('@deleteCatalogueCategoryData', { timeout: 10000 });
 };
 
 export const saveAsCatalogueCategory = (name: string) => {
-  cy.intercept({
-    method: 'POST',
-    url: '**/catalogue-categories',
-  }).as('getCatalogueCategoryData');
   cy.findByRole('button', {
     name: `actions ${name} catalogue category button`,
   }).click();
@@ -147,7 +143,6 @@ export const saveAsCatalogueCategory = (name: string) => {
   }).click();
 
   cy.findByRole('button', { name: 'Save' }).click();
-  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
   cy.findByText(`${name}_copy_1`).should('exist');
 };
 
@@ -155,6 +150,10 @@ const copyToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   cy.intercept({
     method: 'POST',
     url: '**/catalogue-categories',
+  }).as('postCatalogueCategoryData');
+  cy.intercept({
+    method: 'GET',
+    url: '**/catalogue-categories/*',
   }).as('getCatalogueCategoryData');
 
   for (let i = 0; i < values.checkedCategories.length; i++) {
@@ -163,8 +162,10 @@ const copyToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   cy.findByRole('button', { name: 'Copy to' }).click();
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByRole('button', { name: 'Copy here' }).click();
-  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
+  cy.findByRole('dialog').should('not.exist');
+  cy.wait('@postCatalogueCategoryData', { timeout: 10000 });
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
   for (let i = 0; i < values.checkedCategories.length; i++) {
     cy.findByText(`${values.checkedCategories[i]}`).should('exist');
     deleteCatalogueCategory(`${values.checkedCategories[i]}`);
@@ -175,6 +176,11 @@ const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   cy.intercept({
     method: 'PATCH',
     url: '**/catalogue-categories/*',
+  }).as('patchCatalogueCategoryData');
+
+  cy.intercept({
+    method: 'GET',
+    url: '**/catalogue-categories/*',
   }).as('getCatalogueCategoryData');
 
   for (let i = 0; i < values.checkedCategories.length; i++) {
@@ -183,8 +189,10 @@ const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   cy.findByRole('button', { name: 'Move to' }).click();
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByRole('button', { name: 'Move here' }).click();
-  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
+  cy.findByRole('dialog').should('not.exist');
+  cy.wait('@postCatalogueCategoryData', { timeout: 10000 });
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
   for (let i = 0; i < values.checkedCategories.length; i++) {
     cy.findByText(`${values.checkedCategories[i]}`).should('exist');
   }

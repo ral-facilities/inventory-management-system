@@ -226,6 +226,10 @@ export const copyToCatalogueItems = (values: { checkedItems: string[] }) => {
     method: 'POST',
     url: '**/catalogue-items/*',
   }).as('postCatalogueItems');
+  cy.intercept({
+    method: 'GET',
+    url: '**/catalogue-categories/*',
+  }).as('getCatalogueCategoryData');
 
   cy.wait('@postCatalogueItems', { timeout: 10000 });
   for (let i = 0; i < values.checkedItems.length; i++) {
@@ -238,9 +242,12 @@ export const copyToCatalogueItems = (values: { checkedItems: string[] }) => {
   cy.findByRole('link', { name: 'Lenses' }).click();
   cy.findByText('Spherical Lenses_copy_1').click();
   cy.findByRole('button', { name: 'Copy here' }).click();
+  cy.findByRole('dialog').should('not.exist');
   cy.wait('@postCatalogueItems', { timeout: 10000 });
   cy.findByRole('link', { name: 'Lenses' }).click();
+  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
   cy.findByText('Spherical Lenses_copy_1').click();
+  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
   for (let i = 0; i < values.checkedItems.length; i++) {
     cy.findByText(`${values.checkedItems[i]}`).should('exist');
     deleteCatalogueItem(`${values.checkedItems[i]}`);
@@ -254,6 +261,10 @@ export const moveToCatalogueItems = (values: { checkedItems: string[] }) => {
     method: 'PATCH',
     url: '**/catalogue-items/*',
   }).as('patchCatalogueItems');
+  cy.intercept({
+    method: 'GET',
+    url: '**/catalogue-categories/*',
+  }).as('getCatalogueCategoryData');
 
   for (let i = 0; i < values.checkedItems.length; i++) {
     cy.findByLabelText(`${values.checkedItems[i]} row`).within(() => {
@@ -265,9 +276,12 @@ export const moveToCatalogueItems = (values: { checkedItems: string[] }) => {
   cy.findByRole('link', { name: 'Lenses' }).click();
   cy.findByText('Spherical Lenses_copy_1').click();
   cy.findByRole('button', { name: 'Move here' }).click();
+  cy.findByRole('dialog').should('not.exist');
   cy.wait('@patchCatalogueItems', { timeout: 10000 });
   cy.findByRole('link', { name: 'Lenses' }).click();
+  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
   cy.findByText('Spherical Lenses_copy_1').click();
+  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
   for (let i = 0; i < values.checkedItems.length; i++) {
     cy.findByText(`${values.checkedItems[i]}`).should('exist');
     deleteCatalogueItem(`${values.checkedItems[i]}`);
