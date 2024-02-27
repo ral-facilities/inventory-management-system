@@ -581,7 +581,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableDensityToggle: false,
     enableRowSelection: true,
     enableHiding: dense ? false : true,
-    enableTopToolbar: dense ? false : true,
+    enableTopToolbar: true,
     enableMultiRowSelection: dense ? false : true,
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
