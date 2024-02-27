@@ -222,6 +222,12 @@ const deleteCatalogueItem = (name: string) => {
 };
 
 export const copyToCatalogueItems = (values: { checkedItems: string[] }) => {
+  cy.intercept({
+    method: 'POST',
+    url: '**/catalogue-items/*',
+  }).as('getCatalogueItems');
+
+  cy.wait('@postCatalogueItems', { timeout: 10000 });
   for (let i = 0; i < values.checkedItems.length; i++) {
     cy.findByLabelText(`${values.checkedItems[i]} row`).within(() => {
       cy.findAllByLabelText('Toggle select row').first().click();
@@ -232,7 +238,7 @@ export const copyToCatalogueItems = (values: { checkedItems: string[] }) => {
   cy.findByRole('link', { name: 'Lenses' }).click();
   cy.findByText('Spherical Lenses_copy_1').click();
   cy.findByRole('button', { name: 'Copy here' }).click();
-
+  cy.wait('@postCatalogueItems', { timeout: 10000 });
   cy.findByRole('link', { name: 'Lenses' }).click();
   cy.findByText('Spherical Lenses_copy_1').click();
   for (let i = 0; i < values.checkedItems.length; i++) {
@@ -244,6 +250,11 @@ export const copyToCatalogueItems = (values: { checkedItems: string[] }) => {
 };
 
 export const moveToCatalogueItems = (values: { checkedItems: string[] }) => {
+  cy.intercept({
+    method: 'PATCH',
+    url: '**/catalogue-categories/*',
+  }).as('patchCatalogueItems');
+
   for (let i = 0; i < values.checkedItems.length; i++) {
     cy.findByLabelText(`${values.checkedItems[i]} row`).within(() => {
       cy.findAllByLabelText('Toggle select row').first().click();
@@ -254,7 +265,7 @@ export const moveToCatalogueItems = (values: { checkedItems: string[] }) => {
   cy.findByRole('link', { name: 'Lenses' }).click();
   cy.findByText('Spherical Lenses_copy_1').click();
   cy.findByRole('button', { name: 'Move here' }).click();
-
+  cy.wait('@patchCatalogueItems', { timeout: 10000 });
   cy.findByRole('link', { name: 'Lenses' }).click();
   cy.findByText('Spherical Lenses_copy_1').click();
   for (let i = 0; i < values.checkedItems.length; i++) {
