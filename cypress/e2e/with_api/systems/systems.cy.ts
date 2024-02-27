@@ -33,7 +33,7 @@ describe('systems', () => {
   });
 
   it('CRUD for systems', () => {
-    // add systems in the before each as it is need for items
+    // add systems is in the before each as it is need for creating items
     editSystems();
     saveAsSystem('optics 2', 1);
     modifySystem({ name: 'Storage 2', importance: 'high' });
