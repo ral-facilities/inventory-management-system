@@ -32,9 +32,6 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     selectedCategories.map((category) => {
       return category.id;
     });
-
-  const [addCategoryDialogOpen, setAddCategoryDialogOpen] =
-    React.useState<boolean>(false);
   const [selectedCatalogueCategory, setSelectedCatalogueCategory] =
     React.useState<CatalogueCategory | undefined>(undefined);
 
@@ -137,8 +134,8 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       return (
         <>
           <CatalogueCategoryDialog
-            open={addCategoryDialogOpen}
-            onClose={() => setAddCategoryDialogOpen(false)}
+            open={true}
+            onClose={() => table.setCreatingRow(null)}
             parentId={catalogueCategoryParentId ?? null}
             type="add"
             resetSelectedCatalogueCategory={() =>
@@ -155,7 +152,6 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
           sx={{ mx: 0.5 }}
           variant="outlined"
           onClick={() => {
-            setAddCategoryDialogOpen(true);
             table.setCreatingRow(true);
           }}
         >

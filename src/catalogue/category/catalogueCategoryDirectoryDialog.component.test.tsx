@@ -198,6 +198,36 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       });
       expect(onClose).toHaveBeenCalled();
     });
+
+    it('renders add dialog when button is clicked', async () => {
+      props.selectedCategories = [
+        {
+          id: '1',
+          name: 'Beam Characterization',
+          parent_id: null,
+          code: 'beam-characterization',
+          is_leaf: false,
+        },
+        {
+          id: '2',
+          name: 'Motion',
+          parent_id: null,
+          code: 'motion',
+          is_leaf: false,
+        },
+      ];
+
+      props.parentCategoryId = null;
+
+      createView();
+
+      const addButton = screen.getByRole('button', {
+        name: 'Add Catalogue Category',
+      });
+      await user.click(addButton);
+      //Used 'Name*' as 'Add Catalogue Category is the same as button name
+      expect(screen.getByText('Name *')).toBeInTheDocument();
+    });
   });
 
   describe('Copy to', () => {
