@@ -37,6 +37,8 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: true,
+      staleTime: 0,
+      gcTime: 0,
       refetchInterval: 5 * 60 * 1000,
       retry: (failureCount, error) => {
         return retryIMS_APIErrors(failureCount, error as AxiosError);
