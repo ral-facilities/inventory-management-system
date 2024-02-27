@@ -614,6 +614,25 @@ describe('Catalogue Category', () => {
     });
   });
 
+  it('opens add dialog from directory and then closes it', () => {
+    cy.visit('/catalogue/1');
+    cy.findByLabelText('Cameras checkbox').click();
+    cy.findByRole('button', { name: 'Move to' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
+      });
+
+    cy.findByLabelText('Name *').should('be.visible');
+
+    cy.findByRole('button', { name: 'Cancel' }).click();
+
+    //checks directory is the only dialog on screen
+    cy.findAllByRole('dialog').should('have.length', 1);
+  });
+
   it('can move multiple catalogue categories', () => {
     cy.visit('/catalogue/1');
     cy.findByLabelText('Cameras checkbox').click();

@@ -472,6 +472,27 @@ describe('Systems', () => {
       });
   });
 
+  it('opens add dialog from directory and then closes it', () => {
+    cy.visit('/systems');
+    cy.findByRole('row', { name: 'Toggle select row Pulse Laser' })
+      .findByRole('checkbox')
+      .click();
+    cy.findByRole('button', { name: 'Move to' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByRole('button', { name: 'Add System' }).click();
+      });
+
+    cy.findByLabelText('Name *').should('be.visible');
+
+    cy.findByRole('button', { name: 'Cancel' }).click();
+
+    //checks directory is the only dialog on screen
+    cy.findAllByRole('dialog').should('have.length', 1);
+  });
+
   it('moves systems', () => {
     cy.visit('/systems');
 

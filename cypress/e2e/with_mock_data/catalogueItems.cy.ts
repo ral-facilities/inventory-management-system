@@ -741,6 +741,25 @@ describe('Catalogue Items', () => {
     cy.url().should('contain', 'catalogue/item/89/items');
   });
 
+  it('opens add dialog from directory and then closes it', () => {
+    cy.visit('/catalogue/5');
+    cy.findAllByLabelText('Toggle select row').first().click();
+    cy.findByRole('button', { name: 'Move to' }).click();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
+      });
+
+    cy.findByLabelText('Name *').should('be.visible');
+
+    cy.findByRole('button', { name: 'Cancel' }).click();
+
+    //checks directory is the only dialog on screen
+    cy.findAllByRole('dialog').should('have.length', 1);
+  });
+
   it('can move multiple catalogue items', () => {
     cy.visit('/catalogue/5');
 
