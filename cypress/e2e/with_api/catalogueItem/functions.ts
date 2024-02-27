@@ -252,7 +252,7 @@ export const copyToCatalogueItems = (values: { checkedItems: string[] }) => {
 export const moveToCatalogueItems = (values: { checkedItems: string[] }) => {
   cy.intercept({
     method: 'PATCH',
-    url: '**/catalogue-categories/*',
+    url: '**/catalogue-items/*',
   }).as('patchCatalogueItems');
 
   for (let i = 0; i < values.checkedItems.length; i++) {
