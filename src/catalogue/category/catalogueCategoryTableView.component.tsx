@@ -32,8 +32,6 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     selectedCategories.map((category) => {
       return category.id;
     });
-  const [selectedCatalogueCategory, setSelectedCatalogueCategory] =
-    React.useState<CatalogueCategory | undefined>(undefined);
 
   const noResultsTxt = 'No catalogue categories found';
   const columns = React.useMemo<MRT_ColumnDef<CatalogueCategory>[]>(() => {
@@ -138,9 +136,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
             onClose={() => table.setCreatingRow(null)}
             parentId={catalogueCategoryParentId ?? null}
             type="add"
-            resetSelectedCatalogueCategory={() =>
-              setSelectedCatalogueCategory(undefined)
-            }
+            resetSelectedCatalogueCategory={() => table.setCreatingRow(null)}
           />
         </>
       );
