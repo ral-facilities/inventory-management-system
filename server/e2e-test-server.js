@@ -9,10 +9,15 @@ app.get('/inventory-management-system-settings.json', function (req, res) {
   // If so, use the settings file specific to E2E
   // Otherwise, use the same settings file that is also for running the app normally (yarn start etc).
   const isCiEnv = process.env.CI;
+
+  const useApiSettings = process.env.USE_API_SETTINGS === 'true';
+
   res.sendFile(
     path.resolve(
       isCiEnv
-        ? './server/e2e-settings.json'
+        ? useApiSettings
+          ? './server/e2e-settings-with-api.json'
+          : './server/e2e-settings.json'
         : './public/inventory-management-system-settings.json'
     )
   );
