@@ -2,6 +2,12 @@
   "apiUrl": "",
   "routes": [
     {
+      "section": "homepage",
+      "link": "/ims",
+      "displayName": "Homepage",
+      "order": 0
+    },
+    {
       "section": "Inventory Management System",
       "link": "/catalogue",
       "displayName": "Catalogue",

@@ -1,0 +1,213 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home page component homepage renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    id="dg-homepage"
+  >
+    <div
+      style="background-image: url(background.jpg); width: 100%; height: 250px;"
+    >
+      <div
+        style="background-repeat: no-repeat; width: 100%; height: 250px;"
+      >
+        <div
+          class="MuiBox-root css-h95k7f"
+        >
+          <h2
+            class="MuiTypography-root MuiTypography-h2 css-1c7qyh0-MuiTypography-root"
+          >
+            <strong>
+              Inventory Managment
+            </strong>
+          </h2>
+          <h2
+            class="MuiTypography-root MuiTypography-h2 css-1c7qyh0-MuiTypography-root"
+          >
+            for 
+            <strong>
+              EPAC
+            </strong>
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiBox-root css-12vlygr"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-177u6i-MuiPaper-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+          style="height: 100%;"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <div
+              class="MuiBox-root css-bvoom2"
+            >
+              <h3
+                class="MuiTypography-root MuiTypography-h3 css-jadg01-MuiTypography-root"
+              >
+                Catalogue
+              </h3>
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-16w7kz2-MuiTypography-root"
+              >
+                Browse catalogue categories, sub categories and catalogue items to locate specific items or add new ones.
+              </p>
+              <div
+                class="MuiBox-root css-1yuhvjn"
+              >
+                <a
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
+                  data-testid="catalogue-button"
+                  href="/catalogue"
+                  tabindex="0"
+                >
+                  Explore
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+          >
+            <div
+              style="background-image: url(facility.jpg); background-repeat: no-repeat; background-position: bottom right; background-size: cover; width: 100%; height: 100%; border-radius: 4px;"
+            >
+              <div
+                class="css-1g012h9"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-4 css-yaog9p-MuiGrid-root"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-177u6i-MuiPaper-root"
+          >
+            <div
+              class="MuiBox-root css-bvoom2"
+            >
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-rspydk-MuiTypography-root"
+              >
+                Systems
+              </h4>
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-16w7kz2-MuiTypography-root"
+              >
+                Navigate through systems and their sub systems to view their component items.
+              </p>
+              <div
+                class="MuiBox-root css-8xl60i"
+              >
+                <a
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
+                  data-testid="systems-button"
+                  href="/systems"
+                  tabindex="0"
+                >
+                  Explore
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-4 css-yaog9p-MuiGrid-root"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-177u6i-MuiPaper-root"
+          >
+            <div
+              class="MuiBox-root css-bvoom2"
+            >
+              <h4
+                class="MuiTypography-root MuiTypography-h4 css-rspydk-MuiTypography-root"
+              >
+                Manufacturers
+              </h4>
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-16w7kz2-MuiTypography-root"
+              >
+                View the manufacturers of parts used by EPAC.
+              </p>
+              <div
+                class="MuiBox-root css-8xl60i"
+              >
+                <a
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
+                  data-testid="manufacturer-button"
+                  href="/manufacturer"
+                  tabindex="0"
+                >
+                  Explore
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-4 css-yaog9p-MuiGrid-root"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-19bggzh-MuiPaper-root"
+          >
+            <div
+              style="background-image: url(green-swirl2.png); background-repeat: no-repeat; background-position: top right; background-size: auto 100%; height: 100%;"
+            >
+              <div
+                class="MuiBox-root css-bvoom2"
+              >
+                <h4
+                  class="MuiTypography-root MuiTypography-h4 css-94tke6-MuiTypography-root"
+                >
+                  EPAC
+                </h4>
+                <p
+                  class="MuiTypography-root MuiTypography-body1 css-1kje51w-MuiTypography-root"
+                >
+                  World-leading centre for scientific and industrial research.
+                </p>
+                <div
+                  class="MuiBox-root css-8xl60i"
+                >
+                  <a
+                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-1m6sz6p-MuiButtonBase-root-MuiButton-root"
+                    data-testid="facility-button"
+                    href="https://www.clf.stfc.ac.uk/Pages/EPAC-Applications.aspx"
+                    tabindex="0"
+                  >
+                    Read more
+                    <span
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
