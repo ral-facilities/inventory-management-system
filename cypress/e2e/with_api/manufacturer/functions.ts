@@ -1,4 +1,4 @@
-const modifyManufacturer = (values: {
+export const modifyManufacturer = (values: {
   editManufacturerName?: string;
   name: string;
   url?: string;
@@ -65,17 +65,8 @@ const modifyManufacturer = (values: {
     cy.findByText(values.telephone_number).should('exist');
   cy.go('back');
 };
-const deleteManufacturer = (name: string) => {
-  cy.findByLabelText(`${name} row`).within(() => {
-    cy.findByLabelText('Row Actions').click();
-  });
-  cy.findByLabelText(`Delete manufacturer ${name}`).click();
 
-  cy.findByRole('button', { name: 'Continue' }).click();
-  cy.findByText(name).should('not.exist');
-};
-
-const addManufacturer = () => {
+export const addManufacturer = () => {
   modifyManufacturer({
     name: 'ThorsLabs',
     url: 'https://www.thorlabs.com/',
@@ -88,7 +79,7 @@ const addManufacturer = () => {
   });
 };
 
-const editManufacturer = () => {
+export const editManufacturer = () => {
   modifyManufacturer({
     editManufacturerName: 'ThorsLabs',
     name: 'ThorsLab',
@@ -102,19 +93,12 @@ const editManufacturer = () => {
   });
 };
 
-describe('Manufacturer', () => {
-  beforeEach(() => {
-    cy.dropIMSDB();
-    cy.visit('/manufacturer');
+export const deleteManufacturer = (name: string) => {
+  cy.findByLabelText(`${name} row`).within(() => {
+    cy.findByLabelText('Row Actions').click();
   });
-  afterEach(() => {
-    cy.clearMocks();
-    cy.dropIMSDB();
-  });
+  cy.findByLabelText(`Delete manufacturer ${name}`).click();
 
-  it('CRUD for Manufacturer', () => {
-    addManufacturer();
-    editManufacturer();
-    deleteManufacturer('ThorsLab');
-  });
-});
+  cy.findByRole('button', { name: 'Continue' }).click();
+  cy.findByText(name).should('not.exist');
+};

@@ -120,7 +120,7 @@ const deleteCatalogueCategory = (name: string) => {
   cy.intercept({
     method: 'DELETE',
     url: '**/catalogue-categories/*',
-  }).as('getCatalogueCategoryData');
+  }).as('deleteCatalogueCategoryData');
   cy.findByRole('button', {
     name: `actions ${name} catalogue category button`,
   }).click();
@@ -130,14 +130,10 @@ const deleteCatalogueCategory = (name: string) => {
   }).click();
 
   cy.findByRole('button', { name: 'Continue' }).click();
-  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
+  cy.wait('@deleteCatalogueCategoryData', { timeout: 10000 });
 };
 
-const saveAsCatalogueCategory = (name: string) => {
-  cy.intercept({
-    method: 'POST',
-    url: '**/catalogue-categories',
-  }).as('getCatalogueCategoryData');
+export const saveAsCatalogueCategory = (name: string) => {
   cy.findByRole('button', {
     name: `actions ${name} catalogue category button`,
   }).click();
@@ -147,7 +143,6 @@ const saveAsCatalogueCategory = (name: string) => {
   }).click();
 
   cy.findByRole('button', { name: 'Save' }).click();
-  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
   cy.findByText(`${name}_copy_1`).should('exist');
 };
 
@@ -155,6 +150,10 @@ const copyToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   cy.intercept({
     method: 'POST',
     url: '**/catalogue-categories',
+  }).as('postCatalogueCategoryData');
+  cy.intercept({
+    method: 'GET',
+    url: '**/catalogue-categories/*',
   }).as('getCatalogueCategoryData');
 
   for (let i = 0; i < values.checkedCategories.length; i++) {
@@ -163,8 +162,10 @@ const copyToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   cy.findByRole('button', { name: 'Copy to' }).click();
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByRole('button', { name: 'Copy here' }).click();
-  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
+  cy.findByRole('dialog').should('not.exist');
+  cy.wait('@postCatalogueCategoryData', { timeout: 10000 });
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
   for (let i = 0; i < values.checkedCategories.length; i++) {
     cy.findByText(`${values.checkedCategories[i]}`).should('exist');
     deleteCatalogueCategory(`${values.checkedCategories[i]}`);
@@ -175,6 +176,11 @@ const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   cy.intercept({
     method: 'PATCH',
     url: '**/catalogue-categories/*',
+  }).as('patchCatalogueCategoryData');
+
+  cy.intercept({
+    method: 'GET',
+    url: '**/catalogue-categories/*',
   }).as('getCatalogueCategoryData');
 
   for (let i = 0; i < values.checkedCategories.length; i++) {
@@ -183,14 +189,16 @@ const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   cy.findByRole('button', { name: 'Move to' }).click();
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByRole('button', { name: 'Move here' }).click();
-  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
+  cy.findByRole('dialog').should('not.exist');
+  cy.wait('@postCatalogueCategoryData', { timeout: 10000 });
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
   for (let i = 0; i < values.checkedCategories.length; i++) {
     cy.findByText(`${values.checkedCategories[i]}`).should('exist');
   }
 };
 
-const addCatalogueCategories = () => {
+export const addCatalogueCategories = () => {
   modifyCatalogueCategory({
     name: 'Lenses',
   });
@@ -230,7 +238,7 @@ const addCatalogueCategories = () => {
   });
 };
 
-const editCatalogueCategories = () => {
+export const editCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   modifyCatalogueCategory({
     editCatalogueCategoryName: 'Lenses',
@@ -273,20 +281,20 @@ const editCatalogueCategories = () => {
   });
 };
 
-const saveAsCatalogueCategories = () => {
+export const saveAsCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   saveAsCatalogueCategory('Lenses 2');
   cy.findByText('Lenses 2').click();
   saveAsCatalogueCategory('Spherical Lenses 2');
 };
 
-const copyToCatalogueCategories = () => {
+export const copyToCatalogueCategories = () => {
   copyToCatalogueCategory({
     checkedCategories: ['Spherical Lenses 2', 'Spherical Lenses 2_copy_1'],
   });
 };
 
-const moveToCatalogueCategories = () => {
+export const moveToCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByText('Lenses 2').click();
   moveToCatalogueCategory({
@@ -294,30 +302,10 @@ const moveToCatalogueCategories = () => {
   });
 };
 
-const deleteCatalogueCategories = () => {
+export const deleteCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   deleteCatalogueCategory('Spherical Lenses 2');
   deleteCatalogueCategory('Spherical Lenses 2_copy_1');
   deleteCatalogueCategory('Lenses 2');
   deleteCatalogueCategory('Lenses 2_copy_1');
 };
-
-describe('Catalogue Category', () => {
-  beforeEach(() => {
-    cy.dropIMSDB();
-    cy.visit('/catalogue');
-  });
-  afterEach(() => {
-    cy.clearMocks();
-    cy.dropIMSDB();
-  });
-
-  it('CRUD for catalogue categories', () => {
-    addCatalogueCategories();
-    editCatalogueCategories();
-    saveAsCatalogueCategories();
-    copyToCatalogueCategories();
-    moveToCatalogueCategories();
-    deleteCatalogueCategories();
-  });
-});
