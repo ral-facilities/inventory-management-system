@@ -225,7 +225,7 @@ export const copyToCatalogueItems = (values: { checkedItems: string[] }) => {
   cy.intercept({
     method: 'POST',
     url: '**/catalogue-items/*',
-  }).as('getCatalogueItems');
+  }).as('postCatalogueItems');
 
   cy.wait('@postCatalogueItems', { timeout: 10000 });
   for (let i = 0; i < values.checkedItems.length; i++) {
