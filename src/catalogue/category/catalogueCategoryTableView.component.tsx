@@ -1,4 +1,4 @@
-import { TableRow, Typography } from '@mui/material';
+import { Box, Button, TableRow, Typography } from '@mui/material';
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -7,9 +7,12 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { CatalogueCategory } from '../../app.types';
+import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
+import AddIcon from '@mui/icons-material/Add';
 
 export interface CatalogueCategoryTableViewProps {
   selectedCategories: CatalogueCategory[];
+  catalogueCategoryParentId?: string;
   onChangeParentCategoryId: (catalogueCurrDirId: string | null) => void;
   requestType: 'moveTo' | 'copyTo' | 'standard';
   catalogueCategoryData: CatalogueCategory[] | undefined;
@@ -20,6 +23,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
   const {
     selectedCategories,
     requestType,
+    catalogueCategoryParentId,
     onChangeParentCategoryId,
     catalogueCategoryDataLoading,
     catalogueCategoryData,
@@ -28,6 +32,11 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     selectedCategories.map((category) => {
       return category.id;
     });
+
+  const [addCategoryDialogOpen, setAddCategoryDialogOpen] =
+    React.useState<boolean>(false);
+  const [selectedCatalogueCategory, setSelectedCatalogueCategory] =
+    React.useState<CatalogueCategory | undefined>(undefined);
 
   const noResultsTxt = 'No catalogue categories found';
   const columns = React.useMemo<MRT_ColumnDef<CatalogueCategory>[]>(() => {
@@ -63,7 +72,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     // Features
     enableColumnOrdering: false,
     enableColumnPinning: false,
-    enableTopToolbar: false,
+    enableTopToolbar: true,
     enableColumnResizing: false,
     enableFacetedValues: true,
     enableRowActions: false,
@@ -122,6 +131,38 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       shape: 'rounded',
       variant: 'outlined',
     },
+
+    //Functions
+    renderCreateRowDialogContent: ({ table, row }) => {
+      return (
+        <>
+          <CatalogueCategoryDialog
+            open={addCategoryDialogOpen}
+            onClose={() => setAddCategoryDialogOpen(false)}
+            parentId={catalogueCategoryParentId ?? null}
+            type="add"
+            resetSelectedCatalogueCategory={() =>
+              setSelectedCatalogueCategory(undefined)
+            }
+          />
+        </>
+      );
+    },
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Box sx={{ display: 'flex' }}>
+        <Button
+          startIcon={<AddIcon />}
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          onClick={() => {
+            setAddCategoryDialogOpen(true);
+            table.setCreatingRow(true);
+          }}
+        >
+          Add Catalogue Category
+        </Button>
+      </Box>
+    ),
   });
 
   return <MaterialReactTable table={table} />;

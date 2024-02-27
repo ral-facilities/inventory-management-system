@@ -185,6 +185,7 @@ const CatalogueCategoryDirectoryDialog = (
       <DialogContent>
         <CatalogueCategoryTableView
           selectedCategories={selectedCategories}
+          catalogueCategoryParentId={parentCategoryId ?? undefined}
           onChangeParentCategoryId={setParentCategoryId}
           requestType={requestType}
           catalogueCategoryData={catalogueCategoryData}
