@@ -16,7 +16,7 @@ export const generateUniqueName = (
 
 /* Returns whether running in development mode */
 export const isRunningInDevelopment = (): boolean => {
-  return process.env.NODE_ENV !== 'production';
+  return import.meta.env.DEV;
 };
 
 /* Returns a calc function giving the page height excluding SciGateway related components

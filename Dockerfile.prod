@@ -23,7 +23,7 @@ COPY . .
 RUN set -eux; \
     \
     # Set the React production variable which holds reference to the path of the plugin build \
-    sed -i "s#REACT_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY=.*#REACT_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY=/inventory-management-system/#" .env.production; \
+    sed -i "s#VITE_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY=.*#VITE_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY=/inventory-management-system/#" .env.production; \
     \
     cp public/inventory-management-system-settings.example.json public/inventory-management-system-settings.json; \
     \

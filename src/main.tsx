@@ -104,9 +104,9 @@ export function unmount(props: unknown): Promise<void> {
 // only export this for testing
 export const fetchSettings =
   (): Promise<InventoryManagementSystemSettings | void> => {
-    const settingsPath = process.env
-      .REACT_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY
-      ? process.env.REACT_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY +
+    const settingsPath = import.meta.env
+      .VITE_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY
+      ? import.meta.env.VITE_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY +
         'inventory-management-system-settings.json'
       : '/inventory-management-system-settings.json';
     return axios
@@ -169,10 +169,7 @@ export const fetchSettings =
   };
 
 function prepare() {
-  if (
-    process.env.NODE_ENV === 'development' ||
-    process.env.REACT_APP_E2E_TESTING === 'true'
-  ) {
+  if (import.meta.env.DEV || import.meta.env.VITE_APP_E2E_TESTING === 'true') {
     // need to use require instead of import as import breaks when loaded in SG
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { worker } = require('./mocks/browser');
@@ -194,10 +191,7 @@ const settings = fetchSettings();
 
 setSettings(settings);
 
-if (
-  process.env.NODE_ENV === 'development' &&
-  process.env.REACT_APP_E2E_TESTING !== 'true'
-) {
+if (import.meta.env.DEV && import.meta.env.VITE_APP_E2E_TESTING !== 'true') {
   settings
     .then((settings) => {
       if (settings && settings.apiUrl !== '') {
@@ -209,12 +203,23 @@ if (
     .catch((error) => log.error(`Got error: ${error.message}`));
 
   log.setDefaultLevel(log.levels.DEBUG);
-} else if (process.env.REACT_APP_E2E_TESTING === 'true') {
+} else if (import.meta.env.VITE_APP_E2E_TESTING === 'true') {
   prepare().then(() => render());
   log.setDefaultLevel(log.levels.DEBUG);
-} else if (process.env.REACT_APP_E2E_TESTING_API === 'true') {
+} else if (import.meta.env.VITE_APP_E2E_TESTING_API === 'true') {
   render();
   log.setDefaultLevel(log.levels.DEBUG);
 } else {
   log.setDefaultLevel(log.levels.ERROR);
 }
+
+// import React from 'react';
+// import ReactDOM from 'react-dom/client';
+// // import App from "./App.tsx";
+// import './index.css';
+
+// console.log('HELLO WORLD');
+
+// ReactDOM.createRoot(
+//   document.getElementById('inventory-management-system')!
+// ).render(<React.StrictMode>{/* <App /> */}</React.StrictMode>);
