@@ -180,6 +180,23 @@ describe('catalogue item directory Dialog', () => {
       });
     });
 
+    it('renders add dialog when button is clicked', async () => {
+      props.parentCategoryId = '5';
+
+      createView();
+
+      await waitFor(() => {
+        expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+      });
+
+      const addButton = screen.getByRole('button', {
+        name: 'Add Catalogue Item',
+      });
+      await user.click(addButton);
+      //Used 'Name*' as 'Add Catalogue Item is the same as button name
+      expect(screen.getByText('Name *')).toBeInTheDocument();
+    });
+
     it('moves multiple catalogue items', async () => {
       props.parentCategoryId = '8967';
 
