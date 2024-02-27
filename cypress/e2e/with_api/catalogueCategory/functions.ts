@@ -133,7 +133,7 @@ const deleteCatalogueCategory = (name: string) => {
   cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
 };
 
-const saveAsCatalogueCategory = (name: string) => {
+export const saveAsCatalogueCategory = (name: string) => {
   cy.intercept({
     method: 'POST',
     url: '**/catalogue-categories',
@@ -190,7 +190,7 @@ const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   }
 };
 
-const addCatalogueCategories = () => {
+export const addCatalogueCategories = () => {
   modifyCatalogueCategory({
     name: 'Lenses',
   });
@@ -230,7 +230,7 @@ const addCatalogueCategories = () => {
   });
 };
 
-const editCatalogueCategories = () => {
+export const editCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   modifyCatalogueCategory({
     editCatalogueCategoryName: 'Lenses',
@@ -273,20 +273,20 @@ const editCatalogueCategories = () => {
   });
 };
 
-const saveAsCatalogueCategories = () => {
+export const saveAsCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   saveAsCatalogueCategory('Lenses 2');
   cy.findByText('Lenses 2').click();
   saveAsCatalogueCategory('Spherical Lenses 2');
 };
 
-const copyToCatalogueCategories = () => {
+export const copyToCatalogueCategories = () => {
   copyToCatalogueCategory({
     checkedCategories: ['Spherical Lenses 2', 'Spherical Lenses 2_copy_1'],
   });
 };
 
-const moveToCatalogueCategories = () => {
+export const moveToCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByText('Lenses 2').click();
   moveToCatalogueCategory({
@@ -294,30 +294,10 @@ const moveToCatalogueCategories = () => {
   });
 };
 
-const deleteCatalogueCategories = () => {
+export const deleteCatalogueCategories = () => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   deleteCatalogueCategory('Spherical Lenses 2');
   deleteCatalogueCategory('Spherical Lenses 2_copy_1');
   deleteCatalogueCategory('Lenses 2');
   deleteCatalogueCategory('Lenses 2_copy_1');
 };
-
-describe('Catalogue Category', () => {
-  beforeEach(() => {
-    cy.dropIMSDB();
-    cy.visit('/catalogue');
-  });
-  afterEach(() => {
-    cy.clearMocks();
-    cy.dropIMSDB();
-  });
-
-  it('CRUD for catalogue categories', () => {
-    addCatalogueCategories();
-    editCatalogueCategories();
-    saveAsCatalogueCategories();
-    copyToCatalogueCategories();
-    moveToCatalogueCategories();
-    deleteCatalogueCategories();
-  });
-});

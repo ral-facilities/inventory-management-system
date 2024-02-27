@@ -632,7 +632,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             'aria-label': `${row.original.catalogueItem.name} row`,
           };
         }
-      : undefined,
+      : ({ row }) => {
+          return {
+            component: TableRow,
+            'aria-label': `${row.original.catalogueItem.name} row`,
+          };
+        },
     muiTableContainerProps: {
       sx: { height: dense ? '360.4px' : tableHeight },
     },
