@@ -30,7 +30,7 @@ RUN set -eux; \
     yarn build;
 
 # Run stage
-FROM httpd:2.4-alpine3.15
+FROM httpd:2.4-alpine3.19
 
 WORKDIR /usr/local/apache2/htdocs
 
@@ -63,6 +63,7 @@ RUN set -eux; \
 USER www-data
 
 ENV API_URL="/inventory-management-system-api"
+ENV PLUGIN_HOST="/inventory-management-system"
 
 COPY docker/docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
