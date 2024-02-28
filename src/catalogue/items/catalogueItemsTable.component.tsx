@@ -360,7 +360,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             );
           }
         },
-        id: 'catalogueItem.properties',
         size: 250,
         filterVariant:
           propertyFilters[

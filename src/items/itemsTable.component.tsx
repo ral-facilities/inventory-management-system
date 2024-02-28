@@ -216,7 +216,6 @@ export function ItemsTable(props: ItemTableProps) {
             return findPropertyValue(row.properties, property.name);
           }
         },
-        id: 'properties',
         size: 250,
         filterVariant:
           propertyFilters[
