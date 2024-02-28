@@ -1,6 +1,11 @@
 describe('App', () => {
-  after(() => {
+  afterEach(() => {
     cy.clearMocks();
+    cy.dropIMSDB();
+  });
+
+  beforeEach(() => {
+    cy.dropIMSDB();
   });
 
   it('should load correctly', () => {
@@ -12,10 +17,10 @@ describe('App', () => {
     cy.intercept({
       method: 'GET',
       url: '**/catalogue-categories?parent_id=null',
-    }).as('getCatalogueCategoryData');
+    }).as('getCatalogueCategoryDataRoot');
 
     cy.visit('/catalogue');
-    cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
+    cy.wait('@getCatalogueCategoryDataRoot', { timeout: 10000 });
     cy.findByText(
       'There are no catalogue categories. Please add a category using the plus icon in the top left of your screen'
     ).should('exist');

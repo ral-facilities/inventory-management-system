@@ -3,13 +3,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { styled } from '@mui/material/styles';
 import React from 'react';
-import {
-  Link,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { TabValue } from '../app.types';
 import Catalogue from '../catalogue/catalogue.component';
 import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingPage.component';
@@ -19,9 +13,11 @@ import Manufacturer from '../manufacturer/manufacturer.component';
 import ManufacturerLandingPage from '../manufacturer/manufacturerLandingPage.component';
 import Systems from '../systems/systems.component';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
+import { HomePage } from '../homePage/homePage.component';
 
 export const paths = {
-  home: '/',
+  root: '/',
+  homepage: '/ims',
   catalogue: '/catalogue/*',
   systems: '/systems/*',
   manufacturers: '/manufacturer',
@@ -75,11 +71,11 @@ function ViewTabs() {
   // because that is when the tabs are visible
   React.useEffect(() => {
     if (process.env.NODE_ENV !== 'production') {
-      const prefixIndex = location.pathname.indexOf(paths.home);
+      const prefixIndex = location.pathname.indexOf(paths.root);
       let tabValue =
         prefixIndex !== -1
           ? location.pathname
-              .substring(prefixIndex + paths.home.length)
+              .substring(prefixIndex + paths.root.length)
               .split('/')[0]
           : '';
 
@@ -97,10 +93,8 @@ function ViewTabs() {
 
   const routing = (
     <Routes location={location}>
-      <Route
-        path={paths.home}
-        element={<Link to={'/catalogue'}>Browse the catalogue</Link>}
-      />
+      <Route path={paths.root} element={<HomePage />} />
+      <Route path={paths.homepage} element={<HomePage />} />
       <Route path={paths.catalogue} element={<Catalogue />} />
       <Route
         path={paths.catalogueItem}
