@@ -80,6 +80,7 @@ export function ItemsTable(props: ItemTableProps) {
         header: 'ID',
         size: 250,
         accessorFn: (row) => row.id,
+        id: 'id',
         enableGrouping: false,
         Cell: ({ row }) => (
           <MuiLink underline="hover" component={Link} to={row.original.id}>
@@ -90,21 +91,25 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'Serial Number',
         accessorFn: (row) => row.serial_number,
+        id: 'serial_number',
         size: 250,
       },
       {
         header: 'Asset Number',
         accessorFn: (row) => row.asset_number,
+        id: 'asset_number',
         size: 250,
       },
       {
         header: 'Purchase Order Number',
         accessorFn: (row) => row.purchase_order_number,
+        id: 'purchase_order_number',
         size: 350,
       },
       {
         header: 'Warranty End Date',
         accessorFn: (row) => row.warranty_end_date,
+        id: 'warranty_end_date',
         size: 250,
         Cell: ({ row }) => (
           <Typography
@@ -119,6 +124,7 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'Delivered Date',
         accessorFn: (row) => row.delivered_date,
+        id: 'delivered_date',
         size: 250,
         Cell: ({ row }) => (
           <Typography
@@ -133,6 +139,7 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'Is Defective',
         accessorFn: (row) => (row.is_defective === true ? 'Yes' : 'No'),
+        id: 'is_defective',
         size: 200,
         filterVariant: 'select',
       },
@@ -147,12 +154,14 @@ export function ItemsTable(props: ItemTableProps) {
           );
           return status || 'Unknown';
         },
+        id: 'usage_status',
         size: 200,
         filterVariant: 'select',
       },
       {
         header: 'Notes',
         accessorFn: (row) => row.notes ?? '',
+        id: 'notes',
         size: 250,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -171,6 +180,7 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'System ID',
         accessorFn: (row) => row.system_id,
+        id: 'system_id',
         size: 250,
         Cell: ({ row }) => (
           <MuiLink
@@ -206,6 +216,7 @@ export function ItemsTable(props: ItemTableProps) {
             return findPropertyValue(row.properties, property.name);
           }
         },
+        id: 'properties',
         size: 250,
         filterVariant:
           propertyFilters[
