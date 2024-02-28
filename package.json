@@ -36,8 +36,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc %% vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview",
+    "preview:build": "yarn build && yarn preview",
     "test": "craco test --env=jsdom --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "lint:js": "eslint --max-warnings=0 --ext=tsx --ext=ts --ext=js --ext=jsx --fix ./src",
