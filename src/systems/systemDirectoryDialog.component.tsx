@@ -125,7 +125,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
       open={open}
       onClose={onClose}
       maxWidth="lg"
-      PaperProps={{ sx: { height: '632px' } }}
+      PaperProps={{ sx: { height: '692px' } }}
       fullWidth
     >
       <DialogTitle marginLeft={2}>

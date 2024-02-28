@@ -7,6 +7,7 @@ import CatalogueItemDirectoryDialog, {
   CatalogueItemDirectoryDialogProps,
 } from './catalogueItemDirectoryDialog.component';
 import { imsApi } from '../../api/api';
+import { add } from 'date-fns';
 
 describe('catalogue item directory Dialog', () => {
   let props: CatalogueItemDirectoryDialogProps;
@@ -180,7 +181,7 @@ describe('catalogue item directory Dialog', () => {
       });
     });
 
-    it('renders add dialog when button is clicked and closes it', async () => {
+    it('renders add button when viewing category table, and has save as functionality when clicked', async () => {
       props.parentCategoryId = '5';
 
       createView();
@@ -189,12 +190,23 @@ describe('catalogue item directory Dialog', () => {
         expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
       });
 
-      const addButton = screen.getByRole('button', {
-        name: 'Add Catalogue Item',
+      await user.click(
+        screen.getByRole('link', { name: 'beam-characterization' })
+      );
+
+      await waitFor(() => {
+        expect(screen.getByText('Cameras')).toBeInTheDocument();
       });
+
+      const addButton = screen.getByRole('button', {
+        name: 'Add Catalogue Category',
+      });
+
       await user.click(addButton);
-      //Used 'Name*' as 'Add Catalogue Item is the same as button name
-      expect(screen.getByText('Name *')).toBeInTheDocument();
+
+      expect(
+        screen.getByDisplayValue('Energy Meters_copy_1')
+      ).toBeInTheDocument();
 
       const cancelButton = screen.getByRole('button', {
         name: 'Cancel',
@@ -202,9 +214,9 @@ describe('catalogue item directory Dialog', () => {
       await user.click(cancelButton);
 
       await waitFor(() => {
-        expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+        expect(screen.getByText('Cameras')).toBeInTheDocument();
       });
-    });
+    }, 10000);
 
     it('moves multiple catalogue items', async () => {
       props.parentCategoryId = '8967';

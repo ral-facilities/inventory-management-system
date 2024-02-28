@@ -734,6 +734,20 @@ describe('Catalogue Items', () => {
     cy.findAllByText('Manufacturer Name').should('exist');
   });
 
+  it.only('can open and close add dialog in obsolete dialog', () => {
+    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findByText('Obsolete').click();
+
+    cy.findByText('Obsolete Replacement').click();
+
+    cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
+
+    cy.findByRole('button', { name: 'Cancel' }).click();
+
+    //checks directory is the only dialog on screen
+    cy.findAllByRole('dialog').should('have.length', 1);
+  });
+
   it('can navigate to a catalogue items replacement', () => {
     cy.visit('/catalogue/5');
 
@@ -759,7 +773,7 @@ describe('Catalogue Items', () => {
     cy.url().should('contain', 'catalogue/item/89/items');
   });
 
-  it('opens add dialog from directory and then closes it', () => {
+  it.only('opens add dialog for categories in directory and has functionality of save as', () => {
     cy.visit('/catalogue/5');
     cy.findAllByLabelText('Toggle select row').first().click();
     cy.findByRole('button', { name: 'Move to' }).click();

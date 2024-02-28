@@ -9,6 +9,7 @@ import React from 'react';
 import { CatalogueCategory } from '../../app.types';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 import AddIcon from '@mui/icons-material/Add';
+import { generateUniqueName } from '../../utils';
 
 export interface CatalogueCategoryTableViewProps {
   selectedCategories: CatalogueCategory[];
@@ -17,6 +18,8 @@ export interface CatalogueCategoryTableViewProps {
   requestType: 'moveTo' | 'copyTo' | 'standard';
   catalogueCategoryData: CatalogueCategory[] | undefined;
   catalogueCategoryDataLoading: boolean;
+  requestOrigin: 'category' | 'item';
+  catalogueItemParentCategory?: CatalogueCategory;
 }
 
 const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
@@ -27,11 +30,18 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     onChangeParentCategoryId,
     catalogueCategoryDataLoading,
     catalogueCategoryData,
+    requestOrigin,
+    catalogueItemParentCategory,
   } = props;
   const selectedCatalogueCategoryIds: (string | null)[] =
     selectedCategories.map((category) => {
       return category.id;
     });
+
+  const catalogueCategoryNames: string[] =
+    catalogueCategoryData?.map((item) => item.name) || [];
+
+  console.log(catalogueItemParentCategory);
 
   const noResultsTxt = 'No catalogue categories found';
   const columns = React.useMemo<MRT_ColumnDef<CatalogueCategory>[]>(() => {
@@ -135,7 +145,18 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
             open={true}
             onClose={() => table.setCreatingRow(null)}
             parentId={catalogueCategoryParentId ?? null}
-            type="add"
+            type={requestOrigin === 'category' ? 'add' : 'save as'}
+            selectedCatalogueCategory={
+              catalogueItemParentCategory
+                ? {
+                    ...catalogueItemParentCategory,
+                    name: generateUniqueName(
+                      catalogueItemParentCategory.name,
+                      catalogueCategoryNames
+                    ),
+                  }
+                : undefined
+            }
             resetSelectedCatalogueCategory={() => table.setCreatingRow(null)}
           />
         </>
