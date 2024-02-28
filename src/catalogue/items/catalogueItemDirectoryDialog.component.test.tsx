@@ -180,7 +180,7 @@ describe('catalogue item directory Dialog', () => {
       });
     });
 
-    it('renders add dialog when button is clicked', async () => {
+    it('renders add dialog when button is clicked and closes it', async () => {
       props.parentCategoryId = '5';
 
       createView();
@@ -195,6 +195,15 @@ describe('catalogue item directory Dialog', () => {
       await user.click(addButton);
       //Used 'Name*' as 'Add Catalogue Item is the same as button name
       expect(screen.getByText('Name *')).toBeInTheDocument();
+
+      const cancelButton = screen.getByRole('button', {
+        name: 'Cancel',
+      });
+      await user.click(cancelButton);
+
+      await waitFor(() => {
+        expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+      });
     });
 
     it('moves multiple catalogue items', async () => {

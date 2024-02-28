@@ -199,7 +199,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
-    it('renders add dialog when button is clicked', async () => {
+    it('renders add dialog when button is clicked and closes it', async () => {
       props.selectedCategories = [
         {
           id: '1',
@@ -227,6 +227,15 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       await user.click(addButton);
       //Used 'Name*' as 'Add Catalogue Category is the same as button name
       expect(screen.getByText('Name *')).toBeInTheDocument();
+
+      const cancelButton = screen.getByRole('button', {
+        name: 'Cancel',
+      });
+      await user.click(cancelButton);
+
+      await waitFor(() => {
+        expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
+      });
     });
   });
 

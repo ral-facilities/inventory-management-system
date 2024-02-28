@@ -112,7 +112,7 @@ describe('SystemDirectoryDialog', () => {
     expect(screen.getByText('Smaller laser')).toBeInTheDocument();
   });
 
-  it('renders add dialog when button is clicked', async () => {
+  it('renders add dialog when button is clicked and closes it', async () => {
     props.parentSystemId = '65328f34a40ff5301575a4e4';
     createView();
 
@@ -122,6 +122,15 @@ describe('SystemDirectoryDialog', () => {
     await user.click(addButton);
     //Used 'Name*' as 'Add System is the same as button name
     expect(screen.getByText('Name *')).toBeInTheDocument();
+
+    const cancelButton = screen.getByRole('button', {
+      name: 'Cancel',
+    });
+    await user.click(cancelButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Pulse Laser')).toBeInTheDocument();
+    });
   });
 
   describe('Move to', () => {
