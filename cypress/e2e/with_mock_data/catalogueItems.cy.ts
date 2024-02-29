@@ -737,17 +737,17 @@ describe('Catalogue Items', () => {
   it('can open and close add dialog in obsolete dialog', () => {
     cy.visit('/catalogue/5');
 
-    cy.findAllByLabelText('Row Actions').eq(1).click();
+    cy.findAllByLabelText('Row Actions').eq(0).click();
     cy.findByText('Obsolete').click();
 
     cy.findByText('Obsolete Replacement').click();
 
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
 
-    cy.findByRole('button', { name: 'Cancel' }).click();
+    cy.findByText('Add catalogue item details').should('exist');
 
-    //checks directory is the only dialog on screen
-    cy.findAllByRole('dialog').should('have.length', 1);
+    cy.findByRole('button', { name: 'Cancel' }).click();
+    cy.findByText('Obsolete Catalogue Item').should('exist');
   });
 
   it('can navigate to a catalogue items replacement', () => {

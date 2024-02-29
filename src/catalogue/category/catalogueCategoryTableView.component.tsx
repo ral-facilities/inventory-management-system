@@ -41,8 +41,6 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
   const catalogueCategoryNames: string[] =
     catalogueCategoryData?.map((item) => item.name) || [];
 
-  console.log(catalogueItemParentCategory);
-
   const noResultsTxt = 'No catalogue categories found';
   const columns = React.useMemo<MRT_ColumnDef<CatalogueCategory>[]>(() => {
     return [
