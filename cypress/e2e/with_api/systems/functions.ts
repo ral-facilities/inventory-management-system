@@ -170,8 +170,9 @@ export const moveItemToSystem = (values: {
 
   cy.findByRole('button', { name: 'Move here' }).click();
 
-  cy.wait('@patchItems', { timeout: 10000 });
   cy.findByRole('dialog').should('not.exist');
+  cy.wait('@patchItems', { timeout: 10000 });
+
   cy.findByRole('button', { name: 'navigate to systems home' }).click();
   cy.findByText('Storage 2').click();
   cy.wait('@getSystemsData', { timeout: 10000 });
