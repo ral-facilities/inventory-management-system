@@ -95,7 +95,7 @@ export function ItemsTable(props: ItemTableProps) {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&
-          formatDateTimeStrings(new Date(row.original.modified_time)),
+          formatDateTimeStrings(row.original.modified_time),
       },
       {
         header: 'Serial Number',
@@ -252,8 +252,7 @@ export function ItemsTable(props: ItemTableProps) {
         id: 'created_time',
         size: 250,
         enableGrouping: false,
-        Cell: ({ row }) =>
-          formatDateTimeStrings(new Date(row.original.created_time)),
+        Cell: ({ row }) => formatDateTimeStrings(row.original.created_time),
       },
     ];
   }, [catalogueCategory]);

@@ -73,7 +73,7 @@ function ManufacturerComponent() {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&
-          formatDateTimeStrings(new Date(row.original.modified_time)),
+          formatDateTimeStrings(row.original.modified_time),
       },
       {
         header: 'URL',
@@ -124,8 +124,7 @@ function ManufacturerComponent() {
         size: 250,
         enableGrouping: false,
         enableHiding: true,
-        Cell: ({ row }) =>
-          formatDateTimeStrings(new Date(row.original.created_time)),
+        Cell: ({ row }) => formatDateTimeStrings(row.original.created_time),
       },
     ];
   }, []);

@@ -96,11 +96,11 @@ function CatalogueCard(props: CatalogueCardProps) {
             </Typography>
 
             <Typography fontStyle={'italic'} fontSize={14}>
-              {`Created:  ${formatDateTimeStrings(new Date(catalogueCategory.created_time))}`}
+              {`Created:  ${formatDateTimeStrings(catalogueCategory.created_time)}`}
             </Typography>
 
             <Typography fontStyle={'italic'} fontSize={14}>
-              {`Last modified:  ${formatDateTimeStrings(new Date(catalogueCategory.modified_time ?? ''))}`}
+              {`Last modified:  ${formatDateTimeStrings(catalogueCategory.modified_time ?? '')}`}
             </Typography>
           </Grid>
         </CardContent>

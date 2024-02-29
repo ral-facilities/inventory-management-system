@@ -153,9 +153,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 <Grid item xs={12}>
                   <Typography color="text.primary">Last Modified</Typography>
                   <Typography color="text.secondary">
-                    {formatDateTimeStrings(
-                      new Date(itemData.modified_time ?? '')
-                    )}
+                    {formatDateTimeStrings(itemData.modified_time ?? '')}
                   </Typography>
                 </Grid>
               </Grid>
@@ -164,7 +162,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 <Grid item xs={12}>
                   <Typography color="text.primary">Created</Typography>
                   <Typography color="text.secondary">
-                    {formatDateTimeStrings(new Date(itemData.created_time))}
+                    {formatDateTimeStrings(itemData.created_time)}
                   </Typography>
                 </Grid>
               </Grid>

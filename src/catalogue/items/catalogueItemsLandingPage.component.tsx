@@ -301,7 +301,7 @@ function CatalogueItemsLandingPage() {
                     </Typography>
                     <Typography align="left" color="text.secondary">
                       {formatDateTimeStrings(
-                        new Date(catalogueItemIdData.modified_time ?? '')
+                        catalogueItemIdData.modified_time ?? ''
                       )}
                     </Typography>
                   </Grid>
@@ -310,9 +310,7 @@ function CatalogueItemsLandingPage() {
                       Created
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {formatDateTimeStrings(
-                        new Date(catalogueItemIdData.created_time)
-                      )}
+                      {formatDateTimeStrings(catalogueItemIdData.created_time)}
                     </Typography>
                   </Grid>
                 </Grid>

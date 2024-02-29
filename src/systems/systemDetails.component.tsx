@@ -154,7 +154,7 @@ function SystemDetails(props: SystemDetailsProps) {
               >
                 <Typography variant="h6">Last modified</Typography>
                 <Typography variant="body1" color="text.secondary">
-                  {formatDateTimeStrings(new Date(system.modified_time ?? ''))}
+                  {formatDateTimeStrings(system.modified_time ?? '')}
                 </Typography>
               </Grid>
               <Grid
@@ -165,7 +165,7 @@ function SystemDetails(props: SystemDetailsProps) {
               >
                 <Typography variant="h6">Created</Typography>
                 <Typography variant="body1" color="text.secondary">
-                  {formatDateTimeStrings(new Date(system.created_time))}
+                  {formatDateTimeStrings(system.created_time)}
                 </Typography>
               </Grid>
             </Grid>

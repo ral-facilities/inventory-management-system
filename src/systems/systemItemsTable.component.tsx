@@ -159,7 +159,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.item.modified_time &&
-          formatDateTimeStrings(new Date(row.original.item.modified_time)),
+          formatDateTimeStrings(row.original.item.modified_time),
       },
       {
         header: 'Serial Number',
@@ -209,7 +209,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 250,
         enableGrouping: false,
         Cell: ({ row }) =>
-          formatDateTimeStrings(new Date(row.original.item.created_time)),
+          formatDateTimeStrings(row.original.item.created_time),
       },
     ];
   }, []);
