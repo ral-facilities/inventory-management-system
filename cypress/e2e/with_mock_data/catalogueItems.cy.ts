@@ -734,7 +734,9 @@ describe('Catalogue Items', () => {
     cy.findAllByText('Manufacturer Name').should('exist');
   });
 
-  it.only('can open and close add dialog in obsolete dialog', () => {
+  it('can open and close add dialog in obsolete dialog', () => {
+    cy.visit('/catalogue/5');
+
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Obsolete').click();
 
@@ -773,7 +775,7 @@ describe('Catalogue Items', () => {
     cy.url().should('contain', 'catalogue/item/89/items');
   });
 
-  it.only('opens add dialog for categories in directory and has functionality of save as', () => {
+  it('opens add dialog for categories in directory and has functionality of save as', () => {
     cy.visit('/catalogue/5');
     cy.findAllByLabelText('Toggle select row').first().click();
     cy.findByRole('button', { name: 'Move to' }).click();
@@ -781,10 +783,14 @@ describe('Catalogue Items', () => {
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
-        cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
+        cy.findByRole('link', { name: 'beam-characterization' }).click();
       });
 
-    cy.findByLabelText('Name *').should('be.visible');
+    cy.findByText('Cameras').should('be.visible');
+
+    cy.findByRole('button', { name: 'Add Catalogue Category' }).click();
+
+    cy.findByDisplayValue('Energy Meters_copy_1').should('be.visible');
 
     cy.findByRole('button', { name: 'Cancel' }).click();
 
