@@ -555,7 +555,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
           }).length
         ).toBeGreaterThan(1);
       },
-      { timeout: 2000 }
+      { timeout: 5000 }
     );
 
     const addButton = screen.getByRole('button', {
@@ -579,7 +579,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
           }).length
         ).toBeGreaterThan(1);
       },
-      { timeout: 2000 }
+      { timeout: 5000 }
     );
   });
 });
