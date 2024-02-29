@@ -93,8 +93,8 @@ export const copyToSystems = (values: {
   });
 
   cy.findByRole('button', { name: 'Copy here' }).click();
-  cy.findByRole('dialog').should('not.exist');
   cy.wait('@postSystems', { timeout: 10000 });
+  cy.findByRole('dialog').should('not.exist');
   cy.findByText('Storage').click();
   cy.wait('@getSystemsData', { timeout: 10000 });
   for (let i = 0; i < values.checkedSystems.length; i++) {
@@ -169,8 +169,9 @@ export const moveItemToSystem = (values: {
   });
 
   cy.findByRole('button', { name: 'Move here' }).click();
-  cy.findByRole('dialog').should('not.exist');
+
   cy.wait('@patchItems', { timeout: 10000 });
+  cy.findByRole('dialog').should('not.exist');
   cy.findByRole('button', { name: 'navigate to systems home' }).click();
   cy.findByText('Storage 2').click();
   cy.wait('@getSystemsData', { timeout: 10000 });
