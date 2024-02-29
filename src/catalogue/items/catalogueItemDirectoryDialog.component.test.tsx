@@ -7,8 +7,6 @@ import CatalogueItemDirectoryDialog, {
   CatalogueItemDirectoryDialogProps,
 } from './catalogueItemDirectoryDialog.component';
 import { imsApi } from '../../api/api';
-import { add } from 'date-fns';
-
 describe('catalogue item directory Dialog', () => {
   let props: CatalogueItemDirectoryDialogProps;
   let user;
@@ -76,6 +74,7 @@ describe('catalogue item directory Dialog', () => {
           is_obsolete: true,
           obsolete_replacement_catalogue_item_id: '6',
           obsolete_reason: 'The item is no longer being manufactured',
+          notes: null,
         },
         {
           catalogue_category_id: '5',
@@ -100,6 +99,7 @@ describe('catalogue item directory Dialog', () => {
           is_obsolete: false,
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
+          notes: null,
         },
       ],
     };
@@ -307,6 +307,7 @@ describe('catalogue item directory Dialog', () => {
         name: 'Energy Meters 26',
         obsolete_reason: 'The item is no longer being manufactured',
         obsolete_replacement_catalogue_item_id: '6',
+        notes: null,
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 1000 },
           { name: 'Accuracy', unit: '', value: '±0.5%' },
@@ -328,6 +329,7 @@ describe('catalogue item directory Dialog', () => {
         name: 'Energy Meters 27',
         obsolete_reason: null,
         obsolete_replacement_catalogue_item_id: null,
+        notes: null,
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 2000 },
         ],
@@ -365,6 +367,7 @@ describe('catalogue item directory Dialog', () => {
         name: 'Energy Meters 26',
         obsolete_reason: 'The item is no longer being manufactured',
         obsolete_replacement_catalogue_item_id: '6',
+        notes: null,
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 1000 },
           { name: 'Accuracy', unit: '', value: '±0.5%' },
@@ -386,6 +389,7 @@ describe('catalogue item directory Dialog', () => {
         name: 'Energy Meters 27',
         obsolete_reason: null,
         obsolete_replacement_catalogue_item_id: null,
+        notes: null,
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 2000 },
         ],
