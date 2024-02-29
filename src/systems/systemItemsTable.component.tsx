@@ -16,6 +16,7 @@ import { useItems } from '../api/item';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 import ItemsDetailsPanel from '../items/ItemsDetailsPanel.component';
 import SystemItemsDialog from './systemItemsDialog.component';
+import { formatDateTimeStrings } from '../utils';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
@@ -151,6 +152,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 250,
       },
       {
+        header: 'Last modified',
+        accessorFn: (row) => row.item.modified_time ?? '',
+        id: 'item.modified_time',
+        size: 250,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          row.original.item.modified_time &&
+          formatDateTimeStrings(new Date(row.original.item.modified_time)),
+      },
+      {
         header: 'Serial Number',
         accessorKey: 'item.serial_number',
         size: 250,
@@ -190,6 +201,15 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         id: 'item.usage_status',
         size: 200,
         filterVariant: 'select',
+      },
+      {
+        header: 'Created',
+        accessorFn: (row) => row.item.created_time,
+        id: 'item.created_time',
+        size: 250,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(new Date(row.original.item.created_time)),
       },
     ];
   }, []);
@@ -238,6 +258,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       showGlobalFilter: true,
       grouping: ['catalogueItem.name'],
       pagination: { pageSize: 15, pageIndex: 0 },
+      columnVisibility: { 'item.created_time': false },
     },
     state: {
       showProgressBars: isLoading,

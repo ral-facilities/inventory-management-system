@@ -37,7 +37,7 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import { useItems } from '../api/item';
 import ItemsDetailsPanel from './ItemsDetailsPanel.component';
-import { getPageHeightCalc } from '../utils';
+import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 
 export interface ItemTableProps {
@@ -86,6 +86,16 @@ export function ItemsTable(props: ItemTableProps) {
             {row.original.id}
           </MuiLink>
         ),
+      },
+      {
+        header: 'Last modified',
+        accessorFn: (row) => row.modified_time ?? '',
+        id: 'modified_time',
+        size: 250,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          row.original.modified_time &&
+          formatDateTimeStrings(new Date(row.original.modified_time)),
       },
       {
         header: 'Serial Number',
@@ -236,6 +246,15 @@ export function ItemsTable(props: ItemTableProps) {
           }
         },
       })),
+      {
+        header: 'Created',
+        accessorFn: (row) => row.created_time,
+        id: 'created_time',
+        size: 250,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(new Date(row.original.created_time)),
+      },
     ];
   }, [catalogueCategory]);
 
@@ -297,6 +316,7 @@ export function ItemsTable(props: ItemTableProps) {
       showColumnFilters: true,
       showGlobalFilter: true,
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+      columnVisibility: { created_time: false },
     },
     state: {
       showProgressBars: isLoading, //or showSkeletons

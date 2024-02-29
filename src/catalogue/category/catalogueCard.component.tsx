@@ -10,6 +10,7 @@ import {
   MenuItem,
   ListItemIcon,
   Menu,
+  Grid,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -17,6 +18,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import { CatalogueCategory } from '../../app.types';
 import { Link } from 'react-router-dom';
+import { formatDateTimeStrings } from '../../utils';
 export interface CatalogueCardProps extends CatalogueCategory {
   onChangeOpenDeleteDialog: (catalogueCategory: CatalogueCategory) => void;
   onChangeOpenEditDialog: (catalogueCategory: CatalogueCategory) => void;
@@ -88,9 +90,19 @@ function CatalogueCard(props: CatalogueCardProps) {
             minWidth: 0,
           }}
         >
-          <div>
-            <Typography>{catalogueCategory.name}</Typography>
-          </div>
+          <Grid>
+            <Typography fontWeight={'bold'} fontSize={20}>
+              {catalogueCategory.name}
+            </Typography>
+
+            <Typography fontStyle={'italic'} fontSize={14}>
+              {`Created:  ${formatDateTimeStrings(new Date(catalogueCategory.created_time))}`}
+            </Typography>
+
+            <Typography fontStyle={'italic'} fontSize={14}>
+              {`Last modified:  ${formatDateTimeStrings(new Date(catalogueCategory.modified_time ?? ''))}`}
+            </Typography>
+          </Grid>
         </CardContent>
         <CardActions>
           <IconButton

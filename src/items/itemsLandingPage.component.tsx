@@ -25,6 +25,7 @@ import { BreadcrumbsInfo, UsageStatusType } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ItemDialog from './itemDialog.component';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
+import { formatDateTimeStrings } from '../utils';
 
 function ItemsLandingPage() {
   // Navigation
@@ -265,6 +266,24 @@ function ItemsLandingPage() {
                       >
                         {itemData.system_id}
                       </MuiLink>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Typography align="left" color="text.primary">
+                      Last modified
+                    </Typography>
+                    <Typography align="left" color="text.secondary">
+                      {formatDateTimeStrings(
+                        new Date(itemData.modified_time ?? '')
+                      )}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Typography align="left" color="text.primary">
+                      Created
+                    </Typography>
+                    <Typography align="left" color="text.secondary">
+                      {formatDateTimeStrings(new Date(itemData.created_time))}
                     </Typography>
                   </Grid>
                 </Grid>

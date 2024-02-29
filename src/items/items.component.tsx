@@ -73,7 +73,7 @@ export function Items() {
         <ItemsTable
           catalogueCategory={catalogueCategory}
           catalogueItem={catalogueItem}
-          dense={false}
+          dense={true}
         />
       )}
 

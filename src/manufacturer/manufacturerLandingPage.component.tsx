@@ -14,6 +14,7 @@ import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { paths } from '../view/viewTabs.component';
 import { BreadcrumbsInfo } from '../app.types';
+import { formatDateTimeStrings } from '../utils';
 
 function ManufacturerLandingPage() {
   const { manufacturer_id: manufacturerId } = useParams();
@@ -188,6 +189,40 @@ function ManufacturerLandingPage() {
               color="text.secondary"
             >
               {manufacturerData.address.country}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} my={2}>
+            <Typography textAlign={'center'} variant="h6">
+              Last modified:
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              sx={{ mx: '8px' }}
+              textAlign={'center'}
+              variant="body1"
+              color="text.secondary"
+            >
+              {formatDateTimeStrings(
+                new Date(manufacturerData.modified_time ?? '')
+              )}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} my={2}>
+            <Typography textAlign={'center'} variant="h6">
+              Created:
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              sx={{ mx: '8px' }}
+              textAlign={'center'}
+              variant="body1"
+              color="text.secondary"
+            >
+              {formatDateTimeStrings(new Date(manufacturerData.created_time))}
             </Typography>
           </Grid>
         </Grid>

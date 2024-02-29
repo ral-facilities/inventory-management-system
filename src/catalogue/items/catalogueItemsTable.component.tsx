@@ -37,7 +37,11 @@ import {
   CatalogueItemPropertyResponse,
   Manufacturer,
 } from '../../app.types';
-import { generateUniqueName, getPageHeightCalc } from '../../utils';
+import {
+  formatDateTimeStrings,
+  generateUniqueName,
+  getPageHeightCalc,
+} from '../../utils';
 import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
@@ -250,6 +254,18 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             >
               {renderedCellValue}
             </MuiLink>
+          ),
+      },
+      {
+        header: 'Last modified',
+        accessorFn: (row) => row.catalogueItem.modified_time ?? '',
+        id: 'catalogueItem.modified_time',
+        size: 250,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          row.original.catalogueItem.modified_time &&
+          formatDateTimeStrings(
+            new Date(row.original.catalogueItem.modified_time)
           ),
       },
       {
@@ -546,6 +562,18 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             </Tooltip>
           ),
       },
+      {
+        header: 'Created',
+        accessorFn: (row) => row.catalogueItem.created_time,
+        id: 'catalogueItem.created_time',
+        size: 250,
+        enableGrouping: false,
+        enableHiding: true,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(
+            new Date(row.original.catalogueItem.created_time)
+          ),
+      },
     ];
   }, [dense, isItemSelectable, parentInfo.catalogue_item_properties]);
 
@@ -638,6 +666,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       showColumnFilters: true,
       showGlobalFilter: true,
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+      columnVisibility: { 'catalogueItem.created_time': false },
     },
     state: {
       showProgressBars: isLoading, //or showSkeletons
