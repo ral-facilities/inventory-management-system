@@ -35,7 +35,7 @@ export const getSciGatewayPageHeightCalc = (
    that only appears in development */
 export const getPageHeightCalc = (additionalSubtraction?: string): string => {
   // SciGateway heights - view tabs (if in development) - additional
-  let newAdditional = undefined;
+  let newAdditional: string | undefined = undefined;
 
   if (isRunningInDevelopment()) newAdditional = '48px';
   if (additionalSubtraction !== undefined) {

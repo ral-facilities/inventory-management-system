@@ -40,11 +40,12 @@ export const createTestQueryClient = (): QueryClient =>
         staleTime: 300000,
       },
     },
-    logger: {
-      log: console.log,
-      warn: console.warn,
-      error: jest.fn(),
-    },
+    // TODO: May need but causes tsc error
+    // logger: {
+    //   log: console.log,
+    //   warn: console.warn,
+    //   error: jest.fn(),
+    // },
   });
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {

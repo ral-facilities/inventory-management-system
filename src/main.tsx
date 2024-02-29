@@ -168,11 +168,11 @@ export const fetchSettings =
       });
   };
 
-function prepare() {
+async function prepare() {
   if (import.meta.env.DEV || import.meta.env.VITE_APP_E2E_TESTING === 'true') {
     // need to use require instead of import as import breaks when loaded in SG
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { worker } = require('./mocks/browser');
+    const { worker } = await import('./mocks/browser');
     return (worker as SetupWorker).start({
       onUnhandledRequest(request, print) {
         // Ignore unhandled requests to non-localhost things (normally means you're contacting a real server)
