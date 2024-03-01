@@ -36,9 +36,8 @@
 //   }
 // }
 import '@testing-library/cypress/add-commands';
-import { MockedRequest } from 'msw';
 
-let mockedRequests: MockedRequest[] = [];
+let mockedRequests: Request[] = [];
 
 Cypress.Commands.add('clearMocks', () => {
   mockedRequests = [];
@@ -60,8 +59,8 @@ Cypress.Commands.add('startSnoopingBrowserMockedRequest', () => {
   cy.window().then((window) => {
     const worker = window?.msw?.worker;
 
-    worker.events.on('request:match', ({ request }) => {
-      mockedRequests.push(request);
+    worker.events.on('request:start', ({ request }) => {
+      mockedRequests.push((request as Request).clone());
     });
   });
 });
@@ -104,7 +103,7 @@ Cypress.Commands.add('findBrowserMockedRequests', ({ method, url }) => {
         mockedRequests.filter((req) => {
           const matchesMethod =
             req.method && req.method.toLowerCase() === method.toLowerCase();
-          const matchesUrl = matchRequestUrl(req.url, url).matches;
+          const matchesUrl = matchRequestUrl(new URL(req.url), url).matches;
           return matchesMethod && matchesUrl;
         })
       );
