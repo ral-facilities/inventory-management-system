@@ -1,10 +1,10 @@
-import { PluginOption, defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
 import fs from 'node:fs';
+import path from 'path';
+import { PluginOption, UserConfig, defineConfig, loadEnv } from 'vite';
 
 /* See https://github.com/mswjs/msw/discussions/712 */
-function excludeMsw(): PluginOption {
+function excludeMSWPlugin(): PluginOption {
   return {
     name: 'exclude-msw',
     apply: 'build',
@@ -20,8 +20,13 @@ function excludeMsw(): PluginOption {
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
-  return {
-    plugins: [react(), excludeMsw()],
+  const excludeMSW =
+    env.NODE_ENV === 'production' && env.VITE_APP_E2E_TESTING !== 'true';
+
+  let plugins: PluginOption[] = [react()];
+
+  let config: UserConfig = {
+    plugins: plugins,
     server: {
       open: true,
       port: 3000,
@@ -34,7 +39,12 @@ export default defineConfig(({ command, mode }) => {
       // we need to replace here as the build in library mode won't
       'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV),
     },
-    build: {
+  };
+
+  if (excludeMSW) {
+    // Config for deployment in SciGateway without MSW
+    plugins.push(excludeMSWPlugin());
+    config.build = {
       lib: {
         // https://github.com/vitejs/vite/issues/7130
         entry: 'src/main.tsx',
@@ -47,7 +57,6 @@ export default defineConfig(({ command, mode }) => {
         output: {
           entryFileNames: '[name].js',
           chunkFileNames: '[name].chunk.js',
-          // assetFileNames: '[name].[ext]',
           globals: {
             react: 'React',
             'react-dom': 'ReactDOM',
@@ -55,6 +64,23 @@ export default defineConfig(({ command, mode }) => {
         },
         preserveEntrySignatures: 'strict',
       },
-    },
-  };
+    };
+  } else {
+    // Config for stand alone deployment e.g. for cypress
+    config.build = {
+      rollupOptions: {
+        input: ['src/main.tsx', './index.html'],
+        external: ['react', 'react-dom'],
+        output: {
+          globals: {
+            react: 'React',
+            'react-dom': 'ReactDOM',
+          },
+        },
+        preserveEntrySignatures: 'strict',
+      },
+    };
+  }
+
+  return config;
 });
