@@ -129,9 +129,8 @@ export const moveToSystems = (values: {
   });
 
   cy.findByRole('button', { name: 'Move here' }).click();
-  cy.wait('@patchSystems', { timeout: 10000 });
   cy.findByRole('dialog').should('not.exist');
-
+  cy.wait('@patchSystems', { timeout: 10000 });
   cy.findByText('Storage').click();
   cy.wait('@getSystemsData', { timeout: 10000 });
   for (let i = 0; i < values.checkedSystems.length; i++) {
