@@ -228,6 +228,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Name',
         accessorFn: (row) => row.catalogueItem.name,
+        id: 'catalogueItem.name',
         size: 200,
         Cell: ({ renderedCellValue, row }) =>
           dense ? (
@@ -269,6 +270,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Description',
         accessorFn: (row) => row.catalogueItem.description ?? '',
+        id: 'catalogueItem.description',
         size: 250,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -288,6 +290,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Is Obsolete',
         accessorFn: (row) =>
           row.catalogueItem.is_obsolete === true ? 'Yes' : 'No',
+        id: 'catalogueItem.is_obsolete',
         size: 200,
         filterVariant: 'select',
       },
@@ -295,6 +298,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Obsolete replacement link',
         accessorFn: (row) =>
           row.catalogueItem.obsolete_replacement_catalogue_item_id ?? '',
+        id: 'catalogueItem.obsolete_replacement_catalogue_item_id',
         size: 300,
         enableSorting: false,
         enableColumnFilter: false,
@@ -313,6 +317,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Obsolete Reason',
         accessorFn: (row) => row.catalogueItem.obsolete_reason ?? '',
+        id: 'catalogueItem.obsolete_reason',
         size: 250,
         enableGrouping: false,
         Cell: ({ row }) =>
@@ -330,6 +335,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       ...viewCatalogueItemProperties.map((property, index) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
+        id: `row.catalogueItem.properties.${property.name}`,
         accessorFn: (row: TableRowData) => {
           if (property.type === 'boolean') {
             return (findPropertyValue(
@@ -405,12 +411,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Cost (£)',
         accessorFn: (row) => row.catalogueItem.cost_gbp,
+        id: 'catalogueItem.cost_gbp',
         size: 250,
         filterVariant: 'range',
       },
       {
         header: 'Cost to Rework (£)',
         accessorFn: (row) => row.catalogueItem.cost_to_rework_gbp ?? 0,
+        id: 'catalogueItem.cost_to_rework_gbp',
         size: 300,
         filterVariant: 'range',
         Cell: ({ row }) => {
@@ -425,12 +433,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Time to replace (days)',
         accessorFn: (row) => row.catalogueItem.days_to_replace,
+        id: 'catalogueItem.days_to_replace',
         size: 250,
         filterVariant: 'range',
       },
       {
         header: 'Days to Rework',
         accessorFn: (row) => row.catalogueItem.days_to_rework ?? 0,
+        id: 'catalogueItem.days_to_rework',
         size: 250,
         filterVariant: 'range',
         Cell: ({ row }) => {
@@ -450,6 +460,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Drawing Link',
         accessorFn: (row) => row.catalogueItem.drawing_link ?? '',
+        id: 'catalogueItem.drawing_link',
         size: 250,
         Cell: ({ row }) =>
           row.original.catalogueItem.drawing_link && (
@@ -467,11 +478,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Item Model Number',
         accessorFn: (row) => row.catalogueItem.item_model_number ?? '',
+        id: 'catalogueItem.item_model_number',
         size: 250,
       },
       {
         header: 'Manufacturer Name',
         accessorFn: (row) => row.manufacturer?.name,
+        id: 'manufacturer.name',
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
@@ -487,6 +500,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Manufacturer URL',
         accessorFn: (row) => row.manufacturer?.url,
+        id: 'manufacturer.url',
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
@@ -503,6 +517,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Manufacturer Address',
         accessorFn: (row) =>
           `${row.manufacturer?.address.address_line}${row.manufacturer?.address.town}${row.manufacturer?.address.county}${row.manufacturer?.address.postcode}${row.manufacturer?.address.country}`,
+        id: 'manufacturer.address',
         Cell: ({ row }) => (
           <div style={{ display: 'inline-block' }}>
             <Typography sx={{ fontSize: 'inherit' }}>
@@ -526,11 +541,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       {
         header: 'Manufacturer Telephone',
         accessorFn: (row) => row.manufacturer?.telephone,
+        id: 'manufacturer.telephone',
         Cell: ({ row }) => row.original.manufacturer?.telephone,
       },
       {
         header: 'Notes',
         accessorFn: (row) => row.catalogueItem.notes ?? '',
+        id: 'catalogueItem.notes',
         size: 250,
         enableGrouping: false,
         Cell: ({ row }) =>

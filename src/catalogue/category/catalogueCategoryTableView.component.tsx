@@ -35,6 +35,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
       {
         header: 'Name',
         accessorFn: (row) => row.name,
+        id: 'name',
         size: 1135,
         Cell: ({ renderedCellValue, row }) => {
           const canPlaceHere =

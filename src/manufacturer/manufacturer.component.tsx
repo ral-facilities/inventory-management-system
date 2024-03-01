@@ -50,6 +50,7 @@ function ManufacturerComponent() {
       {
         header: 'Name',
         accessorFn: (row) => row.name,
+        id: 'name',
         size: 400,
         Cell: ({ row }) =>
           row.original.name && (
@@ -67,6 +68,7 @@ function ManufacturerComponent() {
       {
         header: 'URL',
         accessorFn: (row) => row.url ?? '',
+        id: 'url',
         size: 500,
         Cell: ({ row }) =>
           row.original.url && (
@@ -80,6 +82,7 @@ function ManufacturerComponent() {
         // Stitch together for filtering
         accessorFn: (row) =>
           `${row.address.address_line} ${row.address.town} ${row.address.county} ${row.address.postcode} ${row.address.country}`,
+        id: 'address',
         size: 650,
         Cell: ({ row }) => (
           <div style={{ display: 'inline-block' }}>
@@ -104,6 +107,7 @@ function ManufacturerComponent() {
       {
         header: 'Telephone number',
         accessorFn: (row) => row.telephone,
+        id: 'telephone',
         size: 250,
       },
     ];

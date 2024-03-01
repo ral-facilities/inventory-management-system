@@ -13,7 +13,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-1y6k1sx-MuiTable-root"
-          style="--header-mrt_row_expand-size: 60; --col-mrt_row_expand-size: 60; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-Name-size: 1000; --col-Name-size: 1000;"
+          style="--header-mrt_row_expand-size: 60; --col-mrt_row_expand-size: 60; --header-mrt_row_select-size: 60; --col-mrt_row_select-size: 60; --header-catalogueItem_name-size: 1000; --col-catalogueItem_name-size: 1000;"
         >
           <thead
             class="MuiTableHead-root css-dk8izd-MuiTableHead-root"
@@ -98,7 +98,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-em432r-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6tsrk2-MuiTableCell-root"
                 colspan="1"
                 data-index="2"
                 scope="col"
@@ -326,7 +326,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ljsm7s-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-bgtvur-MuiTableCell-root"
                 data-index="2"
               >
                 <p
@@ -433,7 +433,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ljsm7s-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-bgtvur-MuiTableCell-root"
                 data-index="2"
               >
                 <p
@@ -540,7 +540,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ljsm7s-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-bgtvur-MuiTableCell-root"
                 data-index="2"
               >
                 <p
@@ -647,7 +647,7 @@ exports[`Catalogue Items Table renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ljsm7s-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-bgtvur-MuiTableCell-root"
                 data-index="2"
               >
                 <p
