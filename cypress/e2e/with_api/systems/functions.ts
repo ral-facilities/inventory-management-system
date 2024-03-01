@@ -153,6 +153,16 @@ export const moveItemToSystem = (values: {
     url: '**/systems/*',
   }).as('getSystemsData');
 
+  cy.intercept({
+    method: 'GET',
+    url: '**/systems/*/breadcrumbs',
+  }).as('getSystemsBreadcrumbs');
+
+  cy.intercept({
+    method: 'GET',
+    url: '**/systems*',
+  }).as('getSystemsDetails');
+
   cy.findByText('Storage').click();
 
   for (let i = 0; i < values.checkedItems.length; i++) {
@@ -169,6 +179,8 @@ export const moveItemToSystem = (values: {
   });
 
   cy.findByRole('button', { name: 'Move here' }).click();
+  cy.wait('@getSystemsBreadcrumbs', { timeout: 10000 });
+  cy.wait('@getSystemsDetails', { timeout: 10000 });
   cy.wait('@getSystemsData', { timeout: 10000 });
   cy.wait('@patchItems', { timeout: 10000 });
   cy.findByRole('dialog').should('not.exist');
