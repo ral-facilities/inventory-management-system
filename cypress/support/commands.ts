@@ -60,8 +60,8 @@ Cypress.Commands.add('startSnoopingBrowserMockedRequest', () => {
   cy.window().then((window) => {
     const worker = window?.msw?.worker;
 
-    worker.events.on('request:match', (req) => {
-      mockedRequests.push(req);
+    worker.events.on('request:match', ({ request }) => {
+      mockedRequests.push(request);
     });
   });
 });

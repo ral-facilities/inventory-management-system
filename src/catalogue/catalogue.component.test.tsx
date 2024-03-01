@@ -3,7 +3,7 @@ import { renderComponentWithMemoryRouter } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 import { server } from '../mocks/server';
 import { CatalogueCategoryFormData, CatalogueItemProperty } from '../app.types';
 
@@ -213,8 +213,8 @@ describe('Catalogue', () => {
 
   it('root has no categories so there is no results page', async () => {
     server.use(
-      rest.get('/v1/catalogue-categories', (req, res, ctx) => {
-        return res(ctx.status(200), ctx.json([]));
+      http.get('/v1/catalogue-categories', () => {
+          return HttpResponse.json([], { status: 200 });
       })
     );
 
