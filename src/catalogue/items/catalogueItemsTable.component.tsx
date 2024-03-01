@@ -335,6 +335,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       ...viewCatalogueItemProperties.map((property, index) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
+        id: `row.catalogueItem.properties.${property.name}`,
         accessorFn: (row: TableRowData) => {
           if (property.type === 'boolean') {
             return (findPropertyValue(

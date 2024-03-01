@@ -196,6 +196,7 @@ export function ItemsTable(props: ItemTableProps) {
       },
       ...viewCatalogueItemProperties.map((property, index) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
+        id: `row.catalogueItem.properties.${property.name}`,
         accessorFn: (row: Item) => {
           if (property.type === 'boolean') {
             return (findPropertyValue(
