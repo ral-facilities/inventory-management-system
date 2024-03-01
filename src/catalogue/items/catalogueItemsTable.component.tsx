@@ -135,7 +135,7 @@ export interface CatalogueItemsTableProps {
   // Only for dense tables with a select - should return if a given catalogue item is
   // selectable or not
   isItemSelectable?: (item: CatalogueItem) => boolean;
-  requestOrigin?: 'move to' | 'obselete';
+  requestOrigin?: 'move to' | 'obsolete';
 }
 export type PropertyFiltersType = {
   boolean: 'select' | 'text' | 'range';
