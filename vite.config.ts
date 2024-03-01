@@ -48,7 +48,7 @@ export default defineConfig(({ command, mode }) => {
       lib: {
         // https://github.com/vitejs/vite/issues/7130
         entry: 'src/main.tsx',
-        formats: ['umd'],
+        // formats: ['umd'],
         name: 'inventory-management-system',
       },
       rollupOptions: {
@@ -70,7 +70,8 @@ export default defineConfig(({ command, mode }) => {
     config.build = {
       rollupOptions: {
         input: ['src/main.tsx', './index.html'],
-        external: ['react', 'react-dom'],
+        // Don't make these external as not a library here, so have to bundle
+        // external: ['react', 'react-dom'],
         output: {
           globals: {
             react: 'React',
