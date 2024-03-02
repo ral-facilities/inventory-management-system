@@ -1,4 +1,5 @@
-import { TableRow, Typography } from '@mui/material';
+import { Box, Button, TableRow, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import {
   MRT_ColumnDef,
   MaterialReactTable,
@@ -7,10 +8,12 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { System } from '../app.types';
+import SystemDialog from './systemDialog.component';
 
 export interface SystemsTableViewProps {
   systemsData?: System[];
   systemsDataLoading: boolean;
+  systemParentId?: string;
   onChangeParentId: (systemId: string | null) => void;
   selectedSystems: System[];
   type: 'moveTo' | 'copyTo';
@@ -20,6 +23,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
   const {
     systemsData,
     systemsDataLoading,
+    systemParentId,
     onChangeParentId,
     selectedSystems,
     type,
@@ -60,7 +64,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     // Features
     enableColumnOrdering: false,
     enableColumnPinning: false,
-    enableTopToolbar: false,
+    enableTopToolbar: true,
     enableColumnResizing: false,
     enableFacetedValues: true,
     enableRowActions: false,
@@ -109,6 +113,33 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       shape: 'rounded',
       variant: 'outlined',
     },
+    //Functions
+    renderCreateRowDialogContent: ({ table, row }) => {
+      return (
+        <>
+          <SystemDialog
+            open={true}
+            onClose={() => table.setCreatingRow(null)}
+            parentId={systemParentId}
+            type="add"
+          />
+        </>
+      );
+    },
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Box sx={{ display: 'flex' }}>
+        <Button
+          startIcon={<AddIcon />}
+          sx={{ mx: 0.5 }}
+          variant="outlined"
+          onClick={() => {
+            table.setCreatingRow(true);
+          }}
+        >
+          Add System
+        </Button>
+      </Box>
+    ),
   });
 
   return <MaterialReactTable table={table} />;
