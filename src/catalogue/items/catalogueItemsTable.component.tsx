@@ -135,6 +135,7 @@ export interface CatalogueItemsTableProps {
   // Only for dense tables with a select - should return if a given catalogue item is
   // selectable or not
   isItemSelectable?: (item: CatalogueItem) => boolean;
+  requestOrigin?: 'move to' | 'obsolete';
 }
 export type PropertyFiltersType = {
   boolean: 'select' | 'text' | 'range';
@@ -150,6 +151,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     onChangeObsoleteReplacementId,
     selectedRowState,
     isItemSelectable,
+    requestOrigin,
   } = props;
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 32px');
@@ -619,7 +621,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableDensityToggle: false,
     enableRowSelection: true,
     enableHiding: dense ? false : true,
-    enableTopToolbar: dense ? false : true,
+    enableTopToolbar: dense && requestOrigin === 'move to' ? false : true,
     enableMultiRowSelection: dense ? false : true,
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
@@ -770,17 +772,19 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             />
           </>
         )}
-        <Button
-          startIcon={<ClearIcon />}
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          disabled={columnFilters.length === 0}
-          onClick={() => {
-            table.resetColumnFilters();
-          }}
-        >
-          Clear Filters
-        </Button>
+        {requestOrigin === undefined && (
+          <Button
+            startIcon={<ClearIcon />}
+            sx={{ mx: 0.5 }}
+            variant="outlined"
+            disabled={columnFilters.length === 0}
+            onClick={() => {
+              table.resetColumnFilters();
+            }}
+          >
+            Clear Filters
+          </Button>
+        )}
       </Box>
     ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
@@ -875,6 +879,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             open={obsoleteItemDialogOpen}
             onClose={() => setObsoleteItemDialogOpen(false)}
             catalogueItem={selectedCatalogueItem}
+            parentInfo={parentInfo}
           />
         </>
       )}
