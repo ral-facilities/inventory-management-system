@@ -66,14 +66,7 @@ Cypress.Commands.add('startSnoopingBrowserMockedRequest', () => {
   });
 });
 
-Cypress.Commands.add('dropIMSDB', () => {
-  const collections = [
-    'catalogue_categories',
-    'catalogue_items',
-    'manufacturers',
-    'items',
-    'systems',
-  ];
+Cypress.Commands.add('dropIMSCollections', (collections: string[]) => {
   collections.forEach((collection) =>
     cy.exec(
       `docker exec -i $(docker ps | grep mongo | awk '{ print $1 }') mongosh ims --username "root" --password "example" --authenticationDatabase=admin --eval "db.${collection}.drop()"`
@@ -155,11 +148,11 @@ declare global {
         method,
         url,
       }: any): Chainable<MockedRequest[]>;
-      dropIMSDB(): Chainable<unknown>;
+      dropIMSCollections(collections: string[]): Chainable<unknown>;
       /**
-       * Deletes the IMS database
+       * Deletes the IMS collections
        *
-       * @example cy.dropIMSDB();
+       * @example cy.dropIMSCollections();
        */
     }
   }

@@ -1,14 +1,17 @@
-export const modifyManufacturer = (values: {
-  editManufacturerName?: string;
-  name: string;
-  url?: string;
-  country: string;
-  address_line: string;
-  town?: string;
-  county?: string;
-  postcode: string;
-  telephone_number?: string;
-}) => {
+export const modifyManufacturer = (
+  values: {
+    editManufacturerName?: string;
+    name: string;
+    url?: string;
+    country: string;
+    address_line: string;
+    town?: string;
+    county?: string;
+    postcode: string;
+    telephone_number?: string;
+  },
+  ignore?: boolean
+) => {
   if (values.editManufacturerName) {
     cy.findByLabelText(`${values.editManufacturerName} row`).within(() => {
       cy.findByLabelText('Row Actions').click();
@@ -52,31 +55,37 @@ export const modifyManufacturer = (values: {
   }
 
   cy.findByRole('button', { name: 'Save' }).click();
-  cy.findByText(values.name).should('exist');
-  cy.findByText(values.name).click();
-  cy.findAllByText(values.name).should('have.length.gte', 1);
-  values.url && cy.findByText(values.url).should('exist');
-  cy.findByText(values.country).should('exist');
-  cy.findByText(values.address_line).should('exist');
-  values.town && cy.findByText(values.town).should('exist');
-  values.county && cy.findByText(values.county).should('exist');
-  cy.findByText(values.postcode).should('exist');
-  values.telephone_number &&
-    cy.findByText(values.telephone_number).should('exist');
-  cy.go('back');
+
+  if (!ignore) {
+    cy.findByText(values.name).should('exist');
+    cy.findByText(values.name).click();
+    cy.findAllByText(values.name).should('have.length.gte', 1);
+    values.url && cy.findByText(values.url).should('exist');
+    cy.findByText(values.country).should('exist');
+    cy.findByText(values.address_line).should('exist');
+    values.town && cy.findByText(values.town).should('exist');
+    values.county && cy.findByText(values.county).should('exist');
+    cy.findByText(values.postcode).should('exist');
+    values.telephone_number &&
+      cy.findByText(values.telephone_number).should('exist');
+    cy.go('back');
+  }
 };
 
-export const addManufacturer = () => {
-  modifyManufacturer({
-    name: 'ThorsLabs',
-    url: 'https://www.thorlabs.com/',
-    country: 'United Kingdom',
-    address_line: '2 Kew Court Pynes Hill Office Campus',
-    town: 'Rydon Lane',
-    county: 'Exeter',
-    postcode: 'EX2 5AZ',
-    telephone_number: '074493208487',
-  });
+export const addManufacturer = (ignore?: boolean) => {
+  modifyManufacturer(
+    {
+      name: 'ThorsLabs',
+      url: 'https://www.thorlabs.com/',
+      country: 'United Kingdom',
+      address_line: '2 Kew Court Pynes Hill Office Campus',
+      town: 'Rydon Lane',
+      county: 'Exeter',
+      postcode: 'EX2 5AZ',
+      telephone_number: '074493208487',
+    },
+    ignore
+  );
 };
 
 export const editManufacturer = () => {

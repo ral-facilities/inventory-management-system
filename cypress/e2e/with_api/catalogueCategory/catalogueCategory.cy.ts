@@ -9,12 +9,12 @@ import {
 
 describe('Catalogue Category', () => {
   beforeEach(() => {
-    cy.dropIMSDB();
+    cy.dropIMSCollections(['catalogue_categories']);
     cy.visit('/catalogue');
   });
   afterEach(() => {
     cy.clearMocks();
-    cy.dropIMSDB();
+    cy.dropIMSCollections(['catalogue_categories']);
   });
 
   it('CRUD for catalogue categories', () => {

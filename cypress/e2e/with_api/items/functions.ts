@@ -1,19 +1,22 @@
-const modifyItem = (values: {
-  edit?: number;
-  serialNumber?: string;
-  assetNumber?: string;
-  purchaseOrderNumber?: string;
-  warrantyEndDate?: string;
-  deliveredDate?: string;
-  isDefective: string;
-  usageStatus: string;
-  notes?: string;
-  substrate: string;
-  diameter?: string;
-  wavelengthRange: string;
-  broken?: string;
-  system: string;
-}) => {
+const modifyItem = (
+  values: {
+    edit?: number;
+    serialNumber?: string;
+    assetNumber?: string;
+    purchaseOrderNumber?: string;
+    warrantyEndDate?: string;
+    deliveredDate?: string;
+    isDefective: string;
+    usageStatus: string;
+    notes?: string;
+    substrate: string;
+    diameter?: string;
+    wavelengthRange: string;
+    broken?: string;
+    system: string;
+  },
+  ignore?: boolean
+) => {
   if (typeof values.edit === 'number') {
     cy.findAllByLabelText('Row Actions').eq(values.edit).click();
 
@@ -103,19 +106,21 @@ const modifyItem = (values: {
 
   cy.findByRole('button', { name: 'Finish' }).click();
 
-  if (values.serialNumber) {
-    cy.findByText('Serial Number').scrollIntoView();
-    cy.findByText(values.serialNumber).should('exist');
-  }
+  if (!ignore) {
+    if (values.serialNumber) {
+      cy.findByText('Serial Number').scrollIntoView();
+      cy.findByText(values.serialNumber).should('exist');
+    }
 
-  if (values.assetNumber) {
-    cy.findByText('Asset Number').scrollIntoView();
-    cy.findByText(values.assetNumber).should('exist');
-  }
+    if (values.assetNumber) {
+      cy.findByText('Asset Number').scrollIntoView();
+      cy.findByText(values.assetNumber).should('exist');
+    }
 
-  if (values.purchaseOrderNumber) {
-    cy.findByText('Purchase Order Number').scrollIntoView();
-    cy.findByText(values.purchaseOrderNumber).should('exist');
+    if (values.purchaseOrderNumber) {
+      cy.findByText('Purchase Order Number').scrollIntoView();
+      cy.findByText(values.purchaseOrderNumber).should('exist');
+    }
   }
 };
 
@@ -138,23 +143,26 @@ export const deleteItem = (serialNumber: string, index: number) => {
   cy.findByText(serialNumber).should('not.exist');
 };
 
-export const addItem = () => {
+export const addItem = (ignore?: boolean) => {
   cy.findByText('Click here').click();
-  modifyItem({
-    serialNumber: 'MX432424',
-    assetNumber: 'PY4234324',
-    purchaseOrderNumber: '234',
-    warrantyEndDate: '17/02/2029',
-    deliveredDate: '19/03/2022',
-    isDefective: 'Yes',
-    usageStatus: 'New',
-    notes: 'test',
-    substrate: 'N-BK7',
-    diameter: '10',
-    wavelengthRange: '195 - 2100',
-    broken: 'False',
-    system: 'Storage',
-  });
+  modifyItem(
+    {
+      serialNumber: 'MX432424',
+      assetNumber: 'PY4234324',
+      purchaseOrderNumber: '234',
+      warrantyEndDate: '17/02/2029',
+      deliveredDate: '19/03/2022',
+      isDefective: 'Yes',
+      usageStatus: 'New',
+      notes: 'test',
+      substrate: 'N-BK7',
+      diameter: '10',
+      wavelengthRange: '195 - 2100',
+      broken: 'False',
+      system: 'Storage',
+    },
+    ignore
+  );
 };
 
 export const editItem = () => {

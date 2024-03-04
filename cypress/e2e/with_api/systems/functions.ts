@@ -1,11 +1,14 @@
-export const modifySystem = (values: {
-  index?: number;
-  name: string;
-  description?: string;
-  location?: string;
-  owner?: string;
-  importance: string;
-}) => {
+export const modifySystem = (
+  values: {
+    index?: number;
+    name: string;
+    description?: string;
+    location?: string;
+    owner?: string;
+    importance: string;
+  },
+  ignore?: boolean
+) => {
   if (typeof values.index === 'number') {
     cy.findAllByLabelText('Row Actions').eq(values.index).click();
     cy.findByText('Edit').click();
@@ -38,16 +41,18 @@ export const modifySystem = (values: {
   cy.findByLabelText('Importance').click();
   cy.findByRole('option', { name: values.importance }).click();
 
-  cy.findByRole('button', { name: 'Save' }).click();
-  cy.findByText(values.name).click();
+  if (!ignore) {
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByText(values.name).click();
 
-  cy.findAllByText(values.name).should('have.length.gte', 1);
-  values.description && cy.findByText(values.description).should('exist');
-  values.owner && cy.findByText(values.owner).should('exist');
-  values.location && cy.findByText(values.location).should('exist');
-  cy.findByText(values.importance).should('exist');
+    cy.findAllByText(values.name).should('have.length.gte', 1);
+    values.description && cy.findByText(values.description).should('exist');
+    values.owner && cy.findByText(values.owner).should('exist');
+    values.location && cy.findByText(values.location).should('exist');
+    cy.findByText(values.importance).should('exist');
 
-  cy.go('back');
+    cy.go('back');
+  }
 };
 
 export const saveAsSystem = (name: string, index: number) => {
@@ -143,15 +148,6 @@ export const moveItemToSystem = (values: {
   checkedItems: number[];
   checkedItemsNames: string[];
 }) => {
-  cy.intercept({
-    method: 'PATCH',
-    url: '**/items/*',
-  }).as('patchItems');
-  cy.intercept({
-    method: 'GET',
-    url: '**/systems/*',
-  }).as('getSystemsData');
-
   cy.findByText('Storage').click();
 
   for (let i = 0; i < values.checkedItems.length; i++) {
@@ -180,15 +176,18 @@ export const moveItemToSystem = (values: {
   cy.findByRole('button', { name: 'navigate to systems home' }).click();
 };
 
-export const addSystems = () => {
-  modifySystem({ name: 'Storage', importance: 'high' });
-  modifySystem({
-    name: 'optics 1',
-    importance: 'medium',
-    owner: 'Tim',
-    location: 'R100, room 4 bench 5',
-    description: 'optics for experiment RE3213',
-  });
+export const addSystems = (ignore?: boolean) => {
+  modifySystem({ name: 'Storage', importance: 'high' }, ignore);
+  modifySystem(
+    {
+      name: 'optics 1',
+      importance: 'medium',
+      owner: 'Tim',
+      location: 'R100, room 4 bench 5',
+      description: 'optics for experiment RE3213',
+    },
+    ignore
+  );
 };
 
 export const editSystems = () => {

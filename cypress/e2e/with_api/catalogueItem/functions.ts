@@ -1,21 +1,24 @@
-const modifyCatalogueItem = (values: {
-  editCatalogueItemName?: string;
-  name: string;
-  description?: string;
-  costGbp: string;
-  costToReworkGbp?: string;
-  daysToReplace: string;
-  daysToRework?: string;
-  drawingNumber?: string;
-  drawingLink?: string;
-  itemModelNumber?: string;
-  notes?: string;
-  manufacturer: string;
-  substrate: string;
-  diameter?: string;
-  wavelengthRange: string;
-  broken?: string;
-}) => {
+const modifyCatalogueItem = (
+  values: {
+    editCatalogueItemName?: string;
+    name: string;
+    description?: string;
+    costGbp: string;
+    costToReworkGbp?: string;
+    daysToReplace: string;
+    daysToRework?: string;
+    drawingNumber?: string;
+    drawingLink?: string;
+    itemModelNumber?: string;
+    notes?: string;
+    manufacturer: string;
+    substrate: string;
+    diameter?: string;
+    wavelengthRange: string;
+    broken?: string;
+  },
+  ignore?: boolean
+) => {
   if (values.editCatalogueItemName) {
     cy.findByLabelText(`${values.editCatalogueItemName} row`).within(() => {
       cy.findByLabelText('Row Actions').click();
@@ -110,51 +113,55 @@ const modifyCatalogueItem = (values: {
   }
   cy.findByRole('button', { name: 'Finish' }).click();
 
-  cy.findByText(values.name).should('exist');
-  cy.findByText(values.name).click();
+  if (!ignore) {
+    cy.findByText(values.name).should('exist');
+    cy.findByText(values.name).click();
 
-  values.description && cy.findByText(values.description).should('exist');
+    values.description && cy.findByText(values.description).should('exist');
 
-  cy.findByText(values.costGbp).should('exist');
+    cy.findByText(values.costGbp).should('exist');
 
-  values.costToReworkGbp &&
-    cy.findByText(values.costToReworkGbp).should('exist');
+    values.costToReworkGbp &&
+      cy.findByText(values.costToReworkGbp).should('exist');
 
-  cy.findByText(values.daysToReplace).should('exist');
+    cy.findByText(values.daysToReplace).should('exist');
 
-  values.daysToRework && cy.findByText(values.daysToRework).should('exist');
+    values.daysToRework && cy.findByText(values.daysToRework).should('exist');
 
-  values.drawingNumber && cy.findByText(values.drawingNumber).should('exist');
+    values.drawingNumber && cy.findByText(values.drawingNumber).should('exist');
 
-  values.drawingLink && cy.findByText(values.drawingLink).should('exist');
+    values.drawingLink && cy.findByText(values.drawingLink).should('exist');
 
-  values.itemModelNumber &&
-    cy.findByText(values.itemModelNumber).should('exist');
+    values.itemModelNumber &&
+      cy.findByText(values.itemModelNumber).should('exist');
 
-  values.notes && cy.findByText(values.notes).should('exist');
+    values.notes && cy.findByText(values.notes).should('exist');
 
-  cy.findByText(values.manufacturer).should('exist');
+    cy.findByText(values.manufacturer).should('exist');
 
-  cy.findByText(values.substrate).should('exist');
+    cy.findByText(values.substrate).should('exist');
 
-  values.diameter && cy.findByText(values.diameter).should('exist');
+    values.diameter && cy.findByText(values.diameter).should('exist');
 
-  cy.findByText(values.wavelengthRange).should('exist');
+    cy.findByText(values.wavelengthRange).should('exist');
 
-  if (values.broken) {
-    cy.findByText(
-      values.broken === 'False' ? 'false' : 'true'
-    ).scrollIntoView();
+    if (values.broken) {
+      cy.findByText(
+        values.broken === 'False' ? 'false' : 'true'
+      ).scrollIntoView();
 
-    cy.findByText(values.broken === 'False' ? 'false' : 'true').should('exist');
+      cy.findByText(values.broken === 'False' ? 'false' : 'true').should(
+        'exist'
+      );
+    }
+
+    if (values.notes) {
+      cy.findByText(values.notes).scrollIntoView();
+
+      cy.findByText(values.notes).should('exist');
+    }
+    cy.go('back');
   }
-
-  if (values.notes) {
-    cy.findByText(values.notes).scrollIntoView();
-
-    cy.findByText(values.notes).should('exist');
-  }
-  cy.go('back');
 };
 
 export const saveAsCatalogueItem = (name: string) => {
@@ -287,25 +294,28 @@ export const moveToCatalogueItems = (values: { checkedItems: string[] }) => {
   }
 };
 
-export const addCatalogueItem = () => {
+export const addCatalogueItem = (ignore?: boolean) => {
   cy.findByText('Spherical Lenses').click();
-  modifyCatalogueItem({
-    name: 'Plano-Convex Lens',
-    description: 'Planoconvex Lens UVFS 6mmdia x 10mm F.L. Uncoated',
-    costGbp: '43.95',
-    costToReworkGbp: '20',
-    daysToReplace: '5',
-    daysToRework: '1',
-    drawingLink: 'https://example.com/',
-    drawingNumber: 'GH45235324',
-    itemModelNumber: 'rew5435453',
-    notes: 'test',
-    manufacturer: 'ThorsLabs',
-    substrate: 'N-BK7',
-    diameter: '10',
-    wavelengthRange: '195 - 2100',
-    broken: 'False',
-  });
+  modifyCatalogueItem(
+    {
+      name: 'Plano-Convex Lens',
+      description: 'Planoconvex Lens UVFS 6mmdia x 10mm F.L. Uncoated',
+      costGbp: '43.95',
+      costToReworkGbp: '20',
+      daysToReplace: '5',
+      daysToRework: '1',
+      drawingLink: 'https://example.com/',
+      drawingNumber: 'GH45235324',
+      itemModelNumber: 'rew5435453',
+      notes: 'test',
+      manufacturer: 'ThorsLabs',
+      substrate: 'N-BK7',
+      diameter: '10',
+      wavelengthRange: '195 - 2100',
+      broken: 'False',
+    },
+    ignore
+  );
 };
 
 export const editCatalogueItem = () => {
