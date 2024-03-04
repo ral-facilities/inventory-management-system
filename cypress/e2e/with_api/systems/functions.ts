@@ -40,9 +40,8 @@ export const modifySystem = (
 
   cy.findByLabelText('Importance').click();
   cy.findByRole('option', { name: values.importance }).click();
-
+  cy.findByRole('button', { name: 'Save' }).click();
   if (!ignore) {
-    cy.findByRole('button', { name: 'Save' }).click();
     cy.findByText(values.name).click();
 
     cy.findAllByText(values.name).should('have.length.gte', 1);
