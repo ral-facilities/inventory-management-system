@@ -194,6 +194,8 @@ describe('catalogue items api functions', () => {
         system_id: '65328f34a40ff5301575a4e3',
         usage_status: 1,
         warranty_end_date: '2023-04-04T23:00:00.000Z',
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       });
     });
   });
