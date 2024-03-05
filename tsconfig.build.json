@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  // Exclude test files from build
+  "exclude": ["**/?*test.*"]
+}

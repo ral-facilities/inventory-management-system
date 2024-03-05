@@ -99,5 +99,11 @@ export default defineConfig(({ command, mode }) => {
     };
   }
 
-  return config;
+  return {
+    ...config,
+    test: {
+      globals: 'true',
+      environment: 'jsdom',
+    },
+  };
 });
