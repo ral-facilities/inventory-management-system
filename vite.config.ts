@@ -20,8 +20,15 @@ function excludeMSWPlugin(): PluginOption {
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
+  // Whether to output build files in a way SciGateway can load (the default unless e2e testing)
+  const buildForSciGateway =
+    env.NODE_ENV === 'production' &&
+    env.VITE_APP_E2E_TESTING !== 'true' &&
+    env.VITE_APP_E2E_TESTING_API !== 'true';
+
+  // Whether to include MSW from the build
   const excludeMSW =
-    env.NODE_ENV === 'production' && env.VITE_APP_E2E_TESTING !== 'true';
+    env.NODE_ENV !== 'production' || env.VITE_APP_E2E_TESTING_API === 'true';
 
   let plugins: PluginOption[] = [react()];
 
@@ -41,18 +48,27 @@ export default defineConfig(({ command, mode }) => {
     },
   };
 
+  let rollupExternals: string[] = [];
+
+  // Exclude msw if necessary
   if (excludeMSW) {
-    // Config for deployment in SciGateway without MSW
     plugins.push(excludeMSWPlugin());
+    rollupExternals.push('msw');
+  }
+
+  if (buildForSciGateway) {
+    // Config for deployment in SciGateway
+    let rollupExternals = ['react', 'react-dom'];
+    if (excludeMSW) rollupExternals.push('msw');
+
     config.build = {
       lib: {
         // https://github.com/vitejs/vite/issues/7130
         entry: 'src/main.tsx',
-        // formats: ['umd'],
         name: 'inventory-management-system',
       },
       rollupOptions: {
-        external: ['react', 'react-dom', 'msw'],
+        external: ['react', 'react-dom'].concat(rollupExternals),
         input: 'src/main.tsx',
         output: {
           entryFileNames: '[name].js',
@@ -70,8 +86,8 @@ export default defineConfig(({ command, mode }) => {
     config.build = {
       rollupOptions: {
         input: ['src/main.tsx', './index.html'],
-        // Don't make these external as not a library here, so have to bundle
-        // external: ['react', 'react-dom'],
+        // Don't make react/react-dom external as not a library here, so have to bundle
+        external: rollupExternals,
         output: {
           globals: {
             react: 'React',
