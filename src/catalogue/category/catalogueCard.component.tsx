@@ -91,17 +91,15 @@ function CatalogueCard(props: CatalogueCardProps) {
           }}
         >
           <Grid>
-            <Typography fontWeight={'bold'} fontSize={20}>
-              {catalogueCategory.name}
-            </Typography>
+            <Grid position={'relative'}>
+              <Typography>{catalogueCategory.name}</Typography>
+            </Grid>
 
-            <Typography fontStyle={'italic'} fontSize={14}>
-              {`Created:  ${formatDateTimeStrings(catalogueCategory.created_time)}`}
-            </Typography>
-
-            <Typography fontStyle={'italic'} fontSize={14}>
-              {`Last modified:  ${formatDateTimeStrings(catalogueCategory.modified_time ?? '')}`}
-            </Typography>
+            <Grid position={'absolute'} bottom={5} right={12}>
+              <Typography color="text.secondary">
+                {`Last modified:  ${formatDateTimeStrings(catalogueCategory.modified_time ?? '')}`}
+              </Typography>
+            </Grid>
           </Grid>
         </CardContent>
         <CardActions>
