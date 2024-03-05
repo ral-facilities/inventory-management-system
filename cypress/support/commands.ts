@@ -59,6 +59,11 @@ Cypress.Commands.add('startSnoopingBrowserMockedRequest', () => {
   cy.window().then((window) => {
     const worker = window?.msw?.worker;
 
+    // Use start here instead of match as needs to be done before the request is read to
+    // avoid errors as an MDN Request's contents can only be read once. We then clone it
+    // here to ensure the MSW handlers can call .json() on it, and also any Cypress tests
+    // which would otherwise have failed for the same reason as json() can only be called
+    // once on the original request.
     worker.events.on('request:start', ({ request }) => {
       mockedRequests.push((request as Request).clone());
     });
