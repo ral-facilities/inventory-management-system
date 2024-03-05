@@ -2,16 +2,20 @@ module.exports = {
   webpack: {
     configure: (webpackConfig, { env, paths }) => {
       webpackConfig.externals = {
-        react: "React", // Case matters here
-        "react-dom": "ReactDOM", // Case matters here
+        react: 'React', // Case matters here
+        'react-dom': 'ReactDOM', // Case matters here
       };
 
-      if (env === "production" && process.env.REACT_APP_E2E_TESTING !== "true") {
-        webpackConfig.output.library = "inventory-management-system";
-        webpackConfig.output.libraryTarget = "window";
+      if (
+        env === 'production' &&
+        (process.env.REACT_APP_E2E_TESTING !== 'true' ||
+          process.env.REACT_APP_E2E_TESTING_API !== 'true')
+      ) {
+        webpackConfig.output.library = 'inventory-management-system';
+        webpackConfig.output.libraryTarget = 'window';
 
-        webpackConfig.output.filename = "[name].js";
-        webpackConfig.output.chunkFilename = "[name].chunk.js";
+        webpackConfig.output.filename = '[name].js';
+        webpackConfig.output.chunkFilename = '[name].chunk.js';
 
         delete webpackConfig.optimization.splitChunks;
         webpackConfig.optimization.runtimeChunk = false;
