@@ -2755,7 +2755,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by ID"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rii:"
+                            id=":ri7:"
                             placeholder="Filter by ID"
                             title="Filter by ID"
                             type="text"
@@ -2893,7 +2893,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Last modified"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rim:"
+                            id=":rib:"
                             placeholder="Filter by Last modified"
                             title="Filter by Last modified"
                             type="text"
@@ -3031,7 +3031,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Serial Number"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":riq:"
+                            id=":rif:"
                             placeholder="Filter by Serial Number"
                             title="Filter by Serial Number"
                             type="text"
@@ -3169,7 +3169,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Warranty End Date"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":riu:"
+                            id=":rij:"
                             placeholder="Filter by Warranty End Date"
                             title="Filter by Warranty End Date"
                             type="text"
@@ -3307,7 +3307,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                             aria-label="Filter by Delivered Date"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rj2:"
+                            id=":rin:"
                             placeholder="Filter by Delivered Date"
                             title="Filter by Delivered Date"
                             type="text"
@@ -3441,13 +3441,13 @@ exports[`Items Table renders the dense table correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
                           <div
-                            aria-controls=":rj7:"
+                            aria-controls=":ris:"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Is Defective"
-                            aria-labelledby=":rj6:"
+                            aria-labelledby=":rir:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":rj6:"
+                            id=":rir:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -3584,7 +3584,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
                 >
-                  04/04/2023
+                  4/4/2023
                 </p>
               </td>
               <td
@@ -3594,7 +3594,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
                 >
-                  17/03/2023
+                  3/17/2023
                 </p>
               </td>
               <td
@@ -3680,7 +3680,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
                 >
-                  18/05/2023
+                  5/18/2023
                 </p>
               </td>
               <td
@@ -3690,7 +3690,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
                 >
-                  11/05/2023
+                  5/11/2023
                 </p>
               </td>
               <td
@@ -3776,7 +3776,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
                 >
-                  18/07/2023
+                  7/18/2023
                 </p>
               </td>
               <td
@@ -3786,7 +3786,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
                 >
-                  16/06/2023
+                  6/16/2023
                 </p>
               </td>
               <td
@@ -3872,7 +3872,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
                 >
-                  04/10/2023
+                  10/4/2023
                 </p>
               </td>
               <td
@@ -3882,7 +3882,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
                 >
-                  05/12/2023
+                  12/5/2023
                 </p>
               </td>
               <td
@@ -3990,7 +3990,7 @@ exports[`Items Table renders the dense table correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":rj9:"
+                    aria-controls=":riu:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
