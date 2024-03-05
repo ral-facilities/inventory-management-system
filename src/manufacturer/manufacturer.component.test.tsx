@@ -149,6 +149,6 @@ describe('Manufacturer', () => {
     await user.click(homeButton);
 
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturer');
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturers');
   });
 });

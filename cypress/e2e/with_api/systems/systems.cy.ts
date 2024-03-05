@@ -17,7 +17,7 @@ describe('systems', () => {
   beforeEach(() => {
     cy.dropIMSDB();
     // Prepare relevant data for systems
-    cy.visit('/manufacturer');
+    cy.visit('/manufacturers');
     addManufacturer();
     cy.visit('/systems');
     addSystems();

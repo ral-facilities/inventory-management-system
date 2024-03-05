@@ -1,6 +1,6 @@
 import { addCatalogueCategories } from '../catalogueCategory/functions';
 import { addCatalogueItem } from '../catalogueItem/functions';
-import { addManufacturer } from '../manufacturer/functions';
+import { addManufacturer } from '../manufacturers/functions';
 import { addSystems } from '../systems/functions';
 import { addItem, deleteItem, editItem, saveAsItem } from './functions';
 
@@ -8,7 +8,7 @@ describe('items', () => {
   beforeEach(() => {
     cy.dropIMSDB();
     // Prepare relevant data for items
-    cy.visit('/manufacturer');
+    cy.visit('/manufacturers');
     addManufacturer();
     cy.visit('/systems');
     addSystems();

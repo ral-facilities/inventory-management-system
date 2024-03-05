@@ -20,8 +20,8 @@ export const paths = {
   homepage: '/ims',
   catalogue: '/catalogue/*',
   systems: '/systems/*',
-  manufacturers: '/manufacturer',
-  manufacturer: '/manufacturer/:manufacturer_id',
+  manufacturers: '/manufacturers',
+  manufacturer: '/manufacturers/:manufacturer_id',
   catalogueItem: '/catalogue/item/:catalogue_item_id',
   items: '/catalogue/item/:catalogue_item_id/items',
   item: '/catalogue/item/:catalogue_item_id/items/:item_id',
@@ -129,9 +129,9 @@ function ViewTabs() {
               {...a11yProps('Systems')}
             />
             <StyledTab
-              value="Manufacturer"
-              label="Manufacturer"
-              {...a11yProps('Manufacturer')}
+              value="Manufacturers"
+              label="Manufacturers"
+              {...a11yProps('Manufacturers')}
             />
           </Tabs>
           <Box

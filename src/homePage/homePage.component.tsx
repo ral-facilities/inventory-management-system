@@ -257,7 +257,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                     color="primary"
                     variant="contained"
                     component={Link}
-                    to={'/manufacturer'}
+                    to={'/manufacturers'}
                     data-testid="manufacturer-button"
                   >
                     {'Explore'}

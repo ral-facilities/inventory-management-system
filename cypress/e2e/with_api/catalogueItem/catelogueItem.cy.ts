@@ -16,7 +16,7 @@ describe('catalogue items', () => {
   beforeEach(() => {
     cy.dropIMSDB();
     // Prepare relevant data for catalogue items
-    cy.visit('/manufacturer');
+    cy.visit('/manufacturers');
     addManufacturer();
     cy.visit('/catalogue');
     addCatalogueCategories();
