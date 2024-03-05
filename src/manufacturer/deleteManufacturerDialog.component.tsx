@@ -18,10 +18,11 @@ export interface DeleteManufacturerProps {
   open: boolean;
   onClose: () => void;
   manufacturer: Manufacturer | undefined;
+  resetManufacturer: (manufacturer: Manufacturer | undefined) => void;
 }
 
 const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
-  const { open, onClose, manufacturer } = props;
+  const { open, onClose, manufacturer, resetManufacturer } = props;
 
   const [error, setError] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
@@ -41,6 +42,7 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
     if (manufacturer) {
       deleteManufacturer(manufacturer)
         .then((response) => {
+          resetManufacturer(undefined);
           onClose();
         })
         .catch((error: AxiosError) => {

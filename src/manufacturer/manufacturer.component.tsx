@@ -39,6 +39,8 @@ function ManufacturerComponent() {
     Manufacturer | undefined
   >(undefined);
 
+  console.log(selectedManufacturer?.name);
+
   const tableHeight = getPageHeightCalc('192px');
 
   const [maufacturerDialogType, setMaufacturerDialogType] = React.useState<
@@ -274,6 +276,7 @@ function ManufacturerComponent() {
         open={deleteManufacturerDialog}
         onClose={() => setDeleteManufacturerDialog(false)}
         manufacturer={selectedManufacturer}
+        resetManufacturer={setSelectedManufacturer}
       />
     </div>
   );
