@@ -13,6 +13,7 @@ describe('Delete Manufacturer Dialog', () => {
   const onClose = jest.fn();
   let props: DeleteManufacturerProps;
   let manufacturer: Manufacturer;
+  const resetManufacturer = jest.fn();
   let user;
   const createView = (): RenderResult => {
     return renderComponentWithBrowserRouter(
@@ -37,6 +38,7 @@ describe('Delete Manufacturer Dialog', () => {
       open: true,
       onClose: onClose,
       manufacturer: manufacturer,
+      resetManufacturer: resetManufacturer,
     };
     user = userEvent;
   });
