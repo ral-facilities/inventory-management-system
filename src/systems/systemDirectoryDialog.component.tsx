@@ -186,7 +186,14 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
             isCopyPending ||
             isMovePending ||
             // Disable when not moving anywhere different
-            (props.parentSystemId === parentSystemId && type === 'moveTo')
+            (props.parentSystemId === parentSystemId && type === 'moveTo') ||
+            // Either ensure finished loading, or moving to root (move to)
+            !(!targetSystemLoading || parentSystemId === null) ||
+            // Either ensure finished loading, or moving to root and system data is defined (copy to)
+            !(
+              (!targetSystemLoading || parentSystemId === null) &&
+              systemsData !== undefined
+            )
           }
           onClick={type === 'moveTo' ? handleMoveTo : handleCopyTo}
         >
