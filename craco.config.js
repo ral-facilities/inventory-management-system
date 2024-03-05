@@ -8,8 +8,8 @@ module.exports = {
 
       if (
         env === 'production' &&
-        (process.env.REACT_APP_E2E_TESTING !== 'true' ||
-          process.env.REACT_APP_E2E_TESTING_API !== 'true')
+        process.env.REACT_APP_E2E_TESTING !== 'true' &&
+        process.env.REACT_APP_E2E_TESTING_API !== 'true'
       ) {
         webpackConfig.output.library = 'inventory-management-system';
         webpackConfig.output.libraryTarget = 'window';
