@@ -39,8 +39,6 @@ function ManufacturerComponent() {
     Manufacturer | undefined
   >(undefined);
 
-  console.log(selectedManufacturer?.name);
-
   const tableHeight = getPageHeightCalc('192px');
 
   const [maufacturerDialogType, setMaufacturerDialogType] = React.useState<
