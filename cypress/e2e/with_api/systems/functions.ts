@@ -75,15 +75,6 @@ export const copyToSystems = (values: {
   checkedSystems: number[];
   checkedSystemsNames: string[];
 }) => {
-  cy.intercept({
-    method: 'POST',
-    url: '**/systems',
-  }).as('postSystems');
-  cy.intercept({
-    method: 'GET',
-    url: '**/systems/*',
-  }).as('getSystemsData');
-
   for (let i = 0; i < values.checkedSystems.length; i++) {
     cy.findAllByLabelText('Toggle select row')
       .eq(values.checkedSystems[i])
@@ -96,14 +87,12 @@ export const copyToSystems = (values: {
     cy.findByText('Storage').click();
   });
 
-  cy.wait('@getSystemsData', { timeout: 10000 });
   cy.findByRole('button', { name: 'Copy here' }).should('not.be.disabled');
-
   cy.findByRole('button', { name: 'Copy here' }).click();
   cy.findByRole('dialog').should('not.exist', { timeout: 10000 });
-  cy.wait('@postSystems', { timeout: 10000 });
+
   cy.findByText('Storage').click();
-  cy.wait('@getSystemsData', { timeout: 10000 });
+
   for (let i = 0; i < values.checkedSystems.length; i++) {
     deleteSystem(values.checkedSystemsNames[i], 0);
   }
@@ -114,15 +103,6 @@ export const moveToSystems = (values: {
   checkedSystems: number[];
   checkedSystemsNames: string[];
 }) => {
-  cy.intercept({
-    method: 'PATCH',
-    url: '**/systems/*',
-  }).as('patchSystems');
-  cy.intercept({
-    method: 'GET',
-    url: '**/systems/*',
-  }).as('getSystemsData');
-
   for (let i = 0; i < values.checkedSystems.length; i++) {
     cy.findAllByLabelText('Toggle select row')
       .eq(values.checkedSystems[i])
@@ -134,13 +114,13 @@ export const moveToSystems = (values: {
   cy.findByRole('dialog').within(() => {
     cy.findByText('Storage').click();
   });
-  cy.wait('@getSystemsData', { timeout: 10000 });
+
   cy.findByRole('button', { name: 'Move here' }).should('not.be.disabled');
   cy.findByRole('button', { name: 'Move here' }).click();
   cy.findByRole('dialog').should('not.exist', { timeout: 10000 });
-  cy.wait('@patchSystems', { timeout: 10000 });
+
   cy.findByText('Storage').click();
-  cy.wait('@getSystemsData', { timeout: 10000 });
+
   for (let i = 0; i < values.checkedSystems.length; i++) {
     deleteSystem(values.checkedSystemsNames[i], 0);
   }
@@ -151,15 +131,6 @@ export const moveItemToSystem = (values: {
   checkedItems: number[];
   checkedItemsNames: string[];
 }) => {
-  cy.intercept({
-    method: 'PATCH',
-    url: '**/items/*',
-  }).as('patchItems');
-  cy.intercept({
-    method: 'GET',
-    url: '**/systems/*',
-  }).as('getSystemsData');
-
   cy.findByText('Storage').click();
 
   for (let i = 0; i < values.checkedItems.length; i++) {
@@ -174,15 +145,14 @@ export const moveItemToSystem = (values: {
     cy.findByRole('button', { name: 'navigate to systems home' }).click();
     cy.findByText('Storage 2').click();
   });
-  cy.wait('@getSystemsData', { timeout: 10000 });
+
   cy.findByRole('button', { name: 'Move here' }).should('not.be.disabled');
   cy.findByRole('button', { name: 'Move here' }).click();
   cy.findByRole('dialog').should('not.exist', { timeout: 10000 });
-  cy.wait('@patchItems', { timeout: 10000 });
 
   cy.findByRole('button', { name: 'navigate to systems home' }).click();
   cy.findByText('Storage 2').click();
-  cy.wait('@getSystemsData', { timeout: 10000 });
+
   for (let i = 0; i < values.checkedItems.length; i++) {
     cy.findByText(values.checkedItemsNames[i]).should('exist');
   }
