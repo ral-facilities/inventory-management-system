@@ -153,7 +153,11 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await ensureColumnsVisible(['Drawing Link', 'Item Model Number']);
+    await ensureColumnsVisible([
+      'Drawing Link',
+      'Item Model Number',
+      'Created',
+    ]);
   });
 
   it('renders table correctly (section 5 due to column virtualisation)', async () => {
