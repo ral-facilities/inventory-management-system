@@ -10,7 +10,7 @@ export const modifyManufacturer = (
     postcode: string;
     telephone_number?: string;
   },
-  ignore?: boolean
+  ignoreChecks?: boolean
 ) => {
   if (values.editManufacturerName) {
     cy.findByLabelText(`${values.editManufacturerName} row`).within(() => {
@@ -56,7 +56,7 @@ export const modifyManufacturer = (
 
   cy.findByRole('button', { name: 'Save' }).click();
 
-  if (!ignore) {
+  if (!ignoreChecks) {
     cy.findByText(values.name).should('exist');
     cy.findByText(values.name).click();
     cy.findAllByText(values.name).should('have.length.gte', 1);
@@ -72,7 +72,7 @@ export const modifyManufacturer = (
   }
 };
 
-export const addManufacturer = (ignore?: boolean) => {
+export const addManufacturer = (ignoreChecks?: boolean) => {
   modifyManufacturer(
     {
       name: 'ThorsLabs',
@@ -84,7 +84,7 @@ export const addManufacturer = (ignore?: boolean) => {
       postcode: 'EX2 5AZ',
       telephone_number: '074493208487',
     },
-    ignore
+    ignoreChecks
   );
 };
 

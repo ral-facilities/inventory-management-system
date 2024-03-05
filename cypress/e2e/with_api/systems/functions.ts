@@ -7,7 +7,7 @@ export const modifySystem = (
     owner?: string;
     importance: string;
   },
-  ignore?: boolean
+  ignoreChecks?: boolean
 ) => {
   if (typeof values.index === 'number') {
     cy.findAllByLabelText('Row Actions').eq(values.index).click();
@@ -41,7 +41,7 @@ export const modifySystem = (
   cy.findByLabelText('Importance').click();
   cy.findByRole('option', { name: values.importance }).click();
   cy.findByRole('button', { name: 'Save' }).click();
-  if (!ignore) {
+  if (!ignoreChecks) {
     cy.findByText(values.name).click();
 
     cy.findAllByText(values.name).should('have.length.gte', 1);
@@ -159,8 +159,8 @@ export const moveItemToSystem = (values: {
   cy.findByRole('button', { name: 'navigate to systems home' }).click();
 };
 
-export const addSystems = (ignore?: boolean) => {
-  modifySystem({ name: 'Storage', importance: 'high' }, ignore);
+export const addSystems = (ignoreChecks?: boolean) => {
+  modifySystem({ name: 'Storage', importance: 'high' }, ignoreChecks);
   modifySystem(
     {
       name: 'optics 1',
@@ -169,7 +169,7 @@ export const addSystems = (ignore?: boolean) => {
       location: 'R100, room 4 bench 5',
       description: 'optics for experiment RE3213',
     },
-    ignore
+    ignoreChecks
   );
 };
 

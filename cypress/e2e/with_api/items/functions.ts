@@ -15,7 +15,7 @@ const modifyItem = (
     broken?: string;
     system: string;
   },
-  ignore?: boolean
+  ignoreChecks?: boolean
 ) => {
   if (typeof values.edit === 'number') {
     cy.findAllByLabelText('Row Actions').eq(values.edit).click();
@@ -106,7 +106,7 @@ const modifyItem = (
 
   cy.findByRole('button', { name: 'Finish' }).click();
 
-  if (!ignore) {
+  if (!ignoreChecks) {
     if (values.serialNumber) {
       cy.findByText('Serial Number').scrollIntoView();
       cy.findByText(values.serialNumber).should('exist');
@@ -143,7 +143,7 @@ export const deleteItem = (serialNumber: string, index: number) => {
   cy.findByText(serialNumber).should('not.exist');
 };
 
-export const addItem = (ignore?: boolean) => {
+export const addItem = (ignoreChecks?: boolean) => {
   cy.findByText('Click here').click();
   modifyItem(
     {
@@ -161,7 +161,7 @@ export const addItem = (ignore?: boolean) => {
       broken: 'False',
       system: 'Storage',
     },
-    ignore
+    ignoreChecks
   );
 };
 

@@ -10,7 +10,7 @@ const modifyCatalogueCategory = (
       allowed_values?: { values: any[]; type: string };
     }[];
   },
-  ignore?: boolean
+  ignoreChecks?: boolean
 ) => {
   if (values.editCatalogueCategoryName) {
     cy.findByRole('button', {
@@ -102,7 +102,7 @@ const modifyCatalogueCategory = (
   }
 
   cy.findByRole('button', { name: 'Save' }).click();
-  if (!ignore) {
+  if (!ignoreChecks) {
     cy.findByText(values.name).should('exist');
 
     if (values.newFormFields) {
@@ -179,12 +179,12 @@ const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   }
 };
 
-export const addCatalogueCategories = (ignore?: boolean) => {
+export const addCatalogueCategories = (ignoreChecks?: boolean) => {
   modifyCatalogueCategory(
     {
       name: 'Lenses',
     },
-    ignore
+    ignoreChecks
   );
 
   cy.findByText('Lenses').click();
@@ -221,7 +221,7 @@ export const addCatalogueCategories = (ignore?: boolean) => {
         },
       ],
     },
-    ignore
+    ignoreChecks
   );
 };
 

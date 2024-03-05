@@ -17,7 +17,7 @@ const modifyCatalogueItem = (
     wavelengthRange: string;
     broken?: string;
   },
-  ignore?: boolean
+  ignoreChecks?: boolean
 ) => {
   if (values.editCatalogueItemName) {
     cy.findByLabelText(`${values.editCatalogueItemName} row`).within(() => {
@@ -113,7 +113,7 @@ const modifyCatalogueItem = (
   }
   cy.findByRole('button', { name: 'Finish' }).click();
 
-  if (!ignore) {
+  if (!ignoreChecks) {
     cy.findByText(values.name).should('exist');
     cy.findByText(values.name).click();
 
@@ -276,7 +276,7 @@ export const moveToCatalogueItems = (values: { checkedItems: string[] }) => {
   }
 };
 
-export const addCatalogueItem = (ignore?: boolean) => {
+export const addCatalogueItem = (ignoreChecks?: boolean) => {
   cy.findByText('Spherical Lenses').click();
   modifyCatalogueItem(
     {
@@ -296,7 +296,7 @@ export const addCatalogueItem = (ignore?: boolean) => {
       wavelengthRange: '195 - 2100',
       broken: 'False',
     },
-    ignore
+    ignoreChecks
   );
 };
 
