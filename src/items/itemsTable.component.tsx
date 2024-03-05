@@ -266,6 +266,7 @@ export function ItemsTable(props: ItemTableProps) {
       ? [
           { ...columns[0], size: 400 },
           { ...columns[1], size: 400 },
+          { ...columns[2], size: 400 },
           { ...columns[5], size: 400 },
           { ...columns[6], size: 400 },
           { ...columns[7], size: 400 },
