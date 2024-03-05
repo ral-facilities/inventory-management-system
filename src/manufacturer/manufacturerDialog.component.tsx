@@ -91,9 +91,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     useAddManufacturer();
   const { mutateAsync: editManufacturer, isPending: isEditPending } =
     useEditManufacturer();
-  // const { data: selectedManufacturerData } = useManufacturer(
-  //   selectedManufacturer?.id
-  // );
 
   const handleClose = React.useCallback(() => {
     setManufacturerDetails({
