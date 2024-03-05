@@ -28,6 +28,7 @@ import {
   useEditCatalogueItem,
 } from '../../api/catalogueItem';
 import {
+  CatalogueCategory,
   CatalogueItem,
   EditCatalogueItem,
   ObsoleteDetails,
@@ -42,6 +43,7 @@ export interface ObsoleteCatalogueItemDialogProps {
   open: boolean;
   onClose: () => void;
   catalogueItem: CatalogueItem | undefined;
+  parentInfo: CatalogueCategory;
 }
 
 const STEPS = ['Is Obsolete', 'Obsolete Reason', 'Obsolete Replacement'];
@@ -49,7 +51,7 @@ const STEPS = ['Is Obsolete', 'Obsolete Reason', 'Obsolete Replacement'];
 const ObsoleteCatalogueItemDialog = (
   props: ObsoleteCatalogueItemDialogProps
 ) => {
-  const { open, onClose, catalogueItem } = props;
+  const { open, onClose, catalogueItem, parentInfo } = props;
 
   // Stepper
   const [steps, setSteps] = React.useState<string[]>(STEPS);
@@ -112,6 +114,7 @@ const ObsoleteCatalogueItemDialog = (
   // Current category and its children
   const { data: catalogueCategoryData } =
     useCatalogueCategory(catalogueCurrDirId);
+
   const {
     data: catalogueCategoryDataList,
     isLoading: catalogueCategoryDataListLoading,
@@ -269,6 +272,7 @@ const ObsoleteCatalogueItemDialog = (
                 isItemSelectable={(item: CatalogueItem) =>
                   catalogueItem?.id !== item.id && !item.is_obsolete
                 }
+                requestOrigin="obsolete"
               />
             ) : (
               <CatalogueCategoryTableView
@@ -277,6 +281,8 @@ const ObsoleteCatalogueItemDialog = (
                 requestType={'standard'}
                 catalogueCategoryData={catalogueCategoryDataList}
                 catalogueCategoryDataLoading={catalogueCategoryDataListLoading}
+                requestOrigin="item"
+                catalogueItemParentCategory={parentInfo}
               />
             )}
           </>
@@ -288,7 +294,7 @@ const ObsoleteCatalogueItemDialog = (
     <Dialog
       open={open}
       onClose={handleClose}
-      PaperProps={{ sx: { height: '658px' } }}
+      PaperProps={{ sx: { height: '720px' } }}
       fullWidth
       maxWidth="xl"
     >
