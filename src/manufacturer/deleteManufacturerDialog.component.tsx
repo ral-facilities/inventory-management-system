@@ -60,7 +60,7 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
       setError(true);
       setErrorMessage('No data provided, Please refresh and try again');
     }
-  }, [manufacturer, deleteManufacturer, onClose]);
+  }, [manufacturer, deleteManufacturer, resetManufacturer, onClose]);
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">
