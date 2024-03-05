@@ -20,11 +20,7 @@ import {
   ErrorParsing,
   ManufacturerDetails,
 } from '../app.types';
-import {
-  useAddManufacturer,
-  useEditManufacturer,
-  useManufacturer,
-} from '../api/manufacturer';
+import { useAddManufacturer, useEditManufacturer } from '../api/manufacturer';
 import { AxiosError } from 'axios';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { trimStringValues } from '../utils';
@@ -95,9 +91,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     useAddManufacturer();
   const { mutateAsync: editManufacturer, isPending: isEditPending } =
     useEditManufacturer();
-  const { data: selectedManufacturerData } = useManufacturer(
-    selectedManufacturer?.id
-  );
+  // const { data: selectedManufacturerData } = useManufacturer(
+  //   selectedManufacturer?.id
+  // );
 
   const handleClose = React.useCallback(() => {
     setManufacturerDetails({
@@ -207,7 +203,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   }, [handleErrors, manufacturerDetails, addManufacturer, handleClose]);
 
   const handleEditManufacturer = React.useCallback(() => {
-    if (manufacturerDetails && selectedManufacturerData) {
+    if (manufacturerDetails && selectedManufacturer) {
       const hasErrors = handleErrors();
 
       if (hasErrors) {
@@ -215,37 +211,37 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       }
 
       const isNameUpdated =
-        manufacturerDetails.name !== selectedManufacturerData.name;
+        manufacturerDetails.name !== selectedManufacturer?.name;
 
       const isURLUpdated =
-        manufacturerDetails.url !== selectedManufacturerData.url &&
+        manufacturerDetails.url !== selectedManufacturer?.url &&
         manufacturerDetails.url !== undefined;
 
       const isAddressLineUpdated =
         manufacturerDetails.address?.address_line !==
-        selectedManufacturerData.address.address_line;
+        selectedManufacturer?.address.address_line;
 
       const isTownUpdated =
         manufacturerDetails.address?.town !==
-        selectedManufacturerData.address.town;
+        selectedManufacturer?.address.town;
 
       const isCountyUpdated =
         manufacturerDetails.address?.county !==
-        selectedManufacturerData.address.county;
+        selectedManufacturer?.address.county;
 
       const isPostcodeUpdated =
         manufacturerDetails.address?.postcode !==
-        selectedManufacturerData.address.postcode;
+        selectedManufacturer?.address.postcode;
 
       const isCountryUpdated =
         manufacturerDetails.address?.country !==
-        selectedManufacturerData.address.country;
+        selectedManufacturer?.address.country;
 
       const isTelephoneUpdated =
-        manufacturerDetails.telephone !== selectedManufacturerData.telephone;
+        manufacturerDetails.telephone !== selectedManufacturer?.telephone;
 
       let manufacturerToEdit: EditManufacturer = {
-        id: selectedManufacturerData.id,
+        id: selectedManufacturer?.id,
       };
 
       isNameUpdated && (manufacturerToEdit.name = manufacturerDetails.name);
@@ -334,7 +330,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     handleClose,
     handleErrors,
     manufacturerDetails,
-    selectedManufacturerData,
+    selectedManufacturer,
   ]);
 
   return (

@@ -274,7 +274,6 @@ function ManufacturerComponent() {
         open={deleteManufacturerDialog}
         onClose={() => setDeleteManufacturerDialog(false)}
         manufacturer={selectedManufacturer}
-        resetManufacturer={setSelectedManufacturer}
       />
     </div>
   );
