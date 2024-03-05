@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SystemItemsTable can set a table filter and clear them again 1`] = `<DocumentFragment />`;
-
 exports[`SystemItemsTable renders correctly 1`] = `
 <DocumentFragment>
   <div
@@ -1809,7 +1807,7 @@ exports[`SystemItemsTable renders correctly 1`] = `
               <p
                 class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
               >
-                05/09/2023
+                9/5/2023
               </p>
             </td>
             <td
