@@ -122,10 +122,6 @@ const modifyCatalogueCategory = (
 };
 
 const deleteCatalogueCategory = (name: string) => {
-  cy.intercept({
-    method: 'DELETE',
-    url: '**/catalogue-categories/*',
-  }).as('deleteCatalogueCategoryData');
   cy.findByRole('button', {
     name: `actions ${name} catalogue category button`,
   }).click();
@@ -135,7 +131,6 @@ const deleteCatalogueCategory = (name: string) => {
   }).click();
 
   cy.findByRole('button', { name: 'Continue' }).click();
-  cy.wait('@deleteCatalogueCategoryData', { timeout: 10000 });
 };
 
 export const saveAsCatalogueCategory = (name: string) => {
@@ -152,15 +147,6 @@ export const saveAsCatalogueCategory = (name: string) => {
 };
 
 const copyToCatalogueCategory = (values: { checkedCategories: string[] }) => {
-  cy.intercept({
-    method: 'POST',
-    url: '**/catalogue-categories',
-  }).as('postCatalogueCategoryData');
-  cy.intercept({
-    method: 'GET',
-    url: '**/catalogue-categories/*',
-  }).as('getCatalogueCategoryData');
-
   for (let i = 0; i < values.checkedCategories.length; i++) {
     cy.findByLabelText(`${values.checkedCategories[i]} checkbox`).click();
   }
@@ -168,9 +154,9 @@ const copyToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByRole('button', { name: 'Copy here' }).click();
   cy.findByRole('dialog').should('not.exist');
-  cy.wait('@postCatalogueCategoryData', { timeout: 10000 });
+
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
+
   for (let i = 0; i < values.checkedCategories.length; i++) {
     cy.findByText(`${values.checkedCategories[i]}`).should('exist');
     deleteCatalogueCategory(`${values.checkedCategories[i]}`);
@@ -178,16 +164,6 @@ const copyToCatalogueCategory = (values: { checkedCategories: string[] }) => {
 };
 
 const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
-  cy.intercept({
-    method: 'PATCH',
-    url: '**/catalogue-categories/*',
-  }).as('patchCatalogueCategoryData');
-
-  cy.intercept({
-    method: 'GET',
-    url: '**/catalogue-categories/*',
-  }).as('getCatalogueCategoryData');
-
   for (let i = 0; i < values.checkedCategories.length; i++) {
     cy.findByLabelText(`${values.checkedCategories[i]} checkbox`).click();
   }
@@ -195,9 +171,9 @@ const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByRole('button', { name: 'Move here' }).click();
   cy.findByRole('dialog').should('not.exist');
-  cy.wait('@postCatalogueCategoryData', { timeout: 10000 });
+
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
+
   for (let i = 0; i < values.checkedCategories.length; i++) {
     cy.findByText(`${values.checkedCategories[i]}`).should('exist');
   }
