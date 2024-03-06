@@ -96,9 +96,9 @@ jobs:
           DATABASE__HOSTNAME: mongodb
           DATABASE__PORT: 27017
           DATABASE__NAME: ims
-          API__ALLOWED_CORS_HEADERS: "['*']"
-          API__ALLOWED_CORS_ORIGINS: "['*']"
-          API__ALLOWED_CORS_METHODS: "['*']"
+          API__ALLOWED_CORS_HEADERS: ['*']
+          API__ALLOWED_CORS_ORIGINS: ['*']
+          API__ALLOWED_CORS_METHODS: ['*']
 
           options: --name inventory-management-system-api
 
@@ -116,9 +116,6 @@ jobs:
         run: |
           sudo apt-get install libgconf-2-4
           yarn --immutable
-
-      - name: debug
-        run: echo $API__ALLOWED_CORS_HEADERS
 
       - name: Download unit data
         run: wget https://raw.githubusercontent.com/ral-facilities/inventory-management-system-api/develop/data/units.json

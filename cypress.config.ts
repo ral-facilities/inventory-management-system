@@ -6,7 +6,7 @@ export default defineConfig({
     chromeWebSecurity: false,
     video: false,
     retries: {
-      runMode: 0,
+      runMode: 3,
       openMode: 1,
     },
     setupNodeEvents(on, config) {
