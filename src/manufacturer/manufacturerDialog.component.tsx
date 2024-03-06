@@ -362,6 +362,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             onClick={handleSubmit(onSubmit)}
             disabled={
               Object.values(errors).length !== 0 ||
+              formError !== undefined ||
               nameError !== undefined ||
               isAddPending ||
               isEditPending

@@ -214,12 +214,14 @@ function ManufacturerLandingPage() {
         </Box>
       )}
 
-      <ManufacturerDialog
-        open={editManufacturerDialogOpen}
-        onClose={() => setEditManufacturerDialogOpen(false)}
-        selectedManufacturer={manufacturerData}
-        type="edit"
-      />
+      {editManufacturerDialogOpen && (
+        <ManufacturerDialog
+          open={editManufacturerDialogOpen}
+          onClose={() => setEditManufacturerDialogOpen(false)}
+          selectedManufacturer={manufacturerData}
+          type="edit"
+        />
+      )}
     </Grid>
   );
 }
