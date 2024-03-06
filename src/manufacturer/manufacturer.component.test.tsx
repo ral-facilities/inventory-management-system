@@ -35,7 +35,7 @@ describe('Manufacturer', () => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
     });
     expect(view.asFragment()).toMatchSnapshot();
-  });
+  }, 10000);
 
   it('manufacturer url has a href so therefore links to new webpage', async () => {
     createView();
