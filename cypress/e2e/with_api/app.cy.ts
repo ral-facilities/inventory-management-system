@@ -1,11 +1,6 @@
 describe('App', () => {
   afterEach(() => {
     cy.clearMocks();
-    cy.dropIMSDB();
-  });
-
-  beforeEach(() => {
-    cy.dropIMSDB();
   });
 
   it('should load correctly', () => {
