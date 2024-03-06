@@ -540,4 +540,46 @@ describe('Obsolete Catalogue Item Dialog', () => {
       ).toBe(2);
     });
   });
+
+  it('renders add button on table and can open and close dialog', async () => {
+    createView();
+
+    // Get to end of form
+    await modifyForm(true, {});
+
+    await waitFor(
+      () => {
+        expect(
+          screen.getAllByRole('row', {
+            name: `Energy Meters 26 row`,
+          }).length
+        ).toBeGreaterThan(1);
+      },
+      { timeout: 5000 }
+    );
+
+    const addButton = screen.getByRole('button', {
+      name: 'Add Catalogue Item',
+    });
+
+    await user.click(addButton);
+
+    expect(screen.getByText('Name *')).toBeInTheDocument();
+
+    const cancelButton = screen.getByRole('button', {
+      name: 'Cancel',
+    });
+    await user.click(cancelButton);
+
+    await waitFor(
+      () => {
+        expect(
+          screen.getAllByRole('row', {
+            name: `Energy Meters 26 row`,
+          }).length
+        ).toBeGreaterThan(1);
+      },
+      { timeout: 5000 }
+    );
+  });
 });

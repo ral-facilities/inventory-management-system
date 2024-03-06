@@ -188,6 +188,9 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
 
       const moveButton = screen.getByRole('button', { name: 'Move here' });
+      await waitFor(() => {
+        expect(moveButton).not.toBeDisabled();
+      });
       await user.click(moveButton);
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/1', {
@@ -197,6 +200,45 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         parent_id: '3',
       });
       expect(onClose).toHaveBeenCalled();
+    });
+
+    it('renders add dialog when button is clicked and closes it', async () => {
+      props.selectedCategories = [
+        {
+          id: '1',
+          name: 'Beam Characterization',
+          parent_id: null,
+          code: 'beam-characterization',
+          is_leaf: false,
+        },
+        {
+          id: '2',
+          name: 'Motion',
+          parent_id: null,
+          code: 'motion',
+          is_leaf: false,
+        },
+      ];
+
+      props.parentCategoryId = null;
+
+      createView();
+
+      const addButton = screen.getByRole('button', {
+        name: 'Add Catalogue Category',
+      });
+      await user.click(addButton);
+      //Used 'Name*' as 'Add Catalogue Category is the same as button name
+      expect(screen.getByText('Name *')).toBeInTheDocument();
+
+      const cancelButton = screen.getByRole('button', {
+        name: 'Cancel',
+      });
+      await user.click(cancelButton);
+
+      await waitFor(() => {
+        expect(screen.getByText('Vacuum Technology')).toBeInTheDocument();
+      });
     });
   });
 
@@ -306,6 +348,9 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
 
       const copyButton = screen.getByRole('button', { name: 'Copy here' });
+      await waitFor(() => {
+        expect(copyButton).not.toBeDisabled();
+      });
       await user.click(copyButton);
 
       props.selectedCategories.forEach((selectedCategory) =>
@@ -382,6 +427,9 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
 
       const copyButton = screen.getByRole('button', { name: 'Copy here' });
+      await waitFor(() => {
+        expect(copyButton).not.toBeDisabled();
+      });
       await user.click(copyButton);
 
       props.selectedCategories.forEach((selectedCategory) =>

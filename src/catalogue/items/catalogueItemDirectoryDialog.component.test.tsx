@@ -7,7 +7,6 @@ import CatalogueItemDirectoryDialog, {
   CatalogueItemDirectoryDialogProps,
 } from './catalogueItemDirectoryDialog.component';
 import { imsApi } from '../../api/api';
-
 describe('catalogue item directory Dialog', () => {
   let props: CatalogueItemDirectoryDialogProps;
   let user;
@@ -75,6 +74,7 @@ describe('catalogue item directory Dialog', () => {
           is_obsolete: true,
           obsolete_replacement_catalogue_item_id: '6',
           obsolete_reason: 'The item is no longer being manufactured',
+          notes: null,
         },
         {
           catalogue_category_id: '5',
@@ -99,6 +99,7 @@ describe('catalogue item directory Dialog', () => {
           is_obsolete: false,
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
+          notes: null,
         },
       ],
     };
@@ -179,6 +180,43 @@ describe('catalogue item directory Dialog', () => {
         expect(screen.getByText('Cameras')).toBeInTheDocument();
       });
     });
+
+    it('renders add button when viewing category table, and has save as functionality when clicked', async () => {
+      props.parentCategoryId = '5';
+
+      createView();
+
+      await waitFor(() => {
+        expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+      });
+
+      await user.click(
+        screen.getByRole('link', { name: 'beam-characterization' })
+      );
+
+      await waitFor(() => {
+        expect(screen.getByText('Cameras')).toBeInTheDocument();
+      });
+
+      const addButton = screen.getByRole('button', {
+        name: 'Add Catalogue Category',
+      });
+
+      await user.click(addButton);
+
+      expect(
+        screen.getByDisplayValue('Energy Meters_copy_1')
+      ).toBeInTheDocument();
+
+      const cancelButton = screen.getByRole('button', {
+        name: 'Cancel',
+      });
+      await user.click(cancelButton);
+
+      await waitFor(() => {
+        expect(screen.getByText('Cameras')).toBeInTheDocument();
+      });
+    }, 10000);
 
     it('moves multiple catalogue items', async () => {
       props.parentCategoryId = '8967';
@@ -269,6 +307,7 @@ describe('catalogue item directory Dialog', () => {
         name: 'Energy Meters 26',
         obsolete_reason: 'The item is no longer being manufactured',
         obsolete_replacement_catalogue_item_id: '6',
+        notes: null,
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 1000 },
           { name: 'Accuracy', unit: '', value: '±0.5%' },
@@ -290,6 +329,7 @@ describe('catalogue item directory Dialog', () => {
         name: 'Energy Meters 27',
         obsolete_reason: null,
         obsolete_replacement_catalogue_item_id: null,
+        notes: null,
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 2000 },
         ],
@@ -327,6 +367,7 @@ describe('catalogue item directory Dialog', () => {
         name: 'Energy Meters 26',
         obsolete_reason: 'The item is no longer being manufactured',
         obsolete_replacement_catalogue_item_id: '6',
+        notes: null,
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 1000 },
           { name: 'Accuracy', unit: '', value: '±0.5%' },
@@ -348,6 +389,7 @@ describe('catalogue item directory Dialog', () => {
         name: 'Energy Meters 27',
         obsolete_reason: null,
         obsolete_replacement_catalogue_item_id: null,
+        notes: null,
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 2000 },
         ],

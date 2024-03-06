@@ -137,7 +137,7 @@ const CatalogueCategoryDirectoryDialog = (
       open={open}
       onClose={onClose}
       maxWidth="lg"
-      PaperProps={{ sx: { height: '632px' } }}
+      PaperProps={{ sx: { height: '692px' } }}
       fullWidth
     >
       <DialogTitle sx={{ marginLeft: 2 }}>
@@ -185,21 +185,34 @@ const CatalogueCategoryDirectoryDialog = (
       <DialogContent>
         <CatalogueCategoryTableView
           selectedCategories={selectedCategories}
+          catalogueCategoryParentId={parentCategoryId ?? undefined}
           onChangeParentCategoryId={setParentCategoryId}
           requestType={requestType}
           catalogueCategoryData={catalogueCategoryData}
           catalogueCategoryDataLoading={catalogueCategoryDataLoading}
+          requestOrigin="category"
         />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           disabled={
-            isCopyToPending || isMoveToPending || requestType === 'moveTo'
+            (requestType === 'moveTo'
               ? selectedCategories.length > 0
                 ? parentCategoryId === selectedCategories[0].parent_id
                 : false
-              : false
+              : false) ||
+            isCopyToPending ||
+            isMoveToPending ||
+            // Either ensure finished loading, or moving to root (move to)
+            (requestType === 'moveTo' &&
+              !(!targetCategoryLoading || parentCategoryId === null)) ||
+            // Either ensure finished loading, or moving to root and system data is defined (copy to)
+            (requestType === 'copyTo' &&
+              !(
+                (!targetCategoryLoading || parentCategoryId === null) &&
+                catalogueCategoryData !== undefined
+              ))
           }
           onClick={
             requestType === 'moveTo'

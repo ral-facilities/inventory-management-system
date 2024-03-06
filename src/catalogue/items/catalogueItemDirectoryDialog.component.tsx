@@ -67,13 +67,13 @@ const CatalogueItemDirectoryDialog = (
 
   const handleClose = React.useCallback(() => {
     onClose();
-    setErrorMessage('');
+    setErrorMessage(undefined);
     setParentCategoryId(props.parentCategoryId);
   }, [onClose, props.parentCategoryId]);
 
   // reset error message when catalogue catagory id changes
   React.useEffect(() => {
-    setErrorMessage('');
+    setErrorMessage(undefined);
   }, [parentCategoryId]);
 
   const { mutateAsync: moveToCatalogueItem, isPending: isMoveToPending } =
@@ -84,7 +84,9 @@ const CatalogueItemDirectoryDialog = (
   const { data: targetCatalogueCategory } =
     useCatalogueCategory(parentCategoryId);
 
-  const [errorMessage, setErrorMessage] = React.useState<string>('');
+  const [errorMessage, setErrorMessage] = React.useState<string | undefined>(
+    undefined
+  );
 
   const handleMoveToCatalogueItem = React.useCallback(() => {
     if (
@@ -195,6 +197,7 @@ const CatalogueItemDirectoryDialog = (
             parentInfo={targetCatalogueCategory}
             dense={true}
             isItemSelectable={(item: CatalogueItem) => false}
+            requestOrigin="move to"
           />
         ) : (
           <CatalogueCategoryTableView
@@ -203,6 +206,8 @@ const CatalogueItemDirectoryDialog = (
             requestType={'standard'}
             catalogueCategoryData={catalogueCategoryData}
             catalogueCategoryDataLoading={catalogueCategoryDataLoading}
+            requestOrigin="item"
+            catalogueItemParentCategory={parentInfo}
           />
         )}
       </DialogContent>
@@ -210,12 +215,15 @@ const CatalogueItemDirectoryDialog = (
         <Button onClick={handleClose}>Cancel</Button>
         <Button
           disabled={
-            isCopyToPending || isMoveToPending || requestType === 'moveTo'
+            (requestType === 'moveTo'
               ? !(
                   (targetCatalogueCategory?.is_leaf ?? false) &&
                   parentCategoryId !== parentInfo.id
                 )
-              : !(targetCatalogueCategory?.is_leaf ?? false)
+              : !(targetCatalogueCategory?.is_leaf ?? false)) ||
+            isCopyToPending ||
+            isMoveToPending ||
+            errorMessage !== undefined
           }
           onClick={
             requestType === 'moveTo'

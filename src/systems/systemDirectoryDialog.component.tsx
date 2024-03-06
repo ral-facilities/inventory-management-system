@@ -125,7 +125,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
       open={open}
       onClose={onClose}
       maxWidth="lg"
-      PaperProps={{ sx: { height: '632px' } }}
+      PaperProps={{ sx: { height: '692px' } }}
       fullWidth
     >
       <DialogTitle marginLeft={2}>
@@ -173,6 +173,7 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
         <SystemsTableView
           systemsData={systemsData}
           systemsDataLoading={systemsDataLoading}
+          systemParentId={parentSystemId ?? undefined}
           onChangeParentId={setParentSystemId}
           selectedSystems={selectedSystems}
           type={type}
@@ -185,7 +186,14 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
             isCopyPending ||
             isMovePending ||
             // Disable when not moving anywhere different
-            (props.parentSystemId === parentSystemId && type === 'moveTo')
+            (props.parentSystemId === parentSystemId && type === 'moveTo') ||
+            // Either ensure finished loading, or moving to root (move to)
+            !(!targetSystemLoading || parentSystemId === null) ||
+            // Either ensure finished loading, or moving to root and system data is defined (copy to)
+            !(
+              (!targetSystemLoading || parentSystemId === null) &&
+              systemsData !== undefined
+            )
           }
           onClick={type === 'moveTo' ? handleMoveTo : handleCopyTo}
         >
