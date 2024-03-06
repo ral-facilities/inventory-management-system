@@ -152,7 +152,7 @@ declare global {
       /**
        * Deletes the IMS collections
        *
-       * @example cy.dropIMSCollections();
+       * @example cy.dropIMSCollections(['catalogue_categories']);
        */
     }
   }
