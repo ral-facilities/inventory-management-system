@@ -188,6 +188,9 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
 
       const moveButton = screen.getByRole('button', { name: 'Move here' });
+      await waitFor(() => {
+        expect(moveButton).not.toBeDisabled();
+      });
       await user.click(moveButton);
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/1', {
@@ -345,6 +348,9 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
 
       const copyButton = screen.getByRole('button', { name: 'Copy here' });
+      await waitFor(() => {
+        expect(copyButton).not.toBeDisabled();
+      });
       await user.click(copyButton);
 
       props.selectedCategories.forEach((selectedCategory) =>
@@ -421,6 +427,9 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
 
       const copyButton = screen.getByRole('button', { name: 'Copy here' });
+      await waitFor(() => {
+        expect(copyButton).not.toBeDisabled();
+      });
       await user.click(copyButton);
 
       props.selectedCategories.forEach((selectedCategory) =>
