@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
+exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = `
 <DocumentFragment>
   <div
     style="width: 100%;"
@@ -1139,7 +1139,7 @@ exports[`Items Table renders correctly part 1 due column virtualisation 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
+exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = `
 <DocumentFragment>
   <div
     style="width: 100%;"
@@ -2584,7 +2584,7 @@ exports[`Items Table renders correctly part 2 due column virtualisation 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Items Table renders the dense table correctly 1`] = `
+exports[`Items Table > renders the dense table correctly 1`] = `
 <DocumentFragment>
   <div
     style="width: 100%;"
