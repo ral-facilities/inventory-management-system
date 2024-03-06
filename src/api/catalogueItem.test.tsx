@@ -286,8 +286,8 @@ describe('catalogue items api functions', () => {
         expect(result.current.isSuccess).toBeTruthy();
       });
       expect(result.current.data).toEqual([
-        { message: undefined, name: 'test', state: 'error' },
-        { message: undefined, name: 'test_copy1', state: 'error' },
+        { message: 'Something went wrong', name: 'test', state: 'error' },
+        { message: 'Something went wrong', name: 'test_copy1', state: 'error' },
       ]);
     });
   });
@@ -410,8 +410,8 @@ describe('catalogue items api functions', () => {
         expect(result.current.isSuccess).toBeTruthy();
       });
       expect(result.current.data).toEqual([
-        { message: undefined, name: 'test', state: 'error' },
-        { message: undefined, name: 'test_copy1', state: 'error' },
+        { message: 'Something went wrong', name: 'test', state: 'error' },
+        { message: 'Something went wrong', name: 'test_copy1', state: 'error' },
       ]);
     });
   });
