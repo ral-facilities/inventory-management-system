@@ -28,7 +28,7 @@ export default defineConfig(({ command, mode }) => {
 
   // Whether to include MSW from the build
   const excludeMSW =
-    env.NODE_ENV !== 'production' || env.VITE_APP_E2E_TESTING_API === 'true';
+    env.NODE_ENV === 'production' || env.VITE_APP_E2E_TESTING_API === 'true';
 
   let plugins: PluginOption[] = [react()];
 
@@ -104,6 +104,8 @@ export default defineConfig(({ command, mode }) => {
     test: {
       globals: 'true',
       environment: 'jsdom',
+      globalSetup: './globalSetup.js',
+      setupFiles: ['src/setupTestsVitest.tsx'],
     },
   };
 });

@@ -74,6 +74,7 @@ describe('manufacturer api functions', () => {
         telephone: '07334893348',
       };
     });
+
     it('posts a request to delete a manufacturer and return a successful response', async () => {
       const { result } = renderHook(() => useDeleteManufacturer(), {
         wrapper: hooksWrapperWithProviders(),
@@ -83,7 +84,7 @@ describe('manufacturer api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      expect(result.current.data).toEqual('');
+      expect(result.current.data).toEqual({ status: 204 });
     });
   });
 

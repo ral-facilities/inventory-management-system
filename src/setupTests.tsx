@@ -1,11 +1,6 @@
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import '@testing-library/jest-dom';
 import { RenderOptions, render } from '@testing-library/react';
 import { enGB } from 'date-fns/locale/en-GB';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
@@ -20,17 +15,6 @@ import CatalogueCategoryJSON from './mocks/CatalogueCategory.json';
 import CatalogueItemJSON from './mocks/CatalogueItems.json';
 import ItemsJSON from './mocks/Items.json';
 import ManufacturerJSON from './mocks/manufacturer.json';
-import { server } from './mocks/server';
-
-// Establish API mocking before all tests.
-beforeAll(() => server.listen());
-
-// Reset any request handlers that we may add during the tests,
-// so they don't affect other tests.
-afterEach(() => server.resetHandlers());
-
-// Clean up after the tests are finished.
-afterAll(() => server.close());
 
 export const createTestQueryClient = (): QueryClient =>
   new QueryClient({

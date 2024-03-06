@@ -153,7 +153,7 @@ describe('catalogue items api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      expect(result.current.data).toEqual('');
+      expect(result.current.data).toEqual({ status: 204 });
     });
   });
 

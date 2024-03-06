@@ -101,6 +101,7 @@ describe('catalogue category api functions', () => {
         is_leaf: false,
       };
     });
+
     it('posts a request to add a user session and returns successful response', async () => {
       const { result } = renderHook(() => useDeleteCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
@@ -110,7 +111,7 @@ describe('catalogue category api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      expect(result.current.data).toEqual('');
+      expect(result.current.data).toEqual({ status: 204 });
     });
   });
 

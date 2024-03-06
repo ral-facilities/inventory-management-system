@@ -1,4 +1,10 @@
-import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
+import {
+  DefaultBodyType,
+  DefaultRequestMultipartBody,
+  http,
+  HttpResponse,
+  PathParams,
+} from 'msw';
 import {
   AddCatalogueCategory,
   AddCatalogueItem,
@@ -184,7 +190,7 @@ export const handlers = [
     return HttpResponse.json(fullBody as CatalogueCategory, { status: 200 });
   }),
 
-  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | null>(
+  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | {}>(
     '/v1/catalogue-categories/:id',
     ({ params }) => {
       const { id } = params;
@@ -201,7 +207,7 @@ export const handlers = [
             { status: 409 }
           );
         } else {
-          return HttpResponse.json(null, { status: 204 });
+          return HttpResponse.json({ status: 204 });
         }
       } else {
         return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -316,7 +322,7 @@ export const handlers = [
     }
   ),
 
-  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | null>(
+  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | {}>(
     '/v1/catalogue-items/:id',
     ({ params }) => {
       const { id } = params;
@@ -332,7 +338,7 @@ export const handlers = [
             { status: 409 }
           );
         } else {
-          return HttpResponse.json(null, { status: 204 });
+          return HttpResponse.json({ status: 204 });
         }
       } else {
         return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -438,7 +444,7 @@ export const handlers = [
     }
   ),
 
-  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | null>(
+  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | {}>(
     '/v1/manufacturers/:id',
     ({ params }) => {
       const { id } = params;
@@ -455,7 +461,7 @@ export const handlers = [
             { status: 409 }
           );
         } else {
-          return HttpResponse.json(null, { status: 200 });
+          return HttpResponse.json({ status: 204 });
         }
       } else {
         return HttpResponse.json({ detail: '' }, { status: 400 });
@@ -567,7 +573,7 @@ export const handlers = [
     }
   ),
 
-  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | null>(
+  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | {}>(
     '/v1/systems/:id',
     ({ params }) => {
       const { id } = params;
@@ -581,7 +587,7 @@ export const handlers = [
             { status: 409 }
           );
         } else {
-          return HttpResponse.json(null, { status: 204 });
+          return HttpResponse.json({ status: 204 });
         }
       } else {
         return HttpResponse.json({ detail: '' }, { status: 404 });
@@ -677,7 +683,7 @@ export const handlers = [
     }
   ),
 
-  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | null>(
+  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | {}>(
     '/v1/items/:id',
     ({ params }) => {
       const { id } = params;
@@ -688,7 +694,7 @@ export const handlers = [
           { status: 500 }
         );
 
-      return HttpResponse.json(null, { status: 204 });
+      return HttpResponse.json({ status: 204 });
     }
   ),
 

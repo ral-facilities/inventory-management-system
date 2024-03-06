@@ -120,6 +120,7 @@ describe('catalogue items api functions', () => {
         properties: [],
       };
     });
+
     it('posts a request to delete a catalogue Item and returns successful response', async () => {
       const { result } = renderHook(() => useDeleteCatalogueItem(), {
         wrapper: hooksWrapperWithProviders(),
@@ -129,7 +130,7 @@ describe('catalogue items api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      expect(result.current.data).toEqual('');
+      expect(result.current.data).toEqual({ status: 204 });
     });
   });
 
