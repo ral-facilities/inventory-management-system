@@ -1,20 +1,20 @@
 import log from 'loglevel';
-import { AnyAction } from 'redux';
+import { UnknownAction } from 'redux';
 import { TransferState } from './app.types';
 import handleTransferState from './handleTransferState';
 import { NotificationType } from './state/actions/actions.types';
 
-jest.mock('loglevel');
+vi.mock('loglevel');
 
 describe('handleTransferStates', () => {
   let transferStates: TransferState[];
-  let events: CustomEvent<AnyAction>[] = [];
+  let events: CustomEvent<UnknownAction>[] = [];
 
   beforeEach(() => {
     events = [];
 
     document.dispatchEvent = (e: Event) => {
-      events.push(e as CustomEvent<AnyAction>);
+      events.push(e as CustomEvent<UnknownAction>);
       return true;
     };
 

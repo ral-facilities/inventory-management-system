@@ -1,15 +1,16 @@
-import React from 'react';
-import { renderComponentWithMemoryRouter } from '../../testUtils';
 import { screen, waitFor } from '@testing-library/react';
-import CatalogueItemsLandingPage from './catalogueItemsLandingPage.component';
 import userEvent from '@testing-library/user-event';
 import { Route, Routes } from 'react-router-dom';
+import { renderComponentWithMemoryRouter } from '../../testUtils';
 import { paths } from '../../view/viewTabs.component';
+import CatalogueItemsLandingPage from './catalogueItemsLandingPage.component';
+
 const mockedUseNavigate = vi.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
   useNavigate: () => mockedUseNavigate,
 }));
+
 describe('Catalogue Items Landing Page', () => {
   let user;
   const createView = (path: string) => {

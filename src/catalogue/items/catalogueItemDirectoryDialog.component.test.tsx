@@ -1,12 +1,12 @@
-import React from 'react';
 import { renderComponentWithBrowserRouter } from '../../testUtils';
 
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { imsApi } from '../../api/api';
 import CatalogueItemDirectoryDialog, {
   CatalogueItemDirectoryDialogProps,
 } from './catalogueItemDirectoryDialog.component';
-import { imsApi } from '../../api/api';
+
 describe('catalogue item directory Dialog', () => {
   let props: CatalogueItemDirectoryDialogProps;
   let user;
@@ -110,7 +110,7 @@ describe('catalogue item directory Dialog', () => {
       observe: vi.fn(),
       unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 2000 });
   });

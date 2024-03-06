@@ -1,6 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
 import { renderComponentWithBrowserRouter } from '../testUtils';
@@ -10,7 +9,7 @@ import {
 } from './systemItemsTable.component';
 
 describe('SystemItemsTable', () => {
-  jest.setTimeout(10000);
+  vi.setConfig({ testTimeout: 10000 });
 
   let props: SystemItemsTableProps;
   let user;
@@ -31,7 +30,7 @@ describe('SystemItemsTable', () => {
       observe: vi.fn(),
       unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
   });

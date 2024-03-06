@@ -19,7 +19,7 @@ import CatalogueItemsDialog, {
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { imsApi } from '../../api/api';
 
-jest.mock('../../handleIMS_APIError');
+vi.mock('../../handleIMS_APIError');
 
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;

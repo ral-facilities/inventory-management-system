@@ -4,7 +4,7 @@ import { UnknownAction } from 'redux';
 import handleIMS_APIError from './handleIMS_APIError';
 import { NotificationType } from './state/actions/actions.types';
 
-jest.mock('loglevel');
+vi.mock('loglevel');
 
 describe('handleIMS_APIError', () => {
   let error: AxiosError;

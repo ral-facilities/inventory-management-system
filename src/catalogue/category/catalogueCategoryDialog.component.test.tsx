@@ -1,6 +1,5 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import { imsApi } from '../../api/api';
 import { CatalogueCategory, CatalogueCategoryFormData } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
@@ -9,7 +8,7 @@ import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
 
-jest.mock('../../handleIMS_APIError');
+vi.mock('../../handleIMS_APIError');
 
 describe('Catalogue Category Dialog', () => {
   const onClose = vi.fn();

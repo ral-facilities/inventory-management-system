@@ -1,14 +1,13 @@
-import React from 'react';
-import { screen, RenderResult, waitFor } from '@testing-library/react';
+import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { CatalogueCategory } from '../../app.types';
+import handleIMS_APIError from '../../handleIMS_APIError';
+import { renderComponentWithBrowserRouter } from '../../testUtils';
 import DeleteCatalogueCategoryDialog, {
   DeleteCatalogueCategoryDialogProps,
 } from './deleteCatalogueCategoryDialog.component';
-import { renderComponentWithBrowserRouter } from '../../testUtils';
-import { CatalogueCategory } from '../../app.types';
-import handleIMS_APIError from '../../handleIMS_APIError';
 
-jest.mock('../../handleIMS_APIError');
+vi.mock('../../handleIMS_APIError');
 
 describe('delete Catalogue Category dialogue', () => {
   let props: DeleteCatalogueCategoryDialogProps;

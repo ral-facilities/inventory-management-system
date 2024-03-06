@@ -1,17 +1,16 @@
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ManufacturerDialog, {
-  ManufacturerDialogProps,
-} from './manufacturerDialog.component';
+import { imsApi } from '../api/api';
+import handleIMS_APIError from '../handleIMS_APIError';
 import {
   getManufacturerById,
   renderComponentWithBrowserRouter,
 } from '../testUtils';
-import handleIMS_APIError from '../handleIMS_APIError';
-import { imsApi } from '../api/api';
+import ManufacturerDialog, {
+  ManufacturerDialogProps,
+} from './manufacturerDialog.component';
 
-jest.mock('../handleIMS_APIError');
+vi.mock('../handleIMS_APIError');
 
 describe('Add manufacturer dialog', () => {
   const onClose = vi.fn();
@@ -21,6 +20,7 @@ describe('Add manufacturer dialog', () => {
   const createView = () => {
     return renderComponentWithBrowserRouter(<ManufacturerDialog {...props} />);
   };
+
   beforeEach(() => {
     props = {
       open: true,

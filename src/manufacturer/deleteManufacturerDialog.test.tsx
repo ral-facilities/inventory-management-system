@@ -1,13 +1,13 @@
-import React from 'react';
 import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderComponentWithBrowserRouter } from '../testUtils';
-import { DeleteManufacturerProps } from './deleteManufacturerDialog.component';
-import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import { Manufacturer } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { renderComponentWithBrowserRouter } from '../testUtils';
+import DeleteManufacturerDialog, {
+  DeleteManufacturerProps,
+} from './deleteManufacturerDialog.component';
 
-jest.mock('../handleIMS_APIError');
+vi.mock('../handleIMS_APIError');
 
 describe('Delete Manufacturer Dialog', () => {
   const onClose = vi.fn();

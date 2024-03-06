@@ -1,11 +1,10 @@
-import React from 'react';
-import { renderComponentWithMemoryRouter } from '../testUtils';
 import { screen, waitFor } from '@testing-library/react';
-import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
 import userEvent from '@testing-library/user-event';
-import { http, HttpResponse } from 'msw';
-import { server } from '../mocks/server';
+import { HttpResponse, http } from 'msw';
 import { CatalogueCategoryFormData, CatalogueItemProperty } from '../app.types';
+import { server } from '../mocks/server';
+import { renderComponentWithMemoryRouter } from '../testUtils';
+import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
 
 describe('matchCatalogueItemProperties', () => {
   it('should match catalogue item properties correctly', () => {
@@ -89,7 +88,7 @@ describe('Catalogue', () => {
       observe: vi.fn(),
       unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
   });

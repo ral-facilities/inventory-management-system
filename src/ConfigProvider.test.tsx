@@ -12,7 +12,7 @@ const ConfigTest: React.FC = (): React.ReactElement => {
   return <div data-testid="settings">{JSON.stringify(settings)}</div>;
 };
 
-jest.mock('./settings', () => ({
+vi.mock('./settings', () => ({
   settings: Promise.resolve({
     apiUrl: '',
     routes: [

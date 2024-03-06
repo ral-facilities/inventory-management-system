@@ -1,4 +1,7 @@
-import React from 'react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { imsApi } from '../api/api';
+import handleIMS_APIError from '../handleIMS_APIError';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
@@ -9,12 +12,8 @@ import ItemDialog, {
   ItemDialogProps,
   isValidDateTime,
 } from './itemDialog.component';
-import { fireEvent, screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import handleIMS_APIError from '../handleIMS_APIError';
-import { imsApi } from '../api/api';
 
-jest.mock('../handleIMS_APIError');
+vi.mock('../handleIMS_APIError');
 
 describe('isValidDateTime', () => {
   it('should return true for a valid date string', () => {

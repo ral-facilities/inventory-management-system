@@ -1,9 +1,6 @@
 import { AxiosError } from 'axios';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
 
-// have to unmock here as we mock "globally" in setupTests.tsx
-jest.unmock('./retryIMS_APIErrors');
-
 describe('retryIMS_APIErrors', () => {
   let error: AxiosError;
 

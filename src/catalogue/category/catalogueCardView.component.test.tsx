@@ -1,9 +1,8 @@
-import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { CatalogueCategory } from '../../app.types';
 import { renderComponentWithBrowserRouter } from '../../testUtils';
 import CardView, { CardViewProps } from './catalogueCardView.component';
-import { CatalogueCategory } from '../../app.types';
 
 describe('CardView', () => {
   let user;
@@ -46,7 +45,7 @@ describe('CardView', () => {
       observe: vi.fn(),
       unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
   });

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   getCatalogueItemById,
   renderComponentWithBrowserRouter,
@@ -6,17 +5,17 @@ import {
 
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { imsApi } from '../../api/api';
+import handleIMS_APIError from '../../handleIMS_APIError';
 import ObsoleteCatalogueItemDialog, {
   ObsoleteCatalogueItemDialogProps,
 } from './obsoleteCatalogueItemDialog.component';
-import handleIMS_APIError from '../../handleIMS_APIError';
-import { imsApi } from '../../api/api';
 
-jest.mock('../../handleIMS_APIError');
+vi.mock('../../handleIMS_APIError');
 
 describe('Obsolete Catalogue Item Dialog', () => {
   // Quite a few of these take more than 10 seconds on CI
-  jest.setTimeout(20000);
+  vi.setConfig({ testTimeout: 20000 });
 
   let props: ObsoleteCatalogueItemDialogProps;
   let user;
@@ -166,7 +165,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
       observe: vi.fn(),
       unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 2000 });
   });

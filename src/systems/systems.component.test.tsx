@@ -1,12 +1,11 @@
-import React from 'react';
-import { renderComponentWithMemoryRouter } from '../testUtils';
 import { screen, waitFor, within } from '@testing-library/react';
-import Systems from './systems.component';
 import userEvent from '@testing-library/user-event';
+import { renderComponentWithMemoryRouter } from '../testUtils';
+import Systems from './systems.component';
 
 describe('Systems', () => {
   // Quite a few of these take more than 5 seconds on CI
-  jest.setTimeout(14000);
+  vi.setConfig({ testTimeout: 14000 });
 
   let user;
   const createView = (path: string) => {
@@ -21,7 +20,7 @@ describe('Systems', () => {
       observe: vi.fn(),
       unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
   });

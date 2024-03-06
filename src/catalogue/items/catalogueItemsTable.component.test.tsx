@@ -1,6 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 import {
   getCatalogueCategoryById,
   renderComponentWithBrowserRouter,
@@ -8,7 +7,9 @@ import {
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';
-jest.setTimeout(10000);
+
+vi.setConfig({ testTimeout: 10000 });
+
 describe('Catalogue Items Table', () => {
   let props: CatalogueItemsTableProps;
   let user;
@@ -38,7 +39,7 @@ describe('Catalogue Items Table', () => {
       observe: vi.fn(),
       unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
   });
@@ -523,7 +524,7 @@ describe('Catalogue Items Table', () => {
 
   it('renders the dense table correctly', async () => {
     props.dense = true;
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 1135 });
     const view = createView();
@@ -566,7 +567,7 @@ describe('Catalogue Items Table', () => {
   // with an MUI tabs component
   it.skip('renders the dense table correctly and can expand and collapse', async () => {
     props.dense = true;
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 1135 });
     createView();

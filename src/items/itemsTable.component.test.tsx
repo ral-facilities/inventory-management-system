@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
@@ -9,7 +8,7 @@ import { waitFor, screen } from '@testing-library/react';
 import ItemsTable, { ItemTableProps } from './itemsTable.component';
 
 describe('Items Table', () => {
-  jest.setTimeout(10000);
+  vi.setConfig({ testTimeout: 10000 });
 
   let props: ItemTableProps;
   let user;
@@ -38,7 +37,7 @@ describe('Items Table', () => {
       observe: vi.fn(),
       unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
 
@@ -310,7 +309,7 @@ describe('Items Table', () => {
 
   it('renders the dense table correctly', async () => {
     props.dense = true;
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 400 });
     const view = createView();

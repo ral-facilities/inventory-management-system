@@ -1,17 +1,16 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
+import { imsApi } from '../api/api';
 import { System, SystemImportanceType } from '../app.types';
+import handleIMS_APIError from '../handleIMS_APIError';
 import SystemsJSON from '../mocks/Systems.json';
 import { renderComponentWithBrowserRouter } from '../testUtils';
 import {
   DeleteSystemDialog,
   DeleteSystemDialogProps,
 } from './deleteSystemDialog.component';
-import handleIMS_APIError from '../handleIMS_APIError';
-import { imsApi } from '../api/api';
 
-jest.mock('../handleIMS_APIError');
+vi.mock('../handleIMS_APIError');
 
 describe('DeleteSystemDialog', () => {
   let systemId = '';
