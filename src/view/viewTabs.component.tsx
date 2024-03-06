@@ -3,7 +3,13 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { styled } from '@mui/material/styles';
 import React from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import {
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { TabValue } from '../app.types';
 import Catalogue from '../catalogue/catalogue.component';
 import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingPage.component';
@@ -14,6 +20,7 @@ import ManufacturerLandingPage from '../manufacturer/manufacturerLandingPage.com
 import Systems from '../systems/systems.component';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
 import { HomePage } from '../homePage/homePage.component';
+import { Layout } from '../App';
 
 export const paths = {
   root: '/',
@@ -91,23 +98,6 @@ function ViewTabs() {
     navigate(`/${newValue.toLowerCase()}`);
   };
 
-  const routing = (
-    <Routes location={location}>
-      <Route path={paths.root} element={<HomePage />} />
-      <Route path={paths.homepage} element={<HomePage />} />
-      <Route path={paths.catalogue} element={<Catalogue />} />
-      <Route
-        path={paths.catalogueItem}
-        element={<CatalogueItemsLandingPage />}
-      />
-      <Route path={paths.systems} element={<Systems />} />
-      <Route path={paths.manufacturers} element={<Manufacturer />} />
-      <Route path={paths.manufacturer} element={<ManufacturerLandingPage />} />
-      <Route path={paths.items} element={<Items />} />
-      <Route path={paths.item} element={<ItemsLandingPage />} />
-    </Routes>
-  );
-
   return (
     <Box
       sx={{
@@ -140,12 +130,12 @@ function ViewTabs() {
             }}
           >
             <TabPanel value={value} label={value}>
-              {routing}
+              <Outlet />
             </TabPanel>
           </Box>
         </>
       ) : (
-        routing
+        <></>
       )}
     </Box>
   );

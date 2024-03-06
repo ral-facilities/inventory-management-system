@@ -10,7 +10,14 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
-import { BrowserRouter } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Outlet,
+  Route,
+  RouterProvider,
+  Routes,
+  createBrowserRouter,
+} from 'react-router-dom';
 import './App.css';
 import {
   clearFailedAuthRequestsQueue,
@@ -26,8 +33,16 @@ import {
   requestPluginRerender,
   tokenRefreshed,
 } from './state/scigateway.actions';
-import ViewTabs from './view/viewTabs.component';
+import ViewTabs, { paths } from './view/viewTabs.component';
 import ConfigProvider from './ConfigProvider';
+import { HomePage } from './homePage/homePage.component';
+import Catalogue from './catalogue/catalogue.component';
+import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
+import Systems from './systems/systems.component';
+import ManufacturerComponent from './manufacturer/manufacturer.component';
+import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
+import Items from './items/items.component';
+import ItemsLandingPage from './items/itemsLandingPage.component';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -48,7 +63,7 @@ const queryClient = new QueryClient({
   },
 });
 
-const App: React.FunctionComponent = () => {
+const Root: React.FunctionComponent = () => {
   // we need to call forceUpdate if SciGateway tells us to rerender
   // but there's no forceUpdate in functional components, so this is the hooks equivalent
   // see https://reactjs.org/docs/hooks-faq.html#is-there-something-like-forceupdate
@@ -70,28 +85,60 @@ const App: React.FunctionComponent = () => {
     };
   }, []);
 
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
-          <IMSThemeProvider>
-            <ConfigProvider>
-              <QueryClientProvider client={queryClient}>
-                <React.Suspense
-                  fallback={
-                    <Preloader loading={true}>Finished loading</Preloader>
-                  }
-                >
-                  <ViewTabs />
-                  {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-                </React.Suspense>
-              </QueryClientProvider>
-            </ConfigProvider>
-          </IMSThemeProvider>
-        </LocalizationProvider>
-      </BrowserRouter>
-    </div>
-  );
+  return <div className="Root"></div>;
 };
 
-export default App;
+const router = createBrowserRouter([
+  {
+    path: '/*',
+    Component: Layout,
+    children: [
+      { path: '', Component: HomePage },
+      { path: 'ims', Component: HomePage },
+      { path: 'catalogue/*', Component: Catalogue },
+      {
+        path: 'catalogue/item/:catalogue_item_id',
+        Component: CatalogueItemsLandingPage,
+      },
+      { path: 'catalogue/item/:catalogue_item_id/items', Component: Items },
+      {
+        path: 'catalogue/item/:catalogue_item_id/items/:item_id',
+        Component: ItemsLandingPage,
+      },
+      { path: 'systems/*', Component: Systems },
+      { path: 'manufacturer', Component: ManufacturerComponent },
+      {
+        path: 'manufacturer/:manufacturer_id',
+        Component: ManufacturerLandingPage,
+      },
+    ],
+  },
+  { path: '*', Component: Root },
+]);
+
+export default function App() {
+  return <RouterProvider router={router} />;
+}
+
+export function Layout() {
+  return (
+    <div className="App">
+      <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
+        <IMSThemeProvider>
+          <ConfigProvider>
+            <QueryClientProvider client={queryClient}>
+              <React.Suspense
+                fallback={
+                  <Preloader loading={true}>Finished loading</Preloader>
+                }
+              >
+                <ViewTabs />
+                {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+              </React.Suspense>
+            </QueryClientProvider>
+          </ConfigProvider>
+        </IMSThemeProvider>
+      </LocalizationProvider>
+    </div>
+  );
+}
