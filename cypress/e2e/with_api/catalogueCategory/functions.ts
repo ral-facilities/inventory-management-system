@@ -1,14 +1,17 @@
-const modifyCatalogueCategory = (values: {
-  editCatalogueCategoryName?: string;
-  name: string;
-  newFormFields?: {
+const modifyCatalogueCategory = (
+  values: {
+    editCatalogueCategoryName?: string;
     name: string;
-    unit?: string;
-    type: string;
-    mandatory: boolean;
-    allowed_values?: { values: any[]; type: string };
-  }[];
-}) => {
+    newFormFields?: {
+      name: string;
+      unit?: string;
+      type: string;
+      mandatory: boolean;
+      allowed_values?: { values: any[]; type: string };
+    }[];
+  },
+  ignoreChecks?: boolean
+) => {
   if (values.editCatalogueCategoryName) {
     cy.findByRole('button', {
       name: `actions ${values.editCatalogueCategoryName} catalogue category button`,
@@ -99,28 +102,26 @@ const modifyCatalogueCategory = (values: {
   }
 
   cy.findByRole('button', { name: 'Save' }).click();
-  cy.findByText(values.name).should('exist');
+  if (!ignoreChecks) {
+    cy.findByText(values.name).should('exist');
 
-  if (values.newFormFields) {
-    cy.findByText(values.name).click();
-    cy.findByRole('button', { name: 'Show/Hide columns' }).click();
-    cy.findByText('Hide all').click();
+    if (values.newFormFields) {
+      cy.findByText(values.name).click();
+      cy.findByRole('button', { name: 'Show/Hide columns' }).click();
+      cy.findByText('Hide all').click();
 
-    cy.findByText(
-      `${values.newFormFields[0].name}${values.newFormFields[0].unit ? `(${values.newFormFields[0].unit})` : ''}`
-    ).click();
-    cy.findAllByText(
-      `${values.newFormFields[0].name}${values.newFormFields[0].unit ? ` (${values.newFormFields[0].unit})` : ''}`
-    ).should('have.length', 2);
-    cy.go('back');
+      cy.findByText(
+        `${values.newFormFields[0].name}${values.newFormFields[0].unit ? `(${values.newFormFields[0].unit})` : ''}`
+      ).click();
+      cy.findAllByText(
+        `${values.newFormFields[0].name}${values.newFormFields[0].unit ? ` (${values.newFormFields[0].unit})` : ''}`
+      ).should('have.length', 2);
+      cy.go('back');
+    }
   }
 };
 
 const deleteCatalogueCategory = (name: string) => {
-  cy.intercept({
-    method: 'DELETE',
-    url: '**/catalogue-categories/*',
-  }).as('deleteCatalogueCategoryData');
   cy.findByRole('button', {
     name: `actions ${name} catalogue category button`,
   }).click();
@@ -130,7 +131,6 @@ const deleteCatalogueCategory = (name: string) => {
   }).click();
 
   cy.findByRole('button', { name: 'Continue' }).click();
-  cy.wait('@deleteCatalogueCategoryData', { timeout: 10000 });
 };
 
 export const saveAsCatalogueCategory = (name: string) => {
@@ -147,15 +147,6 @@ export const saveAsCatalogueCategory = (name: string) => {
 };
 
 const copyToCatalogueCategory = (values: { checkedCategories: string[] }) => {
-  cy.intercept({
-    method: 'POST',
-    url: '**/catalogue-categories',
-  }).as('postCatalogueCategoryData');
-  cy.intercept({
-    method: 'GET',
-    url: '**/catalogue-categories/*',
-  }).as('getCatalogueCategoryData');
-
   for (let i = 0; i < values.checkedCategories.length; i++) {
     cy.findByLabelText(`${values.checkedCategories[i]} checkbox`).click();
   }
@@ -163,9 +154,9 @@ const copyToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByRole('button', { name: 'Copy here' }).click();
   cy.findByRole('dialog').should('not.exist');
-  cy.wait('@postCatalogueCategoryData', { timeout: 10000 });
+
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
+
   for (let i = 0; i < values.checkedCategories.length; i++) {
     cy.findByText(`${values.checkedCategories[i]}`).should('exist');
     deleteCatalogueCategory(`${values.checkedCategories[i]}`);
@@ -173,16 +164,6 @@ const copyToCatalogueCategory = (values: { checkedCategories: string[] }) => {
 };
 
 const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
-  cy.intercept({
-    method: 'PATCH',
-    url: '**/catalogue-categories/*',
-  }).as('patchCatalogueCategoryData');
-
-  cy.intercept({
-    method: 'GET',
-    url: '**/catalogue-categories/*',
-  }).as('getCatalogueCategoryData');
-
   for (let i = 0; i < values.checkedCategories.length; i++) {
     cy.findByLabelText(`${values.checkedCategories[i]} checkbox`).click();
   }
@@ -190,52 +171,58 @@ const moveToCatalogueCategory = (values: { checkedCategories: string[] }) => {
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
   cy.findByRole('button', { name: 'Move here' }).click();
   cy.findByRole('dialog').should('not.exist');
-  cy.wait('@postCatalogueCategoryData', { timeout: 10000 });
+
   cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
-  cy.wait('@getCatalogueCategoryData', { timeout: 10000 });
+
   for (let i = 0; i < values.checkedCategories.length; i++) {
     cy.findByText(`${values.checkedCategories[i]}`).should('exist');
   }
 };
 
-export const addCatalogueCategories = () => {
-  modifyCatalogueCategory({
-    name: 'Lenses',
-  });
+export const addCatalogueCategories = (ignoreChecks?: boolean) => {
+  modifyCatalogueCategory(
+    {
+      name: 'Lenses',
+    },
+    ignoreChecks
+  );
 
   cy.findByText('Lenses').click();
 
-  modifyCatalogueCategory({
-    name: 'Spherical Lenses',
-    newFormFields: [
-      {
-        name: 'Substrate',
-        type: 'text',
-        mandatory: true,
-        allowed_values: {
-          type: 'list',
-          values: ['N-BK7', 'UV Fused Silica', 'Fused Silica'],
+  modifyCatalogueCategory(
+    {
+      name: 'Spherical Lenses',
+      newFormFields: [
+        {
+          name: 'Substrate',
+          type: 'text',
+          mandatory: true,
+          allowed_values: {
+            type: 'list',
+            values: ['N-BK7', 'UV Fused Silica', 'Fused Silica'],
+          },
         },
-      },
-      {
-        name: 'Diameter',
-        type: 'number',
-        unit: 'mm',
-        mandatory: false,
-      },
-      {
-        name: 'Wavelength Range',
-        type: 'text',
-        unit: 'nm',
-        mandatory: true,
-      },
-      {
-        name: 'Broken',
-        type: 'boolean',
-        mandatory: false,
-      },
-    ],
-  });
+        {
+          name: 'Diameter',
+          type: 'number',
+          unit: 'mm',
+          mandatory: false,
+        },
+        {
+          name: 'Wavelength Range',
+          type: 'text',
+          unit: 'nm',
+          mandatory: true,
+        },
+        {
+          name: 'Broken',
+          type: 'boolean',
+          mandatory: false,
+        },
+      ],
+    },
+    ignoreChecks
+  );
 };
 
 export const editCatalogueCategories = () => {

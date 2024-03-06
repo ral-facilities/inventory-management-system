@@ -14,17 +14,25 @@ import {
 
 describe('catalogue items', () => {
   beforeEach(() => {
-    cy.dropIMSDB();
+    cy.dropIMSCollections([
+      'catalogue_categories',
+      'catalogue_items',
+      'manufacturers',
+    ]);
     // Prepare relevant data for catalogue items
     cy.visit('/manufacturer');
-    addManufacturer();
+    addManufacturer(true);
     cy.visit('/catalogue');
-    addCatalogueCategories();
+    addCatalogueCategories(true);
     saveAsCatalogueCategory('Spherical Lenses');
   });
   afterEach(() => {
     cy.clearMocks();
-    cy.dropIMSDB();
+    cy.dropIMSCollections([
+      'catalogue_categories',
+      'catalogue_items',
+      'manufacturers',
+    ]);
   });
 
   it('CRUD for catalogue items', () => {
