@@ -44,7 +44,7 @@ export const createTestQueryClient = (): QueryClient =>
     // logger: {
     //   log: console.log,
     //   warn: console.warn,
-    //   error: jest.fn(),
+    //   error: vi.fn(),
     // },
   });
 

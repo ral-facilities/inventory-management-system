@@ -8,10 +8,10 @@ import { CatalogueCategory } from '../../app.types';
 describe('CardView', () => {
   let user;
   let props: CardViewProps;
-  const onChangeOpenDeleteCategoryDialog = jest.fn();
-  const onChangeOpenEditCategoryDialog = jest.fn();
-  const onChangeOpenSaveAsDialog = jest.fn();
-  const handleToggleSelect = jest.fn();
+  const onChangeOpenDeleteCategoryDialog = vi.fn();
+  const onChangeOpenEditCategoryDialog = vi.fn();
+  const onChangeOpenSaveAsDialog = vi.fn();
+  const handleToggleSelect = vi.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(<CardView {...props} />);
   };
@@ -41,10 +41,10 @@ describe('CardView', () => {
     };
 
     user = userEvent.setup();
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
     window.Element.prototype.getBoundingClientRect = jest
       .fn()
@@ -52,7 +52,7 @@ describe('CardView', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders pagination component correctly', async () => {

@@ -13,8 +13,8 @@ jest.mock('../handleIMS_APIError');
 describe('delete item dialog', () => {
   let props: DeleteItemDialogProps;
   let user;
-  const onClose = jest.fn();
-  const onChangeItem = jest.fn();
+  const onClose = vi.fn();
+  const onChangeItem = vi.fn();
   let item: Item | undefined;
 
   const createView = (): RenderResult => {
@@ -32,7 +32,7 @@ describe('delete item dialog', () => {
     user = userEvent; // Assigning userEvent to 'user'
   });
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('renders correctly', async () => {
     createView();

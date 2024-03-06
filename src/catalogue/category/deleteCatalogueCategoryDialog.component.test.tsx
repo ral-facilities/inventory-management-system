@@ -13,8 +13,8 @@ jest.mock('../../handleIMS_APIError');
 describe('delete Catalogue Category dialogue', () => {
   let props: DeleteCatalogueCategoryDialogProps;
   let user;
-  const onClose = jest.fn();
-  const onChangeCatalogueCategory = jest.fn();
+  const onClose = vi.fn();
+  const onChangeCatalogueCategory = vi.fn();
   let catalogueCategory: CatalogueCategory;
   const createView = (): RenderResult => {
     return renderComponentWithBrowserRouter(
@@ -40,7 +40,7 @@ describe('delete Catalogue Category dialogue', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('renders correctly', async () => {
     createView();

@@ -13,7 +13,7 @@ describe('SystemsTableView', () => {
   let props: SystemsTableViewProps;
   let user;
 
-  const mockOnChangeParentId = jest.fn();
+  const mockOnChangeParentId = vi.fn();
   const mockSystemsData: System[] = [
     SystemsJSON[0] as System,
     SystemsJSON[1] as System,
@@ -37,7 +37,7 @@ describe('SystemsTableView', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders text correctly', async () => {

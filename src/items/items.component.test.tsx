@@ -5,7 +5,7 @@ import { waitFor, screen } from '@testing-library/react';
 import { Route, Routes } from 'react-router-dom';
 import { paths } from '../view/viewTabs.component';
 import userEvent from '@testing-library/user-event';
-const mockedUseNavigate = jest.fn();
+const mockedUseNavigate = vi.fn();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockedUseNavigate,
@@ -23,15 +23,15 @@ describe('Items', () => {
 
   beforeEach(() => {
     user = userEvent.setup();
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('navigates to catalogue category table view', async () => {

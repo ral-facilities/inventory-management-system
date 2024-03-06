@@ -21,7 +21,7 @@ import { imsApi } from './api';
 
 describe('catalogue category api functions', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('useAddCatalogueCategory', () => {
@@ -230,7 +230,7 @@ describe('catalogue category api functions', () => {
     let axiosPatchSpy;
 
     beforeEach(() => {
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
 
       moveToCatalogueCategory = {
         selectedCategories: mockSelectedCatalogueCategories,
@@ -239,7 +239,7 @@ describe('catalogue category api functions', () => {
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('sends requests to move a single or multiple catalogue categories data to root and returns successful response', async () => {
@@ -391,11 +391,11 @@ describe('catalogue category api functions', () => {
         existingCategoryNames: [],
       };
 
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('sends requests to copy multiple catalogue categories to root and returns successful response', async () => {

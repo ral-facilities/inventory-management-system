@@ -11,7 +11,7 @@ import {
 
 describe('manufacturer api functions', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('useAddManufacturer', () => {

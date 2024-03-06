@@ -11,7 +11,7 @@ describe('CatalogueCategoryTableView', () => {
   let props: CatalogueCategoryTableViewProps;
   let user;
 
-  const onChangeParentCategoryId = jest.fn();
+  const onChangeParentCategoryId = vi.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(
       <CatalogueCategoryTableView {...props} />
@@ -168,7 +168,7 @@ describe('CatalogueCategoryTableView', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders text correctly', async () => {

@@ -44,16 +44,16 @@ describe('DeleteSystemDialog', () => {
   beforeEach(() => {
     props = {
       open: true,
-      onClose: jest.fn(),
+      onClose: vi.fn(),
       system: undefined,
     };
     systemId = '65328f34a40ff5301575a4e9';
     user = userEvent.setup();
-    axiosDeleteSpy = jest.spyOn(imsApi, 'delete');
+    axiosDeleteSpy = vi.spyOn(imsApi, 'delete');
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders correctly', async () => {

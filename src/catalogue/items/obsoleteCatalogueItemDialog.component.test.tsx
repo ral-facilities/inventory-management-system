@@ -21,7 +21,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
   let props: ObsoleteCatalogueItemDialogProps;
   let user;
   let axiosPatchSpy;
-  const mockOnClose = jest.fn();
+  const mockOnClose = vi.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(
@@ -159,12 +159,12 @@ describe('Obsolete Catalogue Item Dialog', () => {
       catalogueItem: getCatalogueItemById('89'),
     };
     user = userEvent.setup();
-    axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+    axiosPatchSpy = vi.spyOn(imsApi, 'patch');
 
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
     window.Element.prototype.getBoundingClientRect = jest
       .fn()
@@ -172,7 +172,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('calls onClose when cancel is clicked', async () => {

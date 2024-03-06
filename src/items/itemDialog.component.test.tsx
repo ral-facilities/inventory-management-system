@@ -55,7 +55,7 @@ describe('isValidDateTime', () => {
 describe('ItemDialog', () => {
   let props: ItemDialogProps;
   let user;
-  const onClose = jest.fn();
+  const onClose = vi.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(<ItemDialog {...props} />);
@@ -178,14 +178,14 @@ describe('ItemDialog', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('Add Item', () => {
     let axiosPostSpy;
 
     beforeEach(() => {
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     it('displays no item properties message', async () => {
@@ -713,7 +713,7 @@ describe('ItemDialog', () => {
     let axiosPatchSpy;
 
     beforeEach(() => {
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
       props.selectedItem = getItemById('G463gOIA');
       props.type = 'edit';
     });

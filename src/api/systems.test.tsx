@@ -24,7 +24,7 @@ import { imsApi } from './api';
 
 describe('System api functions', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('useSystems', () => {
@@ -220,11 +220,11 @@ describe('System api functions', () => {
         targetSystem: null,
       };
 
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('sends requests to move multiple systems to root and returns a successful response for each', async () => {
@@ -355,11 +355,11 @@ describe('System api functions', () => {
         existingSystemNames: [],
       };
 
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('sends requests to copy multiple systems to root and returns a successful response for each', async () => {

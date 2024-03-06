@@ -20,7 +20,7 @@ describe('retryIMS_APIErrors', () => {
       },
       name: 'Test error name',
       message: 'Test error message',
-      toJSON: jest.fn(),
+      toJSON: vi.fn(),
     };
   });
 

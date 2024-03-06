@@ -3,7 +3,7 @@ import { renderComponentWithBrowserRouter } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import Manufacturer from './manufacturer.component';
 import userEvent from '@testing-library/user-event';
-const mockedUseNavigate = jest.fn();
+const mockedUseNavigate = vi.fn();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockedUseNavigate,

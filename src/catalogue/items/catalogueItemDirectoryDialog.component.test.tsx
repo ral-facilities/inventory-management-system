@@ -12,8 +12,8 @@ describe('catalogue item directory Dialog', () => {
   let user;
   let axiosPatchSpy;
   let axiosPostSpy;
-  const onClose = jest.fn();
-  const onChangeSelectedItems = jest.fn();
+  const onClose = vi.fn();
+  const onChangeSelectedItems = vi.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(
@@ -105,10 +105,10 @@ describe('catalogue item directory Dialog', () => {
     };
     user = userEvent.setup();
 
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
     window.Element.prototype.getBoundingClientRect = jest
       .fn()
@@ -116,15 +116,15 @@ describe('catalogue item directory Dialog', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   describe('Move to', () => {
     beforeEach(() => {
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('calls onClose when cancel is clicked', async () => {
@@ -269,11 +269,11 @@ describe('catalogue item directory Dialog', () => {
   describe('Copy to', () => {
     beforeEach(() => {
       props.requestType = 'copyTo';
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('copies multiple catalogue items (new catalogue category)', async () => {

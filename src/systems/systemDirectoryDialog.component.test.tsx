@@ -16,8 +16,8 @@ describe('SystemDirectoryDialog', () => {
   let axiosPatchSpy;
   let axiosPostSpy;
 
-  const mockOnClose = jest.fn();
-  const mockOnChangeSelectedSystems = jest.fn();
+  const mockOnClose = vi.fn();
+  const mockOnChangeSelectedSystems = vi.fn();
 
   const mockSelectedSystems: System[] = [
     SystemsJSON[4] as System,
@@ -41,12 +41,12 @@ describe('SystemDirectoryDialog', () => {
     };
 
     user = userEvent.setup();
-    axiosPatchSpy = jest.spyOn(imsApi, 'patch');
-    axiosPostSpy = jest.spyOn(imsApi, 'post');
+    axiosPatchSpy = vi.spyOn(imsApi, 'patch');
+    axiosPostSpy = vi.spyOn(imsApi, 'post');
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('calls onClose when Cancel button is clicked', async () => {

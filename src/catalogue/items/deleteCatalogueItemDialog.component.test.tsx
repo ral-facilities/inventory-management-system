@@ -13,8 +13,8 @@ jest.mock('../../handleIMS_APIError');
 describe('delete Catalogue Category dialogue', () => {
   let props: DeleteCatalogueItemDialogProps;
   let user;
-  const onClose = jest.fn();
-  const onChangeCatalogueItem = jest.fn();
+  const onClose = vi.fn();
+  const onChangeCatalogueItem = vi.fn();
   let catalogueItem: CatalogueItem;
 
   const createView = (): RenderResult => {
@@ -40,7 +40,7 @@ describe('delete Catalogue Category dialogue', () => {
     user = userEvent; // Assigning userEvent to 'user'
   });
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('renders correctly', async () => {
     createView();

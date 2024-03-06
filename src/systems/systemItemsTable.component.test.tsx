@@ -26,10 +26,10 @@ describe('SystemItemsTable', () => {
 
     user = userEvent.setup();
 
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
     window.Element.prototype.getBoundingClientRect = jest
       .fn()
@@ -37,7 +37,7 @@ describe('SystemItemsTable', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders correctly', async () => {

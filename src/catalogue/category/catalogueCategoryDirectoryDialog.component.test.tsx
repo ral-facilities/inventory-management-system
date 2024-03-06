@@ -12,8 +12,8 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   let user;
   let axiosPatchSpy;
   let axiosPostSpy;
-  const onChangeSelectedCategories = jest.fn();
-  const onClose = jest.fn();
+  const onChangeSelectedCategories = vi.fn();
+  const onClose = vi.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(
       <CatalogueCategoryDirectoryDialog {...props} />
@@ -33,11 +33,11 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       user = userEvent.setup();
 
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
       axiosPatchSpy.mockRestore();
     });
 
@@ -252,11 +252,11 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       user = userEvent.setup();
 
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
       axiosPostSpy.mockRestore();
     });
 

@@ -25,7 +25,7 @@ describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
   let user;
   let axiosPostSpy;
-  const onClose = jest.fn();
+  const onClose = vi.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(
@@ -42,7 +42,7 @@ describe('Catalogue Items Dialog', () => {
     };
 
     user = userEvent.setup();
-    axiosPostSpy = jest.spyOn(imsApi, 'post');
+    axiosPostSpy = vi.spyOn(imsApi, 'post');
   });
   const modifyValues = async (values: {
     name?: string;
@@ -154,7 +154,7 @@ describe('Catalogue Items Dialog', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders details step correctly', async () => {
@@ -627,7 +627,7 @@ describe('Catalogue Items Dialog', () => {
         type: 'edit',
       };
 
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
     it('Edit a catalogue item (catalogue detail)', async () => {

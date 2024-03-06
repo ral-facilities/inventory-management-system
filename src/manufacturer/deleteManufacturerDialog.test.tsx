@@ -10,7 +10,7 @@ import handleIMS_APIError from '../handleIMS_APIError';
 jest.mock('../handleIMS_APIError');
 
 describe('Delete Manufacturer Dialog', () => {
-  const onClose = jest.fn();
+  const onClose = vi.fn();
   let props: DeleteManufacturerProps;
   let manufacturer: Manufacturer;
   let user;
@@ -41,7 +41,7 @@ describe('Delete Manufacturer Dialog', () => {
     user = userEvent;
   });
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders dialog correctly', async () => {

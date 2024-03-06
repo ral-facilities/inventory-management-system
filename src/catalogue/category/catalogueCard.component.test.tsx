@@ -8,9 +8,9 @@ describe('Catalogue Card', () => {
   let props: CatalogueCardProps;
   let user;
 
-  const onChangeOpenDeleteDialog = jest.fn();
-  const onChangeOpenEditDialog = jest.fn();
-  const onToggleSelect = jest.fn();
+  const onChangeOpenDeleteDialog = vi.fn();
+  const onChangeOpenEditDialog = vi.fn();
+  const onToggleSelect = vi.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(<CatalogueCard {...props} />);
   };

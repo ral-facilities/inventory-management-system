@@ -30,11 +30,11 @@ describe('handleIMS_APIError', () => {
       },
       name: 'Test error name',
       message: 'Test error message',
-      toJSON: jest.fn(),
+      toJSON: vi.fn(),
     };
   });
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('logs an error and sends a notification to SciGateway', () => {
@@ -66,7 +66,7 @@ describe('handleIMS_APIError', () => {
       },
       name: 'Test error name',
       message: 'Test error message',
-      toJSON: jest.fn(),
+      toJSON: vi.fn(),
     };
 
     handleIMS_APIError(error);
@@ -88,7 +88,7 @@ describe('handleIMS_APIError', () => {
       config: {},
       name: 'Test error name',
       message: 'Network Error',
-      toJSON: jest.fn(),
+      toJSON: vi.fn(),
     };
 
     handleIMS_APIError(error);

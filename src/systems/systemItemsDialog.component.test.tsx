@@ -14,8 +14,8 @@ describe('SystemItemsDialog', () => {
   let user;
   let axiosPatchSpy;
 
-  const mockOnClose = jest.fn();
-  const mockOnChangeSelectedItems = jest.fn();
+  const mockOnClose = vi.fn();
+  const mockOnChangeSelectedItems = vi.fn();
 
   const mockSelectedItems: Item[] = [
     ItemsJSON[0] as Item,
@@ -36,11 +36,11 @@ describe('SystemItemsDialog', () => {
     };
 
     user = userEvent.setup();
-    axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+    axiosPatchSpy = vi.spyOn(imsApi, 'patch');
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('calls onClose when Cancel button is clicked', async () => {

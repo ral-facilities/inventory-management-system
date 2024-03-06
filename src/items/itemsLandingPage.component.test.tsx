@@ -5,7 +5,7 @@ import ItemsLandingPage from './itemsLandingPage.component';
 import userEvent from '@testing-library/user-event';
 import { Route, Routes } from 'react-router-dom';
 import { paths } from '../view/viewTabs.component';
-const mockedUseNavigate = jest.fn();
+const mockedUseNavigate = vi.fn();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => mockedUseNavigate,
@@ -26,7 +26,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders text correctly (only basic details given)', async () => {
@@ -147,7 +147,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('prints when the button is clicked', async () => {
-    const spy = jest.spyOn(window, 'print').mockImplementation(() => {});
+    const spy = vi.spyOn(window, 'print').mockImplementation(() => {});
     createView('/catalogue/item/1/items/KvT2Ox7n');
 
     await waitFor(() => {

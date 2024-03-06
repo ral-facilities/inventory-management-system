@@ -84,10 +84,10 @@ describe('Catalogue', () => {
 
   beforeEach(() => {
     user = userEvent.setup();
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
     window.Element.prototype.getBoundingClientRect = jest
       .fn()
@@ -95,7 +95,7 @@ describe('Catalogue', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('progress bar renders correctly', async () => {
@@ -214,7 +214,7 @@ describe('Catalogue', () => {
   it('root has no categories so there is no results page', async () => {
     server.use(
       http.get('/v1/catalogue-categories', () => {
-          return HttpResponse.json([], { status: 200 });
+        return HttpResponse.json([], { status: 200 });
       })
     );
 

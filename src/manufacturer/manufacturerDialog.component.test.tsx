@@ -14,7 +14,7 @@ import { imsApi } from '../api/api';
 jest.mock('../handleIMS_APIError');
 
 describe('Add manufacturer dialog', () => {
-  const onClose = jest.fn();
+  const onClose = vi.fn();
   let props: ManufacturerDialogProps;
   let user;
   let axiosPostSpy;
@@ -31,7 +31,7 @@ describe('Add manufacturer dialog', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   const modifyManufacturerValues = (values: {
     name?: string;
@@ -86,11 +86,11 @@ describe('Add manufacturer dialog', () => {
 
   describe('Add manufacturer', () => {
     beforeEach(() => {
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
     it('renders text fields correctly', async () => {
       createView();
@@ -235,7 +235,7 @@ describe('Add manufacturer dialog', () => {
         type: 'edit',
       };
 
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
     it('Edits a manufacturer correctly', async () => {

@@ -15,7 +15,7 @@ describe('Systems Dialog', () => {
   let axiosPostSpy;
   let axiosPatchSpy;
 
-  const mockOnClose = jest.fn();
+  const mockOnClose = vi.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(<SystemDialog {...props} />);
@@ -62,12 +62,12 @@ describe('Systems Dialog', () => {
       type: 'add',
     };
     user = userEvent.setup();
-    axiosPostSpy = jest.spyOn(imsApi, 'post');
-    axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+    axiosPostSpy = vi.spyOn(imsApi, 'post');
+    axiosPatchSpy = vi.spyOn(imsApi, 'patch');
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('Add', () => {

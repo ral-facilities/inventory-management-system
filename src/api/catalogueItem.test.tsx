@@ -20,7 +20,7 @@ import CatalogueItemJSON from '../mocks/CatalogueItems.json';
 
 describe('catalogue items api functions', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('useAddCatalogueItem', () => {
@@ -243,7 +243,7 @@ describe('catalogue items api functions', () => {
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
     it('sends requests to move multiple catalogue items and returns successful response', async () => {
       const { result } = renderHook(() => useMoveToCatalogueItem(), {
@@ -367,7 +367,7 @@ describe('catalogue items api functions', () => {
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
     it('sends requests to copy multiple catalogue items and returns successful response', async () => {
       const { result } = renderHook(() => useCopyToCatalogueItem(), {
