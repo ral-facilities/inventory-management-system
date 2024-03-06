@@ -117,6 +117,9 @@ jobs:
           sudo apt-get install libgconf-2-4
           yarn --immutable
 
+      - name: debug
+        run: echo $API__ALLOWED_CORS_HEADERS
+
       - name: Download unit data
         run: wget https://raw.githubusercontent.com/ral-facilities/inventory-management-system-api/develop/data/units.json
 
