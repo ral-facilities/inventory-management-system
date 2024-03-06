@@ -94,7 +94,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       country: isNotCreating ? manufacturer.address.country : '',
     },
   };
-  console.log(initialManufacturer);
   const {
     handleSubmit,
     register,

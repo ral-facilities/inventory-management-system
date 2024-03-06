@@ -270,11 +270,13 @@ function ManufacturerComponent() {
         />
       </Box>
       <MaterialReactTable table={table} />
-      <DeleteManufacturerDialog
-        open={deleteManufacturerDialog}
-        onClose={() => setDeleteManufacturerDialog(false)}
-        manufacturer={selectedManufacturer}
-      />
+      {deleteManufacturerDialog && (
+        <DeleteManufacturerDialog
+          open={deleteManufacturerDialog}
+          onClose={() => setDeleteManufacturerDialog(false)}
+          manufacturer={selectedManufacturer}
+        />
+      )}
     </div>
   );
 }
