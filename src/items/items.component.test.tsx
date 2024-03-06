@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderComponentWithMemoryRouter } from '../setupTests';
+import { renderComponentWithMemoryRouter } from '../testUtils';
 import Items from './items.component';
 import { waitFor, screen } from '@testing-library/react';
 import { Route, Routes } from 'react-router-dom';

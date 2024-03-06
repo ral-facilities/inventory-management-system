@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { Manufacturer } from '../app.types';
 import ManufacturerJSON from '../mocks/manufacturer.json';
-import { hooksWrapperWithProviders } from '../setupTests';
+import { hooksWrapperWithProviders } from '../testUtils';
 import {
   useAddManufacturer,
   useDeleteManufacturer,

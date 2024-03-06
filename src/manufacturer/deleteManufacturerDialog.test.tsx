@@ -1,7 +1,7 @@
 import React from 'react';
 import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithBrowserRouter } from '../testUtils';
 import { DeleteManufacturerProps } from './deleteManufacturerDialog.component';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import { Manufacturer } from '../app.types';

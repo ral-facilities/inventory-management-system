@@ -9,7 +9,7 @@ import {
 } from '../app.types';
 import SystemBreadcrumbsJSON from '../mocks/SystemBreadcrumbs.json';
 import SystemsJSON from '../mocks/Systems.json';
-import { hooksWrapperWithProviders } from '../setupTests';
+import { hooksWrapperWithProviders } from '../testUtils';
 import {
   useAddSystem,
   useCopyToSystem,

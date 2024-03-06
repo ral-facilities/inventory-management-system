@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { renderComponentWithBrowserRouter } from '../../testUtils';
 import CardView, { CardViewProps } from './catalogueCardView.component';
 import { CatalogueCategory } from '../../app.types';
 

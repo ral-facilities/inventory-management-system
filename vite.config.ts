@@ -105,7 +105,7 @@ export default defineConfig(({ command, mode }) => {
       globals: 'true',
       environment: 'jsdom',
       globalSetup: './globalSetup.js',
-      setupFiles: ['src/setupTestsVitest.tsx'],
+      setupFiles: ['src/setupTests.tsx'],
     },
   };
 });

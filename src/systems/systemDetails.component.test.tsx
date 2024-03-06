@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { System } from '../app.types';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithBrowserRouter } from '../testUtils';
 import SystemsJSON from '../mocks/Systems.json';
 import SystemDetails, { SystemDetailsProps } from './systemDetails.component';
 import userEvent from '@testing-library/user-event';

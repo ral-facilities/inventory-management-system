@@ -4,7 +4,7 @@ import React from 'react';
 import {
   getCatalogueCategoryById,
   renderComponentWithBrowserRouter,
-} from '../../setupTests';
+} from '../../testUtils';
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';

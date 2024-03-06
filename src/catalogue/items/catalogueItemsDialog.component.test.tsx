@@ -3,7 +3,7 @@ import {
   renderComponentWithBrowserRouter,
   getCatalogueCategoryById,
   getCatalogueItemById,
-} from '../../setupTests';
+} from '../../testUtils';
 import {
   act,
   fireEvent,

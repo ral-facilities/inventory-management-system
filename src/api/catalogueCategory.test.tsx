@@ -6,7 +6,7 @@ import {
   EditCatalogueCategory,
   MoveToCatalogueCategory,
 } from '../app.types';
-import { hooksWrapperWithProviders } from '../setupTests';
+import { hooksWrapperWithProviders } from '../testUtils';
 import {
   useAddCatalogueCategory,
   useCatalogueBreadcrumbs,

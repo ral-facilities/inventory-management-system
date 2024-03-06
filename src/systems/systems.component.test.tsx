@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderComponentWithMemoryRouter } from '../setupTests';
+import { renderComponentWithMemoryRouter } from '../testUtils';
 import { screen, waitFor, within } from '@testing-library/react';
 import Systems from './systems.component';
 import userEvent from '@testing-library/user-event';

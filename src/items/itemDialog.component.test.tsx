@@ -4,7 +4,7 @@ import {
   getCatalogueItemById,
   getItemById,
   renderComponentWithBrowserRouter,
-} from '../setupTests';
+} from '../testUtils';
 import ItemDialog, {
   ItemDialogProps,
   isValidDateTime,

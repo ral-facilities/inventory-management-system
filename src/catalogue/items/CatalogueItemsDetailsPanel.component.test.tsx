@@ -4,7 +4,7 @@ import {
   getCatalogueCategoryById,
   getCatalogueItemById,
   renderComponentWithBrowserRouter,
-} from '../../setupTests';
+} from '../../testUtils';
 
 import userEvent from '@testing-library/user-event';
 import CatalogueItemsDetailsPanel, {

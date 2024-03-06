@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import DeleteCatalogueCategoryDialog, {
   DeleteCatalogueCategoryDialogProps,
 } from './deleteCatalogueCategoryDialog.component';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { renderComponentWithBrowserRouter } from '../../testUtils';
 import { CatalogueCategory } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 

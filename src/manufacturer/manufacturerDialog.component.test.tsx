@@ -7,7 +7,7 @@ import ManufacturerDialog, {
 import {
   getManufacturerById,
   renderComponentWithBrowserRouter,
-} from '../setupTests';
+} from '../testUtils';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { imsApi } from '../api/api';
 

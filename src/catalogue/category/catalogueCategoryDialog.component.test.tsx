@@ -4,7 +4,7 @@ import React from 'react';
 import { imsApi } from '../../api/api';
 import { CatalogueCategory, CatalogueCategoryFormData } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { renderComponentWithBrowserRouter } from '../../testUtils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';

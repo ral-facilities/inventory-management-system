@@ -12,7 +12,7 @@ import {
   getItemsByCatalogueItemId,
   getItemsBySystemId,
   hooksWrapperWithProviders,
-} from '../setupTests';
+} from '../testUtils';
 import {
   AddItem,
   EditItem,

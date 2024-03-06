@@ -9,7 +9,7 @@ import {
   useEditCatalogueItem,
   useMoveToCatalogueItem,
 } from './catalogueItem';
-import { catalogueItemData, hooksWrapperWithProviders } from '../setupTests';
+import { catalogueItemData, hooksWrapperWithProviders } from '../testUtils';
 import {
   AddCatalogueItem,
   CatalogueItem,

@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import DeleteItemDialog, {
   DeleteItemDialogProps,
 } from './deleteItemDialog.component';
-import { getItemById, renderComponentWithBrowserRouter } from '../setupTests';
+import { getItemById, renderComponentWithBrowserRouter } from '../testUtils';
 import { Item } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderComponentWithMemoryRouter } from '../setupTests';
+import { renderComponentWithMemoryRouter } from '../testUtils';
 import { screen, waitFor } from '@testing-library/react';
 import ManufacturerLandingPage from './manufacturerLandingPage.component';
 import userEvent from '@testing-library/user-event';
