@@ -17,7 +17,7 @@ const handleTransferState = (
             payload: {
               severity: singleTransferState.state,
               message: `${singleTransferState.name}: ${singleTransferState.message}`,
-              showAllToasts: 'true',
+              instant: true,
             },
           },
         })
