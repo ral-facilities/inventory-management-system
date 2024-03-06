@@ -1,15 +1,15 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { RenderResult } from '@testing-library/react';
 import { HomePage } from '../homePage/homePage.component';
+import { renderComponentWithBrowserRouter } from '../setupTests';
 
 describe('Home page component', () => {
+  const createView = (): RenderResult => {
+    return renderComponentWithBrowserRouter(<HomePage />);
+  };
   it('homepage renders correctly', () => {
-    const { asFragment } = render(
-      <MemoryRouter>
-        <HomePage />
-      </MemoryRouter>
-    );
+    const { asFragment } = createView();
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

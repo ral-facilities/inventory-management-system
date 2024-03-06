@@ -189,6 +189,10 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                 </PaperDescription>
                 <Box marginTop="16px">
                   <Button
+                    sx={(theme) => ({
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      backgroundColor: (theme as any).colours?.darkBlue,
+                    })}
                     color="primary"
                     variant="contained"
                     component={Link}
@@ -233,6 +237,10 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                 </PaperDescription>
                 <Box marginTop="auto">
                   <Button
+                    sx={(theme) => ({
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      backgroundColor: (theme as any).colours?.darkBlue,
+                    })}
                     color="primary"
                     variant="contained"
                     component={Link}
@@ -254,6 +262,10 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                 </PaperDescription>
                 <Box marginTop="auto">
                   <Button
+                    sx={(theme) => ({
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      backgroundColor: (theme as any).colours?.darkBlue,
+                    })}
                     color="primary"
                     variant="contained"
                     component={Link}
