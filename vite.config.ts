@@ -107,6 +107,9 @@ export default defineConfig(({ command, mode }) => {
       environment: 'jsdom',
       globalSetup: './globalSetup.js',
       setupFiles: ['src/setupTests.tsx'],
+      coverage: {
+        exclude: ['public/*', 'server/*'],
+      },
     },
   };
 });
