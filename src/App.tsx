@@ -27,6 +27,7 @@ import {
   tokenRefreshed,
 } from './state/scigateway.actions';
 import ViewTabs from './view/viewTabs.component';
+import ConfigProvider from './ConfigProvider';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -74,16 +75,18 @@ const App: React.FunctionComponent = () => {
       <BrowserRouter>
         <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
           <IMSThemeProvider>
-            <QueryClientProvider client={queryClient}>
-              <React.Suspense
-                fallback={
-                  <Preloader loading={true}>Finished loading</Preloader>
-                }
-              >
-                <ViewTabs />
-                {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-              </React.Suspense>
-            </QueryClientProvider>
+            <ConfigProvider>
+              <QueryClientProvider client={queryClient}>
+                <React.Suspense
+                  fallback={
+                    <Preloader loading={true}>Finished loading</Preloader>
+                  }
+                >
+                  <ViewTabs />
+                  {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+                </React.Suspense>
+              </QueryClientProvider>
+            </ConfigProvider>
           </IMSThemeProvider>
         </LocalizationProvider>
       </BrowserRouter>
