@@ -11,7 +11,7 @@ import Decal2Image from '../images/decal2.svg';
 import Decal2DarkImage from '../images/decal2-dark.svg';
 import Decal2DarkHCImage from '../images/decal2-darkhc.svg';
 import FacilityImage from '../images/facility.jpg';
-import { settings } from '../settings';
+import { InventoryManagementSystemSettingsContext } from '../ConfigProvider';
 
 export interface BaseHomePageProps {
   logo: string;
@@ -189,6 +189,10 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                 </PaperDescription>
                 <Box marginTop="16px">
                   <Button
+                    sx={(theme) => ({
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      backgroundColor: (theme as any).colours?.darkBlue,
+                    })}
                     color="primary"
                     variant="contained"
                     component={Link}
@@ -233,6 +237,10 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                 </PaperDescription>
                 <Box marginTop="auto">
                   <Button
+                    sx={(theme) => ({
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      backgroundColor: (theme as any).colours?.darkBlue,
+                    })}
                     color="primary"
                     variant="contained"
                     component={Link}
@@ -254,6 +262,10 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
                 </PaperDescription>
                 <Box marginTop="auto">
                   <Button
+                    sx={(theme) => ({
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      backgroundColor: (theme as any).colours?.darkBlue,
+                    })}
                     color="primary"
                     variant="contained"
                     component={Link}
@@ -310,13 +322,8 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
 };
 
 export const HomePage = React.memo((): React.ReactElement => {
-  // TODO: Replace this with redux if it ends up being used elsewhere
-  const [pluginHost, setPluginHost] = React.useState<string>('');
-  React.useEffect(() => {
-    const loadPluginHost = async () =>
-      setPluginHost((await settings)?.pluginHost || '');
-    loadPluginHost();
-  }, []);
+  const settings = React.useContext(InventoryManagementSystemSettingsContext);
+  const pluginHost = settings.pluginHost;
 
   const HomePage = BaseHomePage;
   return (
