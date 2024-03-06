@@ -1,10 +1,4 @@
-import {
-  DefaultBodyType,
-  DefaultRequestMultipartBody,
-  http,
-  HttpResponse,
-  PathParams,
-} from 'msw';
+import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
   AddCatalogueCategory,
   AddCatalogueItem,
