@@ -4,7 +4,6 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^7.1.0",
     "@date-io/date-fns": "3.0.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -39,7 +38,6 @@
     "preview": "vite preview",
     "preview:build": "yarn build && yarn preview",
     "test": "vitest --coverage",
-    "eject": "react-scripts eject",
     "lint:js": "eslint --max-warnings=0 --ext=tsx --ext=ts --ext=js --ext=jsx --fix ./src",
     "build:e2e": "cross-env VITE_APP_E2E_TESTING=true GENERATE_SOURCEMAP=false yarn build",
     "build:e2e:api": "cross-env VITE_APP_E2E_TESTING_API=true GENERATE_SOURCEMAP=false yarn build",
