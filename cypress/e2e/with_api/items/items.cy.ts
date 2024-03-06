@@ -6,19 +6,31 @@ import { addItem, deleteItem, editItem, saveAsItem } from './functions';
 
 describe('items', () => {
   beforeEach(() => {
-    cy.dropIMSDB();
+    cy.dropIMSCollections([
+      'catalogue_categories',
+      'catalogue_items',
+      'manufacturers',
+      'items',
+      'systems',
+    ]);
     // Prepare relevant data for items
     cy.visit('/manufacturers');
-    addManufacturer();
+    addManufacturer(true);
     cy.visit('/systems');
-    addSystems();
+    addSystems(true);
     cy.visit('/catalogue');
-    addCatalogueCategories();
-    addCatalogueItem();
+    addCatalogueCategories(true);
+    addCatalogueItem(true);
   });
   afterEach(() => {
     cy.clearMocks();
-    cy.dropIMSDB();
+    cy.dropIMSCollections([
+      'catalogue_categories',
+      'catalogue_items',
+      'manufacturers',
+      'items',
+      'systems',
+    ]);
   });
 
   it('CRUD for items', () => {
