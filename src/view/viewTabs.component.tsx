@@ -3,24 +3,9 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { styled } from '@mui/material/styles';
 import React from 'react';
-import {
-  Outlet,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { TabValue } from '../app.types';
-import Catalogue from '../catalogue/catalogue.component';
-import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingPage.component';
-import Items from '../items/items.component';
-import ItemsLandingPage from '../items/itemsLandingPage.component';
-import Manufacturer from '../manufacturer/manufacturer.component';
-import ManufacturerLandingPage from '../manufacturer/manufacturerLandingPage.component';
-import Systems from '../systems/systems.component';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
-import { HomePage } from '../homePage/homePage.component';
-import { Layout } from '../App';
 
 export const paths = {
   root: '/',

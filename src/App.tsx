@@ -10,14 +10,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
-import {
-  BrowserRouter,
-  Outlet,
-  Route,
-  RouterProvider,
-  Routes,
-  createBrowserRouter,
-} from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
 import {
   clearFailedAuthRequestsQueue,
@@ -33,7 +26,7 @@ import {
   requestPluginRerender,
   tokenRefreshed,
 } from './state/scigateway.actions';
-import ViewTabs, { paths } from './view/viewTabs.component';
+import ViewTabs from './view/viewTabs.component';
 import ConfigProvider from './ConfigProvider';
 import { HomePage } from './homePage/homePage.component';
 import Catalogue from './catalogue/catalogue.component';
