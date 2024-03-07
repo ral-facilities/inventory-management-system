@@ -16,6 +16,25 @@ function excludeMSWPlugin(): PluginOption {
   };
 }
 
+/* See https://stackoverflow.com/questions/69626090/how-to-watch-public-directory-in-vite-project-for-hot-reload allows
+   hot reloading when json files are modifeid in the public folder*/
+function jsonHMR(): PluginOption {
+  return {
+    name: 'json-hmr',
+    enforce: 'post',
+    handleHotUpdate({ file, server }) {
+      if (file.endsWith('.json')) {
+        console.log('reloading json file...');
+
+        server.hot.send({
+          type: 'full-reload',
+          path: '*',
+        });
+      }
+    },
+  };
+}
+
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
@@ -28,6 +47,9 @@ export default defineConfig(({ command, mode }) => {
   const excludeMSW = env.VITE_APP_INCLUDE_MSW !== 'true';
 
   let plugins: PluginOption[] = [react()];
+
+  // Allow hot reloading of json files in public folder when in development
+  if (env.NODE_ENV === 'development') plugins.push(jsonHMR());
 
   let config: UserConfig = {
     plugins: plugins,
