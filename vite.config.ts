@@ -78,8 +78,6 @@ export default defineConfig(({ command, mode }) => {
 
   if (buildLibrary) {
     // Config for deployment in SciGateway
-    let rollupExternals = ['react', 'react-dom'];
-
     config.build = {
       lib: {
         // https://github.com/vitejs/vite/issues/7130

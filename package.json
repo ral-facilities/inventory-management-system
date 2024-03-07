@@ -38,6 +38,7 @@
     "build": "tsc --project tsconfig.build.json && vite build",
     "preview": "vite preview",
     "preview:build": "yarn build && yarn preview",
+    "preview:build:dev": "yarn build --watch & yarn preview",
     "test": "vitest --coverage",
     "lint:js": "eslint --max-warnings=0 --ext=tsx --ext=ts --ext=js --ext=jsx --fix ./src",
     "build:e2e": "cross-env VITE_APP_BUILD_STANDALONE=true VITE_APP_INCLUDE_MSW=true GENERATE_SOURCEMAP=false yarn build",
