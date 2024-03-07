@@ -1,11 +1,11 @@
 import React from 'react';
 import { RenderResult } from '@testing-library/react';
 import { HomePage } from '../homePage/homePage.component';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 
 describe('Home page component', () => {
   const createView = (): RenderResult => {
-    return renderComponentWithBrowserRouter(<HomePage />);
+    return renderComponentWithRouterProvider(<HomePage />);
   };
   it('homepage renders correctly', () => {
     const { asFragment } = createView();

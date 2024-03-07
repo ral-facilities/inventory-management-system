@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import Breadcrumbs, { BreadcrumbsProps } from './breadcrumbs.component';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 
 describe('Channel Breadcrumbs', () => {
   const onChangeNode = jest.fn();
@@ -10,7 +10,7 @@ describe('Channel Breadcrumbs', () => {
   let props: BreadcrumbsProps;
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(<Breadcrumbs {...props} />);
+    return renderComponentWithRouterProvider(<Breadcrumbs {...props} />);
   };
   beforeEach(() => {
     props = {
