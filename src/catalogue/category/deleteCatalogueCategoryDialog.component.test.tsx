@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import DeleteCatalogueCategoryDialog, {
   DeleteCatalogueCategoryDialogProps,
 } from './deleteCatalogueCategoryDialog.component';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { renderComponentWithRouterProvider } from '../../setupTests';
 import { CatalogueCategory } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
@@ -17,7 +17,7 @@ describe('delete Catalogue Category dialogue', () => {
   const onChangeCatalogueCategory = jest.fn();
   let catalogueCategory: CatalogueCategory;
   const createView = (): RenderResult => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <DeleteCatalogueCategoryDialog {...props} />
     );
   };

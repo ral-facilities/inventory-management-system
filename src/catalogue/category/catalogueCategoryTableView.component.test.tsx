@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { renderComponentWithRouterProvider } from '../../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 
 import userEvent from '@testing-library/user-event';
@@ -13,7 +13,7 @@ describe('CatalogueCategoryTableView', () => {
 
   const onChangeParentCategoryId = jest.fn();
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <CatalogueCategoryTableView {...props} />
     );
   };

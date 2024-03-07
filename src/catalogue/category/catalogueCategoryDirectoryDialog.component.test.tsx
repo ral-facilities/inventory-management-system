@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { renderComponentWithRouterProvider } from '../../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import CatalogueCategoryDirectoryDialog, {
   CatalogueCategoryDirectoryDialogProps,
@@ -15,7 +15,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   const onChangeSelectedCategories = jest.fn();
   const onClose = jest.fn();
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <CatalogueCategoryDirectoryDialog {...props} />
     );
   };

@@ -4,7 +4,7 @@ import React from 'react';
 import { imsApi } from '../../api/api';
 import { CatalogueCategory, CatalogueCategoryFormData } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { renderComponentWithRouterProvider } from '../../setupTests';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
@@ -18,7 +18,7 @@ describe('Catalogue Category Dialog', () => {
   let user;
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <CatalogueCategoryDialog {...props} />
     );
   };

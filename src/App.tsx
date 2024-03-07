@@ -115,7 +115,7 @@ export default function App() {
 
 export function Layout() {
   return (
-    <div className="App">
+    <div className="Layout">
       <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
         <IMSThemeProvider>
           <ConfigProvider>

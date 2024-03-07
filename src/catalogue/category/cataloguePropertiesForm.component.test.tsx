@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { renderComponentWithRouterProvider } from '../../setupTests';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CataloguePropertiesForm, {
@@ -19,7 +19,7 @@ describe('Catalogue Properties Form', () => {
 
   const resetFormError = jest.fn();
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <CataloguePropertiesForm {...props} />
     );
   };

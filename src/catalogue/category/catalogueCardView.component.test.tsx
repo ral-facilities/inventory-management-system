@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { renderComponentWithRouterProvider } from '../../setupTests';
 import CardView, { CardViewProps } from './catalogueCardView.component';
 import { CatalogueCategory } from '../../app.types';
 
@@ -13,7 +13,7 @@ describe('CardView', () => {
   const onChangeOpenSaveAsDialog = jest.fn();
   const handleToggleSelect = jest.fn();
   const createView = () => {
-    return renderComponentWithBrowserRouter(<CardView {...props} />);
+    return renderComponentWithRouterProvider(<CardView {...props} />);
   };
 
   function createData(): CatalogueCategory[] {

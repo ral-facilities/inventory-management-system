@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { renderComponentWithRouterProvider } from '../../setupTests';
 import { screen } from '@testing-library/react';
 import CatalogueCard, { CatalogueCardProps } from './catalogueCard.component';
 import userEvent from '@testing-library/user-event';
@@ -12,7 +12,7 @@ describe('Catalogue Card', () => {
   const onChangeOpenEditDialog = jest.fn();
   const onToggleSelect = jest.fn();
   const createView = () => {
-    return renderComponentWithBrowserRouter(<CatalogueCard {...props} />);
+    return renderComponentWithRouterProvider(<CatalogueCard {...props} />);
   };
 
   beforeEach(() => {

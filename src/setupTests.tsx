@@ -8,7 +8,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '@testing-library/jest-dom';
 import { RenderOptions, render } from '@testing-library/react';
 import { enGB } from 'date-fns/locale/en-GB';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import {
+  BrowserRouter,
+  MemoryRouter,
+  Route,
+  RouterProvider,
+  Routes,
+  createBrowserRouter,
+} from 'react-router-dom';
 import {
   CatalogueCategory,
   CatalogueCategoryFormData,
@@ -49,6 +56,41 @@ export const createTestQueryClient = (): QueryClient =>
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   queryClient?: QueryClient;
+}
+
+export function renderComponentWithRouterProvider(
+  ui: any,
+  path?: string,
+  {
+    // Automatically create a store instance if no store was passed i
+    // Automatically create a query client instance if no query client was passed in
+    queryClient = createTestQueryClient(),
+    ...renderOptions
+  }: ExtendedRenderOptions = {}
+) {
+  const Root: React.FunctionComponent = () => {
+    return (
+      <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
+        <QueryClientProvider client={queryClient}>
+          <Routes>
+            <Route path={path ?? '/'} element={ui} />
+          </Routes>
+        </QueryClientProvider>
+      </LocalizationProvider>
+    );
+  };
+
+  const router = createBrowserRouter([{ path: '*', Component: Root }]);
+
+  function Wrapper({
+    children,
+  }: React.PropsWithChildren<unknown>): JSX.Element {
+    return <RouterProvider router={router} />;
+  }
+  return {
+    queryClient,
+    ...render(ui, { wrapper: Wrapper, ...renderOptions }),
+  };
 }
 
 export function renderComponentWithBrowserRouter(
