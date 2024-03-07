@@ -81,12 +81,15 @@ const AddSystemButton = (props: { systemId: string | null }) => {
       >
         <AddIcon />
       </IconButton>
-      <SystemDialog
-        open={addSystemDialogOpen}
-        onClose={() => setAddSystemDialogOpen(false)}
-        parentId={props.systemId}
-        type="add"
-      />
+
+      {addSystemDialogOpen && (
+        <SystemDialog
+          open={addSystemDialogOpen}
+          onClose={() => setAddSystemDialogOpen(false)}
+          parentId={props.systemId}
+          type="add"
+        />
+      )}
     </>
   );
 };
@@ -463,22 +466,22 @@ function Systems() {
           </Grid>
         </Grid>
       </Box>
-      <SystemDialog
-        open={menuDialogType !== undefined && menuDialogType !== 'delete'}
-        onClose={() => setMenuDialogType(undefined)}
-        type={
-          menuDialogType !== undefined && menuDialogType !== 'delete'
-            ? menuDialogType
-            : 'edit'
-        }
-        selectedSystem={selectedSystemForMenu}
-        parentId={systemId}
-      />
-      <DeleteSystemDialog
-        open={menuDialogType === 'delete'}
-        onClose={() => setMenuDialogType(undefined)}
-        system={selectedSystemForMenu}
-      />
+      {menuDialogType !== undefined && menuDialogType !== 'delete' && (
+        <SystemDialog
+          open={true}
+          onClose={() => setMenuDialogType(undefined)}
+          type={menuDialogType !== undefined ? menuDialogType : 'edit'}
+          selectedSystem={selectedSystemForMenu}
+          parentId={systemId}
+        />
+      )}
+      {menuDialogType === 'delete' && (
+        <DeleteSystemDialog
+          open={menuDialogType === 'delete'}
+          onClose={() => setMenuDialogType(undefined)}
+          system={selectedSystemForMenu}
+        />
+      )}
     </>
   );
 }

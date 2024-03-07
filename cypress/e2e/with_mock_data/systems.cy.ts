@@ -105,8 +105,10 @@ describe('Systems', () => {
         expect(JSON.stringify(await postRequests[0].json())).equal(
           JSON.stringify({
             name: 'System name',
+            location: null,
+            owner: null,
+            description: null,
             importance: 'medium',
-            parent_id: null,
           })
         );
       });
@@ -135,11 +137,10 @@ describe('Systems', () => {
         expect(JSON.stringify(await postRequests[0].json())).equal(
           JSON.stringify({
             name: 'System name',
-            description: 'System description',
             location: 'System location',
             owner: 'System owner',
+            description: 'System description',
             importance: 'high',
-            parent_id: null,
           })
         );
       });
@@ -164,6 +165,9 @@ describe('Systems', () => {
         expect(JSON.stringify(await postRequests[0].json())).equal(
           JSON.stringify({
             name: 'System name',
+            location: null,
+            owner: null,
+            description: null,
             importance: 'medium',
             parent_id: '65328f34a40ff5301575a4e3',
           })
@@ -353,11 +357,10 @@ describe('Systems', () => {
         expect(JSON.stringify(await postRequests[0].json())).equal(
           JSON.stringify({
             name: 'System name',
-            description: 'System description',
             location: 'System location',
             owner: 'System owner',
+            description: 'System description',
             importance: 'medium',
-            parent_id: null,
           })
         );
       });
@@ -387,10 +390,10 @@ describe('Systems', () => {
         expect(JSON.stringify(await postRequests[0].json())).equal(
           JSON.stringify({
             name: 'System name',
-            description:
-              'Pretty speech spend mouth control skill. Fire together return message catch food wish.',
             location: '848 James Lock Suite 863\nNew Robertbury, PW 17883',
             owner: 'Daniel Morrison',
+            description:
+              'Pretty speech spend mouth control skill. Fire together return message catch food wish.',
             importance: 'low',
             parent_id: '65328f34a40ff5301575a4e3',
           })

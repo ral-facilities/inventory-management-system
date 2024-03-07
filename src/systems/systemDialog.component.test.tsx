@@ -135,9 +135,12 @@ describe('Systems Dialog', () => {
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
-        ...values,
-        importance: SystemImportanceType.MEDIUM,
-        parent_id: null,
+        description: null,
+        importance: 'medium',
+        location: null,
+        name: 'System name',
+        owner: null,
+        parent_id: undefined,
       });
       expect(mockOnClose).toHaveBeenCalled();
     });
