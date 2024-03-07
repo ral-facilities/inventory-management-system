@@ -100,11 +100,11 @@ export const handlers = [
         if (parentId === 'null') {
           data = CatalogueCategoryJSON.filter(
             (catalogueCategory) => catalogueCategory.parent_id === null
-          );
+          ) as CatalogueCategory[];
         } else {
           data = CatalogueCategoryJSON.filter(
             (catalogueCategory) => catalogueCategory.parent_id === parentId
-          );
+          ) as CatalogueCategory[];
         }
       }
 
@@ -517,10 +517,14 @@ export const handlers = [
 
       if (parentId) {
         if (parentId === 'null')
-          data = SystemsJSON.filter((system) => system.parent_id === null);
+          data = SystemsJSON.filter(
+            (system) => system.parent_id === null
+          ) as System[];
         else
-          data = SystemsJSON.filter((system) => system.parent_id === parentId);
-      } else data = SystemsJSON;
+          data = SystemsJSON.filter(
+            (system) => system.parent_id === parentId
+          ) as System[];
+      } else data = SystemsJSON as System[];
       return HttpResponse.json(data, { status: 200 });
     }
   ),
