@@ -6,7 +6,7 @@ import ManufacturerDialog, {
 } from './manufacturerDialog.component';
 import {
   getManufacturerById,
-  renderComponentWithBrowserRouter,
+  renderComponentWithRouterProvider,
 } from '../setupTests';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { imsApi } from '../api/api';
@@ -19,7 +19,7 @@ describe('Add manufacturer dialog', () => {
   let user;
   let axiosPostSpy;
   const createView = () => {
-    return renderComponentWithBrowserRouter(<ManufacturerDialog {...props} />);
+    return renderComponentWithRouterProvider(<ManufacturerDialog {...props} />);
   };
   beforeEach(() => {
     props = {

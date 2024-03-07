@@ -1,7 +1,7 @@
 import React from 'react';
 import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 import { DeleteManufacturerProps } from './deleteManufacturerDialog.component';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import { Manufacturer } from '../app.types';
@@ -15,7 +15,7 @@ describe('Delete Manufacturer Dialog', () => {
   let manufacturer: Manufacturer;
   let user;
   const createView = (): RenderResult => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <DeleteManufacturerDialog {...props} />
     );
   };

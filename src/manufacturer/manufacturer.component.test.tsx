@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import Manufacturer from './manufacturer.component';
 import userEvent from '@testing-library/user-event';
@@ -11,7 +11,7 @@ jest.mock('react-router-dom', () => ({
 describe('Manufacturer', () => {
   let user;
   const createView = () => {
-    return renderComponentWithBrowserRouter(<Manufacturer />);
+    return renderComponentWithRouterProvider(<Manufacturer />);
   };
   beforeEach(() => {
     user = userEvent.setup();
