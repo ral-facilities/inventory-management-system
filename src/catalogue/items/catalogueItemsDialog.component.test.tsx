@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  renderComponentWithBrowserRouter,
   getCatalogueCategoryById,
   getCatalogueItemById,
+  renderComponentWithRouterProvider,
 } from '../../setupTests';
 import {
   act,
@@ -28,7 +28,7 @@ describe('Catalogue Items Dialog', () => {
   const onClose = jest.fn();
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <CatalogueItemsDialog {...props} />
     );
   };

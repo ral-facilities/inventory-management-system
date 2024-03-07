@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import DeleteCatalogueItemDialog, {
   DeleteCatalogueItemDialogProps,
 } from './deleteCatalogueItemDialog.component';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { renderComponentWithRouterProvider } from '../../setupTests';
 import { CatalogueItem } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
@@ -18,7 +18,7 @@ describe('delete Catalogue Category dialogue', () => {
   let catalogueItem: CatalogueItem;
 
   const createView = (): RenderResult => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <DeleteCatalogueItemDialog {...props} />
     );
   };

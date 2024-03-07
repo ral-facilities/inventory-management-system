@@ -3,7 +3,7 @@ import React from 'react';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
-  renderComponentWithBrowserRouter,
+  renderComponentWithRouterProvider,
 } from '../../setupTests';
 
 import userEvent from '@testing-library/user-event';
@@ -15,7 +15,7 @@ describe('Catalogue Items details panel', () => {
   let user;
   let props: CatalogueItemsDetailsPanelProps;
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <CatalogueItemsDetailsPanel {...props} />
     );
   };

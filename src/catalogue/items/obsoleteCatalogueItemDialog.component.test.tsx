@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   getCatalogueItemById,
-  renderComponentWithBrowserRouter,
+  renderComponentWithRouterProvider,
 } from '../../setupTests';
 
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
@@ -24,7 +24,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
   const mockOnClose = jest.fn();
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <ObsoleteCatalogueItemDialog {...props} />
     );
   };
