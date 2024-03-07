@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { System } from '../app.types';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 import SystemsJSON from '../mocks/Systems.json';
 import SystemDetails, { SystemDetailsProps } from './systemDetails.component';
 import userEvent from '@testing-library/user-event';
@@ -16,7 +16,7 @@ describe('SystemDetails', () => {
       mockSystemDetails = SystemsJSON.filter(
         (system) => system.id === props.id
       )[0] as System;
-    return renderComponentWithBrowserRouter(<SystemDetails {...props} />);
+    return renderComponentWithRouterProvider(<SystemDetails {...props} />);
   };
 
   beforeEach(() => {

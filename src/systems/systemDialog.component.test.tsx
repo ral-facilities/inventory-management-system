@@ -1,7 +1,7 @@
 import { fireEvent, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 import SystemDialog, { SystemDialogProps } from './systemDialog.component';
 import { System, SystemImportanceType } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
@@ -18,7 +18,7 @@ describe('Systems Dialog', () => {
   const mockOnClose = jest.fn();
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(<SystemDialog {...props} />);
+    return renderComponentWithRouterProvider(<SystemDialog {...props} />);
   };
 
   // Modifies values when given a value that is not undefined

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { System, SystemImportanceType } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 import {
   DeleteSystemDialog,
   DeleteSystemDialogProps,
@@ -38,7 +38,7 @@ describe('DeleteSystemDialog', () => {
         code: '',
       };
 
-    return renderComponentWithBrowserRouter(<DeleteSystemDialog {...props} />);
+    return renderComponentWithRouterProvider(<DeleteSystemDialog {...props} />);
   };
 
   beforeEach(() => {

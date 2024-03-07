@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 import {
   SystemDirectoryDialog,
   SystemDirectoryDialogProps,
@@ -25,7 +25,7 @@ describe('SystemDirectoryDialog', () => {
   ];
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <SystemDirectoryDialog {...props} />
     );
   };

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 import {
   SystemItemsTable,
   SystemItemsTableProps,
@@ -18,7 +18,7 @@ describe('SystemItemsTable', () => {
   let mockSystem: System = SystemsJSON[2] as System;
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(<SystemItemsTable {...props} />);
+    return renderComponentWithRouterProvider(<SystemItemsTable {...props} />);
   };
 
   beforeEach(() => {

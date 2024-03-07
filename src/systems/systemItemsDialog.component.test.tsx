@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { Item } from '../app.types';
 import ItemsJSON from '../mocks/Items.json';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 import SystemItemsDialog, {
   SystemItemsDialogProps,
 } from './systemItemsDialog.component';
@@ -23,7 +23,7 @@ describe('SystemItemsDialog', () => {
   ];
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(<SystemItemsDialog {...props} />);
+    return renderComponentWithRouterProvider(<SystemItemsDialog {...props} />);
   };
 
   beforeEach(() => {
