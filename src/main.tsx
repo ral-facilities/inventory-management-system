@@ -199,7 +199,7 @@ const conditionalSciGatewayRender = () => {
 };
 
 if (import.meta.env.DEV) {
-  // When in dev, only use MSW if the api url or otherwise if MSW is explicitely requested
+  // When in dev, only use MSW if the api url or otherwise if MSW is explicitly requested
   settings
     .then((settings) => {
       if (
@@ -213,7 +213,7 @@ if (import.meta.env.DEV) {
 
   log.setDefaultLevel(log.levels.DEBUG);
 } else {
-  // When in production, only use MSW if explicitely requested
+  // When in production, only use MSW if explicitly requested
   if (import.meta.env.VITE_APP_INCLUDE_MSW === 'true') {
     prepare().then(() => conditionalSciGatewayRender());
     log.setDefaultLevel(log.levels.DEBUG);

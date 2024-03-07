@@ -34,7 +34,7 @@ FROM httpd:2.4-alpine3.19
 
 WORKDIR /usr/local/apache2/htdocs
 
-COPY --from=builder /inventory-management-system-build/build/. .
+COPY --from=builder /inventory-management-system-build/dist/. .
 
 RUN set -eux; \
     \

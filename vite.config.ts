@@ -32,8 +32,9 @@ export default defineConfig(({ command, mode }) => {
   let config: UserConfig = {
     plugins: plugins,
     server: {
-      open: true,
       port: 3000,
+      // Don't open by default as Dockerfile wont run as it can't find a display
+      open: false,
     },
     preview: {
       port: 5001,
@@ -56,7 +57,6 @@ export default defineConfig(({ command, mode }) => {
   if (buildLibrary) {
     // Config for deployment in SciGateway
     let rollupExternals = ['react', 'react-dom'];
-    if (excludeMSW) rollupExternals.push('msw');
 
     config.build = {
       lib: {

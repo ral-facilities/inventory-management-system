@@ -33,7 +33,8 @@
     "web-vitals": "^3.0.0"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
+    "dev-without-open": "vite",
     "build": "tsc --project tsconfig.build.json && vite build",
     "preview": "vite preview",
     "preview:build": "yarn build && yarn preview",
