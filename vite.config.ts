@@ -104,7 +104,16 @@ export default defineConfig(({ command, mode }) => {
       globalSetup: './globalSetup.js',
       setupFiles: ['src/setupTests.tsx'],
       coverage: {
-        exclude: ['public/*', 'server/*'],
+        exclude: [
+          'public/*',
+          'server/*',
+          // Leave handlers to show up unused code
+          'src/mocks/browser.ts',
+          'src/mocks/server.ts',
+          'src/vite-env.d.ts',
+          'src/main.tsx',
+          'src/testUtils.tsx',
+        ],
       },
     },
   };
