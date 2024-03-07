@@ -1,11 +1,10 @@
-import React from 'react';
-import { renderComponentWithBrowserRouter } from '../../testUtils';
 import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { imsApi } from '../../api/api';
+import { renderComponentWithBrowserRouter } from '../../testUtils';
 import CatalogueCategoryDirectoryDialog, {
   CatalogueCategoryDirectoryDialogProps,
 } from './catalogueCategoryDirectoryDialog.component';
-import userEvent from '@testing-library/user-event';
-import { imsApi } from '../../api/api';
 
 describe('CatalogueCategoryDirectoryDialog', () => {
   let props: CatalogueCategoryDirectoryDialogProps;

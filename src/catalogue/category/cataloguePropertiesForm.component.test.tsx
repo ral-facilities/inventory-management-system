@@ -1,14 +1,13 @@
-import React from 'react';
-import { renderComponentWithBrowserRouter } from '../../testUtils';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import CataloguePropertiesForm, {
-  CataloguePropertiesFormProps,
-} from './cataloguePropertiesForm.component';
 import {
   CatalogueCategoryFormData,
   CatalogueItemPropertiesErrorsType,
 } from '../../app.types';
+import { renderComponentWithBrowserRouter } from '../../testUtils';
+import CataloguePropertiesForm, {
+  CataloguePropertiesFormProps,
+} from './cataloguePropertiesForm.component';
 
 describe('Catalogue Properties Form', () => {
   let props: CataloguePropertiesFormProps;

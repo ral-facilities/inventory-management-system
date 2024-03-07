@@ -1,8 +1,7 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
-import Breadcrumbs, { BreadcrumbsProps } from './breadcrumbs.component';
 import { renderComponentWithBrowserRouter } from '../testUtils';
+import Breadcrumbs, { BreadcrumbsProps } from './breadcrumbs.component';
 
 describe('Channel Breadcrumbs', () => {
   const onChangeNode = vi.fn();

@@ -1,9 +1,3 @@
-import React from 'react';
-import {
-  renderComponentWithBrowserRouter,
-  getCatalogueCategoryById,
-  getCatalogueItemById,
-} from '../../testUtils';
 import {
   act,
   fireEvent,
@@ -12,12 +6,17 @@ import {
   within,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {
+  getCatalogueCategoryById,
+  getCatalogueItemById,
+  renderComponentWithBrowserRouter,
+} from '../../testUtils';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
 
-import handleIMS_APIError from '../../handleIMS_APIError';
 import { imsApi } from '../../api/api';
+import handleIMS_APIError from '../../handleIMS_APIError';
 
 vi.mock('../../handleIMS_APIError');
 

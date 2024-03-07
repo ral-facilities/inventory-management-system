@@ -1,8 +1,7 @@
-import React from 'react';
-import { renderComponentWithBrowserRouter } from '../../testUtils';
 import { screen } from '@testing-library/react';
-import CatalogueCard, { CatalogueCardProps } from './catalogueCard.component';
 import userEvent from '@testing-library/user-event';
+import { renderComponentWithBrowserRouter } from '../../testUtils';
+import CatalogueCard, { CatalogueCardProps } from './catalogueCard.component';
 
 describe('Catalogue Card', () => {
   let props: CatalogueCardProps;

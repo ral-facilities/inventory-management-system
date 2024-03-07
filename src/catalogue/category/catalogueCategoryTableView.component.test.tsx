@@ -1,6 +1,5 @@
-import React from 'react';
-import { renderComponentWithBrowserRouter } from '../../testUtils';
 import { screen, waitFor } from '@testing-library/react';
+import { renderComponentWithBrowserRouter } from '../../testUtils';
 
 import userEvent from '@testing-library/user-event';
 import CatalogueCategoryTableView, {

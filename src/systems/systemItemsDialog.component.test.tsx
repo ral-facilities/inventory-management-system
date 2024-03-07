@@ -1,13 +1,12 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
+import { imsApi } from '../api/api';
 import { Item } from '../app.types';
 import ItemsJSON from '../mocks/Items.json';
 import { renderComponentWithBrowserRouter } from '../testUtils';
 import SystemItemsDialog, {
   SystemItemsDialogProps,
 } from './systemItemsDialog.component';
-import { imsApi } from '../api/api';
 
 describe('SystemItemsDialog', () => {
   let props: SystemItemsDialogProps;
