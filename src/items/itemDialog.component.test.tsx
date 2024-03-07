@@ -3,7 +3,7 @@ import {
   getCatalogueCategoryById,
   getCatalogueItemById,
   getItemById,
-  renderComponentWithBrowserRouter,
+  renderComponentWithRouterProvider,
 } from '../setupTests';
 import ItemDialog, {
   ItemDialogProps,
@@ -58,7 +58,7 @@ describe('ItemDialog', () => {
   const onClose = jest.fn();
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(<ItemDialog {...props} />);
+    return renderComponentWithRouterProvider(<ItemDialog {...props} />);
   };
   beforeEach(() => {
     props = {
