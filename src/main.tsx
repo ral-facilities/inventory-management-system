@@ -169,7 +169,7 @@ export const fetchSettings =
   };
 
 async function prepare() {
-  if (import.meta.env.DEV || import.meta.env.VITE_APP_E2E_TESTING === 'true') {
+  if (import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true') {
     // need to use require instead of import as import breaks when loaded in SG
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { worker } = await import('./mocks/browser');
@@ -191,35 +191,34 @@ const settings = fetchSettings();
 
 setSettings(settings);
 
-if (import.meta.env.DEV && import.meta.env.VITE_APP_E2E_TESTING !== 'true') {
+/* Renders only if we're not being loaded by SG  */
+const conditionalSciGatewayRender = () => {
+  if (!document.getElementById('scigateway')) {
+    render();
+  }
+};
+
+if (import.meta.env.DEV) {
+  // When in dev, only use MSW if the api url or otherwise if MSW is explicitely requested
   settings
     .then((settings) => {
-      if (settings && settings.apiUrl !== '') {
-        render();
-      } else {
-        prepare().then(() => render());
-      }
+      if (
+        (settings && settings.apiUrl !== '') ||
+        import.meta.env.VITE_APP_INCLUDE_MSW === 'false'
+      )
+        conditionalSciGatewayRender();
+      else prepare().then(() => conditionalSciGatewayRender());
     })
     .catch((error) => log.error(`Got error: ${error.message}`));
 
   log.setDefaultLevel(log.levels.DEBUG);
-} else if (import.meta.env.VITE_APP_E2E_TESTING === 'true') {
-  prepare().then(() => render());
-  log.setDefaultLevel(log.levels.DEBUG);
-} else if (import.meta.env.VITE_APP_E2E_TESTING_API === 'true') {
-  render();
-  log.setDefaultLevel(log.levels.DEBUG);
 } else {
-  log.setDefaultLevel(log.levels.ERROR);
+  // When in production, only use MSW if explicitely requested
+  if (import.meta.env.VITE_APP_INCLUDE_MSW === 'true') {
+    prepare().then(() => conditionalSciGatewayRender());
+    log.setDefaultLevel(log.levels.DEBUG);
+  } else {
+    conditionalSciGatewayRender();
+    log.setDefaultLevel(log.levels.ERROR);
+  }
 }
-
-// import React from 'react';
-// import ReactDOM from 'react-dom/client';
-// // import App from "./App.tsx";
-// import './index.css';
-
-// console.log('HELLO WORLD');
-
-// ReactDOM.createRoot(
-//   document.getElementById('inventory-management-system')!
-// ).render(<React.StrictMode>{/* <App /> */}</React.StrictMode>);

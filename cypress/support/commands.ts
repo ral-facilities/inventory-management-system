@@ -36,6 +36,7 @@
 //   }
 // }
 import '@testing-library/cypress/add-commands';
+import { HttpResponse } from 'msw';
 
 let mockedRequests: Request[] = [];
 
@@ -44,12 +45,13 @@ Cypress.Commands.add('clearMocks', () => {
 });
 
 Cypress.Commands.add('editEndpointResponse', ({ url, data, statusCode }) => {
+  cy.window().its('msw').should('not.equal', undefined);
   cy.window().then((window) => {
-    const { worker, rest } = window.msw;
+    const { worker, http } = window.msw;
 
     worker.use(
-      rest.get(url, (req, res, ctx) => {
-        return res(ctx.status(statusCode), ctx.json(data));
+      http.get(url, ({ params, request }) => {
+        return HttpResponse.json(data, { status: statusCode });
       })
     );
   });

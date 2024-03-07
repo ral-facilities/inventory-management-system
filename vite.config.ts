@@ -20,16 +20,12 @@ function excludeMSWPlugin(): PluginOption {
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
-  // Whether to output build files in a way SciGateway can load (the default unless e2e testing)
-  const buildForSciGateway =
-    env.NODE_ENV === 'production' &&
-    env.VITE_APP_E2E_TESTING !== 'true' &&
-    env.VITE_APP_E2E_TESTING_API !== 'true';
+  // Whether to output build files in a way SciGateway can load (the default for production unless e2e testing)
+  const buildLibrary =
+    env.NODE_ENV === 'production' && env.VITE_APP_BUILD_STANDALONE !== 'true';
 
-  // Whether to include MSW from the build
-  const excludeMSW =
-    (env.NODE_ENV === 'production' && env.VITE_APP_E2E_TESTING !== 'true') ||
-    env.VITE_APP_E2E_TESTING_API === 'true';
+  // Whether to exclude MSW from the build
+  const excludeMSW = env.VITE_APP_INCLUDE_MSW !== 'true';
 
   let plugins: PluginOption[] = [react()];
 
@@ -57,7 +53,7 @@ export default defineConfig(({ command, mode }) => {
     rollupExternals.push('msw');
   }
 
-  if (buildForSciGateway) {
+  if (buildLibrary) {
     // Config for deployment in SciGateway
     let rollupExternals = ['react', 'react-dom'];
     if (excludeMSW) rollupExternals.push('msw');

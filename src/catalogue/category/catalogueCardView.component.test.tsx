@@ -2,11 +2,13 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CatalogueCategory } from '../../app.types';
 import { renderComponentWithBrowserRouter } from '../../testUtils';
-import CardView, { CardViewProps } from './catalogueCardView.component';
+import CardView, {
+  CatalogueCardViewProps,
+} from './catalogueCardView.component';
 
 describe('CardView', () => {
   let user;
-  let props: CardViewProps;
+  let props: CatalogueCardViewProps;
   const onChangeOpenDeleteCategoryDialog = vi.fn();
   const onChangeOpenEditCategoryDialog = vi.fn();
   const onChangeOpenSaveAsDialog = vi.fn();
