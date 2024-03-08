@@ -365,7 +365,7 @@ const CatalogueCategoryDialog = React.memo(
           parent_id: parentId,
         };
       }
-      if (!!updatedProperties) {
+      if (updatedProperties) {
         catalogueCategory = {
           ...catalogueCategory,
           catalogue_item_properties: updatedProperties,

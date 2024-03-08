@@ -14,7 +14,7 @@ describe('SystemItemsTable', () => {
   let props: SystemItemsTableProps;
   let user;
 
-  let mockSystem: System = SystemsJSON[2] as System;
+  const mockSystem: System = SystemsJSON[2] as System;
 
   const createView = () => {
     return renderComponentWithBrowserRouter(<SystemItemsTable {...props} />);

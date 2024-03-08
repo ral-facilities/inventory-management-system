@@ -486,7 +486,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       const isManufacturerUpdated =
         JSON.stringify(details.manufacturer_id) !==
         JSON.stringify(selectedCatalogueItem.manufacturer_id);
-      let catalogueItem: EditCatalogueItem = {
+      const catalogueItem: EditCatalogueItem = {
         id: selectedCatalogueItem.id,
       };
 

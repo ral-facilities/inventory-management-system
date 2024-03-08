@@ -399,7 +399,7 @@ function ItemDialog(props: ItemDialogProps) {
 
       const isSystemIdUpdated = details.system_id !== selectedItem.system_id;
 
-      let item: EditItem = {
+      const item: EditItem = {
         id: selectedItem.id,
       };
 

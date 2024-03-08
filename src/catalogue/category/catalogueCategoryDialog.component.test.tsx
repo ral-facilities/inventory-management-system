@@ -612,7 +612,7 @@ describe('Catalogue Category Dialog', () => {
 
   describe('Edit Catalogue Category Dialog', () => {
     let axiosPatchSpy;
-    let mockData: CatalogueCategory = {
+    const mockData: CatalogueCategory = {
       name: 'test',
       parent_id: null,
       id: '1',
@@ -1014,7 +1014,7 @@ describe('Catalogue Category Dialog', () => {
     //checks that the dialog renders/opens correctly for `save as`
 
     let axiosPostSpy;
-    let mockData: CatalogueCategory = {
+    const mockData: CatalogueCategory = {
       name: 'test',
       parent_id: null,
       id: '1',

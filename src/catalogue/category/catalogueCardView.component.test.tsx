@@ -18,7 +18,7 @@ describe('CardView', () => {
   };
 
   function createData(): CatalogueCategory[] {
-    let data: CatalogueCategory[] = [];
+    const data: CatalogueCategory[] = [];
     for (let index = 1; index < 50; index++) {
       data.push({
         id: index.toString(),
