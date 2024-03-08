@@ -54,9 +54,23 @@
     "cy:run:api": "cross-env TZ=UTC cypress run --spec \"./cypress/e2e/with_api/**/*.cy.ts\""
   },
   "eslintConfig": {
-    "extends": [
-      "react-app"
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 2015
+    },
+    "plugins": [
+      "react",
+      "@typescript-eslint"
     ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off"
+    },
     "overrides": [
       {
         "files": [
@@ -96,9 +110,10 @@
     "cypress": "^13.0.0",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-cypress": "^2.13.3",
     "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-testing-library": "^6.2.0",
     "express": "4.18.1",
     "jsdom": "^24.0.0",
     "prettier": "^3.0.0",
