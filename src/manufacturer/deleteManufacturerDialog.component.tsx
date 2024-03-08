@@ -40,7 +40,7 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
   const handleDeleteManufacturer = React.useCallback(() => {
     if (manufacturer) {
       deleteManufacturer(manufacturer)
-        .then((response) => {
+        .then(() => {
           onClose();
         })
         .catch((error: AxiosError) => {

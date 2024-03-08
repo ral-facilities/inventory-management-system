@@ -431,7 +431,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     };
 
     addCatalogueItem(trimStringValues(catalogueItem))
-      .then((response) => handleClose())
+      .then(() => handleClose())
       .catch((error: AxiosError) => {
         handleIMS_APIError(error);
       });
@@ -480,6 +480,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       const isCatalogueItemPropertiesUpdated =
         JSON.stringify(updatedProperties) !==
         JSON.stringify(
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           selectedCatalogueItem.properties.map(({ unit, ...rest }) => rest)
         );
 
@@ -529,7 +530,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           isNotesUpdated)
       ) {
         editCatalogueItem(trimStringValues(catalogueItem))
-          .then((response) => handleClose())
+          .then(() => handleClose())
           .catch((error: AxiosError) => {
             const response = error.response?.data as ErrorParsing;
 

@@ -373,7 +373,7 @@ const CatalogueCategoryDialog = React.memo(
       }
 
       addCatalogueCategory(trimStringValues(catalogueCategory))
-        .then((response) => handleClose())
+        .then(() => handleClose())
         .catch((error) => {
           const response = error.response?.data as ErrorParsing;
           if (response && error.response?.status === 409) {
@@ -461,7 +461,7 @@ const CatalogueCategoryDialog = React.memo(
         ) {
           // Only call editCatalogueCategory if id is present and at least one of the properties has been updated
           editCatalogueCategory(trimStringValues(catalogueCategory))
-            .then((response) => {
+            .then(() => {
               resetSelectedCatalogueCategory();
               handleClose();
             })

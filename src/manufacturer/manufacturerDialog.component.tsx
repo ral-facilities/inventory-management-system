@@ -196,7 +196,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     };
 
     addManufacturer(trimStringValues(manufacturerToAdd))
-      .then((response) => handleClose())
+      .then(() => handleClose())
       .catch((error: AxiosError) => {
         if (error.response?.status === 409) {
           setNameError('A manufacturer with the same name already exists.');
@@ -311,7 +311,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         isTelephoneUpdated
       ) {
         editManufacturer(trimStringValues(manufacturerToEdit))
-          .then((response) => handleClose())
+          .then(() => handleClose())
           .catch((error: AxiosError) => {
             const response = error.response?.data as ErrorParsing;
             if (response && error.response?.status === 409) {

@@ -45,7 +45,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
   const handleDeleteItem = React.useCallback(() => {
     if (item) {
       deleteItem(item)
-        .then((response) => {
+        .then(() => {
           onClose();
           onChangeItem(undefined);
         })

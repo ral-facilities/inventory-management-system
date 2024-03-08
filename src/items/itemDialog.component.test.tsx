@@ -297,20 +297,18 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByText('Add item properties'));
 
-      await fireEvent.change(
+      fireEvent.change(
         screen.getByLabelText('Ultimate Pressure (millibar) *'),
         {
           target: { value: '10' },
         }
       );
 
-      await fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-      await fireEvent.click(
-        within(screen.getByRole('listbox')).getByText('400')
-      );
+      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
 
-      await fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      await fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
+      fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
@@ -785,20 +783,18 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByText('Edit item properties'));
 
-      await fireEvent.change(
+      fireEvent.change(
         screen.getByLabelText('Ultimate Pressure (millibar) *'),
         {
           target: { value: '10' },
         }
       );
 
-      await fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-      await fireEvent.click(
-        within(screen.getByRole('listbox')).getByText('400')
-      );
+      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
 
-      await fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      await fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
+      fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));

@@ -335,7 +335,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             </Tooltip>
           ),
       },
-      ...viewCatalogueItemProperties.map((property, index) => ({
+      ...viewCatalogueItemProperties.map((property) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
         id: `row.catalogueItem.properties.${property.name}`,
         accessorFn: (row: TableRowData) => {

@@ -18,9 +18,9 @@ export interface BreadcrumbsProps {
   navigateHomeAriaLabel: string;
 }
 
-const StyledBreadcrumbs = styled(MuiBreadcrumbs)(({ theme }) => ({
+const StyledBreadcrumbs = styled(MuiBreadcrumbs)({
   color: 'text.secondary',
-}));
+});
 
 const Breadcrumbs = (props: BreadcrumbsProps) => {
   const {

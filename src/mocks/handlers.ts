@@ -90,7 +90,7 @@ export const handlers = [
 
   http.get<PathParams, DefaultBodyType, CatalogueCategory[]>(
     '/v1/catalogue-categories',
-    ({ params, request }) => {
+    ({ request }) => {
       const url = new URL(request.url);
       const catalogueCategoryParams = url.searchParams;
       const parentId = catalogueCategoryParams.get('parent_id');
@@ -184,30 +184,31 @@ export const handlers = [
     return HttpResponse.json(fullBody as CatalogueCategory, { status: 200 });
   }),
 
-  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | {}>(
-    '/v1/catalogue-categories/:id',
-    ({ params }) => {
-      const { id } = params;
-      const validCatalogueCategory = CatalogueCategoryJSON.find(
-        (value) => value.id === id
-      );
-      if (validCatalogueCategory) {
-        if (id === '2') {
-          return HttpResponse.json(
-            {
-              detail:
-                'Catalogue category has children elements and cannot be deleted',
-            },
-            { status: 409 }
-          );
-        } else {
-          return HttpResponse.json({ status: 204 });
-        }
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/v1/catalogue-categories/:id', ({ params }) => {
+    const { id } = params;
+    const validCatalogueCategory = CatalogueCategoryJSON.find(
+      (value) => value.id === id
+    );
+    if (validCatalogueCategory) {
+      if (id === '2') {
+        return HttpResponse.json(
+          {
+            detail:
+              'Catalogue category has children elements and cannot be deleted',
+          },
+          { status: 409 }
+        );
       } else {
-        return HttpResponse.json({ detail: '' }, { status: 400 });
+        return HttpResponse.json({ status: 204 });
       }
+    } else {
+      return HttpResponse.json({ detail: '' }, { status: 400 });
     }
-  ),
+  }),
 
   // ------------------------------------ CATALOGUE ITEMS ------------------------------------
 
@@ -316,29 +317,30 @@ export const handlers = [
     }
   ),
 
-  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | {}>(
-    '/v1/catalogue-items/:id',
-    ({ params }) => {
-      const { id } = params;
-      const validCatalogueItem = CatalogueItemJSON.find(
-        (value) => value.id === id
-      );
-      if (validCatalogueItem) {
-        if (id === '6') {
-          return HttpResponse.json(
-            {
-              detail: 'Catalogue item has child elements and cannot be deleted',
-            },
-            { status: 409 }
-          );
-        } else {
-          return HttpResponse.json({ status: 204 });
-        }
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/v1/catalogue-items/:id', ({ params }) => {
+    const { id } = params;
+    const validCatalogueItem = CatalogueItemJSON.find(
+      (value) => value.id === id
+    );
+    if (validCatalogueItem) {
+      if (id === '6') {
+        return HttpResponse.json(
+          {
+            detail: 'Catalogue item has child elements and cannot be deleted',
+          },
+          { status: 409 }
+        );
       } else {
-        return HttpResponse.json({ detail: '' }, { status: 400 });
+        return HttpResponse.json({ status: 204 });
       }
+    } else {
+      return HttpResponse.json({ detail: '' }, { status: 400 });
     }
-  ),
+  }),
 
   // ------------------------------------ MANUFACTURERS ------------------------------------
 
@@ -438,30 +440,28 @@ export const handlers = [
     }
   ),
 
-  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | {}>(
-    '/v1/manufacturers/:id',
-    ({ params }) => {
-      const { id } = params;
-      const validManufacturer = ManufacturerJSON.find(
-        (value) => value.id === id
-      );
-      if (validManufacturer) {
-        if (id === '2') {
-          return HttpResponse.json(
-            {
-              detail:
-                'The specified manufacturer is a part of a Catalogue Item',
-            },
-            { status: 409 }
-          );
-        } else {
-          return HttpResponse.json({ status: 204 });
-        }
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/v1/manufacturers/:id', ({ params }) => {
+    const { id } = params;
+    const validManufacturer = ManufacturerJSON.find((value) => value.id === id);
+    if (validManufacturer) {
+      if (id === '2') {
+        return HttpResponse.json(
+          {
+            detail: 'The specified manufacturer is a part of a Catalogue Item',
+          },
+          { status: 409 }
+        );
       } else {
-        return HttpResponse.json({ detail: '' }, { status: 400 });
+        return HttpResponse.json({ status: 204 });
       }
+    } else {
+      return HttpResponse.json({ detail: '' }, { status: 400 });
     }
-  ),
+  }),
 
   // ------------------------------------ SYSTEMS ------------------------------------
 
@@ -571,27 +571,28 @@ export const handlers = [
     }
   ),
 
-  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | {}>(
-    '/v1/systems/:id',
-    ({ params }) => {
-      const { id } = params;
-      const validSystem = SystemsJSON.find((value) => value.id === id);
-      if (validSystem) {
-        if (SystemsJSON.find((value) => value.parent_id === validSystem.id)) {
-          return HttpResponse.json(
-            {
-              detail: 'System has child elements and cannot be deleted',
-            },
-            { status: 409 }
-          );
-        } else {
-          return HttpResponse.json({ status: 204 });
-        }
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/v1/systems/:id', ({ params }) => {
+    const { id } = params;
+    const validSystem = SystemsJSON.find((value) => value.id === id);
+    if (validSystem) {
+      if (SystemsJSON.find((value) => value.parent_id === validSystem.id)) {
+        return HttpResponse.json(
+          {
+            detail: 'System has child elements and cannot be deleted',
+          },
+          { status: 409 }
+        );
       } else {
-        return HttpResponse.json({ detail: '' }, { status: 404 });
+        return HttpResponse.json({ status: 204 });
       }
+    } else {
+      return HttpResponse.json({ detail: '' }, { status: 404 });
     }
-  ),
+  }),
 
   // ------------------------------------ ITEMS ------------------------------------------------
 
@@ -681,20 +682,21 @@ export const handlers = [
     }
   ),
 
-  http.delete<{ id: string }, DefaultBodyType, ErrorResponse | {}>(
-    '/v1/items/:id',
-    ({ params }) => {
-      const { id } = params;
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/v1/items/:id', ({ params }) => {
+    const { id } = params;
 
-      if (id === 'Error 500')
-        return HttpResponse.json(
-          { detail: 'Something went wrong' },
-          { status: 500 }
-        );
+    if (id === 'Error 500')
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
 
-      return HttpResponse.json({ status: 204 });
-    }
-  ),
+    return HttpResponse.json({ status: 204 });
+  }),
 
   // ------------------------------------ Units ------------------------------------------------
 

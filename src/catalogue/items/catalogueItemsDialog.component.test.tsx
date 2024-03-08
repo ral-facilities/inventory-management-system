@@ -263,18 +263,15 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Next' }));
 
-    await fireEvent.change(
-      screen.getByLabelText('Ultimate Pressure (millibar) *'),
-      {
-        target: { value: '10' },
-      }
-    );
+    fireEvent.change(screen.getByLabelText('Ultimate Pressure (millibar) *'), {
+      target: { value: '10' },
+    });
 
-    await fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-    await fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+    fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+    fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
 
-    await fireEvent.mouseDown(screen.getByLabelText('Axis'));
-    await fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
+    fireEvent.mouseDown(screen.getByLabelText('Axis'));
+    fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -372,12 +369,9 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Next' }));
 
-    await fireEvent.change(
-      screen.getByLabelText('Ultimate Pressure (millibar) *'),
-      {
-        target: { value: '10' },
-      }
-    );
+    fireEvent.change(screen.getByLabelText('Ultimate Pressure (millibar) *'), {
+      target: { value: '10' },
+    });
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -682,20 +676,18 @@ describe('Catalogue Items Dialog', () => {
       createView();
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      await fireEvent.change(
+      fireEvent.change(
         screen.getByLabelText('Ultimate Pressure (millibar) *'),
         {
           target: { value: '10' },
         }
       );
 
-      await fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-      await fireEvent.click(
-        within(screen.getByRole('listbox')).getByText('400')
-      );
+      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
 
-      await fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      await fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
+      fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 

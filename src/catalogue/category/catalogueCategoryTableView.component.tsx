@@ -137,7 +137,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     },
 
     //Functions
-    renderCreateRowDialogContent: ({ table, row }) => {
+    renderCreateRowDialogContent: ({ table }) => {
       return (
         <>
           <CatalogueCategoryDialog

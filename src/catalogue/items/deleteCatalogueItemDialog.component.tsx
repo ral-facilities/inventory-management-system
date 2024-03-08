@@ -40,7 +40,7 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
   const handleDeleteCatalogueCategory = React.useCallback(() => {
     if (catalogueItem) {
       deleteCatalogueItem(catalogueItem)
-        .then((response) => {
+        .then(() => {
           onClose();
           onChangeCatalogueItem(undefined);
         })

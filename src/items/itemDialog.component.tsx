@@ -355,7 +355,7 @@ function ItemDialog(props: ItemDialogProps) {
     };
 
     addItem(trimStringValues(item))
-      .then((response) => handleClose())
+      .then(() => handleClose())
       .catch((error: AxiosError) => {
         handleIMS_APIError(error);
       });
@@ -394,6 +394,7 @@ function ItemDialog(props: ItemDialogProps) {
       const isCatalogueItemPropertiesUpdated =
         JSON.stringify(updatedProperties) !==
         JSON.stringify(
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           selectedItem.properties.map(({ unit, ...rest }) => rest)
         );
 
@@ -432,7 +433,7 @@ function ItemDialog(props: ItemDialogProps) {
           isSystemIdUpdated)
       ) {
         editItem(trimStringValues(item))
-          .then((response) => handleClose())
+          .then(() => handleClose())
           .catch((error: AxiosError) => {
             handleIMS_APIError(error);
           });
