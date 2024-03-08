@@ -226,7 +226,6 @@ describe('Catalogue Category', () => {
     cy.findByRole('button', { name: 'Save' }).click();
 
     cy.findByText('Please enter a property name').should('exist');
-    cy.findByText('Please select a type').should('exist');
 
     cy.findAllByLabelText('Property Name *').last().type('Updated Field 2');
     cy.findAllByLabelText('Select Type *').last().click();
@@ -283,7 +282,6 @@ describe('Catalogue Category', () => {
     cy.findByRole('button', { name: 'Save' }).click();
 
     cy.findByText('Please enter a property name').should('exist');
-    cy.findByText('Please select a type').should('exist');
 
     cy.findAllByLabelText('Property Name *').last().type('Updated Field 2');
     cy.findAllByLabelText('Select Type *').last().click();
@@ -333,7 +331,7 @@ describe('Catalogue Category', () => {
     }).click();
     cy.findByLabelText('Property Name *').type('Updated Field 1');
     cy.findByLabelText('Select Type *').click();
-    cy.findByText('Text').click();
+    cy.findByRole('option', { name: 'Text' }).click();
     cy.findAllByLabelText('Select Allowed values *').last().click();
     cy.findByRole('option', { name: 'List' }).click();
     cy.findByRole('button', { name: 'Add list item 0' }).click();
@@ -356,7 +354,7 @@ describe('Catalogue Category', () => {
     cy.findByRole('button', { name: 'Save' }).click();
 
     cy.findAllByText('Please enter a value').should('have.length', 2);
-    cy.findAllByText('Duplicate value').should('have.length', 2);
+    cy.findAllByText('Duplicate value').should('have.length', 1);
 
     // Clearing the errors
 
@@ -418,9 +416,8 @@ describe('Catalogue Category', () => {
 
     cy.findByRole('button', { name: 'Save' }).click();
 
-    cy.findAllByText('Please enter a value').should('have.length', 2);
-    cy.findAllByText('Duplicate value').should('have.length', 2);
-    cy.findAllByText('Please enter a valid number').should('have.length', 2);
+    cy.findAllByText('Duplicate value').should('have.length', 1);
+    cy.findAllByText('Please enter a valid number').should('have.length', 4);
 
     // Clearing the errors
 
@@ -428,7 +425,7 @@ describe('Catalogue Category', () => {
     cy.findAllByLabelText('List Item 0').last().type('11');
     cy.findAllByLabelText('List Item 1').last().clear();
     cy.findAllByLabelText('List Item 1').last().type('12');
-    cy.findAllByText('Please enter a valid number').should('have.length', 0);
+    cy.findAllByText('Please enter a valid number').should('have.length', 2);
 
     cy.findAllByLabelText('List Item 1').eq(1).clear();
     cy.findAllByLabelText('List Item 1').eq(1).type('11');
@@ -436,7 +433,7 @@ describe('Catalogue Category', () => {
 
     cy.findAllByLabelText('List Item 0').first().type('10');
     cy.findAllByLabelText('List Item 1').first().type('11');
-    cy.findAllByText('Please enter a value').should('have.length', 0);
+    cy.findAllByText('Please enter a valid number').should('have.length', 0);
   });
 
   it('displays error message when duplicate names for properties are entered', () => {

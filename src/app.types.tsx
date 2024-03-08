@@ -42,6 +42,12 @@ export interface CatalogueCategory {
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }
 
+export enum CatalogueItemPropertyType {
+  Number = 'number',
+  Boolean = 'boolean',
+  Text = 'string',
+}
+
 export interface AddManufacturer {
   name: string;
   url?: string | null;
@@ -67,9 +73,12 @@ export interface ManufacturerDetails {
 export interface Manufacturer extends ManufacturerDetails {
   id: string;
 }
-
+export enum AllowedValuesListType {
+  Any = 'any',
+  List = 'list',
+}
 export interface AllowedValuesList {
-  type: 'list';
+  type?: 'list';
   values: any[];
 }
 export type AllowedValues = AllowedValuesList;

@@ -82,13 +82,15 @@ const AddCategoryButton = (props: AddCatalogueButtonProps) => {
       >
         <AddIcon />
       </IconButton>
-      <CatalogueCategoryDialog
-        open={addCategoryDialogOpen}
-        onClose={() => setAddCategoryDialogOpen(false)}
-        parentId={props.parentId}
-        type="add"
-        resetSelectedCatalogueCategory={props.resetSelectedCatalogueCategory}
-      />
+      {addCategoryDialogOpen && (
+        <CatalogueCategoryDialog
+          open={addCategoryDialogOpen}
+          onClose={() => setAddCategoryDialogOpen(false)}
+          parentId={props.parentId}
+          type="add"
+          resetSelectedCatalogueCategory={props.resetSelectedCatalogueCategory}
+        />
+      )}
     </>
   );
 };
@@ -383,36 +385,40 @@ function Catalogue() {
         <CatalogueItemsTable parentInfo={parentInfo} dense={false} />
       )}
 
-      <CatalogueCategoryDialog
-        open={editCategoryDialogOpen}
-        onClose={() => setEditCategoryDialogOpen(false)}
-        parentId={parentId}
-        type="edit"
-        selectedCatalogueCategory={selectedCatalogueCategory}
-        resetSelectedCatalogueCategory={() =>
-          setSelectedCatalogueCategory(undefined)
-        }
-      />
-      <CatalogueCategoryDialog
-        open={saveAsCategoryDialogOpen}
-        onClose={() => setSaveAsCategoryDialogOpen(false)}
-        parentId={parentId}
-        type="save as"
-        selectedCatalogueCategory={
-          selectedCatalogueCategory
-            ? {
-                ...selectedCatalogueCategory,
-                name: generateUniqueName(
-                  selectedCatalogueCategory.name,
-                  catalogueCategoryNames
-                ),
-              }
-            : undefined
-        }
-        resetSelectedCatalogueCategory={() =>
-          setSelectedCatalogueCategory(undefined)
-        }
-      />
+      {editCategoryDialogOpen && (
+        <CatalogueCategoryDialog
+          open={editCategoryDialogOpen}
+          onClose={() => setEditCategoryDialogOpen(false)}
+          parentId={parentId}
+          type="edit"
+          selectedCatalogueCategory={selectedCatalogueCategory}
+          resetSelectedCatalogueCategory={() =>
+            setSelectedCatalogueCategory(undefined)
+          }
+        />
+      )}
+      {saveAsCategoryDialogOpen && (
+        <CatalogueCategoryDialog
+          open={saveAsCategoryDialogOpen}
+          onClose={() => setSaveAsCategoryDialogOpen(false)}
+          parentId={parentId}
+          type="save as"
+          selectedCatalogueCategory={
+            selectedCatalogueCategory
+              ? {
+                  ...selectedCatalogueCategory,
+                  name: generateUniqueName(
+                    selectedCatalogueCategory.name,
+                    catalogueCategoryNames
+                  ),
+                }
+              : undefined
+          }
+          resetSelectedCatalogueCategory={() =>
+            setSelectedCatalogueCategory(undefined)
+          }
+        />
+      )}
       <DeleteCatalogueCategoryDialog
         open={deleteCategoryDialogOpen}
         onClose={() => setDeleteCategoryDialogOpen(false)}
