@@ -47,6 +47,7 @@ describe('handleTransferStates', () => {
         severity: 'error',
         message:
           'test_dup: A catalogue category with the same name already exists within the parent catalogue category',
+        instant: true,
       },
     });
 
@@ -55,6 +56,7 @@ describe('handleTransferStates', () => {
       payload: {
         severity: 'success',
         message: 'Wavefront Sensors: Successfully moved to',
+        instant: true,
       },
     });
   });
