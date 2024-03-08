@@ -59,6 +59,11 @@
       "sourceType": "module",
       "ecmaVersion": 2015
     },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
     "plugins": [
       "react",
       "@typescript-eslint"
