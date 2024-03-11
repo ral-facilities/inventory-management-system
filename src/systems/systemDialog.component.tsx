@@ -335,5 +335,6 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     </Dialog>
   );
 });
+SystemDialog.displayName = 'SystemDialog';
 
 export default SystemDialog;

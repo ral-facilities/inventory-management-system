@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { CatalogueItem, Item, UsageStatusType } from '../app.types';
 import { useManufacturer } from '../api/manufacturer';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
 
@@ -164,7 +165,9 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                     }`}</Typography>
                     <Box sx={{ display: 'flex' }}>
                       <Typography align="left" color="text.secondary">
-                        {property.value !== null ? String(property.value) : 'None'}
+                        {property.value !== null
+                          ? String(property.value)
+                          : 'None'}
                       </Typography>
                     </Box>
                   </Grid>

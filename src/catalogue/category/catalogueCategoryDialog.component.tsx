@@ -630,5 +630,6 @@ const CatalogueCategoryDialog = React.memo(
     );
   }
 );
+CatalogueCategoryDialog.displayName = 'CatalogueCategoryDialog';
 
 export default CatalogueCategoryDialog;

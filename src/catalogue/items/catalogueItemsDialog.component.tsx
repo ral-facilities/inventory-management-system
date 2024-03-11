@@ -777,10 +777,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   onInputChange={(event, newInputValue) =>
                     setInputValue(newInputValue)
                   }
-                  onChange={(
-                    event: any,
-                    newManufacturer: Manufacturer | null
-                  ) => {
+                  onChange={(event, newManufacturer: Manufacturer | null) => {
                     setSelectedManufacturer(newManufacturer ?? null);
                     setInputValue(newManufacturer?.name ?? '');
                     handleCatalogueDetails(

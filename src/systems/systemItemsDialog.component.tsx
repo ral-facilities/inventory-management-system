@@ -129,5 +129,6 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     </Dialog>
   );
 });
+SystemItemsDialog.displayName = 'SystemItemsDialog';
 
 export default SystemItemsDialog;

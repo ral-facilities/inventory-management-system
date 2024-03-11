@@ -340,3 +340,4 @@ export const HomePage = React.memo((): React.ReactElement => {
     />
   );
 });
+HomePage.displayName = 'HomePage';

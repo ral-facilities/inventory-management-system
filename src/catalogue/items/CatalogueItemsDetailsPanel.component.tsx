@@ -14,6 +14,7 @@ import {
   Manufacturer,
 } from '../../app.types';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
 
