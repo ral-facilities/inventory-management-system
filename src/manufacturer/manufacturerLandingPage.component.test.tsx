@@ -123,7 +123,7 @@ describe('Manufacturer Landing page', () => {
 
   it('prints when the button is clicked', async () => {
     const spy = vi.spyOn(window, 'print').mockImplementation(() => {});
-    createView('/manufacturer/1');
+    createView('/manufacturers/1');
 
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
