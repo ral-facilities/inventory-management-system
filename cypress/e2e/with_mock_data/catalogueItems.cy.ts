@@ -401,7 +401,7 @@ describe('Catalogue Items', () => {
     cy.get('body').click();
 
     cy.findByRole('link', { name: 'Manufacturer A' }).click();
-    cy.url().should('contain', '/manufacturer/1');
+    cy.url().should('contain', '/manufacturers/1');
   });
 
   it('checks the href property of the drawing link link', () => {

@@ -33,7 +33,7 @@ describe('View Tabs', () => {
     ).toHaveTextContent('Systems');
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[1]
-    ).toHaveTextContent('Manufacturer');
+    ).toHaveTextContent('Manufacturers');
 
     await user.click(screen.getByRole('tab', { name: 'Systems' }));
 
@@ -46,12 +46,12 @@ describe('View Tabs', () => {
     ).toHaveTextContent('Catalogue');
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[1]
-    ).toHaveTextContent('Manufacturer');
+    ).toHaveTextContent('Manufacturers');
 
-    await user.click(screen.getByRole('tab', { name: 'Manufacturer' }));
+    await user.click(screen.getByRole('tab', { name: 'Manufacturers' }));
 
     expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
-      'Manufacturer'
+      'Manufacturers'
     );
     expect(screen.getByText('Actions')).toBeInTheDocument();
     expect(screen.getByText('Name')).toBeInTheDocument();

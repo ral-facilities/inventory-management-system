@@ -15,8 +15,8 @@
     },
     {
       "section": "Inventory Management System",
-      "link": "/manufacturer",
-      "displayName": "Manufacturer",
+      "link": "/manufacturers",
+      "displayName": "Manufacturers",
       "order": 3
     }
   ],

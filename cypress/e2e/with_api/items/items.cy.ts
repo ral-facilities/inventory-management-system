@@ -14,7 +14,7 @@ describe('items', () => {
       'systems',
     ]);
     // Prepare relevant data for items
-    cy.visit('/manufacturer');
+    cy.visit('/manufacturers');
     addManufacturer(true);
     cy.visit('/systems');
     addSystems(true);

@@ -153,7 +153,7 @@ exports[`Home page component homepage renders correctly 1`] = `
                 <a
                   class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium css-sghohy-MuiButtonBase-root-MuiButton-root"
                   data-testid="manufacturer-button"
-                  href="/manufacturer"
+                  href="/manufacturers"
                   tabindex="0"
                 >
                   Explore
