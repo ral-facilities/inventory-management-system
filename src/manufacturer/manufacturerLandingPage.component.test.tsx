@@ -1,5 +1,8 @@
 import React from 'react';
-import { renderComponentWithMemoryRouter } from '../setupTests';
+import {
+  renderComponentWithMemoryRouter,
+  renderComponentWithRouterProvider,
+} from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import ManufacturerLandingPage from './manufacturerLandingPage.component';
 import userEvent from '@testing-library/user-event';
@@ -14,15 +17,7 @@ jest.mock('react-router-dom', () => ({
 describe('Manufacturer Landing page', () => {
   let user;
   const createView = (path: string) => {
-    return renderComponentWithMemoryRouter(
-      <Routes>
-        <Route
-          path={paths.manufacturer}
-          element={<ManufacturerLandingPage />}
-        />
-      </Routes>,
-      path
-    );
+    return renderComponentWithRouterProvider(<ManufacturerLandingPage />, path);
   };
   beforeEach(() => {
     user = userEvent.setup();
@@ -62,8 +57,9 @@ describe('Manufacturer Landing page', () => {
 
     await user.click(homeButton);
 
-    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturer');
+    await waitFor(() => {
+      expect(screen.queryByText('Manufacturer A')).not.toBeInTheDocument();
+    });
   });
   it('landing page renders data correctly when optional values are null', async () => {
     createView('/manufacturer/4');

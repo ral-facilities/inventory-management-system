@@ -1,10 +1,8 @@
 import React from 'react';
-import { renderComponentWithMemoryRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import ItemsLandingPage from './itemsLandingPage.component';
 import userEvent from '@testing-library/user-event';
-import { Route, Routes } from 'react-router-dom';
-import { paths } from '../view/viewTabs.component';
 const mockedUseNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -13,12 +11,7 @@ jest.mock('react-router-dom', () => ({
 describe('Catalogue Items Landing Page', () => {
   let user;
   const createView = (path: string) => {
-    return renderComponentWithMemoryRouter(
-      <Routes>
-        <Route path={paths.item} element={<ItemsLandingPage />} />
-      </Routes>,
-      path
-    );
+    return renderComponentWithRouterProvider(<ItemsLandingPage />, path);
   };
 
   beforeEach(() => {

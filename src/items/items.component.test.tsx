@@ -1,9 +1,7 @@
 import React from 'react';
-import { renderComponentWithMemoryRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 import Items from './items.component';
 import { waitFor, screen } from '@testing-library/react';
-import { Route, Routes } from 'react-router-dom';
-import { paths } from '../view/viewTabs.component';
 import userEvent from '@testing-library/user-event';
 const mockedUseNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
@@ -13,12 +11,7 @@ jest.mock('react-router-dom', () => ({
 describe('Items', () => {
   let user;
   const createView = (path: string) => {
-    return renderComponentWithMemoryRouter(
-      <Routes>
-        <Route path={paths.items} element={<Items />}></Route>
-      </Routes>,
-      path
-    );
+    return renderComponentWithRouterProvider(<Items />, path);
   };
 
   beforeEach(() => {

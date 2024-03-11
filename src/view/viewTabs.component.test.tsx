@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderComponentWithMemoryRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 import ViewTabs from './viewTabs.component';
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event';
 describe('View Tabs', () => {
   let user;
   const createView = (path: string) => {
-    return renderComponentWithMemoryRouter(<ViewTabs />, path);
+    return renderComponentWithRouterProvider(<ViewTabs />, path);
   };
 
   beforeEach(() => {

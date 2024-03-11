@@ -15,6 +15,7 @@ import {
   RouterProvider,
   Routes,
   createBrowserRouter,
+  createMemoryRouter,
 } from 'react-router-dom';
 import {
   CatalogueCategory,
@@ -28,6 +29,14 @@ import CatalogueItemJSON from './mocks/CatalogueItems.json';
 import ItemsJSON from './mocks/Items.json';
 import ManufacturerJSON from './mocks/manufacturer.json';
 import { server } from './mocks/server';
+import { HomePage } from './homePage/homePage.component';
+import Catalogue from './catalogue/catalogue.component';
+import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
+import Systems from './systems/systems.component';
+import ItemsLandingPage from './items/itemsLandingPage.component';
+import Items from './items/items.component';
+import ManufacturerComponent from './manufacturer/manufacturer.component';
+import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
 
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
@@ -60,7 +69,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 
 export function renderComponentWithRouterProvider(
   ui: any,
-  path?: string,
+  pathName?: string,
   {
     // Automatically create a store instance if no store was passed i
     // Automatically create a query client instance if no query client was passed in
@@ -73,23 +82,51 @@ export function renderComponentWithRouterProvider(
       <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
         <QueryClientProvider client={queryClient}>
           <Routes>
-            <Route path={path ?? '/'} element={ui} />
+            <Route path={pathName ?? '*'} element={ui} />
           </Routes>
         </QueryClientProvider>
       </LocalizationProvider>
     );
   };
 
-  const router = createBrowserRouter([{ path: '*', Component: Root }]);
+  const routesConfig = [
+    {
+      path: '/*',
+      Component: Root,
+      children: [
+        { path: '', Component: HomePage },
+        { path: 'ims', Component: HomePage },
+        { path: 'catalogue/*', Component: Catalogue },
+        {
+          path: 'catalogue/item/:catalogue_item_id',
+          Component: CatalogueItemsLandingPage,
+        },
+        { path: 'catalogue/item/:catalogue_item_id/items', Component: Items },
+        {
+          path: 'catalogue/item/:catalogue_item_id/items/:item_id',
+          Component: ItemsLandingPage,
+        },
+        { path: 'systems/*', Component: Systems },
+        { path: 'manufacturer', Component: ManufacturerComponent },
+        {
+          path: 'manufacturer/:manufacturer_id',
+          Component: ManufacturerLandingPage,
+        },
+      ],
+    },
+    { path: '*', Component: Root },
+  ];
 
-  function Wrapper({
-    children,
-  }: React.PropsWithChildren<unknown>): JSX.Element {
-    return <RouterProvider router={router} />;
-  }
+  const router =
+    pathName !== undefined
+      ? createMemoryRouter(routesConfig, {
+          initialEntries: [pathName],
+        })
+      : createBrowserRouter([{ path: '/', Component: Root }]);
+
   return {
     queryClient,
-    ...render(ui, { wrapper: Wrapper, ...renderOptions }),
+    ...render(<RouterProvider router={router} />, renderOptions),
   };
 }
 

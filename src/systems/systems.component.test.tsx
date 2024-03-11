@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderComponentWithMemoryRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 import { screen, waitFor, within } from '@testing-library/react';
 import Systems from './systems.component';
 import userEvent from '@testing-library/user-event';
@@ -10,7 +10,7 @@ describe('Systems', () => {
 
   let user;
   const createView = (path: string) => {
-    return renderComponentWithMemoryRouter(<Systems />, path);
+    return renderComponentWithRouterProvider(<Systems />, path);
   };
 
   beforeEach(() => {

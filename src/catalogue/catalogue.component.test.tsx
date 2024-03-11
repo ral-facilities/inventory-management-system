@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderComponentWithMemoryRouter } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
 import userEvent from '@testing-library/user-event';
@@ -79,7 +79,7 @@ describe('matchCatalogueItemProperties', () => {
 describe('Catalogue', () => {
   let user;
   const createView = (path: string) => {
-    return renderComponentWithMemoryRouter(<Catalogue />, path);
+    return renderComponentWithRouterProvider(<Catalogue />, path);
   };
 
   beforeEach(() => {
