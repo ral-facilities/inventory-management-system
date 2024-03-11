@@ -34,7 +34,7 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
 
   const trailPrefix =
     breadcrumbsInfo && !breadcrumbsInfo.full_trail
-      ? [emptyElement, ['', <MoreHorizIcon />]]
+      ? [emptyElement, ['', <MoreHorizIcon key="trailPrefix" />]]
       : [emptyElement];
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>

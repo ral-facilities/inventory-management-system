@@ -460,12 +460,13 @@ function ItemDialog(props: ItemDialogProps) {
   const handleNext = React.useCallback(
     (step: number) => {
       switch (step) {
-        case 1:
+        case 1: {
           const { hasPropertiesErrors } = handleFormPropertiesErrorStates();
           return (
             !hasPropertiesErrors &&
             setActiveStep((prevActiveStep) => prevActiveStep + 1)
           );
+        }
         default:
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
