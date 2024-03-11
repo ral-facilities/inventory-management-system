@@ -58,7 +58,7 @@ const convertListToNumbers = (values: string[]): number[] => {
 };
 
 const AllowedValuesListSchema = z.object({
-  type: z.string().optional(),
+  type: z.string().nullable().optional(),
   values: z
     .array(z.any())
     .transform((values) => {
@@ -102,8 +102,8 @@ const CatalogueCategoryFormDataSchema = z
                 type: data.allowed_values?.type,
                 values: parsedAllowedValuesList,
               }
-            : undefined
-          : undefined,
+            : null
+          : null,
     };
   })
   .superRefine((data, ctx) => {
@@ -128,8 +128,6 @@ const CatalogueCategoryFormDataSchema = z
             code: 'custom',
           });
         }
-
-        console.log(value, isNaN(value));
 
         if (data.type === 'number' && isNaN(value)) {
           ctx.addIssue({
@@ -424,10 +422,10 @@ const CatalogueCategoryDialog = React.memo(
             catalogueCategory.is_leaf !== selectedCatalogueCategory?.is_leaf;
           const isCatalogueItemPropertiesUpdated =
             JSON.stringify(
-              catalogueCategory.catalogue_item_properties ?? null
+              catalogueCategory.catalogue_item_properties ?? []
             ) !==
             JSON.stringify(
-              selectedCatalogueCategory?.catalogue_item_properties ?? null
+              selectedCatalogueCategory?.catalogue_item_properties ?? []
             );
 
           isNameUpdated &&
@@ -639,50 +637,53 @@ const CatalogueCategoryDialog = React.memo(
                           <Controller
                             control={control}
                             name={`catalogue_item_properties.${index}.allowed_values.type`}
-                            render={({ field: { value, onChange } }) => (
-                              <>
-                                <InputLabel
-                                  error={
-                                    !!errors?.catalogue_item_properties?.[index]
-                                      ?.allowed_values?.type
-                                  }
-                                  required={true}
-                                  id={`catalogue-properties-form-select-allowed-values-label-${index}`}
-                                >
-                                  Select Allowed values
-                                </InputLabel>
-                                <Select
-                                  labelId={`catalogue-properties-form-select-allowed-values-label-${index}`}
-                                  value={
-                                    type !== 'boolean'
-                                      ? value ?? AllowedValuesListType.Any
-                                      : AllowedValuesListType.Any
-                                  }
-                                  onChange={(value) => {
-                                    onChange(
-                                      value ?? AllowedValuesListType.Any
-                                    );
-                                  }}
-                                  label=" Select Allowed values"
-                                  required={true}
-                                >
-                                  {Object.keys(AllowedValuesListType).map(
-                                    (key, i) => (
-                                      <MenuItem
-                                        key={i}
-                                        value={
-                                          AllowedValuesListType[
-                                            key as keyof typeof AllowedValuesListType
-                                          ]
-                                        }
-                                      >
-                                        {key}
-                                      </MenuItem>
-                                    )
-                                  )}
-                                </Select>
-                              </>
-                            )}
+                            render={({ field: { value, onChange } }) => {
+                              return (
+                                <>
+                                  <InputLabel
+                                    error={
+                                      !!errors?.catalogue_item_properties?.[
+                                        index
+                                      ]?.allowed_values?.type
+                                    }
+                                    required={true}
+                                    id={`catalogue-properties-form-select-allowed-values-label-${index}`}
+                                  >
+                                    Select Allowed values
+                                  </InputLabel>
+                                  <Select
+                                    labelId={`catalogue-properties-form-select-allowed-values-label-${index}`}
+                                    value={
+                                      type !== 'boolean'
+                                        ? value ?? AllowedValuesListType.Any
+                                        : AllowedValuesListType.Any
+                                    }
+                                    onChange={(value) => {
+                                      onChange(
+                                        value ?? AllowedValuesListType.Any
+                                      );
+                                    }}
+                                    label=" Select Allowed values"
+                                    required={true}
+                                  >
+                                    {Object.keys(AllowedValuesListType).map(
+                                      (key, i) => (
+                                        <MenuItem
+                                          key={i}
+                                          value={
+                                            AllowedValuesListType[
+                                              key as keyof typeof AllowedValuesListType
+                                            ]
+                                          }
+                                        >
+                                          {key}
+                                        </MenuItem>
+                                      )
+                                    )}
+                                  </Select>
+                                </>
+                              );
+                            }}
                           />
                         </FormControl>
 

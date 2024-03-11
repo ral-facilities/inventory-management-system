@@ -307,6 +307,7 @@ describe('Catalogue Category Dialog', () => {
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
         catalogue_item_properties: [
           {
+            allowed_values: null,
             mandatory: true,
             name: 'radius',
             type: 'number',
@@ -315,6 +316,7 @@ describe('Catalogue Category Dialog', () => {
         ],
         is_leaf: true,
         name: 'test',
+        parent_id: undefined,
       });
 
       expect(onClose).toHaveBeenCalled();
@@ -647,6 +649,7 @@ describe('Catalogue Category Dialog', () => {
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
         catalogue_item_properties: [
           {
+            allowed_values: null,
             mandatory: true,
             name: 'Resolution',
             type: 'number',
@@ -704,6 +707,7 @@ describe('Catalogue Category Dialog', () => {
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
         catalogue_item_properties: [
           {
+            allowed_values: null,
             mandatory: true,
             name: 'Resolution',
             type: 'number',
@@ -794,12 +798,14 @@ describe('Catalogue Category Dialog', () => {
             type: 'number',
             unit: 'megapixels',
             mandatory: true,
+            allowed_values: null,
           },
           {
             mandatory: true,
             name: 'radius',
             type: 'number',
             unit: 'millimeters',
+            allowed_values: null,
           },
         ],
       });
@@ -846,11 +852,13 @@ describe('Catalogue Category Dialog', () => {
             type: 'number',
             unit: 'volts',
             mandatory: true,
+            allowed_values: null,
           },
           {
             name: 'Accuracy',
             type: 'string',
             mandatory: true,
+            allowed_values: null,
           },
         ],
       };

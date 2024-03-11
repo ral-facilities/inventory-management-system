@@ -247,12 +247,18 @@ describe('Catalogue Category', () => {
           name: 'test',
           is_leaf: true,
           catalogue_item_properties: [
-            { name: 'Updated Field 1', type: 'boolean', mandatory: false },
+            {
+              name: 'Updated Field 1',
+              type: 'boolean',
+              mandatory: false,
+              allowed_values: null,
+            },
             {
               name: 'Updated Field 2',
               type: 'number',
               unit: 'millimeters',
               mandatory: false,
+              allowed_values: null,
             },
           ],
         })
@@ -304,7 +310,12 @@ describe('Catalogue Category', () => {
           name: 'test',
           is_leaf: true,
           catalogue_item_properties: [
-            { name: 'Updated Field 1', type: 'boolean', mandatory: false },
+            {
+              name: 'Updated Field 1',
+              type: 'boolean',
+              mandatory: false,
+              allowed_values: null,
+            },
             {
               name: 'Updated Field 2',
               type: 'number',
@@ -547,8 +558,14 @@ describe('Catalogue Category', () => {
               type: 'number',
               unit: 'volts',
               mandatory: true,
+              allowed_values: null,
             },
-            { name: 'Accuracy', type: 'string', mandatory: true },
+            {
+              name: 'Accuracy',
+              type: 'string',
+              mandatory: true,
+              allowed_values: null,
+            },
           ],
         })
       );
