@@ -23,7 +23,7 @@ describe('systems', () => {
       'systems',
     ]);
     // Prepare relevant data for systems
-    cy.visit('/manufacturer');
+    cy.visit('/manufacturers');
     addManufacturer(true);
     cy.visit('/systems');
     addSystems();
