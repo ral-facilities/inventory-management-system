@@ -208,37 +208,36 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       }
 
       const isNameUpdated =
-        manufacturerDetails.name !== selectedManufacturer?.name;
+        manufacturerDetails.name !== selectedManufacturer.name;
 
       const isURLUpdated =
-        manufacturerDetails.url !== selectedManufacturer?.url &&
+        manufacturerDetails.url !== selectedManufacturer.url &&
         manufacturerDetails.url !== undefined;
 
       const isAddressLineUpdated =
         manufacturerDetails.address?.address_line !==
-        selectedManufacturer?.address.address_line;
+        selectedManufacturer.address.address_line;
 
       const isTownUpdated =
-        manufacturerDetails.address?.town !==
-        selectedManufacturer?.address.town;
+        manufacturerDetails.address?.town !== selectedManufacturer.address.town;
 
       const isCountyUpdated =
         manufacturerDetails.address?.county !==
-        selectedManufacturer?.address.county;
+        selectedManufacturer.address.county;
 
       const isPostcodeUpdated =
         manufacturerDetails.address?.postcode !==
-        selectedManufacturer?.address.postcode;
+        selectedManufacturer.address.postcode;
 
       const isCountryUpdated =
         manufacturerDetails.address?.country !==
-        selectedManufacturer?.address.country;
+        selectedManufacturer.address.country;
 
       const isTelephoneUpdated =
-        manufacturerDetails.telephone !== selectedManufacturer?.telephone;
+        manufacturerDetails.telephone !== selectedManufacturer.telephone;
 
       let manufacturerToEdit: EditManufacturer = {
-        id: selectedManufacturer?.id,
+        id: selectedManufacturer.id,
       };
 
       isNameUpdated && (manufacturerToEdit.name = manufacturerDetails.name);
