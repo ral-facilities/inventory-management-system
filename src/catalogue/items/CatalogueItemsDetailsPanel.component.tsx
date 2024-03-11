@@ -177,7 +177,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Grid>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={8}>
+              <Grid item xs={12} sm={6} key={9}>
                 <Grid item xs={12}>
                   <Typography color="text.primary">Last Modified</Typography>
                   <Typography color="text.secondary">
@@ -188,7 +188,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Grid>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={8}>
+              <Grid item xs={12} sm={6} key={10}>
                 <Grid item xs={12}>
                   <Typography color="text.primary">Created</Typography>
                   <Typography color="text.secondary">

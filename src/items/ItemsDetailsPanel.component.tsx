@@ -149,7 +149,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 </Grid>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={6}>
+              <Grid item xs={12} sm={6} key={7}>
                 <Grid item xs={12}>
                   <Typography color="text.primary">Last Modified</Typography>
                   <Typography color="text.secondary">
@@ -158,7 +158,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 </Grid>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={6}>
+              <Grid item xs={12} sm={6} key={8}>
                 <Grid item xs={12}>
                   <Typography color="text.primary">Created</Typography>
                   <Typography color="text.secondary">
