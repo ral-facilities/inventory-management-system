@@ -124,9 +124,14 @@ export function renderComponentWithRouterProvider(
         })
       : createBrowserRouter([{ path: '*', Component: Root }]);
 
+  function Wrapper({
+    children,
+  }: React.PropsWithChildren<unknown>): JSX.Element {
+    return <RouterProvider router={router} />;
+  }
   return {
     queryClient,
-    ...render(<RouterProvider router={router} />, renderOptions),
+    ...render(ui, { wrapper: Wrapper, ...renderOptions }),
   };
 }
 
