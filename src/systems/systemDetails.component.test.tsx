@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
 import { renderComponentWithBrowserRouter } from '../testUtils';
@@ -8,7 +8,7 @@ import SystemDetails, { SystemDetailsProps } from './systemDetails.component';
 describe('SystemDetails', () => {
   let props: SystemDetailsProps;
   let mockSystemDetails: System;
-  let user;
+  let user: UserEvent;
 
   const createView = () => {
     if (props.id)

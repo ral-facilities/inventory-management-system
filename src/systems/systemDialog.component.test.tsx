@@ -1,5 +1,5 @@
 import { fireEvent, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../api/api';
 import { System, SystemImportanceType } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
@@ -10,7 +10,7 @@ vi.mock('../handleIMS_APIError');
 
 describe('Systems Dialog', () => {
   let props: SystemDialogProps;
-  let user;
+  let user: UserEvent;
   let axiosPostSpy;
   let axiosPatchSpy;
 

@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
 import { renderComponentWithBrowserRouter } from '../testUtils';
@@ -12,7 +12,7 @@ describe('SystemItemsTable', () => {
   vi.setConfig({ testTimeout: 10000 });
 
   let props: SystemItemsTableProps;
-  let user;
+  let user: UserEvent;
 
   const mockSystem: System = SystemsJSON[2] as System;
 

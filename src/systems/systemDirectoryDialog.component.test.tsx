@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../api/api';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
@@ -11,7 +11,7 @@ import {
 
 describe('SystemDirectoryDialog', () => {
   let props: SystemDirectoryDialogProps;
-  let user;
+  let user: UserEvent;
   let axiosPatchSpy;
   let axiosPostSpy;
 

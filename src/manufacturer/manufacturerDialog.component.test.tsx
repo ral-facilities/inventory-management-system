@@ -1,5 +1,5 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../api/api';
 import handleIMS_APIError from '../handleIMS_APIError';
 import {
@@ -15,7 +15,7 @@ vi.mock('../handleIMS_APIError');
 describe('Add manufacturer dialog', () => {
   const onClose = vi.fn();
   let props: ManufacturerDialogProps;
-  let user;
+  let user: UserEvent;
   let axiosPostSpy;
   const createView = () => {
     return renderComponentWithBrowserRouter(<ManufacturerDialog {...props} />);

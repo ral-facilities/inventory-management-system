@@ -1,17 +1,17 @@
+import { screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
   renderComponentWithBrowserRouter,
 } from '../testUtils';
-import userEvent from '@testing-library/user-event';
-import { waitFor, screen } from '@testing-library/react';
 import ItemsTable, { ItemTableProps } from './itemsTable.component';
 
 describe('Items Table', () => {
   vi.setConfig({ testTimeout: 10000 });
 
   let props: ItemTableProps;
-  let user;
+  let user: UserEvent;
   const createView = () => {
     return renderComponentWithBrowserRouter(<ItemsTable {...props} />);
   };
