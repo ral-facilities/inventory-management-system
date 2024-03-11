@@ -122,7 +122,7 @@ export function renderComponentWithRouterProvider(
       ? createMemoryRouter(routesConfig, {
           initialEntries: [pathName],
         })
-      : createBrowserRouter([{ path: '/', Component: Root }]);
+      : createBrowserRouter([{ path: '*', Component: Root }]);
 
   return {
     queryClient,
