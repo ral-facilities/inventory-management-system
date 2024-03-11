@@ -67,7 +67,7 @@ const AllowedValuesListSchema = z.object({
           typeof value === 'string' ? value.trim() : value
         );
       }
-      return values;
+      
     })
     .optional(),
 });
