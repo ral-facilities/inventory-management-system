@@ -20,7 +20,7 @@ describe('catalogue items', () => {
       'manufacturers',
     ]);
     // Prepare relevant data for catalogue items
-    cy.visit('/manufacturer');
+    cy.visit('/manufacturers');
     addManufacturer(true);
     cy.visit('/catalogue');
     addCatalogueCategories(true);

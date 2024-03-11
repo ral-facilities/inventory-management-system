@@ -505,7 +505,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <MuiLink
             underline="hover"
             component={Link}
-            to={`/manufacturer/${row.original.catalogueItem.manufacturer_id}`}
+            to={`/manufacturers/${row.original.catalogueItem.manufacturer_id}`}
             // For ensuring space when grouping
             sx={{ marginRight: 0.5 }}
           >

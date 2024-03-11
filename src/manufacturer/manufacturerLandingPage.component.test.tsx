@@ -29,7 +29,7 @@ describe('Manufacturer Landing page', () => {
   });
 
   it('landing page renders data correctly', async () => {
-    createView('/manufacturer/1');
+    createView('/manufacturers/1');
 
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
@@ -50,7 +50,7 @@ describe('Manufacturer Landing page', () => {
   });
 
   it('navigates back to the root directory', async () => {
-    createView('/manufacturer/1');
+    createView('/manufacturers/1');
 
     await waitFor(() => {
       expect(screen.queryByText('Manufacturer A')).not.toBeInTheDocument();
@@ -63,10 +63,10 @@ describe('Manufacturer Landing page', () => {
     await user.click(homeButton);
 
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturer');
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturers');
   });
   it('landing page renders data correctly when optional values are null', async () => {
-    createView('/manufacturer/4');
+    createView('/manufacturers/4');
 
     await waitFor(() => {
       expect(screen.getByText('Manufacturer D')).toBeInTheDocument();
@@ -78,7 +78,7 @@ describe('Manufacturer Landing page', () => {
   });
 
   it('shows no manufacturer page correctly', async () => {
-    createView('/manufacturer/invalid');
+    createView('/manufacturers/invalid');
 
     await waitFor(() => {
       expect(
@@ -90,7 +90,7 @@ describe('Manufacturer Landing page', () => {
   });
 
   it('shows the loading indicator', async () => {
-    createView('/manufacturer/1');
+    createView('/manufacturers/1');
 
     await waitFor(() => {
       expect(screen.getByRole('progressbar')).toBeInTheDocument();
@@ -98,7 +98,7 @@ describe('Manufacturer Landing page', () => {
   });
 
   it('opens and closes the edit manufacturer dialog', async () => {
-    createView('/manufacturer/1');
+    createView('/manufacturers/1');
 
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
@@ -122,7 +122,7 @@ describe('Manufacturer Landing page', () => {
 
   it('prints when the button is clicked', async () => {
     const spy = jest.spyOn(window, 'print').mockImplementation(() => {});
-    createView('/manufacturer/1');
+    createView('/manufacturers/1');
 
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();

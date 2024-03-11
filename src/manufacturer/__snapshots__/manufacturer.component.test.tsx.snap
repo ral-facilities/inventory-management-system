@@ -1349,7 +1349,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/manufacturer/1"
+                  href="/manufacturers/1"
                 >
                   Manufacturer A
                 </a>
@@ -1462,7 +1462,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/manufacturer/2"
+                  href="/manufacturers/2"
                 >
                   Manufacturer B
                 </a>
@@ -1575,7 +1575,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/manufacturer/3"
+                  href="/manufacturers/3"
                 >
                   Manufacturer C
                 </a>
@@ -1688,7 +1688,7 @@ exports[`Manufacturer renders table data correctly 1`] = `
               >
                 <a
                   class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/manufacturer/4"
+                  href="/manufacturers/4"
                 >
                   Manufacturer D
                 </a>
