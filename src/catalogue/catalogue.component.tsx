@@ -404,15 +404,13 @@ function Catalogue() {
           parentId={parentId}
           type="save as"
           selectedCatalogueCategory={
-            selectedCatalogueCategory
-              ? {
-                  ...selectedCatalogueCategory,
-                  name: generateUniqueName(
-                    selectedCatalogueCategory.name,
-                    catalogueCategoryNames
-                  ),
-                }
-              : undefined
+            selectedCatalogueCategory && {
+              ...selectedCatalogueCategory,
+              name: generateUniqueName(
+                selectedCatalogueCategory.name,
+                catalogueCategoryNames
+              ),
+            }
           }
           resetSelectedCatalogueCategory={() =>
             setSelectedCatalogueCategory(undefined)
