@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  renderComponentWithMemoryRouter,
-  renderComponentWithRouterProvider,
-} from '../setupTests';
+import { renderComponentWithRouterProvider } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
 import ManufacturerLandingPage from './manufacturerLandingPage.component';
 import userEvent from '@testing-library/user-event';
-import { Route, Routes } from 'react-router-dom';
-import { paths } from '../view/viewTabs.component';
 
 const mockedUseNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
