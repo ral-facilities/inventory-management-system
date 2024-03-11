@@ -519,7 +519,7 @@ describe('Catalogue Items Table', () => {
     await ensureColumnsVisible(['Manufacturer Name']);
 
     const url = screen.getAllByText('Manufacturer A');
-    expect(url[0]).toHaveAttribute('href', '/manufacturer/1');
+    expect(url[0]).toHaveAttribute('href', '/manufacturers/1');
   });
 
   it('renders the dense table correctly', async () => {

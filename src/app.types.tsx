@@ -1,7 +1,7 @@
 export const MicroFrontendId = 'scigateway';
 export const MicroFrontendToken = `${MicroFrontendId}:token`;
 
-export type TabValue = 'Systems' | 'Catalogue' | 'Manufacturer';
+export type TabValue = 'Systems' | 'Catalogue' | 'Manufacturers';
 
 export interface AddCatalogueCategory {
   name: string;

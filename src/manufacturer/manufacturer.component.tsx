@@ -57,7 +57,7 @@ function ManufacturerComponent() {
             <MuiLink
               underline="hover"
               component={Link}
-              to={`/manufacturer/${row.original.id}`}
+              to={`/manufacturers/${row.original.id}`}
             >
               {row.original.name}
             </MuiLink>
@@ -251,7 +251,7 @@ function ManufacturerComponent() {
 
   const navigate = useNavigate();
   const onChangeNode = React.useCallback(() => {
-    navigate('/manufacturer');
+    navigate('/manufacturers');
   }, [navigate]);
 
   return (
