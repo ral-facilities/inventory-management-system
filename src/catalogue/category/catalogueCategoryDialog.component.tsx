@@ -79,6 +79,7 @@ const CatalogueCategoryFormDataSchema = z
     unit: z
       .string()
       .optional()
+      .nullable()
       .or(z.literal('').transform(() => undefined)),
     mandatory: z.boolean(),
     allowed_values: AllowedValuesListSchema.optional(),
@@ -373,7 +374,6 @@ const CatalogueCategoryDialog = React.memo(
       watch,
       control,
       resetField,
-      setValue,
     } = useForm({
       resolver: zodResolver(CatalogueCategorySchema),
       defaultValues: initialCatalogueCategory,
@@ -519,8 +519,11 @@ const CatalogueCategoryDialog = React.memo(
                         value={value}
                         onChange={(e, value) => {
                           onChange(value === 'true');
-                          !(value === 'true') &&
-                            setValue(`catalogue_item_properties`, []);
+                          if (!(value === 'true')) {
+                            resetField(`catalogue_item_properties`, {
+                              defaultValue: [],
+                            });
+                          }
                         }}
                       >
                         <FormControlLabel
