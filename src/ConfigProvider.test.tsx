@@ -36,8 +36,8 @@ jest.mock('./settings', () => ({
       },
       {
         section: 'Inventory Management System',
-        link: '/manufacturer',
-        displayName: 'Manufacturer',
+        link: '/manufacturers',
+        displayName: 'Manufacturers',
         order: 3,
       },
     ],
@@ -98,8 +98,8 @@ describe('ConfigProvider', () => {
           },
           {
             section: 'Inventory Management System',
-            link: '/manufacturer',
-            displayName: 'Manufacturer',
+            link: '/manufacturers',
+            displayName: 'Manufacturers',
             order: 3,
           },
         ],

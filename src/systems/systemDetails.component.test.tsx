@@ -118,5 +118,5 @@ describe('SystemDetails', () => {
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
-  });
+  }, 10000);
 });

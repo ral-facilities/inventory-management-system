@@ -6,12 +6,12 @@ import {
 
 describe('Manufacturer', () => {
   beforeEach(() => {
-    cy.dropIMSDB();
-    cy.visit('/manufacturer');
+    cy.dropIMSCollections(['manufacturers']);
+    cy.visit('/manufacturers');
   });
   afterEach(() => {
     cy.clearMocks();
-    cy.dropIMSDB();
+    cy.dropIMSCollections(['manufacturers']);
   });
 
   it('CRUD for Manufacturer', () => {

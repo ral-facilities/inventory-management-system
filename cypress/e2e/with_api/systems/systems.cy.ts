@@ -15,21 +15,33 @@ import {
 
 describe('systems', () => {
   beforeEach(() => {
-    cy.dropIMSDB();
+    cy.dropIMSCollections([
+      'catalogue_categories',
+      'catalogue_items',
+      'manufacturers',
+      'items',
+      'systems',
+    ]);
     // Prepare relevant data for systems
-    cy.visit('/manufacturer');
-    addManufacturer();
+    cy.visit('/manufacturers');
+    addManufacturer(true);
     cy.visit('/systems');
     addSystems();
     cy.visit('/catalogue');
-    addCatalogueCategories();
-    addCatalogueItem();
-    addItem();
+    addCatalogueCategories(true);
+    addCatalogueItem(true);
+    addItem(true);
     cy.visit('/systems');
   });
   afterEach(() => {
     cy.clearMocks();
-    cy.dropIMSDB();
+    cy.dropIMSCollections([
+      'catalogue_categories',
+      'catalogue_items',
+      'manufacturers',
+      'items',
+      'systems',
+    ]);
   });
 
   it('CRUD for systems', () => {
