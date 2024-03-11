@@ -64,7 +64,9 @@ describe('SystemItemsTable', () => {
     // (expanding all causes an infinite loop due to an issue with details panels)
     await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
     //also unhide created column
-    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
+    await user.click(
+      await screen.findByRole('button', { name: 'Show/Hide columns' })
+    );
     await user.click(screen.getByText('Created'));
 
     // Rest in a snapshot

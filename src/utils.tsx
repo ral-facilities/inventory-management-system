@@ -74,12 +74,6 @@ export const trimStringValues = (object: any): any => {
   return object;
 };
 
-// export const formatDateTimeStrings = (dateTime: Date): string => {
-//   return `${dateTime.getFullYear()}-${(dateTime.getMonth() + 1).toString().padStart(2, '0')}-${dateTime.getDate().toString().padStart(2, '0')}
-//   ${dateTime.getHours().toString().padStart(2, '0')}:${dateTime.getMinutes().toString().padStart(2, '0')}:${dateTime.getSeconds().toString().padStart(2, '0')}
-//   `;
-// };
-
 export const formatDateTimeStrings = (dateTime: string): string => {
   const date = parseISO(dateTime);
   const formattedDate = format(date, 'dd MMM yyyy HH:mm');
