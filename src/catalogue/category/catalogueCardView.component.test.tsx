@@ -26,6 +26,8 @@ describe('CardView', () => {
         parent_id: null,
         code: index.toString(),
         is_leaf: true,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       });
     }
     return data;

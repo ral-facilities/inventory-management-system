@@ -86,6 +86,8 @@ describe('catalogue category api functions', () => {
         is_leaf: true,
         name: 'test',
         parent_id: '1',
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       });
     });
   });
@@ -132,6 +134,8 @@ describe('catalogue category api functions', () => {
           is_leaf: false,
           name: 'Actuators',
           parent_id: '2',
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         },
       ]);
     });
@@ -171,6 +175,8 @@ describe('catalogue category api functions', () => {
         is_leaf: false,
         name: 'Beam Characterization',
         parent_id: null,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       });
     });
   });
