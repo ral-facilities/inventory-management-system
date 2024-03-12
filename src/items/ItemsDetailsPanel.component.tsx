@@ -11,6 +11,7 @@ import {
 import { Link } from 'react-router-dom';
 import { CatalogueItem, Item, UsageStatusType } from '../app.types';
 import { useManufacturer } from '../api/manufacturer';
+import { formatDateTimeStrings } from '../utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function TabPanel(props: any) {
@@ -145,6 +146,24 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                   <Typography color="text.primary">Usage Status</Typography>
                   <Typography color="text.secondary">
                     {Object.values(UsageStatusType)[itemData.usage_status]}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12} sm={6} key={7}>
+                <Grid item xs={12}>
+                  <Typography color="text.primary">Last Modified</Typography>
+                  <Typography color="text.secondary">
+                    {formatDateTimeStrings(itemData.modified_time)}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12} sm={6} key={8}>
+                <Grid item xs={12}>
+                  <Typography color="text.primary">Created</Typography>
+                  <Typography color="text.secondary">
+                    {formatDateTimeStrings(itemData.created_time)}
                   </Typography>
                 </Grid>
               </Grid>

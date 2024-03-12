@@ -15,6 +15,8 @@ describe('Catalogue Category', () => {
         parent_id: null,
         code: index.toString(),
         is_leaf: true,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       });
     }
     return data;
@@ -720,6 +722,8 @@ describe('Catalogue Category', () => {
               mandatory: false,
             },
           ],
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -729,6 +733,8 @@ describe('Catalogue Category', () => {
           parent_id: null,
           code: 'test_dup',
           is_leaf: false,
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
       expect(JSON.stringify(await patchRequests[2].json())).equal(
@@ -738,6 +744,8 @@ describe('Catalogue Category', () => {
           parent_id: null,
           code: 'amp-meters',
           is_leaf: false,
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
     });
@@ -794,6 +802,8 @@ describe('Catalogue Category', () => {
               mandatory: false,
             },
           ],
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -803,6 +813,8 @@ describe('Catalogue Category', () => {
           parent_id: '2',
           code: 'test_dup',
           is_leaf: false,
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
       expect(JSON.stringify(await patchRequests[2].json())).equal(
@@ -812,6 +824,8 @@ describe('Catalogue Category', () => {
           parent_id: '2',
           code: 'amp-meters',
           is_leaf: false,
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
     });

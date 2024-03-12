@@ -36,6 +36,10 @@ describe('Manufacturer', () => {
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
     });
+
+    //also unhide created column
+    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
+    await user.click(screen.getByText('Created'));
     expect(view.asFragment()).toMatchSnapshot();
   }, 10000);
 
