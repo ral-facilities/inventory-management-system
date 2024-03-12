@@ -29,14 +29,6 @@ import CatalogueItemJSON from './mocks/CatalogueItems.json';
 import ItemsJSON from './mocks/Items.json';
 import ManufacturerJSON from './mocks/manufacturer.json';
 import { server } from './mocks/server';
-import { HomePage } from './homePage/homePage.component';
-import Catalogue from './catalogue/catalogue.component';
-import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
-import Systems from './systems/systems.component';
-import ItemsLandingPage from './items/itemsLandingPage.component';
-import Items from './items/items.component';
-import ManufacturerComponent from './manufacturer/manufacturer.component';
-import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
 
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());
