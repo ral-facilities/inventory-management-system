@@ -153,7 +153,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 <Grid item xs={12}>
                   <Typography color="text.primary">Last Modified</Typography>
                   <Typography color="text.secondary">
-                    {formatDateTimeStrings(itemData.modified_time ?? '')}
+                    {formatDateTimeStrings(itemData.modified_time)}
                   </Typography>
                 </Grid>
               </Grid>

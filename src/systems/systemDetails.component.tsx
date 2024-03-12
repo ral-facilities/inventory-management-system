@@ -154,7 +154,7 @@ function SystemDetails(props: SystemDetailsProps) {
               >
                 <Typography variant="h6">Last modified</Typography>
                 <Typography variant="body1" color="text.secondary">
-                  {formatDateTimeStrings(system.modified_time ?? '')}
+                  {formatDateTimeStrings(system.modified_time)}
                 </Typography>
               </Grid>
               <Grid

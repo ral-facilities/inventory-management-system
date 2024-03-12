@@ -122,7 +122,7 @@ describe('Catalogue', () => {
     createView('/catalogue/4');
 
     await waitFor(() => {
-      expect(screen.getByText('Last modified')).toBeInTheDocument();
+      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
   });
 

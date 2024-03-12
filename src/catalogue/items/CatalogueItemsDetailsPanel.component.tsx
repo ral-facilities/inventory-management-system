@@ -181,9 +181,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 <Grid item xs={12}>
                   <Typography color="text.primary">Last Modified</Typography>
                   <Typography color="text.secondary">
-                    {formatDateTimeStrings(
-                      catalogueItemIdData.modified_time ?? ''
-                    )}
+                    {formatDateTimeStrings(catalogueItemIdData.modified_time)}
                   </Typography>
                 </Grid>
               </Grid>

@@ -261,7 +261,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => row.catalogueItem.modified_time ?? '',
+        accessorFn: (row) => row.catalogueItem.modified_time,
         id: 'catalogueItem.modified_time',
         size: 250,
         enableGrouping: false,

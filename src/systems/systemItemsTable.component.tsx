@@ -153,7 +153,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => row.item.modified_time ?? '',
+        accessorFn: (row) => row.item.modified_time,
         id: 'item.modified_time',
         size: 250,
         enableGrouping: false,

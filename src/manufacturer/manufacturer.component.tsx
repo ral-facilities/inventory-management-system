@@ -68,7 +68,7 @@ function ManufacturerComponent() {
 
       {
         header: 'Last modified',
-        accessorFn: (row) => row.modified_time ?? '',
+        accessorFn: (row) => row.modified_time,
         id: 'modified_time',
         size: 250,
         enableGrouping: false,

@@ -300,9 +300,7 @@ function CatalogueItemsLandingPage() {
                       Last Modified
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {formatDateTimeStrings(
-                        catalogueItemIdData.modified_time ?? ''
-                      )}
+                      {formatDateTimeStrings(catalogueItemIdData.modified_time)}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>

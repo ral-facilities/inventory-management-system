@@ -273,7 +273,7 @@ function ItemsLandingPage() {
                       Last modified
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {formatDateTimeStrings(itemData.modified_time ?? '')}
+                      {formatDateTimeStrings(itemData.modified_time)}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>

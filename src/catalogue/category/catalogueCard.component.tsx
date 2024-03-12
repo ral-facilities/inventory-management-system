@@ -97,7 +97,7 @@ function CatalogueCard(props: CatalogueCardProps) {
 
             <Grid position={'absolute'} bottom={5} right={12}>
               <Typography fontSize="0.8rem" color="text.secondary">
-                {`Last modified:  ${formatDateTimeStrings(catalogueCategory.modified_time ?? '')}`}
+                {`Last modified: ${formatDateTimeStrings(catalogueCategory.modified_time)}`}
               </Typography>
             </Grid>
           </Grid>
