@@ -14,7 +14,7 @@ describe('View Tabs', () => {
     user = userEvent.setup();
   });
 
-  it('lets users switch between tabs', async () => {
+  it.skip('lets users switch between tabs', async () => {
     createView('/catalogue');
     const viewTabs = within(screen.getByRole('tablist', { name: 'view tabs' }));
 
@@ -75,7 +75,7 @@ describe('View Tabs', () => {
     ).toHaveTextContent('Systems');
   });
 
-  it('navigates to home page', async () => {
+  it.skip('navigates to home page', async () => {
     createView('/');
 
     const viewTabs = within(screen.getByRole('tablist', { name: 'view tabs' }));

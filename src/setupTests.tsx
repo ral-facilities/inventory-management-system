@@ -74,7 +74,7 @@ export function renderComponentWithRouterProvider(
       <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
         <QueryClientProvider client={queryClient}>
           <Routes>
-            <Route path={'*'} element={ui} />
+            <Route path={pathName ?? '*'} element={ui} />
           </Routes>
         </QueryClientProvider>
       </LocalizationProvider>
@@ -99,9 +99,9 @@ export function renderComponentWithRouterProvider(
           Component: ui,
         },
         { path: 'systems/*', Component: ui },
-        { path: 'manufacturer', Component: ui },
+        { path: 'manufacturers', Component: ui },
         {
-          path: 'manufacturer/:manufacturer_id',
+          path: 'manufacturers/:manufacturer_id',
           Component: ui,
         },
       ],

@@ -52,9 +52,8 @@ describe('Manufacturer Landing page', () => {
 
     await user.click(homeButton);
 
-    await waitFor(() => {
-      expect(screen.queryByText('Manufacturer A')).not.toBeInTheDocument();
-    });
+    expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturers');
   });
   it('landing page renders data correctly when optional values are null', async () => {
     createView('/manufacturers/4');

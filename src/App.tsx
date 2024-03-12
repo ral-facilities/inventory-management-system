@@ -99,9 +99,9 @@ const router = createBrowserRouter([
         Component: ItemsLandingPage,
       },
       { path: 'systems/*', Component: Systems },
-      { path: 'manufacturer', Component: ManufacturerComponent },
+      { path: 'manufacturers', Component: ManufacturerComponent },
       {
-        path: 'manufacturer/:manufacturer_id',
+        path: 'manufacturers/:manufacturer_id',
         Component: ManufacturerLandingPage,
       },
     ],
