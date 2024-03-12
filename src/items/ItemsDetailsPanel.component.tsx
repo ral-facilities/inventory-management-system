@@ -11,6 +11,7 @@ import {
 import { Link } from 'react-router-dom';
 import { CatalogueItem, Item, UsageStatusType } from '../app.types';
 import { useManufacturer } from '../api/manufacturer';
+import { formatDateTimeStrings } from '../utils';
 
 function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
@@ -147,6 +148,24 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                   </Typography>
                 </Grid>
               </Grid>
+
+              <Grid item xs={12} sm={6} key={7}>
+                <Grid item xs={12}>
+                  <Typography color="text.primary">Last Modified</Typography>
+                  <Typography color="text.secondary">
+                    {formatDateTimeStrings(itemData.modified_time)}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12} sm={6} key={8}>
+                <Grid item xs={12}>
+                  <Typography color="text.primary">Created</Typography>
+                  <Typography color="text.secondary">
+                    {formatDateTimeStrings(itemData.created_time)}
+                  </Typography>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </TabPanel>
@@ -164,7 +183,9 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                     }`}</Typography>
                     <Box sx={{ display: 'flex' }}>
                       <Typography align="left" color="text.secondary">
-                        {property.value !== null ? String(property.value) : 'None'}
+                        {property.value !== null
+                          ? String(property.value)
+                          : 'None'}
                       </Typography>
                     </Box>
                   </Grid>

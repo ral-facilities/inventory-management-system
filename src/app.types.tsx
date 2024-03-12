@@ -46,6 +46,8 @@ export interface CatalogueCategory {
   code: string;
   is_leaf: boolean;
   catalogue_item_properties?: CatalogueCategoryFormData[];
+  created_time: string;
+  modified_time: string;
 }
 
 export interface AddManufacturer {
@@ -72,6 +74,8 @@ export interface ManufacturerDetails {
 
 export interface Manufacturer extends ManufacturerDetails {
   id: string;
+  created_time: string;
+  modified_time: string;
 }
 
 export interface AllowedValuesList {
@@ -130,6 +134,8 @@ export interface CatalogueItemPropertyResponse {
 export interface CatalogueItem extends CatalogueItemDetails {
   properties: CatalogueItemPropertyResponse[];
   id: string;
+  created_time: string;
+  modified_time: string;
 }
 export interface AddCatalogueItem extends CatalogueItemDetails {
   properties: CatalogueItemProperty[];
@@ -198,6 +204,8 @@ export interface System {
   importance: SystemImportanceType;
   parent_id: string | null;
   code: string;
+  created_time: string;
+  modified_time: string;
 }
 
 export interface EditSystem extends Partial<AddSystem> {
@@ -251,6 +259,8 @@ export interface AddItem extends ItemDetails {
 export interface Item extends ItemDetails {
   properties: CatalogueItemPropertyResponse[];
   id: string;
+  created_time: string;
+  modified_time: string;
 }
 
 export interface EditItem extends Partial<AddItem> {

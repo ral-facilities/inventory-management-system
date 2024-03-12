@@ -52,7 +52,7 @@ describe('Catalogue Items Table', () => {
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
-    expect(screen.getByText('Description')).toBeInTheDocument();
+    expect(screen.getByText('Last modified')).toBeInTheDocument();
   });
 
   it('renders table correctly (Cameras more details)', async () => {
@@ -153,7 +153,11 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await ensureColumnsVisible(['Drawing Link', 'Item Model Number']);
+    await ensureColumnsVisible([
+      'Drawing Link',
+      'Item Model Number',
+      'Created',
+    ]);
   });
 
   it('renders table correctly (section 5 due to column virtualisation)', async () => {
@@ -184,6 +188,12 @@ describe('Catalogue Items Table', () => {
 
   it('displays descriptions tooltip on hover', async () => {
     createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Last modified')).toBeInTheDocument();
+    });
+
+    await ensureColumnsVisible(['Description']);
 
     await waitFor(() => {
       expect(
