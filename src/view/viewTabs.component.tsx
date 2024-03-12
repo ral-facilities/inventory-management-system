@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import { styled } from '@mui/material/styles';
 import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { TabValue } from '../app.types';
+import { TAB_VALUES, TabValue } from '../app.types';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
 
 export const paths = {
@@ -21,8 +21,8 @@ export const paths = {
 
 interface TabPanelProps {
   children?: React.ReactNode;
-  value: TabValue;
-  label: TabValue;
+  value: TabValue | false;
+  label: TabValue | false;
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -55,7 +55,7 @@ const StyledTab = styled(Tab)(({ theme }) => ({
 }));
 
 function ViewTabs() {
-  const [value, setValue] = React.useState<TabValue>('Catalogue');
+  const [value, setValue] = React.useState<TabValue | false>('Catalogue');
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -73,8 +73,10 @@ function ViewTabs() {
 
       if (tabValue !== value && tabValue !== '') {
         tabValue = tabValue.charAt(0).toUpperCase() + tabValue.slice(1);
-        setValue(tabValue as TabValue);
-      }
+        if (TAB_VALUES.includes(tabValue as TabValue))
+          setValue(tabValue as TabValue);
+        else setValue(false);
+      } else setValue(false);
     }
   }, [location.pathname, value]);
 
@@ -93,21 +95,14 @@ function ViewTabs() {
       {isRunningInDevelopment() ? (
         <>
           <Tabs value={value} onChange={handleChange} aria-label="view tabs">
-            <StyledTab
-              value="Catalogue"
-              label="Catalogue"
-              {...a11yProps('Catalogue')}
-            />
-            <StyledTab
-              value="Systems"
-              label="Systems"
-              {...a11yProps('Systems')}
-            />
-            <StyledTab
-              value="Manufacturers"
-              label="Manufacturers"
-              {...a11yProps('Manufacturers')}
-            />
+            {TAB_VALUES.map((value) => (
+              <StyledTab
+                value={value}
+                label={value}
+                key={value}
+                {...a11yProps(value)}
+              />
+            ))}
           </Tabs>
           <Box
             sx={{
