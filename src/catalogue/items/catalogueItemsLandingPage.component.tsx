@@ -472,13 +472,15 @@ function CatalogueItemsLandingPage() {
         </Box>
       )}
 
-      <CatalogueItemsDialog
-        open={editItemDialogOpen}
-        onClose={() => setEditItemDialogOpen(false)}
-        parentInfo={catalogueCategoryData}
-        selectedCatalogueItem={catalogueItemIdData}
-        type="edit"
-      />
+      {catalogueCategoryData && catalogueItemIdData && (
+        <CatalogueItemsDialog
+          open={editItemDialogOpen}
+          onClose={() => setEditItemDialogOpen(false)}
+          parentInfo={catalogueCategoryData}
+          selectedCatalogueItem={catalogueItemIdData}
+          type="edit"
+        />
+      )}
     </Grid>
   );
 }
