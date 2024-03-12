@@ -25,7 +25,8 @@ describe('Obsolete Catalogue Item Dialog', () => {
 
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <ObsoleteCatalogueItemDialog {...props} />
+      <ObsoleteCatalogueItemDialog {...props} />,
+      undefined
     );
   };
 

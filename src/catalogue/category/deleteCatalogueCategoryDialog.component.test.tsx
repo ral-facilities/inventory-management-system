@@ -18,7 +18,8 @@ describe('delete Catalogue Category dialogue', () => {
   let catalogueCategory: CatalogueCategory;
   const createView = (): RenderResult => {
     return renderComponentWithRouterProvider(
-      <DeleteCatalogueCategoryDialog {...props} />
+      <DeleteCatalogueCategoryDialog {...props} />,
+      undefined
     );
   };
 

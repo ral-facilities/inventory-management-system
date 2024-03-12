@@ -11,7 +11,7 @@ jest.mock('react-router-dom', () => ({
 describe('Manufacturer', () => {
   let user;
   const createView = () => {
-    return renderComponentWithRouterProvider(<Manufacturer />);
+    return renderComponentWithRouterProvider(<Manufacturer />, undefined);
   };
   beforeEach(() => {
     user = userEvent.setup();

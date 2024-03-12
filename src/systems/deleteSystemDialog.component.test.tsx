@@ -38,7 +38,10 @@ describe('DeleteSystemDialog', () => {
         code: '',
       };
 
-    return renderComponentWithRouterProvider(<DeleteSystemDialog {...props} />);
+    return renderComponentWithRouterProvider(
+      <DeleteSystemDialog {...props} />,
+      undefined
+    );
   };
 
   beforeEach(() => {

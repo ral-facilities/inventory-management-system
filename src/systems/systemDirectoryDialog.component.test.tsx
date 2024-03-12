@@ -26,7 +26,8 @@ describe('SystemDirectoryDialog', () => {
 
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <SystemDirectoryDialog {...props} />
+      <SystemDirectoryDialog {...props} />,
+      undefined
     );
   };
 

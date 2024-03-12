@@ -82,7 +82,7 @@ export function renderComponentWithRouterProvider(
       <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
         <QueryClientProvider client={queryClient}>
           <Routes>
-            <Route path={pathName ?? '*'} element={ui} />
+            <Route path={'*'} element={ui} />
           </Routes>
         </QueryClientProvider>
       </LocalizationProvider>
@@ -94,23 +94,23 @@ export function renderComponentWithRouterProvider(
       path: '/*',
       Component: Root,
       children: [
-        { path: '', Component: HomePage },
-        { path: 'ims', Component: HomePage },
-        { path: 'catalogue/*', Component: Catalogue },
+        { path: '', Component: ui },
+        { path: 'ims', Component: ui },
+        { path: 'catalogue/*', Component: ui },
         {
           path: 'catalogue/item/:catalogue_item_id',
-          Component: CatalogueItemsLandingPage,
+          Component: ui,
         },
-        { path: 'catalogue/item/:catalogue_item_id/items', Component: Items },
+        { path: 'catalogue/item/:catalogue_item_id/items', Component: ui },
         {
           path: 'catalogue/item/:catalogue_item_id/items/:item_id',
-          Component: ItemsLandingPage,
+          Component: ui,
         },
-        { path: 'systems/*', Component: Systems },
-        { path: 'manufacturer', Component: ManufacturerComponent },
+        { path: 'systems/*', Component: ui },
+        { path: 'manufacturer', Component: ui },
         {
           path: 'manufacturer/:manufacturer_id',
-          Component: ManufacturerLandingPage,
+          Component: ui,
         },
       ],
     },

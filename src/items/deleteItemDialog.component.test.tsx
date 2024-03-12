@@ -18,7 +18,10 @@ describe('delete item dialog', () => {
   let item: Item | undefined;
 
   const createView = (): RenderResult => {
-    return renderComponentWithRouterProvider(<DeleteItemDialog {...props} />);
+    return renderComponentWithRouterProvider(
+      <DeleteItemDialog {...props} />,
+      undefined
+    );
   };
 
   beforeEach(() => {

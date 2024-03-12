@@ -58,7 +58,10 @@ describe('ItemDialog', () => {
   const onClose = jest.fn();
 
   const createView = () => {
-    return renderComponentWithRouterProvider(<ItemDialog {...props} />);
+    return renderComponentWithRouterProvider(
+      <ItemDialog {...props} />,
+      undefined
+    );
   };
   beforeEach(() => {
     props = {

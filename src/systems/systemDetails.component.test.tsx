@@ -16,7 +16,10 @@ describe('SystemDetails', () => {
       mockSystemDetails = SystemsJSON.filter(
         (system) => system.id === props.id
       )[0] as System;
-    return renderComponentWithRouterProvider(<SystemDetails {...props} />);
+    return renderComponentWithRouterProvider(
+      <SystemDetails {...props} />,
+      undefined
+    );
   };
 
   beforeEach(() => {

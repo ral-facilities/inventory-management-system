@@ -23,7 +23,10 @@ describe('SystemItemsDialog', () => {
   ];
 
   const createView = () => {
-    return renderComponentWithRouterProvider(<SystemItemsDialog {...props} />);
+    return renderComponentWithRouterProvider(
+      <SystemItemsDialog {...props} />,
+      undefined
+    );
   };
 
   beforeEach(() => {

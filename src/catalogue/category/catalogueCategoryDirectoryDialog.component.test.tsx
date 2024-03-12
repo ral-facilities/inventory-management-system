@@ -16,7 +16,8 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   const onClose = jest.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <CatalogueCategoryDirectoryDialog {...props} />
+      <CatalogueCategoryDirectoryDialog {...props} />,
+      undefined
     );
   };
 

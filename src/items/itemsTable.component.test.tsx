@@ -14,7 +14,10 @@ describe('Items Table', () => {
   let props: ItemTableProps;
   let user;
   const createView = () => {
-    return renderComponentWithRouterProvider(<ItemsTable {...props} />);
+    return renderComponentWithRouterProvider(
+      <ItemsTable {...props} />,
+      undefined
+    );
   };
 
   const ensureColumnsVisible = async (columns: string[]) => {

@@ -19,7 +19,10 @@ describe('Add manufacturer dialog', () => {
   let user;
   let axiosPostSpy;
   const createView = () => {
-    return renderComponentWithRouterProvider(<ManufacturerDialog {...props} />);
+    return renderComponentWithRouterProvider(
+      <ManufacturerDialog {...props} />,
+      undefined
+    );
   };
   beforeEach(() => {
     props = {

@@ -16,7 +16,8 @@ describe('Delete Manufacturer Dialog', () => {
   let user;
   const createView = (): RenderResult => {
     return renderComponentWithRouterProvider(
-      <DeleteManufacturerDialog {...props} />
+      <DeleteManufacturerDialog {...props} />,
+      undefined
     );
   };
   beforeEach(() => {

@@ -20,7 +20,8 @@ describe('Catalogue Properties Form', () => {
   const resetFormError = jest.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <CataloguePropertiesForm {...props} />
+      <CataloguePropertiesForm {...props} />,
+      undefined
     );
   };
 

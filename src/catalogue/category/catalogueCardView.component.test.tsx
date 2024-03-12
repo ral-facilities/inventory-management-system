@@ -13,7 +13,10 @@ describe('CardView', () => {
   const onChangeOpenSaveAsDialog = jest.fn();
   const handleToggleSelect = jest.fn();
   const createView = () => {
-    return renderComponentWithRouterProvider(<CardView {...props} />);
+    return renderComponentWithRouterProvider(
+      <CardView {...props} />,
+      undefined
+    );
   };
 
   function createData(): CatalogueCategory[] {

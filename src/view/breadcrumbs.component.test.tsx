@@ -10,7 +10,10 @@ describe('Channel Breadcrumbs', () => {
   let props: BreadcrumbsProps;
 
   const createView = () => {
-    return renderComponentWithRouterProvider(<Breadcrumbs {...props} />);
+    return renderComponentWithRouterProvider(
+      <Breadcrumbs {...props} />,
+      undefined
+    );
   };
   beforeEach(() => {
     props = {

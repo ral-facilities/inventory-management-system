@@ -18,7 +18,10 @@ describe('Systems Dialog', () => {
   const mockOnClose = jest.fn();
 
   const createView = () => {
-    return renderComponentWithRouterProvider(<SystemDialog {...props} />);
+    return renderComponentWithRouterProvider(
+      <SystemDialog {...props} />,
+      undefined
+    );
   };
 
   // Modifies values when given a value that is not undefined

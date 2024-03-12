@@ -12,7 +12,10 @@ describe('Catalogue Card', () => {
   const onChangeOpenEditDialog = jest.fn();
   const onToggleSelect = jest.fn();
   const createView = () => {
-    return renderComponentWithRouterProvider(<CatalogueCard {...props} />);
+    return renderComponentWithRouterProvider(
+      <CatalogueCard {...props} />,
+      undefined
+    );
   };
 
   beforeEach(() => {

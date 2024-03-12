@@ -18,7 +18,10 @@ describe('SystemItemsTable', () => {
   let mockSystem: System = SystemsJSON[2] as System;
 
   const createView = () => {
-    return renderComponentWithRouterProvider(<SystemItemsTable {...props} />);
+    return renderComponentWithRouterProvider(
+      <SystemItemsTable {...props} />,
+      undefined
+    );
   };
 
   beforeEach(() => {

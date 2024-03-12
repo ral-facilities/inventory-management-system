@@ -14,7 +14,8 @@ describe('CatalogueCategoryTableView', () => {
   const onChangeParentCategoryId = jest.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <CatalogueCategoryTableView {...props} />
+      <CatalogueCategoryTableView {...props} />,
+      undefined
     );
   };
 

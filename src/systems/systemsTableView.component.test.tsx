@@ -21,7 +21,10 @@ describe('SystemsTableView', () => {
   ];
 
   const createView = () => {
-    return renderComponentWithRouterProvider(<SystemsTableView {...props} />);
+    return renderComponentWithRouterProvider(
+      <SystemsTableView {...props} />,
+      undefined
+    );
   };
 
   beforeEach(() => {
