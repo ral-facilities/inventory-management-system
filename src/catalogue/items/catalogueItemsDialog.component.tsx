@@ -182,11 +182,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     }
   }, [parentCatalogueItemPropertiesInfo, selectedCatalogueItem, open]);
 
-  const handlePropertyChange = (
-    index: number,
-    name: string,
-    value: string | null
-  ) => {
+  const handlePropertyChange = (index: number, value: string | null) => {
     const updatedPropertyValues = [...propertyValues];
 
     if (value === null || (typeof value === 'string' && value.trim() === '')) {
@@ -774,10 +770,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       : selectedManufacturer
                   }
                   inputValue={inputValue ?? ''}
-                  onInputChange={(event, newInputValue) =>
+                  onInputChange={(_event, newInputValue) =>
                     setInputValue(newInputValue)
                   }
-                  onChange={(event, newManufacturer: Manufacturer | null) => {
+                  onChange={(_event, newManufacturer: Manufacturer | null) => {
                     setSelectedManufacturer(newManufacturer ?? null);
                     setInputValue(newManufacturer?.name ?? '');
                     handleCatalogueDetails(
@@ -874,7 +870,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 onChange={(event) =>
                                   handlePropertyChange(
                                     index,
-                                    property.name,
                                     event.target.value as string
                                   )
                                 }
@@ -918,7 +913,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 onChange={(event) =>
                                   handlePropertyChange(
                                     index,
-                                    property.name,
                                     event.target.value as string
                                   )
                                 }
@@ -952,7 +946,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                               onChange={(event) =>
                                 handlePropertyChange(
                                   index,
-                                  property.name,
                                   event.target.value ? event.target.value : null
                                 )
                               }

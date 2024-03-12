@@ -185,11 +185,7 @@ function ItemDialog(props: ItemDialogProps) {
     }
   }, [parentCatalogueItemPropertiesInfo, selectedItem, open]);
 
-  const handlePropertyChange = (
-    index: number,
-    name: string,
-    value: string | null
-  ) => {
+  const handlePropertyChange = (index: number, value: string | null) => {
     const updatedPropertyValues = [...propertyValues];
 
     if (value === null || (typeof value === 'string' && value.trim() === '')) {
@@ -696,7 +692,6 @@ function ItemDialog(props: ItemDialogProps) {
                                 onChange={(event) =>
                                   handlePropertyChange(
                                     index,
-                                    property.name,
                                     event.target.value as string
                                   )
                                 }
@@ -740,7 +735,6 @@ function ItemDialog(props: ItemDialogProps) {
                                 onChange={(event) =>
                                   handlePropertyChange(
                                     index,
-                                    property.name,
                                     event.target.value as string
                                   )
                                 }
@@ -768,7 +762,6 @@ function ItemDialog(props: ItemDialogProps) {
                               onChange={(event) =>
                                 handlePropertyChange(
                                   index,
-                                  property.name,
                                   event.target.value ? event.target.value : null
                                 )
                               }

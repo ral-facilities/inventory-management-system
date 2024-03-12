@@ -463,7 +463,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               getOptionLabel={(option) => option.value}
               value={units?.find((unit) => unit.value === field.unit) || null}
               disabled={field.type === 'boolean'}
-              onChange={(event, newValue: Unit | null) => {
+              onChange={(_event, newValue: Unit | null) => {
                 handleChange(index, 'unit', newValue?.value || '');
               }}
               renderInput={(params) => (

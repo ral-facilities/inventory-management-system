@@ -524,7 +524,7 @@ const CatalogueCategoryDialog = React.memo(
                   aria-labelledby="controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
                   value={categoryData.is_leaf ? 'true' : 'false'}
-                  onChange={(event, value) => {
+                  onChange={(_event, value) => {
                     const newData = {
                       ...categoryData,
                       is_leaf: value === 'true' ? true : false,

@@ -132,7 +132,7 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
             shape="rounded"
             count={Math.ceil(catalogueCategoryData?.length / paginationResults)}
             page={page}
-            onChange={(event, value) => {
+            onChange={(_event, value) => {
               setPage(value);
             }}
             size="medium"

@@ -88,7 +88,7 @@ function ViewTabs() {
     }
   }, [location.pathname, value]);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: TabValue) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: TabValue) => {
     setValue(newValue);
     navigate(`/${newValue.toLowerCase()}`);
   };
