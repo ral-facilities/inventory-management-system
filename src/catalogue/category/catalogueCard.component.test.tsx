@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithBrowserRouter } from '../../testUtils';
 import CatalogueCard, { CatalogueCardProps } from './catalogueCard.component';
 
 describe('Catalogue Card', () => {
   let props: CatalogueCardProps;
-  let user;
+  let user: UserEvent;
 
   const onChangeOpenDeleteDialog = vi.fn();
   const onChangeOpenEditDialog = vi.fn();

@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { Route, Routes } from 'react-router-dom';
 import { renderComponentWithMemoryRouter } from '../../testUtils';
 import { paths } from '../../view/viewTabs.component';
@@ -12,7 +12,7 @@ vi.mock('react-router-dom', async () => ({
 }));
 
 describe('Catalogue Items Landing Page', () => {
-  let user;
+  let user: UserEvent;
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(
       <Routes>

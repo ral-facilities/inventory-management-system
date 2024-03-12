@@ -5,13 +5,13 @@ import {
   renderComponentWithBrowserRouter,
 } from '../../testUtils';
 
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import CatalogueItemsDetailsPanel, {
   CatalogueItemsDetailsPanelProps,
 } from './CatalogueItemsDetailsPanel.component';
 
 describe('Catalogue Items details panel', () => {
-  let user;
+  let user: UserEvent;
   let props: CatalogueItemsDetailsPanelProps;
   const createView = () => {
     return renderComponentWithBrowserRouter(

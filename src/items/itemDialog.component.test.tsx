@@ -1,5 +1,5 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../api/api';
 import handleIMS_APIError from '../handleIMS_APIError';
 import {
@@ -53,7 +53,7 @@ describe('isValidDateTime', () => {
 
 describe('ItemDialog', () => {
   let props: ItemDialogProps;
-  let user;
+  let user: UserEvent;
   const onClose = vi.fn();
 
   const createView = () => {

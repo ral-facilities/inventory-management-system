@@ -5,7 +5,7 @@ import {
   waitFor,
   within,
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
@@ -22,7 +22,7 @@ vi.mock('../../handleIMS_APIError');
 
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
-  let user;
+  let user: UserEvent;
   let axiosPostSpy;
   const onClose = vi.fn();
 
