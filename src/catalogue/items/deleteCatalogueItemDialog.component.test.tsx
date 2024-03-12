@@ -78,7 +78,7 @@ describe('delete Catalogue Category dialogue', () => {
   it('calls handleDeleteSession when continue button is clicked with a valid session name', async () => {
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
-    user.click(continueButton);
+    await user.click(continueButton);
 
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
@@ -89,7 +89,7 @@ describe('delete Catalogue Category dialogue', () => {
     catalogueItem.id = '6';
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
-    user.click(continueButton);
+    await user.click(continueButton);
 
     await waitFor(() => {
       expect(

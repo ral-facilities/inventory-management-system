@@ -81,7 +81,7 @@ describe('Catalogue Properties Form', () => {
     createView();
 
     // Click on the add button
-    user.click(
+    await user.click(
       screen.getByRole('button', { name: 'Add catalogue category field entry' })
     );
 
@@ -105,7 +105,7 @@ describe('Catalogue Properties Form', () => {
     createView();
 
     // Click on the add button
-    user.click(screen.getAllByTestId('DeleteIcon')[0]);
+    await user.click(screen.getAllByTestId('DeleteIcon')[0]);
 
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
