@@ -360,6 +360,7 @@ export const handlers = [
 
       return HttpResponse.json(
         {
+          id: '4',
           name: 'Manufacturer D',
           code: 'manufacturer-d',
           url: 'http://test.co.uk',
@@ -371,7 +372,8 @@ export const handlers = [
             postcode: 'OX1 2AB',
           },
           telephone: '07349612203',
-          id: '4',
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         },
         { status: 200 }
       );
@@ -422,6 +424,7 @@ export const handlers = [
       }
       return HttpResponse.json(
         {
+          id: '1',
           name: 'test',
           address: {
             address_line: 'test',
@@ -431,7 +434,8 @@ export const handlers = [
             postcode: 'test',
           },
           telephone: '0000000000',
-          id: '1',
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         },
         { status: 200 }
       );

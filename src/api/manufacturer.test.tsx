@@ -41,6 +41,7 @@ describe('manufacturer api functions', () => {
         expect(result.current.isSuccess).toBeTruthy();
       });
       expect(result.current.data).toEqual({
+        id: '4',
         name: 'Manufacturer D',
         code: 'manufacturer-d',
         url: 'http://test.co.uk',
@@ -52,7 +53,8 @@ describe('manufacturer api functions', () => {
           country: 'United Kingdom',
         },
         telephone: '07349612203',
-        id: '4',
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       });
     });
   });
