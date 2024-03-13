@@ -34,7 +34,7 @@
   },
   "scripts": {
     "dev": "vite --open",
-    "dev-without-open": "vite",
+    "dev-docker": "vite --host",
     "build": "tsc --project tsconfig.build.json && vite build",
     "preview": "vite preview",
     "preview:build": "yarn build && yarn preview",
