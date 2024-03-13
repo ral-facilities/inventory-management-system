@@ -46,33 +46,39 @@
         "name": "Resolution",
         "type": "number",
         "unit": "megapixels",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       },
       {
         "name": "Frame Rate",
         "type": "number",
         "unit": "fps",
-        "mandatory": false
+        "mandatory": false,
+        "allowed_values": null
       },
       {
         "name": "Sensor Type",
         "type": "string",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       },
       {
         "name": "Sensor brand",
         "type": "string",
-        "mandatory": false
+        "mandatory": false,
+        "allowed_values": null
       },
       {
         "name": "Broken",
         "type": "boolean",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       },
       {
         "name": "Older than five years",
         "type": "boolean",
-        "mandatory": false
+        "mandatory": false,
+        "allowed_values": null
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -89,12 +95,14 @@
         "name": "Measurement Range",
         "type": "number",
         "unit": "Joules",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       },
       {
         "name": "Accuracy",
         "type": "string",
-        "mandatory": false
+        "mandatory": false,
+        "allowed_values": null
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -111,12 +119,14 @@
         "name": "Measurement Range",
         "type": "number",
         "unit": "Joules",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       },
       {
         "name": "Accuracy",
         "type": "string",
-        "mandatory": false
+        "mandatory": false,
+        "allowed_values": null
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -132,7 +142,8 @@
       {
         "name": "Wavefront Measurement Range",
         "type": "string",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       },
       {
         "name": "Spatial Resolution",
@@ -164,13 +175,15 @@
         "name": "Travel Range",
         "type": "number",
         "unit": "millimeters",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       },
       {
         "name": "Load Capacity",
         "type": "number",
         "unit": "kilograms",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -231,7 +244,8 @@
       {
         "name": "Cooldown Time",
         "type": "string",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       },
       {
         "name": "Pumping Speed",
@@ -261,12 +275,13 @@
         "name": "Ultimate Pressure",
         "type": "number",
         "unit": "millibar",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       },
       {
         "name": "Axis",
         "type": "string",
-        "unit": "",
+        "unit": null,
         "mandatory": false,
         "allowed_values": { "type": "list", "values": ["y", "x", "z"] }
       }
@@ -285,7 +300,8 @@
         "name": "Pumping Speed",
         "type": "number",
         "unit": "liters per second",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       },
       {
         "name": "Compression Ratio",
@@ -307,13 +323,15 @@
         "name": "Pumping Speed",
         "type": "number",
         "unit": "liters per second",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       },
       {
         "name": "Backing Pressure",
         "type": "number",
         "unit": "millibar",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -358,12 +376,14 @@
         "name": "Measurement Range",
         "type": "number",
         "unit": "volts",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       },
       {
         "name": "Accuracy",
         "type": "string",
-        "mandatory": true
+        "mandatory": true,
+        "allowed_values": null
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
