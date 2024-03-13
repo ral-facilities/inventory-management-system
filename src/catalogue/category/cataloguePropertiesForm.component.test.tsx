@@ -87,7 +87,13 @@ describe('Catalogue Properties Form', () => {
 
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
-        { mandatory: false, name: '', type: '', unit: '' },
+        {
+          mandatory: false,
+          name: '',
+          type: '',
+          unit: undefined,
+          allowed_values: undefined,
+        },
       ]);
     });
   });
