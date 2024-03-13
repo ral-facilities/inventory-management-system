@@ -42,7 +42,12 @@ import { Autocomplete } from '@mui/material';
 import { useManufacturers } from '../../api/manufacturer';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { booleanParser, numberParser, trimStringValues } from '../../utils';
+import {
+  booleanParser,
+  numberParser,
+  stringParser,
+  trimStringValues,
+} from '../../utils';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -86,7 +91,7 @@ function transformPropertiesData(
       transformedData.push({
         name: category.name,
         key: `${category.type}_${category.mandatory}`,
-        value: '',
+        value: category.mandatory ? undefined : null,
       });
     }
   });
@@ -99,8 +104,9 @@ const numberSchema = z.object({
   name: z.string(),
   key: z.literal('number_true'),
   value: z.number({
-    invalid_type_error: 'Please enter a valid number',
-    required_error: 'Please enter a valid value as this field is mandatory',
+    invalid_type_error:
+      'Please enter a valid number as this field is mandatory',
+    required_error: 'Please enter a valid number as this field is mandatory',
   }),
 });
 
@@ -109,7 +115,8 @@ const numberSchemaNullable = z.object({
   key: z.literal('number_false'),
   value: z
     .number({
-      invalid_type_error: 'Please enter a valid number',
+      invalid_type_error:
+        'Please enter a valid number as this field is mandatory',
     })
     .nullable(),
 });
@@ -120,6 +127,8 @@ const stringSchema = z.object({
   value: z
     .string({
       required_error: 'Please enter a valid value as this field is mandatory',
+      invalid_type_error:
+        'Please enter a valid value as this field is mandatory',
     })
     .trim(),
 });
@@ -156,12 +165,10 @@ const UnionSchema = z.discriminatedUnion('key', [
   booleanSchemaNullable,
 ]);
 
-const CatalogueItemSchema = (
-  catalogueItemsProperties: CatalogueCategoryFormData[]
-) => {
+const CatalogueItemSchema = () => {
   const catalogueItemDetailsSchema = z.object({
     name: z
-      .string({ invalid_type_error: 'Please enter a name' })
+      .string({ required_error: 'Please enter a name' })
       .trim()
       .min(1, { message: 'Please enter a name' }),
     description: z
@@ -175,7 +182,7 @@ const CatalogueItemSchema = (
     }),
     cost_to_rework_gbp: z
       .number({
-        invalid_type_error: 'Please enter a valid number',
+        invalid_type_error: 'Please enter a cost to rework as a valid number',
       })
       .nullable()
       .transform((val) => (!val ? null : val))
@@ -188,7 +195,8 @@ const CatalogueItemSchema = (
     }),
     days_to_rework: z
       .number({
-        invalid_type_error: 'Please enter a valid number',
+        invalid_type_error:
+          'Please enter how many days it would take to rework as a valid number',
       })
       .nullable()
       .transform((val) => (!val ? null : val))
@@ -201,7 +209,10 @@ const CatalogueItemSchema = (
     drawing_link: z
       .string()
       .trim()
-      .url({ message: 'Please enter a valid URL' })
+      .url({
+        message:
+          'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted',
+      })
       .optional()
       .nullable()
       .or(z.literal('').transform(() => null)),
@@ -237,35 +248,32 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const isNotCreating = type !== 'create' && !!selectedCatalogueItem;
   const emptyCatalogueItem = {
-    name: '',
-    description: '',
-    cost_gbp: '',
-    cost_to_rework_gbp: '',
-    days_to_replace: '',
-    days_to_rework: '',
-    drawing_number: '',
-    drawing_link: '',
-    item_model_number: '',
-    manufacturer_id: null,
-    notes: '',
+    name: undefined,
+    description: null,
+    cost_gbp: undefined,
+    cost_to_rework_gbp: null,
+    days_to_replace: undefined,
+    days_to_rework: null,
+    drawing_number: null,
+    drawing_link: null,
+    item_model_number: null,
+    manufacturer_id: undefined,
+    notes: null,
     properties: [],
     catalogue_category_id: undefined,
     is_obsolete: false,
     obsolete_replacement_catalogue_item_id: null,
     obsolete_reason: null,
   };
-
   const initialCatalogueItem = isNotCreating
     ? selectedCatalogueItem
     : emptyCatalogueItem;
 
-  const [formError, setFormError] = React.useState(false);
   const [formErrorMessage, setFormErrorMessage] = React.useState<
     string | undefined
   >(undefined);
 
   const handleClose = React.useCallback(() => {
-    setFormError(false);
     setFormErrorMessage(undefined);
     onClose();
   }, [onClose]);
@@ -279,17 +287,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const {
     handleSubmit,
-    register,
     formState: { errors },
     control,
     trigger,
     watch,
   } = useForm({
-    resolver: zodResolver(
-      CatalogueItemSchema(parentInfo.catalogue_item_properties ?? [])[
-        activeStep
-      ]
-    ),
+    resolver: zodResolver(CatalogueItemSchema()[activeStep]),
     defaultValues: {
       ...initialCatalogueItem,
       properties: transformPropertiesData(
@@ -300,7 +303,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     shouldUnregister: false,
     mode: 'onChange',
   });
-  // console.log(watch());
+
+  // If any field value changes, clear the state
+  React.useEffect(() => {
+    if (selectedCatalogueItem) {
+      const subscription = watch(() => setFormErrorMessage(undefined));
+      return () => subscription.unsubscribe();
+    }
+  }, [selectedCatalogueItem, watch]);
   const { mutateAsync: addCatalogueItem, isPending: isAddPending } =
     useAddCatalogueItem();
   const { mutateAsync: editCatalogueItem, isPending: isEditPending } =
@@ -415,7 +425,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
               if (response && error.response?.status === 409) {
                 if (response.detail.includes('child elements')) {
-                  setFormError(true);
                   setFormErrorMessage(response.detail);
                 }
                 return;
@@ -423,7 +432,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               handleIMS_APIError(error);
             });
         } else {
-          setFormError(true);
           setFormErrorMessage('Please edit a form entry before clicking save');
         }
       }
@@ -459,7 +467,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   // Spread Method to clone errors
   const catalogueItemDetailsErrors = Object.fromEntries(
-    Object.entries(errors).filter(([key, value]) => key !== 'properties')
+    Object.entries(errors).filter(([key, _value]) => key !== 'properties')
   );
 
   const isStepFailed = React.useCallback(
@@ -475,23 +483,22 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   );
 
   const onSubmit = (data: any) => {
-    const cataloguteItemData: AddCatalogueSchemaType = data;
+    const catalogueItemData: AddCatalogueSchemaType = data;
     type === 'edit'
       ? handleEditCatalogueItem({
-          ...cataloguteItemData,
+          ...catalogueItemData,
           catalogue_category_id: parentId,
-
-          properties: cataloguteItemData.properties.map(
+          properties: catalogueItemData.properties.map(
             ({ key, ...rest }) => rest
           ),
         } as EditCatalogueItem)
       : handleAddCatalogueItem({
-          ...cataloguteItemData,
+          ...catalogueItemData,
           catalogue_category_id: parentId,
           is_obsolete: false,
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
-          properties: cataloguteItemData.properties.map(
+          properties: catalogueItemData.properties.map(
             ({ key, ...rest }) => rest
           ),
         } as AddCatalogueItem);
@@ -503,23 +510,37 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         return (
           <Grid item container spacing={1.5} xs={12}>
             <Grid item xs={12}>
-              <TextField
-                label="Name"
-                size="small"
-                required={true}
-                {...register('name')}
-                fullWidth
-                error={!!errors.name}
-                helperText={errors.name?.message}
+              <Controller
+                control={control}
+                name="name"
+                render={({ field }) => (
+                  <TextField
+                    label="Name"
+                    size="small"
+                    required={true}
+                    {...field}
+                    value={field.value ?? ''}
+                    fullWidth
+                    error={!!errors.name}
+                    helperText={errors.name?.message}
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                label="Description"
-                size="small"
-                {...register('description')}
-                fullWidth
-                multiline
+              <Controller
+                control={control}
+                name="description"
+                render={({ field }) => (
+                  <TextField
+                    label="Description"
+                    size="small"
+                    {...field}
+                    value={field.value ?? ''}
+                    fullWidth
+                    multiline
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>
@@ -532,6 +553,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     size="small"
                     required={true}
                     {...field}
+                    value={field.value ?? ''}
                     onChange={(event) => {
                       field.onChange(numberParser.parse(event.target.value));
                     }}
@@ -552,6 +574,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     label="Cost to rework (£)"
                     size="small"
                     {...field}
+                    value={field.value ?? ''}
                     onChange={(event) => {
                       field.onChange(numberParser.parse(event.target.value));
                     }}
@@ -573,6 +596,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     size="small"
                     required={true}
                     {...field}
+                    value={field.value ?? ''}
                     onChange={(event) => {
                       field.onChange(numberParser.parse(event.target.value));
                     }}
@@ -593,6 +617,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     label="Time to rework (days)"
                     size="small"
                     {...field}
+                    value={field.value ?? ''}
                     onChange={(event) => {
                       field.onChange(numberParser.parse(event.target.value));
                     }}
@@ -605,31 +630,52 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             </Grid>
 
             <Grid item xs={12}>
-              <TextField
-                label="Drawing number"
-                size="small"
-                {...register('drawing_number')}
-                fullWidth
+              <Controller
+                control={control}
+                name="drawing_number"
+                render={({ field }) => (
+                  <TextField
+                    label="Drawing number"
+                    size="small"
+                    {...field}
+                    value={field.value ?? ''}
+                    fullWidth
+                  />
+                )}
               />
             </Grid>
 
             <Grid item xs={12}>
-              <TextField
-                label="Drawing link"
-                size="small"
-                {...register('drawing_link')}
-                error={!!errors.drawing_link}
-                helperText={errors.drawing_link?.message}
-                fullWidth
+              <Controller
+                control={control}
+                name="drawing_link"
+                render={({ field }) => (
+                  <TextField
+                    label="Drawing link"
+                    size="small"
+                    {...field}
+                    value={field.value ?? ''}
+                    error={!!errors.drawing_link}
+                    helperText={errors.drawing_link?.message}
+                    fullWidth
+                  />
+                )}
               />
             </Grid>
 
             <Grid item xs={12}>
-              <TextField
-                label="Model number"
-                size="small"
-                {...register('item_model_number')}
-                fullWidth
+              <Controller
+                control={control}
+                name="item_model_number"
+                render={({ field }) => (
+                  <TextField
+                    label="Model number"
+                    size="small"
+                    {...field}
+                    value={field.value ?? ''}
+                    fullWidth
+                  />
+                )}
               />
             </Grid>
 
@@ -688,13 +734,20 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             />
 
             <Grid item xs={12}>
-              <TextField
-                label="Notes"
-                size="small"
-                multiline
-                minRows={5}
-                {...register('notes')}
-                fullWidth
+              <Controller
+                control={control}
+                name="notes"
+                render={({ field }) => (
+                  <TextField
+                    label="Notes"
+                    size="small"
+                    multiline
+                    minRows={5}
+                    {...field}
+                    value={field.value ?? ''}
+                    fullWidth
+                  />
+                )}
               />
             </Grid>
           </Grid>
@@ -855,13 +908,16 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                     size="small"
                                     required={property.mandatory ?? false}
                                     {...field}
+                                    value={field.value ?? ''}
                                     onChange={(event) =>
                                       field.onChange(
                                         property.type === 'number'
                                           ? numberParser.parse(
                                               event.target.value
                                             )
-                                          : event.target.value
+                                          : stringParser.parse(
+                                              event.target.value
+                                            )
                                       )
                                     }
                                     error={!!errors.properties?.[index]?.value}
@@ -984,7 +1040,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             disabled={
               isEditPending ||
               isAddPending ||
-              formError ||
+              formErrorMessage !== undefined ||
               Object.values(errors).length !== 0
             }
             onClick={handleSubmit(onSubmit)}
@@ -1012,7 +1068,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           alignItems: 'center',
         }}
       >
-        {formError && (
+        {formErrorMessage !== undefined && (
           <FormHelperText
             sx={{ marginBottom: '16px', textAlign: 'center' }}
             error

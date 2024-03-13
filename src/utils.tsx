@@ -77,7 +77,18 @@ export const trimStringValues = (object: any): any => {
 export const numberParser = z
   .string()
   .nullable()
-  .transform((val) => Number(val) || val);
+  .transform((val) => {
+    if (!val) return null; // If the value is null or undefined, return null
+    return !val.trim() ? null : Number(val) || val;
+  });
+
+export const stringParser = z
+  .string()
+  .nullable()
+  .transform((val) => {
+    if (!val) return null;
+    return !val.trim() ? null : val;
+  });
 
 export const numberListParser = z
   .array(z.string())
