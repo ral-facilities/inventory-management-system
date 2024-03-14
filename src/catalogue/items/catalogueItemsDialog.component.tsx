@@ -57,7 +57,7 @@ export interface CatalogueItemsDialogProps {
 interface PropertiesSchemaType {
   name: string;
   key: string;
-  value?: string | number | boolean | null;
+  value: string | number | boolean | null;
   unit?: string;
 }
 
@@ -356,6 +356,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     formState: { errors },
     control,
     trigger,
+    register,
     watch,
   } = useForm({
     resolver: zodResolver(CatalogueItemSchema()[activeStep]),
@@ -576,160 +577,96 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         return (
           <Grid item container spacing={1.5} xs={12}>
             <Grid item xs={12}>
-              <Controller
-                control={control}
-                name="name"
-                render={({ field }) => (
-                  <TextField
-                    label="Name"
-                    size="small"
-                    required={true}
-                    {...field}
-                    value={field.value ?? ''}
-                    fullWidth
-                    error={!!errors.name}
-                    helperText={errors.name?.message}
-                  />
-                )}
+              <TextField
+                label="Name"
+                size="small"
+                required={true}
+                {...register('name')}
+                fullWidth
+                error={!!errors.name}
+                helperText={errors.name?.message}
               />
             </Grid>
             <Grid item xs={12}>
-              <Controller
-                control={control}
-                name="description"
-                render={({ field }) => (
-                  <TextField
-                    label="Description"
-                    size="small"
-                    {...field}
-                    value={field.value ?? ''}
-                    fullWidth
-                    multiline
-                  />
-                )}
+              <TextField
+                label="Description"
+                size="small"
+                {...register('description')}
+                fullWidth
+                multiline
               />
             </Grid>
             <Grid item xs={12}>
-              <Controller
-                control={control}
-                name="cost_gbp"
-                render={({ field }) => (
-                  <TextField
-                    label="Cost (£)"
-                    size="small"
-                    required={true}
-                    {...field}
-                    value={field.value ?? ''}
-                    error={!!errors.cost_gbp}
-                    helperText={errors.cost_gbp?.message}
-                    fullWidth
-                  />
-                )}
+              <TextField
+                label="Cost (£)"
+                size="small"
+                required={true}
+                {...register('cost_gbp')}
+                error={!!errors.cost_gbp}
+                helperText={errors.cost_gbp?.message}
+                fullWidth
               />
             </Grid>
 
             <Grid item xs={12}>
-              <Controller
-                control={control}
-                name="cost_to_rework_gbp"
-                render={({ field }) => (
-                  <TextField
-                    label="Cost to rework (£)"
-                    size="small"
-                    {...field}
-                    value={field.value ?? ''}
-                    error={!!errors.cost_to_rework_gbp}
-                    helperText={errors.cost_to_rework_gbp?.message}
-                    fullWidth
-                  />
-                )}
+              <TextField
+                label="Cost to rework (£)"
+                size="small"
+                {...register('cost_to_rework_gbp')}
+                error={!!errors.cost_to_rework_gbp}
+                helperText={errors.cost_to_rework_gbp?.message}
+                fullWidth
               />
             </Grid>
 
             <Grid item xs={12}>
-              <Controller
-                control={control}
-                name="days_to_replace"
-                render={({ field }) => (
-                  <TextField
-                    label="Time to replace (days)"
-                    size="small"
-                    required={true}
-                    {...field}
-                    value={field.value ?? ''}
-                    error={!!errors.days_to_replace}
-                    helperText={errors.days_to_replace?.message}
-                    fullWidth
-                  />
-                )}
+              <TextField
+                label="Time to replace (days)"
+                size="small"
+                required={true}
+                {...register('days_to_replace')}
+                error={!!errors.days_to_replace}
+                helperText={errors.days_to_replace?.message}
+                fullWidth
               />
             </Grid>
 
             <Grid item xs={12}>
-              <Controller
-                control={control}
-                name="days_to_rework"
-                render={({ field }) => (
-                  <TextField
-                    label="Time to rework (days)"
-                    size="small"
-                    {...field}
-                    value={field.value ?? ''}
-                    error={!!errors.days_to_rework}
-                    helperText={errors.days_to_rework?.message}
-                    fullWidth
-                  />
-                )}
+              <TextField
+                label="Time to rework (days)"
+                size="small"
+                {...register('days_to_rework')}
+                helperText={errors.days_to_rework?.message}
+                fullWidth
               />
             </Grid>
 
             <Grid item xs={12}>
-              <Controller
-                control={control}
-                name="drawing_number"
-                render={({ field }) => (
-                  <TextField
-                    label="Drawing number"
-                    size="small"
-                    {...field}
-                    value={field.value ?? ''}
-                    fullWidth
-                  />
-                )}
+              <TextField
+                label="Drawing number"
+                size="small"
+                {...register('drawing_number')}
+                fullWidth
               />
             </Grid>
 
             <Grid item xs={12}>
-              <Controller
-                control={control}
-                name="drawing_link"
-                render={({ field }) => (
-                  <TextField
-                    label="Drawing link"
-                    size="small"
-                    {...field}
-                    value={field.value ?? ''}
-                    error={!!errors.drawing_link}
-                    helperText={errors.drawing_link?.message}
-                    fullWidth
-                  />
-                )}
+              <TextField
+                label="Drawing link"
+                size="small"
+                {...register('drawing_link')}
+                error={!!errors.drawing_link}
+                helperText={errors.drawing_link?.message}
+                fullWidth
               />
             </Grid>
 
             <Grid item xs={12}>
-              <Controller
-                control={control}
-                name="item_model_number"
-                render={({ field }) => (
-                  <TextField
-                    label="Model number"
-                    size="small"
-                    {...field}
-                    value={field.value ?? ''}
-                    fullWidth
-                  />
-                )}
+              <TextField
+                label="Model number"
+                size="small"
+                {...register('item_model_number')}
+                fullWidth
               />
             </Grid>
 
@@ -788,20 +725,13 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             />
 
             <Grid item xs={12}>
-              <Controller
-                control={control}
-                name="notes"
-                render={({ field }) => (
-                  <TextField
-                    label="Notes"
-                    size="small"
-                    multiline
-                    minRows={5}
-                    {...field}
-                    value={field.value ?? ''}
-                    fullWidth
-                  />
-                )}
+              <TextField
+                label="Notes"
+                size="small"
+                multiline
+                minRows={5}
+                {...register('notes')}
+                fullWidth
               />
             </Grid>
           </Grid>
@@ -911,9 +841,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                           )}`}
                                           {...field}
                                           value={currentValue}
-                                          onChange={(event) =>
-                                            field.onChange(event.target.value)
-                                          }
                                           label={property.name}
                                           sx={{ alignItems: 'center' }}
                                           fullWidth
