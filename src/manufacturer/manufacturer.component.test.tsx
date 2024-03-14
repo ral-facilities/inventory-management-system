@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithBrowserRouter } from '../testUtils';
 import Manufacturer from './manufacturer.component';
 
@@ -11,7 +11,7 @@ vi.mock('react-router-dom', async () => ({
 }));
 
 describe('Manufacturer', () => {
-  let user;
+  let user: UserEvent;
   const createView = () => {
     return renderComponentWithBrowserRouter(<Manufacturer />);
   };

@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../api/api';
 import { Item } from '../app.types';
 import ItemsJSON from '../mocks/Items.json';
@@ -10,7 +10,7 @@ import SystemItemsDialog, {
 
 describe('SystemItemsDialog', () => {
   let props: SystemItemsDialogProps;
-  let user;
+  let user: UserEvent;
   let axiosPatchSpy;
 
   const mockOnClose = vi.fn();

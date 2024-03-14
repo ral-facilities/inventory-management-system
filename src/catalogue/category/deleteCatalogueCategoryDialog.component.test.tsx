@@ -1,5 +1,5 @@
 import { RenderResult, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { CatalogueCategory } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { renderComponentWithBrowserRouter } from '../../testUtils';
@@ -11,7 +11,7 @@ vi.mock('../../handleIMS_APIError');
 
 describe('delete Catalogue Category dialogue', () => {
   let props: DeleteCatalogueCategoryDialogProps;
-  let user;
+  let user: UserEvent;
   const onClose = vi.fn();
   const onChangeCatalogueCategory = vi.fn();
   let catalogueCategory: CatalogueCategory;

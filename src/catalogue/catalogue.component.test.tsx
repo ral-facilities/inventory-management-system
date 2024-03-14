@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { HttpResponse, http } from 'msw';
 import { CatalogueCategoryFormData, CatalogueItemProperty } from '../app.types';
 import { server } from '../mocks/server';
@@ -76,7 +76,7 @@ describe('matchCatalogueItemProperties', () => {
 });
 
 describe('Catalogue', () => {
-  let user;
+  let user: UserEvent;
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(<Catalogue />, path);
   };

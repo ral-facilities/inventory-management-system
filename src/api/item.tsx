@@ -54,7 +54,7 @@ export const useItems = (
 ): UseQueryResult<Item[], AxiosError> => {
   return useQuery({
     queryKey: ['Items', system_id, catalogue_item_id],
-    queryFn: (params) => {
+    queryFn: () => {
       return fetchItems(system_id, catalogue_item_id);
     },
     enabled: system_id !== undefined || catalogue_item_id !== undefined,
@@ -78,7 +78,7 @@ export const useItem = (
 ): UseQueryResult<Item, AxiosError> => {
   return useQuery({
     queryKey: ['Item', id],
-    queryFn: (params) => {
+    queryFn: () => {
       return fetchItem(id ?? '');
     },
     enabled: !!id,

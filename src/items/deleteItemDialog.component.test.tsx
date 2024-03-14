@@ -1,5 +1,5 @@
 import { RenderResult, act, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { Item } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { getItemById, renderComponentWithBrowserRouter } from '../testUtils';
@@ -11,7 +11,7 @@ vi.mock('../handleIMS_APIError');
 
 describe('delete item dialog', () => {
   let props: DeleteItemDialogProps;
-  let user;
+  let user: UserEvent;
   const onClose = vi.fn();
   const onChangeItem = vi.fn();
   let item: Item | undefined;

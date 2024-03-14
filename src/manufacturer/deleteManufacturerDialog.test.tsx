@@ -1,5 +1,5 @@
 import { RenderResult, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { Manufacturer } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { renderComponentWithBrowserRouter } from '../testUtils';
@@ -13,7 +13,7 @@ describe('Delete Manufacturer Dialog', () => {
   const onClose = vi.fn();
   let props: DeleteManufacturerProps;
   let manufacturer: Manufacturer;
-  let user;
+  let user: UserEvent;
   const createView = (): RenderResult => {
     return renderComponentWithBrowserRouter(
       <DeleteManufacturerDialog {...props} />

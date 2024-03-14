@@ -4,7 +4,7 @@ import {
 } from '../../testUtils';
 
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../../api/api';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ObsoleteCatalogueItemDialog, {
@@ -18,7 +18,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
   vi.setConfig({ testTimeout: 20000 });
 
   let props: ObsoleteCatalogueItemDialogProps;
-  let user;
+  let user: UserEvent;
   let axiosPatchSpy;
   const mockOnClose = vi.fn();
 

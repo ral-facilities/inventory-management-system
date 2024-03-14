@@ -365,7 +365,7 @@ const CatalogueCategoryDialog = React.memo(
           parent_id: parentId,
         };
       }
-      if (!!updatedProperties) {
+      if (updatedProperties) {
         catalogueCategory = {
           ...catalogueCategory,
           catalogue_item_properties: updatedProperties,
@@ -373,7 +373,7 @@ const CatalogueCategoryDialog = React.memo(
       }
 
       addCatalogueCategory(trimStringValues(catalogueCategory))
-        .then((response) => handleClose())
+        .then(() => handleClose())
         .catch((error) => {
           const response = error.response?.data as ErrorParsing;
           if (response && error.response?.status === 409) {
@@ -461,7 +461,7 @@ const CatalogueCategoryDialog = React.memo(
         ) {
           // Only call editCatalogueCategory if id is present and at least one of the properties has been updated
           editCatalogueCategory(trimStringValues(catalogueCategory))
-            .then((response) => {
+            .then(() => {
               resetSelectedCatalogueCategory();
               handleClose();
             })
@@ -524,7 +524,7 @@ const CatalogueCategoryDialog = React.memo(
                   aria-labelledby="controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
                   value={categoryData.is_leaf ? 'true' : 'false'}
-                  onChange={(event, value) => {
+                  onChange={(_event, value) => {
                     const newData = {
                       ...categoryData,
                       is_leaf: value === 'true' ? true : false,
@@ -630,5 +630,6 @@ const CatalogueCategoryDialog = React.memo(
     );
   }
 );
+CatalogueCategoryDialog.displayName = 'CatalogueCategoryDialog';
 
 export default CatalogueCategoryDialog;

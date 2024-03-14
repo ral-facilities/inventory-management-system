@@ -8,7 +8,7 @@ function excludeMSWPlugin(): PluginOption {
   return {
     name: 'exclude-msw',
     apply: 'build',
-    renderStart(outputOptions, _inputOptions) {
+    renderStart(outputOptions) {
       const outDir = outputOptions.dir;
       const msWorker = path.resolve(outDir || '', 'mockServiceWorker.js');
       fs.rm(msWorker, () => console.log(`Deleted ${msWorker}`));
@@ -36,7 +36,7 @@ function jsonHMR(): PluginOption {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   // Whether to output build files in a way SciGateway can load (the default for production unless e2e testing)
@@ -46,12 +46,12 @@ export default defineConfig(({ command, mode }) => {
   // Whether to exclude MSW from the build
   const excludeMSW = env.VITE_APP_INCLUDE_MSW !== 'true';
 
-  let plugins: PluginOption[] = [react()];
+  const plugins: PluginOption[] = [react()];
 
   // Allow hot reloading of json files in public folder when in development
   if (env.NODE_ENV === 'development') plugins.push(jsonHMR());
 
-  let config: UserConfig = {
+  const config: UserConfig = {
     plugins: plugins,
     server: {
       port: 3000,
@@ -68,7 +68,7 @@ export default defineConfig(({ command, mode }) => {
     },
   };
 
-  let rollupExternals: string[] = [];
+  const rollupExternals: string[] = [];
 
   // Exclude msw if necessary
   if (excludeMSW) {

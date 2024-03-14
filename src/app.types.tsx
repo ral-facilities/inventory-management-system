@@ -80,6 +80,7 @@ export interface Manufacturer extends ManufacturerDetails {
 
 export interface AllowedValuesList {
   type: 'list';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   values: any[];
 }
 export type AllowedValues = AllowedValuesList;

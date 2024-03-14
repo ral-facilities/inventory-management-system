@@ -1,14 +1,14 @@
 import { screen, waitFor } from '@testing-library/react';
 import { renderComponentWithBrowserRouter } from '../../testUtils';
 
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import CatalogueCategoryTableView, {
   CatalogueCategoryTableViewProps,
 } from './catalogueCategoryTableView.component';
 
 describe('CatalogueCategoryTableView', () => {
   let props: CatalogueCategoryTableViewProps;
-  let user;
+  let user: UserEvent;
 
   const onChangeParentCategoryId = vi.fn();
   const createView = () => {

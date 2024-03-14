@@ -236,8 +236,8 @@ function ManufacturerLandingPage() {
           >
             <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
             <Typography>
-              This manufacturer doesn't exist. Please click the Home button to
-              navigate to the manufacturer table
+              This manufacturer doesn&#39;t exist. Please click the Home button
+              to navigate to the manufacturer table
             </Typography>
           </Box>
         )

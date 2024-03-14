@@ -30,7 +30,7 @@ import ConfigProvider from './ConfigProvider';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
-    onError: (error, query) => {
+    onError: (error) => {
       handleIMS_APIError(error as AxiosError);
     },
   }),

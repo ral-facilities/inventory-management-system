@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
 import { renderComponentWithBrowserRouter } from '../testUtils';
@@ -10,7 +10,7 @@ import {
 
 describe('SystemsTableView', () => {
   let props: SystemsTableViewProps;
-  let user;
+  let user: UserEvent;
 
   const mockOnChangeParentId = vi.fn();
   const mockSystemsData: System[] = [

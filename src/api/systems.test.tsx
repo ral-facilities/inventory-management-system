@@ -456,7 +456,7 @@ describe('System api functions', () => {
         })
       );
       expect(result.current.data).toEqual(
-        copyToSystem.selectedSystems.map((system, index) => ({
+        copyToSystem.selectedSystems.map((system) => ({
           message: `Successfully copied to Root`,
           name: system.name,
           state: 'success',

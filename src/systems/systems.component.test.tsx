@@ -1,5 +1,5 @@
 import { screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithMemoryRouter } from '../testUtils';
 import Systems from './systems.component';
 
@@ -7,7 +7,7 @@ describe('Systems', () => {
   // Quite a few of these take more than 5 seconds on CI
   vi.setConfig({ testTimeout: 14000 });
 
-  let user;
+  let user: UserEvent;
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(<Systems />, path);
   };

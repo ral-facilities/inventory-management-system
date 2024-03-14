@@ -49,6 +49,7 @@ export const getPageHeightCalc = (additionalSubtraction?: string): string => {
 };
 
 /* Trims all the string values in an object, and then returns the object */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const trimStringValues = (object: any): any => {
   if (typeof object !== 'object' || object === null) {
     if (typeof object === 'string') {
@@ -59,8 +60,9 @@ export const trimStringValues = (object: any): any => {
   }
 
   for (const prop in object) {
-    if (object.hasOwnProperty(prop)) {
+    if (Object.prototype.hasOwnProperty.call(object, prop)) {
       if (Array.isArray(object[prop])) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         object[prop] = object[prop].map((element: any) =>
           trimStringValues(element)
         );
