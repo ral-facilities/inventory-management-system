@@ -487,7 +487,7 @@ describe('Catalogue Items Dialog', () => {
     );
 
     const mandatoryNumberFieldHelperText = screen.getAllByText(
-      'Please enter a valid value as this field is mandatory'
+      'Please enter a valid number as this field is mandatory'
     );
 
     const mandatoryFieldBooleanHelperText = screen.getByText(

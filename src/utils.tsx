@@ -74,40 +74,10 @@ export const trimStringValues = (object: any): any => {
   return object;
 };
 
-export const numberParser = z
-  .string()
-  .nullable()
-  .transform((val) => {
-    if (!val) return null; // If the value is null or undefined, return null
-    return !val.trim() ? null : Number(val) || val;
-  });
-
-export const stringParser = z
-  .string()
-  .nullable()
-  .transform((val) => {
-    if (!val) return null;
-    return !val.trim() ? null : val;
-  });
-
 export const numberListParser = z
   .array(z.string())
   .nullable()
   .transform((vals) => {
     if (!vals) return null; // If the value is null or undefined, return null
     return vals.map((val) => (val.trim() === '' ? NaN : Number(val))); // Convert each string element to a number
-  });
-
-export const booleanParser = z
-  .string()
-  .nullable()
-  .transform((val) => {
-    if (!val) {
-      return null; // Return null if the value is null or undefined
-    }
-    if (typeof val === 'string') {
-      // Parse strings 'true' and 'false' to boolean
-      return val.toLowerCase() === 'true';
-    }
-    return Boolean(val); // Otherwise, cast to boolean
   });

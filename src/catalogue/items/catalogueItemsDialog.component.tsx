@@ -42,12 +42,6 @@ import { Autocomplete } from '@mui/material';
 import { useManufacturers } from '../../api/manufacturer';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import {
-  booleanParser,
-  numberParser,
-  stringParser,
-  trimStringValues,
-} from '../../utils';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -64,6 +58,7 @@ interface PropertiesSchemaType {
   name: string;
   key: string;
   value?: string | number | boolean | null;
+  unit?: string;
 }
 
 interface AddCatalogueSchemaType extends CatalogueItemDetails {
@@ -85,13 +80,16 @@ function transformPropertiesData(
       transformedData.push({
         name: category.name,
         key: `${category.type}_${category.mandatory}`,
-        value: matchingProperty.value,
+        value:
+          matchingProperty.value || typeof matchingProperty.value === 'boolean'
+            ? String(matchingProperty.value)
+            : '',
       });
     } else {
       transformedData.push({
         name: category.name,
         key: `${category.type}_${category.mandatory}`,
-        value: category.mandatory ? undefined : null,
+        value: '',
       });
     }
   });
@@ -103,22 +101,35 @@ function transformPropertiesData(
 const numberSchema = z.object({
   name: z.string(),
   key: z.literal('number_true'),
-  value: z.number({
-    invalid_type_error:
-      'Please enter a valid number as this field is mandatory',
-    required_error: 'Please enter a valid number as this field is mandatory',
-  }),
+  value: z
+    .string()
+    .min(1, {
+      message: 'Please enter a valid number as this field is mandatory',
+    })
+    .pipe(
+      z.coerce.number({
+        invalid_type_error:
+          'Please enter a valid number as this field is mandatory',
+        required_error:
+          'Please enter a valid number as this field is mandatory',
+      })
+    ),
 });
 
 const numberSchemaNullable = z.object({
   name: z.string(),
   key: z.literal('number_false'),
   value: z
-    .number({
-      invalid_type_error:
-        'Please enter a valid number as this field is mandatory',
-    })
-    .nullable(),
+    .string()
+    .transform((val) => (!val ? null : val))
+    .pipe(
+      z.coerce
+        .number({
+          invalid_type_error:
+            'Please enter a valid number as this field is mandatory',
+        })
+        .nullable()
+    ),
 });
 
 const stringSchema = z.object({
@@ -130,28 +141,46 @@ const stringSchema = z.object({
       invalid_type_error:
         'Please enter a valid value as this field is mandatory',
     })
+    .min(1, {
+      message: 'Please enter a valid value as this field is mandatory',
+    })
     .trim(),
 });
 
 const stringSchemaNullable = z.object({
   name: z.string(),
   key: z.literal('string_false'),
-  value: z.string().trim().nullable(),
+  value: z
+    .string()
+    .trim()
+    .transform((val) => (!val ? null : val))
+    .nullable(),
 });
 
 const booleanSchema = z.object({
   name: z.string(),
   key: z.literal('boolean_true'),
-  value: z.boolean({
-    required_error: 'Please select either True or False',
-    invalid_type_error: 'Please select either True or False',
-  }),
+  value: z
+    .string()
+    .min(1, { message: 'Please select either True or False' })
+    .toLowerCase()
+    .transform((val) => (!val ? null : JSON.parse(val)))
+    .pipe(
+      z.boolean({
+        required_error: 'Please select either True or False',
+        invalid_type_error: 'Please select either True or False',
+      })
+    ),
 });
 
 const booleanSchemaNullable = z.object({
   name: z.string(),
   key: z.literal('boolean_false'),
-  value: z.boolean().nullable(),
+  value: z
+    .string()
+    .toLowerCase()
+    .transform((val) => (!val ? null : JSON.parse(val)))
+    .pipe(z.boolean().nullable()),
 });
 
 // Define a union schema to handle both types of objects
@@ -176,31 +205,55 @@ const CatalogueItemSchema = () => {
       .trim()
       .transform((val) => (val === '' ? null : val))
       .nullable(),
-    cost_gbp: z.number({
-      invalid_type_error: 'Please enter a cost as a valid number',
-      required_error: 'Please enter a cost as a valid number',
-    }),
-    cost_to_rework_gbp: z
-      .number({
-        invalid_type_error: 'Please enter a cost to rework as a valid number',
+    cost_gbp: z
+      .string()
+      .min(1, { message: 'Please enter a cost as a valid number' })
+      .pipe(
+        z.coerce
+          .number({
+            invalid_type_error: 'Please enter a cost as a valid number',
+            required_error: 'Please enter a cost as a valid number',
+          })
+          .min(0, { message: 'Please enter a cost as a valid number' })
+      ),
+    cost_to_rework_gbp: z.string().pipe(
+      z.coerce
+        .number({
+          invalid_type_error: 'Please enter a cost to rework as a valid number',
+        })
+        .nullable()
+        .transform((val) => (!val ? null : val))
+        .optional()
+    ),
+    days_to_replace: z
+      .string()
+      .min(1, {
+        message:
+          'Please enter how many days it would take to replace as a valid number',
       })
-      .nullable()
-      .transform((val) => (!val ? null : val))
-      .optional(),
-    days_to_replace: z.number({
-      invalid_type_error:
-        'Please enter how many days it would take to replace as a valid number',
-      required_error:
-        'Please enter how many days it would take to replace as a valid number',
-    }),
-    days_to_rework: z
-      .number({
-        invalid_type_error:
-          'Please enter how many days it would take to rework as a valid number',
-      })
-      .nullable()
-      .transform((val) => (!val ? null : val))
-      .optional(),
+      .pipe(
+        z.coerce
+          .number({
+            invalid_type_error:
+              'Please enter how many days it would take to replace as a valid number',
+            required_error:
+              'Please enter how many days it would take to replace as a valid number',
+          })
+          .min(0, {
+            message:
+              'Please enter how many days it would take to replace as a valid number',
+          })
+      ),
+    days_to_rework: z.string().pipe(
+      z.coerce
+        .number({
+          invalid_type_error:
+            'Please enter how many days it would take to rework as a valid number',
+        })
+        .nullable()
+        .transform((val) => (!val ? null : val))
+        .optional()
+    ),
     drawing_number: z
       .string()
       .trim()
@@ -221,9 +274,14 @@ const CatalogueItemSchema = () => {
       .trim()
       .transform((val) => (val === '' ? null : val))
       .nullable(),
-    manufacturer_id: z.string({
-      required_error: 'Please choose a manufacturer, or add a new manufacturer',
-    }),
+    manufacturer_id: z
+      .string({
+        required_error:
+          'Please choose a manufacturer, or add a new manufacturer',
+      })
+      .min(1, {
+        message: 'Please choose a manufacturer, or add a new manufacturer',
+      }),
     notes: z
       .string()
       .trim()
@@ -248,17 +306,17 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const isNotCreating = type !== 'create' && !!selectedCatalogueItem;
   const emptyCatalogueItem = {
-    name: undefined,
-    description: null,
-    cost_gbp: undefined,
-    cost_to_rework_gbp: null,
-    days_to_replace: undefined,
-    days_to_rework: null,
-    drawing_number: null,
-    drawing_link: null,
-    item_model_number: null,
-    manufacturer_id: undefined,
-    notes: null,
+    name: '',
+    description: '',
+    cost_gbp: '',
+    cost_to_rework_gbp: '',
+    days_to_replace: '',
+    days_to_rework: '',
+    drawing_number: '',
+    drawing_link: '',
+    item_model_number: '',
+    manufacturer_id: '',
+    notes: '',
     properties: [],
     catalogue_category_id: undefined,
     is_obsolete: false,
@@ -266,7 +324,15 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     obsolete_reason: null,
   };
   const initialCatalogueItem = isNotCreating
-    ? selectedCatalogueItem
+    ? {
+        ...selectedCatalogueItem,
+        cost_gbp: String(selectedCatalogueItem.cost_gbp),
+        days_to_replace: String(selectedCatalogueItem.days_to_replace),
+        cost_to_rework_gbp: String(
+          selectedCatalogueItem.cost_to_rework_gbp ?? ''
+        ),
+        days_to_rework: String(selectedCatalogueItem.days_to_rework ?? ''),
+      }
     : emptyCatalogueItem;
 
   const [formErrorMessage, setFormErrorMessage] = React.useState<
@@ -418,7 +484,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             isManufacturerUpdated ||
             isNotesUpdated)
         ) {
-          editCatalogueItem(trimStringValues(catalogueItem))
+          editCatalogueItem(catalogueItem)
             .then((response) => handleClose())
             .catch((error: AxiosError) => {
               const response = error.response?.data as ErrorParsing;
@@ -489,7 +555,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           ...catalogueItemData,
           catalogue_category_id: parentId,
           properties: catalogueItemData.properties.map(
-            ({ key, ...rest }) => rest
+            ({ key, unit, ...rest }) => rest
           ),
         } as EditCatalogueItem)
       : handleAddCatalogueItem({
@@ -499,7 +565,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
           properties: catalogueItemData.properties.map(
-            ({ key, ...rest }) => rest
+            ({ key, unit, ...rest }) => rest
           ),
         } as AddCatalogueItem);
   };
@@ -554,9 +620,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     required={true}
                     {...field}
                     value={field.value ?? ''}
-                    onChange={(event) => {
-                      field.onChange(numberParser.parse(event.target.value));
-                    }}
                     error={!!errors.cost_gbp}
                     helperText={errors.cost_gbp?.message}
                     fullWidth
@@ -575,9 +638,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     size="small"
                     {...field}
                     value={field.value ?? ''}
-                    onChange={(event) => {
-                      field.onChange(numberParser.parse(event.target.value));
-                    }}
                     error={!!errors.cost_to_rework_gbp}
                     helperText={errors.cost_to_rework_gbp?.message}
                     fullWidth
@@ -597,9 +657,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     required={true}
                     {...field}
                     value={field.value ?? ''}
-                    onChange={(event) => {
-                      field.onChange(numberParser.parse(event.target.value));
-                    }}
                     error={!!errors.days_to_replace}
                     helperText={errors.days_to_replace?.message}
                     fullWidth
@@ -618,9 +675,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     size="small"
                     {...field}
                     value={field.value ?? ''}
-                    onChange={(event) => {
-                      field.onChange(numberParser.parse(event.target.value));
-                    }}
                     error={!!errors.days_to_rework}
                     helperText={errors.days_to_rework?.message}
                     fullWidth
@@ -798,13 +852,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                           )}`}
                                           {...field}
                                           value={booleanFieldValue}
-                                          onChange={(event) =>
-                                            field.onChange(
-                                              booleanParser.parse(
-                                                event.target.value
-                                              )
-                                            )
-                                          }
                                           label={property.name}
                                           sx={{ alignItems: 'center' }}
                                           fullWidth
@@ -875,7 +922,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                             (value, index) => (
                                               <MenuItem
                                                 key={index}
-                                                value={value}
+                                                value={String(value)}
                                               >
                                                 {value}
                                               </MenuItem>
@@ -909,17 +956,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                     required={property.mandatory ?? false}
                                     {...field}
                                     value={field.value ?? ''}
-                                    onChange={(event) =>
-                                      field.onChange(
-                                        property.type === 'number'
-                                          ? numberParser.parse(
-                                              event.target.value
-                                            )
-                                          : stringParser.parse(
-                                              event.target.value
-                                            )
-                                      )
-                                    }
                                     error={!!errors.properties?.[index]?.value}
                                     helperText={
                                       errors.properties?.[index]?.value?.message
