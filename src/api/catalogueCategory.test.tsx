@@ -70,16 +70,43 @@ describe('catalogue category api functions', () => {
       expect(result.current.data).toEqual({
         catalogue_item_properties: [
           {
+            allowed_values: null,
             mandatory: true,
             name: 'Resolution',
             type: 'number',
             unit: 'megapixels',
           },
-          { mandatory: false, name: 'Frame Rate', type: 'number', unit: 'fps' },
-          { mandatory: true, name: 'Sensor Type', type: 'string' },
-          { mandatory: false, name: 'Sensor brand', type: 'string' },
-          { mandatory: true, name: 'Broken', type: 'boolean' },
-          { mandatory: false, name: 'Older than five years', type: 'boolean' },
+          {
+            allowed_values: null,
+            mandatory: false,
+            name: 'Frame Rate',
+            type: 'number',
+            unit: 'fps',
+          },
+          {
+            allowed_values: null,
+            mandatory: true,
+            name: 'Sensor Type',
+            type: 'string',
+          },
+          {
+            allowed_values: null,
+            mandatory: false,
+            name: 'Sensor brand',
+            type: 'string',
+          },
+          {
+            allowed_values: null,
+            mandatory: true,
+            name: 'Broken',
+            type: 'boolean',
+          },
+          {
+            allowed_values: null,
+            mandatory: false,
+            name: 'Older than five years',
+            type: 'boolean',
+          },
         ],
         code: 'cameras',
         id: '4',

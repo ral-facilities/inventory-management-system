@@ -935,7 +935,7 @@ describe('Catalogue Items', () => {
             {
               name: 'Accuracy',
               value: null,
-              unit: '',
+              unit: null,
             },
           ],
           id: '6',
