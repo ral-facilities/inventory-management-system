@@ -54,7 +54,7 @@ export interface CatalogueItemsDialogProps {
   type: 'edit' | 'create' | 'save as';
 }
 
-interface PropertiesSchemaType {
+export interface PropertiesSchemaType {
   name: string;
   key: string;
   value: string | number | boolean | null;
@@ -65,7 +65,7 @@ interface AddCatalogueSchemaType extends CatalogueItemDetails {
   properties: PropertiesSchemaType[];
 }
 
-function transformPropertiesData(
+export function transformPropertiesData(
   formData: CatalogueCategoryFormData[],
   itemProperties: CatalogueItemPropertyResponse[]
 ): PropertiesSchemaType[] {
@@ -81,7 +81,9 @@ function transformPropertiesData(
         name: category.name,
         key: `${category.type}_${category.mandatory}`,
         value:
-          matchingProperty.value || typeof matchingProperty.value === 'boolean'
+          matchingProperty.value ||
+          typeof matchingProperty.value === 'boolean' ||
+          typeof matchingProperty.value === 'number'
             ? String(matchingProperty.value)
             : '',
       });
@@ -185,7 +187,7 @@ const booleanSchemaNullable = z.object({
 
 // Define a union schema to handle both types of objects
 
-const UnionSchema = z.discriminatedUnion('key', [
+export const UnionSchema = z.discriminatedUnion('key', [
   stringSchema,
   stringSchemaNullable,
   numberSchema,

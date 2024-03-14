@@ -5,52 +5,13 @@ import {
   getItemById,
   renderComponentWithBrowserRouter,
 } from '../setupTests';
-import ItemDialog, {
-  ItemDialogProps,
-  isValidDateTime,
-} from './itemDialog.component';
+import ItemDialog, { ItemDialogProps } from './itemDialog.component';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { imsApi } from '../api/api';
 
 jest.mock('../handleIMS_APIError');
-
-describe('isValidDateTime', () => {
-  it('should return true for a valid date string', () => {
-    const validDateString = '2022-01-17T12:00:00Z';
-    expect(isValidDateTime(validDateString)).toBe(true);
-  });
-
-  it('should return false for an invalid date string', () => {
-    const invalidDateString = 'invalid-date';
-    expect(isValidDateTime(invalidDateString)).toBe(false);
-  });
-
-  it('should return true for a valid Date object', () => {
-    const validDateObject = new Date('2022-01-17T12:00:00Z');
-    expect(isValidDateTime(validDateObject)).toBe(true);
-  });
-
-  it('should return false for an invalid Date object', () => {
-    const invalidDateObject = new Date('invalid-date');
-    expect(isValidDateTime(invalidDateObject)).toBe(false);
-  });
-
-  it('should return false for null input', () => {
-    expect(isValidDateTime(null)).toBe(false);
-  });
-
-  it('should return false if date year exceeds 2100', () => {
-    const validDateObject = new Date('2122-01-17T12:00:00Z');
-    expect(isValidDateTime(validDateObject)).toBe(false);
-  });
-
-  it('should return false if date year (string) exceeds 2100', () => {
-    const validDateObject = '2122-01-17T12:00:00Z';
-    expect(isValidDateTime(validDateObject)).toBe(false);
-  });
-});
 
 describe('ItemDialog', () => {
   let props: ItemDialogProps;
@@ -439,7 +400,7 @@ describe('ItemDialog', () => {
         resolution: '12',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(await screen.findByRole('button', { name: 'Next' }));
 
       expect(screen.getByRole('button', { name: 'Finish' })).toBeDisabled();
 
@@ -531,9 +492,11 @@ describe('ItemDialog', () => {
         broken: 'None',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Next' }));
+      const mandatoryNumberFieldHelperText = await screen.findByText(
+        'Please enter a valid number as this field is mandatory'
+      );
 
-      const mandatoryFieldHelperText = screen.getAllByText(
+      const mandatoryStringFieldHelperText = screen.getByText(
         'Please enter a valid value as this field is mandatory'
       );
 
@@ -542,7 +505,8 @@ describe('ItemDialog', () => {
       );
 
       expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
-      expect(mandatoryFieldHelperText.length).toBe(2);
+      expect(mandatoryStringFieldHelperText).toBeInTheDocument();
+      expect(mandatoryNumberFieldHelperText).toBeInTheDocument();
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
 
@@ -554,7 +518,11 @@ describe('ItemDialog', () => {
         sensorBrand: 'pixel',
       });
 
-      expect(mandatoryFieldBooleanHelperText).not.toBeInTheDocument();
+      await waitFor(() =>
+        expect(
+          screen.queryByText('Please select either True or False')
+        ).not.toBeInTheDocument()
+      );
 
       expect(
         screen.queryByText(
@@ -620,10 +588,8 @@ describe('ItemDialog', () => {
         broken: 'None',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-
-      const validNumberHelperText = screen.getByText(
-        'Please enter a valid number'
+      const validNumberHelperText = await screen.findByText(
+        'Please enter a valid number as this field is mandatory'
       );
 
       expect(validNumberHelperText).toBeInTheDocument();
@@ -633,9 +599,13 @@ describe('ItemDialog', () => {
       await modifyPropertiesValues({
         resolution: '12',
       });
-      expect(
-        screen.queryByText('Please enter a valid number')
-      ).not.toBeInTheDocument();
+      await waitFor(() =>
+        expect(
+          screen.queryByText(
+            'Please enter a valid number as this field is mandatory'
+          )
+        ).not.toBeInTheDocument()
+      );
     }, 10000);
 
     it('displays warning message when an unknown error occurs', async () => {
@@ -837,10 +807,8 @@ describe('ItemDialog', () => {
         broken: 'None',
       });
 
-      await user.click(screen.getByRole('button', { name: 'Next' }));
-
-      const validNumberHelperText = screen.getByText(
-        'Please enter a valid number'
+      const validNumberHelperText = await screen.findByText(
+        'Please enter a valid number as this field is mandatory'
       );
 
       expect(validNumberHelperText).toBeInTheDocument();
@@ -850,9 +818,11 @@ describe('ItemDialog', () => {
       await modifyPropertiesValues({
         resolution: '12',
       });
-      expect(
-        screen.queryByText('Please enter a valid number')
-      ).not.toBeInTheDocument();
+      await waitFor(() =>
+        expect(
+          screen.queryByText('Please enter a valid number')
+        ).not.toBeInTheDocument()
+      );
     }, 10000);
 
     it('displays error message if no fields have been changed (when they are no catalogue property fields)', async () => {

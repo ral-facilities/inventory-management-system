@@ -445,16 +445,18 @@ function ItemsLandingPage() {
         </Box>
       )}
 
-      <ItemDialog
-        open={editItemDialogOpen}
-        onClose={() => {
-          setEditItemDialogOpen(false);
-        }}
-        type="edit"
-        catalogueCategory={catalogueCategoryData}
-        catalogueItem={catalogueItemData}
-        selectedItem={itemData}
-      />
+      {editItemDialogOpen && (
+        <ItemDialog
+          open={editItemDialogOpen}
+          onClose={() => {
+            setEditItemDialogOpen(false);
+          }}
+          type="edit"
+          catalogueCategory={catalogueCategoryData}
+          catalogueItem={catalogueItemData}
+          selectedItem={itemData}
+        />
+      )}
     </Grid>
   );
 }

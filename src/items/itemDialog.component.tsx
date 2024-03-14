@@ -17,7 +17,6 @@ import {
   StepLabel,
   Stepper,
   TextField,
-  TextFieldProps,
   Tooltip,
   Typography,
 } from '@mui/material';
@@ -29,12 +28,10 @@ import {
   EditItem,
   Item,
   ItemDetails,
-  ItemDetailsPlaceholder,
   UsageStatusType,
 } from '../app.types';
 import { DatePicker } from '@mui/x-date-pickers';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
 import { useAddItem, useEditItem } from '../api/item';
 import { AxiosError } from 'axios';
 import handleIMS_APIError from '../handleIMS_APIError';
@@ -42,52 +39,85 @@ import { SystemsTableView } from '../systems/systemsTableView.component';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { trimStringValues } from '../utils';
-const maxYear = 2100;
-export function isValidDateTime(input: Date | string | null) {
-  // Attempt to create a Date object from the input
-  let dateObj: Date;
-  if (input instanceof Date) {
-    dateObj = input;
-  } else if (typeof input === 'string') {
-    dateObj = new Date(input);
-  } else {
-    // Handle null or other non-supported types
-    dateObj = new Date('');
-  }
+import { z } from 'zod';
+import {
+  PropertiesSchemaType,
+  UnionSchema,
+  transformPropertiesData,
+} from '../catalogue/items/catalogueItemsDialog.component';
+import { Controller, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-  // Check if the Date object is valid and the string was successfully parsed
-  // Also, check if the original string is not equal to 'Invalid Date'
-  // Check if the date is larger than the year 2100, the maximum date of the date picker
-  return (
-    !isNaN(dateObj.getTime()) &&
-    dateObj.toString() !== 'Invalid Date' &&
-    !(dateObj.getUTCFullYear() >= maxYear)
-  );
+interface AddItemSchemaType extends ItemDetails {
+  properties: PropertiesSchemaType[];
 }
+const maxDate = new Date('2100-01-01');
+const minDate = new Date('1900-01-01');
 
-const CustomTextField: React.FC<TextFieldProps> = (renderProps) => {
-  const { id, ...inputProps } = renderProps.inputProps ?? {};
-  let helperText = 'Date format: dd/MM/yyyy';
+const ItemSchema = () => {
+  const itemDetailsSchema = z.object({
+    serial_number: z
+      .string()
+      .trim()
+      .transform((val) => (val === '' ? null : val))
+      .nullable(),
+    asset_number: z
+      .string()
+      .trim()
+      .transform((val) => (val === '' ? null : val))
+      .nullable(),
+    purchase_order_number: z
+      .string()
+      .trim()
+      .transform((val) => (val === '' ? null : val))
+      .nullable(),
+    warranty_end_date: z
+      .date({
+        errorMap: (issue, { defaultError }) => ({
+          message:
+            issue.code === 'invalid_date'
+              ? 'Date format: dd/MM/yyyy'
+              : defaultError,
+        }),
+      })
+      .max(maxDate, { message: 'Exceeded maximum date' })
+      .min(minDate, { message: 'Below minimum date' })
+      .nullable()
+      .transform((val) => (!val ? null : val.toISOString())),
 
-  if (
-    renderProps.value &&
-    Number((renderProps.value as string).split('/')[2]) >= maxYear
-  ) {
-    helperText = 'Exceeded maximum date';
-  }
-  return (
-    <TextField
-      {...renderProps}
-      fullWidth
-      id={id}
-      size="small"
-      inputProps={{
-        ...inputProps,
-      }}
-      error={renderProps.error}
-      {...(renderProps.error && { helperText: helperText })}
-    />
-  );
+    delivered_date: z
+      .date({
+        errorMap: (issue, { defaultError }) => ({
+          message:
+            issue.code === 'invalid_date'
+              ? 'Date format: dd/MM/yyyy'
+              : defaultError,
+        }),
+      })
+      .max(maxDate, { message: 'Exceeded maximum date' })
+      .min(minDate, { message: 'Below minimum date' })
+      .nullable()
+      .transform((val) => (!val ? null : val.toISOString())),
+    is_defective: z
+      .string()
+      .min(1, { message: 'Please select either True or False' })
+      .transform((val) => (!val ? null : JSON.parse(val)))
+      .pipe(
+        z.boolean({
+          required_error: 'Please select either True or False',
+          invalid_type_error: 'Please select either True or False',
+        })
+      ),
+    usage_status: z.nativeEnum(UsageStatusType),
+    notes: z
+      .string()
+      .trim()
+      .transform((val) => (val === '' ? null : val))
+      .nullable(),
+  });
+  return itemDetailsSchema.extend({
+    properties: z.array(UnionSchema), // Use the accumulated properties
+  });
 };
 
 export interface ItemDialogProps {
@@ -113,223 +143,69 @@ function ItemDialog(props: ItemDialogProps) {
     [catalogueCategory]
   );
 
-  const [itemDetails, setItemDetails] = React.useState<ItemDetailsPlaceholder>({
-    catalogue_item_id: null,
-    system_id: null,
-    purchase_order_number: null,
-    is_defective: null,
-    usage_status: null,
-    warranty_end_date: null,
-    asset_number: null,
-    serial_number: null,
-    delivered_date: null,
-    notes: null,
-  });
-
-  const [hasDateErrors, setHasDateErrors] = React.useState<{
-    warranty_end_date: boolean;
-    delivered_date: boolean;
-  }>({ warranty_end_date: false, delivered_date: false });
-
-  const [propertyValues, setPropertyValues] = React.useState<(string | null)[]>(
-    []
-  );
-
-  const [propertyErrors, setPropertyErrors] = React.useState(
-    new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
-  );
-
   const [formErrorMessage, setFormErrorMessage] = React.useState<
     string | undefined
   >(undefined);
 
-  const { mutateAsync: addItem, isPending: isAddPending } = useAddItem();
-  const { mutateAsync: editItem, isPending: isEditPending } = useEditItem();
+  const isNotCreating = type !== 'create' && !!selectedItem;
+  const emptyCatalogueItem = {
+    serial_number: '',
+    asset_number: '',
+    purchase_order_number: '',
+    warranty_end_date: null,
+    delivered_date: null,
+    is_defective: 'false',
+    usage_status: UsageStatusType.new,
+    notes: '',
+    properties: [],
+    catalogue_item_id: undefined,
+  };
 
-  React.useEffect(() => {
-    if (type === 'create' && open) {
-      setPropertyValues(
-        matchCatalogueItemProperties(
-          parentCatalogueItemPropertiesInfo,
-          catalogueItem?.properties ?? []
-        )
-      );
-    }
-  }, [parentCatalogueItemPropertiesInfo, catalogueItem, open, type]);
-
-  React.useEffect(() => {
-    if (selectedItem && open) {
-      setItemDetails({
-        catalogue_item_id: null,
-        system_id: null,
-        purchase_order_number: selectedItem.purchase_order_number,
-        is_defective: selectedItem.is_defective ? 'true' : 'false',
-        usage_status: UsageStatusType[selectedItem.usage_status],
+  const initialItem = isNotCreating
+    ? {
+        ...selectedItem,
         warranty_end_date: selectedItem.warranty_end_date
           ? new Date(selectedItem.warranty_end_date)
           : null,
-        asset_number: selectedItem.asset_number,
-        serial_number: selectedItem.serial_number,
         delivered_date: selectedItem.delivered_date
           ? new Date(selectedItem.delivered_date)
           : null,
-        notes: selectedItem.notes,
-      });
-
-      setPropertyValues(
-        matchCatalogueItemProperties(
-          parentCatalogueItemPropertiesInfo,
-          selectedItem.properties ?? []
-        )
-      );
-    }
-  }, [parentCatalogueItemPropertiesInfo, selectedItem, open]);
-
-  const handlePropertyChange = (
-    index: number,
-    name: string,
-    value: string | null
-  ) => {
-    const updatedPropertyValues = [...propertyValues];
-
-    if (value === null || (typeof value === 'string' && value.trim() === '')) {
-      updatedPropertyValues[index] = null;
-    } else {
-      updatedPropertyValues[index] = value;
-    }
-    setPropertyValues(updatedPropertyValues);
-    // Clear the error state for the changed property
-    const updatedPropertyErrors = [...propertyErrors];
-    updatedPropertyErrors[index] = false;
-    setPropertyErrors(updatedPropertyErrors);
-    setFormErrorMessage(undefined);
-  };
-
-  const handleItemDetails = React.useCallback(
-    (field: keyof ItemDetailsPlaceholder, value: string | Date | null) => {
-      const updatedItemDetails = { ...itemDetails };
-
-      switch (field) {
-        case 'delivered_date':
-        case 'warranty_end_date':
-          updatedItemDetails[field] = value as Date | null;
-          break;
-        default:
-          if (
-            value === null ||
-            (typeof value === 'string' && value.trim() === '')
-          ) {
-            updatedItemDetails[field] = null;
-          } else {
-            updatedItemDetails[field] = value as string;
-          }
-          break;
+        is_defective: String(selectedItem.is_defective),
       }
-
-      setItemDetails(updatedItemDetails);
-      setFormErrorMessage(undefined);
+    : emptyCatalogueItem;
+  const {
+    handleSubmit,
+    formState: { errors },
+    control,
+    register,
+    watch,
+  } = useForm({
+    resolver: zodResolver(ItemSchema()),
+    defaultValues: {
+      ...initialItem,
+      properties: transformPropertiesData(
+        parentCatalogueItemPropertiesInfo,
+        selectedItem?.properties || catalogueItem?.properties || []
+      ),
     },
-    [itemDetails]
-  );
+    shouldUnregister: false,
+    mode: 'onChange',
+  });
+
+  // If any field value changes, clear the state
+  React.useEffect(() => {
+    if (selectedItem) {
+      const subscription = watch(() => setFormErrorMessage(undefined));
+      return () => subscription.unsubscribe();
+    }
+  }, [selectedItem, watch]);
+
+  const { mutateAsync: addItem, isPending: isAddPending } = useAddItem();
+  const { mutateAsync: editItem, isPending: isEditPending } = useEditItem();
+
   const handleClose = React.useCallback(() => {
     onClose();
-    setItemDetails({
-      catalogue_item_id: null,
-      system_id: null,
-      purchase_order_number: null,
-      is_defective: null,
-      usage_status: null,
-      warranty_end_date: null,
-      asset_number: null,
-      serial_number: null,
-      delivered_date: null,
-      notes: null,
-    });
-    setPropertyValues([]);
-    setPropertyErrors(
-      new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
-    );
-  }, [onClose, parentCatalogueItemPropertiesInfo]);
-
-  const handleFormPropertiesErrorStates = React.useCallback(() => {
-    let hasPropertiesErrors = false;
-
-    // Check properties
-    const updatedPropertyErrors = [...propertyErrors];
-
-    const updatedProperties = parentCatalogueItemPropertiesInfo.map(
-      (property, index) => {
-        if (property.mandatory && !propertyValues[index]) {
-          updatedPropertyErrors[index] = true;
-          hasPropertiesErrors = true;
-        } else {
-          updatedPropertyErrors[index] = false;
-        }
-
-        if (
-          propertyValues[index] &&
-          property.type === 'number' &&
-          isNaN(Number(propertyValues[index]))
-        ) {
-          updatedPropertyErrors[index] = true;
-          hasPropertiesErrors = true;
-        }
-
-        if (!propertyValues[index])
-          return {
-            name: property.name,
-            value: null,
-          };
-
-        let typedValue: string | number | boolean | null =
-          propertyValues[index]; // Assume it's a string by default
-
-        // Check if the type of the 'property' is boolean
-        if (property.type === 'boolean') {
-          // If the type is boolean, then check the type of 'propertyValues[index]'
-          typedValue = propertyValues[index] === 'true' ? true : false;
-        } else if (property.type === 'number') {
-          typedValue = Number(propertyValues[index]);
-        }
-
-        return {
-          name: property.name,
-          value: typedValue,
-        };
-      }
-    );
-
-    setPropertyErrors(updatedPropertyErrors);
-
-    return { hasPropertiesErrors, updatedProperties };
-  }, [propertyErrors, parentCatalogueItemPropertiesInfo, propertyValues]);
-
-  const details: ItemDetails = React.useMemo(() => {
-    return {
-      catalogue_item_id: catalogueItem?.id ?? '',
-      system_id: itemDetails.system_id ?? '',
-      purchase_order_number: itemDetails.purchase_order_number,
-      is_defective: itemDetails.is_defective === 'true' ? true : false,
-      usage_status: itemDetails.usage_status
-        ? UsageStatusType[
-            itemDetails.usage_status as keyof typeof UsageStatusType
-          ]
-        : UsageStatusType.new,
-      warranty_end_date:
-        itemDetails.warranty_end_date &&
-        isValidDateTime(itemDetails.warranty_end_date)
-          ? itemDetails.warranty_end_date.toISOString()
-          : null,
-      asset_number: itemDetails.asset_number,
-      serial_number: itemDetails.serial_number,
-      delivered_date:
-        itemDetails.delivered_date &&
-        isValidDateTime(itemDetails.delivered_date)
-          ? itemDetails.delivered_date.toISOString()
-          : null,
-      notes: itemDetails.notes,
-    };
-  }, [itemDetails, catalogueItem]);
+  }, [onClose]);
 
   //move to systems
   const [parentSystemId, setParentSystemId] = React.useState<string | null>(
@@ -343,112 +219,122 @@ function ItemDialog(props: ItemDialogProps) {
   const { data: parentSystemBreadcrumbs } =
     useSystemsBreadcrumbs(parentSystemId);
 
-  const handleAddItem = React.useCallback(() => {
-    const { updatedProperties, hasPropertiesErrors } =
-      handleFormPropertiesErrorStates();
+  const handleAddItem = React.useCallback(
+    (item: AddItem) => {
+      addItem(trimStringValues(item))
+        .then(() => handleClose())
+        .catch((error: AxiosError) => {
+          handleIMS_APIError(error);
+        });
+    },
+    [addItem, handleClose]
+  );
 
-    if (hasPropertiesErrors) return;
+  const handleEditItem = React.useCallback(
+    (itemData: AddItem) => {
+      if (selectedItem) {
+        const isPurchaseOrderNumberUpdated =
+          itemData.purchase_order_number !== selectedItem.purchase_order_number;
 
-    const item: AddItem = {
-      ...details,
-      properties: updatedProperties,
-    };
+        const isIsDefectiveUpdated =
+          itemData.is_defective !== selectedItem.is_defective;
 
-    addItem(trimStringValues(item))
-      .then((response) => handleClose())
-      .catch((error: AxiosError) => {
-        handleIMS_APIError(error);
-      });
-  }, [handleFormPropertiesErrorStates, details, addItem, handleClose]);
+        const isUsageStatusUpdated =
+          itemData.usage_status !== selectedItem.usage_status;
 
-  const handleEditItem = React.useCallback(() => {
-    if (selectedItem) {
-      const { updatedProperties, hasPropertiesErrors } =
-        handleFormPropertiesErrorStates();
+        const isWarrantyEndDateUpdated =
+          itemData.warranty_end_date !== selectedItem.warranty_end_date;
 
-      if (hasPropertiesErrors) return;
+        const isAssetNumberUpdated =
+          itemData.asset_number !== selectedItem.asset_number;
 
-      const isPurchaseOrderNumberUpdated =
-        details.purchase_order_number !== selectedItem.purchase_order_number;
+        const isSerialNumberUpdated =
+          itemData.serial_number !== selectedItem.serial_number;
 
-      const isIsDefectiveUpdated =
-        details.is_defective !== selectedItem.is_defective;
+        const isDeliveredDateUpdated =
+          itemData.delivered_date !== selectedItem.delivered_date;
 
-      const isUsageStatusUpdated =
-        details.usage_status !== selectedItem.usage_status;
+        const isNotesUpdated = itemData.notes !== selectedItem.notes;
 
-      const isWarrantyEndDateUpdated =
-        details.warranty_end_date !== selectedItem.warranty_end_date;
+        const isCatalogueItemPropertiesUpdated =
+          JSON.stringify(itemData.properties) !==
+          JSON.stringify(
+            selectedItem.properties.map(({ unit, ...rest }) => rest)
+          );
 
-      const isAssetNumberUpdated =
-        details.asset_number !== selectedItem.asset_number;
+        const isSystemIdUpdated = itemData.system_id !== selectedItem.system_id;
 
-      const isSerialNumberUpdated =
-        details.serial_number !== selectedItem.serial_number;
+        let item: EditItem = {
+          id: selectedItem.id,
+        };
 
-      const isDeliveredDateUpdated =
-        details.delivered_date !== selectedItem.delivered_date;
+        isSerialNumberUpdated && (item.serial_number = itemData.serial_number);
+        isPurchaseOrderNumberUpdated &&
+          (item.purchase_order_number = itemData.purchase_order_number);
+        isIsDefectiveUpdated && (item.is_defective = itemData.is_defective);
+        isUsageStatusUpdated && (item.usage_status = itemData.usage_status);
+        isWarrantyEndDateUpdated &&
+          (item.warranty_end_date = itemData.warranty_end_date);
+        isAssetNumberUpdated && (item.asset_number = itemData.asset_number);
+        isSerialNumberUpdated && (item.serial_number = itemData.serial_number);
+        isDeliveredDateUpdated &&
+          (item.delivered_date = itemData.delivered_date);
+        isNotesUpdated && (item.notes = itemData.notes);
+        isSystemIdUpdated && (item.system_id = itemData.system_id);
+        isCatalogueItemPropertiesUpdated &&
+          (item.properties = itemData.properties);
 
-      const isNotesUpdated = details.notes !== selectedItem.notes;
-
-      const isCatalogueItemPropertiesUpdated =
-        JSON.stringify(updatedProperties) !==
-        JSON.stringify(
-          selectedItem.properties.map(({ unit, ...rest }) => rest)
-        );
-
-      const isSystemIdUpdated = details.system_id !== selectedItem.system_id;
-
-      let item: EditItem = {
-        id: selectedItem.id,
-      };
-
-      isSerialNumberUpdated && (item.serial_number = details.serial_number);
-      isPurchaseOrderNumberUpdated &&
-        (item.purchase_order_number = details.purchase_order_number);
-      isIsDefectiveUpdated && (item.is_defective = details.is_defective);
-      isUsageStatusUpdated && (item.usage_status = details.usage_status);
-      isWarrantyEndDateUpdated &&
-        (item.warranty_end_date = details.warranty_end_date);
-      isAssetNumberUpdated && (item.asset_number = details.asset_number);
-      isSerialNumberUpdated && (item.serial_number = details.serial_number);
-      isDeliveredDateUpdated && (item.delivered_date = details.delivered_date);
-      isNotesUpdated && (item.notes = details.notes);
-      isSystemIdUpdated && (item.system_id = details.system_id);
-      isCatalogueItemPropertiesUpdated && (item.properties = updatedProperties);
-
-      if (
-        item.id &&
-        (isSerialNumberUpdated ||
-          isPurchaseOrderNumberUpdated ||
-          isIsDefectiveUpdated ||
-          isUsageStatusUpdated ||
-          isWarrantyEndDateUpdated ||
-          isAssetNumberUpdated ||
-          isSerialNumberUpdated ||
-          isDeliveredDateUpdated ||
-          isNotesUpdated ||
-          isCatalogueItemPropertiesUpdated ||
-          isSystemIdUpdated)
-      ) {
-        editItem(trimStringValues(item))
-          .then((response) => handleClose())
-          .catch((error: AxiosError) => {
-            handleIMS_APIError(error);
-          });
-      } else {
-        setFormErrorMessage('Please edit a form entry before clicking save');
+        if (
+          item.id &&
+          (isSerialNumberUpdated ||
+            isPurchaseOrderNumberUpdated ||
+            isIsDefectiveUpdated ||
+            isUsageStatusUpdated ||
+            isWarrantyEndDateUpdated ||
+            isAssetNumberUpdated ||
+            isSerialNumberUpdated ||
+            isDeliveredDateUpdated ||
+            isNotesUpdated ||
+            isCatalogueItemPropertiesUpdated ||
+            isSystemIdUpdated)
+        ) {
+          editItem(trimStringValues(item))
+            .then((response) => handleClose())
+            .catch((error: AxiosError) => {
+              handleIMS_APIError(error);
+            });
+        } else {
+          setFormErrorMessage('Please edit a form entry before clicking save');
+        }
       }
+    },
+    [selectedItem, editItem, handleClose]
+  );
+
+  const onSubmit = (data: any) => {
+    if (parentSystemId && catalogueItem) {
+      const itemData: AddItemSchemaType = data;
+      type === 'edit'
+        ? handleEditItem({
+            ...itemData,
+            system_id: parentSystemId,
+            properties: itemData.properties.map(
+              ({ key, unit, ...rest }) => rest
+            ),
+          })
+        : handleAddItem({
+            ...itemData,
+            system_id: parentSystemId,
+            catalogue_item_id: catalogueItem.id,
+            properties: itemData.properties.map(
+              ({ key, unit, ...rest }) => rest
+            ),
+          });
     }
-  }, [
-    selectedItem,
-    handleFormPropertiesErrorStates,
-    details,
-    editItem,
-    handleClose,
-  ]);
+  };
 
   // Stepper
+
   const STEPS = [
     (type === 'edit' ? 'Edit' : 'Add') + ' item details',
     (type === 'edit' ? 'Edit' : 'Add') + ' item properties',
@@ -456,47 +342,36 @@ function ItemDialog(props: ItemDialogProps) {
   ];
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
-  const handleNext = React.useCallback(
-    (step: number) => {
-      switch (step) {
-        case 1:
-          const { hasPropertiesErrors } = handleFormPropertiesErrorStates();
-          return (
-            !hasPropertiesErrors &&
-            setActiveStep((prevActiveStep) => prevActiveStep + 1)
-          );
-        default:
-          setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      }
-    },
-    [handleFormPropertiesErrorStates]
-  );
+  const handleNext = React.useCallback((step: number) => {
+    switch (step) {
+      default:
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
+  }, []);
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-  React.useEffect(() => {
-    setItemDetails((prev) => ({
-      ...prev,
-      system_id: parentSystemId,
-    }));
-    setFormErrorMessage(undefined);
-  }, [parentSystemId]);
+
+  const propertiesErrors = errors.properties;
+
+  // Spread Method to clone errors
+  const itemDetailsErrors = Object.fromEntries(
+    Object.entries(errors).filter(([key, _value]) => key !== 'properties')
+  );
 
   const isStepFailed = React.useCallback(
     (step: number) => {
       switch (step) {
         case 0:
-          return Object.values(hasDateErrors).some(
-            (value: boolean) => value === true
-          );
+          return Object.values(itemDetailsErrors).length !== 0;
         case 1:
-          return propertyErrors.some((value) => value === true);
+          return propertiesErrors !== undefined;
         case 2:
           return false;
       }
     },
-    [hasDateErrors, propertyErrors]
+    [itemDetailsErrors, propertiesErrors]
   );
 
   const renderStepContent = (step: number) => {
@@ -508,10 +383,7 @@ function ItemDialog(props: ItemDialogProps) {
               <TextField
                 label="Serial number"
                 size="small"
-                value={itemDetails.serial_number ?? ''}
-                onChange={(event) => {
-                  handleItemDetails('serial_number', event.target.value);
-                }}
+                {...register('serial_number')}
                 fullWidth
               />
             </Grid>
@@ -519,10 +391,7 @@ function ItemDialog(props: ItemDialogProps) {
               <TextField
                 label="Asset number"
                 size="small"
-                value={itemDetails.asset_number ?? ''}
-                onChange={(event) => {
-                  handleItemDetails('asset_number', event.target.value);
-                }}
+                {...register('asset_number')}
                 fullWidth
               />
             </Grid>
@@ -530,96 +399,113 @@ function ItemDialog(props: ItemDialogProps) {
               <TextField
                 label="Purchase order number"
                 size="small"
-                value={itemDetails.purchase_order_number ?? ''}
-                onChange={(event) => {
-                  handleItemDetails(
-                    'purchase_order_number',
-                    event.target.value
-                  );
-                }}
+                {...register('purchase_order_number')}
                 fullWidth
               />
             </Grid>
 
             <Grid item xs={12}>
-              <DatePicker
-                label="Warranty end date"
-                value={itemDetails.warranty_end_date}
-                onChange={(date) =>
-                  handleItemDetails('warranty_end_date', date ? date : null)
-                }
-                slots={{ textField: CustomTextField }}
-                slotProps={{
-                  actionBar: { actions: ['clear'] },
-                }}
-                onError={(error) => {
-                  setHasDateErrors((prev) => ({
-                    ...prev,
-                    warranty_end_date: error ? true : false,
-                  }));
-                }}
+              <Controller
+                name="warranty_end_date"
+                control={control}
+                render={({ field }) => (
+                  <DatePicker
+                    label="Warranty end date"
+                    {...field}
+                    slotProps={{
+                      actionBar: { actions: ['clear'] },
+                      textField: {
+                        size: 'small',
+                        fullWidth: true,
+                        error: !!errors.warranty_end_date,
+                        helperText: errors.warranty_end_date?.message,
+                      },
+                    }}
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>
-              <DatePicker
-                label="Delivered date"
-                value={itemDetails.delivered_date}
-                onChange={(date) =>
-                  handleItemDetails('delivered_date', date ? date : null)
-                }
-                slotProps={{
-                  actionBar: { actions: ['clear'] },
-                }}
-                slots={{ textField: CustomTextField }}
-                onError={(error) => {
-                  setHasDateErrors((prev) => ({
-                    ...prev,
-                    delivered_date: error ? true : false,
-                  }));
-                }}
+              <Controller
+                name="delivered_date"
+                control={control}
+                render={({ field }) => (
+                  <DatePicker
+                    label="Delivered date"
+                    {...field}
+                    slotProps={{
+                      actionBar: { actions: ['clear'] },
+                      textField: {
+                        size: 'small',
+                        fullWidth: true,
+                        error: !!errors.delivered_date,
+                        helperText: errors.delivered_date?.message,
+                      },
+                    }}
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel required={true} size="small" id="is-defective">
-                  Is defective
-                </InputLabel>
+                <Controller
+                  name="is_defective"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <InputLabel
+                        required={true}
+                        size="small"
+                        id="is-defective"
+                      >
+                        Is defective
+                      </InputLabel>
 
-                <Select
-                  labelId="is-defective"
-                  value={itemDetails.is_defective ?? 'false'}
-                  size="small"
-                  onChange={(e) =>
-                    handleItemDetails('is_defective', e.target.value)
-                  }
-                  required={true}
-                  label="Is defective"
-                >
-                  <MenuItem value={'true'}>Yes</MenuItem>
-                  <MenuItem value={'false'}>No</MenuItem>
-                </Select>
+                      <Select
+                        labelId="is-defective"
+                        size="small"
+                        {...field}
+                        value={field.value ?? 'false'}
+                        required={true}
+                        label="Is defective"
+                      >
+                        <MenuItem value={'true'}>Yes</MenuItem>
+                        <MenuItem value={'false'}>No</MenuItem>
+                      </Select>
+                    </>
+                  )}
+                />
               </FormControl>
             </Grid>
             <Grid item xs={12}>
               <FormControl size="small" fullWidth>
-                <InputLabel required={true} id="usage-status">
-                  Usage status
-                </InputLabel>
-                <Select
-                  required={true}
-                  labelId="usage-status"
-                  value={itemDetails.usage_status ?? 'new'}
-                  size="small"
-                  onChange={(e) =>
-                    handleItemDetails('usage_status', e.target.value)
-                  }
-                  label="Usage status"
-                >
-                  <MenuItem value={'new'}>New</MenuItem>
-                  <MenuItem value={'inUse'}>In Use</MenuItem>
-                  <MenuItem value={'used'}>Used</MenuItem>
-                  <MenuItem value={'scrapped'}>Scrapped</MenuItem>
-                </Select>
+                <Controller
+                  name="usage_status"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <InputLabel required={true} id="usage-status">
+                        Usage status
+                      </InputLabel>
+                      <Select
+                        required={true}
+                        labelId="usage-status"
+                        size="small"
+                        {...field}
+                        label="Usage status"
+                      >
+                        <MenuItem value={UsageStatusType.new}>New</MenuItem>
+                        <MenuItem value={UsageStatusType.inUse}>
+                          In Use
+                        </MenuItem>
+                        <MenuItem value={UsageStatusType.used}>Used</MenuItem>
+                        <MenuItem value={UsageStatusType.scrapped}>
+                          Scrapped
+                        </MenuItem>
+                      </Select>
+                    </>
+                  )}
+                />
               </FormControl>
             </Grid>
 
@@ -630,10 +516,7 @@ function ItemDialog(props: ItemDialogProps) {
                   size="small"
                   multiline
                   minRows={5}
-                  value={itemDetails.notes ?? ''}
-                  onChange={(event) => {
-                    handleItemDetails('notes', event.target.value);
-                  }}
+                  {...register('notes')}
                   fullWidth
                 />
               </Grid>
@@ -664,159 +547,187 @@ function ItemDialog(props: ItemDialogProps) {
             {parentCatalogueItemPropertiesInfo.length >= 1 ? (
               <Grid container spacing={1.5}>
                 {parentCatalogueItemPropertiesInfo.map(
-                  (property: CatalogueCategoryFormData, index: number) => (
-                    <Grid item xs={12} key={index}>
-                      <Grid container spacing={1.5}>
-                        <Grid item xs={11} sx={{ display: 'flex' }}>
-                          {property.type === 'boolean' ? (
-                            <FormControl fullWidth>
-                              <InputLabel
-                                required={property.mandatory ?? false}
-                                error={propertyErrors[index]}
-                                id={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                size="small"
-                                sx={{ alignItems: 'center' }}
-                              >
-                                {property.name}
-                              </InputLabel>
-                              <Select
-                                value={(propertyValues[index] as string) ?? ''}
-                                required={property.mandatory ?? false}
-                                size="small"
-                                error={propertyErrors[index]}
-                                labelId={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                onChange={(event) =>
-                                  handlePropertyChange(
-                                    index,
-                                    property.name,
-                                    event.target.value as string
-                                  )
-                                }
-                                label={property.name}
-                                sx={{ alignItems: 'center' }}
-                                fullWidth
-                              >
-                                <MenuItem value="">None</MenuItem>
-                                <MenuItem value="true">True</MenuItem>
-                                <MenuItem value="false">False</MenuItem>
-                              </Select>
-                              {propertyErrors[index] && (
-                                <FormHelperText error>
-                                  Please select either True or False
-                                </FormHelperText>
-                              )}
-                            </FormControl>
-                          ) : property.allowed_values ? (
-                            <FormControl fullWidth>
-                              <InputLabel
-                                required={property.mandatory ?? false}
-                                error={propertyErrors[index]}
-                                id={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                size="small"
-                                sx={{ alignItems: 'center' }}
-                              >
-                                {property.name}
-                              </InputLabel>
-                              <Select
-                                value={(propertyValues[index] as string) ?? ''}
-                                required={property.mandatory ?? false}
-                                size="small"
-                                error={propertyErrors[index]}
-                                labelId={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                onChange={(event) =>
-                                  handlePropertyChange(
-                                    index,
-                                    property.name,
-                                    event.target.value as string
-                                  )
-                                }
-                                label={property.name}
-                                sx={{ alignItems: 'center' }}
-                                fullWidth
-                              >
-                                {property.allowed_values.values.map(
-                                  (value, index) => (
-                                    <MenuItem key={index} value={value}>
-                                      {value}
-                                    </MenuItem>
-                                  )
+                  (property: CatalogueCategoryFormData, index: number) => {
+                    return (
+                      <Grid item xs={12} key={index}>
+                        <Grid container spacing={1.5}>
+                          <Grid item xs={11} sx={{ display: 'flex' }}>
+                            {property.type === 'boolean' ? (
+                              <FormControl fullWidth>
+                                <Controller
+                                  control={control}
+                                  name={`properties.${index}.value`}
+                                  render={({ field }) => {
+                                    const booleanFieldValue = field.value ?? '';
+                                    return (
+                                      <>
+                                        <InputLabel
+                                          required={property.mandatory ?? false}
+                                          error={
+                                            !!errors.properties?.[index]?.value
+                                          }
+                                          id={`catalogue-item-property-${property.name.replace(
+                                            /\s+/g,
+                                            '-'
+                                          )}`}
+                                          size="small"
+                                          sx={{ alignItems: 'center' }}
+                                        >
+                                          {property.name}
+                                        </InputLabel>
+                                        <Select
+                                          required={property.mandatory ?? false}
+                                          size="small"
+                                          error={
+                                            !!errors.properties?.[index]?.value
+                                          }
+                                          labelId={`catalogue-item-property-${property.name.replace(
+                                            /\s+/g,
+                                            '-'
+                                          )}`}
+                                          {...field}
+                                          value={booleanFieldValue}
+                                          label={property.name}
+                                          sx={{ alignItems: 'center' }}
+                                          fullWidth
+                                        >
+                                          <MenuItem value="">None</MenuItem>
+                                          <MenuItem value="true">True</MenuItem>
+                                          <MenuItem value="false">
+                                            False
+                                          </MenuItem>
+                                        </Select>
+                                        {!!errors.properties?.[index]
+                                          ?.value && (
+                                          <FormHelperText error>
+                                            {
+                                              errors.properties?.[index]?.value
+                                                ?.message
+                                            }
+                                          </FormHelperText>
+                                        )}
+                                      </>
+                                    );
+                                  }}
+                                />
+                              </FormControl>
+                            ) : property.allowed_values ? (
+                              <FormControl fullWidth>
+                                <Controller
+                                  control={control}
+                                  name={`properties.${index}.value`}
+                                  render={({ field }) => {
+                                    const currentValue = field.value ?? '';
+                                    return (
+                                      <>
+                                        <InputLabel
+                                          required={property.mandatory ?? false}
+                                          error={
+                                            !!errors.properties?.[index]?.value
+                                          }
+                                          id={`catalogue-item-property-${property.name.replace(
+                                            /\s+/g,
+                                            '-'
+                                          )}`}
+                                          size="small"
+                                          sx={{ alignItems: 'center' }}
+                                        >
+                                          {property.name}
+                                        </InputLabel>
+                                        <Select
+                                          required={property.mandatory ?? false}
+                                          size="small"
+                                          error={
+                                            !!errors.properties?.[index]?.value
+                                          }
+                                          labelId={`catalogue-item-property-${property.name.replace(
+                                            /\s+/g,
+                                            '-'
+                                          )}`}
+                                          {...field}
+                                          value={currentValue}
+                                          label={property.name}
+                                          sx={{ alignItems: 'center' }}
+                                          fullWidth
+                                        >
+                                          {property.allowed_values?.values.map(
+                                            (value, index) => (
+                                              <MenuItem
+                                                key={index}
+                                                value={String(value)}
+                                              >
+                                                {value}
+                                              </MenuItem>
+                                            )
+                                          )}
+                                        </Select>
+                                        {!!errors.properties?.[index]
+                                          ?.value && (
+                                          <FormHelperText error>
+                                            {
+                                              errors.properties?.[index]?.value
+                                                ?.message
+                                            }
+                                          </FormHelperText>
+                                        )}
+                                      </>
+                                    );
+                                  }}
+                                />
+                              </FormControl>
+                            ) : (
+                              <Controller
+                                control={control}
+                                name={`properties.${index}.value`}
+                                render={({ field }) => (
+                                  <TextField
+                                    label={`${property.name} ${
+                                      property.unit ? `(${property.unit})` : ''
+                                    }`}
+                                    size="small"
+                                    required={property.mandatory ?? false}
+                                    {...field}
+                                    value={field.value ?? ''}
+                                    error={!!errors.properties?.[index]?.value}
+                                    helperText={
+                                      errors.properties?.[index]?.value?.message
+                                    }
+                                    fullWidth
+                                  />
                                 )}
-                              </Select>
-                            </FormControl>
-                          ) : (
-                            <TextField
-                              label={`${property.name} ${
-                                property.unit ? `(${property.unit})` : ''
-                              }`}
-                              size="small"
-                              required={property.mandatory ?? false}
-                              value={propertyValues[index] || ''}
-                              onChange={(event) =>
-                                handlePropertyChange(
-                                  index,
-                                  property.name,
-                                  event.target.value ? event.target.value : null
-                                )
-                              }
-                              fullWidth
-                              error={propertyErrors[index]}
-                              helperText={
-                                // Check if 'propertyErrors[index]' exists and evaluate its value
-                                propertyErrors[index]
-                                  ? // If 'propertyErrors[index]' is truthy, perform the following checks:
-                                    property.mandatory && !propertyValues[index]
-                                    ? // If 'property' is mandatory and 'propertyValues[index]' is empty, return a mandatory field error message
-                                      'Please enter a valid value as this field is mandatory'
-                                    : property.type === 'number' &&
-                                      isNaN(Number(propertyValues[index])) &&
-                                      'Please enter a valid number' // If 'property' is of type 'number' and 'propertyValues[index]' is not a valid number, return an invalid number error message
-                                  : // If 'propertyErrors[index]' is falsy, return an empty string (no error)
-                                    ''
-                              }
-                            />
-                          )}
-                        </Grid>
-                        <Grid
-                          item
-                          xs={1}
-                          sx={{ display: 'flex', alignItems: 'center' }}
-                        >
-                          <Tooltip
-                            title={
-                              <div>
-                                <Typography>Name: {property.name}</Typography>
-                                <Typography>Unit: {property.unit}</Typography>
-                                <Typography>
-                                  Type:{' '}
-                                  {property.type === 'string'
-                                    ? 'text'
-                                    : property.type}
-                                </Typography>
-                              </div>
-                            }
-                            placement="right"
-                            enterTouchDelay={0}
+                              />
+                            )}
+                          </Grid>
+                          <Grid
+                            item
+                            xs={1}
+                            sx={{ display: 'flex', alignItems: 'center' }}
                           >
-                            <IconButton size="small">
-                              <InfoOutlinedIcon />
-                            </IconButton>
-                          </Tooltip>
+                            <Tooltip
+                              title={
+                                <div>
+                                  <Typography>Name: {property.name}</Typography>
+                                  <Typography>Unit: {property.unit}</Typography>
+                                  <Typography>
+                                    Type:{' '}
+                                    {property.type === 'string'
+                                      ? 'text'
+                                      : property.type}
+                                  </Typography>
+                                </div>
+                              }
+                              placement="right"
+                              enterTouchDelay={0}
+                            >
+                              <IconButton size="small">
+                                <InfoOutlinedIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </Grid>
                         </Grid>
                       </Grid>
-                    </Grid>
-                  )
+                    );
+                  }
                 )}
               </Grid>
             ) : (
@@ -921,28 +832,18 @@ function ItemDialog(props: ItemDialogProps) {
             disabled={
               isAddPending ||
               isEditPending ||
-              !itemDetails.system_id ||
               formErrorMessage !== undefined ||
-              propertyErrors.some((value) => value === true) ||
-              Object.values(hasDateErrors).some(
-                (value: boolean) => value === true
-              )
+              Object.values(errors).length !== 0 ||
+              !parentSystemId
             }
-            onClick={type === 'edit' ? handleEditItem : handleAddItem}
+            onClick={handleSubmit(onSubmit)}
             sx={{ mr: 3 }}
           >
             Finish
           </Button>
         ) : (
           <Button
-            disabled={
-              (activeStep === 1 &&
-                propertyErrors.some((value) => value === true)) ||
-              (activeStep === 0 &&
-                Object.values(hasDateErrors).some(
-                  (value: boolean) => value === true
-                ))
-            }
+            disabled={isStepFailed(activeStep)}
             onClick={() => handleNext(activeStep)}
             sx={{ mr: 3 }}
           >
