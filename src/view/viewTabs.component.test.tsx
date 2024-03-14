@@ -1,11 +1,10 @@
-import React from 'react';
-import { renderComponentWithMemoryRouter } from '../setupTests';
-import ViewTabs from './viewTabs.component';
 import { screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { renderComponentWithMemoryRouter } from '../testUtils';
+import ViewTabs from './viewTabs.component';
 
 describe('View Tabs', () => {
-  let user;
+  let user: UserEvent;
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(<ViewTabs />, path);
   };

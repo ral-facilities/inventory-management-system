@@ -1,18 +1,17 @@
 import { screen } from '@testing-library/react';
-import React from 'react';
 import {
   getCatalogueItemById,
   getItemById,
   renderComponentWithBrowserRouter,
-} from '../setupTests';
+} from '../testUtils';
 
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import ItemsDetailsPanel, {
   ItemsDetailsPanelProps,
 } from './ItemsDetailsPanel.component';
 
 describe('Catalogue Items details panel', () => {
-  let user;
+  let user: UserEvent;
   let props: ItemsDetailsPanelProps;
   const createView = () => {
     return renderComponentWithBrowserRouter(<ItemsDetailsPanel {...props} />);

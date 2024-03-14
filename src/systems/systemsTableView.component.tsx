@@ -114,7 +114,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       variant: 'outlined',
     },
     //Functions
-    renderCreateRowDialogContent: ({ table, row }) => {
+    renderCreateRowDialogContent: ({ table }) => {
       return (
         <>
           <SystemDialog

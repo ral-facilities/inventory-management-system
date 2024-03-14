@@ -1,18 +1,19 @@
-import React from 'react';
-import { renderComponentWithMemoryRouter } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
-import ManufacturerLandingPage from './manufacturerLandingPage.component';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { Route, Routes } from 'react-router-dom';
+import { renderComponentWithMemoryRouter } from '../testUtils';
 import { paths } from '../view/viewTabs.component';
+import ManufacturerLandingPage from './manufacturerLandingPage.component';
 
-const mockedUseNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+const mockedUseNavigate = vi.fn();
+
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
   useNavigate: () => mockedUseNavigate,
 }));
+
 describe('Manufacturer Landing page', () => {
-  let user;
+  let user: UserEvent;
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(
       <Routes>
@@ -121,7 +122,7 @@ describe('Manufacturer Landing page', () => {
   });
 
   it('prints when the button is clicked', async () => {
-    const spy = jest.spyOn(window, 'print').mockImplementation(() => {});
+    const spy = vi.spyOn(window, 'print').mockImplementation(() => {});
     createView('/manufacturers/1');
 
     await waitFor(() => {

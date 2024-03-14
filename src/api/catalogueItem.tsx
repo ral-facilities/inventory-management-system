@@ -62,7 +62,7 @@ export const useCatalogueItems = (
 ): UseQueryResult<CatalogueItem[], AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueItems', catalogueCategoryId],
-    queryFn: (params) => {
+    queryFn: () => {
       return fetchCatalogueItems(catalogueCategoryId);
     },
   });
@@ -87,7 +87,7 @@ export const useCatalogueItem = (
 ): UseQueryResult<CatalogueItem, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueItem', catalogueCategoryId],
-    queryFn: (params) => {
+    queryFn: () => {
       return fetchCatalogueItem(catalogueCategoryId);
     },
     enabled: catalogueCategoryId !== undefined,
@@ -175,13 +175,13 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
       const successfulCatalogueCategoryIds: string[] = [];
 
       const promises = moveToCatalogueItem.selectedCatalogueItems.map(
-        async (catalogueItem: CatalogueItem, index) => {
+        async (catalogueItem: CatalogueItem) => {
           return editCatalogueItem({
             id: catalogueItem.id,
             catalogue_category_id:
               moveToCatalogueItem.targetCatalogueCategory?.id,
           })
-            .then((result) => {
+            .then(() => {
               transferStates.push({
                 name: catalogueItem.name,
                 message: `Successfully moved to ${

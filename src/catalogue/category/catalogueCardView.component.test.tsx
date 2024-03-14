@@ -1,23 +1,24 @@
-import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
-import CardView, { CardViewProps } from './catalogueCardView.component';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { CatalogueCategory } from '../../app.types';
+import { renderComponentWithBrowserRouter } from '../../testUtils';
+import CardView, {
+  CatalogueCardViewProps,
+} from './catalogueCardView.component';
 
 describe('CardView', () => {
-  let user;
-  let props: CardViewProps;
-  const onChangeOpenDeleteCategoryDialog = jest.fn();
-  const onChangeOpenEditCategoryDialog = jest.fn();
-  const onChangeOpenSaveAsDialog = jest.fn();
-  const handleToggleSelect = jest.fn();
+  let user: UserEvent;
+  let props: CatalogueCardViewProps;
+  const onChangeOpenDeleteCategoryDialog = vi.fn();
+  const onChangeOpenEditCategoryDialog = vi.fn();
+  const onChangeOpenSaveAsDialog = vi.fn();
+  const handleToggleSelect = vi.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(<CardView {...props} />);
   };
 
   function createData(): CatalogueCategory[] {
-    let data: CatalogueCategory[] = [];
+    const data: CatalogueCategory[] = [];
     for (let index = 1; index < 50; index++) {
       data.push({
         id: index.toString(),
@@ -43,18 +44,18 @@ describe('CardView', () => {
     };
 
     user = userEvent.setup();
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders pagination component correctly', async () => {

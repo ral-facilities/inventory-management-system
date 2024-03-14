@@ -1,18 +1,17 @@
-import React from 'react';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
   renderComponentWithBrowserRouter,
-} from '../setupTests';
-import userEvent from '@testing-library/user-event';
-import { waitFor, screen } from '@testing-library/react';
+} from '../testUtils';
 import ItemsTable, { ItemTableProps } from './itemsTable.component';
 
 describe('Items Table', () => {
-  jest.setTimeout(10000);
+  vi.setConfig({ testTimeout: 10000 });
 
   let props: ItemTableProps;
-  let user;
+  let user: UserEvent;
   const createView = () => {
     return renderComponentWithBrowserRouter(<ItemsTable {...props} />);
   };
@@ -33,12 +32,12 @@ describe('Items Table', () => {
       catalogueItem: getCatalogueItemById('1'),
       dense: false,
     };
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
 
@@ -46,7 +45,7 @@ describe('Items Table', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders correctly part 1 due column virtualisation', async () => {
@@ -310,7 +309,7 @@ describe('Items Table', () => {
 
   it('renders the dense table correctly', async () => {
     props.dense = true;
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 400 });
     const view = createView();

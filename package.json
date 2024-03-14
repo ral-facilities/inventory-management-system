@@ -1,9 +1,9 @@
 {
   "name": "inventory-management-system",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^7.1.0",
     "@date-io/date-fns": "3.0.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -13,34 +13,36 @@
     "@reduxjs/toolkit": "^2.0.0",
     "@tanstack/react-query": "^5.0.0",
     "@tanstack/react-query-devtools": "^5.0.0",
-    "@types/jest": "^29.0.0",
     "@types/node": "^20.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.4",
+    "@vitejs/plugin-react": "^4.2.1",
     "axios": "^1.4.0",
     "date-fns": "3.3.1",
     "history": "^5.3.0",
     "loglevel": "^1.8.1",
     "material-react-table": "^2.0.4",
-    "msw": "1.3.2",
+    "msw": "2.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.0.0",
     "react-router-dom": "^6.11.2",
-    "react-scripts": "5.0.1",
     "single-spa-react": "5.1.4",
     "typescript": "^5.0.0",
+    "vite": "^5.1.4",
     "web-vitals": "^3.0.0"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "serve:build": "yarn build && serve -l 5001 build",
-    "test": "craco test --env=jsdom --coverage --watchAll=false",
-    "eject": "react-scripts eject",
+    "dev": "vite --open",
+    "dev-docker": "vite --host",
+    "build": "tsc --project tsconfig.build.json && vite build",
+    "preview": "vite preview",
+    "preview:build": "yarn build && yarn preview",
+    "preview:build:dev": "yarn build --watch & yarn preview",
+    "test": "vitest --coverage",
     "lint:js": "eslint --max-warnings=0 --ext=tsx --ext=ts --ext=js --ext=jsx --fix ./src",
-    "build:e2e": "cross-env REACT_APP_E2E_TESTING=true GENERATE_SOURCEMAP=false craco build",
-    "build:e2e:api": "cross-env REACT_APP_E2E_TESTING_API=true GENERATE_SOURCEMAP=false craco build",
+    "build:e2e": "cross-env VITE_APP_BUILD_STANDALONE=true VITE_APP_INCLUDE_MSW=true GENERATE_SOURCEMAP=false yarn build",
+    "build:e2e:api": "cross-env VITE_APP_BUILD_STANDALONE=true VITE_APP_INCLUDE_MSW=false GENERATE_SOURCEMAP=false yarn build",
     "e2e:serve": "yarn build:e2e && node ./server/e2e-test-server.js",
     "e2e:serve:api": "yarn build:e2e:api && node ./server/e2e-test-server.js",
     "e2e:interactive": "start-server-and-test e2e:serve http://localhost:3000 cy:open",
@@ -50,12 +52,6 @@
     "cy:open": "cross-env TZ=UTC cypress open",
     "cy:run": "cross-env TZ=UTC cypress run --spec \"./cypress/e2e/with_mock_data/*.cy.ts\"",
     "cy:run:api": "cross-env TZ=UTC cypress run --spec \"./cypress/e2e/with_api/**/*.cy.ts\""
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -69,13 +65,6 @@
       "last 1 safari version"
     ]
   },
-  "jest": {
-    "resetMocks": false,
-    "transformIgnorePatterns": [
-      "node_modules/(?!axios)"
-    ],
-    "globalSetup": "./global-setup.js"
-  },
   "packageManager": "yarn@4.1.0",
   "devDependencies": {
     "@babel/eslint-parser": "^7.21.8",
@@ -85,22 +74,25 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/react-router-dom": "^5.3.3",
-    "@types/testing-library__jest-dom": "^5.14.5",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
+    "@vitest/coverage-v8": "^1.3.1",
     "cross-env": "7.0.3",
     "cypress": "^13.0.0",
-    "cypress-failed-log": "2.10.0",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-cypress": "^2.13.3",
     "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-testing-library": "^6.2.0",
     "express": "4.18.1",
+    "jsdom": "^24.0.0",
     "prettier": "^3.0.0",
     "serve": "^14.2.0",
     "serve-static": "1.15.0",
-    "start-server-and-test": "^2.0.0"
+    "start-server-and-test": "^2.0.0",
+    "vitest": "^1.3.1"
   },
   "msw": {
     "workerDirectory": "public"

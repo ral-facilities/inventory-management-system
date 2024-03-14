@@ -6,7 +6,7 @@ import {
   EditCatalogueCategory,
   MoveToCatalogueCategory,
 } from '../app.types';
-import { hooksWrapperWithProviders } from '../setupTests';
+import { hooksWrapperWithProviders } from '../testUtils';
 import {
   useAddCatalogueCategory,
   useCatalogueBreadcrumbs,
@@ -21,7 +21,7 @@ import { imsApi } from './api';
 
 describe('catalogue category api functions', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('useAddCatalogueCategory', () => {
@@ -130,6 +130,7 @@ describe('catalogue category api functions', () => {
         is_leaf: false,
       };
     });
+
     it('posts a request to add a user session and returns successful response', async () => {
       const { result } = renderHook(() => useDeleteCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
@@ -139,7 +140,7 @@ describe('catalogue category api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      expect(result.current.data).toEqual('');
+      expect(result.current.data).toEqual({ status: 204 });
     });
   });
 
@@ -263,7 +264,7 @@ describe('catalogue category api functions', () => {
     let axiosPatchSpy;
 
     beforeEach(() => {
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
 
       moveToCatalogueCategory = {
         selectedCategories: mockSelectedCatalogueCategories,
@@ -272,7 +273,7 @@ describe('catalogue category api functions', () => {
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('sends requests to move a single or multiple catalogue categories data to root and returns successful response', async () => {
@@ -424,11 +425,11 @@ describe('catalogue category api functions', () => {
         existingCategoryNames: [],
       };
 
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('sends requests to copy multiple catalogue categories to root and returns successful response', async () => {

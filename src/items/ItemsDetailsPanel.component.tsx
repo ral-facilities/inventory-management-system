@@ -13,6 +13,7 @@ import { CatalogueItem, Item, UsageStatusType } from '../app.types';
 import { useManufacturer } from '../api/manufacturer';
 import { formatDateTimeStrings } from '../utils';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
 
@@ -44,7 +45,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
   const { data: manufacturerData } = useManufacturer(
     catalogueItemIdData.manufacturer_id
   );
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
   return (

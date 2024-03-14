@@ -12,7 +12,7 @@ const ConfigTest: React.FC = (): React.ReactElement => {
   return <div data-testid="settings">{JSON.stringify(settings)}</div>;
 };
 
-jest.mock('./settings', () => ({
+vi.mock('./settings', () => ({
   settings: Promise.resolve({
     apiUrl: '',
     routes: [
@@ -47,12 +47,12 @@ jest.mock('./settings', () => ({
 
 describe('ConfigProvider', () => {
   beforeEach(() => {
-    global.document.dispatchEvent = jest.fn();
-    global.CustomEvent = jest.fn();
+    global.document.dispatchEvent = vi.fn();
+    global.CustomEvent = vi.fn();
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   // Create a wrapper for our settings tests.

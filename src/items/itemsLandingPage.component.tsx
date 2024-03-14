@@ -451,8 +451,8 @@ function ItemsLandingPage() {
           >
             <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
             <Typography>
-              This item doesn't exist. Please click the Home button to navigate
-              to the catalogue home
+              This item doesn&#39;t exist. Please click the Home button to
+              navigate to the catalogue home
             </Typography>
           </Box>
         )

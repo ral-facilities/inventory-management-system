@@ -1,21 +1,20 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
-import { renderComponentWithBrowserRouter } from '../setupTests';
+import { renderComponentWithBrowserRouter } from '../testUtils';
 import {
   SystemItemsTable,
   SystemItemsTableProps,
 } from './systemItemsTable.component';
 
 describe('SystemItemsTable', () => {
-  jest.setTimeout(10000);
+  vi.setConfig({ testTimeout: 10000 });
 
   let props: SystemItemsTableProps;
-  let user;
+  let user: UserEvent;
 
-  let mockSystem: System = SystemsJSON[2] as System;
+  const mockSystem: System = SystemsJSON[2] as System;
 
   const createView = () => {
     return renderComponentWithBrowserRouter(<SystemItemsTable {...props} />);
@@ -26,18 +25,18 @@ describe('SystemItemsTable', () => {
 
     user = userEvent.setup();
 
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders correctly', async () => {

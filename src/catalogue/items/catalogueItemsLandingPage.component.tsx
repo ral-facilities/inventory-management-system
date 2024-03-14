@@ -478,8 +478,9 @@ function CatalogueItemsLandingPage() {
           >
             <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
             <Typography>
-              This catalogue item doesn't exist. Please click the Home button on
-              the top left of you screen to navigate to the catalogue home
+              This catalogue item doesn&#39;t exist. Please click the Home
+              button on the top left of your screen to navigate to the catalogue
+              home.
             </Typography>
           </Box>
         )

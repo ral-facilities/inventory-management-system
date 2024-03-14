@@ -1,15 +1,17 @@
-import React from 'react';
-import { renderComponentWithBrowserRouter } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { renderComponentWithBrowserRouter } from '../testUtils';
 import Manufacturer from './manufacturer.component';
-import userEvent from '@testing-library/user-event';
-const mockedUseNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+
+const mockedUseNavigate = vi.fn();
+
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
   useNavigate: () => mockedUseNavigate,
 }));
+
 describe('Manufacturer', () => {
-  let user;
+  let user: UserEvent;
   const createView = () => {
     return renderComponentWithBrowserRouter(<Manufacturer />);
   };
