@@ -1,20 +1,19 @@
-import React from 'react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { imsApi } from '../api/api';
+import handleIMS_APIError from '../handleIMS_APIError';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
   getItemById,
   renderComponentWithBrowserRouter,
-} from '../setupTests';
+} from '../testUtils';
 import ItemDialog, {
   ItemDialogProps,
   isValidDateTime,
 } from './itemDialog.component';
-import { fireEvent, screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import handleIMS_APIError from '../handleIMS_APIError';
-import { imsApi } from '../api/api';
 
-jest.mock('../handleIMS_APIError');
+vi.mock('../handleIMS_APIError');
 
 describe('isValidDateTime', () => {
   it('should return true for a valid date string', () => {
@@ -55,7 +54,7 @@ describe('isValidDateTime', () => {
 describe('ItemDialog', () => {
   let props: ItemDialogProps;
   let user;
-  const onClose = jest.fn();
+  const onClose = vi.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(<ItemDialog {...props} />);
@@ -178,14 +177,14 @@ describe('ItemDialog', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('Add Item', () => {
     let axiosPostSpy;
 
     beforeEach(() => {
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     it('displays no item properties message', async () => {
@@ -713,7 +712,7 @@ describe('ItemDialog', () => {
     let axiosPatchSpy;
 
     beforeEach(() => {
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
       props.selectedItem = getItemById('G463gOIA');
       props.type = 'edit';
     });

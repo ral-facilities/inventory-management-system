@@ -1,10 +1,9 @@
 import { screen } from '@testing-library/react';
-import React from 'react';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
   renderComponentWithBrowserRouter,
-} from '../../setupTests';
+} from '../../testUtils';
 
 import userEvent from '@testing-library/user-event';
 import CatalogueItemsDetailsPanel, {

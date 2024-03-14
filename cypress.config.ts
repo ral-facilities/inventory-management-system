@@ -9,13 +9,5 @@ export default defineConfig({
       runMode: 3,
       openMode: 1,
     },
-    setupNodeEvents(on, config) {
-      // `on` is used to hook into various events Cypress emits
-      // `config` is the resolved Cypress config
-      on('task', {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        failed: require('cypress-failed-log/src/failed')(),
-      });
-    },
   },
 });

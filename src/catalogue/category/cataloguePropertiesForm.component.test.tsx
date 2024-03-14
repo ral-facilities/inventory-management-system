@@ -1,23 +1,22 @@
-import React from 'react';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import CataloguePropertiesForm, {
-  CataloguePropertiesFormProps,
-} from './cataloguePropertiesForm.component';
 import {
   CatalogueCategoryFormData,
   CatalogueItemPropertiesErrorsType,
 } from '../../app.types';
+import { renderComponentWithBrowserRouter } from '../../testUtils';
+import CataloguePropertiesForm, {
+  CataloguePropertiesFormProps,
+} from './cataloguePropertiesForm.component';
 
 describe('Catalogue Properties Form', () => {
   let props: CataloguePropertiesFormProps;
   let user;
-  const onChangeFormFields = jest.fn();
-  const onChangeCatalogueItemPropertiesErrors = jest.fn();
-  const onChangeAllowedValuesListErrors = jest.fn();
+  const onChangeFormFields = vi.fn();
+  const onChangeCatalogueItemPropertiesErrors = vi.fn();
+  const onChangeAllowedValuesListErrors = vi.fn();
 
-  const resetFormError = jest.fn();
+  const resetFormError = vi.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(
       <CataloguePropertiesForm {...props} />
@@ -39,7 +38,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders correctly', async () => {

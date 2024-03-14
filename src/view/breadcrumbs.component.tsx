@@ -7,7 +7,6 @@ import {
   styled,
   IconButton,
 } from '@mui/material';
-import React from 'react';
 import { BreadcrumbsInfo } from '../app.types';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import HomeIcon from '@mui/icons-material/Home';

@@ -1,6 +1,5 @@
-import React from 'react';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
 import { screen, waitFor } from '@testing-library/react';
+import { renderComponentWithBrowserRouter } from '../../testUtils';
 
 import userEvent from '@testing-library/user-event';
 import CatalogueCategoryTableView, {
@@ -11,7 +10,7 @@ describe('CatalogueCategoryTableView', () => {
   let props: CatalogueCategoryTableViewProps;
   let user;
 
-  const onChangeParentCategoryId = jest.fn();
+  const onChangeParentCategoryId = vi.fn();
   const createView = () => {
     return renderComponentWithBrowserRouter(
       <CatalogueCategoryTableView {...props} />
@@ -168,7 +167,7 @@ describe('CatalogueCategoryTableView', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders text correctly', async () => {

@@ -1,20 +1,19 @@
-import React from 'react';
-import { screen, RenderResult, waitFor } from '@testing-library/react';
+import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { CatalogueItem } from '../../app.types';
+import handleIMS_APIError from '../../handleIMS_APIError';
+import { renderComponentWithBrowserRouter } from '../../testUtils';
 import DeleteCatalogueItemDialog, {
   DeleteCatalogueItemDialogProps,
 } from './deleteCatalogueItemDialog.component';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
-import { CatalogueItem } from '../../app.types';
-import handleIMS_APIError from '../../handleIMS_APIError';
 
-jest.mock('../../handleIMS_APIError');
+vi.mock('../../handleIMS_APIError');
 
 describe('delete Catalogue Category dialogue', () => {
   let props: DeleteCatalogueItemDialogProps;
   let user;
-  const onClose = jest.fn();
-  const onChangeCatalogueItem = jest.fn();
+  const onClose = vi.fn();
+  const onChangeCatalogueItem = vi.fn();
   let catalogueItem: CatalogueItem;
 
   const createView = (): RenderResult => {
@@ -40,7 +39,7 @@ describe('delete Catalogue Category dialogue', () => {
     user = userEvent; // Assigning userEvent to 'user'
   });
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('renders correctly', async () => {
     createView();

@@ -18,7 +18,7 @@ export const generateUniqueName = (
 
 /* Returns whether running in development mode */
 export const isRunningInDevelopment = (): boolean => {
-  return process.env.NODE_ENV !== 'production';
+  return import.meta.env.DEV;
 };
 
 /* Returns a calc function giving the page height excluding SciGateway related components
@@ -37,7 +37,7 @@ export const getSciGatewayPageHeightCalc = (
    that only appears in development */
 export const getPageHeightCalc = (additionalSubtraction?: string): string => {
   // SciGateway heights - view tabs (if in development) - additional
-  let newAdditional = undefined;
+  let newAdditional: string | undefined = undefined;
 
   if (isRunningInDevelopment()) newAdditional = '48px';
   if (additionalSubtraction !== undefined) {

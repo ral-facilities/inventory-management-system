@@ -70,7 +70,7 @@ function ViewTabs() {
   // The useEffect below is only active when it is in not production
   // because that is when the tabs are visible
   React.useEffect(() => {
-    if (process.env.NODE_ENV !== 'production') {
+    if (import.meta.env.DEV) {
       const prefixIndex = location.pathname.indexOf(paths.root);
       let tabValue =
         prefixIndex !== -1

@@ -12,7 +12,7 @@ import {
   getItemsByCatalogueItemId,
   getItemsBySystemId,
   hooksWrapperWithProviders,
-} from '../setupTests';
+} from '../testUtils';
 import {
   AddItem,
   EditItem,
@@ -25,7 +25,7 @@ import { imsApi } from './api';
 
 describe('catalogue items api functions', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('useAddItem', () => {
@@ -153,7 +153,7 @@ describe('catalogue items api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      expect(result.current.data).toEqual('');
+      expect(result.current.data).toEqual({ status: 204 });
     });
   });
 
@@ -219,11 +219,11 @@ describe('catalogue items api functions', () => {
         targetSystem: SystemsJSON[0] as System,
       };
 
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('sends requests to move multiple items to a system and returns a successful response for each', async () => {

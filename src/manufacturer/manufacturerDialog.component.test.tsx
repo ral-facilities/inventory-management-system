@@ -1,26 +1,26 @@
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ManufacturerDialog, {
-  ManufacturerDialogProps,
-} from './manufacturerDialog.component';
+import { imsApi } from '../api/api';
+import handleIMS_APIError from '../handleIMS_APIError';
 import {
   getManufacturerById,
   renderComponentWithBrowserRouter,
-} from '../setupTests';
-import handleIMS_APIError from '../handleIMS_APIError';
-import { imsApi } from '../api/api';
+} from '../testUtils';
+import ManufacturerDialog, {
+  ManufacturerDialogProps,
+} from './manufacturerDialog.component';
 
-jest.mock('../handleIMS_APIError');
+vi.mock('../handleIMS_APIError');
 
 describe('Add manufacturer dialog', () => {
-  const onClose = jest.fn();
+  const onClose = vi.fn();
   let props: ManufacturerDialogProps;
   let user;
   let axiosPostSpy;
   const createView = () => {
     return renderComponentWithBrowserRouter(<ManufacturerDialog {...props} />);
   };
+
   beforeEach(() => {
     props = {
       open: true,
@@ -31,7 +31,7 @@ describe('Add manufacturer dialog', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   const modifyManufacturerValues = (values: {
     name?: string;
@@ -86,11 +86,11 @@ describe('Add manufacturer dialog', () => {
 
   describe('Add manufacturer', () => {
     beforeEach(() => {
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
     it('renders text fields correctly', async () => {
       createView();
@@ -235,7 +235,7 @@ describe('Add manufacturer dialog', () => {
         type: 'edit',
       };
 
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
     it('Edits a manufacturer correctly', async () => {

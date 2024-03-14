@@ -1,9 +1,3 @@
-import React from 'react';
-import {
-  renderComponentWithBrowserRouter,
-  getCatalogueCategoryById,
-  getCatalogueItemById,
-} from '../../setupTests';
 import {
   act,
   fireEvent,
@@ -12,20 +6,25 @@ import {
   within,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {
+  getCatalogueCategoryById,
+  getCatalogueItemById,
+  renderComponentWithBrowserRouter,
+} from '../../testUtils';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
 
-import handleIMS_APIError from '../../handleIMS_APIError';
 import { imsApi } from '../../api/api';
+import handleIMS_APIError from '../../handleIMS_APIError';
 
-jest.mock('../../handleIMS_APIError');
+vi.mock('../../handleIMS_APIError');
 
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
   let user;
   let axiosPostSpy;
-  const onClose = jest.fn();
+  const onClose = vi.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(
@@ -42,7 +41,7 @@ describe('Catalogue Items Dialog', () => {
     };
 
     user = userEvent.setup();
-    axiosPostSpy = jest.spyOn(imsApi, 'post');
+    axiosPostSpy = vi.spyOn(imsApi, 'post');
   });
   const modifyValues = async (values: {
     name?: string;
@@ -154,7 +153,7 @@ describe('Catalogue Items Dialog', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders details step correctly', async () => {
@@ -627,7 +626,7 @@ describe('Catalogue Items Dialog', () => {
         type: 'edit',
       };
 
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
     it('Edit a catalogue item (catalogue detail)', async () => {

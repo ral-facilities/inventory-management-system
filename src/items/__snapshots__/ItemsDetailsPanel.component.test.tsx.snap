@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Catalogue Items details panel renders details panel correctly (None values for telephone and url) 1`] = `
+exports[`Catalogue Items details panel > renders details panel correctly (None values for telephone and url) 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid-root MuiGrid-container css-k6wrnl-MuiGrid-root"
@@ -565,7 +565,7 @@ exports[`Catalogue Items details panel renders details panel correctly (None val
 </DocumentFragment>
 `;
 
-exports[`Catalogue Items details panel renders details panel correctly (no dates) 1`] = `
+exports[`Catalogue Items details panel > renders details panel correctly (no dates) 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid-root MuiGrid-container css-k6wrnl-MuiGrid-root"
@@ -1130,7 +1130,7 @@ exports[`Catalogue Items details panel renders details panel correctly (no dates
 </DocumentFragment>
 `;
 
-exports[`Catalogue Items details panel renders details panel correctly 1`] = `
+exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid-root MuiGrid-container css-k6wrnl-MuiGrid-root"
@@ -1695,7 +1695,7 @@ exports[`Catalogue Items details panel renders details panel correctly 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] = `
+exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid-root MuiGrid-container css-k6wrnl-MuiGrid-root"
@@ -2287,7 +2287,7 @@ exports[`Catalogue Items details panel renders manufacturer panel correctly 1`] 
 </DocumentFragment>
 `;
 
-exports[`Catalogue Items details panel renders notes panel correctly 1`] = `
+exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid-root MuiGrid-container css-k6wrnl-MuiGrid-root"
@@ -2879,7 +2879,7 @@ exports[`Catalogue Items details panel renders notes panel correctly 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Catalogue Items details panel renders properties panel correctly 1`] = `
+exports[`Catalogue Items details panel > renders properties panel correctly 1`] = `
 <DocumentFragment>
   <div
     class="MuiGrid-root MuiGrid-container css-k6wrnl-MuiGrid-root"

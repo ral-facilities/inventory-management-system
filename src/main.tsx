@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as log from 'loglevel';
-import { SetupWorker } from 'msw';
+import { SetupWorker } from 'msw/browser';
 import React from 'react';
 import ReactDOMClient from 'react-dom/client';
 import singleSpaReact from 'single-spa-react';
@@ -104,9 +104,9 @@ export function unmount(props: unknown): Promise<void> {
 // only export this for testing
 export const fetchSettings =
   (): Promise<InventoryManagementSystemSettings | void> => {
-    const settingsPath = process.env
-      .REACT_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY
-      ? process.env.REACT_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY +
+    const settingsPath = import.meta.env
+      .VITE_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY
+      ? import.meta.env.VITE_APP_INVENTORY_MANAGEMENT_SYSTEM_BUILD_DIRECTORY +
         'inventory-management-system-settings.json'
       : '/inventory-management-system-settings.json';
     return axios
@@ -168,18 +168,15 @@ export const fetchSettings =
       });
   };
 
-function prepare() {
-  if (
-    process.env.NODE_ENV === 'development' ||
-    process.env.REACT_APP_E2E_TESTING === 'true'
-  ) {
+async function prepare() {
+  if (import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true') {
     // need to use require instead of import as import breaks when loaded in SG
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { worker } = require('./mocks/browser');
+    const { worker } = await import('./mocks/browser');
     return (worker as SetupWorker).start({
       onUnhandledRequest(request, print) {
         // Ignore unhandled requests to non-localhost things (normally means you're contacting a real server)
-        if (request.url.hostname !== 'localhost') {
+        if (request.url.includes('localhost')) {
           return;
         }
 
@@ -194,27 +191,34 @@ const settings = fetchSettings();
 
 setSettings(settings);
 
-if (
-  process.env.NODE_ENV === 'development' &&
-  process.env.REACT_APP_E2E_TESTING !== 'true'
-) {
+/* Renders only if we're not being loaded by SG  */
+const conditionalSciGatewayRender = () => {
+  if (!document.getElementById('scigateway')) {
+    render();
+  }
+};
+
+if (import.meta.env.DEV) {
+  // When in dev, only use MSW if the api url or otherwise if MSW is explicitly requested
   settings
     .then((settings) => {
-      if (settings && settings.apiUrl !== '') {
-        render();
-      } else {
-        prepare().then(() => render());
-      }
+      if (
+        (settings && settings.apiUrl !== '') ||
+        import.meta.env.VITE_APP_INCLUDE_MSW === 'false'
+      )
+        conditionalSciGatewayRender();
+      else prepare().then(() => conditionalSciGatewayRender());
     })
     .catch((error) => log.error(`Got error: ${error.message}`));
 
   log.setDefaultLevel(log.levels.DEBUG);
-} else if (process.env.REACT_APP_E2E_TESTING === 'true') {
-  prepare().then(() => render());
-  log.setDefaultLevel(log.levels.DEBUG);
-} else if (process.env.REACT_APP_E2E_TESTING_API === 'true') {
-  render();
-  log.setDefaultLevel(log.levels.DEBUG);
 } else {
-  log.setDefaultLevel(log.levels.ERROR);
+  // When in production, only use MSW if explicitly requested
+  if (import.meta.env.VITE_APP_INCLUDE_MSW === 'true') {
+    prepare().then(() => conditionalSciGatewayRender());
+    log.setDefaultLevel(log.levels.DEBUG);
+  } else {
+    conditionalSciGatewayRender();
+    log.setDefaultLevel(log.levels.ERROR);
+  }
 }

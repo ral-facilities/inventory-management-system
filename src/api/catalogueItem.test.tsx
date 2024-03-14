@@ -9,7 +9,7 @@ import {
   useEditCatalogueItem,
   useMoveToCatalogueItem,
 } from './catalogueItem';
-import { catalogueItemData, hooksWrapperWithProviders } from '../setupTests';
+import { catalogueItemData, hooksWrapperWithProviders } from '../testUtils';
 import {
   AddCatalogueItem,
   CatalogueItem,
@@ -20,7 +20,7 @@ import CatalogueItemJSON from '../mocks/CatalogueItems.json';
 
 describe('catalogue items api functions', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('useAddCatalogueItem', () => {
@@ -120,6 +120,7 @@ describe('catalogue items api functions', () => {
         properties: [],
       };
     });
+
     it('posts a request to delete a catalogue Item and returns successful response', async () => {
       const { result } = renderHook(() => useDeleteCatalogueItem(), {
         wrapper: hooksWrapperWithProviders(),
@@ -129,7 +130,7 @@ describe('catalogue items api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      expect(result.current.data).toEqual('');
+      expect(result.current.data).toEqual({ status: 204 });
     });
   });
 
@@ -243,7 +244,7 @@ describe('catalogue items api functions', () => {
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
     it('sends requests to move multiple catalogue items and returns successful response', async () => {
       const { result } = renderHook(() => useMoveToCatalogueItem(), {
@@ -285,8 +286,8 @@ describe('catalogue items api functions', () => {
         expect(result.current.isSuccess).toBeTruthy();
       });
       expect(result.current.data).toEqual([
-        { message: undefined, name: 'test', state: 'error' },
-        { message: undefined, name: 'test_copy1', state: 'error' },
+        { message: 'Something went wrong', name: 'test', state: 'error' },
+        { message: 'Something went wrong', name: 'test_copy1', state: 'error' },
       ]);
     });
   });
@@ -367,7 +368,7 @@ describe('catalogue items api functions', () => {
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
     it('sends requests to copy multiple catalogue items and returns successful response', async () => {
       const { result } = renderHook(() => useCopyToCatalogueItem(), {
@@ -409,8 +410,8 @@ describe('catalogue items api functions', () => {
         expect(result.current.isSuccess).toBeTruthy();
       });
       expect(result.current.data).toEqual([
-        { message: undefined, name: 'test', state: 'error' },
-        { message: undefined, name: 'test_copy1', state: 'error' },
+        { message: 'Something went wrong', name: 'test', state: 'error' },
+        { message: 'Something went wrong', name: 'test_copy1', state: 'error' },
       ]);
     });
   });
