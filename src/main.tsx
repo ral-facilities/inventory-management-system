@@ -6,7 +6,6 @@ import ReactDOMClient from 'react-dom/client';
 import singleSpaReact from 'single-spa-react';
 import App from './App';
 import { MicroFrontendId } from './app.types';
-import './index.css';
 import { InventoryManagementSystemSettings, setSettings } from './settings';
 import { PluginRoute, RegisterRouteType } from './state/actions/actions.types';
 

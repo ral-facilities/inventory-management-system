@@ -11,7 +11,6 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
 import { BrowserRouter } from 'react-router-dom';
-import './App.css';
 import {
   clearFailedAuthRequestsQueue,
   retryFailedAuthRequests,
