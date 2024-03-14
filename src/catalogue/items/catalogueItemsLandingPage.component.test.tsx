@@ -92,7 +92,7 @@ describe('Catalogue Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          `This catalogue item doesn't exist. Please click the Home button on the top left of you screen to navigate to the catalogue home`
+          `This catalogue item doesn't exist. Please click the Home button on the top left of your screen to navigate to the catalogue home.`
         )
       ).toBeInTheDocument();
     });

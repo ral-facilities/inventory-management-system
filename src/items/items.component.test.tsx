@@ -97,7 +97,7 @@ describe('Items', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          `These items don't exist. Please click the Home button on the top left of you screen to navigate to the catalogue home`
+          `These items don't exist. Please click the Home button on the top left of your screen to navigate to the catalogue home.`
         )
       ).toBeInTheDocument();
     });
