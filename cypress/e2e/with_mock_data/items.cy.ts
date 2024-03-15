@@ -81,15 +81,13 @@ describe('Items', () => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
-          catalogue_item_id: '1',
-          system_id: '65328f34a40ff5301575a4e3',
+          serial_number: null,
+          asset_number: null,
           purchase_order_number: null,
+          warranty_end_date: null,
+          delivered_date: null,
           is_defective: false,
           usage_status: 0,
-          warranty_end_date: null,
-          asset_number: null,
-          serial_number: null,
-          delivered_date: null,
           notes: null,
           properties: [
             { name: 'Resolution', value: 12 },
@@ -99,6 +97,8 @@ describe('Items', () => {
             { name: 'Broken', value: true },
             { name: 'Older than five years', value: false },
           ],
+          system_id: '65328f34a40ff5301575a4e3',
+          catalogue_item_id: '1',
         })
       );
     });
@@ -129,21 +129,21 @@ describe('Items', () => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
-          catalogue_item_id: '17',
-          system_id: '65328f34a40ff5301575a4e3',
+          serial_number: null,
+          asset_number: null,
           purchase_order_number: null,
+          warranty_end_date: null,
+          delivered_date: null,
           is_defective: false,
           usage_status: 0,
-          warranty_end_date: null,
-          asset_number: null,
-          serial_number: null,
-          delivered_date: null,
           notes: null,
           properties: [
             { name: 'Pumping Speed', value: 400 },
             { name: 'Ultimate Pressure', value: 0.2 },
             { name: 'Axis', value: 'y' },
           ],
+          system_id: '65328f34a40ff5301575a4e3',
+          catalogue_item_id: '17',
         })
       );
     });
@@ -190,15 +190,13 @@ describe('Items', () => {
       expect(postRequests.length).eq(1);
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
-          catalogue_item_id: '1',
-          system_id: '65328f34a40ff5301575a4e3',
+          serial_number: 'test1234',
+          asset_number: 'test13221',
           purchase_order_number: 'test23',
+          warranty_end_date: '2028-02-12T00:00:00.000Z',
+          delivered_date: '2028-02-12T00:00:00.000Z',
           is_defective: true,
           usage_status: 3,
-          warranty_end_date: '2028-02-12T00:00:00.000Z',
-          asset_number: 'test13221',
-          serial_number: 'test1234',
-          delivered_date: '2028-02-12T00:00:00.000Z',
           notes: 'test',
           properties: [
             { name: 'Resolution', value: 1218 },
@@ -208,6 +206,8 @@ describe('Items', () => {
             { name: 'Broken', value: false },
             { name: 'Older than five years', value: true },
           ],
+          system_id: '65328f34a40ff5301575a4e3',
+          catalogue_item_id: '1',
         })
       );
     });
@@ -239,22 +239,28 @@ describe('Items', () => {
     cy.findByLabelText('Broken *').click();
     cy.findByRole('option', { name: 'None' }).click();
 
-    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByText(
+      'Please enter a valid number as this field is mandatory'
+    ).should('exist');
 
-    cy.findAllByText(
+    cy.findByText(
       'Please enter a valid value as this field is mandatory'
-    ).should('have.length', 2);
+    ).should('exist');
+
     cy.findByText('Please select either True or False').should('exist');
 
-    cy.findByLabelText('Resolution (megapixels) *').type('test');
+    cy.findByLabelText('Resolution (megapixels) *').type('12');
     cy.findByLabelText('Sensor Type *').type('test');
     cy.findByLabelText('Broken *').click();
     cy.findByRole('option', { name: 'True' }).click();
 
     cy.findByText('Please select either True or False').should('not.exist');
-    cy.findAllByText(
+    cy.findByText(
       'Please enter a valid value as this field is mandatory'
     ).should('not.exist');
+    cy.findByText(
+      'Please enter a valid number as this field is mandatory'
+    ).should('not exist');
   });
 
   it('sets the table filters and clears the table filters', () => {
@@ -357,7 +363,7 @@ describe('Items', () => {
           serial_number: '5YUQDDjKpz2z',
           delivered_date: '2023-03-17T00:00:00.000Z',
           notes:
-            '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this ID: KvT2Ox7n',
+            '6Y5XTJfBrNNx8oltI9HE\\n\\nThis is a copy of the item with this ID: KvT2Ox7n',
           properties: [
             { name: 'Resolution', value: 0 },
             { name: 'Frame Rate', value: null },
