@@ -553,7 +553,12 @@ describe('Catalogue Category', () => {
               mandatory: true,
               allowed_values: null,
             },
-            { name: 'Accuracy', type: 'string', mandatory: true },
+            {
+              name: 'Accuracy',
+              type: 'string',
+              mandatory: true,
+              allowed_values: null,
+            },
           ],
         })
       );
