@@ -810,6 +810,43 @@ describe('ItemDialog', () => {
       });
     });
 
+    it('edits an item where the item property has an allowed list of values (optional)', async () => {
+      props = {
+        ...props,
+        catalogueCategory: getCatalogueCategoryById('12'),
+        catalogueItem: getCatalogueItemById('17'),
+      };
+      createView();
+
+      await user.click(screen.getByText('Edit item properties'));
+
+      fireEvent.change(
+        screen.getByLabelText('Ultimate Pressure (millibar) *'),
+        {
+          target: { value: '10' },
+        }
+      );
+
+      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+
+      fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('None'));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
+        properties: [
+          { name: 'Pumping Speed', value: 400 },
+          { name: 'Ultimate Pressure', value: 10 },
+          {
+            name: 'Axis',
+            value: null,
+          },
+        ],
+      });
+    });
+
     it('displays error message when property values type is incorrect', async () => {
       createView();
 

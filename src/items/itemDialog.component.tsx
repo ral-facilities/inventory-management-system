@@ -742,9 +742,12 @@ function ItemDialog(props: ItemDialogProps) {
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
                               >
+                                <MenuItem key={0} value={''}>
+                                  {'None'}
+                                </MenuItem>
                                 {property.allowed_values.values.map(
                                   (value, index) => (
-                                    <MenuItem key={index} value={value}>
+                                    <MenuItem key={index + 1} value={value}>
                                       {value}
                                     </MenuItem>
                                   )
