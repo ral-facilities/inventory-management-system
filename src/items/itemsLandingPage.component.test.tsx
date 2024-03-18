@@ -12,7 +12,7 @@ vi.mock('react-router-dom', async () => ({
   useNavigate: () => mockedUseNavigate,
 }));
 
-describe('Catalogue Items Landing Page', () => {
+describe('Items Landing Page', () => {
   let user: UserEvent;
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(
