@@ -63,4 +63,20 @@ describe('Catalogue Items details panel', () => {
 
     expect(view.asFragment()).toMatchSnapshot();
   });
+
+  it('renders notes panel correctly', async () => {
+    const view = createView();
+    await user.click(screen.getByText('Notes'));
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders details panel correctly (when there are no Notes)', async () => {
+    props.catalogueCategoryData = getCatalogueCategoryById('4');
+    props.catalogueItemIdData = getCatalogueItemById('33');
+
+    const view = createView();
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
 });

@@ -64,6 +64,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
           <Tab label="Details" />
           <Tab label="Properties" />
           <Tab label="Manufacturer" />
+          <Tab label="Notes" />
         </Tabs>
       </Grid>
       <Grid item container sx={{ ml: 2 }} xs={12}>
@@ -176,15 +177,6 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 </Grid>
               </Grid>
             </Grid>
-
-            <Grid item xs={12}>
-              <Typography sx={{ my: 1 }} variant="h6">
-                Notes:
-              </Typography>
-              <Typography sx={{ mb: 1 }} variant="body1">
-                {catalogueItemIdData.notes ?? 'None'}
-              </Typography>
-            </Grid>
           </Grid>
         </TabPanel>
 
@@ -255,6 +247,16 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               </Typography>
               <Typography align="left" color="text.secondary">
                 {manufacturerData?.address.postcode}
+              </Typography>
+            </Grid>
+          </Grid>
+        </TabPanel>
+
+        <TabPanel value={tabValue} index={3}>
+          <Grid item container spacing={0}>
+            <Grid item xs={12}>
+              <Typography color="text.secondary">
+                {catalogueItemIdData.notes ?? 'None'}
               </Typography>
             </Grid>
           </Grid>
