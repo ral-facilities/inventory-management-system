@@ -254,8 +254,9 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
         <TabPanel value={tabValue} index={3}>
           <Grid item container spacing={0}>
             <Grid item xs={12}>
-              <Typography variant="h4">Notes</Typography>
-              <Typography color="text.secondary">{itemData.notes}</Typography>
+              <Typography color="text.secondary">
+                {itemData.notes ?? 'None'}
+              </Typography>
             </Grid>
           </Grid>
         </TabPanel>
