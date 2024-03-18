@@ -1474,41 +1474,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/react-table@npm:8.11.8":
-  version: 8.11.8
-  resolution: "@tanstack/react-table@npm:8.11.8"
+"@tanstack/react-table@npm:8.13.2":
+  version: 8.13.2
+  resolution: "@tanstack/react-table@npm:8.13.2"
   dependencies:
-    "@tanstack/table-core": "npm:8.11.8"
+    "@tanstack/table-core": "npm:8.13.2"
   peerDependencies:
     react: ">=16"
     react-dom: ">=16"
-  checksum: 10c0/c3ce8a679058da31ff10fb53a5aeb512b168b7e7997a3f5a93c91b2fa2b93d620e44dd33c00c03991b259286039581be7ca608081421dc8fd6f0c93b308a5068
+  checksum: 10c0/780f206c29bcd4386638cb935d27df2db002026c8a3c06eacbf4fcedaeefd20b212ccc4eea2f00feee66840c8d401b478b21d83ab69902341402cb2d3aa5cb60
   languageName: node
   linkType: hard
 
-"@tanstack/react-virtual@npm:3.0.4":
-  version: 3.0.4
-  resolution: "@tanstack/react-virtual@npm:3.0.4"
+"@tanstack/react-virtual@npm:3.1.3":
+  version: 3.1.3
+  resolution: "@tanstack/react-virtual@npm:3.1.3"
   dependencies:
-    "@tanstack/virtual-core": "npm:3.0.0"
+    "@tanstack/virtual-core": "npm:3.1.3"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10c0/6222dc1254843fa52bdb93deca74282e2b8aabd17337d7b35596441bb70d1d7e333b1679acfb50240847799d63ee24eb184958ad8c7f1ca84c4ff0c13aefa7ec
+  checksum: 10c0/66d06f8c152e975cce861f459e811c0aaa4fd478d626d3792c31c55d3d931214ace3512430aeb0448b654cfb8a145be82caf62916a91d42cd44ef2558e259520
   languageName: node
   linkType: hard
 
-"@tanstack/table-core@npm:8.11.8":
-  version: 8.11.8
-  resolution: "@tanstack/table-core@npm:8.11.8"
-  checksum: 10c0/3e36220b16952d4356a74aa762ebf58d6e51033defe87aa482f03b6f342a91783ad755af2bccc27eafb6debfa73d8fa4e91d7fe57282c95322fdde86f0951c0c
+"@tanstack/table-core@npm:8.13.2":
+  version: 8.13.2
+  resolution: "@tanstack/table-core@npm:8.13.2"
+  checksum: 10c0/e81934be7792ee24d66e22471849659abfb926f0e9fda22eea3a94060f4c6d9197b1d5a901700adafe84263950acb97816b7b4736e14353ef58f49a10f8400aa
   languageName: node
   linkType: hard
 
-"@tanstack/virtual-core@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@tanstack/virtual-core@npm:3.0.0"
-  checksum: 10c0/d0899fe470b43f80a2ccc567a01138cc015900f13d91b82abc784fc7bc46419e9c8b99c102a5c6ee76d15933db61aecc68c0ae8e92e9cb9ded9ae2f51a01cf4c
+"@tanstack/virtual-core@npm:3.1.3":
+  version: 3.1.3
+  resolution: "@tanstack/virtual-core@npm:3.1.3"
+  checksum: 10c0/4c825b47f7d0badc9ca206227d8fbc2546011a8a3b228618907229c0c0efe1cc8c4854a98c312b01d4f8b7aa41c87550f0863546998edc6d76c05a07ca8ba15b
   languageName: node
   linkType: hard
 
@@ -5968,12 +5968,12 @@ __metadata:
   linkType: hard
 
 "material-react-table@npm:^2.0.4":
-  version: 2.11.1
-  resolution: "material-react-table@npm:2.11.1"
+  version: 2.12.1
+  resolution: "material-react-table@npm:2.12.1"
   dependencies:
     "@tanstack/match-sorter-utils": "npm:8.11.8"
-    "@tanstack/react-table": "npm:8.11.8"
-    "@tanstack/react-virtual": "npm:3.0.4"
+    "@tanstack/react-table": "npm:8.13.2"
+    "@tanstack/react-virtual": "npm:3.1.3"
     highlight-words: "npm:1.2.2"
   peerDependencies:
     "@emotion/react": ">=11.11"
@@ -5981,9 +5981,9 @@ __metadata:
     "@mui/icons-material": ">=5.11"
     "@mui/material": ">=5.13"
     "@mui/x-date-pickers": ">=6.15.0"
-    react: ">=18.0"
-    react-dom: ">=18.0"
-  checksum: 10c0/6c8b6f909a6a82153f38148ae0e4cf5442f0097ac67bbee23c5593ec839a7bcbcda29f458c6019dd56519baa61623f5134417c87c187797238a2923203fb6163
+    react: ">=17.0"
+    react-dom: ">=17.0"
+  checksum: 10c0/97e30acb8078276a6da4bbe9765c4283a0a698fc25626ac3d4a219a3fa75ff92f07524f3c6f26cd50514d6a1526aa547917e1557ea9cb7d157442c594d621de2
   languageName: node
   linkType: hard
 
