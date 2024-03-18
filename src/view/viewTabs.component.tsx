@@ -115,7 +115,7 @@ function ViewTabs() {
           </Box>
         </>
       ) : (
-        <></>
+        <Outlet />
       )}
     </Box>
   );
