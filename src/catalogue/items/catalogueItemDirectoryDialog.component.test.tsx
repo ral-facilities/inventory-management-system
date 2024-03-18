@@ -41,14 +41,13 @@ describe('catalogue item directory Dialog', () => {
             type: 'number',
             unit: 'Joules',
             mandatory: true,
-            allowed_values: undefined,
+            allowed_values: null,
           },
           {
             name: 'Accuracy',
             type: 'string',
             mandatory: false,
-            allowed_values: undefined,
-            unit: undefined,
+            allowed_values: null,
           },
         ],
         created_time: '2024-01-01T12:00:00.000+00:00',
@@ -68,7 +67,7 @@ describe('catalogue item directory Dialog', () => {
             {
               name: 'Accuracy',
               value: '±0.5%',
-              unit: undefined,
+              unit: null,
             },
           ],
           id: '89',
@@ -231,7 +230,7 @@ describe('catalogue item directory Dialog', () => {
       });
     }, 10000);
 
-    it.only('moves multiple catalogue items', async () => {
+    it('moves multiple catalogue items', async () => {
       props.parentCategoryId = '8967';
 
       createView();
@@ -291,7 +290,7 @@ describe('catalogue item directory Dialog', () => {
       vi.clearAllMocks();
     });
 
-    it.only('copies multiple catalogue items (new catalogue category)', async () => {
+    it('copies multiple catalogue items (new catalogue category)', async () => {
       props.parentCategoryId = '8967';
 
       createView();
@@ -355,7 +354,7 @@ describe('catalogue item directory Dialog', () => {
       });
     });
 
-    it.only('copies multiple catalogue items (same catalogue category)', async () => {
+    it('copies multiple catalogue items (same catalogue category)', async () => {
       props.parentCategoryId = '5';
 
       createView();
