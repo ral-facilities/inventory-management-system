@@ -112,164 +112,128 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Obsolete
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          No
-                        </p>
-                      </div>
+                        Obsolete
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        No
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Obsolete replacement link
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Obsolete replacement link
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Obsolete Reason
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Obsolete Reason
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Cost (£)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          1800
-                        </p>
-                      </div>
+                        Cost (£)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        1800
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Cost to rework (£)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Cost to rework (£)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Time to replace (days)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          7
-                        </p>
-                      </div>
+                        Time to replace (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        7
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Time to rework (days)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Time to rework (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Drawing Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Drawing Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Model Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Model Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -348,7 +312,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -649,170 +613,134 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Obsolete
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          No
-                        </p>
-                      </div>
+                        Obsolete
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        No
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        Obsolete replacement link
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                          href="/catalogue/item/10"
+                          target="_blank"
                         >
-                          Obsolete replacement link
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                            href="/catalogue/item/10"
-                            target="_blank"
-                          >
-                            Click here
-                          </a>
-                        </p>
-                      </div>
+                          Click here
+                        </a>
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Obsolete Reason
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Obsolete Reason
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Cost (£)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          1100
-                        </p>
-                      </div>
+                        Cost (£)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        1100
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Cost to rework (£)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Cost to rework (£)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Time to replace (days)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          90
-                        </p>
-                      </div>
+                        Time to replace (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        90
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Time to rework (days)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Time to rework (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Drawing Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Drawing Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Model Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Model Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -891,7 +819,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1136,170 +1064,134 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Obsolete
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          Yes
-                        </p>
-                      </div>
+                        Obsolete
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        Yes
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        Obsolete replacement link
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                          href="/catalogue/item/6"
+                          target="_blank"
                         >
-                          Obsolete replacement link
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                            href="/catalogue/item/6"
-                            target="_blank"
-                          >
-                            Click here
-                          </a>
-                        </p>
-                      </div>
+                          Click here
+                        </a>
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Obsolete Reason
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          The item is no longer being manufactured
-                        </p>
-                      </div>
+                        Obsolete Reason
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        The item is no longer being manufactured
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Cost (£)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          500
-                        </p>
-                      </div>
+                        Cost (£)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        500
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Cost to rework (£)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Cost to rework (£)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Time to replace (days)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          7
-                        </p>
-                      </div>
+                        Time to replace (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        7
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Time to rework (days)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Time to rework (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Drawing Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Drawing Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Model Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Model Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1378,7 +1270,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1633,170 +1525,134 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Obsolete
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          Yes
-                        </p>
-                      </div>
+                        Obsolete
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        Yes
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        Obsolete replacement link
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                          href="/catalogue/item/6"
+                          target="_blank"
                         >
-                          Obsolete replacement link
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                            href="/catalogue/item/6"
-                            target="_blank"
-                          >
-                            Click here
-                          </a>
-                        </p>
-                      </div>
+                          Click here
+                        </a>
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Obsolete Reason
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          The item is no longer being manufactured
-                        </p>
-                      </div>
+                        Obsolete Reason
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        The item is no longer being manufactured
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Cost (£)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          500
-                        </p>
-                      </div>
+                        Cost (£)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        500
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Cost to rework (£)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Cost to rework (£)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Time to replace (days)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          7
-                        </p>
-                      </div>
+                        Time to replace (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        7
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Time to rework (days)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Time to rework (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Drawing Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Drawing Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Model Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Model Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1875,7 +1731,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -2129,170 +1985,134 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Obsolete
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          Yes
-                        </p>
-                      </div>
+                        Obsolete
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        Yes
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                        Obsolete replacement link
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                          href="/catalogue/item/6"
+                          target="_blank"
                         >
-                          Obsolete replacement link
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          <a
-                            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                            href="/catalogue/item/6"
-                            target="_blank"
-                          >
-                            Click here
-                          </a>
-                        </p>
-                      </div>
+                          Click here
+                        </a>
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Obsolete Reason
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          The item is no longer being manufactured
-                        </p>
-                      </div>
+                        Obsolete Reason
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        The item is no longer being manufactured
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Cost (£)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          500
-                        </p>
-                      </div>
+                        Cost (£)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        500
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Cost to rework (£)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Cost to rework (£)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Time to replace (days)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          7
-                        </p>
-                      </div>
+                        Time to replace (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        7
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Time to rework (days)
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Time to rework (days)
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Drawing Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Drawing Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Model Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Model Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -2370,7 +2190,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"

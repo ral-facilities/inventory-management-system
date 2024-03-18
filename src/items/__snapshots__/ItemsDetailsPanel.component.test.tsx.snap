@@ -124,164 +124,128 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Serial Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          tWdvjircsEhc
-                        </p>
-                      </div>
+                        Serial Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        tWdvjircsEhc
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Asset Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          HCPbzzzanH
-                        </p>
-                      </div>
+                        Asset Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        HCPbzzzanH
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Purchase Order Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          NL87uLiK
-                        </p>
-                      </div>
+                        Purchase Order Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        NL87uLiK
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Warranty End Date
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          3/5/2023
-                        </p>
-                      </div>
+                        Warranty End Date
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        3/5/2023
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Delivered Date
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          1/14/2023
-                        </p>
-                      </div>
+                        Delivered Date
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        1/14/2023
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Is Defective
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          No
-                        </p>
-                      </div>
+                        Is Defective
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        No
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Usage Status
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          scrapped
-                        </p>
-                      </div>
+                        Usage Status
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        scrapped
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Last Modified
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          02 Jan 2024 13:10
-                        </p>
-                      </div>
+                        Last Modified
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        02 Jan 2024 13:10
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Created
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          01 Jan 2024 12:00
-                        </p>
-                      </div>
+                        Created
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        01 Jan 2024 12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -310,7 +274,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -684,164 +648,128 @@ exports[`Catalogue Items details panel > renders details panel correctly (no dat
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Serial Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          Zf7P8Qu8TD8c
-                        </p>
-                      </div>
+                        Serial Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        Zf7P8Qu8TD8c
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Asset Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          75YWiLwy54
-                        </p>
-                      </div>
+                        Asset Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        75YWiLwy54
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Purchase Order Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          hpGBgi0d
-                        </p>
-                      </div>
+                        Purchase Order Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        hpGBgi0d
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Warranty End Date
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Warranty End Date
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Delivered Date
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          None
-                        </p>
-                      </div>
+                        Delivered Date
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        None
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Is Defective
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          Yes
-                        </p>
-                      </div>
+                        Is Defective
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        Yes
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Usage Status
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          inUse
-                        </p>
-                      </div>
+                        Usage Status
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        inUse
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Last Modified
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          02 Jan 2024 13:10
-                        </p>
-                      </div>
+                        Last Modified
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        02 Jan 2024 13:10
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Created
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          01 Jan 2024 12:00
-                        </p>
-                      </div>
+                        Created
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        01 Jan 2024 12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -870,7 +798,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (no dat
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1244,164 +1172,128 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Serial Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          RncNJlDk1pXC
-                        </p>
-                      </div>
+                        Serial Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        RncNJlDk1pXC
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Asset Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          0etHDZ3ehA
-                        </p>
-                      </div>
+                        Asset Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        0etHDZ3ehA
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Purchase Order Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          AjW0iYHn
-                        </p>
-                      </div>
+                        Purchase Order Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        AjW0iYHn
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Warranty End Date
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          3/6/2023
-                        </p>
-                      </div>
+                        Warranty End Date
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        3/6/2023
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Delivered Date
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          7/31/2023
-                        </p>
-                      </div>
+                        Delivered Date
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        7/31/2023
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Is Defective
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          Yes
-                        </p>
-                      </div>
+                        Is Defective
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        Yes
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Usage Status
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          new
-                        </p>
-                      </div>
+                        Usage Status
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        new
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Last Modified
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          02 Jan 2024 13:10
-                        </p>
-                      </div>
+                        Last Modified
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        02 Jan 2024 13:10
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Created
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          01 Jan 2024 12:00
-                        </p>
-                      </div>
+                        Created
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        01 Jan 2024 12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -1430,7 +1322,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1804,164 +1696,128 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Serial Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          5YUQDDjKpz2z
-                        </p>
-                      </div>
+                        Serial Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        5YUQDDjKpz2z
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Asset Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          LyH8yp1FHf
-                        </p>
-                      </div>
+                        Asset Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        LyH8yp1FHf
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Purchase Order Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          6JYHEjwN
-                        </p>
-                      </div>
+                        Purchase Order Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        6JYHEjwN
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Warranty End Date
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          4/4/2023
-                        </p>
-                      </div>
+                        Warranty End Date
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        4/4/2023
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Delivered Date
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          3/17/2023
-                        </p>
-                      </div>
+                        Delivered Date
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        3/17/2023
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Is Defective
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          No
-                        </p>
-                      </div>
+                        Is Defective
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        No
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Usage Status
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          inUse
-                        </p>
-                      </div>
+                        Usage Status
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        inUse
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Last Modified
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          02 Jan 2024 13:10
-                        </p>
-                      </div>
+                        Last Modified
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        02 Jan 2024 13:10
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Created
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          01 Jan 2024 12:00
-                        </p>
-                      </div>
+                        Created
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        01 Jan 2024 12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -1990,7 +1846,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -2374,164 +2230,128 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Serial Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          5YUQDDjKpz2z
-                        </p>
-                      </div>
+                        Serial Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        5YUQDDjKpz2z
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Asset Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          LyH8yp1FHf
-                        </p>
-                      </div>
+                        Asset Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        LyH8yp1FHf
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Purchase Order Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          6JYHEjwN
-                        </p>
-                      </div>
+                        Purchase Order Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        6JYHEjwN
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Warranty End Date
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          4/4/2023
-                        </p>
-                      </div>
+                        Warranty End Date
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        4/4/2023
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Delivered Date
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          3/17/2023
-                        </p>
-                      </div>
+                        Delivered Date
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        3/17/2023
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Is Defective
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          No
-                        </p>
-                      </div>
+                        Is Defective
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        No
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Usage Status
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          inUse
-                        </p>
-                      </div>
+                        Usage Status
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        inUse
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Last Modified
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          02 Jan 2024 13:10
-                        </p>
-                      </div>
+                        Last Modified
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        02 Jan 2024 13:10
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Created
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          01 Jan 2024 12:00
-                        </p>
-                      </div>
+                        Created
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        01 Jan 2024 12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -2560,7 +2380,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -2961,164 +2781,128 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Serial Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          5YUQDDjKpz2z
-                        </p>
-                      </div>
+                        Serial Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        5YUQDDjKpz2z
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Asset Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          LyH8yp1FHf
-                        </p>
-                      </div>
+                        Asset Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        LyH8yp1FHf
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Purchase Order Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          6JYHEjwN
-                        </p>
-                      </div>
+                        Purchase Order Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        6JYHEjwN
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Warranty End Date
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          4/4/2023
-                        </p>
-                      </div>
+                        Warranty End Date
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        4/4/2023
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Delivered Date
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          3/17/2023
-                        </p>
-                      </div>
+                        Delivered Date
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        3/17/2023
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Is Defective
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          No
-                        </p>
-                      </div>
+                        Is Defective
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        No
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Usage Status
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          inUse
-                        </p>
-                      </div>
+                        Usage Status
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        inUse
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Last Modified
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          02 Jan 2024 13:10
-                        </p>
-                      </div>
+                        Last Modified
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        02 Jan 2024 13:10
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Created
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          01 Jan 2024 12:00
-                        </p>
-                      </div>
+                        Created
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        01 Jan 2024 12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -3147,7 +2931,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -3548,164 +3332,128 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Serial Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          5YUQDDjKpz2z
-                        </p>
-                      </div>
+                        Serial Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        5YUQDDjKpz2z
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Asset Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          LyH8yp1FHf
-                        </p>
-                      </div>
+                        Asset Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        LyH8yp1FHf
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Purchase Order Number
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          6JYHEjwN
-                        </p>
-                      </div>
+                        Purchase Order Number
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        6JYHEjwN
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Warranty End Date
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          4/4/2023
-                        </p>
-                      </div>
+                        Warranty End Date
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        4/4/2023
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Delivered Date
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          3/17/2023
-                        </p>
-                      </div>
+                        Delivered Date
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        3/17/2023
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Is Defective
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          No
-                        </p>
-                      </div>
+                        Is Defective
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        No
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Usage Status
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          inUse
-                        </p>
-                      </div>
+                        Usage Status
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        inUse
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Last Modified
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          02 Jan 2024 13:10
-                        </p>
-                      </div>
+                        Last Modified
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        02 Jan 2024 13:10
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Created
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          01 Jan 2024 12:00
-                        </p>
-                      </div>
+                        Created
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        01 Jan 2024 12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -3733,7 +3481,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
