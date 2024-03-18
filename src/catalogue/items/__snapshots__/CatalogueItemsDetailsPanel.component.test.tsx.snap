@@ -250,38 +250,30 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Last Modified
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          02 Jan 2024 13:10
-                        </p>
-                      </div>
+                        Last Modified
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        02 Jan 2024 13:10
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Created
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          01 Jan 2024 12:00
-                        </p>
-                      </div>
+                        Created
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        01 Jan 2024 12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -514,17 +506,13 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                   >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    >
-                      None
-                    </p>
-                  </div>
+                    None
+                  </p>
                 </div>
               </div>
             </div>
@@ -786,38 +774,30 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Last Modified
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          02 Jan 2024 13:10
-                        </p>
-                      </div>
+                        Last Modified
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        02 Jan 2024 13:10
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Created
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          01 Jan 2024 12:00
-                        </p>
-                      </div>
+                        Created
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        01 Jan 2024 12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -1050,17 +1030,13 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                   >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    >
-                      None
-                    </p>
-                  </div>
+                    None
+                  </p>
                 </div>
               </div>
             </div>
@@ -1328,38 +1304,30 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Last Modified
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          02 Jan 2024 13:10
-                        </p>
-                      </div>
+                        Last Modified
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        02 Jan 2024 13:10
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Created
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          01 Jan 2024 12:00
-                        </p>
-                      </div>
+                        Created
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        01 Jan 2024 12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -1536,17 +1504,13 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                   >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    >
-                      None
-                    </p>
-                  </div>
+                    None
+                  </p>
                 </div>
               </div>
             </div>
@@ -1814,38 +1778,30 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Last Modified
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          02 Jan 2024 13:10
-                        </p>
-                      </div>
+                        Last Modified
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        02 Jan 2024 13:10
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Created
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          01 Jan 2024 12:00
-                        </p>
-                      </div>
+                        Created
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        01 Jan 2024 12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -2022,17 +1978,13 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                   >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    >
-                      Need to find new manufacturer. 26
-                    </p>
-                  </div>
+                    Need to find new manufacturer. 26
+                  </p>
                 </div>
               </div>
             </div>
@@ -2310,38 +2262,30 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Last Modified
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          02 Jan 2024 13:10
-                        </p>
-                      </div>
+                        Last Modified
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        02 Jan 2024 13:10
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Created
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          01 Jan 2024 12:00
-                        </p>
-                      </div>
+                        Created
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        01 Jan 2024 12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -2517,17 +2461,13 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                   >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    >
-                      Need to find new manufacturer. 26
-                    </p>
-                  </div>
+                    Need to find new manufacturer. 26
+                  </p>
                 </div>
               </div>
             </div>
@@ -2805,38 +2745,30 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Last Modified
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          02 Jan 2024 13:10
-                        </p>
-                      </div>
+                        Last Modified
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        02 Jan 2024 13:10
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Created
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          01 Jan 2024 12:00
-                        </p>
-                      </div>
+                        Created
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        01 Jan 2024 12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -3012,17 +2944,13 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                   >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    >
-                      Need to find new manufacturer. 26
-                    </p>
-                  </div>
+                    Need to find new manufacturer. 26
+                  </p>
                 </div>
               </div>
             </div>
@@ -3300,38 +3228,30 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Last Modified
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          02 Jan 2024 13:10
-                        </p>
-                      </div>
+                        Last Modified
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        02 Jan 2024 13:10
+                      </p>
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                     >
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
-                        >
-                          Created
-                        </p>
-                        <p
-                          class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                        >
-                          01 Jan 2024 12:00
-                        </p>
-                      </div>
+                        Created
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        01 Jan 2024 12:00
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -3507,17 +3427,13 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
-                  <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                   >
-                    <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    >
-                      Need to find new manufacturer. 26
-                    </p>
-                  </div>
+                    Need to find new manufacturer. 26
+                  </p>
                 </div>
               </div>
             </div>

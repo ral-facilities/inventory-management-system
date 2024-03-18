@@ -230,12 +230,10 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
         </TabPanel>
 
         <TabPanel value={tabValue} index={3}>
-          <Grid item container spacing={0}>
-            <Grid item xs={12}>
-              <Typography color="text.secondary">
-                {itemData.notes ?? 'None'}
-              </Typography>
-            </Grid>
+          <Grid item xs={12} spacing={0}>
+            <Typography color="text.secondary">
+              {itemData.notes ?? 'None'}
+            </Typography>
           </Grid>
         </TabPanel>
       </Grid>

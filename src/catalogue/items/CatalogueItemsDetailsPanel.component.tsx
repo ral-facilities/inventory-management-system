@@ -160,21 +160,17 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               </Grid>
 
               <Grid item xs={12} sm={6} key={9}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">Last Modified</Typography>
-                  <Typography color="text.secondary">
-                    {formatDateTimeStrings(catalogueItemIdData.modified_time)}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">Last Modified</Typography>
+                <Typography color="text.secondary">
+                  {formatDateTimeStrings(catalogueItemIdData.modified_time)}
+                </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={10}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">Created</Typography>
-                  <Typography color="text.secondary">
-                    {formatDateTimeStrings(catalogueItemIdData.created_time)}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">Created</Typography>
+                <Typography color="text.secondary">
+                  {formatDateTimeStrings(catalogueItemIdData.created_time)}
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
@@ -253,12 +249,10 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
         </TabPanel>
 
         <TabPanel value={tabValue} index={3}>
-          <Grid item container spacing={0}>
-            <Grid item xs={12}>
-              <Typography color="text.secondary">
-                {catalogueItemIdData.notes ?? 'None'}
-              </Typography>
-            </Grid>
+          <Grid item xs={12} spacing={0}>
+            <Typography color="text.secondary">
+              {catalogueItemIdData.notes ?? 'None'}
+            </Typography>
           </Grid>
         </TabPanel>
       </Grid>
