@@ -8,13 +8,14 @@ import {
 } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useManufacturer } from '../api/manufacturer';
-
 import ManufacturerDialog from './manufacturerDialog.component';
 import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { paths } from '../view/viewTabs.component';
 import { BreadcrumbsInfo } from '../app.types';
 import { formatDateTimeStrings } from '../utils';
+import EditIcon from '@mui/icons-material/Edit';
+import PrintIcon from '@mui/icons-material/Print';
 
 function ManufacturerLandingPage() {
   const { manufacturer_id: manufacturerId } = useParams();
@@ -74,6 +75,7 @@ function ManufacturerLandingPage() {
             <Button
               sx={{ mx: 0.5 }}
               variant="outlined"
+              startIcon={<EditIcon />}
               onClick={() => {
                 setEditManufacturerDialogOpen(true);
               }}
@@ -83,6 +85,7 @@ function ManufacturerLandingPage() {
             <Button
               sx={{ mx: 0.5 }}
               variant="outlined"
+              startIcon={<PrintIcon />}
               onClick={() => {
                 window.print();
               }}
