@@ -46,6 +46,7 @@ describe('catalogue item directory Dialog', () => {
           {
             name: 'Accuracy',
             type: 'string',
+            unit: null,
             mandatory: false,
             allowed_values: null,
           },
