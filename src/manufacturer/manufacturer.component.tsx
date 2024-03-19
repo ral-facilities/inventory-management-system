@@ -65,12 +65,12 @@ function ManufacturerComponent() {
         filterVariant: 'autocomplete',
         filterFn: 'equals',
       },
-
       {
         header: 'Last modified',
-        accessorFn: (row) => row.modified_time,
+        accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
-        size: 250,
+        filterVariant: 'datetime-range',
+        size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&
@@ -123,9 +123,10 @@ function ManufacturerComponent() {
       },
       {
         header: 'Created',
-        accessorFn: (row) => row.created_time,
+        accessorFn: (row) => new Date(row.created_time),
         id: 'created_time',
-        size: 250,
+        filterVariant: 'datetime-range',
+        size: 350,
         enableGrouping: false,
         enableHiding: true,
         Cell: ({ row }) => new Date(row.original.created_time).toLocaleString(),

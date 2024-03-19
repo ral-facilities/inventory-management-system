@@ -152,9 +152,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => row.item.modified_time,
+        accessorFn: (row) => new Date(row.item.modified_time),
         id: 'item.modified_time',
-        size: 250,
+        filterVariant: 'datetime-range',
+        size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.item.modified_time &&
@@ -205,9 +206,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Created',
-        accessorFn: (row) => row.item.created_time,
+        accessorFn: (row) => new Date(row.item.created_time),
         id: 'item.created_time',
-        size: 250,
+        filterVariant: 'datetime-range',
+        size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
           new Date(row.original.item.created_time).toLocaleString(),

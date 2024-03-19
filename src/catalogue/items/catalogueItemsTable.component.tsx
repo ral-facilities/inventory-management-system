@@ -257,9 +257,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => row.catalogueItem.modified_time,
+        accessorFn: (row) => new Date(row.catalogueItem.modified_time),
         id: 'catalogueItem.modified_time',
-        size: 250,
+        filterVariant: 'datetime-range',
+        size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.catalogueItem.modified_time &&
@@ -577,9 +578,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Created',
-        accessorFn: (row) => row.catalogueItem.created_time,
+        accessorFn: (row) => new Date(row.catalogueItem.created_time),
         id: 'catalogueItem.created_time',
-        size: 250,
+        filterVariant: 'datetime-range',
+        size: 350,
         enableGrouping: false,
         enableHiding: true,
         Cell: ({ row }) =>
