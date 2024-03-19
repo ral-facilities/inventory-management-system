@@ -118,9 +118,10 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'Warranty End Date',
-        accessorFn: (row) => row.warranty_end_date,
+        accessorFn: (row) => new Date(row.warranty_end_date ?? ''),
         id: 'warranty_end_date',
-        size: 250,
+        filterVariant: 'date-range',
+        size: 350,
         Cell: ({ row }) => (
           <Typography
             // For ensuring space when grouping
@@ -133,9 +134,10 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'Delivered Date',
-        accessorFn: (row) => row.delivered_date,
+        accessorFn: (row) => new Date(row.delivered_date ?? ''),
         id: 'delivered_date',
-        size: 250,
+        filterVariant: 'date-range',
+        size: 350,
         Cell: ({ row }) => (
           <Typography
             // For ensuring space when grouping

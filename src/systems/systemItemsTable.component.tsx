@@ -168,8 +168,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Delivered Date',
-        accessorKey: 'item.delivered_date',
-        size: 250,
+        accessorFn: (row) => new Date(row.item.delivered_date ?? ''),
+        id: 'item.delivered_date',
+        filterVariant: 'date-range',
+        size: 350,
         Cell: ({ row }) => (
           <Typography
             // For ensuring space when grouping
