@@ -222,7 +222,7 @@ function Systems() {
     // State
     initialState: {
       showGlobalFilter: true,
-      pagination: { pageSize: 10, pageIndex: 0 },
+      pagination: { pageSize: 15, pageIndex: 0 },
     },
     state: { rowSelection: rowSelection },
     // MUI
@@ -231,7 +231,7 @@ function Systems() {
       shape: 'rounded',
       variant: 'outlined',
       showRowsPerPage: true,
-      rowsPerPageOptions: [10, 25, 50],
+      rowsPerPageOptions: [15, 30, 45],
       showFirstButton: false,
       showLastButton: false,
       size: 'small',
