@@ -1998,7 +1998,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
             data-index="3"
           >
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-70l1lt-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-1exvi8x-MuiTableCell-root"
               colspan="11"
             />
           </tr>
