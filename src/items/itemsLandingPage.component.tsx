@@ -221,9 +221,7 @@ function ItemsLandingPage() {
                     </Typography>
                     <Typography align="left" color="text.secondary">
                       {itemData.warranty_end_date
-                        ? new Date(
-                            itemData.warranty_end_date
-                          ).toLocaleDateString()
+                        ? formatDateTimeStrings(itemData.warranty_end_date)
                         : 'None'}
                     </Typography>
                   </Grid>
@@ -234,7 +232,7 @@ function ItemsLandingPage() {
                     </Typography>
                     <Typography align="left" color="text.secondary">
                       {itemData.delivered_date
-                        ? new Date(itemData.delivered_date).toLocaleDateString()
+                        ? formatDateTimeStrings(itemData.delivered_date)
                         : 'None'}
                     </Typography>
                   </Grid>

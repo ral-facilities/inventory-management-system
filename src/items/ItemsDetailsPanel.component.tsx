@@ -105,7 +105,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 <Typography color="text.primary">Warranty End Date</Typography>
                 <Typography color="text.secondary">
                   {itemData.warranty_end_date
-                    ? new Date(itemData.warranty_end_date).toLocaleDateString()
+                    ? formatDateTimeStrings(itemData.warranty_end_date)
                     : 'None'}
                 </Typography>
               </Grid>
@@ -113,7 +113,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 <Typography color="text.primary">Delivered Date</Typography>
                 <Typography color="text.secondary">
                   {itemData.delivered_date
-                    ? new Date(itemData.delivered_date).toLocaleDateString()
+                    ? formatDateTimeStrings(itemData.delivered_date)
                     : 'None'}
                 </Typography>
               </Grid>

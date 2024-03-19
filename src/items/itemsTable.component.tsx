@@ -129,7 +129,7 @@ export function ItemsTable(props: ItemTableProps) {
             sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
             {row.original.warranty_end_date &&
-              new Date(row.original.warranty_end_date).toLocaleDateString()}
+              formatDateTimeStrings(row.original.warranty_end_date)}
           </Typography>
         ),
       },
@@ -145,7 +145,7 @@ export function ItemsTable(props: ItemTableProps) {
             sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
             {row.original.delivered_date &&
-              new Date(row.original.delivered_date).toLocaleDateString()}
+              formatDateTimeStrings(row.original.delivered_date)}
           </Typography>
         ),
       },

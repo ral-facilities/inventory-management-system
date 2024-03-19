@@ -78,6 +78,10 @@ export const trimStringValues = (object: any): any => {
 
 export const formatDateTimeStrings = (dateTime: string): string => {
   const date = parseISO(dateTime);
-  const formattedDate = format(date, 'dd MMM yyyy HH:mm');
+  const formattedDate =
+    date.getHours() !== 0 && date.getMinutes() !== 0
+      ? format(date, 'dd MMM yyyy HH:mm')
+      : format(date, 'dd MMM yyyy');
+
   return formattedDate;
 };

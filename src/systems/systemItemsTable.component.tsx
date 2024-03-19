@@ -179,7 +179,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             sx={{ marginRight: 0.5 }}
           >
             {row.original.item.delivered_date &&
-              new Date(row.original.item.delivered_date).toLocaleDateString()}
+              formatDateTimeStrings(row.original.item.delivered_date)}
           </Typography>
         ),
       },
