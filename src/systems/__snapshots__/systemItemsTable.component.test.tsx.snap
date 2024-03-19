@@ -2090,7 +2090,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-10xdbbc-MuiTableCell-root"
               data-index="4"
             >
-              1/2/2024, 1:10:10 PM
+              02 Jan 2024 13:10
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-dxw051-MuiTableCell-root"
@@ -2105,7 +2105,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               <p
                 class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
               >
-                9/5/2023
+                05 Sep 2023
               </p>
             </td>
             <td
@@ -2124,7 +2124,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-44ujmk-MuiTableCell-root"
               data-index="9"
             >
-              1/1/2024, 12:00:00 PM
+              01 Jan 2024
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"

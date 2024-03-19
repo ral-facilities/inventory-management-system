@@ -2801,7 +2801,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                             aria-label="Filter by ID"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r3v:"
+                            id=":rjj:"
                             placeholder="Filter by ID"
                             title="Filter by ID"
                             type="text"
@@ -2942,7 +2942,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r43:"
+                              id=":rjn:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -2987,7 +2987,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r45:"
+                              id=":rjp:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -3123,7 +3123,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                             aria-label="Filter by Serial Number"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r49:"
+                            id=":rjt:"
                             placeholder="Filter by Serial Number"
                             title="Filter by Serial Number"
                             type="text"
@@ -3264,7 +3264,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r4d:"
+                              id=":rk1:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -3309,7 +3309,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r4f:"
+                              id=":rk3:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -3448,7 +3448,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r4j:"
+                              id=":rk7:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -3493,7 +3493,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r4l:"
+                              id=":rk9:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -3625,13 +3625,13 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
                           <div
-                            aria-controls=":r4q:"
+                            aria-controls=":rke:"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Is Defective"
-                            aria-labelledby=":r4p:"
+                            aria-labelledby=":rkd:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":r4p:"
+                            id=":rkd:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -3753,7 +3753,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
                 data-index="2"
               >
-                1/2/2024, 1:10:10 PM
+                02 Jan 2024 13:10
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6yf0oe-MuiTableCell-root"
@@ -3768,7 +3768,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
                 >
-                  4/4/2023
+                  04 Apr 2023
                 </p>
               </td>
               <td
@@ -3778,7 +3778,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
                 >
-                  3/17/2023
+                  17 Mar 2023
                 </p>
               </td>
               <td
@@ -3849,7 +3849,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
                 data-index="2"
               >
-                1/2/2024, 1:10:10 PM
+                02 Jan 2024 13:10
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6yf0oe-MuiTableCell-root"
@@ -3864,7 +3864,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
                 >
-                  5/18/2023
+                  18 May 2023
                 </p>
               </td>
               <td
@@ -3874,7 +3874,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
                 >
-                  5/11/2023
+                  11 May 2023
                 </p>
               </td>
               <td
@@ -3945,7 +3945,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
                 data-index="2"
               >
-                1/2/2024, 1:10:10 PM
+                02 Jan 2024 13:10
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6yf0oe-MuiTableCell-root"
@@ -3960,7 +3960,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
                 >
-                  7/18/2023
+                  18 Jul 2023
                 </p>
               </td>
               <td
@@ -3970,7 +3970,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
                 >
-                  6/16/2023
+                  16 Jun 2023
                 </p>
               </td>
               <td
@@ -4041,7 +4041,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
                 data-index="2"
               >
-                1/2/2024, 1:10:10 PM
+                02 Jan 2024 13:10
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6yf0oe-MuiTableCell-root"
@@ -4056,7 +4056,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
                 >
-                  10/4/2023
+                  04 Oct 2023
                 </p>
               </td>
               <td
@@ -4066,7 +4066,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 <p
                   class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
                 >
-                  12/5/2023
+                  05 Dec 2023
                 </p>
               </td>
               <td
@@ -4174,7 +4174,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r4s:"
+                    aria-controls=":rkg:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
