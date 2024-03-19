@@ -15,6 +15,7 @@ import { paths } from '../view/viewTabs.component';
 import { BreadcrumbsInfo } from '../app.types';
 import EditIcon from '@mui/icons-material/Edit';
 import PrintIcon from '@mui/icons-material/Print';
+import { formatDateTimeStrings } from '../utils';
 
 function ManufacturerLandingPage() {
   const { manufacturer_id: manufacturerId } = useParams();
@@ -206,7 +207,7 @@ function ManufacturerLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {new Date(manufacturerData.modified_time).toLocaleString()}
+              {formatDateTimeStrings(manufacturerData.modified_time)}
             </Typography>
           </Grid>
 
@@ -222,7 +223,7 @@ function ManufacturerLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {new Date(manufacturerData.created_time).toLocaleString()}
+              {formatDateTimeStrings(manufacturerData.created_time)}
             </Typography>
           </Grid>
         </Grid>

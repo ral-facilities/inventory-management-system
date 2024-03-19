@@ -18,6 +18,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import { CatalogueCategory } from '../../app.types';
 import { Link } from 'react-router-dom';
+import { formatDateTimeStrings } from '../../utils';
 export interface CatalogueCardProps extends CatalogueCategory {
   onChangeOpenDeleteDialog: (catalogueCategory: CatalogueCategory) => void;
   onChangeOpenEditDialog: (catalogueCategory: CatalogueCategory) => void;
@@ -96,7 +97,7 @@ function CatalogueCard(props: CatalogueCardProps) {
 
             <Grid position={'absolute'} bottom={5} right={12}>
               <Typography fontSize="0.8rem" color="text.secondary">
-                {`Last modified: ${new Date(catalogueCategory.modified_time).toLocaleString()}`}
+                {`Last modified: ${formatDateTimeStrings(catalogueCategory.modified_time)}`}
               </Typography>
             </Grid>
           </Grid>

@@ -9,6 +9,7 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { System } from '../app.types';
 import SystemDialog from './systemDialog.component';
+import { formatDateTimeStrings } from '../utils';
 
 export interface SystemsTableViewProps {
   systemsData?: System[];
@@ -64,7 +65,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&
-          new Date(row.original.modified_time).toLocaleString(),
+          formatDateTimeStrings(row.original.modified_time),
       },
     ];
   }, [selectedSystemIds, type]);

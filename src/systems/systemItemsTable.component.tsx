@@ -16,6 +16,7 @@ import { useItems } from '../api/item';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 import ItemsDetailsPanel from '../items/ItemsDetailsPanel.component';
 import SystemItemsDialog from './systemItemsDialog.component';
+import { formatDateTimeStrings } from '../utils';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
@@ -159,7 +160,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.item.modified_time &&
-          new Date(row.original.item.modified_time).toLocaleString(),
+          formatDateTimeStrings(row.original.item.modified_time),
       },
       {
         header: 'Serial Number',
@@ -212,7 +213,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
-          new Date(row.original.item.created_time).toLocaleString(),
+          formatDateTimeStrings(row.original.item.created_time),
       },
     ];
   }, []);

@@ -13,6 +13,7 @@ import {
   CatalogueItem,
   Manufacturer,
 } from '../../app.types';
+import { formatDateTimeStrings } from '../../utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function TabPanel(props: any) {
@@ -162,9 +163,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 <Grid item xs={12}>
                   <Typography color="text.primary">Last Modified</Typography>
                   <Typography color="text.secondary">
-                    {new Date(
-                      catalogueItemIdData.modified_time
-                    ).toLocaleString()}
+                    {formatDateTimeStrings(catalogueItemIdData.modified_time)}
                   </Typography>
                 </Grid>
               </Grid>
@@ -173,9 +172,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 <Grid item xs={12}>
                   <Typography color="text.primary">Created</Typography>
                   <Typography color="text.secondary">
-                    {new Date(
-                      catalogueItemIdData.created_time
-                    ).toLocaleString()}
+                    {formatDateTimeStrings(catalogueItemIdData.created_time)}
                   </Typography>
                 </Grid>
               </Grid>

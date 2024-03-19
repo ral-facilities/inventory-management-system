@@ -37,7 +37,11 @@ import {
   CatalogueItemPropertyResponse,
   Manufacturer,
 } from '../../app.types';
-import { generateUniqueName, getPageHeightCalc } from '../../utils';
+import {
+  formatDateTimeStrings,
+  generateUniqueName,
+  getPageHeightCalc,
+} from '../../utils';
 import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
@@ -264,7 +268,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.catalogueItem.modified_time &&
-          new Date(row.original.catalogueItem.modified_time).toLocaleString(),
+          formatDateTimeStrings(row.original.catalogueItem.modified_time),
       },
       {
         header: 'View Items',
@@ -585,7 +589,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         enableGrouping: false,
         enableHiding: true,
         Cell: ({ row }) =>
-          new Date(row.original.catalogueItem.created_time).toLocaleString(),
+          formatDateTimeStrings(row.original.catalogueItem.created_time),
       },
     ];
   }, [dense, isItemSelectable, parentInfo.catalogue_item_properties]);

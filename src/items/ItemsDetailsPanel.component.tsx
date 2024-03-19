@@ -11,6 +11,7 @@ import {
 import { Link } from 'react-router-dom';
 import { CatalogueItem, Item, UsageStatusType } from '../app.types';
 import { useManufacturer } from '../api/manufacturer';
+import { formatDateTimeStrings } from '../utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function TabPanel(props: any) {
@@ -135,7 +136,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 <Grid item xs={12}>
                   <Typography color="text.primary">Last Modified</Typography>
                   <Typography color="text.secondary">
-                    {new Date(itemData.modified_time).toLocaleString()}
+                    {formatDateTimeStrings(itemData.modified_time)}
                   </Typography>
                 </Grid>
               </Grid>
@@ -144,7 +145,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 <Grid item xs={12}>
                   <Typography color="text.primary">Created</Typography>
                   <Typography color="text.secondary">
-                    {new Date(itemData.created_time).toLocaleString()}
+                    {formatDateTimeStrings(itemData.created_time)}
                   </Typography>
                 </Grid>
               </Grid>

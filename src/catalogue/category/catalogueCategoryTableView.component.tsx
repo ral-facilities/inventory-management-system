@@ -9,7 +9,7 @@ import React from 'react';
 import { CatalogueCategory } from '../../app.types';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 import AddIcon from '@mui/icons-material/Add';
-import { generateUniqueName } from '../../utils';
+import { formatDateTimeStrings, generateUniqueName } from '../../utils';
 
 export interface CatalogueCategoryTableViewProps {
   selectedCategories: CatalogueCategory[];
@@ -75,7 +75,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&
-          new Date(row.original.modified_time).toLocaleString(),
+          formatDateTimeStrings(row.original.modified_time),
       },
     ];
   }, [requestType, selectedCatalogueCategoryIds]);

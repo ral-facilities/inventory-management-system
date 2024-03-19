@@ -37,7 +37,7 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import { useItems } from '../api/item';
 import ItemsDetailsPanel from './ItemsDetailsPanel.component';
-import { getPageHeightCalc } from '../utils';
+import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 
 export interface ItemTableProps {
@@ -97,7 +97,7 @@ export function ItemsTable(props: ItemTableProps) {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&
-          new Date(row.original.modified_time).toLocaleString(),
+          formatDateTimeStrings(row.original.modified_time),
       },
       {
         header: 'Serial Number',
@@ -267,7 +267,7 @@ export function ItemsTable(props: ItemTableProps) {
         filterVariant: 'datetime-range',
         size: 350,
         enableGrouping: false,
-        Cell: ({ row }) => new Date(row.original.created_time).toLocaleString(),
+        Cell: ({ row }) => formatDateTimeStrings(row.original.created_time),
       },
     ];
   }, [catalogueCategory]);

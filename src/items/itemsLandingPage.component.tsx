@@ -25,6 +25,7 @@ import { BreadcrumbsInfo, UsageStatusType } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ItemDialog from './itemDialog.component';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
+import { formatDateTimeStrings } from '../utils';
 
 function ItemsLandingPage() {
   // Navigation
@@ -273,7 +274,7 @@ function ItemsLandingPage() {
                       Last modified
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {new Date(itemData.modified_time).toLocaleString()}
+                      {formatDateTimeStrings(itemData.modified_time)}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
@@ -281,7 +282,7 @@ function ItemsLandingPage() {
                       Created
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {new Date(itemData.created_time).toLocaleString()}
+                      {formatDateTimeStrings(itemData.created_time)}
                     </Typography>
                   </Grid>
                 </Grid>
