@@ -148,7 +148,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                         aria-invalid="false"
                         autocomplete="new-password"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":rv:"
+                        id=":r0:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -246,7 +246,16 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </svg>
                 <span
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
+                >
+                  <span
+                    class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
+                    style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
+                  >
+                    <span
+                      class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+                    />
+                  </span>
+                </span>
               </button>
             </div>
           </div>
@@ -257,7 +266,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
-          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-name-size: 400; --col-name-size: 400; --header-modified_time-size: 250; --col-modified_time-size: 250; --header-url-size: 500; --col-url-size: 500; --header-address-size: 650; --col-address-size: 650; --header-telephone-size: 250; --col-telephone-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-created_time-size: 250; --col-created_time-size: 250;"
+          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-name-size: 400; --col-name-size: 400; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-url-size: 500; --col-url-size: 500; --header-address-size: 650; --col-address-size: 650; --header-telephone-size: 250; --col-telephone-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-created_time-size: 350; --col-created_time-size: 350;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
@@ -412,7 +421,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by Name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r16:"
+                            id=":r7:"
                             placeholder="Filter by Name"
                             title="Filter by Name"
                             type="text"
@@ -471,12 +480,12 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                       Last modified
                     </div>
                     <span
-                      aria-label="Sort by Last modified ascending"
+                      aria-label="Sort by Last modified descending"
                       class="MuiBadge-root css-1c32n2y-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
-                        aria-label="Sort by Last modified ascending"
+                        aria-label="Sort by Last modified descending"
                         class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
@@ -567,50 +576,96 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                       class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
                     >
                       <div
-                        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
+                        class="MuiBox-root css-8yqbvs"
                       >
                         <div
-                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
                         >
-                          <input
-                            aria-invalid="false"
-                            aria-label="Filter by Last modified"
-                            autocomplete="new-password"
-                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1b:"
-                            placeholder="Filter by Last modified"
-                            title="Filter by Last modified"
-                            type="text"
-                            value=""
-                          />
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                           >
-                            <span
-                              aria-label="Clear filter"
-                              class=""
-                              data-mui-internal-clone-element="true"
+                            <input
+                              aria-invalid="false"
+                              aria-label="Min"
+                              autocomplete="new-password"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
+                              id=":rc:"
+                              inputmode="text"
+                              placeholder="Min"
+                              title="Min"
+                              type="text"
+                              value=""
+                            />
+                            <div
+                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
                             >
                               <button
-                                aria-label="Clear filter"
-                                class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-1so9ih7-MuiButtonBase-root-MuiIconButton-root"
-                                disabled=""
-                                tabindex="-1"
+                                aria-label="Choose date"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+                                tabindex="0"
                                 type="button"
                               >
                                 <svg
                                   aria-hidden="true"
                                   class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                  data-testid="CloseIcon"
+                                  data-testid="CalendarIcon"
                                   focusable="false"
                                   viewBox="0 0 24 24"
                                 >
                                   <path
-                                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                    d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
                                   />
                                 </svg>
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
                               </button>
-                            </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
+                        >
+                          <div
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                          >
+                            <input
+                              aria-invalid="false"
+                              aria-label="Max"
+                              autocomplete="new-password"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
+                              id=":re:"
+                              inputmode="text"
+                              placeholder="Max"
+                              title="Max"
+                              type="text"
+                              value=""
+                            />
+                            <div
+                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                            >
+                              <button
+                                aria-label="Choose date"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+                                tabindex="0"
+                                type="button"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="CalendarIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+                                  />
+                                </svg>
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -742,7 +797,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by URL"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1g:"
+                            id=":rj:"
                             placeholder="Filter by URL"
                             title="Filter by URL"
                             type="text"
@@ -907,7 +962,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by Address"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1l:"
+                            id=":ro:"
                             placeholder="Filter by Address"
                             title="Filter by Address"
                             type="text"
@@ -1072,7 +1127,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by Telephone number"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1q:"
+                            id=":rt:"
                             placeholder="Filter by Telephone number"
                             title="Filter by Telephone number"
                             type="text"
@@ -1131,12 +1186,12 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                       Created
                     </div>
                     <span
-                      aria-label="Sort by Created ascending"
+                      aria-label="Sort by Created descending"
                       class="MuiBadge-root css-1c32n2y-MuiBadge-root"
                       data-mui-internal-clone-element="true"
                     >
                       <span
-                        aria-label="Sort by Created ascending"
+                        aria-label="Sort by Created descending"
                         class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
                         role="button"
                         tabindex="0"
@@ -1227,50 +1282,96 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                       class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
                     >
                       <div
-                        class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
+                        class="MuiBox-root css-8yqbvs"
                       >
                         <div
-                          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
                         >
-                          <input
-                            aria-invalid="false"
-                            aria-label="Filter by Created"
-                            autocomplete="new-password"
-                            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r2i:"
-                            placeholder="Filter by Created"
-                            title="Filter by Created"
-                            type="text"
-                            value=""
-                          />
                           <div
-                            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                           >
-                            <span
-                              aria-label="Clear filter"
-                              class=""
-                              data-mui-internal-clone-element="true"
+                            <input
+                              aria-invalid="false"
+                              aria-label="Min"
+                              autocomplete="new-password"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
+                              id=":r1l:"
+                              inputmode="text"
+                              placeholder="Min"
+                              title="Min"
+                              type="text"
+                              value=""
+                            />
+                            <div
+                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
                             >
                               <button
-                                aria-label="Clear filter"
-                                class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-1so9ih7-MuiButtonBase-root-MuiIconButton-root"
-                                disabled=""
-                                tabindex="-1"
+                                aria-label="Choose date"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+                                tabindex="0"
                                 type="button"
                               >
                                 <svg
                                   aria-hidden="true"
                                   class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                  data-testid="CloseIcon"
+                                  data-testid="CalendarIcon"
                                   focusable="false"
                                   viewBox="0 0 24 24"
                                 >
                                   <path
-                                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                    d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
                                   />
                                 </svg>
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
                               </button>
-                            </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1blq8rz-MuiFormControl-root-MuiTextField-root"
+                        >
+                          <div
+                            class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
+                          >
+                            <input
+                              aria-invalid="false"
+                              aria-label="Max"
+                              autocomplete="new-password"
+                              class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
+                              id=":r1n:"
+                              inputmode="text"
+                              placeholder="Max"
+                              title="Max"
+                              type="text"
+                              value=""
+                            />
+                            <div
+                              class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+                            >
+                              <button
+                                aria-label="Choose date"
+                                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+                                tabindex="0"
+                                type="button"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="CalendarIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+                                  />
+                                </svg>
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -1352,7 +1453,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                1/2/2024, 1:10:10 PM
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1albell-MuiTableCell-root"
@@ -1410,7 +1511,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
                 data-index="6"
               >
-                01 Jan 2024 12:00
+                1/1/2024, 12:00:00 PM
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -1465,7 +1566,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                1/2/2024, 1:10:10 PM
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1albell-MuiTableCell-root"
@@ -1523,7 +1624,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
                 data-index="6"
               >
-                01 Jan 2024 12:00
+                1/1/2024, 12:00:00 PM
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -1578,7 +1679,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                1/2/2024, 1:10:10 PM
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1albell-MuiTableCell-root"
@@ -1636,7 +1737,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
                 data-index="6"
               >
-                01 Jan 2024 12:00
+                1/1/2024, 12:00:00 PM
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -1691,7 +1792,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                1/2/2024, 1:10:10 PM
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1albell-MuiTableCell-root"
@@ -1735,7 +1836,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
                 data-index="6"
               >
-                01 Jan 2024 12:00
+                1/1/2024, 12:00:00 PM
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -1805,7 +1906,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r1s:"
+                    aria-controls=":rv:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
