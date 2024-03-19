@@ -122,7 +122,7 @@ export default defineConfig(({ mode }) => {
       globals: true,
       environment: 'jsdom',
       globalSetup: './globalSetup.js',
-      setupFiles: ['src/setupTests.tsx'],
+      setupFiles: ['src/setupTests.ts'],
       coverage: {
         exclude: [
           'public/*',
@@ -132,7 +132,6 @@ export default defineConfig(({ mode }) => {
           'src/mocks/server.ts',
           'src/vite-env.d.ts',
           'src/main.tsx',
-          'src/testUtils.tsx',
         ],
       },
     },

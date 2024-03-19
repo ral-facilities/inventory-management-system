@@ -135,18 +135,18 @@ export interface CatalogueItemsTableProps {
   onChangeObsoleteReplacementId?: (
     obsoleteReplacementId: string | null
   ) => void;
-  selectedRowState?: { [x: string]: boolean };
+  selectedRowState?: Record<string, boolean>;
   // Only for dense tables with a select - should return if a given catalogue item is
   // selectable or not
   isItemSelectable?: (item: CatalogueItem) => boolean;
   requestOrigin?: 'move to' | 'obsolete';
 }
-export type PropertyFiltersType = {
+export interface PropertyFiltersType {
   boolean: 'select' | 'text' | 'range';
   string: 'select' | 'text' | 'range';
   number: 'select' | 'text' | 'range';
   null: 'select' | 'text' | 'range';
-};
+}
 
 const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   const {
