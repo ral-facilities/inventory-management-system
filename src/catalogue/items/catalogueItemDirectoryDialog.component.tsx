@@ -208,6 +208,7 @@ const CatalogueItemDirectoryDialog = (
             catalogueCategoryDataLoading={catalogueCategoryDataLoading}
             requestOrigin="item"
             catalogueItemParentCategory={parentInfo}
+            catalogueCategoryParentId={parentCategoryId ?? undefined}
           />
         )}
       </DialogContent>

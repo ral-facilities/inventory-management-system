@@ -209,11 +209,12 @@ function Catalogue() {
   } = useCatalogueCategories(
     catalogueCategoryDetailLoading ? true : !!parentInfo && parentInfo.is_leaf,
     // String value of null for filtering root catalogue category
-    catalogueCategoryId === null ? 'null' : catalogueCategoryId
+    !catalogueCategoryId ? 'null' : catalogueCategoryId
   );
 
-  const catalogueCategoryNames: string[] =
-    catalogueCategoryData?.map((item) => item.name) || [];
+  const catalogueCategoryNames: string[] = catalogueCategoryData
+    ? catalogueCategoryData.map((item) => item.name)
+    : [];
 
   const [deleteCategoryDialogOpen, setDeleteCategoryDialogOpen] =
     React.useState<boolean>(false);

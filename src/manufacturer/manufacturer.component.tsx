@@ -62,8 +62,6 @@ function ManufacturerComponent() {
               {row.original.name}
             </MuiLink>
           ),
-        filterVariant: 'autocomplete',
-        filterFn: 'equals',
       },
       {
         header: 'Last modified',
