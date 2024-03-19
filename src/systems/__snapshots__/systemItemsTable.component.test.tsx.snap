@@ -2124,7 +2124,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-44ujmk-MuiTableCell-root"
               data-index="9"
             >
-              01 Jan 2024
+              01 Jan 2024 12:00
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"

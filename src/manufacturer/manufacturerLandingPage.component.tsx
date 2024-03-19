@@ -207,7 +207,7 @@ function ManufacturerLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {formatDateTimeStrings(manufacturerData.modified_time)}
+              {formatDateTimeStrings(manufacturerData.modified_time, true)}
             </Typography>
           </Grid>
 
@@ -223,7 +223,7 @@ function ManufacturerLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {formatDateTimeStrings(manufacturerData.created_time)}
+              {formatDateTimeStrings(manufacturerData.created_time, true)}
             </Typography>
           </Grid>
         </Grid>

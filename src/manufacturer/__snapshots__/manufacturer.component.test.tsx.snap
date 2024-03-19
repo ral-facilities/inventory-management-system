@@ -1444,7 +1444,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                02 Jan 2024
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1albell-MuiTableCell-root"
@@ -1502,7 +1502,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
                 data-index="6"
               >
-                01 Jan 2024
+                01 Jan 2024 12:00
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -1557,7 +1557,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                02 Jan 2024
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1albell-MuiTableCell-root"
@@ -1615,7 +1615,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
                 data-index="6"
               >
-                01 Jan 2024
+                01 Jan 2024 12:00
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -1670,7 +1670,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                02 Jan 2024
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1albell-MuiTableCell-root"
@@ -1728,7 +1728,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
                 data-index="6"
               >
-                01 Jan 2024
+                01 Jan 2024 12:00
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -1783,7 +1783,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                02 Jan 2024
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1albell-MuiTableCell-root"
@@ -1827,7 +1827,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
                 data-index="6"
               >
-                01 Jan 2024
+                01 Jan 2024 12:00
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"

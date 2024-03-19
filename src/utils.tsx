@@ -76,12 +76,14 @@ export const trimStringValues = (object: any): any => {
   return object;
 };
 
-export const formatDateTimeStrings = (dateTime: string): string => {
+export const formatDateTimeStrings = (
+  dateTime: string,
+  includesTime: boolean
+): string => {
   const date = parseISO(dateTime);
-  const formattedDate =
-    date.getHours() !== 0 && date.getMinutes() !== 0
-      ? format(date, 'dd MMM yyyy HH:mm')
-      : format(date, 'dd MMM yyyy');
+  const formattedDate = includesTime
+    ? format(date, 'dd MMM yyyy HH:mm')
+    : format(date, 'dd MMM yyyy');
 
   return formattedDate;
 };

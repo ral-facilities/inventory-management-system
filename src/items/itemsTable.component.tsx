@@ -97,7 +97,7 @@ export function ItemsTable(props: ItemTableProps) {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&
-          formatDateTimeStrings(row.original.modified_time),
+          formatDateTimeStrings(row.original.modified_time, true),
       },
       {
         header: 'Serial Number',
@@ -129,7 +129,7 @@ export function ItemsTable(props: ItemTableProps) {
             sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
             {row.original.warranty_end_date &&
-              formatDateTimeStrings(row.original.warranty_end_date)}
+              formatDateTimeStrings(row.original.warranty_end_date, false)}
           </Typography>
         ),
       },
@@ -145,7 +145,7 @@ export function ItemsTable(props: ItemTableProps) {
             sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
             {row.original.delivered_date &&
-              formatDateTimeStrings(row.original.delivered_date)}
+              formatDateTimeStrings(row.original.delivered_date, false)}
           </Typography>
         ),
       },
@@ -267,7 +267,8 @@ export function ItemsTable(props: ItemTableProps) {
         filterVariant: 'datetime-range',
         size: 350,
         enableGrouping: false,
-        Cell: ({ row }) => formatDateTimeStrings(row.original.created_time),
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.created_time, true),
       },
     ];
   }, [catalogueCategory]);

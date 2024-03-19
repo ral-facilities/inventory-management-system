@@ -105,7 +105,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 <Typography color="text.primary">Warranty End Date</Typography>
                 <Typography color="text.secondary">
                   {itemData.warranty_end_date
-                    ? formatDateTimeStrings(itemData.warranty_end_date)
+                    ? formatDateTimeStrings(itemData.warranty_end_date, false)
                     : 'None'}
                 </Typography>
               </Grid>
@@ -113,7 +113,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 <Typography color="text.primary">Delivered Date</Typography>
                 <Typography color="text.secondary">
                   {itemData.delivered_date
-                    ? formatDateTimeStrings(itemData.delivered_date)
+                    ? formatDateTimeStrings(itemData.delivered_date, false)
                     : 'None'}
                 </Typography>
               </Grid>
@@ -136,7 +136,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 <Grid item xs={12}>
                   <Typography color="text.primary">Last Modified</Typography>
                   <Typography color="text.secondary">
-                    {formatDateTimeStrings(itemData.modified_time)}
+                    {formatDateTimeStrings(itemData.modified_time, true)}
                   </Typography>
                 </Grid>
               </Grid>
@@ -145,7 +145,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 <Grid item xs={12}>
                   <Typography color="text.primary">Created</Typography>
                   <Typography color="text.secondary">
-                    {formatDateTimeStrings(itemData.created_time)}
+                    {formatDateTimeStrings(itemData.created_time, true)}
                   </Typography>
                 </Grid>
               </Grid>

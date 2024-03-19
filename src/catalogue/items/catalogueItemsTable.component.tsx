@@ -268,7 +268,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.catalogueItem.modified_time &&
-          formatDateTimeStrings(row.original.catalogueItem.modified_time),
+          formatDateTimeStrings(row.original.catalogueItem.modified_time, true),
       },
       {
         header: 'View Items',
@@ -589,7 +589,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         enableGrouping: false,
         enableHiding: true,
         Cell: ({ row }) =>
-          formatDateTimeStrings(row.original.catalogueItem.created_time),
+          formatDateTimeStrings(row.original.catalogueItem.created_time, true),
       },
     ];
   }, [dense, isItemSelectable, parentInfo.catalogue_item_properties]);
