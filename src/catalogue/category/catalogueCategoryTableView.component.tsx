@@ -48,7 +48,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         header: 'Name',
         accessorFn: (row) => row.name,
         id: 'name',
-        size: 1135,
+        size: 785,
         Cell: ({ renderedCellValue, row }) => {
           const canPlaceHere =
             (!row.original.is_leaf &&
@@ -65,6 +65,17 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
             </Typography>
           );
         },
+      },
+      {
+        header: 'Last modified',
+        accessorFn: (row) => new Date(row.modified_time),
+        id: 'modified_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          row.original.modified_time &&
+          new Date(row.original.modified_time).toLocaleString(),
       },
     ];
   }, [requestType, selectedCatalogueCategoryIds]);

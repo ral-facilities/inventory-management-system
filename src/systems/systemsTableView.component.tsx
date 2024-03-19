@@ -35,11 +35,12 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
   );
 
   const noResultsText = 'No systems found';
-  const columns = React.useMemo<MRT_ColumnDef<System>[]>(
-    () => [
+  const columns = React.useMemo<MRT_ColumnDef<System>[]>(() => {
+    return [
       {
         header: 'Name',
         accessorKey: 'name',
+        size: 450,
         Cell: ({ renderedCellValue, row }) => {
           const canPlaceHere =
             type === 'copyTo' || !selectedSystemIds.includes(row.original.id);
@@ -54,9 +55,19 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
           );
         },
       },
-    ],
-    [selectedSystemIds, type]
-  );
+      {
+        header: 'Last modified',
+        accessorFn: (row) => new Date(row.modified_time),
+        id: 'modified_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          row.original.modified_time &&
+          new Date(row.original.modified_time).toLocaleString(),
+      },
+    ];
+  }, [selectedSystemIds, type]);
   const table = useMaterialReactTable({
     // Data
     columns: columns,
