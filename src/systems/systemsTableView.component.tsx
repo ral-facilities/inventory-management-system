@@ -40,7 +40,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       {
         header: 'Name',
         accessorKey: 'name',
-        size: 450,
+        size: 400,
         Cell: ({ renderedCellValue, row }) => {
           const canPlaceHere =
             type === 'copyTo' || !selectedSystemIds.includes(row.original.id);
@@ -60,7 +60,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
-        size: 350,
+        size: 400,
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&

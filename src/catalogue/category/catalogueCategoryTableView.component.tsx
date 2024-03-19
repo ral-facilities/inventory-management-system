@@ -48,7 +48,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         header: 'Name',
         accessorFn: (row) => row.name,
         id: 'name',
-        size: 785,
+        size: 567.5,
         Cell: ({ renderedCellValue, row }) => {
           const canPlaceHere =
             (!row.original.is_leaf &&
@@ -71,7 +71,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
-        size: 350,
+        size: 567.5,
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&
