@@ -906,7 +906,7 @@ describe('Catalogue Items', () => {
           description: 'Precision energy meters for accurate measurements. 26',
           properties: [
             { name: 'Measurement Range', value: 1000, unit: 'Joules' },
-            { name: 'Accuracy', value: '±0.5%', unit: '' },
+            { name: 'Accuracy', value: '±0.5%', unit: null },
           ],
           id: '89',
           manufacturer_id: '1',
@@ -935,7 +935,7 @@ describe('Catalogue Items', () => {
             {
               name: 'Accuracy',
               value: null,
-              unit: '',
+              unit: null,
             },
           ],
           id: '6',

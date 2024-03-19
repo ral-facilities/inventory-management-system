@@ -129,7 +129,7 @@ export interface CatalogueItemProperty {
 export interface CatalogueItemPropertyResponse {
   name: string;
   value: string | number | boolean | null;
-  unit: string;
+  unit: string | null;
 }
 
 export interface CatalogueItem extends CatalogueItemDetails {

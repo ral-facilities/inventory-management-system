@@ -41,9 +41,18 @@ describe('catalogue item directory Dialog', () => {
             type: 'number',
             unit: 'Joules',
             mandatory: true,
+            allowed_values: null,
           },
-          { name: 'Accuracy', type: 'string', mandatory: false },
+          {
+            name: 'Accuracy',
+            type: 'string',
+            unit: null,
+            mandatory: false,
+            allowed_values: null,
+          },
         ],
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       },
       selectedItems: [
         {
@@ -59,7 +68,7 @@ describe('catalogue item directory Dialog', () => {
             {
               name: 'Accuracy',
               value: '±0.5%',
-              unit: '',
+              unit: null,
             },
           ],
           id: '89',
@@ -75,6 +84,8 @@ describe('catalogue item directory Dialog', () => {
           obsolete_replacement_catalogue_item_id: '6',
           obsolete_reason: 'The item is no longer being manufactured',
           notes: null,
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         },
         {
           catalogue_category_id: '5',
@@ -100,6 +111,8 @@ describe('catalogue item directory Dialog', () => {
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
           notes: null,
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         },
       ],
     };
@@ -228,7 +241,9 @@ describe('catalogue item directory Dialog', () => {
           screen.getByText('No catalogue items found')
         ).toBeInTheDocument();
       });
-      const moveButton = screen.getByRole('button', { name: 'Move here' });
+      const moveButton = await screen.findByRole('button', {
+        name: 'Move here',
+      });
 
       await user.click(moveButton);
 
@@ -308,9 +323,11 @@ describe('catalogue item directory Dialog', () => {
         obsolete_reason: 'The item is no longer being manufactured',
         obsolete_replacement_catalogue_item_id: '6',
         notes: null,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 1000 },
-          { name: 'Accuracy', unit: '', value: '±0.5%' },
+          { name: 'Accuracy', unit: null, value: '±0.5%' },
         ],
       });
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
@@ -330,6 +347,8 @@ describe('catalogue item directory Dialog', () => {
         obsolete_reason: null,
         obsolete_replacement_catalogue_item_id: null,
         notes: null,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 2000 },
         ],
@@ -368,9 +387,11 @@ describe('catalogue item directory Dialog', () => {
         obsolete_reason: 'The item is no longer being manufactured',
         obsolete_replacement_catalogue_item_id: '6',
         notes: null,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 1000 },
-          { name: 'Accuracy', unit: '', value: '±0.5%' },
+          { name: 'Accuracy', unit: null, value: '±0.5%' },
         ],
       });
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
@@ -390,6 +411,8 @@ describe('catalogue item directory Dialog', () => {
         obsolete_reason: null,
         obsolete_replacement_catalogue_item_id: null,
         notes: null,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 2000 },
         ],
