@@ -13,7 +13,6 @@ import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { paths } from '../view/viewTabs.component';
 import { BreadcrumbsInfo } from '../app.types';
-import { formatDateTimeStrings } from '../utils';
 import EditIcon from '@mui/icons-material/Edit';
 import PrintIcon from '@mui/icons-material/Print';
 
@@ -207,7 +206,7 @@ function ManufacturerLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {formatDateTimeStrings(manufacturerData.modified_time)}
+              {new Date(manufacturerData.modified_time).toLocaleString()}
             </Typography>
           </Grid>
 
@@ -223,7 +222,7 @@ function ManufacturerLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {formatDateTimeStrings(manufacturerData.created_time)}
+              {new Date(manufacturerData.created_time).toLocaleString()}
             </Typography>
           </Grid>
         </Grid>

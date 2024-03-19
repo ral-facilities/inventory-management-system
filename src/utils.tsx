@@ -1,5 +1,3 @@
-import { format, parseISO } from 'date-fns';
-
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
   name: string,
@@ -74,10 +72,4 @@ export const trimStringValues = (object: any): any => {
     }
   }
   return object;
-};
-
-export const formatDateTimeStrings = (dateTime: string): string => {
-  const date = parseISO(dateTime);
-  const formattedDate = format(date, 'dd MMM yyyy HH:mm');
-  return formattedDate;
 };

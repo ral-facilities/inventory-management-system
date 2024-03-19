@@ -25,8 +25,8 @@ import { useManufacturers } from '../api/manufacturer';
 import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
-import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import { getPageHeightCalc } from '../utils';
 
 function ManufacturerComponent() {
   const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
@@ -74,7 +74,7 @@ function ManufacturerComponent() {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&
-          formatDateTimeStrings(row.original.modified_time),
+          new Date(row.original.modified_time).toLocaleString(),
       },
       {
         header: 'URL',
@@ -128,7 +128,7 @@ function ManufacturerComponent() {
         size: 250,
         enableGrouping: false,
         enableHiding: true,
-        Cell: ({ row }) => formatDateTimeStrings(row.original.created_time),
+        Cell: ({ row }) => new Date(row.original.created_time).toLocaleString(),
       },
     ];
   }, []);

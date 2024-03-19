@@ -23,7 +23,6 @@ import { BreadcrumbsInfo } from '../../app.types';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import { useNavigateToCatalogue } from '../catalogue.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
-import { formatDateTimeStrings } from '../../utils';
 
 function CatalogueItemsLandingPage() {
   const { catalogue_item_id: catalogueItemId } = useParams();
@@ -300,7 +299,9 @@ function CatalogueItemsLandingPage() {
                       Last Modified
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {formatDateTimeStrings(catalogueItemIdData.modified_time)}
+                      {new Date(
+                        catalogueItemIdData.modified_time
+                      ).toLocaleString()}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
@@ -308,7 +309,9 @@ function CatalogueItemsLandingPage() {
                       Created
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {formatDateTimeStrings(catalogueItemIdData.created_time)}
+                      {new Date(
+                        catalogueItemIdData.created_time
+                      ).toLocaleString()}
                     </Typography>
                   </Grid>
                 </Grid>

@@ -14,7 +14,6 @@ import { getSystemImportanceColour, useSystem } from '../api/systems';
 import { System } from '../app.types';
 import SystemDialog from './systemDialog.component';
 import { SystemItemsTable } from './systemItemsTable.component';
-import { formatDateTimeStrings } from '../utils';
 
 interface SystemButtonProps {
   system: System;
@@ -154,7 +153,7 @@ function SystemDetails(props: SystemDetailsProps) {
               >
                 <Typography variant="h6">Last modified</Typography>
                 <Typography variant="body1" color="text.secondary">
-                  {formatDateTimeStrings(system.modified_time)}
+                  {new Date(system.modified_time).toLocaleString()}
                 </Typography>
               </Grid>
               <Grid
@@ -165,7 +164,7 @@ function SystemDetails(props: SystemDetailsProps) {
               >
                 <Typography variant="h6">Created</Typography>
                 <Typography variant="body1" color="text.secondary">
-                  {formatDateTimeStrings(system.created_time)}
+                  {new Date(system.created_time).toLocaleString()}
                 </Typography>
               </Grid>
             </Grid>
