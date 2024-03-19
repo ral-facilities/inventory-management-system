@@ -59,24 +59,28 @@
       {
         "name": "Sensor Type",
         "type": "string",
+        "unit": null,
         "mandatory": true,
         "allowed_values": null
       },
       {
         "name": "Sensor brand",
         "type": "string",
+        "unit": null,
         "mandatory": false,
         "allowed_values": null
       },
       {
         "name": "Broken",
         "type": "boolean",
+        "unit": null,
         "mandatory": true,
         "allowed_values": null
       },
       {
         "name": "Older than five years",
         "type": "boolean",
+        "unit": null,
         "mandatory": false,
         "allowed_values": null
       }
@@ -101,6 +105,7 @@
       {
         "name": "Accuracy",
         "type": "string",
+        "unit": null,
         "mandatory": false,
         "allowed_values": null
       }
@@ -125,6 +130,7 @@
       {
         "name": "Accuracy",
         "type": "string",
+        "unit": null,
         "mandatory": false,
         "allowed_values": null
       }
@@ -142,6 +148,7 @@
       {
         "name": "Wavefront Measurement Range",
         "type": "string",
+        "unit": null,
         "mandatory": true,
         "allowed_values": null
       },
@@ -149,7 +156,8 @@
         "name": "Spatial Resolution",
         "type": "number",
         "unit": "micrometers",
-        "mandatory": false
+        "mandatory": false,
+        "allowed_values": null
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -244,6 +252,7 @@
       {
         "name": "Cooldown Time",
         "type": "string",
+        "unit": null,
         "mandatory": true,
         "allowed_values": null
       },
@@ -251,7 +260,8 @@
         "name": "Pumping Speed",
         "type": "number",
         "unit": "liters per second",
-        "mandatory": false
+        "mandatory": false,
+        "allowed_values": null
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -306,7 +316,9 @@
       {
         "name": "Compression Ratio",
         "type": "number",
-        "mandatory": false
+        "mandatory": false,
+        "unit": null,
+        "allowed_values": null
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -382,6 +394,7 @@
       {
         "name": "Accuracy",
         "type": "string",
+        "unit": null,
         "mandatory": true,
         "allowed_values": null
       }
