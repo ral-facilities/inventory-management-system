@@ -1,20 +1,19 @@
-import React from 'react';
-import { screen, RenderResult, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { RenderResult, screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { CatalogueItem } from '../../app.types';
+import handleIMS_APIError from '../../handleIMS_APIError';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import DeleteCatalogueItemDialog, {
   DeleteCatalogueItemDialogProps,
 } from './deleteCatalogueItemDialog.component';
-import { renderComponentWithRouterProvider } from '../../setupTests';
-import { CatalogueItem } from '../../app.types';
-import handleIMS_APIError from '../../handleIMS_APIError';
 
-jest.mock('../../handleIMS_APIError');
+vi.mock('../../handleIMS_APIError');
 
 describe('delete Catalogue Category dialogue', () => {
   let props: DeleteCatalogueItemDialogProps;
-  let user;
-  const onClose = jest.fn();
-  const onChangeCatalogueItem = jest.fn();
+  let user: UserEvent;
+  const onClose = vi.fn();
+  const onChangeCatalogueItem = vi.fn();
   let catalogueItem: CatalogueItem;
 
   const createView = (): RenderResult => {
@@ -41,7 +40,7 @@ describe('delete Catalogue Category dialogue', () => {
     user = userEvent; // Assigning userEvent to 'user'
   });
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('renders correctly', async () => {
     createView();
@@ -79,7 +78,7 @@ describe('delete Catalogue Category dialogue', () => {
   it('calls handleDeleteSession when continue button is clicked with a valid session name', async () => {
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
-    user.click(continueButton);
+    await user.click(continueButton);
 
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
@@ -90,7 +89,7 @@ describe('delete Catalogue Category dialogue', () => {
     catalogueItem.id = '6';
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
-    user.click(continueButton);
+    await user.click(continueButton);
 
     await waitFor(() => {
       expect(

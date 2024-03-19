@@ -1,17 +1,16 @@
-import React from 'react';
-import { renderComponentWithRouterProvider } from '../../setupTests';
 import { screen, waitFor } from '@testing-library/react';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import CatalogueCategoryTableView, {
   CatalogueCategoryTableViewProps,
 } from './catalogueCategoryTableView.component';
 
 describe('CatalogueCategoryTableView', () => {
   let props: CatalogueCategoryTableViewProps;
-  let user;
+  let user: UserEvent;
 
-  const onChangeParentCategoryId = jest.fn();
+  const onChangeParentCategoryId = vi.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CatalogueCategoryTableView {...props} />,
@@ -169,7 +168,7 @@ describe('CatalogueCategoryTableView', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders text correctly', async () => {

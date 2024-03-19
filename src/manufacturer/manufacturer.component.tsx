@@ -25,7 +25,7 @@ import { useManufacturers } from '../api/manufacturer';
 import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
-import { getPageHeightCalc } from '../utils';
+import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 
 function ManufacturerComponent() {
@@ -62,8 +62,17 @@ function ManufacturerComponent() {
               {row.original.name}
             </MuiLink>
           ),
-        filterVariant: 'autocomplete',
-        filterFn: 'equals',
+      },
+
+      {
+        header: 'Last modified',
+        accessorFn: (row) => row.modified_time,
+        id: 'modified_time',
+        size: 250,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          row.original.modified_time &&
+          formatDateTimeStrings(row.original.modified_time),
       },
       {
         header: 'URL',
@@ -110,6 +119,15 @@ function ManufacturerComponent() {
         id: 'telephone',
         size: 250,
       },
+      {
+        header: 'Created',
+        accessorFn: (row) => row.created_time,
+        id: 'created_time',
+        size: 250,
+        enableGrouping: false,
+        enableHiding: true,
+        Cell: ({ row }) => formatDateTimeStrings(row.original.created_time),
+      },
     ];
   }, []);
 
@@ -148,6 +166,7 @@ function ManufacturerComponent() {
       showColumnFilters: true,
       showGlobalFilter: true,
       pagination: { pageSize: 25, pageIndex: 0 },
+      columnVisibility: { created_time: false },
     },
     state: {
       columnFilters,

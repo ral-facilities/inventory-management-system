@@ -1,19 +1,18 @@
-import React from 'react';
-import { renderComponentWithRouterProvider } from '../../setupTests';
 import { screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { imsApi } from '../../api/api';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueCategoryDirectoryDialog, {
   CatalogueCategoryDirectoryDialogProps,
 } from './catalogueCategoryDirectoryDialog.component';
-import userEvent from '@testing-library/user-event';
-import { imsApi } from '../../api/api';
 
 describe('CatalogueCategoryDirectoryDialog', () => {
   let props: CatalogueCategoryDirectoryDialogProps;
-  let user;
+  let user: UserEvent;
   let axiosPatchSpy;
   let axiosPostSpy;
-  const onChangeSelectedCategories = jest.fn();
-  const onClose = jest.fn();
+  const onChangeSelectedCategories = vi.fn();
+  const onClose = vi.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CatalogueCategoryDirectoryDialog {...props} />,
@@ -34,11 +33,11 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       user = userEvent.setup();
 
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
       axiosPatchSpy.mockRestore();
     });
 
@@ -256,11 +255,11 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       user = userEvent.setup();
 
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
       axiosPostSpy.mockRestore();
     });
 

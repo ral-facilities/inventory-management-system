@@ -1,27 +1,26 @@
-import React from 'react';
 import {
   getCatalogueItemById,
   renderComponentWithRouterProvider,
-} from '../../setupTests';
+} from '../../testUtils';
 
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { imsApi } from '../../api/api';
+import handleIMS_APIError from '../../handleIMS_APIError';
 import ObsoleteCatalogueItemDialog, {
   ObsoleteCatalogueItemDialogProps,
 } from './obsoleteCatalogueItemDialog.component';
-import handleIMS_APIError from '../../handleIMS_APIError';
-import { imsApi } from '../../api/api';
 
-jest.mock('../../handleIMS_APIError');
+vi.mock('../../handleIMS_APIError');
 
 describe('Obsolete Catalogue Item Dialog', () => {
   // Quite a few of these take more than 10 seconds on CI
-  jest.setTimeout(20000);
+  vi.setConfig({ testTimeout: 30000 });
 
   let props: ObsoleteCatalogueItemDialogProps;
-  let user;
+  let user: UserEvent;
   let axiosPatchSpy;
-  const mockOnClose = jest.fn();
+  const mockOnClose = vi.fn();
 
   const createView = () => {
     return renderComponentWithRouterProvider(
@@ -160,20 +159,20 @@ describe('Obsolete Catalogue Item Dialog', () => {
       catalogueItem: getCatalogueItemById('89'),
     };
     user = userEvent.setup();
-    axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+    axiosPatchSpy = vi.spyOn(imsApi, 'patch');
 
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 2000 });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('calls onClose when cancel is clicked', async () => {

@@ -37,7 +37,7 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import { useItems } from '../api/item';
 import ItemsDetailsPanel from './ItemsDetailsPanel.component';
-import { getPageHeightCalc } from '../utils';
+import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 
 export interface ItemTableProps {
@@ -89,6 +89,16 @@ export function ItemsTable(props: ItemTableProps) {
         ),
       },
       {
+        header: 'Last modified',
+        accessorFn: (row) => row.modified_time,
+        id: 'modified_time',
+        size: 250,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          row.original.modified_time &&
+          formatDateTimeStrings(row.original.modified_time),
+      },
+      {
         header: 'Serial Number',
         accessorFn: (row) => row.serial_number,
         id: 'serial_number',
@@ -114,7 +124,7 @@ export function ItemsTable(props: ItemTableProps) {
         Cell: ({ row }) => (
           <Typography
             // For ensuring space when grouping
-            sx={{ marginRight: 0.5 }}
+            sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
             {row.original.warranty_end_date &&
               new Date(row.original.warranty_end_date).toLocaleDateString()}
@@ -129,7 +139,7 @@ export function ItemsTable(props: ItemTableProps) {
         Cell: ({ row }) => (
           <Typography
             // For ensuring space when grouping
-            sx={{ marginRight: 0.5 }}
+            sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
             {row.original.delivered_date &&
               new Date(row.original.delivered_date).toLocaleDateString()}
@@ -194,7 +204,7 @@ export function ItemsTable(props: ItemTableProps) {
           </MuiLink>
         ),
       },
-      ...viewCatalogueItemProperties.map((property, index) => ({
+      ...viewCatalogueItemProperties.map((property) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
         id: `row.catalogueItem.properties.${property.name}`,
         accessorFn: (row: Item) => {
@@ -247,6 +257,14 @@ export function ItemsTable(props: ItemTableProps) {
           }
         },
       })),
+      {
+        header: 'Created',
+        accessorFn: (row) => row.created_time,
+        id: 'created_time',
+        size: 250,
+        enableGrouping: false,
+        Cell: ({ row }) => formatDateTimeStrings(row.original.created_time),
+      },
     ];
   }, [catalogueCategory]);
 
@@ -259,6 +277,7 @@ export function ItemsTable(props: ItemTableProps) {
       ? [
           { ...columns[0], size: 400 },
           { ...columns[1], size: 400 },
+          { ...columns[2], size: 400 },
           { ...columns[5], size: 400 },
           { ...columns[6], size: 400 },
           { ...columns[7], size: 400 },
@@ -308,6 +327,7 @@ export function ItemsTable(props: ItemTableProps) {
       showColumnFilters: true,
       showGlobalFilter: true,
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+      columnVisibility: { created_time: false },
     },
     state: {
       showProgressBars: isLoading, //or showSkeletons

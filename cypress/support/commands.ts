@@ -36,21 +36,22 @@
 //   }
 // }
 import '@testing-library/cypress/add-commands';
-import { MockedRequest } from 'msw';
+import { HttpResponse } from 'msw';
 
-let mockedRequests: MockedRequest[] = [];
+let mockedRequests: Request[] = [];
 
 Cypress.Commands.add('clearMocks', () => {
   mockedRequests = [];
 });
 
 Cypress.Commands.add('editEndpointResponse', ({ url, data, statusCode }) => {
+  cy.window().its('msw').should('not.equal', undefined);
   cy.window().then((window) => {
-    const { worker, rest } = window.msw;
+    const { worker, http } = window.msw;
 
     worker.use(
-      rest.get(url, (req, res, ctx) => {
-        return res(ctx.status(statusCode), ctx.json(data));
+      http.get(url, ({ params, request }) => {
+        return HttpResponse.json(data, { status: statusCode });
       })
     );
   });
@@ -60,8 +61,13 @@ Cypress.Commands.add('startSnoopingBrowserMockedRequest', () => {
   cy.window().then((window) => {
     const worker = window?.msw?.worker;
 
-    worker.events.on('request:match', (req) => {
-      mockedRequests.push(req);
+    // Use start here instead of match as needs to be done before the request is read to
+    // avoid errors as an MDN Request's contents can only be read once. We then clone it
+    // here to ensure the MSW handlers can call .json() on it, and also any Cypress tests
+    // which would otherwise have failed for the same reason as json() can only be called
+    // once on the original request.
+    worker.events.on('request:start', ({ request }) => {
+      mockedRequests.push((request as Request).clone());
     });
   });
 });
@@ -97,7 +103,7 @@ Cypress.Commands.add('findBrowserMockedRequests', ({ method, url }) => {
         mockedRequests.filter((req) => {
           const matchesMethod =
             req.method && req.method.toLowerCase() === method.toLowerCase();
-          const matchesUrl = matchRequestUrl(req.url, url).matches;
+          const matchesUrl = matchRequestUrl(new URL(req.url), url).matches;
           return matchesMethod && matchesUrl;
         })
       );

@@ -1,23 +1,22 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { imsApi } from '../api/api';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
-import { renderComponentWithRouterProvider } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import {
   SystemDirectoryDialog,
   SystemDirectoryDialogProps,
 } from './systemDirectoryDialog.component';
-import { imsApi } from '../api/api';
 
 describe('SystemDirectoryDialog', () => {
   let props: SystemDirectoryDialogProps;
-  let user;
+  let user: UserEvent;
   let axiosPatchSpy;
   let axiosPostSpy;
 
-  const mockOnClose = jest.fn();
-  const mockOnChangeSelectedSystems = jest.fn();
+  const mockOnClose = vi.fn();
+  const mockOnChangeSelectedSystems = vi.fn();
 
   const mockSelectedSystems: System[] = [
     SystemsJSON[4] as System,
@@ -42,12 +41,12 @@ describe('SystemDirectoryDialog', () => {
     };
 
     user = userEvent.setup();
-    axiosPatchSpy = jest.spyOn(imsApi, 'patch');
-    axiosPostSpy = jest.spyOn(imsApi, 'post');
+    axiosPatchSpy = vi.spyOn(imsApi, 'patch');
+    axiosPostSpy = vi.spyOn(imsApi, 'post');
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('calls onClose when Cancel button is clicked', async () => {

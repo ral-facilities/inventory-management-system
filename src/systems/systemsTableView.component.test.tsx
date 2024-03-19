@@ -1,9 +1,8 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
-import { renderComponentWithRouterProvider } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import {
   SystemsTableView,
   SystemsTableViewProps,
@@ -11,9 +10,9 @@ import {
 
 describe('SystemsTableView', () => {
   let props: SystemsTableViewProps;
-  let user;
+  let user: UserEvent;
 
-  const mockOnChangeParentId = jest.fn();
+  const mockOnChangeParentId = vi.fn();
   const mockSystemsData: System[] = [
     SystemsJSON[0] as System,
     SystemsJSON[1] as System,
@@ -40,7 +39,7 @@ describe('SystemsTableView', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders text correctly', async () => {

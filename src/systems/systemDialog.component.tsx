@@ -118,7 +118,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
       };
       if (parentId !== undefined) system.parent_id = parentId;
       addSystem(trimStringValues(system))
-        .then((response) => handleClose())
+        .then(() => handleClose())
         .catch((error: AxiosError) => {
           const response = error.response?.data as ErrorParsing;
 
@@ -335,5 +335,6 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     </Dialog>
   );
 });
+SystemDialog.displayName = 'SystemDialog';
 
 export default SystemDialog;

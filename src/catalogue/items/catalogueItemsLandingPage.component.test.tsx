@@ -1,15 +1,16 @@
-import React from 'react';
-import { renderComponentWithRouterProvider } from '../../setupTests';
 import { screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueItemsLandingPage from './catalogueItemsLandingPage.component';
-import userEvent from '@testing-library/user-event';
-const mockedUseNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+
+const mockedUseNavigate = vi.fn();
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
   useNavigate: () => mockedUseNavigate,
 }));
+
 describe('Catalogue Items Landing Page', () => {
-  let user;
+  let user: UserEvent;
   const createView = (path: string) => {
     return renderComponentWithRouterProvider(
       <CatalogueItemsLandingPage />,
@@ -21,7 +22,7 @@ describe('Catalogue Items Landing Page', () => {
     user = userEvent.setup();
   });
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders text correctly (only basic details given)', async () => {
@@ -84,7 +85,7 @@ describe('Catalogue Items Landing Page', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          `This catalogue item doesn't exist. Please click the Home button on the top left of you screen to navigate to the catalogue home`
+          `This catalogue item doesn't exist. Please click the Home button on the top left of your screen to navigate to the catalogue home.`
         )
       ).toBeInTheDocument();
     });
@@ -220,7 +221,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('prints when the button is clicked', async () => {
-    const spy = jest.spyOn(window, 'print').mockImplementation(() => {});
+    const spy = vi.spyOn(window, 'print').mockImplementation(() => {});
     createView('/catalogue/item/89');
 
     await waitFor(() => {

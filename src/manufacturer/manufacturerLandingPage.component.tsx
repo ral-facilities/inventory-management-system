@@ -8,12 +8,14 @@ import {
 } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useManufacturer } from '../api/manufacturer';
-
 import ManufacturerDialog from './manufacturerDialog.component';
 import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { paths } from '../view/viewTabs.component';
 import { BreadcrumbsInfo } from '../app.types';
+import { formatDateTimeStrings } from '../utils';
+import EditIcon from '@mui/icons-material/Edit';
+import PrintIcon from '@mui/icons-material/Print';
 
 function ManufacturerLandingPage() {
   const { manufacturer_id: manufacturerId } = useParams();
@@ -73,6 +75,7 @@ function ManufacturerLandingPage() {
             <Button
               sx={{ mx: 0.5 }}
               variant="outlined"
+              startIcon={<EditIcon />}
               onClick={() => {
                 setEditManufacturerDialogOpen(true);
               }}
@@ -82,6 +85,7 @@ function ManufacturerLandingPage() {
             <Button
               sx={{ mx: 0.5 }}
               variant="outlined"
+              startIcon={<PrintIcon />}
               onClick={() => {
                 window.print();
               }}
@@ -190,6 +194,38 @@ function ManufacturerLandingPage() {
               {manufacturerData.address.country}
             </Typography>
           </Grid>
+
+          <Grid item xs={12} my={2}>
+            <Typography textAlign={'center'} variant="h6">
+              Last modified:
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              sx={{ mx: '8px' }}
+              textAlign={'center'}
+              variant="body1"
+              color="text.secondary"
+            >
+              {formatDateTimeStrings(manufacturerData.modified_time)}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} my={2}>
+            <Typography textAlign={'center'} variant="h6">
+              Created:
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography
+              sx={{ mx: '8px' }}
+              textAlign={'center'}
+              variant="body1"
+              color="text.secondary"
+            >
+              {formatDateTimeStrings(manufacturerData.created_time)}
+            </Typography>
+          </Grid>
         </Grid>
       )}
       {!manufacturerDataLoading ? (
@@ -203,8 +239,8 @@ function ManufacturerLandingPage() {
           >
             <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
             <Typography>
-              This manufacturer doesn't exist. Please click the Home button to
-              navigate to the manufacturer table
+              This manufacturer doesn&#39;t exist. Please click the Home button
+              to navigate to the manufacturer table
             </Typography>
           </Box>
         )

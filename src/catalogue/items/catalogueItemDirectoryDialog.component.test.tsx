@@ -1,19 +1,18 @@
-import React from 'react';
-import { renderComponentWithRouterProvider } from '../../setupTests';
-
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { imsApi } from '../../api/api';
 import CatalogueItemDirectoryDialog, {
   CatalogueItemDirectoryDialogProps,
 } from './catalogueItemDirectoryDialog.component';
-import { imsApi } from '../../api/api';
+
 describe('catalogue item directory Dialog', () => {
   let props: CatalogueItemDirectoryDialogProps;
-  let user;
+  let user: UserEvent;
   let axiosPatchSpy;
   let axiosPostSpy;
-  const onClose = jest.fn();
-  const onChangeSelectedItems = jest.fn();
+  const onClose = vi.fn();
+  const onChangeSelectedItems = vi.fn();
 
   const createView = () => {
     return renderComponentWithRouterProvider(
@@ -42,9 +41,18 @@ describe('catalogue item directory Dialog', () => {
             type: 'number',
             unit: 'Joules',
             mandatory: true,
+            allowed_values: null,
           },
-          { name: 'Accuracy', type: 'string', mandatory: false },
+          {
+            name: 'Accuracy',
+            type: 'string',
+            unit: null,
+            mandatory: false,
+            allowed_values: null,
+          },
         ],
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       },
       selectedItems: [
         {
@@ -60,7 +68,7 @@ describe('catalogue item directory Dialog', () => {
             {
               name: 'Accuracy',
               value: '±0.5%',
-              unit: '',
+              unit: null,
             },
           ],
           id: '89',
@@ -76,6 +84,8 @@ describe('catalogue item directory Dialog', () => {
           obsolete_replacement_catalogue_item_id: '6',
           obsolete_reason: 'The item is no longer being manufactured',
           notes: null,
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         },
         {
           catalogue_category_id: '5',
@@ -101,31 +111,33 @@ describe('catalogue item directory Dialog', () => {
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
           notes: null,
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         },
       ],
     };
     user = userEvent.setup();
 
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 2000 });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   describe('Move to', () => {
     beforeEach(() => {
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('calls onClose when cancel is clicked', async () => {
@@ -229,7 +241,9 @@ describe('catalogue item directory Dialog', () => {
           screen.getByText('No catalogue items found')
         ).toBeInTheDocument();
       });
-      const moveButton = screen.getByRole('button', { name: 'Move here' });
+      const moveButton = await screen.findByRole('button', {
+        name: 'Move here',
+      });
 
       await user.click(moveButton);
 
@@ -270,11 +284,11 @@ describe('catalogue item directory Dialog', () => {
   describe('Copy to', () => {
     beforeEach(() => {
       props.requestType = 'copyTo';
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('copies multiple catalogue items (new catalogue category)', async () => {
@@ -309,9 +323,11 @@ describe('catalogue item directory Dialog', () => {
         obsolete_reason: 'The item is no longer being manufactured',
         obsolete_replacement_catalogue_item_id: '6',
         notes: null,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 1000 },
-          { name: 'Accuracy', unit: '', value: '±0.5%' },
+          { name: 'Accuracy', unit: null, value: '±0.5%' },
         ],
       });
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
@@ -331,6 +347,8 @@ describe('catalogue item directory Dialog', () => {
         obsolete_reason: null,
         obsolete_replacement_catalogue_item_id: null,
         notes: null,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 2000 },
         ],
@@ -369,9 +387,11 @@ describe('catalogue item directory Dialog', () => {
         obsolete_reason: 'The item is no longer being manufactured',
         obsolete_replacement_catalogue_item_id: '6',
         notes: null,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 1000 },
-          { name: 'Accuracy', unit: '', value: '±0.5%' },
+          { name: 'Accuracy', unit: null, value: '±0.5%' },
         ],
       });
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
@@ -391,6 +411,8 @@ describe('catalogue item directory Dialog', () => {
         obsolete_reason: null,
         obsolete_replacement_catalogue_item_id: null,
         notes: null,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
           { name: 'Measurement Range', unit: 'Joules', value: 2000 },
         ],

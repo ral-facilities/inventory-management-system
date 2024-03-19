@@ -25,9 +25,11 @@ import { BreadcrumbsInfo, UsageStatusType } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ItemDialog from './itemDialog.component';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
+import { formatDateTimeStrings } from '../utils';
 
 function ItemsLandingPage() {
   // Navigation
+
   const { item_id: id } = useParams();
   const navigateToCatalogue = useNavigateToCatalogue();
 
@@ -267,6 +269,22 @@ function ItemsLandingPage() {
                       </MuiLink>
                     </Typography>
                   </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Typography align="left" color="text.primary">
+                      Last modified
+                    </Typography>
+                    <Typography align="left" color="text.secondary">
+                      {formatDateTimeStrings(itemData.modified_time)}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Typography align="left" color="text.primary">
+                      Created
+                    </Typography>
+                    <Typography align="left" color="text.secondary">
+                      {formatDateTimeStrings(itemData.created_time)}
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Collapse>
             </Grid>
@@ -434,8 +452,8 @@ function ItemsLandingPage() {
           >
             <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
             <Typography>
-              This item doesn't exist. Please click the Home button to navigate
-              to the catalogue home
+              This item doesn&#39;t exist. Please click the Home button to
+              navigate to the catalogue home
             </Typography>
           </Box>
         )
@@ -445,16 +463,18 @@ function ItemsLandingPage() {
         </Box>
       )}
 
-      <ItemDialog
-        open={editItemDialogOpen}
-        onClose={() => {
-          setEditItemDialogOpen(false);
-        }}
-        type="edit"
-        catalogueCategory={catalogueCategoryData}
-        catalogueItem={catalogueItemData}
-        selectedItem={itemData}
-      />
+      {editItemDialogOpen && (
+        <ItemDialog
+          open={editItemDialogOpen}
+          onClose={() => {
+            setEditItemDialogOpen(false);
+          }}
+          type="edit"
+          catalogueCategory={catalogueCategoryData}
+          catalogueItem={catalogueItemData}
+          selectedItem={itemData}
+        />
+      )}
     </Grid>
   );
 }

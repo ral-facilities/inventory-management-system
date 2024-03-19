@@ -1,9 +1,3 @@
-import React from 'react';
-import {
-  getCatalogueCategoryById,
-  getCatalogueItemById,
-  renderComponentWithRouterProvider,
-} from '../../setupTests';
 import {
   act,
   fireEvent,
@@ -11,21 +5,26 @@ import {
   waitFor,
   within,
 } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import {
+  getCatalogueCategoryById,
+  getCatalogueItemById,
+  renderComponentWithRouterProvider,
+} from '../../testUtils';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
 
-import handleIMS_APIError from '../../handleIMS_APIError';
 import { imsApi } from '../../api/api';
+import handleIMS_APIError from '../../handleIMS_APIError';
 
-jest.mock('../../handleIMS_APIError');
+vi.mock('../../handleIMS_APIError');
 
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
-  let user;
+  let user: UserEvent;
   let axiosPostSpy;
-  const onClose = jest.fn();
+  const onClose = vi.fn();
 
   const createView = () => {
     return renderComponentWithRouterProvider(
@@ -43,7 +42,7 @@ describe('Catalogue Items Dialog', () => {
     };
 
     user = userEvent.setup();
-    axiosPostSpy = jest.spyOn(imsApi, 'post');
+    axiosPostSpy = vi.spyOn(imsApi, 'post');
   });
   const modifyValues = async (values: {
     name?: string;
@@ -155,7 +154,7 @@ describe('Catalogue Items Dialog', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders details step correctly', async () => {
@@ -265,18 +264,15 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Next' }));
 
-    await fireEvent.change(
-      screen.getByLabelText('Ultimate Pressure (millibar) *'),
-      {
-        target: { value: '10' },
-      }
-    );
+    fireEvent.change(screen.getByLabelText('Ultimate Pressure (millibar) *'), {
+      target: { value: '10' },
+    });
 
-    await fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-    await fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+    fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+    fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
 
-    await fireEvent.mouseDown(screen.getByLabelText('Axis'));
-    await fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
+    fireEvent.mouseDown(screen.getByLabelText('Axis'));
+    fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -374,12 +370,9 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(screen.getByRole('button', { name: 'Next' }));
 
-    await fireEvent.change(
-      screen.getByLabelText('Ultimate Pressure (millibar) *'),
-      {
-        target: { value: '10' },
-      }
-    );
+    fireEvent.change(screen.getByLabelText('Ultimate Pressure (millibar) *'), {
+      target: { value: '10' },
+    });
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -628,7 +621,7 @@ describe('Catalogue Items Dialog', () => {
         type: 'edit',
       };
 
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
     it('Edit a catalogue item (catalogue detail)', async () => {
@@ -684,20 +677,18 @@ describe('Catalogue Items Dialog', () => {
       createView();
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      await fireEvent.change(
+      fireEvent.change(
         screen.getByLabelText('Ultimate Pressure (millibar) *'),
         {
           target: { value: '10' },
         }
       );
 
-      await fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-      await fireEvent.click(
-        within(screen.getByRole('listbox')).getByText('400')
-      );
+      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
 
-      await fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      await fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
+      fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -708,6 +699,43 @@ describe('Catalogue Items Dialog', () => {
           {
             name: 'Axis',
             value: 'y',
+          },
+        ],
+      });
+    }, 10000);
+
+    it('edits a catalogue item where the catalogue item property has an allowed list of values (Optional)', async () => {
+      props = {
+        ...props,
+        parentInfo: getCatalogueCategoryById('12'),
+        selectedCatalogueItem: getCatalogueItemById('17'),
+      };
+
+      createView();
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      fireEvent.change(
+        screen.getByLabelText('Ultimate Pressure (millibar) *'),
+        {
+          target: { value: '10' },
+        }
+      );
+
+      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+
+      fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('None'));
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/17', {
+        properties: [
+          { name: 'Pumping Speed', value: 400 },
+          { name: 'Ultimate Pressure', value: 10 },
+          {
+            name: 'Axis',
+            value: null,
           },
         ],
       });

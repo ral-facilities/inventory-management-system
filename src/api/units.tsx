@@ -12,7 +12,7 @@ const fetchUnits = async (): Promise<Unit[]> => {
 export const useUnits = (): UseQueryResult<Unit[], AxiosError> => {
   return useQuery({
     queryKey: ['Units'],
-    queryFn: (params) => {
+    queryFn: () => {
       return fetchUnits();
     },
   });

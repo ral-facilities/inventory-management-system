@@ -1,21 +1,20 @@
 import { fireEvent, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
-import { renderComponentWithRouterProvider } from '../setupTests';
-import SystemDialog, { SystemDialogProps } from './systemDialog.component';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { imsApi } from '../api/api';
 import { System, SystemImportanceType } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { imsApi } from '../api/api';
+import { renderComponentWithRouterProvider } from '../testUtils';
+import SystemDialog, { SystemDialogProps } from './systemDialog.component';
 
-jest.mock('../handleIMS_APIError');
+vi.mock('../handleIMS_APIError');
 
 describe('Systems Dialog', () => {
   let props: SystemDialogProps;
-  let user;
+  let user: UserEvent;
   let axiosPostSpy;
   let axiosPatchSpy;
 
-  const mockOnClose = jest.fn();
+  const mockOnClose = vi.fn();
 
   const createView = () => {
     return renderComponentWithRouterProvider(
@@ -65,12 +64,12 @@ describe('Systems Dialog', () => {
       type: 'add',
     };
     user = userEvent.setup();
-    axiosPostSpy = jest.spyOn(imsApi, 'post');
-    axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+    axiosPostSpy = vi.spyOn(imsApi, 'post');
+    axiosPatchSpy = vi.spyOn(imsApi, 'patch');
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('Add', () => {

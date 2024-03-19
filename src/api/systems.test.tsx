@@ -9,7 +9,7 @@ import {
 } from '../app.types';
 import SystemBreadcrumbsJSON from '../mocks/SystemBreadcrumbs.json';
 import SystemsJSON from '../mocks/Systems.json';
-import { hooksWrapperWithProviders } from '../setupTests';
+import { hooksWrapperWithProviders } from '../testUtils';
 import {
   useAddSystem,
   useCopyToSystem,
@@ -24,7 +24,7 @@ import { imsApi } from './api';
 
 describe('System api functions', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('useSystems', () => {
@@ -197,7 +197,7 @@ describe('System api functions', () => {
       result.current.mutate('65328f34a40ff5301575a4e9');
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
 
-      expect(result.current.data).toEqual('');
+      expect(result.current.data).toEqual({ status: 204 });
     });
   });
 
@@ -220,11 +220,11 @@ describe('System api functions', () => {
         targetSystem: null,
       };
 
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('sends requests to move multiple systems to root and returns a successful response for each', async () => {
@@ -355,11 +355,11 @@ describe('System api functions', () => {
         existingSystemNames: [],
       };
 
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('sends requests to copy multiple systems to root and returns a successful response for each', async () => {
@@ -456,7 +456,7 @@ describe('System api functions', () => {
         })
       );
       expect(result.current.data).toEqual(
-        copyToSystem.selectedSystems.map((system, index) => ({
+        copyToSystem.selectedSystems.map((system) => ({
           message: `Successfully copied to Root`,
           name: system.name,
           state: 'success',

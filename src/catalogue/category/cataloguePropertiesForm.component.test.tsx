@@ -1,23 +1,22 @@
-import React from 'react';
-import { renderComponentWithRouterProvider } from '../../setupTests';
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import CataloguePropertiesForm, {
-  CataloguePropertiesFormProps,
-} from './cataloguePropertiesForm.component';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   CatalogueCategoryFormData,
   CatalogueItemPropertiesErrorsType,
 } from '../../app.types';
+import { renderComponentWithRouterProvider } from '../../testUtils';
+import CataloguePropertiesForm, {
+  CataloguePropertiesFormProps,
+} from './cataloguePropertiesForm.component';
 
 describe('Catalogue Properties Form', () => {
   let props: CataloguePropertiesFormProps;
-  let user;
-  const onChangeFormFields = jest.fn();
-  const onChangeCatalogueItemPropertiesErrors = jest.fn();
-  const onChangeAllowedValuesListErrors = jest.fn();
+  let user: UserEvent;
+  const onChangeFormFields = vi.fn();
+  const onChangeCatalogueItemPropertiesErrors = vi.fn();
+  const onChangeAllowedValuesListErrors = vi.fn();
 
-  const resetFormError = jest.fn();
+  const resetFormError = vi.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CataloguePropertiesForm {...props} />,
@@ -40,7 +39,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders correctly', async () => {
@@ -82,13 +81,19 @@ describe('Catalogue Properties Form', () => {
     createView();
 
     // Click on the add button
-    user.click(
+    await user.click(
       screen.getByRole('button', { name: 'Add catalogue category field entry' })
     );
 
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
-        { mandatory: false, name: '', type: '', unit: '' },
+        {
+          mandatory: false,
+          name: '',
+          type: '',
+          unit: undefined,
+          allowed_values: undefined,
+        },
       ]);
     });
   });
@@ -106,7 +111,7 @@ describe('Catalogue Properties Form', () => {
     createView();
 
     // Click on the add button
-    user.click(screen.getAllByTestId('DeleteIcon')[0]);
+    await user.click(screen.getAllByTestId('DeleteIcon')[0]);
 
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([

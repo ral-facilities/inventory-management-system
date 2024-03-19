@@ -1,11 +1,10 @@
-import React from 'react';
-import { renderComponentWithRouterProvider } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
-import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
-import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
-import { server } from '../mocks/server';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { HttpResponse, http } from 'msw';
 import { CatalogueCategoryFormData, CatalogueItemProperty } from '../app.types';
+import { server } from '../mocks/server';
+import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
+import { renderComponentWithRouterProvider } from '../testUtils';
 
 describe('matchCatalogueItemProperties', () => {
   it('should match catalogue item properties correctly', () => {
@@ -77,25 +76,25 @@ describe('matchCatalogueItemProperties', () => {
 });
 
 describe('Catalogue', () => {
-  let user;
+  let user: UserEvent;
   const createView = (path: string) => {
     return renderComponentWithRouterProvider(<Catalogue />, path);
   };
 
   beforeEach(() => {
     user = userEvent.setup();
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('progress bar renders correctly', async () => {
@@ -122,7 +121,7 @@ describe('Catalogue', () => {
     createView('/catalogue/4');
 
     await waitFor(() => {
-      expect(screen.getByText('Description')).toBeInTheDocument();
+      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
   });
 
@@ -213,8 +212,8 @@ describe('Catalogue', () => {
 
   it('root has no categories so there is no results page', async () => {
     server.use(
-      rest.get('/v1/catalogue-categories', (req, res, ctx) => {
-        return res(ctx.status(200), ctx.json([]));
+      http.get('/v1/catalogue-categories', () => {
+        return HttpResponse.json([], { status: 200 });
       })
     );
 

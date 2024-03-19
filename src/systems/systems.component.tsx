@@ -63,8 +63,11 @@ export const useSystemId = (): string | null => {
   const location = useLocation();
 
   return React.useMemo(() => {
-    let systemId: string | null = location.pathname.replace('/systems', '');
-    systemId = systemId === '' ? null : systemId.replace('/', '');
+    let systemId: string | null = location.pathname
+      .replace('/systems', '')
+      // In case of /systems/
+      .replace('/', '');
+    systemId = systemId === '' ? null : systemId;
     return systemId;
   }, [location.pathname]);
 };

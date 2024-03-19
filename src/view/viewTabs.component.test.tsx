@@ -1,11 +1,10 @@
-import React from 'react';
-import { renderComponentWithRouterProvider } from '../setupTests';
-import ViewTabs from './viewTabs.component';
 import { screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { renderComponentWithRouterProvider } from '../testUtils';
+import ViewTabs from './viewTabs.component';
 
 describe('View Tabs', () => {
-  let user;
+  let user: UserEvent;
   const createView = (path: string) => {
     return renderComponentWithRouterProvider(<ViewTabs />, path);
   };

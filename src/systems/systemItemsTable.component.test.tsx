@@ -1,21 +1,20 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
-import { renderComponentWithRouterProvider } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import {
   SystemItemsTable,
   SystemItemsTableProps,
 } from './systemItemsTable.component';
 
 describe('SystemItemsTable', () => {
-  jest.setTimeout(10000);
+  vi.setConfig({ testTimeout: 10000 });
 
   let props: SystemItemsTableProps;
-  let user;
+  let user: UserEvent;
 
-  let mockSystem: System = SystemsJSON[2] as System;
+  const mockSystem: System = SystemsJSON[2] as System;
 
   const createView = () => {
     return renderComponentWithRouterProvider(
@@ -29,18 +28,18 @@ describe('SystemItemsTable', () => {
 
     user = userEvent.setup();
 
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders correctly', async () => {
@@ -66,6 +65,11 @@ describe('SystemItemsTable', () => {
     // Expand a group so all columns are rendered to improve test coverage
     // (expanding all causes an infinite loop due to an issue with details panels)
     await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
+    //also unhide created column
+    await user.click(
+      await screen.findByRole('button', { name: 'Show/Hide columns' })
+    );
+    await user.click(screen.getByText('Created'));
 
     // Rest in a snapshot
     expect(view.asFragment()).toMatchSnapshot();

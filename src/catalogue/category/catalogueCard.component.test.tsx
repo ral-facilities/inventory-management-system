@@ -1,16 +1,15 @@
-import React from 'react';
-import { renderComponentWithRouterProvider } from '../../setupTests';
 import { screen } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import CatalogueCard, { CatalogueCardProps } from './catalogueCard.component';
-import userEvent from '@testing-library/user-event';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 
 describe('Catalogue Card', () => {
   let props: CatalogueCardProps;
-  let user;
+  let user: UserEvent;
 
-  const onChangeOpenDeleteDialog = jest.fn();
-  const onChangeOpenEditDialog = jest.fn();
-  const onToggleSelect = jest.fn();
+  const onChangeOpenDeleteDialog = vi.fn();
+  const onChangeOpenEditDialog = vi.fn();
+  const onToggleSelect = vi.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CatalogueCard {...props} />,
@@ -29,6 +28,8 @@ describe('Catalogue Card', () => {
       onChangeOpenEditDialog: onChangeOpenEditDialog,
       isSelected: false,
       onToggleSelect: onToggleSelect,
+      created_time: '2024-01-01T12:00:00.000+00:00',
+      modified_time: '2024-01-02T13:10:10.000+00:00',
     };
     user = userEvent.setup();
   });

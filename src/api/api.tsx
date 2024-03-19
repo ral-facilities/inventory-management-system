@@ -16,7 +16,7 @@ imsApi.interceptors.request.use(async (config) => {
 // These are for ensuring refresh request is only sent once when multiple requests
 // are failing due to 403's at the same time
 let isFetchingAccessToken = false;
-let failedAuthRequestQueue: ((shouldReject?: boolean) => any)[] = [];
+let failedAuthRequestQueue: ((shouldReject?: boolean) => void)[] = [];
 
 /* This should be called when SciGateway successfully refreshes the access token - it retries
    all requests that failed due to an invalid token */

@@ -11,7 +11,6 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import './App.css';
 import {
   clearFailedAuthRequestsQueue,
   retryFailedAuthRequests,
@@ -39,7 +38,7 @@ import ItemsLandingPage from './items/itemsLandingPage.component';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
-    onError: (error, query) => {
+    onError: (error) => {
       handleIMS_APIError(error as AxiosError);
     },
   }),

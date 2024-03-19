@@ -23,6 +23,7 @@ import { BreadcrumbsInfo } from '../../app.types';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import { useNavigateToCatalogue } from '../catalogue.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
+import { formatDateTimeStrings } from '../../utils';
 
 function CatalogueItemsLandingPage() {
   const { catalogue_item_id: catalogueItemId } = useParams();
@@ -294,6 +295,22 @@ function CatalogueItemsLandingPage() {
                       {catalogueItemIdData.item_model_number ?? 'None'}
                     </Typography>
                   </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Typography align="left" color="text.primary">
+                      Last Modified
+                    </Typography>
+                    <Typography align="left" color="text.secondary">
+                      {formatDateTimeStrings(catalogueItemIdData.modified_time)}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Typography align="left" color="text.primary">
+                      Created
+                    </Typography>
+                    <Typography align="left" color="text.secondary">
+                      {formatDateTimeStrings(catalogueItemIdData.created_time)}
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Collapse>
             </Grid>
@@ -461,8 +478,9 @@ function CatalogueItemsLandingPage() {
           >
             <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
             <Typography>
-              This catalogue item doesn't exist. Please click the Home button on
-              the top left of you screen to navigate to the catalogue home
+              This catalogue item doesn&#39;t exist. Please click the Home
+              button on the top left of your screen to navigate to the catalogue
+              home.
             </Typography>
           </Box>
         )

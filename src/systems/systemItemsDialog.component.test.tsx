@@ -1,21 +1,20 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { imsApi } from '../api/api';
 import { Item } from '../app.types';
 import ItemsJSON from '../mocks/Items.json';
-import { renderComponentWithRouterProvider } from '../setupTests';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemItemsDialog, {
   SystemItemsDialogProps,
 } from './systemItemsDialog.component';
-import { imsApi } from '../api/api';
 
 describe('SystemItemsDialog', () => {
   let props: SystemItemsDialogProps;
-  let user;
+  let user: UserEvent;
   let axiosPatchSpy;
 
-  const mockOnClose = jest.fn();
-  const mockOnChangeSelectedItems = jest.fn();
+  const mockOnClose = vi.fn();
+  const mockOnChangeSelectedItems = vi.fn();
 
   const mockSelectedItems: Item[] = [
     ItemsJSON[0] as Item,
@@ -39,11 +38,11 @@ describe('SystemItemsDialog', () => {
     };
 
     user = userEvent.setup();
-    axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+    axiosPatchSpy = vi.spyOn(imsApi, 'patch');
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('calls onClose when Cancel button is clicked', async () => {
