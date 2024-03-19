@@ -241,6 +241,7 @@ function ItemDialog(props: ItemDialogProps) {
       delivered_date: null,
       notes: null,
     });
+    setActiveStep(0);
     setPropertyValues([]);
     setPropertyErrors(
       new Array(parentCatalogueItemPropertiesInfo.length).fill(false)

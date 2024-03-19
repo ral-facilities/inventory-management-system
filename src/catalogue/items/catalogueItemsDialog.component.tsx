@@ -134,6 +134,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       notes: null,
     });
 
+    setActiveStep(0);
     setPropertyValues([]);
     setPropertyErrors(
       new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
@@ -195,6 +196,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     const updatedPropertyErrors = [...propertyErrors];
     updatedPropertyErrors[index] = false;
     setPropertyErrors(updatedPropertyErrors);
+    setFormError(false);
+    setFormErrorMessage(undefined);
   };
 
   const { mutateAsync: addCatalogueItem, isPending: isAddPending } =
