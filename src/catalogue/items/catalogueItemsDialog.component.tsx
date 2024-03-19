@@ -134,6 +134,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       notes: null,
     });
 
+    setActiveStep(0);
     setPropertyValues([]);
     setPropertyErrors(
       new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
@@ -195,6 +196,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     const updatedPropertyErrors = [...propertyErrors];
     updatedPropertyErrors[index] = false;
     setPropertyErrors(updatedPropertyErrors);
+    setFormError(false);
+    setFormErrorMessage(undefined);
   };
 
   const { mutateAsync: addCatalogueItem, isPending: isAddPending } =
@@ -920,9 +923,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
                               >
+                                <MenuItem key={0} value={''}>
+                                  {'None'}
+                                </MenuItem>
                                 {property.allowed_values.values.map(
                                   (value, index) => (
-                                    <MenuItem key={index} value={value}>
+                                    <MenuItem key={index + 1} value={value}>
                                       {value}
                                     </MenuItem>
                                   )

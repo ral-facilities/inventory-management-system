@@ -241,6 +241,7 @@ function ItemDialog(props: ItemDialogProps) {
       delivered_date: null,
       notes: null,
     });
+    setActiveStep(0);
     setPropertyValues([]);
     setPropertyErrors(
       new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
@@ -742,9 +743,12 @@ function ItemDialog(props: ItemDialogProps) {
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
                               >
+                                <MenuItem key={0} value={''}>
+                                  {'None'}
+                                </MenuItem>
                                 {property.allowed_values.values.map(
                                   (value, index) => (
-                                    <MenuItem key={index} value={value}>
+                                    <MenuItem key={index + 1} value={value}>
                                       {value}
                                     </MenuItem>
                                   )

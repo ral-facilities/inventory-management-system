@@ -29,6 +29,7 @@ import { formatDateTimeStrings } from '../utils';
 
 function ItemsLandingPage() {
   // Navigation
+
   const { item_id: id } = useParams();
   const navigateToCatalogue = useNavigateToCatalogue();
 
@@ -462,16 +463,18 @@ function ItemsLandingPage() {
         </Box>
       )}
 
-      <ItemDialog
-        open={editItemDialogOpen}
-        onClose={() => {
-          setEditItemDialogOpen(false);
-        }}
-        type="edit"
-        catalogueCategory={catalogueCategoryData}
-        catalogueItem={catalogueItemData}
-        selectedItem={itemData}
-      />
+      {editItemDialogOpen && (
+        <ItemDialog
+          open={editItemDialogOpen}
+          onClose={() => {
+            setEditItemDialogOpen(false);
+          }}
+          type="edit"
+          catalogueCategory={catalogueCategoryData}
+          catalogueItem={catalogueItemData}
+          selectedItem={itemData}
+        />
+      )}
     </Grid>
   );
 }

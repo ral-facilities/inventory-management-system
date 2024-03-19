@@ -703,6 +703,43 @@ describe('Catalogue Items Dialog', () => {
       });
     }, 10000);
 
+    it('edits a catalogue item where the catalogue item property has an allowed list of values (Optional)', async () => {
+      props = {
+        ...props,
+        parentInfo: getCatalogueCategoryById('12'),
+        selectedCatalogueItem: getCatalogueItemById('17'),
+      };
+
+      createView();
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      fireEvent.change(
+        screen.getByLabelText('Ultimate Pressure (millibar) *'),
+        {
+          target: { value: '10' },
+        }
+      );
+
+      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+
+      fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('None'));
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/17', {
+        properties: [
+          { name: 'Pumping Speed', value: 400 },
+          { name: 'Ultimate Pressure', value: 10 },
+          {
+            name: 'Axis',
+            value: null,
+          },
+        ],
+      });
+    }, 10000);
+
     it('display error message when mandatory field is not filled in', async () => {
       props = {
         ...props,

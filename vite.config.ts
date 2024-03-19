@@ -119,7 +119,7 @@ export default defineConfig(({ mode }) => {
   return {
     ...config,
     test: {
-      globals: 'true',
+      globals: true,
       environment: 'jsdom',
       globalSetup: './globalSetup.js',
       setupFiles: ['src/setupTests.tsx'],

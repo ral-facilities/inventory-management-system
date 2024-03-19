@@ -124,7 +124,7 @@ export function ItemsTable(props: ItemTableProps) {
         Cell: ({ row }) => (
           <Typography
             // For ensuring space when grouping
-            sx={{ marginRight: 0.5 }}
+            sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
             {row.original.warranty_end_date &&
               new Date(row.original.warranty_end_date).toLocaleDateString()}
@@ -139,7 +139,7 @@ export function ItemsTable(props: ItemTableProps) {
         Cell: ({ row }) => (
           <Typography
             // For ensuring space when grouping
-            sx={{ marginRight: 0.5 }}
+            sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
             {row.original.delivered_date &&
               new Date(row.original.delivered_date).toLocaleDateString()}
