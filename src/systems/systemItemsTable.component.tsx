@@ -287,6 +287,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       shape: 'rounded',
       variant: 'outlined',
     },
+    // Fix width to ensure details panels are reasonably close together regardless of table width
+    // - appears to be needed only when using enableColumnResizing, MuiCollapse is the container of
+    // the details panel
+    muiDetailPanelProps: {
+      sx: {
+        '.MuiCollapse-vertical': {
+          width: '800px',
+        },
+      },
+    },
     // Functions
     getRowId: (row) => row.item.id,
     onColumnFiltersChange: setColumnFilters,

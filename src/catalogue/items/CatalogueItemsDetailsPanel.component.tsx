@@ -67,7 +67,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
           <Tab label="Notes" />
         </Tabs>
       </Grid>
-      <Grid item container sx={{ ml: 2 }} xs={12}>
+      <Grid item sx={{ ml: 2 }} xs={12}>
         <TabPanel value={tabValue} index={0}>
           <Grid item container spacing={0}>
             <Grid item xs={12}>
@@ -79,7 +79,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 {catalogueItemIdData.description}
               </Typography>
             </Grid>
-            <Grid item container spacing={0} xs={12} sm={6}>
+            <Grid item container spacing={0}>
               <Grid item xs={12} sm={6} key={0}>
                 <Typography color="text.primary">Obsolete</Typography>
                 <Typography color="text.secondary">
@@ -177,7 +177,7 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
         </TabPanel>
 
         <TabPanel value={tabValue} index={1}>
-          <Grid item container spacing={0} columnSpacing={20}>
+          <Grid item container justifyContent="space-between">
             {catalogueItemIdData.properties &&
               catalogueItemIdData.properties.map((property, index) => (
                 <Grid item xs={12} sm={6} key={index}>

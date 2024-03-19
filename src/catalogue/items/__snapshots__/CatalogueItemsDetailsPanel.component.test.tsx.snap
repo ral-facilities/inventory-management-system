@@ -76,7 +76,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1kgdoxy-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-kpumdk-MuiGrid-root"
     >
       <div
         aria-labelledby="tab-0"
@@ -119,7 +119,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     </p>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1k15kbj-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -302,7 +302,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-9pwih8-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -600,7 +600,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1kgdoxy-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-kpumdk-MuiGrid-root"
     >
       <div
         aria-labelledby="tab-0"
@@ -643,7 +643,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     </p>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1k15kbj-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -826,7 +826,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-9pwih8-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1124,7 +1124,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1kgdoxy-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-kpumdk-MuiGrid-root"
     >
       <div
         aria-labelledby="tab-0"
@@ -1167,7 +1167,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                     </p>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1k15kbj-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1356,7 +1356,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-9pwih8-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1598,7 +1598,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1kgdoxy-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-kpumdk-MuiGrid-root"
     >
       <div
         aria-labelledby="tab-0"
@@ -1641,7 +1641,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                     </p>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1k15kbj-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1830,7 +1830,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-9pwih8-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -2081,7 +2081,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1kgdoxy-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-kpumdk-MuiGrid-root"
     >
       <div
         aria-labelledby="tab-0"
@@ -2125,7 +2125,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                     </p>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1k15kbj-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -2314,7 +2314,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-9pwih8-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -2564,7 +2564,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1kgdoxy-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-kpumdk-MuiGrid-root"
     >
       <div
         aria-labelledby="tab-0"
@@ -2608,7 +2608,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                     </p>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1k15kbj-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -2797,7 +2797,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-9pwih8-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -3047,7 +3047,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-1kgdoxy-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-kpumdk-MuiGrid-root"
     >
       <div
         aria-labelledby="tab-0"
@@ -3091,7 +3091,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                     </p>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1k15kbj-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -3279,7 +3279,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-1jwrqqv-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item css-9pwih8-MuiGrid-root"
                 >
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
