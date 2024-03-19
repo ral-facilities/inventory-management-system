@@ -72,4 +72,12 @@ describe('Catalogue Items details panel', () => {
 
     expect(view.asFragment()).toMatchSnapshot();
   });
+
+  it('renders details panel correctly (when there are no Notes)', async () => {
+    props.itemData = getItemById('3lmRHP8q');
+
+    const view = createView();
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
 });

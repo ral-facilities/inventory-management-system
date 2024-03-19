@@ -64,9 +64,10 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
           <Tab label="Details" />
           <Tab label="Properties" />
           <Tab label="Manufacturer" />
+          <Tab label="Notes" />
         </Tabs>
       </Grid>
-      <Grid item container sx={{ ml: 2 }} xs={12}>
+      <Grid item sx={{ ml: 2 }} xs={12}>
         <TabPanel value={tabValue} index={0}>
           <Grid item container spacing={0}>
             <Grid item xs={12}>
@@ -78,138 +79,105 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 {catalogueItemIdData.description}
               </Typography>
             </Grid>
-            <Grid item container spacing={0} xs={12} sm={6}>
+            <Grid item container spacing={0}>
               <Grid item xs={12} sm={6} key={0}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">Obsolete</Typography>
-                  <Typography color="text.secondary">
-                    {catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">Obsolete</Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}
+                </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={1}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">
-                    Obsolete replacement link
-                  </Typography>
-                  <Typography color="text.secondary">
-                    {catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
-                      <MuiLink
-                        component={Link}
-                        underline="hover"
-                        target="_blank"
-                        to={`/catalogue/item/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
-                      >
-                        Click here
-                      </MuiLink>
-                    ) : (
-                      'None'
-                    )}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">
+                  Obsolete replacement link
+                </Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
+                    <MuiLink
+                      component={Link}
+                      underline="hover"
+                      target="_blank"
+                      to={`/catalogue/item/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
+                    >
+                      Click here
+                    </MuiLink>
+                  ) : (
+                    'None'
+                  )}
+                </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={2}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">Obsolete Reason</Typography>
-                  <Typography color="text.secondary">
-                    {catalogueItemIdData.obsolete_reason ?? 'None'}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">Obsolete Reason</Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.obsolete_reason ?? 'None'}
+                </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={3}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">Cost (£)</Typography>
-                  <Typography color="text.secondary">
-                    {catalogueItemIdData.cost_gbp ?? 'None'}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">Cost (£)</Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.cost_gbp ?? 'None'}
+                </Typography>
               </Grid>
               <Grid item xs={12} sm={6} key={4}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">
-                    Cost to rework (£)
-                  </Typography>
-                  <Typography color="text.secondary">
-                    {catalogueItemIdData.cost_to_rework_gbp ?? 'None'}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">Cost to rework (£)</Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.cost_to_rework_gbp ?? 'None'}
+                </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={5}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">
-                    Time to replace (days)
-                  </Typography>
-                  <Typography color="text.secondary">
-                    {catalogueItemIdData.days_to_replace ?? 'None'}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">
+                  Time to replace (days)
+                </Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.days_to_replace ?? 'None'}
+                </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={6}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">
-                    Time to rework (days)
-                  </Typography>
-                  <Typography color="text.secondary">
-                    {catalogueItemIdData.days_to_rework ?? 'None'}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">
+                  Time to rework (days)
+                </Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.days_to_rework ?? 'None'}
+                </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={7}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">Drawing Number</Typography>
-                  <Typography color="text.secondary">
-                    {catalogueItemIdData.drawing_number ?? 'None'}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">Drawing Number</Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.drawing_number ?? 'None'}
+                </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={8}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">Model Number</Typography>
-                  <Typography color="text.secondary">
-                    {catalogueItemIdData.item_model_number ?? 'None'}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">Model Number</Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.item_model_number ?? 'None'}
+                </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={9}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">Last Modified</Typography>
-                  <Typography color="text.secondary">
-                    {formatDateTimeStrings(catalogueItemIdData.modified_time)}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">Last Modified</Typography>
+                <Typography color="text.secondary">
+                  {formatDateTimeStrings(catalogueItemIdData.modified_time)}
+                </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={10}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">Created</Typography>
-                  <Typography color="text.secondary">
-                    {formatDateTimeStrings(catalogueItemIdData.created_time)}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">Created</Typography>
+                <Typography color="text.secondary">
+                  {formatDateTimeStrings(catalogueItemIdData.created_time)}
+                </Typography>
               </Grid>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Typography sx={{ my: 1 }} variant="h6">
-                Notes:
-              </Typography>
-              <Typography sx={{ mb: 1 }} variant="body1">
-                {catalogueItemIdData.notes ?? 'None'}
-              </Typography>
             </Grid>
           </Grid>
         </TabPanel>
 
         <TabPanel value={tabValue} index={1}>
-          <Grid item container spacing={0}>
+          <Grid item container justifyContent="space-between">
             {catalogueItemIdData.properties &&
               catalogueItemIdData.properties.map((property, index) => (
                 <Grid item xs={12} sm={6} key={index}>
@@ -277,6 +245,14 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
                 {manufacturerData?.address.postcode}
               </Typography>
             </Grid>
+          </Grid>
+        </TabPanel>
+
+        <TabPanel value={tabValue} index={3}>
+          <Grid item xs={12} spacing={0}>
+            <Typography color="text.secondary">
+              {catalogueItemIdData.notes ?? 'None'}
+            </Typography>
           </Grid>
         </TabPanel>
       </Grid>
