@@ -1,31 +1,30 @@
 import { screen } from '@testing-library/react';
 import {
+  getCatalogueCategoryById,
   getCatalogueItemById,
-  getItemById,
   renderComponentWithRouterProvider,
-} from '../testUtils';
+} from '../../testUtils';
 
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import ItemsDetailsPanel, {
-  ItemsDetailsPanelProps,
-} from './ItemsDetailsPanel.component';
+import CatalogueItemsDetailsPanel, {
+  CatalogueItemsDetailsPanelProps,
+} from './catalogueItemsDetailsPanel.component';
 
 describe('Catalogue Items details panel', () => {
   let user: UserEvent;
-  let props: ItemsDetailsPanelProps;
+  let props: CatalogueItemsDetailsPanelProps;
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <ItemsDetailsPanel {...props} />,
+      <CatalogueItemsDetailsPanel {...props} />,
       undefined
     );
   };
 
   beforeEach(() => {
     props = {
-      catalogueItemIdData: getCatalogueItemById('1'),
-      itemData: getItemById('KvT2Ox7n'),
+      catalogueItemIdData: getCatalogueItemById('89'),
+      catalogueCategoryData: getCatalogueCategoryById('5'),
     };
-
     user = userEvent.setup();
   });
 
@@ -35,12 +34,17 @@ describe('Catalogue Items details panel', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
-  it('renders details panel correctly (no dates)', async () => {
-    props.itemData = {
-      ...getItemById('wKsFzrSq'),
-      delivered_date: null,
-      warranty_end_date: null,
-    };
+  it('renders details panel correctly (with obsolete replacement link)', async () => {
+    props.catalogueItemIdData = getCatalogueItemById('11');
+    props.catalogueCategoryData = getCatalogueCategoryById('9');
+    const view = createView();
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders details panel correctly (None values for telephone and url)', async () => {
+    props.catalogueCategoryData = getCatalogueCategoryById('4');
+    props.catalogueItemIdData = getCatalogueItemById('33');
     const view = createView();
 
     expect(view.asFragment()).toMatchSnapshot();
@@ -49,35 +53,28 @@ describe('Catalogue Items details panel', () => {
   it('renders properties panel correctly', async () => {
     const view = createView();
 
-    await user.click(screen.getByRole('tab', { name: 'Properties' }));
-
-    expect(view.asFragment()).toMatchSnapshot();
-  });
-
-  it('renders details panel correctly (None values for telephone and url)', async () => {
-    props.itemData = getItemById('I26EJNJ0');
-
-    const view = createView();
+    await user.click(screen.getByText('Properties'));
 
     expect(view.asFragment()).toMatchSnapshot();
   });
 
   it('renders manufacturer panel correctly', async () => {
     const view = createView();
-    await user.click(screen.getByRole('tab', { name: 'Manufacturer' }));
+    await user.click(screen.getByText('Manufacturer'));
 
     expect(view.asFragment()).toMatchSnapshot();
   });
 
   it('renders notes panel correctly', async () => {
     const view = createView();
-    await user.click(screen.getByRole('tab', { name: 'Notes' }));
+    await user.click(screen.getByText('Notes'));
 
     expect(view.asFragment()).toMatchSnapshot();
   });
 
   it('renders details panel correctly (when there are no Notes)', async () => {
-    props.itemData = getItemById('3lmRHP8q');
+    props.catalogueCategoryData = getCatalogueCategoryById('4');
+    props.catalogueItemIdData = getCatalogueItemById('33');
 
     const view = createView();
 

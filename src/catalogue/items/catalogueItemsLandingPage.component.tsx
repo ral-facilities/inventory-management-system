@@ -156,7 +156,7 @@ function CatalogueItemsLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {catalogueItemIdData.description}
+              {catalogueItemIdData.description ?? 'None'}
             </Typography>
           </Grid>
           <Grid item container spacing={1} xs={12}>
@@ -300,7 +300,10 @@ function CatalogueItemsLandingPage() {
                       Last Modified
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {formatDateTimeStrings(catalogueItemIdData.modified_time)}
+                      {formatDateTimeStrings(
+                        catalogueItemIdData.modified_time,
+                        true
+                      )}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
@@ -308,7 +311,10 @@ function CatalogueItemsLandingPage() {
                       Created
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {formatDateTimeStrings(catalogueItemIdData.created_time)}
+                      {formatDateTimeStrings(
+                        catalogueItemIdData.created_time,
+                        true
+                      )}
                     </Typography>
                   </Grid>
                 </Grid>

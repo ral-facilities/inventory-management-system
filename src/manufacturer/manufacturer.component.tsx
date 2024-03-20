@@ -25,8 +25,8 @@ import { useManufacturers } from '../api/manufacturer';
 import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
-import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 
 function ManufacturerComponent() {
   const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
@@ -63,16 +63,27 @@ function ManufacturerComponent() {
             </MuiLink>
           ),
       },
-
       {
         header: 'Last modified',
-        accessorFn: (row) => row.modified_time,
+        accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
-        size: 250,
+        filterVariant: 'datetime-range',
+        size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&
-          formatDateTimeStrings(row.original.modified_time),
+          formatDateTimeStrings(row.original.modified_time, true),
+      },
+      {
+        header: 'Created',
+        accessorFn: (row) => new Date(row.created_time),
+        id: 'created_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        enableHiding: true,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.created_time, true),
       },
       {
         header: 'URL',
@@ -118,15 +129,6 @@ function ManufacturerComponent() {
         accessorFn: (row) => row.telephone,
         id: 'telephone',
         size: 250,
-      },
-      {
-        header: 'Created',
-        accessorFn: (row) => row.created_time,
-        id: 'created_time',
-        size: 250,
-        enableGrouping: false,
-        enableHiding: true,
-        Cell: ({ row }) => formatDateTimeStrings(row.original.created_time),
       },
     ];
   }, []);
