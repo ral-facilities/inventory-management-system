@@ -100,6 +100,16 @@ export function ItemsTable(props: ItemTableProps) {
           formatDateTimeStrings(row.original.modified_time, true),
       },
       {
+        header: 'Created',
+        accessorFn: (row) => new Date(row.created_time),
+        id: 'created_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.created_time, true),
+      },
+      {
         header: 'Serial Number',
         accessorFn: (row) => row.serial_number,
         id: 'serial_number',
@@ -260,16 +270,6 @@ export function ItemsTable(props: ItemTableProps) {
           }
         },
       })),
-      {
-        header: 'Created',
-        accessorFn: (row) => new Date(row.created_time),
-        id: 'created_time',
-        filterVariant: 'datetime-range',
-        size: 350,
-        enableGrouping: false,
-        Cell: ({ row }) =>
-          formatDateTimeStrings(row.original.created_time, true),
-      },
     ];
   }, [catalogueCategory]);
 

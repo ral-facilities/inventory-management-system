@@ -163,6 +163,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           formatDateTimeStrings(row.original.item.modified_time, true),
       },
       {
+        header: 'Created',
+        accessorFn: (row) => new Date(row.item.created_time),
+        id: 'item.created_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.item.created_time, true),
+      },
+      {
         header: 'Serial Number',
         accessorKey: 'item.serial_number',
         size: 250,
@@ -204,16 +214,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         id: 'item.usage_status',
         size: 200,
         filterVariant: 'select',
-      },
-      {
-        header: 'Created',
-        accessorFn: (row) => new Date(row.item.created_time),
-        id: 'item.created_time',
-        filterVariant: 'datetime-range',
-        size: 350,
-        enableGrouping: false,
-        Cell: ({ row }) =>
-          formatDateTimeStrings(row.original.item.created_time, true),
       },
     ];
   }, []);

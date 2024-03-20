@@ -271,6 +271,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           formatDateTimeStrings(row.original.catalogueItem.modified_time, true),
       },
       {
+        header: 'Created',
+        accessorFn: (row) => new Date(row.catalogueItem.created_time),
+        id: 'catalogueItem.created_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        enableHiding: true,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.catalogueItem.created_time, true),
+      },
+      {
         header: 'View Items',
         size: 200,
         enableGrouping: false,
@@ -579,17 +590,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               <InfoOutlinedIcon />
             </Tooltip>
           ),
-      },
-      {
-        header: 'Created',
-        accessorFn: (row) => new Date(row.catalogueItem.created_time),
-        id: 'catalogueItem.created_time',
-        filterVariant: 'datetime-range',
-        size: 350,
-        enableGrouping: false,
-        enableHiding: true,
-        Cell: ({ row }) =>
-          formatDateTimeStrings(row.original.catalogueItem.created_time, true),
       },
     ];
   }, [dense, isItemSelectable, parentInfo.catalogue_item_properties]);
