@@ -115,22 +115,20 @@ function SystemDetails(props: SystemDetailsProps) {
             justifyContent="space-evenly"
             sx={{ margin: 0 }}
           >
-            <Grid item container direction="column" spacing={1} xs={6}>
-              <Grid item>
+            <Grid item container spacing={1}>
+              <Grid item xs={12} sm={6} key={0}>
                 <Typography variant="h6">Location</Typography>
                 <Typography variant="body1" color="text.secondary">
                   {system.location ?? 'None'}
                 </Typography>
               </Grid>
-              <Grid item>
-                <Typography variant="h6">Owner</Typography>
-                <Typography variant="body1" color="text.secondary">
-                  {system.owner ?? 'None'}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid item container direction="column" spacing={1} xs={6}>
-              <Grid item sx={{ display: 'inline-flex', alignItems: 'center' }}>
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                key={1}
+                sx={{ display: 'inline-flex', alignItems: 'center' }}
+              >
                 <Typography variant="h6">Importance</Typography>
                 <Chip
                   label={system.importance}
@@ -146,23 +144,20 @@ function SystemDetails(props: SystemDetailsProps) {
                   }}
                 />
               </Grid>
-              <Grid
-                item
-                sx={{
-                  alignItems: 'center',
-                }}
-              >
+              <Grid item xs={12} sm={6} key={2}>
+                <Typography variant="h6">Owner</Typography>
+                <Typography variant="body1" color="text.secondary">
+                  {system.owner ?? 'None'}
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={6} key={3}>
                 <Typography variant="h6">Last modified</Typography>
                 <Typography variant="body1" color="text.secondary">
                   {formatDateTimeStrings(system.modified_time)}
                 </Typography>
               </Grid>
-              <Grid
-                item
-                sx={{
-                  alignItems: 'center',
-                }}
-              >
+
+              <Grid item xs={12} sm={6} key={4}>
                 <Typography variant="h6">Created</Typography>
                 <Typography variant="body1" color="text.secondary">
                   {formatDateTimeStrings(system.created_time)}
@@ -170,8 +165,11 @@ function SystemDetails(props: SystemDetailsProps) {
               </Grid>
             </Grid>
           </Grid>
+
           <Grid item>
-            <Typography variant="h6">Description</Typography>
+            <Typography sx={{ paddingTop: 2 }} variant="h6">
+              Description
+            </Typography>
             <Typography
               variant="body1"
               color="text.secondary"
