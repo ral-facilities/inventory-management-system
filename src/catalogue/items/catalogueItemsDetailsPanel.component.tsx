@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Box,
   Collapse,
   Grid,
   Link as MuiLink,
@@ -9,9 +8,12 @@ import {
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { CatalogueItem, Item, UsageStatusType } from '../app.types';
-import { useManufacturer } from '../api/manufacturer';
-import { formatDateTimeStrings } from '../utils';
+import {
+  CatalogueCategory,
+  CatalogueItem,
+  Manufacturer,
+} from '../../app.types';
+import { formatDateTimeStrings } from '../../utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function TabPanel(props: any) {
@@ -34,20 +36,20 @@ function TabPanel(props: any) {
   );
 }
 
-export interface ItemsDetailsPanelProps {
-  itemData: Item;
+export interface CatalogueItemsDetailsPanelProps {
   catalogueItemIdData: CatalogueItem;
+  catalogueCategoryData: CatalogueCategory;
+  manufacturerData?: Manufacturer;
 }
 
-function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
-  const { catalogueItemIdData, itemData } = props;
+function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
+  const { catalogueItemIdData, manufacturerData } = props;
   const [tabValue, setTabValue] = React.useState(0);
-  const { data: manufacturerData } = useManufacturer(
-    catalogueItemIdData.manufacturer_id
-  );
+
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
+
   return (
     <Grid
       container
@@ -79,70 +81,101 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
             </Grid>
             <Grid item container spacing={0}>
               <Grid item xs={12} sm={6} key={0}>
-                <Typography color="text.primary">Serial Number</Typography>
+                <Typography color="text.primary">Obsolete</Typography>
                 <Typography color="text.secondary">
-                  {itemData.serial_number ?? 'None'}
+                  {catalogueItemIdData.is_obsolete ? 'Yes' : 'No'}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={1}>
-                <Typography color="text.primary">Asset Number</Typography>
+                <Typography color="text.primary">
+                  Obsolete replacement link
+                </Typography>
                 <Typography color="text.secondary">
-                  {itemData.asset_number ?? 'None'}
+                  {catalogueItemIdData.obsolete_replacement_catalogue_item_id ? (
+                    <MuiLink
+                      component={Link}
+                      underline="hover"
+                      target="_blank"
+                      to={`/catalogue/item/${catalogueItemIdData.obsolete_replacement_catalogue_item_id}`}
+                    >
+                      Click here
+                    </MuiLink>
+                  ) : (
+                    'None'
+                  )}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={2}>
-                <Typography color="text.primary">
-                  Purchase Order Number
-                </Typography>
+                <Typography color="text.primary">Obsolete Reason</Typography>
                 <Typography color="text.secondary">
-                  {itemData.purchase_order_number ?? 'None'}
+                  {catalogueItemIdData.obsolete_reason ?? 'None'}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={3}>
-                <Typography color="text.primary">Warranty End Date</Typography>
+                <Typography color="text.primary">Cost (£)</Typography>
                 <Typography color="text.secondary">
-                  {itemData.warranty_end_date
-                    ? formatDateTimeStrings(itemData.warranty_end_date, false)
-                    : 'None'}
+                  {catalogueItemIdData.cost_gbp ?? 'None'}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6} key={4}>
-                <Typography color="text.primary">Delivered Date</Typography>
+                <Typography color="text.primary">Cost to rework (£)</Typography>
                 <Typography color="text.secondary">
-                  {itemData.delivered_date
-                    ? formatDateTimeStrings(itemData.delivered_date, false)
-                    : 'None'}
+                  {catalogueItemIdData.cost_to_rework_gbp ?? 'None'}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={5}>
-                <Typography color="text.primary">Is Defective</Typography>
+                <Typography color="text.primary">
+                  Time to replace (days)
+                </Typography>
                 <Typography color="text.secondary">
-                  {itemData.is_defective ? 'Yes' : 'No'}
+                  {catalogueItemIdData.days_to_replace ?? 'None'}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={6}>
-                <Typography color="text.primary">Usage Status</Typography>
+                <Typography color="text.primary">
+                  Time to rework (days)
+                </Typography>
                 <Typography color="text.secondary">
-                  {Object.values(UsageStatusType)[itemData.usage_status]}
+                  {catalogueItemIdData.days_to_rework ?? 'None'}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={7}>
-                <Typography color="text.primary">Last Modified</Typography>
+                <Typography color="text.primary">Drawing Number</Typography>
                 <Typography color="text.secondary">
-                  {formatDateTimeStrings(itemData.modified_time, true)}
+                  {catalogueItemIdData.drawing_number ?? 'None'}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={8}>
+                <Typography color="text.primary">Model Number</Typography>
+                <Typography color="text.secondary">
+                  {catalogueItemIdData.item_model_number ?? 'None'}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12} sm={6} key={9}>
+                <Typography color="text.primary">Last Modified</Typography>
+                <Typography color="text.secondary">
+                  {formatDateTimeStrings(
+                    catalogueItemIdData.modified_time,
+                    true
+                  )}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12} sm={6} key={10}>
                 <Typography color="text.primary">Created</Typography>
                 <Typography color="text.secondary">
-                  {formatDateTimeStrings(itemData.created_time, true)}
+                  {formatDateTimeStrings(
+                    catalogueItemIdData.created_time,
+                    true
+                  )}
                 </Typography>
               </Grid>
             </Grid>
@@ -150,26 +183,18 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
         </TabPanel>
 
         <TabPanel value={tabValue} index={1}>
-          <Grid item container spacing={0}>
-            {itemData.properties &&
-              itemData.properties.map((property, index) => {
-                return (
-                  <Grid item xs={12} sm={6} key={index}>
-                    <Typography align="left" color="text.primary">{`${
-                      property.name
-                    } ${
-                      property.unit ? `(${property.unit})` : ''
-                    }`}</Typography>
-                    <Box sx={{ display: 'flex' }}>
-                      <Typography align="left" color="text.secondary">
-                        {property.value !== null
-                          ? String(property.value)
-                          : 'None'}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                );
-              })}
+          <Grid item container justifyContent="space-between">
+            {catalogueItemIdData.properties &&
+              catalogueItemIdData.properties.map((property, index) => (
+                <Grid item xs={12} sm={6} key={index}>
+                  <Typography color="text.primary">{`${property.name} ${
+                    property.unit ? `(${property.unit})` : ''
+                  }`}</Typography>
+                  <Typography color="text.secondary">
+                    {property.value !== null ? String(property.value) : 'None'}
+                  </Typography>
+                </Grid>
+              ))}
           </Grid>
         </TabPanel>
 
@@ -230,9 +255,9 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
         </TabPanel>
 
         <TabPanel value={tabValue} index={3}>
-          <Grid item xs={12} spacing={0}>
+          <Grid item xs={12}>
             <Typography color="text.secondary">
-              {itemData.notes ?? 'None'}
+              {catalogueItemIdData.notes ?? 'None'}
             </Typography>
           </Grid>
         </TabPanel>
@@ -241,4 +266,4 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
   );
 }
 
-export default ItemsDetailsPanel;
+export default CatalogueItemsDetailsPanel;

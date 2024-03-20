@@ -15,7 +15,7 @@ vi.mock('../../handleIMS_APIError');
 
 describe('Obsolete Catalogue Item Dialog', () => {
   // Quite a few of these take more than 10 seconds on CI
-  vi.setConfig({ testTimeout: 20000 });
+  vi.setConfig({ testTimeout: 30000 });
 
   let props: ObsoleteCatalogueItemDialogProps;
   let user: UserEvent;

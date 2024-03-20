@@ -17,22 +17,22 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": null,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "1",
@@ -69,22 +69,22 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Sony",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "2",
@@ -121,22 +121,22 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Canon",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "3",
@@ -173,22 +173,22 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Nikon",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "90",
@@ -225,22 +225,22 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Panasonic",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "24",
@@ -277,22 +277,22 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Olympus",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "25",
@@ -329,22 +329,22 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Fujifilm",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "26",
@@ -381,22 +381,22 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "27",
@@ -433,22 +433,22 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Pentax",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "28",
@@ -485,22 +485,22 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Sigma",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "29",
@@ -537,22 +537,22 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "30",
@@ -589,22 +589,22 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Red",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "31",
@@ -641,22 +641,22 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "32",
@@ -693,22 +693,22 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "33",
@@ -745,22 +745,22 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "34",
@@ -797,22 +797,22 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "35",
@@ -849,22 +849,22 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "36",
@@ -901,22 +901,22 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "37",
@@ -953,22 +953,22 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "38",
@@ -1005,22 +1005,22 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "39",
@@ -1057,22 +1057,22 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "40",
@@ -1109,22 +1109,22 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "41",
@@ -1161,22 +1161,22 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "42",
@@ -1213,22 +1213,22 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "43",
@@ -1265,22 +1265,22 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "44",
@@ -1312,7 +1312,7 @@
       {
         "name": "Accuracy",
         "value": "±0.5%",
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "89",
@@ -1344,7 +1344,7 @@
       {
         "name": "Accuracy",
         "value": null,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "6",
@@ -1376,7 +1376,7 @@
       {
         "name": "Accuracy",
         "value": "±0.1%",
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "7",
@@ -1408,7 +1408,7 @@
       {
         "name": "Accuracy",
         "value": "±0.05%",
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "8",
@@ -1435,7 +1435,7 @@
       {
         "name": "Wavefront Measurement Range",
         "value": "0-10 micrometers",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Spatial Resolution",
@@ -1467,7 +1467,7 @@
       {
         "name": "Wavefront Measurement Range",
         "value": "0-20 micrometers",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Spatial Resolution",
@@ -1627,7 +1627,7 @@
       {
         "name": "Cooldown Time",
         "value": "2 hours",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Pumping Speed",
@@ -1659,7 +1659,7 @@
       {
         "name": "Cooldown Time",
         "value": "3 hours",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Pumping Speed",
@@ -1701,7 +1701,7 @@
       {
         "name": "Axis",
         "value": "x",
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "17",
@@ -1738,7 +1738,7 @@
       {
         "name": "Axis",
         "value": "y",
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "18",
@@ -1775,7 +1775,7 @@
       {
         "name": "Axis",
         "value": "x",
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "19",
@@ -1812,7 +1812,7 @@
       {
         "name": "Axis",
         "value": "z",
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "20",
@@ -1844,7 +1844,7 @@
       {
         "name": "Compression Ratio",
         "value": 100,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "21",
@@ -1876,7 +1876,7 @@
       {
         "name": "Compression Ratio",
         "value": 120,
-        "unit": ""
+        "unit": null
       }
     ],
     "id": "22",

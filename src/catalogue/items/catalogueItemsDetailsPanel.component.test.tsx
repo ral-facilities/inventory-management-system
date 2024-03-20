@@ -8,7 +8,7 @@ import {
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import CatalogueItemsDetailsPanel, {
   CatalogueItemsDetailsPanelProps,
-} from './CatalogueItemsDetailsPanel.component';
+} from './catalogueItemsDetailsPanel.component';
 
 describe('Catalogue Items details panel', () => {
   let user: UserEvent;

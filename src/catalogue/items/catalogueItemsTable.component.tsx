@@ -42,7 +42,7 @@ import {
   generateUniqueName,
   getPageHeightCalc,
 } from '../../utils';
-import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
+import CatalogueItemsDetailsPanel from './catalogueItemsDetailsPanel.component';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
