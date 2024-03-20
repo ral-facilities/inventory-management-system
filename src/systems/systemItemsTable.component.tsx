@@ -186,7 +186,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         Cell: ({ row }) => (
           <Typography
             // For ensuring space when grouping
-            sx={{ marginRight: 0.5 }}
+            sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
             {row.original.item.delivered_date &&
               formatDateTimeStrings(row.original.item.delivered_date, false)}
