@@ -36,8 +36,8 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
   );
 
   const noResultsText = 'No systems found';
-  const columns = React.useMemo<MRT_ColumnDef<System>[]>(() => {
-    return [
+  const columns = React.useMemo<MRT_ColumnDef<System>[]>(
+    () => [
       {
         header: 'Name',
         accessorKey: 'name',
@@ -67,8 +67,9 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
           row.original.modified_time &&
           formatDateTimeStrings(row.original.modified_time, true),
       },
-    ];
-  }, [selectedSystemIds, type]);
+    ],
+    [selectedSystemIds, type]
+  );
   const table = useMaterialReactTable({
     // Data
     columns: columns,

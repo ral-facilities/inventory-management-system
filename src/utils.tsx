@@ -78,10 +78,10 @@ export const trimStringValues = (object: any): any => {
 
 export const formatDateTimeStrings = (
   dateTime: string,
-  includesTime: boolean
+  includeTime: boolean
 ): string => {
   const date = parseISO(dateTime);
-  const formattedDate = includesTime
+  const formattedDate = includeTime
     ? format(date, 'dd MMM yyyy HH:mm')
     : format(date, 'dd MMM yyyy');
 

@@ -72,7 +72,7 @@ function ManufacturerComponent() {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&
-          formatDateTimeStrings(row.original.modified_time, false),
+          formatDateTimeStrings(row.original.modified_time, true),
       },
       {
         header: 'Created',

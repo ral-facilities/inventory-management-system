@@ -133,21 +133,17 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
               </Grid>
 
               <Grid item xs={12} sm={6} key={7}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">Last Modified</Typography>
-                  <Typography color="text.secondary">
-                    {formatDateTimeStrings(itemData.modified_time, true)}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">Last Modified</Typography>
+                <Typography color="text.secondary">
+                  {formatDateTimeStrings(itemData.modified_time, true)}
+                </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={8}>
-                <Grid item xs={12}>
-                  <Typography color="text.primary">Created</Typography>
-                  <Typography color="text.secondary">
-                    {formatDateTimeStrings(itemData.created_time, true)}
-                  </Typography>
-                </Grid>
+                <Typography color="text.primary">Created</Typography>
+                <Typography color="text.secondary">
+                  {formatDateTimeStrings(itemData.created_time, true)}
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
