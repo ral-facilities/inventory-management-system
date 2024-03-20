@@ -647,11 +647,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableDensityToggle: false,
     enableRowSelection: true,
     enableHiding: dense ? false : true,
-    enableTopToolbar: dense && requestOrigin === 'move to' ? false : true,
+    enableTopToolbar: true,
     enableMultiRowSelection: dense ? false : true,
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
     enableColumnVirtualization: dense ? false : true,
+    enableGlobalFilter: !dense,
     enableGrouping: !dense,
     enablePagination: true,
     // Other settings
@@ -770,50 +771,51 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         </>
       );
     },
-    renderTopToolbarCustomActions: ({ table }) => (
-      <Box sx={{ display: 'flex' }}>
-        <Button
-          startIcon={<AddIcon />}
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          onClick={() => {
-            setItemsDialogType('create');
-            table.setCreatingRow(true);
-          }}
-        >
-          Add Catalogue Item
-        </Button>
-        {selectedRowIds.length > 0 && (
-          <>
-            <MoveCatalogueItemsButton
-              selectedItems={selectedCatalogueItems}
-              onChangeSelectedItems={setRowSelection}
-              parentCategoryId={parentInfo.id}
-              parentInfo={parentInfo}
-            />
-            <CopyCatalogueItemsButton
-              selectedItems={selectedCatalogueItems}
-              onChangeSelectedItems={setRowSelection}
-              parentCategoryId={parentInfo.id}
-              parentInfo={parentInfo}
-            />
-          </>
-        )}
-        {requestOrigin === undefined && (
+    renderTopToolbarCustomActions: ({ table }) =>
+      dense && requestOrigin === 'move to' ? undefined : (
+        <Box sx={{ display: 'flex' }}>
           <Button
-            startIcon={<ClearIcon />}
+            startIcon={<AddIcon />}
             sx={{ mx: 0.5 }}
             variant="outlined"
-            disabled={columnFilters.length === 0}
             onClick={() => {
-              table.resetColumnFilters();
+              setItemsDialogType('create');
+              table.setCreatingRow(true);
             }}
           >
-            Clear Filters
+            Add Catalogue Item
           </Button>
-        )}
-      </Box>
-    ),
+          {selectedRowIds.length > 0 && (
+            <>
+              <MoveCatalogueItemsButton
+                selectedItems={selectedCatalogueItems}
+                onChangeSelectedItems={setRowSelection}
+                parentCategoryId={parentInfo.id}
+                parentInfo={parentInfo}
+              />
+              <CopyCatalogueItemsButton
+                selectedItems={selectedCatalogueItems}
+                onChangeSelectedItems={setRowSelection}
+                parentCategoryId={parentInfo.id}
+                parentInfo={parentInfo}
+              />
+            </>
+          )}
+          {requestOrigin === undefined && (
+            <Button
+              startIcon={<ClearIcon />}
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              disabled={columnFilters.length === 0}
+              onClick={() => {
+                table.resetColumnFilters();
+              }}
+            >
+              Clear Filters
+            </Button>
+          )}
+        </Box>
+      ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
       return [
         <MenuItem
