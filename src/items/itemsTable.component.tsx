@@ -36,7 +36,7 @@ import {
 } from '../app.types';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import { useItems } from '../api/item';
-import ItemsDetailsPanel from './ItemsDetailsPanel.component';
+import ItemsDetailsPanel from './itemsDetailsPanel.component';
 import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 

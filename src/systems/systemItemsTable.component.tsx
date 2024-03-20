@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { useCatalogueItemIds } from '../api/catalogueItem';
 import { useItems } from '../api/item';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
-import ItemsDetailsPanel from '../items/ItemsDetailsPanel.component';
+import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import SystemItemsDialog from './systemItemsDialog.component';
 import { formatDateTimeStrings } from '../utils';
 

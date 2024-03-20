@@ -157,7 +157,7 @@ function ItemsLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {catalogueItemData.description}
+              {catalogueItemData.description ?? 'None'}
             </Typography>
           </Grid>
 
@@ -436,7 +436,7 @@ function ItemsLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {itemData.notes}
+              {itemData.notes ?? 'None'}
             </Typography>
           </Grid>
         </Grid>
