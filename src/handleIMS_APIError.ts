@@ -4,19 +4,25 @@ import { NotificationType } from './state/actions/actions.types';
 import { ErrorParsing, MicroFrontendId } from './app.types';
 
 const handleIMS_APIError = (error: AxiosError, broadcast = true): void => {
+  const status = error.response?.status;
   const message = error.response?.data
     ? (error.response.data as ErrorParsing).detail ?? error.message
     : error.message;
 
   log.error(message);
-  if (broadcast) {
-    // 403 errors should be handled by the axios intercept, so shouldnt need to be checked here
+  // Don't broadcast any error for an authenitcation issue - navigating via homepage links causes
+  // a split second render of the page when not logged in. This would otherwise display an error
+  // that is not displayed if navigating via SciGateway's navigation drawer instead (presumably
+  // due to the plugin its routing from being different). It is assumed that errors of this nature
+  // should not be possible due to SciGatway verifing the user itself, so we follow DataGateway's
+  // approach and don't display any of these errors.
+  if (broadcast && status !== 403) {
     let broadcastMessage;
-    // no reponse so it's a network error
     if (!error.response)
+      // No reponse so it's a network error
       broadcastMessage =
         'Network Error, please reload the page or try again later';
-    else if (error.status === 500)
+    else if (status === 500)
       broadcastMessage =
         'Something went wrong, please contact the system administrator';
     else broadcastMessage = message;
