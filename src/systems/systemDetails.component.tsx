@@ -162,9 +162,7 @@ function SystemDetails(props: SystemDetailsProps) {
           </Grid>
 
           <Grid item>
-            <Typography sx={{ paddingTop: 2 }} variant="h6">
-              Description
-            </Typography>
+            <Typography variant="h6">Description</Typography>
             <Typography
               variant="body1"
               color="text.secondary"
@@ -174,7 +172,7 @@ function SystemDetails(props: SystemDetailsProps) {
             </Typography>
           </Grid>
           <Grid item>
-            <Typography variant="h6" sx={{ paddingTop: 2 }}>
+            <Typography variant="h6" sx={{ paddingTop: 4 }}>
               Items
             </Typography>
           </Grid>
