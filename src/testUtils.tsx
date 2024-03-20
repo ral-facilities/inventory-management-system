@@ -39,6 +39,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 }
 
 export function renderComponentWithRouterProvider(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ui: any,
   pathName?: string,
   {
