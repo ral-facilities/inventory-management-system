@@ -45,11 +45,13 @@ imsApi.interceptors.response.use(
       : error.message;
 
     // Check if the token is invalid and needs refreshing
-    // only allow a request to be retried once
+    // only allow a request to be retried once. Don't retry if not logged
+    // in, it should not have been accessible
     if (
       error.response?.status === 403 &&
       errorMessage.includes('expired token') &&
-      !originalRequest._retried
+      !originalRequest._retried &&
+      localStorage.getItem('scigateway:token')
     ) {
       originalRequest._retried = true;
 
