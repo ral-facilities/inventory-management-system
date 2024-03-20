@@ -156,7 +156,7 @@ function CatalogueItemsLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {catalogueItemIdData.description}
+              {catalogueItemIdData.description ?? 'None'}
             </Typography>
           </Grid>
           <Grid item container spacing={1} xs={12}>
