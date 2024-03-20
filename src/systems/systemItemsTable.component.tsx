@@ -153,13 +153,24 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => row.item.modified_time,
+        accessorFn: (row) => new Date(row.item.modified_time),
         id: 'item.modified_time',
-        size: 250,
+        filterVariant: 'datetime-range',
+        size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.item.modified_time &&
-          formatDateTimeStrings(row.original.item.modified_time),
+          formatDateTimeStrings(row.original.item.modified_time, true),
+      },
+      {
+        header: 'Created',
+        accessorFn: (row) => new Date(row.item.created_time),
+        id: 'item.created_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.item.created_time, true),
       },
       {
         header: 'Serial Number',
@@ -168,15 +179,17 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Delivered Date',
-        accessorKey: 'item.delivered_date',
-        size: 250,
+        accessorFn: (row) => new Date(row.item.delivered_date ?? ''),
+        id: 'item.delivered_date',
+        filterVariant: 'date-range',
+        size: 350,
         Cell: ({ row }) => (
           <Typography
             // For ensuring space when grouping
             sx={{ marginRight: 0.5 }}
           >
             {row.original.item.delivered_date &&
-              new Date(row.original.item.delivered_date).toLocaleDateString()}
+              formatDateTimeStrings(row.original.item.delivered_date, false)}
           </Typography>
         ),
       },
@@ -201,15 +214,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         id: 'item.usage_status',
         size: 200,
         filterVariant: 'select',
-      },
-      {
-        header: 'Created',
-        accessorFn: (row) => row.item.created_time,
-        id: 'item.created_time',
-        size: 250,
-        enableGrouping: false,
-        Cell: ({ row }) =>
-          formatDateTimeStrings(row.original.item.created_time),
       },
     ];
   }, []);

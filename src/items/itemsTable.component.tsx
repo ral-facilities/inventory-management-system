@@ -90,13 +90,24 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => row.modified_time,
+        accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
-        size: 250,
+        filterVariant: 'datetime-range',
+        size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&
-          formatDateTimeStrings(row.original.modified_time),
+          formatDateTimeStrings(row.original.modified_time, true),
+      },
+      {
+        header: 'Created',
+        accessorFn: (row) => new Date(row.created_time),
+        id: 'created_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.created_time, true),
       },
       {
         header: 'Serial Number',
@@ -118,31 +129,33 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'Warranty End Date',
-        accessorFn: (row) => row.warranty_end_date,
+        accessorFn: (row) => new Date(row.warranty_end_date ?? ''),
         id: 'warranty_end_date',
-        size: 250,
+        filterVariant: 'date-range',
+        size: 350,
         Cell: ({ row }) => (
           <Typography
             // For ensuring space when grouping
             sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
             {row.original.warranty_end_date &&
-              new Date(row.original.warranty_end_date).toLocaleDateString()}
+              formatDateTimeStrings(row.original.warranty_end_date, false)}
           </Typography>
         ),
       },
       {
         header: 'Delivered Date',
-        accessorFn: (row) => row.delivered_date,
+        accessorFn: (row) => new Date(row.delivered_date ?? ''),
         id: 'delivered_date',
-        size: 250,
+        filterVariant: 'date-range',
+        size: 350,
         Cell: ({ row }) => (
           <Typography
             // For ensuring space when grouping
             sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
             {row.original.delivered_date &&
-              new Date(row.original.delivered_date).toLocaleDateString()}
+              formatDateTimeStrings(row.original.delivered_date, false)}
           </Typography>
         ),
       },
@@ -257,14 +270,6 @@ export function ItemsTable(props: ItemTableProps) {
           }
         },
       })),
-      {
-        header: 'Created',
-        accessorFn: (row) => row.created_time,
-        id: 'created_time',
-        size: 250,
-        enableGrouping: false,
-        Cell: ({ row }) => formatDateTimeStrings(row.original.created_time),
-      },
     ];
   }, [catalogueCategory]);
 
@@ -277,10 +282,10 @@ export function ItemsTable(props: ItemTableProps) {
       ? [
           { ...columns[0], size: 400 },
           { ...columns[1], size: 400 },
-          { ...columns[2], size: 400 },
-          { ...columns[5], size: 400 },
+          { ...columns[3], size: 400 },
           { ...columns[6], size: 400 },
           { ...columns[7], size: 400 },
+          { ...columns[8], size: 400 },
         ]
       : columns,
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)

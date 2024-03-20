@@ -13,9 +13,9 @@ import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { paths } from '../view/viewTabs.component';
 import { BreadcrumbsInfo } from '../app.types';
-import { formatDateTimeStrings } from '../utils';
 import EditIcon from '@mui/icons-material/Edit';
 import PrintIcon from '@mui/icons-material/Print';
+import { formatDateTimeStrings } from '../utils';
 
 function ManufacturerLandingPage() {
   const { manufacturer_id: manufacturerId } = useParams();
@@ -207,7 +207,7 @@ function ManufacturerLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {formatDateTimeStrings(manufacturerData.modified_time)}
+              {formatDateTimeStrings(manufacturerData.modified_time, true)}
             </Typography>
           </Grid>
 
@@ -223,7 +223,7 @@ function ManufacturerLandingPage() {
               variant="body1"
               color="text.secondary"
             >
-              {formatDateTimeStrings(manufacturerData.created_time)}
+              {formatDateTimeStrings(manufacturerData.created_time, true)}
             </Typography>
           </Grid>
         </Grid>

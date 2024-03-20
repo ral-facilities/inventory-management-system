@@ -221,9 +221,10 @@ function ItemsLandingPage() {
                     </Typography>
                     <Typography align="left" color="text.secondary">
                       {itemData.warranty_end_date
-                        ? new Date(
-                            itemData.warranty_end_date
-                          ).toLocaleDateString()
+                        ? formatDateTimeStrings(
+                            itemData.warranty_end_date,
+                            false
+                          )
                         : 'None'}
                     </Typography>
                   </Grid>
@@ -234,7 +235,7 @@ function ItemsLandingPage() {
                     </Typography>
                     <Typography align="left" color="text.secondary">
                       {itemData.delivered_date
-                        ? new Date(itemData.delivered_date).toLocaleDateString()
+                        ? formatDateTimeStrings(itemData.delivered_date, false)
                         : 'None'}
                     </Typography>
                   </Grid>
@@ -274,7 +275,7 @@ function ItemsLandingPage() {
                       Last modified
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {formatDateTimeStrings(itemData.modified_time)}
+                      {formatDateTimeStrings(itemData.modified_time, true)}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
@@ -282,7 +283,7 @@ function ItemsLandingPage() {
                       Created
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {formatDateTimeStrings(itemData.created_time)}
+                      {formatDateTimeStrings(itemData.created_time, true)}
                     </Typography>
                   </Grid>
                 </Grid>

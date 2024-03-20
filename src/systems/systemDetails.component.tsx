@@ -148,14 +148,14 @@ function SystemDetails(props: SystemDetailsProps) {
               <Grid item xs={12} sm={6}>
                 <Typography variant="h6">Last modified</Typography>
                 <Typography variant="body1" color="text.secondary">
-                  {formatDateTimeStrings(system.modified_time)}
+                  {formatDateTimeStrings(system.modified_time, true)}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6}>
                 <Typography variant="h6">Created</Typography>
                 <Typography variant="body1" color="text.secondary">
-                  {formatDateTimeStrings(system.created_time)}
+                  {formatDateTimeStrings(system.created_time, true)}
                 </Typography>
               </Grid>
             </Grid>
