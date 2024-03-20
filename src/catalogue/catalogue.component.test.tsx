@@ -144,6 +144,7 @@ describe('Catalogue', () => {
     expect(screen.getByText('High Power Lasers')).toBeInTheDocument();
     expect(screen.getByText('X-RAY Beams')).toBeInTheDocument();
   });
+
   it('opens the add catalogue category dialog', async () => {
     createView('/catalogue');
 

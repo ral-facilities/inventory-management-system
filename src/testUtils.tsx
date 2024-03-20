@@ -4,11 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RenderOptions, render } from '@testing-library/react';
 import { enGB } from 'date-fns/locale/en-GB';
 import {
-  BrowserRouter,
-  MemoryRouter,
-  Route,
   RouterProvider,
-  Routes,
   createBrowserRouter,
   createMemoryRouter,
 } from 'react-router-dom';
@@ -39,8 +35,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 }
 
 export function renderComponentWithRouterProvider(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ui: any,
+  ui: React.ReactElement,
   pathName?: string,
   {
     // Automatically create a store instance if no store was passed i
@@ -52,109 +47,20 @@ export function renderComponentWithRouterProvider(
   const Root: React.FunctionComponent = () => {
     return (
       <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
-        <QueryClientProvider client={queryClient}>
-          <Routes>
-            <Route path={pathName ?? '*'} element={ui} />
-          </Routes>
-        </QueryClientProvider>
+        <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
       </LocalizationProvider>
     );
   };
 
-  const routesConfig = [
-    {
-      path: '/*',
-      Component: Root,
-      children: [
-        { path: '', Component: ui },
-        { path: 'ims', Component: ui },
-        { path: 'catalogue/*', Component: ui },
-        {
-          path: 'catalogue/item/:catalogue_item_id',
-          Component: ui,
-        },
-        { path: 'catalogue/item/:catalogue_item_id/items', Component: ui },
-        {
-          path: 'catalogue/item/:catalogue_item_id/items/:item_id',
-          Component: ui,
-        },
-        { path: 'systems/*', Component: ui },
-        { path: 'manufacturers', Component: ui },
-        {
-          path: 'manufacturers/:manufacturer_id',
-          Component: ui,
-        },
-      ],
-    },
-    { path: '*', Component: Root },
-  ];
-
   const router =
     pathName !== undefined
-      ? createMemoryRouter(routesConfig, {
+      ? createMemoryRouter([{ path: '*', Component: Root }], {
           initialEntries: [pathName],
         })
       : createBrowserRouter([{ path: '*', Component: Root }]);
 
   function Wrapper(): JSX.Element {
     return <RouterProvider router={router} />;
-  }
-  return {
-    queryClient,
-    ...render(ui, { wrapper: Wrapper, ...renderOptions }),
-  };
-}
-
-export function renderComponentWithBrowserRouter(
-  ui: React.ReactElement,
-  {
-    // Automatically create a store instance if no store was passed i
-    // Automatically create a query client instance if no query client was passed in
-    queryClient = createTestQueryClient(),
-    ...renderOptions
-  }: ExtendedRenderOptions = {}
-) {
-  function Wrapper({
-    children,
-  }: React.PropsWithChildren<unknown>): JSX.Element {
-    return (
-      <BrowserRouter>
-        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
-        </LocalizationProvider>
-      </BrowserRouter>
-    );
-  }
-  return {
-    queryClient,
-    ...render(ui, { wrapper: Wrapper, ...renderOptions }),
-  };
-}
-
-export function renderComponentWithMemoryRouter(
-  ui: React.ReactElement,
-  path: string,
-  {
-    // Automatically create a store instance if no store was passed i
-    // Automatically create a query client instance if no query client was passed in
-    queryClient = createTestQueryClient(),
-    ...renderOptions
-  }: ExtendedRenderOptions = {}
-) {
-  function Wrapper({
-    children,
-  }: React.PropsWithChildren<unknown>): JSX.Element {
-    return (
-      <MemoryRouter initialEntries={[path]}>
-        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
-        </LocalizationProvider>
-      </MemoryRouter>
-    );
   }
   return {
     queryClient,

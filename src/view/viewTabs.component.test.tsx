@@ -1,4 +1,4 @@
-import { screen, waitFor, within } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import ViewTabs from './viewTabs.component';
@@ -13,20 +13,14 @@ describe('View Tabs', () => {
     user = userEvent.setup();
   });
 
-  it.skip('lets users switch between tabs', async () => {
+  it('lets users switch between tabs', async () => {
     createView('/catalogue');
     const viewTabs = within(screen.getByRole('tablist', { name: 'view tabs' }));
 
     expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
       'Catalogue'
     );
-    const catalogueHomeButton = await screen.findByRole('button', {
-      name: 'navigate to catalogue home',
-    });
-    expect(catalogueHomeButton).toBeInTheDocument();
-    await waitFor(() => {
-      expect(screen.getByText('Beam Characterization')).toBeInTheDocument();
-    });
+
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[0]
     ).toHaveTextContent('Ims');
@@ -42,7 +36,7 @@ describe('View Tabs', () => {
     expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
       'Systems'
     );
-    expect(screen.getByText('Root systems')).toBeInTheDocument();
+
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[0]
     ).toHaveTextContent('Ims');
@@ -58,10 +52,6 @@ describe('View Tabs', () => {
     expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
       'Manufacturers'
     );
-    expect(screen.getByText('Actions')).toBeInTheDocument();
-    expect(screen.getByText('Name')).toBeInTheDocument();
-    expect(screen.getByText('URL')).toBeInTheDocument();
-    expect(screen.getByText('Address')).toBeInTheDocument();
 
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[0]
@@ -74,7 +64,7 @@ describe('View Tabs', () => {
     ).toHaveTextContent('Systems');
   });
 
-  it.skip('navigates to home page', async () => {
+  it('navigates to home page', async () => {
     createView('/');
 
     const viewTabs = within(screen.getByRole('tablist', { name: 'view tabs' }));
