@@ -2109,7 +2109,7 @@ exports[`SystemItemsTable > renders correctly 1`] = `
               data-index="7"
             >
               <p
-                class="MuiTypography-root MuiTypography-body1 css-1gi6lsa-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
               >
                 05 Sep 2023
               </p>
