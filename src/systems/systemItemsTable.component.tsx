@@ -278,9 +278,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         zIndex: table.getState().isFullScreen ? 1210 : undefined,
       },
     }),
-    muiTableContainerProps: {
-      sx: { minHeight: '360.4px' },
-    },
+    muiTableContainerProps: ({ table }) => ({
+      sx: {
+        minHeight: '360.4px',
+        height: table.getState().isFullScreen ? '100%' : undefined,
+      },
+    }),
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
