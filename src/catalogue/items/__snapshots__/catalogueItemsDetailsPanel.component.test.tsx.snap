@@ -113,7 +113,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 14
                     </p>
@@ -637,7 +637,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 14
                     </p>
@@ -1161,7 +1161,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
                       Motorized actuators for controlled motion. 32
                     </p>
@@ -1635,7 +1635,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
                       Precision energy meters for accurate measurements. 26
                     </p>
@@ -2119,7 +2119,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
                       Precision energy meters for accurate measurements. 26
                     </p>
@@ -2602,7 +2602,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
                       Precision energy meters for accurate measurements. 26
                     </p>
@@ -3085,7 +3085,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-10oj567-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
                     >
                       Precision energy meters for accurate measurements. 26
                     </p>
