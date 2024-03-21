@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Catalogue Items Dialog renders details step correctly 1`] = `
+exports[`Catalogue Items Dialog > renders details step correctly 1`] = `
 <body
   style="padding-right: 1024px; overflow: hidden;"
 >
@@ -736,7 +736,7 @@ exports[`Catalogue Items Dialog renders details step correctly 1`] = `
 </body>
 `;
 
-exports[`Catalogue Items Dialog renders properties step correctly 1`] = `
+exports[`Catalogue Items Dialog > renders properties step correctly 1`] = `
 <body
   style="padding-right: 1024px; overflow: hidden;"
 >

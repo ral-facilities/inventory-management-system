@@ -1,17 +1,18 @@
 import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   getCatalogueCategoryById,
   renderComponentWithBrowserRouter,
-} from '../../setupTests';
+} from '../../testUtils';
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';
-jest.setTimeout(10000);
+
+vi.setConfig({ testTimeout: 10000 });
+
 describe('Catalogue Items Table', () => {
   let props: CatalogueItemsTableProps;
-  let user;
+  let user: UserEvent;
 
   const createView = () => {
     return renderComponentWithBrowserRouter(<CatalogueItemsTable {...props} />);
@@ -33,18 +34,18 @@ describe('Catalogue Items Table', () => {
       dense: false,
     };
     user = userEvent.setup();
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders table correctly (section 1 due to column virtualisation )', async () => {
@@ -52,7 +53,7 @@ describe('Catalogue Items Table', () => {
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
-    expect(screen.getByText('Description')).toBeInTheDocument();
+    expect(screen.getByText('Last modified')).toBeInTheDocument();
   });
 
   it('renders table correctly (Cameras more details)', async () => {
@@ -153,7 +154,11 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Name')).toBeInTheDocument();
     });
 
-    await ensureColumnsVisible(['Drawing Link', 'Item Model Number']);
+    await ensureColumnsVisible([
+      'Drawing Link',
+      'Item Model Number',
+      'Created',
+    ]);
   });
 
   it('renders table correctly (section 5 due to column virtualisation)', async () => {
@@ -184,6 +189,12 @@ describe('Catalogue Items Table', () => {
 
   it('displays descriptions tooltip on hover', async () => {
     createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Last modified')).toBeInTheDocument();
+    });
+
+    await ensureColumnsVisible(['Description']);
 
     await waitFor(() => {
       expect(
@@ -518,12 +529,12 @@ describe('Catalogue Items Table', () => {
     await ensureColumnsVisible(['Manufacturer Name']);
 
     const url = screen.getAllByText('Manufacturer A');
-    expect(url[0]).toHaveAttribute('href', '/manufacturer/1');
+    expect(url[0]).toHaveAttribute('href', '/manufacturers/1');
   });
 
   it('renders the dense table correctly', async () => {
     props.dense = true;
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 1135 });
     const view = createView();
@@ -566,7 +577,7 @@ describe('Catalogue Items Table', () => {
   // with an MUI tabs component
   it.skip('renders the dense table correctly and can expand and collapse', async () => {
     props.dense = true;
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 1135 });
     createView();

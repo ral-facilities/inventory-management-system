@@ -63,8 +63,11 @@ export const useSystemId = (): string | null => {
   const location = useLocation();
 
   return React.useMemo(() => {
-    let systemId: string | null = location.pathname.replace('/systems', '');
-    systemId = systemId === '' ? null : systemId.replace('/', '');
+    let systemId: string | null = location.pathname
+      .replace('/systems', '')
+      // In case of /systems/
+      .replace('/', '');
+    systemId = systemId === '' ? null : systemId;
     return systemId;
   }, [location.pathname]);
 };
@@ -222,7 +225,7 @@ function Systems() {
     // State
     initialState: {
       showGlobalFilter: true,
-      pagination: { pageSize: 10, pageIndex: 0 },
+      pagination: { pageSize: 15, pageIndex: 0 },
     },
     state: { rowSelection: rowSelection },
     // MUI
@@ -231,7 +234,7 @@ function Systems() {
       shape: 'rounded',
       variant: 'outlined',
       showRowsPerPage: true,
-      rowsPerPageOptions: [10, 25, 50],
+      rowsPerPageOptions: [15, 30, 45],
       showFirstButton: false,
       showLastButton: false,
       size: 'small',

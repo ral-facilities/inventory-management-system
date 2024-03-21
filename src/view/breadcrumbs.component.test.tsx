@@ -1,12 +1,11 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
+import { renderComponentWithBrowserRouter } from '../testUtils';
 import Breadcrumbs, { BreadcrumbsProps } from './breadcrumbs.component';
-import { renderComponentWithBrowserRouter } from '../setupTests';
 
 describe('Channel Breadcrumbs', () => {
-  const onChangeNode = jest.fn();
-  const onChangeNavigateHome = jest.fn();
+  const onChangeNode = vi.fn();
+  const onChangeNavigateHome = vi.fn();
   let props: BreadcrumbsProps;
 
   const createView = () => {

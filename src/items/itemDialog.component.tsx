@@ -185,11 +185,7 @@ function ItemDialog(props: ItemDialogProps) {
     }
   }, [parentCatalogueItemPropertiesInfo, selectedItem, open]);
 
-  const handlePropertyChange = (
-    index: number,
-    name: string,
-    value: string | null
-  ) => {
+  const handlePropertyChange = (index: number, value: string | null) => {
     const updatedPropertyValues = [...propertyValues];
 
     if (value === null || (typeof value === 'string' && value.trim() === '')) {
@@ -245,6 +241,7 @@ function ItemDialog(props: ItemDialogProps) {
       delivered_date: null,
       notes: null,
     });
+    setActiveStep(0);
     setPropertyValues([]);
     setPropertyErrors(
       new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
@@ -355,7 +352,7 @@ function ItemDialog(props: ItemDialogProps) {
     };
 
     addItem(trimStringValues(item))
-      .then((response) => handleClose())
+      .then(() => handleClose())
       .catch((error: AxiosError) => {
         handleIMS_APIError(error);
       });
@@ -394,12 +391,13 @@ function ItemDialog(props: ItemDialogProps) {
       const isCatalogueItemPropertiesUpdated =
         JSON.stringify(updatedProperties) !==
         JSON.stringify(
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           selectedItem.properties.map(({ unit, ...rest }) => rest)
         );
 
       const isSystemIdUpdated = details.system_id !== selectedItem.system_id;
 
-      let item: EditItem = {
+      const item: EditItem = {
         id: selectedItem.id,
       };
 
@@ -432,7 +430,7 @@ function ItemDialog(props: ItemDialogProps) {
           isSystemIdUpdated)
       ) {
         editItem(trimStringValues(item))
-          .then((response) => handleClose())
+          .then(() => handleClose())
           .catch((error: AxiosError) => {
             handleIMS_APIError(error);
           });
@@ -459,12 +457,13 @@ function ItemDialog(props: ItemDialogProps) {
   const handleNext = React.useCallback(
     (step: number) => {
       switch (step) {
-        case 1:
+        case 1: {
           const { hasPropertiesErrors } = handleFormPropertiesErrorStates();
           return (
             !hasPropertiesErrors &&
             setActiveStep((prevActiveStep) => prevActiveStep + 1)
           );
+        }
         default:
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
@@ -694,7 +693,6 @@ function ItemDialog(props: ItemDialogProps) {
                                 onChange={(event) =>
                                   handlePropertyChange(
                                     index,
-                                    property.name,
                                     event.target.value as string
                                   )
                                 }
@@ -738,7 +736,6 @@ function ItemDialog(props: ItemDialogProps) {
                                 onChange={(event) =>
                                   handlePropertyChange(
                                     index,
-                                    property.name,
                                     event.target.value as string
                                   )
                                 }
@@ -746,9 +743,12 @@ function ItemDialog(props: ItemDialogProps) {
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
                               >
+                                <MenuItem key={0} value={''}>
+                                  {'None'}
+                                </MenuItem>
                                 {property.allowed_values.values.map(
                                   (value, index) => (
-                                    <MenuItem key={index} value={value}>
+                                    <MenuItem key={index + 1} value={value}>
                                       {value}
                                     </MenuItem>
                                   )
@@ -766,7 +766,6 @@ function ItemDialog(props: ItemDialogProps) {
                               onChange={(event) =>
                                 handlePropertyChange(
                                   index,
-                                  property.name,
                                   event.target.value ? event.target.value : null
                                 )
                               }
@@ -853,6 +852,7 @@ function ItemDialog(props: ItemDialogProps) {
               systemsData={systemsData}
               systemsDataLoading={systemsDataLoading}
               onChangeParentId={setParentSystemId}
+              systemParentId={parentSystemId ?? undefined}
               // Use most unrestricted variant (i.e. copy with no selection)
               selectedSystems={[]}
               type="copyTo"

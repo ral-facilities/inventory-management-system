@@ -1,19 +1,19 @@
-import React from 'react';
 import { RenderResult, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { renderComponentWithBrowserRouter } from '../setupTests';
-import { DeleteManufacturerProps } from './deleteManufacturerDialog.component';
-import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { Manufacturer } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { renderComponentWithBrowserRouter } from '../testUtils';
+import DeleteManufacturerDialog, {
+  DeleteManufacturerProps,
+} from './deleteManufacturerDialog.component';
 
-jest.mock('../handleIMS_APIError');
+vi.mock('../handleIMS_APIError');
 
 describe('Delete Manufacturer Dialog', () => {
-  const onClose = jest.fn();
+  const onClose = vi.fn();
   let props: DeleteManufacturerProps;
   let manufacturer: Manufacturer;
-  let user;
+  let user: UserEvent;
   const createView = (): RenderResult => {
     return renderComponentWithBrowserRouter(
       <DeleteManufacturerDialog {...props} />
@@ -41,7 +41,7 @@ describe('Delete Manufacturer Dialog', () => {
     user = userEvent;
   });
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders dialog correctly', async () => {
@@ -80,7 +80,7 @@ describe('Delete Manufacturer Dialog', () => {
   it('calls handleDelete when Continue clicked', async () => {
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
-    user.click(continueButton);
+    await user.click(continueButton);
 
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();

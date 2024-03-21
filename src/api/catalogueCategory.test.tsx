@@ -6,7 +6,7 @@ import {
   EditCatalogueCategory,
   MoveToCatalogueCategory,
 } from '../app.types';
-import { hooksWrapperWithProviders } from '../setupTests';
+import { hooksWrapperWithProviders } from '../testUtils';
 import {
   useAddCatalogueCategory,
   useCatalogueBreadcrumbs,
@@ -21,7 +21,7 @@ import { imsApi } from './api';
 
 describe('catalogue category api functions', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('useAddCatalogueCategory', () => {
@@ -70,22 +70,55 @@ describe('catalogue category api functions', () => {
       expect(result.current.data).toEqual({
         catalogue_item_properties: [
           {
+            allowed_values: null,
             mandatory: true,
             name: 'Resolution',
             type: 'number',
             unit: 'megapixels',
           },
-          { mandatory: false, name: 'Frame Rate', type: 'number', unit: 'fps' },
-          { mandatory: true, name: 'Sensor Type', type: 'string' },
-          { mandatory: false, name: 'Sensor brand', type: 'string' },
-          { mandatory: true, name: 'Broken', type: 'boolean' },
-          { mandatory: false, name: 'Older than five years', type: 'boolean' },
+          {
+            allowed_values: null,
+            mandatory: false,
+            name: 'Frame Rate',
+            type: 'number',
+            unit: 'fps',
+          },
+          {
+            allowed_values: null,
+            mandatory: true,
+            name: 'Sensor Type',
+            type: 'string',
+            unit: null,
+          },
+          {
+            allowed_values: null,
+            mandatory: false,
+            name: 'Sensor brand',
+            type: 'string',
+            unit: null,
+          },
+          {
+            allowed_values: null,
+            mandatory: true,
+            name: 'Broken',
+            type: 'boolean',
+            unit: null,
+          },
+          {
+            allowed_values: null,
+            mandatory: false,
+            name: 'Older than five years',
+            type: 'boolean',
+            unit: null,
+          },
         ],
         code: 'cameras',
         id: '4',
         is_leaf: true,
         name: 'test',
         parent_id: '1',
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       });
     });
   });
@@ -101,6 +134,7 @@ describe('catalogue category api functions', () => {
         is_leaf: false,
       };
     });
+
     it('posts a request to add a user session and returns successful response', async () => {
       const { result } = renderHook(() => useDeleteCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
@@ -110,7 +144,7 @@ describe('catalogue category api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      expect(result.current.data).toEqual('');
+      expect(result.current.data).toEqual({ status: 204 });
     });
   });
 
@@ -131,6 +165,8 @@ describe('catalogue category api functions', () => {
           is_leaf: false,
           name: 'Actuators',
           parent_id: '2',
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         },
       ]);
     });
@@ -170,6 +206,8 @@ describe('catalogue category api functions', () => {
         is_leaf: false,
         name: 'Beam Characterization',
         parent_id: null,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       });
     });
   });
@@ -230,7 +268,7 @@ describe('catalogue category api functions', () => {
     let axiosPatchSpy;
 
     beforeEach(() => {
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
 
       moveToCatalogueCategory = {
         selectedCategories: mockSelectedCatalogueCategories,
@@ -239,7 +277,7 @@ describe('catalogue category api functions', () => {
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('sends requests to move a single or multiple catalogue categories data to root and returns successful response', async () => {
@@ -391,11 +429,11 @@ describe('catalogue category api functions', () => {
         existingCategoryNames: [],
       };
 
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('sends requests to copy multiple catalogue categories to root and returns successful response', async () => {

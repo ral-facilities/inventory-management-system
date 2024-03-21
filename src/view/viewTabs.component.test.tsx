@@ -1,11 +1,10 @@
-import React from 'react';
-import { renderComponentWithMemoryRouter } from '../setupTests';
-import ViewTabs from './viewTabs.component';
 import { screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { renderComponentWithMemoryRouter } from '../testUtils';
+import ViewTabs from './viewTabs.component';
 
 describe('View Tabs', () => {
-  let user;
+  let user: UserEvent;
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(<ViewTabs />, path);
   };
@@ -30,10 +29,13 @@ describe('View Tabs', () => {
     });
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[0]
-    ).toHaveTextContent('Systems');
+    ).toHaveTextContent('Ims');
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[1]
-    ).toHaveTextContent('Manufacturer');
+    ).toHaveTextContent('Systems');
+    expect(
+      viewTabs.getAllByRole('tab', { selected: false })[2]
+    ).toHaveTextContent('Manufacturers');
 
     await user.click(screen.getByRole('tab', { name: 'Systems' }));
 
@@ -43,15 +45,18 @@ describe('View Tabs', () => {
     expect(screen.getByText('Root systems')).toBeInTheDocument();
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[0]
-    ).toHaveTextContent('Catalogue');
+    ).toHaveTextContent('Ims');
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[1]
-    ).toHaveTextContent('Manufacturer');
+    ).toHaveTextContent('Catalogue');
+    expect(
+      viewTabs.getAllByRole('tab', { selected: false })[2]
+    ).toHaveTextContent('Manufacturers');
 
-    await user.click(screen.getByRole('tab', { name: 'Manufacturer' }));
+    await user.click(screen.getByRole('tab', { name: 'Manufacturers' }));
 
     expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
-      'Manufacturer'
+      'Manufacturers'
     );
     expect(screen.getByText('Actions')).toBeInTheDocument();
     expect(screen.getByText('Name')).toBeInTheDocument();
@@ -60,24 +65,46 @@ describe('View Tabs', () => {
 
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[0]
-    ).toHaveTextContent('Catalogue');
+    ).toHaveTextContent('Ims');
     expect(
       viewTabs.getAllByRole('tab', { selected: false })[1]
+    ).toHaveTextContent('Catalogue');
+    expect(
+      viewTabs.getAllByRole('tab', { selected: false })[2]
     ).toHaveTextContent('Systems');
   });
 
   it('navigates to home page', async () => {
-    createView('/ims');
-
-    await waitFor(() => {
-      expect(screen.getAllByText('Inventory Managment')[0]).toBeInTheDocument();
-    });
-
     createView('/');
 
-    await waitFor(() => {
-      expect(screen.getAllByText('Inventory Managment')[0]).toBeInTheDocument();
-    });
+    const viewTabs = within(screen.getByRole('tablist', { name: 'view tabs' }));
+    expect(
+      viewTabs.getAllByRole('tab', { selected: false })[0]
+    ).toHaveTextContent('Ims');
+    expect(
+      viewTabs.getAllByRole('tab', { selected: false })[1]
+    ).toHaveTextContent('Catalogue');
+    expect(
+      viewTabs.getAllByRole('tab', { selected: false })[2]
+    ).toHaveTextContent('Systems');
+    expect(
+      viewTabs.getAllByRole('tab', { selected: false })[3]
+    ).toHaveTextContent('Manufacturers');
+
+    await user.click(screen.getByRole('tab', { name: 'Ims' }));
+
+    expect(viewTabs.getByRole('tab', { selected: true })).toHaveTextContent(
+      'Ims'
+    );
+    expect(
+      viewTabs.getAllByRole('tab', { selected: false })[0]
+    ).toHaveTextContent('Catalogue');
+    expect(
+      viewTabs.getAllByRole('tab', { selected: false })[1]
+    ).toHaveTextContent('Systems');
+    expect(
+      viewTabs.getAllByRole('tab', { selected: false })[2]
+    ).toHaveTextContent('Manufacturers');
   });
 
   it('updates the tab value when url is not default Tab', async () => {

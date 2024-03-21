@@ -122,7 +122,7 @@ function SystemDialog(props: SystemDialogProps) {
   const handleAddSaveSystem = React.useCallback(
     (system: AddSystem) => {
       addSystem(trimStringValues(system))
-        .then((response) => handleClose())
+        .then(() => handleClose())
         .catch((error: AxiosError) => {
           const response = error.response?.data as ErrorParsing;
 
@@ -296,5 +296,7 @@ function SystemDialog(props: SystemDialogProps) {
     </Dialog>
   );
 }
+
+SystemDialog.displayName = 'SystemDialog';
 
 export default SystemDialog;

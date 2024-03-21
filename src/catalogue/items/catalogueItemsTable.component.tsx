@@ -37,8 +37,12 @@ import {
   CatalogueItemPropertyResponse,
   Manufacturer,
 } from '../../app.types';
-import { generateUniqueName, getPageHeightCalc } from '../../utils';
-import CatalogueItemsDetailsPanel from './CatalogueItemsDetailsPanel.component';
+import {
+  formatDateTimeStrings,
+  generateUniqueName,
+  getPageHeightCalc,
+} from '../../utils';
+import CatalogueItemsDetailsPanel from './catalogueItemsDetailsPanel.component';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
@@ -256,6 +260,28 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           ),
       },
       {
+        header: 'Last modified',
+        accessorFn: (row) => new Date(row.catalogueItem.modified_time),
+        id: 'catalogueItem.modified_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          row.original.catalogueItem.modified_time &&
+          formatDateTimeStrings(row.original.catalogueItem.modified_time, true),
+      },
+      {
+        header: 'Created',
+        accessorFn: (row) => new Date(row.catalogueItem.created_time),
+        id: 'catalogueItem.created_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        enableHiding: true,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.catalogueItem.created_time, true),
+      },
+      {
         header: 'View Items',
         size: 200,
         enableGrouping: false,
@@ -335,7 +361,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             </Tooltip>
           ),
       },
-      ...viewCatalogueItemProperties.map((property, index) => ({
+      ...viewCatalogueItemProperties.map((property) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
         id: `row.catalogueItem.properties.${property.name}`,
         accessorFn: (row: TableRowData) => {
@@ -491,7 +517,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           <MuiLink
             underline="hover"
             component={Link}
-            to={`/manufacturer/${row.original.catalogueItem.manufacturer_id}`}
+            to={`/manufacturers/${row.original.catalogueItem.manufacturer_id}`}
             // For ensuring space when grouping
             sx={{ marginRight: 0.5 }}
           >
@@ -621,11 +647,12 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     enableDensityToggle: false,
     enableRowSelection: true,
     enableHiding: dense ? false : true,
-    enableTopToolbar: dense && requestOrigin === 'move to' ? false : true,
+    enableTopToolbar: true,
     enableMultiRowSelection: dense ? false : true,
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
     enableColumnVirtualization: dense ? false : true,
+    enableGlobalFilter: !dense,
     enableGrouping: !dense,
     enablePagination: true,
     // Other settings
@@ -657,6 +684,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       showColumnFilters: true,
       showGlobalFilter: true,
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+      columnVisibility: { 'catalogueItem.created_time': false },
     },
     state: {
       showProgressBars: isLoading, //or showSkeletons
@@ -743,50 +771,51 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         </>
       );
     },
-    renderTopToolbarCustomActions: ({ table }) => (
-      <Box sx={{ display: 'flex' }}>
-        <Button
-          startIcon={<AddIcon />}
-          sx={{ mx: 0.5 }}
-          variant="outlined"
-          onClick={() => {
-            setItemsDialogType('create');
-            table.setCreatingRow(true);
-          }}
-        >
-          Add Catalogue Item
-        </Button>
-        {selectedRowIds.length > 0 && (
-          <>
-            <MoveCatalogueItemsButton
-              selectedItems={selectedCatalogueItems}
-              onChangeSelectedItems={setRowSelection}
-              parentCategoryId={parentInfo.id}
-              parentInfo={parentInfo}
-            />
-            <CopyCatalogueItemsButton
-              selectedItems={selectedCatalogueItems}
-              onChangeSelectedItems={setRowSelection}
-              parentCategoryId={parentInfo.id}
-              parentInfo={parentInfo}
-            />
-          </>
-        )}
-        {requestOrigin === undefined && (
+    renderTopToolbarCustomActions: ({ table }) =>
+      dense && requestOrigin === 'move to' ? undefined : (
+        <Box sx={{ display: 'flex' }}>
           <Button
-            startIcon={<ClearIcon />}
+            startIcon={<AddIcon />}
             sx={{ mx: 0.5 }}
             variant="outlined"
-            disabled={columnFilters.length === 0}
             onClick={() => {
-              table.resetColumnFilters();
+              setItemsDialogType('create');
+              table.setCreatingRow(true);
             }}
           >
-            Clear Filters
+            Add Catalogue Item
           </Button>
-        )}
-      </Box>
-    ),
+          {selectedRowIds.length > 0 && (
+            <>
+              <MoveCatalogueItemsButton
+                selectedItems={selectedCatalogueItems}
+                onChangeSelectedItems={setRowSelection}
+                parentCategoryId={parentInfo.id}
+                parentInfo={parentInfo}
+              />
+              <CopyCatalogueItemsButton
+                selectedItems={selectedCatalogueItems}
+                onChangeSelectedItems={setRowSelection}
+                parentCategoryId={parentInfo.id}
+                parentInfo={parentInfo}
+              />
+            </>
+          )}
+          {requestOrigin === undefined && (
+            <Button
+              startIcon={<ClearIcon />}
+              sx={{ mx: 0.5 }}
+              variant="outlined"
+              disabled={columnFilters.length === 0}
+              onClick={() => {
+                table.resetColumnFilters();
+              }}
+            >
+              Clear Filters
+            </Button>
+          )}
+        </Box>
+      ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
       return [
         <MenuItem

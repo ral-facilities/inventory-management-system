@@ -9,6 +9,7 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { System } from '../app.types';
 import SystemDialog from './systemDialog.component';
+import { formatDateTimeStrings } from '../utils';
 
 export interface SystemsTableViewProps {
   systemsData?: System[];
@@ -40,6 +41,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       {
         header: 'Name',
         accessorKey: 'name',
+        size: 400,
         Cell: ({ renderedCellValue, row }) => {
           const canPlaceHere =
             type === 'copyTo' || !selectedSystemIds.includes(row.original.id);
@@ -53,6 +55,17 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
             </Typography>
           );
         },
+      },
+      {
+        header: 'Last modified',
+        accessorFn: (row) => new Date(row.modified_time),
+        id: 'modified_time',
+        filterVariant: 'datetime-range',
+        size: 400,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          row.original.modified_time &&
+          formatDateTimeStrings(row.original.modified_time, true),
       },
     ],
     [selectedSystemIds, type]
@@ -114,7 +127,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       variant: 'outlined',
     },
     //Functions
-    renderCreateRowDialogContent: ({ table, row }) => {
+    renderCreateRowDialogContent: ({ table }) => {
       return (
         <>
           <SystemDialog

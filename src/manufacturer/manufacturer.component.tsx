@@ -25,8 +25,8 @@ import { useManufacturers } from '../api/manufacturer';
 import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
-import { getPageHeightCalc } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 
 function ManufacturerComponent() {
   const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
@@ -57,13 +57,33 @@ function ManufacturerComponent() {
             <MuiLink
               underline="hover"
               component={Link}
-              to={`/manufacturer/${row.original.id}`}
+              to={`/manufacturers/${row.original.id}`}
             >
               {row.original.name}
             </MuiLink>
           ),
-        filterVariant: 'autocomplete',
-        filterFn: 'equals',
+      },
+      {
+        header: 'Last modified',
+        accessorFn: (row) => new Date(row.modified_time),
+        id: 'modified_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          row.original.modified_time &&
+          formatDateTimeStrings(row.original.modified_time, true),
+      },
+      {
+        header: 'Created',
+        accessorFn: (row) => new Date(row.created_time),
+        id: 'created_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        enableHiding: true,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.created_time, true),
       },
       {
         header: 'URL',
@@ -147,7 +167,8 @@ function ManufacturerComponent() {
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      pagination: { pageSize: 25, pageIndex: 0 },
+      pagination: { pageSize: 15, pageIndex: 0 },
+      columnVisibility: { created_time: false },
     },
     state: {
       columnFilters,
@@ -165,7 +186,7 @@ function ManufacturerComponent() {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [25, 50, 100],
+      rowsPerPageOptions: [15, 30, 45],
       shape: 'rounded',
       variant: 'outlined',
     },
@@ -251,7 +272,7 @@ function ManufacturerComponent() {
 
   const navigate = useNavigate();
   const onChangeNode = React.useCallback(() => {
-    navigate('/manufacturer');
+    navigate('/manufacturers');
   }, [navigate]);
 
   return (

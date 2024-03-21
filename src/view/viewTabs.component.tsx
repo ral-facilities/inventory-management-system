@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import { styled } from '@mui/material/styles';
 import React from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { TabValue } from '../app.types';
+import { TAB_VALUES, TabValue } from '../app.types';
 import Catalogue from '../catalogue/catalogue.component';
 import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingPage.component';
 import Items from '../items/items.component';
@@ -20,8 +20,8 @@ export const paths = {
   homepage: '/ims',
   catalogue: '/catalogue/*',
   systems: '/systems/*',
-  manufacturers: '/manufacturer',
-  manufacturer: '/manufacturer/:manufacturer_id',
+  manufacturers: '/manufacturers',
+  manufacturer: '/manufacturers/:manufacturer_id',
   catalogueItem: '/catalogue/item/:catalogue_item_id',
   items: '/catalogue/item/:catalogue_item_id/items',
   item: '/catalogue/item/:catalogue_item_id/items/:item_id',
@@ -29,8 +29,8 @@ export const paths = {
 
 interface TabPanelProps {
   children?: React.ReactNode;
-  value: TabValue;
-  label: TabValue;
+  value: TabValue | false;
+  label: TabValue | false;
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -63,14 +63,14 @@ const StyledTab = styled(Tab)(({ theme }) => ({
 }));
 
 function ViewTabs() {
-  const [value, setValue] = React.useState<TabValue>('Catalogue');
+  const [value, setValue] = React.useState<TabValue | false>('Catalogue');
   const navigate = useNavigate();
   const location = useLocation();
 
   // The useEffect below is only active when it is in not production
   // because that is when the tabs are visible
   React.useEffect(() => {
-    if (process.env.NODE_ENV !== 'production') {
+    if (import.meta.env.DEV) {
       const prefixIndex = location.pathname.indexOf(paths.root);
       let tabValue =
         prefixIndex !== -1
@@ -81,12 +81,14 @@ function ViewTabs() {
 
       if (tabValue !== value && tabValue !== '') {
         tabValue = tabValue.charAt(0).toUpperCase() + tabValue.slice(1);
-        setValue(tabValue as TabValue);
-      }
+        if (TAB_VALUES.includes(tabValue as TabValue))
+          setValue(tabValue as TabValue);
+        else setValue(false);
+      } else setValue(false);
     }
   }, [location.pathname, value]);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: TabValue) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: TabValue) => {
     setValue(newValue);
     navigate(`/${newValue.toLowerCase()}`);
   };
@@ -118,21 +120,14 @@ function ViewTabs() {
       {isRunningInDevelopment() ? (
         <>
           <Tabs value={value} onChange={handleChange} aria-label="view tabs">
-            <StyledTab
-              value="Catalogue"
-              label="Catalogue"
-              {...a11yProps('Catalogue')}
-            />
-            <StyledTab
-              value="Systems"
-              label="Systems"
-              {...a11yProps('Systems')}
-            />
-            <StyledTab
-              value="Manufacturer"
-              label="Manufacturer"
-              {...a11yProps('Manufacturer')}
-            />
+            {TAB_VALUES.map((value) => (
+              <StyledTab
+                value={value}
+                label={value}
+                key={value}
+                {...a11yProps(value)}
+              />
+            ))}
           </Tabs>
           <Box
             sx={{

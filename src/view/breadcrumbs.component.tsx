@@ -7,7 +7,6 @@ import {
   styled,
   IconButton,
 } from '@mui/material';
-import React from 'react';
 import { BreadcrumbsInfo } from '../app.types';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import HomeIcon from '@mui/icons-material/Home';
@@ -19,9 +18,9 @@ export interface BreadcrumbsProps {
   navigateHomeAriaLabel: string;
 }
 
-const StyledBreadcrumbs = styled(MuiBreadcrumbs)(({ theme }) => ({
+const StyledBreadcrumbs = styled(MuiBreadcrumbs)({
   color: 'text.secondary',
-}));
+});
 
 const Breadcrumbs = (props: BreadcrumbsProps) => {
   const {
@@ -35,7 +34,7 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
 
   const trailPrefix =
     breadcrumbsInfo && !breadcrumbsInfo.full_trail
-      ? [emptyElement, ['', <MoreHorizIcon />]]
+      ? [emptyElement, ['', <MoreHorizIcon key="trailPrefix" />]]
       : [emptyElement];
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>

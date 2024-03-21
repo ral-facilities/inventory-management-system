@@ -1,13 +1,13 @@
 describe('Manufacturer', () => {
   beforeEach(() => {
-    cy.visit('/manufacturer');
+    cy.visit('/manufacturers');
   });
   afterEach(() => {
     cy.clearMocks();
   });
 
   it('should render in table headers', () => {
-    cy.visit('/manufacturer');
+    cy.visit('/manufacturers');
     cy.findByText('Actions').should('be.visible');
     cy.findByText('Name').should('be.visible');
     cy.findByText('URL').should('be.visible');
@@ -17,7 +17,7 @@ describe('Manufacturer', () => {
   });
 
   it('should render manufacturer data', () => {
-    cy.visit('/manufacturer');
+    cy.visit('/manufacturers');
 
     cy.findByText('Manufacturer A').should('be.visible');
     cy.findByText('Manufacturer B').should('be.visible');
@@ -36,7 +36,7 @@ describe('Manufacturer', () => {
   });
 
   it('manufacturer url is correct and opens new webpage', () => {
-    cy.visit('/manufacturer');
+    cy.visit('/manufacturers');
     const url = cy.findByText('http://example.com');
 
     url
@@ -206,7 +206,7 @@ describe('Manufacturer', () => {
   });
 
   it('edits a manufacturer correctly', () => {
-    cy.visit('/manufacturer');
+    cy.visit('/manufacturers');
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
     cy.findByLabelText('Name *').clear();
@@ -374,7 +374,7 @@ describe('Manufacturer', () => {
   });
 
   it('displays expired landing page message and navigates back to manufacturer table view', () => {
-    cy.visit('/manufacturer/invalid');
+    cy.visit('/manufacturers/invalid');
 
     cy.findByText(
       `This manufacturer doesn't exist. Please click the Home button to navigate to the manufacturer table`

@@ -38,7 +38,7 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
   const handleDeleteSystem = React.useCallback(() => {
     if (system)
       deleteSystem(system.id)
-        .then((response) => {
+        .then(() => {
           onClose();
         })
         .catch((error: AxiosError) => {
