@@ -17,7 +17,7 @@ describe('catalogue item directory Dialog', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CatalogueItemDirectoryDialog {...props} />,
-      undefined
+      paths.catalogue
     );
   };
 

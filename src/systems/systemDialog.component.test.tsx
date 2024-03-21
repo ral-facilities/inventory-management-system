@@ -5,6 +5,7 @@ import { System, SystemImportanceType } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemDialog, { SystemDialogProps } from './systemDialog.component';
+import { paths } from '../view/viewTabs.component';
 
 vi.mock('../handleIMS_APIError');
 
@@ -19,7 +20,7 @@ describe('Systems Dialog', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <SystemDialog {...props} />,
-      undefined
+      paths.systems
     );
   };
 

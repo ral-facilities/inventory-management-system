@@ -2,6 +2,7 @@ import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Systems from './systems.component';
+import { paths } from '../view/viewTabs.component';
 
 describe('Systems', () => {
   // Quite a few of these take more than 5 seconds on CI
@@ -9,7 +10,7 @@ describe('Systems', () => {
 
   let user: UserEvent;
   const createView = (path: string) => {
-    return renderComponentWithRouterProvider(<Systems />, path);
+    return renderComponentWithRouterProvider(<Systems />, paths.systems, path);
   };
 
   beforeEach(() => {

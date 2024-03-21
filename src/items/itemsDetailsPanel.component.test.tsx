@@ -9,6 +9,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import ItemsDetailsPanel, {
   ItemsDetailsPanelProps,
 } from './itemsDetailsPanel.component';
+import { paths } from '../view/viewTabs.component';
 
 describe('Catalogue Items details panel', () => {
   let user: UserEvent;
@@ -16,7 +17,7 @@ describe('Catalogue Items details panel', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <ItemsDetailsPanel {...props} />,
-      undefined
+      paths.items
     );
   };
 

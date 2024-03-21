@@ -8,6 +8,7 @@ import {
   SystemDirectoryDialog,
   SystemDirectoryDialogProps,
 } from './systemDirectoryDialog.component';
+import { paths } from '../view/viewTabs.component';
 
 describe('SystemDirectoryDialog', () => {
   let props: SystemDirectoryDialogProps;
@@ -26,7 +27,7 @@ describe('SystemDirectoryDialog', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <SystemDirectoryDialog {...props} />,
-      undefined
+      paths.systems
     );
   };
 

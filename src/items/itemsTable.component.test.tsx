@@ -6,6 +6,7 @@ import {
   renderComponentWithRouterProvider,
 } from '../testUtils';
 import ItemsTable, { ItemTableProps } from './itemsTable.component';
+import { paths } from '../view/viewTabs.component';
 
 describe('Items Table', () => {
   vi.setConfig({ testTimeout: 10000 });
@@ -15,7 +16,7 @@ describe('Items Table', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <ItemsTable {...props} />,
-      undefined
+      paths.items
     );
   };
 

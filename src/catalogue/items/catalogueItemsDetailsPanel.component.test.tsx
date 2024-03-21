@@ -16,7 +16,7 @@ describe('Catalogue Items details panel', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CatalogueItemsDetailsPanel {...props} />,
-      undefined
+      paths.catalogue
     );
   };
 

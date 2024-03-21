@@ -8,6 +8,7 @@ import { TAB_VALUES, TabValue } from '../app.types';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
 
 export const paths = {
+  any: '*',
   root: '/',
   homepage: '/ims',
   catalogue: '/catalogue/*',

@@ -78,7 +78,11 @@ describe('matchCatalogueItemProperties', () => {
 describe('Catalogue', () => {
   let user: UserEvent;
   const createView = (path: string) => {
-    return renderComponentWithRouterProvider(<Catalogue />, path);
+    return renderComponentWithRouterProvider(
+      <Catalogue />,
+      paths.catalogue,
+      path
+    );
   };
 
   beforeEach(() => {

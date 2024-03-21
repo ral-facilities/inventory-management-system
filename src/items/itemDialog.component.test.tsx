@@ -12,6 +12,7 @@ import ItemDialog, {
   ItemDialogProps,
   isValidDateTime,
 } from './itemDialog.component';
+import { paths } from '../view/viewTabs.component';
 
 vi.mock('../handleIMS_APIError');
 
@@ -59,7 +60,7 @@ describe('ItemDialog', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <ItemDialog {...props} />,
-      undefined
+      paths.items
     );
   };
   beforeEach(() => {

@@ -7,6 +7,7 @@ import {
   SystemItemsTable,
   SystemItemsTableProps,
 } from './systemItemsTable.component';
+import { paths } from '../view/viewTabs.component';
 
 describe('SystemItemsTable', () => {
   vi.setConfig({ testTimeout: 10000 });
@@ -19,7 +20,7 @@ describe('SystemItemsTable', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <SystemItemsTable {...props} />,
-      undefined
+      paths.systems
     );
   };
 

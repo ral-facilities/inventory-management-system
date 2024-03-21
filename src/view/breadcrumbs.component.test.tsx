@@ -2,6 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Breadcrumbs, { BreadcrumbsProps } from './breadcrumbs.component';
+import { paths } from './viewTabs.component';
 
 describe('Channel Breadcrumbs', () => {
   const onChangeNode = vi.fn();
@@ -11,7 +12,7 @@ describe('Channel Breadcrumbs', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <Breadcrumbs {...props} />,
-      undefined
+      paths.root
     );
   };
   beforeEach(() => {

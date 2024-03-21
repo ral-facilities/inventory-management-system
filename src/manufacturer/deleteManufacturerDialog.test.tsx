@@ -6,6 +6,7 @@ import { renderComponentWithRouterProvider } from '../testUtils';
 import DeleteManufacturerDialog, {
   DeleteManufacturerProps,
 } from './deleteManufacturerDialog.component';
+import { paths } from '../view/viewTabs.component';
 
 vi.mock('../handleIMS_APIError');
 
@@ -17,7 +18,7 @@ describe('Delete Manufacturer Dialog', () => {
   const createView = (): RenderResult => {
     return renderComponentWithRouterProvider(
       <DeleteManufacturerDialog {...props} />,
-      undefined
+      paths.manufacturers
     );
   };
   beforeEach(() => {

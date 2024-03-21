@@ -19,7 +19,7 @@ describe('Catalogue Category Dialog', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CatalogueCategoryDialog {...props} />,
-      undefined
+      paths.catalogue
     );
   };
 

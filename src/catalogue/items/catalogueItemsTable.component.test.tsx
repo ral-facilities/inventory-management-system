@@ -17,7 +17,7 @@ describe('Catalogue Items Table', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CatalogueItemsTable {...props} />,
-      undefined
+      paths.catalogue
     );
   };
 

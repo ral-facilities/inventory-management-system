@@ -2,6 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueItemsLandingPage from './catalogueItemsLandingPage.component';
+import { paths } from '../../view/viewTabs.component';
 
 const mockedUseNavigate = vi.fn();
 vi.mock('react-router-dom', async () => ({
@@ -14,6 +15,7 @@ describe('Catalogue Items Landing Page', () => {
   const createView = (path: string) => {
     return renderComponentWithRouterProvider(
       <CatalogueItemsLandingPage />,
+      paths.catalogueItem,
       path
     );
   };

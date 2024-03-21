@@ -13,7 +13,7 @@ describe('Catalogue Card', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CatalogueCard {...props} />,
-      undefined
+      paths.catalogue
     );
   };
 

@@ -14,7 +14,7 @@ describe('CatalogueCategoryTableView', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CatalogueCategoryTableView {...props} />,
-      undefined
+      paths.catalogue
     );
   };
 

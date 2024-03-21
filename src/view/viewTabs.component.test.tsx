@@ -1,12 +1,12 @@
 import { screen, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../testUtils';
-import ViewTabs from './viewTabs.component';
+import ViewTabs, { paths } from './viewTabs.component';
 
 describe('View Tabs', () => {
   let user: UserEvent;
   const createView = (path: string) => {
-    return renderComponentWithRouterProvider(<ViewTabs />, path);
+    return renderComponentWithRouterProvider(<ViewTabs />, paths.any, path);
   };
 
   beforeEach(() => {

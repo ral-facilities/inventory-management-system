@@ -20,7 +20,7 @@ describe('Catalogue Properties Form', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CataloguePropertiesForm {...props} />,
-      undefined
+      paths.catalogue
     );
   };
 

@@ -16,7 +16,7 @@ describe('CardView', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CardView {...props} />,
-      undefined
+      paths.catalogue
     );
   };
 

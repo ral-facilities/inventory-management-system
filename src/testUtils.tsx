@@ -19,6 +19,7 @@ import CatalogueCategoryJSON from './mocks/CatalogueCategory.json';
 import CatalogueItemJSON from './mocks/CatalogueItems.json';
 import ItemsJSON from './mocks/Items.json';
 import ManufacturerJSON from './mocks/manufacturer.json';
+import { paths } from './view/viewTabs.component';
 
 export const createTestQueryClient = (): QueryClient =>
   new QueryClient({
@@ -36,6 +37,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 
 export function renderComponentWithRouterProvider(
   ui: React.ReactElement,
+  urlPath: keyof typeof paths,
   pathName?: string,
   {
     // Automatically create a store instance if no store was passed i
@@ -54,7 +56,7 @@ export function renderComponentWithRouterProvider(
 
   const router =
     pathName !== undefined
-      ? createMemoryRouter([{ path: '*', Component: Root }], {
+      ? createMemoryRouter([{ path: urlPath, Component: Root }], {
           initialEntries: [pathName],
         })
       : createBrowserRouter([{ path: '*', Component: Root }]);

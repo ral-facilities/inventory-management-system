@@ -7,6 +7,7 @@ import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemItemsDialog, {
   SystemItemsDialogProps,
 } from './systemItemsDialog.component';
+import { paths } from '../view/viewTabs.component';
 
 describe('SystemItemsDialog', () => {
   let props: SystemItemsDialogProps;
@@ -24,7 +25,7 @@ describe('SystemItemsDialog', () => {
   const createView = () => {
     return renderComponentWithRouterProvider(
       <SystemItemsDialog {...props} />,
-      undefined
+      paths.systems
     );
   };
 
