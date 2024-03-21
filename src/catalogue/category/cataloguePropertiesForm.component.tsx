@@ -55,7 +55,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       {
         name: '',
         type: '',
-        unit: '',
+        unit: undefined,
         mandatory: false,
         allowed_values: undefined,
       },
@@ -463,8 +463,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               getOptionLabel={(option) => option.value}
               value={units?.find((unit) => unit.value === field.unit) || null}
               disabled={field.type === 'boolean'}
-              onChange={(event: any, newValue: Unit | null) => {
-                handleChange(index, 'unit', newValue?.value || '');
+              onChange={(_event, newValue: Unit | null) => {
+                handleChange(index, 'unit', newValue?.value || null);
               }}
               renderInput={(params) => (
                 <TextField

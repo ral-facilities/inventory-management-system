@@ -1,15 +1,17 @@
-import React from 'react';
-import { renderComponentWithBrowserRouter } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { renderComponentWithBrowserRouter } from '../testUtils';
 import Manufacturer from './manufacturer.component';
-import userEvent from '@testing-library/user-event';
-const mockedUseNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+
+const mockedUseNavigate = vi.fn();
+
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
   useNavigate: () => mockedUseNavigate,
 }));
+
 describe('Manufacturer', () => {
-  let user;
+  let user: UserEvent;
   const createView = () => {
     return renderComponentWithBrowserRouter(<Manufacturer />);
   };
@@ -34,8 +36,12 @@ describe('Manufacturer', () => {
     await waitFor(() => {
       expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
     });
+
+    //also unhide created column
+    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
+    await user.click(screen.getByText('Created'));
     expect(view.asFragment()).toMatchSnapshot();
-  });
+  }, 10000);
 
   it('manufacturer url has a href so therefore links to new webpage', async () => {
     createView();
@@ -149,6 +155,6 @@ describe('Manufacturer', () => {
     await user.click(homeButton);
 
     expect(mockedUseNavigate).toHaveBeenCalledTimes(1);
-    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturer');
+    expect(mockedUseNavigate).toHaveBeenCalledWith('/manufacturers');
   });
 });

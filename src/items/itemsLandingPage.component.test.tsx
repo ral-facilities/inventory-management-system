@@ -1,17 +1,19 @@
-import React from 'react';
-import { renderComponentWithMemoryRouter } from '../setupTests';
 import { screen, waitFor } from '@testing-library/react';
-import ItemsLandingPage from './itemsLandingPage.component';
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { Route, Routes } from 'react-router-dom';
+import { renderComponentWithMemoryRouter } from '../testUtils';
 import { paths } from '../view/viewTabs.component';
-const mockedUseNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+import ItemsLandingPage from './itemsLandingPage.component';
+
+const mockedUseNavigate = vi.fn();
+
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
   useNavigate: () => mockedUseNavigate,
 }));
-describe('Catalogue Items Landing Page', () => {
-  let user;
+
+describe('Items Landing Page', () => {
+  let user: UserEvent;
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(
       <Routes>
@@ -26,7 +28,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders text correctly (only basic details given)', async () => {
@@ -147,7 +149,7 @@ describe('Catalogue Items Landing Page', () => {
   });
 
   it('prints when the button is clicked', async () => {
-    const spy = jest.spyOn(window, 'print').mockImplementation(() => {});
+    const spy = vi.spyOn(window, 'print').mockImplementation(() => {});
     createView('/catalogue/item/1/items/KvT2Ox7n');
 
     await waitFor(() => {

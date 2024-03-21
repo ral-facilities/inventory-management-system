@@ -12,7 +12,7 @@ import {
   getItemsByCatalogueItemId,
   getItemsBySystemId,
   hooksWrapperWithProviders,
-} from '../setupTests';
+} from '../testUtils';
 import {
   AddItem,
   EditItem,
@@ -25,7 +25,7 @@ import { imsApi } from './api';
 
 describe('catalogue items api functions', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('useAddItem', () => {
@@ -153,7 +153,7 @@ describe('catalogue items api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      expect(result.current.data).toEqual('');
+      expect(result.current.data).toEqual({ status: 204 });
     });
   });
 
@@ -184,16 +184,18 @@ describe('catalogue items api functions', () => {
         properties: [
           { name: 'Resolution', unit: 'megapixels', value: 0 },
           { name: 'Frame Rate', unit: 'fps', value: null },
-          { name: 'Sensor Type', unit: '', value: 'CMOS' },
-          { name: 'Sensor brand', unit: '', value: null },
-          { name: 'Broken', unit: '', value: true },
-          { name: 'Older than five years', unit: '', value: false },
+          { name: 'Sensor Type', unit: null, value: 'CMOS' },
+          { name: 'Sensor brand', unit: null, value: null },
+          { name: 'Broken', unit: null, value: true },
+          { name: 'Older than five years', unit: null, value: false },
         ],
         purchase_order_number: '6JYHEjwN',
         serial_number: 'test',
         system_id: '65328f34a40ff5301575a4e3',
         usage_status: 1,
         warranty_end_date: '2023-04-04T23:00:00.000Z',
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       });
     });
   });
@@ -217,11 +219,11 @@ describe('catalogue items api functions', () => {
         targetSystem: SystemsJSON[0] as System,
       };
 
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('sends requests to move multiple items to a system and returns a successful response for each', async () => {

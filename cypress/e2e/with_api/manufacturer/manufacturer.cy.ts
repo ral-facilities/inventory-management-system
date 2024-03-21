@@ -7,7 +7,7 @@ import {
 describe('Manufacturer', () => {
   beforeEach(() => {
     cy.dropIMSCollections(['manufacturers']);
-    cy.visit('/manufacturer');
+    cy.visit('/manufacturers');
   });
   afterEach(() => {
     cy.clearMocks();

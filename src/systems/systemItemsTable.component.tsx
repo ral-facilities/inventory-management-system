@@ -14,8 +14,9 @@ import { Link } from 'react-router-dom';
 import { useCatalogueItemIds } from '../api/catalogueItem';
 import { useItems } from '../api/item';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
-import ItemsDetailsPanel from '../items/ItemsDetailsPanel.component';
+import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import SystemItemsDialog from './systemItemsDialog.component';
+import { formatDateTimeStrings } from '../utils';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
@@ -151,21 +152,44 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 250,
       },
       {
+        header: 'Last modified',
+        accessorFn: (row) => new Date(row.item.modified_time),
+        id: 'item.modified_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          row.original.item.modified_time &&
+          formatDateTimeStrings(row.original.item.modified_time, true),
+      },
+      {
+        header: 'Created',
+        accessorFn: (row) => new Date(row.item.created_time),
+        id: 'item.created_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.item.created_time, true),
+      },
+      {
         header: 'Serial Number',
         accessorKey: 'item.serial_number',
         size: 250,
       },
       {
         header: 'Delivered Date',
-        accessorKey: 'item.delivered_date',
-        size: 250,
+        accessorFn: (row) => new Date(row.item.delivered_date ?? ''),
+        id: 'item.delivered_date',
+        filterVariant: 'date-range',
+        size: 350,
         Cell: ({ row }) => (
           <Typography
             // For ensuring space when grouping
-            sx={{ marginRight: 0.5 }}
+            sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
             {row.original.item.delivered_date &&
-              new Date(row.original.item.delivered_date).toLocaleDateString()}
+              formatDateTimeStrings(row.original.item.delivered_date, false)}
           </Typography>
         ),
       },
@@ -238,6 +262,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       showGlobalFilter: true,
       grouping: ['catalogueItem.name'],
       pagination: { pageSize: 15, pageIndex: 0 },
+      columnVisibility: { 'item.created_time': false },
     },
     state: {
       showProgressBars: isLoading,
@@ -253,9 +278,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         zIndex: table.getState().isFullScreen ? 1210 : undefined,
       },
     }),
-    muiTableContainerProps: {
-      sx: { minHeight: '360.4px' },
-    },
+    muiTableContainerProps: ({ table }) => ({
+      sx: {
+        minHeight: '360.4px',
+        height: table.getState().isFullScreen ? '100%' : undefined,
+      },
+    }),
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
@@ -265,6 +293,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       rowsPerPageOptions: [15, 30, 45],
       shape: 'rounded',
       variant: 'outlined',
+    },
+    // Fix width to ensure details panels are reasonably close together regardless of table width
+    // - appears to be needed only when using enableColumnResizing, MuiCollapse is the container of
+    // the details panel
+    muiDetailPanelProps: {
+      sx: {
+        '.MuiCollapse-vertical': {
+          width: '800px',
+        },
+      },
     },
     // Functions
     getRowId: (row) => row.item.id,

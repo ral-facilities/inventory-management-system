@@ -1,20 +1,19 @@
-import React from 'react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { imsApi } from '../api/api';
+import handleIMS_APIError from '../handleIMS_APIError';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
   getItemById,
   renderComponentWithBrowserRouter,
-} from '../setupTests';
+} from '../testUtils';
 import ItemDialog, {
   ItemDialogProps,
   isValidDateTime,
 } from './itemDialog.component';
-import { fireEvent, screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import handleIMS_APIError from '../handleIMS_APIError';
-import { imsApi } from '../api/api';
 
-jest.mock('../handleIMS_APIError');
+vi.mock('../handleIMS_APIError');
 
 describe('isValidDateTime', () => {
   it('should return true for a valid date string', () => {
@@ -54,8 +53,8 @@ describe('isValidDateTime', () => {
 
 describe('ItemDialog', () => {
   let props: ItemDialogProps;
-  let user;
-  const onClose = jest.fn();
+  let user: UserEvent;
+  const onClose = vi.fn();
 
   const createView = () => {
     return renderComponentWithBrowserRouter(<ItemDialog {...props} />);
@@ -178,14 +177,14 @@ describe('ItemDialog', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('Add Item', () => {
     let axiosPostSpy;
 
     beforeEach(() => {
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     it('displays no item properties message', async () => {
@@ -298,20 +297,18 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByText('Add item properties'));
 
-      await fireEvent.change(
+      fireEvent.change(
         screen.getByLabelText('Ultimate Pressure (millibar) *'),
         {
           target: { value: '10' },
         }
       );
 
-      await fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-      await fireEvent.click(
-        within(screen.getByRole('listbox')).getByText('400')
-      );
+      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
 
-      await fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      await fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
+      fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
@@ -713,7 +710,7 @@ describe('ItemDialog', () => {
     let axiosPatchSpy;
 
     beforeEach(() => {
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
       props.selectedItem = getItemById('G463gOIA');
       props.type = 'edit';
     });
@@ -786,20 +783,18 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByText('Edit item properties'));
 
-      await fireEvent.change(
+      fireEvent.change(
         screen.getByLabelText('Ultimate Pressure (millibar) *'),
         {
           target: { value: '10' },
         }
       );
 
-      await fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-      await fireEvent.click(
-        within(screen.getByRole('listbox')).getByText('400')
-      );
+      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
 
-      await fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      await fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
+      fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -810,6 +805,43 @@ describe('ItemDialog', () => {
           {
             name: 'Axis',
             value: 'z',
+          },
+        ],
+      });
+    });
+
+    it('edits an item where the item property has an allowed list of values (optional)', async () => {
+      props = {
+        ...props,
+        catalogueCategory: getCatalogueCategoryById('12'),
+        catalogueItem: getCatalogueItemById('17'),
+      };
+      createView();
+
+      await user.click(screen.getByText('Edit item properties'));
+
+      fireEvent.change(
+        screen.getByLabelText('Ultimate Pressure (millibar) *'),
+        {
+          target: { value: '10' },
+        }
+      );
+
+      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+
+      fireEvent.mouseDown(screen.getByLabelText('Axis'));
+      fireEvent.click(within(screen.getByRole('listbox')).getByText('None'));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
+        properties: [
+          { name: 'Pumping Speed', value: 400 },
+          { name: 'Ultimate Pressure', value: 10 },
+          {
+            name: 'Axis',
+            value: null,
           },
         ],
       });

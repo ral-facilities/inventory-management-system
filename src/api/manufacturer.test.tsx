@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { Manufacturer } from '../app.types';
 import ManufacturerJSON from '../mocks/manufacturer.json';
-import { hooksWrapperWithProviders } from '../setupTests';
+import { hooksWrapperWithProviders } from '../testUtils';
 import {
   useAddManufacturer,
   useDeleteManufacturer,
@@ -11,7 +11,7 @@ import {
 
 describe('manufacturer api functions', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('useAddManufacturer', () => {
@@ -41,6 +41,7 @@ describe('manufacturer api functions', () => {
         expect(result.current.isSuccess).toBeTruthy();
       });
       expect(result.current.data).toEqual({
+        id: '4',
         name: 'Manufacturer D',
         code: 'manufacturer-d',
         url: 'http://test.co.uk',
@@ -52,7 +53,8 @@ describe('manufacturer api functions', () => {
           country: 'United Kingdom',
         },
         telephone: '07349612203',
-        id: '4',
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       });
     });
   });
@@ -74,6 +76,7 @@ describe('manufacturer api functions', () => {
         telephone: '07334893348',
       };
     });
+
     it('posts a request to delete a manufacturer and return a successful response', async () => {
       const { result } = renderHook(() => useDeleteManufacturer(), {
         wrapper: hooksWrapperWithProviders(),
@@ -83,7 +86,7 @@ describe('manufacturer api functions', () => {
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
-      expect(result.current.data).toEqual('');
+      expect(result.current.data).toEqual({ status: 204 });
     });
   });
 
