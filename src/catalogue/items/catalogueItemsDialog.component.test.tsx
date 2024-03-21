@@ -17,6 +17,7 @@ import CatalogueItemsDialog, {
 
 import { imsApi } from '../../api/api';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { paths } from '../../view/viewTabs.component';
 
 vi.mock('../../handleIMS_APIError');
 

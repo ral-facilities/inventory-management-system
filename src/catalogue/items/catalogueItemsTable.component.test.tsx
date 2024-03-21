@@ -7,6 +7,7 @@ import {
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';
+import { paths } from '../../view/viewTabs.component';
 
 vi.setConfig({ testTimeout: 10000 });
 

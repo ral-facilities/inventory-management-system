@@ -7,6 +7,7 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
+import { paths } from '../../view/viewTabs.component';
 
 vi.mock('../../handleIMS_APIError');
 

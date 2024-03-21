@@ -2,6 +2,7 @@ import { screen } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import CatalogueCard, { CatalogueCardProps } from './catalogueCard.component';
 import { renderComponentWithRouterProvider } from '../../testUtils';
+import { paths } from '../../view/viewTabs.component';
 
 describe('Catalogue Card', () => {
   let props: CatalogueCardProps;

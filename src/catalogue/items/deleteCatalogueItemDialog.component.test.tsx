@@ -6,6 +6,7 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import DeleteCatalogueItemDialog, {
   DeleteCatalogueItemDialogProps,
 } from './deleteCatalogueItemDialog.component';
+import { paths } from '../../view/viewTabs.component';
 
 vi.mock('../../handleIMS_APIError');
 

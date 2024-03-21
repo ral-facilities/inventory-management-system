@@ -5,6 +5,7 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import CardView, {
   CatalogueCardViewProps,
 } from './catalogueCardView.component';
+import { paths } from '../../view/viewTabs.component';
 
 describe('CardView', () => {
   let user: UserEvent;

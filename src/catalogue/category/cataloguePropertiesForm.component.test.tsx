@@ -8,6 +8,7 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import CataloguePropertiesForm, {
   CataloguePropertiesFormProps,
 } from './cataloguePropertiesForm.component';
+import { paths } from '../../view/viewTabs.component';
 
 describe('Catalogue Properties Form', () => {
   let props: CataloguePropertiesFormProps;

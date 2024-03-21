@@ -5,6 +5,7 @@ import { CatalogueCategoryFormData, CatalogueItemProperty } from '../app.types';
 import { server } from '../mocks/server';
 import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
 import { renderComponentWithRouterProvider } from '../testUtils';
+import { paths } from '../view/viewTabs.component';
 
 describe('matchCatalogueItemProperties', () => {
   it('should match catalogue item properties correctly', () => {

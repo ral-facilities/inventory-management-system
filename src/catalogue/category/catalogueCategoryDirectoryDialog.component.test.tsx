@@ -5,6 +5,7 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueCategoryDirectoryDialog, {
   CatalogueCategoryDirectoryDialogProps,
 } from './catalogueCategoryDirectoryDialog.component';
+import { paths } from '../../view/viewTabs.component';
 
 describe('CatalogueCategoryDirectoryDialog', () => {
   let props: CatalogueCategoryDirectoryDialogProps;

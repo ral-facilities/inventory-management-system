@@ -10,6 +10,7 @@ import handleIMS_APIError from '../../handleIMS_APIError';
 import ObsoleteCatalogueItemDialog, {
   ObsoleteCatalogueItemDialogProps,
 } from './obsoleteCatalogueItemDialog.component';
+import { paths } from '../../view/viewTabs.component';
 
 vi.mock('../../handleIMS_APIError');
 
