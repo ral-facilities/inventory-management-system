@@ -168,7 +168,7 @@ function SystemDialog(props: SystemDialogProps) {
             (editSystemData.importance = systemData.importance);
 
           editSystem(editSystemData)
-            .then((response) => {
+            .then(() => {
               handleClose();
             })
             .catch((error: AxiosError) => {
