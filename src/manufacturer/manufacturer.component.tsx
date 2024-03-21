@@ -167,7 +167,7 @@ function ManufacturerComponent() {
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      pagination: { pageSize: 25, pageIndex: 0 },
+      pagination: { pageSize: 15, pageIndex: 0 },
       columnVisibility: { created_time: false },
     },
     state: {
@@ -186,7 +186,7 @@ function ManufacturerComponent() {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [25, 50, 100],
+      rowsPerPageOptions: [15, 30, 45],
       shape: 'rounded',
       variant: 'outlined',
     },
