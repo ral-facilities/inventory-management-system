@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react';
+import browserslistToEsbuild from 'browserslist-to-esbuild';
 import fs from 'node:fs';
 import path from 'path';
 import { PluginOption, UserConfig, defineConfig, loadEnv } from 'vite';
@@ -115,6 +116,9 @@ export default defineConfig(({ mode }) => {
       },
     };
   }
+
+  // Use browserslist config
+  config.build.target = browserslistToEsbuild();
 
   return {
     ...config,
