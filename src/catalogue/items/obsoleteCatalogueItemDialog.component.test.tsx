@@ -10,7 +10,6 @@ import handleIMS_APIError from '../../handleIMS_APIError';
 import ObsoleteCatalogueItemDialog, {
   ObsoleteCatalogueItemDialogProps,
 } from './obsoleteCatalogueItemDialog.component';
-import { paths } from '../../view/viewTabs.component';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -25,8 +24,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
 
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <ObsoleteCatalogueItemDialog {...props} />,
-      paths.catalogue
+      <ObsoleteCatalogueItemDialog {...props} />
     );
   };
 

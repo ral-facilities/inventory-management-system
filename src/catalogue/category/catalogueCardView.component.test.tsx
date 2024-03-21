@@ -5,7 +5,6 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import CardView, {
   CatalogueCardViewProps,
 } from './catalogueCardView.component';
-import { paths } from '../../view/viewTabs.component';
 
 describe('CardView', () => {
   let user: UserEvent;
@@ -15,10 +14,7 @@ describe('CardView', () => {
   const onChangeOpenSaveAsDialog = vi.fn();
   const handleToggleSelect = vi.fn();
   const createView = () => {
-    return renderComponentWithRouterProvider(
-      <CardView {...props} />,
-      paths.catalogue
-    );
+    return renderComponentWithRouterProvider(<CardView {...props} />);
   };
 
   function createData(): CatalogueCategory[] {

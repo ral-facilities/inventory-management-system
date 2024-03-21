@@ -7,7 +7,6 @@ import {
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';
-import { paths } from '../../view/viewTabs.component';
 
 vi.setConfig({ testTimeout: 10000 });
 
@@ -17,8 +16,7 @@ describe('Catalogue Items Table', () => {
 
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <CatalogueItemsTable {...props} />,
-      paths.catalogue
+      <CatalogueItemsTable {...props} />
     );
   };
 

@@ -9,7 +9,6 @@ import {
   DeleteSystemDialog,
   DeleteSystemDialogProps,
 } from './deleteSystemDialog.component';
-import { paths } from '../view/viewTabs.component';
 
 vi.mock('../handleIMS_APIError');
 
@@ -38,10 +37,7 @@ describe('DeleteSystemDialog', () => {
         code: '',
       };
 
-    return renderComponentWithRouterProvider(
-      <DeleteSystemDialog {...props} />,
-      paths.systems
-    );
+    return renderComponentWithRouterProvider(<DeleteSystemDialog {...props} />);
   };
 
   beforeEach(() => {

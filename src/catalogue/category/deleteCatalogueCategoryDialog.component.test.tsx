@@ -6,7 +6,6 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import DeleteCatalogueCategoryDialog, {
   DeleteCatalogueCategoryDialogProps,
 } from './deleteCatalogueCategoryDialog.component';
-import { paths } from '../../view/viewTabs.component';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -18,8 +17,7 @@ describe('delete Catalogue Category dialogue', () => {
   let catalogueCategory: CatalogueCategory;
   const createView = (): RenderResult => {
     return renderComponentWithRouterProvider(
-      <DeleteCatalogueCategoryDialog {...props} />,
-      paths.catalogue
+      <DeleteCatalogueCategoryDialog {...props} />
     );
   };
 

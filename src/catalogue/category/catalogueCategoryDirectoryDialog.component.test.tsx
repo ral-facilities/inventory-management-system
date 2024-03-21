@@ -5,7 +5,6 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueCategoryDirectoryDialog, {
   CatalogueCategoryDirectoryDialogProps,
 } from './catalogueCategoryDirectoryDialog.component';
-import { paths } from '../../view/viewTabs.component';
 
 describe('CatalogueCategoryDirectoryDialog', () => {
   let props: CatalogueCategoryDirectoryDialogProps;
@@ -16,8 +15,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   const onClose = vi.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <CatalogueCategoryDirectoryDialog {...props} />,
-      paths.catalogue
+      <CatalogueCategoryDirectoryDialog {...props} />
     );
   };
 

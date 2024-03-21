@@ -6,7 +6,7 @@ import ViewTabs, { paths } from './viewTabs.component';
 describe('View Tabs', () => {
   let user: UserEvent;
   const createView = (path: string) => {
-    return renderComponentWithRouterProvider(<ViewTabs />, paths.any, path);
+    return renderComponentWithRouterProvider(<ViewTabs />, 'any', path);
   };
 
   beforeEach(() => {

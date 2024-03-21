@@ -6,7 +6,6 @@ import { getItemById, renderComponentWithRouterProvider } from '../testUtils';
 import DeleteItemDialog, {
   DeleteItemDialogProps,
 } from './deleteItemDialog.component';
-import { paths } from '../view/viewTabs.component';
 
 vi.mock('../handleIMS_APIError');
 
@@ -18,10 +17,7 @@ describe('delete item dialog', () => {
   let item: Item | undefined;
 
   const createView = (): RenderResult => {
-    return renderComponentWithRouterProvider(
-      <DeleteItemDialog {...props} />,
-      paths.items
-    );
+    return renderComponentWithRouterProvider(<DeleteItemDialog {...props} />);
   };
 
   beforeEach(() => {

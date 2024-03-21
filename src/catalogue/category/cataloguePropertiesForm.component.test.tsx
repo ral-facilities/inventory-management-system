@@ -8,7 +8,6 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import CataloguePropertiesForm, {
   CataloguePropertiesFormProps,
 } from './cataloguePropertiesForm.component';
-import { paths } from '../../view/viewTabs.component';
 
 describe('Catalogue Properties Form', () => {
   let props: CataloguePropertiesFormProps;
@@ -20,8 +19,7 @@ describe('Catalogue Properties Form', () => {
   const resetFormError = vi.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <CataloguePropertiesForm {...props} />,
-      paths.catalogue
+      <CataloguePropertiesForm {...props} />
     );
   };
 

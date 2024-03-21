@@ -4,7 +4,6 @@ import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemDetails, { SystemDetailsProps } from './systemDetails.component';
-import { paths } from '../view/viewTabs.component';
 
 describe('SystemDetails', () => {
   let props: SystemDetailsProps;
@@ -16,10 +15,7 @@ describe('SystemDetails', () => {
       mockSystemDetails = SystemsJSON.filter(
         (system) => system.id === props.id
       )[0] as System;
-    return renderComponentWithRouterProvider(
-      <SystemDetails {...props} />,
-      paths.systems
-    );
+    return renderComponentWithRouterProvider(<SystemDetails {...props} />);
   };
 
   beforeEach(() => {

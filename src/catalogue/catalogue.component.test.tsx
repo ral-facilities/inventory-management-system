@@ -5,7 +5,6 @@ import { CatalogueCategoryFormData, CatalogueItemProperty } from '../app.types';
 import { server } from '../mocks/server';
 import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
 import { renderComponentWithRouterProvider } from '../testUtils';
-import { paths } from '../view/viewTabs.component';
 
 describe('matchCatalogueItemProperties', () => {
   it('should match catalogue item properties correctly', () => {
@@ -79,11 +78,7 @@ describe('matchCatalogueItemProperties', () => {
 describe('Catalogue', () => {
   let user: UserEvent;
   const createView = (path: string) => {
-    return renderComponentWithRouterProvider(
-      <Catalogue />,
-      paths.catalogue,
-      path
-    );
+    return renderComponentWithRouterProvider(<Catalogue />, 'catalogue', path);
   };
 
   beforeEach(() => {

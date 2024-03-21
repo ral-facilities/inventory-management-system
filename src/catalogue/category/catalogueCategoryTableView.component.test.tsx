@@ -5,7 +5,6 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import CatalogueCategoryTableView, {
   CatalogueCategoryTableViewProps,
 } from './catalogueCategoryTableView.component';
-import { paths } from '../../view/viewTabs.component';
 
 describe('CatalogueCategoryTableView', () => {
   let props: CatalogueCategoryTableViewProps;
@@ -14,8 +13,7 @@ describe('CatalogueCategoryTableView', () => {
   const onChangeParentCategoryId = vi.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <CatalogueCategoryTableView {...props} />,
-      paths.catalogue
+      <CatalogueCategoryTableView {...props} />
     );
   };
 

@@ -7,7 +7,6 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
-import { paths } from '../../view/viewTabs.component';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -19,8 +18,7 @@ describe('Catalogue Category Dialog', () => {
 
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <CatalogueCategoryDialog {...props} />,
-      paths.catalogue
+      <CatalogueCategoryDialog {...props} />
     );
   };
 

@@ -9,7 +9,6 @@ import {
 import ManufacturerDialog, {
   ManufacturerDialogProps,
 } from './manufacturerDialog.component';
-import { paths } from '../view/viewTabs.component';
 
 vi.mock('../handleIMS_APIError');
 
@@ -19,10 +18,7 @@ describe('Add manufacturer dialog', () => {
   let user: UserEvent;
   let axiosPostSpy;
   const createView = () => {
-    return renderComponentWithRouterProvider(
-      <ManufacturerDialog {...props} />,
-      paths.manufacturers
-    );
+    return renderComponentWithRouterProvider(<ManufacturerDialog {...props} />);
   };
 
   beforeEach(() => {

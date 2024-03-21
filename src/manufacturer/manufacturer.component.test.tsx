@@ -2,7 +2,6 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import Manufacturer from './manufacturer.component';
-import { paths } from '../view/viewTabs.component';
 
 const mockedUseNavigate = vi.fn();
 
@@ -14,10 +13,7 @@ vi.mock('react-router-dom', async () => ({
 describe('Manufacturer', () => {
   let user: UserEvent;
   const createView = () => {
-    return renderComponentWithRouterProvider(
-      <Manufacturer />,
-      paths.manufacturers
-    );
+    return renderComponentWithRouterProvider(<Manufacturer />);
   };
   beforeEach(() => {
     user = userEvent.setup();

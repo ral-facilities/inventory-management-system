@@ -2,7 +2,6 @@ import { screen } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import CatalogueCard, { CatalogueCardProps } from './catalogueCard.component';
 import { renderComponentWithRouterProvider } from '../../testUtils';
-import { paths } from '../../view/viewTabs.component';
 
 describe('Catalogue Card', () => {
   let props: CatalogueCardProps;
@@ -12,10 +11,7 @@ describe('Catalogue Card', () => {
   const onChangeOpenEditDialog = vi.fn();
   const onToggleSelect = vi.fn();
   const createView = () => {
-    return renderComponentWithRouterProvider(
-      <CatalogueCard {...props} />,
-      paths.catalogue
-    );
+    return renderComponentWithRouterProvider(<CatalogueCard {...props} />);
   };
 
   beforeEach(() => {

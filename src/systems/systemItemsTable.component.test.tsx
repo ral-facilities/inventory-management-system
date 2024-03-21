@@ -7,7 +7,6 @@ import {
   SystemItemsTable,
   SystemItemsTableProps,
 } from './systemItemsTable.component';
-import { paths } from '../view/viewTabs.component';
 
 describe('SystemItemsTable', () => {
   vi.setConfig({ testTimeout: 10000 });
@@ -18,10 +17,7 @@ describe('SystemItemsTable', () => {
   const mockSystem: System = SystemsJSON[2] as System;
 
   const createView = () => {
-    return renderComponentWithRouterProvider(
-      <SystemItemsTable {...props} />,
-      paths.systems
-    );
+    return renderComponentWithRouterProvider(<SystemItemsTable {...props} />);
   };
 
   beforeEach(() => {

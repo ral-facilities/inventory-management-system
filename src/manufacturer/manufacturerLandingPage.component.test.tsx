@@ -2,7 +2,6 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import ManufacturerLandingPage from './manufacturerLandingPage.component';
-import { paths } from '../view/viewTabs.component';
 
 const mockedUseNavigate = vi.fn();
 
@@ -16,7 +15,7 @@ describe('Manufacturer Landing page', () => {
   const createView = (path: string) => {
     return renderComponentWithRouterProvider(
       <ManufacturerLandingPage />,
-      paths.manufacturer,
+      'manufacturer',
       path
     );
   };

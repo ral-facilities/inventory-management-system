@@ -12,7 +12,6 @@ import ItemDialog, {
   ItemDialogProps,
   isValidDateTime,
 } from './itemDialog.component';
-import { paths } from '../view/viewTabs.component';
 
 vi.mock('../handleIMS_APIError');
 
@@ -58,10 +57,7 @@ describe('ItemDialog', () => {
   const onClose = vi.fn();
 
   const createView = () => {
-    return renderComponentWithRouterProvider(
-      <ItemDialog {...props} />,
-      paths.items
-    );
+    return renderComponentWithRouterProvider(<ItemDialog {...props} />);
   };
   beforeEach(() => {
     props = {

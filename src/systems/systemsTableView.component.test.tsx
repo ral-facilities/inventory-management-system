@@ -7,7 +7,6 @@ import {
   SystemsTableView,
   SystemsTableViewProps,
 } from './systemsTableView.component';
-import { paths } from '../view/viewTabs.component';
 
 describe('SystemsTableView', () => {
   let props: SystemsTableViewProps;
@@ -21,10 +20,7 @@ describe('SystemsTableView', () => {
   ];
 
   const createView = () => {
-    return renderComponentWithRouterProvider(
-      <SystemsTableView {...props} />,
-      paths.systems
-    );
+    return renderComponentWithRouterProvider(<SystemsTableView {...props} />);
   };
 
   beforeEach(() => {

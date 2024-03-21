@@ -5,7 +5,6 @@ import { imsApi } from '../../api/api';
 import CatalogueItemDirectoryDialog, {
   CatalogueItemDirectoryDialogProps,
 } from './catalogueItemDirectoryDialog.component';
-import { paths } from '../../view/viewTabs.component';
 
 describe('catalogue item directory Dialog', () => {
   let props: CatalogueItemDirectoryDialogProps;
@@ -17,8 +16,7 @@ describe('catalogue item directory Dialog', () => {
 
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <CatalogueItemDirectoryDialog {...props} />,
-      paths.catalogue
+      <CatalogueItemDirectoryDialog {...props} />
     );
   };
 

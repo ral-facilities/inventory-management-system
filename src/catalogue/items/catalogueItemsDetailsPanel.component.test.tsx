@@ -9,15 +9,13 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import CatalogueItemsDetailsPanel, {
   CatalogueItemsDetailsPanelProps,
 } from './catalogueItemsDetailsPanel.component';
-import { paths } from '../../view/viewTabs.component';
 
 describe('Catalogue Items details panel', () => {
   let user: UserEvent;
   let props: CatalogueItemsDetailsPanelProps;
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <CatalogueItemsDetailsPanel {...props} />,
-      paths.catalogue
+      <CatalogueItemsDetailsPanel {...props} />
     );
   };
 

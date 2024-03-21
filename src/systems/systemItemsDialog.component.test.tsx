@@ -7,7 +7,6 @@ import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemItemsDialog, {
   SystemItemsDialogProps,
 } from './systemItemsDialog.component';
-import { paths } from '../view/viewTabs.component';
 
 describe('SystemItemsDialog', () => {
   let props: SystemItemsDialogProps;
@@ -23,10 +22,7 @@ describe('SystemItemsDialog', () => {
   ];
 
   const createView = () => {
-    return renderComponentWithRouterProvider(
-      <SystemItemsDialog {...props} />,
-      paths.systems
-    );
+    return renderComponentWithRouterProvider(<SystemItemsDialog {...props} />);
   };
 
   beforeEach(() => {

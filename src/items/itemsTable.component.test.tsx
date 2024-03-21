@@ -6,7 +6,6 @@ import {
   renderComponentWithRouterProvider,
 } from '../testUtils';
 import ItemsTable, { ItemTableProps } from './itemsTable.component';
-import { paths } from '../view/viewTabs.component';
 
 describe('Items Table', () => {
   vi.setConfig({ testTimeout: 10000 });
@@ -14,10 +13,7 @@ describe('Items Table', () => {
   let props: ItemTableProps;
   let user: UserEvent;
   const createView = () => {
-    return renderComponentWithRouterProvider(
-      <ItemsTable {...props} />,
-      paths.items
-    );
+    return renderComponentWithRouterProvider(<ItemsTable {...props} />);
   };
 
   const ensureColumnsVisible = async (columns: string[]) => {
