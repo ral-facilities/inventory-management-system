@@ -1,7 +1,7 @@
 # Dockerfile to build and serve inventory management system
 
 # Build stage
-FROM node:20.11-alpine3.19 as builder
+FROM node:20.11.1-alpine3.19@sha256:c0a3badbd8a0a760de903e00cedbca94588e609299820557e72cba2a53dbaa2c as builder
 
 WORKDIR /inventory-management-system-build
 
@@ -30,7 +30,7 @@ RUN set -eux; \
     yarn build;
 
 # Run stage
-FROM httpd:2.4-alpine3.19
+FROM httpd:2.4.58-alpine3.19@sha256:5f3c87973b3e76601b2f4d8832d6075e272868815e4966d2e57823591f8da29f
 
 WORKDIR /usr/local/apache2/htdocs
 
