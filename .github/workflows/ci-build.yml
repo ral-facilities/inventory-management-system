@@ -82,7 +82,7 @@ jobs:
           MONGO_INITDB_ROOT_PASSWORD: example
 
       ims-api:
-        image: harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
+        image: ${{ secrets.HARBOR_URL }}/ims-api:develop
         ports:
           - 8000:8000
         env:
@@ -146,7 +146,7 @@ jobs:
       - name: Login to Harbor
         uses: docker/login-action@e92390c5fb421da1463c202d546fed0ec5c39f20 # v3.1.0
         with:
-          registry: harbor.stfc.ac.uk/inventory-management-system
+          registry: ${{ secrets.HARBOR_URL }}
           username: ${{ secrets.HARBOR_USERNAME }}
           password: ${{ secrets.HARBOR_TOKEN }}
 
@@ -154,7 +154,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@dbef88086f6cef02e264edb7dbf63250c17cef6c # v5.5.0
         with:
-          images: harbor.stfc.ac.uk/inventory-management-system/ims
+          images: ${{ secrets.HARBOR_URL }}/ims
 
       - name: Build and push Docker image to Harbor
         uses: docker/build-push-action@2cdde995de11925a030ce8070c3d77a52ffcf1c0 # v5.3.0
