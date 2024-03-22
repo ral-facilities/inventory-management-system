@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import { format, parseISO } from 'date-fns';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
@@ -75,6 +76,14 @@ export const trimStringValues = (object: any): any => {
   }
   return object;
 };
+
+export const numberListParser = z
+  .array(z.string())
+  .nullable()
+  .transform((vals) => {
+    if (!vals) return null; // If the value is null or undefined, return null
+    return vals.map((val) => (val.trim() === '' ? NaN : Number(val))); // Convert each string element to a number
+  });
 
 export const formatDateTimeStrings = (
   dateTime: string,

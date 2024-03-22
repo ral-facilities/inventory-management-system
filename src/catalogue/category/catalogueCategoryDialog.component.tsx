@@ -37,7 +37,7 @@ import {
   AllowedValuesListType,
 } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { trimStringValues } from '../../utils';
+import { numberListParser, trimStringValues } from '../../utils';
 import {
   Control,
   Controller,
@@ -51,11 +51,6 @@ import { ZodIssue, z } from 'zod';
 import { useUnits } from '../../api/units';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-
-// Function to convert a list of strings to a list of numbers
-const convertListToNumbers = (values: string[]): number[] => {
-  return values.map((value) => (value.trim() === '' ? NaN : Number(value)));
-};
 
 const AllowedValuesListSchema = z.object({
   type: z.string().nullable().optional(),
@@ -88,7 +83,7 @@ const CatalogueCategoryFormDataSchema = z
 
     const parsedAllowedValuesList = allowed_values?.values
       ? type === 'number'
-        ? convertListToNumbers(allowed_values.values)
+        ? numberListParser.parse(allowed_values.values)
         : allowed_values.values
       : undefined;
 
