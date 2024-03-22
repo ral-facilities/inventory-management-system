@@ -82,7 +82,7 @@ jobs:
           MONGO_INITDB_ROOT_PASSWORD: example
 
       ims-api:
-        image: ${{ secrets.HARBOR_URL }}/ims-api:develop
+        image: harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
         ports:
           - 8000:8000
         env:
