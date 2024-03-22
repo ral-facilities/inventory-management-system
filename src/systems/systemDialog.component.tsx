@@ -32,7 +32,6 @@ import {
   useEditSystem,
 } from '../api/systems';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { trimStringValues } from '../utils';
 
 const systemsSchema = z.object({
   name: z.string().trim().min(1, { message: 'Please enter a name' }),
@@ -121,7 +120,7 @@ function SystemDialog(props: SystemDialogProps) {
 
   const handleAddSaveSystem = React.useCallback(
     (system: AddSystem) => {
-      addSystem(trimStringValues(system))
+      addSystem(system)
         .then(() => handleClose())
         .catch((error: AxiosError) => {
           const response = error.response?.data as ErrorParsing;
