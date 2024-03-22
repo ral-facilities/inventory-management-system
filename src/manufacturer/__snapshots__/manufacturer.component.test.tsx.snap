@@ -1905,7 +1905,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                     role="combobox"
                     tabindex="0"
                   >
-                    25
+                    15
                   </div>
                   <input
                     aria-hidden="true"
@@ -1913,7 +1913,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                     class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                     id="mrt-rows-per-page"
                     tabindex="-1"
-                    value="25"
+                    value="15"
                   />
                   <svg
                     aria-hidden="true"
