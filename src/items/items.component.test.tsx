@@ -1,17 +1,19 @@
-import React from 'react';
-import { renderComponentWithMemoryRouter } from '../setupTests';
-import Items from './items.component';
-import { waitFor, screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { Route, Routes } from 'react-router-dom';
+import { renderComponentWithMemoryRouter } from '../testUtils';
 import { paths } from '../view/viewTabs.component';
-import userEvent from '@testing-library/user-event';
-const mockedUseNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+import Items from './items.component';
+
+const mockedUseNavigate = vi.fn();
+
+vi.mock('react-router-dom', async () => ({
+  ...(await vi.importActual('react-router-dom')),
   useNavigate: () => mockedUseNavigate,
 }));
+
 describe('Items', () => {
-  let user;
+  let user: UserEvent;
   const createView = (path: string) => {
     return renderComponentWithMemoryRouter(
       <Routes>
@@ -23,15 +25,15 @@ describe('Items', () => {
 
   beforeEach(() => {
     user = userEvent.setup();
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('navigates to catalogue category table view', async () => {
@@ -95,7 +97,7 @@ describe('Items', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          `These items don't exist. Please click the Home button on the top left of you screen to navigate to the catalogue home`
+          `These items don't exist. Please click the Home button on the top left of your screen to navigate to the catalogue home.`
         )
       ).toBeInTheDocument();
     });

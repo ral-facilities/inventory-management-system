@@ -190,7 +190,7 @@ export const useMoveToSystem = (): UseMutationResult<
             id: system.id,
             parent_id: moveToSystem.targetSystem?.id || null,
           })
-            .then((result: System) => {
+            .then(() => {
               const targetSystemName =
                 moveToSystem.targetSystem?.name || 'Root';
               transferStates.push({

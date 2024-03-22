@@ -1,20 +1,19 @@
-import React from 'react';
-import { screen, RenderResult, waitFor, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { RenderResult, act, screen, waitFor } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { Item } from '../app.types';
+import handleIMS_APIError from '../handleIMS_APIError';
+import { getItemById, renderComponentWithBrowserRouter } from '../testUtils';
 import DeleteItemDialog, {
   DeleteItemDialogProps,
 } from './deleteItemDialog.component';
-import { getItemById, renderComponentWithBrowserRouter } from '../setupTests';
-import { Item } from '../app.types';
-import handleIMS_APIError from '../handleIMS_APIError';
 
-jest.mock('../handleIMS_APIError');
+vi.mock('../handleIMS_APIError');
 
 describe('delete item dialog', () => {
   let props: DeleteItemDialogProps;
-  let user;
-  const onClose = jest.fn();
-  const onChangeItem = jest.fn();
+  let user: UserEvent;
+  const onClose = vi.fn();
+  const onChangeItem = vi.fn();
   let item: Item | undefined;
 
   const createView = (): RenderResult => {
@@ -31,9 +30,11 @@ describe('delete item dialog', () => {
     };
     user = userEvent; // Assigning userEvent to 'user'
   });
+
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
+
   it('renders correctly', async () => {
     createView();
     let baseElement;
@@ -84,7 +85,7 @@ describe('delete item dialog', () => {
   it('calls handleDeleteSession when continue button is clicked with a valid session name', async () => {
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
-    user.click(continueButton);
+    await user.click(continueButton);
 
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();

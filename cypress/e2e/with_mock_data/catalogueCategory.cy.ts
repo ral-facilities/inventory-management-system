@@ -15,6 +15,8 @@ describe('Catalogue Category', () => {
         parent_id: null,
         code: index.toString(),
         is_leaf: true,
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
       });
     }
     return data;
@@ -319,7 +321,6 @@ describe('Catalogue Category', () => {
             {
               name: 'Updated Field 2',
               type: 'number',
-              unit: '',
               mandatory: false,
               allowed_values: { type: 'list', values: [10] },
             },
@@ -563,6 +564,7 @@ describe('Catalogue Category', () => {
             {
               name: 'Accuracy',
               type: 'string',
+              unit: null,
               mandatory: true,
               allowed_values: null,
             },
@@ -718,22 +720,46 @@ describe('Catalogue Category', () => {
               type: 'number',
               unit: 'megapixels',
               mandatory: true,
+              allowed_values: null,
             },
             {
               name: 'Frame Rate',
               type: 'number',
               unit: 'fps',
               mandatory: false,
+              allowed_values: null,
             },
-            { name: 'Sensor Type', type: 'string', mandatory: true },
-            { name: 'Sensor brand', type: 'string', mandatory: false },
-            { name: 'Broken', type: 'boolean', mandatory: true },
+            {
+              name: 'Sensor Type',
+              type: 'string',
+              unit: null,
+              mandatory: true,
+              allowed_values: null,
+            },
+            {
+              name: 'Sensor brand',
+              type: 'string',
+              unit: null,
+              mandatory: false,
+              allowed_values: null,
+            },
+            {
+              name: 'Broken',
+              type: 'boolean',
+              unit: null,
+              mandatory: true,
+              allowed_values: null,
+            },
             {
               name: 'Older than five years',
               type: 'boolean',
+              unit: null,
               mandatory: false,
+              allowed_values: null,
             },
           ],
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -743,6 +769,8 @@ describe('Catalogue Category', () => {
           parent_id: null,
           code: 'test_dup',
           is_leaf: false,
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
       expect(JSON.stringify(await patchRequests[2].json())).equal(
@@ -752,6 +780,8 @@ describe('Catalogue Category', () => {
           parent_id: null,
           code: 'amp-meters',
           is_leaf: false,
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
     });
@@ -792,22 +822,46 @@ describe('Catalogue Category', () => {
               type: 'number',
               unit: 'megapixels',
               mandatory: true,
+              allowed_values: null,
             },
             {
               name: 'Frame Rate',
               type: 'number',
               unit: 'fps',
               mandatory: false,
+              allowed_values: null,
             },
-            { name: 'Sensor Type', type: 'string', mandatory: true },
-            { name: 'Sensor brand', type: 'string', mandatory: false },
-            { name: 'Broken', type: 'boolean', mandatory: true },
+            {
+              name: 'Sensor Type',
+              type: 'string',
+              unit: null,
+              mandatory: true,
+              allowed_values: null,
+            },
+            {
+              name: 'Sensor brand',
+              type: 'string',
+              unit: null,
+              mandatory: false,
+              allowed_values: null,
+            },
+            {
+              name: 'Broken',
+              type: 'boolean',
+              unit: null,
+              mandatory: true,
+              allowed_values: null,
+            },
             {
               name: 'Older than five years',
               type: 'boolean',
+              unit: null,
               mandatory: false,
+              allowed_values: null,
             },
           ],
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -817,6 +871,8 @@ describe('Catalogue Category', () => {
           parent_id: '2',
           code: 'test_dup',
           is_leaf: false,
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
       expect(JSON.stringify(await patchRequests[2].json())).equal(
@@ -826,6 +882,8 @@ describe('Catalogue Category', () => {
           parent_id: '2',
           code: 'amp-meters',
           is_leaf: false,
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
     });

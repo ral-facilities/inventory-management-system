@@ -259,12 +259,13 @@ function ItemDialog(props: ItemDialogProps) {
         const isCatalogueItemPropertiesUpdated =
           JSON.stringify(itemData.properties) !==
           JSON.stringify(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             selectedItem.properties.map(({ unit, ...rest }) => rest)
           );
 
         const isSystemIdUpdated = itemData.system_id !== selectedItem.system_id;
 
-        let item: EditItem = {
+        const item: EditItem = {
           id: selectedItem.id,
         };
 
@@ -299,7 +300,7 @@ function ItemDialog(props: ItemDialogProps) {
             isSystemIdUpdated)
         ) {
           editItem(trimStringValues(item))
-            .then((response) => handleClose())
+            .then(() => handleClose())
             .catch((error: AxiosError) => {
               handleIMS_APIError(error);
             });
@@ -311,6 +312,7 @@ function ItemDialog(props: ItemDialogProps) {
     [selectedItem, editItem, handleClose]
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
     if (parentSystemId && catalogueItem) {
       const itemData: AddItemSchemaType = data;
@@ -319,6 +321,7 @@ function ItemDialog(props: ItemDialogProps) {
             ...itemData,
             system_id: parentSystemId,
             properties: itemData.properties.map(
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               ({ key, unit, ...rest }) => rest
             ),
           })
@@ -327,6 +330,7 @@ function ItemDialog(props: ItemDialogProps) {
             system_id: parentSystemId,
             catalogue_item_id: catalogueItem.id,
             properties: itemData.properties.map(
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               ({ key, unit, ...rest }) => rest
             ),
           });
@@ -357,7 +361,7 @@ function ItemDialog(props: ItemDialogProps) {
 
   // Spread Method to clone errors
   const itemDetailsErrors = Object.fromEntries(
-    Object.entries(errors).filter(([key, _value]) => key !== 'properties')
+    Object.entries(errors).filter(([key]) => key !== 'properties')
   );
 
   const isStepFailed = React.useCallback(
@@ -650,10 +654,13 @@ function ItemDialog(props: ItemDialogProps) {
                                           sx={{ alignItems: 'center' }}
                                           fullWidth
                                         >
+                                          <MenuItem key={0} value={''}>
+                                            {'None'}
+                                          </MenuItem>
                                           {property.allowed_values?.values.map(
                                             (value, index) => (
                                               <MenuItem
-                                                key={index}
+                                                key={index + 1}
                                                 value={String(value)}
                                               >
                                                 {value}
@@ -764,6 +771,7 @@ function ItemDialog(props: ItemDialogProps) {
               systemsData={systemsData}
               systemsDataLoading={systemsDataLoading}
               onChangeParentId={setParentSystemId}
+              systemParentId={parentSystemId ?? undefined}
               // Use most unrestricted variant (i.e. copy with no selection)
               selectedSystems={[]}
               type="copyTo"

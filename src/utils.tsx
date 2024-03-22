@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { format, parseISO } from 'date-fns';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -18,7 +19,7 @@ export const generateUniqueName = (
 
 /* Returns whether running in development mode */
 export const isRunningInDevelopment = (): boolean => {
-  return process.env.NODE_ENV !== 'production';
+  return import.meta.env.DEV;
 };
 
 /* Returns a calc function giving the page height excluding SciGateway related components
@@ -37,7 +38,7 @@ export const getSciGatewayPageHeightCalc = (
    that only appears in development */
 export const getPageHeightCalc = (additionalSubtraction?: string): string => {
   // SciGateway heights - view tabs (if in development) - additional
-  let newAdditional = undefined;
+  let newAdditional: string | undefined = undefined;
 
   if (isRunningInDevelopment()) newAdditional = '48px';
   if (additionalSubtraction !== undefined) {
@@ -49,6 +50,7 @@ export const getPageHeightCalc = (additionalSubtraction?: string): string => {
 };
 
 /* Trims all the string values in an object, and then returns the object */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const trimStringValues = (object: any): any => {
   if (typeof object !== 'object' || object === null) {
     if (typeof object === 'string') {
@@ -59,8 +61,9 @@ export const trimStringValues = (object: any): any => {
   }
 
   for (const prop in object) {
-    if (object.hasOwnProperty(prop)) {
+    if (Object.prototype.hasOwnProperty.call(object, prop)) {
       if (Array.isArray(object[prop])) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         object[prop] = object[prop].map((element: any) =>
           trimStringValues(element)
         );
@@ -81,3 +84,15 @@ export const numberListParser = z
     if (!vals) return null; // If the value is null or undefined, return null
     return vals.map((val) => (val.trim() === '' ? NaN : Number(val))); // Convert each string element to a number
   });
+
+export const formatDateTimeStrings = (
+  dateTime: string,
+  includeTime: boolean
+): string => {
+  const date = parseISO(dateTime);
+  const formattedDate = includeTime
+    ? format(date, 'dd MMM yyyy HH:mm')
+    : format(date, 'dd MMM yyyy');
+
+  return formattedDate;
+};

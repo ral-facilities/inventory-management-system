@@ -13,7 +13,7 @@ describe('IMS HomePage', () => {
     cy.go('back');
 
     cy.get('[data-testid="manufacturer-button"]').click();
-    cy.url().should('include', '/manufacturer');
+    cy.url().should('include', '/manufacturers');
     cy.go('back');
 
     cy.origin('https://www.clf.stfc.ac.uk/Pages/EPAC-Applications.aspx', () => {

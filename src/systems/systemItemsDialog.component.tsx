@@ -104,6 +104,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
           systemsData={systemsData}
           systemsDataLoading={systemsDataLoading}
           onChangeParentId={setParentSystemId}
+          systemParentId={parentSystemId ?? undefined}
           // Use most unrestricted variant (i.e. copy with no selection)
           selectedSystems={[]}
           type="copyTo"
@@ -129,5 +130,6 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     </Dialog>
   );
 });
+SystemItemsDialog.displayName = 'SystemItemsDialog';
 
 export default SystemItemsDialog;
