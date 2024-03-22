@@ -121,7 +121,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   const handleAddManufacturer = React.useCallback(
     (manufacturerData: AddManufacturer) => {
       addManufacturer(manufacturerData)
-        .then((response) => handleClose())
+        .then(() => handleClose())
         .catch((error: AxiosError) => {
           if (error.response?.status === 409) {
             setNameError('A manufacturer with the same name already exists.');
@@ -232,7 +232,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           isTelephoneUpdated
         ) {
           editManufacturer(manufacturerToEdit)
-            .then((response) => handleClose())
+            .then(() => handleClose())
             .catch((error: AxiosError) => {
               const response = error.response?.data as ErrorParsing;
               if (response && error.response?.status === 409) {

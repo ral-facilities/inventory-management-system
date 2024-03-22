@@ -134,6 +134,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       notes: null,
     });
 
+    setActiveStep(0);
     setPropertyValues([]);
     setPropertyErrors(
       new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
@@ -182,11 +183,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     }
   }, [parentCatalogueItemPropertiesInfo, selectedCatalogueItem, open]);
 
-  const handlePropertyChange = (
-    index: number,
-    name: string,
-    value: string | null
-  ) => {
+  const handlePropertyChange = (index: number, value: string | null) => {
     const updatedPropertyValues = [...propertyValues];
 
     if (value === null || (typeof value === 'string' && value.trim() === '')) {
@@ -199,6 +196,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     const updatedPropertyErrors = [...propertyErrors];
     updatedPropertyErrors[index] = false;
     setPropertyErrors(updatedPropertyErrors);
+    setFormError(false);
+    setFormErrorMessage(undefined);
   };
 
   const { mutateAsync: addCatalogueItem, isPending: isAddPending } =
@@ -431,7 +430,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     };
 
     addCatalogueItem(trimStringValues(catalogueItem))
-      .then((response) => handleClose())
+      .then(() => handleClose())
       .catch((error: AxiosError) => {
         handleIMS_APIError(error);
       });
@@ -480,13 +479,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       const isCatalogueItemPropertiesUpdated =
         JSON.stringify(updatedProperties) !==
         JSON.stringify(
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           selectedCatalogueItem.properties.map(({ unit, ...rest }) => rest)
         );
 
       const isManufacturerUpdated =
         JSON.stringify(details.manufacturer_id) !==
         JSON.stringify(selectedCatalogueItem.manufacturer_id);
-      let catalogueItem: EditCatalogueItem = {
+      const catalogueItem: EditCatalogueItem = {
         id: selectedCatalogueItem.id,
       };
 
@@ -529,7 +529,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           isNotesUpdated)
       ) {
         editCatalogueItem(trimStringValues(catalogueItem))
-          .then((response) => handleClose())
+          .then(() => handleClose())
           .catch((error: AxiosError) => {
             const response = error.response?.data as ErrorParsing;
 
@@ -773,13 +773,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       : selectedManufacturer
                   }
                   inputValue={inputValue ?? ''}
-                  onInputChange={(event, newInputValue) =>
+                  onInputChange={(_event, newInputValue) =>
                     setInputValue(newInputValue)
                   }
-                  onChange={(
-                    event: any,
-                    newManufacturer: Manufacturer | null
-                  ) => {
+                  onChange={(_event, newManufacturer: Manufacturer | null) => {
                     setSelectedManufacturer(newManufacturer ?? null);
                     setInputValue(newManufacturer?.name ?? '');
                     handleCatalogueDetails(
@@ -876,7 +873,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 onChange={(event) =>
                                   handlePropertyChange(
                                     index,
-                                    property.name,
                                     event.target.value as string
                                   )
                                 }
@@ -920,7 +916,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 onChange={(event) =>
                                   handlePropertyChange(
                                     index,
-                                    property.name,
                                     event.target.value as string
                                   )
                                 }
@@ -928,9 +923,12 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
                               >
+                                <MenuItem key={0} value={''}>
+                                  {'None'}
+                                </MenuItem>
                                 {property.allowed_values.values.map(
                                   (value, index) => (
-                                    <MenuItem key={index} value={value}>
+                                    <MenuItem key={index + 1} value={value}>
                                       {value}
                                     </MenuItem>
                                   )
@@ -954,7 +952,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                               onChange={(event) =>
                                 handlePropertyChange(
                                   index,
-                                  property.name,
                                   event.target.value ? event.target.value : null
                                 )
                               }

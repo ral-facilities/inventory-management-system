@@ -3,7 +3,7 @@ import { act } from '@testing-library/react';
 import App from './App';
 import { createRoot } from 'react-dom/client';
 
-jest.mock('loglevel');
+vi.mock('loglevel');
 
 describe('App', () => {
   it('renders without crashing', async () => {

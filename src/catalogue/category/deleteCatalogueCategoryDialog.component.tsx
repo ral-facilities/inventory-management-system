@@ -44,7 +44,7 @@ const DeleteCatalogueCategoryDialog = (
   const handleDeleteCatalogueCategory = React.useCallback(() => {
     if (catalogueCategory) {
       deleteCatalogueCategory(catalogueCategory)
-        .then((response) => {
+        .then(() => {
           onChangeCatalogueCategory(undefined);
           onClose();
         })

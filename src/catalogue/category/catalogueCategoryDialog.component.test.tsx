@@ -1,21 +1,20 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import React from 'react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../../api/api';
 import { CatalogueCategory, CatalogueCategoryFormData } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { renderComponentWithBrowserRouter } from '../../setupTests';
+import { renderComponentWithBrowserRouter } from '../../testUtils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
 
-jest.mock('../../handleIMS_APIError');
+vi.mock('../../handleIMS_APIError');
 
 describe('Catalogue Category Dialog', () => {
-  const onClose = jest.fn();
-  const resetSelectedCatalogueCategory = jest.fn();
+  const onClose = vi.fn();
+  const resetSelectedCatalogueCategory = vi.fn();
   let props: CatalogueCategoryDialogProps;
-  let user;
+  let user: UserEvent;
 
   const createView = () => {
     return renderComponentWithBrowserRouter(
@@ -45,7 +44,7 @@ describe('Catalogue Category Dialog', () => {
       await user.click(screen.getByLabelText('Catalogue Items'));
 
       // Add any required fields
-      values.newFormFields.forEach(async (field, index) => {
+      values.newFormFields.forEach(async () => {
         await user.click(
           screen.getByRole('button', {
             name: 'Add catalogue category field entry',
@@ -138,7 +137,7 @@ describe('Catalogue Category Dialog', () => {
               });
               const listItems = screen.getAllByLabelText(`List Item ${j}`);
 
-              await fireEvent.change(
+              fireEvent.change(
                 within(
                   listItems[
                     i + numberOfCurrentFields - allowedValuesSelects.length + 1
@@ -167,11 +166,11 @@ describe('Catalogue Category Dialog', () => {
       };
       user = userEvent.setup();
 
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
       axiosPostSpy.mockRestore();
     });
 
@@ -650,7 +649,7 @@ describe('Catalogue Category Dialog', () => {
 
   describe('Edit Catalogue Category Dialog', () => {
     let axiosPatchSpy;
-    let mockData: CatalogueCategory = {
+    const mockData: CatalogueCategory = {
       name: 'test',
       parent_id: null,
       id: '1',
@@ -668,11 +667,11 @@ describe('Catalogue Category Dialog', () => {
         resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
       };
       user = userEvent.setup();
-      axiosPatchSpy = jest.spyOn(imsApi, 'patch');
+      axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     it('checks that the catalogue item properties are cleared when it goes from a leaf to a non-leaf back to a leaf', async () => {
@@ -1106,7 +1105,7 @@ describe('Catalogue Category Dialog', () => {
       const formName = screen.getAllByLabelText('Property Name *');
 
       // Modify the name field using userEvent
-      await fireEvent.change(formName[0], {
+      fireEvent.change(formName[0], {
         target: { value: 'Updated Field' },
       });
 
@@ -1223,7 +1222,7 @@ describe('Catalogue Category Dialog', () => {
     //checks that the dialog renders/opens correctly for `save as`
 
     let axiosPostSpy;
-    let mockData: CatalogueCategory = {
+    const mockData: CatalogueCategory = {
       name: 'test',
       parent_id: null,
       id: '1',
@@ -1241,7 +1240,7 @@ describe('Catalogue Category Dialog', () => {
         resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
       };
       user = userEvent.setup();
-      axiosPostSpy = jest.spyOn(imsApi, 'post');
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
     it('renders correctly when saving as', async () => {

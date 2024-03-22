@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Systems Dialog Add renders correctly when adding 1`] = `
+exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
 <body
   style="padding-right: 1024px; overflow: hidden;"
 >

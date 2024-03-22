@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`delete item dialog renders correctly 1`] = `
+exports[`delete item dialog > renders correctly 1`] = `
 <body
   style="padding-right: 1024px; overflow: hidden;"
 >
@@ -190,7 +190,7 @@ exports[`delete item dialog renders correctly 1`] = `
 </body>
 `;
 
-exports[`delete item dialog renders correctly when the item has an system id 1`] = `
+exports[`delete item dialog > renders correctly when the item has an system id 1`] = `
 <body
   style="padding-right: 1024px; overflow: hidden;"
 >

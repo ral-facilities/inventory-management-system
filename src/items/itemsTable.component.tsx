@@ -36,8 +36,8 @@ import {
 } from '../app.types';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import { useItems } from '../api/item';
-import ItemsDetailsPanel from './ItemsDetailsPanel.component';
-import { getPageHeightCalc } from '../utils';
+import ItemsDetailsPanel from './itemsDetailsPanel.component';
+import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 
 export interface ItemTableProps {
@@ -89,6 +89,27 @@ export function ItemsTable(props: ItemTableProps) {
         ),
       },
       {
+        header: 'Last modified',
+        accessorFn: (row) => new Date(row.modified_time),
+        id: 'modified_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          row.original.modified_time &&
+          formatDateTimeStrings(row.original.modified_time, true),
+      },
+      {
+        header: 'Created',
+        accessorFn: (row) => new Date(row.created_time),
+        id: 'created_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.created_time, true),
+      },
+      {
         header: 'Serial Number',
         accessorFn: (row) => row.serial_number,
         id: 'serial_number',
@@ -108,31 +129,33 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'Warranty End Date',
-        accessorFn: (row) => row.warranty_end_date,
+        accessorFn: (row) => new Date(row.warranty_end_date ?? ''),
         id: 'warranty_end_date',
-        size: 250,
+        filterVariant: 'date-range',
+        size: 350,
         Cell: ({ row }) => (
           <Typography
             // For ensuring space when grouping
-            sx={{ marginRight: 0.5 }}
+            sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
             {row.original.warranty_end_date &&
-              new Date(row.original.warranty_end_date).toLocaleDateString()}
+              formatDateTimeStrings(row.original.warranty_end_date, false)}
           </Typography>
         ),
       },
       {
         header: 'Delivered Date',
-        accessorFn: (row) => row.delivered_date,
+        accessorFn: (row) => new Date(row.delivered_date ?? ''),
         id: 'delivered_date',
-        size: 250,
+        filterVariant: 'date-range',
+        size: 350,
         Cell: ({ row }) => (
           <Typography
             // For ensuring space when grouping
-            sx={{ marginRight: 0.5 }}
+            sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
             {row.original.delivered_date &&
-              new Date(row.original.delivered_date).toLocaleDateString()}
+              formatDateTimeStrings(row.original.delivered_date, false)}
           </Typography>
         ),
       },
@@ -194,7 +217,7 @@ export function ItemsTable(props: ItemTableProps) {
           </MuiLink>
         ),
       },
-      ...viewCatalogueItemProperties.map((property, index) => ({
+      ...viewCatalogueItemProperties.map((property) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
         id: `row.catalogueItem.properties.${property.name}`,
         accessorFn: (row: Item) => {
@@ -259,9 +282,10 @@ export function ItemsTable(props: ItemTableProps) {
       ? [
           { ...columns[0], size: 400 },
           { ...columns[1], size: 400 },
-          { ...columns[5], size: 400 },
+          { ...columns[3], size: 400 },
           { ...columns[6], size: 400 },
           { ...columns[7], size: 400 },
+          { ...columns[8], size: 400 },
         ]
       : columns,
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
@@ -308,6 +332,7 @@ export function ItemsTable(props: ItemTableProps) {
       showColumnFilters: true,
       showGlobalFilter: true,
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+      columnVisibility: { created_time: false },
     },
     state: {
       showProgressBars: isLoading, //or showSkeletons

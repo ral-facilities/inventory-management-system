@@ -1,7 +1,13 @@
 export const MicroFrontendId = 'scigateway';
 export const MicroFrontendToken = `${MicroFrontendId}:token`;
 
-export type TabValue = 'Systems' | 'Catalogue' | 'Manufacturer';
+export const TAB_VALUES = [
+  'Ims', // Homepage
+  'Catalogue',
+  'Systems',
+  'Manufacturers',
+] as const;
+export type TabValue = (typeof TAB_VALUES)[number];
 
 export interface AddCatalogueCategory {
   name: string;
@@ -40,6 +46,8 @@ export interface CatalogueCategory {
   code: string;
   is_leaf: boolean;
   catalogue_item_properties?: CatalogueCategoryFormData[];
+  created_time: string;
+  modified_time: string;
 }
 
 export enum CatalogueItemPropertyType {
@@ -72,6 +80,8 @@ export interface ManufacturerDetails {
 
 export interface Manufacturer extends ManufacturerDetails {
   id: string;
+  created_time: string;
+  modified_time: string;
 }
 export enum AllowedValuesListType {
   Any = 'any',
@@ -79,6 +89,7 @@ export enum AllowedValuesListType {
 }
 export interface AllowedValuesList {
   type?: 'list';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   values: any[];
 }
 export type AllowedValues = AllowedValuesList;
@@ -127,12 +138,14 @@ export interface CatalogueItemProperty {
 export interface CatalogueItemPropertyResponse {
   name: string;
   value: string | number | boolean | null;
-  unit: string;
+  unit: string | null;
 }
 
 export interface CatalogueItem extends CatalogueItemDetails {
   properties: CatalogueItemPropertyResponse[];
   id: string;
+  created_time: string;
+  modified_time: string;
 }
 export interface AddCatalogueItem extends CatalogueItemDetails {
   properties: CatalogueItemProperty[];
@@ -201,6 +214,8 @@ export interface System {
   importance: SystemImportanceType;
   parent_id: string | null;
   code: string;
+  created_time: string;
+  modified_time: string;
 }
 
 export interface EditSystem extends Partial<AddSystem> {
@@ -254,6 +269,8 @@ export interface AddItem extends ItemDetails {
 export interface Item extends ItemDetails {
   properties: CatalogueItemPropertyResponse[];
   id: string;
+  created_time: string;
+  modified_time: string;
 }
 
 export interface EditItem extends Partial<AddItem> {

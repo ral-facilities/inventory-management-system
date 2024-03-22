@@ -2,7 +2,7 @@ import { generateUniqueName, trimStringValues } from './utils';
 
 describe('Utility functions', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('generateUniqueName', () => {

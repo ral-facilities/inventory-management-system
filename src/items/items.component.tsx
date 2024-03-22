@@ -88,8 +88,8 @@ export function Items() {
           >
             <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
             <Typography>
-              These items don't exist. Please click the Home button on the top
-              left of you screen to navigate to the catalogue home
+              These items don&#39;t exist. Please click the Home button on the
+              top left of your screen to navigate to the catalogue home.
             </Typography>
           </Box>
         )

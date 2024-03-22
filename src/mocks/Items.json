@@ -25,24 +25,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": null,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "G463gOIA",
@@ -70,24 +72,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": null,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "9yh39Mcg",
@@ -115,24 +119,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": null,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "wKsFzrSq",
@@ -160,24 +166,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": null,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "Kb2N1rjS",
@@ -205,29 +213,31 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": null,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Sony",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "c83eBHj6",
@@ -255,24 +265,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Sony",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "AB4EW0jz",
@@ -300,24 +312,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Sony",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "joumhhcn",
@@ -345,24 +359,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Sony",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "A5Hcs053",
@@ -390,24 +406,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Canon",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "cuycaDQs",
@@ -435,24 +453,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Canon",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "gzRcYqS9",
@@ -480,24 +500,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Canon",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "Y0M2nhmz",
@@ -525,24 +547,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Canon",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "zazFzgxp",
@@ -570,24 +594,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Nikon",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "qWQ1yfec",
@@ -615,24 +641,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Nikon",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "lRvn1Jnr",
@@ -660,24 +688,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Nikon",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "0lzaqZ0w",
@@ -705,24 +735,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Nikon",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "MwLd0sYm",
@@ -750,24 +782,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Panasonic",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "z6Qt5NU4",
@@ -795,24 +829,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Panasonic",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "tWNDKaHR",
@@ -840,24 +876,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Panasonic",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "YLqMwM3N",
@@ -885,24 +923,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Panasonic",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "APh1Ndbc",
@@ -930,24 +970,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Olympus",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "ckPjb8V6",
@@ -975,24 +1017,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Olympus",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "7Lrj9KVu",
@@ -1020,24 +1064,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Olympus",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "QQen23yW",
@@ -1065,24 +1111,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Olympus",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "4SjSVQmP",
@@ -1110,24 +1158,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Fujifilm",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "35sMH894",
@@ -1155,24 +1205,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Fujifilm",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "slwY94tc",
@@ -1200,24 +1252,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Fujifilm",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "nylsu6gZ",
@@ -1245,24 +1299,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Fujifilm",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "a7aqmF5r",
@@ -1290,24 +1346,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "9Z7hdTSu",
@@ -1335,24 +1393,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "AS9r1EQq",
@@ -1380,24 +1440,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "hoicQciP",
@@ -1425,24 +1487,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "loiykp5U",
@@ -1470,24 +1534,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Pentax",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "9MeUulz3",
@@ -1515,24 +1581,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Pentax",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "z1hJvV8Z",
@@ -1560,24 +1628,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Pentax",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "4mYoI7pr",
@@ -1605,24 +1675,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Pentax",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "1udp6lRk",
@@ -1650,24 +1722,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Sigma",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "NbL5aSAz",
@@ -1695,24 +1769,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Sigma",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "OJWfE0Mp",
@@ -1740,24 +1816,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Sigma",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "73FINwy7",
@@ -1785,24 +1863,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Sigma",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "hrUWznLY",
@@ -1830,24 +1910,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "OjnE5C1W",
@@ -1875,24 +1957,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "z16LCpoR",
@@ -1920,24 +2004,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "swUvB9bq",
@@ -1965,24 +2051,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "rEff1Cl7",
@@ -2010,24 +2098,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Red",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "3UPBT0kW",
@@ -2055,24 +2145,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Red",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "TGdlRPP4",
@@ -2100,24 +2192,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Red",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "F4dqMusW",
@@ -2145,24 +2239,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Red",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "3lmRHP8q",
@@ -2190,24 +2286,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "ZQeuMbUX",
@@ -2235,24 +2333,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "7BWe5x50",
@@ -2280,24 +2380,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "pxfWrsgQ",
@@ -2325,24 +2427,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "I26EJNJ0",
@@ -2370,24 +2474,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "HRgUTr7b",
@@ -2415,24 +2521,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "7VTiQ1rN",
@@ -2460,24 +2568,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "I6oxdiEd",
@@ -2505,24 +2615,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "zPfNASql",
@@ -2550,24 +2662,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "vTDcFzrG",
@@ -2595,24 +2709,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "UPYt9ypT",
@@ -2640,24 +2756,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "OU1k4iY3",
@@ -2685,24 +2803,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "xjEbEZOE",
@@ -2730,24 +2850,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "IJOYQrhH",
@@ -2775,24 +2897,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "4aw4EUKQ",
@@ -2820,24 +2944,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "gnA5hLb1",
@@ -2865,24 +2991,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "ALHQQRJv",
@@ -2910,24 +3038,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "R3bEqVqM",
@@ -2955,24 +3085,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "bhTh5Ywf",
@@ -3000,24 +3132,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "zegJZcW2",
@@ -3045,24 +3179,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "kCyH1V1J",
@@ -3090,24 +3226,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "DchobEDu",
@@ -3135,24 +3273,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "x2pHalX4",
@@ -3180,24 +3320,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "fPBwKiMm",
@@ -3225,24 +3367,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "lLtHoej6",
@@ -3270,24 +3414,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "S7Aquw2x",
@@ -3315,24 +3461,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "jh58ibVS",
@@ -3360,24 +3508,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "4KmQ01dv",
@@ -3405,24 +3555,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "QmLcA0kH",
@@ -3450,24 +3602,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "NH9SdVzu",
@@ -3495,24 +3649,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "EZv8Qol3",
@@ -3540,24 +3696,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "wkYrA6wL",
@@ -3585,24 +3743,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "npBPwFLr",
@@ -3630,24 +3790,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "RphQ48eV",
@@ -3675,24 +3837,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "mtv5VOKi",
@@ -3720,24 +3884,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "aeDDP3F9",
@@ -3765,24 +3931,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "j6dRBqob",
@@ -3810,24 +3978,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "hRR4QLw0",
@@ -3855,24 +4025,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "R4TbmBiK",
@@ -3900,24 +4072,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "x2YWmLk8",
@@ -3945,24 +4119,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "U52r9dmR",
@@ -3990,24 +4166,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "Ks6zj5Du",
@@ -4035,24 +4213,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "gY2PnEvQ",
@@ -4080,24 +4260,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "bJQkEJo1",
@@ -4125,24 +4307,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "vInjjLmV",
@@ -4170,24 +4354,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "pZo2U0zc",
@@ -4215,24 +4401,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "z5C7uMCm",
@@ -4260,24 +4448,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "35v1D39M",
@@ -4305,24 +4495,26 @@
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "o0Bgwvxp",
@@ -4350,24 +4542,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "cxRPZi4Q",
@@ -4395,24 +4589,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "BQUIXhWT",
@@ -4440,24 +4636,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "bJgTNX8H",
@@ -4485,24 +4683,26 @@
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "PdI5ckm3",
@@ -4525,9 +4725,11 @@
       {
         "name": "Accuracy",
         "value": "±0.5%",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "aJNKWM8o",
@@ -4550,9 +4752,11 @@
       {
         "name": "Accuracy",
         "value": "±0.5%",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "hXfNBb6c",
@@ -4575,9 +4779,11 @@
       {
         "name": "Accuracy",
         "value": "±0.5%",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "fpuAzOVk",
@@ -4600,9 +4806,11 @@
       {
         "name": "Accuracy",
         "value": "±0.5%",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "80IuBMnl",
@@ -4622,7 +4830,9 @@
         "value": 2000,
         "unit": "Joules"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "DeL8AAzt",
@@ -4642,7 +4852,9 @@
         "value": 2000,
         "unit": "Joules"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "b7HetQHr",
@@ -4662,7 +4874,9 @@
         "value": 2000,
         "unit": "Joules"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "acnfRHxk",
@@ -4682,7 +4896,9 @@
         "value": 2000,
         "unit": "Joules"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "Di8XDNNT",
@@ -4705,9 +4921,11 @@
       {
         "name": "Accuracy",
         "value": "±0.1%",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "nexErJ2V",
@@ -4730,9 +4948,11 @@
       {
         "name": "Accuracy",
         "value": "±0.1%",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "KbSX3BPD",
@@ -4755,9 +4975,11 @@
       {
         "name": "Accuracy",
         "value": "±0.1%",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "uZ3KdrPV",
@@ -4780,9 +5002,11 @@
       {
         "name": "Accuracy",
         "value": "±0.1%",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "CgpXgwld",
@@ -4805,9 +5029,11 @@
       {
         "name": "Accuracy",
         "value": "±0.05%",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "MfUrsGUc",
@@ -4830,9 +5056,11 @@
       {
         "name": "Accuracy",
         "value": "±0.05%",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "kGw3CHKA",
@@ -4855,9 +5083,11 @@
       {
         "name": "Accuracy",
         "value": "±0.05%",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "znRqHCkp",
@@ -4880,9 +5110,11 @@
       {
         "name": "Accuracy",
         "value": "±0.05%",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "5ox74xy9",
@@ -4900,14 +5132,16 @@
       {
         "name": "Wavefront Measurement Range",
         "value": "0-10 micrometers",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Spatial Resolution",
         "value": 5,
         "unit": "micrometers"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "7NX2p3IB",
@@ -4925,14 +5159,16 @@
       {
         "name": "Wavefront Measurement Range",
         "value": "0-10 micrometers",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Spatial Resolution",
         "value": 5,
         "unit": "micrometers"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "Bpd4mkpx",
@@ -4950,14 +5186,16 @@
       {
         "name": "Wavefront Measurement Range",
         "value": "0-10 micrometers",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Spatial Resolution",
         "value": 5,
         "unit": "micrometers"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "hovxfZSy",
@@ -4975,14 +5213,16 @@
       {
         "name": "Wavefront Measurement Range",
         "value": "0-10 micrometers",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Spatial Resolution",
         "value": 5,
         "unit": "micrometers"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "pZT8K0aP",
@@ -5000,14 +5240,16 @@
       {
         "name": "Wavefront Measurement Range",
         "value": "0-20 micrometers",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Spatial Resolution",
         "value": 10,
         "unit": "micrometers"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "er7KjEZx",
@@ -5025,14 +5267,16 @@
       {
         "name": "Wavefront Measurement Range",
         "value": "0-20 micrometers",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Spatial Resolution",
         "value": 10,
         "unit": "micrometers"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "6klWy2HB",
@@ -5050,14 +5294,16 @@
       {
         "name": "Wavefront Measurement Range",
         "value": "0-20 micrometers",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Spatial Resolution",
         "value": 10,
         "unit": "micrometers"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "5iPpKKGv",
@@ -5075,14 +5321,16 @@
       {
         "name": "Wavefront Measurement Range",
         "value": "0-20 micrometers",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Spatial Resolution",
         "value": 10,
         "unit": "micrometers"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "RuUxShkg",
@@ -5107,7 +5355,9 @@
         "value": 10,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "JzzSH7LB",
@@ -5132,7 +5382,9 @@
         "value": 10,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "SSqpnjRe",
@@ -5157,7 +5409,9 @@
         "value": 10,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "qWAdynAI",
@@ -5182,7 +5436,9 @@
         "value": 10,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "L8r4nbEW",
@@ -5207,7 +5463,9 @@
         "value": 20,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "GkgYQzYe",
@@ -5232,7 +5490,9 @@
         "value": 20,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "dkve1K34",
@@ -5257,7 +5517,9 @@
         "value": 20,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "Lm32xoew",
@@ -5282,7 +5544,9 @@
         "value": 20,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "HDJdMjf5",
@@ -5307,7 +5571,9 @@
         "value": 30,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "m2RuT9Um",
@@ -5332,7 +5598,9 @@
         "value": 30,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "uudvIi3i",
@@ -5357,7 +5625,9 @@
         "value": 30,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "C1If27Rp",
@@ -5382,7 +5652,9 @@
         "value": 30,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "wBEf8sP9",
@@ -5407,7 +5679,9 @@
         "value": 40,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "TytwM71h",
@@ -5432,7 +5706,9 @@
         "value": 40,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "KAaXhv1x",
@@ -5457,7 +5733,9 @@
         "value": 40,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "zr0N0zKP",
@@ -5482,7 +5760,9 @@
         "value": 40,
         "unit": "kilograms"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "GDnO8BUW",
@@ -5500,14 +5780,16 @@
       {
         "name": "Cooldown Time",
         "value": "2 hours",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Pumping Speed",
         "value": 50,
         "unit": "liters per second"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "tVTBh78z",
@@ -5525,14 +5807,16 @@
       {
         "name": "Cooldown Time",
         "value": "2 hours",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Pumping Speed",
         "value": 50,
         "unit": "liters per second"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "euAEB5OY",
@@ -5550,14 +5834,16 @@
       {
         "name": "Cooldown Time",
         "value": "2 hours",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Pumping Speed",
         "value": 50,
         "unit": "liters per second"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "cxUxtqv5",
@@ -5575,14 +5861,16 @@
       {
         "name": "Cooldown Time",
         "value": "2 hours",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Pumping Speed",
         "value": 50,
         "unit": "liters per second"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "xYbx3mvf",
@@ -5600,14 +5888,16 @@
       {
         "name": "Cooldown Time",
         "value": "3 hours",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Pumping Speed",
         "value": 60,
         "unit": "liters per second"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "2l0SVHgT",
@@ -5625,14 +5915,16 @@
       {
         "name": "Cooldown Time",
         "value": "3 hours",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Pumping Speed",
         "value": 60,
         "unit": "liters per second"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "Xp5pZ8gX",
@@ -5650,14 +5942,16 @@
       {
         "name": "Cooldown Time",
         "value": "3 hours",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Pumping Speed",
         "value": 60,
         "unit": "liters per second"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "7NLut0BN",
@@ -5675,14 +5969,16 @@
       {
         "name": "Cooldown Time",
         "value": "3 hours",
-        "unit": ""
+        "unit": null
       },
       {
         "name": "Pumping Speed",
         "value": 60,
         "unit": "liters per second"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "vvfJdzH0",
@@ -5710,9 +6006,11 @@
       {
         "name": "Axis",
         "value": "x",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "BHrItb4x",
@@ -5740,9 +6038,11 @@
       {
         "name": "Axis",
         "value": "x",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "GbHPLn8G",
@@ -5770,9 +6070,11 @@
       {
         "name": "Axis",
         "value": "x",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "FgSXg3uW",
@@ -5800,9 +6102,11 @@
       {
         "name": "Axis",
         "value": "x",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "UoQeYZLb",
@@ -5830,9 +6134,11 @@
       {
         "name": "Axis",
         "value": "y",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "GXtvY5iQ",
@@ -5860,9 +6166,11 @@
       {
         "name": "Axis",
         "value": "y",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "6lhdTuGi",
@@ -5890,9 +6198,11 @@
       {
         "name": "Axis",
         "value": "y",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "kAQIPo23",
@@ -5920,9 +6230,11 @@
       {
         "name": "Axis",
         "value": "y",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "3vsctR0N",
@@ -5950,9 +6262,11 @@
       {
         "name": "Axis",
         "value": "x",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "V32B9lj8",
@@ -5980,9 +6294,11 @@
       {
         "name": "Axis",
         "value": "x",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "uR5ICUYm",
@@ -6010,9 +6326,11 @@
       {
         "name": "Axis",
         "value": "x",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "cH7NAwGc",
@@ -6040,9 +6358,11 @@
       {
         "name": "Axis",
         "value": "x",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "QIy544tc",
@@ -6070,9 +6390,11 @@
       {
         "name": "Axis",
         "value": "z",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "h5nBh3tf",
@@ -6100,9 +6422,11 @@
       {
         "name": "Axis",
         "value": "z",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "YHIyqQHO",
@@ -6130,9 +6454,11 @@
       {
         "name": "Axis",
         "value": "z",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "fkNiGPC2",
@@ -6160,9 +6486,11 @@
       {
         "name": "Axis",
         "value": "z",
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "13h6TOX6",
@@ -6185,9 +6513,11 @@
       {
         "name": "Compression Ratio",
         "value": 100,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "3xgGk6uf",
@@ -6210,9 +6540,11 @@
       {
         "name": "Compression Ratio",
         "value": 100,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "y669dgiz",
@@ -6235,9 +6567,11 @@
       {
         "name": "Compression Ratio",
         "value": 100,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "wtNJCvBR",
@@ -6260,9 +6594,11 @@
       {
         "name": "Compression Ratio",
         "value": 100,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "nWxqHM5w",
@@ -6285,9 +6621,11 @@
       {
         "name": "Compression Ratio",
         "value": 120,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "Kn0X1FRI",
@@ -6310,9 +6648,11 @@
       {
         "name": "Compression Ratio",
         "value": 120,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "8ir4YkZn",
@@ -6335,9 +6675,11 @@
       {
         "name": "Compression Ratio",
         "value": 120,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "xHNXwBDB",
@@ -6360,9 +6702,11 @@
       {
         "name": "Compression Ratio",
         "value": 120,
-        "unit": ""
+        "unit": null
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "yMJg6hNF",
@@ -6387,7 +6731,9 @@
         "value": 0.2,
         "unit": "millibar"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "EkGV4HS7",
@@ -6412,7 +6758,9 @@
         "value": 0.2,
         "unit": "millibar"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "gnW5L9Nf",
@@ -6437,7 +6785,9 @@
         "value": 0.2,
         "unit": "millibar"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "ZHHYPHbi",
@@ -6462,7 +6812,9 @@
         "value": 0.2,
         "unit": "millibar"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "j443wAMk",
@@ -6487,7 +6839,9 @@
         "value": 0.3,
         "unit": "millibar"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "GPcmo9nN",
@@ -6512,7 +6866,9 @@
         "value": 0.3,
         "unit": "millibar"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "tBEHaXez",
@@ -6537,7 +6893,9 @@
         "value": 0.3,
         "unit": "millibar"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
     "id": "Mo4hx8uC",
@@ -6562,6 +6920,8 @@
         "value": 0.3,
         "unit": "millibar"
       }
-    ]
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
   }
 ]
