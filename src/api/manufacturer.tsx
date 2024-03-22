@@ -21,7 +21,7 @@ export const useManufacturers = (): UseQueryResult<
 > => {
   return useQuery({
     queryKey: ['Manufacturers'],
-    queryFn: (params) => {
+    queryFn: () => {
       return getAllManufacturers();
     },
   });
@@ -81,7 +81,7 @@ export const useManufacturer = (
 ): UseQueryResult<Manufacturer, AxiosError> => {
   return useQuery({
     queryKey: ['Manufacturer', id],
-    queryFn: (params) => {
+    queryFn: () => {
       return fetchManufacturer(id ?? '');
     },
     enabled: !!id,

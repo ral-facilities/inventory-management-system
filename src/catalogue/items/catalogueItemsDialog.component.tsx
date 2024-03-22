@@ -386,7 +386,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const handleAddCatalogueItem = React.useCallback(
     (catalogueItem: AddCatalogueItem) => {
       addCatalogueItem(catalogueItem)
-        .then((response) => handleClose())
+        .then(() => handleClose())
         .catch((error: AxiosError) => {
           handleIMS_APIError(error);
         });
@@ -432,13 +432,14 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         const isCatalogueItemPropertiesUpdated =
           JSON.stringify(catalogueItemData.properties) !==
           JSON.stringify(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             selectedCatalogueItem.properties.map(({ unit, ...rest }) => rest)
           );
 
         const isManufacturerUpdated =
           JSON.stringify(catalogueItemData.manufacturer_id) !==
           JSON.stringify(selectedCatalogueItem.manufacturer_id);
-        let catalogueItem: EditCatalogueItem = {
+        const catalogueItem: EditCatalogueItem = {
           id: selectedCatalogueItem.id,
         };
 
@@ -486,7 +487,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             isNotesUpdated)
         ) {
           editCatalogueItem(catalogueItem)
-            .then((response) => handleClose())
+            .then(() => handleClose())
             .catch((error: AxiosError) => {
               const response = error.response?.data as ErrorParsing;
 
@@ -534,7 +535,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   // Spread Method to clone errors
   const catalogueItemDetailsErrors = Object.fromEntries(
-    Object.entries(errors).filter(([key, _value]) => key !== 'properties')
+    Object.entries(errors).filter(([key]) => key !== 'properties')
   );
 
   const isStepFailed = React.useCallback(
@@ -549,6 +550,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     [catalogueItemDetailsErrors, propertiesErrors]
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
     const catalogueItemData: AddCatalogueSchemaType = data;
     type === 'edit'
@@ -556,6 +558,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           ...catalogueItemData,
           catalogue_category_id: parentId,
           properties: catalogueItemData.properties.map(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             ({ key, unit, ...rest }) => rest
           ),
         } as EditCatalogueItem)
@@ -566,6 +569,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
           properties: catalogueItemData.properties.map(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             ({ key, unit, ...rest }) => rest
           ),
         } as AddCatalogueItem);
@@ -683,7 +687,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         ) || null
                       }
                       onChange={(
-                        _event: any,
+                        _event: React.SyntheticEvent,
                         newManufacturer: Manufacturer | null
                       ) => {
                         onChange(newManufacturer?.id);
@@ -845,10 +849,13 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                           sx={{ alignItems: 'center' }}
                                           fullWidth
                                         >
+                                          <MenuItem key={0} value={''}>
+                                            {'None'}
+                                          </MenuItem>
                                           {property.allowed_values?.values.map(
                                             (value, index) => (
                                               <MenuItem
-                                                key={index}
+                                                key={index + 1}
                                                 value={String(value)}
                                               >
                                                 {value}

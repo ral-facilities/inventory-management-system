@@ -172,7 +172,7 @@ const ObsoleteCatalogueItemDialog = (
         obsoleteDetails.obsolete_replacement_catalogue_item_id !==
         catalogueItem.obsolete_replacement_catalogue_item_id;
 
-      let editObsoleteCatalogueItem: EditCatalogueItem = {
+      const editObsoleteCatalogueItem: EditCatalogueItem = {
         id: catalogueItem.id,
       };
       isIsObsoleteUpdated &&

@@ -414,7 +414,7 @@ describe('Catalogue Items', () => {
     cy.get('body').click();
 
     cy.findByRole('link', { name: 'Manufacturer A' }).click();
-    cy.url().should('contain', '/manufacturer/1');
+    cy.url().should('contain', '/manufacturers/1');
   });
 
   it('checks the href property of the drawing link link', () => {
@@ -457,7 +457,7 @@ describe('Catalogue Items', () => {
     cy.visit('/catalogue/item/1fds');
 
     cy.findByText(
-      `This catalogue item doesn't exist. Please click the Home button on the top left of you screen to navigate to the catalogue home`
+      `This catalogue item doesn't exist. Please click the Home button on the top left of your screen to navigate to the catalogue home.`
     ).should('exist');
 
     cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
@@ -919,7 +919,7 @@ describe('Catalogue Items', () => {
           description: 'Precision energy meters for accurate measurements. 26',
           properties: [
             { name: 'Measurement Range', value: 1000, unit: 'Joules' },
-            { name: 'Accuracy', value: '±0.5%', unit: '' },
+            { name: 'Accuracy', value: '±0.5%', unit: null },
           ],
           id: '89',
           manufacturer_id: '1',
@@ -934,6 +934,8 @@ describe('Catalogue Items', () => {
           obsolete_replacement_catalogue_item_id: '6',
           obsolete_reason: 'The item is no longer being manufactured',
           notes: 'Need to find new manufacturer. 26',
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
       expect(JSON.stringify(await patchRequests[1].json())).equal(
@@ -946,7 +948,7 @@ describe('Catalogue Items', () => {
             {
               name: 'Accuracy',
               value: null,
-              unit: '',
+              unit: null,
             },
           ],
           id: '6',
@@ -962,6 +964,8 @@ describe('Catalogue Items', () => {
           obsolete_replacement_catalogue_item_id: null,
           obsolete_reason: null,
           notes: 'Need to find new manufacturer. 27',
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
     });

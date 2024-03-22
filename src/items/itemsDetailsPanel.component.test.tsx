@@ -1,18 +1,17 @@
 import { screen } from '@testing-library/react';
-import React from 'react';
 import {
   getCatalogueItemById,
   getItemById,
   renderComponentWithBrowserRouter,
-} from '../setupTests';
+} from '../testUtils';
 
-import userEvent from '@testing-library/user-event';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import ItemsDetailsPanel, {
   ItemsDetailsPanelProps,
-} from './ItemsDetailsPanel.component';
+} from './itemsDetailsPanel.component';
 
 describe('Catalogue Items details panel', () => {
-  let user;
+  let user: UserEvent;
   let props: ItemsDetailsPanelProps;
   const createView = () => {
     return renderComponentWithBrowserRouter(<ItemsDetailsPanel {...props} />);
@@ -70,6 +69,14 @@ describe('Catalogue Items details panel', () => {
   it('renders notes panel correctly', async () => {
     const view = createView();
     await user.click(screen.getByRole('tab', { name: 'Notes' }));
+
+    expect(view.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders details panel correctly (when there are no Notes)', async () => {
+    props.itemData = getItemById('3lmRHP8q');
+
+    const view = createView();
 
     expect(view.asFragment()).toMatchSnapshot();
   });

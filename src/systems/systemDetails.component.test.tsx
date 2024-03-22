@@ -1,15 +1,14 @@
 import { screen, waitFor } from '@testing-library/react';
-import React from 'react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { System } from '../app.types';
-import { renderComponentWithBrowserRouter } from '../setupTests';
 import SystemsJSON from '../mocks/Systems.json';
+import { renderComponentWithBrowserRouter } from '../testUtils';
 import SystemDetails, { SystemDetailsProps } from './systemDetails.component';
-import userEvent from '@testing-library/user-event';
 
 describe('SystemDetails', () => {
   let props: SystemDetailsProps;
   let mockSystemDetails: System;
-  let user;
+  let user: UserEvent;
 
   const createView = () => {
     if (props.id)
@@ -26,12 +25,12 @@ describe('SystemDetails', () => {
 
     user = userEvent.setup();
 
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      disconnect: jest.fn(),
-      observe: jest.fn(),
-      unobserve: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      disconnect: vi.fn(),
+      observe: vi.fn(),
+      unobserve: vi.fn(),
     }));
-    window.Element.prototype.getBoundingClientRect = jest
+    window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
   });
@@ -118,5 +117,5 @@ describe('SystemDetails', () => {
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
-  });
+  }, 10000);
 });

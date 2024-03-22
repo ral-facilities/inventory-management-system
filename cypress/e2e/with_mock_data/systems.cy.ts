@@ -578,6 +578,8 @@ describe('Systems', () => {
           importance: 'high',
           id: '656da8ef9cba7a76c6f81a5d',
           code: 'pulse-laser',
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
       expect(JSON.stringify(await postRequests[1].json())).equal(
@@ -590,6 +592,8 @@ describe('Systems', () => {
           importance: 'low',
           id: '656ef565ed0773f82e44bc6d',
           code: 'pico-laser',
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
         })
       );
     });

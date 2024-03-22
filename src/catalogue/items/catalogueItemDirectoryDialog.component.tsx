@@ -196,7 +196,7 @@ const CatalogueItemDirectoryDialog = (
           <CatalogueItemsTable
             parentInfo={targetCatalogueCategory}
             dense={true}
-            isItemSelectable={(item: CatalogueItem) => false}
+            isItemSelectable={() => false}
             requestOrigin="move to"
           />
         ) : (
@@ -208,6 +208,7 @@ const CatalogueItemDirectoryDialog = (
             catalogueCategoryDataLoading={catalogueCategoryDataLoading}
             requestOrigin="item"
             catalogueItemParentCategory={parentInfo}
+            catalogueCategoryParentId={parentCategoryId ?? undefined}
           />
         )}
       </DialogContent>

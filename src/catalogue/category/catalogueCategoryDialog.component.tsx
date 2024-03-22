@@ -74,7 +74,7 @@ const CatalogueCategoryFormDataSchema = z
       .string()
       .optional()
       .nullable()
-      .or(z.literal('').transform(() => undefined)),
+      .transform((val) => (val === '' ? undefined : val)),
     mandatory: z.boolean(),
     allowed_values: AllowedValuesListSchema.optional(),
   })
@@ -242,9 +242,9 @@ const CatalogueCategorySchema = z
 
 interface AllowedValuesListTextFieldsProps {
   nestIndex: number;
-  control: Control<CatalogueCategory> | undefined;
-  register: UseFormRegister<CatalogueCategory>;
-  errors: FieldErrors<CatalogueCategory>; // Update this to match your error type
+  control: Control<AddCatalogueCategory> | undefined;
+  register: UseFormRegister<AddCatalogueCategory>;
+  errors: FieldErrors<AddCatalogueCategory>; // Update this to match your error type
 }
 
 const AllowedValuesListTextFields = (
@@ -330,7 +330,7 @@ const CatalogueCategoryDialog = React.memo(
     } = props;
 
     const isNotAdding = type !== 'add' && selectedCatalogueCategory;
-    const initialCatalogueCategory = isNotAdding
+    const initialCatalogueCategory: AddCatalogueCategory = isNotAdding
       ? selectedCatalogueCategory
       : {
           name: '',
@@ -389,7 +389,7 @@ const CatalogueCategoryDialog = React.memo(
     const handleAddCatalogueCategory = React.useCallback(
       (catalogueCategory: AddCatalogueCategory) => {
         addCatalogueCategory(trimStringValues(catalogueCategory))
-          .then((response) => handleClose())
+          .then(() => handleClose())
           .catch((error) => {
             const response = error.response?.data as ErrorParsing;
             if (response && error.response?.status === 409) {
@@ -441,7 +441,7 @@ const CatalogueCategoryDialog = React.memo(
           ) {
             // Only call editCatalogueCategory if id is present and at least one of the properties has been updated
             editCatalogueCategory(editCatalogueCategoryData)
-              .then((response) => {
+              .then(() => {
                 resetSelectedCatalogueCategory();
                 handleClose();
               })
@@ -511,7 +511,7 @@ const CatalogueCategoryDialog = React.memo(
                         aria-labelledby="controlled-radio-buttons-group"
                         name="controlled-radio-buttons-group"
                         value={value}
-                        onChange={(e, value) => {
+                        onChange={(_e, value) => {
                           onChange(value === 'true');
                           if (!(value === 'true')) {
                             resetField(`catalogue_item_properties`, {
@@ -543,7 +543,7 @@ const CatalogueCategoryDialog = React.memo(
                 </Grid>
                 <Grid item sx={{ paddingLeft: 1, paddingTop: 3 }}>
                   <Typography variant="h6">Catalogue Item Fields</Typography>
-                  {fields.map((field, index) => {
+                  {fields.map((_field, index) => {
                     const allowedValuesType = watch(
                       `catalogue_item_properties.${index}.allowed_values.type`
                     );
@@ -854,5 +854,6 @@ const CatalogueCategoryDialog = React.memo(
     );
   }
 );
+CatalogueCategoryDialog.displayName = 'CatalogueCategoryDialog';
 
 export default CatalogueCategoryDialog;

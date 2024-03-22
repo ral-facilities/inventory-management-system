@@ -42,7 +42,7 @@ export const useCatalogueCategories = (
 ): UseQueryResult<CatalogueCategory[], AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueCategories', parent_id],
-    queryFn: (params) => {
+    queryFn: () => {
       return fetchCatalogueCategories(parent_id);
     },
     enabled: !isLeaf,
@@ -64,7 +64,7 @@ export const useCatalogueBreadcrumbs = (
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueBreadcrumbs', id],
-    queryFn: (params) => {
+    queryFn: () => {
       return fetchCatalogueBreadcrumbs(id ?? '');
     },
     enabled: !!id,
@@ -312,7 +312,7 @@ export const useCatalogueCategory = (
 ): UseQueryResult<CatalogueCategory, AxiosError> => {
   return useQuery({
     queryKey: ['CatalogueCategory', id],
-    queryFn: (params) => {
+    queryFn: () => {
       return fetchCatalogueCategory(id ?? '');
     },
     enabled: !!id,
