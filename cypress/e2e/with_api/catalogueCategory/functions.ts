@@ -72,7 +72,7 @@ const modifyCatalogueCategory = (
 
       cy.findAllByLabelText('Select is mandatory?').eq(i).click();
       cy.findByRole('option', {
-        name: field.mandatory ? 'Yes' : 'No',
+        name: field.mandatory ? 'True' : 'False',
       }).click();
 
       if (field.allowed_values) {

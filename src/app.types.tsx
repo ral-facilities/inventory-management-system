@@ -50,6 +50,12 @@ export interface CatalogueCategory {
   modified_time: string;
 }
 
+export enum CatalogueItemPropertyType {
+  Number = 'number',
+  Boolean = 'boolean',
+  Text = 'string',
+}
+
 export interface AddManufacturer {
   name: string;
   url?: string | null;
@@ -77,7 +83,10 @@ export interface Manufacturer extends ManufacturerDetails {
   created_time: string;
   modified_time: string;
 }
-
+export enum AllowedValuesListType {
+  Any = 'any',
+  List = 'list',
+}
 export interface AllowedValuesList {
   type: 'list';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
