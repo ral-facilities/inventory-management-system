@@ -88,7 +88,7 @@ export enum AllowedValuesListType {
   List = 'list',
 }
 export interface AllowedValuesList {
-  type?: 'list';
+  type: 'list';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   values: any[];
 }

@@ -79,7 +79,7 @@ const CatalogueCategoryFormDataSchema = z
       .string()
       .optional()
       .nullable()
-      .or(z.literal('').transform(() => undefined)),
+      .transform((val) => (val === '' ? undefined : val)),
     mandatory: z.boolean(),
     allowed_values: AllowedValuesListSchema.optional(),
   })
@@ -247,9 +247,9 @@ const CatalogueCategorySchema = z
 
 interface AllowedValuesListTextFieldsProps {
   nestIndex: number;
-  control: Control<CatalogueCategory> | undefined;
-  register: UseFormRegister<CatalogueCategory>;
-  errors: FieldErrors<CatalogueCategory>; // Update this to match your error type
+  control: Control<AddCatalogueCategory> | undefined;
+  register: UseFormRegister<AddCatalogueCategory>;
+  errors: FieldErrors<AddCatalogueCategory>; // Update this to match your error type
 }
 
 const AllowedValuesListTextFields = (
@@ -335,7 +335,7 @@ const CatalogueCategoryDialog = React.memo(
     } = props;
 
     const isNotAdding = type !== 'add' && selectedCatalogueCategory;
-    const initialCatalogueCategory = isNotAdding
+    const initialCatalogueCategory: AddCatalogueCategory = isNotAdding
       ? selectedCatalogueCategory
       : {
           name: '',
