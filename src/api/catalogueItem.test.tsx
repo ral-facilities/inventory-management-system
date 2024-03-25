@@ -16,7 +16,7 @@ import {
   EditCatalogueItem,
   TransferToCatalogueItem,
 } from '../app.types';
-import CatalogueItemJSON from '../mocks/CatalogueItems.json';
+import CatalogueItemsJSON from '../mocks/CatalogueItems.json';
 
 describe('catalogue items api functions', () => {
   afterEach(() => {
@@ -85,7 +85,9 @@ describe('catalogue items api functions', () => {
       });
 
       expect(result.current.data).toEqual(
-        CatalogueItemJSON.filter((catalogueItem) => catalogueItem.id === '1')[0]
+        CatalogueItemsJSON.filter(
+          (catalogueItem) => catalogueItem.id === '1'
+        )[0]
       );
     });
   });
@@ -101,10 +103,14 @@ describe('catalogue items api functions', () => {
       });
 
       expect(result.current[0].data).toEqual(
-        CatalogueItemJSON.filter((catalogueItem) => catalogueItem.id === '1')[0]
+        CatalogueItemsJSON.filter(
+          (catalogueItem) => catalogueItem.id === '1'
+        )[0]
       );
       expect(result.current[1].data).toEqual(
-        CatalogueItemJSON.filter((catalogueItem) => catalogueItem.id === '2')[0]
+        CatalogueItemsJSON.filter(
+          (catalogueItem) => catalogueItem.id === '2'
+        )[0]
       );
     });
   });
