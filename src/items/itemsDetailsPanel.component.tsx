@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { CatalogueItem, Item, UsageStatusType } from '../app.types';
-import { useManufacturer } from '../api/manufacturer';
+import { useManufacturer } from '../api/manufacturers';
 import { formatDateTimeStrings } from '../utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

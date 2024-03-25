@@ -6,7 +6,7 @@ import {
   useItem,
   useItems,
   useMoveItemsToSystem,
-} from './item';
+} from './items';
 import {
   getItemById,
   getItemsByCatalogueItemId,

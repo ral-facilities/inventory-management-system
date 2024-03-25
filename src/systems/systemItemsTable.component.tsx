@@ -11,8 +11,8 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useCatalogueItemIds } from '../api/catalogueItem';
-import { useItems } from '../api/item';
+import { useCatalogueItemIds } from '../api/catalogueItems';
+import { useItems } from '../api/items';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import SystemItemsDialog from './systemItemsDialog.component';

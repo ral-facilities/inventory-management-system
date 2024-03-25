@@ -1,13 +1,13 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { Manufacturer } from '../app.types';
-import ManufacturerJSON from '../mocks/manufacturer.json';
+import ManufacturersJSON from '../mocks/Manufacturers.json';
 import { hooksWrapperWithProviders } from '../testUtils';
 import {
   useAddManufacturer,
   useDeleteManufacturer,
   useManufacturerIds,
   useManufacturers,
-} from './manufacturer';
+} from './manufacturers';
 
 describe('manufacturer api functions', () => {
   afterEach(() => {
@@ -100,7 +100,7 @@ describe('manufacturer api functions', () => {
         expect(result.current.isSuccess).toBeTruthy();
       });
 
-      expect(result.current.data).toEqual(ManufacturerJSON);
+      expect(result.current.data).toEqual(ManufacturersJSON);
     });
   });
 
@@ -115,10 +115,10 @@ describe('manufacturer api functions', () => {
       });
 
       expect(result.current[0].data).toEqual(
-        ManufacturerJSON.filter((manufacturer) => manufacturer.id === '1')[0]
+        ManufacturersJSON.filter((manufacturer) => manufacturer.id === '1')[0]
       );
       expect(result.current[1].data).toEqual(
-        ManufacturerJSON.filter((manufacturer) => manufacturer.id === '2')[0]
+        ManufacturersJSON.filter((manufacturer) => manufacturer.id === '2')[0]
       );
     });
   });

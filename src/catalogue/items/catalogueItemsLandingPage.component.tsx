@@ -16,9 +16,9 @@ import { Link, useParams } from 'react-router-dom';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
-} from '../../api/catalogueCategory';
-import { useCatalogueItem } from '../../api/catalogueItem';
-import { useManufacturer } from '../../api/manufacturer';
+} from '../../api/catalogueCategories';
+import { useCatalogueItem } from '../../api/catalogueItems';
+import { useManufacturer } from '../../api/manufacturers';
 import { BreadcrumbsInfo } from '../../app.types';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import { useNavigateToCatalogue } from '../catalogue.component';

@@ -22,11 +22,11 @@ import {
   useCatalogueBreadcrumbs,
   useCatalogueCategories,
   useCatalogueCategory,
-} from '../../api/catalogueCategory';
+} from '../../api/catalogueCategories';
 import {
   useCatalogueItem,
   useEditCatalogueItem,
-} from '../../api/catalogueItem';
+} from '../../api/catalogueItems';
 import {
   CatalogueCategory,
   CatalogueItem,

@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { useDeleteManufacturer } from '../api/manufacturer';
+import { useDeleteManufacturer } from '../api/manufacturers';
 import { ErrorParsing, Manufacturer } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 

@@ -13,7 +13,7 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDeleteItem } from '../api/item';
+import { useDeleteItem } from '../api/items';
 import { useSystem } from '../api/systems';
 import { Item } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';

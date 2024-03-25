@@ -20,7 +20,7 @@ import {
   ErrorParsing,
   ManufacturerDetails,
 } from '../app.types';
-import { useAddManufacturer, useEditManufacturer } from '../api/manufacturer';
+import { useAddManufacturer, useEditManufacturer } from '../api/manufacturers';
 import { AxiosError } from 'axios';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { trimStringValues } from '../utils';
