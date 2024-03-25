@@ -77,14 +77,13 @@ export function ItemsTable(props: ItemTableProps) {
     };
     return [
       {
-        header: 'ID',
+        header: 'Serial Number',
+        accessorFn: (row) => row.serial_number,
+        id: 'serial_number',
         size: 250,
-        accessorFn: (row) => row.id,
-        id: 'id',
-        enableGrouping: false,
         Cell: ({ row }) => (
           <MuiLink underline="hover" component={Link} to={row.original.id}>
-            {row.original.id}
+            {row.original.serial_number ?? 'No Serial number'}
           </MuiLink>
         ),
       },
@@ -94,7 +93,6 @@ export function ItemsTable(props: ItemTableProps) {
         id: 'modified_time',
         filterVariant: 'datetime-range',
         size: 350,
-        enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&
           formatDateTimeStrings(row.original.modified_time, true),
@@ -105,15 +103,8 @@ export function ItemsTable(props: ItemTableProps) {
         id: 'created_time',
         filterVariant: 'datetime-range',
         size: 350,
-        enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.created_time, true),
-      },
-      {
-        header: 'Serial Number',
-        accessorFn: (row) => row.serial_number,
-        id: 'serial_number',
-        size: 250,
       },
       {
         header: 'Asset Number',
@@ -186,7 +177,6 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) => row.notes ?? '',
         id: 'notes',
         size: 250,
-        enableGrouping: false,
         Cell: ({ row }) =>
           row.original.notes && (
             <Tooltip
@@ -282,10 +272,10 @@ export function ItemsTable(props: ItemTableProps) {
       ? [
           { ...columns[0], size: 400 },
           { ...columns[1], size: 400 },
-          { ...columns[3], size: 400 },
+          { ...columns[2], size: 400 },
+          { ...columns[5], size: 400 },
           { ...columns[6], size: 400 },
           { ...columns[7], size: 400 },
-          { ...columns[8], size: 400 },
         ]
       : columns,
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
@@ -301,7 +291,6 @@ export function ItemsTable(props: ItemTableProps) {
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
     enableColumnVirtualization: dense ? false : true,
-    enableGrouping: !dense,
     enablePagination: true,
     // Other settings
     columnVirtualizerOptions: dense
