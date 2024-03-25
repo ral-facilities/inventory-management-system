@@ -21,7 +21,7 @@ import React from 'react';
 import {
   useAddCatalogueCategory,
   useEditCatalogueCategory,
-} from '../../api/catalogueCategory';
+} from '../../api/catalogueCategories';
 import {
   AddCatalogueCategory,
   AllowedValuesListErrorsType,

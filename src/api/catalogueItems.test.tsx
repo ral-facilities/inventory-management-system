@@ -8,7 +8,7 @@ import {
   useDeleteCatalogueItem,
   useEditCatalogueItem,
   useMoveToCatalogueItem,
-} from './catalogueItem';
+} from './catalogueItems';
 import { catalogueItemData, hooksWrapperWithProviders } from '../testUtils';
 import {
   AddCatalogueItem,

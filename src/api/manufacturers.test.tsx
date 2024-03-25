@@ -7,7 +7,7 @@ import {
   useDeleteManufacturer,
   useManufacturerIds,
   useManufacturers,
-} from './manufacturer';
+} from './manufacturers';
 
 describe('manufacturer api functions', () => {
   afterEach(() => {

@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { useDeleteCatalogueItem } from '../../api/catalogueItem';
+import { useDeleteCatalogueItem } from '../../api/catalogueItems';
 import { CatalogueItem, ErrorParsing } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
