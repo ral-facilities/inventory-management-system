@@ -141,6 +141,7 @@ export interface CatalogueItemsTableProps {
   isItemSelectable?: (item: CatalogueItem) => boolean;
   requestOrigin?: 'move to' | 'obsolete';
 }
+
 export type PropertyFiltersType = {
   boolean: 'select' | 'text' | 'range';
   string: 'select' | 'text' | 'range';

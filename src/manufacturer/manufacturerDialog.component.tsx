@@ -38,7 +38,7 @@ function isValidUrl(url: string) {
       (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') &&
       parsedUrl.hostname.includes('.') // Checks for the typical top-level domain
     );
-  } catch (error) {
+  } catch (_error) {
     return false;
   }
 }
