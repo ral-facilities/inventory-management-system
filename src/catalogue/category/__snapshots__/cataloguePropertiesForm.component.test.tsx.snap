@@ -180,7 +180,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
         class="MuiFormControl-root css-dru9rs-MuiFormControl-root"
       >
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1h51icj-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-clttge-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -210,7 +210,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 value=""
               />
               <div
-                class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+                class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
               >
                 <button
                   aria-label="Open"
@@ -510,7 +510,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
         class="MuiFormControl-root css-dru9rs-MuiFormControl-root"
       >
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1h51icj-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-clttge-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -540,7 +540,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 value=""
               />
               <div
-                class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+                class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
               >
                 <button
                   aria-label="Open"
@@ -987,7 +987,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
         class="MuiFormControl-root css-dru9rs-MuiFormControl-root"
       >
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1h51icj-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-clttge-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -1017,7 +1017,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 value=""
               />
               <div
-                class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+                class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
               >
                 <button
                   aria-label="Open"
@@ -1464,7 +1464,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
         class="MuiFormControl-root css-dru9rs-MuiFormControl-root"
       >
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1h51icj-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-clttge-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -1494,7 +1494,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 value=""
               />
               <div
-                class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+                class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
               >
                 <button
                   aria-label="Open"
@@ -1819,7 +1819,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
         class="MuiFormControl-root css-dru9rs-MuiFormControl-root"
       >
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1h51icj-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-clttge-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -1849,7 +1849,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 value=""
               />
               <div
-                class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"
+                class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
               >
                 <button
                   aria-label="Open"
