@@ -38,7 +38,7 @@ Runs unit tests for all packages
 
 Runs e2e tests for all packages
 
-### `yarn lint:js`
+### `yarn lint`
 
 Lints all packages
 
@@ -56,12 +56,6 @@ See the section about [building for production](https://vitejs.dev/guide/build.h
 Deploys a static version of the build from the `dist` directory to port 5001. Use `yarn preview:build` to build and preview it in SciGateway.
 
 For development purposes, use `yarn preview:build:dev` to build in watch mode so that changes are built automatically.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## How to run
 

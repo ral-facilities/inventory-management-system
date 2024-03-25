@@ -18,6 +18,8 @@
     "@types/react-dom": "^18.0.4",
     "@vitejs/plugin-react": "^4.2.1",
     "axios": "^1.4.0",
+    "browserslist": "^4.23.0",
+    "browserslist-to-esbuild": "^2.1.1",
     "date-fns": "3.6.0",
     "history": "^5.3.0",
     "loglevel": "^1.8.1",
@@ -40,7 +42,7 @@
     "preview:build": "yarn build && yarn preview",
     "preview:build:dev": "yarn build --watch & yarn preview",
     "test": "vitest --coverage",
-    "lint:js": "eslint --max-warnings=0 --ext=tsx --ext=ts --ext=js --ext=jsx --fix ./src",
+    "lint": "eslint --max-warnings=0 --ext=tsx --ext=ts --ext=js --ext=jsx --fix ./src",
     "build:e2e": "cross-env VITE_APP_BUILD_STANDALONE=true VITE_APP_INCLUDE_MSW=true GENERATE_SOURCEMAP=false yarn build",
     "build:e2e:api": "cross-env VITE_APP_BUILD_STANDALONE=true VITE_APP_INCLUDE_MSW=false GENERATE_SOURCEMAP=false yarn build",
     "e2e:serve": "yarn build:e2e && node ./server/e2e-test-server.js",
@@ -53,18 +55,11 @@
     "cy:run": "cross-env TZ=UTC cypress run --spec \"./cypress/e2e/with_mock_data/*.cy.ts\"",
     "cy:run:api": "cross-env TZ=UTC cypress run --spec \"./cypress/e2e/with_api/**/*.cy.ts\""
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "packageManager": "yarn@4.1.0",
   "devDependencies": {
     "@babel/eslint-parser": "^7.21.8",
