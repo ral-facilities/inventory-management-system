@@ -26,7 +26,6 @@ import {
   tokenRefreshed,
 } from './state/scigateway.actions';
 import ViewTabs from './view/viewTabs.component';
-import ConfigProvider from './ConfigProvider';
 import { HomePage } from './homePage/homePage.component';
 import Catalogue from './catalogue/catalogue.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
