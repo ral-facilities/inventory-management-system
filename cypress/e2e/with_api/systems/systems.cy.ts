@@ -1,7 +1,7 @@
-import { addCatalogueCategories } from '../catalogueCategory/functions';
-import { addCatalogueItem } from '../catalogueItem/functions';
+import { addCatalogueCategories } from '../catalogueCategories/functions';
+import { addCatalogueItem } from '../catalogueItems/functions';
 import { addItem } from '../items/functions';
-import { addManufacturer } from '../manufacturer/functions';
+import { addManufacturer } from '../manufacturers/functions';
 import {
   addSystems,
   copyToSystems,

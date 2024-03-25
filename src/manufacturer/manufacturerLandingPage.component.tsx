@@ -7,7 +7,7 @@ import {
   LinearProgress,
 } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useManufacturer } from '../api/manufacturer';
+import { useManufacturer } from '../api/manufacturers';
 import ManufacturerDialog from './manufacturerDialog.component';
 import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';

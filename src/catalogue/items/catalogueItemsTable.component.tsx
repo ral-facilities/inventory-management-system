@@ -29,8 +29,8 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useCatalogueItems } from '../../api/catalogueItem';
-import { useManufacturerIds } from '../../api/manufacturer';
+import { useCatalogueItems } from '../../api/catalogueItems';
+import { useManufacturerIds } from '../../api/manufacturers';
 import {
   CatalogueCategory,
   CatalogueItem,
@@ -141,6 +141,7 @@ export interface CatalogueItemsTableProps {
   isItemSelectable?: (item: CatalogueItem) => boolean;
   requestOrigin?: 'move to' | 'obsolete';
 }
+
 export type PropertyFiltersType = {
   boolean: 'select' | 'text' | 'range';
   string: 'select' | 'text' | 'range';

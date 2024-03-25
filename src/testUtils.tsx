@@ -15,11 +15,11 @@ import {
   Item,
   Manufacturer,
 } from './app.types';
-import CatalogueCategoryJSON from './mocks/CatalogueCategory.json';
-import CatalogueItemJSON from './mocks/CatalogueItems.json';
+import CatalogueCategoriesJSON from './mocks/CatalogueCategories.json';
+import CatalogueItemsJSON from './mocks/CatalogueItems.json';
 import ItemsJSON from './mocks/Items.json';
-import ManufacturerJSON from './mocks/manufacturer.json';
 import { paths } from './view/viewTabs.component';
+import ManufacturersJSON from './mocks/Manufacturers.json';
 
 export const createTestQueryClient = (): QueryClient =>
   new QueryClient({
@@ -83,7 +83,7 @@ export const hooksWrapperWithProviders = (queryClient?: QueryClient) => {
 export const getCatalogueItemsPropertiesById = (
   id: string
 ): CatalogueCategoryFormData[] => {
-  const filteredCategories = CatalogueCategoryJSON.filter(
+  const filteredCategories = CatalogueCategoriesJSON.filter(
     (catalogueCategory) => catalogueCategory.id === id
   );
 
@@ -99,7 +99,7 @@ export const getCatalogueCategoryById = (
   id: string
 ): CatalogueCategory | undefined => {
   return (
-    (CatalogueCategoryJSON.find(
+    (CatalogueCategoriesJSON.find(
       (catalogueCategory) => catalogueCategory.id === id
     ) as CatalogueCategory) || undefined
   );
@@ -107,21 +107,21 @@ export const getCatalogueCategoryById = (
 
 export const getCatalogueItemById = (id: string): CatalogueItem | undefined => {
   return (
-    (CatalogueItemJSON.find(
+    (CatalogueItemsJSON.find(
       (catalogueItem) => catalogueItem.id === id
     ) as CatalogueItem) || undefined
   );
 };
 
 export const catalogueItemData = (id: string): CatalogueItem[] => {
-  return CatalogueItemJSON.filter(
+  return CatalogueItemsJSON.filter(
     (catalogueitem) => catalogueitem.catalogue_category_id === id
   );
 };
 
 export const getManufacturerById = (id: string): Manufacturer | undefined => {
   return (
-    (ManufacturerJSON.find(
+    (ManufacturersJSON.find(
       (manufacturer) => manufacturer.id === id
     ) as Manufacturer) || undefined
   );

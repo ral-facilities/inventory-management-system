@@ -21,7 +21,7 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useManufacturers } from '../api/manufacturer';
+import { useManufacturers } from '../api/manufacturers';
 import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
@@ -167,7 +167,7 @@ function ManufacturerComponent() {
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      pagination: { pageSize: 25, pageIndex: 0 },
+      pagination: { pageSize: 15, pageIndex: 0 },
       columnVisibility: { created_time: false },
     },
     state: {
@@ -186,7 +186,7 @@ function ManufacturerComponent() {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [25, 50, 100],
+      rowsPerPageOptions: [15, 30, 45],
       shape: 'rounded',
       variant: 'outlined',
     },

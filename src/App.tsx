@@ -35,6 +35,7 @@ import ManufacturerComponent from './manufacturer/manufacturer.component';
 import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
 import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
+import ConfigProvider from './configProvider.component';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({

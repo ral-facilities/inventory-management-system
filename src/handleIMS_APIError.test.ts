@@ -23,8 +23,8 @@ describe('handleIMS_APIError', () => {
       config: {},
       response: {
         data: { detail: 'Test error message (response data)' },
-        status: 500,
-        statusText: 'Internal Server Error',
+        status: 404,
+        statusText: 'Not found',
         headers: {},
         config: {},
       },
@@ -33,6 +33,7 @@ describe('handleIMS_APIError', () => {
       toJSON: vi.fn(),
     };
   });
+
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -53,7 +54,58 @@ describe('handleIMS_APIError', () => {
     });
   });
 
+  it('does not broadcast 403 errors', () => {
+    error = {
+      isAxiosError: true,
+      config: {},
+      response: {
+        data: {},
+        status: 403,
+        statusText: 'Invalid token or expired token',
+        headers: {},
+        config: {},
+      },
+      name: 'Test error name',
+      message: 'Test error message',
+      toJSON: vi.fn(),
+    };
+
+    handleIMS_APIError(error);
+
+    expect(log.error).toHaveBeenCalledWith('Test error message');
+    expect(events.length).toBe(0);
+  });
+
   it('logs fallback error.message if there is no response message', () => {
+    error = {
+      isAxiosError: true,
+      config: {},
+      response: {
+        data: {},
+        status: 418,
+        statusText: 'Internal Server Error',
+        headers: {},
+        config: {},
+      },
+      name: 'Test error name',
+      message: 'Test error message',
+      toJSON: vi.fn(),
+    };
+
+    handleIMS_APIError(error);
+
+    expect(log.error).toHaveBeenCalledWith('Test error message');
+    expect(events.length).toBe(1);
+    expect(events[0].detail).toEqual({
+      type: NotificationType,
+      payload: {
+        severity: 'error',
+        message: 'Test error message',
+      },
+    });
+  });
+
+  it('logs generic message if the error is a 500', () => {
     error = {
       isAxiosError: true,
       config: {},
@@ -77,7 +129,8 @@ describe('handleIMS_APIError', () => {
       type: NotificationType,
       payload: {
         severity: 'error',
-        message: 'Test error message',
+        message:
+          'Something went wrong, please contact the system administrator',
       },
     });
   });

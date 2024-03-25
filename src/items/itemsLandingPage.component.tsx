@@ -17,10 +17,10 @@ import { Link, useParams } from 'react-router-dom';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
-} from '../api/catalogueCategory';
-import { useCatalogueItem } from '../api/catalogueItem';
-import { useItem } from '../api/item';
-import { useManufacturer } from '../api/manufacturer';
+} from '../api/catalogueCategories';
+import { useCatalogueItem } from '../api/catalogueItems';
+import { useItem } from '../api/items';
+import { useManufacturer } from '../api/manufacturers';
 import { BreadcrumbsInfo, UsageStatusType } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ItemDialog from './itemDialog.component';

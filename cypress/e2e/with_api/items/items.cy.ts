@@ -1,6 +1,6 @@
-import { addCatalogueCategories } from '../catalogueCategory/functions';
-import { addCatalogueItem } from '../catalogueItem/functions';
-import { addManufacturer } from '../manufacturer/functions';
+import { addCatalogueCategories } from '../catalogueCategories/functions';
+import { addCatalogueItem } from '../catalogueItems/functions';
+import { addManufacturer } from '../manufacturers/functions';
 import { addSystems } from '../systems/functions';
 import { addItem, deleteItem, editItem, saveAsItem } from './functions';
 
