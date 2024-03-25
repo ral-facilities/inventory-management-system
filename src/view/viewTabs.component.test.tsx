@@ -1,7 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from '../testUtils';
-import ViewTabs, { paths } from './viewTabs.component';
+import ViewTabs from './viewTabs.component';
 
 describe('View Tabs', () => {
   let user: UserEvent;
