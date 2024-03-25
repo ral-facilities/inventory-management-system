@@ -61,7 +61,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
   return (
     <Dialog
       open={open}
-      onClose={(reason) => reason == 'backdropClick' ?? onClose}
+      onClose={(reason) => reason == 'backdropClick' ?? handleClose}
       maxWidth="lg"
     >
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>

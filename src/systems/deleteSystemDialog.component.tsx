@@ -57,7 +57,7 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
   return (
     <Dialog
       open={open}
-      onClose={(reason) => reason == 'backdropClick' ?? onClose}
+      onClose={(reason) => reason == 'backdropClick' ?? handleClose}
       maxWidth="lg"
     >
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
