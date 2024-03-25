@@ -38,7 +38,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 export function renderComponentWithRouterProvider(
   ui: React.ReactElement,
   urlPathKey?: keyof typeof paths,
-  pathName?: string,
+  initialEntry?: string,
   {
     // Automatically create a store instance if no store was passed i
     // Automatically create a query client instance if no query client was passed in
@@ -55,9 +55,9 @@ export function renderComponentWithRouterProvider(
   };
 
   const router =
-    pathName !== undefined && urlPathKey !== undefined
+    initialEntry !== undefined && urlPathKey !== undefined
       ? createMemoryRouter([{ path: paths[urlPathKey], Component: Root }], {
-          initialEntries: [pathName],
+          initialEntries: [initialEntry],
         })
       : createBrowserRouter([{ path: '*', Component: Root }]);
 

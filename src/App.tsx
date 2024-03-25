@@ -55,7 +55,38 @@ const queryClient = new QueryClient({
   },
 });
 
-const Root: React.FunctionComponent = () => {
+const router = createBrowserRouter([
+  {
+    Component: Layout,
+    children: [
+      { path: '*', Component: ViewTabs },
+      { path: '', Component: HomePage },
+      { path: 'ims', Component: HomePage },
+      { path: 'catalogue/*', Component: Catalogue },
+      {
+        path: 'catalogue/item/:catalogue_item_id',
+        Component: CatalogueItemsLandingPage,
+      },
+      { path: 'catalogue/item/:catalogue_item_id/items', Component: Items },
+      {
+        path: 'catalogue/item/:catalogue_item_id/items/:item_id',
+        Component: ItemsLandingPage,
+      },
+      { path: 'systems/*', Component: Systems },
+      { path: 'manufacturers', Component: ManufacturerComponent },
+      {
+        path: 'manufacturers/:manufacturer_id',
+        Component: ManufacturerLandingPage,
+      },
+    ],
+  },
+]);
+
+export default function App() {
+  return <RouterProvider router={router} />;
+}
+
+export function Layout() {
   // we need to call forceUpdate if SciGateway tells us to rerender
   // but there's no forceUpdate in functional components, so this is the hooks equivalent
   // see https://reactjs.org/docs/hooks-faq.html#is-there-something-like-forceupdate
@@ -77,42 +108,6 @@ const Root: React.FunctionComponent = () => {
     };
   }, []);
 
-  return <div className="Root"></div>;
-};
-
-const router = createBrowserRouter([
-  {
-    path: '/*',
-    Component: Layout,
-    children: [
-      { path: '', Component: HomePage },
-      { path: 'ims', Component: HomePage },
-      { path: 'catalogue/*', Component: Catalogue },
-      {
-        path: 'catalogue/item/:catalogue_item_id',
-        Component: CatalogueItemsLandingPage,
-      },
-      { path: 'catalogue/item/:catalogue_item_id/items', Component: Items },
-      {
-        path: 'catalogue/item/:catalogue_item_id/items/:item_id',
-        Component: ItemsLandingPage,
-      },
-      { path: 'systems/*', Component: Systems },
-      { path: 'manufacturers', Component: ManufacturerComponent },
-      {
-        path: 'manufacturers/:manufacturer_id',
-        Component: ManufacturerLandingPage,
-      },
-    ],
-  },
-  { path: '*', Component: Root },
-]);
-
-export default function App() {
-  return <RouterProvider router={router} />;
-}
-
-export function Layout() {
   return (
     <div className="Layout">
       <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
