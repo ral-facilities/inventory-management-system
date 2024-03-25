@@ -209,7 +209,12 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const systemText = parentId ? 'Subsystem' : 'System';
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+    <Dialog
+      open={open}
+      onClose={(reason) => reason == 'backdropClick' ?? handleClose}
+      maxWidth="md"
+      fullWidth
+    >
       <DialogTitle>
         {type === 'edit' ? `Edit ${systemText}` : `Add ${systemText}`}
       </DialogTitle>

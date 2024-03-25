@@ -490,7 +490,12 @@ const CatalogueCategoryDialog = React.memo(
     ]);
 
     return (
-      <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
+      <Dialog
+        open={open}
+        onClose={(reason) => reason == 'backdropClick' ?? handleClose}
+        maxWidth="lg"
+        fullWidth
+      >
         <DialogTitle>
           {type === 'edit'
             ? 'Edit Catalogue Category'

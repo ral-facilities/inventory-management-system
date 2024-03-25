@@ -77,7 +77,12 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   ]);
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+    <Dialog
+      open={open}
+      onClose={(reason) => reason == 'backdropClick' ?? onClose}
+      maxWidth="md"
+      fullWidth
+    >
       <DialogTitle marginLeft={2}>
         <Grid container spacing={2}>
           <Grid item>
