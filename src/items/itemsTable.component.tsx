@@ -78,14 +78,15 @@ export function ItemsTable(props: ItemTableProps) {
     return [
       {
         header: 'Serial Number',
-        accessorFn: (row) => row.serial_number,
+        accessorFn: (row) => row.serial_number ?? 'No serial number',
         id: 'serial_number',
         size: 250,
         Cell: ({ row }) => (
           <MuiLink underline="hover" component={Link} to={row.original.id}>
-            {row.original.serial_number ?? 'No Serial number'}
+            {row.original.serial_number ?? 'No serial number'}
           </MuiLink>
         ),
+        enableGrouping: false,
       },
       {
         header: 'Last modified',
@@ -96,6 +97,7 @@ export function ItemsTable(props: ItemTableProps) {
         Cell: ({ row }) =>
           row.original.modified_time &&
           formatDateTimeStrings(row.original.modified_time, true),
+        enableGrouping: false,
       },
       {
         header: 'Created',
@@ -105,6 +107,7 @@ export function ItemsTable(props: ItemTableProps) {
         size: 350,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.created_time, true),
+        enableGrouping: false,
       },
       {
         header: 'Asset Number',
@@ -189,6 +192,7 @@ export function ItemsTable(props: ItemTableProps) {
               <InfoOutlinedIcon />
             </Tooltip>
           ),
+        enableGrouping: false,
       },
       {
         header: 'System ID',
@@ -291,6 +295,7 @@ export function ItemsTable(props: ItemTableProps) {
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
     enableColumnVirtualization: dense ? false : true,
+    enableGrouping: !dense,
     enablePagination: true,
     // Other settings
     columnVirtualizerOptions: dense
