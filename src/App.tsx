@@ -26,7 +26,7 @@ import {
   tokenRefreshed,
 } from './state/scigateway.actions';
 import ViewTabs from './view/viewTabs.component';
-import ConfigProvider from './ConfigProvider';
+import ConfigProvider from './configProvider.component';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({

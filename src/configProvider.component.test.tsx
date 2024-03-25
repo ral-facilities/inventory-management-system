@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
 import ConfigProvider, {
   InventoryManagementSystemSettingsContext,
-} from './ConfigProvider';
+} from './configProvider.component';
 
 const ConfigTest: React.FC = (): React.ReactElement => {
   const settings = React.useContext(InventoryManagementSystemSettingsContext);

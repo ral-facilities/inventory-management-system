@@ -11,7 +11,7 @@ import Decal2Image from '/images/decal2.svg';
 import Decal2DarkImage from '/images/decal2-dark.svg';
 import Decal2DarkHCImage from '/images/decal2-darkhc.svg';
 import FacilityImage from '/images/facility.jpg';
-import { InventoryManagementSystemSettingsContext } from '../ConfigProvider';
+import { InventoryManagementSystemSettingsContext } from '../configProvider.component';
 
 export interface BaseHomePageProps {
   logo: string;
