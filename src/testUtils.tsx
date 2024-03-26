@@ -3,7 +3,11 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RenderOptions, render } from '@testing-library/react';
 import { enGB } from 'date-fns/locale/en-GB';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import {
+  RouterProvider,
+  createBrowserRouter,
+  createMemoryRouter,
+} from 'react-router-dom';
 import {
   CatalogueCategory,
   CatalogueCategoryFormData,
@@ -15,6 +19,7 @@ import CatalogueCategoriesJSON from './mocks/CatalogueCategories.json';
 import CatalogueItemsJSON from './mocks/CatalogueItems.json';
 import ItemsJSON from './mocks/Items.json';
 import ManufacturersJSON from './mocks/Manufacturers.json';
+import { paths } from './App';
 
 export const createTestQueryClient = (): QueryClient =>
   new QueryClient({
@@ -30,8 +35,10 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   queryClient?: QueryClient;
 }
 
-export function renderComponentWithBrowserRouter(
+export function renderComponentWithRouterProvider(
   ui: React.ReactElement,
+  urlPathKey?: keyof typeof paths,
+  initialEntry?: string,
   {
     // Automatically create a store instance if no store was passed i
     // Automatically create a query client instance if no query client was passed in
@@ -39,47 +46,23 @@ export function renderComponentWithBrowserRouter(
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {
-  function Wrapper({
-    children,
-  }: React.PropsWithChildren<unknown>): JSX.Element {
+  const Root: React.FunctionComponent = () => {
     return (
-      <BrowserRouter>
-        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
-        </LocalizationProvider>
-      </BrowserRouter>
+      <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
+        <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
+      </LocalizationProvider>
     );
-  }
-  return {
-    queryClient,
-    ...render(ui, { wrapper: Wrapper, ...renderOptions }),
   };
-}
 
-export function renderComponentWithMemoryRouter(
-  ui: React.ReactElement,
-  path: string,
-  {
-    // Automatically create a store instance if no store was passed i
-    // Automatically create a query client instance if no query client was passed in
-    queryClient = createTestQueryClient(),
-    ...renderOptions
-  }: ExtendedRenderOptions = {}
-) {
-  function Wrapper({
-    children,
-  }: React.PropsWithChildren<unknown>): JSX.Element {
-    return (
-      <MemoryRouter initialEntries={[path]}>
-        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
-        </LocalizationProvider>
-      </MemoryRouter>
-    );
+  const router =
+    initialEntry !== undefined && urlPathKey !== undefined
+      ? createMemoryRouter([{ path: paths[urlPathKey], Component: Root }], {
+          initialEntries: [initialEntry],
+        })
+      : createBrowserRouter([{ path: '*', Component: Root }]);
+
+  function Wrapper(): JSX.Element {
+    return <RouterProvider router={router} />;
   }
   return {
     queryClient,

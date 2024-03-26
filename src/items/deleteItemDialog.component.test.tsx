@@ -8,7 +8,7 @@ import {
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { Item } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { getItemById, renderComponentWithBrowserRouter } from '../testUtils';
+import { getItemById, renderComponentWithRouterProvider } from '../testUtils';
 import DeleteItemDialog, {
   DeleteItemDialogProps,
 } from './deleteItemDialog.component';
@@ -23,7 +23,7 @@ describe('delete item dialog', () => {
   let item: Item | undefined;
 
   const createView = (): RenderResult => {
-    return renderComponentWithBrowserRouter(<DeleteItemDialog {...props} />);
+    return renderComponentWithRouterProvider(<DeleteItemDialog {...props} />);
   };
 
   beforeEach(() => {

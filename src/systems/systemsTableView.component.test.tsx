@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
-import { renderComponentWithBrowserRouter } from '../testUtils';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import {
   SystemsTableView,
   SystemsTableViewProps,
@@ -20,7 +20,7 @@ describe('SystemsTableView', () => {
   ];
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(<SystemsTableView {...props} />);
+    return renderComponentWithRouterProvider(<SystemsTableView {...props} />);
   };
 
   beforeEach(() => {

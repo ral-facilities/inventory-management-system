@@ -9,7 +9,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
-  renderComponentWithBrowserRouter,
+  renderComponentWithRouterProvider,
 } from '../../testUtils';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
@@ -27,7 +27,7 @@ describe('Catalogue Items Dialog', () => {
   const onClose = vi.fn();
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <CatalogueItemsDialog {...props} />
     );
   };

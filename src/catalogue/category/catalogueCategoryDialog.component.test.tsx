@@ -3,7 +3,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../../api/api';
 import { CatalogueCategory, CatalogueCategoryFormData } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { renderComponentWithBrowserRouter } from '../../testUtils';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
@@ -17,7 +17,7 @@ describe('Catalogue Category Dialog', () => {
   let user: UserEvent;
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <CatalogueCategoryDialog {...props} />
     );
   };

@@ -77,16 +77,16 @@ export function ItemsTable(props: ItemTableProps) {
     };
     return [
       {
-        header: 'ID',
+        header: 'Serial Number',
+        accessorFn: (row) => row.serial_number ?? 'No serial number',
+        id: 'serial_number',
         size: 250,
-        accessorFn: (row) => row.id,
-        id: 'id',
-        enableGrouping: false,
         Cell: ({ row }) => (
           <MuiLink underline="hover" component={Link} to={row.original.id}>
-            {row.original.id}
+            {row.original.serial_number ?? 'No serial number'}
           </MuiLink>
         ),
+        enableGrouping: false,
       },
       {
         header: 'Last modified',
@@ -94,10 +94,10 @@ export function ItemsTable(props: ItemTableProps) {
         id: 'modified_time',
         filterVariant: 'datetime-range',
         size: 350,
-        enableGrouping: false,
         Cell: ({ row }) =>
           row.original.modified_time &&
           formatDateTimeStrings(row.original.modified_time, true),
+        enableGrouping: false,
       },
       {
         header: 'Created',
@@ -105,15 +105,9 @@ export function ItemsTable(props: ItemTableProps) {
         id: 'created_time',
         filterVariant: 'datetime-range',
         size: 350,
-        enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.created_time, true),
-      },
-      {
-        header: 'Serial Number',
-        accessorFn: (row) => row.serial_number,
-        id: 'serial_number',
-        size: 250,
+        enableGrouping: false,
       },
       {
         header: 'Asset Number',
@@ -186,7 +180,6 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) => row.notes ?? '',
         id: 'notes',
         size: 250,
-        enableGrouping: false,
         Cell: ({ row }) =>
           row.original.notes && (
             <Tooltip
@@ -199,6 +192,7 @@ export function ItemsTable(props: ItemTableProps) {
               <InfoOutlinedIcon />
             </Tooltip>
           ),
+        enableGrouping: false,
       },
       {
         header: 'System ID',
@@ -282,10 +276,10 @@ export function ItemsTable(props: ItemTableProps) {
       ? [
           { ...columns[0], size: 400 },
           { ...columns[1], size: 400 },
-          { ...columns[3], size: 400 },
+          { ...columns[2], size: 400 },
+          { ...columns[5], size: 400 },
           { ...columns[6], size: 400 },
           { ...columns[7], size: 400 },
-          { ...columns[8], size: 400 },
         ]
       : columns,
     data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)

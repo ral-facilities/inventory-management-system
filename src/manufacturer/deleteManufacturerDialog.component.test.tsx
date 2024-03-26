@@ -7,7 +7,7 @@ import {
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { Manufacturer } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { renderComponentWithBrowserRouter } from '../testUtils';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import DeleteManufacturerDialog, {
   DeleteManufacturerProps,
 } from './deleteManufacturerDialog.component';
@@ -20,7 +20,7 @@ describe('Delete Manufacturer Dialog', () => {
   let manufacturer: Manufacturer;
   let user: UserEvent;
   const createView = (): RenderResult => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <DeleteManufacturerDialog {...props} />
     );
   };

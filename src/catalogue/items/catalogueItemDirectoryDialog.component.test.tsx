@@ -1,5 +1,4 @@
-import { renderComponentWithBrowserRouter } from '../../testUtils';
-
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../../api/api';
@@ -16,7 +15,7 @@ describe('catalogue item directory Dialog', () => {
   const onChangeSelectedItems = vi.fn();
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <CatalogueItemDirectoryDialog {...props} />
     );
   };

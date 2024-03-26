@@ -7,7 +7,7 @@ import {
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { CatalogueCategory } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { renderComponentWithBrowserRouter } from '../../testUtils';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import DeleteCatalogueCategoryDialog, {
   DeleteCatalogueCategoryDialogProps,
 } from './deleteCatalogueCategoryDialog.component';
@@ -21,7 +21,7 @@ describe('delete Catalogue Category dialogue', () => {
   const onChangeCatalogueCategory = vi.fn();
   let catalogueCategory: CatalogueCategory;
   const createView = (): RenderResult => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <DeleteCatalogueCategoryDialog {...props} />
     );
   };

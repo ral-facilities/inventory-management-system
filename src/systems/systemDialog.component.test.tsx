@@ -3,7 +3,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../api/api';
 import { System, SystemImportanceType } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { renderComponentWithBrowserRouter } from '../testUtils';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemDialog, { SystemDialogProps } from './systemDialog.component';
 
 vi.mock('../handleIMS_APIError');
@@ -17,7 +17,7 @@ describe('Systems Dialog', () => {
   const mockOnClose = vi.fn();
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(<SystemDialog {...props} />);
+    return renderComponentWithRouterProvider(<SystemDialog {...props} />);
   };
 
   // Modifies values when given a value that is not undefined

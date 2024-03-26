@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { CatalogueCategory } from '../../app.types';
-import { renderComponentWithBrowserRouter } from '../../testUtils';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import CardView, {
   CatalogueCardViewProps,
 } from './catalogueCardView.component';
@@ -14,7 +14,7 @@ describe('CardView', () => {
   const onChangeOpenSaveAsDialog = vi.fn();
   const handleToggleSelect = vi.fn();
   const createView = () => {
-    return renderComponentWithBrowserRouter(<CardView {...props} />);
+    return renderComponentWithRouterProvider(<CardView {...props} />);
   };
 
   function createData(): CatalogueCategory[] {
