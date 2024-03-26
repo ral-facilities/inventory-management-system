@@ -1,3 +1,4 @@
+import { PaginationState } from '@tanstack/table-core';
 import {
   MRT_ColumnFiltersState,
   MRT_RowData,
@@ -9,10 +10,11 @@ import { useSearchParams } from 'react-router-dom';
 
 // State as will be stored after parsing from search params
 interface State {
-  // Column filters
   cF: MRT_ColumnFiltersState;
   srt: MRT_SortingState;
   cVis: MRT_VisibilityState;
+  gFil: string | undefined;
+  p: PaginationState;
 }
 
 // State as will be stored in search params (undefined => should not be present in the url)
@@ -48,6 +50,9 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       parsedStateSearchParams.cVis ||
       props?.initialState?.columnVisibility ||
       {},
+    gFil: undefined,
+    p: parsedStateSearchParams.p ||
+      props?.initialState?.pagination || { pageSize: 15, pageIndex: 0 },
   };
 
   const updateSearchParams = (modifiedParams: StateSearchParams) => {
@@ -85,13 +90,33 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     updaterOrValue: Updater<MRT_VisibilityState>
   ) => {
     const newValue = getValueFromUpdater(updaterOrValue, state.cVis);
-    console.log(newValue, props?.initialState?.columnVisibility);
     // TODO: Make this work for multiple (MRT stores it forever after initially chaning, so it might be
     //       easiest to just let it be there afterwards)
     updateSearchParams({
       cVis:
         JSON.stringify(newValue) ===
         JSON.stringify(props?.initialState?.columnVisibility || {})
+          ? undefined
+          : newValue,
+    });
+  };
+
+  const setGlobalFilter = (updaterOrValue: Updater<string | undefined>) => {
+    const newValue = getValueFromUpdater(updaterOrValue, state.gFil);
+    updateSearchParams({
+      gFil: newValue === '' ? undefined : newValue,
+    });
+  };
+
+  const setPagination = (updaterOrValue: Updater<PaginationState>) => {
+    const newValue = getValueFromUpdater(updaterOrValue, state.p);
+    console.log(newValue);
+    // TODO: Make this work for multiple (MRT stores it forever after initially chaning, so it might be
+    //       easiest to just let it be there afterwards)
+    updateSearchParams({
+      p:
+        JSON.stringify(newValue) ===
+        JSON.stringify(props?.initialState?.pagination || {})
           ? undefined
           : newValue,
     });
@@ -104,5 +129,9 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     setSorting: setSorting,
     columnVisibility: state.cVis,
     setColumnVisibility: setColumnVisibility,
+    globalFilter: state.gFil,
+    setGlobalFilter: setGlobalFilter,
+    pagination: state.p,
+    setPagination: setPagination,
   };
 };

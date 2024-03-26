@@ -643,8 +643,15 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     setSorting,
     columnVisibility,
     setColumnVisibility,
+    globalFilter,
+    setGlobalFilter,
+    pagination,
+    setPagination,
   } = usePreservedTableState({
-    initialState: { columnVisibility: { 'catalogueItem.created_time': false } },
+    initialState: {
+      columnVisibility: { 'catalogueItem.created_time': false },
+      pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+    },
   });
 
   const table = useMaterialReactTable({
@@ -696,7 +703,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
     },
     state: {
       showProgressBars: isLoading, //or showSkeletons
@@ -704,6 +710,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       columnFilters,
       sorting,
       columnVisibility,
+      globalFilter,
+      pagination,
     },
     // MUI
     muiTableBodyRowProps: dense
@@ -759,6 +767,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     onSortingChange: setSorting,
     onRowSelectionChange: setRowSelection,
     onColumnVisibilityChange: setColumnVisibility,
+    onGlobalFilterChange: setGlobalFilter,
+    onPaginationChange: setPagination,
     renderCreateRowDialogContent: ({ table, row }) => {
       return (
         <>
