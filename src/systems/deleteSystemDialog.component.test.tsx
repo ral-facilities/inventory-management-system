@@ -4,7 +4,7 @@ import { imsApi } from '../api/api';
 import { System, SystemImportanceType } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import SystemsJSON from '../mocks/Systems.json';
-import { renderComponentWithBrowserRouter } from '../testUtils';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import {
   DeleteSystemDialog,
   DeleteSystemDialogProps,
@@ -37,7 +37,7 @@ describe('DeleteSystemDialog', () => {
         code: '',
       };
 
-    return renderComponentWithBrowserRouter(<DeleteSystemDialog {...props} />);
+    return renderComponentWithRouterProvider(<DeleteSystemDialog {...props} />);
   };
 
   beforeEach(() => {

@@ -11,11 +11,11 @@ import { useManufacturer } from '../api/manufacturers';
 import ManufacturerDialog from './manufacturerDialog.component';
 import React from 'react';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { paths } from '../view/viewTabs.component';
 import { BreadcrumbsInfo } from '../app.types';
 import EditIcon from '@mui/icons-material/Edit';
 import PrintIcon from '@mui/icons-material/Print';
 import { formatDateTimeStrings } from '../utils';
+import { paths } from '../App';
 
 function ManufacturerLandingPage() {
   const { manufacturer_id: manufacturerId } = useParams();

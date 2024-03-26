@@ -6,7 +6,7 @@ import {
   getCatalogueCategoryById,
   getCatalogueItemById,
   getItemById,
-  renderComponentWithBrowserRouter,
+  renderComponentWithRouterProvider,
 } from '../testUtils';
 import ItemDialog, {
   ItemDialogProps,
@@ -57,7 +57,7 @@ describe('ItemDialog', () => {
   const onClose = vi.fn();
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(<ItemDialog {...props} />);
+    return renderComponentWithRouterProvider(<ItemDialog {...props} />);
   };
   beforeEach(() => {
     props = {

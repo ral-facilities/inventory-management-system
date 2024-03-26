@@ -3,7 +3,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../api/api';
 import { Item } from '../app.types';
 import ItemsJSON from '../mocks/Items.json';
-import { renderComponentWithBrowserRouter } from '../testUtils';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemItemsDialog, {
   SystemItemsDialogProps,
 } from './systemItemsDialog.component';
@@ -22,7 +22,7 @@ describe('SystemItemsDialog', () => {
   ];
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(<SystemItemsDialog {...props} />);
+    return renderComponentWithRouterProvider(<SystemItemsDialog {...props} />);
   };
 
   beforeEach(() => {

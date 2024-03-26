@@ -136,20 +136,20 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 250,
       },
       {
-        header: 'ID',
-        accessorKey: 'item.id',
-        Cell: ({ renderedCellValue, row }) => (
+        header: 'Serial Number',
+        accessorFn: (row) => row.item.serial_number ?? 'No serial number',
+        id: 'item.serial_number',
+        size: 250,
+        Cell: ({ row }) => (
           <MuiLink
             underline="hover"
             component={Link}
             to={`/catalogue/item/${row.original.item.catalogue_item_id}/items/${row.original.item.id}`}
-            // For ensuring space when grouping
-            sx={{ marginRight: 0.5 }}
           >
-            {renderedCellValue}
+            {row.original.item.serial_number ?? 'No serial number'}
           </MuiLink>
         ),
-        size: 250,
+        enableGrouping: false,
       },
       {
         header: 'Last modified',
@@ -171,11 +171,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         enableGrouping: false,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.item.created_time, true),
-      },
-      {
-        header: 'Serial Number',
-        accessorKey: 'item.serial_number',
-        size: 250,
       },
       {
         header: 'Delivered Date',

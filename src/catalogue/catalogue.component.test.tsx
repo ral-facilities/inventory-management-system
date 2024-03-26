@@ -3,8 +3,8 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { HttpResponse, http } from 'msw';
 import { CatalogueCategoryFormData, CatalogueItemProperty } from '../app.types';
 import { server } from '../mocks/server';
-import { renderComponentWithMemoryRouter } from '../testUtils';
 import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
+import { renderComponentWithRouterProvider } from '../testUtils';
 
 describe('matchCatalogueItemProperties', () => {
   it('should match catalogue item properties correctly', () => {
@@ -78,7 +78,7 @@ describe('matchCatalogueItemProperties', () => {
 describe('Catalogue', () => {
   let user: UserEvent;
   const createView = (path: string) => {
-    return renderComponentWithMemoryRouter(<Catalogue />, path);
+    return renderComponentWithRouterProvider(<Catalogue />, 'catalogue', path);
   };
 
   beforeEach(() => {
@@ -144,6 +144,7 @@ describe('Catalogue', () => {
     expect(screen.getByText('High Power Lasers')).toBeInTheDocument();
     expect(screen.getByText('X-RAY Beams')).toBeInTheDocument();
   });
+
   it('opens the add catalogue category dialog', async () => {
     createView('/catalogue');
 

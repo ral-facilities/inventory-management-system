@@ -4,7 +4,7 @@ import {
   CatalogueCategoryFormData,
   CatalogueItemPropertiesErrorsType,
 } from '../../app.types';
-import { renderComponentWithBrowserRouter } from '../../testUtils';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import CataloguePropertiesForm, {
   CataloguePropertiesFormProps,
 } from './cataloguePropertiesForm.component';
@@ -18,7 +18,7 @@ describe('Catalogue Properties Form', () => {
 
   const resetFormError = vi.fn();
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <CataloguePropertiesForm {...props} />
     );
   };

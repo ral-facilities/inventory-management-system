@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../../api/api';
-import { renderComponentWithBrowserRouter } from '../../testUtils';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueCategoryDirectoryDialog, {
   CatalogueCategoryDirectoryDialogProps,
 } from './catalogueCategoryDirectoryDialog.component';
@@ -14,7 +14,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   const onChangeSelectedCategories = vi.fn();
   const onClose = vi.fn();
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <CatalogueCategoryDirectoryDialog {...props} />
     );
   };
