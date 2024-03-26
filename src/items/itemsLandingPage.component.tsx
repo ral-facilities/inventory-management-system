@@ -60,10 +60,13 @@ function ItemsLandingPage() {
           ...catalogueBreadcrumbs.trail,
           [`item/${catalogueItemData.id}`, `${catalogueItemData.name}`],
           [`item/${catalogueItemData.id}/items`, 'Items'],
-          [`item/${catalogueItemData.id}/items/${id}`, id ?? ''],
+          [
+            `item/${catalogueItemData.id}/items/${id}`,
+            itemData?.serial_number ?? 'No serial number',
+          ],
         ],
       });
-  }, [catalogueBreadcrumbs, catalogueItemData, id]);
+  }, [catalogueBreadcrumbs, catalogueItemData, id, itemData?.serial_number]);
 
   const { data: manufacturer } = useManufacturer(
     catalogueItemData?.manufacturer_id
