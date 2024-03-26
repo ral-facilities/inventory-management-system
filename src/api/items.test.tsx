@@ -6,6 +6,7 @@ import {
   useItem,
   useItems,
   useMoveItemsToSystem,
+  useAddItems,
 } from './items';
 import {
   getItemById,
@@ -15,6 +16,7 @@ import {
 } from '../testUtils';
 import {
   AddItem,
+  AddItems,
   EditItem,
   Item,
   MoveItemsToSystem,
@@ -296,6 +298,109 @@ describe('catalogue items api functions', () => {
           // Exception takes longer to resolve so it gets added last
           .reverse()
       );
+    });
+  });
+
+  describe('useAddItems', () => {
+    let addItems: AddItems;
+
+    // Use patch spy for testing since response is not actual data in this case
+    // so can't test the underlying use of editSystem otherwise
+    let axiosPostSpy;
+    const { _id, ...item } = getItemById('KvT2Ox7n');
+    beforeEach(() => {
+      addItems = {
+        quantity: 2,
+        startingValue: 10,
+        item: {
+          ...item,
+          serial_number: item.serial_number + '_%s',
+        },
+      };
+
+      axiosPostSpy = vi.spyOn(imsApi, 'post');
+    });
+
+    afterEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it('sends requests to add multiple items and returns a successful response for each', async () => {
+      const { result } = renderHook(() => useAddItems(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      result.current.mutate(addItems);
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      for (
+        let i = addItems.startingValue;
+        i < addItems.startingValue + addItems.quantity;
+        i++
+      ) {
+        expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
+          ...item,
+          serial_number: item.serial_number + `_${i}`,
+        });
+      }
+
+      expect(result.current.data).toEqual([
+        {
+          message: 'Successfully created 5YUQDDjKpz2z_10',
+          name: '5YUQDDjKpz2z_10',
+          state: 'success',
+        },
+        {
+          message: 'Successfully created 5YUQDDjKpz2z_11',
+          name: '5YUQDDjKpz2z_11',
+          state: 'success',
+        },
+      ]);
+    });
+
+    it('handles failed requests when adding multiple items correctly', async () => {
+      addItems.item.serial_number = 'Error 500';
+
+      const { result } = renderHook(() => useAddItems(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+
+      expect(result.current.isIdle).toBe(true);
+
+      result.current.mutate(addItems);
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+
+      for (
+        let i = addItems.startingValue;
+        i < addItems.startingValue + addItems.quantity;
+        i++
+      ) {
+        expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
+          ...item,
+          serial_number: 'Error 500',
+        });
+      }
+
+      expect(result.current.data).toEqual([
+        {
+          message: 'Something went wrong',
+          name: 'Error 500',
+          state: 'error',
+        },
+        {
+          message: 'Something went wrong',
+          name: 'Error 500',
+          state: 'error',
+        },
+      ]);
     });
   });
 });

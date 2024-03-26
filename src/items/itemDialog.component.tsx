@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Box,
   Button,
+  Collapse,
   Dialog,
   DialogActions,
   DialogContent,
@@ -23,6 +24,7 @@ import {
 } from '@mui/material';
 import {
   AddItem,
+  AdvancedSerialNumberOptionsType,
   CatalogueCategory,
   CatalogueCategoryFormData,
   CatalogueItem,
@@ -35,13 +37,14 @@ import {
 import { DatePicker } from '@mui/x-date-pickers';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
-import { useAddItem, useEditItem } from '../api/items';
+import { useAddItem, useAddItems, useEditItem } from '../api/items';
 import { AxiosError } from 'axios';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { SystemsTableView } from '../systems/systemsTableView.component';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { trimStringValues } from '../utils';
+import handleTransferState from '../handleTransferState';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
   // Attempt to create a Date object from the input
@@ -135,6 +138,14 @@ function ItemDialog(props: ItemDialogProps) {
     []
   );
 
+  const [advancedSerialNumberOptions, setAdvancedSerialNumberOptions] =
+    React.useState<AdvancedSerialNumberOptionsType>({
+      quantity: null,
+      startingValue: null,
+    });
+  const [showAdvancedSerialNumberOptions, setShowAdvancedSerialNumberOptions] =
+    React.useState(false);
+
   const [propertyErrors, setPropertyErrors] = React.useState(
     new Array(parentCatalogueItemPropertiesInfo.length).fill(false)
   );
@@ -143,8 +154,9 @@ function ItemDialog(props: ItemDialogProps) {
     string | undefined
   >(undefined);
 
-  const { mutateAsync: addItem, isPending: isAddPending } = useAddItem();
-  const { mutateAsync: editItem, isPending: isEditPending } = useEditItem();
+  const { mutateAsync: addItem, isPending: isAddItemPending } = useAddItem();
+  const { mutateAsync: addItems, isPending: isAddItemsPending } = useAddItems();
+  const { mutateAsync: editItem, isPending: isEditItemPending } = useEditItem();
 
   React.useEffect(() => {
     if (type === 'create' && open) {
@@ -351,12 +363,30 @@ function ItemDialog(props: ItemDialogProps) {
       properties: updatedProperties,
     };
 
-    addItem(trimStringValues(item))
-      .then(() => handleClose())
-      .catch((error: AxiosError) => {
-        handleIMS_APIError(error);
+    if (advancedSerialNumberOptions.quantity) {
+      addItems({
+        quantity: Number(advancedSerialNumberOptions.quantity),
+        startingValue: Number(advancedSerialNumberOptions.startingValue ?? 1),
+        item: trimStringValues(item),
+      }).then((response) => {
+        handleTransferState(response);
+        handleClose();
       });
-  }, [handleFormPropertiesErrorStates, details, addItem, handleClose]);
+    } else {
+      addItem(trimStringValues(item))
+        .then(() => handleClose())
+        .catch((error: AxiosError) => {
+          handleIMS_APIError(error);
+        });
+    }
+  }, [
+    handleFormPropertiesErrorStates,
+    details,
+    advancedSerialNumberOptions,
+    addItems,
+    addItem,
+    handleClose,
+  ]);
 
   const handleEditItem = React.useCallback(() => {
     if (selectedItem) {
@@ -482,12 +512,47 @@ function ItemDialog(props: ItemDialogProps) {
     setFormErrorMessage(undefined);
   }, [parentSystemId]);
 
+  const hasSerialNumberErrors =
+    advancedSerialNumberOptions.quantity &&
+    !itemDetails.serial_number?.trim().includes('%s') &&
+    'Please use %s to specify the location you want to append the number to serial number';
+
+  const hasQuantityErrors = !advancedSerialNumberOptions.quantity
+    ? ''
+    : isNaN(Number(advancedSerialNumberOptions.quantity))
+      ? 'Please enter a valid number'
+      : !Number.isInteger(Number(advancedSerialNumberOptions.quantity))
+        ? 'Quantity must be an integer'
+        : Number(advancedSerialNumberOptions.quantity) <= 1
+          ? 'Quantity must be greater than 1'
+          : Number(advancedSerialNumberOptions.quantity) >= 100
+            ? 'Quantity must be less than 100'
+            : '';
+
+  const hasStartingValueErrors =
+    !advancedSerialNumberOptions.quantity &&
+    !!advancedSerialNumberOptions.startingValue
+      ? 'Please enter a quantity value'
+      : isNaN(Number(advancedSerialNumberOptions.startingValue))
+        ? 'Please enter a valid number'
+        : !Number.isInteger(Number(advancedSerialNumberOptions.startingValue))
+          ? 'Quantity must be an integer'
+          : Number(advancedSerialNumberOptions.startingValue) < 0
+            ? 'Quantity must be greater than or equal to 0'
+            : '';
+
   const isStepFailed = React.useCallback(
     (step: number) => {
       switch (step) {
         case 0:
-          return Object.values(hasDateErrors).some(
-            (value: boolean) => value === true
+          return (
+            // Date error
+            Object.values(hasDateErrors).some(
+              (value: boolean) => value === true
+            ) ||
+            !!hasSerialNumberErrors ||
+            !!hasQuantityErrors ||
+            !!hasStartingValueErrors
           );
         case 1:
           return propertyErrors.some((value) => value === true);
@@ -495,7 +560,13 @@ function ItemDialog(props: ItemDialogProps) {
           return false;
       }
     },
-    [hasDateErrors, propertyErrors]
+    [
+      hasDateErrors,
+      hasQuantityErrors,
+      hasSerialNumberErrors,
+      hasStartingValueErrors,
+      propertyErrors,
+    ]
   );
 
   const renderStepContent = (step: number) => {
@@ -503,7 +574,7 @@ function ItemDialog(props: ItemDialogProps) {
       case 0:
         return (
           <Grid item container spacing={1.5} xs={12}>
-            <Grid item xs={12}>
+            <Grid item container xs={12}>
               <TextField
                 label="Serial number"
                 size="small"
@@ -512,7 +583,95 @@ function ItemDialog(props: ItemDialogProps) {
                   handleItemDetails('serial_number', event.target.value);
                 }}
                 fullWidth
+                error={!!hasSerialNumberErrors}
+                helperText={
+                  hasSerialNumberErrors ||
+                  (advancedSerialNumberOptions.quantity &&
+                    itemDetails.serial_number?.trim().includes('%s') &&
+                    `e.g. ${itemDetails.serial_number?.replace(
+                      '%s',
+                      advancedSerialNumberOptions.startingValue ?? '1'
+                    )}`)
+                }
               />
+
+              {type !== 'edit' && (
+                <>
+                  <Grid
+                    item
+                    onClick={() =>
+                      setShowAdvancedSerialNumberOptions(
+                        !showAdvancedSerialNumberOptions
+                      )
+                    }
+                  >
+                    <Typography
+                      ml={1}
+                      mb={0}
+                      variant="caption"
+                      sx={{
+                        cursor: 'pointer',
+                        '&:hover': { textDecoration: 'underline' },
+                      }}
+                    >
+                      {showAdvancedSerialNumberOptions
+                        ? 'Close advanced options'
+                        : 'Show advanced options'}
+                    </Typography>
+                  </Grid>
+                  <Grid container item xs={12}>
+                    <Collapse
+                      sx={{ width: '100%' }}
+                      in={showAdvancedSerialNumberOptions}
+                    >
+                      <Grid item container mt={0.25} spacing={1.5} xs={12}>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Quantity"
+                            size="small"
+                            fullWidth
+                            value={advancedSerialNumberOptions.quantity ?? ''}
+                            onChange={(event) => {
+                              setAdvancedSerialNumberOptions(
+                                (prev: AdvancedSerialNumberOptionsType) => ({
+                                  ...prev,
+                                  quantity: event.target.value
+                                    ? event.target.value
+                                    : null,
+                                })
+                              );
+                            }}
+                            error={!!hasQuantityErrors}
+                            helperText={hasQuantityErrors}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Starting value"
+                            size="small"
+                            fullWidth
+                            value={
+                              advancedSerialNumberOptions.startingValue ?? ''
+                            }
+                            onChange={(event) => {
+                              setAdvancedSerialNumberOptions(
+                                (prev: AdvancedSerialNumberOptionsType) => ({
+                                  ...prev,
+                                  startingValue: event.target.value
+                                    ? event.target.value
+                                    : null,
+                                })
+                              );
+                            }}
+                            error={!!hasStartingValueErrors}
+                            helperText={hasStartingValueErrors}
+                          />
+                        </Grid>
+                      </Grid>
+                    </Collapse>
+                  </Grid>
+                </>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -867,7 +1026,7 @@ function ItemDialog(props: ItemDialogProps) {
       open={open}
       onClose={handleClose}
       maxWidth="lg"
-      PaperProps={{ sx: { height: '705px' } }}
+      PaperProps={{ sx: { height: '770px' } }}
       fullWidth
     >
       <DialogTitle>
@@ -890,7 +1049,7 @@ function ItemDialog(props: ItemDialogProps) {
               labelProps.optional = (
                 <Typography variant="caption" color="error">
                   {index === 1 && 'Invalid item properties'}
-                  {index === 0 && 'Invalid date'}
+                  {index === 0 && 'Invalid item details'}
                 </Typography>
               );
               labelProps.error = true;
@@ -919,14 +1078,18 @@ function ItemDialog(props: ItemDialogProps) {
         {activeStep === STEPS.length - 1 ? (
           <Button
             disabled={
-              isAddPending ||
-              isEditPending ||
+              isAddItemsPending ||
+              isAddItemPending ||
+              isEditItemPending ||
               !itemDetails.system_id ||
               formErrorMessage !== undefined ||
               propertyErrors.some((value) => value === true) ||
               Object.values(hasDateErrors).some(
                 (value: boolean) => value === true
-              )
+              ) ||
+              !!hasSerialNumberErrors ||
+              !!hasQuantityErrors ||
+              !!hasStartingValueErrors
             }
             onClick={type === 'edit' ? handleEditItem : handleAddItem}
             sx={{ mr: 3 }}
@@ -935,14 +1098,7 @@ function ItemDialog(props: ItemDialogProps) {
           </Button>
         ) : (
           <Button
-            disabled={
-              (activeStep === 1 &&
-                propertyErrors.some((value) => value === true)) ||
-              (activeStep === 0 &&
-                Object.values(hasDateErrors).some(
-                  (value: boolean) => value === true
-                ))
-            }
+            disabled={isStepFailed(activeStep)}
             onClick={() => handleNext(activeStep)}
             sx={{ mr: 3 }}
           >
