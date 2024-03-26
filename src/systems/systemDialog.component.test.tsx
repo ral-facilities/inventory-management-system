@@ -112,7 +112,7 @@ describe('Systems Dialog', () => {
         charCode: 27,
       });
 
-      expect(mockOnClose).toHaveBeenCalled();
+      expect(mockOnClose).not.toHaveBeenCalled();
     });
 
     it('adds a system', async () => {
