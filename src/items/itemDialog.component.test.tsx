@@ -721,7 +721,7 @@ describe('ItemDialog', () => {
 
       expect(onClose).not.toHaveBeenCalled();
     });
-
+  });
   describe('Edit Item', () => {
     let axiosPatchSpy;
 
