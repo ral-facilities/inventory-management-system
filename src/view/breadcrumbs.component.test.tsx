@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { renderComponentWithBrowserRouter } from '../testUtils';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import Breadcrumbs, { BreadcrumbsProps } from './breadcrumbs.component';
 
 describe('Channel Breadcrumbs', () => {
@@ -9,7 +9,7 @@ describe('Channel Breadcrumbs', () => {
   let props: BreadcrumbsProps;
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(<Breadcrumbs {...props} />);
+    return renderComponentWithRouterProvider(<Breadcrumbs {...props} />);
   };
   beforeEach(() => {
     props = {

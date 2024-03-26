@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import { renderComponentWithBrowserRouter } from '../../testUtils';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import CatalogueCategoryTableView, {
@@ -12,7 +12,7 @@ describe('CatalogueCategoryTableView', () => {
 
   const onChangeParentCategoryId = vi.fn();
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <CatalogueCategoryTableView {...props} />
     );
   };

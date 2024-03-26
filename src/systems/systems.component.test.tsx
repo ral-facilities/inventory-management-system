@@ -1,6 +1,6 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { renderComponentWithMemoryRouter } from '../testUtils';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import Systems from './systems.component';
 
 describe('Systems', () => {
@@ -9,7 +9,7 @@ describe('Systems', () => {
 
   let user: UserEvent;
   const createView = (path: string) => {
-    return renderComponentWithMemoryRouter(<Systems />, path);
+    return renderComponentWithRouterProvider(<Systems />, 'systems', path);
   };
 
   beforeEach(() => {
