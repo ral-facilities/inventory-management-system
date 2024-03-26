@@ -517,7 +517,7 @@ function ItemDialog(props: ItemDialogProps) {
     !itemDetails.serial_number?.trim().includes('%s') &&
     'Please use %s to specify the location you want to append the number to serial number';
 
-  const hasQuantityErrors = !advancedSerialNumberOptions.quantity
+  const hasQuantityErrors = !advancedSerialNumberOptions.quantity?.trim()
     ? ''
     : isNaN(Number(advancedSerialNumberOptions.quantity))
       ? 'Please enter a valid number'
@@ -531,7 +531,7 @@ function ItemDialog(props: ItemDialogProps) {
 
   const hasStartingValueErrors =
     !advancedSerialNumberOptions.quantity &&
-    !!advancedSerialNumberOptions.startingValue
+    !!advancedSerialNumberOptions.startingValue?.trim()
       ? 'Please enter a quantity value'
       : isNaN(Number(advancedSerialNumberOptions.startingValue))
         ? 'Please enter a valid number'
