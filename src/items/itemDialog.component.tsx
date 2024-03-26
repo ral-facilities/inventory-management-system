@@ -865,9 +865,7 @@ function ItemDialog(props: ItemDialogProps) {
   return (
     <Dialog
       open={open}
-      onClose={(event, reason) =>
-        event && reason == 'backdropClick' ? null : handleClose()
-      }
+      onClose={(_event, reason) => reason !== 'backdropClick' && handleClose()}
       maxWidth="lg"
       PaperProps={{ sx: { height: '705px' } }}
       fullWidth

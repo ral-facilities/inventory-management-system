@@ -79,9 +79,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   return (
     <Dialog
       open={open}
-      onClose={(event, reason) =>
-        event && reason == 'backdropClick' ? null : onClose()
-      }
+      onClose={(_event, reason) => reason !== 'backdropClick' && handleClose()}
       maxWidth="md"
       fullWidth
     >
@@ -118,7 +116,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={handleClose}>Cancel</Button>
         <Button
           disabled={
             isMovePending ||
