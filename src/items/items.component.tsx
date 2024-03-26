@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
-} from '../api/catalogueCategory';
-import { useCatalogueItem } from '../api/catalogueItem';
+} from '../api/catalogueCategories';
+import { useCatalogueItem } from '../api/catalogueItems';
 
 import { BreadcrumbsInfo } from '../app.types';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';

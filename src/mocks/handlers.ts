@@ -17,14 +17,14 @@ import {
   Manufacturer,
   System,
 } from '../app.types';
-import CatalogueBreadcrumbsJSON from './CatalogueBreadcrumbs.json';
-import CatalogueCategoryJSON from './CatalogueCategory.json';
-import CatalogueItemJSON from './CatalogueItems.json';
+import CatalogueCategoriesJSON from './CatalogueCategories.json';
+import CatalogueCategoryBreadcrumbsJSON from './CatalogueCategoryBreadcrumbs.json';
+import CatalogueItemsJSON from './CatalogueItems.json';
+import ItemsJSON from './Items.json';
+import ManufacturersJSON from './Manufacturers.json';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
-import ManufacturerJSON from './manufacturer.json';
-import ItemsJSON from './Items.json';
-import unitsJSON from './units.json';
+import UnitsJSON from './Units.json';
 
 /* MSW v2 expects types for responses, this interface covers any empty body
    or error with detail */
@@ -80,7 +80,7 @@ export const handlers = [
     ({ params }) => {
       const { id } = params;
 
-      const data = CatalogueCategoryJSON.find(
+      const data = CatalogueCategoriesJSON.find(
         (catalogueCategory) => catalogueCategory.id === id
       );
 
@@ -98,11 +98,11 @@ export const handlers = [
 
       if (parentId) {
         if (parentId === 'null') {
-          data = CatalogueCategoryJSON.filter(
+          data = CatalogueCategoriesJSON.filter(
             (catalogueCategory) => catalogueCategory.parent_id === null
           ) as CatalogueCategory[];
         } else {
-          data = CatalogueCategoryJSON.filter(
+          data = CatalogueCategoriesJSON.filter(
             (catalogueCategory) => catalogueCategory.parent_id === parentId
           ) as CatalogueCategory[];
         }
@@ -116,7 +116,7 @@ export const handlers = [
     '/v1/catalogue-categories/:id/breadcrumbs',
     ({ params }) => {
       const { id } = params;
-      const data = CatalogueBreadcrumbsJSON.find(
+      const data = CatalogueCategoryBreadcrumbsJSON.find(
         (catalogueBreadcrumbs) => catalogueBreadcrumbs.id === id
       ) as unknown as BreadcrumbsInfo;
       return HttpResponse.json(data, {
@@ -131,15 +131,15 @@ export const handlers = [
     CatalogueCategory | ErrorResponse
   >('/v1/catalogue-categories/:id', async ({ request, params }) => {
     const { id } = params;
-    const itemData = CatalogueItemJSON.filter(
+    const itemData = CatalogueItemsJSON.filter(
       (catalogueItem) => catalogueItem.catalogue_category_id === id
     );
 
-    const catalogueData = CatalogueCategoryJSON.filter(
+    const catalogueData = CatalogueCategoriesJSON.filter(
       (catalogueData) => catalogueData.parent_id === id
     );
 
-    const obj = CatalogueCategoryJSON.find(
+    const obj = CatalogueCategoriesJSON.find(
       (catalogueCategory) => catalogueCategory.id === id
     );
     const body = await request.json();
@@ -190,7 +190,7 @@ export const handlers = [
     ErrorResponse | NonNullable<unknown>
   >('/v1/catalogue-categories/:id', ({ params }) => {
     const { id } = params;
-    const validCatalogueCategory = CatalogueCategoryJSON.find(
+    const validCatalogueCategory = CatalogueCategoriesJSON.find(
       (value) => value.id === id
     );
     if (validCatalogueCategory) {
@@ -242,7 +242,7 @@ export const handlers = [
     ({ params }) => {
       const { id } = params;
       if (id) {
-        const CatalogueItemData = CatalogueItemJSON.find(
+        const CatalogueItemData = CatalogueItemsJSON.find(
           (catalogueItem) => catalogueItem.id === id
         );
         return HttpResponse.json(CatalogueItemData, { status: 200 });
@@ -259,7 +259,7 @@ export const handlers = [
       const id = catalogueItemsParams.get('catalogue_category_id');
 
       if (id) {
-        const CatalogueItemData = CatalogueItemJSON.filter(
+        const CatalogueItemData = CatalogueItemsJSON.filter(
           (catalogueItem) => catalogueItem.catalogue_category_id === id
         );
 
@@ -276,7 +276,7 @@ export const handlers = [
       const body = await request.json();
       const { id } = params;
 
-      const validCatalogueItem = CatalogueItemJSON.find(
+      const validCatalogueItem = CatalogueItemsJSON.find(
         (value) => value.id === id
       );
 
@@ -323,7 +323,7 @@ export const handlers = [
     ErrorResponse | NonNullable<unknown>
   >('/v1/catalogue-items/:id', ({ params }) => {
     const { id } = params;
-    const validCatalogueItem = CatalogueItemJSON.find(
+    const validCatalogueItem = CatalogueItemsJSON.find(
       (value) => value.id === id
     );
     if (validCatalogueItem) {
@@ -385,7 +385,7 @@ export const handlers = [
   http.get<PathParams, DefaultBodyType, Manufacturer[]>(
     '/v1/manufacturers',
     () => {
-      return HttpResponse.json(ManufacturerJSON as Manufacturer[], {
+      return HttpResponse.json(ManufacturersJSON as Manufacturer[], {
         status: 200,
       });
     }
@@ -396,7 +396,7 @@ export const handlers = [
     ({ params }) => {
       const { id } = params;
 
-      const data = ManufacturerJSON.find(
+      const data = ManufacturersJSON.find(
         (manufacturer) => manufacturer.id === id
       ) as Manufacturer;
 
@@ -450,7 +450,9 @@ export const handlers = [
     ErrorResponse | NonNullable<unknown>
   >('/v1/manufacturers/:id', ({ params }) => {
     const { id } = params;
-    const validManufacturer = ManufacturerJSON.find((value) => value.id === id);
+    const validManufacturer = ManufacturersJSON.find(
+      (value) => value.id === id
+    );
     if (validManufacturer) {
       if (id === '2') {
         return HttpResponse.json(
@@ -705,6 +707,6 @@ export const handlers = [
   // ------------------------------------ Units ------------------------------------------------
 
   http.get('/v1/units', () => {
-    return HttpResponse.json(unitsJSON, { status: 200 });
+    return HttpResponse.json(UnitsJSON, { status: 200 });
   }),
 ];

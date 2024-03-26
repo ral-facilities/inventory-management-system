@@ -21,7 +21,7 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useManufacturers } from '../api/manufacturer';
+import { useManufacturers } from '../api/manufacturers';
 import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';

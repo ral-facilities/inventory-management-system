@@ -16,7 +16,7 @@ import {
   useDeleteCatalogueCategory,
   useEditCatalogueCategory,
   useMoveToCatalogueCategory,
-} from './catalogueCategory';
+} from './catalogueCategories';
 import { imsApi } from './api';
 
 describe('catalogue category api functions', () => {

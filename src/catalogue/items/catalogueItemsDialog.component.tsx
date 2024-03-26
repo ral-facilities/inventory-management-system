@@ -26,7 +26,7 @@ import React from 'react';
 import {
   useAddCatalogueItem,
   useEditCatalogueItem,
-} from '../../api/catalogueItem';
+} from '../../api/catalogueItems';
 import {
   AddCatalogueItem,
   CatalogueCategory,
@@ -40,7 +40,7 @@ import {
 } from '../../app.types';
 import { matchCatalogueItemProperties } from '../catalogue.component';
 import { Autocomplete } from '@mui/material';
-import { useManufacturers } from '../../api/manufacturer';
+import { useManufacturers } from '../../api/manufacturers';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { trimStringValues } from '../../utils';

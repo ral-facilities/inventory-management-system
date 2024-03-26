@@ -16,11 +16,11 @@ import {
   useCatalogueBreadcrumbs,
   useCatalogueCategories,
   useCatalogueCategory,
-} from '../../api/catalogueCategory';
+} from '../../api/catalogueCategories';
 import {
   useCopyToCatalogueItem,
   useMoveToCatalogueItem,
-} from '../../api/catalogueItem';
+} from '../../api/catalogueItems';
 import { CatalogueCategory, CatalogueItem } from '../../app.types';
 import handleTransferState from '../../handleTransferState';
 import Breadcrumbs from '../../view/breadcrumbs.component';

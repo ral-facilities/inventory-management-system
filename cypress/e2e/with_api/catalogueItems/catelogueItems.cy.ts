@@ -1,8 +1,8 @@
 import {
   addCatalogueCategories,
   saveAsCatalogueCategory,
-} from '../catalogueCategory/functions';
-import { addManufacturer } from '../manufacturer/functions';
+} from '../catalogueCategories/functions';
+import { addManufacturer } from '../manufacturers/functions';
 import {
   addCatalogueItem,
   copyToCatalogueItems,

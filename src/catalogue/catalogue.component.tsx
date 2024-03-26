@@ -17,7 +17,7 @@ import {
   useCatalogueBreadcrumbs,
   useCatalogueCategories,
   useCatalogueCategory,
-} from '../api/catalogueCategory';
+} from '../api/catalogueCategories';
 import {
   CatalogueCategory,
   CatalogueCategoryFormData,
