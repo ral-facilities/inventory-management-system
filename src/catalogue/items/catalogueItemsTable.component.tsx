@@ -47,6 +47,7 @@ import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.compone
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
+import { usePreservedTableState } from '../../common/preservedTable.component';
 
 const MoveCatalogueItemsButton = (props: {
   selectedItems: CatalogueItem[];
@@ -606,8 +607,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       selectedRowIds.includes(catalogueItem.id)
     ) ?? [];
 
-  const [columnFilters, setColumnFilters] =
-    React.useState<MRT_ColumnFiltersState>([]);
+  // const [columnFilters, setColumnFilters] =
+  //   React.useState<MRT_ColumnFiltersState>([]);
 
   const handleRowSelection = React.useCallback(
     (row: MRT_Row<TableRowData>) => {
@@ -634,6 +635,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     },
     [isItemSelectable, onChangeObsoleteReplacementId, selectedRowIds]
   );
+
+  const { columnFilters, setColumnFilters } = usePreservedTableState();
 
   const table = useMaterialReactTable({
     // Data
