@@ -536,9 +536,9 @@ function ItemDialog(props: ItemDialogProps) {
       : isNaN(Number(advancedSerialNumberOptions.startingValue))
         ? 'Please enter a valid number'
         : !Number.isInteger(Number(advancedSerialNumberOptions.startingValue))
-          ? 'Quantity must be an integer'
+          ? 'Starting value must be an integer'
           : Number(advancedSerialNumberOptions.startingValue) < 0
-            ? 'Quantity must be greater than or equal to 0'
+            ? 'Starting value must be greater than or equal to 0'
             : '';
 
   const isStepFailed = React.useCallback(

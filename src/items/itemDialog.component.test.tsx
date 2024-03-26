@@ -563,7 +563,7 @@ describe('ItemDialog', () => {
       expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
     }, 10000);
 
-    it('displays error messages for serial number advance options', async () => {
+    it('displays error messages for serial number advanced options', async () => {
       createView();
       await modifyDetailsValues({
         serialNumberAdvancedOptions: { startingValue: '10' },
@@ -590,9 +590,12 @@ describe('ItemDialog', () => {
         },
       });
 
-      expect(screen.getAllByText('Quantity must be an integer').length).toEqual(
-        2
-      );
+      expect(
+        screen.getByText('Quantity must be an integer')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Starting value must be an integer')
+      ).toBeInTheDocument();
 
       await user.click(screen.getByText('Close advanced options'));
       await modifyDetailsValues({
@@ -606,7 +609,7 @@ describe('ItemDialog', () => {
         screen.getByText('Quantity must be greater than 1')
       ).toBeInTheDocument();
       expect(
-        screen.getByText('Quantity must be greater than or equal to 0')
+        screen.getByText('Starting value must be greater than or equal to 0')
       ).toBeInTheDocument();
 
       await user.click(screen.getByText('Close advanced options'));
