@@ -611,6 +611,23 @@ describe('Catalogue Items Dialog', () => {
     expect(screen.getByText('Add Catalogue Item')).toBeInTheDocument();
   });
 
+  it('does not close dialog on background click, but does on escape key', async () => {
+    createView();
+
+    await userEvent.click(document.body);
+
+    expect(onClose).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(screen.getByRole('dialog'), {
+      key: 'Escape',
+      code: 'Escape',
+      keyCode: 27,
+      charCode: 27,
+    });
+
+    expect(onClose).toHaveBeenCalled();
+  });
+
   describe('Edit a catalogue item', () => {
     let axiosPatchSpy;
 

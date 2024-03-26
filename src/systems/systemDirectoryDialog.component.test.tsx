@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../api/api';
 import { System } from '../app.types';
@@ -56,6 +56,23 @@ describe('SystemDirectoryDialog', () => {
     expect(axiosPatchSpy).not.toHaveBeenCalled();
     expect(axiosPostSpy).not.toHaveBeenCalled();
     expect(mockOnChangeSelectedSystems).not.toHaveBeenCalled();
+    expect(mockOnClose).toHaveBeenCalled();
+  });
+
+  it('does not close dialog on background click, but does on escape key', async () => {
+    createView();
+
+    await userEvent.click(document.body);
+
+    expect(mockOnClose).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(screen.getByRole('dialog'), {
+      key: 'Escape',
+      code: 'Escape',
+      keyCode: 27,
+      charCode: 27,
+    });
+
     expect(mockOnClose).toHaveBeenCalled();
   });
 

@@ -1,4 +1,10 @@
-import { fireEvent, screen, waitFor, within } from '@testing-library/react';
+import {
+  fireEvent,
+  getByRole,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../../api/api';
 import { CatalogueCategory, CatalogueCategoryFormData } from '../../app.types';
@@ -607,6 +613,25 @@ describe('Catalogue Category Dialog', () => {
       expect(duplicateHelperTexts.length).toEqual(2);
 
       expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('does not close dialog on background click, but does on escape key', async () => {
+      createView();
+
+      expect(screen.getByLabelText('Name *')).toBeInTheDocument();
+
+      await userEvent.click(document.body);
+
+      expect(onClose).not.toHaveBeenCalled();
+
+      fireEvent.keyDown(screen.getByRole('dialog'), {
+        key: 'Escape',
+        code: 'Escape',
+        keyCode: 27,
+        charCode: 27,
+      });
+
+      expect(onClose).toHaveBeenCalled();
     });
   });
 

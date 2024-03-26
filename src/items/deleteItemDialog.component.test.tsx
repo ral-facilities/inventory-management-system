@@ -1,4 +1,10 @@
-import { RenderResult, act, screen, waitFor } from '@testing-library/react';
+import {
+  RenderResult,
+  act,
+  fireEvent,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { Item } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
@@ -67,6 +73,23 @@ describe('delete item dialog', () => {
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
     });
+  });
+
+  it('does not close dialog on background click, but does on escape key', async () => {
+    createView();
+
+    await userEvent.click(document.body);
+
+    expect(onClose).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(screen.getByRole('dialog'), {
+      key: 'Escape',
+      code: 'Escape',
+      keyCode: 27,
+      charCode: 27,
+    });
+
+    expect(onClose).toHaveBeenCalled();
   });
 
   it('displays warning message when session data is not loaded', async () => {
