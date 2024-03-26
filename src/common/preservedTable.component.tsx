@@ -1,33 +1,53 @@
 import { MRT_ColumnFiltersState } from 'material-react-table';
-import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
+// State as will be stored in search params (undefined => should not be present)
+interface StateSearchParams {
+  // Column filters
+  cF?: MRT_ColumnFiltersState;
+}
+
+// State as will be stored after parsing from search params
+interface State {
+  // Column filters
+  cF: MRT_ColumnFiltersState;
+}
 
 export const usePreservedTableState = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const columnFiltersParams = searchParams.get('columnFilters');
-  const columnFilters =
-    columnFiltersParams !== null ? JSON.parse(columnFiltersParams) : [];
+  const unparsedStateSearchParams = searchParams.get('state');
+  // TODO: Do something when it fails to parse from url
+  const parsedStateSearchParams: StateSearchParams =
+    unparsedStateSearchParams !== null
+      ? JSON.parse(unparsedStateSearchParams)
+      : {};
 
-  // const [columnFilters, setColumnFilters] = useState<MRT_ColumnFiltersState>(
-  //   []
-  // );
-  // console.log(columnFilters);
+  const state: State = {
+    cF: parsedStateSearchParams.cF || [],
+  };
+
+  console.log(unparsedStateSearchParams);
 
   const setColumnFilters = (
-    stateFn:
-      | ((prevState: MRT_ColumnFiltersState) => MRT_ColumnFiltersState)
-      | undefined
+    updaterOrValue:
+      | MRT_ColumnFiltersState
+      | ((old: MRT_ColumnFiltersState) => MRT_ColumnFiltersState)
   ) => {
     const newColumnFilters =
-      stateFn !== undefined ? stateFn(columnFilters) : undefined;
-    if (newColumnFilters !== undefined && newColumnFilters.length > 0)
-      setSearchParams({ columnFilters: JSON.stringify(newColumnFilters) });
-    else setSearchParams({});
+      updaterOrValue instanceof Function
+        ? updaterOrValue(state.cF)
+        : updaterOrValue;
+
+    const newStateSearchParams: StateSearchParams = {
+      ...parsedStateSearchParams,
+      cF: newColumnFilters.length === 0 ? undefined : newColumnFilters,
+    };
+    setSearchParams({ state: JSON.stringify(newStateSearchParams) });
   };
 
   return {
-    columnFilters: columnFilters,
+    columnFilters: state.cF,
     setColumnFilters: setColumnFilters,
   };
 };
