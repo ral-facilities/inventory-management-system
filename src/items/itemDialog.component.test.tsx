@@ -639,6 +639,9 @@ describe('ItemDialog', () => {
       });
 
       expect(screen.getByText('e.g. test 2')).toBeInTheDocument();
+
+      await user.clear(screen.getByLabelText('Quantity'));
+      await user.clear(screen.getByLabelText('Starting value'));
     }, 10000);
 
     it('adds an item (case empty string with spaces returns null and change property boolean values)', async () => {
