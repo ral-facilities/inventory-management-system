@@ -18,8 +18,8 @@ import {
 import CatalogueCategoriesJSON from './mocks/CatalogueCategories.json';
 import CatalogueItemsJSON from './mocks/CatalogueItems.json';
 import ItemsJSON from './mocks/Items.json';
-import { paths } from './view/viewTabs.component';
 import ManufacturersJSON from './mocks/Manufacturers.json';
+import { paths } from './App';
 
 export const createTestQueryClient = (): QueryClient =>
   new QueryClient({

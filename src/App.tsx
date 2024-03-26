@@ -36,6 +36,19 @@ import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
 import ConfigProvider from './configProvider.component';
 
+export const paths = {
+  any: '*',
+  root: '/',
+  homepage: '/ims',
+  catalogue: '/catalogue/*',
+  systems: '/systems/*',
+  manufacturers: '/manufacturers',
+  manufacturer: '/manufacturers/:manufacturer_id',
+  catalogueItem: '/catalogue/item/:catalogue_item_id',
+  items: '/catalogue/item/:catalogue_item_id/items',
+  item: '/catalogue/item/:catalogue_item_id/items/:item_id',
+};
+
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error) => {
@@ -59,23 +72,23 @@ const router = createBrowserRouter([
   {
     Component: Layout,
     children: [
-      { path: '*', Component: ViewTabs },
-      { path: '', Component: HomePage },
-      { path: 'ims', Component: HomePage },
-      { path: 'catalogue/*', Component: Catalogue },
+      { path: paths.any, Component: ViewTabs },
+      { path: paths.root, Component: HomePage },
+      { path: paths.homepage, Component: HomePage },
+      { path: paths.catalogue, Component: Catalogue },
       {
-        path: 'catalogue/item/:catalogue_item_id',
+        path: paths.catalogueItem,
         Component: CatalogueItemsLandingPage,
       },
-      { path: 'catalogue/item/:catalogue_item_id/items', Component: Items },
+      { path: paths.items, Component: Items },
       {
-        path: 'catalogue/item/:catalogue_item_id/items/:item_id',
+        path: paths.item,
         Component: ItemsLandingPage,
       },
-      { path: 'systems/*', Component: Systems },
-      { path: 'manufacturers', Component: ManufacturerComponent },
+      { path: paths.systems, Component: Systems },
+      { path: paths.manufacturers, Component: ManufacturerComponent },
       {
-        path: 'manufacturers/:manufacturer_id',
+        path: paths.manufacturer,
         Component: ManufacturerLandingPage,
       },
     ],

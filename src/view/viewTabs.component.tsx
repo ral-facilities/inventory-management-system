@@ -6,19 +6,7 @@ import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { TAB_VALUES, TabValue } from '../app.types';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
-
-export const paths = {
-  any: '*',
-  root: '/',
-  homepage: '/ims',
-  catalogue: '/catalogue/*',
-  systems: '/systems/*',
-  manufacturers: '/manufacturers',
-  manufacturer: '/manufacturers/:manufacturer_id',
-  catalogueItem: '/catalogue/item/:catalogue_item_id',
-  items: '/catalogue/item/:catalogue_item_id/items',
-  item: '/catalogue/item/:catalogue_item_id/items/:item_id',
-};
+import { paths } from '../App';
 
 interface TabPanelProps {
   children?: React.ReactNode;
