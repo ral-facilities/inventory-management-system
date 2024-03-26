@@ -3,7 +3,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../api/api';
 import { System } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
-import { renderComponentWithBrowserRouter } from '../testUtils';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import {
   SystemDirectoryDialog,
   SystemDirectoryDialogProps,
@@ -24,7 +24,7 @@ describe('SystemDirectoryDialog', () => {
   ];
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <SystemDirectoryDialog {...props} />
     );
   };
