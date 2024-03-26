@@ -705,7 +705,7 @@ describe('ItemDialog', () => {
       });
     });
 
-    it('does not close dialog on background click, but does on escape key', async () => {
+    it('does not close dialog on background click, or on escape key press', async () => {
       createView();
 
       await userEvent.click(document.body);
@@ -719,9 +719,8 @@ describe('ItemDialog', () => {
         charCode: 27,
       });
 
-      expect(onClose).toHaveBeenCalled();
+      expect(onClose).not.toHaveBeenCalled();
     });
-  });
 
   describe('Edit Item', () => {
     let axiosPatchSpy;

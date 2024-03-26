@@ -147,7 +147,7 @@ describe('catalogue item directory Dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
-    it('does not close dialog on background click, but does on escape key', async () => {
+    it('does not close dialog on background click, or on escape key press', async () => {
       createView();
 
       await userEvent.click(document.body);
@@ -161,7 +161,7 @@ describe('catalogue item directory Dialog', () => {
         charCode: 27,
       });
 
-      expect(onClose).toHaveBeenCalled();
+      expect(onClose).not.toHaveBeenCalled();
     });
 
     it('navigates to home when the home button is clicked', async () => {

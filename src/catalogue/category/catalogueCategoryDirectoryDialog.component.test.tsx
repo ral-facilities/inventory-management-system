@@ -93,7 +93,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       });
     });
 
-    it('does not close dialog on background click, but does on escape key', async () => {
+    it('does not close dialog on background click, or on escape key press', async () => {
       createView();
 
       await userEvent.click(document.body);
@@ -107,7 +107,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         charCode: 27,
       });
 
-      expect(onClose).toHaveBeenCalled();
+      expect(onClose).not.toHaveBeenCalled();
     });
 
     it('renders the breadcrumbs and can navigate to another directory', async () => {

@@ -75,7 +75,7 @@ describe('delete item dialog', () => {
     });
   });
 
-  it('does not close dialog on background click, but does on escape key', async () => {
+  it('does not close dialog on background click, or on escape key press', async () => {
     createView();
 
     await userEvent.click(document.body);
@@ -89,7 +89,7 @@ describe('delete item dialog', () => {
       charCode: 27,
     });
 
-    expect(onClose).toHaveBeenCalled();
+    expect(onClose).not.toHaveBeenCalled();
   });
 
   it('displays warning message when session data is not loaded', async () => {

@@ -609,10 +609,8 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     });
 
-    it('does not close dialog on background click, but does on escape key', async () => {
+    it('does not close dialog on background click, or on escape key press', async () => {
       createView();
-
-      expect(screen.getByLabelText('Name *')).toBeInTheDocument();
 
       await userEvent.click(document.body);
 
@@ -625,7 +623,7 @@ describe('Catalogue Category Dialog', () => {
         charCode: 27,
       });
 
-      expect(onClose).toHaveBeenCalled();
+      expect(onClose).not.toHaveBeenCalled();
     });
   });
 

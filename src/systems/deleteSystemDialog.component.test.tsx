@@ -73,7 +73,7 @@ describe('DeleteSystemDialog', () => {
     expect(axiosDeleteSpy).not.toHaveBeenCalled();
   });
 
-  it('does not close dialog on background click, but does on escape key', async () => {
+  it('does not close dialog on background click, or on escape key press', async () => {
     createView();
 
     await userEvent.click(document.body);
@@ -87,7 +87,7 @@ describe('DeleteSystemDialog', () => {
       charCode: 27,
     });
 
-    expect(props.onClose).toHaveBeenCalled();
+    expect(props.onClose).not.toHaveBeenCalled();
   });
 
   it('sends a delete request and closes the dialog when continue button is clicked with a valid system', async () => {

@@ -150,7 +150,10 @@ const CatalogueItemDirectoryDialog = (
   return (
     <Dialog
       open={open}
-      onClose={(_event, reason) => reason !== 'backdropClick' && handleClose()}
+      onClose={(_event: object, reason: string) =>
+        !(reason == 'backdropClick' || reason == 'escapeKeyDown') &&
+        handleClose()
+      }
       maxWidth="lg"
       PaperProps={{ sx: { height: '692px' } }}
       fullWidth

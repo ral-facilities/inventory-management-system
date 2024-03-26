@@ -182,7 +182,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     expect(mockOnClose).toHaveBeenCalled();
   });
 
-  it('does not close dialog on background click, but does on escape key', async () => {
+  it('does not close dialog on background click, or on escape key press', async () => {
     createView();
 
     await userEvent.click(document.body);
@@ -196,7 +196,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
       charCode: 27,
     });
 
-    expect(mockOnClose).toHaveBeenCalled();
+    expect(mockOnClose).not.toHaveBeenCalled();
   });
 
   it('renders exisiting data correctly (not obsolete)', async () => {
