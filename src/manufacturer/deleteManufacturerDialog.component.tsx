@@ -63,7 +63,9 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
   return (
     <Dialog
       open={open}
-      onClose={(reason) => reason == 'backdropClick' ?? handleClose}
+      onClose={(event, reason) =>
+        event && reason == 'backdropClick' ? null : handleClose()
+      }
       maxWidth="lg"
     >
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>

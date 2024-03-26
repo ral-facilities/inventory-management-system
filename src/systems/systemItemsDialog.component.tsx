@@ -79,7 +79,9 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   return (
     <Dialog
       open={open}
-      onClose={(reason) => reason == 'backdropClick' ?? onClose}
+      onClose={(event, reason) =>
+        event && reason == 'backdropClick' ? null : onClose()
+      }
       maxWidth="md"
       fullWidth
     >

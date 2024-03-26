@@ -123,7 +123,9 @@ export const SystemDirectoryDialog = (props: SystemDirectoryDialogProps) => {
   return (
     <Dialog
       open={open}
-      onClose={(reason) => reason == 'backdropClick' ?? handleClose}
+      onClose={(event, reason) =>
+        event && reason == 'backdropClick' ? null : handleClose()
+      }
       maxWidth="lg"
       PaperProps={{ sx: { height: '692px' } }}
       fullWidth

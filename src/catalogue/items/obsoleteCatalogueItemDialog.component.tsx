@@ -293,7 +293,9 @@ const ObsoleteCatalogueItemDialog = (
   return (
     <Dialog
       open={open}
-      onClose={(reason) => reason == 'backdropClick' ?? handleClose}
+      onClose={(event, reason) =>
+        event && reason == 'backdropClick' ? null : handleClose()
+      }
       PaperProps={{ sx: { height: '720px' } }}
       fullWidth
       maxWidth="xl"

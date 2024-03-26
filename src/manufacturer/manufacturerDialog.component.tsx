@@ -332,7 +332,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   return (
     <Dialog
       open={open}
-      onClose={(reason) => reason == 'backdropClick' ?? handleClose}
+      onClose={(event, reason) =>
+        event && reason == 'backdropClick' ? null : handleClose()
+      }
       maxWidth="lg"
       fullWidth
     >
