@@ -55,7 +55,7 @@ describe('Systems', () => {
   it("should be able to navigate to an item's landing page", () => {
     cy.findByRole('cell', { name: 'Pulse Laser' }).click();
     cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
-    cy.findByRole('link', { name: 'z1hJvV8Z' }).click();
+    cy.findByRole('link', { name: 'QnfSKahnQuze' }).click();
 
     // Check now on landing page for the item
     cy.url().should('include', '/catalogue/item/28/items/z1hJvV8Z');
