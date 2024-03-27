@@ -23,7 +23,6 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
-  type MRT_ColumnFiltersState,
   type MRT_RowSelectionState,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
@@ -37,17 +36,17 @@ import {
   CatalogueItemPropertyResponse,
   Manufacturer,
 } from '../../app.types';
+import { usePreservedTableState } from '../../common/preservedTable.component';
 import {
   formatDateTimeStrings,
   generateUniqueName,
   getPageHeightCalc,
 } from '../../utils';
-import CatalogueItemsDetailsPanel from './catalogueItemsDetailsPanel.component';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
+import CatalogueItemsDetailsPanel from './catalogueItemsDetailsPanel.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
 import DeleteCatalogueItemsDialog from './deleteCatalogueItemDialog.component';
 import ObsoleteCatalogueItemDialog from './obsoleteCatalogueItemDialog.component';
-import { usePreservedTableState } from '../../common/preservedTable.component';
 
 const MoveCatalogueItemsButton = (props: {
   selectedItems: CatalogueItem[];
@@ -636,18 +635,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     [isItemSelectable, onChangeObsoleteReplacementId, selectedRowIds]
   );
 
-  const {
-    columnFilters,
-    setColumnFilters,
-    sorting,
-    setSorting,
-    columnVisibility,
-    setColumnVisibility,
-    globalFilter,
-    setGlobalFilter,
-    pagination,
-    setPagination,
-  } = usePreservedTableState({
+  const { preservedState, onChangePreservedStates } = usePreservedTableState({
     initialState: {
       columnVisibility: { 'catalogueItem.created_time': false },
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
@@ -705,13 +693,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       showGlobalFilter: true,
     },
     state: {
+      ...preservedState,
       showProgressBars: isLoading, //or showSkeletons
       rowSelection,
-      columnFilters,
-      sorting,
-      columnVisibility,
-      globalFilter,
-      pagination,
     },
     // MUI
     muiTableBodyRowProps: dense
@@ -763,12 +747,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     },
     //Functions
     getRowId: (row) => row.catalogueItem.id,
-    onColumnFiltersChange: setColumnFilters,
-    onSortingChange: setSorting,
+    ...onChangePreservedStates,
     onRowSelectionChange: setRowSelection,
-    onColumnVisibilityChange: setColumnVisibility,
-    onGlobalFilterChange: setGlobalFilter,
-    onPaginationChange: setPagination,
     renderCreateRowDialogContent: ({ table, row }) => {
       return (
         <>
@@ -832,7 +812,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               startIcon={<ClearIcon />}
               sx={{ mx: 0.5 }}
               variant="outlined"
-              disabled={columnFilters.length === 0}
+              disabled={preservedState.columnFilters.length === 0}
               onClick={() => {
                 table.resetColumnFilters();
               }}

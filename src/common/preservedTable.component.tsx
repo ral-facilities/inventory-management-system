@@ -1,6 +1,7 @@
-import { PaginationState } from '@tanstack/table-core';
 import {
   MRT_ColumnFiltersState,
+  MRT_ColumnOrderState,
+  MRT_PaginationState,
   MRT_RowData,
   MRT_SortingState,
   MRT_TableState,
@@ -13,8 +14,9 @@ interface State {
   cF: MRT_ColumnFiltersState;
   srt: MRT_SortingState;
   cVis: MRT_VisibilityState;
-  gFil: string | undefined;
-  p: PaginationState;
+  gFil: string | undefined; // Global filter
+  p: MRT_PaginationState;
+  cO: MRT_ColumnOrderState;
 }
 
 // State as will be stored in search params (undefined => should not be present in the url)
@@ -50,9 +52,10 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       parsedStateSearchParams.cVis ||
       props?.initialState?.columnVisibility ||
       {},
-    gFil: undefined,
+    gFil: parsedStateSearchParams.gFil,
     p: parsedStateSearchParams.p ||
       props?.initialState?.pagination || { pageSize: 15, pageIndex: 0 },
+    cO: parsedStateSearchParams.cO || [],
   };
 
   const updateSearchParams = (modifiedParams: StateSearchParams) => {
@@ -108,9 +111,8 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     });
   };
 
-  const setPagination = (updaterOrValue: Updater<PaginationState>) => {
+  const setPagination = (updaterOrValue: Updater<MRT_PaginationState>) => {
     const newValue = getValueFromUpdater(updaterOrValue, state.p);
-    console.log(newValue);
     // TODO: Make this work for multiple (MRT stores it forever after initially chaning, so it might be
     //       easiest to just let it be there afterwards)
     updateSearchParams({
@@ -122,16 +124,29 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     });
   };
 
+  const setColumnOrder = (updaterOrValue: Updater<MRT_ColumnOrderState>) => {
+    const newValue = getValueFromUpdater(updaterOrValue, []);
+    updateSearchParams({
+      cO: newValue.length === 0 ? undefined : newValue,
+    });
+  };
+
   return {
-    columnFilters: state.cF,
-    setColumnFilters: setColumnFilters,
-    sorting: state.srt,
-    setSorting: setSorting,
-    columnVisibility: state.cVis,
-    setColumnVisibility: setColumnVisibility,
-    globalFilter: state.gFil,
-    setGlobalFilter: setGlobalFilter,
-    pagination: state.p,
-    setPagination: setPagination,
+    preservedState: {
+      columnFilters: state.cF,
+      sorting: state.srt,
+      columnVisibility: state.cVis,
+      globalFilter: state.gFil,
+      pagination: state.p,
+      columnOrder: state.cO,
+    },
+    onChangePreservedStates: {
+      onColumnFiltersChange: setColumnFilters,
+      onSortingChange: setSorting,
+      onColumnVisibilityChange: setColumnVisibility,
+      onGlobalFilterChange: setGlobalFilter,
+      onPaginationChange: setPagination,
+      onColumnOrderChange: setColumnOrder,
+    },
   };
 };
