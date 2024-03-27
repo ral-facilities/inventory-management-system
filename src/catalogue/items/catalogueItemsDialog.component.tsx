@@ -1029,10 +1029,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     <Dialog
       PaperProps={{ sx: { height: '850px' } }}
       open={open}
-      onClose={(_event: object, reason: string) =>
-        !(reason == 'backdropClick' || reason == 'escapeKeyDown') &&
-        handleClose()
-      }
       maxWidth="lg"
       fullWidth
     >

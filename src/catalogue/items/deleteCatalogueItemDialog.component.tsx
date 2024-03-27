@@ -62,14 +62,7 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
   }, [catalogueItem, deleteCatalogueItem, onChangeCatalogueItem, onClose]);
 
   return (
-    <Dialog
-      open={open}
-      onClose={(_event: object, reason: string) =>
-        !(reason == 'backdropClick' || reason == 'escapeKeyDown') &&
-        handleClose()
-      }
-      maxWidth="lg"
-    >
+    <Dialog open={open} maxWidth="lg">
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
         <WarningIcon sx={{ marginRight: 1 }} />
         Delete Catalogue Item
