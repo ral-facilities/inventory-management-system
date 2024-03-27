@@ -8,7 +8,7 @@ import {
   MRT_TableState,
   MRT_VisibilityState,
 } from 'material-react-table';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 // State as will be stored after parsing from search params
@@ -40,6 +40,7 @@ interface UsePreservedTableStateProps {
 }
 
 export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
+  const isFirstUpdate = useRef(true);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const unparsedStateSearchParams = props?.storeInUrl
@@ -105,6 +106,13 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
 
   const updateSearchParams = useCallback(
     (modifiedParams: StateSearchParams) => {
+      // Ignore first update (pagination and column order has a habit of being set in MRT
+      // shortly after the first render with actual data even if disabled in the table itself)
+      // similar to https://www.material-react-table.com/docs/guides/state-management
+      if (isFirstUpdate.current) {
+        isFirstUpdate.current = false;
+        return;
+      }
       // Use function version to ensure multiple can be changed in the same render
       // e.g. grouping also changes ordering
       setParsedStateSearchParams((prevState) => ({
