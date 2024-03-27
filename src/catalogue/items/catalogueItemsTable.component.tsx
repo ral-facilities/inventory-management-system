@@ -640,6 +640,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       columnVisibility: { 'catalogueItem.created_time': false },
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
     },
+    storeInUrl: !dense,
   });
 
   const table = useMaterialReactTable({
