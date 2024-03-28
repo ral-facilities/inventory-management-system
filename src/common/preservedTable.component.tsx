@@ -10,6 +10,7 @@ import {
 } from 'material-react-table';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import LZString from 'lz-string';
 
 // State as will be stored after parsing from search params
 interface State {
@@ -17,9 +18,9 @@ interface State {
   srt: MRT_SortingState;
   cVis: MRT_VisibilityState;
   gFil: string | undefined; // Global filter
-  p: MRT_PaginationState;
   cO: MRT_ColumnOrderState;
   g: MRT_GroupingState;
+  p: MRT_PaginationState;
 }
 
 // State as will be stored in search params (undefined => should not be present in the url)
@@ -32,6 +33,19 @@ type Updater<T> = T | ((old: T) => T);
 /* Returns correctly types value from an updater */
 const getValueFromUpdater = <T,>(updater: Updater<T>, currentValue: T) =>
   updater instanceof Function ? (updater(currentValue) as T) : (updater as T);
+
+/* Attempts to decompress state from URL, returns null if its null or not decompressable
+   (which appears rare) */
+const decompressState = (compressedStateOrNull: string | null) => {
+  if (compressedStateOrNull !== null) {
+    try {
+      return LZString.decompressFromEncodedURIComponent(compressedStateOrNull);
+    } catch (_error) {
+      // Do nothing, error shouldn't appear to the user
+    }
+  }
+  return null;
+};
 
 /* Parses the unparsed state returning nothing if it's null or unparsable */
 const getDefaultParsedState = (unparsedState: string | null) => {
@@ -55,7 +69,8 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const isFirstUpdate = useRef(true);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const unparsedState = props?.storeInUrl ? searchParams.get('state') : null;
+  const compressedState = props?.storeInUrl ? searchParams.get('state') : null;
+  const unparsedState = decompressState(compressedState);
 
   const [parsedState, setParsedState] = useState<StateSearchParams>(
     getDefaultParsedState(unparsedState)
@@ -68,7 +83,9 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       if (unparsedState !== newUnparsedState) {
         // Clear search params if state is no longer needed
         if (newUnparsedState !== '{}')
-          setSearchParams({ state: newUnparsedState });
+          setSearchParams({
+            state: LZString.compressToEncodedURIComponent(newUnparsedState),
+          });
         else setSearchParams({});
       }
     }
@@ -185,20 +202,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     [state.gFil, updateSearchParams]
   );
 
-  const setPagination = useCallback(
-    (updaterOrValue: Updater<MRT_PaginationState>) => {
-      const newValue = getValueFromUpdater(updaterOrValue, state.p);
-      updateSearchParams({
-        p:
-          JSON.stringify(newValue) ===
-          JSON.stringify(props?.initialState?.pagination || {})
-            ? undefined
-            : newValue,
-      });
-    },
-    [props?.initialState?.pagination, state.p, updateSearchParams]
-  );
-
   const setColumnOrder = useCallback(
     (updaterOrValue: Updater<MRT_ColumnOrderState>) => {
       const newValue = getValueFromUpdater(updaterOrValue, state.cO);
@@ -219,24 +222,38 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     [state.g, updateSearchParams]
   );
 
+  const setPagination = useCallback(
+    (updaterOrValue: Updater<MRT_PaginationState>) => {
+      const newValue = getValueFromUpdater(updaterOrValue, state.p);
+      updateSearchParams({
+        p:
+          JSON.stringify(newValue) ===
+          JSON.stringify(props?.initialState?.pagination || {})
+            ? undefined
+            : newValue,
+      });
+    },
+    [props?.initialState?.pagination, state.p, updateSearchParams]
+  );
+
   return {
     preservedState: {
       columnFilters: state.cF,
       sorting: state.srt,
       columnVisibility: state.cVis,
       globalFilter: state.gFil,
-      pagination: state.p,
       columnOrder: state.cO,
       grouping: state.g,
+      pagination: state.p,
     },
     onChangePreservedStates: {
       onColumnFiltersChange: setColumnFilters,
       onSortingChange: setSorting,
       onColumnVisibilityChange: setColumnVisibility,
       onGlobalFilterChange: setGlobalFilter,
-      onPaginationChange: setPagination,
       onColumnOrderChange: setColumnOrder,
       onGroupingChange: setGroupingState,
+      onPaginationChange: setPagination,
     },
   };
 };
