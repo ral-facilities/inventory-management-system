@@ -330,7 +330,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   ]);
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
+    <Dialog open={open} maxWidth="lg" fullWidth>
       <DialogTitle>{`${
         type === 'create' ? 'Add' : 'Edit'
       } Manufacturer`}</DialogTitle>

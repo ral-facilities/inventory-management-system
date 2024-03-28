@@ -1,5 +1,5 @@
 import { renderComponentWithRouterProvider } from '../../testUtils';
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../../api/api';
 import CatalogueItemDirectoryDialog, {
@@ -145,6 +145,23 @@ describe('catalogue item directory Dialog', () => {
       await user.click(screen.getByRole('button', { name: 'Cancel' }));
 
       expect(onClose).toHaveBeenCalled();
+    });
+
+    it('does not close dialog on background click, or on escape key press', async () => {
+      createView();
+
+      await userEvent.click(document.body);
+
+      expect(onClose).not.toHaveBeenCalled();
+
+      fireEvent.keyDown(screen.getByRole('dialog'), {
+        key: 'Escape',
+        code: 'Escape',
+        keyCode: 27,
+        charCode: 27,
+      });
+
+      expect(onClose).not.toHaveBeenCalled();
     });
 
     it('navigates to home when the home button is clicked', async () => {
