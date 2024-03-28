@@ -33,6 +33,18 @@ type Updater<T> = T | ((old: T) => T);
 const getValueFromUpdater = <T,>(updater: Updater<T>, currentValue: T) =>
   updater instanceof Function ? (updater(currentValue) as T) : (updater as T);
 
+/* Parses the unparsed state returning nothing if it's null or unparsable */
+const getDefaultParsedState = (unparsedState: string | null) => {
+  if (unparsedState !== null) {
+    try {
+      return JSON.parse(unparsedState);
+    } catch (_error) {
+      // Do nothing, error shouldnt appear to the user
+    }
+  }
+  return {};
+};
+
 interface UsePreservedTableStateProps {
   initialState?: Partial<MRT_TableState<MRT_RowData>>;
   // Use this to only store the state internally and not preserve it in the URL e.g. dialogues
@@ -43,62 +55,47 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const isFirstUpdate = useRef(true);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const unparsedStateSearchParams = props?.storeInUrl
-    ? searchParams.get('state')
-    : null;
-  // TODO: Do something when it fails to parse from url
-  const [parsedStateSearchParams, setParsedStateSearchParams] =
-    useState<StateSearchParams>(
-      unparsedStateSearchParams !== null
-        ? JSON.parse(unparsedStateSearchParams)
-        : {}
-    );
+  const unparsedState = props?.storeInUrl ? searchParams.get('state') : null;
+
+  const [parsedState, setParsedState] = useState<StateSearchParams>(
+    getDefaultParsedState(unparsedState)
+  );
 
   // Update the search params only if necessary
   useEffect(() => {
     if (props?.storeInUrl) {
-      const newUnparsedStateSearchParams = JSON.stringify(
-        parsedStateSearchParams
-      );
-      if (unparsedStateSearchParams !== newUnparsedStateSearchParams) {
+      const newUnparsedState = JSON.stringify(parsedState);
+      if (unparsedState !== newUnparsedState) {
         // Clear search params if state is no longer needed
-        if (newUnparsedStateSearchParams !== '{}')
-          setSearchParams({ state: newUnparsedStateSearchParams });
+        if (newUnparsedState !== '{}')
+          setSearchParams({ state: newUnparsedState });
         else setSearchParams({});
       }
     }
-  }, [
-    parsedStateSearchParams,
-    props?.storeInUrl,
-    setSearchParams,
-    unparsedStateSearchParams,
-  ]);
+  }, [parsedState, props?.storeInUrl, setSearchParams, unparsedState]);
 
   // Convert the state stored into the url to one that can be used
   // (apply any default values here)
   const state: State = useMemo(
     () => ({
-      cF: parsedStateSearchParams.cF || [],
-      srt: parsedStateSearchParams.srt || [],
+      cF: parsedState.cF || [],
+      srt: parsedState.srt || [],
       // Use given default or {}
-      cVis:
-        parsedStateSearchParams.cVis ||
-        props?.initialState?.columnVisibility ||
-        {},
-      gFil: parsedStateSearchParams.gFil,
-      p: parsedStateSearchParams.p ||
+      cVis: parsedState.cVis || props?.initialState?.columnVisibility || {},
+      gFil: parsedState.gFil,
+      p: parsedState.p ||
         props?.initialState?.pagination || { pageSize: 15, pageIndex: 0 },
-      cO: parsedStateSearchParams.cO || [],
-      g: parsedStateSearchParams.g || [],
+      cO: parsedState.cO || [],
+      g: parsedState.g || [],
     }),
     [
-      parsedStateSearchParams.cF,
-      parsedStateSearchParams.cO,
-      parsedStateSearchParams.cVis,
-      parsedStateSearchParams.g,
-      parsedStateSearchParams.gFil,
-      parsedStateSearchParams.p,
-      parsedStateSearchParams.srt,
+      parsedState.cF,
+      parsedState.cO,
+      parsedState.cVis,
+      parsedState.g,
+      parsedState.gFil,
+      parsedState.p,
+      parsedState.srt,
       props?.initialState?.columnVisibility,
       props?.initialState?.pagination,
     ]
@@ -115,7 +112,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       }
       // Use function version to ensure multiple can be changed in the same render
       // e.g. grouping also changes ordering
-      setParsedStateSearchParams((prevState) => ({
+      setParsedState((prevState) => ({
         ...prevState,
         ...modifiedParams,
       }));
@@ -150,14 +147,29 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const setColumnVisibility = useCallback(
     (updaterOrValue: Updater<MRT_VisibilityState>) => {
       const newValue = getValueFromUpdater(updaterOrValue, state.cVis);
-      // TODO: Make this work for multiple (MRT stores it forever after initially chaning, so it might be
-      //       easiest to just let it be there afterwards)
+
+      // Check if default value for removing from the URL
+      const initialValue = props?.initialState?.columnVisibility || {};
+      let defaultState = true;
+      if (Object.keys(newValue).length > 0) {
+        // Check any undefined initial value is true or otherwise
+        // if it is defined that it matches the original value, otherwise it
+        // is not the default
+        for (const key in newValue) {
+          if (
+            initialValue[key] === undefined
+              ? newValue[key] !== true
+              : initialValue[key] !== newValue[key]
+          )
+            defaultState = false;
+        }
+      } else {
+        // New value empty, need to ensure initial value is for it to be default
+        defaultState = Object.keys(initialValue).length === 0;
+      }
+
       updateSearchParams({
-        cVis:
-          JSON.stringify(newValue) ===
-          JSON.stringify(props?.initialState?.columnVisibility || {})
-            ? undefined
-            : newValue,
+        cVis: defaultState ? undefined : newValue,
       });
     },
     [props?.initialState?.columnVisibility, state.cVis, updateSearchParams]
@@ -176,8 +188,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const setPagination = useCallback(
     (updaterOrValue: Updater<MRT_PaginationState>) => {
       const newValue = getValueFromUpdater(updaterOrValue, state.p);
-      // TODO: Make this work for multiple (MRT stores it forever after initially chaning, so it might be
-      //       easiest to just let it be there afterwards)
       updateSearchParams({
         p:
           JSON.stringify(newValue) ===
@@ -202,7 +212,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const setGroupingState = useCallback(
     (updaterOrValue: Updater<MRT_GroupingState>) => {
       const newValue = getValueFromUpdater(updaterOrValue, state.g);
-      console.log(newValue);
       updateSearchParams({
         g: newValue.length === 0 ? undefined : newValue,
       });
