@@ -66,7 +66,7 @@ interface UsePreservedTableStateProps {
 }
 
 export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
-  const isFirstUpdate = useRef(true);
+  const firstUpdate = useRef<StateSearchParams | undefined>(undefined);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const compressedState = props?.storeInUrl ? searchParams.get('state') : null;
@@ -100,10 +100,12 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       // Use given default or {}
       cVis: parsedState.cVis || props?.initialState?.columnVisibility || {},
       gFil: parsedState.gFil,
+      // Intial MRT assigned value is in first update, must be assigned here for column ordering to work correctly
+      // when it is the first thing done
+      cO: parsedState.cO || firstUpdate.current?.cO || [],
+      g: parsedState.g || [],
       p: parsedState.p ||
         props?.initialState?.pagination || { pageSize: 15, pageIndex: 0 },
-      cO: parsedState.cO || [],
-      g: parsedState.g || [],
     }),
     [
       parsedState.cF,
@@ -123,8 +125,8 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       // Ignore first update (pagination and column order has a habit of being set in MRT
       // shortly after the first render with actual data even if disabled in the table itself)
       // similar to https://www.material-react-table.com/docs/guides/state-management
-      if (isFirstUpdate.current) {
-        isFirstUpdate.current = false;
+      if (firstUpdate.current === undefined) {
+        firstUpdate.current = modifiedParams;
         return;
       }
       // Use function version to ensure multiple can be changed in the same render
@@ -206,7 +208,11 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     (updaterOrValue: Updater<MRT_ColumnOrderState>) => {
       const newValue = getValueFromUpdater(updaterOrValue, state.cO);
       updateSearchParams({
-        cO: newValue.length === 0 ? undefined : newValue,
+        cO:
+          newValue.length === 0 ||
+          JSON.stringify(newValue) === JSON.stringify(firstUpdate.current?.cO)
+            ? undefined
+            : newValue,
       });
     },
     [state.cO, updateSearchParams]
@@ -246,7 +252,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       grouping: state.g,
       pagination: state.p,
     },
-    onChangePreservedStates: {
+    onPreservedStatesChange: {
       onColumnFiltersChange: setColumnFilters,
       onSortingChange: setSorting,
       onColumnVisibilityChange: setColumnVisibility,

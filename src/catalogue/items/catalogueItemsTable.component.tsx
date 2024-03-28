@@ -606,9 +606,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       selectedRowIds.includes(catalogueItem.id)
     ) ?? [];
 
-  // const [columnFilters, setColumnFilters] =
-  //   React.useState<MRT_ColumnFiltersState>([]);
-
   const handleRowSelection = React.useCallback(
     (row: MRT_Row<TableRowData>) => {
       // Ensure selectable
@@ -635,7 +632,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     [isItemSelectable, onChangeObsoleteReplacementId, selectedRowIds]
   );
 
-  const { preservedState, onChangePreservedStates } = usePreservedTableState({
+  const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       columnVisibility: { 'catalogueItem.created_time': false },
       pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
@@ -747,8 +744,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       variant: 'outlined',
     },
     //Functions
+    ...onPreservedStatesChange,
     getRowId: (row) => row.catalogueItem.id,
-    ...onChangePreservedStates,
     onRowSelectionChange: setRowSelection,
     renderCreateRowDialogContent: ({ table, row }) => {
       return (
