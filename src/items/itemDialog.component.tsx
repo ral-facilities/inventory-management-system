@@ -865,7 +865,6 @@ function ItemDialog(props: ItemDialogProps) {
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
       maxWidth="lg"
       PaperProps={{ sx: { height: '705px' } }}
       fullWidth

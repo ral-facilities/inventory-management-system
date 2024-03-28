@@ -135,7 +135,6 @@ const CatalogueCategoryDirectoryDialog = (
   return (
     <Dialog
       open={open}
-      onClose={onClose}
       maxWidth="lg"
       PaperProps={{ sx: { height: '692px' } }}
       fullWidth

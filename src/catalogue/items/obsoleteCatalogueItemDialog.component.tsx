@@ -293,7 +293,6 @@ const ObsoleteCatalogueItemDialog = (
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
       PaperProps={{ sx: { height: '720px' } }}
       fullWidth
       maxWidth="xl"

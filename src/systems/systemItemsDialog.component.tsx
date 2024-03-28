@@ -77,7 +77,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   ]);
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+    <Dialog open={open} maxWidth="md" fullWidth>
       <DialogTitle marginLeft={2}>
         <Grid container spacing={2}>
           <Grid item>
@@ -111,7 +111,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={handleClose}>Cancel</Button>
         <Button
           disabled={
             isMovePending ||

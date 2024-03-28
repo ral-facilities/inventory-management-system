@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../api/api';
 import { System } from '../app.types';
@@ -57,6 +57,23 @@ describe('SystemDirectoryDialog', () => {
     expect(axiosPostSpy).not.toHaveBeenCalled();
     expect(mockOnChangeSelectedSystems).not.toHaveBeenCalled();
     expect(mockOnClose).toHaveBeenCalled();
+  });
+
+  it('does not close dialog on background click, or on escape key press', async () => {
+    createView();
+
+    await userEvent.click(document.body);
+
+    expect(mockOnClose).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(screen.getByRole('dialog'), {
+      key: 'Escape',
+      code: 'Escape',
+      keyCode: 27,
+      charCode: 27,
+    });
+
+    expect(mockOnClose).not.toHaveBeenCalled();
   });
 
   it('renders the breadcrumbs and navigates correctly', async () => {
