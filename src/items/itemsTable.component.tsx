@@ -457,6 +457,27 @@ export function ItemsTable(props: ItemTableProps) {
         </MenuItem>,
       ];
     },
+    renderBottomToolbarCustomActions: ({ table }) => (
+      <Typography>
+        {`Showing rows ${
+          Math.min(
+            table.getState().pagination.pageIndex *
+              table.getState().pagination.pageSize +
+              table.getState().pagination.pageSize,
+            table.getRowCount()
+          ) === 0
+            ? 0
+            : (
+                table.getState().pagination.pageIndex *
+                  table.getState().pagination.pageSize +
+                1
+              ).toLocaleString()
+        }
+          - ${Math.min(table.getState().pagination.pageIndex * table.getState().pagination.pageSize + table.getState().pagination.pageSize, table.getRowCount()).toLocaleString()}
+           of ${table.getRowCount()}`}
+      </Typography>
+    ),
+
     renderDetailPanel: dense
       ? ({ row }) => (
           <ItemsDetailsPanel
