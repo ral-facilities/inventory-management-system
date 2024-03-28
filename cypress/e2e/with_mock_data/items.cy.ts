@@ -104,6 +104,109 @@ describe('Items', () => {
     });
   });
 
+  it('adds an item with only mandatory fields (serial number advanced options)', () => {
+    cy.findByRole('button', { name: 'Add Item' }).click();
+    cy.findByText('Show advanced options').click();
+    cy.findByLabelText('Serial number').type('test %s');
+    cy.findByLabelText('Quantity').type('10');
+    cy.findByLabelText('Starting value').type('2');
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByText('Giant laser').click();
+
+    cy.findByRole('button', { name: 'Finish' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/items',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).eq(10);
+      expect(JSON.stringify(await postRequests[0].json())).equal(
+        JSON.stringify({
+          catalogue_item_id: '1',
+          system_id: '65328f34a40ff5301575a4e3',
+          purchase_order_number: null,
+          is_defective: false,
+          usage_status: 0,
+          warranty_end_date: null,
+          asset_number: null,
+          serial_number: 'test 2',
+          delivered_date: null,
+          notes: null,
+          properties: [
+            { name: 'Resolution', value: 12 },
+            { name: 'Frame Rate', value: 30 },
+            { name: 'Sensor Type', value: 'CMOS' },
+            { name: 'Sensor brand', value: null },
+            { name: 'Broken', value: true },
+            { name: 'Older than five years', value: false },
+          ],
+        })
+      );
+    });
+  });
+
+  it.only('displays error messages for serial number advanced options', () => {
+    cy.findByRole('button', { name: 'Add Item' }).click();
+
+    cy.findByText('Show advanced options').click();
+
+    cy.findByLabelText('Starting value').type('10');
+
+    cy.findByText('Please enter a quantity value').should('exist');
+
+    cy.findByLabelText('Starting value').clear();
+
+    cy.findByLabelText('Quantity').type('10a');
+    cy.findByLabelText('Starting value').type('10a');
+
+    cy.findAllByText('Please enter a valid number').should('have.length', 2);
+
+    cy.findByLabelText('Quantity').clear();
+    cy.findByLabelText('Starting value').clear();
+
+    cy.findByLabelText('Quantity').type('10.5');
+    cy.findByLabelText('Starting value').type('10.5');
+
+    cy.findByText('Quantity must be an integer').should('exist');
+    cy.findByText('Starting value must be an integer').should('exist');
+
+    cy.findByLabelText('Quantity').clear();
+    cy.findByLabelText('Starting value').clear();
+
+    cy.findByLabelText('Quantity').type('-1');
+    cy.findByLabelText('Starting value').type('-1');
+
+    cy.findByText('Quantity must be greater than 1').should('exist');
+    cy.findByText('Starting value must be greater than or equal to 0').should(
+      'exist'
+    );
+
+    cy.findByLabelText('Quantity').clear();
+    cy.findByLabelText('Starting value').clear();
+
+    cy.findByLabelText('Quantity').type('100');
+    cy.findByLabelText('Starting value').type('2');
+
+    cy.findByText(
+      'Please use %s to specify the location you want to append the number to serial number'
+    ).should('exist');
+    cy.findByText('Quantity must be less than 100').should('exist');
+
+    cy.findByLabelText('Quantity').clear();
+    cy.findByLabelText('Starting value').clear();
+
+    cy.findByLabelText('Serial number').type('test %s');
+    cy.findByLabelText('Quantity').type('4');
+    cy.findByLabelText('Starting value').type('2');
+
+    cy.findByText('e.g. test 2').should('exist');
+  });
+
   it('adds an item with only mandatory fields (allowed list of values)', () => {
     cy.visit('/catalogue/item/17/items');
     cy.findByRole('button', { name: 'Add Item' }).click();
