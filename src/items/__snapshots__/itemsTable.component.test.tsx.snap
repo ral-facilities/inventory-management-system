@@ -1077,9 +1077,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
           <p
             class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
           >
-            Showing rows 0
-    - 0
-     of 0
+            Returned 0 out of undefined Items
           </p>
           <div
             class="MuiBox-root css-nokk8"
@@ -2514,9 +2512,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
           <p
             class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
           >
-            Showing rows 1
-    - 4
-     of 4
+            Total Items: 4
           </p>
           <div
             class="MuiBox-root css-nokk8"
@@ -4007,9 +4003,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
           <p
             class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
           >
-            Showing rows 1
-    - 4
-     of 4
+            Total Items: 4
           </p>
           <div
             class="MuiBox-root css-nokk8"

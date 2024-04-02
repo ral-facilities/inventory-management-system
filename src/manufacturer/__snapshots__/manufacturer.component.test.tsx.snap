@@ -1889,9 +1889,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
           <p
             class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
           >
-            Showing rows 1
-    - 4
-     of 4
+            Total Manufacturers: 4
           </p>
           <div
             class="MuiBox-root css-nokk8"
