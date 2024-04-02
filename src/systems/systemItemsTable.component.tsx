@@ -189,14 +189,11 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     return status || '';
   };
 
-  const isFirstRun = React.useRef(true);
   React.useEffect(() => {
     if (
-      isFirstRun.current &&
       onChangeAggregatedCellUsageStatus &&
       aggregatedCellUsageStatus?.length === 0
     ) {
-      isFirstRun.current = false; // Set isFirstRun to false after the first run
       const initialUsageStatues: Omit<UsageStatuesType, 'item_id'>[] =
         Array.from(catalogueItemIdSet).map((catalogue_item_id) => ({
           catalogue_item_id: catalogue_item_id,
