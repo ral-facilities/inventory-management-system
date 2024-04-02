@@ -10,7 +10,7 @@ import {
   MRT_VisibilityState,
 } from 'material-react-table';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 // State as will be stored after parsing from search params
 interface State {
@@ -70,6 +70,7 @@ interface UsePreservedTableStateProps {
 export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const firstUpdate = useRef<StateSearchParams>({});
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
 
   const urlParamName = props?.urlParamName || 'state';
   const compressedState = props?.storeInUrl
@@ -80,6 +81,17 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const [parsedState, setParsedState] = useState<StateSearchParams>(
     getDefaultParsedState(unparsedState)
   );
+
+  // Update when the path changes e.g. when navigating between systems (ensures
+  // the same pagination state is recalled when going back)
+  useEffect(() => {
+    const defaultParsedState = getDefaultParsedState(unparsedState);
+    if (defaultParsedState !== parsedState && location.pathname) {
+      firstUpdate.current.p = undefined;
+      setParsedState(defaultParsedState);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
   // Update the search params only if necessary
   useEffect(() => {
@@ -139,7 +151,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
 
   const updateSearchParams = useCallback(
     (modifiedParams: StateSearchParams) => {
-      console.log(modifiedParams);
       // Ignore first update (pagination and column order has a habit of being set in MRT
       // shortly after the first render with actual data even if disabled in the table itself)
       // similar to https://www.material-react-table.com/docs/guides/state-management
@@ -257,6 +268,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const setPagination = useCallback(
     (updaterOrValue: Updater<MRT_PaginationState>) => {
       const newValue = getValueFromUpdater(updaterOrValue, state.p);
+      console.log('NEW', newValue);
       updateSearchParams({
         p:
           JSON.stringify(newValue) ===
