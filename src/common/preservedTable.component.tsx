@@ -1,3 +1,4 @@
+import LZString from 'lz-string';
 import {
   MRT_ColumnFiltersState,
   MRT_ColumnOrderState,
@@ -9,8 +10,7 @@ import {
   MRT_VisibilityState,
 } from 'material-react-table';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import LZString from 'lz-string';
+import { useSearchParams } from 'react-router-dom';
 
 // State as will be stored after parsing from search params
 interface State {
@@ -34,7 +34,7 @@ type Updater<T> = T | ((old: T) => T);
 const getValueFromUpdater = <T,>(updater: Updater<T>, currentValue: T) =>
   updater instanceof Function ? (updater(currentValue) as T) : (updater as T);
 
-/* Attempts to decompress state from URL, returns null if its null or not decompressable
+/* Attempts to decompress state from URL, returns '{}' if its null or not decompressable
    (which appears rare) */
 const decompressState = (compressedStateOrNull: string | null) => {
   if (compressedStateOrNull !== null) {
@@ -63,14 +63,18 @@ interface UsePreservedTableStateProps {
   initialState?: Partial<MRT_TableState<MRT_RowData>>;
   // Use this to only store the state internally and not preserve it in the URL e.g. dialogues
   storeInUrl?: boolean;
+  // URL parameter name to store the state in (default is 'state' if not defined here)
+  urlParamName?: string;
 }
 
 export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
-  const firstUpdate = useRef<StateSearchParams | undefined>(undefined);
+  const firstUpdate = useRef<StateSearchParams>({});
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
 
-  const compressedState = props?.storeInUrl ? searchParams.get('state') : null;
+  const urlParamName = props?.urlParamName || 'state';
+  const compressedState = props?.storeInUrl
+    ? searchParams.get(urlParamName)
+    : null;
   const unparsedState = decompressState(compressedState);
 
   const [parsedState, setParsedState] = useState<StateSearchParams>(
@@ -84,19 +88,22 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       if (unparsedState !== newUnparsedState) {
         // Clear search params if state is no longer needed
         if (newUnparsedState !== '{}')
-          navigate(
-            `?state=${LZString.compressToEncodedURIComponent(newUnparsedState)}`,
+          setSearchParams(
+            {
+              [urlParamName]:
+                LZString.compressToEncodedURIComponent(newUnparsedState),
+            },
             { replace: true }
           );
-        else setSearchParams({});
+        else setSearchParams({}, { replace: true });
       }
     }
   }, [
-    navigate,
     parsedState,
     props?.storeInUrl,
     setSearchParams,
     unparsedState,
+    urlParamName,
   ]);
 
   // Convert the state stored into the url to one that can be used
@@ -111,9 +118,10 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       // Intial MRT assigned value is in first update, must be assigned here for column ordering to work correctly
       // when it is the first thing done
       cO: parsedState.cO || firstUpdate.current?.cO || [],
-      g: parsedState.g || [],
+      g: parsedState.g || props?.initialState?.grouping || [],
       p: parsedState.p ||
-        props?.initialState?.pagination || { pageSize: 15, pageIndex: 0 },
+        props?.initialState?.pagination ||
+        firstUpdate.current?.p || { pageSize: 15, pageIndex: 0 },
     }),
     [
       parsedState.cF,
@@ -124,17 +132,23 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       parsedState.p,
       parsedState.srt,
       props?.initialState?.columnVisibility,
+      props?.initialState?.grouping,
       props?.initialState?.pagination,
     ]
   );
 
   const updateSearchParams = useCallback(
     (modifiedParams: StateSearchParams) => {
+      console.log(modifiedParams);
       // Ignore first update (pagination and column order has a habit of being set in MRT
       // shortly after the first render with actual data even if disabled in the table itself)
       // similar to https://www.material-react-table.com/docs/guides/state-management
-      if (firstUpdate.current === undefined) {
-        firstUpdate.current = modifiedParams;
+      if ('cO' in modifiedParams && firstUpdate.current.cO === undefined) {
+        firstUpdate.current.cO = modifiedParams.cO;
+        return;
+      }
+      if ('p' in modifiedParams && firstUpdate.current.p === undefined) {
+        firstUpdate.current.p = modifiedParams.p;
         return;
       }
       // Use function version to ensure multiple can be changed in the same render
@@ -230,10 +244,14 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     (updaterOrValue: Updater<MRT_GroupingState>) => {
       const newValue = getValueFromUpdater(updaterOrValue, state.g);
       updateSearchParams({
-        g: newValue.length === 0 ? undefined : newValue,
+        g:
+          JSON.stringify(newValue) ===
+          JSON.stringify(props?.initialState?.grouping || {})
+            ? undefined
+            : newValue,
       });
     },
-    [state.g, updateSearchParams]
+    [props?.initialState?.grouping, state.g, updateSearchParams]
   );
 
   const setPagination = useCallback(
@@ -242,12 +260,12 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       updateSearchParams({
         p:
           JSON.stringify(newValue) ===
-          JSON.stringify(props?.initialState?.pagination || {})
+          JSON.stringify(firstUpdate.current?.p || {})
             ? undefined
             : newValue,
       });
     },
-    [props?.initialState?.pagination, state.p, updateSearchParams]
+    [state.p, updateSearchParams]
   );
 
   return {
