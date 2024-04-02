@@ -159,6 +159,9 @@ export const useMoveItemsToSystem = (): UseMutationResult<
           return editItem({
             id: item.id,
             system_id: moveItemsToSystem.targetSystem?.id || '',
+            usage_status: moveItemsToSystem.usageStatues.find(
+              (status) => status.item_id === item.id
+            )?.usage_status,
           })
             .then((result: Item) => {
               const targetSystemName =

@@ -15,7 +15,11 @@ import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { useMoveItemsToSystem } from '../api/items';
 import { useSystem, useSystems, useSystemsBreadcrumbs } from '../api/systems';
-import { Item, UsageStatusType } from '../app.types';
+import {
+  Item,
+  MoveItemsToSystemUsageStatus,
+  UsageStatusType,
+} from '../app.types';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemsTableView } from './systemsTableView.component';
@@ -39,6 +43,17 @@ export interface UsageStatuesErrorType
   extends Omit<UsageStatuesType, 'usageStatus'> {
   error: boolean;
 }
+
+const moveItemsToSystemUsageStatues = (
+  list: UsageStatuesType[]
+): MoveItemsToSystemUsageStatus[] => {
+  return list
+    .filter((item) => item.usageStatus !== '') // Exclude items with empty usageStatus
+    .map((item) => ({
+      item_id: item.item_id,
+      usage_status: item.usageStatus as UsageStatusType, // Safer now, but still a type assertion.
+    }));
+};
 
 const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const { open, onClose, selectedItems, onChangeSelectedItems } = props;
@@ -149,10 +164,12 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       hasSystemErrors && setPlaceIntoSystemError(hasSystemErrors);
       return;
     }
+
     // Ensure finished loading and not moving to root
     // (where we don't need to load anything as the name is known)
     if (!targetSystemLoading && targetSystem !== undefined) {
       moveItemsToSystem({
+        usageStatues: moveItemsToSystemUsageStatues(usageStatues),
         selectedItems: selectedItems,
         // Only reason for targetSystem to be undefined here is if not loading at all
         // which happens when at root
@@ -171,6 +188,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     selectedItems,
     targetSystem,
     targetSystemLoading,
+    usageStatues,
     validateUsageStatus,
   ]);
 
