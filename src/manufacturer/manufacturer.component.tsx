@@ -16,17 +16,17 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
-  type MRT_ColumnFiltersState,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useManufacturers } from '../api/manufacturers';
 import { Manufacturer } from '../app.types';
+import { usePreservedTableState } from '../common/preservedTable.component';
+import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
+import Breadcrumbs from '../view/breadcrumbs.component';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
-import Breadcrumbs from '../view/breadcrumbs.component';
-import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 
 function ManufacturerComponent() {
   const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
@@ -136,8 +136,13 @@ function ManufacturerComponent() {
   const noResultsTxt =
     'No results found: Try adding an Manufacturer by using the Add Manufacturer button on the top left of your screen';
 
-  const [columnFilters, setColumnFilters] =
-    React.useState<MRT_ColumnFiltersState>([]);
+  const { preservedState, onPreservedStatesChange } = usePreservedTableState({
+    initialState: {
+      columnVisibility: { created_time: false },
+      pagination: { pageSize: 15, pageIndex: 0 },
+    },
+    storeInUrl: true,
+  });
 
   const table = useMaterialReactTable({
     // Data
@@ -167,11 +172,9 @@ function ManufacturerComponent() {
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      pagination: { pageSize: 15, pageIndex: 0 },
-      columnVisibility: { created_time: false },
     },
     state: {
-      columnFilters,
+      ...preservedState,
       showProgressBars: ManufacturerDataLoading, //or showSkeletons
     },
     // MUI
@@ -191,7 +194,7 @@ function ManufacturerComponent() {
       variant: 'outlined',
     },
     // Functions
-    onColumnFiltersChange: setColumnFilters,
+    ...onPreservedStatesChange,
     renderCreateRowDialogContent: ({ table }) => {
       return (
         <>
@@ -225,7 +228,7 @@ function ManufacturerComponent() {
           startIcon={<ClearIcon />}
           sx={{ mx: '4px' }}
           variant="outlined"
-          disabled={columnFilters.length === 0}
+          disabled={preservedState.columnFilters.length === 0}
           onClick={() => {
             table.resetColumnFilters();
           }}

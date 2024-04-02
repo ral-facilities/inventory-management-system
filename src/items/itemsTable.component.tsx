@@ -1,44 +1,44 @@
-import React from 'react';
-import {
-  Box,
-  Button,
-  Tooltip,
-  Typography,
-  Link as MuiLink,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-} from '@mui/material';
-import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
-import SaveAsIcon from '@mui/icons-material/SaveAs';
-import ItemDialog from './itemDialog.component';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
-  PropertyFiltersType,
-  findPropertyValue,
-} from '../catalogue/items/catalogueItemsTable.component';
+  Box,
+  Button,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  Link as MuiLink,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import {
   MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
   type MRT_ColumnDef,
-  type MRT_ColumnFiltersState,
 } from 'material-react-table';
+import { MRT_Localization_EN } from 'material-react-table/locales/en';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useItems } from '../api/items';
 import {
   CatalogueCategory,
   CatalogueItem,
   Item,
   UsageStatusType,
 } from '../app.types';
-import { MRT_Localization_EN } from 'material-react-table/locales/en';
-import { useItems } from '../api/items';
-import ItemsDetailsPanel from './itemsDetailsPanel.component';
+import {
+  PropertyFiltersType,
+  findPropertyValue,
+} from '../catalogue/items/catalogueItemsTable.component';
+import { usePreservedTableState } from '../common/preservedTable.component';
 import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
+import ItemDialog from './itemDialog.component';
+import ItemsDetailsPanel from './itemsDetailsPanel.component';
 
 export interface ItemTableProps {
   catalogueCategory: CatalogueCategory;
@@ -267,8 +267,13 @@ export function ItemsTable(props: ItemTableProps) {
     ];
   }, [catalogueCategory]);
 
-  const [columnFilters, setColumnFilters] =
-    React.useState<MRT_ColumnFiltersState>([]);
+  const { preservedState, onPreservedStatesChange } = usePreservedTableState({
+    initialState: {
+      columnVisibility: { created_time: false },
+      pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
+    },
+    storeInUrl: !dense,
+  });
 
   const table = useMaterialReactTable({
     // Data
@@ -325,12 +330,10 @@ export function ItemsTable(props: ItemTableProps) {
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      pagination: { pageSize: dense ? 5 : 15, pageIndex: 0 },
-      columnVisibility: { created_time: false },
     },
     state: {
+      ...preservedState,
       showProgressBars: isLoading, //or showSkeletons
-      columnFilters,
     },
     // MUI
     muiTableContainerProps: {
@@ -347,8 +350,8 @@ export function ItemsTable(props: ItemTableProps) {
       variant: 'outlined',
     },
     // Functions
+    ...onPreservedStatesChange,
     getRowId: (row) => row.id,
-    onColumnFiltersChange: setColumnFilters,
     renderCreateRowDialogContent: ({ table, row }) => {
       return (
         <>
@@ -393,7 +396,7 @@ export function ItemsTable(props: ItemTableProps) {
           startIcon={<ClearIcon />}
           sx={{ mx: 0.5 }}
           variant="outlined"
-          disabled={columnFilters.length === 0}
+          disabled={preservedState.columnFilters.length === 0}
           onClick={() => {
             table.resetColumnFilters();
           }}

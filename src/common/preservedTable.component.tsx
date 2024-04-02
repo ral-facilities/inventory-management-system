@@ -9,7 +9,7 @@ import {
   MRT_VisibilityState,
 } from 'material-react-table';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import LZString from 'lz-string';
 
 // State as will be stored after parsing from search params
@@ -44,11 +44,11 @@ const decompressState = (compressedStateOrNull: string | null) => {
       // Do nothing, error shouldn't appear to the user
     }
   }
-  return null;
+  return '{}';
 };
 
 /* Parses the unparsed state returning nothing if it's null or unparsable */
-const getDefaultParsedState = (unparsedState: string | null) => {
+const getDefaultParsedState = (unparsedState: string) => {
   if (unparsedState !== null) {
     try {
       return JSON.parse(unparsedState);
@@ -68,6 +68,7 @@ interface UsePreservedTableStateProps {
 export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const firstUpdate = useRef<StateSearchParams | undefined>(undefined);
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const compressedState = props?.storeInUrl ? searchParams.get('state') : null;
   const unparsedState = decompressState(compressedState);
@@ -83,13 +84,20 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       if (unparsedState !== newUnparsedState) {
         // Clear search params if state is no longer needed
         if (newUnparsedState !== '{}')
-          setSearchParams({
-            state: LZString.compressToEncodedURIComponent(newUnparsedState),
-          });
+          navigate(
+            `?state=${LZString.compressToEncodedURIComponent(newUnparsedState)}`,
+            { replace: true }
+          );
         else setSearchParams({});
       }
     }
-  }, [parsedState, props?.storeInUrl, setSearchParams, unparsedState]);
+  }, [
+    navigate,
+    parsedState,
+    props?.storeInUrl,
+    setSearchParams,
+    unparsedState,
+  ]);
 
   // Convert the state stored into the url to one that can be used
   // (apply any default values here)
