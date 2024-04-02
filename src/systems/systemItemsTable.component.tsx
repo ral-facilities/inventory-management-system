@@ -16,7 +16,7 @@ import { useItems } from '../api/items';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import SystemItemsDialog from './systemItemsDialog.component';
-import { formatDateTimeStrings, showTotalRowCounts } from '../utils';
+import { formatDateTimeStrings } from '../utils';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
@@ -325,11 +325,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     ),
     renderBottomToolbarCustomActions: ({ table }) => (
       <Typography>
-        {showTotalRowCounts(
-          table.getState().pagination.pageIndex,
-          table.getState().pagination.pageSize,
-          table.getRowCount()
-        )}
+        {table.getFilteredRowModel().rows.length == itemsData?.length
+          ? `Total Items: ${itemsData.length}`
+          : `Returned ${table.getFilteredRowModel().rows.length} out of ${itemsData?.length} Items`}
       </Typography>
     ),
 

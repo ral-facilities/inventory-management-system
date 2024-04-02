@@ -37,11 +37,7 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import { useItems } from '../api/items';
 import ItemsDetailsPanel from './itemsDetailsPanel.component';
-import {
-  formatDateTimeStrings,
-  getPageHeightCalc,
-  showTotalRowCounts,
-} from '../utils';
+import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 
 export interface ItemTableProps {
@@ -457,11 +453,9 @@ export function ItemsTable(props: ItemTableProps) {
     },
     renderBottomToolbarCustomActions: ({ table }) => (
       <Typography>
-        {showTotalRowCounts(
-          table.getState().pagination.pageIndex,
-          table.getState().pagination.pageSize,
-          table.getRowCount()
-        )}
+        {table.getFilteredRowModel().rows.length == data?.length
+          ? `Total Items: ${data.length}`
+          : `Returned ${table.getFilteredRowModel().rows.length} out of ${data?.length} Items`}
       </Typography>
     ),
 

@@ -26,11 +26,7 @@ import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import {
-  formatDateTimeStrings,
-  getPageHeightCalc,
-  showTotalRowCounts,
-} from '../utils';
+import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 
 function ManufacturerComponent() {
   const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
@@ -274,11 +270,9 @@ function ManufacturerComponent() {
     },
     renderBottomToolbarCustomActions: ({ table }) => (
       <Typography>
-        {showTotalRowCounts(
-          table.getState().pagination.pageIndex,
-          table.getState().pagination.pageSize,
-          table.getRowCount()
-        )}
+        {table.getFilteredRowModel().rows.length == ManufacturerData?.length
+          ? `Total Manufacturers: ${ManufacturerData.length}`
+          : `Returned ${table.getFilteredRowModel().rows.length} out of ${ManufacturerData?.length} Manufacturers`}
       </Typography>
     ),
   });

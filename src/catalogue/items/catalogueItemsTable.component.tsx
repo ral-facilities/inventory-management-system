@@ -41,7 +41,6 @@ import {
   formatDateTimeStrings,
   generateUniqueName,
   getPageHeightCalc,
-  showTotalRowCounts,
 } from '../../utils';
 import CatalogueItemsDetailsPanel from './catalogueItemsDetailsPanel.component';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
@@ -775,11 +774,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     },
     renderBottomToolbarCustomActions: ({ table }) => (
       <Typography>
-        {showTotalRowCounts(
-          table.getState().pagination.pageIndex,
-          table.getState().pagination.pageSize,
-          table.getRowCount()
-        )}
+        {table.getFilteredRowModel().rows.length == catalogueItemsData?.length
+          ? `Total Catalogue Items: ${catalogueItemsData.length}`
+          : `Returned ${table.getFilteredRowModel().rows.length} out of ${catalogueItemsData?.length} Catalogue Items`}
       </Typography>
     ),
 

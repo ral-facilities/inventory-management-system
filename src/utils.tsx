@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { format, parseISO } from 'date-fns';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
@@ -86,20 +87,4 @@ export const formatDateTimeStrings = (
     : format(date, 'dd MMM yyyy');
 
   return formattedDate;
-};
-
-/* returns a string with the total rows and current rows for table views */
-export const showTotalRowCounts = (
-  pageIndex: number,
-  pageSize: number,
-  totalRowCount: number
-): string => {
-  const firstRowIndex = pageIndex * pageSize;
-  const lastRowIndex = Math.min(pageIndex * pageSize + pageSize, totalRowCount);
-
-  return `Showing rows ${
-    lastRowIndex === 0 ? 0 : (firstRowIndex + 1).toLocaleString()
-  }
-    - ${lastRowIndex.toLocaleString()}
-     of ${totalRowCount}`;
 };
