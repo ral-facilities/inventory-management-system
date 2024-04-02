@@ -18,6 +18,7 @@ import {
   EditItem,
   Item,
   MoveItemsToSystem,
+  MoveItemsToSystemUsageStatus,
   System,
 } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
@@ -206,6 +207,11 @@ describe('catalogue items api functions', () => {
       getItemById('G463gOIA'),
     ];
 
+    const mockUsageStatues: MoveItemsToSystemUsageStatus[] = [
+      { item_id: 'KvT2Ox7n', usage_status: 0 },
+      { item_id: 'G463gOIA', usage_status: 0 },
+    ];
+
     let moveItemsToSystem: MoveItemsToSystem;
 
     // Use patch spy for testing since response is not actual data in this case
@@ -215,6 +221,7 @@ describe('catalogue items api functions', () => {
     beforeEach(() => {
       moveItemsToSystem = {
         // Prevent test interference if modifying the selected items
+        usageStatues: JSON.parse(JSON.stringify(mockUsageStatues)),
         selectedItems: JSON.parse(JSON.stringify(mockItems)),
         targetSystem: SystemsJSON[0] as System,
       };
@@ -241,6 +248,9 @@ describe('catalogue items api functions', () => {
       moveItemsToSystem.selectedItems.map((item) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
           system_id: moveItemsToSystem.targetSystem.id,
+          usage_status: moveItemsToSystem.usageStatues.find(
+            (status) => status.item_id === item.id
+          )?.usage_status,
         })
       );
       expect(result.current.data).toEqual(
@@ -258,6 +268,10 @@ describe('catalogue items api functions', () => {
         name: 'New system name',
         id: 'new_system_id',
       };
+      moveItemsToSystem.usageStatues = [
+        ...moveItemsToSystem.usageStatues,
+        { item_id: 'Error 409', usage_status: 2 },
+      ];
 
       // Fail just the 1st system
       moveItemsToSystem.selectedItems[0].id = 'Error 409';
@@ -276,6 +290,9 @@ describe('catalogue items api functions', () => {
       moveItemsToSystem.selectedItems.map((item) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
           system_id: 'new_system_id',
+          usage_status: moveItemsToSystem.usageStatues.find(
+            (status) => status.item_id === item.id
+          )?.usage_status,
         })
       );
       expect(result.current.data).toEqual(
