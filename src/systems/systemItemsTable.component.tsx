@@ -210,7 +210,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     catalogueItemIdSet,
     onChangeAggregatedCellUsageStatus,
   ]);
-  console.log(aggregatedCellUsageStatus);
+
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     return [
       {
@@ -241,7 +241,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                   status.error === true
               ).length !== 0
             : false;
-          console.log(error);
 
           return (
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -260,7 +259,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 <Box color={error ? 'error.main' : 'inherit'}>
                   {row.getValue(grouping[grouping.length - 1])}
                 </Box>
-              )}{' '}
+              )}
+
               <Box color={error ? 'error.main' : 'inherit'}>
                 {`(${row.subRows?.length})`}
               </Box>
@@ -510,6 +510,21 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                               return updatedUsageStatues;
                             }
                           );
+                        }
+
+                        if (onChangeAggregatedCellUsageStatus) {
+                          onChangeAggregatedCellUsageStatus((prev) => {
+                            const itemIndex = prev.findIndex(
+                              (status: Omit<UsageStatuesType, 'item_id'>) =>
+                                status.catalogue_item_id ===
+                                row.original.catalogueItem?.id
+                            );
+                            const updatedUsageStatues = [...prev];
+
+                            updatedUsageStatues[itemIndex].usageStatus = '';
+
+                            return updatedUsageStatues;
+                          });
                         }
                       }}
                       error={error}
