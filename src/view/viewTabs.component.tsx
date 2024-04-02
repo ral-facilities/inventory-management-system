@@ -3,29 +3,10 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { styled } from '@mui/material/styles';
 import React from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { TAB_VALUES, TabValue } from '../app.types';
-import Catalogue from '../catalogue/catalogue.component';
-import CatalogueItemsLandingPage from '../catalogue/items/catalogueItemsLandingPage.component';
-import Items from '../items/items.component';
-import ItemsLandingPage from '../items/itemsLandingPage.component';
-import Manufacturer from '../manufacturer/manufacturer.component';
-import ManufacturerLandingPage from '../manufacturer/manufacturerLandingPage.component';
-import Systems from '../systems/systems.component';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
-import { HomePage } from '../homePage/homePage.component';
-
-export const paths = {
-  root: '/',
-  homepage: '/ims',
-  catalogue: '/catalogue/*',
-  systems: '/systems/*',
-  manufacturers: '/manufacturers',
-  manufacturer: '/manufacturers/:manufacturer_id',
-  catalogueItem: '/catalogue/item/:catalogue_item_id',
-  items: '/catalogue/item/:catalogue_item_id/items',
-  item: '/catalogue/item/:catalogue_item_id/items/:item_id',
-};
+import { paths } from '../App';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -93,23 +74,6 @@ function ViewTabs() {
     navigate(`/${newValue.toLowerCase()}`);
   };
 
-  const routing = (
-    <Routes location={location}>
-      <Route path={paths.root} element={<HomePage />} />
-      <Route path={paths.homepage} element={<HomePage />} />
-      <Route path={paths.catalogue} element={<Catalogue />} />
-      <Route
-        path={paths.catalogueItem}
-        element={<CatalogueItemsLandingPage />}
-      />
-      <Route path={paths.systems} element={<Systems />} />
-      <Route path={paths.manufacturers} element={<Manufacturer />} />
-      <Route path={paths.manufacturer} element={<ManufacturerLandingPage />} />
-      <Route path={paths.items} element={<Items />} />
-      <Route path={paths.item} element={<ItemsLandingPage />} />
-    </Routes>
-  );
-
   return (
     <Box
       sx={{
@@ -135,12 +99,12 @@ function ViewTabs() {
             }}
           >
             <TabPanel value={value} label={value}>
-              {routing}
+              <Outlet />
             </TabPanel>
           </Box>
         </>
       ) : (
-        routing
+        <Outlet />
       )}
     </Box>
   );

@@ -1,10 +1,10 @@
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../api/api';
 import { System, SystemImportanceType } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import SystemsJSON from '../mocks/Systems.json';
-import { renderComponentWithBrowserRouter } from '../testUtils';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import {
   DeleteSystemDialog,
   DeleteSystemDialogProps,
@@ -37,7 +37,7 @@ describe('DeleteSystemDialog', () => {
         code: '',
       };
 
-    return renderComponentWithBrowserRouter(<DeleteSystemDialog {...props} />);
+    return renderComponentWithRouterProvider(<DeleteSystemDialog {...props} />);
   };
 
   beforeEach(() => {
@@ -71,6 +71,23 @@ describe('DeleteSystemDialog', () => {
 
     expect(props.onClose).toHaveBeenCalled();
     expect(axiosDeleteSpy).not.toHaveBeenCalled();
+  });
+
+  it('does not close dialog on background click, or on escape key press', async () => {
+    createView();
+
+    await userEvent.click(document.body);
+
+    expect(props.onClose).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(screen.getByRole('dialog'), {
+      key: 'Escape',
+      code: 'Escape',
+      keyCode: 27,
+      charCode: 27,
+    });
+
+    expect(props.onClose).not.toHaveBeenCalled();
   });
 
   it('sends a delete request and closes the dialog when continue button is clicked with a valid system', async () => {

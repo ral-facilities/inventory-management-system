@@ -2,7 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   getCatalogueCategoryById,
-  renderComponentWithBrowserRouter,
+  renderComponentWithRouterProvider,
 } from '../../testUtils';
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
@@ -15,7 +15,9 @@ describe('Catalogue Items Table', () => {
   let user: UserEvent;
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(<CatalogueItemsTable {...props} />);
+    return renderComponentWithRouterProvider(
+      <CatalogueItemsTable {...props} />
+    );
   };
 
   const ensureColumnsVisible = async (columns: string[]) => {

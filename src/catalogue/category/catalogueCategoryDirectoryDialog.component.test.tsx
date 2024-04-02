@@ -1,7 +1,7 @@
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../../api/api';
-import { renderComponentWithBrowserRouter } from '../../testUtils';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueCategoryDirectoryDialog, {
   CatalogueCategoryDirectoryDialogProps,
 } from './catalogueCategoryDirectoryDialog.component';
@@ -14,7 +14,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   const onChangeSelectedCategories = vi.fn();
   const onClose = vi.fn();
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <CatalogueCategoryDirectoryDialog {...props} />
     );
   };
@@ -91,6 +91,23 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       await waitFor(() => {
         expect(onClose).toHaveBeenCalled();
       });
+    });
+
+    it('does not close dialog on background click, or on escape key press', async () => {
+      createView();
+
+      await userEvent.click(document.body);
+
+      expect(onClose).not.toHaveBeenCalled();
+
+      fireEvent.keyDown(screen.getByRole('dialog'), {
+        key: 'Escape',
+        code: 'Escape',
+        keyCode: 27,
+        charCode: 27,
+      });
+
+      expect(onClose).not.toHaveBeenCalled();
     });
 
     it('renders the breadcrumbs and can navigate to another directory', async () => {

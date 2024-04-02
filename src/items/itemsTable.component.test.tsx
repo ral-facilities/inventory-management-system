@@ -3,7 +3,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
-  renderComponentWithBrowserRouter,
+  renderComponentWithRouterProvider,
 } from '../testUtils';
 import ItemsTable, { ItemTableProps } from './itemsTable.component';
 
@@ -13,7 +13,7 @@ describe('Items Table', () => {
   let props: ItemTableProps;
   let user: UserEvent;
   const createView = () => {
-    return renderComponentWithBrowserRouter(<ItemsTable {...props} />);
+    return renderComponentWithRouterProvider(<ItemsTable {...props} />);
   };
 
   const ensureColumnsVisible = async (columns: string[]) => {
@@ -132,10 +132,10 @@ describe('Items Table', () => {
     await waitFor(() => {
       expect(screen.getByText(serialNumber)).toBeInTheDocument();
     });
-    await ensureColumnsVisible(['ID']);
+    await ensureColumnsVisible(['Serial Number']);
 
-    const Id = screen.getByText('KvT2Ox7n');
-    expect(Id).toHaveAttribute('href', '/KvT2Ox7n');
+    const serialNum = screen.getByText('5YUQDDjKpz2z');
+    expect(serialNum).toHaveAttribute('href', '/KvT2Ox7n');
   });
 
   it('opens the delete catalogue item dialog and can delete an item', async () => {
@@ -282,7 +282,7 @@ describe('Items Table', () => {
     props.catalogueItem = getCatalogueItemById('3');
     createView();
 
-    const serialNumber = 'A5Hcs053';
+    const serialNumber = 'fBfU9b3ySyKc';
     await waitFor(() => {
       expect(screen.getByText(serialNumber)).toBeInTheDocument();
     });

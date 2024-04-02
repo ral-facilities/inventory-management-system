@@ -9,7 +9,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
-  renderComponentWithBrowserRouter,
+  renderComponentWithRouterProvider,
 } from '../../testUtils';
 import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
@@ -27,7 +27,7 @@ describe('Catalogue Items Dialog', () => {
   const onClose = vi.fn();
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <CatalogueItemsDialog {...props} />
     );
   };
@@ -609,6 +609,23 @@ describe('Catalogue Items Dialog', () => {
     await user.click(closeButton);
 
     expect(screen.getByText('Add Catalogue Item')).toBeInTheDocument();
+  });
+
+  it('does not close dialog on background click, or on escape key press', async () => {
+    createView();
+
+    await userEvent.click(document.body);
+
+    expect(onClose).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(screen.getByRole('dialog'), {
+      key: 'Escape',
+      code: 'Escape',
+      keyCode: 27,
+      charCode: 27,
+    });
+
+    expect(onClose).not.toHaveBeenCalled();
   });
 
   describe('Edit a catalogue item', () => {

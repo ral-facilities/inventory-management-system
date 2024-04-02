@@ -1,8 +1,13 @@
-import { RenderResult, screen, waitFor } from '@testing-library/react';
+import {
+  RenderResult,
+  fireEvent,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { CatalogueItem } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { renderComponentWithBrowserRouter } from '../../testUtils';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import DeleteCatalogueItemDialog, {
   DeleteCatalogueItemDialogProps,
 } from './deleteCatalogueItemDialog.component';
@@ -17,7 +22,7 @@ describe('delete Catalogue Category dialogue', () => {
   let catalogueItem: CatalogueItem;
 
   const createView = (): RenderResult => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <DeleteCatalogueItemDialog {...props} />
     );
   };
@@ -57,6 +62,23 @@ describe('delete Catalogue Category dialogue', () => {
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
     });
+  });
+
+  it('does not close dialog on background click, or on escape key press', async () => {
+    createView();
+
+    await userEvent.click(document.body);
+
+    expect(onClose).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(screen.getByRole('dialog'), {
+      key: 'Escape',
+      code: 'Escape',
+      keyCode: 27,
+      charCode: 27,
+    });
+
+    expect(onClose).not.toHaveBeenCalled();
   });
 
   it('displays warning message when session data is not loaded', async () => {

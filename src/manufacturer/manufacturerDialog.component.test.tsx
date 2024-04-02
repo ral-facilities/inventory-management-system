@@ -4,7 +4,7 @@ import { imsApi } from '../api/api';
 import handleIMS_APIError from '../handleIMS_APIError';
 import {
   getManufacturerById,
-  renderComponentWithBrowserRouter,
+  renderComponentWithRouterProvider,
 } from '../testUtils';
 import ManufacturerDialog, {
   ManufacturerDialogProps,
@@ -18,7 +18,7 @@ describe('Add manufacturer dialog', () => {
   let user: UserEvent;
   let axiosPostSpy;
   const createView = () => {
-    return renderComponentWithBrowserRouter(<ManufacturerDialog {...props} />);
+    return renderComponentWithRouterProvider(<ManufacturerDialog {...props} />);
   };
 
   beforeEach(() => {
@@ -145,6 +145,23 @@ describe('Add manufacturer dialog', () => {
       await waitFor(() => {
         expect(onClose).toHaveBeenCalled();
       });
+    });
+
+    it('does not close dialog on background click, or on escape key press', async () => {
+      createView();
+
+      await userEvent.click(document.body);
+
+      expect(onClose).not.toHaveBeenCalled();
+
+      fireEvent.keyDown(screen.getByRole('dialog'), {
+        key: 'Escape',
+        code: 'Escape',
+        keyCode: 27,
+        charCode: 27,
+      });
+
+      expect(onClose).not.toHaveBeenCalled();
     });
 
     it('duplicate manufacturer name displays warning message', async () => {

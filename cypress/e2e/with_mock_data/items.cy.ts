@@ -275,7 +275,7 @@ describe('Items', () => {
   });
 
   it('navigates to the landing page, toggles the properties and navigates back to the table view', () => {
-    cy.findByText('KvT2Ox7n').click();
+    cy.findByText('5YUQDDjKpz2z').click();
     cy.findByText(
       'High-resolution cameras for beam characterization. 1'
     ).should('exist');

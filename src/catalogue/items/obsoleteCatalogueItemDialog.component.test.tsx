@@ -1,6 +1,6 @@
 import {
   getCatalogueItemById,
-  renderComponentWithBrowserRouter,
+  renderComponentWithRouterProvider,
 } from '../../testUtils';
 
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
@@ -23,7 +23,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
   const mockOnClose = vi.fn();
 
   const createView = () => {
-    return renderComponentWithBrowserRouter(
+    return renderComponentWithRouterProvider(
       <ObsoleteCatalogueItemDialog {...props} />
     );
   };
@@ -180,6 +180,23 @@ describe('Obsolete Catalogue Item Dialog', () => {
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
 
     expect(mockOnClose).toHaveBeenCalled();
+  });
+
+  it('does not close dialog on background click, or on escape key press', async () => {
+    createView();
+
+    await userEvent.click(document.body);
+
+    expect(mockOnClose).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(screen.getByRole('dialog'), {
+      key: 'Escape',
+      code: 'Escape',
+      keyCode: 27,
+      charCode: 27,
+    });
+
+    expect(mockOnClose).not.toHaveBeenCalled();
   });
 
   it('renders exisiting data correctly (not obsolete)', async () => {
