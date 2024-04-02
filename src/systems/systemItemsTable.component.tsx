@@ -1,6 +1,17 @@
 import ClearIcon from '@mui/icons-material/Clear';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
-import { Box, Button, Link as MuiLink, Typography } from '@mui/material';
+import ErrorIcon from '@mui/icons-material/Error';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Link as MuiLink,
+  Select,
+  Typography,
+} from '@mui/material';
 import {
   MRT_ColumnDef,
   MRT_ColumnFiltersState,
@@ -15,7 +26,10 @@ import { useCatalogueItemIds } from '../api/catalogueItems';
 import { useItems } from '../api/items';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
-import SystemItemsDialog from './systemItemsDialog.component';
+import SystemItemsDialog, {
+  UsageStatuesErrorType,
+  UsageStatuesType,
+} from './systemItemsDialog.component';
 import { formatDateTimeStrings } from '../utils';
 
 const MoveItemsButton = (props: {
@@ -55,11 +69,35 @@ interface TableRowData {
 }
 
 export interface SystemItemsTableProps {
-  system: System;
+  system?: System;
+  type: 'normal' | 'usageStatus';
+  moveToSelectedItems?: Item[];
+  usageStatues?: UsageStatuesType[];
+  onChangeUsageStatues?: React.Dispatch<
+    React.SetStateAction<UsageStatuesType[]>
+  >;
+  usageStatuesErrors?: UsageStatuesErrorType[];
+  onChangeUsageStatuesErrors?: React.Dispatch<
+    React.SetStateAction<UsageStatuesErrorType[]>
+  >;
+  aggregatedCellUsageStatus?: Omit<UsageStatuesType, 'item_id'>[];
+  onChangeAggregatedCellUsageStatus?: React.Dispatch<
+    React.SetStateAction<Omit<UsageStatuesType, 'item_id'>[]>
+  >;
 }
 
 export function SystemItemsTable(props: SystemItemsTableProps) {
-  const { system } = props;
+  const {
+    system,
+    type,
+    moveToSelectedItems,
+    usageStatues,
+    onChangeUsageStatues,
+    usageStatuesErrors,
+    onChangeUsageStatuesErrors,
+    aggregatedCellUsageStatus,
+    onChangeAggregatedCellUsageStatus,
+  } = props;
 
   // States
   const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
@@ -69,20 +107,33 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
 
   // Data
   const { data: itemsData, isLoading: isLoadingItems } = useItems(
-    system.id,
+    system?.id,
     undefined
   );
 
   // Obtain the selected system data, not just the selection state
   const selectedRowIds = Object.keys(rowSelection);
   const selectedItems =
-    itemsData?.filter((item) => selectedRowIds.includes(item.id)) ?? [];
+    type === 'normal'
+      ? itemsData?.filter((item) => selectedRowIds.includes(item.id)) ?? []
+      : moveToSelectedItems?.filter((item) =>
+          selectedRowIds.includes(item.id)
+        ) ?? [];
 
   // Fetch catalogue items for each item to display in the table
-  const catalogueItemIdSet = new Set<string>(
-    itemsData?.map((item) => item.catalogue_item_id) ?? []
+  const catalogueItemIdSet = React.useMemo(
+    () =>
+      type === 'normal'
+        ? new Set<string>(
+            itemsData?.map((item) => item.catalogue_item_id) ?? []
+          )
+        : new Set<string>(
+            moveToSelectedItems?.map((item) => item.catalogue_item_id) ?? []
+          ),
+    [itemsData, moveToSelectedItems, type]
   );
   let isLoading = isLoadingItems;
+
   const catalogueItemList: (CatalogueItem | undefined)[] = useCatalogueItemIds(
     Array.from(catalogueItemIdSet.values())
   ).map((query) => {
@@ -107,6 +158,19 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             }) as TableRowData
         )
       );
+    } else if (moveToSelectedItems) {
+      setTableRows(
+        moveToSelectedItems.map(
+          (itemData) =>
+            ({
+              item: itemData,
+              catalogueItem: catalogueItemList?.find(
+                (catalogueItem) =>
+                  catalogueItem?.id === itemData.catalogue_item_id
+              ),
+            }) as TableRowData
+        )
+      );
     }
     // Purposefully leave out catalogueItemList - this will never be the same due
     // to the reference changing so instead am relying on isLoading to have changed to
@@ -116,39 +180,111 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, itemsData]);
 
+  const status = (usageStatus: UsageStatusType | undefined | '') => {
+    if (typeof usageStatus !== 'number') return '';
+    const status = Object.values(UsageStatusType).find(
+      (value) =>
+        UsageStatusType[value as keyof typeof UsageStatusType] === usageStatus
+    );
+    return status || '';
+  };
+
+  const isFirstRun = React.useRef(true);
+  React.useEffect(() => {
+    if (
+      isFirstRun.current &&
+      onChangeAggregatedCellUsageStatus &&
+      aggregatedCellUsageStatus?.length === 0
+    ) {
+      isFirstRun.current = false; // Set isFirstRun to false after the first run
+      const initialUsageStatues: Omit<UsageStatuesType, 'item_id'>[] =
+        Array.from(catalogueItemIdSet).map((catalogue_item_id) => ({
+          catalogue_item_id: catalogue_item_id,
+          usageStatus: '', // Setting usageStatus to an empty string by default
+        }));
+
+      onChangeAggregatedCellUsageStatus(initialUsageStatues); // Using onChangeAggregatedCellUsageStatus to update state
+    }
+  }, [
+    aggregatedCellUsageStatus,
+    catalogueItemIdSet,
+    onChangeAggregatedCellUsageStatus,
+  ]);
+  console.log(aggregatedCellUsageStatus);
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     return [
       {
         header: 'Catalogue Item',
         accessorFn: (row) => row.catalogueItem?.name,
         id: 'catalogueItem.name',
-        Cell: ({ renderedCellValue, row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            to={`/catalogue/item/${row.original.item.catalogue_item_id}`}
-            // For ensuring space when grouping
-            sx={{ marginRight: 0.5 }}
-          >
-            {renderedCellValue}
-          </MuiLink>
-        ),
+        Cell:
+          type === 'normal'
+            ? ({ renderedCellValue, row }) => (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`/catalogue/item/${row.original.item.catalogue_item_id}`}
+                  // For ensuring space when grouping
+                  sx={{ marginRight: 0.5 }}
+                >
+                  {renderedCellValue}
+                </MuiLink>
+              )
+            : undefined,
         size: 250,
+        GroupedCell: ({ row, table }) => {
+          const { grouping } = table.getState();
+          const error = usageStatuesErrors
+            ? usageStatuesErrors.filter(
+                (status) =>
+                  status.catalogue_item_id === row.original.catalogueItem?.id &&
+                  status.error === true
+              ).length !== 0
+            : false;
+          console.log(error);
+
+          return (
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {error && <ErrorIcon sx={{ color: 'error.main' }} />}
+              {type === 'normal' ? (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`/catalogue/item/${row.original.item.catalogue_item_id}`}
+                  // For ensuring space when grouping
+                  sx={{ marginRight: 0.5 }}
+                >
+                  {row.getValue(grouping[grouping.length - 1])}
+                </MuiLink>
+              ) : (
+                <Box color={error ? 'error.main' : 'inherit'}>
+                  {row.getValue(grouping[grouping.length - 1])}
+                </Box>
+              )}{' '}
+              <Box color={error ? 'error.main' : 'inherit'}>
+                {`(${row.subRows?.length})`}
+              </Box>
+            </Box>
+          );
+        },
       },
       {
         header: 'Serial Number',
         accessorFn: (row) => row.item.serial_number ?? 'No serial number',
         id: 'item.serial_number',
         size: 250,
-        Cell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            to={`/catalogue/item/${row.original.item.catalogue_item_id}/items/${row.original.item.id}`}
-          >
-            {row.original.item.serial_number ?? 'No serial number'}
-          </MuiLink>
-        ),
+        Cell:
+          type === 'normal'
+            ? ({ row }) => (
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`/catalogue/item/${row.original.item.catalogue_item_id}/items/${row.original.item.id}`}
+                >
+                  {row.original.item.serial_number ?? 'No serial number'}
+                </MuiLink>
+              )
+            : undefined,
         enableGrouping: false,
       },
       {
@@ -209,9 +345,201 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         id: 'item.usage_status',
         size: 200,
         filterVariant: 'select',
+        AggregatedCell:
+          type === 'usageStatus'
+            ? ({ row }) => {
+                return (
+                  <FormControl size="small" fullWidth>
+                    <InputLabel
+                      id={`usage-status-${row.original.catalogueItem?.name}`}
+                    >
+                      {`Usage statues`}
+                    </InputLabel>
+                    <Select
+                      labelId={`usage-status-${row.original.catalogueItem?.name}`}
+                      size="small"
+                      value={
+                        aggregatedCellUsageStatus
+                          ? status(
+                              aggregatedCellUsageStatus.find(
+                                (status) =>
+                                  status.catalogue_item_id ===
+                                  row.original.catalogueItem?.id
+                              )?.usageStatus
+                            )
+                          : ''
+                      }
+                      onChange={(event) => {
+                        if (onChangeAggregatedCellUsageStatus) {
+                          onChangeAggregatedCellUsageStatus((prev) => {
+                            const itemIndex = prev.findIndex(
+                              (status: Omit<UsageStatuesType, 'item_id'>) =>
+                                status.catalogue_item_id ===
+                                row.original.catalogueItem?.id
+                            );
+                            const updatedUsageStatues = [...prev];
+
+                            updatedUsageStatues[itemIndex].usageStatus =
+                              UsageStatusType[
+                                event.target
+                                  .value as keyof typeof UsageStatusType
+                              ];
+
+                            return updatedUsageStatues as UsageStatuesType[];
+                          });
+                        }
+                        if (onChangeUsageStatues) {
+                          onChangeUsageStatues((prev: UsageStatuesType[]) => {
+                            const updatedUsageStatues = prev.map(
+                              (status: UsageStatuesType) => {
+                                if (
+                                  status.catalogue_item_id ===
+                                  row.original.catalogueItem?.id
+                                ) {
+                                  // Update the usageStatus for the matching item
+                                  return {
+                                    ...status,
+                                    usageStatus:
+                                      UsageStatusType[
+                                        event.target
+                                          .value as keyof typeof UsageStatusType
+                                      ],
+                                  };
+                                }
+                                return status;
+                              }
+                            );
+                            return updatedUsageStatues;
+                          });
+                        }
+                        if (onChangeUsageStatuesErrors) {
+                          onChangeUsageStatuesErrors(
+                            (prev: UsageStatuesErrorType[]) => {
+                              const updatedUsageStatuesErrors = prev.map(
+                                (status: UsageStatuesErrorType) => {
+                                  if (
+                                    status.catalogue_item_id ===
+                                    row.original.catalogueItem?.id
+                                  ) {
+                                    return {
+                                      ...status,
+                                      error: false,
+                                    };
+                                  }
+                                  return status;
+                                }
+                              );
+                              return updatedUsageStatuesErrors;
+                            }
+                          );
+                        }
+                      }}
+                      label="Usage statues"
+                    >
+                      <MenuItem value={'new'}>New</MenuItem>
+                      <MenuItem value={'inUse'}>In Use</MenuItem>
+                      <MenuItem value={'used'}>Used</MenuItem>
+                      <MenuItem value={'scrapped'}>Scrapped</MenuItem>
+                    </Select>
+                  </FormControl>
+                );
+              }
+            : undefined,
+        Cell:
+          type === 'usageStatus'
+            ? ({ row }) => {
+                const error = usageStatuesErrors?.find(
+                  (status) => status.item_id === row.original.item.id
+                )?.error;
+                return (
+                  <FormControl size="small" fullWidth>
+                    <InputLabel
+                      required={true}
+                      id={`usage-status-${row.original.item.id}`}
+                      error={
+                        usageStatuesErrors?.find(
+                          (status) => status.item_id === row.original.item.id
+                        )?.error
+                      }
+                    >
+                      Usage status
+                    </InputLabel>
+                    <Select
+                      required={true}
+                      labelId={`usage-status-${row.original.item.id}`}
+                      size="small"
+                      value={
+                        usageStatues
+                          ? status(
+                              usageStatues.find(
+                                (status) =>
+                                  status.item_id === row.original.item.id
+                              )?.usageStatus
+                            )
+                          : ''
+                      }
+                      onChange={(event) => {
+                        if (onChangeUsageStatues) {
+                          onChangeUsageStatues((prev: UsageStatuesType[]) => {
+                            const itemIndex = prev.findIndex(
+                              (status: UsageStatuesType) =>
+                                status.item_id === row.original.item.id
+                            );
+                            const updatedUsageStatues = [...prev];
+
+                            updatedUsageStatues[itemIndex].usageStatus =
+                              UsageStatusType[
+                                event.target
+                                  .value as keyof typeof UsageStatusType
+                              ];
+
+                            return updatedUsageStatues as UsageStatuesType[];
+                          });
+                        }
+                        if (onChangeUsageStatuesErrors) {
+                          onChangeUsageStatuesErrors(
+                            (prev: UsageStatuesErrorType[]) => {
+                              const itemIndex = prev.findIndex(
+                                (status: UsageStatuesErrorType) =>
+                                  status.item_id === row.original.item.id
+                              );
+                              const updatedUsageStatues = [...prev];
+
+                              updatedUsageStatues[itemIndex].error = false;
+
+                              return updatedUsageStatues;
+                            }
+                          );
+                        }
+                      }}
+                      error={error}
+                      label="Usage status"
+                    >
+                      <MenuItem value={'new'}>New</MenuItem>
+                      <MenuItem value={'inUse'}>In Use</MenuItem>
+                      <MenuItem value={'used'}>Used</MenuItem>
+                      <MenuItem value={'scrapped'}>Scrapped</MenuItem>
+                    </Select>
+                    {error && (
+                      <FormHelperText error>
+                        Please select a usage status
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                );
+              }
+            : undefined,
       },
     ];
-  }, []);
+  }, [
+    aggregatedCellUsageStatus,
+    onChangeAggregatedCellUsageStatus,
+    onChangeUsageStatues,
+    onChangeUsageStatuesErrors,
+    type,
+    usageStatues,
+    usageStatuesErrors,
+  ]);
 
   const [columnFilters, setColumnFilters] =
     React.useState<MRT_ColumnFiltersState>([]);
@@ -219,20 +547,27 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const noResultsText = 'No items found';
   const table = useMaterialReactTable({
     // Data
-    columns: columns,
+    columns:
+      type === 'normal'
+        ? columns
+        : [
+            { ...columns[0], size: 200 },
+            { ...columns[1], size: 200 },
+            { ...columns[6], size: 200 },
+          ],
     data: tableRows,
     // Features
-    enableColumnOrdering: true,
+    enableColumnOrdering: type === 'normal' ? true : false,
     enableFacetedValues: true,
-    enableColumnResizing: true,
+    enableColumnResizing: type === 'normal' ? true : false,
     enableStickyHeader: true,
     enableDensityToggle: false,
-    enableHiding: true,
+    enableHiding: type === 'normal' ? true : false,
     enableTopToolbar: true,
     enableRowVirtualization: false,
-    enableFullScreenToggle: true,
+    enableFullScreenToggle: type === 'normal' ? true : false,
     enableColumnVirtualization: false,
-    enableRowSelection: true,
+    enableRowSelection: type === 'normal' ? true : false,
     enableGrouping: true,
     enablePagination: true,
     // Other settings
@@ -316,15 +651,18 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         >
           Clear Filters
         </Button>
-        <MoveItemsButton
-          selectedItems={selectedItems}
-          system={system}
-          onChangeSelectedItems={setRowSelection}
-        />
+        {system && type === 'normal' && (
+          <MoveItemsButton
+            selectedItems={selectedItems}
+            system={system}
+            onChangeSelectedItems={setRowSelection}
+          />
+        )}
       </Box>
     ),
     renderDetailPanel: ({ row }) =>
-      row.original.catalogueItem !== undefined ? (
+      type === 'usageStatus' ? undefined : row.original.catalogueItem !==
+        undefined ? (
         <ItemsDetailsPanel
           itemData={row.original.item}
           catalogueItemIdData={row.original.catalogueItem}

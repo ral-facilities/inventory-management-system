@@ -180,7 +180,7 @@ function SystemDetails(props: SystemDetailsProps) {
             <Divider />
           </Grid>
           <Grid item>
-            <SystemItemsTable system={system} />
+            <SystemItemsTable system={system} type="normal" />
           </Grid>
         </Grid>
       )}

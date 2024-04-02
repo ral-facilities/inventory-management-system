@@ -21,7 +21,7 @@ describe('SystemItemsTable', () => {
   };
 
   beforeEach(() => {
-    props = { system: mockSystem };
+    props = { system: mockSystem, type: 'normal' };
 
     user = userEvent.setup();
 
