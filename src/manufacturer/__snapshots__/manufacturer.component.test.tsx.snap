@@ -246,7 +246,16 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </svg>
                 <span
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
+                >
+                  <span
+                    class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
+                    style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
+                  >
+                    <span
+                      class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
+                    />
+                  </span>
+                </span>
               </button>
             </div>
           </div>
@@ -582,7 +591,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                               id=":r1d:"
                               inputmode="text"
-                              placeholder="Min"
+                              placeholder="DD/MM/YYYY hh:mm"
                               title="Min"
                               type="text"
                               value=""
@@ -627,7 +636,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                               id=":r1f:"
                               inputmode="text"
-                              placeholder="Max"
+                              placeholder="DD/MM/YYYY hh:mm"
                               title="Max"
                               type="text"
                               value=""
@@ -793,7 +802,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                               id=":r2m:"
                               inputmode="text"
-                              placeholder="Min"
+                              placeholder="DD/MM/YYYY hh:mm"
                               title="Min"
                               type="text"
                               value=""
@@ -838,7 +847,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                               id=":r2o:"
                               inputmode="text"
-                              placeholder="Max"
+                              placeholder="DD/MM/YYYY hh:mm"
                               title="Max"
                               type="text"
                               value=""
@@ -1854,7 +1863,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
               class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
             >
               <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-dxfizy-MuiPaper-root-MuiAlert-root"
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
                 role="alert"
               >
                 <div
@@ -1877,9 +1886,15 @@ exports[`Manufacturer > renders table data correctly 1`] = `
         <div
           class="MuiBox-root css-1llu0od"
         >
-          <span />
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            Showing rows 1
+    - 4
+     of 4
+          </p>
           <div
-            class="MuiBox-root css-qpxlqp"
+            class="MuiBox-root css-nokk8"
           >
             <div
               class="MuiTablePagination-root MuiBox-root css-8k4lth"

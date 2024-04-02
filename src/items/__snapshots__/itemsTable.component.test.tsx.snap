@@ -571,7 +571,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                               id=":re:"
                               inputmode="text"
-                              placeholder="Min"
+                              placeholder="DD/MM/YYYY hh:mm"
                               title="Min"
                               type="text"
                               value=""
@@ -616,7 +616,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                               id=":rg:"
                               inputmode="text"
-                              placeholder="Max"
+                              placeholder="DD/MM/YYYY hh:mm"
                               title="Max"
                               type="text"
                               value=""
@@ -1051,7 +1051,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
               class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
             >
               <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-dxfizy-MuiPaper-root-MuiAlert-root"
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
                 role="alert"
               >
                 <div
@@ -1074,9 +1074,15 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
         <div
           class="MuiBox-root css-1llu0od"
         >
-          <span />
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            Showing rows 0
+    - 0
+     of 0
+          </p>
           <div
-            class="MuiBox-root css-qpxlqp"
+            class="MuiBox-root css-nokk8"
           >
             <div
               class="MuiTablePagination-root MuiBox-root css-8k4lth"
@@ -2482,7 +2488,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
               class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
             >
               <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-dxfizy-MuiPaper-root-MuiAlert-root"
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
                 role="alert"
               >
                 <div
@@ -2505,9 +2511,15 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
         <div
           class="MuiBox-root css-1llu0od"
         >
-          <span />
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            Showing rows 1
+    - 4
+     of 4
+          </p>
           <div
-            class="MuiBox-root css-qpxlqp"
+            class="MuiBox-root css-nokk8"
           >
             <div
               class="MuiTablePagination-root MuiBox-root css-8k4lth"
@@ -2944,7 +2956,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                               id=":rjn:"
                               inputmode="text"
-                              placeholder="Min"
+                              placeholder="DD/MM/YYYY hh:mm"
                               title="Min"
                               type="text"
                               value=""
@@ -2989,7 +3001,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                               id=":rjp:"
                               inputmode="text"
-                              placeholder="Max"
+                              placeholder="DD/MM/YYYY hh:mm"
                               title="Max"
                               type="text"
                               value=""
@@ -3266,7 +3278,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                               id=":rk1:"
                               inputmode="text"
-                              placeholder="Min"
+                              placeholder="DD/MM/YYYY"
                               title="Min"
                               type="text"
                               value=""
@@ -3311,7 +3323,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                               id=":rk3:"
                               inputmode="text"
-                              placeholder="Max"
+                              placeholder="DD/MM/YYYY"
                               title="Max"
                               type="text"
                               value=""
@@ -3450,7 +3462,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                               id=":rk7:"
                               inputmode="text"
-                              placeholder="Min"
+                              placeholder="DD/MM/YYYY"
                               title="Min"
                               type="text"
                               value=""
@@ -3495,7 +3507,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
                               id=":rk9:"
                               inputmode="text"
-                              placeholder="Max"
+                              placeholder="DD/MM/YYYY"
                               title="Max"
                               type="text"
                               value=""
@@ -4131,7 +4143,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
               class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
             >
               <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-dxfizy-MuiPaper-root-MuiAlert-root"
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
                 role="alert"
               >
                 <div
@@ -4154,9 +4166,15 @@ exports[`Items Table > renders the dense table correctly 1`] = `
         <div
           class="MuiBox-root css-1llu0od"
         >
-          <span />
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            Showing rows 1
+    - 4
+     of 4
+          </p>
           <div
-            class="MuiBox-root css-qpxlqp"
+            class="MuiBox-root css-nokk8"
           >
             <div
               class="MuiTablePagination-root MuiBox-root css-8k4lth"
