@@ -149,6 +149,10 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   }, [usageStatues]);
 
   const handleClose = React.useCallback(() => {
+    setAggregatedCellUsageStatus([]);
+    setUsageStatues([]);
+    setUsageStatuesErrors([]);
+    setPlaceIntoSystemError(false);
     setActiveStep(0);
     onClose();
   }, [onClose]);
@@ -275,7 +279,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
+    <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
       <DialogTitle marginLeft={2}>
         <Grid container spacing={2}>
           <Grid item>
