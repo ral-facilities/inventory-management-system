@@ -26,7 +26,11 @@ import { Manufacturer } from '../app.types';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
+import {
+  formatDateTimeStrings,
+  getPageHeightCalc,
+  showTotalRowCounts,
+} from '../utils';
 
 function ManufacturerComponent() {
   const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
@@ -270,22 +274,11 @@ function ManufacturerComponent() {
     },
     renderBottomToolbarCustomActions: ({ table }) => (
       <Typography>
-        {`Showing rows ${
-          Math.min(
-            table.getState().pagination.pageIndex *
-              table.getState().pagination.pageSize +
-              table.getState().pagination.pageSize,
-            table.getRowCount()
-          ) === 0
-            ? 0
-            : (
-                table.getState().pagination.pageIndex *
-                  table.getState().pagination.pageSize +
-                1
-              ).toLocaleString()
-        }
-          - ${Math.min(table.getState().pagination.pageIndex * table.getState().pagination.pageSize + table.getState().pagination.pageSize, table.getRowCount()).toLocaleString()}
-           of ${table.getRowCount()}`}
+        {showTotalRowCounts(
+          table.getState().pagination.pageIndex,
+          table.getState().pagination.pageSize,
+          table.getRowCount()
+        )}
       </Typography>
     ),
   });

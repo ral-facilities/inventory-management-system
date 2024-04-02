@@ -37,7 +37,11 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import { useItems } from '../api/items';
 import ItemsDetailsPanel from './itemsDetailsPanel.component';
-import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
+import {
+  formatDateTimeStrings,
+  getPageHeightCalc,
+  showTotalRowCounts,
+} from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 
 export interface ItemTableProps {
@@ -459,22 +463,11 @@ export function ItemsTable(props: ItemTableProps) {
     },
     renderBottomToolbarCustomActions: ({ table }) => (
       <Typography>
-        {`Showing rows ${
-          Math.min(
-            table.getState().pagination.pageIndex *
-              table.getState().pagination.pageSize +
-              table.getState().pagination.pageSize,
-            table.getRowCount()
-          ) === 0
-            ? 0
-            : (
-                table.getState().pagination.pageIndex *
-                  table.getState().pagination.pageSize +
-                1
-              ).toLocaleString()
-        }
-          - ${Math.min(table.getState().pagination.pageIndex * table.getState().pagination.pageSize + table.getState().pagination.pageSize, table.getRowCount()).toLocaleString()}
-           of ${table.getRowCount()}`}
+        {showTotalRowCounts(
+          table.getState().pagination.pageIndex,
+          table.getState().pagination.pageSize,
+          table.getRowCount()
+        )}
       </Typography>
     ),
 

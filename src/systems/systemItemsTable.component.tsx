@@ -16,7 +16,7 @@ import { useItems } from '../api/items';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import SystemItemsDialog from './systemItemsDialog.component';
-import { formatDateTimeStrings } from '../utils';
+import { formatDateTimeStrings, showTotalRowCounts } from '../utils';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
@@ -330,22 +330,11 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     ),
     renderBottomToolbarCustomActions: ({ table }) => (
       <Typography>
-        {`Showing rows ${
-          Math.min(
-            table.getState().pagination.pageIndex *
-              table.getState().pagination.pageSize +
-              table.getState().pagination.pageSize,
-            table.getRowCount()
-          ) === 0
-            ? 0
-            : (
-                table.getState().pagination.pageIndex *
-                  table.getState().pagination.pageSize +
-                1
-              ).toLocaleString()
-        }
-          - ${Math.min(table.getState().pagination.pageIndex * table.getState().pagination.pageSize + table.getState().pagination.pageSize, table.getRowCount()).toLocaleString()}
-           of ${table.getRowCount()}`}
+        {showTotalRowCounts(
+          table.getState().pagination.pageIndex,
+          table.getState().pagination.pageSize,
+          table.getRowCount()
+        )}
       </Typography>
     ),
 
