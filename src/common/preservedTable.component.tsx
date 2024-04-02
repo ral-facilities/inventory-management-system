@@ -86,10 +86,11 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   // the same pagination state is recalled when going back), seems MRT treats pagination
   // slightly diferent to column order as it doesn't appear to have the same issue
   useEffect(() => {
-    const defaultParsedState = getDefaultParsedState(unparsedState);
-    if (defaultParsedState !== parsedState && location.pathname) {
-      firstUpdate.current.p = undefined;
-      setParsedState(defaultParsedState);
+    if (props?.storeInUrl) {
+      if (JSON.stringify(parsedState) !== unparsedState && location.pathname) {
+        firstUpdate.current.p = undefined;
+        setParsedState(getDefaultParsedState(unparsedState));
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
