@@ -83,7 +83,8 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   );
 
   // Update when the path changes e.g. when navigating between systems (ensures
-  // the same pagination state is recalled when going back)
+  // the same pagination state is recalled when going back), seems MRT treats pagination
+  // slightly diferent to column order as it doesn't appear to have the same issue
   useEffect(() => {
     const defaultParsedState = getDefaultParsedState(unparsedState);
     if (defaultParsedState !== parsedState && location.pathname) {
@@ -99,20 +100,22 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       const newUnparsedState = JSON.stringify(parsedState);
       if (unparsedState !== newUnparsedState) {
         // Clear search params if state is no longer needed
-        if (newUnparsedState !== '{}')
-          setSearchParams(
-            {
-              [urlParamName]:
-                LZString.compressToEncodedURIComponent(newUnparsedState),
-            },
-            { replace: true }
+        if (newUnparsedState !== '{}') {
+          searchParams.set(
+            urlParamName,
+            LZString.compressToEncodedURIComponent(newUnparsedState)
           );
-        else setSearchParams({}, { replace: true });
+          setSearchParams(searchParams, { replace: true });
+        } else {
+          searchParams.delete(urlParamName);
+          setSearchParams(searchParams, { replace: true });
+        }
       }
     }
   }, [
     parsedState,
     props?.storeInUrl,
+    searchParams,
     setSearchParams,
     unparsedState,
     urlParamName,
@@ -268,7 +271,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const setPagination = useCallback(
     (updaterOrValue: Updater<MRT_PaginationState>) => {
       const newValue = getValueFromUpdater(updaterOrValue, state.p);
-      console.log('NEW', newValue);
       updateSearchParams({
         p:
           JSON.stringify(newValue) ===
