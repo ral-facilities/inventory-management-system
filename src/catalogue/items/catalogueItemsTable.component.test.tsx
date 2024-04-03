@@ -7,6 +7,7 @@ import {
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';
+import exp from 'constants';
 
 vi.setConfig({ testTimeout: 10000 });
 
@@ -189,7 +190,7 @@ describe('Catalogue Items Table', () => {
     ]);
   });
 
-  it('displays descriptions tooltip on hover', async () => {
+  it('displays full description on hover', async () => {
     createView();
 
     await waitFor(() => {
@@ -212,22 +213,24 @@ describe('Catalogue Items Table', () => {
 
     await user.hover(infoIcon);
 
+    //react testing library ignores `overflow` prop, so checking there are 2 of the same text
+    //on hover then only 1 on unhover
     await waitFor(() => {
       expect(
-        screen.getByText(
+        screen.queryAllByText(
           'Precision energy meters for accurate measurements. 26'
-        )
-      ).toBeInTheDocument();
+        ).length
+      ).toBe(2);
     });
 
     await user.unhover(infoIcon);
 
     await waitFor(() => {
       expect(
-        screen.queryByText(
+        screen.queryAllByText(
           'Precision energy meters for accurate measurements. 26'
-        )
-      ).not.toBeInTheDocument();
+        ).length
+      ).toBe(1);
     });
   });
 
