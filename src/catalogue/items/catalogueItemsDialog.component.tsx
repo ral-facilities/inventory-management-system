@@ -1029,7 +1029,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     <Dialog
       PaperProps={{ sx: { height: '850px' } }}
       open={open}
-      onClose={handleClose}
       maxWidth="lg"
       fullWidth
     >

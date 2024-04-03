@@ -147,6 +147,23 @@ describe('Add manufacturer dialog', () => {
       });
     });
 
+    it('does not close dialog on background click, or on escape key press', async () => {
+      createView();
+
+      await userEvent.click(document.body);
+
+      expect(onClose).not.toHaveBeenCalled();
+
+      fireEvent.keyDown(screen.getByRole('dialog'), {
+        key: 'Escape',
+        code: 'Escape',
+        keyCode: 27,
+        charCode: 27,
+      });
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
+
     it('duplicate manufacturer name displays warning message', async () => {
       createView();
       modifyManufacturerValues({

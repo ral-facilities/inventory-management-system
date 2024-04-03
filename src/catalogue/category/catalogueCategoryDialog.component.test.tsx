@@ -608,6 +608,23 @@ describe('Catalogue Category Dialog', () => {
 
       expect(onClose).not.toHaveBeenCalled();
     });
+
+    it('does not close dialog on background click, or on escape key press', async () => {
+      createView();
+
+      await userEvent.click(document.body);
+
+      expect(onClose).not.toHaveBeenCalled();
+
+      fireEvent.keyDown(screen.getByRole('dialog'), {
+        key: 'Escape',
+        code: 'Escape',
+        keyCode: 27,
+        charCode: 27,
+      });
+
+      expect(onClose).not.toHaveBeenCalled();
+    });
   });
 
   describe('Edit Catalogue Category Dialog', () => {

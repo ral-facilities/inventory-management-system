@@ -279,7 +279,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
+    <Dialog open={open} maxWidth="lg" fullWidth>
       <DialogTitle marginLeft={2}>
         <Grid container spacing={2}>
           <Grid item>
