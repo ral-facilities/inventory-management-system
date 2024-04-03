@@ -640,10 +640,6 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     storeInUrl: !dense,
   });
 
-  const ref = React.useRef(0);
-  ref.current += 1;
-  console.log(ref.current);
-
   const table = useMaterialReactTable({
     // Data
     columns: dense ? [{ ...columns[0], size: 1135 }] : columns, // If dense only show the name column
