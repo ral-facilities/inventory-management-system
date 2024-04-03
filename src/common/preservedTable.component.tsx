@@ -18,8 +18,8 @@ interface State {
   srt: MRT_SortingState;
   cVis: MRT_VisibilityState;
   gFil: string | undefined; // Global filter
-  cO: MRT_ColumnOrderState;
   g: MRT_GroupingState;
+  cO: MRT_ColumnOrderState;
   p: MRT_PaginationState;
 }
 
@@ -123,24 +123,50 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     urlParamName,
   ]);
 
+  // Default state to be for MRT used when storing undefined for any given parameter
+  const defaultState: State = useMemo(
+    () => ({
+      cF: [],
+      srt: [],
+      // Use given default or {}
+      cVis: props?.initialState?.columnVisibility || {},
+      gFil: undefined,
+      // Intial MRT assigned value is in first update, must be assigned here for column ordering to work correctly
+      // when it is the first thing done
+      g: props?.initialState?.grouping || [],
+      cO: firstUpdate.current?.cO || [],
+      p: props?.initialState?.pagination ||
+        firstUpdate.current?.p || { pageSize: 15, pageIndex: 0 },
+    }),
+    [
+      props?.initialState?.columnVisibility,
+      props?.initialState?.grouping,
+      props?.initialState?.pagination,
+    ]
+  );
+
   // Convert the state stored into the url to one that can be used
   // (apply any default values here)
   const state: State = useMemo(
     () => ({
-      cF: parsedState.cF || [],
-      srt: parsedState.srt || [],
-      // Use given default or {}
-      cVis: parsedState.cVis || props?.initialState?.columnVisibility || {},
-      gFil: parsedState.gFil,
+      cF: parsedState.cF || defaultState.cF,
+      srt: parsedState.srt || defaultState.srt,
+      cVis: parsedState.cVis || defaultState.cVis,
+      gFil: parsedState.gFil || defaultState.gFil,
       // Intial MRT assigned value is in first update, must be assigned here for column ordering to work correctly
       // when it is the first thing done
-      cO: parsedState.cO || firstUpdate.current?.cO || [],
-      g: parsedState.g || props?.initialState?.grouping || [],
-      p: parsedState.p ||
-        props?.initialState?.pagination ||
-        firstUpdate.current?.p || { pageSize: 15, pageIndex: 0 },
+      g: parsedState.g || defaultState.g,
+      cO: parsedState.cO || defaultState.cO,
+      p: parsedState.p || defaultState.p,
     }),
     [
+      defaultState.cF,
+      defaultState.cO,
+      defaultState.cVis,
+      defaultState.g,
+      defaultState.gFil,
+      defaultState.p,
+      defaultState.srt,
       parsedState.cF,
       parsedState.cO,
       parsedState.cVis,
@@ -148,86 +174,21 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       parsedState.gFil,
       parsedState.p,
       parsedState.srt,
-      props?.initialState?.columnVisibility,
-      props?.initialState?.grouping,
-      props?.initialState?.pagination,
     ]
   );
 
   const updateSearchParams = useCallback(
-    (modifiedParams: StateSearchParams) => {
-      // Ignore first update (pagination and column order has a habit of being set in MRT
-      // shortly after the first render with actual data even if disabled in the table itself)
-      // similar to https://www.material-react-table.com/docs/guides/state-management
-      if ('cO' in modifiedParams && firstUpdate.current.cO === undefined) {
-        firstUpdate.current.cO = modifiedParams.cO;
-        return;
-      }
-      if ('p' in modifiedParams && firstUpdate.current.p === undefined) {
-        firstUpdate.current.p = modifiedParams.p;
-        return;
-      }
+    (stateUpdater: Updater<StateSearchParams>) => {
       // Use function version to ensure multiple can be changed in the same render
       // e.g. grouping also changes ordering
       setParsedState((prevState) => {
-        // MRT show all columns and hide all columns behave differently, show all does one change at a time
-        // with just the values needed to change, but hide all also includes rest of the columns in its assignment
-        // so to cater for both, have to compare what has changed and only change those so hide all can repeatedly
-        // call and still work
-
-        // console.log(prevState.cVis, modifiedParams.cVis);
-
-        if ('cVis' in modifiedParams && modifiedParams.cVis) {
-          const newValue: MRT_VisibilityState = { ...prevState.cVis };
-          for (const key in modifiedParams.cVis) {
-            // console.log(
-            //   key,
-            //   parsedState.cVis,
-            //   parsedState.cVis ? parsedState.cVis[key] : undefined,
-            //   modifiedParams.cVis[key]
-            // );
-            if (
-              (parsedState.cVis ? parsedState.cVis[key] : undefined) !==
-              modifiedParams.cVis[key]
-            ) {
-              // console.log(key, parsedState.cVis[key], modifiedParams.cVis[key]);
-              newValue[key] = modifiedParams.cVis[key];
-            }
-          }
-          modifiedParams.cVis = newValue;
-        }
-
-        if (modifiedParams.cVis !== undefined) {
-          // Check if default value for removing from the URL
-          const initialValue = props?.initialState?.columnVisibility || {};
-          const newValue = modifiedParams.cVis;
-          let defaultState = true;
-          if (Object.keys(newValue).length > 0) {
-            // Check any undefined initial value is true or otherwise
-            // if it is defined that it matches the original value, otherwise it
-            // is not the default
-            for (const key in newValue) {
-              if (
-                initialValue[key] === undefined
-                  ? newValue[key] !== true
-                  : initialValue[key] !== newValue[key]
-              )
-                defaultState = false;
-            }
-          } else {
-            // New value empty, need to ensure initial value is for it to be default
-            defaultState = Object.keys(initialValue).length === 0;
-          }
-          if (defaultState) modifiedParams.cVis = undefined;
-          // columnVisibility can also be modified multiple at a time e.g. show all/hide all filters
-        }
         return {
           ...prevState,
-          ...modifiedParams,
+          ...getValueFromUpdater(stateUpdater, prevState),
         };
       });
     },
-    [parsedState.cVis]
+    []
   );
 
   // Below are setters for MRT onChange events, these should obtain the value and update it in the
@@ -236,88 +197,162 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
 
   const setColumnFilters = useCallback(
     (updaterOrValue: Updater<MRT_ColumnFiltersState>) => {
-      const newValue = getValueFromUpdater(updaterOrValue, state.cF);
-      updateSearchParams({
-        cF: newValue.length === 0 ? undefined : newValue,
+      updateSearchParams((prevState: StateSearchParams) => {
+        const newValue = getValueFromUpdater(
+          updaterOrValue,
+          prevState.cF || defaultState.cF
+        );
+        return {
+          ...prevState,
+          cF: newValue.length === 0 ? undefined : newValue,
+        };
       });
     },
-    [state.cF, updateSearchParams]
+    [defaultState.cF, updateSearchParams]
   );
 
   const setSorting = useCallback(
     (updaterOrValue: Updater<MRT_SortingState>) => {
-      const newValue = getValueFromUpdater(updaterOrValue, state.srt);
-      updateSearchParams({
-        srt: newValue.length === 0 ? undefined : newValue,
+      updateSearchParams((prevState: StateSearchParams) => {
+        const newValue = getValueFromUpdater(
+          updaterOrValue,
+          prevState.srt || defaultState.srt
+        );
+        return {
+          ...prevState,
+          srt: newValue.length === 0 ? undefined : newValue,
+        };
       });
     },
-    [state.srt, updateSearchParams]
+    [defaultState.srt, updateSearchParams]
   );
 
   const setColumnVisibility = useCallback(
     (updaterOrValue: Updater<MRT_VisibilityState>) => {
-      const newValue = getValueFromUpdater(updaterOrValue, state.cVis);
-
-      updateSearchParams({
-        cVis: newValue,
+      updateSearchParams((prevState: StateSearchParams): StateSearchParams => {
+        const newValue = getValueFromUpdater(
+          updaterOrValue,
+          prevState.cVis || defaultState.cVis
+        );
+        // Check if default value for removing from the URL
+        const initialValue = defaultState.cVis;
+        let isDefaultState = true;
+        if (Object.keys(newValue).length > 0) {
+          // Check any undefined initial value is true or otherwise
+          // if it is defined that it matches the original value, otherwise it
+          // is not the default
+          for (const key in newValue) {
+            if (
+              initialValue[key] === undefined
+                ? newValue[key] !== true
+                : initialValue[key] !== newValue[key]
+            )
+              isDefaultState = false;
+          }
+        }
+        // New value empty, need to ensure initial value is for it to be default
+        else isDefaultState = Object.keys(initialValue).length === 0;
+        return {
+          ...prevState,
+          cVis: isDefaultState ? undefined : newValue,
+        };
       });
     },
-    [state.cVis, updateSearchParams]
+    [defaultState.cVis, updateSearchParams]
   );
-
-  // const [columnVisibility, setColumnVisibility] =
-  //   useState<MRT_VisibilityState>();
 
   const setGlobalFilter = useCallback(
     (updaterOrValue: Updater<string | undefined>) => {
-      const newValue = getValueFromUpdater(updaterOrValue, state.gFil);
-      updateSearchParams({
-        gFil: newValue === '' ? undefined : newValue,
+      updateSearchParams((prevState: StateSearchParams) => {
+        const newValue = getValueFromUpdater(
+          updaterOrValue,
+          prevState.gFil || defaultState.gFil
+        );
+        return {
+          ...prevState,
+          gFil: newValue === '' ? undefined : newValue,
+        };
       });
     },
-    [state.gFil, updateSearchParams]
-  );
-
-  const setColumnOrder = useCallback(
-    (updaterOrValue: Updater<MRT_ColumnOrderState>) => {
-      const newValue = getValueFromUpdater(updaterOrValue, state.cO);
-      updateSearchParams({
-        cO:
-          newValue.length === 0 ||
-          JSON.stringify(newValue) === JSON.stringify(firstUpdate.current?.cO)
-            ? undefined
-            : newValue,
-      });
-    },
-    [state.cO, updateSearchParams]
+    [defaultState.gFil, updateSearchParams]
   );
 
   const setGroupingState = useCallback(
     (updaterOrValue: Updater<MRT_GroupingState>) => {
-      const newValue = getValueFromUpdater(updaterOrValue, state.g);
-      updateSearchParams({
-        g:
-          JSON.stringify(newValue) ===
-          JSON.stringify(props?.initialState?.grouping || {})
-            ? undefined
-            : newValue,
+      updateSearchParams((prevState: StateSearchParams) => {
+        const newValue = getValueFromUpdater(
+          updaterOrValue,
+          prevState.g || defaultState.g
+        );
+        return {
+          ...prevState,
+          g:
+            JSON.stringify(newValue) === JSON.stringify(defaultState.g)
+              ? undefined
+              : newValue,
+        };
       });
     },
-    [props?.initialState?.grouping, state.g, updateSearchParams]
+    [defaultState.g, updateSearchParams]
+  );
+
+  const setColumnOrder = useCallback(
+    (updaterOrValue: Updater<MRT_ColumnOrderState>) => {
+      // Ignore first update (pagination and column order has a habit of being set in MRT
+      // shortly after the first render with actual data even if disabled in the table itself)
+      // similar to https://www.material-react-table.com/docs/guides/state-management
+      if (
+        firstUpdate.current.cO === undefined &&
+        // This is done additionally as on page load with a value in the url, no such issue
+        // occurs here, equally we can't know what the default order was anymore so it should
+        // never be removed from the url
+        parsedState.cO === undefined
+      ) {
+        firstUpdate.current.cO = getValueFromUpdater(updaterOrValue, state.cO);
+        return;
+      }
+      updateSearchParams((prevState: StateSearchParams): StateSearchParams => {
+        const newValue = getValueFromUpdater(
+          updaterOrValue,
+          prevState.cO || defaultState.cO
+        );
+        return {
+          ...prevState,
+          cO:
+            newValue.length === 0 ||
+            JSON.stringify(newValue) === JSON.stringify(defaultState.cO)
+              ? undefined
+              : newValue,
+        };
+      });
+    },
+    [defaultState.cO, parsedState.cO, state.cO, updateSearchParams]
   );
 
   const setPagination = useCallback(
     (updaterOrValue: Updater<MRT_PaginationState>) => {
-      const newValue = getValueFromUpdater(updaterOrValue, state.p);
-      updateSearchParams({
-        p:
-          JSON.stringify(newValue) ===
-          JSON.stringify(firstUpdate.current?.p || {})
-            ? undefined
-            : newValue,
+      // Ignore first update (pagination and column order has a habit of being set in MRT
+      // shortly after the first render with actual data even if disabled in the table itself)
+      // similar to https://www.material-react-table.com/docs/guides/state-management
+      if (firstUpdate.current.p === undefined) {
+        firstUpdate.current.p = getValueFromUpdater(updaterOrValue, state.p);
+        return;
+      }
+      updateSearchParams((prevState: StateSearchParams) => {
+        const newValue = getValueFromUpdater(
+          updaterOrValue,
+          prevState.p || defaultState.p
+        );
+        return {
+          ...prevState,
+          p:
+            JSON.stringify(newValue) === JSON.stringify(defaultState.p)
+              ? undefined
+              : newValue,
+        };
       });
     },
-    [state.p, updateSearchParams]
+    [defaultState.p, state.p, updateSearchParams]
   );
 
   return {
@@ -326,8 +361,8 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       sorting: state.srt,
       columnVisibility: state.cVis,
       globalFilter: state.gFil,
-      columnOrder: state.cO,
       grouping: state.g,
+      columnOrder: state.cO,
       pagination: state.p,
     },
     onPreservedStatesChange: {
@@ -335,8 +370,8 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       onSortingChange: setSorting,
       onColumnVisibilityChange: setColumnVisibility,
       onGlobalFilterChange: setGlobalFilter,
-      onColumnOrderChange: setColumnOrder,
       onGroupingChange: setGroupingState,
+      onColumnOrderChange: setColumnOrder,
       onPaginationChange: setPagination,
     },
   };
