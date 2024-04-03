@@ -311,7 +311,15 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               arrow
               aria-label={`Catalogue item description: ${row.original.catalogueItem.description}`}
             >
-              <InfoOutlinedIcon />
+              <div
+                style={{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {row.original.catalogueItem.description}
+              </div>
             </Tooltip>
           ),
       },
