@@ -148,7 +148,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                         aria-invalid="false"
                         autocomplete="new-password"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r0:"
+                        id=":r11:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -246,16 +246,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </svg>
                 <span
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                >
-                  <span
-                    class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
-                    style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
-                  >
-                    <span
-                      class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
-                    />
-                  </span>
-                </span>
+                />
               </button>
             </div>
           </div>
@@ -421,7 +412,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by Name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r7:"
+                            id=":r18:"
                             placeholder="Filter by Name"
                             title="Filter by Name"
                             type="text"
@@ -589,7 +580,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":rc:"
+                              id=":r1d:"
                               inputmode="text"
                               placeholder="DD/MM/YYYY hh:mm"
                               title="Min"
@@ -634,7 +625,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":re:"
+                              id=":r1f:"
                               inputmode="text"
                               placeholder="DD/MM/YYYY hh:mm"
                               title="Max"
@@ -800,7 +791,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r1l:"
+                              id=":r2m:"
                               inputmode="text"
                               placeholder="DD/MM/YYYY hh:mm"
                               title="Min"
@@ -845,7 +836,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r1n:"
+                              id=":r2o:"
                               inputmode="text"
                               placeholder="DD/MM/YYYY hh:mm"
                               title="Max"
@@ -1008,7 +999,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by URL"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rj:"
+                            id=":r1k:"
                             placeholder="Filter by URL"
                             title="Filter by URL"
                             type="text"
@@ -1173,7 +1164,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by Address"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":ro:"
+                            id=":r1p:"
                             placeholder="Filter by Address"
                             title="Filter by Address"
                             type="text"
@@ -1338,7 +1329,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by Telephone number"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rt:"
+                            id=":r1u:"
                             placeholder="Filter by Telephone number"
                             title="Filter by Telephone number"
                             type="text"
@@ -1910,7 +1901,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":rv:"
+                    aria-controls=":r20:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
