@@ -99,6 +99,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   useEffect(() => {
     if (props?.storeInUrl) {
       const newUnparsedState = JSON.stringify(parsedState);
+      // console.log(unparsedState, newUnparsedState);
       if (unparsedState !== newUnparsedState) {
         // Clear search params if state is no longer needed
         if (newUnparsedState !== '{}') {
@@ -168,12 +169,65 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       }
       // Use function version to ensure multiple can be changed in the same render
       // e.g. grouping also changes ordering
-      setParsedState((prevState) => ({
-        ...prevState,
-        ...modifiedParams,
-      }));
+      setParsedState((prevState) => {
+        // MRT show all columns and hide all columns behave differently, show all does one change at a time
+        // with just the values needed to change, but hide all also includes rest of the columns in its assignment
+        // so to cater for both, have to compare what has changed and only change those so hide all can repeatedly
+        // call and still work
+
+        // console.log(prevState.cVis, modifiedParams.cVis);
+
+        if ('cVis' in modifiedParams && modifiedParams.cVis) {
+          const newValue: MRT_VisibilityState = { ...prevState.cVis };
+          for (const key in modifiedParams.cVis) {
+            // console.log(
+            //   key,
+            //   parsedState.cVis,
+            //   parsedState.cVis ? parsedState.cVis[key] : undefined,
+            //   modifiedParams.cVis[key]
+            // );
+            if (
+              (parsedState.cVis ? parsedState.cVis[key] : undefined) !==
+              modifiedParams.cVis[key]
+            ) {
+              // console.log(key, parsedState.cVis[key], modifiedParams.cVis[key]);
+              newValue[key] = modifiedParams.cVis[key];
+            }
+          }
+          modifiedParams.cVis = newValue;
+        }
+
+        if (modifiedParams.cVis !== undefined) {
+          // Check if default value for removing from the URL
+          const initialValue = props?.initialState?.columnVisibility || {};
+          const newValue = modifiedParams.cVis;
+          let defaultState = true;
+          if (Object.keys(newValue).length > 0) {
+            // Check any undefined initial value is true or otherwise
+            // if it is defined that it matches the original value, otherwise it
+            // is not the default
+            for (const key in newValue) {
+              if (
+                initialValue[key] === undefined
+                  ? newValue[key] !== true
+                  : initialValue[key] !== newValue[key]
+              )
+                defaultState = false;
+            }
+          } else {
+            // New value empty, need to ensure initial value is for it to be default
+            defaultState = Object.keys(initialValue).length === 0;
+          }
+          if (defaultState) modifiedParams.cVis = undefined;
+          // columnVisibility can also be modified multiple at a time e.g. show all/hide all filters
+        }
+        return {
+          ...prevState,
+          ...modifiedParams,
+        };
+      });
     },
-    []
+    [parsedState.cVis]
   );
 
   // Below are setters for MRT onChange events, these should obtain the value and update it in the
@@ -204,32 +258,15 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     (updaterOrValue: Updater<MRT_VisibilityState>) => {
       const newValue = getValueFromUpdater(updaterOrValue, state.cVis);
 
-      // Check if default value for removing from the URL
-      const initialValue = props?.initialState?.columnVisibility || {};
-      let defaultState = true;
-      if (Object.keys(newValue).length > 0) {
-        // Check any undefined initial value is true or otherwise
-        // if it is defined that it matches the original value, otherwise it
-        // is not the default
-        for (const key in newValue) {
-          if (
-            initialValue[key] === undefined
-              ? newValue[key] !== true
-              : initialValue[key] !== newValue[key]
-          )
-            defaultState = false;
-        }
-      } else {
-        // New value empty, need to ensure initial value is for it to be default
-        defaultState = Object.keys(initialValue).length === 0;
-      }
-
       updateSearchParams({
-        cVis: defaultState ? undefined : newValue,
+        cVis: newValue,
       });
     },
-    [props?.initialState?.columnVisibility, state.cVis, updateSearchParams]
+    [state.cVis, updateSearchParams]
   );
+
+  // const [columnVisibility, setColumnVisibility] =
+  //   useState<MRT_VisibilityState>();
 
   const setGlobalFilter = useCallback(
     (updaterOrValue: Updater<string | undefined>) => {
