@@ -7,7 +7,6 @@ import {
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';
-import exp from 'constants';
 
 vi.setConfig({ testTimeout: 10000 });
 
