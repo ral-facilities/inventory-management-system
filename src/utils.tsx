@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { format, parseISO } from 'date-fns';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
