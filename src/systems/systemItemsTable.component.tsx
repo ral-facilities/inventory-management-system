@@ -73,17 +73,15 @@ export interface SystemItemsTableProps {
   type: 'normal' | 'usageStatus';
   moveToSelectedItems?: Item[];
   usageStatues?: UsageStatuesType[];
-  onChangeUsageStatues?: React.Dispatch<
-    React.SetStateAction<UsageStatuesType[]>
-  >;
+  onChangeUsageStatues?: (usageStatues: UsageStatuesType[]) => void;
   usageStatuesErrors?: UsageStatuesErrorType[];
-  onChangeUsageStatuesErrors?: React.Dispatch<
-    React.SetStateAction<UsageStatuesErrorType[]>
-  >;
+  onChangeUsageStatuesErrors?: (
+    usageStatuesErrors: UsageStatuesErrorType[]
+  ) => void;
   aggregatedCellUsageStatus?: Omit<UsageStatuesType, 'item_id'>[];
-  onChangeAggregatedCellUsageStatus?: React.Dispatch<
-    React.SetStateAction<Omit<UsageStatuesType, 'item_id'>[]>
-  >;
+  onChangeAggregatedCellUsageStatus?: (
+    aggregatedCellUsageStatus?: Omit<UsageStatuesType, 'item_id'>[]
+  ) => void;
 }
 
 export function SystemItemsTable(props: SystemItemsTableProps) {
@@ -104,7 +102,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     {}
   );
-
   // Data
   const { data: itemsData, isLoading: isLoadingItems } = useItems(
     system?.id,
@@ -132,7 +129,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           ),
     [itemsData, moveToSelectedItems, type]
   );
-  let isLoading = isLoadingItems;
+  let isLoading = type === 'normal' ? isLoadingItems : false;
 
   const catalogueItemList: (CatalogueItem | undefined)[] = useCatalogueItemIds(
     Array.from(catalogueItemIdSet.values())
@@ -158,7 +155,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             }) as TableRowData
         )
       );
-    } else if (moveToSelectedItems) {
+    } else if (!isLoading && moveToSelectedItems) {
       setTableRows(
         moveToSelectedItems.map(
           (itemData) =>
@@ -192,7 +189,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   React.useEffect(() => {
     if (
       onChangeAggregatedCellUsageStatus &&
-      aggregatedCellUsageStatus?.length === 0
+      aggregatedCellUsageStatus &&
+      aggregatedCellUsageStatus.length === 0
     ) {
       const initialUsageStatues: Omit<UsageStatuesType, 'item_id'>[] =
         Array.from(catalogueItemIdSet).map((catalogue_item_id) => ({
@@ -240,7 +238,13 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             : false;
 
           return (
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                color: error ? 'error.main' : 'inherit',
+              }}
+            >
               {error && <ErrorIcon sx={{ color: 'error.main' }} />}
               {type === 'normal' ? (
                 <MuiLink
@@ -248,19 +252,17 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                   component={Link}
                   to={`/catalogue/item/${row.original.item.catalogue_item_id}`}
                   // For ensuring space when grouping
-                  sx={{ marginRight: 0.5 }}
+                  sx={{ mx: 0.5 }}
                 >
                   {row.getValue(grouping[grouping.length - 1])}
                 </MuiLink>
               ) : (
-                <Box color={error ? 'error.main' : 'inherit'}>
+                <Box sx={{ mx: 0.5 }}>
                   {row.getValue(grouping[grouping.length - 1])}
                 </Box>
               )}
 
-              <Box color={error ? 'error.main' : 'inherit'}>
-                {`(${row.subRows?.length})`}
-              </Box>
+              {`(${row.subRows?.length})`}
             </Box>
           );
         },
@@ -348,12 +350,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 return (
                   <FormControl size="small" fullWidth>
                     <InputLabel
-                      id={`usage-status-${row.original.catalogueItem?.name}`}
+                      id={`usage-statues-${row.original.catalogueItem?.name}`}
                     >
-                      {`Usage statues`}
+                      Usage statues
                     </InputLabel>
                     <Select
-                      labelId={`usage-status-${row.original.catalogueItem?.name}`}
+                      labelId={`usage-statues-${row.original.catalogueItem?.name}`}
                       size="small"
                       value={
                         aggregatedCellUsageStatus
@@ -367,68 +369,68 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           : ''
                       }
                       onChange={(event) => {
-                        if (onChangeAggregatedCellUsageStatus) {
-                          onChangeAggregatedCellUsageStatus((prev) => {
-                            const itemIndex = prev.findIndex(
-                              (status: Omit<UsageStatuesType, 'item_id'>) =>
-                                status.catalogue_item_id ===
-                                row.original.catalogueItem?.id
-                            );
-                            const updatedUsageStatues = [...prev];
-
-                            updatedUsageStatues[itemIndex].usageStatus =
-                              UsageStatusType[
-                                event.target
-                                  .value as keyof typeof UsageStatusType
-                              ];
-
-                            return updatedUsageStatues as UsageStatuesType[];
-                          });
-                        }
-                        if (onChangeUsageStatues) {
-                          onChangeUsageStatues((prev: UsageStatuesType[]) => {
-                            const updatedUsageStatues = prev.map(
-                              (status: UsageStatuesType) => {
-                                if (
-                                  status.catalogue_item_id ===
-                                  row.original.catalogueItem?.id
-                                ) {
-                                  // Update the usageStatus for the matching item
-                                  return {
-                                    ...status,
-                                    usageStatus:
-                                      UsageStatusType[
-                                        event.target
-                                          .value as keyof typeof UsageStatusType
-                                      ],
-                                  };
-                                }
-                                return status;
-                              }
-                            );
-                            return updatedUsageStatues;
-                          });
-                        }
-                        if (onChangeUsageStatuesErrors) {
-                          onChangeUsageStatuesErrors(
-                            (prev: UsageStatuesErrorType[]) => {
-                              const updatedUsageStatuesErrors = prev.map(
-                                (status: UsageStatuesErrorType) => {
-                                  if (
-                                    status.catalogue_item_id ===
-                                    row.original.catalogueItem?.id
-                                  ) {
-                                    return {
-                                      ...status,
-                                      error: false,
-                                    };
-                                  }
-                                  return status;
-                                }
-                              );
-                              return updatedUsageStatuesErrors;
-                            }
+                        if (
+                          onChangeAggregatedCellUsageStatus &&
+                          aggregatedCellUsageStatus
+                        ) {
+                          const itemIndex = aggregatedCellUsageStatus.findIndex(
+                            (status: Omit<UsageStatuesType, 'item_id'>) =>
+                              status.catalogue_item_id ===
+                              row.original.catalogueItem?.id
                           );
+                          const updatedUsageStatues = [
+                            ...aggregatedCellUsageStatus,
+                          ];
+
+                          updatedUsageStatues[itemIndex].usageStatus =
+                            UsageStatusType[
+                              event.target.value as keyof typeof UsageStatusType
+                            ];
+
+                          onChangeAggregatedCellUsageStatus(
+                            updatedUsageStatues
+                          );
+                        }
+
+                        if (onChangeUsageStatues && usageStatues) {
+                          const updatedUsageStatues = [...usageStatues];
+
+                          for (let i = 0; i < updatedUsageStatues.length; i++) {
+                            const status = updatedUsageStatues[i];
+                            if (
+                              status.catalogue_item_id ===
+                              row.original.catalogueItem?.id
+                            ) {
+                              // Update the usageStatus for the matching item
+                              updatedUsageStatues[i].usageStatus =
+                                UsageStatusType[
+                                  event.target
+                                    .value as keyof typeof UsageStatusType
+                                ];
+                            }
+                          }
+
+                          onChangeUsageStatues(updatedUsageStatues);
+                        }
+                        if (onChangeUsageStatuesErrors && usageStatuesErrors) {
+                          const updatedUsageStatuesErrors = [
+                            ...usageStatuesErrors,
+                          ];
+
+                          for (
+                            let i = 0;
+                            i < updatedUsageStatuesErrors.length;
+                            i++
+                          ) {
+                            const status = updatedUsageStatuesErrors[i];
+                            if (
+                              status.catalogue_item_id ===
+                              row.original.catalogueItem?.id
+                            ) {
+                              updatedUsageStatuesErrors[i].error = false;
+                            }
+                          }
+                          onChangeUsageStatuesErrors(updatedUsageStatuesErrors);
                         }
                       }}
                       label="Usage statues"
@@ -476,52 +478,50 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           : ''
                       }
                       onChange={(event) => {
-                        if (onChangeUsageStatues) {
-                          onChangeUsageStatues((prev: UsageStatuesType[]) => {
-                            const itemIndex = prev.findIndex(
-                              (status: UsageStatuesType) =>
-                                status.item_id === row.original.item.id
-                            );
-                            const updatedUsageStatues = [...prev];
-
-                            updatedUsageStatues[itemIndex].usageStatus =
-                              UsageStatusType[
-                                event.target
-                                  .value as keyof typeof UsageStatusType
-                              ];
-
-                            return updatedUsageStatues as UsageStatuesType[];
-                          });
-                        }
-                        if (onChangeUsageStatuesErrors) {
-                          onChangeUsageStatuesErrors(
-                            (prev: UsageStatuesErrorType[]) => {
-                              const itemIndex = prev.findIndex(
-                                (status: UsageStatuesErrorType) =>
-                                  status.item_id === row.original.item.id
-                              );
-                              const updatedUsageStatues = [...prev];
-
-                              updatedUsageStatues[itemIndex].error = false;
-
-                              return updatedUsageStatues;
-                            }
+                        if (onChangeUsageStatues && usageStatues) {
+                          const itemIndex = usageStatues.findIndex(
+                            (status: UsageStatuesType) =>
+                              status.item_id === row.original.item.id
                           );
+                          const updatedUsageStatues = [...usageStatues];
+
+                          updatedUsageStatues[itemIndex].usageStatus =
+                            UsageStatusType[
+                              event.target.value as keyof typeof UsageStatusType
+                            ];
+
+                          onChangeUsageStatues(updatedUsageStatues);
+                        }
+                        if (onChangeUsageStatuesErrors && usageStatuesErrors) {
+                          const itemIndex = usageStatuesErrors.findIndex(
+                            (status: UsageStatuesErrorType) =>
+                              status.item_id === row.original.item.id
+                          );
+                          const updatedUsageStatues = [...usageStatuesErrors];
+
+                          updatedUsageStatues[itemIndex].error = false;
+
+                          onChangeUsageStatuesErrors(updatedUsageStatues);
                         }
 
-                        if (onChangeAggregatedCellUsageStatus) {
-                          onChangeAggregatedCellUsageStatus((prev) => {
-                            const itemIndex = prev.findIndex(
-                              (status: Omit<UsageStatuesType, 'item_id'>) =>
-                                status.catalogue_item_id ===
-                                row.original.catalogueItem?.id
-                            );
-                            const updatedUsageStatues = [...prev];
+                        if (
+                          onChangeAggregatedCellUsageStatus &&
+                          aggregatedCellUsageStatus
+                        ) {
+                          const itemIndex = aggregatedCellUsageStatus.findIndex(
+                            (status: Omit<UsageStatuesType, 'item_id'>) =>
+                              status.catalogue_item_id ===
+                              row.original.catalogueItem?.id
+                          );
+                          const updatedUsageStatues = [
+                            ...aggregatedCellUsageStatus,
+                          ];
 
-                            updatedUsageStatues[itemIndex].usageStatus = '';
+                          updatedUsageStatues[itemIndex].usageStatus = '';
 
-                            return updatedUsageStatues;
-                          });
+                          onChangeAggregatedCellUsageStatus(
+                            updatedUsageStatues
+                          );
                         }
                       }}
                       error={error}
