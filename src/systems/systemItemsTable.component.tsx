@@ -80,7 +80,7 @@ export interface SystemItemsTableProps {
   ) => void;
   aggregatedCellUsageStatus?: Omit<UsageStatuesType, 'item_id'>[];
   onChangeAggregatedCellUsageStatus?: (
-    aggregatedCellUsageStatus?: Omit<UsageStatuesType, 'item_id'>[]
+    aggregatedCellUsageStatus: Omit<UsageStatuesType, 'item_id'>[]
   ) => void;
 }
 
@@ -358,15 +358,13 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                       labelId={`usage-statues-${row.original.catalogueItem?.name}`}
                       size="small"
                       value={
-                        aggregatedCellUsageStatus
-                          ? status(
-                              aggregatedCellUsageStatus.find(
-                                (status) =>
-                                  status.catalogue_item_id ===
-                                  row.original.catalogueItem?.id
-                              )?.usageStatus
-                            )
-                          : ''
+                        status(
+                          aggregatedCellUsageStatus?.find(
+                            (status) =>
+                              status.catalogue_item_id ===
+                              row.original.catalogueItem?.id
+                          )?.usageStatus
+                        ) ?? ''
                       }
                       onChange={(event) => {
                         if (
@@ -378,17 +376,19 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                               status.catalogue_item_id ===
                               row.original.catalogueItem?.id
                           );
-                          const updatedUsageStatues = [
+                          const updatedAggregatedCellUsageStatus = [
                             ...aggregatedCellUsageStatus,
                           ];
 
-                          updatedUsageStatues[itemIndex].usageStatus =
+                          updatedAggregatedCellUsageStatus[
+                            itemIndex
+                          ].usageStatus =
                             UsageStatusType[
                               event.target.value as keyof typeof UsageStatusType
                             ];
 
                           onChangeAggregatedCellUsageStatus(
-                            updatedUsageStatues
+                            updatedAggregatedCellUsageStatus
                           );
                         }
 
@@ -468,14 +468,11 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                       labelId={`usage-status-${row.original.item.id}`}
                       size="small"
                       value={
-                        usageStatues
-                          ? status(
-                              usageStatues.find(
-                                (status) =>
-                                  status.item_id === row.original.item.id
-                              )?.usageStatus
-                            )
-                          : ''
+                        status(
+                          usageStatues?.find(
+                            (status) => status.item_id === row.original.item.id
+                          )?.usageStatus
+                        ) ?? ''
                       }
                       onChange={(event) => {
                         if (onChangeUsageStatues && usageStatues) {

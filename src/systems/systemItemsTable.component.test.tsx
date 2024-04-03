@@ -86,10 +86,32 @@ describe('SystemItemsTable', () => {
       expect(screen.getByText('No items found')).toBeInTheDocument();
     });
 
+    it('links to catalogue item landing page', async () => {
+      createView();
+
+      // Name (obtained from catalogue category item)
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('cell', {
+              name: `Turbomolecular Pumps 42 (1)`,
+            })
+          ).toBeInTheDocument();
+        },
+        { timeout: 4000 }
+      );
+
+      expect(
+        screen.getByRole('link', {
+          name: `Turbomolecular Pumps 42`,
+        })
+      ).toHaveAttribute('href', '/catalogue/item/21');
+    });
+
     it('can set a table filter and clear them again', async () => {
       createView();
 
-      // Name (obtained from catalouge category item)
+      // Name (obtained from catalogue category item)
       await waitFor(
         () => {
           expect(
@@ -381,6 +403,58 @@ describe('SystemItemsTable', () => {
       ]);
     });
 
+    it('set the initial aggregated Cell Usage Status  ', async () => {
+      props.aggregatedCellUsageStatus = [];
+      createView();
+
+      // Name (obtained from catalogue category item)
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('cell', {
+              name: `Cameras 1 (2)`,
+            })
+          ).toBeInTheDocument();
+        },
+        { timeout: 4000 }
+      );
+
+      await waitFor(() => {
+        expect(onChangeAggregatedCellUsageStatus).toHaveBeenCalledWith([
+          { catalogue_item_id: '1', usageStatus: '' },
+          { catalogue_item_id: '25', usageStatus: '' },
+        ]);
+      });
+    });
+
+    it('selects the correct usage status text value according to the number value', async () => {
+      props.aggregatedCellUsageStatus = [
+        { catalogue_item_id: '1', usageStatus: 0 },
+        { catalogue_item_id: '25', usageStatus: 1 },
+      ];
+
+      createView();
+
+      // Name (obtained from catalogue category item)
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('cell', {
+              name: `Cameras 1 (2)`,
+            })
+          ).toBeInTheDocument();
+        },
+        { timeout: 4000 }
+      );
+
+      expect(
+        within(screen.getAllByRole('combobox')[1]).getByText('New')
+      ).toBeInTheDocument();
+      expect(
+        within(screen.getAllByRole('combobox')[2]).getByText('In Use')
+      ).toBeInTheDocument();
+    });
+
     it('sets the usages status one by one', async () => {
       createView();
 
@@ -438,7 +512,7 @@ describe('SystemItemsTable', () => {
       ]);
     });
 
-    it('displays errors message correctly', async () => {
+    it('displays errors messages correctly', async () => {
       props.usageStatuesErrors = [
         { item_id: 'KvT2Ox7n', catalogue_item_id: '1', error: true },
         { item_id: 'G463gOIA', catalogue_item_id: '1', error: true },
@@ -472,17 +546,6 @@ describe('SystemItemsTable', () => {
       await user.click(screen.getAllByLabelText('Expand all')[1]);
       const helperTexts = screen.getAllByText('Please select a usage status');
       expect(helperTexts.length).toEqual(4);
-
-      // await modifyUsageStatus({ cameras1: 'Used' });
-      // await modifyUsageStatus({ cameras6Item1: 'Used', cameras6Item2: 'Used' });
-
-      // await waitFor(() => {
-      //   expect(screen.queryByTestId('ErrorIcon')).not.toBeInTheDocument();
-      // });
-
-      // expect(
-      //   screen.queryByTestId('Please select a usage status')
-      // ).not.toBeInTheDocument();
     });
   });
 });
