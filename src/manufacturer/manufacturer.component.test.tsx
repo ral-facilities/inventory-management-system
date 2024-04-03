@@ -41,7 +41,7 @@ describe('Manufacturer', () => {
     await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
     await user.click(screen.getByText('Created'));
     expect(view.asFragment()).toMatchSnapshot();
-  }, 10000);
+  });
 
   it('manufacturer url has a href so therefore links to new webpage', async () => {
     createView();
