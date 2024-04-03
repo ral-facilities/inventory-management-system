@@ -595,7 +595,7 @@ describe('Systems', () => {
       );
     });
   });
-  describe.only('Move', () => {
+  describe('Move', () => {
     it('moves items', () => {
       cy.findByRole('cell', { name: 'Pulse Laser' }).click();
       cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
