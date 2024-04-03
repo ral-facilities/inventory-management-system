@@ -210,8 +210,6 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             setActiveStep((prevActiveStep) => prevActiveStep + 1)
           );
         }
-        default:
-          setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     },
     [hasSystemErrors]
