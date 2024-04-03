@@ -35,49 +35,68 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   queryClient?: QueryClient;
 }
 
+function constructRouterProviderWrapper(
+  queryClient: QueryClient,
+  urlPathKey?: keyof typeof paths,
+  initialEntry?: string
+) {
+  const wrapper = ({ children }): JSX.Element => {
+    const Root: React.FunctionComponent = () => {
+      return (
+        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
+          <QueryClientProvider client={queryClient}>
+            {children}
+          </QueryClientProvider>
+        </LocalizationProvider>
+      );
+    };
+
+    const router =
+      initialEntry !== undefined && urlPathKey !== undefined
+        ? createMemoryRouter([{ path: paths[urlPathKey], Component: Root }], {
+            initialEntries: [initialEntry],
+          })
+        : createBrowserRouter([{ path: '*', Component: Root }]);
+
+    return <RouterProvider router={router} />;
+  };
+  return wrapper;
+}
+
 export function renderComponentWithRouterProvider(
   ui: React.ReactElement,
   urlPathKey?: keyof typeof paths,
   initialEntry?: string,
   {
-    // Automatically create a store instance if no store was passed i
     // Automatically create a query client instance if no query client was passed in
     queryClient = createTestQueryClient(),
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {
-  const Root: React.FunctionComponent = () => {
-    return (
-      <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
-        <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
-      </LocalizationProvider>
-    );
-  };
-
-  const router =
-    initialEntry !== undefined && urlPathKey !== undefined
-      ? createMemoryRouter([{ path: paths[urlPathKey], Component: Root }], {
-          initialEntries: [initialEntry],
-        })
-      : createBrowserRouter([{ path: '*', Component: Root }]);
-
-  function Wrapper(): JSX.Element {
-    return <RouterProvider router={router} />;
-  }
   return {
     queryClient,
-    ...render(ui, { wrapper: Wrapper, ...renderOptions }),
+    ...render(ui, {
+      wrapper: constructRouterProviderWrapper(
+        queryClient,
+        urlPathKey,
+        initialEntry
+      ),
+      ...renderOptions,
+    }),
   };
 }
 
-export const hooksWrapperWithProviders = (queryClient?: QueryClient) => {
-  const testQueryClient = queryClient ?? createTestQueryClient();
-  const wrapper = ({ children }) => (
-    <QueryClientProvider client={testQueryClient}>
-      {children}
-    </QueryClientProvider>
+export const hooksWrapperWithProviders = (props?: {
+  queryClient?: QueryClient;
+  urlPathKey?: keyof typeof paths;
+  initialEntry?: string;
+}) => {
+  const testQueryClient = props?.queryClient ?? createTestQueryClient();
+  return constructRouterProviderWrapper(
+    testQueryClient,
+    props?.urlPathKey,
+    props?.initialEntry
   );
-  return wrapper;
 };
 
 export const getCatalogueItemsPropertiesById = (

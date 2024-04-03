@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 import { useCatalogueItemIds } from '../api/catalogueItems';
 import { useItems } from '../api/items';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
-import { usePreservedTableState } from '../common/preservedTable.component';
+import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import { formatDateTimeStrings } from '../utils';
 import SystemItemsDialog from './systemItemsDialog.component';

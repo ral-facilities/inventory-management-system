@@ -36,7 +36,7 @@ import {
   CatalogueItemPropertyResponse,
   Manufacturer,
 } from '../../app.types';
-import { usePreservedTableState } from '../../common/preservedTable.component';
+import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
   formatDateTimeStrings,
   generateUniqueName,

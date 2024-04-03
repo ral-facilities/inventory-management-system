@@ -34,7 +34,7 @@ import {
   PropertyFiltersType,
   findPropertyValue,
 } from '../catalogue/items/catalogueItemsTable.component';
-import { usePreservedTableState } from '../common/preservedTable.component';
+import { usePreservedTableState } from '../common/preservedTableState.component';
 import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';

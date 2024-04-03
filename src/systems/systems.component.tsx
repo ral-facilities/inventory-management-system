@@ -43,7 +43,7 @@ import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog, { SystemDialogType } from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
-import { usePreservedTableState } from '../common/preservedTable.component';
+import { usePreservedTableState } from '../common/preservedTableState.component';
 
 /* Returns function that navigates to a specific system id (or to the root of all systems
    if given null) */

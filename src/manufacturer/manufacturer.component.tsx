@@ -22,7 +22,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useManufacturers } from '../api/manufacturers';
 import { Manufacturer } from '../app.types';
-import { usePreservedTableState } from '../common/preservedTable.component';
+import { usePreservedTableState } from '../common/preservedTableState.component';
 import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
