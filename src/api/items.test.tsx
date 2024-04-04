@@ -304,7 +304,7 @@ describe('catalogue items api functions', () => {
   describe('useAddItems', () => {
     let addItems: AddItems;
 
-    // Use patch spy for testing since response is not actual data in this case
+    // Use post spy for testing since response is not actual data in this case
     // so can't test the underlying use of editSystem otherwise
     let axiosPostSpy;
     const { _id, ...item } = getItemById('KvT2Ox7n');
