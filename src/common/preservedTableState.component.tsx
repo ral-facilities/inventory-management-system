@@ -99,7 +99,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   useEffect(() => {
     if (props?.storeInUrl) {
       const newUnparsedState = JSON.stringify(parsedState);
-      // console.log(unparsedState, newUnparsedState);
       if (unparsedState !== newUnparsedState) {
         // Clear search params if state is no longer needed
         if (newUnparsedState !== '{}') {
@@ -107,26 +106,10 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
             urlParamName,
             LZString.compressToEncodedURIComponent(newUnparsedState)
           );
-          const testState: StateSearchParams = {
-            cF: [{ id: 'catalogueItem.name', value: 'nameFilter' }],
-            srt: [{ id: 'catalogueItem.name', desc: true }],
-            cVis: {
-              'catalogueItem.created_time': false,
-              'catalogueItem.description': false,
-            },
-            gFil: 'globalFilter',
-            g: ['catalogueItem.is_obsolete'],
-            cO: ['mrt-row-expand', 'mrt-row-actions'],
-            p: { pageSize: 30, pageIndex: 0 },
-          };
-          console.log(newUnparsedState);
-          console.log(
-            LZString.compressToEncodedURIComponent(JSON.stringify(testState))
-          );
-          setSearchParams(searchParams, { replace: true });
+          setSearchParams(searchParams);
         } else {
           searchParams.delete(urlParamName);
-          setSearchParams(searchParams, { replace: true });
+          setSearchParams(searchParams);
         }
       }
     }
@@ -154,10 +137,14 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       p: props?.initialState?.pagination ||
         firstUpdate.current?.p || { pageSize: 15, pageIndex: 0 },
     }),
+    // Need to also update when firstUpdate.current?.x changes, for some reason it claims its not used here when it is
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       props?.initialState?.columnVisibility,
       props?.initialState?.grouping,
       props?.initialState?.pagination,
+      firstUpdate.current?.cO,
+      firstUpdate.current?.p,
     ]
   );
 
