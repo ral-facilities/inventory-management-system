@@ -150,7 +150,7 @@ describe('Items', () => {
     });
   });
 
-  it.only('displays error messages for serial number advanced options', () => {
+  it('displays error messages for serial number advanced options', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
 
     cy.findByText('Show advanced options').click();
