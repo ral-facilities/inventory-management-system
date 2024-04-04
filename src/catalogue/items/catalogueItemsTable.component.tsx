@@ -149,7 +149,8 @@ export type PropertyFiltersType = {
   null: 'select' | 'text' | 'range';
 };
 
-const OverflowTip = ({ children }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const OverflowTip = ({ children }: any) => {
   const [isOverflowed, setIsOverflow] = React.useState(false);
   const overflowElementRef = useRef<HTMLInputElement | null>(null);
   React.useEffect(() => {
