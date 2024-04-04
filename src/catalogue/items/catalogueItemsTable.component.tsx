@@ -38,6 +38,7 @@ import {
   Manufacturer,
 } from '../../app.types';
 import {
+  OverflowTip,
   formatDateTimeStrings,
   generateUniqueName,
   getPageHeightCalc,
@@ -147,40 +148,6 @@ export type PropertyFiltersType = {
   string: 'select' | 'text' | 'range';
   number: 'select' | 'text' | 'range';
   null: 'select' | 'text' | 'range';
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const OverflowTip = ({ children }: any) => {
-  const [isOverflowed, setIsOverflow] = React.useState(false);
-  const overflowElementRef = useRef<HTMLInputElement | null>(null);
-  React.useEffect(() => {
-    if (overflowElementRef.current) {
-      setIsOverflow(
-        overflowElementRef.current.scrollWidth >
-          overflowElementRef.current.clientWidth
-      );
-    }
-  }, []);
-  return (
-    <Tooltip
-      title={children}
-      disableHoverListener={!isOverflowed}
-      placement="top"
-      enterTouchDelay={0}
-      arrow
-    >
-      <div
-        ref={overflowElementRef}
-        style={{
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-        }}
-      >
-        {children}
-      </div>
-    </Tooltip>
-  );
 };
 
 const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
@@ -338,11 +305,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.catalogueItem.description && (
-            <OverflowTip
-              aria-label={`Catalogue item description: ${row.original.catalogueItem.description}`}
-            >
-              {row.original.catalogueItem.description}
-            </OverflowTip>
+            <OverflowTip>{row.original.catalogueItem.description}</OverflowTip>
           ),
       },
       {
