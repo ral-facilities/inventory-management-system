@@ -108,7 +108,7 @@ describe('Items', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
     cy.findByText('Show advanced options').click();
     cy.findByLabelText('Serial number').type('test %s');
-    cy.findByLabelText('Quantity').type('10');
+    cy.findByLabelText('Quantity').type('3');
     cy.findByLabelText('Starting value').type('2');
 
     cy.startSnoopingBrowserMockedRequest();
@@ -124,29 +124,32 @@ describe('Items', () => {
       method: 'POST',
       url: '/v1/items',
     }).should(async (postRequests) => {
-      expect(postRequests.length).eq(10);
-      expect(JSON.stringify(await postRequests[0].json())).equal(
-        JSON.stringify({
-          catalogue_item_id: '1',
-          system_id: '65328f34a40ff5301575a4e3',
-          purchase_order_number: null,
-          is_defective: false,
-          usage_status: 0,
-          warranty_end_date: null,
-          asset_number: null,
-          serial_number: 'test 2',
-          delivered_date: null,
-          notes: null,
-          properties: [
-            { name: 'Resolution', value: 12 },
-            { name: 'Frame Rate', value: 30 },
-            { name: 'Sensor Type', value: 'CMOS' },
-            { name: 'Sensor brand', value: null },
-            { name: 'Broken', value: true },
-            { name: 'Older than five years', value: false },
-          ],
-        })
-      );
+      expect(postRequests.length).eq(3);
+
+      for (let i = 0; i < 3; i++) {
+        expect(JSON.stringify(await postRequests[i].json())).equal(
+          JSON.stringify({
+            catalogue_item_id: '1',
+            system_id: '65328f34a40ff5301575a4e3',
+            purchase_order_number: null,
+            is_defective: false,
+            usage_status: 0,
+            warranty_end_date: null,
+            asset_number: null,
+            serial_number: `test ${i + 2}`,
+            delivered_date: null,
+            notes: null,
+            properties: [
+              { name: 'Resolution', value: 12 },
+              { name: 'Frame Rate', value: 30 },
+              { name: 'Sensor Type', value: 'CMOS' },
+              { name: 'Sensor brand', value: null },
+              { name: 'Broken', value: true },
+              { name: 'Older than five years', value: false },
+            ],
+          })
+        );
+      }
     });
   });
 

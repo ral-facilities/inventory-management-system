@@ -277,84 +277,47 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
-        asset_number: null,
-        catalogue_item_id: '1',
-        delivered_date: null,
-        is_defective: false,
-        notes: null,
-        properties: [
-          {
-            name: 'Resolution',
-            value: 12,
-          },
-          {
-            name: 'Frame Rate',
-            value: 30,
-          },
-          {
-            name: 'Sensor Type',
-            value: 'CMOS',
-          },
-          {
-            name: 'Sensor brand',
-            value: null,
-          },
-          {
-            name: 'Broken',
-            value: true,
-          },
-          {
-            name: 'Older than five years',
-            value: false,
-          },
-        ],
-        purchase_order_number: null,
-        serial_number: 'test12 10',
-        system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 0,
-        warranty_end_date: null,
-      });
-
-      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
-        asset_number: null,
-        catalogue_item_id: '1',
-        delivered_date: null,
-        is_defective: false,
-        notes: null,
-        properties: [
-          {
-            name: 'Resolution',
-            value: 12,
-          },
-          {
-            name: 'Frame Rate',
-            value: 30,
-          },
-          {
-            name: 'Sensor Type',
-            value: 'CMOS',
-          },
-          {
-            name: 'Sensor brand',
-            value: null,
-          },
-          {
-            name: 'Broken',
-            value: true,
-          },
-          {
-            name: 'Older than five years',
-            value: false,
-          },
-        ],
-        purchase_order_number: null,
-        serial_number: 'test12 11',
-        system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 0,
-        warranty_end_date: null,
-      });
-    });
+      for (let i = 0; i < 2; i++) {
+        expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
+          asset_number: null,
+          catalogue_item_id: '1',
+          delivered_date: null,
+          is_defective: false,
+          notes: null,
+          properties: [
+            {
+              name: 'Resolution',
+              value: 12,
+            },
+            {
+              name: 'Frame Rate',
+              value: 30,
+            },
+            {
+              name: 'Sensor Type',
+              value: 'CMOS',
+            },
+            {
+              name: 'Sensor brand',
+              value: null,
+            },
+            {
+              name: 'Broken',
+              value: true,
+            },
+            {
+              name: 'Older than five years',
+              value: false,
+            },
+          ],
+          purchase_order_number: null,
+          serial_number: `test12 ${i + 10}`,
+          system_id: '65328f34a40ff5301575a4e3',
+          usage_status: 0,
+          warranty_end_date: null,
+        });
+      }
+    }, 10000);
 
     it('navigates through the stepper using the labels', async () => {
       createView();

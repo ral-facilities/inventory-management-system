@@ -25,7 +25,7 @@ import {
 import SystemsJSON from '../mocks/Systems.json';
 import { imsApi } from './api';
 
-describe('catalogue items api functions', () => {
+describe('items api functions', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
