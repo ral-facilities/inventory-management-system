@@ -27,7 +27,7 @@ import {
   type MRT_RowSelectionState,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
-import React, { useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCatalogueItems } from '../../api/catalogueItems';
 import { useManufacturerIds } from '../../api/manufacturers';
