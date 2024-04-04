@@ -149,11 +149,13 @@ export const moveItemToSystem = (values: {
   cy.findByRole('button', { name: 'Next' }).should('not.be.disabled');
   cy.findByRole('button', { name: 'Next' }).click();
 
+  cy.findByRole('cell', {
+    name: `Plano-Convex Lens (1)`,
+  }).should('exist');
+
   cy.findByRole('progressbar').should('not.exist');
 
-  cy.findByText('Plano-Convex Lens (1)').should('exist');
-
-  cy.findByRole('combobox').eq(1).click();
+  cy.findAllByRole('combobox').eq(1).click();
   cy.findByText('Scrapped').click();
 
   cy.findByRole('button', { name: 'Finish' }).should('not.be.disabled');

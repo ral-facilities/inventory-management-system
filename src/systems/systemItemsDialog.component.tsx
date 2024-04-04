@@ -340,7 +340,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
               // Disable when not moving anywhere different
               // or when attempting to move to root i.e. no system
               placeIntoSystemError ||
-              errorUsageStatuesItemId.length !== 0
+              errorUsageStatuesItemId.length !== 0 ||
+              !(!targetSystemLoading && targetSystem !== undefined)
             }
             onClick={handleMoveTo}
             sx={{ mr: 3 }}
