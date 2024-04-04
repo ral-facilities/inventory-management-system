@@ -53,7 +53,7 @@ const getDefaultParsedState = (unparsedState: string) => {
     try {
       return JSON.parse(unparsedState);
     } catch (_error) {
-      // Do nothing, error shouldnt appear to the user
+      // Do nothing, error shouldn't appear to the user
     }
   }
   return {};

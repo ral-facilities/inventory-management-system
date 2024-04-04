@@ -1,16 +1,15 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { usePreservedTableState } from './preservedTableState.component';
-import { hooksWrapperWithProviders } from '../testUtils';
-import { act } from 'react-dom/test-utils';
+import LZString from 'lz-string';
 import { MRT_VisibilityState } from 'material-react-table';
+import { act } from 'react-dom/test-utils';
+import { hooksWrapperWithProviders } from '../testUtils';
+import { usePreservedTableState } from './preservedTableState.component';
 
 describe('Preserved table state functions', () => {
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
   describe('usePreservedTableState', () => {
     afterEach(() => {
+      vi.clearAllMocks();
+
       // NOTE: In these tests we would ideally use a memory router and use router.state.location instead
       // however renderHook requires a wrapper, and using RouterProvider requires that the router is
       // be inside that wrapper, preventing access so we must use BrowserRouter instead here for now
@@ -33,6 +32,57 @@ describe('Preserved table state functions', () => {
         {
           wrapper: hooksWrapperWithProviders(),
         }
+      );
+
+      expect(JSON.stringify(result.current.preservedState)).toBe(
+        JSON.stringify({
+          columnFilters: [],
+          sorting: [],
+          columnVisibility: {},
+          globalFilter: undefined,
+          grouping: [],
+          columnOrder: [],
+          pagination: {
+            pageSize: 15,
+            pageIndex: 0,
+          },
+        })
+      );
+    });
+
+    it('uses default states if url is invalid', () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () => usePreservedTableState({ storeInUrl: true }),
+        '?state=D'
+      );
+
+      expect(JSON.stringify(result.current.preservedState)).toBe(
+        JSON.stringify({
+          columnFilters: [],
+          sorting: [],
+          columnVisibility: {},
+          globalFilter: undefined,
+          grouping: [],
+          columnOrder: [],
+          pagination: {
+            pageSize: 15,
+            pageIndex: 0,
+          },
+        })
+      );
+    });
+
+    it('uses default states if url cannot be decompressed', () => {
+      vi.spyOn(
+        LZString,
+        'decompressFromEncodedURIComponent'
+      ).mockImplementationOnce(() => {
+        throw new Error('Some error');
+      });
+
+      const { result } = renderHookWithBrowserRouterURL(
+        () => usePreservedTableState({ storeInUrl: true }),
+        '?state=D'
       );
 
       expect(JSON.stringify(result.current.preservedState)).toBe(
@@ -83,7 +133,7 @@ describe('Preserved table state functions', () => {
       );
     });
 
-    it('correctly loads the state found in the url', () => {
+    it('loads the state found in the url', () => {
       // This test was constructed using the following:
 
       // const testState: StateSearchParams = {
@@ -128,6 +178,69 @@ describe('Preserved table state functions', () => {
           grouping: ['catalogueItem.is_obsolete'],
           columnOrder: ['mrt-row-expand', 'mrt-row-actions'],
           pagination: { pageSize: 30, pageIndex: 5 },
+        })
+      );
+    });
+
+    it('loads the state found in the url when urlParamName is given', () => {
+      const { result } = renderHook(
+        () =>
+          usePreservedTableState({
+            storeInUrl: true,
+            urlParamName: 'subState',
+          }),
+        {
+          wrapper: hooksWrapperWithProviders({
+            urlPathKey: 'any',
+            initialEntry:
+              '?subState=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJq9jEC2FAE4gAvgF1WAZ0EYY8EMlRhMOAiXJU6DJqyTFJYGBkElxrMADUEkmKGVY8RMhRphBxTMSQB9DAkYwAGY4ksTmKo7qLtR6BoIIAA5+uLRBIcQirPh82Kj4eABGODlCLCD4cugOas6a1t64BZK42MQUIBLgAPKVlDIAtIK4AO79xAAeCWi0KKx9GIMj-WhgybQ2nQm2IFP4xADKCABeTNAAzAAMrLtkMxMwAKwiIkA',
+          }),
+        }
+      );
+
+      expect(JSON.stringify(result.current.preservedState)).toBe(
+        JSON.stringify({
+          columnFilters: [{ id: 'catalogueItem.name', value: 'nameFilter' }],
+          sorting: [{ id: 'catalogueItem.name', desc: true }],
+          columnVisibility: {
+            'catalogueItem.created_time': false,
+            'catalogueItem.description': false,
+          },
+          globalFilter: 'globalFilter',
+          grouping: ['catalogueItem.is_obsolete'],
+          columnOrder: ['mrt-row-expand', 'mrt-row-actions'],
+          pagination: { pageSize: 30, pageIndex: 5 },
+        })
+      );
+    });
+
+    it('ignores the the state found in the url if storeInUrl is false', () => {
+      const { result } = renderHook(
+        () =>
+          usePreservedTableState({
+            storeInUrl: false,
+          }),
+        {
+          wrapper: hooksWrapperWithProviders({
+            urlPathKey: 'any',
+            initialEntry:
+              '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJq9jEC2FAE4gAvgF1WAZ0EYY8EMlRhMOAiXJU6DJqyTFJYGBkElxrMADUEkmKGVY8RMhRphBxTMSQB9DAkYwAGY4ksTmKo7qLtR6BoIIAA5+uLRBIcQirPh82Kj4eABGODlCLCD4cugOas6a1t64BZK42MQUIBLgAPKVlDIAtIK4AO79xAAeCWi0KKx9GIMj-WhgybQ2nQm2IFP4xADKCABeTNAAzAAMrLtkMxMwAKwiIkA',
+          }),
+        }
+      );
+
+      expect(JSON.stringify(result.current.preservedState)).toBe(
+        JSON.stringify({
+          columnFilters: [],
+          sorting: [],
+          columnVisibility: {},
+          globalFilter: undefined,
+          grouping: [],
+          columnOrder: [],
+          pagination: {
+            pageSize: 15,
+            pageIndex: 0,
+          },
         })
       );
     });
@@ -243,6 +356,52 @@ describe('Preserved table state functions', () => {
             'catalogueItem.created_time': true,
           })
         )
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnVisibility)
+        ).toBe(JSON.stringify({}))
+      );
+      expect(window.location.search).toBe('');
+    });
+
+    it('onColumnVisibilityChange updates the state and url correctly (using an empty object to clear)', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () => usePreservedTableState({ storeInUrl: true }),
+        '/'
+      );
+
+      // Change the state to a non-default value
+      act(() => {
+        result.current.onPreservedStatesChange.onColumnVisibilityChange(
+          (prevState: MRT_VisibilityState) => ({
+            ...prevState,
+            'catalogueItem.name': false,
+            'catalogueItem.created_time': false,
+          })
+        );
+      });
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnVisibility)
+        ).toBe(
+          JSON.stringify({
+            'catalogueItem.name': false,
+            'catalogueItem.created_time': false,
+          })
+        )
+      );
+
+      expect(window.location.search).toBe(
+        '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDoA7ZMghAM0xgIBpw1NdCTyKwATgTQEAJgH1UUOo2YEAvvKA'
+      );
+
+      // Now change back to a default value (MRT doesn't supply {} here, but instead just changes values back to true,
+      // this is here just to improve coverage)
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnVisibilityChange({})
       );
 
       await waitFor(() =>
