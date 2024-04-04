@@ -27,7 +27,7 @@ import {
   type MRT_RowSelectionState,
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useCatalogueItems } from '../../api/catalogueItems';
 import { useManufacturerIds } from '../../api/manufacturers';
@@ -147,6 +147,39 @@ export type PropertyFiltersType = {
   string: 'select' | 'text' | 'range';
   number: 'select' | 'text' | 'range';
   null: 'select' | 'text' | 'range';
+};
+
+const OverflowTip = ({ children }) => {
+  const [isOverflowed, setIsOverflow] = React.useState(false);
+  const overflowElementRef = useRef<HTMLInputElement | null>(null);
+  React.useEffect(() => {
+    if (overflowElementRef.current) {
+      setIsOverflow(
+        overflowElementRef.current.scrollWidth >
+          overflowElementRef.current.clientWidth
+      );
+    }
+  }, []);
+  return (
+    <Tooltip
+      title={children}
+      disableHoverListener={!isOverflowed}
+      placement="top"
+      enterTouchDelay={0}
+      arrow
+    >
+      <div
+        ref={overflowElementRef}
+        style={{
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }}
+      >
+        {children}
+      </div>
+    </Tooltip>
+  );
 };
 
 const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
@@ -304,23 +337,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         enableGrouping: false,
         Cell: ({ row }) =>
           row.original.catalogueItem.description && (
-            <Tooltip
-              title={row.original.catalogueItem.description}
-              placement="top"
-              enterTouchDelay={0}
-              arrow
+            <OverflowTip
               aria-label={`Catalogue item description: ${row.original.catalogueItem.description}`}
             >
-              <div
-                style={{
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {row.original.catalogueItem.description}
-              </div>
-            </Tooltip>
+              {row.original.catalogueItem.description}
+            </OverflowTip>
           ),
       },
       {
