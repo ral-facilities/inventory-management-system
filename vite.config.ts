@@ -128,6 +128,15 @@ export default defineConfig(({ mode }) => {
       globalSetup: './globalSetup.js',
       setupFiles: ['src/setupTests.ts'],
       coverage: {
+        reporter: [
+          // Default
+          'text',
+          'html',
+          'clover',
+          'json',
+          // Extra for VSCode extension
+          ['lcov', { outputFile: 'lcov.info', silent: true }],
+        ],
         exclude: [
           'public/*',
           'server/*',
