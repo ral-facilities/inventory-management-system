@@ -24,11 +24,11 @@ import {
 } from '../../api/catalogueCategories';
 import {
   AddCatalogueCategory,
-  AddCatalogueCategoryWithOrderId,
+  AddCatalogueCategoryWithPlacementIds,
   AllowedValuesListErrorsType,
   CatalogueCategory,
   CatalogueCategoryFormData,
-  CatalogueCategoryFormDataWithIDs,
+  CatalogueCategoryFormDataWithPlacementIds,
   CatalogueItemPropertiesErrorsType,
   EditCatalogueCategory,
   ErrorParsing,
@@ -62,7 +62,7 @@ const CatalogueCategoryDialog = React.memo(
     } = props;
 
     const [categoryData, setCategoryData] =
-      React.useState<AddCatalogueCategoryWithOrderId>({
+      React.useState<AddCatalogueCategoryWithPlacementIds>({
         name: '',
         parent_id: null,
         is_leaf: false,
@@ -104,7 +104,7 @@ const CatalogueCategoryDialog = React.memo(
             return modifiedCatalogueCategory;
           }) || undefined;
 
-        const updatedSelectedCatalogueCategory: AddCatalogueCategoryWithOrderId =
+        const updatedSelectedCatalogueCategory: AddCatalogueCategoryWithPlacementIds =
           {
             ...selectedCatalogueCategory,
             catalogue_item_properties: updatedCatalogueItemProperties,
@@ -121,7 +121,7 @@ const CatalogueCategoryDialog = React.memo(
 
           JSON.parse(
             JSON.stringify(updatedSelectedCatalogueCategory)
-          ) as AddCatalogueCategoryWithOrderId
+          ) as AddCatalogueCategoryWithPlacementIds
         );
       }
     }, [selectedCatalogueCategory]);
@@ -163,7 +163,7 @@ const CatalogueCategoryDialog = React.memo(
 
     // Reset errors when required
     const handleFormChange = (
-      newCategoryData: AddCatalogueCategoryWithOrderId
+      newCategoryData: AddCatalogueCategoryWithPlacementIds
     ) => {
       setCategoryData(newCategoryData);
 
@@ -172,7 +172,7 @@ const CatalogueCategoryDialog = React.memo(
     };
 
     const validateAllowedValuesList = (
-      catalogueItemProperties: CatalogueCategoryFormDataWithIDs[]
+      catalogueItemProperties: CatalogueCategoryFormDataWithPlacementIds[]
     ): boolean => {
       let hasErrors = false;
 
@@ -645,7 +645,7 @@ const CatalogueCategoryDialog = React.memo(
                   <CataloguePropertiesForm
                     formFields={categoryData.catalogue_item_properties ?? []}
                     onChangeFormFields={(
-                      formFields: CatalogueCategoryFormDataWithIDs[]
+                      formFields: CatalogueCategoryFormDataWithPlacementIds[]
                     ) =>
                       handleFormChange({
                         ...categoryData,

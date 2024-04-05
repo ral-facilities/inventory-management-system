@@ -19,14 +19,16 @@ import {
   CatalogueItemPropertiesErrorsType,
   AllowedValuesListErrorsType,
   Unit,
-  CatalogueCategoryFormDataWithIDs,
+  CatalogueCategoryFormDataWithPlacementIds,
 } from '../../app.types';
 import { useUnits } from '../../api/units';
 import { generateUniqueId } from '../../utils';
 
 export interface CataloguePropertiesFormProps {
-  formFields: CatalogueCategoryFormDataWithIDs[];
-  onChangeFormFields: (formFields: CatalogueCategoryFormDataWithIDs[]) => void;
+  formFields: CatalogueCategoryFormDataWithPlacementIds[];
+  onChangeFormFields: (
+    formFields: CatalogueCategoryFormDataWithPlacementIds[]
+  ) => void;
   catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[];
   onChangeCatalogueItemPropertiesErrors: (
     catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[]
@@ -67,7 +69,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   };
 
   const handleDeleteField = (cip_placement_id: string) => {
-    const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
+    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       ...formFields,
     ];
 
@@ -107,7 +109,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     field: keyof CatalogueCategoryFormData,
     value: string | boolean | null
   ) => {
-    const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
+    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       ...formFields,
     ];
 
@@ -177,7 +179,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     resetFormError();
   };
   const handleAddListValue = (cip_placement_id: string) => {
-    const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
+    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       ...formFields,
     ];
 
@@ -237,7 +239,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       return; // Or handle the error accordingly
     }
 
-    const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
+    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       ...formFields,
     ];
     const currentField = updatedFormFields[fieldIndex];
@@ -301,7 +303,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       return; // Or handle the error accordingly
     }
 
-    const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
+    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       ...formFields,
     ];
     const currentField = updatedFormFields[fieldIndex];
@@ -464,9 +466,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             <Select
               value={field.allowed_values?.type ?? 'any'}
               onChange={(e) => {
-                const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
-                  ...formFields,
-                ];
+                const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] =
+                  [...formFields];
                 const fieldIndex = updatedFormFields.findIndex(
                   (formField) =>
                     formField.cip_placement_id === field.cip_placement_id

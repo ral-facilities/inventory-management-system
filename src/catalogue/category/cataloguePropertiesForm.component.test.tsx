@@ -2,7 +2,7 @@ import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   CatalogueItemPropertiesErrorsType,
-  CatalogueCategoryFormDataWithIDs,
+  CatalogueCategoryFormDataWithPlacementIds,
   AllowedValuesListErrorsType,
 } from '../../app.types';
 import { renderComponentWithRouterProvider } from '../../testUtils';
@@ -45,7 +45,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('renders correctly', async () => {
-    const formFields: CatalogueCategoryFormDataWithIDs[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 1',
@@ -356,7 +356,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('display error message for type and name if they are not filled in', async () => {
-    const formFields: CatalogueCategoryFormDataWithIDs[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: '',
@@ -607,7 +607,7 @@ describe('Catalogue Properties Form', () => {
     expect(onChangeCatalogueItemPropertiesErrors).toHaveBeenCalledWith([]);
   });
   it('should delete a list item when the delete icon is click', async () => {
-    const formFields: CatalogueCategoryFormDataWithIDs[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -681,7 +681,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should add a list item when the add icon is clicked', async () => {
-    const formFields: CatalogueCategoryFormDataWithIDs[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -759,7 +759,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should edit a list item when the add icon is clicked', async () => {
-    const formFields: CatalogueCategoryFormDataWithIDs[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -837,7 +837,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should set the allowed values to undefined if switched to any', async () => {
-    const formFields: CatalogueCategoryFormDataWithIDs[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -910,7 +910,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should set the allowed values to empty if switched to list from any', async () => {
-    const formFields: CatalogueCategoryFormDataWithIDs[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -977,7 +977,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should display error for duplicate values and incorrect type values and the error should be removed if the catalogue item property is deleted', async () => {
-    const formFields: CatalogueCategoryFormDataWithIDs[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -1107,7 +1107,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should error for incorrect type values and remove error if a values has been changed for the specfic list item', async () => {
-    const formFields: CatalogueCategoryFormDataWithIDs[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -1190,7 +1190,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should display error for incorrect type values and remove the error if the value has been deleted', async () => {
-    const formFields: CatalogueCategoryFormDataWithIDs[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -1270,7 +1270,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should display error for duplicate values and incorrect type values and the error should be removed if the type is changed', async () => {
-    const formFields: CatalogueCategoryFormDataWithIDs[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
