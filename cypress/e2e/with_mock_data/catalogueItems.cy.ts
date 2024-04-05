@@ -634,6 +634,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
     cy.findByLabelText('Filter by Name').type('Cameras 15');
     cy.findByText('Cameras 1').should('not.exist');
+    cy.findByRole('link', { name: 'Cameras 15' }).should('exist');
     cy.location('search').should(
       'eq',
       '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJqAwg8QE5oAzgAIAjAFYQAXwC60oA'
@@ -641,7 +642,7 @@ describe('Catalogue Items', () => {
 
     cy.reload();
 
-    cy.findByText('Cameras 15').should('exist');
+    cy.findByRole('link', { name: 'Cameras 15' }).should('exist');
     cy.findByText('Cameras 1').should('not.exist');
     cy.location('search').should(
       'eq',
