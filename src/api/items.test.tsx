@@ -220,7 +220,7 @@ describe('catalogue items api functions', () => {
 
     beforeEach(() => {
       moveItemsToSystem = {
-        // Prevent test interference if modifying the selected items
+        // Prevent test interference if modifying the usage statuses or selected items
         usageStatues: JSON.parse(JSON.stringify(mockUsageStatues)),
         selectedItems: JSON.parse(JSON.stringify(mockItems)),
         targetSystem: SystemsJSON[0] as System,
