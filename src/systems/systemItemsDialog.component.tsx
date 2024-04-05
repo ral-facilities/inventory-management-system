@@ -158,6 +158,8 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   }, [onClose]);
 
   const hasSystemErrors =
+     // Disable when not moving anywhere different
+    // or when attempting to move to root i.e. no system
     props.parentSystemId === parentSystemId ||
     parentSystemId === null ||
     !(!targetSystemLoading && targetSystem !== undefined);
