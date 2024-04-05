@@ -87,3 +87,10 @@ export const formatDateTimeStrings = (
 
   return formattedDate;
 };
+
+let lastId = 0;
+
+export function generateUniqueId(prefix: string = 'id_'): string {
+  lastId++;
+  return `${prefix}${lastId}`;
+}

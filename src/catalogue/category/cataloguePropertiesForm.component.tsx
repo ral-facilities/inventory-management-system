@@ -19,12 +19,14 @@ import {
   CatalogueItemPropertiesErrorsType,
   AllowedValuesListErrorsType,
   Unit,
+  CatalogueCategoryFormDataWithIDs,
 } from '../../app.types';
 import { useUnits } from '../../api/units';
+import { generateUniqueId } from '../../utils';
 
 export interface CataloguePropertiesFormProps {
-  formFields: CatalogueCategoryFormData[];
-  onChangeFormFields: (formFields: CatalogueCategoryFormData[]) => void;
+  formFields: CatalogueCategoryFormDataWithIDs[];
+  onChangeFormFields: (formFields: CatalogueCategoryFormDataWithIDs[]) => void;
   catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[];
   onChangeCatalogueItemPropertiesErrors: (
     catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[]
@@ -58,17 +60,20 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
         unit: undefined,
         mandatory: false,
         allowed_values: undefined,
+        cip_placement_id: generateUniqueId('cip_placement_id_'),
       },
     ]);
     resetFormError();
   };
 
   const handleDeleteField = (index: number) => {
-    const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
+    const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
+      ...formFields,
+    ];
     updatedFormFields.splice(index, 1);
 
     // When a catalogue item property is deleted it removes the list errors
-    const updatedallowedValuesListErrors = allowedValuesListErrors.filter(
+    const updatedAllowedValuesListErrors = allowedValuesListErrors.filter(
       (item) => item.index !== index
     );
 
@@ -80,7 +85,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           'Duplicate property name. Please change the name or remove the property'
       );
 
-    onChangeAllowedValuesListErrors(updatedallowedValuesListErrors);
+    onChangeAllowedValuesListErrors(updatedAllowedValuesListErrors);
     onChangeFormFields(updatedFormFields);
     onChangeCatalogueItemPropertiesErrors(updatedCatalogueItemPropertiesErrors);
     resetFormError();
@@ -91,7 +96,9 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     field: keyof CatalogueCategoryFormData,
     value: string | boolean | null
   ) => {
-    const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
+    const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
+      ...formFields,
+    ];
 
     if (
       field === 'type' &&
@@ -138,12 +145,13 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     } else {
       (updatedFormFields[index][field] as boolean | string | null) = value;
     }
+    if (field === 'type') {
+      const updatedallowedValuesListErrors = allowedValuesListErrors.filter(
+        (item) => item.index !== index
+      );
 
-    const updatedallowedValuesListErrors = allowedValuesListErrors.filter(
-      (item) => item.index !== index
-    );
-
-    onChangeAllowedValuesListErrors(updatedallowedValuesListErrors);
+      onChangeAllowedValuesListErrors(updatedallowedValuesListErrors);
+    }
 
     onChangeFormFields(updatedFormFields);
 
@@ -151,12 +159,20 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   };
 
   const handleAddListValue = (index: number) => {
-    const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
+    const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
+      ...formFields,
+    ];
     const currentField = updatedFormFields[index];
 
     const updatedAllowedValues: AllowedValuesList = {
       type: 'list',
-      values: [...(currentField.allowed_values?.values || []), ''],
+      values: [
+        ...(currentField.allowed_values?.values || []),
+        {
+          av_placement_id: generateUniqueId('av_placement_id_'),
+          value: '',
+        },
+      ],
     };
 
     updatedFormFields[index] = {
@@ -182,7 +198,9 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     valueIndex: number,
     value: string
   ) => {
-    const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
+    const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
+      ...formFields,
+    ];
     const currentField = updatedFormFields[index];
     if (currentField.allowed_values) {
       const updatedAllowedValues: AllowedValuesList = {
@@ -223,7 +241,9 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   };
 
   const handleDeleteListValue = (index: number, valueIndex: number) => {
-    const updatedFormFields: CatalogueCategoryFormData[] = [...formFields];
+    const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
+      ...formFields,
+    ];
     const currentField = updatedFormFields[index];
 
     if (currentField.allowed_values) {
@@ -366,7 +386,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             <Select
               value={field.allowed_values?.type ?? 'any'}
               onChange={(e) => {
-                const updatedFormFields: CatalogueCategoryFormData[] = [
+                const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
                   ...formFields,
                 ];
                 const currentField = updatedFormFields[index];
@@ -405,14 +425,18 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
                 <Stack
                   key={valueIndex}
                   direction="row"
-                  sx={{ alignItems: 'center', justifyContent: 'center', mb: 1 }}
+                  sx={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    mb: 1,
+                  }}
                   spacing={1}
                 >
                   <TextField
                     label={`List Item`}
                     aria-label={`List Item ${valueIndex}`}
                     variant="outlined"
-                    value={listValue as string}
+                    value={listValue.value as string}
                     onChange={(e) =>
                       field.allowed_values &&
                       handleChangeListValues(

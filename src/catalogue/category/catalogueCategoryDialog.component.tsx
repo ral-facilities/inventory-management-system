@@ -24,16 +24,18 @@ import {
 } from '../../api/catalogueCategories';
 import {
   AddCatalogueCategory,
+  AddCatalogueCategoryWithOrderId,
   AllowedValuesListErrorsType,
   CatalogueCategory,
   CatalogueCategoryFormData,
+  CatalogueCategoryFormDataWithIDs,
   CatalogueItemPropertiesErrorsType,
   EditCatalogueCategory,
   ErrorParsing,
 } from '../../app.types';
 import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { trimStringValues } from '../../utils';
+import { generateUniqueId, trimStringValues } from '../../utils';
 
 // Function to convert a list of strings to a list of numbers
 const convertListToNumbers = (values: string[]): number[] => {
@@ -60,7 +62,7 @@ const CatalogueCategoryDialog = React.memo(
     } = props;
 
     const [categoryData, setCategoryData] =
-      React.useState<AddCatalogueCategory>({
+      React.useState<AddCatalogueCategoryWithOrderId>({
         name: '',
         parent_id: null,
         is_leaf: false,
@@ -68,7 +70,46 @@ const CatalogueCategoryDialog = React.memo(
       });
 
     React.useEffect(() => {
-      if (selectedCatalogueCategory)
+      if (selectedCatalogueCategory) {
+        const updatedCatalogueItemProperties =
+          selectedCatalogueCategory.catalogue_item_properties?.map((item) => {
+            // Assuming allowed_values should be an array of objects with id and value keys
+            const allowedValuesWithId = item.allowed_values?.values.map(
+              (value) => ({
+                av_placement_id: generateUniqueId('av_placement_id_'), // Allowed values (av)
+                value: value,
+              })
+            ) || [
+              {
+                av_placement_id: generateUniqueId('av_placement_id_'),
+                value: '',
+              },
+            ]; // Default case if allowed_values is undefined or empty
+
+            let modifiedCatalogueCategory = {
+              ...item,
+              cip_placement_id: generateUniqueId('cip_placement_id_'),
+            };
+
+            if (item.allowed_values) {
+              modifiedCatalogueCategory = {
+                ...modifiedCatalogueCategory,
+                allowed_values: {
+                  type: item.allowed_values?.type,
+                  values: allowedValuesWithId,
+                },
+              };
+            }
+
+            return modifiedCatalogueCategory;
+          }) || [];
+
+        const updatedSelectedCatalogueCategory: AddCatalogueCategoryWithOrderId =
+          {
+            ...selectedCatalogueCategory,
+            catalogue_item_properties: updatedCatalogueItemProperties,
+          };
+
         setCategoryData(
           // This is not ideal but fixes the properties being reset when closing the dialog
           // The array itself is stored as a reference in typescript meaning that modifying
@@ -77,10 +118,12 @@ const CatalogueCategoryDialog = React.memo(
           // from being reset
           // This ensures the array created is brand new with a different reference to fix it
           // See https://stackoverflow.com/questions/9885821/copying-of-an-array-of-objects-to-another-array-without-object-reference-in-java
+
           JSON.parse(
-            JSON.stringify(selectedCatalogueCategory)
-          ) as AddCatalogueCategory
+            JSON.stringify(updatedSelectedCatalogueCategory)
+          ) as AddCatalogueCategoryWithOrderId
         );
+      }
     }, [selectedCatalogueCategory]);
 
     const [nameError, setNameError] = React.useState<string | undefined>(
@@ -119,7 +162,9 @@ const CatalogueCategoryDialog = React.memo(
     }, [onClose, resetSelectedCatalogueCategory]);
 
     // Reset errors when required
-    const handleFormChange = (newCategoryData: AddCatalogueCategory) => {
+    const handleFormChange = (
+      newCategoryData: AddCatalogueCategoryWithOrderId
+    ) => {
       setCategoryData(newCategoryData);
 
       if (newCategoryData.name !== categoryData.name) setNameError(undefined);
@@ -559,7 +604,7 @@ const CatalogueCategoryDialog = React.memo(
                   <CataloguePropertiesForm
                     formFields={categoryData.catalogue_item_properties ?? []}
                     onChangeFormFields={(
-                      formFields: CatalogueCategoryFormData[]
+                      formFields: CatalogueCategoryFormDataWithIDs[]
                     ) =>
                       handleFormChange({
                         ...categoryData,

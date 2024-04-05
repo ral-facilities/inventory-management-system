@@ -16,6 +16,10 @@ export interface AddCatalogueCategory {
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }
 
+export interface AddCatalogueCategoryWithOrderId extends AddCatalogueCategory {
+  catalogue_item_properties?: CatalogueCategoryFormDataWithIDs[];
+}
+
 export interface EditCatalogueCategory {
   name?: string;
   id: string;
@@ -91,6 +95,11 @@ export interface CatalogueCategoryFormData {
   unit?: string;
   mandatory: boolean;
   allowed_values?: AllowedValues;
+}
+
+export interface CatalogueCategoryFormDataWithIDs
+  extends CatalogueCategoryFormData {
+  cip_placement_id: string; // Catalogue item properties (cip)
 }
 
 export interface ObsoleteDetails {
