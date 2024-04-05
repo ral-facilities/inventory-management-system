@@ -269,9 +269,9 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             if (error.cip_placement_id === cip_placement_id) {
               return {
                 ...error,
-                errors: (error.errors || []).filter(
-                  (item) => item.av_placement_id !== av_placement_id
-                ),
+                errors: (error.errors || [])
+                  .filter((item) => item.av_placement_id !== av_placement_id)
+                  .filter((item) => item.errorMessage !== 'Duplicate value'),
               };
             }
             return error;
