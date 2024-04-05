@@ -198,7 +198,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           usageStatus: '', // Setting usageStatus to an empty string by default
         }));
 
-      onChangeAggregatedCellUsageStatus(initialUsageStatues); // Using onChangeAggregatedCellUsageStatus to update state
+      onChangeAggregatedCellUsageStatus(initialUsageStatues);
     }
   }, [
     aggregatedCellUsageStatus,
