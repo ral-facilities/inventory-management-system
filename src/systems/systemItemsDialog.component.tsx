@@ -307,7 +307,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
                 <Typography variant="caption" color="error">
                   {index === 1 && 'Please select a usage status for all items'}
                   {index === 0 &&
-                    'Move items from current location  or root to another directory'}
+                    'Move items from current location or root to another system'}
                 </Typography>
               );
               labelProps.error = true;
