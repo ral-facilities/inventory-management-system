@@ -152,7 +152,7 @@ describe('SystemItemsDialog', () => {
       ).toBeInTheDocument();
     });
 
-    it('cannot move selected items to the same parent system and resets back to an non error state after error have been resolved', async () => {
+    it('cannot move selected items to the same parent system and resets back to an non error state after errors have been resolved', async () => {
       props.parentSystemId = '65328f34a40ff5301575a4e3';
 
       createView();
