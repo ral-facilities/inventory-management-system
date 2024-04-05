@@ -51,7 +51,7 @@ const moveItemsToSystemUsageStatues = (
     .filter((item) => item.usageStatus !== '') // Exclude items with empty usageStatus
     .map((item) => ({
       item_id: item.item_id,
-      usage_status: item.usageStatus as UsageStatusType, // Safer now, but still a type assertion.
+      usage_status: item.usageStatus as UsageStatusType,
     }));
 };
 
