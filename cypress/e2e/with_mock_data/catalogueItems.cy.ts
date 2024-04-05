@@ -629,6 +629,26 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 1').should('exist');
   });
 
+  it('check table state persists on page reload', () => {
+    cy.findByText('Cameras 1').should('exist');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+    cy.findByLabelText('Filter by Name').type('Cameras 15');
+    cy.findByText('Cameras 1').should('not.exist');
+    cy.location('search').should(
+      'eq',
+      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJqAwg8QE5oAzgAIAjAFYQAXwC60oA'
+    );
+
+    cy.reload();
+
+    cy.findByText('Cameras 15').should('exist');
+    cy.findByText('Cameras 1').should('not.exist');
+    cy.location('search').should(
+      'eq',
+      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJqAwg8QE5oAzgAIAjAFYQAXwC60oA'
+    );
+  });
+
   it('make an item obsolete (no details)', () => {
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Obsolete').click();
