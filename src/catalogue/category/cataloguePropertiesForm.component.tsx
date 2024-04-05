@@ -66,19 +66,30 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     resetFormError();
   };
 
-  const handleDeleteField = (index: number) => {
+  const handleDeleteField = (cip_placement_id: string) => {
     const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
       ...formFields,
     ];
+
+    // Find the index of the item with the given cip_placement_id
+    const index = updatedFormFields.findIndex(
+      (field) => field.cip_placement_id === cip_placement_id
+    );
+
+    if (index === -1) {
+      // Item with given cip_placement_id not found
+      return; // or handle the error accordingly
+    }
+
     updatedFormFields.splice(index, 1);
 
-    // When a catalogue item property is deleted it removes the list errors
+    // When a catalogue item property is deleted, remove the list errors associated with its cip_placement_id
     const updatedAllowedValuesListErrors = allowedValuesListErrors.filter(
-      (item) => item.index !== index
+      (item) => item.cip_placement_id !== cip_placement_id
     );
 
     const updatedCatalogueItemPropertiesErrors = catalogueItemPropertiesErrors
-      .filter((item) => item.index !== index)
+      .filter((item) => item.cip_placement_id !== cip_placement_id)
       .filter(
         (item) =>
           item.errors?.errorMessage !==
@@ -92,7 +103,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   };
 
   const handleChange = (
-    index: number,
+    cip_placement_id: string,
     field: keyof CatalogueCategoryFormData,
     value: string | boolean | null
   ) => {
@@ -100,16 +111,24 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       ...formFields,
     ];
 
+    const fieldIndex = updatedFormFields.findIndex(
+      (field) => field.cip_placement_id === cip_placement_id
+    );
+    if (fieldIndex === -1) {
+      // Handle the case where the field with the given cip_placement_id is not found
+      return;
+    }
+
     if (
       field === 'type' &&
       (value === 'boolean' || value === 'number' || value === 'string')
     ) {
-      updatedFormFields[index].type = value;
+      updatedFormFields[fieldIndex].type = value;
 
       const updatedCatalogueItemPropertiesErrors =
         catalogueItemPropertiesErrors.filter((item) => {
           return !(
-            item.index === index &&
+            item.cip_placement_id === cip_placement_id &&
             item.errors &&
             item.errors.fieldName === 'type'
           );
@@ -117,16 +136,16 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       onChangeCatalogueItemPropertiesErrors(
         updatedCatalogueItemPropertiesErrors
       );
-      updatedFormFields[index][field] = value;
+      updatedFormFields[fieldIndex][field] = value;
       if (value === 'boolean') {
-        delete updatedFormFields[index].unit;
-        delete updatedFormFields[index].allowed_values;
+        delete updatedFormFields[fieldIndex].unit;
+        delete updatedFormFields[fieldIndex].allowed_values;
       }
     } else if (field === 'name') {
       const updatedCatalogueItemPropertiesErrors = catalogueItemPropertiesErrors
         .filter((item) => {
           return !(
-            item.index === index &&
+            item.cip_placement_id === cip_placement_id &&
             item.errors &&
             item.errors.fieldName === 'name'
           );
@@ -141,27 +160,37 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
         updatedCatalogueItemPropertiesErrors
       );
 
-      updatedFormFields[index].name = value as string;
+      updatedFormFields[fieldIndex].name = value as string;
     } else {
-      (updatedFormFields[index][field] as boolean | string | null) = value;
+      (updatedFormFields[fieldIndex][field] as boolean | string | null) = value;
     }
     if (field === 'type') {
-      const updatedallowedValuesListErrors = allowedValuesListErrors.filter(
-        (item) => item.index !== index
+      const updatedAllowedValuesListErrors = allowedValuesListErrors.filter(
+        (item) => item.cip_placement_id !== cip_placement_id
       );
 
-      onChangeAllowedValuesListErrors(updatedallowedValuesListErrors);
+      onChangeAllowedValuesListErrors(updatedAllowedValuesListErrors);
     }
 
     onChangeFormFields(updatedFormFields);
 
     resetFormError();
   };
-
-  const handleAddListValue = (index: number) => {
+  const handleAddListValue = (cip_placement_id: string) => {
     const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
       ...formFields,
     ];
+
+    // Find the index of the item with the given cip_placement_id
+    const index = updatedFormFields.findIndex(
+      (field) => field.cip_placement_id === cip_placement_id
+    );
+
+    if (index === -1) {
+      // Item with given cip_placement_id not found
+      return; // or handle the error accordingly
+    }
+
     const currentField = updatedFormFields[index];
 
     const updatedAllowedValues: AllowedValuesList = {
@@ -185,7 +214,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     const updatedCatalogueItemPropertiesErrors =
       catalogueItemPropertiesErrors.filter((item) => {
         return !(
-          item.index === index &&
+          item.cip_placement_id === cip_placement_id &&
           item.errors &&
           item.errors.fieldName === 'list'
         );
@@ -194,67 +223,99 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   };
 
   const handleChangeListValues = (
-    index: number,
-    valueIndex: number,
+    cip_placement_id: string,
+    av_placement_id: string,
     value: string
   ) => {
+    // Find the index of the field with the provided cip_placement_id
+    const fieldIndex = formFields.findIndex(
+      (field) => field.cip_placement_id === cip_placement_id
+    );
+
+    if (fieldIndex === -1) {
+      // If the field with the provided cip_placement_id doesn't exist, return or handle the error
+      return; // Or handle the error accordingly
+    }
+
     const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
       ...formFields,
     ];
-    const currentField = updatedFormFields[index];
+    const currentField = updatedFormFields[fieldIndex];
+
     if (currentField.allowed_values) {
-      const updatedAllowedValues: AllowedValuesList = {
-        type: 'list',
-        values: currentField.allowed_values.values.map((val, i) =>
-          i === valueIndex ? value : val
-        ),
-      };
-
-      updatedFormFields[index] = {
-        ...currentField,
-        allowed_values: updatedAllowedValues,
-      };
-
-      onChangeFormFields(updatedFormFields);
-
-      // Remove the error when the value is changed
-
-      const updatedallowedValuesListErrors = [...allowedValuesListErrors];
-
-      const errorIndex = updatedallowedValuesListErrors.findIndex(
-        (error) => error.index === index
+      // Find the index of the value within the allowed_values array with the provided av_placement_id
+      const valueIndex = currentField.allowed_values.values.findIndex(
+        (val) => val.av_placement_id === av_placement_id
       );
 
-      updatedallowedValuesListErrors[errorIndex] = {
-        index: index,
-        errors: (updatedallowedValuesListErrors[errorIndex]?.errors ?? [])
-          .filter((item) => item.index !== valueIndex)
-          .filter((item) => item.errorMessage !== 'Duplicate value'),
-      };
+      if (valueIndex !== -1) {
+        const updatedAllowedValues: AllowedValuesList = {
+          type: 'list',
+          values: currentField.allowed_values.values.map((val, i) =>
+            i === valueIndex ? { ...val, value } : val
+          ),
+        };
 
-      onChangeAllowedValuesListErrors(
-        updatedallowedValuesListErrors.filter(
-          (item) => (item.errors?.length ?? 0) > 0
-        )
-      );
+        updatedFormFields[fieldIndex] = {
+          ...currentField,
+          allowed_values: updatedAllowedValues,
+        };
+
+        onChangeFormFields(updatedFormFields);
+
+        // Remove the error when the value is changed
+        const updatedAllowedValuesListErrors = allowedValuesListErrors.map(
+          (error) => {
+            if (error.cip_placement_id === cip_placement_id) {
+              return {
+                ...error,
+                errors: (error.errors || []).filter(
+                  (item) => item.av_placement_id !== av_placement_id
+                ),
+              };
+            }
+            return error;
+          }
+        );
+
+        onChangeAllowedValuesListErrors(
+          updatedAllowedValuesListErrors.filter(
+            (item) => (item.errors?.length ?? 0) > 0
+          )
+        );
+      }
     }
   };
 
-  const handleDeleteListValue = (index: number, valueIndex: number) => {
+  const handleDeleteListValue = (
+    cip_placement_id: string,
+    av_placement_id: string
+  ) => {
+    // Find the index of the field with the provided cip_placement_id
+    const fieldIndex = formFields.findIndex(
+      (field) => field.cip_placement_id === cip_placement_id
+    );
+
+    if (fieldIndex === -1) {
+      // If the field with the provided cip_placement_id doesn't exist, return or handle the error
+      return; // Or handle the error accordingly
+    }
+
     const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
       ...formFields,
     ];
-    const currentField = updatedFormFields[index];
+    const currentField = updatedFormFields[fieldIndex];
 
     if (currentField.allowed_values) {
+      // Remove the value with the provided av_placement_id from the allowed_values array
       const updatedAllowedValues: AllowedValuesList = {
         type: 'list',
         values: currentField.allowed_values.values.filter(
-          (_, i) => i !== valueIndex
+          (val) => val.av_placement_id !== av_placement_id
         ),
       };
 
-      updatedFormFields[index] = {
+      updatedFormFields[fieldIndex] = {
         ...currentField,
         allowed_values: updatedAllowedValues,
       };
@@ -262,20 +323,22 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       onChangeFormFields(updatedFormFields);
 
       // Remove the error when the value is deleted
-      const updatedallowedValuesListErrors = [...allowedValuesListErrors];
-      const errorIndex = updatedallowedValuesListErrors.findIndex(
-        (error) => error.index === index
+      const updatedAllowedValuesListErrors = allowedValuesListErrors.map(
+        (error) => {
+          if (error.cip_placement_id === cip_placement_id) {
+            return {
+              ...error,
+              errors: (error.errors || []).filter(
+                (item) => item.av_placement_id !== av_placement_id
+              ),
+            };
+          }
+          return error;
+        }
       );
 
-      updatedallowedValuesListErrors[errorIndex] = {
-        index: index,
-        errors: (updatedallowedValuesListErrors[errorIndex]?.errors ?? [])
-          .filter((item) => item.index !== valueIndex)
-          .filter((item) => item.errorMessage !== 'Duplicate value'),
-      };
-
       onChangeAllowedValuesListErrors(
-        updatedallowedValuesListErrors.filter(
+        updatedAllowedValuesListErrors.filter(
           (item) => (item.errors?.length ?? 0) > 0
         )
       );
@@ -284,12 +347,12 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
 
   const catalogueItemPropertyMessage = React.useCallback(
     (
-      index: number,
+      cip_placement_id: string,
       column: 'name' | 'type' | 'unit' | 'mandatory' | 'list'
     ) => {
       const errors = catalogueItemPropertiesErrors.filter((item) => {
         return (
-          item.index === index &&
+          item.cip_placement_id === cip_placement_id &&
           item.errors &&
           item.errors.fieldName === column
         );
@@ -303,13 +366,14 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   );
 
   const allowedValuesListErrorMessage = React.useCallback(
-    (index: number, listIndex: number) => {
+    (cip_placement_id: string, av_placement_id: string) => {
       const atIndex =
-        allowedValuesListErrors.find((item) => item.index === index)?.errors ??
-        [];
+        allowedValuesListErrors.find(
+          (item) => item.cip_placement_id === cip_placement_id
+        )?.errors ?? [];
       if (atIndex.length >= 1) {
         const filteredItems = atIndex.filter((item) => {
-          return item.index === listIndex;
+          return item.av_placement_id === av_placement_id;
         });
         if (filteredItems.length > 0) {
           return filteredItems[0].errorMessage;
@@ -322,26 +386,38 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
 
   return (
     <div>
-      {formFields.map((field, index) => (
-        <Stack direction="row" key={index} spacing={1} padding={1}>
+      {formFields.map((field) => (
+        <Stack
+          direction="row"
+          key={field.cip_placement_id}
+          spacing={1}
+          padding={1}
+        >
           <TextField
             label="Property Name"
-            id={`catalogue-category-form-data-name-${index}`}
+            id={`catalogue-category-form-data-name-${field.cip_placement_id}`}
             variant="outlined"
             required={true}
             value={field.name}
-            onChange={(e) => handleChange(index, 'name', e.target.value)}
-            error={!!catalogueItemPropertyMessage(index, 'name')}
+            onChange={(e) =>
+              handleChange(field.cip_placement_id, 'name', e.target.value)
+            }
+            error={
+              !!catalogueItemPropertyMessage(field.cip_placement_id, 'name')
+            }
             helperText={
-              catalogueItemPropertyMessage(index, 'name')?.errors?.errorMessage
+              catalogueItemPropertyMessage(field.cip_placement_id, 'name')
+                ?.errors?.errorMessage
             }
             sx={{ minWidth: '150px' }}
           />
           <FormControl sx={{ width: '150px', minWidth: '150px' }}>
             <InputLabel
-              error={!!catalogueItemPropertyMessage(index, 'type')}
+              error={
+                !!catalogueItemPropertyMessage(field.cip_placement_id, 'type')
+              }
               required={true}
-              id={`catalogue-properties-form-select-type-label-${index}`}
+              id={`catalogue-properties-form-select-type-label-${field.cip_placement_id}`}
             >
               Select Type
             </InputLabel>
@@ -349,25 +425,27 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               value={field.type === 'string' ? 'text' : field.type}
               onChange={(e) => {
                 handleChange(
-                  index,
+                  field.cip_placement_id,
                   'type',
                   e.target.value === 'text' ? 'string' : e.target.value
                 );
               }}
-              error={!!catalogueItemPropertyMessage(index, 'type')}
+              error={
+                !!catalogueItemPropertyMessage(field.cip_placement_id, 'type')
+              }
               label="Select Type"
-              labelId={`catalogue-properties-form-select-type-label-${index}`}
+              labelId={`catalogue-properties-form-select-type-label-${field.cip_placement_id}`}
               required={true}
             >
               <MenuItem value="boolean">Boolean</MenuItem>
               <MenuItem value="number">Number</MenuItem>
               <MenuItem value="text">Text</MenuItem>
             </Select>
-            {catalogueItemPropertyMessage(index, 'type') && (
+            {catalogueItemPropertyMessage(field.cip_placement_id, 'type') && (
               <FormHelperText error>
                 {
-                  catalogueItemPropertyMessage(index, 'type')?.errors
-                    ?.errorMessage
+                  catalogueItemPropertyMessage(field.cip_placement_id, 'type')
+                    ?.errors?.errorMessage
                 }
               </FormHelperText>
             )}
@@ -379,7 +457,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           >
             <InputLabel
               required={true}
-              id={`catalogue-properties-form-select-allowed-values-label-${index}`}
+              id={`catalogue-properties-form-select-allowed-values-label-${field.cip_placement_id}`}
             >
               Select Allowed values
             </InputLabel>
@@ -389,20 +467,26 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
                 const updatedFormFields: CatalogueCategoryFormDataWithIDs[] = [
                   ...formFields,
                 ];
-                const currentField = updatedFormFields[index];
-                if (e.target.value !== 'list') {
-                  delete updatedFormFields[index].allowed_values;
-                } else {
-                  updatedFormFields[index] = {
-                    ...currentField,
-                    allowed_values: { type: 'list', values: [] },
-                  };
-                }
+                const fieldIndex = updatedFormFields.findIndex(
+                  (formField) =>
+                    formField.cip_placement_id === field.cip_placement_id
+                );
 
-                onChangeFormFields(updatedFormFields);
+                if (fieldIndex !== -1) {
+                  if (e.target.value !== 'list') {
+                    delete updatedFormFields[fieldIndex].allowed_values;
+                  } else {
+                    updatedFormFields[fieldIndex] = {
+                      ...updatedFormFields[fieldIndex],
+                      allowed_values: { type: 'list', values: [] },
+                    };
+                  }
+
+                  onChangeFormFields(updatedFormFields);
+                }
               }}
               label="Select Allowed values"
-              labelId={`catalogue-properties-form-select-allowed-values-label-${index}`}
+              labelId={`catalogue-properties-form-select-allowed-values-label-${field.cip_placement_id}`}
               required={true}
             >
               <MenuItem value="any">Any</MenuItem>
@@ -440,21 +524,31 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
                     onChange={(e) =>
                       field.allowed_values &&
                       handleChangeListValues(
-                        index,
-                        valueIndex,
+                        field.cip_placement_id,
+                        listValue.av_placement_id,
                         e.target.value as string
                       )
                     }
-                    error={!!allowedValuesListErrorMessage(index, valueIndex)}
+                    error={
+                      !!allowedValuesListErrorMessage(
+                        field.cip_placement_id,
+                        listValue.av_placement_id
+                      )
+                    }
                     helperText={allowedValuesListErrorMessage(
-                      index,
-                      valueIndex
+                      field.cip_placement_id,
+                      listValue.av_placement_id
                     )}
                   />
 
                   <IconButton
                     aria-label={`Delete list item ${valueIndex}`}
-                    onClick={() => handleDeleteListValue(index, valueIndex)}
+                    onClick={() =>
+                      handleDeleteListValue(
+                        field.cip_placement_id,
+                        listValue.av_placement_id
+                      )
+                    }
                   >
                     <DeleteIcon />
                   </IconButton>
@@ -462,16 +556,16 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               ))}
 
               <IconButton
-                aria-label={`Add list item ${index}`}
-                onClick={() => handleAddListValue(index)}
+                aria-label={`Add list item ${field.cip_placement_id}`}
+                onClick={() => handleAddListValue(field.cip_placement_id)}
               >
                 <AddIcon />
               </IconButton>
-              {catalogueItemPropertyMessage(index, 'list') && (
+              {catalogueItemPropertyMessage(field.cip_placement_id, 'list') && (
                 <FormHelperText error>
                   {
-                    catalogueItemPropertyMessage(index, 'list')?.errors
-                      ?.errorMessage
+                    catalogueItemPropertyMessage(field.cip_placement_id, 'list')
+                      ?.errors?.errorMessage
                   }
                 </FormHelperText>
               )}
@@ -488,7 +582,11 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               value={units?.find((unit) => unit.value === field.unit) || null}
               disabled={field.type === 'boolean'}
               onChange={(_event, newValue: Unit | null) => {
-                handleChange(index, 'unit', newValue?.value || null);
+                handleChange(
+                  field.cip_placement_id,
+                  'unit',
+                  newValue?.value || null
+                );
               }}
               renderInput={(params) => (
                 <TextField
@@ -502,17 +600,21 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           </FormControl>
           <FormControl sx={{ width: '150px', minWidth: '150px' }}>
             <InputLabel
-              id={`catalogue-properties-form-select-mandatory-label-${index}`}
+              id={`catalogue-properties-form-select-mandatory-label-${field.cip_placement_id}`}
             >
               Select is mandatory?
             </InputLabel>
             <Select
               value={field.mandatory ? 'yes' : 'no'}
               onChange={(e) =>
-                handleChange(index, 'mandatory', e.target.value === 'yes')
+                handleChange(
+                  field.cip_placement_id,
+                  'mandatory',
+                  e.target.value === 'yes'
+                )
               }
               label="Select is mandatory?"
-              labelId={`catalogue-properties-form-select-mandatory-label-${index}`}
+              labelId={`catalogue-properties-form-select-mandatory-label-${field.cip_placement_id}`}
             >
               <MenuItem value="yes">Yes</MenuItem>
               <MenuItem value="no">No</MenuItem>
@@ -527,7 +629,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           >
             <IconButton
               aria-label={'Delete catalogue category field entry'}
-              onClick={() => handleDeleteField(index)}
+              onClick={() => handleDeleteField(field.cip_placement_id)}
             >
               <DeleteIcon />
             </IconButton>

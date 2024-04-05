@@ -283,7 +283,7 @@ export interface MoveItemsToSystem {
 }
 
 export interface CatalogueItemPropertiesErrorsType {
-  index: number;
+  cip_placement_id: string;
   errors: {
     fieldName: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
     errorMessage: string;
@@ -291,8 +291,8 @@ export interface CatalogueItemPropertiesErrorsType {
 }
 
 export interface AllowedValuesListErrorsType {
-  index: number | null;
-  errors: { index: number; errorMessage: string }[] | null;
+  cip_placement_id: string | null;
+  errors: { av_placement_id: string; errorMessage: string }[] | null;
 }
 
 export interface Unit {
