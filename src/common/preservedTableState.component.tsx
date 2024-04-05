@@ -65,6 +65,9 @@ interface UsePreservedTableStateProps {
   storeInUrl?: boolean;
   // URL parameter name to store the state in (default is 'state' if not defined here)
   urlParamName?: string;
+  // Whether this is being used just for pagination (if that is the case, assuming not in MRT and so
+  // don't ignore initial update)
+  paginationOnly?: boolean;
 }
 
 export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
@@ -106,10 +109,10 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
             urlParamName,
             LZString.compressToEncodedURIComponent(newUnparsedState)
           );
-          setSearchParams(searchParams);
+          setSearchParams(searchParams, { replace: true });
         } else {
           searchParams.delete(urlParamName);
-          setSearchParams(searchParams);
+          setSearchParams(searchParams, { replace: true });
         }
       }
     }
@@ -337,7 +340,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       // Ignore first update (pagination and column order has a habit of being set in MRT
       // shortly after the first render with actual data even if disabled in the table itself)
       // similar to https://www.material-react-table.com/docs/guides/state-management
-      if (firstUpdate.current.p === undefined) {
+      if (firstUpdate.current.p === undefined && !props?.paginationOnly) {
         firstUpdate.current.p = getValueFromUpdater(updaterOrValue, state.p);
         return;
       }
@@ -355,7 +358,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         };
       });
     },
-    [defaultState.p, state.p, updateSearchParams]
+    [defaultState.p, props?.paginationOnly, state.p, updateSearchParams]
   );
 
   return {
