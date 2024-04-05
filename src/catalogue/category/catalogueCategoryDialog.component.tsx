@@ -102,7 +102,7 @@ const CatalogueCategoryDialog = React.memo(
             }
 
             return modifiedCatalogueCategory;
-          }) || [];
+          }) || undefined;
 
         const updatedSelectedCatalogueCategory: AddCatalogueCategoryWithOrderId =
           {

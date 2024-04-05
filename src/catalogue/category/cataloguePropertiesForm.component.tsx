@@ -386,7 +386,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
 
   return (
     <div>
-      {formFields.map((field) => (
+      {formFields.map((field, index) => (
         <Stack
           direction="row"
           key={field.cip_placement_id}
@@ -556,7 +556,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               ))}
 
               <IconButton
-                aria-label={`Add list item ${field.cip_placement_id}`}
+                aria-label={`Add list item ${index}`}
                 onClick={() => handleAddListValue(field.cip_placement_id)}
               >
                 <AddIcon />
