@@ -9,6 +9,7 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import CataloguePropertiesForm, {
   CataloguePropertiesFormProps,
 } from './cataloguePropertiesForm.component';
+import { resetUniqueIdCounter } from '../../utils';
 
 describe('Catalogue Properties Form', () => {
   let props: CataloguePropertiesFormProps;
@@ -40,6 +41,7 @@ describe('Catalogue Properties Form', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+    resetUniqueIdCounter();
   });
 
   it('renders correctly', async () => {
@@ -473,7 +475,7 @@ describe('Catalogue Properties Form', () => {
         name: 'raduis 2',
         allowed_values: {
           type: 'list',
-          values: [{ av_placement_id: 'av_placement_id_2', value: '' }],
+          values: [{ av_placement_id: 'av_placement_id_1', value: '' }],
         },
         type: 'number',
         unit: '',
@@ -730,7 +732,7 @@ describe('Catalogue Properties Form', () => {
             values: [
               { av_placement_id: '3', value: '1' },
               { av_placement_id: '4', value: '2' },
-              { av_placement_id: 'av_placement_id_3', value: '' },
+              { av_placement_id: 'av_placement_id_1', value: '' },
             ],
           },
           mandatory: true,

@@ -94,3 +94,7 @@ export function generateUniqueId(prefix: string = 'id_'): string {
   lastId++;
   return `${prefix}${lastId}`;
 }
+
+export const resetUniqueIdCounter = () => {
+  lastId = 0;
+};
