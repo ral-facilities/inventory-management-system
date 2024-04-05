@@ -35,30 +35,42 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   queryClient?: QueryClient;
 }
 
+function constructRouterProvider(
+  ui: React.ReactElement,
+  queryClient: QueryClient,
+  urlPathKey?: keyof typeof paths,
+  initialEntry?: string
+) {
+  const Root: React.FunctionComponent = () => {
+    return (
+      <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
+        <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>
+      </LocalizationProvider>
+    );
+  };
+
+  const router =
+    initialEntry !== undefined && urlPathKey !== undefined
+      ? createMemoryRouter([{ path: paths[urlPathKey], Component: Root }], {
+          initialEntries: [initialEntry],
+        })
+      : createBrowserRouter([{ path: '*', Component: Root }]);
+
+  return { router: router, provider: <RouterProvider router={router} /> };
+}
+
 function constructRouterProviderWrapper(
   queryClient: QueryClient,
   urlPathKey?: keyof typeof paths,
   initialEntry?: string
 ) {
   const wrapper = ({ children }): JSX.Element => {
-    const Root: React.FunctionComponent = () => {
-      return (
-        <LocalizationProvider adapterLocale={enGB} dateAdapter={AdapterDateFns}>
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
-        </LocalizationProvider>
-      );
-    };
-
-    const router =
-      initialEntry !== undefined && urlPathKey !== undefined
-        ? createMemoryRouter([{ path: paths[urlPathKey], Component: Root }], {
-            initialEntries: [initialEntry],
-          })
-        : createBrowserRouter([{ path: '*', Component: Root }]);
-
-    return <RouterProvider router={router} />;
+    return constructRouterProvider(
+      children,
+      queryClient,
+      urlPathKey,
+      initialEntry
+    ).provider;
   };
   return wrapper;
 }
@@ -73,14 +85,17 @@ export function renderComponentWithRouterProvider(
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {
+  const { router, provider } = constructRouterProvider(
+    ui,
+    queryClient,
+    urlPathKey,
+    initialEntry
+  );
   return {
     queryClient,
+    router,
     ...render(ui, {
-      wrapper: constructRouterProviderWrapper(
-        queryClient,
-        urlPathKey,
-        initialEntry
-      ),
+      wrapper: () => provider,
       ...renderOptions,
     }),
   };
