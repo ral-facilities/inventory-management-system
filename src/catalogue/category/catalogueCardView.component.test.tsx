@@ -14,7 +14,11 @@ describe('CardView', () => {
   const onChangeOpenSaveAsDialog = vi.fn();
   const handleToggleSelect = vi.fn();
   const createView = () => {
-    return renderComponentWithRouterProvider(<CardView {...props} />);
+    return renderComponentWithRouterProvider(
+      <CardView {...props} />,
+      'catalogue',
+      '/catalogue'
+    );
   };
 
   function createData(): CatalogueCategory[] {
@@ -72,37 +76,59 @@ describe('CardView', () => {
 
   it('changes page correctly and rerenders data', async () => {
     props.catalogueCategoryData = createData();
-    createView();
+    const { router } = createView();
 
     await waitFor(() => {
       expect(screen.getByText('Test 1')).toBeInTheDocument();
     });
-
     expect(screen.queryByText('Test 31')).not.toBeInTheDocument();
+    expect(router.state.location.search).toBe('');
 
-    const page2 = screen.getByRole('button', { name: 'Go to page 2' });
-    await user.click(page2);
+    await user.click(screen.getByRole('button', { name: 'Go to page 2' }));
 
     await waitFor(() => {
       expect(screen.getByText('Test 31')).toBeInTheDocument();
     });
-  });
+    expect(screen.queryByText('Test 1')).not.toBeInTheDocument();
+    expect(router.state.location.search).toBe(
+      '?state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADygCYBfBoA'
+    );
 
-  it('changes max results correctly', async () => {
-    props.catalogueCategoryData = createData();
-    createView();
+    await user.click(screen.getByRole('button', { name: 'Go to page 1' }));
 
     await waitFor(() => {
       expect(screen.getByText('Test 1')).toBeInTheDocument();
     });
-
     expect(screen.queryByText('Test 31')).not.toBeInTheDocument();
+    expect(router.state.location.search).toBe('');
+  });
 
-    const maxresults = screen.getByRole('combobox');
-    await user.click(maxresults);
+  it('changes max results correctly', async () => {
+    props.catalogueCategoryData = createData();
+    const { router } = createView();
 
+    await waitFor(() => {
+      expect(screen.getByText('Test 1')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('Test 31')).not.toBeInTheDocument();
+    expect(router.state.location.search).toBe('');
+
+    const maxResults = screen.getByRole('combobox');
+    await user.click(maxResults);
     await user.click(screen.getByRole('option', { name: '45' }));
 
     expect(screen.getByText('Test 31')).toBeInTheDocument();
+    expect(router.state.location.search).toBe(
+      '?state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygEYBfBoA'
+    );
+
+    await user.click(maxResults);
+    await user.click(screen.getByRole('option', { name: '30' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Test 1')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('Test 31')).not.toBeInTheDocument();
+    expect(router.state.location.search).toBe('');
   });
 });
