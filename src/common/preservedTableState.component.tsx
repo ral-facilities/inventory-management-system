@@ -75,11 +75,8 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
 
-  // Keeps track of the last location state update to occurr (for detecting browser changes e.g. back button being clicked)
-  const lastLocationUpdate = useRef({
-    pathname: location.pathname,
-    search: location.search,
-  });
+  // Keeps track of the last location state update to occur (for detecting browser changes e.g. back button being clicked)
+  const lastLocationUpdate = useRef(location);
 
   const urlParamName = props?.urlParamName || 'state';
   const compressedState = props?.storeInUrl
@@ -125,10 +122,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         }
       }
 
-      lastLocationUpdate.current = {
-        pathname: location.pathname,
-        search: location.search,
-      };
+      lastLocationUpdate.current = location;
     }
   }, [
     location,
