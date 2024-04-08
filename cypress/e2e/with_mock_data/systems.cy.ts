@@ -683,7 +683,7 @@ describe('Systems', () => {
       cy.findByRole('button', { name: 'Finish' }).click();
 
       cy.findByText(
-        'Move items from current location or root to another directory'
+        'Move items from current location or root to another system'
       ).should('exist');
       cy.findByText('Please select a usage status for all items').should(
         'exist'
@@ -699,17 +699,17 @@ describe('Systems', () => {
       cy.findByText('Place into a system').click();
       cy.findByRole('button', { name: 'navigate to systems home' }).click();
       cy.findByText(
-        'Move items from current location or root to another directory'
+        'Move items from current location or root to another system'
       ).should('not.exist');
       cy.findByRole('button', { name: 'Next' }).click();
       cy.findByText(
-        'Move items from current location or root to another directory'
+        'Move items from current location or root to another system'
       ).should('exist');
 
       cy.findByText('Pico Laser').click();
       cy.findByRole('button', { name: 'Next' }).click();
       cy.findByText(
-        'Move items from current location or root to another directory'
+        'Move items from current location or root to another system'
       ).should('not.exist');
       cy.findByRole('button', { name: 'Finish' }).should('not.be.disabled');
     });

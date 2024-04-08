@@ -174,7 +174,7 @@ describe('SystemItemsDialog', () => {
       ).toBeDisabled();
       expect(
         screen.getByText(
-          'Move items from current location or root to another directory'
+          'Move items from current location or root to another system'
         )
       ).toBeInTheDocument();
 
@@ -185,7 +185,7 @@ describe('SystemItemsDialog', () => {
       ).not.toBeDisabled();
       expect(
         screen.queryByText(
-          'Move items from current location or root to another directory'
+          'Move items from current location or root to another system'
         )
       ).not.toBeInTheDocument();
     });
@@ -212,7 +212,7 @@ describe('SystemItemsDialog', () => {
       ).toBeDisabled();
       expect(
         screen.getByText(
-          'Move items from current location or root to another directory'
+          'Move items from current location or root to another system'
         )
       ).toBeInTheDocument();
 
@@ -223,7 +223,7 @@ describe('SystemItemsDialog', () => {
       ).not.toBeDisabled();
       expect(
         screen.queryByText(
-          'Move items from current location or root to another directory'
+          'Move items from current location or root to another system'
         )
       ).not.toBeInTheDocument();
     });
@@ -244,7 +244,7 @@ describe('SystemItemsDialog', () => {
       ).toBeDisabled();
       expect(
         screen.getByText(
-          'Move items from current location or root to another directory'
+          'Move items from current location or root to another system'
         )
       ).toBeInTheDocument();
       expect(
@@ -265,7 +265,7 @@ describe('SystemItemsDialog', () => {
       await user.click(await screen.findByRole('button', { name: 'Next' }));
       expect(
         screen.queryByText(
-          'Move items from current location or root to another directory'
+          'Move items from current location or root to another system'
         )
       ).not.toBeInTheDocument();
 
