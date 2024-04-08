@@ -108,14 +108,11 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
               urlParamName,
               LZString.compressToEncodedURIComponent(newUnparsedState)
             );
-            setSearchParams(searchParams, { replace: true });
+            setSearchParams(searchParams, { replace: false });
           } else {
             searchParams.delete(urlParamName);
-            setSearchParams(searchParams, { replace: true });
+            setSearchParams(searchParams, { replace: false });
           }
-          // Pre-emptively update last search location to ensure the change is not repeated below
-          lastLocationUpdate.current.search =
-            searchParams.toString() === '' ? '' : `?${searchParams.toString()}`;
         } else {
           // Update the internal state to reflect the browser level change
 
@@ -124,13 +121,14 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
           if (lastLocationUpdate.current.pathname !== location.pathname)
             firstUpdate.current.p = undefined;
 
-          lastLocationUpdate.current = {
-            pathname: location.pathname,
-            search: location.search,
-          };
           setParsedState(getDefaultParsedState(unparsedState));
         }
       }
+
+      lastLocationUpdate.current = {
+        pathname: location.pathname,
+        search: location.search,
+      };
     }
   }, [
     location,
