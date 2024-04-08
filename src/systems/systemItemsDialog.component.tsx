@@ -100,9 +100,10 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     setParentSystemId(props.parentSystemId);
   }, [props.parentSystemId]);
 
-  React.useEffect(() => {
+  const changeParentSystemId = (newParentSystemId: string | null) => {
+    setParentSystemId(newParentSystemId);
     setPlaceIntoSystemError(false);
-  }, [parentSystemId]);
+  };
 
   const { data: parentSystemBreadcrumbs } =
     useSystemsBreadcrumbs(parentSystemId);
@@ -242,9 +243,9 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
             <Grid item xs={12}>
               <Breadcrumbs
                 breadcrumbsInfo={parentSystemBreadcrumbs}
-                onChangeNode={setParentSystemId}
+                onChangeNode={changeParentSystemId}
                 onChangeNavigateHome={() => {
-                  setParentSystemId(null);
+                  changeParentSystemId(null);
                 }}
                 navigateHomeAriaLabel={'navigate to systems home'}
               />
@@ -253,7 +254,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
               <SystemsTableView
                 systemsData={systemsData}
                 systemsDataLoading={systemsDataLoading}
-                onChangeParentId={setParentSystemId}
+                onChangeParentId={changeParentSystemId}
                 systemParentId={parentSystemId ?? undefined}
                 // Use most unrestricted variant (i.e. copy with no selection)
                 selectedSystems={[]}
