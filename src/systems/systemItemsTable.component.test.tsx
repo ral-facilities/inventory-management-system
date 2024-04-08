@@ -232,8 +232,8 @@ describe('SystemItemsTable', () => {
   });
 
   describe('SystemItemsTable (usageStatus)', () => {
-    const onChangeUsageStatues = vi.fn();
-    const onChangeUsageStatuesErrors = vi.fn();
+    const onChangeUsageStatuses = vi.fn();
+    const onChangeUsageStatusesErrors = vi.fn();
     const onChangeAggregatedCellUsageStatus = vi.fn();
     const moveToSelectedItems: Item[] = [
       ItemJSON[0],
@@ -247,19 +247,19 @@ describe('SystemItemsTable', () => {
         system: undefined,
         type: 'usageStatus',
         onChangeAggregatedCellUsageStatus,
-        onChangeUsageStatues,
-        onChangeUsageStatuesErrors,
+        onChangeUsageStatuses,
+        onChangeUsageStatusesErrors,
         aggregatedCellUsageStatus: [
           { catalogue_item_id: '1', usageStatus: '' },
           { catalogue_item_id: '25', usageStatus: '' },
         ],
-        usageStatues: [
+        usageStatuses: [
           { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: '' },
           { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: '' },
           { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: '' },
           { item_id: 'QQen23yW', catalogue_item_id: '25', usageStatus: '' },
         ],
-        usageStatuesErrors: [
+        usageStatusesErrors: [
           { item_id: 'KvT2Ox7n', catalogue_item_id: '1', error: false },
           { item_id: 'G463gOIA', catalogue_item_id: '1', error: false },
           { item_id: '7Lrj9KVu', catalogue_item_id: '25', error: false },
@@ -377,7 +377,7 @@ describe('SystemItemsTable', () => {
       await modifyUsageStatus({ cameras1: 'Used' });
 
       // Change usages status for cameras 1 items
-      expect(onChangeUsageStatues).toHaveBeenCalledWith([
+      expect(onChangeUsageStatuses).toHaveBeenCalledWith([
         { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
         { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 2 },
         { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: '' },
@@ -391,7 +391,7 @@ describe('SystemItemsTable', () => {
       await modifyUsageStatus({ cameras6: 'Used' });
 
       // Change usages status for cameras 6 items
-      expect(onChangeUsageStatues).toHaveBeenCalledWith([
+      expect(onChangeUsageStatuses).toHaveBeenCalledWith([
         { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
         { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 2 },
         { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: 2 },
@@ -477,7 +477,7 @@ describe('SystemItemsTable', () => {
 
       await modifyUsageStatus({ cameras1Item1: 'Used' });
 
-      expect(onChangeUsageStatues).toHaveBeenCalledWith([
+      expect(onChangeUsageStatuses).toHaveBeenCalledWith([
         { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
         { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: '' },
         { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: '' },
@@ -486,7 +486,7 @@ describe('SystemItemsTable', () => {
 
       await modifyUsageStatus({ cameras1Item2: 'Used' });
 
-      expect(onChangeUsageStatues).toHaveBeenCalledWith([
+      expect(onChangeUsageStatuses).toHaveBeenCalledWith([
         { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
         { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 2 },
         { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: '' },
@@ -495,7 +495,7 @@ describe('SystemItemsTable', () => {
 
       await modifyUsageStatus({ cameras6Item1: 'Used' });
 
-      expect(onChangeUsageStatues).toHaveBeenCalledWith([
+      expect(onChangeUsageStatuses).toHaveBeenCalledWith([
         { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
         { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 2 },
         { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: 2 },
@@ -504,7 +504,7 @@ describe('SystemItemsTable', () => {
 
       await modifyUsageStatus({ cameras6Item2: 'Used' });
 
-      expect(onChangeUsageStatues).toHaveBeenCalledWith([
+      expect(onChangeUsageStatuses).toHaveBeenCalledWith([
         { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
         { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 2 },
         { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: 2 },
@@ -513,7 +513,7 @@ describe('SystemItemsTable', () => {
     });
 
     it('displays errors messages correctly', async () => {
-      props.usageStatuesErrors = [
+      props.usageStatusesErrors = [
         { item_id: 'KvT2Ox7n', catalogue_item_id: '1', error: true },
         { item_id: 'G463gOIA', catalogue_item_id: '1', error: true },
         { item_id: '7Lrj9KVu', catalogue_item_id: '25', error: true },

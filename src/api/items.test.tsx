@@ -207,7 +207,7 @@ describe('catalogue items api functions', () => {
       getItemById('G463gOIA'),
     ];
 
-    const mockUsageStatues: MoveItemsToSystemUsageStatus[] = [
+    const mockUsageStatuses: MoveItemsToSystemUsageStatus[] = [
       { item_id: 'KvT2Ox7n', usage_status: 0 },
       { item_id: 'G463gOIA', usage_status: 0 },
     ];
@@ -221,7 +221,7 @@ describe('catalogue items api functions', () => {
     beforeEach(() => {
       moveItemsToSystem = {
         // Prevent test interference if modifying the usage statuses or selected items
-        usageStatues: JSON.parse(JSON.stringify(mockUsageStatues)),
+        usageStatuses: JSON.parse(JSON.stringify(mockUsageStatuses)),
         selectedItems: JSON.parse(JSON.stringify(mockItems)),
         targetSystem: SystemsJSON[0] as System,
       };
@@ -248,7 +248,7 @@ describe('catalogue items api functions', () => {
       moveItemsToSystem.selectedItems.map((item) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
           system_id: moveItemsToSystem.targetSystem.id,
-          usage_status: moveItemsToSystem.usageStatues.find(
+          usage_status: moveItemsToSystem.usageStatuses.find(
             (status) => status.item_id === item.id
           )?.usage_status,
         })
@@ -268,8 +268,8 @@ describe('catalogue items api functions', () => {
         name: 'New system name',
         id: 'new_system_id',
       };
-      moveItemsToSystem.usageStatues = [
-        ...moveItemsToSystem.usageStatues,
+      moveItemsToSystem.usageStatuses = [
+        ...moveItemsToSystem.usageStatuses,
         { item_id: 'Error 409', usage_status: 2 },
       ];
 
@@ -290,7 +290,7 @@ describe('catalogue items api functions', () => {
       moveItemsToSystem.selectedItems.map((item) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
           system_id: 'new_system_id',
-          usage_status: moveItemsToSystem.usageStatues.find(
+          usage_status: moveItemsToSystem.usageStatuses.find(
             (status) => status.item_id === item.id
           )?.usage_status,
         })

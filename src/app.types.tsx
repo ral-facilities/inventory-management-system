@@ -273,7 +273,7 @@ export interface MoveItemsToSystemUsageStatus {
   usage_status: UsageStatusType;
 }
 export interface MoveItemsToSystem {
-  usageStatues: MoveItemsToSystemUsageStatus[];
+  usageStatuses: MoveItemsToSystemUsageStatus[];
   selectedItems: Item[];
   targetSystem: System;
 }

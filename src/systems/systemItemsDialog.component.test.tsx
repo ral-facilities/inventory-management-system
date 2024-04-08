@@ -228,7 +228,7 @@ describe('SystemItemsDialog', () => {
       ).not.toBeInTheDocument();
     });
 
-    it('sets the finish button to disabled when the usage statues and system is not set and clears the states when resolved', async () => {
+    it('sets the finish button to disabled when the usage statuses and system is not set and clears the states when resolved', async () => {
       props.parentSystemId = '65328f34a40ff5301575a4e3';
 
       createView();
@@ -236,7 +236,7 @@ describe('SystemItemsDialog', () => {
       await waitFor(() => {
         expect(screen.getByText('Giant laser')).toBeInTheDocument();
       });
-      await user.click(screen.getByText('Set usage statues'));
+      await user.click(screen.getByText('Set usage statuses'));
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       expect(

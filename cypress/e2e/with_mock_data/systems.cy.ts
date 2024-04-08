@@ -679,7 +679,7 @@ describe('Systems', () => {
 
       cy.findByRole('button', { name: 'Move to' }).click();
 
-      cy.findByText('Set usage statues').click();
+      cy.findByText('Set usage statuses').click();
       cy.findByRole('button', { name: 'Finish' }).click();
 
       cy.findByText(

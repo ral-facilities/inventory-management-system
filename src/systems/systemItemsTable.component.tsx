@@ -27,7 +27,7 @@ import { useItems } from '../api/items';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import SystemItemsDialog, {
-  UsageStatuesErrorType,
+  UsageStatusesErrorType,
   UsageStatusesType,
 } from './systemItemsDialog.component';
 import { formatDateTimeStrings } from '../utils';
@@ -72,11 +72,11 @@ export interface SystemItemsTableProps {
   system?: System;
   type: 'normal' | 'usageStatus';
   moveToSelectedItems?: Item[];
-  usageStatues?: UsageStatusesType[];
-  onChangeUsageStatues?: (usageStatues: UsageStatusesType[]) => void;
-  usageStatuesErrors?: UsageStatuesErrorType[];
-  onChangeUsageStatuesErrors?: (
-    usageStatuesErrors: UsageStatuesErrorType[]
+  usageStatuses?: UsageStatusesType[];
+  onChangeUsageStatuses?: (usageStatuses: UsageStatusesType[]) => void;
+  usageStatusesErrors?: UsageStatusesErrorType[];
+  onChangeUsageStatusesErrors?: (
+    usageStatusesErrors: UsageStatusesErrorType[]
   ) => void;
   aggregatedCellUsageStatus?: Omit<UsageStatusesType, 'item_id'>[];
   onChangeAggregatedCellUsageStatus?: (
@@ -89,10 +89,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     system,
     type,
     moveToSelectedItems,
-    usageStatues,
-    onChangeUsageStatues,
-    usageStatuesErrors,
-    onChangeUsageStatuesErrors,
+    usageStatuses,
+    onChangeUsageStatuses,
+    usageStatusesErrors,
+    onChangeUsageStatusesErrors,
     aggregatedCellUsageStatus,
     onChangeAggregatedCellUsageStatus,
   } = props;
@@ -192,13 +192,13 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       aggregatedCellUsageStatus &&
       aggregatedCellUsageStatus.length === 0
     ) {
-      const initialUsageStatues: Omit<UsageStatusesType, 'item_id'>[] =
+      const initialUsageStatuses: Omit<UsageStatusesType, 'item_id'>[] =
         Array.from(catalogueItemIdSet).map((catalogue_item_id) => ({
           catalogue_item_id: catalogue_item_id,
           usageStatus: '', // Setting usageStatus to an empty string by default
         }));
 
-      onChangeAggregatedCellUsageStatus(initialUsageStatues);
+      onChangeAggregatedCellUsageStatus(initialUsageStatuses);
     }
   }, [
     aggregatedCellUsageStatus,
@@ -229,8 +229,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 250,
         GroupedCell: ({ row, table }) => {
           const { grouping } = table.getState();
-          const error = usageStatuesErrors
-            ? usageStatuesErrors.filter(
+          const error = usageStatusesErrors
+            ? usageStatusesErrors.filter(
                 (status) =>
                   status.catalogue_item_id === row.original.catalogueItem?.id &&
                   status.error === true
@@ -350,12 +350,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 return (
                   <FormControl size="small" fullWidth>
                     <InputLabel
-                      id={`usage-statues-${row.original.catalogueItem?.name}`}
+                      id={`usage-statuses-${row.original.catalogueItem?.name}`}
                     >
-                      Usage statues
+                      Usage statuses
                     </InputLabel>
                     <Select
-                      labelId={`usage-statues-${row.original.catalogueItem?.name}`}
+                      labelId={`usage-statuses-${row.original.catalogueItem?.name}`}
                       size="small"
                       value={
                         status(
@@ -392,17 +392,21 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           );
                         }
 
-                        if (onChangeUsageStatues && usageStatues) {
-                          const updatedUsageStatues = [...usageStatues];
+                        if (onChangeUsageStatuses && usageStatuses) {
+                          const updatedUsageStatuses = [...usageStatuses];
 
-                          for (let i = 0; i < updatedUsageStatues.length; i++) {
-                            const status = updatedUsageStatues[i];
+                          for (
+                            let i = 0;
+                            i < updatedUsageStatuses.length;
+                            i++
+                          ) {
+                            const status = updatedUsageStatuses[i];
                             if (
                               status.catalogue_item_id ===
                               row.original.catalogueItem?.id
                             ) {
                               // Update the usageStatus for the matching item
-                              updatedUsageStatues[i].usageStatus =
+                              updatedUsageStatuses[i].usageStatus =
                                 UsageStatusType[
                                   event.target
                                     .value as keyof typeof UsageStatusType
@@ -410,30 +414,35 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                             }
                           }
 
-                          onChangeUsageStatues(updatedUsageStatues);
+                          onChangeUsageStatuses(updatedUsageStatuses);
                         }
-                        if (onChangeUsageStatuesErrors && usageStatuesErrors) {
-                          const updatedUsageStatuesErrors = [
-                            ...usageStatuesErrors,
+                        if (
+                          onChangeUsageStatusesErrors &&
+                          usageStatusesErrors
+                        ) {
+                          const updatedUsageStatusesErrors = [
+                            ...usageStatusesErrors,
                           ];
 
                           for (
                             let i = 0;
-                            i < updatedUsageStatuesErrors.length;
+                            i < updatedUsageStatusesErrors.length;
                             i++
                           ) {
-                            const status = updatedUsageStatuesErrors[i];
+                            const status = updatedUsageStatusesErrors[i];
                             if (
                               status.catalogue_item_id ===
                               row.original.catalogueItem?.id
                             ) {
-                              updatedUsageStatuesErrors[i].error = false;
+                              updatedUsageStatusesErrors[i].error = false;
                             }
                           }
-                          onChangeUsageStatuesErrors(updatedUsageStatuesErrors);
+                          onChangeUsageStatusesErrors(
+                            updatedUsageStatusesErrors
+                          );
                         }
                       }}
-                      label="Usage statues"
+                      label="Usage statuses"
                     >
                       <MenuItem value={'new'}>New</MenuItem>
                       <MenuItem value={'inUse'}>In Use</MenuItem>
@@ -447,7 +456,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         Cell:
           type === 'usageStatus'
             ? ({ row }) => {
-                const error = usageStatuesErrors?.find(
+                const error = usageStatusesErrors?.find(
                   (status) => status.item_id === row.original.item.id
                 )?.error;
                 return (
@@ -456,7 +465,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                       required={true}
                       id={`usage-status-${row.original.item.id}`}
                       error={
-                        usageStatuesErrors?.find(
+                        usageStatusesErrors?.find(
                           (status) => status.item_id === row.original.item.id
                         )?.error
                       }
@@ -469,36 +478,39 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                       size="small"
                       value={
                         status(
-                          usageStatues?.find(
+                          usageStatuses?.find(
                             (status) => status.item_id === row.original.item.id
                           )?.usageStatus
                         ) ?? ''
                       }
                       onChange={(event) => {
-                        if (onChangeUsageStatues && usageStatues) {
-                          const itemIndex = usageStatues.findIndex(
+                        if (onChangeUsageStatuses && usageStatuses) {
+                          const itemIndex = usageStatuses.findIndex(
                             (status: UsageStatusesType) =>
                               status.item_id === row.original.item.id
                           );
-                          const updatedUsageStatues = [...usageStatues];
+                          const updatedUsageStatuses = [...usageStatuses];
 
-                          updatedUsageStatues[itemIndex].usageStatus =
+                          updatedUsageStatuses[itemIndex].usageStatus =
                             UsageStatusType[
                               event.target.value as keyof typeof UsageStatusType
                             ];
 
-                          onChangeUsageStatues(updatedUsageStatues);
+                          onChangeUsageStatuses(updatedUsageStatuses);
                         }
-                        if (onChangeUsageStatuesErrors && usageStatuesErrors) {
-                          const itemIndex = usageStatuesErrors.findIndex(
-                            (status: UsageStatuesErrorType) =>
+                        if (
+                          onChangeUsageStatusesErrors &&
+                          usageStatusesErrors
+                        ) {
+                          const itemIndex = usageStatusesErrors.findIndex(
+                            (status: UsageStatusesErrorType) =>
                               status.item_id === row.original.item.id
                           );
-                          const updatedUsageStatues = [...usageStatuesErrors];
+                          const updatedUsageStatuses = [...usageStatusesErrors];
 
-                          updatedUsageStatues[itemIndex].error = false;
+                          updatedUsageStatuses[itemIndex].error = false;
 
-                          onChangeUsageStatuesErrors(updatedUsageStatues);
+                          onChangeUsageStatusesErrors(updatedUsageStatuses);
                         }
 
                         if (
@@ -510,14 +522,14 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                               status.catalogue_item_id ===
                               row.original.catalogueItem?.id
                           );
-                          const updatedUsageStatues = [
+                          const updatedUsageStatuses = [
                             ...aggregatedCellUsageStatus,
                           ];
 
-                          updatedUsageStatues[itemIndex].usageStatus = '';
+                          updatedUsageStatuses[itemIndex].usageStatus = '';
 
                           onChangeAggregatedCellUsageStatus(
-                            updatedUsageStatues
+                            updatedUsageStatuses
                           );
                         }
                       }}
@@ -543,11 +555,11 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
   }, [
     aggregatedCellUsageStatus,
     onChangeAggregatedCellUsageStatus,
-    onChangeUsageStatues,
-    onChangeUsageStatuesErrors,
+    onChangeUsageStatuses,
+    onChangeUsageStatusesErrors,
     type,
-    usageStatues,
-    usageStatuesErrors,
+    usageStatuses,
+    usageStatusesErrors,
   ]);
 
   const [columnFilters, setColumnFilters] =

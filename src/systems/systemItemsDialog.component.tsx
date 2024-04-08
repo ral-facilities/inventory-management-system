@@ -39,7 +39,7 @@ export interface UsageStatusesType {
   usageStatus: UsageStatusType | '';
 }
 
-export interface UsageStatuesErrorType
+export interface UsageStatusesErrorType
   extends Omit<UsageStatusesType, 'usageStatus'> {
   error: boolean;
 }
@@ -63,12 +63,12 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const [parentSystemId, setParentSystemId] = React.useState<string | null>(
     props.parentSystemId
   );
-  const [usageStatues, setUsageStatues] = React.useState<UsageStatusesType[]>(
+  const [usageStatuses, setUsageStatuses] = React.useState<UsageStatusesType[]>(
     []
   );
 
-  const [usageStatuesErrors, setUsageStatuesErrors] = React.useState<
-    UsageStatuesErrorType[]
+  const [usageStatusesErrors, setUsageStatusesErrors] = React.useState<
+    UsageStatusesErrorType[]
   >([]);
 
   const [aggregatedCellUsageStatus, setAggregatedCellUsageStatus] =
@@ -77,7 +77,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const [placeIntoSystemError, setPlaceIntoSystemError] = React.useState(false);
   React.useEffect(() => {
     if (open) {
-      const initialUsageStatues: UsageStatusesType[] = selectedItems.map(
+      const initialUsageStatuses: UsageStatusesType[] = selectedItems.map(
         (item) => ({
           item_id: item.id,
           catalogue_item_id: item.catalogue_item_id,
@@ -85,14 +85,14 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         })
       );
 
-      const initialUsageStatuesErrors: UsageStatuesErrorType[] =
+      const initialUsageStatusesErrors: UsageStatusesErrorType[] =
         selectedItems.map((item) => ({
           item_id: item.id,
           catalogue_item_id: item.catalogue_item_id,
           error: false,
         }));
-      setUsageStatues(initialUsageStatues);
-      setUsageStatuesErrors(initialUsageStatuesErrors);
+      setUsageStatuses(initialUsageStatuses);
+      setUsageStatusesErrors(initialUsageStatusesErrors);
     }
   }, [open, selectedItems]);
 
@@ -117,7 +117,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const { mutateAsync: moveItemsToSystem, isPending: isMovePending } =
     useMoveItemsToSystem();
 
-  const errorUsageStatuesItemId = usageStatuesErrors
+  const errorUsageStatusesItemId = usageStatusesErrors
     .map((status) => {
       if (status.error) {
         return status.item_id;
@@ -127,7 +127,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     .filter((errorItemId) => errorItemId !== null);
 
   const validateUsageStatus = React.useCallback(() => {
-    const errorItemId = usageStatues
+    const errorItemId = usageStatuses
       .map((status) => {
         if (status.usageStatus === '') {
           return status.item_id;
@@ -136,7 +136,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       })
       .filter((errorItemId) => errorItemId !== null);
 
-    setUsageStatuesErrors((prevErrors) =>
+    setUsageStatusesErrors((prevErrors) =>
       prevErrors.map((error) => {
         const index = errorItemId.indexOf(error.item_id);
         if (index !== -1) {
@@ -146,12 +146,12 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
       })
     );
     return errorItemId.length !== 0;
-  }, [usageStatues]);
+  }, [usageStatuses]);
 
   const handleClose = React.useCallback(() => {
     setAggregatedCellUsageStatus([]);
-    setUsageStatues([]);
-    setUsageStatuesErrors([]);
+    setUsageStatuses([]);
+    setUsageStatusesErrors([]);
     setPlaceIntoSystemError(false);
     setActiveStep(0);
     onClose();
@@ -175,7 +175,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     // (where we don't need to load anything as the name is known)
     if (!targetSystemLoading && targetSystem !== undefined) {
       moveItemsToSystem({
-        usageStatues: convertToSystemUsageStatuses(usageStatues),
+        usageStatuses: convertToSystemUsageStatuses(usageStatuses),
         selectedItems: selectedItems,
         // Only reason for targetSystem to be undefined here is if not loading at all
         // which happens when at root
@@ -194,12 +194,12 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     selectedItems,
     targetSystem,
     targetSystemLoading,
-    usageStatues,
+    usageStatuses,
     validateUsageStatus,
   ]);
 
   // Stepper
-  const STEPS = ['Place into a system', 'Set usage statues'];
+  const STEPS = ['Place into a system', 'Set usage statuses'];
   const [activeStep, setActiveStep] = React.useState<number>(0);
 
   const handleNext = React.useCallback(
@@ -228,10 +228,10 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
           return placeIntoSystemError;
         }
         case 1:
-          return errorUsageStatuesItemId.length !== 0;
+          return errorUsageStatusesItemId.length !== 0;
       }
     },
-    [errorUsageStatuesItemId.length, placeIntoSystemError]
+    [errorUsageStatusesItemId.length, placeIntoSystemError]
   );
 
   const renderStepContent = (step: number) => {
@@ -267,10 +267,10 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
           <SystemItemsTable
             moveToSelectedItems={selectedItems}
             type="usageStatus"
-            onChangeUsageStatues={setUsageStatues}
-            usageStatues={usageStatues}
-            onChangeUsageStatuesErrors={setUsageStatuesErrors}
-            usageStatuesErrors={usageStatuesErrors}
+            onChangeUsageStatuses={setUsageStatuses}
+            usageStatuses={usageStatuses}
+            onChangeUsageStatusesErrors={setUsageStatusesErrors}
+            usageStatusesErrors={usageStatusesErrors}
             aggregatedCellUsageStatus={aggregatedCellUsageStatus}
             onChangeAggregatedCellUsageStatus={setAggregatedCellUsageStatus}
           />
@@ -342,7 +342,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
               // Disable when not moving anywhere different
               // or when attempting to move to root i.e. no system
               placeIntoSystemError ||
-              errorUsageStatuesItemId.length !== 0 ||
+              errorUsageStatusesItemId.length !== 0 ||
               !(!targetSystemLoading && targetSystem !== undefined)
             }
             onClick={handleMoveTo}
