@@ -28,7 +28,7 @@ import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import SystemItemsDialog, {
   UsageStatuesErrorType,
-  UsageStatuesType,
+  UsageStatusesType,
 } from './systemItemsDialog.component';
 import { formatDateTimeStrings } from '../utils';
 
@@ -72,15 +72,15 @@ export interface SystemItemsTableProps {
   system?: System;
   type: 'normal' | 'usageStatus';
   moveToSelectedItems?: Item[];
-  usageStatues?: UsageStatuesType[];
-  onChangeUsageStatues?: (usageStatues: UsageStatuesType[]) => void;
+  usageStatues?: UsageStatusesType[];
+  onChangeUsageStatues?: (usageStatues: UsageStatusesType[]) => void;
   usageStatuesErrors?: UsageStatuesErrorType[];
   onChangeUsageStatuesErrors?: (
     usageStatuesErrors: UsageStatuesErrorType[]
   ) => void;
-  aggregatedCellUsageStatus?: Omit<UsageStatuesType, 'item_id'>[];
+  aggregatedCellUsageStatus?: Omit<UsageStatusesType, 'item_id'>[];
   onChangeAggregatedCellUsageStatus?: (
-    aggregatedCellUsageStatus: Omit<UsageStatuesType, 'item_id'>[]
+    aggregatedCellUsageStatus: Omit<UsageStatusesType, 'item_id'>[]
   ) => void;
 }
 
@@ -192,7 +192,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       aggregatedCellUsageStatus &&
       aggregatedCellUsageStatus.length === 0
     ) {
-      const initialUsageStatues: Omit<UsageStatuesType, 'item_id'>[] =
+      const initialUsageStatues: Omit<UsageStatusesType, 'item_id'>[] =
         Array.from(catalogueItemIdSet).map((catalogue_item_id) => ({
           catalogue_item_id: catalogue_item_id,
           usageStatus: '', // Setting usageStatus to an empty string by default
@@ -372,7 +372,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           aggregatedCellUsageStatus
                         ) {
                           const itemIndex = aggregatedCellUsageStatus.findIndex(
-                            (status: Omit<UsageStatuesType, 'item_id'>) =>
+                            (status: Omit<UsageStatusesType, 'item_id'>) =>
                               status.catalogue_item_id ===
                               row.original.catalogueItem?.id
                           );
@@ -477,7 +477,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                       onChange={(event) => {
                         if (onChangeUsageStatues && usageStatues) {
                           const itemIndex = usageStatues.findIndex(
-                            (status: UsageStatuesType) =>
+                            (status: UsageStatusesType) =>
                               status.item_id === row.original.item.id
                           );
                           const updatedUsageStatues = [...usageStatues];
@@ -506,7 +506,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           aggregatedCellUsageStatus
                         ) {
                           const itemIndex = aggregatedCellUsageStatus.findIndex(
-                            (status: Omit<UsageStatuesType, 'item_id'>) =>
+                            (status: Omit<UsageStatusesType, 'item_id'>) =>
                               status.catalogue_item_id ===
                               row.original.catalogueItem?.id
                           );

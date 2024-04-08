@@ -33,19 +33,19 @@ export interface SystemItemsDialogProps {
   parentSystemId: string | null;
 }
 
-export interface UsageStatuesType {
+export interface UsageStatusesType {
   item_id: string;
   catalogue_item_id: string;
   usageStatus: UsageStatusType | '';
 }
 
 export interface UsageStatuesErrorType
-  extends Omit<UsageStatuesType, 'usageStatus'> {
+  extends Omit<UsageStatusesType, 'usageStatus'> {
   error: boolean;
 }
 
-const moveItemsToSystemUsageStatues = (
-  list: UsageStatuesType[]
+const convertToSystemUsageStatuses = (
+  list: UsageStatusesType[]
 ): MoveItemsToSystemUsageStatus[] => {
   return list
     .filter((item) => item.usageStatus !== '') // Exclude items with empty usageStatus
@@ -63,7 +63,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const [parentSystemId, setParentSystemId] = React.useState<string | null>(
     props.parentSystemId
   );
-  const [usageStatues, setUsageStatues] = React.useState<UsageStatuesType[]>(
+  const [usageStatues, setUsageStatues] = React.useState<UsageStatusesType[]>(
     []
   );
 
@@ -72,12 +72,12 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   >([]);
 
   const [aggregatedCellUsageStatus, setAggregatedCellUsageStatus] =
-    React.useState<Omit<UsageStatuesType, 'item_id'>[]>([]);
+    React.useState<Omit<UsageStatusesType, 'item_id'>[]>([]);
 
   const [placeIntoSystemError, setPlaceIntoSystemError] = React.useState(false);
   React.useEffect(() => {
     if (open) {
-      const initialUsageStatues: UsageStatuesType[] = selectedItems.map(
+      const initialUsageStatues: UsageStatusesType[] = selectedItems.map(
         (item) => ({
           item_id: item.id,
           catalogue_item_id: item.catalogue_item_id,
@@ -158,7 +158,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   }, [onClose]);
 
   const hasSystemErrors =
-     // Disable when not moving anywhere different
+    // Disable when not moving anywhere different
     // or when attempting to move to root i.e. no system
     props.parentSystemId === parentSystemId ||
     parentSystemId === null ||
@@ -175,7 +175,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     // (where we don't need to load anything as the name is known)
     if (!targetSystemLoading && targetSystem !== undefined) {
       moveItemsToSystem({
-        usageStatues: moveItemsToSystemUsageStatues(usageStatues),
+        usageStatues: convertToSystemUsageStatuses(usageStatues),
         selectedItems: selectedItems,
         // Only reason for targetSystem to be undefined here is if not loading at all
         // which happens when at root
