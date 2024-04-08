@@ -75,6 +75,12 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
 
+  // Keeps track of the last location state update to occurr (for detecting browser changes e.g. back button being clicked)
+  const lastLocationUpdate = useRef({
+    pathname: location.pathname,
+    search: location.search,
+  });
+
   const urlParamName = props?.urlParamName || 'state';
   const compressedState = props?.storeInUrl
     ? searchParams.get(urlParamName)
@@ -85,38 +91,49 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     getDefaultParsedState(unparsedState)
   );
 
-  // Update when the path changes e.g. when navigating between systems (ensures
-  // the same pagination state is recalled when going back), seems MRT treats pagination
-  // slightly diferent to column order as it doesn't appear to have the same issue
-  useEffect(() => {
-    if (props?.storeInUrl) {
-      if (JSON.stringify(parsedState) !== unparsedState && location.pathname) {
-        firstUpdate.current.p = undefined;
-        setParsedState(getDefaultParsedState(unparsedState));
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
-
   // Update the search params only if necessary
   useEffect(() => {
     if (props?.storeInUrl) {
       const newUnparsedState = JSON.stringify(parsedState);
       if (unparsedState !== newUnparsedState) {
-        // Clear search params if state is no longer needed
-        if (newUnparsedState !== '{}') {
-          searchParams.set(
-            urlParamName,
-            LZString.compressToEncodedURIComponent(newUnparsedState)
-          );
-          setSearchParams(searchParams, { replace: true });
+        // Only set the search params if its just a current page state change and not a browser level change
+        // such as clicking the back button
+        if (
+          lastLocationUpdate.current.pathname === location.pathname &&
+          lastLocationUpdate.current.search === location.search
+        ) {
+          // Clear search params if state is no longer needed
+          if (newUnparsedState !== '{}') {
+            searchParams.set(
+              urlParamName,
+              LZString.compressToEncodedURIComponent(newUnparsedState)
+            );
+            setSearchParams(searchParams, { replace: true });
+          } else {
+            searchParams.delete(urlParamName);
+            setSearchParams(searchParams, { replace: true });
+          }
+          // Pre-emptively update last search location to ensure the change is not repeated below
+          lastLocationUpdate.current.search =
+            searchParams.toString() === '' ? '' : `?${searchParams.toString()}`;
         } else {
-          searchParams.delete(urlParamName);
-          setSearchParams(searchParams, { replace: true });
+          // Update the internal state to reflect the browser level change
+
+          // Ensures the same pagination state is recalled when going back, seems MRT treats pagination
+          // slightly diferently to column order as it doesn't appear to have the same issue
+          if (lastLocationUpdate.current.pathname !== location.pathname)
+            firstUpdate.current.p = undefined;
+
+          lastLocationUpdate.current = {
+            pathname: location.pathname,
+            search: location.search,
+          };
+          setParsedState(getDefaultParsedState(unparsedState));
         }
       }
     }
   }, [
+    location,
     parsedState,
     props?.storeInUrl,
     searchParams,
