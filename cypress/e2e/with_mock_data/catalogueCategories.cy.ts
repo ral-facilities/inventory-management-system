@@ -370,6 +370,52 @@ describe('Catalogue Category', () => {
     cy.findAllByText('Please enter a value').should('have.length', 0);
   });
 
+  it('displays the allowed values list error states and check if the error states are in the correct location (number)', () => {
+    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByLabelText('Name *').type('test');
+
+    cy.findByLabelText('Catalogue Items').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+    cy.findByLabelText('Property Name *').type('Updated Field 1');
+    cy.findByLabelText('Select Type *').click();
+    cy.findByText('Number').click();
+    cy.findAllByLabelText('Select Allowed values *').last().click();
+    cy.findByRole('option', { name: 'List' }).click();
+    cy.findByRole('button', { name: 'Add list item 0' }).click();
+    cy.findByRole('button', { name: 'Add list item 0' }).click();
+    cy.findAllByLabelText('List Item 0').eq(0).type('dsadd');
+    cy.findAllByLabelText('List Item 1').eq(0).type('10');
+
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+
+    cy.findAllByLabelText('Property Name *').eq(1).type('Updated Field 2');
+    cy.findAllByLabelText('Select Type *').eq(1).click();
+    cy.findByRole('option', { name: 'Number' }).click();
+    cy.findAllByLabelText('Select Allowed values *').eq(1).click();
+    cy.findByRole('option', { name: 'List' }).click();
+    cy.findByRole('button', { name: 'Add list item 1' }).click();
+    cy.findByRole('button', { name: 'Add list item 1' }).click();
+    cy.findAllByLabelText('List Item 0').eq(1).type('dsadd');
+    cy.findAllByLabelText('List Item 1').eq(1).type('10');
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findAllByText('Please enter a valid number').should('have.length', 2);
+
+    // Clearing the errors
+
+    cy.findAllByLabelText('Delete list item 0').first().click();
+    cy.findAllByLabelText('Delete list item 0').last().click();
+    cy.findAllByText('Please enter a value').should('have.length', 0);
+  });
+
   it('displays the allowed values list error states (number)', () => {
     cy.findByRole('button', { name: 'add catalogue category' }).click();
     cy.findByLabelText('Name *').type('test');
@@ -590,6 +636,33 @@ describe('Catalogue Category', () => {
     cy.findAllByText(
       'Duplicate property name. Please change the name or remove the property'
     ).should('exist');
+  });
+
+  it('displays error message when property name field is empty and checks that error states are in the correct location', () => {
+    cy.visit('/catalogue/1');
+    cy.findByRole('button', {
+      name: 'actions Voltage Meters catalogue category button',
+    }).click();
+
+    cy.findByRole('menuitem', {
+      name: 'edit Voltage Meters catalogue category button',
+    }).click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findAllByLabelText('Property Name *').first().clear();
+
+    cy.findAllByLabelText('Property Name *').last().clear();
+    cy.findAllByLabelText('Property Name *').last().type('Updated Field');
+
+    cy.findByRole('button', { name: 'Save' }).click();
+
+    cy.findAllByText('Please enter a property name').should('exist');
+
+    cy.findAllByLabelText('Delete catalogue category field entry')
+      .first()
+      .click();
+    cy.findAllByText('Please enter a property name').should('not.exist');
   });
 
   it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
