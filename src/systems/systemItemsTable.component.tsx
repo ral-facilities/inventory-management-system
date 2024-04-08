@@ -173,9 +173,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     // to the reference changing so instead am relying on isLoading to have changed to
     // false and then back to true again for any refetches that occurr - only
     // alternative I can see right now requires backend changes
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, itemsData]);
+  }, [isLoading, itemsData, moveToSelectedItems]);
 
   const status = (usageStatus: UsageStatusType | undefined | '') => {
     if (typeof usageStatus !== 'number') return '';
