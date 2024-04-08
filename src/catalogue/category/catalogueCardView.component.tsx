@@ -120,6 +120,7 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
               inputProps={{
                 name: 'Max Results',
                 labelId: 'select-max-results',
+                'aria-label': 'Categories per page',
               }}
               onChange={(event) =>
                 onPreservedStatesChange.onPaginationChange({
