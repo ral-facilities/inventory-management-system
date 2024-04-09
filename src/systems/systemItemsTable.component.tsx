@@ -3,7 +3,6 @@ import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined
 import { Box, Button, Link as MuiLink, Typography } from '@mui/material';
 import {
   MRT_ColumnDef,
-  MRT_ColumnFiltersState,
   MRT_RowSelectionState,
   MaterialReactTable,
   useMaterialReactTable,
@@ -14,9 +13,10 @@ import { Link } from 'react-router-dom';
 import { useCatalogueItemIds } from '../api/catalogueItems';
 import { useItems } from '../api/items';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
+import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
-import SystemItemsDialog from './systemItemsDialog.component';
 import { formatDateTimeStrings } from '../utils';
+import SystemItemsDialog from './systemItemsDialog.component';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
@@ -213,8 +213,14 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     ];
   }, []);
 
-  const [columnFilters, setColumnFilters] =
-    React.useState<MRT_ColumnFiltersState>([]);
+  const { preservedState, onPreservedStatesChange } = usePreservedTableState({
+    initialState: {
+      columnVisibility: { 'item.created_time': false },
+      grouping: ['catalogueItem.name'],
+      pagination: { pageSize: 15, pageIndex: 0 },
+    },
+    storeInUrl: true,
+  });
 
   const noResultsText = 'No items found';
   const table = useMaterialReactTable({
@@ -255,13 +261,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      grouping: ['catalogueItem.name'],
-      pagination: { pageSize: 15, pageIndex: 0 },
-      columnVisibility: { 'item.created_time': false },
     },
     state: {
+      ...preservedState,
       showProgressBars: isLoading,
-      columnFilters: columnFilters,
       rowSelection: rowSelection,
     },
     // MUI
@@ -300,8 +303,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
     },
     // Functions
+    ...onPreservedStatesChange,
     getRowId: (row) => row.item.id,
-    onColumnFiltersChange: setColumnFilters,
     onRowSelectionChange: setRowSelection,
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
@@ -309,7 +312,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           startIcon={<ClearIcon />}
           sx={{ mx: 0.5 }}
           variant="outlined"
-          disabled={columnFilters.length === 0}
+          disabled={preservedState.columnFilters.length === 0}
           onClick={() => {
             table.resetColumnFilters();
           }}

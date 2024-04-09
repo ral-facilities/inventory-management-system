@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   getCatalogueCategoryById,
@@ -16,7 +16,9 @@ describe('Catalogue Items Table', () => {
 
   const createView = () => {
     return renderComponentWithRouterProvider(
-      <CatalogueItemsTable {...props} />
+      <CatalogueItemsTable {...props} />,
+      'any',
+      '/'
     );
   };
 
@@ -548,8 +550,8 @@ describe('Catalogue Items Table', () => {
     expect(view.asFragment()).toMatchSnapshot();
   });
 
-  it('sets the table filters and clears the table filters', async () => {
-    createView();
+  it('can change the table filters and clear the table filters', async () => {
+    const { router } = createView();
 
     await waitFor(() => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
@@ -558,6 +560,7 @@ describe('Catalogue Items Table', () => {
       name: 'Clear Filters',
     });
     expect(clearFiltersButton).toBeDisabled();
+    expect(router.state.location.search).toBe('');
 
     const nameInput = screen.getByLabelText('Filter by Name');
 
@@ -566,12 +569,160 @@ describe('Catalogue Items Table', () => {
     await waitFor(() => {
       expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
     });
+    expect(router.state.location.search).toBe(
+      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJqATAJwgBfALoCgA'
+    );
 
     await user.click(clearFiltersButton);
 
     await waitFor(() => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
+    expect(router.state.location.search).toBe('');
+  });
+
+  it('can sort the table columns', async () => {
+    const { router } = createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    expect(router.state.location.search).toBe('');
+
+    const lastModifiedSortButton = await screen.findByRole('button', {
+      name: 'Sort by Last modified descending',
+    });
+    await user.click(lastModifiedSortButton);
+
+    expect(router.state.location.search).toBe(
+      '?state=N4IgzgTgLiBcDaoCWATOIDGBDKWA2A9gOYCuApgJJRkC2AdDQSkgGZJkoD6USNZIAGhAoyYDHCgRyAXwC60oA'
+    );
+
+    // Reset
+    await user.click(lastModifiedSortButton);
+    await user.click(lastModifiedSortButton);
+
+    expect(router.state.location.search).toBe('');
+  });
+
+  it('can show and hide columns', async () => {
+    const { router } = createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    expect(router.state.location.search).toBe('');
+
+    await user.click(screen.getByRole('button', { name: 'Show/Hide columns' }));
+    const nameColumnVisibilityToggle = within(
+      screen.getByRole('menuitem', { name: 'Toggle visibility Name' })
+    ).getByRole('checkbox');
+    await user.click(nameColumnVisibilityToggle);
+
+    await waitFor(() => {
+      expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
+    });
+    expect(router.state.location.search).toBe(
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnZceBAL7ygA'
+    );
+
+    // Reset
+    await user.click(nameColumnVisibilityToggle);
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    expect(router.state.location.search).toBe('');
+  });
+
+  it('can use the global filter', async () => {
+    const { router } = createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    expect(router.state.location.search).toBe('');
+
+    const globalFilter = screen.getByRole('textbox', { name: '' });
+    await user.type(globalFilter, '29');
+
+    await waitFor(() => {
+      expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
+    });
+    expect(router.state.location.search).toBe(
+      '?state=N4Ig5gYglgNiBcIBMBOEBfIA'
+    );
+
+    // Reset
+    await user.click(screen.getByRole('button', { name: 'Clear search' }));
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    expect(router.state.location.search).toBe('');
+  });
+
+  it('can change the grouping state', async () => {
+    const { router } = createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    expect(screen.queryByText('Grouped by')).not.toBeInTheDocument();
+    expect(router.state.location.search).toBe('');
+
+    const nameColumnActions = screen.getAllByRole('button', {
+      name: 'Column Actions',
+    })[0];
+    await user.click(nameColumnActions);
+    await user.click(screen.getByRole('menuitem', { name: 'Group by Name' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Grouped by')).toBeInTheDocument();
+    });
+    expect(router.state.location.search).toBe(
+      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOViTiOGqRSsLKqnZmjpYuSmp%2B6ABGauiGhBWhuS6Nza04flHCqArEOGRIfiE5fUpWfkqSWZVhed0tOIT90c1kmnIkk1XhJMI8wjgcPmokALJbWFFUY6kASmJg1Ax7B8suJ%2BhnF0KJAAgnA4PcFABPdpTI5wdBqcZgBrCGGHPLwxEBdCbXjoNgAaz8yNRiw61VI4gQkLqSBxAyGcA%2B8Gy6JcVJp2Nx%2BIJmgAImwELwlGQwKkAHJYIgNc5on6UwXC0V%2BVAi3lk2F5GbEPxuAqoPxkKUytiaIhiLCeBRIe7nciUZnmo1WxS2tgke6oM0Wl02qLuhDicRRNSZLQ%2B61ukiEQzCAAWqmZ3061nQhDD2jkelETNNNAAvkA'
+    );
+
+    // Reset
+    await user.click(nameColumnActions);
+    await user.click(screen.getByRole('menuitem', { name: 'Ungroup by Name' }));
+    await waitFor(() => {
+      expect(screen.queryByText('Grouped by')).not.toBeInTheDocument();
+    });
+    // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
+    expect(router.state.location.search).toBe(
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQUwA8AHAQwDsATEAGkVQx32PKtuXS1xLBQEtMyAZxp0OjQXgA2eHiLAkUJSZgDmAVzwBJFHgQA6MiQR45Cpao3bdehJgq8AZrzwUA%2Bn2OnFy9Vp36wJDwFF3deT1oANWdsAAIrBGFaeW8LP2sKPEFA3iI%2BAS9zXwS9XkFXTAAjQUxpHUKfS389Kpq6vFcgokluXTwyFFcUoo1XXn8x1nAzRvT9Vtq8HU7gmrIRTj1h2ZKiLCI8VGdBPQBZVbUg4wHYgCVyFRNaTe203f3Dviy9AEEwMEu3AAng03s0wJhBIMVJUiKDiuDIYMUJgVthMEgANauGFw5IzMEZEhA8oolbdXrwppEknuVFBdFYkQAESQJGwvDIKliADk1AhKocqXM9BQ2Ryua5JJzMcKSuNdK5bJlJK4yPzBUgRAhyGoHNwUJdDgYjE9ELr9TwjUg9JdJNqLQbrXoSBQxVkkub1ZbDUEbTppEQABYCM2vBHWMiYHSe9gMXCCUhgIUAXQAvkA'
+    );
+  });
+
+  it('can change the pagination options', async () => {
+    const { router } = createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    expect(router.state.location.search).toBe('');
+
+    const rowsPerPageSelect = await screen.findByRole('combobox', {
+      name: 'Rows per page',
+    });
+    expect(within(rowsPerPageSelect).getByText('15')).toBeInTheDocument();
+
+    // Change to another value
+    fireEvent.mouseDown(rowsPerPageSelect);
+    fireEvent.click(within(await screen.findByRole('listbox')).getByText('30'));
+    expect(within(rowsPerPageSelect).getByText('30')).toBeInTheDocument();
+
+    expect(router.state.location.search).toBe(
+      '?state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+    );
+
+    // And back again
+    fireEvent.mouseDown(rowsPerPageSelect);
+    fireEvent.click(within(await screen.findByRole('listbox')).getByText('15'));
+    expect(within(rowsPerPageSelect).getByText('15')).toBeInTheDocument();
+
+    expect(router.state.location.search).toBe('');
   });
 
   // skipping this test as it causes an infinite loop when expanding the details panel
