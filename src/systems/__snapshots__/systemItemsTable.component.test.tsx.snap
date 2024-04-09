@@ -234,7 +234,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
       </div>
     </div>
     <div
-      class="MuiTableContainer-root css-1xsriem-MuiTableContainer-root"
+      class="MuiTableContainer-root css-fa3r-MuiTableContainer-root"
     >
       <table
         class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
@@ -2441,7 +2441,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
       </div>
     </div>
     <div
-      class="MuiTableContainer-root css-1xsriem-MuiTableContainer-root"
+      class="MuiTableContainer-root css-yx8aw7-MuiTableContainer-root"
     >
       <table
         class="MuiTable-root MuiTable-stickyHeader css-1y6k1sx-MuiTable-root"

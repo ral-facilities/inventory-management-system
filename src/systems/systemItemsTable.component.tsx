@@ -632,6 +632,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       sx: {
         minHeight: '360.4px',
         height: table.getState().isFullScreen ? '100%' : undefined,
+        maxHeight: type === 'usageStatus' ? '670px' : undefined,
       },
     }),
     muiSearchTextFieldProps: {
@@ -681,8 +682,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       </Box>
     ),
     renderDetailPanel: ({ row }) =>
-      type === 'usageStatus' ? undefined : row.original.catalogueItem !==
-        undefined ? (
+      row.original.catalogueItem !== undefined ? (
         <ItemsDetailsPanel
           itemData={row.original.item}
           catalogueItemIdData={row.original.catalogueItem}

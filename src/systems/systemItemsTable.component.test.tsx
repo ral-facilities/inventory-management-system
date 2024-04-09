@@ -296,32 +296,35 @@ describe('SystemItemsTable', () => {
         values.cameras6Item1 ||
         values.cameras6Item2
       ) {
-        await user.click(screen.getAllByLabelText('Expand all')[1]);
-        values.cameras1Item1 &&
-          (await selectUsageStatus({
-            index: 2,
+        await user.click(screen.getByTestId('CancelIcon'));
+
+        if (values.cameras1Item1) {
+          await selectUsageStatus({
+            index: 1,
             usageStatus: values.cameras1Item1,
-          }));
+          });
+        }
 
-        values.cameras1Item2 &&
-          (await selectUsageStatus({
-            index: 3,
+        if (values.cameras1Item2) {
+          await selectUsageStatus({
+            index: 2,
             usageStatus: values.cameras1Item2,
-          }));
+          });
+        }
 
-        values.cameras6Item1 &&
-          (await selectUsageStatus({
-            index: 5,
+        if (values.cameras6Item1) {
+          await selectUsageStatus({
+            index: 3,
             usageStatus: values.cameras6Item1,
-          }));
+          });
+        }
 
-        values.cameras6Item2 &&
-          (await selectUsageStatus({
-            index: 6,
+        if (values.cameras6Item2) {
+          await selectUsageStatus({
+            index: 4,
             usageStatus: values.cameras6Item2,
-          }));
-
-        await user.click(await screen.findByLabelText('Collapse all'));
+          });
+        }
       }
       values.cameras1 &&
         (await selectUsageStatus({ index: 1, usageStatus: values.cameras1 }));
@@ -475,34 +478,12 @@ describe('SystemItemsTable', () => {
         expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
       );
 
-      await modifyUsageStatus({ cameras1Item1: 'Used' });
-
-      expect(onChangeUsageStatuses).toHaveBeenCalledWith([
-        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
-        { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: '' },
-        { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: '' },
-        { item_id: 'QQen23yW', catalogue_item_id: '25', usageStatus: '' },
-      ]);
-
-      await modifyUsageStatus({ cameras1Item2: 'Used' });
-
-      expect(onChangeUsageStatuses).toHaveBeenCalledWith([
-        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
-        { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 2 },
-        { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: '' },
-        { item_id: 'QQen23yW', catalogue_item_id: '25', usageStatus: '' },
-      ]);
-
-      await modifyUsageStatus({ cameras6Item1: 'Used' });
-
-      expect(onChangeUsageStatuses).toHaveBeenCalledWith([
-        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
-        { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 2 },
-        { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: 2 },
-        { item_id: 'QQen23yW', catalogue_item_id: '25', usageStatus: '' },
-      ]);
-
-      await modifyUsageStatus({ cameras6Item2: 'Used' });
+      await modifyUsageStatus({
+        cameras1Item1: 'Used',
+        cameras1Item2: 'Used',
+        cameras6Item1: 'Used',
+        cameras6Item2: 'Used',
+      });
 
       expect(onChangeUsageStatuses).toHaveBeenCalledWith([
         { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
@@ -543,9 +524,24 @@ describe('SystemItemsTable', () => {
 
       expect(errorIcon.length).toEqual(2);
 
-      await user.click(screen.getAllByLabelText('Expand all')[1]);
-      const helperTexts = screen.getAllByText('Please select a usage status');
-      expect(helperTexts.length).toEqual(4);
+      await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
+
+      expect(
+        screen.getAllByText('Please select a usage status').length
+      ).toEqual(2);
+      await user.click(screen.getAllByLabelText('Collapse')[1]);
+
+      await waitFor(() => {
+        expect(
+          screen.queryByText('Please select a usage status')
+        ).not.toBeInTheDocument();
+      });
+
+      await user.click(screen.getAllByRole('button', { name: 'Expand' })[1]);
+
+      expect(
+        screen.getAllByText('Please select a usage status').length
+      ).toEqual(2);
     });
   });
 });
