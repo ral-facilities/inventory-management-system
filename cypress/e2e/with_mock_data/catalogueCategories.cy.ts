@@ -43,6 +43,49 @@ describe('Catalogue Category', () => {
     cy.findByText('actuators').should('not.exist');
   });
 
+  it('should be able to navigate through categories while preserving the page state when going back', () => {
+    cy.editEndpointResponse({
+      url: '/v1/catalogue-categories',
+      data: createMockData(),
+      statusCode: 200,
+    });
+
+    cy.findByText('Test 1').should('exist');
+    cy.findByText('Test 45').should('not.exist');
+    cy.location('search').should('eq', '');
+
+    // Categories per page
+    cy.findByRole('combobox', { name: 'Categories per page' }).within(() =>
+      cy.findByText('30').should('be.visible')
+    );
+    cy.findByRole('combobox', { name: 'Categories per page' }).click();
+    cy.findByRole('listbox').within(() => {
+      cy.findByText('45').click();
+    });
+    cy.findByText('Test 45').should('exist');
+    cy.location('search').should(
+      'eq',
+      '?state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygEYBfBoA'
+    );
+
+    cy.findByText('Test 1').click();
+    cy.location('search').should('eq', '');
+    cy.findByRole('combobox', { name: 'Categories per page' }).within(() =>
+      cy.findByText('30').should('be.visible')
+    );
+
+    // Ensure same state is recovered
+    cy.go('back');
+
+    cy.location('search').should(
+      'eq',
+      '?state=N4IgDiBcpghg5gUwMoEsBeioBYCsAacBRASQDsATRADygEYBfBoA'
+    );
+    cy.findByRole('combobox', { name: 'Categories per page' }).within(() =>
+      cy.findByText('45').should('be.visible')
+    );
+  });
+
   it('should be able to change page', () => {
     cy.editEndpointResponse({
       url: '/v1/catalogue-categories',

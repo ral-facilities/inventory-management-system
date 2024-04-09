@@ -13,7 +13,11 @@ describe('Items Table', () => {
   let props: ItemTableProps;
   let user: UserEvent;
   const createView = () => {
-    return renderComponentWithRouterProvider(<ItemsTable {...props} />);
+    return renderComponentWithRouterProvider(
+      <ItemsTable {...props} />,
+      'any',
+      '/'
+    );
   };
 
   const ensureColumnsVisible = async (columns: string[]) => {
@@ -50,6 +54,10 @@ describe('Items Table', () => {
 
   it('renders correctly part 1 due column virtualisation', async () => {
     const view = createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Serial Number')).toBeInTheDocument();
+    });
     expect(view.asFragment()).toMatchSnapshot();
   });
 

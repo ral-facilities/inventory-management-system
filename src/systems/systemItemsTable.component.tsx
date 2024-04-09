@@ -14,7 +14,6 @@ import {
 } from '@mui/material';
 import {
   MRT_ColumnDef,
-  MRT_ColumnFiltersState,
   MRT_RowSelectionState,
   MaterialReactTable,
   useMaterialReactTable,
@@ -25,6 +24,7 @@ import { Link } from 'react-router-dom';
 import { useCatalogueItemIds } from '../api/catalogueItems';
 import { useItems } from '../api/items';
 import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
+import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import SystemItemsDialog, {
   ItemUsageStatusesErrorStateType,
@@ -564,8 +564,14 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     usageStatuses,
   ]);
 
-  const [columnFilters, setColumnFilters] =
-    React.useState<MRT_ColumnFiltersState>([]);
+  const { preservedState, onPreservedStatesChange } = usePreservedTableState({
+    initialState: {
+      columnVisibility: { 'item.created_time': false },
+      grouping: ['catalogueItem.name'],
+      pagination: { pageSize: 15, pageIndex: 0 },
+    },
+    storeInUrl: true,
+  });
 
   const noResultsText = 'No items found';
   const table = useMaterialReactTable({
@@ -613,13 +619,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     initialState: {
       showColumnFilters: true,
       showGlobalFilter: true,
-      grouping: ['catalogueItem.name'],
-      pagination: { pageSize: 15, pageIndex: 0 },
-      columnVisibility: { 'item.created_time': false },
     },
     state: {
+      ...preservedState,
       showProgressBars: isLoading,
-      columnFilters: columnFilters,
       rowSelection: rowSelection,
     },
     // MUI
@@ -635,6 +638,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       sx: {
         minHeight: '360.4px',
         height: table.getState().isFullScreen ? '100%' : undefined,
+        maxHeight: type === 'usageStatus' ? '670px' : undefined,
       },
     }),
     muiSearchTextFieldProps: {
@@ -658,8 +662,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
     },
     // Functions
+    ...onPreservedStatesChange,
     getRowId: (row) => row.item.id,
-    onColumnFiltersChange: setColumnFilters,
     onRowSelectionChange: setRowSelection,
     renderTopToolbarCustomActions: ({ table }) => (
       <Box sx={{ display: 'flex' }}>
@@ -667,7 +671,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           startIcon={<ClearIcon />}
           sx={{ mx: 0.5 }}
           variant="outlined"
-          disabled={columnFilters.length === 0}
+          disabled={preservedState.columnFilters.length === 0}
           onClick={() => {
             table.resetColumnFilters();
           }}
@@ -684,8 +688,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       </Box>
     ),
     renderDetailPanel: ({ row }) =>
-      type === 'usageStatus' ? undefined : row.original.catalogueItem !==
-        undefined ? (
+      row.original.catalogueItem !== undefined ? (
         <ItemsDetailsPanel
           itemData={row.original.item}
           catalogueItemIdData={row.original.catalogueItem}

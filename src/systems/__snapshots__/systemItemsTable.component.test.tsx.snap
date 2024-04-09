@@ -234,7 +234,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
       </div>
     </div>
     <div
-      class="MuiTableContainer-root css-1xsriem-MuiTableContainer-root"
+      class="MuiTableContainer-root css-fa3r-MuiTableContainer-root"
     >
       <table
         class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
@@ -2358,7 +2358,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       aria-invalid="false"
                       autocomplete="new-password"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":rae:"
+                      id=":rbh:"
                       placeholder="Search"
                       type="text"
                       value=""
@@ -2441,7 +2441,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
       </div>
     </div>
     <div
-      class="MuiTableContainer-root css-1xsriem-MuiTableContainer-root"
+      class="MuiTableContainer-root css-yx8aw7-MuiTableContainer-root"
     >
       <table
         class="MuiTable-root MuiTable-stickyHeader css-1y6k1sx-MuiTable-root"
@@ -2550,7 +2550,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                           aria-label="Filter by Catalogue Item"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":raj:"
+                          id=":rbm:"
                           placeholder="Filter by Catalogue Item"
                           title="Filter by Catalogue Item"
                           type="text"
@@ -2741,7 +2741,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                           aria-label="Filter by Serial Number"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":rao:"
+                          id=":rbr:"
                           placeholder="Filter by Serial Number"
                           title="Filter by Serial Number"
                           type="text"
@@ -2895,13 +2895,13 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                         class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                       >
                         <div
-                          aria-controls=":rau:"
+                          aria-controls=":rc1:"
                           aria-expanded="false"
                           aria-haspopup="listbox"
                           aria-label="Filter by Usage Status"
-                          aria-labelledby=":rat:"
+                          aria-labelledby=":rc0:"
                           class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                          id=":rat:"
+                          id=":rc0:"
                           role="combobox"
                           tabindex="0"
                         >
@@ -3045,7 +3045,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                   class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":rb2:"
+                    aria-controls=":rc5:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-labelledby="usage-statuses-Cameras 1"
@@ -3167,7 +3167,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                   class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":rb4:"
+                    aria-controls=":rc7:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-labelledby="usage-statuses-Cameras 6"
@@ -3303,7 +3303,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                 class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
-                  aria-controls=":rb0:"
+                  aria-controls=":rc3:"
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-label="Rows per page"

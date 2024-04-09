@@ -72,6 +72,7 @@ describe('ItemDialog', () => {
 
   const modifyDetailsValues = async (values: {
     serialNumber?: string;
+    serialNumberAdvancedOptions?: { quantity?: string; startingValue?: string };
     assetNumber?: string;
     purchaseOrderNumber?: string;
     warrantyEndDate?: string;
@@ -84,6 +85,20 @@ describe('ItemDialog', () => {
       fireEvent.change(screen.getByLabelText('Serial number'), {
         target: { value: values.serialNumber },
       });
+
+    if (Object.values(values.serialNumberAdvancedOptions ?? {}).length !== 0) {
+      await user.click(screen.getByText('Show advanced options'));
+      expect(screen.getByText('Close advanced options')).toBeInTheDocument();
+
+      values.serialNumberAdvancedOptions?.quantity !== undefined &&
+        fireEvent.change(screen.getByLabelText('Quantity'), {
+          target: { value: values.serialNumberAdvancedOptions.quantity },
+        });
+      values.serialNumberAdvancedOptions?.startingValue !== undefined &&
+        fireEvent.change(screen.getByLabelText('Starting value'), {
+          target: { value: values.serialNumberAdvancedOptions.startingValue },
+        });
+    }
 
     values.assetNumber !== undefined &&
       fireEvent.change(screen.getByLabelText('Asset number'), {
@@ -243,6 +258,66 @@ describe('ItemDialog', () => {
         warranty_end_date: null,
       });
     });
+
+    it('adds multiple items with just the default values', async () => {
+      createView();
+
+      await modifyDetailsValues({
+        serialNumber: 'test12 %s',
+        serialNumberAdvancedOptions: { quantity: '2', startingValue: '10' },
+      });
+
+      //navigate through stepper
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifySystemValue({
+        system: 'Giant laser',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      for (let i = 0; i < 2; i++) {
+        expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
+          asset_number: null,
+          catalogue_item_id: '1',
+          delivered_date: null,
+          is_defective: false,
+          notes: null,
+          properties: [
+            {
+              name: 'Resolution',
+              value: 12,
+            },
+            {
+              name: 'Frame Rate',
+              value: 30,
+            },
+            {
+              name: 'Sensor Type',
+              value: 'CMOS',
+            },
+            {
+              name: 'Sensor brand',
+              value: null,
+            },
+            {
+              name: 'Broken',
+              value: true,
+            },
+            {
+              name: 'Older than five years',
+              value: false,
+            },
+          ],
+          purchase_order_number: null,
+          serial_number: `test12 ${i + 10}`,
+          system_id: '65328f34a40ff5301575a4e3',
+          usage_status: 0,
+          warranty_end_date: null,
+        });
+      }
+    }, 10000);
 
     it('navigates through the stepper using the labels', async () => {
       createView();
@@ -410,7 +485,7 @@ describe('ItemDialog', () => {
       });
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
-      expect(screen.getByText('Invalid date')).toBeInTheDocument();
+      expect(screen.getByText('Invalid item details')).toBeInTheDocument();
 
       await user.click(screen.getByText('Add item properties'));
 
@@ -449,6 +524,87 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
       expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
+    }, 10000);
+
+    it('displays error messages for serial number advanced options', async () => {
+      createView();
+      await modifyDetailsValues({
+        serialNumberAdvancedOptions: { startingValue: '10' },
+      });
+
+      expect(
+        screen.getByText('Please enter a quantity value')
+      ).toBeInTheDocument();
+
+      await user.click(screen.getByText('Close advanced options'));
+      await modifyDetailsValues({
+        serialNumberAdvancedOptions: { quantity: '10a', startingValue: '10a' },
+      });
+
+      expect(screen.getAllByText('Please enter a valid number').length).toEqual(
+        2
+      );
+
+      await user.click(screen.getByText('Close advanced options'));
+      await modifyDetailsValues({
+        serialNumberAdvancedOptions: {
+          quantity: '10.5',
+          startingValue: '10.5',
+        },
+      });
+
+      expect(
+        screen.getByText('Quantity must be an integer')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Starting value must be an integer')
+      ).toBeInTheDocument();
+
+      await user.click(screen.getByText('Close advanced options'));
+      await modifyDetailsValues({
+        serialNumberAdvancedOptions: {
+          quantity: '-1',
+          startingValue: '-1',
+        },
+      });
+
+      expect(
+        screen.getByText('Quantity must be greater than 1')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Starting value must be greater than or equal to 0')
+      ).toBeInTheDocument();
+
+      await user.click(screen.getByText('Close advanced options'));
+      await modifyDetailsValues({
+        serialNumberAdvancedOptions: {
+          quantity: '100',
+          startingValue: '2',
+        },
+      });
+
+      expect(
+        screen.getByText('Quantity must be less than 100')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'Please use %s to specify the location you want to append the number to serial number'
+        )
+      ).toBeInTheDocument();
+
+      await user.click(screen.getByText('Close advanced options'));
+      await modifyDetailsValues({
+        serialNumber: 'test %s',
+        serialNumberAdvancedOptions: {
+          quantity: '4',
+          startingValue: '2',
+        },
+      });
+
+      expect(screen.getByText('e.g. test 2')).toBeInTheDocument();
+
+      await user.clear(screen.getByLabelText('Quantity'));
+      await user.clear(screen.getByLabelText('Starting value'));
     }, 10000);
 
     it('adds an item (case empty string with spaces returns null and change property boolean values)', async () => {
