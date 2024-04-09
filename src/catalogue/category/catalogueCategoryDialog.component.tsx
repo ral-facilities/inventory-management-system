@@ -73,7 +73,7 @@ const CatalogueCategoryDialog = React.memo(
       if (selectedCatalogueCategory) {
         const updatedCatalogueItemProperties =
           selectedCatalogueCategory.catalogue_item_properties?.map((item) => {
-            // Assuming allowed_values should be an array of objects with id and value keys
+            // Transform allowed_values to an array of objects with id and value keys
             const allowedValuesWithId = item.allowed_values?.values.map(
               (value) => ({
                 av_placement_id: generateUniqueId('av_placement_id_'), // Allowed values (av)
