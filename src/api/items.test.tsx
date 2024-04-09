@@ -256,7 +256,7 @@ describe('catalogue items api functions', () => {
       expect(result.current.data).toEqual(
         moveItemsToSystem.selectedItems.map((item) => ({
           message: `Successfully moved to Giant laser`,
-          name: item.id,
+          name: item.serial_number,
           state: 'success',
         }))
       );
@@ -275,6 +275,7 @@ describe('catalogue items api functions', () => {
 
       // Fail just the 1st system
       moveItemsToSystem.selectedItems[0].id = 'Error 409';
+      moveItemsToSystem.selectedItems[0].serial_number = null;
 
       const { result } = renderHook(() => useMoveItemsToSystem(), {
         wrapper: hooksWrapperWithProviders(),
@@ -301,12 +302,12 @@ describe('catalogue items api functions', () => {
             index === 0
               ? {
                   message: 'The specified system ID does not exist',
-                  name: item.id,
+                  name: item.serial_number ?? 'No serial number',
                   state: 'error',
                 }
               : {
                   message: 'Successfully moved to New system name',
-                  name: item.id,
+                  name: item.serial_number,
                   state: 'success',
                 }
           )
