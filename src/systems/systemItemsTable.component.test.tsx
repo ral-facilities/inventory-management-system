@@ -8,7 +8,6 @@ import {
   SystemItemsTable,
   SystemItemsTableProps,
 } from './systemItemsTable.component';
-import { JsxEmit } from 'typescript';
 
 describe('SystemItemsTable', () => {
   vi.setConfig({ testTimeout: 10000 });
@@ -488,7 +487,7 @@ describe('SystemItemsTable', () => {
             })
           ).toBeInTheDocument();
         },
-        { timeout: 10000 }
+        { timeout: 4000 }
       );
 
       // Ensure no loading bars visible
