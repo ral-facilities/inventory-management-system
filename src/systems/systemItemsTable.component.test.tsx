@@ -458,41 +458,6 @@ describe('SystemItemsTable', () => {
       ).toBeInTheDocument();
     });
 
-    it('sets the usages status one by one', async () => {
-      createView();
-
-      // Name (obtained from catalogue category item)
-      await waitFor(
-        () => {
-          expect(
-            screen.getByRole('cell', {
-              name: `Cameras 1 (2)`,
-            })
-          ).toBeInTheDocument();
-        },
-        { timeout: 4000 }
-      );
-
-      // Ensure no loading bars visible
-      await waitFor(() =>
-        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
-      );
-
-      await modifyUsageStatus({
-        cameras1Item1: 'Used',
-        cameras1Item2: 'Used',
-        cameras6Item1: 'Used',
-        cameras6Item2: 'Used',
-      });
-
-      expect(onChangeUsageStatuses).toHaveBeenCalledWith([
-        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
-        { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 2 },
-        { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: 2 },
-        { item_id: 'QQen23yW', catalogue_item_id: '25', usageStatus: 2 },
-      ]);
-    });
-
     it('displays errors messages correctly', async () => {
       props.usageStatusesErrors = [
         { item_id: 'KvT2Ox7n', catalogue_item_id: '1', error: true },
@@ -542,6 +507,40 @@ describe('SystemItemsTable', () => {
       expect(
         screen.getAllByText('Please select a usage status').length
       ).toEqual(2);
+    });
+    it('sets the usages status one by one', async () => {
+      createView();
+
+      // Name (obtained from catalogue category item)
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('cell', {
+              name: `Cameras 1 (2)`,
+            })
+          ).toBeInTheDocument();
+        },
+        { timeout: 4000 }
+      );
+
+      // Ensure no loading bars visible
+      await waitFor(() =>
+        expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+      );
+
+      await modifyUsageStatus({
+        cameras1Item1: 'Used',
+        cameras1Item2: 'Used',
+        cameras6Item1: 'Used',
+        cameras6Item2: 'Used',
+      });
+
+      expect(onChangeUsageStatuses).toHaveBeenCalledWith([
+        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
+        { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 2 },
+        { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: 2 },
+        { item_id: 'QQen23yW', catalogue_item_id: '25', usageStatus: 2 },
+      ]);
     });
   });
 });
