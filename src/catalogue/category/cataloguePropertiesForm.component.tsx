@@ -80,7 +80,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
 
     if (index === -1) {
       // Item with given cip_placement_id not found
-      return; // or handle the error accordingly
+      return;
     }
 
     updatedFormFields.splice(index, 1);
