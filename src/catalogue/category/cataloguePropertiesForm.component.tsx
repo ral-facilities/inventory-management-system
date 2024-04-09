@@ -117,7 +117,6 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       (field) => field.cip_placement_id === cip_placement_id
     );
     if (fieldIndex === -1) {
-      // Handle the case where the field with the given cip_placement_id is not found
       return;
     }
 
