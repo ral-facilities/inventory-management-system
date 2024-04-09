@@ -257,6 +257,12 @@ export interface AddItem extends ItemDetails {
   properties: CatalogueItemProperty[];
 }
 
+export interface AddItems {
+  quantity: number;
+  startingValue: number;
+  item: AddItem;
+}
+
 export interface Item extends ItemDetails {
   properties: CatalogueItemPropertyResponse[];
   id: string;
@@ -286,6 +292,10 @@ export interface CatalogueItemPropertiesErrorsType {
   } | null;
 }
 
+export interface AdvancedSerialNumberOptionsType {
+  quantity: string | null;
+  startingValue: string | null;
+}
 export interface AllowedValuesListErrorsType {
   index: number | null;
   errors: { index: number; errorMessage: string }[] | null;

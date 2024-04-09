@@ -43,6 +43,176 @@ describe('Systems', () => {
     cy.findByText('Description').should('be.visible');
   });
 
+  it('should be able to use browser back to undo a pagination state change', () => {
+    cy.visit('/systems/65328f34a40ff5301575a4e3');
+
+    cy.findByText('Smaller laser').should('be.visible');
+
+    // Rows per page (subsystems)
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(0)
+      .within(() => {
+        cy.findByText('15').should('be.visible');
+      });
+    cy.findAllByRole('combobox', { name: 'Rows per page' }).eq(0).click();
+    cy.findByRole('listbox').within(() => {
+      cy.findByText(30).click();
+    });
+    cy.location('search').should(
+      'eq',
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+    );
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(0)
+      .within(() => {
+        cy.findByText('15').should('not.exist');
+        cy.findByText('30').should('be.visible');
+      });
+
+    // Rows per page (items)
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .within(() => {
+        cy.findByText('15').should('be.visible');
+      });
+    cy.findAllByRole('combobox', { name: 'Rows per page' }).eq(1).click();
+    cy.findByRole('listbox').within(() => {
+      cy.findByText(30).click();
+    });
+    cy.location('search').should(
+      'eq',
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+    );
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .within(() => {
+        cy.findByText('15').should('not.exist');
+        cy.findByText('30').should('be.visible');
+      });
+
+    //Ensure same state is recovered
+    cy.go('back');
+
+    cy.findByText('Smaller laser').should('be.visible');
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(0)
+      .within(() => {
+        cy.findByText('15').should('not.exist');
+        cy.findByText('30').should('be.visible');
+      });
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .within(() => {
+        cy.findByText('30').should('not.exist');
+        cy.findByText('15').should('be.visible');
+      });
+    cy.location('search').should(
+      'eq',
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+    );
+
+    cy.go('back');
+    cy.findByText('Smaller laser').should('be.visible');
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(0)
+      .within(() => {
+        cy.findByText('30').should('not.exist');
+        cy.findByText('15').should('be.visible');
+      });
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .within(() => {
+        cy.findByText('30').should('not.exist');
+        cy.findByText('15').should('be.visible');
+      });
+    cy.location('search').should('eq', '');
+  });
+
+  it('should be able to navigate through subsystems while preserving the table states when going back', () => {
+    cy.visit('/systems/65328f34a40ff5301575a4e3');
+
+    cy.findByText('Smaller laser').should('be.visible');
+
+    // Rows per page (subsystems)
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(0)
+      .within(() => {
+        cy.findByText('15').should('be.visible');
+      });
+    cy.findAllByRole('combobox', { name: 'Rows per page' }).eq(0).click();
+    cy.findByRole('listbox').within(() => {
+      cy.findByText(30).click();
+    });
+    cy.location('search').should(
+      'eq',
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+    );
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(0)
+      .within(() => {
+        cy.findByText('15').should('not.exist');
+        cy.findByText('30').should('be.visible');
+      });
+
+    // Rows per page (items)
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .within(() => {
+        cy.findByText('15').should('be.visible');
+      });
+    cy.findAllByRole('combobox', { name: 'Rows per page' }).eq(1).click();
+    cy.findByRole('listbox').within(() => {
+      cy.findByText(30).click();
+    });
+    cy.location('search').should(
+      'eq',
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+    );
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .within(() => {
+        cy.findByText('15').should('not.exist');
+        cy.findByText('30').should('be.visible');
+      });
+
+    // Navigate deeper
+    cy.findByText('Smaller laser').click();
+    cy.url().should('include', '/systems/65328f34a40ff5301575a4e4');
+    cy.location('search').should('eq', '');
+    cy.findByText('Pulse Laser').should('be.visible');
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(0)
+      .within(() => cy.findByText('15').should('be.visible'));
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .within(() => cy.findByText('15').should('be.visible'));
+    cy.location('search').should('eq', '');
+
+    //Ensure same state is recovered
+    cy.go('back');
+
+    cy.findByText('Smaller laser').should('be.visible');
+    cy.findByText('Pulse Laser').should('not.exist');
+
+    // Rows per page
+    cy.location('search').should(
+      'eq',
+      '?subState=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g&state=N4IgDiBcpghg5gUwMoEsBeioGYAMAacBRASQDsATRADylwF96g'
+    );
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(0)
+      .within(() => {
+        cy.findByText('15').should('not.exist');
+        cy.findByText('30').should('be.visible');
+      });
+    cy.findAllByRole('combobox', { name: 'Rows per page' })
+      .eq(1)
+      .within(() => {
+        cy.findByText('15').should('not.exist');
+        cy.findByText('30').should('be.visible');
+      });
+  });
+
   it('should be able to navigate to an items catalogue item landing page', () => {
     cy.findByRole('cell', { name: 'Pulse Laser' }).click();
     cy.findAllByRole('link', { name: 'Cameras 8' }).first().click();
