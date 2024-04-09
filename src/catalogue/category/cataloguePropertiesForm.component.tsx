@@ -233,8 +233,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     );
 
     if (fieldIndex === -1) {
-      // If the field with the provided cip_placement_id doesn't exist, return or handle the error
-      return; // Or handle the error accordingly
+      return;
     }
 
     const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
