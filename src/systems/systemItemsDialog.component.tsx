@@ -135,6 +135,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const handleClose = React.useCallback(() => {
     setAggregatedCellUsageStatus([]);
     setUsageStatuses([]);
+    setItemUsageStatusesErrorState({});
     setPlaceIntoSystemError(false);
     setActiveStep(0);
     onClose();
