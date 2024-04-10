@@ -27,7 +27,7 @@ import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import SystemItemsDialog, {
-  UsageStatusesErrorType,
+  ItemUsageStatusesErrorStateType,
   UsageStatusesType,
 } from './systemItemsDialog.component';
 import { formatDateTimeStrings } from '../utils';
@@ -74,13 +74,13 @@ export interface SystemItemsTableProps {
   moveToSelectedItems?: Item[];
   usageStatuses?: UsageStatusesType[];
   onChangeUsageStatuses?: (usageStatuses: UsageStatusesType[]) => void;
-  usageStatusesErrors?: UsageStatusesErrorType[];
-  onChangeUsageStatusesErrors?: (
-    usageStatusesErrors: UsageStatusesErrorType[]
-  ) => void;
   aggregatedCellUsageStatus?: Omit<UsageStatusesType, 'item_id'>[];
   onChangeAggregatedCellUsageStatus?: (
     aggregatedCellUsageStatus: Omit<UsageStatusesType, 'item_id'>[]
+  ) => void;
+  itemUsageStatusesErrorState?: ItemUsageStatusesErrorStateType;
+  onChangeItemUsageStatusesErrorState?: (
+    itemUsageStatusesErrorState: ItemUsageStatusesErrorStateType
   ) => void;
 }
 
@@ -91,10 +91,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     moveToSelectedItems,
     usageStatuses,
     onChangeUsageStatuses,
-    usageStatusesErrors,
-    onChangeUsageStatusesErrors,
     aggregatedCellUsageStatus,
     onChangeAggregatedCellUsageStatus,
+    itemUsageStatusesErrorState,
+    onChangeItemUsageStatusesErrorState,
   } = props;
 
   // States
@@ -228,11 +228,11 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         size: 250,
         GroupedCell: ({ row, table }) => {
           const { grouping } = table.getState();
-          const error = usageStatusesErrors
-            ? usageStatusesErrors.filter(
-                (status) =>
-                  status.catalogue_item_id === row.original.catalogueItem?.id &&
-                  status.error === true
+          const nameGroupedCellError = itemUsageStatusesErrorState
+            ? Object.values(itemUsageStatusesErrorState).filter(
+                (errorState) =>
+                  errorState.catalogue_item_id ===
+                  row.original.item.catalogue_item_id
               ).length !== 0
             : false;
 
@@ -241,10 +241,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                color: error ? 'error.main' : 'inherit',
+                color: nameGroupedCellError ? 'error.main' : 'inherit',
               }}
             >
-              {error && <ErrorIcon sx={{ color: 'error.main' }} />}
+              {nameGroupedCellError && (
+                <ErrorIcon sx={{ color: 'error.main' }} />
+              )}
               {type === 'normal' ? (
                 <MuiLink
                   underline="hover"
@@ -415,29 +417,29 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
 
                           onChangeUsageStatuses(updatedUsageStatuses);
                         }
-                        if (
-                          onChangeUsageStatusesErrors &&
-                          usageStatusesErrors
-                        ) {
-                          const updatedUsageStatusesErrors = [
-                            ...usageStatusesErrors,
-                          ];
 
-                          for (
-                            let i = 0;
-                            i < updatedUsageStatusesErrors.length;
-                            i++
-                          ) {
-                            const status = updatedUsageStatusesErrors[i];
-                            if (
-                              status.catalogue_item_id ===
-                              row.original.catalogueItem?.id
-                            ) {
-                              updatedUsageStatusesErrors[i].error = false;
+                        if (
+                          itemUsageStatusesErrorState &&
+                          onChangeItemUsageStatusesErrorState
+                        ) {
+                          const updatedItemUsageStatusesErrorState = {
+                            ...itemUsageStatusesErrorState,
+                          };
+                          Object.entries(itemUsageStatusesErrorState).forEach(
+                            ([item_id, status]) => {
+                              if (
+                                status.catalogue_item_id ===
+                                row.original.item.catalogue_item_id
+                              ) {
+                                delete updatedItemUsageStatusesErrorState[
+                                  item_id
+                                ];
+                              }
                             }
-                          }
-                          onChangeUsageStatusesErrors(
-                            updatedUsageStatusesErrors
+                          );
+
+                          onChangeItemUsageStatusesErrorState(
+                            updatedItemUsageStatusesErrorState
                           );
                         }
                       }}
@@ -455,19 +457,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         Cell:
           type === 'usageStatus'
             ? ({ row }) => {
-                const error = usageStatusesErrors?.find(
-                  (status) => status.item_id === row.original.item.id
-                )?.error;
+                const usageStatusCellError = !!(
+                  itemUsageStatusesErrorState &&
+                  itemUsageStatusesErrorState[row.original.item.id]
+                );
                 return (
                   <FormControl size="small" fullWidth>
                     <InputLabel
                       required={true}
                       id={`usage-status-${row.original.item.id}`}
-                      error={
-                        usageStatusesErrors?.find(
-                          (status) => status.item_id === row.original.item.id
-                        )?.error
-                      }
+                      error={usageStatusCellError}
                     >
                       Usage status
                     </InputLabel>
@@ -497,19 +496,20 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
 
                           onChangeUsageStatuses(updatedUsageStatuses);
                         }
+
                         if (
-                          onChangeUsageStatusesErrors &&
-                          usageStatusesErrors
+                          itemUsageStatusesErrorState &&
+                          onChangeItemUsageStatusesErrorState
                         ) {
-                          const itemIndex = usageStatusesErrors.findIndex(
-                            (status: UsageStatusesErrorType) =>
-                              status.item_id === row.original.item.id
+                          const updatedItemUsageStatusesErrorState = {
+                            ...itemUsageStatusesErrorState,
+                          };
+                          delete updatedItemUsageStatusesErrorState[
+                            row.original.item.id
+                          ];
+                          onChangeItemUsageStatusesErrorState(
+                            updatedItemUsageStatusesErrorState
                           );
-                          const updatedUsageStatuses = [...usageStatusesErrors];
-
-                          updatedUsageStatuses[itemIndex].error = false;
-
-                          onChangeUsageStatusesErrors(updatedUsageStatuses);
                         }
 
                         if (
@@ -532,7 +532,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           );
                         }
                       }}
-                      error={error}
+                      error={usageStatusCellError}
                       label="Usage status"
                     >
                       <MenuItem value={'new'}>New</MenuItem>
@@ -540,9 +540,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                       <MenuItem value={'used'}>Used</MenuItem>
                       <MenuItem value={'scrapped'}>Scrapped</MenuItem>
                     </Select>
-                    {error && (
+                    {usageStatusCellError && (
                       <FormHelperText error>
-                        Please select a usage status
+                        {
+                          itemUsageStatusesErrorState[row.original.item.id]
+                            .message
+                        }
                       </FormHelperText>
                     )}
                   </FormControl>
@@ -553,12 +556,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     ];
   }, [
     aggregatedCellUsageStatus,
+    itemUsageStatusesErrorState,
     onChangeAggregatedCellUsageStatus,
+    onChangeItemUsageStatusesErrorState,
     onChangeUsageStatuses,
-    onChangeUsageStatusesErrors,
     type,
     usageStatuses,
-    usageStatusesErrors,
   ]);
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({

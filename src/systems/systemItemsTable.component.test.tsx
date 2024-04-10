@@ -233,7 +233,7 @@ describe('SystemItemsTable', () => {
 
   describe('SystemItemsTable (usageStatus)', () => {
     const onChangeUsageStatuses = vi.fn();
-    const onChangeUsageStatusesErrors = vi.fn();
+    const onChangeItemUsageStatusesErrorState = vi.fn();
     const onChangeAggregatedCellUsageStatus = vi.fn();
     const moveToSelectedItems: Item[] = [
       ItemJSON[0],
@@ -248,7 +248,7 @@ describe('SystemItemsTable', () => {
         type: 'usageStatus',
         onChangeAggregatedCellUsageStatus,
         onChangeUsageStatuses,
-        onChangeUsageStatusesErrors,
+        onChangeItemUsageStatusesErrorState,
         aggregatedCellUsageStatus: [
           { catalogue_item_id: '1', usageStatus: '' },
           { catalogue_item_id: '25', usageStatus: '' },
@@ -259,14 +259,12 @@ describe('SystemItemsTable', () => {
           { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: '' },
           { item_id: 'QQen23yW', catalogue_item_id: '25', usageStatus: '' },
         ],
-        usageStatusesErrors: [
-          { item_id: 'KvT2Ox7n', catalogue_item_id: '1', error: false },
-          { item_id: 'G463gOIA', catalogue_item_id: '1', error: false },
-          { item_id: '7Lrj9KVu', catalogue_item_id: '25', error: false },
-          { item_id: 'QQen23yW', catalogue_item_id: '25', error: false },
-        ],
+        itemUsageStatusesErrorState: {},
         moveToSelectedItems: moveToSelectedItems,
       };
+    });
+    afterEach(() => {
+      vi.clearAllMocks();
     });
 
     const selectUsageStatus = async (values: {
@@ -459,12 +457,24 @@ describe('SystemItemsTable', () => {
     });
 
     it('displays errors messages correctly', async () => {
-      props.usageStatusesErrors = [
-        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', error: true },
-        { item_id: 'G463gOIA', catalogue_item_id: '1', error: true },
-        { item_id: '7Lrj9KVu', catalogue_item_id: '25', error: true },
-        { item_id: 'QQen23yW', catalogue_item_id: '25', error: true },
-      ];
+      props.itemUsageStatusesErrorState = {
+        ['KvT2Ox7n']: {
+          catalogue_item_id: '1',
+          message: 'Please select a usage status',
+        },
+        ['G463gOIA']: {
+          catalogue_item_id: '1',
+          message: 'Please select a usage status',
+        },
+        ['7Lrj9KVu']: {
+          catalogue_item_id: '25',
+          message: 'Please select a usage status',
+        },
+        ['QQen23yW']: {
+          catalogue_item_id: '25',
+          message: 'Please select a usage status',
+        },
+      };
 
       createView();
 
@@ -490,24 +500,23 @@ describe('SystemItemsTable', () => {
       expect(errorIcon.length).toEqual(2);
 
       await user.click(screen.getAllByRole('button', { name: 'Expand' })[0]);
+      const helperTexts = screen.getAllByText('Please select a usage status');
+      expect(helperTexts.length).toEqual(2);
 
-      expect(
-        screen.getAllByText('Please select a usage status').length
-      ).toEqual(2);
-      await user.click(screen.getAllByLabelText('Collapse')[1]);
+      await modifyUsageStatus({ cameras1: 'Used' });
 
-      await waitFor(() => {
-        expect(
-          screen.queryByText('Please select a usage status')
-        ).not.toBeInTheDocument();
+      expect(onChangeItemUsageStatusesErrorState).toHaveBeenCalledWith({
+        ['7Lrj9KVu']: {
+          catalogue_item_id: '25',
+          message: 'Please select a usage status',
+        },
+        ['QQen23yW']: {
+          catalogue_item_id: '25',
+          message: 'Please select a usage status',
+        },
       });
-
-      await user.click(screen.getAllByRole('button', { name: 'Expand' })[1]);
-
-      expect(
-        screen.getAllByText('Please select a usage status').length
-      ).toEqual(2);
     });
+
     it('sets the usages status one by one', async () => {
       createView();
 
