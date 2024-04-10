@@ -146,8 +146,21 @@ export const moveItemToSystem = (values: {
     cy.findByText('Storage 2').click();
   });
 
-  cy.findByRole('button', { name: 'Move here' }).should('not.be.disabled');
-  cy.findByRole('button', { name: 'Move here' }).click();
+  cy.findByRole('button', { name: 'Next' }).should('not.be.disabled');
+  cy.findByRole('button', { name: 'Next' }).click();
+
+  cy.findByRole('cell', {
+    name: `Plano-Convex Lens (1)`,
+  }).should('exist');
+
+  cy.findByRole('progressbar').should('not.exist');
+
+  cy.findAllByRole('combobox').eq(1).click();
+  cy.findByText('Scrapped').click();
+
+  cy.findByRole('button', { name: 'Finish' }).should('not.be.disabled');
+  cy.findByRole('button', { name: 'Finish' }).click();
+
   cy.findByRole('dialog').should('not.exist', { timeout: 10000 });
 
   cy.findByRole('button', { name: 'navigate to systems home' }).click();

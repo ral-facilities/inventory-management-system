@@ -765,54 +765,123 @@ describe('Systems', () => {
       );
     });
   });
+  describe('Move', () => {
+    it('moves items', () => {
+      cy.findByRole('cell', { name: 'Pulse Laser' }).click();
+      cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
 
-  it('moves items', () => {
-    cy.findByRole('cell', { name: 'Pulse Laser' }).click();
-    cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
+      // Second table, first checkbox
+      cy.findAllByRole('table')
+        .eq(1)
+        .within(() => {
+          cy.findAllByRole('checkbox', {
+            name: 'Toggle select row',
+          })
+            .eq(1)
+            .click();
+          cy.findAllByRole('checkbox', {
+            name: 'Toggle select row',
+          })
+            .eq(2)
+            .click();
+        });
 
-    // Second table, first checkbox
-    cy.findAllByRole('table')
-      .eq(1)
-      .within(() => {
-        cy.findAllByRole('checkbox', {
-          name: 'Toggle select row',
-        })
-          .eq(1)
-          .click();
-        cy.findAllByRole('checkbox', {
-          name: 'Toggle select row',
-        })
-          .eq(2)
-          .click();
+      cy.findByRole('button', { name: 'Move to' }).click();
+
+      cy.startSnoopingBrowserMockedRequest();
+
+      cy.findByRole('dialog')
+        .should('be.visible')
+        .within(() => {
+          cy.findByRole('button', { name: 'navigate to systems home' }).click();
+          cy.findByLabelText('Giant laser row').click();
+          cy.findByRole('button', { name: 'Next' }).click();
+        });
+
+      cy.findAllByRole('combobox').eq(1).click();
+      cy.findByText('Scrapped').click();
+
+      cy.findByRole('button', { name: 'Finish' }).click();
+
+      cy.findByRole('dialog').should('not.exist');
+
+      cy.findBrowserMockedRequests({
+        method: 'PATCH',
+        url: '/v1/items/:id',
+      }).should(async (patchRequests) => {
+        expect(patchRequests.length).eq(2);
+        expect(patchRequests[0].url.toString()).to.contain('/z1hJvV8Z');
+        expect(JSON.stringify(await patchRequests[0].json())).equal(
+          JSON.stringify({
+            system_id: '65328f34a40ff5301575a4e3',
+            usage_status: 3,
+          })
+        );
+        expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
+        expect(JSON.stringify(await patchRequests[1].json())).equal(
+          JSON.stringify({
+            system_id: '65328f34a40ff5301575a4e3',
+            usage_status: 3,
+          })
+        );
       });
+    });
 
-    cy.findByRole('button', { name: 'Move to' }).click();
+    it('display errors message and clears error message when resolved', () => {
+      cy.findByRole('cell', { name: 'Pulse Laser' }).click();
+      cy.findAllByRole('button', { name: 'Expand' }).eq(1).click();
 
-    cy.startSnoopingBrowserMockedRequest();
+      // Second table, first checkbox
+      cy.findAllByRole('table')
+        .eq(1)
+        .within(() => {
+          cy.findAllByRole('checkbox', {
+            name: 'Toggle select row',
+          })
+            .eq(1)
+            .click();
+          cy.findAllByRole('checkbox', {
+            name: 'Toggle select row',
+          })
+            .eq(2)
+            .click();
+        });
 
-    cy.findByRole('dialog')
-      .should('be.visible')
-      .within(() => {
-        cy.findByRole('button', { name: 'navigate to systems home' }).click();
-        cy.findByLabelText('Giant laser row').click();
-        cy.findByRole('button', { name: 'Move here' }).click();
-      });
+      cy.findByRole('button', { name: 'Move to' }).click();
 
-    cy.findByRole('dialog').should('not.exist');
+      cy.findByText('Set usage statuses').click();
+      cy.findByRole('button', { name: 'Finish' }).click();
 
-    cy.findBrowserMockedRequests({
-      method: 'PATCH',
-      url: '/v1/items/:id',
-    }).should(async (patchRequests) => {
-      expect(patchRequests.length).eq(2);
-      expect(patchRequests[0].url.toString()).to.contain('/z1hJvV8Z');
-      expect(JSON.stringify(await patchRequests[0].json())).equal(
-        JSON.stringify({ system_id: '65328f34a40ff5301575a4e3' })
+      cy.findByText(
+        'Move items from current location or root to another system'
+      ).should('exist');
+      cy.findByText('Please select a usage status for all items').should(
+        'exist'
       );
-      expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
-      expect(JSON.stringify(await patchRequests[1].json())).equal(
-        JSON.stringify({ system_id: '65328f34a40ff5301575a4e3' })
+      cy.findAllByLabelText('Expand all').eq(2).click();
+      cy.findAllByText('Please select a usage status').should('have.length', 2);
+      cy.findAllByRole('combobox').eq(1).click();
+      cy.findByText('Scrapped').click();
+      cy.findAllByText('Please select a usage status').should('have.length', 0);
+      cy.findByText('Please select a usage status for all items').should(
+        'not.exist'
       );
+      cy.findByText('Place into a system').click();
+      cy.findByRole('button', { name: 'navigate to systems home' }).click();
+      cy.findByText(
+        'Move items from current location or root to another system'
+      ).should('not.exist');
+      cy.findByRole('button', { name: 'Next' }).click();
+      cy.findByText(
+        'Move items from current location or root to another system'
+      ).should('exist');
+
+      cy.findByText('Pico Laser').click();
+      cy.findByRole('button', { name: 'Next' }).click();
+      cy.findByText(
+        'Move items from current location or root to another system'
+      ).should('not.exist');
+      cy.findByRole('button', { name: 'Finish' }).should('not.be.disabled');
     });
   });
 });

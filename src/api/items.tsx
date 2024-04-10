@@ -220,13 +220,16 @@ export const useMoveItemsToSystem = (): UseMutationResult<
           return editItem({
             id: item.id,
             system_id: moveItemsToSystem.targetSystem?.id || '',
+            usage_status: moveItemsToSystem.usageStatuses.find(
+              (status) => status.item_id === item.id
+            )?.usage_status,
           })
             .then((result: Item) => {
               const targetSystemName =
                 moveItemsToSystem.targetSystem?.name || 'Root';
               transferStates.push({
                 // Not technically a name, but will be displayed as ID: Message
-                name: item.id,
+                name: item.serial_number ?? 'No serial number',
                 message: `Successfully moved to ${targetSystemName}`,
                 state: 'success',
               });
@@ -238,7 +241,7 @@ export const useMoveItemsToSystem = (): UseMutationResult<
               const response = error.response?.data as ErrorParsing;
 
               transferStates.push({
-                name: item.id,
+                name: item.serial_number ?? 'No serial number',
                 message: response.detail,
                 state: 'error',
               });

@@ -274,7 +274,12 @@ export interface EditItem extends Partial<AddItem> {
   id: string;
 }
 
+export interface MoveItemsToSystemUsageStatus {
+  item_id: string;
+  usage_status: UsageStatusType;
+}
 export interface MoveItemsToSystem {
+  usageStatuses: MoveItemsToSystemUsageStatus[];
   selectedItems: Item[];
   targetSystem: System;
 }
