@@ -138,9 +138,9 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
     setItemUsageStatusesErrorState({});
     setPlaceIntoSystemError(false);
     setActiveStep(0);
-    setParentSystemId(null);
+    setParentSystemId(props.parentSystemId);
     onClose();
-  }, [onClose]);
+  }, [onClose, props.parentSystemId]);
 
   const hasSystemErrors =
     // Disable when not moving anywhere different
@@ -326,7 +326,9 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
               // or when attempting to move to root i.e. no system
               placeIntoSystemError ||
               Object.keys(itemUsageStatusesErrorState).length !== 0 ||
-              !(!targetSystemLoading && targetSystem !== undefined)
+              !(parentSystemId === null
+                ? true
+                : !targetSystemLoading && targetSystem !== undefined)
             }
             onClick={handleMoveTo}
             sx={{ mr: 3 }}
