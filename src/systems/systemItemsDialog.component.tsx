@@ -15,11 +15,7 @@ import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { useMoveItemsToSystem } from '../api/items';
 import { useSystem, useSystems, useSystemsBreadcrumbs } from '../api/systems';
-import {
-  Item,
-  MoveItemsToSystemUsageStatus,
-  UsageStatusType,
-} from '../app.types';
+import { Item, MoveItemsToSystemUsageStatus } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemsTableView } from './systemsTableView.component';
@@ -55,7 +51,7 @@ const convertToSystemUsageStatuses = (
     .filter((item) => item.usageStatus !== '') // Exclude items with empty usageStatus
     .map((item) => ({
       item_id: item.item_id,
-      usage_status: item.usageStatus as UsageStatusType,
+      usage_status: item.usageStatus,
     }));
 };
 
