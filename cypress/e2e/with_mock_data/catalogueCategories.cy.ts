@@ -760,10 +760,18 @@ describe('Catalogue Category', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findAllByLabelText('Property Name *').first().clear();
+    cy.findAllByLabelText('Property Name *').first().click();
+
+    cy.findAllByLabelText('Clear').first().click();
+
+    cy.findByText('Edit Catalogue Category').click();
     cy.findAllByLabelText('Property Name *').first().type('Updated Field');
 
-    cy.findAllByLabelText('Property Name *').last().clear();
+    cy.findAllByLabelText('Property Name *').last().click();
+
+    cy.findAllByLabelText('Clear').last().click();
+
+    cy.findByText('Edit Catalogue Category').click();
     cy.findAllByLabelText('Property Name *').last().type('Updated Field');
 
     cy.findByRole('button', { name: 'Save' }).click();
@@ -785,9 +793,16 @@ describe('Catalogue Category', () => {
 
     cy.startSnoopingBrowserMockedRequest();
 
-    cy.findAllByLabelText('Property Name *').first().clear();
+    cy.findAllByLabelText('Property Name *').first().click();
 
-    cy.findAllByLabelText('Property Name *').last().clear();
+    cy.findAllByLabelText('Clear').first().click();
+
+    cy.findByText('Edit Catalogue Category').click();
+
+    cy.findAllByLabelText('Property Name *').last().click();
+
+    cy.findAllByLabelText('Clear').last().click();
+    cy.findByText('Edit Catalogue Category').click();
     cy.findAllByLabelText('Property Name *').last().type('Updated Field');
 
     cy.findByRole('button', { name: 'Save' }).click();
