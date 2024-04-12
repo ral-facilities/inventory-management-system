@@ -306,7 +306,7 @@ describe('Catalogue Category', () => {
     });
   });
 
-  it.only('adds a catalogue category where isLeaf is true using the templates', () => {
+  it('adds a catalogue category where isLeaf is true using the templates', () => {
     cy.findByRole('button', { name: 'add catalogue category' }).click();
     cy.findByLabelText('Name *').type('test');
 
