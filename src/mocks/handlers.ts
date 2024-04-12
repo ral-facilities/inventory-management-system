@@ -25,6 +25,7 @@ import ManufacturersJSON from './Manufacturers.json';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import UnitsJSON from './Units.json';
+import CatalogueItemPropertyTemplatesJSON from './CatalogueItemPropertyTemplates.json';
 
 /* MSW v2 expects types for responses, this interface covers any empty body
    or error with detail */
@@ -708,5 +709,12 @@ export const handlers = [
 
   http.get('/v1/units', () => {
     return HttpResponse.json(UnitsJSON, { status: 200 });
+  }),
+
+  // --------------------------- CatalogueItemPropertyTemplates -------------------------------
+  http.get('/v1/catalogue-item-property-templates', () => {
+    return HttpResponse.json(CatalogueItemPropertyTemplatesJSON, {
+      status: 200,
+    });
   }),
 ];

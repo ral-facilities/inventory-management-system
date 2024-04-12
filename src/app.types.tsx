@@ -98,6 +98,11 @@ export interface CatalogueCategoryFormData {
   allowed_values?: AllowedValues;
 }
 
+export interface CatalogueItemPropertyTemplate
+  extends CatalogueCategoryFormData {
+  id: string;
+}
+
 export interface CatalogueCategoryFormDataWithPlacementIds
   extends CatalogueCategoryFormData {
   cip_placement_id: string; // Catalogue item properties (cip)

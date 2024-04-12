@@ -23,6 +23,7 @@ import {
 } from '../../app.types';
 import { useUnits } from '../../api/units';
 import { generateUniqueId } from '../../utils';
+import { useCatalogueItemPropertyTemplates } from '../../api/catalogue_item_property_templates';
 
 export interface CataloguePropertiesFormProps {
   formFields: CatalogueCategoryFormDataWithPlacementIds[];
@@ -52,6 +53,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   } = props;
 
   const { data: units } = useUnits();
+  const { data: catalogueItemPropertyTemplates } =
+    useCatalogueItemPropertyTemplates();
 
   const handleAddField = () => {
     onChangeFormFields([
@@ -295,7 +298,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     );
 
     if (fieldIndex === -1) {
-      return; 
+      return;
     }
 
     const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
@@ -390,25 +393,111 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           spacing={1}
           padding={1}
         >
-          <TextField
-            label="Property Name"
-            id={`catalogue-category-form-data-name-${field.cip_placement_id}`}
-            variant="outlined"
-            required={true}
-            value={field.name}
-            onChange={(e) =>
-              handleChange(field.cip_placement_id, 'name', e.target.value)
-            }
-            error={
-              !!catalogueItemPropertyMessage(field.cip_placement_id, 'name')
-            }
-            helperText={
-              catalogueItemPropertyMessage(field.cip_placement_id, 'name')
-                ?.errors?.errorMessage
-            }
-            sx={{ minWidth: '150px' }}
-          />
-          <FormControl sx={{ width: '150px', minWidth: '150px' }}>
+          <FormControl sx={{ width: '200px', minWidth: '200px' }}>
+            <Autocomplete
+              freeSolo
+              options={
+                catalogueItemPropertyTemplates
+                  ? [...catalogueItemPropertyTemplates].sort((a, b) =>
+                      a.name.localeCompare(b.name)
+                    )
+                  : []
+              }
+              getOptionLabel={(option) =>
+                typeof option === 'string' ? option : option.name
+              }
+              value={
+                catalogueItemPropertyTemplates?.find(
+                  (template) => template.name === field.name
+                ) || null
+              }
+              inputValue={field.name}
+              onInputChange={(_event, newValue) => {
+                handleChange(field.cip_placement_id, 'name', newValue);
+              }}
+              onChange={(_event, newValue) => {
+                if (typeof newValue !== 'string' && newValue !== null) {
+                  const updatedFormFields = [...formFields];
+                  const fieldIndex = updatedFormFields.findIndex(
+                    (formField) =>
+                      formField.cip_placement_id === field.cip_placement_id
+                  );
+                  if (fieldIndex === -1) {
+                    return;
+                  }
+
+                  // If the field has allowed values, assign an av_placement_id to each value
+                  if (
+                    newValue.allowed_values &&
+                    newValue.allowed_values.values
+                  ) {
+                    const updatedAllowedValues =
+                      newValue.allowed_values.values.map((value) => ({
+                        av_placement_id: generateUniqueId('av_placement_id_'),
+                        value: value,
+                      }));
+
+                    newValue = {
+                      ...newValue,
+                      allowed_values: {
+                        ...newValue.allowed_values,
+                        values: updatedAllowedValues,
+                      },
+                    };
+                  }
+                  const { id, ...newValueWithoutId } = newValue;
+                  updatedFormFields[fieldIndex] = {
+                    ...updatedFormFields[fieldIndex],
+                    ...newValueWithoutId,
+                  };
+                  onChangeFormFields(updatedFormFields);
+
+                  const updatedCatalogueItemPropertiesErrors =
+                    catalogueItemPropertiesErrors.filter(
+                      (item) => item.cip_placement_id !== field.cip_placement_id
+                    );
+
+                  onChangeCatalogueItemPropertiesErrors(
+                    updatedCatalogueItemPropertiesErrors.filter(
+                      (item) =>
+                        item.errors?.errorMessage !==
+                        'Duplicate property name. Please change the name or remove the property'
+                    )
+                  );
+
+                  const updatedAllowedValuesListErrors =
+                    allowedValuesListErrors.filter(
+                      (item) => item.cip_placement_id !== field.cip_placement_id
+                    );
+
+                  onChangeAllowedValuesListErrors(
+                    updatedAllowedValuesListErrors
+                  );
+                }
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Property Name"
+                  id={`catalogue-category-form-data-name-${field.cip_placement_id}`}
+                  variant="outlined"
+                  required={true}
+                  error={
+                    !!catalogueItemPropertyMessage(
+                      field.cip_placement_id,
+                      'name'
+                    )
+                  }
+                  helperText={
+                    catalogueItemPropertyMessage(field.cip_placement_id, 'name')
+                      ?.errors?.errorMessage
+                  }
+                  sx={{ minWidth: '150px' }}
+                />
+              )}
+            />
+          </FormControl>
+          <FormControl sx={{ width: '140px', minWidth: '140px' }}>
             <InputLabel
               error={
                 !!catalogueItemPropertyMessage(field.cip_placement_id, 'type')
@@ -450,7 +539,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
 
           <FormControl
             disabled={field.type === 'boolean'}
-            sx={{ width: '200px', minWidth: '200px' }}
+            sx={{ width: '170px', minWidth: '170px' }}
           >
             <InputLabel
               required={true}

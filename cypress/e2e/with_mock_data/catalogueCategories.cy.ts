@@ -306,6 +306,98 @@ describe('Catalogue Category', () => {
     });
   });
 
+  it.only('adds a catalogue category where isLeaf is true using the templates', () => {
+    cy.findByRole('button', { name: 'add catalogue category' }).click();
+    cy.findByLabelText('Name *').type('test');
+
+    cy.findByLabelText('Catalogue Items').click();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+    cy.findByLabelText('Property Name *').type('Mat');
+    cy.findByRole('option', { name: 'Material' }).click();
+    cy.findByLabelText('Property Name *').type(' test');
+
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+    cy.findAllByLabelText('Property Name *').eq(1).type('Coat');
+    cy.findByRole('option', { name: 'Coating' }).click();
+
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+    cy.findAllByLabelText('Property Name *').eq(2).type('Dia');
+    cy.findByRole('option', { name: 'Diameter' }).click();
+    cy.findByRole('button', {
+      name: 'Add catalogue category field entry',
+    }).click();
+    cy.findAllByLabelText('Property Name *').eq(3).type('Dim');
+    cy.findByRole('option', { name: 'Dimension' }).click();
+    cy.findAllByLabelText('Property Name *').eq(3).type(' test');
+
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'POST',
+      url: '/v1/catalogue-categories',
+    }).should(async (postRequests) => {
+      expect(postRequests.length).equal(1);
+      const request = postRequests[0];
+      expect(JSON.stringify(await request.json())).equal(
+        JSON.stringify({
+          name: 'test',
+          is_leaf: true,
+          catalogue_item_properties: [
+            {
+              name: 'Material test',
+              type: 'string',
+              unit: null,
+              mandatory: false,
+              allowed_values: {
+                type: 'list',
+                values: ['Fused Silica', '(N)BK-7', 'KzFS', 'SF6'],
+              },
+            },
+            {
+              name: 'Coating',
+              type: 'string',
+              unit: null,
+              mandatory: false,
+              allowed_values: {
+                type: 'list',
+                values: [
+                  'Dielectric',
+                  'Protected Gold',
+                  'Aluminum',
+                  'Enhanced Silver',
+                ],
+              },
+            },
+            {
+              name: 'Diameter',
+              type: 'number',
+              unit: 'millimeters',
+              mandatory: true,
+              allowed_values: null,
+            },
+            {
+              name: 'Dimension test',
+              type: 'number',
+              unit: 'millimeters',
+              mandatory: true,
+              allowed_values: null,
+            },
+          ],
+        })
+      );
+    });
+  });
+
   it('adds a catalogue category where isLeaf is true with a list of allowed values', () => {
     cy.findByRole('button', { name: 'add catalogue category' }).click();
     cy.findByLabelText('Name *').type('test');

@@ -168,6 +168,50 @@ describe('Catalogue Properties Form', () => {
     });
   });
 
+  it('populate catalogue item property field when template is selected', async () => {
+    const formFields = [
+      {
+        cip_placement_id: '1',
+        name: '',
+        type: 'text',
+        unit: '',
+        mandatory: false,
+      },
+    ];
+    props = { ...props, formFields: formFields };
+    createView();
+
+    await user.click(screen.getByRole('combobox', { name: 'Property Name' }));
+
+    const dropdown = screen.getByRole('listbox', {
+      name: 'Property Name',
+    });
+
+    await user.click(
+      within(dropdown).getByRole('option', { name: 'Material' })
+    );
+
+    // Modified name should be called in the handleChange function
+    expect(onChangeFormFields).toHaveBeenCalledWith([
+      {
+        cip_placement_id: '1',
+        name: 'Material',
+        type: 'string',
+        unit: null,
+        mandatory: false,
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: 'av_placement_id_1', value: 'Fused Silica' },
+            { av_placement_id: 'av_placement_id_2', value: '(N)BK-7' },
+            { av_placement_id: 'av_placement_id_3', value: 'KzFS' },
+            { av_placement_id: 'av_placement_id_4', value: 'SF6' },
+          ],
+        },
+      },
+    ]);
+  });
+
   it('should handle changes in form fields', async () => {
     const formFields = [
       {
