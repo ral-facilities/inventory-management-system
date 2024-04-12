@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "value": "New"
+  },
+  {
+    "id": "2",
+    "value": "Used"
+  },
+  {
+    "id": "3",
+    "value": "In Use"
+  },
+  {
+    "id": "4",
+    "value": "Scrapped"
+  }
+]

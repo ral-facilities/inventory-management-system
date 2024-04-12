@@ -254,7 +254,7 @@ describe('ItemDialog', () => {
         purchase_order_number: null,
         serial_number: null,
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 0,
+        usage_status: 'New',
         warranty_end_date: null,
       });
     });
@@ -313,7 +313,7 @@ describe('ItemDialog', () => {
           purchase_order_number: null,
           serial_number: `test12 ${i + 10}`,
           system_id: '65328f34a40ff5301575a4e3',
-          usage_status: 0,
+          usage_status: 'New',
           warranty_end_date: null,
         });
       }
@@ -410,7 +410,7 @@ describe('ItemDialog', () => {
         purchase_order_number: null,
         serial_number: null,
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 0,
+        usage_status: 'New',
         warranty_end_date: null,
       });
     });
@@ -465,7 +465,7 @@ describe('ItemDialog', () => {
         purchase_order_number: 'test21',
         serial_number: 'test12',
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 2,
+        usage_status: 'Used',
         warranty_end_date: '2035-02-17T00:00:00.000Z',
       });
     }, 10000);
@@ -657,7 +657,7 @@ describe('ItemDialog', () => {
         purchase_order_number: 'test21',
         serial_number: null,
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 2,
+        usage_status: 'Used',
         warranty_end_date: '2035-02-17T00:00:00.000Z',
       });
     }, 10000);
@@ -832,7 +832,7 @@ describe('ItemDialog', () => {
         purchase_order_number: 'tIWiCOow',
         serial_number: 'vYs9Vxx6yWbn',
         system_id: '656ef565ed0773f82e44bc6d',
-        usage_status: 2,
+        usage_status: 'Used',
         warranty_end_date: '2023-05-18T23:00:00.000Z',
       });
     }, 10000);

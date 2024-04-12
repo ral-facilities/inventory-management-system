@@ -344,11 +344,11 @@ describe('SystemItemsDialog', () => {
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 2,
+        usage_status: 'Used',
       });
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 2,
+        usage_status: 'Used',
       });
 
       expect(mockOnClose).toHaveBeenCalled();

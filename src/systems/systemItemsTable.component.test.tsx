@@ -379,13 +379,13 @@ describe('SystemItemsTable', () => {
 
       // Change usages status for cameras 1 items
       expect(onChangeUsageStatuses).toHaveBeenCalledWith([
-        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
-        { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 2 },
+        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 'Used' },
+        { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 'Used' },
         { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: '' },
         { item_id: 'QQen23yW', catalogue_item_id: '25', usageStatus: '' },
       ]);
       expect(onChangeAggregatedCellUsageStatus).toHaveBeenCalledWith([
-        { catalogue_item_id: '1', usageStatus: 2 },
+        { catalogue_item_id: '1', usageStatus: 'Used' },
         { catalogue_item_id: '25', usageStatus: '' },
       ]);
 
@@ -393,14 +393,14 @@ describe('SystemItemsTable', () => {
 
       // Change usages status for cameras 6 items
       expect(onChangeUsageStatuses).toHaveBeenCalledWith([
-        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
-        { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 2 },
-        { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: 2 },
-        { item_id: 'QQen23yW', catalogue_item_id: '25', usageStatus: 2 },
+        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 'Used' },
+        { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 'Used' },
+        { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: 'Used' },
+        { item_id: 'QQen23yW', catalogue_item_id: '25', usageStatus: 'Used' },
       ]);
       expect(onChangeAggregatedCellUsageStatus).toHaveBeenCalledWith([
-        { catalogue_item_id: '1', usageStatus: 2 },
-        { catalogue_item_id: '25', usageStatus: 2 },
+        { catalogue_item_id: '1', usageStatus: 'Used' },
+        { catalogue_item_id: '25', usageStatus: 'Used' },
       ]);
     });
 
@@ -430,8 +430,8 @@ describe('SystemItemsTable', () => {
 
     it('selects the correct usage status text value according to the number value', async () => {
       props.aggregatedCellUsageStatus = [
-        { catalogue_item_id: '1', usageStatus: 0 },
-        { catalogue_item_id: '25', usageStatus: 1 },
+        { catalogue_item_id: '1', usageStatus: 'New' },
+        { catalogue_item_id: '25', usageStatus: 'In Use' },
       ];
 
       createView();
@@ -545,10 +545,10 @@ describe('SystemItemsTable', () => {
       });
 
       expect(onChangeUsageStatuses).toHaveBeenCalledWith([
-        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
-        { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 2 },
-        { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: 2 },
-        { item_id: 'QQen23yW', catalogue_item_id: '25', usageStatus: 2 },
+        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 'Used' },
+        { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 'Used' },
+        { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: 'Used' },
+        { item_id: 'QQen23yW', catalogue_item_id: '25', usageStatus: 'Used' },
       ]);
     });
   });

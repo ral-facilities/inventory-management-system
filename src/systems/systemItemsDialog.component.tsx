@@ -36,7 +36,7 @@ export interface SystemItemsDialogProps {
 export interface UsageStatusesType {
   item_id: string;
   catalogue_item_id: string;
-  usageStatus: UsageStatusType | '';
+  usageStatus: string;
 }
 
 export interface UsageStatusesErrorType

@@ -32,7 +32,6 @@ import {
   Item,
   ItemDetails,
   ItemDetailsPlaceholder,
-  UsageStatusType,
 } from '../app.types';
 import { DatePicker } from '@mui/x-date-pickers';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -45,6 +44,7 @@ import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { trimStringValues } from '../utils';
 import handleTransferState from '../handleTransferState';
+import { useUsageStatuses } from '../api/usageStatus';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
   // Attempt to create a Date object from the input
@@ -154,6 +154,7 @@ function ItemDialog(props: ItemDialogProps) {
     string | undefined
   >(undefined);
 
+  const { data: usageStatuses } = useUsageStatuses();
   const { mutateAsync: addItem, isPending: isAddItemPending } = useAddItem();
   const { mutateAsync: addItems, isPending: isAddItemsPending } = useAddItems();
   const { mutateAsync: editItem, isPending: isEditItemPending } = useEditItem();
@@ -176,7 +177,7 @@ function ItemDialog(props: ItemDialogProps) {
         system_id: null,
         purchase_order_number: selectedItem.purchase_order_number,
         is_defective: selectedItem.is_defective ? 'true' : 'false',
-        usage_status: UsageStatusType[selectedItem.usage_status],
+        usage_status: selectedItem.usage_status,
         warranty_end_date: selectedItem.warranty_end_date
           ? new Date(selectedItem.warranty_end_date)
           : null,
@@ -319,11 +320,7 @@ function ItemDialog(props: ItemDialogProps) {
       system_id: itemDetails.system_id ?? '',
       purchase_order_number: itemDetails.purchase_order_number,
       is_defective: itemDetails.is_defective === 'true' ? true : false,
-      usage_status: itemDetails.usage_status
-        ? UsageStatusType[
-            itemDetails.usage_status as keyof typeof UsageStatusType
-          ]
-        : UsageStatusType.new,
+      usage_status: itemDetails.usage_status ? itemDetails.usage_status : 'New',
       warranty_end_date:
         itemDetails.warranty_end_date &&
         isValidDateTime(itemDetails.warranty_end_date)
@@ -759,26 +756,29 @@ function ItemDialog(props: ItemDialogProps) {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <FormControl size="small" fullWidth>
-                <InputLabel required={true} id="usage-status">
-                  Usage status
-                </InputLabel>
-                <Select
-                  required={true}
-                  labelId="usage-status"
-                  value={itemDetails.usage_status ?? 'new'}
-                  size="small"
-                  onChange={(e) =>
-                    handleItemDetails('usage_status', e.target.value)
-                  }
-                  label="Usage status"
-                >
-                  <MenuItem value={'new'}>New</MenuItem>
-                  <MenuItem value={'inUse'}>In Use</MenuItem>
-                  <MenuItem value={'used'}>Used</MenuItem>
-                  <MenuItem value={'scrapped'}>Scrapped</MenuItem>
-                </Select>
-              </FormControl>
+              {usageStatuses && (
+                <FormControl size="small" fullWidth>
+                  <InputLabel required={true} id="usage-status">
+                    Usage status
+                  </InputLabel>
+                  <Select
+                    required={true}
+                    labelId="usage-status"
+                    value={itemDetails.usage_status ?? 'New'}
+                    size="small"
+                    onChange={(e) =>
+                      handleItemDetails('usage_status', e.target.value)
+                    }
+                    label="Usage status"
+                  >
+                    {usageStatuses.map((usageStatus) => (
+                      <MenuItem key={usageStatus.id} value={usageStatus.value}>
+                        {usageStatus.value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
             </Grid>
 
             <Grid item container xs={12} sx={{ display: 'flex' }}>
