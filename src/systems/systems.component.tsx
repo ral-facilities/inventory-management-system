@@ -29,6 +29,7 @@ import {
   MRT_GlobalFilterTextField as MRTGlobalFilterTextField,
   MRT_TableBodyCellValue as MRTTableBodyCellValue,
   MRT_TablePagination as MRTTablePagination,
+  MRT_BottomToolbar,
   MRT_ColumnDef,
   MRT_RowSelectionState,
   useMaterialReactTable,
@@ -163,7 +164,7 @@ const columns: MRT_ColumnDef<System>[] = [
   },
 ];
 
-const MIN_SUBSYSTEMS_WIDTH = '320px';
+const MIN_SUBSYSTEMS_WIDTH = '480px';
 
 function Systems() {
   // Navigation
@@ -288,6 +289,13 @@ function Systems() {
         </MenuItem>,
       ];
     },
+    renderBottomToolbarCustomActions: ({ table }) => (
+      <Typography sx={{ paddingLeft: '8px' }}>
+        {table.getFilteredRowModel().rows.length == subsystemsData?.length
+          ? `Total Systems: ${subsystemsData.length}`
+          : `Returned ${table.getFilteredRowModel().rows.length} out of ${subsystemsData?.length} Systems`}
+      </Typography>
+    ),
   });
 
   return (
@@ -445,7 +453,7 @@ function Systems() {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  <MRTTablePagination table={subsystemsTable} />
+                  <MRT_BottomToolbar table={subsystemsTable} />
                 </Stack>
               </>
             )}

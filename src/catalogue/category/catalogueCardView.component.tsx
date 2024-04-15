@@ -88,6 +88,12 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
         bottom={12}
         right={0}
       >
+        <Grid item position={'fixed'} left={8}>
+          <Typography sx={{ paddingLeft: '8px' }}>
+            {`Total Categories: ${catalogueCategoryData.length}`}
+          </Typography>
+        </Grid>
+
         <Grid item>
           <FormControl
             variant="standard"
