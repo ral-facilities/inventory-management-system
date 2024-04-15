@@ -198,28 +198,19 @@ describe('Catalogue Items Table', () => {
 
     await ensureColumnsVisible(['Description']);
 
-    await waitFor(() => {
-      expect(
-        screen.getByLabelText(
-          'Catalogue item description: Precision energy meters for accurate measurements. 26'
-        )
-      ).toBeInTheDocument();
-    });
-
     const infoIcon = screen.getByLabelText(
       'Catalogue item description: Precision energy meters for accurate measurements. 26'
     );
 
     await user.hover(infoIcon);
 
-    //react testing library ignores `overflow` prop, so checking there are 2 of the same text
-    //on hover then only 1 on unhover
     await waitFor(() => {
       expect(
-        screen.queryAllByText(
-          'Precision energy meters for accurate measurements. 26'
-        ).length
-      ).toBe(2);
+        screen.getByRole('tooltip', {
+          name: 'Catalogue item description: Precision energy meters for accurate measurements. 26',
+          hidden: true,
+        })
+      ).toBeVisible();
     });
 
     await user.unhover(infoIcon);

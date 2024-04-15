@@ -104,6 +104,7 @@ export const OverflowTip = ({ children }: any) => {
   }, []);
   return (
     <Tooltip
+      role="tooltip"
       title={children}
       disableHoverListener={!isOverflowed}
       placement="top"
