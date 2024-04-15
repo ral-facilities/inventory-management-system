@@ -1,8 +1,12 @@
+import { screen, waitFor } from '@testing-library/react';
 import {
   generateUniqueName,
   trimStringValues,
   generateUniqueId,
+  OverflowTip,
 } from './utils';
+import userEvent from '@testing-library/user-event';
+import { renderComponentWithRouterProvider } from './testUtils';
 
 describe('Utility functions', () => {
   afterEach(() => {
@@ -79,6 +83,24 @@ describe('Utility functions', () => {
       expect(id1).not.toEqual(id2);
       expect(id1.startsWith(prefix)).toBe(true);
       expect(id2.startsWith(prefix)).toBe(true);
+    });
+  });
+
+  it('should render text which overflows and is a tooltip', async () => {
+    const testText =
+      'This is a very very long piece of text which will overflow';
+
+    renderComponentWithRouterProvider(<OverflowTip>{testText}</OverflowTip>);
+
+    const overFlowTip = screen.getByText(testText);
+
+    //checks if text is overflowed
+    expect(overFlowTip).toHaveStyle('overflow: hidden');
+
+    await userEvent.hover(overFlowTip);
+
+    await waitFor(() => {
+      expect(screen.getByText(testText)).toBeInTheDocument();
     });
   });
 });
