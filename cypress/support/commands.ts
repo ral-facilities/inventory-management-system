@@ -154,12 +154,12 @@ declare global {
         method,
         url,
       }: any): Chainable<MockedRequest[]>;
-      dropIMSCollections(collections: string[]): Chainable<unknown>;
       /**
        * Deletes the IMS collections
        *
        * @example cy.dropIMSCollections(['catalogue_categories']);
        */
+      dropIMSCollections(collections: string[]): Chainable<unknown>;
     }
   }
 }

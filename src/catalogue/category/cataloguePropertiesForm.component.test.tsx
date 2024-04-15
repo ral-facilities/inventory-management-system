@@ -1,13 +1,15 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
-  CatalogueCategoryFormData,
   CatalogueItemPropertiesErrorsType,
+  CatalogueCategoryFormDataWithPlacementIds,
+  AllowedValuesListErrorsType,
 } from '../../app.types';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CataloguePropertiesForm, {
   CataloguePropertiesFormProps,
 } from './cataloguePropertiesForm.component';
+import { resetUniqueIdCounter } from '../../utils';
 
 describe('Catalogue Properties Form', () => {
   let props: CataloguePropertiesFormProps;
@@ -39,27 +41,55 @@ describe('Catalogue Properties Form', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+    resetUniqueIdCounter();
   });
 
   it('renders correctly', async () => {
-    const formFields: CatalogueCategoryFormData[] = [
-      { name: 'Field 1', type: 'text', unit: '', mandatory: false },
-      { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'text',
+        unit: '',
+        mandatory: false,
+      },
+      {
+        cip_placement_id: '2',
+        name: 'Field 2',
+        type: 'number',
+        unit: 'cm',
+        mandatory: true,
+      },
+      {
+        cip_placement_id: '3',
         name: 'Field 3',
         type: 'number',
         unit: 'cm',
-        allowed_values: { type: 'list', values: ['1', '2'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '6', value: '1' },
+            { av_placement_id: '7', value: '2' },
+          ],
+        },
         mandatory: true,
       },
       {
+        cip_placement_id: '4',
         name: 'Field 4',
         type: 'string',
         unit: '',
-        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '8', value: 'top' },
+            { av_placement_id: '9', value: 'bottom' },
+          ],
+        },
         mandatory: true,
       },
       {
+        cip_placement_id: '5',
         name: 'Field 5',
         type: 'string',
         unit: '',
@@ -92,6 +122,7 @@ describe('Catalogue Properties Form', () => {
           type: '',
           unit: undefined,
           allowed_values: undefined,
+          cip_placement_id: 'cip_placement_id_1',
         },
       ]);
     });
@@ -99,8 +130,20 @@ describe('Catalogue Properties Form', () => {
 
   it('should add a delete a field when clicking on the bin button', async () => {
     const formFields = [
-      { name: 'Field 1', type: 'text', unit: '', mandatory: false },
-      { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
+      {
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'text',
+        unit: '',
+        mandatory: false,
+      },
+      {
+        cip_placement_id: '2',
+        name: 'Field 2',
+        type: 'number',
+        unit: 'cm',
+        mandatory: true,
+      },
     ];
 
     props = {
@@ -114,14 +157,26 @@ describe('Catalogue Properties Form', () => {
 
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
-        { mandatory: true, name: 'Field 2', type: 'number', unit: 'cm' },
+        {
+          cip_placement_id: '2',
+          mandatory: true,
+          name: 'Field 2',
+          type: 'number',
+          unit: 'cm',
+        },
       ]);
     });
   });
 
   it('should handle changes in form fields', async () => {
     const formFields = [
-      { name: 'Field 1', type: 'text', unit: '', mandatory: false },
+      {
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'text',
+        unit: '',
+        mandatory: false,
+      },
     ];
     props = { ...props, formFields: formFields };
     createView();
@@ -133,13 +188,25 @@ describe('Catalogue Properties Form', () => {
 
     // Modified name should be called in the handleChange function
     expect(onChangeFormFields).toHaveBeenCalledWith([
-      { name: 'Updated Field', type: 'text', unit: '', mandatory: false },
+      {
+        cip_placement_id: '1',
+        name: 'Updated Field',
+        type: 'text',
+        unit: '',
+        mandatory: false,
+      },
     ]);
   });
 
   it('should handle changes in the "Type" field', async () => {
     const formFields = [
-      { name: 'Field 1', type: 'text', unit: '', mandatory: false },
+      {
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'text',
+        unit: '',
+        mandatory: false,
+      },
     ];
     props = { ...props, formFields: formFields };
     createView();
@@ -154,13 +221,25 @@ describe('Catalogue Properties Form', () => {
 
     await user.click(within(dropdown).getByRole('option', { name: 'Number' }));
     expect(onChangeFormFields).toHaveBeenCalledWith([
-      { name: 'Field 1', type: 'number', unit: '', mandatory: false },
+      {
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'number',
+        unit: '',
+        mandatory: false,
+      },
     ]);
   });
 
   it('should handle changes in the "Mandatory" field', async () => {
     const formFields = [
-      { name: 'Field 1', type: 'text', unit: '', mandatory: false },
+      {
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'text',
+        unit: '',
+        mandatory: false,
+      },
     ];
     props = { ...props, formFields: formFields };
     createView();
@@ -178,13 +257,25 @@ describe('Catalogue Properties Form', () => {
 
     // Modified mandatory should be called in the handleChange function
     expect(onChangeFormFields).toHaveBeenCalledWith([
-      { name: 'Field 1', type: 'text', unit: '', mandatory: true },
+      {
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'text',
+        unit: '',
+        mandatory: true,
+      },
     ]);
   });
 
   it('should handle changes in the "Unit" field', async () => {
     const formFields = [
-      { name: 'Field 1', type: 'text', unit: '', mandatory: false },
+      {
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'text',
+        unit: '',
+        mandatory: false,
+      },
     ];
     props = { ...props, formFields: formFields };
     createView();
@@ -203,13 +294,25 @@ describe('Catalogue Properties Form', () => {
     );
     // Modified mandatory should be called in the handleChange function
     expect(onChangeFormFields).toHaveBeenCalledWith([
-      { name: 'Field 1', type: 'text', unit: 'millimeters', mandatory: false },
+      {
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'text',
+        unit: 'millimeters',
+        mandatory: false,
+      },
     ]);
   });
 
   it('should disable "Unit" field when type is boolean', async () => {
     const formFields = [
-      { name: 'Field 1', type: 'boolean', unit: '', mandatory: false },
+      {
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'boolean',
+        unit: '',
+        mandatory: false,
+      },
     ];
     props = { ...props, formFields: formFields };
     createView();
@@ -219,7 +322,13 @@ describe('Catalogue Properties Form', () => {
 
   it('should remove "Unit" field when type is boolean', async () => {
     const formFields = [
-      { name: 'Field 1', type: 'number', unit: '', mandatory: false },
+      {
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'number',
+        unit: '',
+        mandatory: false,
+      },
     ];
     props = { ...props, formFields: formFields };
     createView();
@@ -237,16 +346,34 @@ describe('Catalogue Properties Form', () => {
     await user.click(within(dropdown).getByRole('option', { name: 'Boolean' }));
 
     expect(onChangeFormFields).toHaveBeenCalledWith([
-      { name: 'Field 1', type: 'boolean', mandatory: false },
+      {
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'boolean',
+        mandatory: false,
+      },
     ]);
   });
 
   it('display error message for type and name if they are not filled in', async () => {
-    const formFields: CatalogueCategoryFormData[] = [
-      { name: '', type: 'number', unit: '', mandatory: false },
-      { name: '', type: '', unit: '', mandatory: false },
-      { name: 'raduis 1', type: '', unit: '', mandatory: false },
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
+        cip_placement_id: '1',
+        name: '',
+        type: 'number',
+        unit: '',
+        mandatory: false,
+      },
+      { cip_placement_id: '2', name: '', type: '', unit: '', mandatory: false },
+      {
+        cip_placement_id: '3',
+        name: 'raduis 1',
+        type: '',
+        unit: '',
+        mandatory: false,
+      },
+      {
+        cip_placement_id: '4',
         name: 'raduis 2',
         type: 'number',
         unit: '',
@@ -256,28 +383,28 @@ describe('Catalogue Properties Form', () => {
     ];
     const catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[] = [
       {
-        index: 0,
+        cip_placement_id: '1',
         errors: {
           fieldName: 'name',
           errorMessage: 'Please enter a property name',
         },
       },
       {
-        index: 1,
+        cip_placement_id: '2',
         errors: {
           fieldName: 'name',
           errorMessage: 'Please enter a property name',
         },
       },
       {
-        index: 1,
+        cip_placement_id: '2',
         errors: {
           fieldName: 'type',
           errorMessage: 'Please select a type',
         },
       },
       {
-        index: 3,
+        cip_placement_id: '4',
         errors: {
           fieldName: 'list',
           errorMessage: 'Please create a valid list item',
@@ -327,28 +454,61 @@ describe('Catalogue Properties Form', () => {
 
     expect(onChangeFormFields).toHaveBeenCalledTimes(3);
     expect(onChangeFormFields).toHaveBeenCalledWith([
-      { mandatory: false, name: 'Updated Field', type: 'string', unit: '' },
-      { mandatory: false, name: '', type: '', unit: '' },
-      { mandatory: false, name: 'raduis 1', type: '', unit: '' },
       {
+        cip_placement_id: '1',
+        mandatory: false,
+        name: 'Updated Field',
+        type: 'string',
+        unit: '',
+      },
+      { cip_placement_id: '2', mandatory: false, name: '', type: '', unit: '' },
+      {
+        cip_placement_id: '3',
+        mandatory: false,
+        name: 'raduis 1',
+        type: '',
+        unit: '',
+      },
+      {
+        cip_placement_id: '4',
         mandatory: false,
         name: 'raduis 2',
-        allowed_values: { type: 'list', values: [''] },
+        allowed_values: {
+          type: 'list',
+          values: [{ av_placement_id: 'av_placement_id_1', value: '' }],
+        },
         type: 'number',
         unit: '',
       },
     ]);
-  });
+  }, 10000);
 
   it('display error if duplicate property names are entered and clears when a name is changed', async () => {
     const formFields = [
-      { name: 'Field', type: 'text', unit: '', mandatory: false },
-      { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
-      { name: 'Field', type: 'boolean', mandatory: false },
+      {
+        cip_placement_id: '1',
+        name: 'Field',
+        type: 'text',
+        unit: '',
+        mandatory: false,
+      },
+      {
+        cip_placement_id: '2',
+        name: 'Field 2',
+        type: 'number',
+        unit: 'cm',
+        mandatory: true,
+      },
+      {
+        cip_placement_id: '3',
+        name: 'Field',
+        type: 'boolean',
+        mandatory: false,
+      },
     ];
     const catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[] = [
       {
-        index: 0,
+        cip_placement_id: '1',
         errors: {
           fieldName: 'name',
           errorMessage:
@@ -356,7 +516,7 @@ describe('Catalogue Properties Form', () => {
         },
       },
       {
-        index: 2,
+        cip_placement_id: '3',
         errors: {
           fieldName: 'name',
           errorMessage:
@@ -389,13 +549,30 @@ describe('Catalogue Properties Form', () => {
 
   it('display error if duplicate property names are entered and clears property is deleted', async () => {
     const formFields = [
-      { name: 'Field', type: 'text', unit: '', mandatory: false },
-      { name: 'Field 2', type: 'number', unit: 'cm', mandatory: true },
-      { name: 'Field', type: 'boolean', mandatory: false },
+      {
+        cip_placement_id: '1',
+        name: 'Field',
+        type: 'text',
+        unit: '',
+        mandatory: false,
+      },
+      {
+        cip_placement_id: '2',
+        name: 'Field 2',
+        type: 'number',
+        unit: 'cm',
+        mandatory: true,
+      },
+      {
+        cip_placement_id: '3',
+        name: 'Field',
+        type: 'boolean',
+        mandatory: false,
+      },
     ];
     const catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[] = [
       {
-        index: 0,
+        cip_placement_id: '1',
         errors: {
           fieldName: 'name',
           errorMessage:
@@ -403,7 +580,7 @@ describe('Catalogue Properties Form', () => {
         },
       },
       {
-        index: 2,
+        cip_placement_id: '3',
         errors: {
           fieldName: 'name',
           errorMessage:
@@ -430,19 +607,33 @@ describe('Catalogue Properties Form', () => {
     expect(onChangeCatalogueItemPropertiesErrors).toHaveBeenCalledWith([]);
   });
   it('should delete a list item when the delete icon is click', async () => {
-    const formFields: CatalogueCategoryFormData[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
+        cip_placement_id: '1',
         name: 'Field 3',
         type: 'number',
         unit: 'cm',
-        allowed_values: { type: 'list', values: ['1', '2'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '3', value: '1' },
+            { av_placement_id: '4', value: '2' },
+          ],
+        },
         mandatory: true,
       },
       {
+        cip_placement_id: '2',
         name: 'Field 4',
         type: 'string',
         unit: '',
-        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '5', value: 'top' },
+            { av_placement_id: '6', value: 'bottom' },
+          ],
+        },
         mandatory: true,
       },
     ];
@@ -461,14 +652,25 @@ describe('Catalogue Properties Form', () => {
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
         {
-          allowed_values: { type: 'list', values: ['2'] },
+          cip_placement_id: '1',
+          allowed_values: {
+            type: 'list',
+            values: [{ av_placement_id: '4', value: '2' }],
+          },
           mandatory: true,
           name: 'Field 3',
           type: 'number',
           unit: 'cm',
         },
         {
-          allowed_values: { type: 'list', values: ['top', 'bottom'] },
+          cip_placement_id: '2',
+          allowed_values: {
+            type: 'list',
+            values: [
+              { av_placement_id: '5', value: 'top' },
+              { av_placement_id: '6', value: 'bottom' },
+            ],
+          },
           mandatory: true,
           name: 'Field 4',
           type: 'string',
@@ -479,19 +681,33 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should add a list item when the add icon is clicked', async () => {
-    const formFields: CatalogueCategoryFormData[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
+        cip_placement_id: '1',
         name: 'Field 3',
         type: 'number',
         unit: 'cm',
-        allowed_values: { type: 'list', values: ['1', '2'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '3', value: '1' },
+            { av_placement_id: '4', value: '2' },
+          ],
+        },
         mandatory: true,
       },
       {
+        cip_placement_id: '2',
         name: 'Field 4',
         type: 'string',
         unit: '',
-        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '5', value: 'top' },
+            { av_placement_id: '6', value: 'bottom' },
+          ],
+        },
         mandatory: true,
       },
     ];
@@ -510,14 +726,29 @@ describe('Catalogue Properties Form', () => {
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
         {
-          allowed_values: { type: 'list', values: ['1', '2', ''] },
+          cip_placement_id: '1',
+          allowed_values: {
+            type: 'list',
+            values: [
+              { av_placement_id: '3', value: '1' },
+              { av_placement_id: '4', value: '2' },
+              { av_placement_id: 'av_placement_id_1', value: '' },
+            ],
+          },
           mandatory: true,
           name: 'Field 3',
           type: 'number',
           unit: 'cm',
         },
         {
-          allowed_values: { type: 'list', values: ['top', 'bottom'] },
+          cip_placement_id: '2',
+          allowed_values: {
+            type: 'list',
+            values: [
+              { av_placement_id: '5', value: 'top' },
+              { av_placement_id: '6', value: 'bottom' },
+            ],
+          },
           mandatory: true,
           name: 'Field 4',
           type: 'string',
@@ -528,19 +759,33 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should edit a list item when the add icon is clicked', async () => {
-    const formFields: CatalogueCategoryFormData[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
+        cip_placement_id: '1',
         name: 'Field 3',
         type: 'number',
         unit: 'cm',
-        allowed_values: { type: 'list', values: ['1', '2'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '3', value: '1' },
+            { av_placement_id: '4', value: '2' },
+          ],
+        },
         mandatory: true,
       },
       {
+        cip_placement_id: '2',
         name: 'Field 4',
         type: 'string',
         unit: '',
-        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '5', value: 'top' },
+            { av_placement_id: '6', value: 'bottom' },
+          ],
+        },
         mandatory: true,
       },
     ];
@@ -560,14 +805,28 @@ describe('Catalogue Properties Form', () => {
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
         {
-          allowed_values: { type: 'list', values: ['1', '6'] },
+          cip_placement_id: '1',
+          allowed_values: {
+            type: 'list',
+            values: [
+              { av_placement_id: '3', value: '1' },
+              { av_placement_id: '4', value: '6' },
+            ],
+          },
           mandatory: true,
           name: 'Field 3',
           type: 'number',
           unit: 'cm',
         },
         {
-          allowed_values: { type: 'list', values: ['top', 'bottom'] },
+          cip_placement_id: '2',
+          allowed_values: {
+            type: 'list',
+            values: [
+              { av_placement_id: '5', value: 'top' },
+              { av_placement_id: '6', value: 'bottom' },
+            ],
+          },
           mandatory: true,
           name: 'Field 4',
           type: 'string',
@@ -578,19 +837,33 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should set the allowed values to undefined if switched to any', async () => {
-    const formFields: CatalogueCategoryFormData[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
+        cip_placement_id: '1',
         name: 'Field 3',
         type: 'number',
         unit: 'cm',
-        allowed_values: { type: 'list', values: ['1', '2'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '3', value: '1' },
+            { av_placement_id: '4', value: '2' },
+          ],
+        },
         mandatory: true,
       },
       {
+        cip_placement_id: '2',
         name: 'Field 4',
         type: 'string',
         unit: '',
-        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '5', value: 'top' },
+            { av_placement_id: '6', value: 'bottom' },
+          ],
+        },
         mandatory: true,
       },
     ];
@@ -612,13 +885,21 @@ describe('Catalogue Properties Form', () => {
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
         {
+          cip_placement_id: '1',
           mandatory: true,
           name: 'Field 3',
           type: 'number',
           unit: 'cm',
         },
         {
-          allowed_values: { type: 'list', values: ['top', 'bottom'] },
+          cip_placement_id: '2',
+          allowed_values: {
+            type: 'list',
+            values: [
+              { av_placement_id: '5', value: 'top' },
+              { av_placement_id: '6', value: 'bottom' },
+            ],
+          },
           mandatory: true,
           name: 'Field 4',
           type: 'string',
@@ -629,18 +910,26 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should set the allowed values to empty if switched to list from any', async () => {
-    const formFields: CatalogueCategoryFormData[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
+        cip_placement_id: '1',
         name: 'Field 3',
         type: 'number',
         unit: 'cm',
         mandatory: true,
       },
       {
+        cip_placement_id: '2',
         name: 'Field 4',
         type: 'string',
         unit: '',
-        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '5', value: 'top' },
+            { av_placement_id: '6', value: 'bottom' },
+          ],
+        },
         mandatory: true,
       },
     ];
@@ -662,6 +951,7 @@ describe('Catalogue Properties Form', () => {
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
         {
+          cip_placement_id: '1',
           allowed_values: { type: 'list', values: [] },
           mandatory: true,
           name: 'Field 3',
@@ -669,7 +959,14 @@ describe('Catalogue Properties Form', () => {
           unit: 'cm',
         },
         {
-          allowed_values: { type: 'list', values: ['top', 'bottom'] },
+          cip_placement_id: '2',
+          allowed_values: {
+            type: 'list',
+            values: [
+              { av_placement_id: '5', value: 'top' },
+              { av_placement_id: '6', value: 'bottom' },
+            ],
+          },
           mandatory: true,
           name: 'Field 4',
           type: 'string',
@@ -680,54 +977,70 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should display error for duplicate values and incorrect type values and the error should be removed if the catalogue item property is deleted', async () => {
-    const formFields: CatalogueCategoryFormData[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
+        cip_placement_id: '1',
         name: 'Field 3',
         type: 'number',
         unit: 'cm',
         mandatory: true,
-        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '3', value: 'top' },
+            { av_placement_id: '4', value: 'bottom' },
+          ],
+        },
       },
       {
+        cip_placement_id: '2',
         name: 'Field 4',
         type: 'string',
         unit: '',
-        allowed_values: { type: 'list', values: [12, 11, '13', '13'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '5', value: 12 },
+            { av_placement_id: '6', value: 11 },
+            { av_placement_id: '7', value: '13' },
+            { av_placement_id: '8', value: '13' },
+          ],
+        },
         mandatory: true,
       },
     ];
 
-    const allowedValuesListErrors = [
+    const allowedValuesListErrors: AllowedValuesListErrorsType[] = [
       {
-        index: 0,
+        cip_placement_id: '1',
         errors: [
           {
-            index: 0,
+            av_placement_id: '3',
             errorMessage: 'Please enter a valid number',
           },
           {
-            index: 1,
+            av_placement_id: '4',
             errorMessage: 'Please enter a valid number',
           },
         ],
       },
       {
-        index: 1,
+        cip_placement_id: '2',
         errors: [
           {
-            index: 0,
+            av_placement_id: '5',
             errorMessage: 'Please enter valid text',
           },
           {
-            index: 1,
+            av_placement_id: '6',
             errorMessage: 'Please enter valid text',
           },
           {
-            index: 2,
+            av_placement_id: '7',
             errorMessage: 'Duplicate value',
           },
           {
-            index: 3,
+            av_placement_id: '8',
             errorMessage: 'Duplicate value',
           },
         ],
@@ -762,7 +1075,16 @@ describe('Catalogue Properties Form', () => {
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
         {
-          allowed_values: { type: 'list', values: [12, 11, '13', '13'] },
+          cip_placement_id: '2',
+          allowed_values: {
+            type: 'list',
+            values: [
+              { av_placement_id: '5', value: 12 },
+              { av_placement_id: '6', value: 11 },
+              { av_placement_id: '7', value: '13' },
+              { av_placement_id: '8', value: '13' },
+            ],
+          },
           mandatory: true,
           name: 'Field 4',
           type: 'string',
@@ -773,38 +1095,45 @@ describe('Catalogue Properties Form', () => {
 
     expect(onChangeAllowedValuesListErrors).toHaveBeenCalledWith([
       {
-        index: 1,
+        cip_placement_id: '2',
         errors: [
-          { errorMessage: 'Please enter valid text', index: 0 },
-          { errorMessage: 'Please enter valid text', index: 1 },
-          { errorMessage: 'Duplicate value', index: 2 },
-          { errorMessage: 'Duplicate value', index: 3 },
+          { errorMessage: 'Please enter valid text', av_placement_id: '5' },
+          { errorMessage: 'Please enter valid text', av_placement_id: '6' },
+          { errorMessage: 'Duplicate value', av_placement_id: '7' },
+          { errorMessage: 'Duplicate value', av_placement_id: '8' },
         ],
       },
     ]);
   });
 
   it('should error for incorrect type values and remove error if a values has been changed for the specfic list item', async () => {
-    const formFields: CatalogueCategoryFormData[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
+        cip_placement_id: '1',
         name: 'Field 3',
         type: 'number',
         unit: 'cm',
         mandatory: true,
-        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '5', value: 'top' },
+            { av_placement_id: '6', value: 'bottom' },
+          ],
+        },
       },
     ];
 
     const allowedValuesListErrors = [
       {
-        index: 0,
+        cip_placement_id: '1',
         errors: [
           {
-            index: 0,
+            av_placement_id: '5',
             errorMessage: 'Please enter a valid number',
           },
           {
-            index: 1,
+            av_placement_id: '6',
             errorMessage: 'Please enter a valid number',
           },
         ],
@@ -834,7 +1163,14 @@ describe('Catalogue Properties Form', () => {
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
         {
-          allowed_values: { type: 'list', values: ['top', '6'] },
+          cip_placement_id: '1',
+          allowed_values: {
+            type: 'list',
+            values: [
+              { av_placement_id: '5', value: 'top' },
+              { av_placement_id: '6', value: '6' },
+            ],
+          },
           mandatory: true,
           name: 'Field 3',
           type: 'number',
@@ -845,33 +1181,42 @@ describe('Catalogue Properties Form', () => {
 
     expect(onChangeAllowedValuesListErrors).toHaveBeenCalledWith([
       {
-        index: 0,
-        errors: [{ errorMessage: 'Please enter a valid number', index: 0 }],
+        cip_placement_id: '1',
+        errors: [
+          { errorMessage: 'Please enter a valid number', av_placement_id: '5' },
+        ],
       },
     ]);
   });
 
   it('should display error for incorrect type values and remove the error if the value has been deleted', async () => {
-    const formFields: CatalogueCategoryFormData[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
+        cip_placement_id: '1',
         name: 'Field 3',
         type: 'number',
         unit: 'cm',
         mandatory: true,
-        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '5', value: 'top' },
+            { av_placement_id: '6', value: 'bottom' },
+          ],
+        },
       },
     ];
 
     const allowedValuesListErrors = [
       {
-        index: 0,
+        cip_placement_id: '1',
         errors: [
           {
-            index: 0,
+            av_placement_id: '5',
             errorMessage: 'Please enter a valid number',
           },
           {
-            index: 1,
+            av_placement_id: '6',
             errorMessage: 'Please enter a valid number',
           },
         ],
@@ -901,7 +1246,11 @@ describe('Catalogue Properties Form', () => {
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
         {
-          allowed_values: { type: 'list', values: ['top'] },
+          cip_placement_id: '1',
+          allowed_values: {
+            type: 'list',
+            values: [{ av_placement_id: '5', value: 'top' }],
+          },
           mandatory: true,
           name: 'Field 3',
           type: 'number',
@@ -912,61 +1261,79 @@ describe('Catalogue Properties Form', () => {
 
     expect(onChangeAllowedValuesListErrors).toHaveBeenCalledWith([
       {
-        index: 0,
-        errors: [{ errorMessage: 'Please enter a valid number', index: 0 }],
+        cip_placement_id: '1',
+        errors: [
+          { errorMessage: 'Please enter a valid number', av_placement_id: '5' },
+        ],
       },
     ]);
   });
 
   it('should display error for duplicate values and incorrect type values and the error should be removed if the type is changed', async () => {
-    const formFields: CatalogueCategoryFormData[] = [
+    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
       {
+        cip_placement_id: '1',
         name: 'Field 3',
         type: 'number',
         unit: 'cm',
         mandatory: true,
-        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '3', value: 'top' },
+            { av_placement_id: '4', value: 'bottom' },
+          ],
+        },
       },
       {
+        cip_placement_id: '2',
         name: 'Field 4',
         type: 'string',
         unit: '',
-        allowed_values: { type: 'list', values: [12, 11, '13', '13'] },
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '5', value: 12 },
+            { av_placement_id: '6', value: 11 },
+            { av_placement_id: '7', value: '13' },
+            { av_placement_id: '8', value: '13' },
+          ],
+        },
         mandatory: true,
       },
     ];
 
     const allowedValuesListErrors = [
       {
-        index: 0,
+        cip_placement_id: '1',
         errors: [
           {
-            index: 0,
+            av_placement_id: '3',
             errorMessage: 'Please enter a valid number',
           },
           {
-            index: 1,
+            av_placement_id: '4',
             errorMessage: 'Please enter a valid number',
           },
         ],
       },
       {
-        index: 1,
+        cip_placement_id: '2',
         errors: [
           {
-            index: 0,
+            av_placement_id: '5',
             errorMessage: 'Please enter valid text',
           },
           {
-            index: 1,
+            av_placement_id: '6',
             errorMessage: 'Please enter valid text',
           },
           {
-            index: 2,
+            av_placement_id: '7',
             errorMessage: 'Duplicate value',
           },
           {
-            index: 3,
+            av_placement_id: '8',
             errorMessage: 'Duplicate value',
           },
         ],
@@ -1004,14 +1371,30 @@ describe('Catalogue Properties Form', () => {
 
     expect(onChangeFormFields).toHaveBeenCalledWith([
       {
-        allowed_values: { type: 'list', values: ['top', 'bottom'] },
+        cip_placement_id: '1',
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '3', value: 'top' },
+            { av_placement_id: '4', value: 'bottom' },
+          ],
+        },
         mandatory: true,
         name: 'Field 3',
         type: 'string',
         unit: 'cm',
       },
       {
-        allowed_values: { type: 'list', values: [12, 11, '13', '13'] },
+        cip_placement_id: '2',
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '5', value: 12 },
+            { av_placement_id: '6', value: 11 },
+            { av_placement_id: '7', value: '13' },
+            { av_placement_id: '8', value: '13' },
+          ],
+        },
         mandatory: true,
         name: 'Field 4',
         type: 'string',
@@ -1021,12 +1404,12 @@ describe('Catalogue Properties Form', () => {
 
     expect(onChangeAllowedValuesListErrors).toHaveBeenCalledWith([
       {
-        index: 1,
+        cip_placement_id: '2',
         errors: [
-          { errorMessage: 'Please enter valid text', index: 0 },
-          { errorMessage: 'Please enter valid text', index: 1 },
-          { errorMessage: 'Duplicate value', index: 2 },
-          { errorMessage: 'Duplicate value', index: 3 },
+          { errorMessage: 'Please enter valid text', av_placement_id: '5' },
+          { errorMessage: 'Please enter valid text', av_placement_id: '6' },
+          { errorMessage: 'Duplicate value', av_placement_id: '7' },
+          { errorMessage: 'Duplicate value', av_placement_id: '8' },
         ],
       },
     ]);

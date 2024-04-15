@@ -44,6 +44,7 @@ import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog, { SystemDialogType } from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
+import { usePreservedTableState } from '../common/preservedTableState.component';
 
 /* Returns function that navigates to a specific system id (or to the root of all systems
    if given null) */
@@ -209,6 +210,14 @@ function Systems() {
     setRowSelection({});
   }, [systemId]);
 
+  const { preservedState, onPreservedStatesChange } = usePreservedTableState({
+    initialState: {
+      pagination: { pageSize: 15, pageIndex: 0 },
+    },
+    storeInUrl: true,
+    urlParamName: 'subState',
+  });
+
   const subsystemsTable = useMaterialReactTable({
     // Data
     columns: columns,
@@ -223,9 +232,8 @@ function Systems() {
     // State
     initialState: {
       showGlobalFilter: true,
-      pagination: { pageSize: 15, pageIndex: 0 },
     },
-    state: { rowSelection: rowSelection },
+    state: { ...preservedState, rowSelection: rowSelection },
     // MUI
     muiPaginationProps: {
       color: 'secondary',
@@ -238,6 +246,7 @@ function Systems() {
       size: 'small',
     },
     // Functions
+    ...onPreservedStatesChange,
     getRowId: (system) => system.id,
     onRowSelectionChange: setRowSelection,
     renderRowActionMenuItems: ({ closeMenu, row }) => {

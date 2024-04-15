@@ -16,6 +16,11 @@ export interface AddCatalogueCategory {
   catalogue_item_properties?: CatalogueCategoryFormData[];
 }
 
+export interface AddCatalogueCategoryWithPlacementIds
+  extends AddCatalogueCategory {
+  catalogue_item_properties?: CatalogueCategoryFormDataWithPlacementIds[];
+}
+
 export interface EditCatalogueCategory {
   name?: string;
   id: string;
@@ -91,6 +96,11 @@ export interface CatalogueCategoryFormData {
   unit?: string;
   mandatory: boolean;
   allowed_values?: AllowedValues;
+}
+
+export interface CatalogueCategoryFormDataWithPlacementIds
+  extends CatalogueCategoryFormData {
+  cip_placement_id: string; // Catalogue item properties (cip)
 }
 
 export interface ObsoleteDetails {
@@ -257,6 +267,12 @@ export interface AddItem extends ItemDetails {
   properties: CatalogueItemProperty[];
 }
 
+export interface AddItems {
+  quantity: number;
+  startingValue: number;
+  item: AddItem;
+}
+
 export interface Item extends ItemDetails {
   properties: CatalogueItemPropertyResponse[];
   id: string;
@@ -268,22 +284,31 @@ export interface EditItem extends Partial<AddItem> {
   id: string;
 }
 
+export interface MoveItemsToSystemUsageStatus {
+  item_id: string;
+  usage_status: UsageStatusType;
+}
 export interface MoveItemsToSystem {
+  usageStatuses: MoveItemsToSystemUsageStatus[];
   selectedItems: Item[];
   targetSystem: System;
 }
 
 export interface CatalogueItemPropertiesErrorsType {
-  index: number;
+  cip_placement_id: string;
   errors: {
     fieldName: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
     errorMessage: string;
   } | null;
 }
 
+export interface AdvancedSerialNumberOptionsType {
+  quantity: string | null;
+  startingValue: string | null;
+}
 export interface AllowedValuesListErrorsType {
-  index: number | null;
-  errors: { index: number; errorMessage: string }[] | null;
+  cip_placement_id: string | null;
+  errors: { av_placement_id: string; errorMessage: string }[] | null;
 }
 
 export interface Unit {

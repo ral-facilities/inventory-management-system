@@ -24,16 +24,18 @@ import {
 } from '../../api/catalogueCategories';
 import {
   AddCatalogueCategory,
+  AddCatalogueCategoryWithPlacementIds,
   AllowedValuesListErrorsType,
   CatalogueCategory,
   CatalogueCategoryFormData,
+  CatalogueCategoryFormDataWithPlacementIds,
   CatalogueItemPropertiesErrorsType,
   EditCatalogueCategory,
   ErrorParsing,
 } from '../../app.types';
 import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { trimStringValues } from '../../utils';
+import { generateUniqueId, trimStringValues } from '../../utils';
 
 // Function to convert a list of strings to a list of numbers
 const convertListToNumbers = (values: string[]): number[] => {
@@ -60,7 +62,7 @@ const CatalogueCategoryDialog = React.memo(
     } = props;
 
     const [categoryData, setCategoryData] =
-      React.useState<AddCatalogueCategory>({
+      React.useState<AddCatalogueCategoryWithPlacementIds>({
         name: '',
         parent_id: null,
         is_leaf: false,
@@ -68,7 +70,46 @@ const CatalogueCategoryDialog = React.memo(
       });
 
     React.useEffect(() => {
-      if (selectedCatalogueCategory)
+      if (selectedCatalogueCategory) {
+        const updatedCatalogueItemProperties =
+          selectedCatalogueCategory.catalogue_item_properties?.map((item) => {
+            // Transform allowed_values to an array of objects with id and value keys
+            const allowedValuesWithId = item.allowed_values?.values.map(
+              (value) => ({
+                av_placement_id: generateUniqueId('av_placement_id_'), // Allowed values (av)
+                value: value,
+              })
+            ) || [
+              {
+                av_placement_id: generateUniqueId('av_placement_id_'),
+                value: '',
+              },
+            ]; // Default case if allowed_values is undefined or empty
+
+            let modifiedCatalogueCategory = {
+              ...item,
+              cip_placement_id: generateUniqueId('cip_placement_id_'),
+            };
+
+            if (item.allowed_values) {
+              modifiedCatalogueCategory = {
+                ...modifiedCatalogueCategory,
+                allowed_values: {
+                  type: item.allowed_values?.type,
+                  values: allowedValuesWithId,
+                },
+              };
+            }
+
+            return modifiedCatalogueCategory;
+          }) || undefined;
+
+        const updatedSelectedCatalogueCategory: AddCatalogueCategoryWithPlacementIds =
+          {
+            ...selectedCatalogueCategory,
+            catalogue_item_properties: updatedCatalogueItemProperties,
+          };
+
         setCategoryData(
           // This is not ideal but fixes the properties being reset when closing the dialog
           // The array itself is stored as a reference in typescript meaning that modifying
@@ -77,10 +118,12 @@ const CatalogueCategoryDialog = React.memo(
           // from being reset
           // This ensures the array created is brand new with a different reference to fix it
           // See https://stackoverflow.com/questions/9885821/copying-of-an-array-of-objects-to-another-array-without-object-reference-in-java
+
           JSON.parse(
-            JSON.stringify(selectedCatalogueCategory)
-          ) as AddCatalogueCategory
+            JSON.stringify(updatedSelectedCatalogueCategory)
+          ) as AddCatalogueCategoryWithPlacementIds
         );
+      }
     }, [selectedCatalogueCategory]);
 
     const [nameError, setNameError] = React.useState<string | undefined>(
@@ -119,7 +162,9 @@ const CatalogueCategoryDialog = React.memo(
     }, [onClose, resetSelectedCatalogueCategory]);
 
     // Reset errors when required
-    const handleFormChange = (newCategoryData: AddCatalogueCategory) => {
+    const handleFormChange = (
+      newCategoryData: AddCatalogueCategoryWithPlacementIds
+    ) => {
       setCategoryData(newCategoryData);
 
       if (newCategoryData.name !== categoryData.name) setNameError(undefined);
@@ -127,65 +172,76 @@ const CatalogueCategoryDialog = React.memo(
     };
 
     const validateAllowedValuesList = (
-      catalogueItemProperties: CatalogueCategoryFormData[]
+      catalogueItemProperties: CatalogueCategoryFormDataWithPlacementIds[]
     ): boolean => {
       let hasErrors = false;
 
-      catalogueItemProperties.forEach((property, index) => {
+      catalogueItemProperties.forEach((property) => {
         if (property.allowed_values?.type === 'list') {
-          const listOfValues = property.allowed_values.values;
-          const trimmedLowerCaseValues = listOfValues.map((value) =>
-            String(value).trim().toLowerCase()
+          const trimmedLowerCaseValues = property.allowed_values.values.map(
+            (val) => ({
+              av_placement_id: val.av_placement_id,
+              value: String(val.value).trim().toLowerCase(),
+            })
           );
 
-          const duplicateIndexes: number[] = [];
-          const invalidNumberIndexes: number[] = [];
-          const missingValueIndexes: number[] = [];
+          const duplicateIds: string[] = [];
+          const invalidNumberIds: string[] = [];
+          const missingValueIds: string[] = [];
 
           trimmedLowerCaseValues.forEach((value, i) => {
             for (let j = i + 1; j < trimmedLowerCaseValues.length; j++) {
-              if (value === trimmedLowerCaseValues[j] && value) {
-                duplicateIndexes.push(i, j);
+              if (
+                value.value === trimmedLowerCaseValues[j].value &&
+                value.value
+              ) {
+                duplicateIds.push(
+                  value.av_placement_id,
+                  trimmedLowerCaseValues[j].av_placement_id
+                );
               }
             }
 
-            if (!value) {
-              missingValueIndexes.push(i);
+            if (!value.value) {
+              missingValueIds.push(value.av_placement_id);
             } else if (
               property.type === 'number' &&
-              (isNaN(+value) || !value)
+              (isNaN(+value.value) || !value.value)
             ) {
-              invalidNumberIndexes.push(i);
+              invalidNumberIds.push(value.av_placement_id);
             }
           });
 
           if (
-            // If there are more than 2 instances of the same duplicate value, it adds the index multiple times.
-            // The set removes the repeated indexes.
-            Array.from(new Set(duplicateIndexes)).length > 0 ||
-            invalidNumberIndexes.length > 0 ||
-            missingValueIndexes.length > 0
+            // If there are more than 2 instances of the same duplicate value, it adds the ID multiple times.
+            // The set removes the repeated IDs.
+            Array.from(new Set(duplicateIds)).length > 0 ||
+            invalidNumberIds.length > 0 ||
+            missingValueIds.length > 0
           ) {
-            // Update listItemErrors state with the error indexes
+            // Update listItemErrors state with the error IDs
             // The useState below is order-dependent since the duplicate error could occur simultaneously with the errors above.
             // The error above should be displayed first.
 
             setAllowedValuesListErrors((prev) => [
               ...prev,
               {
-                index,
+                cip_placement_id: property.cip_placement_id,
                 errors: [
-                  ...(prev[index]?.errors || []),
-                  ...invalidNumberIndexes.map((i) => ({
-                    index: i,
+                  ...(prev.find(
+                    (prevValue) =>
+                      prevValue.cip_placement_id === property.cip_placement_id
+                  )?.errors || []),
+                  ...invalidNumberIds.map((id) => ({
+                    av_placement_id: id,
                     errorMessage: 'Please enter a valid number',
                   })),
-                  ...missingValueIndexes.map((i) => ({
-                    index: i,
+                  ...missingValueIds.map((id) => ({
+                    av_placement_id: id,
                     errorMessage: 'Please enter a value',
                   })),
-                  ...Array.from(new Set(duplicateIndexes)).map((i) => ({
-                    index: i,
+                  ...Array.from(new Set(duplicateIds)).map((id) => ({
+                    av_placement_id: id,
                     errorMessage: 'Duplicate value',
                   })),
                 ],
@@ -201,8 +257,11 @@ const CatalogueCategoryDialog = React.memo(
     };
 
     const validateFormFields = React.useCallback(() => {
-      let hasErrors;
-      if (categoryData.catalogue_item_properties) {
+      let hasErrors = false;
+      if (
+        categoryData.catalogue_item_properties &&
+        categoryData.catalogue_item_properties?.length > 0
+      ) {
         for (
           let i = 0;
           i < categoryData.catalogue_item_properties.length;
@@ -212,7 +271,9 @@ const CatalogueCategoryDialog = React.memo(
             setCatalogueItemPropertiesErrors((prev) => [
               ...prev,
               {
-                index: i,
+                cip_placement_id: categoryData.catalogue_item_properties
+                  ? categoryData.catalogue_item_properties[i].cip_placement_id
+                  : '',
                 errors: {
                   fieldName: 'name',
                   errorMessage: 'Please enter a property name',
@@ -226,7 +287,9 @@ const CatalogueCategoryDialog = React.memo(
             setCatalogueItemPropertiesErrors((prev) => [
               ...prev,
               {
-                index: i,
+                cip_placement_id: categoryData.catalogue_item_properties
+                  ? categoryData.catalogue_item_properties[i].cip_placement_id
+                  : '',
                 errors: {
                   fieldName: 'type',
                   errorMessage: 'Please select a type',
@@ -244,7 +307,9 @@ const CatalogueCategoryDialog = React.memo(
             setCatalogueItemPropertiesErrors((prev) => [
               ...prev,
               {
-                index: i,
+                cip_placement_id: categoryData.catalogue_item_properties
+                  ? categoryData.catalogue_item_properties[i].cip_placement_id
+                  : '',
                 errors: {
                   fieldName: 'list',
                   errorMessage: 'Please create a valid list item',
@@ -261,22 +326,29 @@ const CatalogueCategoryDialog = React.memo(
             property.name.toLowerCase().trim()
           );
 
-        const duplicateIndexes: number[] = [];
+        const duplicateIds: string[] = [];
 
         listOfPropertyNames.forEach((value, i) => {
           for (let j = i + 1; j < listOfPropertyNames.length; j++) {
             if (value === listOfPropertyNames[j]) {
-              duplicateIndexes.push(i, j);
+              duplicateIds.push(
+                categoryData.catalogue_item_properties
+                  ? categoryData.catalogue_item_properties[i].cip_placement_id
+                  : '',
+                categoryData.catalogue_item_properties
+                  ? categoryData.catalogue_item_properties[j].cip_placement_id
+                  : ''
+              );
             }
           }
         });
 
-        const uniqueDuplicateIndexes = Array.from(new Set(duplicateIndexes));
-        for (let i = 0; i < uniqueDuplicateIndexes.length; i++) {
+        const uniqueDuplicateIds = Array.from(new Set(duplicateIds));
+        for (let i = 0; i < uniqueDuplicateIds.length; i++) {
           setCatalogueItemPropertiesErrors((prev) => [
             ...prev,
             {
-              index: uniqueDuplicateIndexes[i],
+              cip_placement_id: uniqueDuplicateIds[i],
               errors: {
                 fieldName: 'name',
                 errorMessage:
@@ -335,25 +407,32 @@ const CatalogueCategoryDialog = React.memo(
       if (categoryData.catalogue_item_properties) {
         updatedProperties = categoryData.catalogue_item_properties.map(
           (property) => {
-            if (
-              property.type === 'number' &&
-              property.allowed_values?.type === 'list'
-            ) {
+            const allowedValuesList = property.allowed_values?.values.map(
+              (val) => val.value
+            );
+            if (property.allowed_values?.type === 'list') {
               // Assuming values are strings, convert them to numbers
               const convertedValues = convertListToNumbers(
-                property.allowed_values.values || []
+                allowedValuesList || []
               );
 
               // Update the property with the converted values
               return {
                 ...property,
+                cip_placement_id: undefined,
                 allowed_values: {
                   ...property.allowed_values,
-                  values: convertedValues,
+                  values:
+                    property.type === 'number'
+                      ? convertedValues
+                      : allowedValuesList ?? [],
                 },
               };
             }
-            return property;
+            return {
+              ...property,
+              cip_placement_id: undefined,
+            };
           }
         );
       }
@@ -406,25 +485,32 @@ const CatalogueCategoryDialog = React.memo(
         if (categoryData.catalogue_item_properties) {
           updatedProperties = categoryData.catalogue_item_properties.map(
             (property) => {
-              if (
-                property.type === 'number' &&
-                property.allowed_values?.type === 'list'
-              ) {
+              const allowedValuesList = property.allowed_values?.values.map(
+                (val) => val.value
+              );
+              if (property.allowed_values?.type === 'list') {
                 // Assuming values are strings, convert them to numbers
                 const convertedValues = convertListToNumbers(
-                  property.allowed_values.values || []
+                  allowedValuesList || []
                 );
 
                 // Update the property with the converted values
                 return {
                   ...property,
+                  cip_placement_id: undefined,
                   allowed_values: {
                     ...property.allowed_values,
-                    values: convertedValues,
+                    values:
+                      property.type === 'number'
+                        ? convertedValues
+                        : allowedValuesList ?? [],
                   },
                 };
               }
-              return property;
+              return {
+                ...property,
+                cip_placement_id: undefined,
+              };
             }
           );
         }
@@ -559,7 +645,7 @@ const CatalogueCategoryDialog = React.memo(
                   <CataloguePropertiesForm
                     formFields={categoryData.catalogue_item_properties ?? []}
                     onChangeFormFields={(
-                      formFields: CatalogueCategoryFormData[]
+                      formFields: CatalogueCategoryFormDataWithPlacementIds[]
                     ) =>
                       handleFormChange({
                         ...categoryData,

@@ -1,4 +1,8 @@
-import { generateUniqueName, trimStringValues } from './utils';
+import {
+  generateUniqueName,
+  trimStringValues,
+  generateUniqueId,
+} from './utils';
 
 describe('Utility functions', () => {
   afterEach(() => {
@@ -56,6 +60,25 @@ describe('Utility functions', () => {
           test_object: { test_string: 'test_string', test_string2: 'test2' },
         },
       });
+    });
+  });
+
+  describe('generateUniqueId', () => {
+    it('should generate unique IDs with default prefix', () => {
+      const id1 = generateUniqueId();
+      const id2 = generateUniqueId();
+      expect(id1).not.toEqual(id2);
+      expect(id1.startsWith('id')).toBe(true);
+      expect(id2.startsWith('id')).toBe(true);
+    });
+
+    it('should generate unique IDs with custom prefix', () => {
+      const prefix = 'user';
+      const id1 = generateUniqueId(prefix);
+      const id2 = generateUniqueId(prefix);
+      expect(id1).not.toEqual(id2);
+      expect(id1.startsWith(prefix)).toBe(true);
+      expect(id2.startsWith(prefix)).toBe(true);
     });
   });
 });
