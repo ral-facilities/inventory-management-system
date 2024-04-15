@@ -28,7 +28,6 @@ import {
   // To resolve react/jsx-pascal-case
   MRT_GlobalFilterTextField as MRTGlobalFilterTextField,
   MRT_TableBodyCellValue as MRTTableBodyCellValue,
-  MRT_TablePagination as MRTTablePagination,
   MRT_BottomToolbar,
   MRT_ColumnDef,
   MRT_RowSelectionState,
