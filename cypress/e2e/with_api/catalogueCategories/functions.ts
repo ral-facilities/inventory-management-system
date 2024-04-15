@@ -116,6 +116,9 @@ const modifyCatalogueCategory = (
       cy.findAllByText(
         `${values.newFormFields[0].name}${values.newFormFields[0].unit ? ` (${values.newFormFields[0].unit})` : ''}`
       ).should('have.length', 2);
+      // Two for column visibility changes (hide all and showing name column), one for actually going back
+      cy.go('back');
+      cy.go('back');
       cy.go('back');
     }
   }

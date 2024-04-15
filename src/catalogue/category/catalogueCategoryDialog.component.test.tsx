@@ -517,6 +517,45 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     }, 10000);
 
+    it('displays duplicate values and incorrect type error and deletes an allowed value to check if errors states are in correct location (allowed_values list of numbers)', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            allowed_values: { type: 'list', values: [1, 1, 'dsad', 2] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const duplicateHelperTexts = screen.queryAllByText('Duplicate value');
+      const incorrectTypeHelperTexts = screen.queryAllByText(
+        'Please enter a valid number'
+      );
+
+      expect(duplicateHelperTexts.length).toEqual(2);
+      expect(incorrectTypeHelperTexts.length).toEqual(1);
+
+      expect(onClose).not.toHaveBeenCalled();
+
+      await user.click(screen.getByLabelText('Delete list item 2'));
+
+      const duplicateHelperTexts2 = screen.queryAllByText('Duplicate value');
+
+      expect(duplicateHelperTexts2.length).toEqual(2);
+    }, 10000);
+
     it('displays error if the allowed values list is empty', async () => {
       createView();
 
@@ -991,6 +1030,46 @@ describe('Catalogue Category Dialog', () => {
       expect(typeHelperTexts.length).toBe(2);
 
       expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it('displays an error message when the type or name field are not filled and deletes a property to check if errors states are in correct location', async () => {
+      props.selectedCatalogueCategory = {
+        ...mockData,
+        is_leaf: true,
+        catalogue_item_properties: [
+          { name: '', type: 'number', unit: 'millimeters', mandatory: true },
+          { name: '', type: '', unit: 'millimeters', mandatory: true },
+          { name: 'radius', type: '', unit: 'millimeters', mandatory: true },
+        ],
+      };
+      createView();
+
+      await modifyValues({ name: 'test' });
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      const nameHelperTexts = screen.queryAllByText('Please select a type');
+      const typeHelperTexts = screen.queryAllByText(
+        'Please enter a property name'
+      );
+
+      expect(nameHelperTexts.length).toBe(2);
+      expect(typeHelperTexts.length).toBe(2);
+
+      expect(onClose).not.toHaveBeenCalled();
+
+      await user.click(screen.getAllByTestId('DeleteIcon')[1]);
+
+      const nameHelperTexts2 = screen.queryAllByText('Please select a type');
+      const typeHelperTexts2 = screen.queryAllByText(
+        'Please enter a property name'
+      );
+
+      expect(nameHelperTexts2.length).toBe(1);
+      expect(typeHelperTexts2.length).toBe(1);
     });
 
     it('display error if duplicate property names are entered', async () => {

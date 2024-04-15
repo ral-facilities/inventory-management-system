@@ -8,6 +8,7 @@ import {
 } from '@tanstack/react-query';
 import {
   AddItem,
+  AddItems,
   EditItem,
   ErrorParsing,
   Item,
@@ -26,6 +27,66 @@ export const useAddItem = (): UseMutationResult<Item, AxiosError, AddItem> => {
     mutationFn: (item: AddItem) => addItem(item),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['Items'] });
+    },
+  });
+};
+
+export const useAddItems = (): UseMutationResult<
+  TransferState[],
+  AxiosError,
+  AddItems
+> => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (addItems: AddItems) => {
+      const transferStates: TransferState[] = [];
+      const successfulSerialNumbers: string[] = [];
+
+      const promises = [];
+
+      for (
+        let i = addItems.startingValue;
+        i < addItems.startingValue + addItems.quantity;
+        i++
+      ) {
+        const item: AddItem = {
+          ...addItems.item,
+          serial_number:
+            addItems.item.serial_number?.replace('%s', String(i)) ?? null,
+        };
+
+        const promise = addItem(item)
+          .then((result: Item) => {
+            transferStates.push({
+              name: result.serial_number ?? '',
+              message: `Successfully created ${result.serial_number ?? ''}`,
+              state: 'success',
+            });
+            successfulSerialNumbers.push(result.serial_number ?? '');
+          })
+          .catch((error) => {
+            const response = error.response?.data as ErrorParsing;
+            transferStates.push({
+              name: item.serial_number ?? '',
+              message: response.detail,
+              state: 'error',
+            });
+          });
+
+        promises.push(promise);
+      }
+
+      await Promise.all(promises);
+      if (successfulSerialNumbers.length > 0) {
+        queryClient.invalidateQueries({
+          queryKey: ['Items', undefined, addItems.item.catalogue_item_id],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['Items', addItems.item.system_id, undefined],
+        });
+      }
+
+      return transferStates;
     },
   });
 };
@@ -159,13 +220,16 @@ export const useMoveItemsToSystem = (): UseMutationResult<
           return editItem({
             id: item.id,
             system_id: moveItemsToSystem.targetSystem?.id || '',
+            usage_status: moveItemsToSystem.usageStatuses.find(
+              (status) => status.item_id === item.id
+            )?.usage_status,
           })
             .then((result: Item) => {
               const targetSystemName =
                 moveItemsToSystem.targetSystem?.name || 'Root';
               transferStates.push({
                 // Not technically a name, but will be displayed as ID: Message
-                name: item.id,
+                name: item.serial_number ?? 'No serial number',
                 message: `Successfully moved to ${targetSystemName}`,
                 state: 'success',
               });
@@ -177,7 +241,7 @@ export const useMoveItemsToSystem = (): UseMutationResult<
               const response = error.response?.data as ErrorParsing;
 
               transferStates.push({
-                name: item.id,
+                name: item.serial_number ?? 'No serial number',
                 message: response.detail,
                 state: 'error',
               });

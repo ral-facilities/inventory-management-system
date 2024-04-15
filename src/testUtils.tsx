@@ -35,16 +35,11 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   queryClient?: QueryClient;
 }
 
-export function renderComponentWithRouterProvider(
+function constructRouterProvider(
   ui: React.ReactElement,
+  queryClient: QueryClient,
   urlPathKey?: keyof typeof paths,
-  initialEntry?: string,
-  {
-    // Automatically create a store instance if no store was passed i
-    // Automatically create a query client instance if no query client was passed in
-    queryClient = createTestQueryClient(),
-    ...renderOptions
-  }: ExtendedRenderOptions = {}
+  initialEntry?: string
 ) {
   const Root: React.FunctionComponent = () => {
     return (
@@ -61,23 +56,62 @@ export function renderComponentWithRouterProvider(
         })
       : createBrowserRouter([{ path: '*', Component: Root }]);
 
-  function Wrapper(): JSX.Element {
-    return <RouterProvider router={router} />;
-  }
+  return { router: router, provider: <RouterProvider router={router} /> };
+}
+
+function constructRouterProviderWrapper(
+  queryClient: QueryClient,
+  urlPathKey?: keyof typeof paths,
+  initialEntry?: string
+) {
+  const wrapper = ({ children }): JSX.Element => {
+    return constructRouterProvider(
+      children,
+      queryClient,
+      urlPathKey,
+      initialEntry
+    ).provider;
+  };
+  return wrapper;
+}
+
+export function renderComponentWithRouterProvider(
+  ui: React.ReactElement,
+  urlPathKey?: keyof typeof paths,
+  initialEntry?: string,
+  {
+    // Automatically create a query client instance if no query client was passed in
+    queryClient = createTestQueryClient(),
+    ...renderOptions
+  }: ExtendedRenderOptions = {}
+) {
+  const { router, provider } = constructRouterProvider(
+    ui,
+    queryClient,
+    urlPathKey,
+    initialEntry
+  );
   return {
     queryClient,
-    ...render(ui, { wrapper: Wrapper, ...renderOptions }),
+    router,
+    ...render(ui, {
+      wrapper: () => provider,
+      ...renderOptions,
+    }),
   };
 }
 
-export const hooksWrapperWithProviders = (queryClient?: QueryClient) => {
-  const testQueryClient = queryClient ?? createTestQueryClient();
-  const wrapper = ({ children }) => (
-    <QueryClientProvider client={testQueryClient}>
-      {children}
-    </QueryClientProvider>
+export const hooksWrapperWithProviders = (props?: {
+  queryClient?: QueryClient;
+  urlPathKey?: keyof typeof paths;
+  initialEntry?: string;
+}) => {
+  const testQueryClient = props?.queryClient ?? createTestQueryClient();
+  return constructRouterProviderWrapper(
+    testQueryClient,
+    props?.urlPathKey,
+    props?.initialEntry
   );
-  return wrapper;
 };
 
 export const getCatalogueItemsPropertiesById = (

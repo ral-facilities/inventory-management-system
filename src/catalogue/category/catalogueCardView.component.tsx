@@ -6,10 +6,10 @@ import {
   Select,
   Typography,
 } from '@mui/material';
-import CatalogueCard from './catalogueCard.component';
-import React from 'react';
 import { CatalogueCategory } from '../../app.types';
+import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { getPageHeightCalc } from '../../utils';
+import CatalogueCard from './catalogueCard.component';
 
 export interface CatalogueCardViewProps {
   catalogueCategoryData: CatalogueCategory[];
@@ -34,10 +34,18 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
     selectedCategories,
   } = props;
 
-  const [page, setPage] = React.useState(1);
-  const [paginationResults, setPaginationResults] = React.useState<number>(30);
-  const startIndex = (page - 1) * paginationResults;
-  const endIndex = startIndex + paginationResults;
+  const { preservedState, onPreservedStatesChange } = usePreservedTableState({
+    initialState: {
+      pagination: { pageSize: 30, pageIndex: 1 },
+    },
+    storeInUrl: true,
+    paginationOnly: true,
+  });
+
+  const startIndex =
+    (preservedState.pagination.pageIndex - 1) *
+    preservedState.pagination.pageSize;
+  const endIndex = startIndex + preservedState.pagination.pageSize;
   const displayedCatalogueCategories = catalogueCategoryData?.slice(
     startIndex,
     endIndex
@@ -108,15 +116,18 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
             </Typography>
             <Select
               disableUnderline
-              value={paginationResults}
+              value={preservedState.pagination.pageSize}
               inputProps={{
                 name: 'Max Results',
                 labelId: 'select-max-results',
+                'aria-label': 'Categories per page',
               }}
-              onChange={(event) => {
-                setPaginationResults(+event.target.value);
-                setPage(1);
-              }}
+              onChange={(event) =>
+                onPreservedStatesChange.onPaginationChange({
+                  pageSize: +event.target.value,
+                  pageIndex: 1,
+                })
+              }
               label={'Max Results'}
             >
               <MenuItem value={'30'}>30</MenuItem>
@@ -130,11 +141,16 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
           <Pagination
             variant="outlined"
             shape="rounded"
-            count={Math.ceil(catalogueCategoryData?.length / paginationResults)}
-            page={page}
-            onChange={(_event, value) => {
-              setPage(value);
-            }}
+            count={Math.ceil(
+              catalogueCategoryData?.length / preservedState.pagination.pageSize
+            )}
+            page={preservedState.pagination.pageIndex}
+            onChange={(_event, value) =>
+              onPreservedStatesChange.onPaginationChange((prevState) => ({
+                ...prevState,
+                pageIndex: value,
+              }))
+            }
             size="medium"
             color="secondary"
             sx={{ textAlign: 'center' }}
