@@ -2151,7 +2151,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
         class="MuiBox-root css-1llu0od"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
         >
           Total Items: 3
         </p>
@@ -3239,7 +3239,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-dxfizy-MuiPaper-root-MuiAlert-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
               role="alert"
             >
               <div
@@ -3287,9 +3287,13 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
       <div
         class="MuiBox-root css-1llu0od"
       >
-        <span />
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
+        >
+          Returned 4 out of undefined Items
+        </p>
         <div
-          class="MuiBox-root css-qpxlqp"
+          class="MuiBox-root css-nokk8"
         >
           <div
             class="MuiTablePagination-root MuiBox-root css-8k4lth"

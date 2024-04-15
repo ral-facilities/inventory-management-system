@@ -864,7 +864,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
           class="MuiBox-root css-1llu0od"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
           >
             Total Catalogue Items: 4
           </p>
