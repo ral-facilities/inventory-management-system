@@ -452,7 +452,7 @@ export function ItemsTable(props: ItemTableProps) {
       ];
     },
     renderBottomToolbarCustomActions: ({ table }) => (
-      <Typography>
+      <Typography sx={{ paddingLeft: '8px' }}>
         {table.getFilteredRowModel().rows.length == data?.length
           ? `Total Items: ${data.length}`
           : `Returned ${table.getFilteredRowModel().rows.length} out of ${data?.length} Items`}

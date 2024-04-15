@@ -269,7 +269,7 @@ function ManufacturerComponent() {
       ];
     },
     renderBottomToolbarCustomActions: ({ table }) => (
-      <Typography>
+      <Typography sx={{ paddingLeft: '8px' }}>
         {table.getFilteredRowModel().rows.length == ManufacturerData?.length
           ? `Total Manufacturers: ${ManufacturerData.length}`
           : `Returned ${table.getFilteredRowModel().rows.length} out of ${ManufacturerData?.length} Manufacturers`}
