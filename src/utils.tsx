@@ -98,3 +98,8 @@ export function generateUniqueId(prefix: string = 'id_'): string {
 export const resetUniqueIdCounter = () => {
   lastId = 0;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function sortDataList(data: any[], sortedValue: string) {
+  return data.sort((a, b) => a[sortedValue].localeCompare(b[sortedValue]));
+}
