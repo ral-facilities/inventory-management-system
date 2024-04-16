@@ -30,6 +30,7 @@ import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDia
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 import { generateUniqueName } from '../utils';
 import CatalogueCardView from './category/catalogueCardView.component';
+import CatalogueItemPropertiesMigrationDialog from './category/catalogueItemPropertiesMigrationDialog.component';
 
 /* Returns function that navigates to a specific catalogue category id or catalogue path (or to the root of
    all categories if given null) */
@@ -219,8 +220,13 @@ function Catalogue() {
   const [deleteCategoryDialogOpen, setDeleteCategoryDialogOpen] =
     React.useState<boolean>(false);
 
-  const [editCategoryDialogOpen, setEditCategoryDialogOpen] =
+  const [editCategoryNameDialogOpen, setEditCategoryNameDialogOpen] =
     React.useState<boolean>(false);
+
+  const [
+    editCategoryPropertiesDialogOpen,
+    setEditCategoryPropertiesDialogOpen,
+  ] = React.useState<boolean>(false);
 
   const [saveAsCategoryDialogOpen, setSaveAsCategoryDialogOpen] =
     React.useState<boolean>(false);
@@ -235,10 +241,17 @@ function Catalogue() {
     setSelectedCatalogueCategory(catalogueCategory);
   };
 
-  const onChangeOpenEditCategoryDialog = (
+  const onChangeOpenEditNameCategoryDialog = (
     catalogueCategory: CatalogueCategory
   ) => {
-    setEditCategoryDialogOpen(true);
+    setEditCategoryNameDialogOpen(true);
+    setSelectedCatalogueCategory(catalogueCategory);
+  };
+
+  const onChangeOpenEditPropertiesCategoryDialog = (
+    catalogueCategory: CatalogueCategory
+  ) => {
+    setEditCategoryPropertiesDialogOpen(true);
     setSelectedCatalogueCategory(catalogueCategory);
   };
 
@@ -373,7 +386,12 @@ function Catalogue() {
           <CatalogueCardView
             catalogueCategoryData={catalogueCategoryData}
             onChangeOpenDeleteCategoryDialog={onChangeOpenDeleteCategoryDialog}
-            onChangeOpenEditCategoryDialog={onChangeOpenEditCategoryDialog}
+            onChangeOpenEditNameCategoryDialog={
+              onChangeOpenEditNameCategoryDialog
+            }
+            onChangeOpenEditPropertiesCategoryDialog={
+              onChangeOpenEditPropertiesCategoryDialog
+            }
             onChangeOpenSaveAsDialog={onChangeOpenSaveAsDialog}
             handleToggleSelect={handleToggleSelect}
             selectedCategories={selectedCategories}
@@ -385,15 +403,25 @@ function Catalogue() {
       )}
 
       <CatalogueCategoryDialog
-        open={editCategoryDialogOpen}
-        onClose={() => setEditCategoryDialogOpen(false)}
+        open={editCategoryNameDialogOpen}
+        onClose={() => setEditCategoryNameDialogOpen(false)}
         parentId={parentId}
-        type="edit"
+        type="edit name"
         selectedCatalogueCategory={selectedCatalogueCategory}
         resetSelectedCatalogueCategory={() =>
           setSelectedCatalogueCategory(undefined)
         }
       />
+      {selectedCatalogueCategory && (
+        <CatalogueItemPropertiesMigrationDialog
+          open={editCategoryPropertiesDialogOpen}
+          onClose={() => setEditCategoryPropertiesDialogOpen(false)}
+          selectedCatalogueCategory={selectedCatalogueCategory}
+          resetSelectedCatalogueCategory={() =>
+            setSelectedCatalogueCategory(undefined)
+          }
+        />
+      )}
       <CatalogueCategoryDialog
         open={saveAsCategoryDialogOpen}
         onClose={() => setSaveAsCategoryDialogOpen(false)}

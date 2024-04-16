@@ -21,7 +21,10 @@ import { Link } from 'react-router-dom';
 import { formatDateTimeStrings } from '../../utils';
 export interface CatalogueCardProps extends CatalogueCategory {
   onChangeOpenDeleteDialog: (catalogueCategory: CatalogueCategory) => void;
-  onChangeOpenEditDialog: (catalogueCategory: CatalogueCategory) => void;
+  onChangeOpenEditNameDialog: (catalogueCategory: CatalogueCategory) => void;
+  onChangeOpenEditPropertiesDialog: (
+    catalogueCategory: CatalogueCategory
+  ) => void;
   onChangeOpenSaveAsDialog: (catalogueCategory: CatalogueCategory) => void;
   onToggleSelect: (catalogueCategory: CatalogueCategory) => void;
   isSelected: boolean;
@@ -30,7 +33,8 @@ export interface CatalogueCardProps extends CatalogueCategory {
 function CatalogueCard(props: CatalogueCardProps) {
   const {
     onChangeOpenDeleteDialog,
-    onChangeOpenEditDialog,
+    onChangeOpenEditNameDialog,
+    onChangeOpenEditPropertiesDialog,
     onChangeOpenSaveAsDialog,
     onToggleSelect,
     isSelected,
@@ -125,19 +129,36 @@ function CatalogueCard(props: CatalogueCardProps) {
               key={0}
               onClick={(event) => {
                 event.preventDefault();
-                onChangeOpenEditDialog(catalogueCategory);
+                onChangeOpenEditNameDialog(catalogueCategory);
                 handleActionsClose();
               }}
-              aria-label={`edit ${catalogueCategory.name} catalogue category button`}
+              aria-label={`edit name ${catalogueCategory.name} catalogue category button`}
               sx={{ m: 0 }}
             >
               <ListItemIcon>
                 <EditIcon />
               </ListItemIcon>
-              Edit
+              Edit name
             </MenuItem>
+            {catalogueCategory.is_leaf && (
+              <MenuItem
+                key={1}
+                onClick={(event) => {
+                  event.preventDefault();
+                  onChangeOpenEditPropertiesDialog(catalogueCategory);
+                  handleActionsClose();
+                }}
+                aria-label={`edit properties ${catalogueCategory.name} catalogue category button`}
+                sx={{ m: 0 }}
+              >
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                Edit properties
+              </MenuItem>
+            )}
             <MenuItem
-              key={1}
+              key={2}
               aria-label={`save as ${catalogueCategory.name} catalogue category button`}
               onClick={(event) => {
                 event.preventDefault();
@@ -152,7 +173,7 @@ function CatalogueCard(props: CatalogueCardProps) {
               Save as
             </MenuItem>
             <MenuItem
-              key={2}
+              key={3}
               onClick={(event) => {
                 event.preventDefault();
                 onChangeOpenDeleteDialog(catalogueCategory);

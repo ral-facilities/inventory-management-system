@@ -45,7 +45,7 @@ export interface CatalogueCategoryDialogProps {
   open: boolean;
   onClose: () => void;
   parentId: string | null;
-  type: 'add' | 'edit' | 'save as';
+  type: 'add' | 'edit name' | 'save as';
   selectedCatalogueCategory?: CatalogueCategory;
   resetSelectedCatalogueCategory: () => void;
 }
@@ -480,40 +480,6 @@ const CatalogueCategoryDialog = React.memo(
           return;
         }
 
-        let updatedProperties: CatalogueCategoryFormData[] | undefined;
-        // Inside your component or wherever you're processing the data
-        if (categoryData.catalogue_item_properties) {
-          updatedProperties = categoryData.catalogue_item_properties.map(
-            (property) => {
-              const allowedValuesList = property.allowed_values?.values.map(
-                (val) => val.value
-              );
-              if (property.allowed_values?.type === 'list') {
-                // Assuming values are strings, convert them to numbers
-                const convertedValues = convertListToNumbers(
-                  allowedValuesList || []
-                );
-
-                // Update the property with the converted values
-                return {
-                  ...property,
-                  cip_placement_id: undefined,
-                  allowed_values: {
-                    ...property.allowed_values,
-                    values:
-                      property.type === 'number'
-                        ? convertedValues
-                        : allowedValuesList ?? [],
-                  },
-                };
-              }
-              return {
-                ...property,
-                cip_placement_id: undefined,
-              };
-            }
-          );
-        }
         // Clear the error state and add a new field
         clearFormFields();
 
@@ -524,26 +490,9 @@ const CatalogueCategoryDialog = React.memo(
         const isNameUpdated =
           categoryData.name !== selectedCatalogueCategory?.name;
 
-        const isIsLeafUpdated =
-          categoryData.is_leaf !== selectedCatalogueCategory?.is_leaf;
-        const isCatalogueItemPropertiesUpdated =
-          JSON.stringify(updatedProperties) !==
-          JSON.stringify(
-            selectedCatalogueCategory?.catalogue_item_properties ?? null
-          );
-
-        isNameUpdated && (catalogueCategory.name = categoryData.name);
-
-        isIsLeafUpdated && (catalogueCategory.is_leaf = categoryData.is_leaf);
-
-        isCatalogueItemPropertiesUpdated &&
-          (catalogueCategory.catalogue_item_properties = updatedProperties);
-
         if (
           catalogueCategory.id && // Check if id is present
-          (isNameUpdated ||
-            (!!updatedProperties && isCatalogueItemPropertiesUpdated) ||
-            isIsLeafUpdated) // Check if any of these properties have been updated
+          isNameUpdated // Check if any of these properties have been updated
         ) {
           // Only call editCatalogueCategory if id is present and at least one of the properties has been updated
           editCatalogueCategory(trimStringValues(catalogueCategory))
@@ -576,10 +525,10 @@ const CatalogueCategoryDialog = React.memo(
     ]);
 
     return (
-      <Dialog open={open} maxWidth="lg" fullWidth>
+      <Dialog open={open} maxWidth={'lg'} fullWidth>
         <DialogTitle>
-          {type === 'edit'
-            ? 'Edit Catalogue Category'
+          {type === 'edit name'
+            ? 'Edit Catalogue Category Name'
             : 'Add Catalogue Category'}
         </DialogTitle>
         <DialogContent>
@@ -601,70 +550,80 @@ const CatalogueCategoryDialog = React.memo(
                 fullWidth
               />
             </Grid>
-            <Grid item>
-              <FormControl sx={{ margin: '8px' }}>
-                <FormLabel id="controlled-radio-buttons-group">
-                  Catalogue Directory Content
-                </FormLabel>
-                <RadioGroup
-                  aria-labelledby="controlled-radio-buttons-group"
-                  name="controlled-radio-buttons-group"
-                  value={categoryData.is_leaf ? 'true' : 'false'}
-                  onChange={(_event, value) => {
-                    const newData = {
-                      ...categoryData,
-                      is_leaf: value === 'true' ? true : false,
-                    };
-                    if (value === 'false') {
-                      newData.catalogue_item_properties = undefined;
-                      setCatalogueItemPropertiesErrors([]);
-                    }
-                    handleFormChange(newData);
-                  }}
+
+            <>
+              <Grid item>
+                <FormControl
+                  disabled={type === 'edit name'}
+                  sx={{ margin: '8px' }}
                 >
-                  <FormControlLabel
-                    value="false"
-                    control={<Radio />}
-                    label="Catalogue Categories"
-                  />
-                  <FormControlLabel
-                    value="true"
-                    control={<Radio />}
-                    label="Catalogue Items"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-            {categoryData.is_leaf === true && (
-              <>
-                <Grid item>
-                  <Divider sx={{ minWidth: '700px' }} />
-                </Grid>
-                <Grid item sx={{ paddingLeft: 1, paddingTop: 3 }}>
-                  <Typography variant="h6">Catalogue Item Fields</Typography>
-                  <CataloguePropertiesForm
-                    formFields={categoryData.catalogue_item_properties ?? []}
-                    onChangeFormFields={(
-                      formFields: CatalogueCategoryFormDataWithPlacementIds[]
-                    ) =>
-                      handleFormChange({
+                  <FormLabel id="controlled-radio-buttons-group">
+                    Catalogue Directory Content
+                  </FormLabel>
+                  <RadioGroup
+                    aria-labelledby="controlled-radio-buttons-group"
+                    name="controlled-radio-buttons-group"
+                    value={categoryData.is_leaf ? 'true' : 'false'}
+                    onChange={(_event, value) => {
+                      const newData = {
                         ...categoryData,
-                        catalogue_item_properties: formFields,
-                      })
-                    }
-                    onChangeCatalogueItemPropertiesErrors={
-                      setCatalogueItemPropertiesErrors
-                    }
-                    catalogueItemPropertiesErrors={
-                      catalogueItemPropertiesErrors
-                    }
-                    allowedValuesListErrors={allowedValuesListErrors}
-                    onChangeAllowedValuesListErrors={setAllowedValuesListErrors}
-                    resetFormError={() => setFormError(undefined)}
-                  />
-                </Grid>
-              </>
-            )}
+                        is_leaf: value === 'true' ? true : false,
+                      };
+                      if (value === 'false') {
+                        newData.catalogue_item_properties = undefined;
+                        setCatalogueItemPropertiesErrors([]);
+                      }
+                      handleFormChange(newData);
+                    }}
+                  >
+                    <FormControlLabel
+                      value="false"
+                      control={<Radio />}
+                      label="Catalogue Categories"
+                    />
+                    <FormControlLabel
+                      value="true"
+                      control={<Radio />}
+                      label="Catalogue Items"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+              {categoryData.is_leaf === true && (
+                <>
+                  <Grid item>
+                    <Divider sx={{ minWidth: '700px' }} />
+                  </Grid>
+                  <Grid item sx={{ paddingLeft: 1, paddingTop: 3 }}>
+                    <Typography variant="h6">Catalogue Item Fields</Typography>
+
+                    <CataloguePropertiesForm
+                      type={type}
+                      formFields={categoryData.catalogue_item_properties ?? []}
+                      onChangeFormFields={(
+                        formFields: CatalogueCategoryFormDataWithPlacementIds[]
+                      ) =>
+                        handleFormChange({
+                          ...categoryData,
+                          catalogue_item_properties: formFields,
+                        })
+                      }
+                      onChangeCatalogueItemPropertiesErrors={
+                        setCatalogueItemPropertiesErrors
+                      }
+                      catalogueItemPropertiesErrors={
+                        catalogueItemPropertiesErrors
+                      }
+                      allowedValuesListErrors={allowedValuesListErrors}
+                      onChangeAllowedValuesListErrors={
+                        setAllowedValuesListErrors
+                      }
+                      resetFormError={() => setFormError(undefined)}
+                    />
+                  </Grid>
+                </>
+              )}
+            </>
           </Grid>
         </DialogContent>
         <DialogActions sx={{ flexDirection: 'column', padding: '0px 24px' }}>
@@ -690,7 +649,7 @@ const CatalogueCategoryDialog = React.memo(
               variant="outlined"
               sx={{ width: '50%', mx: 1 }}
               onClick={
-                type === 'edit'
+                type === 'edit name'
                   ? handleEditCatalogueCategory
                   : handleAddCatalogueCategory
               }
