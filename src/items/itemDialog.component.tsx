@@ -756,29 +756,27 @@ function ItemDialog(props: ItemDialogProps) {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              {usageStatuses && (
-                <FormControl size="small" fullWidth>
-                  <InputLabel required={true} id="usage-status">
-                    Usage status
-                  </InputLabel>
-                  <Select
-                    required={true}
-                    labelId="usage-status"
-                    value={itemDetails.usage_status ?? 'New'}
-                    size="small"
-                    onChange={(e) =>
-                      handleItemDetails('usage_status', e.target.value)
-                    }
-                    label="Usage status"
-                  >
-                    {usageStatuses.map((usageStatus) => (
-                      <MenuItem key={usageStatus.id} value={usageStatus.value}>
-                        {usageStatus.value}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              )}
+              <FormControl size="small" fullWidth>
+                <InputLabel required={true} id="usage-status">
+                  Usage status
+                </InputLabel>
+                <Select
+                  required={true}
+                  labelId="usage-status"
+                  value={itemDetails.usage_status ?? 'New'}
+                  size="small"
+                  onChange={(e) =>
+                    handleItemDetails('usage_status', e.target.value)
+                  }
+                  label="Usage status"
+                >
+                  {usageStatuses?.map((usageStatus) => (
+                    <MenuItem key={usageStatus.id} value={usageStatus.value}>
+                      {usageStatus.value}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
 
             <Grid item container xs={12} sx={{ display: 'flex' }}>
