@@ -43,7 +43,7 @@ import { Autocomplete } from '@mui/material';
 import { useManufacturers } from '../../api/manufacturers';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { trimStringValues } from '../../utils';
+import { sortDataList, trimStringValues } from '../../utils';
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
@@ -785,17 +785,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                     );
                   }}
                   id="manufacturer-autocomplete"
-                  options={
-                    manufacturerList?.sort((a, b) => {
-                      if (a.name.toLowerCase() < b.name.toLowerCase()) {
-                        return -1;
-                      }
-                      if (a.name.toLowerCase() > b.name.toLowerCase()) {
-                        return 1;
-                      }
-                      return 0;
-                    }) ?? []
-                  }
+                  options={sortDataList(manufacturerList ?? [], 'name')}
                   size="small"
                   isOptionEqualToValue={(option, value) =>
                     option.name === value.name
