@@ -2,6 +2,7 @@ import {
   generateUniqueName,
   trimStringValues,
   generateUniqueId,
+  sortDataList,
 } from './utils';
 
 describe('Utility functions', () => {
@@ -80,5 +81,23 @@ describe('Utility functions', () => {
       expect(id1.startsWith(prefix)).toBe(true);
       expect(id2.startsWith(prefix)).toBe(true);
     });
+  });
+
+  it('should sort data based on given value to be sorted on', () => {
+    const testList = [
+      { name: 'John' },
+      { name: 'Amanda' },
+      { name: 'Susan' },
+      { name: 'Jack' },
+    ];
+
+    const sortedList = sortDataList(testList, 'name');
+
+    expect(sortedList).toEqual([
+      { name: 'Amanda' },
+      { name: 'Jack' },
+      { name: 'John' },
+      { name: 'Susan' },
+    ]);
   });
 });
