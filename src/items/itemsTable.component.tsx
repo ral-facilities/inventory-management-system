@@ -72,18 +72,14 @@ export function ItemsTable(props: ItemTableProps) {
     undefined
   );
 
-  //console.log(itemsData);
-
   const systemIdSet = new Set<string>(
     itemsData?.map((item) => item.system_id) ?? []
   );
 
-  // console.log(systemIdSet);
   let isLoading = isLoadingItems;
   const systemList: (System | undefined)[] = useSystemIds(
     Array.from(systemIdSet.values())
   ).map((query) => {
-    console.log(query.isLoading);
     isLoading = isLoading || query.isLoading;
     return query.data;
   });
@@ -91,7 +87,6 @@ export function ItemsTable(props: ItemTableProps) {
   //Once loading finished - use same logic as catalogueItemsTable to pair up data
   //Purposefully leave out systemList from dependencies for same reasons as catalogueItemsTable
   React.useEffect(() => {
-    console.log(isLoading);
     if (!isLoading && itemsData) {
       setTableRows(
         itemsData.map((itemData) => ({
