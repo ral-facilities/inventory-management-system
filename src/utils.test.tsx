@@ -87,23 +87,67 @@ describe('Utility functions', () => {
     });
   });
 
-  it('should render text which overflows and is a tooltip', async () => {
-    const testText =
-      'This is a very very long piece of text which will overflow';
+  describe('OverflowTip', () => {
+    it('renders children without tooltip when content does not overflow', async () => {
+      renderComponentWithRouterProvider(
+        <OverflowTip columnSize={200}>
+          {"Some text that doesn't overflow"}
+        </OverflowTip>
+      );
 
-    renderComponentWithRouterProvider(
-      <OverflowTip columnSize={250}>{testText}</OverflowTip>
-    );
+      const overFlowTip = screen.getByText("Some text that doesn't overflow");
 
-    const overFlowTip = screen.getByText(testText);
+      expect(
+        screen.getAllByText("Some text that doesn't overflow").length
+      ).toBe(1);
 
-    //checks if text is overflowed
-    expect(overFlowTip).toHaveStyle('overflow: hidden');
+      await userEvent.hover(overFlowTip);
 
-    await userEvent.hover(overFlowTip);
+      expect(
+        screen.getAllByText("Some text that doesn't overflow").length
+      ).toBe(1);
+    });
 
-    await waitFor(() => {
-      expect(screen.getByText(testText)).toBeInTheDocument();
+    it('renders children with tooltip when content overflows', async () => {
+      // Mocking scrollWidth and clientWidth to make content overflow
+      const mockScrollWidth = 300;
+      const mockClientWidth = 200;
+
+      vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get').mockReturnValue(
+        mockScrollWidth
+      );
+      vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(
+        mockClientWidth
+      );
+
+      renderComponentWithRouterProvider(
+        <OverflowTip columnSize={200}>
+          Some long text that overflows
+        </OverflowTip>
+      );
+      const overFlowTip = screen.getByText('Some long text that overflows');
+
+      await waitFor(() => {
+        expect(
+          screen.getAllByText('Some long text that overflows').length
+        ).toBe(1);
+      });
+
+      await userEvent.hover(overFlowTip);
+
+      await waitFor(() => {
+        expect(
+          screen.getAllByText('Some long text that overflows').length
+        ).toBe(2);
+      });
+
+      await userEvent.unhover(overFlowTip);
+
+      await waitFor(() => {
+        expect(
+          screen.getAllByText('Some long text that overflows').length
+        ).toBe(1);
+      });
     });
   });
 

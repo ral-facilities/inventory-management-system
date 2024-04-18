@@ -110,7 +110,6 @@ export const OverflowTip = ({ children, columnSize }: any) => {
       placement="top"
       enterTouchDelay={0}
       arrow
-      aria-label={`Catalogue item description: ${children}`}
     >
       <div
         ref={overflowElementRef}

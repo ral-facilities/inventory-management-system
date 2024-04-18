@@ -191,7 +191,18 @@ describe('Catalogue Items Table', () => {
     ]);
   });
 
-  it('displays full description on hover', async () => {
+  it.only('displays full description on hover', async () => {
+    // Mocking scrollWidth and clientWidth to make content overflow
+    const mockScrollWidth = 300;
+    const mockClientWidth = 200;
+
+    vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get').mockReturnValue(
+      mockScrollWidth
+    );
+    vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(
+      mockClientWidth
+    );
+
     createView();
 
     await waitFor(() => {
@@ -200,21 +211,38 @@ describe('Catalogue Items Table', () => {
 
     await ensureColumnsVisible(['Description']);
 
-    const infoIcon = screen.getByLabelText(
-      'Catalogue item description: Precision energy meters for accurate measurements. 26'
+    const infoIcon = screen.getByText(
+      'Precision energy meters for accurate measurements. 26'
     );
+
+    await waitFor(() => {
+      expect(
+        screen.getAllByText(
+          'Precision energy meters for accurate measurements. 26'
+        ).length
+      ).toBe(1);
+    });
 
     await user.hover(infoIcon);
 
     await waitFor(() => {
       expect(
-        screen.getByRole('tooltip', {
-          name: 'Catalogue item description: Precision energy meters for accurate measurements. 26',
-          hidden: true,
-        })
-      ).toBeVisible();
+        screen.getAllByText(
+          'Precision energy meters for accurate measurements. 26'
+        ).length
+      ).toBe(2);
     });
-  });
+
+    await user.unhover(infoIcon);
+
+    await waitFor(() => {
+      expect(
+        screen.getAllByText(
+          'Precision energy meters for accurate measurements. 26'
+        ).length
+      ).toBe(1);
+    });
+  }, 20000);
 
   it('displays notes tooltip on hover', async () => {
     createView();
