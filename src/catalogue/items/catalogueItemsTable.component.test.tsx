@@ -191,7 +191,7 @@ describe('Catalogue Items Table', () => {
     ]);
   });
 
-  it.only('displays full description on hover', async () => {
+  it('displays full description on hover', async () => {
     // Mocking scrollWidth and clientWidth to make content overflow
     const mockScrollWidth = 300;
     const mockClientWidth = 200;
