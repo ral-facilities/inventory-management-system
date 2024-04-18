@@ -28,9 +28,9 @@ import {
   // To resolve react/jsx-pascal-case
   MRT_GlobalFilterTextField as MRTGlobalFilterTextField,
   MRT_TableBodyCellValue as MRTTableBodyCellValue,
-  MRT_BottomToolbar,
   MRT_ColumnDef,
   MRT_RowSelectionState,
+  MRT_TablePagination,
   useMaterialReactTable,
 } from 'material-react-table';
 import React from 'react';
@@ -164,7 +164,7 @@ const columns: MRT_ColumnDef<System>[] = [
   },
 ];
 
-const MIN_SUBSYSTEMS_WIDTH = '480px';
+const MIN_SUBSYSTEMS_WIDTH = '320px';
 
 function Systems() {
   // Navigation
@@ -297,13 +297,6 @@ function Systems() {
         </MenuItem>,
       ];
     },
-    renderBottomToolbarCustomActions: ({ table }) => (
-      <Typography sx={{ paddingLeft: '8px' }}>
-        {table.getFilteredRowModel().rows.length == subsystemsData?.length
-          ? `Total Systems: ${subsystemsData.length}`
-          : `Returned ${table.getFilteredRowModel().rows.length} out of ${subsystemsData?.length} Systems`}
-      </Typography>
-    ),
   });
 
   return (
@@ -461,7 +454,15 @@ function Systems() {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  <MRT_BottomToolbar table={subsystemsTable} />
+                  <Box sx={{ paddingTop: '8px' }}>
+                    <Typography sx={{ paddingLeft: '8px' }}>
+                      {subsystemsTable.getFilteredRowModel().rows.length ==
+                      subsystemsData?.length
+                        ? `Total Systems: ${subsystemsData.length}`
+                        : `Returned ${subsystemsTable.getFilteredRowModel().rows.length} out of ${subsystemsData?.length} Systems`}
+                    </Typography>
+                    <MRT_TablePagination table={subsystemsTable} />
+                  </Box>
                 </Stack>
               </>
             )}
