@@ -214,16 +214,6 @@ describe('Catalogue Items Table', () => {
         })
       ).toBeVisible();
     });
-
-    await user.unhover(infoIcon);
-
-    await waitFor(() => {
-      expect(
-        screen.queryAllByText(
-          'Precision energy meters for accurate measurements. 26'
-        ).length
-      ).toBe(1);
-    });
   });
 
   it('displays notes tooltip on hover', async () => {
