@@ -4,6 +4,7 @@ import {
   trimStringValues,
   generateUniqueId,
   OverflowTip,
+  sortDataList,
 } from './utils';
 import userEvent from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from './testUtils';
@@ -101,6 +102,24 @@ describe('Utility functions', () => {
 
     await waitFor(() => {
       expect(screen.getByText(testText)).toBeInTheDocument();
+    });
+
+    it('should sort data based on given value to be sorted on', () => {
+      const testList = [
+        { name: 'John' },
+        { name: 'Amanda' },
+        { name: 'Susan' },
+        { name: 'Jack' },
+      ];
+
+      const sortedList = sortDataList(testList, 'name');
+
+      expect(sortedList).toEqual([
+        { name: 'Amanda' },
+        { name: 'Jack' },
+        { name: 'John' },
+        { name: 'Susan' },
+      ]);
     });
   });
 });
