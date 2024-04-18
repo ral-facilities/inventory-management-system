@@ -91,7 +91,9 @@ describe('Utility functions', () => {
     const testText =
       'This is a very very long piece of text which will overflow';
 
-    renderComponentWithRouterProvider(<OverflowTip>{testText}</OverflowTip>);
+    renderComponentWithRouterProvider(
+      <OverflowTip columnSize={250}>{testText}</OverflowTip>
+    );
 
     const overFlowTip = screen.getByText(testText);
 
@@ -103,23 +105,23 @@ describe('Utility functions', () => {
     await waitFor(() => {
       expect(screen.getByText(testText)).toBeInTheDocument();
     });
+  });
 
-    it('should sort data based on given value to be sorted on', () => {
-      const testList = [
-        { name: 'John' },
-        { name: 'Amanda' },
-        { name: 'Susan' },
-        { name: 'Jack' },
-      ];
+  it('should sort data based on given value to be sorted on', () => {
+    const testList = [
+      { name: 'John' },
+      { name: 'Amanda' },
+      { name: 'Susan' },
+      { name: 'Jack' },
+    ];
 
-      const sortedList = sortDataList(testList, 'name');
+    const sortedList = sortDataList(testList, 'name');
 
-      expect(sortedList).toEqual([
-        { name: 'Amanda' },
-        { name: 'Jack' },
-        { name: 'John' },
-        { name: 'Susan' },
-      ]);
-    });
+    expect(sortedList).toEqual([
+      { name: 'Amanda' },
+      { name: 'Jack' },
+      { name: 'John' },
+      { name: 'Susan' },
+    ]);
   });
 });
