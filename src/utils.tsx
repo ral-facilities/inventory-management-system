@@ -91,7 +91,7 @@ export const formatDateTimeStrings = (
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const OverflowTip = ({ children }: any) => {
+export const OverflowTip = ({ children, columnSize }: any) => {
   const [isOverflowed, setIsOverflow] = React.useState(false);
   const overflowElementRef = useRef<HTMLInputElement | null>(null);
   React.useEffect(() => {
@@ -101,7 +101,7 @@ export const OverflowTip = ({ children }: any) => {
           overflowElementRef.current.clientWidth
       );
     }
-  }, []);
+  }, [columnSize]);
   return (
     <Tooltip
       role="tooltip"

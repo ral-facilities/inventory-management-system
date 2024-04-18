@@ -303,9 +303,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         id: 'catalogueItem.description',
         size: 250,
         enableGrouping: false,
-        Cell: ({ row }) =>
+        Cell: ({ cell, row }) =>
           row.original.catalogueItem.description && (
-            <OverflowTip>{row.original.catalogueItem.description}</OverflowTip>
+            <OverflowTip columnSize={cell.column.getSize()}>
+              {row.original.catalogueItem.description}
+            </OverflowTip>
           ),
       },
       {
