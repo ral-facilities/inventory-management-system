@@ -1,4 +1,6 @@
+import { Tooltip } from '@mui/material';
 import { format, parseISO } from 'date-fns';
+import React, { useRef } from 'react';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -86,6 +88,41 @@ export const formatDateTimeStrings = (
     : format(date, 'dd MMM yyyy');
 
   return formattedDate;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const OverflowTip = ({ children, columnSize }: any) => {
+  const [isOverflowed, setIsOverflow] = React.useState(false);
+  const overflowElementRef = useRef<HTMLInputElement | null>(null);
+  React.useEffect(() => {
+    if (overflowElementRef.current) {
+      setIsOverflow(
+        overflowElementRef.current.scrollWidth >
+          overflowElementRef.current.clientWidth
+      );
+    }
+  }, [columnSize]);
+  return (
+    <Tooltip
+      role="tooltip"
+      title={children}
+      disableHoverListener={!isOverflowed}
+      placement="top"
+      enterTouchDelay={0}
+      arrow
+    >
+      <div
+        ref={overflowElementRef}
+        style={{
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }}
+      >
+        {children}
+      </div>
+    </Tooltip>
+  );
 };
 
 let lastId = 0;
