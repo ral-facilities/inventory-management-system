@@ -38,6 +38,7 @@ import {
 } from '../../app.types';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
+  OverflowTip,
   formatDateTimeStrings,
   generateUniqueName,
   getPageHeightCalc,
@@ -302,17 +303,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         id: 'catalogueItem.description',
         size: 250,
         enableGrouping: false,
-        Cell: ({ row }) =>
+        Cell: ({ cell, row }) =>
           row.original.catalogueItem.description && (
-            <Tooltip
-              title={row.original.catalogueItem.description}
-              placement="top"
-              enterTouchDelay={0}
-              arrow
-              aria-label={`Catalogue item description: ${row.original.catalogueItem.description}`}
-            >
-              <InfoOutlinedIcon />
-            </Tooltip>
+            <OverflowTip columnSize={cell.column.getSize()}>
+              {row.original.catalogueItem.description}
+            </OverflowTip>
           ),
       },
       {

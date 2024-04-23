@@ -1,4 +1,6 @@
+import { Tooltip } from '@mui/material';
 import { format, parseISO } from 'date-fns';
+import React, { useRef } from 'react';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -88,6 +90,41 @@ export const formatDateTimeStrings = (
   return formattedDate;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const OverflowTip = ({ children, columnSize }: any) => {
+  const [isOverflowed, setIsOverflow] = React.useState(false);
+  const overflowElementRef = useRef<HTMLInputElement | null>(null);
+  React.useEffect(() => {
+    if (overflowElementRef.current) {
+      setIsOverflow(
+        overflowElementRef.current.scrollWidth >
+          overflowElementRef.current.clientWidth
+      );
+    }
+  }, [columnSize]);
+  return (
+    <Tooltip
+      role="tooltip"
+      title={children}
+      disableHoverListener={!isOverflowed}
+      placement="top"
+      enterTouchDelay={0}
+      arrow
+    >
+      <div
+        ref={overflowElementRef}
+        style={{
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }}
+      >
+        {children}
+      </div>
+    </Tooltip>
+  );
+};
+
 let lastId = 0;
 
 export function generateUniqueId(prefix: string = 'id_'): string {
@@ -98,3 +135,8 @@ export function generateUniqueId(prefix: string = 'id_'): string {
 export const resetUniqueIdCounter = () => {
   lastId = 0;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function sortDataList(data: any[], sortedValue: string) {
+  return data.sort((a, b) => a[sortedValue].localeCompare(b[sortedValue]));
+}
