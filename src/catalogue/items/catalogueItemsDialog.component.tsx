@@ -184,7 +184,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   }, [parentCatalogueItemPropertiesInfo, selectedCatalogueItem, open]);
 
   const handlePropertyChange = (index: number, value: string | null) => {
-    const updatedPropertyValues = [...propertyValues];
+    const updatedPropertyValues = JSON.parse(JSON.stringify(propertyValues));
 
     if (value === null || (typeof value === 'string' && value.trim() === '')) {
       updatedPropertyValues[index] = null;
@@ -193,7 +193,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     }
     setPropertyValues(updatedPropertyValues);
     // Clear the error state for the changed property
-    const updatedPropertyErrors = [...propertyErrors];
+    const updatedPropertyErrors = JSON.parse(JSON.stringify(propertyErrors));
     updatedPropertyErrors[index] = false;
     setPropertyErrors(updatedPropertyErrors);
     setFormError(false);
@@ -337,7 +337,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     let hasPropertiesErrors = false;
 
     // Check properties
-    const updatedPropertyErrors = [...propertyErrors];
+    const updatedPropertyErrors = JSON.parse(JSON.stringify(propertyErrors));
 
     const updatedProperties = parentCatalogueItemPropertiesInfo.map(
       (property, index) => {

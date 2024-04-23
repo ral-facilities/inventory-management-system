@@ -69,9 +69,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   };
 
   const handleDeleteField = (cip_placement_id: string) => {
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
-      ...formFields,
-    ];
+    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] =
+      JSON.parse(JSON.stringify(formFields));
 
     // Find the index of the item with the given cip_placement_id
     const index = updatedFormFields.findIndex(
@@ -108,9 +107,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     field: keyof CatalogueCategoryFormData,
     value: string | boolean | null
   ) => {
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
-      ...formFields,
-    ];
+    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] =
+      JSON.parse(JSON.stringify(formFields));
 
     const fieldIndex = updatedFormFields.findIndex(
       (field) => field.cip_placement_id === cip_placement_id
@@ -177,9 +175,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     resetFormError();
   };
   const handleAddListValue = (cip_placement_id: string) => {
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
-      ...formFields,
-    ];
+    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] =
+      JSON.parse(JSON.stringify(formFields));
 
     // Find the index of the item with the given cip_placement_id
     const index = updatedFormFields.findIndex(
@@ -235,9 +232,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       return;
     }
 
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
-      ...formFields,
-    ];
+    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] =
+      JSON.parse(JSON.stringify(formFields));
     const currentField = updatedFormFields[fieldIndex];
 
     if (currentField.allowed_values) {
@@ -295,12 +291,11 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     );
 
     if (fieldIndex === -1) {
-      return; 
+      return;
     }
 
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
-      ...formFields,
-    ];
+    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] =
+      JSON.parse(JSON.stringify(formFields));
     const currentField = updatedFormFields[fieldIndex];
 
     if (currentField.allowed_values) {
@@ -462,7 +457,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               value={field.allowed_values?.type ?? 'any'}
               onChange={(e) => {
                 const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] =
-                  [...formFields];
+                  JSON.parse(JSON.stringify(formFields));
                 const fieldIndex = updatedFormFields.findIndex(
                   (formField) =>
                     formField.cip_placement_id === field.cip_placement_id

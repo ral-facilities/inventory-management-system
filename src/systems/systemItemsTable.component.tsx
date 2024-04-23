@@ -377,9 +377,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                               status.catalogue_item_id ===
                               row.original.catalogueItem?.id
                           );
-                          const updatedAggregatedCellUsageStatus = [
-                            ...aggregatedCellUsageStatus,
-                          ];
+                          const updatedAggregatedCellUsageStatus = JSON.parse(
+                            JSON.stringify(aggregatedCellUsageStatus)
+                          );
 
                           updatedAggregatedCellUsageStatus[
                             itemIndex
@@ -394,8 +394,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                         }
 
                         if (onChangeUsageStatuses && usageStatuses) {
-                          const updatedUsageStatuses = [...usageStatuses];
-
+                          const updatedUsageStatuses = JSON.parse(
+                            JSON.stringify(usageStatuses)
+                          );
                           for (
                             let i = 0;
                             i < updatedUsageStatuses.length;
@@ -487,7 +488,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                             (status: UsageStatusesType) =>
                               status.item_id === row.original.item.id
                           );
-                          const updatedUsageStatuses = [...usageStatuses];
+                          const updatedUsageStatuses = JSON.parse(
+                            JSON.stringify(usageStatuses)
+                          );
 
                           updatedUsageStatuses[itemIndex].usageStatus =
                             UsageStatusType[
@@ -521,9 +524,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                               status.catalogue_item_id ===
                               row.original.catalogueItem?.id
                           );
-                          const updatedUsageStatuses = [
-                            ...aggregatedCellUsageStatus,
-                          ];
+                          const updatedUsageStatuses = JSON.parse(
+                            JSON.stringify(aggregatedCellUsageStatus)
+                          );
 
                           updatedUsageStatuses[itemIndex].usageStatus = '';
 
