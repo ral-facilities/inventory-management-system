@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { CatalogueItem, Item, UsageStatusType } from '../app.types';
 import { useManufacturer } from '../api/manufacturers';
 import { formatDateTimeStrings } from '../utils';
+import { useSystem } from '../api/systems';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function TabPanel(props: any) {
@@ -45,6 +46,8 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
   const { data: manufacturerData } = useManufacturer(
     catalogueItemIdData.manufacturer_id
   );
+  const { data: systemData } = useSystem(itemData.system_id);
+
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
@@ -129,6 +132,20 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 <Typography color="text.primary">Usage Status</Typography>
                 <Typography color="text.secondary">
                   {Object.values(UsageStatusType)[itemData.usage_status]}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12} sm={6} key={1}>
+                <Typography color="text.primary">System</Typography>
+                <Typography color="text.secondary">
+                  <MuiLink
+                    component={Link}
+                    underline="hover"
+                    target="_blank"
+                    to={'/systems/' + systemData?.id}
+                  >
+                    {systemData?.name}
+                  </MuiLink>
                 </Typography>
               </Grid>
 

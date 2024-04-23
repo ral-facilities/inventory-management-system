@@ -48,7 +48,7 @@ const fetchSystems = async (parent_id?: string): Promise<System[]> => {
 export const useSystemIds = (ids: string[]): UseQueryResult<System>[] => {
   return useQueries({
     queries: ids.map((id) => ({
-      queryKey: ['Systems', id],
+      queryKey: ['System', id],
       queryFn: () => fetchSystem(id),
     })),
   });

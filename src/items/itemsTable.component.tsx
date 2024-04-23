@@ -85,7 +85,6 @@ export function ItemsTable(props: ItemTableProps) {
   });
 
   //Once loading finished - use same logic as catalogueItemsTable to pair up data
-  //Purposefully leave out systemList from dependencies for same reasons as catalogueItemsTable
   React.useEffect(() => {
     if (!isLoading && itemsData) {
       setTableRows(
@@ -97,6 +96,7 @@ export function ItemsTable(props: ItemTableProps) {
         }))
       );
     }
+    //Purposefully leave out systemList from dependencies for same reasons as catalogueItemsTable
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemsData, isLoading]);
 
@@ -236,7 +236,8 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'System',
-        accessorFn: (row) => row.system?.name,
+        accessorFn: (row) => row.system?.name ?? '',
+        getGroupingValue: (row) => row.system?.id ?? '',
         id: 'system.name',
         size: 250,
         Cell: ({ row }) => (

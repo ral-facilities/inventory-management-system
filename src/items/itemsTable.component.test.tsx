@@ -56,7 +56,7 @@ describe('Items Table', () => {
     const view = createView();
 
     await waitFor(() => {
-      expect(screen.getByText('Serial Number')).toBeInTheDocument();
+      expect(screen.getByText('5YUQDDjKpz2z')).toBeInTheDocument();
     });
     expect(view.asFragment()).toMatchSnapshot();
   });
