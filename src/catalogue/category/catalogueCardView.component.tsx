@@ -51,25 +51,19 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
     endIndex
   );
 
+  const cardViewHeight = getPageHeightCalc('100px');
+  const cardViewCardsHeight = getPageHeightCalc('100px + 72px');
+
   return (
-    <Grid container flexDirection={'column'}>
-      <Grid
-        container
-        item
-        xs={12}
-        maxHeight={getPageHeightCalc('150px')}
-        overflow={'auto'}
-      >
+    <Grid
+      container
+      flexDirection={'column'}
+      height={cardViewHeight}
+      maxHeight={cardViewHeight}
+    >
+      <Grid container item maxHeight={cardViewCardsHeight} overflow={'auto'}>
         {displayedCatalogueCategories?.map((item, index) => (
-          <Grid
-            item
-            key={index}
-            xs={12}
-            sm={6}
-            md={4}
-            flexDirection={'column'}
-            alignContent={'center'}
-          >
+          <Grid item key={index} sm={6} md={4} width={'100%'}>
             <CatalogueCard
               {...item}
               onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
@@ -84,85 +78,92 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
           </Grid>
         ))}
       </Grid>
-      <Grid
-        container
-        item
-        alignItems="center"
-        justifyContent="right"
-        xs={12}
-        px={1}
-        py={1.5}
-        position={'fixed'}
-        bottom={12}
-        right={0}
-      >
-        <Grid item position={'fixed'} left={8}>
-          <Typography sx={{ paddingLeft: '8px' }}>
+
+      <Grid container item margin={0} marginTop={'auto'}>
+        <Grid item xs={6} justifyContent={'left'} alignSelf={'center'}>
+          <Typography
+            sx={{ paddingTop: '16px', paddingLeft: '8px', margin: '8px' }}
+          >
             {`Total Categories: ${catalogueCategoryData.length}`}
           </Typography>
         </Grid>
 
-        <Grid item>
-          <FormControl
-            variant="standard"
-            sx={{
-              margin: 1,
-              minWidth: '120px',
-              display: 'flex',
-              flexDirection: 'row',
-            }}
-          >
-            <Typography
+        <Grid
+          container
+          item
+          xs={6}
+          justifyContent={'flex-end'}
+          flexDirection={'row'}
+          alignSelf={'center'}
+        >
+          <Grid item flexDirection={'row'}>
+            <FormControl
+              variant="standard"
               sx={{
-                padding: 2,
-                color: 'text.secondary',
+                paddingTop: '16px',
+                margin: 1,
+                minWidth: '120px',
+                display: 'flex',
+                flexDirection: 'row',
               }}
             >
-              {'Categories per page'}
-            </Typography>
-            <Select
-              disableUnderline
-              value={preservedState.pagination.pageSize}
-              inputProps={{
-                name: 'Max Results',
-                labelId: 'select-max-results',
-                'aria-label': 'Categories per page',
-              }}
-              onChange={(event) =>
-                onPreservedStatesChange.onPaginationChange({
-                  pageSize: +event.target.value,
-                  pageIndex: 1,
-                })
-              }
-              label={'Max Results'}
-            >
-              <MenuItem value={'30'}>30</MenuItem>
-              <MenuItem value={'45'}>45</MenuItem>
-              <MenuItem value={'60'}>60</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
+              <Typography
+                sx={{
+                  padding: 1,
+                  color: 'text.secondary',
+                }}
+              >
+                {'Categories per page'}
+              </Typography>
+              <Select
+                disableUnderline
+                value={preservedState.pagination.pageSize}
+                inputProps={{
+                  name: 'Max Results',
+                  labelId: 'select-max-results',
+                  'aria-label': 'Categories per page',
+                }}
+                onChange={(event) =>
+                  onPreservedStatesChange.onPaginationChange({
+                    pageSize: +event.target.value,
+                    pageIndex: 1,
+                  })
+                }
+                label={'Max Results'}
+              >
+                <MenuItem value={'30'}>30</MenuItem>
+                <MenuItem value={'45'}>45</MenuItem>
+                <MenuItem value={'60'}>60</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
 
-        <Grid item>
-          <Pagination
-            variant="outlined"
-            shape="rounded"
-            count={Math.ceil(
-              catalogueCategoryData?.length / preservedState.pagination.pageSize
-            )}
-            page={preservedState.pagination.pageIndex}
-            onChange={(_event, value) =>
-              onPreservedStatesChange.onPaginationChange((prevState) => ({
-                ...prevState,
-                pageIndex: value,
-              }))
-            }
-            size="medium"
-            color="secondary"
-            sx={{ textAlign: 'center' }}
-            aria-label="pagination"
-            className="catalogue-categories-pagination"
-          />
+          <Grid
+            item
+            flexDirection={'row'}
+            sx={{ paddingTop: '18px', margin: '8px' }}
+          >
+            <Pagination
+              variant="outlined"
+              shape="rounded"
+              count={Math.ceil(
+                catalogueCategoryData?.length /
+                  preservedState.pagination.pageSize
+              )}
+              page={preservedState.pagination.pageIndex}
+              onChange={(_event, value) =>
+                onPreservedStatesChange.onPaginationChange((prevState) => ({
+                  ...prevState,
+                  pageIndex: value,
+                }))
+              }
+              size="medium"
+              color="secondary"
+              sx={{ textAlign: 'center' }}
+              aria-label="pagination"
+              className="catalogue-categories-pagination"
+            />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
