@@ -105,10 +105,9 @@ const CatalogueCategoryDialog = React.memo(
           }) || undefined;
 
         const updatedSelectedCatalogueCategory: AddCatalogueCategoryWithPlacementIds =
-          {
-            ...selectedCatalogueCategory,
-            catalogue_item_properties: updatedCatalogueItemProperties,
-          };
+          JSON.parse(JSON.stringify(selectedCatalogueCategory));
+        updatedSelectedCatalogueCategory.catalogue_item_properties =
+          updatedCatalogueItemProperties;
 
         setCategoryData(
           // This is not ideal but fixes the properties being reset when closing the dialog
@@ -611,15 +610,15 @@ const CatalogueCategoryDialog = React.memo(
                   name="controlled-radio-buttons-group"
                   value={categoryData.is_leaf ? 'true' : 'false'}
                   onChange={(_event, value) => {
-                    const newData = {
-                      ...categoryData,
-                      is_leaf: value === 'true' ? true : false,
-                    };
+                    const updatedCategoryData: AddCatalogueCategoryWithPlacementIds =
+                      JSON.parse(JSON.stringify(categoryData));
+                    updatedCategoryData.is_leaf =
+                      value === 'true' ? true : false;
                     if (value === 'false') {
-                      newData.catalogue_item_properties = undefined;
+                      updatedCategoryData.catalogue_item_properties = undefined;
                       setCatalogueItemPropertiesErrors([]);
                     }
-                    handleFormChange(newData);
+                    handleFormChange(updatedCategoryData);
                   }}
                 >
                   <FormControlLabel

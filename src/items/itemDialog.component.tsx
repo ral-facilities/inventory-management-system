@@ -215,7 +215,9 @@ function ItemDialog(props: ItemDialogProps) {
 
   const handleItemDetails = React.useCallback(
     (field: keyof ItemDetailsPlaceholder, value: string | Date | null) => {
-      const updatedItemDetails = { ...itemDetails };
+      const updatedItemDetails: ItemDetailsPlaceholder = JSON.parse(
+        JSON.stringify(itemDetails)
+      );
 
       switch (field) {
         case 'delivered_date':
@@ -358,10 +360,8 @@ function ItemDialog(props: ItemDialogProps) {
 
     if (hasPropertiesErrors) return;
 
-    const item: AddItem = {
-      ...details,
-      properties: updatedProperties,
-    };
+    const item: AddItem = JSON.parse(JSON.stringify(details));
+    item.properties = updatedProperties;
 
     if (advancedSerialNumberOptions.quantity) {
       addItems({

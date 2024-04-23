@@ -423,9 +423,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           itemUsageStatusesErrorState &&
                           onChangeItemUsageStatusesErrorState
                         ) {
-                          const updatedItemUsageStatusesErrorState = {
-                            ...itemUsageStatusesErrorState,
-                          };
+                          const updatedItemUsageStatusesErrorState = JSON.parse(
+                            JSON.stringify(itemUsageStatusesErrorState)
+                          );
+
                           Object.entries(itemUsageStatusesErrorState).forEach(
                             ([item_id, status]) => {
                               if (
@@ -504,9 +505,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           itemUsageStatusesErrorState &&
                           onChangeItemUsageStatusesErrorState
                         ) {
-                          const updatedItemUsageStatusesErrorState = {
-                            ...itemUsageStatusesErrorState,
-                          };
+                          const updatedItemUsageStatusesErrorState = JSON.parse(
+                            JSON.stringify(itemUsageStatusesErrorState)
+                          );
+
                           delete updatedItemUsageStatusesErrorState[
                             row.original.item.id
                           ];

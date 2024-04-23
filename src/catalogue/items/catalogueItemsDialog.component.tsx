@@ -560,7 +560,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
     field: keyof CatalogueDetailsErrorMessages,
     value: string | null
   ) => {
-    const updatedDetails = { ...catalogueItemDetails };
+    const updatedDetails: CatalogueItemDetailsPlaceholder = JSON.parse(
+      JSON.stringify(catalogueItemDetails)
+    );
 
     setErrorMessages({ ...errorMessages, [field]: undefined });
     setFormError(false);
