@@ -1,7 +1,10 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../../api/api';
-import { CatalogueCategory, CatalogueCategoryFormData } from '../../app.types';
+import {
+  CatalogueCategory,
+  AddCatalogueCategoryProperty,
+} from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueCategoryDialog, {
@@ -26,7 +29,7 @@ describe('Catalogue Category Dialog', () => {
   const modifyValues = async (values: {
     name?: string;
     // New fields to add (if any)
-    newFormFields?: CatalogueCategoryFormData[];
+    newFormFields?: AddCatalogueCategoryProperty[];
   }) => {
     values.name !== undefined &&
       fireEvent.change(screen.getByLabelText('Name *'), {
@@ -705,6 +708,7 @@ describe('Catalogue Category Dialog', () => {
           is_leaf: true,
           catalogue_item_properties: [
             {
+              id: '1',
               name: 'Resolution',
               type: 'number',
               unit: 'megapixels',

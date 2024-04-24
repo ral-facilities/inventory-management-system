@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 import {
   CatalogueCategory,
-  CatalogueCategoryFormData,
+  CatalogueCategoryProperty,
   CatalogueItem,
   Item,
   Manufacturer,
@@ -116,7 +116,7 @@ export const hooksWrapperWithProviders = (props?: {
 
 export const getCatalogueItemsPropertiesById = (
   id: string
-): CatalogueCategoryFormData[] => {
+): CatalogueCategoryProperty[] => {
   const filteredCategories = CatalogueCategoriesJSON.filter(
     (catalogueCategory) => catalogueCategory.id === id
   );

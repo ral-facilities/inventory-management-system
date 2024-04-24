@@ -25,6 +25,7 @@ import ManufacturersJSON from './Manufacturers.json';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import UnitsJSON from './Units.json';
+import { generateUniqueId } from '../utils';
 
 /* MSW v2 expects types for responses, this interface covers any empty body
    or error with detail */
@@ -65,7 +66,12 @@ export const handlers = [
         parent_id: null,
       };
     }
-
+    body = {
+      ...body,
+      catalogue_item_properties: body.catalogue_item_properties?.map(
+        (property) => ({ ...property, id: generateUniqueId('test_id') })
+      ),
+    };
     return HttpResponse.json(
       {
         id: '1',
@@ -215,7 +221,7 @@ export const handlers = [
   http.post<PathParams, AddCatalogueItem, CatalogueItem | ErrorResponse>(
     '/v1/catalogue-items',
     async ({ request }) => {
-      const body = await request.json();
+      let body = await request.json();
 
       if (
         body.name === 'Error 500' ||
@@ -227,6 +233,24 @@ export const handlers = [
         );
       }
 
+      const catalogueCategoryProperties = CatalogueCategoriesJSON.find(
+        (category) => category.id === body.catalogue_category_id
+      )?.catalogue_item_properties;
+
+      body = {
+        ...body,
+        properties: body.properties?.map((property) => {
+          const extraPropertyData = catalogueCategoryProperties?.find(
+            (catalogueCategoryProperty) =>
+              property.id === catalogueCategoryProperty.id
+          );
+          return {
+            ...property,
+            unit: extraPropertyData?.unit,
+            name: extraPropertyData?.name,
+          };
+        }),
+      };
       return HttpResponse.json(
         {
           ...body,
@@ -605,7 +629,7 @@ export const handlers = [
   http.post<PathParams, AddItem, Item | ErrorResponse>(
     '/v1/items',
     async ({ request }) => {
-      const body = await request.json();
+      let body = await request.json();
 
       if (body.serial_number === 'Error 500') {
         return HttpResponse.json(
@@ -613,6 +637,28 @@ export const handlers = [
           { status: 500 }
         );
       }
+
+      const catalogueItem = CatalogueItemsJSON.find(
+        (catalogueItem) => catalogueItem.id === body.catalogue_item_id
+      );
+      const catalogueCategoryProperties = CatalogueCategoriesJSON.find(
+        (category) => category.id === catalogueItem?.catalogue_category_id
+      )?.catalogue_item_properties;
+
+      body = {
+        ...body,
+        properties: body.properties?.map((property) => {
+          const extraPropertyData = catalogueCategoryProperties?.find(
+            (catalogueCategoryProperty) =>
+              property.id === catalogueCategoryProperty.id
+          );
+          return {
+            ...property,
+            unit: extraPropertyData?.unit,
+            name: extraPropertyData?.name,
+          };
+        }),
+      };
 
       return HttpResponse.json(
         {

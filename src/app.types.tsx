@@ -13,18 +13,18 @@ export interface AddCatalogueCategory {
   name: string;
   parent_id?: string | null;
   is_leaf: boolean;
-  catalogue_item_properties?: CatalogueCategoryFormData[];
+  catalogue_item_properties?: AddCatalogueCategoryProperty[];
 }
 
 export interface AddCatalogueCategoryWithPlacementIds
   extends AddCatalogueCategory {
-  catalogue_item_properties?: CatalogueCategoryFormDataWithPlacementIds[];
+  catalogue_item_properties?: AddCatalogueCategoryPropertyWithPlacementIds[];
 }
 
 export interface EditCatalogueCategory {
   name?: string;
   id: string;
-  catalogue_item_properties?: CatalogueCategoryFormData[];
+  catalogue_item_properties?: CatalogueCategoryProperty[];
   is_leaf?: boolean;
   parent_id?: string | null;
 }
@@ -50,7 +50,7 @@ export interface CatalogueCategory {
   parent_id: string | null;
   code: string;
   is_leaf: boolean;
-  catalogue_item_properties?: CatalogueCategoryFormData[];
+  catalogue_item_properties?: CatalogueCategoryProperty[];
   created_time: string;
   modified_time: string;
 }
@@ -90,7 +90,7 @@ export interface AllowedValuesList {
 }
 export type AllowedValues = AllowedValuesList;
 
-export interface CatalogueCategoryFormData {
+export interface AddCatalogueCategoryProperty {
   name: string;
   type: string;
   unit?: string;
@@ -98,8 +98,13 @@ export interface CatalogueCategoryFormData {
   allowed_values?: AllowedValues;
 }
 
-export interface CatalogueCategoryFormDataWithPlacementIds
-  extends CatalogueCategoryFormData {
+export interface CatalogueCategoryProperty
+  extends AddCatalogueCategoryProperty {
+  id: string;
+}
+
+export interface AddCatalogueCategoryPropertyWithPlacementIds
+  extends AddCatalogueCategoryProperty {
   cip_placement_id: string; // Catalogue item properties (cip)
 }
 
@@ -132,12 +137,12 @@ export type CatalogueDetailsErrorMessages = {
 };
 
 export interface CatalogueItemProperty {
-  name: string;
+  id: string;
   value: string | number | boolean | null;
 }
 
 export interface CatalogueItemPropertyResponse {
-  name: string;
+  id: string;
   value: string | number | boolean | null;
   unit: string | null;
 }

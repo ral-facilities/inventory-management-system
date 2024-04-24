@@ -15,19 +15,19 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
   AllowedValuesList,
-  CatalogueCategoryFormData,
+  AddCatalogueCategoryProperty,
   CatalogueItemPropertiesErrorsType,
   AllowedValuesListErrorsType,
   Unit,
-  CatalogueCategoryFormDataWithPlacementIds,
+  AddCatalogueCategoryPropertyWithPlacementIds,
 } from '../../app.types';
 import { useUnits } from '../../api/units';
 import { generateUniqueId } from '../../utils';
 
 export interface CataloguePropertiesFormProps {
-  formFields: CatalogueCategoryFormDataWithPlacementIds[];
+  formFields: AddCatalogueCategoryPropertyWithPlacementIds[];
   onChangeFormFields: (
-    formFields: CatalogueCategoryFormDataWithPlacementIds[]
+    formFields: AddCatalogueCategoryPropertyWithPlacementIds[]
   ) => void;
   catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[];
   onChangeCatalogueItemPropertiesErrors: (
@@ -69,7 +69,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   };
 
   const handleDeleteField = (cip_placement_id: string) => {
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const updatedFormFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       ...formFields,
     ];
 
@@ -105,10 +105,10 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
 
   const handleChange = (
     cip_placement_id: string,
-    field: keyof CatalogueCategoryFormData,
+    field: keyof AddCatalogueCategoryProperty,
     value: string | boolean | null
   ) => {
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const updatedFormFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       ...formFields,
     ];
 
@@ -177,7 +177,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     resetFormError();
   };
   const handleAddListValue = (cip_placement_id: string) => {
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const updatedFormFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       ...formFields,
     ];
 
@@ -235,7 +235,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       return;
     }
 
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const updatedFormFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       ...formFields,
     ];
     const currentField = updatedFormFields[fieldIndex];
@@ -295,10 +295,10 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     );
 
     if (fieldIndex === -1) {
-      return; 
+      return;
     }
 
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const updatedFormFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       ...formFields,
     ];
     const currentField = updatedFormFields[fieldIndex];
@@ -461,7 +461,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             <Select
               value={field.allowed_values?.type ?? 'any'}
               onChange={(e) => {
-                const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] =
+                const updatedFormFields: AddCatalogueCategoryPropertyWithPlacementIds[] =
                   [...formFields];
                 const fieldIndex = updatedFormFields.findIndex(
                   (formField) =>
