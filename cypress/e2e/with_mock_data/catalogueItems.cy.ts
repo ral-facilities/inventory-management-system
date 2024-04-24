@@ -926,8 +926,8 @@ describe('Catalogue Items', () => {
           name: 'Energy Meters 26',
           description: 'Precision energy meters for accurate measurements. 26',
           properties: [
-            { value: 1000, id: '9' },
-            { value: '±0.5%', id: '10' },
+            { id: '9', value: 1000 },
+            { id: '10', value: '±0.5%' },
           ],
           id: '89',
           manufacturer_id: '1',
@@ -952,8 +952,8 @@ describe('Catalogue Items', () => {
           name: 'Energy Meters 27',
           description: 'Precision energy meters for accurate measurements. 27',
           properties: [
-            { value: 2000, id: '9' },
-            { value: null, id: '10' },
+            { id: '9', value: 2000 },
+            { id: '10', value: null },
           ],
           id: '6',
           manufacturer_id: '3',
