@@ -253,9 +253,13 @@ export const useCopyToCatalogueItem = (): UseMutationResult<
           // Information to post (backend will just ignore the extra here - only id and code)
           // Also use Object.assign to copy the data otherwise will modify in place causing issues
           // in tests
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const properties = catalogueItem.properties.map(
+            ({ name, unit, ...rest }) => rest
+          );
           const catalogueItemAdd: AddCatalogueItem = Object.assign(
             {},
-            catalogueItem
+            { ...catalogueItem, properties: properties }
           ) as AddCatalogueItem;
 
           // Assing new parent

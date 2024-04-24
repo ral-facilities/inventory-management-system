@@ -36,6 +36,7 @@ describe('catalogue item directory Dialog', () => {
 
         catalogue_item_properties: [
           {
+            id: '7',
             name: 'Measurement Range',
             type: 'number',
             unit: 'Joules',
@@ -43,6 +44,7 @@ describe('catalogue item directory Dialog', () => {
             allowed_values: null,
           },
           {
+            id: '8',
             name: 'Accuracy',
             type: 'string',
             unit: null,
@@ -59,16 +61,8 @@ describe('catalogue item directory Dialog', () => {
           name: 'Energy Meters 26',
           description: 'Precision energy meters for accurate measurements. 26',
           properties: [
-            {
-              name: 'Measurement Range',
-              value: 1000,
-              unit: 'Joules',
-            },
-            {
-              name: 'Accuracy',
-              value: '±0.5%',
-              unit: null,
-            },
+            { id: '7', name: 'Measurement Range', value: 1000, unit: 'Joules' },
+            { id: '8', name: 'Accuracy', value: '±0.5%', unit: null },
           ],
           id: '89',
           manufacturer_id: '1',
@@ -91,11 +85,8 @@ describe('catalogue item directory Dialog', () => {
           name: 'Energy Meters 27',
           description: 'Precision energy meters for accurate measurements. 27',
           properties: [
-            {
-              name: 'Measurement Range',
-              value: 2000,
-              unit: 'Joules',
-            },
+            { id: '7', name: 'Measurement Range', value: 2000, unit: 'Joules' },
+            { id: '8', name: 'Accuracy', value: null, unit: null },
           ],
           id: '6',
           manufacturer_id: '1',
@@ -342,8 +333,8 @@ describe('catalogue item directory Dialog', () => {
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
-          { name: 'Measurement Range', unit: 'Joules', value: 1000 },
-          { name: 'Accuracy', unit: null, value: '±0.5%' },
+          { id: '7', value: 1000 },
+          { id: '8', value: '±0.5%' },
         ],
       });
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
@@ -366,7 +357,8 @@ describe('catalogue item directory Dialog', () => {
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
-          { name: 'Measurement Range', unit: 'Joules', value: 2000 },
+          { id: '7', value: 2000 },
+          { id: '8', value: null },
         ],
       });
     });
@@ -406,8 +398,8 @@ describe('catalogue item directory Dialog', () => {
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
-          { name: 'Measurement Range', unit: 'Joules', value: 1000 },
-          { name: 'Accuracy', unit: null, value: '±0.5%' },
+          { id: '7', value: 1000 },
+          { id: '8', value: '±0.5%' },
         ],
       });
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
@@ -430,7 +422,8 @@ describe('catalogue item directory Dialog', () => {
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
-          { name: 'Measurement Range', unit: 'Joules', value: 2000 },
+          { id: '7', value: 2000 },
+          { id: '8', value: null },
         ],
       });
     });
