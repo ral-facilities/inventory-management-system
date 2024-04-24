@@ -70,6 +70,7 @@ describe('catalogue category api functions', () => {
       expect(result.current.data).toEqual({
         catalogue_item_properties: [
           {
+            id: '1',
             allowed_values: null,
             mandatory: true,
             name: 'Resolution',
@@ -77,6 +78,7 @@ describe('catalogue category api functions', () => {
             unit: 'megapixels',
           },
           {
+            id: '2',
             allowed_values: null,
             mandatory: false,
             name: 'Frame Rate',
@@ -84,6 +86,7 @@ describe('catalogue category api functions', () => {
             unit: 'fps',
           },
           {
+            id: '3',
             allowed_values: null,
             mandatory: true,
             name: 'Sensor Type',
@@ -91,6 +94,7 @@ describe('catalogue category api functions', () => {
             unit: null,
           },
           {
+            id: '4',
             allowed_values: null,
             mandatory: false,
             name: 'Sensor brand',
@@ -98,6 +102,7 @@ describe('catalogue category api functions', () => {
             unit: null,
           },
           {
+            id: '5',
             allowed_values: null,
             mandatory: true,
             name: 'Broken',
@@ -105,6 +110,7 @@ describe('catalogue category api functions', () => {
             unit: null,
           },
           {
+            id: '6',
             allowed_values: null,
             mandatory: false,
             name: 'Older than five years',

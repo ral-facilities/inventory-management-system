@@ -28,7 +28,6 @@ import {
   AddCatalogueCategoryWithPlacementIds,
   AllowedValuesListErrorsType,
   CatalogueCategory,
-  CatalogueCategoryProperty,
   AddCatalogueCategoryPropertyWithPlacementIds,
   CatalogueItemPropertiesErrorsType,
   EditCatalogueCategory,

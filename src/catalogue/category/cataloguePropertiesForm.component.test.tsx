@@ -35,6 +35,7 @@ describe('Catalogue Properties Form', () => {
       onChangeAllowedValuesListErrors: onChangeAllowedValuesListErrors,
       allowedValuesListErrors: [],
       resetFormError: resetFormError,
+      isDisabled: false,
     };
     user = userEvent.setup();
   });

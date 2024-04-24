@@ -230,12 +230,12 @@ describe('Catalogue Items Dialog', () => {
       obsolete_reason: null,
       obsolete_replacement_catalogue_item_id: null,
       properties: [
-        { name: 'Resolution', value: 12 },
-        { name: 'Frame Rate', value: 60 },
-        { name: 'Sensor Type', value: 'IO' },
-        { name: 'Sensor brand', value: 'pixel' },
-        { name: 'Broken', value: true },
-        { name: 'Older than five years', value: false },
+        { id: '1', value: 12 },
+        { id: '2', value: 60 },
+        { id: '3', value: 'IO' },
+        { id: '4', value: 'pixel' },
+        { id: '5', value: true },
+        { id: '6', value: false },
       ],
     });
   }, 10000);
@@ -292,10 +292,10 @@ describe('Catalogue Items Dialog', () => {
       obsolete_reason: null,
       obsolete_replacement_catalogue_item_id: null,
       properties: [
-        { name: 'Pumping Speed', value: 400 },
-        { name: 'Ultimate Pressure', value: 10 },
+        { id: '17', value: 400 },
+        { id: '18', value: 10 },
         {
-          name: 'Axis',
+          id: '19',
           value: 'y',
         },
       ],
@@ -426,12 +426,12 @@ describe('Catalogue Items Dialog', () => {
       obsolete_reason: null,
       obsolete_replacement_catalogue_item_id: null,
       properties: [
-        { name: 'Resolution', value: 12 },
-        { name: 'Frame Rate', value: null },
-        { name: 'Sensor Type', value: 'IO' },
-        { name: 'Sensor brand', value: null },
-        { name: 'Broken', value: true },
-        { name: 'Older than five years', value: null },
+        { id: '1', value: 12 },
+        { id: '2', value: null },
+        { id: '3', value: 'IO' },
+        { id: '4', value: null },
+        { id: '5', value: true },
+        { id: '6', value: null },
       ],
     });
   });
@@ -710,10 +710,10 @@ describe('Catalogue Items Dialog', () => {
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/17', {
         properties: [
-          { name: 'Pumping Speed', value: 400 },
-          { name: 'Ultimate Pressure', value: 10 },
+          { id: '17', value: 400 },
+          { id: '18', value: 10 },
           {
-            name: 'Axis',
+            id: '19',
             value: 'y',
           },
         ],
@@ -747,10 +747,10 @@ describe('Catalogue Items Dialog', () => {
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/17', {
         properties: [
-          { name: 'Pumping Speed', value: 400 },
-          { name: 'Ultimate Pressure', value: 10 },
+          { id: '17', value: 400 },
+          { id: '18', value: 10 },
           {
-            name: 'Axis',
+            id: '19',
             value: null,
           },
         ],
@@ -855,12 +855,12 @@ describe('Catalogue Items Dialog', () => {
       await user.click(screen.getByRole('button', { name: 'Finish' }));
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
         properties: [
-          { name: 'Resolution', value: 24 },
-          { name: 'Frame Rate', value: 240 },
-          { name: 'Sensor Type', value: 'CCD' },
-          { name: 'Sensor brand', value: 'Nikon' },
-          { name: 'Broken', value: true },
-          { name: 'Older than five years', value: true },
+          { id: '1', value: 24 },
+          { id: '2', value: 240 },
+          { id: '3', value: 'CCD' },
+          { id: '4', value: 'Nikon' },
+          { id: '5', value: true },
+          { id: '6', value: true },
         ],
       });
 

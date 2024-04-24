@@ -480,7 +480,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         JSON.stringify(updatedProperties) !==
         JSON.stringify(
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          selectedCatalogueItem.properties.map(({ unit, ...rest }) => rest)
+          selectedCatalogueItem.properties.map(({ unit, name, ...rest }) => ({
+            id: rest.id,
+            value: rest.value,
+          }))
         );
 
       const isManufacturerUpdated =

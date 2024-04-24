@@ -143,6 +143,7 @@ export interface CatalogueItemProperty {
 
 export interface CatalogueItemPropertyResponse {
   id: string;
+  name: string;
   value: string | number | boolean | null;
   unit: string | null;
 }

@@ -422,7 +422,10 @@ function ItemDialog(props: ItemDialogProps) {
         JSON.stringify(updatedProperties) !==
         JSON.stringify(
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          selectedItem.properties.map(({ unit, ...rest }) => rest)
+          selectedItem.properties.map(({ unit, name, ...rest }) => ({
+            id: rest.id,
+            value: rest.value,
+          }))
         );
 
       const isSystemIdUpdated = details.system_id !== selectedItem.system_id;
