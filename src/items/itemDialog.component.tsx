@@ -198,7 +198,9 @@ function ItemDialog(props: ItemDialogProps) {
   }, [parentCatalogueItemPropertiesInfo, selectedItem, open]);
 
   const handlePropertyChange = (index: number, value: string | null) => {
-    const updatedPropertyValues = JSON.parse(JSON.stringify(propertyValues));
+    const updatedPropertyValues: (string | null)[] = JSON.parse(
+      JSON.stringify(propertyValues)
+    );
 
     if (value === null || (typeof value === 'string' && value.trim() === '')) {
       updatedPropertyValues[index] = null;
@@ -207,12 +209,19 @@ function ItemDialog(props: ItemDialogProps) {
     }
     setPropertyValues(updatedPropertyValues);
     // Clear the error state for the changed property
-    const updatedPropertyErrors = JSON.parse(JSON.stringify(propertyErrors));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const updatedPropertyErrors: any[] = JSON.parse(
+      JSON.stringify(propertyErrors)
+    );
     updatedPropertyErrors[index] = false;
     setPropertyErrors(updatedPropertyErrors);
     setFormErrorMessage(undefined);
   };
-
+  console.log(itemDetails);
+  console.log('----');
+  console.log(itemDetails.warranty_end_date);
+  console.log('----');
+  console.log(typeof itemDetails.warranty_end_date);
   const handleItemDetails = React.useCallback(
     (field: keyof ItemDetailsPlaceholder, value: string | Date | null) => {
       const updatedItemDetails: ItemDetailsPlaceholder = JSON.parse(
@@ -236,7 +245,15 @@ function ItemDialog(props: ItemDialogProps) {
           break;
       }
 
-      setItemDetails(updatedItemDetails);
+      setItemDetails({
+        ...updatedItemDetails,
+        warranty_end_date: updatedItemDetails.warranty_end_date
+          ? new Date(updatedItemDetails.warranty_end_date)
+          : null,
+        delivered_date: updatedItemDetails.delivered_date
+          ? new Date(updatedItemDetails.delivered_date)
+          : null,
+      });
       setFormErrorMessage(undefined);
     },
     [itemDetails]
@@ -266,7 +283,10 @@ function ItemDialog(props: ItemDialogProps) {
     let hasPropertiesErrors = false;
 
     // Check properties
-    const updatedPropertyErrors = JSON.parse(JSON.stringify(propertyErrors));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const updatedPropertyErrors: any[] = JSON.parse(
+      JSON.stringify(propertyErrors)
+    );
 
     const updatedProperties = parentCatalogueItemPropertiesInfo.map(
       (property, index) => {
@@ -360,8 +380,10 @@ function ItemDialog(props: ItemDialogProps) {
 
     if (hasPropertiesErrors) return;
 
-    const item: AddItem = JSON.parse(JSON.stringify(details));
-    item.properties = updatedProperties;
+    const item: AddItem = {
+      ...details,
+      properties: updatedProperties,
+    };
 
     if (advancedSerialNumberOptions.quantity) {
       addItems({

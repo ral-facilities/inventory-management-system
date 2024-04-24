@@ -393,14 +393,37 @@ describe('SystemItemsTable', () => {
 
       // Change usages status for cameras 6 items
       expect(onChangeUsageStatuses).toHaveBeenCalledWith([
-        { item_id: 'KvT2Ox7n', catalogue_item_id: '1', usageStatus: 2 },
-        { item_id: 'G463gOIA', catalogue_item_id: '1', usageStatus: 2 },
-        { item_id: '7Lrj9KVu', catalogue_item_id: '25', usageStatus: 2 },
-        { item_id: 'QQen23yW', catalogue_item_id: '25', usageStatus: 2 },
+        {
+          catalogue_item_id: '1',
+          item_id: 'KvT2Ox7n',
+          usageStatus: '',
+        },
+        {
+          catalogue_item_id: '1',
+          item_id: 'G463gOIA',
+          usageStatus: '',
+        },
+        {
+          catalogue_item_id: '25',
+          item_id: '7Lrj9KVu',
+          usageStatus: 2,
+        },
+        {
+          catalogue_item_id: '25',
+          item_id: 'QQen23yW',
+          usageStatus: 2,
+        },
       ]);
+
       expect(onChangeAggregatedCellUsageStatus).toHaveBeenCalledWith([
-        { catalogue_item_id: '1', usageStatus: 2 },
-        { catalogue_item_id: '25', usageStatus: 2 },
+        {
+          catalogue_item_id: '1',
+          usageStatus: '',
+        },
+        {
+          catalogue_item_id: '25',
+          usageStatus: 2,
+        },
       ]);
     });
 

@@ -200,10 +200,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       ],
     };
 
-    updatedFormFields[index] = {
-      ...currentField,
-      allowed_values: updatedAllowedValues,
-    };
+    updatedFormFields[index] = JSON.parse(JSON.stringify(currentField));
+    updatedFormFields[index].allowed_values = updatedAllowedValues;
 
     onChangeFormFields(updatedFormFields);
 
@@ -250,10 +248,10 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           ),
         };
 
-        updatedFormFields[fieldIndex] = {
-          ...currentField,
-          allowed_values: updatedAllowedValues,
-        };
+        updatedFormFields[fieldIndex] = JSON.parse(
+          JSON.stringify(currentField)
+        );
+        updatedFormFields[fieldIndex].allowed_values = updatedAllowedValues;
 
         onChangeFormFields(updatedFormFields);
 
@@ -307,10 +305,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
         ),
       };
 
-      updatedFormFields[fieldIndex] = {
-        ...currentField,
-        allowed_values: updatedAllowedValues,
-      };
+      updatedFormFields[fieldIndex] = JSON.parse(JSON.stringify(currentField));
+      updatedFormFields[fieldIndex].allowed_values = updatedAllowedValues;
 
       onChangeFormFields(updatedFormFields);
 
@@ -467,9 +463,12 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
                   if (e.target.value !== 'list') {
                     delete updatedFormFields[fieldIndex].allowed_values;
                   } else {
-                    updatedFormFields[fieldIndex] = {
-                      ...updatedFormFields[fieldIndex],
-                      allowed_values: { type: 'list', values: [] },
+                    updatedFormFields[fieldIndex] = JSON.parse(
+                      JSON.stringify(updatedFormFields[fieldIndex])
+                    );
+                    updatedFormFields[fieldIndex].allowed_values = {
+                      type: 'list',
+                      values: [],
                     };
                   }
 

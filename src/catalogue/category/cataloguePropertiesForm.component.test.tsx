@@ -436,6 +436,47 @@ describe('Catalogue Properties Form', () => {
       await screen.getAllByRole('button', { name: 'Add list item 3' })[0]
     );
 
+    expect(onChangeFormFields).toHaveBeenCalledTimes(1);
+    expect(onChangeFormFields).toHaveBeenCalledWith([
+      {
+        cip_placement_id: '1',
+        mandatory: false,
+        name: '',
+        type: 'number',
+        unit: '',
+      },
+      {
+        cip_placement_id: '2',
+        mandatory: false,
+        name: '',
+        type: '',
+        unit: '',
+      },
+      {
+        cip_placement_id: '3',
+        mandatory: false,
+        name: 'raduis 1',
+        type: '',
+        unit: '',
+      },
+      {
+        allowed_values: {
+          type: 'list',
+          values: [
+            {
+              av_placement_id: 'av_placement_id_1',
+              value: '',
+            },
+          ],
+        },
+        cip_placement_id: '4',
+        mandatory: false,
+        name: 'raduis 2',
+        type: 'number',
+        unit: '',
+      },
+    ]);
+
     const formName = screen.getAllByLabelText('Property Name *');
     const formType = screen.getAllByLabelText('Select Type *');
 
@@ -443,6 +484,42 @@ describe('Catalogue Properties Form', () => {
     fireEvent.change(formName[0], {
       target: { value: 'Updated Field' },
     });
+
+    expect(onChangeFormFields).toHaveBeenCalledTimes(2);
+    expect(onChangeFormFields).toHaveBeenCalledWith([
+      {
+        cip_placement_id: '1',
+        mandatory: false,
+        name: 'Updated Field',
+        type: 'number',
+        unit: '',
+      },
+      {
+        cip_placement_id: '2',
+        mandatory: false,
+        name: '',
+        type: '',
+        unit: '',
+      },
+      {
+        cip_placement_id: '3',
+        mandatory: false,
+        name: 'raduis 1',
+        type: '',
+        unit: '',
+      },
+      {
+        allowed_values: {
+          type: 'list',
+          values: [],
+        },
+        cip_placement_id: '4',
+        mandatory: false,
+        name: 'raduis 2',
+        type: 'number',
+        unit: '',
+      },
+    ]);
 
     await user.click(formType[0]);
 
@@ -457,11 +534,17 @@ describe('Catalogue Properties Form', () => {
       {
         cip_placement_id: '1',
         mandatory: false,
-        name: 'Updated Field',
+        name: '',
         type: 'string',
         unit: '',
       },
-      { cip_placement_id: '2', mandatory: false, name: '', type: '', unit: '' },
+      {
+        cip_placement_id: '2',
+        mandatory: false,
+        name: '',
+        type: '',
+        unit: '',
+      },
       {
         cip_placement_id: '3',
         mandatory: false,
@@ -470,13 +553,13 @@ describe('Catalogue Properties Form', () => {
         unit: '',
       },
       {
+        allowed_values: {
+          type: 'list',
+          values: [],
+        },
         cip_placement_id: '4',
         mandatory: false,
         name: 'raduis 2',
-        allowed_values: {
-          type: 'list',
-          values: [{ av_placement_id: 'av_placement_id_1', value: '' }],
-        },
         type: 'number',
         unit: '',
       },
