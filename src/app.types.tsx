@@ -24,6 +24,7 @@ export interface AddCatalogueCategoryWithPlacementIds
 export interface EditCatalogueCategory {
   name?: string;
   id: string;
+  parent_id?: string | null;
 }
 
 export interface MoveToCatalogueCategory {

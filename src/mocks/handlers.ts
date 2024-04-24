@@ -137,13 +137,6 @@ export const handlers = [
     CatalogueCategory | ErrorResponse
   >('/v1/catalogue-categories/:id', async ({ request, params }) => {
     const { id } = params;
-    const itemData = CatalogueItemsJSON.filter(
-      (catalogueItem) => catalogueItem.catalogue_category_id === id
-    );
-
-    const catalogueData = CatalogueCategoriesJSON.filter(
-      (catalogueData) => catalogueData.parent_id === id
-    );
 
     const obj = CatalogueCategoriesJSON.find(
       (catalogueCategory) => catalogueCategory.id === id
@@ -160,25 +153,6 @@ export const handlers = [
         },
         { status: 409 }
       );
-    }
-    if (body.catalogue_item_properties !== undefined) {
-      if (itemData.length > 0) {
-        return HttpResponse.json(
-          {
-            detail:
-              'Catalogue category has child elements and cannot be updated',
-          },
-          { status: 409 }
-        );
-      } else if (catalogueData.length > 0) {
-        return HttpResponse.json(
-          {
-            detail:
-              'Catalogue category has child elements and cannot be updated',
-          },
-          { status: 409 }
-        );
-      }
     }
 
     if (fullBody.name === 'Error 500') {
