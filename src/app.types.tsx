@@ -24,9 +24,6 @@ export interface AddCatalogueCategoryWithPlacementIds
 export interface EditCatalogueCategory {
   name?: string;
   id: string;
-  catalogue_item_properties?: CatalogueCategoryProperty[];
-  is_leaf?: boolean;
-  parent_id?: string | null;
 }
 
 export interface MoveToCatalogueCategory {
