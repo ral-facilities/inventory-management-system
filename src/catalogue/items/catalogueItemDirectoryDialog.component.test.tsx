@@ -333,8 +333,8 @@ describe('catalogue item directory Dialog', () => {
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
-          { id: '7', value: 1000 },
-          { id: '8', value: '±0.5%' },
+          { id: '9', value: 1000 },
+          { id: '10', value: '±0.5%' },
         ],
       });
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-items', {
@@ -357,8 +357,8 @@ describe('catalogue item directory Dialog', () => {
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
         properties: [
-          { id: '7', value: 2000 },
-          { id: '8', value: null },
+          { id: '9', value: 2000 },
+          { id: '10', value: null },
         ],
       });
     });
