@@ -1,28 +1,16 @@
-import React from 'react';
-import {
-  TextField,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Stack,
-  IconButton,
-  FormHelperText,
-  Box,
-  Autocomplete,
-} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton } from '@mui/material';
+import React from 'react';
+
 import {
-  AllowedValuesList,
   AddCatalogueCategoryProperty,
-  CatalogueItemPropertiesErrorsType,
-  AllowedValuesListErrorsType,
-  Unit,
   AddCatalogueCategoryPropertyWithPlacementIds,
+  AllowedValuesList,
+  AllowedValuesListErrorsType,
+  CatalogueItemPropertiesErrorsType,
 } from '../../app.types';
-import { useUnits } from '../../api/units';
 import { generateUniqueId } from '../../utils';
+import CataloguePropertyForm from './cataloguePropertyForm.component';
 
 export interface CataloguePropertiesFormProps {
   formFields: AddCatalogueCategoryPropertyWithPlacementIds[];
@@ -52,8 +40,6 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     resetFormError,
     isDisabled,
   } = props;
-
-  const { data: units } = useUnits();
 
   const handleAddField = () => {
     onChangeFormFields([
@@ -163,6 +149,15 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       );
 
       updatedFormFields[fieldIndex].name = value as string;
+    } else if (field === 'allowed_values') {
+      if (value !== 'list') {
+        delete updatedFormFields[fieldIndex].allowed_values;
+      } else {
+        updatedFormFields[fieldIndex] = {
+          ...updatedFormFields[fieldIndex],
+          allowed_values: { type: 'list', values: [] },
+        };
+      }
     } else {
       (updatedFormFields[fieldIndex][field] as boolean | string | null) = value;
     }
@@ -217,7 +212,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
         return !(
           item.cip_placement_id === cip_placement_id &&
           item.errors &&
-          item.errors.fieldName === 'list'
+          item.errors.fieldName === 'allowed_values'
         );
       });
     onChangeCatalogueItemPropertiesErrors(updatedCatalogueItemPropertiesErrors);
@@ -345,15 +340,12 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   };
 
   const catalogueItemPropertyMessage = React.useCallback(
-    (
-      cip_placement_id: string,
-      column: 'name' | 'type' | 'unit' | 'mandatory' | 'list'
-    ) => {
+    (cip_placement_id: string, field: keyof AddCatalogueCategoryProperty) => {
       const errors = catalogueItemPropertiesErrors.filter((item) => {
         return (
           item.cip_placement_id === cip_placement_id &&
           item.errors &&
-          item.errors.fieldName === column
+          item.errors.fieldName === field
         );
       });
 
@@ -383,266 +375,44 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     [allowedValuesListErrors]
   );
 
+  const hasAllowedValuesList = React.useCallback(() => {
+    return (
+      formFields.filter(
+        (formField) => formField.allowed_values?.type === 'list'
+      ).length !== 0
+    );
+  }, [formFields]);
   return (
     <div>
-      {formFields.map((field, index) => (
-        <Stack
-          direction="row"
-          key={field.cip_placement_id}
-          spacing={1}
-          padding={1}
-        >
-          <TextField
-            label="Property Name"
-            id={`catalogue-category-form-data-name-${field.cip_placement_id}`}
-            variant="outlined"
-            required={true}
-            value={field.name}
-            disabled={isDisabled}
-            onChange={(e) =>
-              handleChange(field.cip_placement_id, 'name', e.target.value)
+      {formFields.map((formField) => {
+        const { cip_placement_id, ...formFieldWithoutCIP } = formField;
+        return (
+          <CataloguePropertyForm
+            key={cip_placement_id}
+            type={isDisabled ? 'disabled' : 'normal'}
+            catalogueItemField={formFieldWithoutCIP}
+            handleChange={(field, value) =>
+              handleChange(cip_placement_id, field, value)
             }
-            error={
-              !!catalogueItemPropertyMessage(field.cip_placement_id, 'name')
+            handleDeleteField={() => handleDeleteField(cip_placement_id)}
+            handleChangeListValues={(av_placement_id, value) =>
+              handleChangeListValues(cip_placement_id, av_placement_id, value)
             }
-            helperText={
-              catalogueItemPropertyMessage(field.cip_placement_id, 'name')
-                ?.errors?.errorMessage
+            handleAddListValue={() => handleAddListValue(cip_placement_id)}
+            handleDeleteListValue={(av_placement_id) =>
+              handleDeleteListValue(cip_placement_id, av_placement_id)
             }
-            sx={{ minWidth: '200px', width: '200px' }}
+            catalogueItemPropertyMessage={(field) =>
+              catalogueItemPropertyMessage(cip_placement_id, field)
+            }
+            allowedValuesListErrorMessage={(av_placement_id) =>
+              allowedValuesListErrorMessage(cip_placement_id, av_placement_id)
+            }
+            hasAllowedValuesList={hasAllowedValuesList}
+            isList={true}
           />
-          <FormControl
-            disabled={isDisabled}
-            sx={{ width: '140px', minWidth: '140px' }}
-          >
-            <InputLabel
-              error={
-                !!catalogueItemPropertyMessage(field.cip_placement_id, 'type')
-              }
-              required={true}
-              id={`catalogue-properties-form-select-type-label-${field.cip_placement_id}`}
-            >
-              Select Type
-            </InputLabel>
-            <Select
-              value={field.type === 'string' ? 'text' : field.type}
-              onChange={(e) => {
-                handleChange(
-                  field.cip_placement_id,
-                  'type',
-                  e.target.value === 'text' ? 'string' : e.target.value
-                );
-              }}
-              error={
-                !!catalogueItemPropertyMessage(field.cip_placement_id, 'type')
-              }
-              label="Select Type"
-              labelId={`catalogue-properties-form-select-type-label-${field.cip_placement_id}`}
-              required={true}
-            >
-              <MenuItem value="boolean">Boolean</MenuItem>
-              <MenuItem value="number">Number</MenuItem>
-              <MenuItem value="text">Text</MenuItem>
-            </Select>
-            {catalogueItemPropertyMessage(field.cip_placement_id, 'type') && (
-              <FormHelperText error>
-                {
-                  catalogueItemPropertyMessage(field.cip_placement_id, 'type')
-                    ?.errors?.errorMessage
-                }
-              </FormHelperText>
-            )}
-          </FormControl>
-
-          <FormControl
-            disabled={field.type === 'boolean' || isDisabled}
-            sx={{ width: '170px', minWidth: '170px' }}
-          >
-            <InputLabel
-              required={true}
-              id={`catalogue-properties-form-select-allowed-values-label-${field.cip_placement_id}`}
-            >
-              Select Allowed values
-            </InputLabel>
-            <Select
-              value={field.allowed_values?.type ?? 'any'}
-              onChange={(e) => {
-                const updatedFormFields: AddCatalogueCategoryPropertyWithPlacementIds[] =
-                  [...formFields];
-                const fieldIndex = updatedFormFields.findIndex(
-                  (formField) =>
-                    formField.cip_placement_id === field.cip_placement_id
-                );
-
-                if (fieldIndex !== -1) {
-                  if (e.target.value !== 'list') {
-                    delete updatedFormFields[fieldIndex].allowed_values;
-                  } else {
-                    updatedFormFields[fieldIndex] = {
-                      ...updatedFormFields[fieldIndex],
-                      allowed_values: { type: 'list', values: [] },
-                    };
-                  }
-
-                  onChangeFormFields(updatedFormFields);
-                }
-              }}
-              label="Select Allowed values"
-              labelId={`catalogue-properties-form-select-allowed-values-label-${field.cip_placement_id}`}
-              required={true}
-            >
-              <MenuItem value="any">Any</MenuItem>
-              <MenuItem value="list">List</MenuItem>
-            </Select>
-          </FormControl>
-
-          {field.allowed_values?.type === 'list' && (
-            <Stack
-              direction="column"
-              sx={{
-                width: '200px',
-                minWidth: '200px',
-                alignItems: 'center',
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              {field.allowed_values?.values.map((listValue, valueIndex) => (
-                <Stack
-                  key={valueIndex}
-                  direction="row"
-                  sx={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    mb: 1,
-                  }}
-                  spacing={1}
-                >
-                  <TextField
-                    label={`List Item`}
-                    aria-label={`List Item ${valueIndex}`}
-                    disabled={isDisabled}
-                    variant="outlined"
-                    value={listValue.value as string}
-                    onChange={(e) =>
-                      field.allowed_values &&
-                      handleChangeListValues(
-                        field.cip_placement_id,
-                        listValue.av_placement_id,
-                        e.target.value as string
-                      )
-                    }
-                    error={
-                      !!allowedValuesListErrorMessage(
-                        field.cip_placement_id,
-                        listValue.av_placement_id
-                      )
-                    }
-                    helperText={allowedValuesListErrorMessage(
-                      field.cip_placement_id,
-                      listValue.av_placement_id
-                    )}
-                  />
-                  {!isDisabled && (
-                    <IconButton
-                      aria-label={`Delete list item ${valueIndex}`}
-                      onClick={() =>
-                        handleDeleteListValue(
-                          field.cip_placement_id,
-                          listValue.av_placement_id
-                        )
-                      }
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  )}
-                </Stack>
-              ))}
-              {!isDisabled && (
-                <IconButton
-                  aria-label={`Add list item ${index}`}
-                  onClick={() => handleAddListValue(field.cip_placement_id)}
-                >
-                  <AddIcon />
-                </IconButton>
-              )}
-              {catalogueItemPropertyMessage(field.cip_placement_id, 'list') && (
-                <FormHelperText error>
-                  {
-                    catalogueItemPropertyMessage(field.cip_placement_id, 'list')
-                      ?.errors?.errorMessage
-                  }
-                </FormHelperText>
-              )}
-            </Stack>
-          )}
-
-          <Autocomplete
-            options={units ?? []}
-            sx={{ minWidth: '200px' }}
-            getOptionLabel={(option) => option.value}
-            value={units?.find((unit) => unit.value === field.unit) || null}
-            disabled={field.type === 'boolean' || isDisabled}
-            onChange={(_event, newValue: Unit | null) => {
-              handleChange(
-                field.cip_placement_id,
-                'unit',
-                newValue?.value || null
-              );
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Select Unit"
-                variant="outlined"
-                disabled={field.type === 'boolean' || isDisabled}
-              />
-            )}
-          />
-
-          <FormControl
-            disabled={isDisabled}
-            sx={{ width: '150px', minWidth: '150px' }}
-          >
-            <InputLabel
-              id={`catalogue-properties-form-select-mandatory-label-${field.cip_placement_id}`}
-            >
-              Select is mandatory?
-            </InputLabel>
-            <Select
-              value={field.mandatory ? 'yes' : 'no'}
-              onChange={(e) =>
-                handleChange(
-                  field.cip_placement_id,
-                  'mandatory',
-                  e.target.value === 'yes'
-                )
-              }
-              label="Select is mandatory?"
-              labelId={`catalogue-properties-form-select-mandatory-label-${field.cip_placement_id}`}
-            >
-              <MenuItem value="yes">Yes</MenuItem>
-              <MenuItem value="no">No</MenuItem>
-            </Select>
-          </FormControl>
-
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            {!isDisabled && (
-              <IconButton
-                aria-label={'Delete catalogue category field entry'}
-                onClick={() => handleDeleteField(field.cip_placement_id)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            )}
-          </Box>
-        </Stack>
-      ))}
+        );
+      })}
       {!isDisabled && (
         <IconButton
           sx={{ margin: '8px' }}
