@@ -297,8 +297,8 @@ describe('Catalogue Category', () => {
             {
               name: 'Updated Field 2',
               type: 'number',
-              unit: 'millimeters',
               mandatory: false,
+              unit: 'millimeters',
             },
           ],
         })
