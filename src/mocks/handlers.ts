@@ -69,7 +69,7 @@ export const handlers = [
     body = {
       ...body,
       catalogue_item_properties: body.catalogue_item_properties?.map(
-        (property) => ({ ...property, id: generateUniqueId('test_id') })
+        (property) => ({ ...property, id: generateUniqueId('test_id_') })
       ),
     };
     return HttpResponse.json(
