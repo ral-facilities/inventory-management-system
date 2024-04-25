@@ -217,11 +217,7 @@ function ItemDialog(props: ItemDialogProps) {
     setPropertyErrors(updatedPropertyErrors);
     setFormErrorMessage(undefined);
   };
-  console.log(itemDetails);
-  console.log('----');
-  console.log(itemDetails.warranty_end_date);
-  console.log('----');
-  console.log(typeof itemDetails.warranty_end_date);
+
   const handleItemDetails = React.useCallback(
     (field: keyof ItemDetailsPlaceholder, value: string | Date | null) => {
       const updatedItemDetails: ItemDetailsPlaceholder = JSON.parse(
@@ -247,11 +243,11 @@ function ItemDialog(props: ItemDialogProps) {
 
       setItemDetails({
         ...updatedItemDetails,
-        warranty_end_date: updatedItemDetails.warranty_end_date
-          ? new Date(updatedItemDetails.warranty_end_date)
+        warranty_end_date: itemDetails.warranty_end_date
+          ? new Date(itemDetails.warranty_end_date)
           : null,
-        delivered_date: updatedItemDetails.delivered_date
-          ? new Date(updatedItemDetails.delivered_date)
+        delivered_date: itemDetails.delivered_date
+          ? new Date(itemDetails.delivered_date)
           : null,
       });
       setFormErrorMessage(undefined);
