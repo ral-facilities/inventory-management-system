@@ -1,8 +1,13 @@
+import { screen, waitFor } from '@testing-library/react';
 import {
   generateUniqueName,
   trimStringValues,
   generateUniqueId,
+  OverflowTip,
+  sortDataList,
 } from './utils';
+import userEvent from '@testing-library/user-event';
+import { renderComponentWithRouterProvider } from './testUtils';
 
 describe('Utility functions', () => {
   afterEach(() => {
@@ -80,5 +85,87 @@ describe('Utility functions', () => {
       expect(id1.startsWith(prefix)).toBe(true);
       expect(id2.startsWith(prefix)).toBe(true);
     });
+  });
+
+  describe('OverflowTip', () => {
+    it('renders children without tooltip when content does not overflow', async () => {
+      renderComponentWithRouterProvider(
+        <OverflowTip columnSize={200}>
+          {"Some text that doesn't overflow"}
+        </OverflowTip>
+      );
+
+      const overFlowTip = screen.getByText("Some text that doesn't overflow");
+
+      expect(
+        screen.getAllByText("Some text that doesn't overflow").length
+      ).toBe(1);
+
+      await userEvent.hover(overFlowTip);
+
+      expect(
+        screen.getAllByText("Some text that doesn't overflow").length
+      ).toBe(1);
+    });
+
+    it('renders children with tooltip when content overflows', async () => {
+      // Mocking scrollWidth and clientWidth to make content overflow
+      const mockScrollWidth = 300;
+      const mockClientWidth = 200;
+
+      vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get').mockReturnValue(
+        mockScrollWidth
+      );
+      vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(
+        mockClientWidth
+      );
+
+      renderComponentWithRouterProvider(
+        <OverflowTip columnSize={200}>
+          Some long text that overflows
+        </OverflowTip>
+      );
+      const overFlowTip = screen.getByText('Some long text that overflows');
+
+      await waitFor(() => {
+        expect(
+          screen.getAllByText('Some long text that overflows').length
+        ).toBe(1);
+      });
+
+      await userEvent.hover(overFlowTip);
+
+      await waitFor(() => {
+        expect(
+          screen.getAllByText('Some long text that overflows').length
+        ).toBe(2);
+      });
+
+      await userEvent.unhover(overFlowTip);
+
+      await waitFor(() => {
+        expect(
+          screen.getAllByText('Some long text that overflows').length
+        ).toBe(1);
+      });
+    });
+  });
+
+  it('should sort data based on given value to be sorted on', () => {
+    const testList = [
+      { name: 'John' },
+      { name: 'Amanda' },
+      { name: 'Susan' },
+      { name: 'Jack' },
+    ];
+
+    const sortedList = sortDataList(testList, 'name');
+
+    expect(sortedList).toEqual([
+      { name: 'Amanda' },
+      { name: 'Jack' },
+      { name: 'John' },
+      { name: 'Susan' },
+    ]);
   });
 });
