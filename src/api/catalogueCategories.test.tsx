@@ -19,7 +19,7 @@ import {
 } from './catalogueCategories';
 import { imsApi } from './api';
 
-describe('catalogue category api functions', () => {
+describe('catalogue categories api functions', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
