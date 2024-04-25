@@ -258,7 +258,6 @@ export const useCopyToCatalogueItem = (): UseMutationResult<
             copyToCatalogueItem.targetCatalogueCategory
               ?.catalogue_item_properties;
 
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const properties = catalogueItem.properties.map((property) => {
             const targetPropertyId = targetProperties?.find(
               (targetProperty) => property.name === targetProperty.name
