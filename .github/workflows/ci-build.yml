@@ -97,7 +97,7 @@ jobs:
       - name: Setup MongoDB
         working-directory: ../inventory-management-system-api
         run: |
-          python ./scripts/dev_cli.py --ci db-init --replicaSetMemberHost mongodb_container
+          python ./scripts/dev_cli.py --ci db-init --replicaSetMemberHost localhost
           python ./scripts/dev_cli.py --ci db-import
 
       # Use docker run here to test the actual built image
@@ -105,7 +105,7 @@ jobs:
       # name)
       - name: Start inventory-management-system-api
         run: |
-          docker run -d -p 8000:8000 --network=inventory-management-system-api_default \
+          docker run -d --network=host \
           --name inventory_management_system_api_container \
           --env AUTHENTICATION__ENABLED=false \
           --env API__TITLE="Inventory Management System API" \
@@ -113,7 +113,7 @@ jobs:
           --env DATABASE__PROTOCOL="mongodb" \
           --env DATABASE__USERNAME="root" \
           --env DATABASE__PASSWORD="example" \
-          --env DATABASE__HOSTNAME="mongodb_container" \
+          --env DATABASE__HOSTNAME="localhost" \
           --env DATABASE__PORT=27017 \
           --env DATABASE__NAME="ims" \
           --env API__ALLOWED_CORS_HEADERS='["*"]' \
