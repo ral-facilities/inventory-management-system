@@ -410,6 +410,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             }
             hasAllowedValuesList={hasAllowedValuesList}
             isList={true}
+            cip_placement_id={cip_placement_id}
           />
         );
       })}
