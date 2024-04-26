@@ -94,7 +94,6 @@ export interface AddCatalogueCategoryProperty {
   unit?: string;
   mandatory: boolean;
   allowed_values?: AllowedValues;
-  default_value?: string | number | boolean;
 }
 
 export interface CatalogueCategoryProperty
