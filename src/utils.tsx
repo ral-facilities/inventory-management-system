@@ -140,3 +140,9 @@ export const resetUniqueIdCounter = () => {
 export function sortDataList(data: any[], sortedValue: string) {
   return data.sort((a, b) => a[sortedValue].localeCompare(b[sortedValue]));
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function addValueToFrontOfList(list: any[], newValue: any): any[] {
+  list.unshift(newValue);
+  return list;
+}

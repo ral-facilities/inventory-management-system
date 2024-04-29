@@ -11,9 +11,6 @@ import {
   FormHelperText,
   Grid,
   IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
   Step,
   StepLabel,
   Stepper,
@@ -43,7 +40,11 @@ import { Autocomplete } from '@mui/material';
 import { useManufacturers } from '../../api/manufacturers';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { sortDataList, trimStringValues } from '../../utils';
+import {
+  addValueToFrontOfList,
+  sortDataList,
+  trimStringValues,
+} from '../../utils';
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
@@ -185,7 +186,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const handlePropertyChange = (index: number, value: string | null) => {
     const updatedPropertyValues = [...propertyValues];
-
     if (value === null || (typeof value === 'string' && value.trim() === '')) {
       updatedPropertyValues[index] = null;
     } else {
@@ -849,97 +849,77 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         <Grid item xs={11} sx={{ display: 'flex' }}>
                           {property.type === 'boolean' ? (
                             <FormControl fullWidth>
-                              <InputLabel
-                                required={property.mandatory ?? false}
-                                error={propertyErrors[index]}
+                              <Autocomplete
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
                                 )}`}
-                                size="small"
-                                sx={{ alignItems: 'center' }}
-                              >
-                                {property.name}
-                              </InputLabel>
-                              <Select
                                 value={(propertyValues[index] as string) ?? ''}
-                                required={property.mandatory ?? false}
                                 size="small"
-                                error={propertyErrors[index]}
-                                labelId={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                onChange={(event) =>
+                                onChange={(_event, value) => {
                                   handlePropertyChange(
                                     index,
-                                    event.target.value as string
-                                  )
-                                }
-                                label={property.name}
+                                    (value == 'None'
+                                      ? ''
+                                      : value?.toLowerCase()) as string
+                                  );
+                                }}
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                              >
-                                <MenuItem value="">None</MenuItem>
-                                <MenuItem value="true">True</MenuItem>
-                                <MenuItem value="false">False</MenuItem>
-                              </Select>
-                              {propertyErrors[index] && (
-                                <FormHelperText error>
-                                  Please select either True or False
-                                </FormHelperText>
-                              )}
+                                options={['None', 'True', 'False']}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    required={property.mandatory ?? false}
+                                    label={property.name}
+                                    error={propertyErrors[index]}
+                                    helperText={
+                                      propertyErrors[index] &&
+                                      'Please select either True or False'
+                                    }
+                                  />
+                                )}
+                              />
                             </FormControl>
                           ) : property.allowed_values ? (
                             <FormControl fullWidth>
-                              <InputLabel
-                                required={property.mandatory ?? false}
-                                error={propertyErrors[index]}
+                              <Autocomplete
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
                                 )}`}
-                                size="small"
-                                sx={{ alignItems: 'center' }}
-                              >
-                                {property.name}
-                              </InputLabel>
-                              <Select
                                 value={(propertyValues[index] as string) ?? ''}
-                                required={property.mandatory ?? false}
                                 size="small"
-                                error={propertyErrors[index]}
-                                labelId={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                onChange={(event) =>
+                                onChange={(_event, value) => {
                                   handlePropertyChange(
                                     index,
-                                    event.target.value as string
-                                  )
-                                }
-                                label={property.name}
+                                    (value == 'None'
+                                      ? ''
+                                      : value?.toLowerCase()) as string
+                                  );
+                                }}
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                              >
-                                <MenuItem key={0} value={''}>
-                                  {'None'}
-                                </MenuItem>
-                                {property.allowed_values.values.map(
-                                  (value, index) => (
-                                    <MenuItem key={index + 1} value={value}>
-                                      {value}
-                                    </MenuItem>
-                                  )
+                                options={addValueToFrontOfList(
+                                  property.allowed_values.values,
+                                  'None'
                                 )}
-                              </Select>
-                              {propertyErrors[index] && (
-                                <FormHelperText error>
-                                  Please enter a valid value as this field is
-                                  mandatory
-                                </FormHelperText>
-                              )}
+                                isOptionEqualToValue={(option, value) =>
+                                  option === value || value === ''
+                                }
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    required={property.mandatory ?? false}
+                                    label={property.name}
+                                    error={propertyErrors[index]}
+                                    helperText={
+                                      propertyErrors[index] &&
+                                      'Please enter a valid value as this field is mandatory'
+                                    }
+                                  />
+                                )}
+                              />
                             </FormControl>
                           ) : (
                             <TextField

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Autocomplete,
   Box,
   Button,
   Collapse,
@@ -11,9 +12,6 @@ import {
   FormHelperText,
   Grid,
   IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
   Step,
   StepLabel,
   Stepper,
@@ -43,7 +41,7 @@ import handleIMS_APIError from '../handleIMS_APIError';
 import { SystemsTableView } from '../systems/systemsTableView.component';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { trimStringValues } from '../utils';
+import { addValueToFrontOfList, trimStringValues } from '../utils';
 import handleTransferState from '../handleTransferState';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
@@ -739,45 +737,74 @@ function ItemDialog(props: ItemDialogProps) {
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel required={true} size="small" id="is-defective">
-                  Is defective
-                </InputLabel>
-
-                <Select
-                  labelId="is-defective"
-                  value={itemDetails.is_defective ?? 'false'}
+                <Autocomplete
+                  id="is-defective"
+                  value={itemDetails.is_defective ?? 'No'}
                   size="small"
-                  onChange={(e) =>
-                    handleItemDetails('is_defective', e.target.value)
+                  onChange={(_event, value) =>
+                    handleItemDetails(
+                      'is_defective',
+                      value == 'Yes' ? 'true' : 'false'
+                    )
                   }
-                  required={true}
-                  label="Is defective"
-                >
-                  <MenuItem value={'true'}>Yes</MenuItem>
-                  <MenuItem value={'false'}>No</MenuItem>
-                </Select>
+                  sx={{ alignItems: 'center' }}
+                  fullWidth
+                  options={['Yes', 'No']}
+                  isOptionEqualToValue={(option, value) =>
+                    option === value || value === ''
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      required={true}
+                      label="Is defective"
+                    />
+                  )}
+                />
               </FormControl>
             </Grid>
             <Grid item xs={12}>
               <FormControl size="small" fullWidth>
-                <InputLabel required={true} id="usage-status">
-                  Usage status
-                </InputLabel>
-                <Select
-                  required={true}
-                  labelId="usage-status"
-                  value={itemDetails.usage_status ?? 'new'}
+                <Autocomplete
+                  id="usage-status"
+                  value={itemDetails.usage_status ?? 'New'}
                   size="small"
-                  onChange={(e) =>
-                    handleItemDetails('usage_status', e.target.value)
+                  onChange={(_event, value) => {
+                    let newValue = null;
+                    switch (value) {
+                      case 'New':
+                        newValue = 'new';
+                        break;
+                      case 'In Use':
+                        newValue = 'inUse';
+                        break;
+                      case 'Scrapped':
+                        newValue = 'scrapped';
+                        break;
+                      case 'Used':
+                        newValue = 'used';
+                        break;
+
+                      default:
+                        newValue = '';
+                        break;
+                    }
+                    handleItemDetails('usage_status', newValue);
+                  }}
+                  sx={{ alignItems: 'center' }}
+                  fullWidth
+                  options={['Yes', 'No']}
+                  isOptionEqualToValue={(option, value) =>
+                    option === value || value === ''
                   }
-                  label="Usage status"
-                >
-                  <MenuItem value={'new'}>New</MenuItem>
-                  <MenuItem value={'inUse'}>In Use</MenuItem>
-                  <MenuItem value={'used'}>Used</MenuItem>
-                  <MenuItem value={'scrapped'}>Scrapped</MenuItem>
-                </Select>
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      required={true}
+                      label="Usage status"
+                    />
+                  )}
+                />
               </FormControl>
             </Grid>
 
@@ -828,91 +855,77 @@ function ItemDialog(props: ItemDialogProps) {
                         <Grid item xs={11} sx={{ display: 'flex' }}>
                           {property.type === 'boolean' ? (
                             <FormControl fullWidth>
-                              <InputLabel
-                                required={property.mandatory ?? false}
-                                error={propertyErrors[index]}
+                              <Autocomplete
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
                                 )}`}
-                                size="small"
-                                sx={{ alignItems: 'center' }}
-                              >
-                                {property.name}
-                              </InputLabel>
-                              <Select
                                 value={(propertyValues[index] as string) ?? ''}
-                                required={property.mandatory ?? false}
                                 size="small"
-                                error={propertyErrors[index]}
-                                labelId={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                onChange={(event) =>
+                                onChange={(_event, value) => {
                                   handlePropertyChange(
                                     index,
-                                    event.target.value as string
-                                  )
-                                }
-                                label={property.name}
+                                    (value == 'None'
+                                      ? ''
+                                      : value?.toLowerCase()) as string
+                                  );
+                                }}
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                              >
-                                <MenuItem value="">None</MenuItem>
-                                <MenuItem value="true">True</MenuItem>
-                                <MenuItem value="false">False</MenuItem>
-                              </Select>
-                              {propertyErrors[index] && (
-                                <FormHelperText error>
-                                  Please select either True or False
-                                </FormHelperText>
-                              )}
+                                options={['None', 'True', 'False']}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    required={property.mandatory ?? false}
+                                    label={property.name}
+                                    error={propertyErrors[index]}
+                                    helperText={
+                                      propertyErrors[index] &&
+                                      'Please select either True or False'
+                                    }
+                                  />
+                                )}
+                              />
                             </FormControl>
                           ) : property.allowed_values ? (
                             <FormControl fullWidth>
-                              <InputLabel
-                                required={property.mandatory ?? false}
-                                error={propertyErrors[index]}
+                              <Autocomplete
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
                                 )}`}
-                                size="small"
-                                sx={{ alignItems: 'center' }}
-                              >
-                                {property.name}
-                              </InputLabel>
-                              <Select
                                 value={(propertyValues[index] as string) ?? ''}
-                                required={property.mandatory ?? false}
                                 size="small"
-                                error={propertyErrors[index]}
-                                labelId={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                onChange={(event) =>
+                                onChange={(_event, value) => {
                                   handlePropertyChange(
                                     index,
-                                    event.target.value as string
-                                  )
-                                }
-                                label={property.name}
+                                    (value == 'None'
+                                      ? ''
+                                      : value?.toLowerCase()) as string
+                                  );
+                                }}
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                              >
-                                <MenuItem key={0} value={''}>
-                                  {'None'}
-                                </MenuItem>
-                                {property.allowed_values.values.map(
-                                  (value, index) => (
-                                    <MenuItem key={index + 1} value={value}>
-                                      {value}
-                                    </MenuItem>
-                                  )
+                                options={addValueToFrontOfList(
+                                  property.allowed_values.values,
+                                  'None'
                                 )}
-                              </Select>
+                                isOptionEqualToValue={(option, value) =>
+                                  option === value || value === ''
+                                }
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    required={property.mandatory ?? false}
+                                    label={property.name}
+                                    error={propertyErrors[index]}
+                                    helperText={
+                                      propertyErrors[index] &&
+                                      'Please enter a valid value as this field is mandatory'
+                                    }
+                                  />
+                                )}
+                              />
                             </FormControl>
                           ) : (
                             <TextField
