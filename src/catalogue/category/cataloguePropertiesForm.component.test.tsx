@@ -470,7 +470,7 @@ describe('Catalogue Properties Form', () => {
       {
         cip_placement_id: '4',
         errors: {
-          fieldName: 'allowed_values',
+          fieldName: 'list',
           errorMessage: 'Please create a valid list item',
         },
       },
@@ -496,7 +496,9 @@ describe('Catalogue Properties Form', () => {
     expect(listHelperTexts.length).toBe(1);
 
     // Click on the add button
-    await user.click(screen.getByRole('button', { name: 'Add list item' }));
+    await user.click(
+      await screen.getAllByRole('button', { name: 'Add list item 3' })[0]
+    );
 
     const formName = screen.getAllByLabelText('Property Name *');
     const formType = screen.getAllByLabelText('Select Type *');
@@ -668,7 +670,6 @@ describe('Catalogue Properties Form', () => {
 
     expect(onChangeCatalogueItemPropertiesErrors).toHaveBeenCalledWith([]);
   });
-
   it('should delete a list item when the delete icon is click', async () => {
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
@@ -708,7 +709,9 @@ describe('Catalogue Properties Form', () => {
     createView();
 
     // Click on the add button
-    await user.click(screen.getByTestId('3: Delete list item'));
+    await user.click(
+      screen.getAllByRole('button', { name: 'Delete list item 0' })[0]
+    );
 
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
@@ -781,7 +784,7 @@ describe('Catalogue Properties Form', () => {
 
     // Click on the add button
     await user.click(
-      screen.getAllByRole('button', { name: 'Add list item' })[0]
+      screen.getAllByRole('button', { name: 'Add list item 0' })[0]
     );
 
     await waitFor(() => {
@@ -858,9 +861,9 @@ describe('Catalogue Properties Form', () => {
     createView();
 
     // Click on the add button
-    const listItem1 = screen.getByTestId('4: List Item');
+    const listItem1 = screen.getAllByLabelText('List Item 1');
 
-    fireEvent.change(within(listItem1).getByLabelText('List Item'), {
+    fireEvent.change(within(listItem1[0]).getByLabelText('List Item'), {
       target: { value: '6' },
     });
     await waitFor(() => {
@@ -1129,7 +1132,7 @@ describe('Catalogue Properties Form', () => {
 
     await user.click(
       screen.getAllByRole('button', {
-        name: 'Delete catalogue Item Field entry',
+        name: 'Delete catalogue category field entry',
       })[0]
     );
 
@@ -1215,9 +1218,9 @@ describe('Catalogue Properties Form', () => {
     expect(invalidNumberHelperText.length).toEqual(2);
 
     // Click on the add button
-    const listItem1 = screen.getByTestId('6: List Item');
+    const listItem1 = screen.getAllByLabelText('List Item 1');
 
-    fireEvent.change(within(listItem1).getByLabelText('List Item'), {
+    fireEvent.change(within(listItem1[0]).getByLabelText('List Item'), {
       target: { value: '6' },
     });
 
@@ -1298,9 +1301,11 @@ describe('Catalogue Properties Form', () => {
     expect(invalidNumberHelperText.length).toEqual(2);
 
     // Click on the add button
-    const listItemDelete = screen.getByTestId('6: Delete list item');
+    const listItemDelete = screen.getAllByRole('button', {
+      name: `Delete list item 1`,
+    });
 
-    await user.click(listItemDelete);
+    await user.click(listItemDelete[0]);
 
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([

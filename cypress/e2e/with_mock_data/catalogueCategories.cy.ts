@@ -335,8 +335,8 @@ describe('Catalogue Category', () => {
     cy.findByText('Number').click();
     cy.findAllByLabelText('Select Allowed values *').last().click();
     cy.findByRole('option', { name: 'List' }).click();
-    cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findAllByLabelText('List Item').eq(0).type('10');
+    cy.findByRole('button', { name: 'Add list item 1' }).click();
+    cy.findByLabelText('List Item 0').type('10');
     cy.findByRole('button', { name: 'Save' }).click();
     cy.findByRole('dialog').should('not.exist');
 
@@ -380,8 +380,8 @@ describe('Catalogue Category', () => {
     cy.findByText('Text').click();
     cy.findAllByLabelText('Select Allowed values *').last().click();
     cy.findByRole('option', { name: 'List' }).click();
-    cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findByRole('button', { name: 'Add list item' }).click();
+    cy.findByRole('button', { name: 'Add list item 0' }).click();
+    cy.findByRole('button', { name: 'Add list item 0' }).click();
 
     cy.findByRole('button', {
       name: 'Add catalogue category field entry',
@@ -392,10 +392,10 @@ describe('Catalogue Category', () => {
     cy.findByRole('option', { name: 'Text' }).click();
     cy.findAllByLabelText('Select Allowed values *').last().click();
     cy.findByRole('option', { name: 'List' }).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByLabelText('List Item').eq(2).type('10');
-    cy.findAllByLabelText('List Item').eq(3).type('10');
+    cy.findByRole('button', { name: 'Add list item 1' }).click();
+    cy.findByRole('button', { name: 'Add list item 1' }).click();
+    cy.findAllByLabelText('List Item 0').last().type('10');
+    cy.findAllByLabelText('List Item 1').last().type('10');
 
     cy.findByRole('button', { name: 'Save' }).click();
 
@@ -404,12 +404,12 @@ describe('Catalogue Category', () => {
 
     // Clearing the errors
 
-    cy.findAllByLabelText('List Item').eq(3).clear();
-    cy.findAllByLabelText('List Item').eq(3).type('11');
+    cy.findAllByLabelText('List Item 1').last().clear();
+    cy.findAllByLabelText('List Item 1').last().type('11');
     cy.findAllByText('Duplicate value').should('have.length', 0);
 
-    cy.findAllByLabelText('List Item').eq(0).type('10');
-    cy.findAllByLabelText('List Item').eq(1).type('11');
+    cy.findAllByLabelText('List Item 0').first().type('10');
+    cy.findAllByLabelText('List Item 1').first().type('11');
     cy.findAllByText('Please enter a value').should('have.length', 0);
   });
 
@@ -429,10 +429,10 @@ describe('Catalogue Category', () => {
     cy.findByText('Number').click();
     cy.findAllByLabelText('Select Allowed values *').last().click();
     cy.findByRole('option', { name: 'List' }).click();
-    cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findAllByLabelText('List Item').eq(0).type('dsadd');
-    cy.findAllByLabelText('List Item').eq(1).type('10');
+    cy.findByRole('button', { name: 'Add list item 0' }).click();
+    cy.findByRole('button', { name: 'Add list item 0' }).click();
+    cy.findAllByLabelText('List Item 0').eq(0).type('dsadd');
+    cy.findAllByLabelText('List Item 1').eq(0).type('10');
 
     cy.findByRole('button', {
       name: 'Add catalogue category field entry',
@@ -443,10 +443,10 @@ describe('Catalogue Category', () => {
     cy.findByRole('option', { name: 'Number' }).click();
     cy.findAllByLabelText('Select Allowed values *').eq(1).click();
     cy.findByRole('option', { name: 'List' }).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByLabelText('List Item').eq(2).type('dsadd');
-    cy.findAllByLabelText('List Item').eq(3).type('10');
+    cy.findByRole('button', { name: 'Add list item 1' }).click();
+    cy.findByRole('button', { name: 'Add list item 1' }).click();
+    cy.findAllByLabelText('List Item 0').eq(1).type('dsadd');
+    cy.findAllByLabelText('List Item 1').eq(1).type('10');
 
     cy.findByRole('button', { name: 'Save' }).click();
 
@@ -454,9 +454,9 @@ describe('Catalogue Category', () => {
 
     // Clearing the errors
 
-    cy.findAllByLabelText('Delete list item').eq(0).click();
-    cy.findAllByLabelText('Delete list item').eq(1).click();
-    cy.findAllByText('Please enter a valid number').should('have.length', 0);
+    cy.findAllByLabelText('Delete list item 0').first().click();
+    cy.findAllByLabelText('Delete list item 0').last().click();
+    cy.findAllByText('Please enter a value').should('have.length', 0);
   });
 
   it('displays the allowed values list error states (number)', () => {
@@ -475,8 +475,8 @@ describe('Catalogue Category', () => {
     cy.findByText('Number').click();
     cy.findAllByLabelText('Select Allowed values *').last().click();
     cy.findByRole('option', { name: 'List' }).click();
-    cy.findByRole('button', { name: 'Add list item' }).click();
-    cy.findByRole('button', { name: 'Add list item' }).click();
+    cy.findByRole('button', { name: 'Add list item 0' }).click();
+    cy.findByRole('button', { name: 'Add list item 0' }).click();
 
     cy.findByRole('button', {
       name: 'Add catalogue category field entry',
@@ -487,10 +487,10 @@ describe('Catalogue Category', () => {
     cy.findByRole('option', { name: 'Number' }).click();
     cy.findAllByLabelText('Select Allowed values *').eq(1).click();
     cy.findByRole('option', { name: 'List' }).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(1).click();
-    cy.findAllByLabelText('List Item').eq(2).type('10');
-    cy.findAllByLabelText('List Item').eq(3).type('10');
+    cy.findByRole('button', { name: 'Add list item 1' }).click();
+    cy.findByRole('button', { name: 'Add list item 1' }).click();
+    cy.findAllByLabelText('List Item 0').eq(1).type('10');
+    cy.findAllByLabelText('List Item 1').eq(1).type('10');
 
     cy.findByRole('button', {
       name: 'Add catalogue category field entry',
@@ -501,10 +501,10 @@ describe('Catalogue Category', () => {
     cy.findByRole('option', { name: 'Number' }).click();
     cy.findAllByLabelText('Select Allowed values *').last().click();
     cy.findByRole('option', { name: 'List' }).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(2).click();
-    cy.findAllByRole('button', { name: 'Add list item' }).eq(2).click();
-    cy.findAllByLabelText('List Item').eq(4).type('10b');
-    cy.findAllByLabelText('List Item').eq(5).type('10c');
+    cy.findByRole('button', { name: 'Add list item 2' }).click();
+    cy.findByRole('button', { name: 'Add list item 2' }).click();
+    cy.findAllByLabelText('List Item 0').last().type('10b');
+    cy.findAllByLabelText('List Item 1').last().type('10c');
 
     cy.findByRole('button', { name: 'Save' }).click();
 
@@ -514,18 +514,18 @@ describe('Catalogue Category', () => {
 
     // Clearing the errors
 
-    cy.findAllByLabelText('List Item').eq(4).clear();
-    cy.findAllByLabelText('List Item').eq(4).type('11');
-    cy.findAllByLabelText('List Item').eq(5).clear();
-    cy.findAllByLabelText('List Item').eq(5).type('12');
+    cy.findAllByLabelText('List Item 0').last().clear();
+    cy.findAllByLabelText('List Item 0').last().type('11');
+    cy.findAllByLabelText('List Item 1').last().clear();
+    cy.findAllByLabelText('List Item 1').last().type('12');
     cy.findAllByText('Please enter a valid number').should('have.length', 0);
 
-    cy.findAllByLabelText('List Item').eq(3).clear();
-    cy.findAllByLabelText('List Item').eq(3).type('11');
+    cy.findAllByLabelText('List Item 1').eq(1).clear();
+    cy.findAllByLabelText('List Item 1').eq(1).type('11');
     cy.findAllByText('Duplicate value').should('have.length', 0);
 
-    cy.findAllByLabelText('List Item').eq(0).first().type('10');
-    cy.findAllByLabelText('List Item').eq(1).first().type('11');
+    cy.findAllByLabelText('List Item 0').first().type('10');
+    cy.findAllByLabelText('List Item 1').first().type('11');
     cy.findAllByText('Please enter a value').should('have.length', 0);
   });
 
