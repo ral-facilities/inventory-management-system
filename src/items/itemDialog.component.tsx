@@ -751,7 +751,10 @@ function ItemDialog(props: ItemDialogProps) {
                   fullWidth
                   options={['Yes', 'No']}
                   isOptionEqualToValue={(option, value) =>
-                    option === value || value === ''
+                    value == '' ||
+                    (value == 'false' && option == 'No') ||
+                    value == 'true' ||
+                    option == 'Yes'
                   }
                   renderInput={(params) => (
                     <TextField
@@ -793,9 +796,12 @@ function ItemDialog(props: ItemDialogProps) {
                   }}
                   sx={{ alignItems: 'center' }}
                   fullWidth
-                  options={['Yes', 'No']}
+                  options={['New', 'In Use', 'Used', 'Scrapped']}
                   isOptionEqualToValue={(option, value) =>
-                    option === value || value === ''
+                    (option == 'New' && value.toLowerCase() == 'new') ||
+                    (option == 'In Use' && value == 'inUse') ||
+                    (option == 'Scrapped' && value == 'scrapped') ||
+                    (option == 'Used' && value == 'used')
                   }
                   renderInput={(params) => (
                     <TextField
@@ -873,6 +879,9 @@ function ItemDialog(props: ItemDialogProps) {
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
                                 options={['None', 'True', 'False']}
+                                isOptionEqualToValue={(option, value) =>
+                                  option.toLowerCase() == value || value == ''
+                                }
                                 renderInput={(params) => (
                                   <TextField
                                     {...params}
@@ -899,9 +908,7 @@ function ItemDialog(props: ItemDialogProps) {
                                 onChange={(_event, value) => {
                                   handlePropertyChange(
                                     index,
-                                    (value == 'None'
-                                      ? ''
-                                      : value?.toLowerCase()) as string
+                                    value == 'None' ? '' : value
                                   );
                                 }}
                                 sx={{ alignItems: 'center' }}
@@ -910,8 +917,10 @@ function ItemDialog(props: ItemDialogProps) {
                                   property.allowed_values.values,
                                   'None'
                                 )}
+                                getOptionLabel={(option) => option.toString()}
                                 isOptionEqualToValue={(option, value) =>
-                                  option === value || value === ''
+                                  option.toString() === value.toString() ||
+                                  value === ''
                                 }
                                 renderInput={(params) => (
                                   <TextField

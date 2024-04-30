@@ -1,10 +1,4 @@
-import {
-  act,
-  fireEvent,
-  screen,
-  waitFor,
-  within,
-} from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   getCatalogueCategoryById,
@@ -128,17 +122,13 @@ describe('Catalogue Items Dialog', () => {
       });
 
     if (values.broken !== undefined) {
-      fireEvent.mouseDown(screen.getByLabelText('Broken *'));
-      fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.broken)
-      );
+      const brokenAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(brokenAutoComplete, values.broken);
     }
 
     if (values.older !== undefined) {
-      fireEvent.mouseDown(screen.getByLabelText('Older than five years'));
-      fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.older)
-      );
+      const olderAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(olderAutocomplete, values.older);
     }
 
     values.sensorBrand !== undefined &&
@@ -207,8 +197,8 @@ describe('Catalogue Items Dialog', () => {
       frameRate: '60',
       sensorType: 'IO',
       sensorBrand: 'pixel',
-      broken: 'True',
-      older: 'False',
+      broken: 'T{arrowdown}{enter}',
+      older: 'F{arrowdown}{enter}',
     });
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -267,11 +257,11 @@ describe('Catalogue Items Dialog', () => {
       target: { value: '10' },
     });
 
-    fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-    fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+    const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+    await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
 
-    fireEvent.mouseDown(screen.getByLabelText('Axis'));
-    fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
+    const axisAutocomplete = screen.getAllByRole('combobox')[1];
+    await user.type(axisAutocomplete, 'y{enter}');
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -340,8 +330,8 @@ describe('Catalogue Items Dialog', () => {
       frameRate: '60',
       sensorType: 'IO',
       sensorBrand: 'pixel',
-      broken: 'True',
-      older: 'False',
+      broken: 'T{arrowdown}{enter}',
+      older: 'F{arrowdown}{enter}',
     });
     expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
   }, 10000);
@@ -404,7 +394,7 @@ describe('Catalogue Items Dialog', () => {
     await modifyValues({
       resolution: '12',
       sensorType: 'IO',
-      broken: 'True',
+      broken: 'T{arrowdown}{enter}',
     });
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -539,8 +529,8 @@ describe('Catalogue Items Dialog', () => {
       frameRate: '60a',
       sensorType: 'IO',
       sensorBrand: 'pixel',
-      broken: 'True',
-      older: 'False',
+      broken: 'T{arrowdown}{enter}',
+      older: 'F{arrowdown}{enter}',
     });
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -581,8 +571,8 @@ describe('Catalogue Items Dialog', () => {
       frameRate: '60',
       sensorType: 'IO',
       sensorBrand: 'pixel',
-      broken: 'True',
-      older: 'False',
+      broken: 'T{arrowdown}{enter}',
+      older: 'F{arrowdown}{enter}',
     });
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -700,11 +690,11 @@ describe('Catalogue Items Dialog', () => {
         }
       );
 
-      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+      const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
 
-      fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
+      const axisAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(axisAutocomplete, 'y{arrowdown}{enter}');
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -737,11 +727,11 @@ describe('Catalogue Items Dialog', () => {
         }
       );
 
-      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+      const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
 
-      fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('None'));
+      const axisAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(axisAutocomplete, 'N{arrowdown}{enter}');
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -812,8 +802,8 @@ describe('Catalogue Items Dialog', () => {
         frameRate: '',
         sensorType: '',
         sensorBrand: '',
-        broken: 'None',
-        older: 'None',
+        broken: 'N{arrowdown}{enter}',
+        older: 'N{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -849,8 +839,8 @@ describe('Catalogue Items Dialog', () => {
         frameRate: '240',
         sensorType: 'CCD',
         sensorBrand: 'Nikon',
-        broken: 'True',
-        older: 'True',
+        broken: 'T{arrowdown}{enter}',
+        older: 'T{arrowdown}{enter}',
       });
       await user.click(screen.getByRole('button', { name: 'Finish' }));
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {

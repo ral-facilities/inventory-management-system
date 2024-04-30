@@ -867,6 +867,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
                                 options={['None', 'True', 'False']}
+                                isOptionEqualToValue={(option, value) =>
+                                  option.toLowerCase() == value || value == ''
+                                }
                                 renderInput={(params) => (
                                   <TextField
                                     {...params}
@@ -893,9 +896,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 onChange={(_event, value) => {
                                   handlePropertyChange(
                                     index,
-                                    (value == 'None'
-                                      ? ''
-                                      : value?.toLowerCase()) as string
+                                    value == 'None' ? '' : value
                                   );
                                 }}
                                 sx={{ alignItems: 'center' }}
@@ -904,8 +905,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                   property.allowed_values.values,
                                   'None'
                                 )}
+                                getOptionLabel={(option) => option.toString()}
                                 isOptionEqualToValue={(option, value) =>
-                                  option === value || value === ''
+                                  option.toString() === value.toString() ||
+                                  value === ''
                                 }
                                 renderInput={(params) => (
                                   <TextField

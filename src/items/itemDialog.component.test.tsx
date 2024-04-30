@@ -128,17 +128,13 @@ describe('ItemDialog', () => {
       ));
 
     if (values.isDefective !== undefined) {
-      fireEvent.mouseDown(screen.getByLabelText('Is defective *'));
-      fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.isDefective)
-      );
+      const isDefectiveAutocomplete = screen.getAllByRole('combobox')[0];
+      await user.type(isDefectiveAutocomplete, values.isDefective);
     }
 
     if (values.usageStatus !== undefined) {
-      fireEvent.mouseDown(screen.getByLabelText('Usage status *'));
-      fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.usageStatus)
-      );
+      const usageStatusAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(usageStatusAutocomplete, values.usageStatus);
     }
   };
 
@@ -161,17 +157,13 @@ describe('ItemDialog', () => {
       });
 
     if (values.broken !== undefined) {
-      fireEvent.mouseDown(screen.getByLabelText('Broken *'));
-      fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.broken)
-      );
+      const brokenAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(brokenAutoComplete, values.broken);
     }
 
     if (values.older !== undefined) {
-      fireEvent.mouseDown(screen.getByLabelText('Older than five years'));
-      fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.older)
-      );
+      const olderAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(olderAutocomplete, values.older);
     }
 
     values.sensorBrand !== undefined &&
@@ -379,11 +371,11 @@ describe('ItemDialog', () => {
         }
       );
 
-      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+      const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
 
-      fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
+      const axisAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(axisAutocomplete, 'z{arrowdown}{enter}');
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
@@ -425,8 +417,8 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17/02/2035',
         deliveredDate: '23/09/2045',
-        isDefective: 'Yes',
-        usageStatus: 'Used',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -436,8 +428,8 @@ describe('ItemDialog', () => {
         frameRate: '60',
         sensorType: 'IO',
         sensorBrand: 'pixel',
-        broken: 'True',
-        older: 'False',
+        broken: 'T{arrowdown}{enter}',
+        older: 'F{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -480,8 +472,8 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17/02/',
         deliveredDate: '23/09/',
-        isDefective: 'Yes',
-        usageStatus: 'Used',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
@@ -617,8 +609,8 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17/02/2035',
         deliveredDate: '23/09/2045',
-        isDefective: 'Yes',
-        usageStatus: 'Used',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -628,8 +620,8 @@ describe('ItemDialog', () => {
         frameRate: '60',
         sensorType: 'IO',
         sensorBrand: 'pixel',
-        broken: 'False',
-        older: 'True',
+        broken: 'F{arrowdown}{enter}',
+        older: 'T{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -672,8 +664,8 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17/02/2035',
         deliveredDate: '23/09/2045',
-        isDefective: 'Yes',
-        usageStatus: 'Used',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -681,7 +673,7 @@ describe('ItemDialog', () => {
       await modifyPropertiesValues({
         resolution: '',
         sensorType: '',
-        broken: 'None',
+        broken: 'N{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -700,7 +692,7 @@ describe('ItemDialog', () => {
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
 
       await modifyPropertiesValues({
-        broken: 'False',
+        broken: 'F{arrowdown}{enter}',
         resolution: '12',
         frameRate: '60',
         sensorType: 'IO',
@@ -728,8 +720,8 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17',
         deliveredDate: '23',
-        isDefective: 'Yes',
-        usageStatus: 'Used',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       const validDateHelperText = screen.getAllByText(
@@ -897,8 +889,8 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17/02/2035',
         deliveredDate: '23/09/2045',
-        isDefective: 'Yes',
-        usageStatus: 'Used',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -908,8 +900,8 @@ describe('ItemDialog', () => {
         frameRate: '60',
         sensorType: 'IO',
         sensorBrand: 'pixel',
-        broken: 'True',
-        older: 'False',
+        broken: 'T{arrowdown}{enter}',
+        older: 'F{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -962,11 +954,12 @@ describe('ItemDialog', () => {
         }
       );
 
-      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+      const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
 
-      fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
+      const axisAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(axisAutocomplete, 'z{arrowdown}{enter}');
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -999,11 +992,12 @@ describe('ItemDialog', () => {
         }
       );
 
-      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+      const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
 
-      fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('None'));
+      const axisAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(axisAutocomplete, 'N{enter}');
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -1029,8 +1023,8 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17',
         deliveredDate: '23',
-        isDefective: 'Yes',
-        usageStatus: 'Used',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -1038,7 +1032,7 @@ describe('ItemDialog', () => {
       await modifyPropertiesValues({
         resolution: 'rwererw',
         sensorType: '',
-        broken: 'None',
+        broken: 'N{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));

@@ -143,6 +143,7 @@ export function sortDataList(data: any[], sortedValue: string) {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function addValueToFrontOfList(list: any[], newValue: any): any[] {
+  if (list[0] == 'None') return list;
   list.unshift(newValue);
   return list;
 }
