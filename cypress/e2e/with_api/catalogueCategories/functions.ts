@@ -83,18 +83,15 @@ const modifyCatalogueCategory = (
 
         if (field.allowed_values.type === 'list') {
           for (let j = 0; j < field.allowed_values.values.length; j++) {
-            cy.findByRole('button', {
-              name: `Add list item ${i}`,
-            }).click();
+            cy.findAllByRole('button', {
+              name: `Add list item`,
+            })
+              .eq(i)
+              .click();
 
-            cy.findAllByLabelText(`List Item ${j}`).should(
-              'have.length',
-              i + 1
-            );
-
-            cy.get(`[aria-label="List Item ${j}"]:eq(${i})`).type(
-              field.allowed_values.values[j]
-            );
+            cy.findAllByLabelText('List Item')
+              .eq(j)
+              .type(field.allowed_values.values[j]);
           }
         }
       }

@@ -301,7 +301,7 @@ export interface MoveItemsToSystem {
 export interface CatalogueItemPropertiesErrorsType {
   cip_placement_id: string;
   errors: {
-    fieldName: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
+    fieldName: keyof AddCatalogueCategoryProperty;
     errorMessage: string;
   } | null;
 }
