@@ -175,13 +175,13 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
 
         <TabPanel value={tabValue} index={2}>
           <Grid item container spacing={0}>
-            <Grid item xs={12} sm={6} key={0}>
+            <Grid item xs={12} sm={6} key={9}>
               <Typography color="text.primary">Manufacturer Name</Typography>
               <Typography color="text.secondary">
                 {manufacturerData?.name}
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6} key={1}>
+            <Grid item xs={12} sm={6} key={10}>
               <Typography color="text.primary">Manufacturer URL</Typography>
               <Typography color="text.secondary">
                 {manufacturerData?.url ? (
