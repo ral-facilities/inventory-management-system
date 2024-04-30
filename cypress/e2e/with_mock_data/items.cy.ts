@@ -92,12 +92,12 @@ describe('Items', () => {
           delivered_date: null,
           notes: null,
           properties: [
-            { name: 'Resolution', value: 12 },
-            { name: 'Frame Rate', value: 30 },
-            { name: 'Sensor Type', value: 'CMOS' },
-            { name: 'Sensor brand', value: null },
-            { name: 'Broken', value: true },
-            { name: 'Older than five years', value: false },
+            { id: '1', value: 12 },
+            { id: '2', value: 30 },
+            { id: '3', value: 'CMOS' },
+            { id: '4', value: null },
+            { id: '5', value: true },
+            { id: '6', value: false },
           ],
         })
       );
@@ -140,12 +140,12 @@ describe('Items', () => {
             delivered_date: null,
             notes: null,
             properties: [
-              { name: 'Resolution', value: 12 },
-              { name: 'Frame Rate', value: 30 },
-              { name: 'Sensor Type', value: 'CMOS' },
-              { name: 'Sensor brand', value: null },
-              { name: 'Broken', value: true },
-              { name: 'Older than five years', value: false },
+              { id: '1', value: 12 },
+              { id: '2', value: 30 },
+              { id: '3', value: 'CMOS' },
+              { id: '4', value: null },
+              { id: '5', value: true },
+              { id: '6', value: false },
             ],
           })
         );
@@ -246,9 +246,9 @@ describe('Items', () => {
           delivered_date: null,
           notes: null,
           properties: [
-            { name: 'Pumping Speed', value: 400 },
-            { name: 'Ultimate Pressure', value: 0.2 },
-            { name: 'Axis', value: 'y' },
+            { id: '17', value: 400 },
+            { id: '18', value: 0.2 },
+            { id: '19', value: 'y' },
           ],
         })
       );
@@ -307,12 +307,12 @@ describe('Items', () => {
           delivered_date: '2028-02-12T00:00:00.000Z',
           notes: 'test',
           properties: [
-            { name: 'Resolution', value: 1218 },
-            { name: 'Frame Rate', value: 3060 },
-            { name: 'Sensor Type', value: 'CMOSIO' },
-            { name: 'Sensor brand', value: 'pixel' },
-            { name: 'Broken', value: false },
-            { name: 'Older than five years', value: true },
+            { id: '1', value: 1218 },
+            { id: '2', value: 3060 },
+            { id: '3', value: 'CMOSIO' },
+            { id: '4', value: 'pixel' },
+            { id: '5', value: false },
+            { id: '6', value: true },
           ],
         })
       );
@@ -465,12 +465,12 @@ describe('Items', () => {
           notes:
             '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this ID: KvT2Ox7n',
           properties: [
-            { name: 'Resolution', value: 0 },
-            { name: 'Frame Rate', value: null },
-            { name: 'Sensor Type', value: 'CMOS' },
-            { name: 'Sensor brand', value: null },
-            { name: 'Broken', value: true },
-            { name: 'Older than five years', value: false },
+            { id: '1', value: 0 },
+            { id: '2', value: null },
+            { id: '3', value: 'CMOS' },
+            { id: '4', value: null },
+            { id: '5', value: true },
+            { id: '6', value: false },
           ],
         })
       );
@@ -536,12 +536,12 @@ describe('Items', () => {
           notes: 'zolZDKKuvAoTFRUWeZNAtest',
           system_id: '65328f34a40ff5301575a4e3',
           properties: [
-            { name: 'Resolution', value: 1218 },
-            { name: 'Frame Rate', value: 3060 },
-            { name: 'Sensor Type', value: 'CMOSIO' },
-            { name: 'Sensor brand', value: 'pixel' },
-            { name: 'Broken', value: false },
-            { name: 'Older than five years', value: true },
+            { id: '1', value: 1218 },
+            { id: '2', value: 3060 },
+            { id: '3', value: 'CMOSIO' },
+            { id: '4', value: 'pixel' },
+            { id: '5', value: false },
+            { id: '6', value: true },
           ],
         })
       );
@@ -603,12 +603,12 @@ describe('Items', () => {
       expect(JSON.stringify(await postRequests[0].json())).equal(
         JSON.stringify({
           properties: [
-            { name: 'Resolution', value: 1218 },
-            { name: 'Frame Rate', value: 3060 },
-            { name: 'Sensor Type', value: 'CMOSIO' },
-            { name: 'Sensor brand', value: 'pixel' },
-            { name: 'Broken', value: false },
-            { name: 'Older than five years', value: true },
+            { id: '1', value: 1218 },
+            { id: '2', value: 3060 },
+            { id: '3', value: 'CMOSIO' },
+            { id: '4', value: 'pixel' },
+            { id: '5', value: false },
+            { id: '6', value: true },
           ],
         })
       );
