@@ -8,15 +8,19 @@ import {
 import { AxiosError } from 'axios';
 import {
   AddCatalogueCategory,
+  AddPropertyMigration,
   BreadcrumbsInfo,
   CatalogueCategory,
+  CatalogueCategoryProperty,
   CopyToCatalogueCategory,
   EditCatalogueCategory,
   ErrorParsing,
   MoveToCatalogueCategory,
+  EditPropertyMigration,
   TransferState,
 } from '../app.types';
 
+import handleTransferState from '../handleTransferState';
 import { generateUniqueName } from '../utils';
 import { imsApi } from './api';
 
@@ -92,6 +96,132 @@ export const useAddCatalogueCategory = (): UseMutationResult<
       queryClient.invalidateQueries({
         queryKey: ['CatalogueCategories', category.parent_id ?? 'null'],
       });
+    },
+  });
+};
+
+const addCatalogueCategoryProperty = async (
+  addPropertyMigration: AddPropertyMigration
+): Promise<CatalogueCategoryProperty> => {
+  return imsApi
+    .post<CatalogueCategoryProperty>(
+      `/v1/catalogue-categories/${addPropertyMigration.catalogueCategory.id}/properties`,
+      addPropertyMigration.property
+    )
+    .then((response) => response.data);
+};
+
+export const useAddCatalogueCategoryProperty = (): UseMutationResult<
+  CatalogueCategoryProperty,
+  AxiosError,
+  AddPropertyMigration
+> => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (addPropertyMigration: AddPropertyMigration) => {
+      handleTransferState([
+        {
+          name: addPropertyMigration.catalogueCategory.name,
+          message: `Adding property ${addPropertyMigration.property.name} in ${addPropertyMigration.catalogueCategory.name}`,
+          state: 'information',
+        },
+      ]);
+      return addCatalogueCategoryProperty(addPropertyMigration);
+    },
+    onSuccess: (data, variables) => {
+      const { name } = data;
+      queryClient.invalidateQueries({
+        queryKey: ['CatalogueCategories'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['CatalogueItems'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['Items'],
+      });
+
+      handleTransferState([
+        {
+          name: variables.catalogueCategory.name,
+          message: `Successfully added property ${name} in ${variables.catalogueCategory.name}`,
+          state: 'success',
+        },
+      ]);
+    },
+    onError: (error, variables) => {
+      const response = error.response?.data as ErrorParsing;
+
+      handleTransferState([
+        {
+          name: variables.catalogueCategory.name,
+          message: response.detail,
+          state: 'error',
+        },
+      ]);
+    },
+  });
+};
+
+const editCatalogueCategoryProperty = async (
+  editPropertyMigration: EditPropertyMigration
+): Promise<CatalogueCategoryProperty> => {
+  const { id, ...propertyBody } = editPropertyMigration.property;
+  return imsApi
+    .patch<CatalogueCategoryProperty>(
+      `/v1/catalogue-categories/${editPropertyMigration.catalogueCategory.id}/properties/${editPropertyMigration.property.id}`,
+      propertyBody
+    )
+    .then((response) => response.data);
+};
+
+export const useEditCatalogueCategoryProperty = (): UseMutationResult<
+  CatalogueCategoryProperty,
+  AxiosError,
+  EditPropertyMigration
+> => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (editPropertyMigration: EditPropertyMigration) => {
+      handleTransferState([
+        {
+          name: editPropertyMigration.catalogueCategory.name,
+          message: `Editing property ${editPropertyMigration.property.name} in ${editPropertyMigration.catalogueCategory.name}`,
+          state: 'information',
+        },
+      ]);
+      return editCatalogueCategoryProperty(editPropertyMigration);
+    },
+    onSuccess: (data, variables) => {
+      const { name } = data;
+      queryClient.invalidateQueries({
+        queryKey: ['CatalogueCategories'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['CatalogueItems'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['Items'],
+      });
+      handleTransferState([
+        {
+          name: variables.catalogueCategory.name,
+          message: `Successfully edited property ${name} in ${variables.catalogueCategory.name}`,
+          state: 'success',
+        },
+      ]);
+    },
+    onError: (error, variables) => {
+      const response = error.response?.data as ErrorParsing;
+
+      handleTransferState([
+        {
+          name: variables.catalogueCategory.name,
+          message: response.detail,
+          state: 'error',
+        },
+      ]);
     },
   });
 };

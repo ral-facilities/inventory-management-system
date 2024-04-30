@@ -16,7 +16,10 @@ export interface CatalogueCardViewProps {
   onChangeOpenDeleteCategoryDialog: (
     catalogueCategory: CatalogueCategory
   ) => void;
-  onChangeOpenEditCategoryDialog: (
+  onChangeOpenEditNameCategoryDialog: (
+    catalogueCategory: CatalogueCategory
+  ) => void;
+  onChangeOpenEditPropertiesCategoryDialog: (
     catalogueCategory: CatalogueCategory
   ) => void;
   onChangeOpenSaveAsDialog: (catalogueCategory: CatalogueCategory) => void;
@@ -28,7 +31,8 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
   const {
     catalogueCategoryData,
     onChangeOpenDeleteCategoryDialog,
-    onChangeOpenEditCategoryDialog,
+    onChangeOpenEditNameCategoryDialog,
+    onChangeOpenEditPropertiesCategoryDialog,
     onChangeOpenSaveAsDialog,
     handleToggleSelect,
     selectedCategories,
@@ -73,7 +77,10 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
             <CatalogueCard
               {...item}
               onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
-              onChangeOpenEditDialog={onChangeOpenEditCategoryDialog}
+              onChangeOpenEditNameDialog={onChangeOpenEditNameCategoryDialog}
+              onChangeOpenEditPropertiesDialog={
+                onChangeOpenEditPropertiesCategoryDialog
+              }
               onChangeOpenSaveAsDialog={onChangeOpenSaveAsDialog}
               onToggleSelect={handleToggleSelect}
               isSelected={selectedCategories.some(

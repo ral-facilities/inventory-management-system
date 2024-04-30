@@ -1,12 +1,14 @@
 import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
   AddCatalogueCategory,
+  CatalogueCategoryPropertyMigration,
   AddCatalogueItem,
   AddItem,
   AddManufacturer,
   AddSystem,
   BreadcrumbsInfo,
   CatalogueCategory,
+  CatalogueCategoryProperty,
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
@@ -189,6 +191,52 @@ export const handlers = [
       return HttpResponse.json({ detail: '' }, { status: 400 });
     }
   }),
+
+  http.post<
+    PathParams,
+    CatalogueCategoryPropertyMigration,
+    CatalogueCategoryProperty | ErrorResponse
+  >(
+    '/v1/catalogue-categories/:catalogue_category_id/properties',
+    async ({ request }) => {
+      const body = await request.json();
+
+      return HttpResponse.json(
+        {
+          id: '1',
+          ...body,
+        } as CatalogueCategoryProperty,
+        { status: 200 }
+      );
+    }
+  ),
+
+  http.patch<
+    PathParams,
+    CatalogueCategoryPropertyMigration,
+    CatalogueCategoryProperty | ErrorResponse
+  >(
+    '/v1/catalogue-categories/:catalogue_category_id/properties/:property_id',
+    async ({ request, params }) => {
+      const body = await request.json();
+
+      const { catalogue_category_id, property_id } = params;
+
+      const property = CatalogueCategoriesJSON.find(
+        (category) => category.id === catalogue_category_id
+      )?.catalogue_item_properties?.find(
+        (property) => property.id === property_id
+      );
+
+      return HttpResponse.json(
+        {
+          ...body,
+          ...property,
+        } as CatalogueCategoryProperty,
+        { status: 200 }
+      );
+    }
+  ),
 
   // ------------------------------------ CATALOGUE ITEMS ------------------------------------
 
