@@ -7,32 +7,38 @@
       {
         "name": "Resolution",
         "value": 12,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 30,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": null,
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "1",
@@ -59,32 +65,38 @@
       {
         "name": "Resolution",
         "value": 16,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 60,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Sony",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "2",
@@ -111,32 +123,38 @@
       {
         "name": "Resolution",
         "value": 20,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 120,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Canon",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "3",
@@ -163,32 +181,38 @@
       {
         "name": "Resolution",
         "value": 24,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 240,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Nikon",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "90",
@@ -215,32 +239,38 @@
       {
         "name": "Resolution",
         "value": 28,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 120,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Panasonic",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "24",
@@ -267,32 +297,38 @@
       {
         "name": "Resolution",
         "value": 32,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 240,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Olympus",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "25",
@@ -319,32 +355,38 @@
       {
         "name": "Resolution",
         "value": 36,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 360,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Fujifilm",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "26",
@@ -371,32 +413,38 @@
       {
         "name": "Resolution",
         "value": 40,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 480,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "27",
@@ -423,32 +471,38 @@
       {
         "name": "Resolution",
         "value": 48,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 600,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Pentax",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "28",
@@ -475,32 +529,38 @@
       {
         "name": "Resolution",
         "value": 52,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 720,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Sigma",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "29",
@@ -527,32 +587,38 @@
       {
         "name": "Resolution",
         "value": 56,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 840,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "30",
@@ -579,32 +645,38 @@
       {
         "name": "Resolution",
         "value": 60,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 960,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Red",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "31",
@@ -631,32 +703,38 @@
       {
         "name": "Resolution",
         "value": 64,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 1080,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "32",
@@ -683,32 +761,38 @@
       {
         "name": "Resolution",
         "value": 68,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 1440,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "33",
@@ -735,32 +819,38 @@
       {
         "name": "Resolution",
         "value": 72,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 1800,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "34",
@@ -787,32 +877,38 @@
       {
         "name": "Resolution",
         "value": 76,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 2160,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "35",
@@ -839,32 +935,38 @@
       {
         "name": "Resolution",
         "value": 80,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 2520,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "36",
@@ -891,32 +993,38 @@
       {
         "name": "Resolution",
         "value": 84,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 2880,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "37",
@@ -943,32 +1051,38 @@
       {
         "name": "Resolution",
         "value": 88,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 3240,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "38",
@@ -995,32 +1109,38 @@
       {
         "name": "Resolution",
         "value": 92,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 3600,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "39",
@@ -1047,32 +1167,38 @@
       {
         "name": "Resolution",
         "value": 96,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 3960,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "40",
@@ -1099,32 +1225,38 @@
       {
         "name": "Resolution",
         "value": 100,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 4320,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Hasselblad",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "41",
@@ -1151,32 +1283,38 @@
       {
         "name": "Resolution",
         "value": 104,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 4680,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Mamiya",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "42",
@@ -1203,32 +1341,38 @@
       {
         "name": "Resolution",
         "value": 108,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 5040,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CMOS",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Phase One",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "43",
@@ -1255,32 +1399,38 @@
       {
         "name": "Resolution",
         "value": 112,
-        "unit": "megapixels"
+        "unit": "megapixels",
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "value": 5400,
-        "unit": "fps"
+        "unit": "fps",
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "value": "CCD",
-        "unit": null
+        "unit": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "value": "Leica",
-        "unit": null
+        "unit": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "value": false,
-        "unit": null
+        "unit": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "value": true,
-        "unit": null
+        "unit": null,
+        "id": "6"
       }
     ],
     "id": "44",
@@ -1307,12 +1457,14 @@
       {
         "name": "Measurement Range",
         "value": 1000,
-        "unit": "Joules"
+        "unit": "Joules",
+        "id": "7"
       },
       {
         "name": "Accuracy",
         "value": "±0.5%",
-        "unit": null
+        "unit": null,
+        "id": "8"
       }
     ],
     "id": "89",
@@ -1339,12 +1491,14 @@
       {
         "name": "Measurement Range",
         "value": 2000,
-        "unit": "Joules"
+        "unit": "Joules",
+        "id": "7"
       },
       {
         "name": "Accuracy",
         "value": null,
-        "unit": null
+        "unit": null,
+        "id": "8"
       }
     ],
     "id": "6",
@@ -1371,12 +1525,14 @@
       {
         "name": "Measurement Range",
         "value": 5000,
-        "unit": "Joules"
+        "unit": "Joules",
+        "id": "7"
       },
       {
         "name": "Accuracy",
         "value": "±0.1%",
-        "unit": null
+        "unit": null,
+        "id": "8"
       }
     ],
     "id": "7",
@@ -1403,12 +1559,14 @@
       {
         "name": "Measurement Range",
         "value": 10000,
-        "unit": "Joules"
+        "unit": "Joules",
+        "id": "7"
       },
       {
         "name": "Accuracy",
         "value": "±0.05%",
-        "unit": null
+        "unit": null,
+        "id": "8"
       }
     ],
     "id": "8",
@@ -1435,12 +1593,14 @@
       {
         "name": "Wavefront Measurement Range",
         "value": "0-10 micrometers",
-        "unit": null
+        "unit": null,
+        "id": "11"
       },
       {
         "name": "Spatial Resolution",
         "value": 5,
-        "unit": "micrometers"
+        "unit": "micrometers",
+        "id": "12"
       }
     ],
     "id": "9",
@@ -1467,12 +1627,14 @@
       {
         "name": "Wavefront Measurement Range",
         "value": "0-20 micrometers",
-        "unit": null
+        "unit": null,
+        "id": "11"
       },
       {
         "name": "Spatial Resolution",
         "value": 10,
-        "unit": "micrometers"
+        "unit": "micrometers",
+        "id": "12"
       }
     ],
     "id": "10",
@@ -1499,12 +1661,14 @@
       {
         "name": "Travel Range",
         "value": 100,
-        "unit": "millimeters"
+        "unit": "millimeters",
+        "id": "13"
       },
       {
         "name": "Load Capacity",
         "value": 10,
-        "unit": "kilograms"
+        "unit": "kilograms",
+        "id": "14"
       }
     ],
     "id": "11",
@@ -1531,12 +1695,14 @@
       {
         "name": "Travel Range",
         "value": 200,
-        "unit": "millimeters"
+        "unit": "millimeters",
+        "id": "13"
       },
       {
         "name": "Load Capacity",
         "value": 20,
-        "unit": "kilograms"
+        "unit": "kilograms",
+        "id": "14"
       }
     ],
     "id": "12",
@@ -1563,12 +1729,14 @@
       {
         "name": "Travel Range",
         "value": 300,
-        "unit": "millimeters"
+        "unit": "millimeters",
+        "id": "13"
       },
       {
         "name": "Load Capacity",
         "value": 30,
-        "unit": "kilograms"
+        "unit": "kilograms",
+        "id": "14"
       }
     ],
     "id": "13",
@@ -1595,12 +1763,14 @@
       {
         "name": "Travel Range",
         "value": 400,
-        "unit": "millimeters"
+        "unit": "millimeters",
+        "id": "13"
       },
       {
         "name": "Load Capacity",
         "value": 40,
-        "unit": "kilograms"
+        "unit": "kilograms",
+        "id": "14"
       }
     ],
     "id": "14",
@@ -1627,12 +1797,14 @@
       {
         "name": "Cooldown Time",
         "value": "2 hours",
-        "unit": null
+        "unit": null,
+        "id": "15"
       },
       {
         "name": "Pumping Speed",
         "value": 50,
-        "unit": "liters per second"
+        "unit": "liters per second",
+        "id": "16"
       }
     ],
     "id": "15",
@@ -1659,12 +1831,14 @@
       {
         "name": "Cooldown Time",
         "value": "3 hours",
-        "unit": null
+        "unit": null,
+        "id": "15"
       },
       {
         "name": "Pumping Speed",
         "value": 60,
-        "unit": "liters per second"
+        "unit": "liters per second",
+        "id": "16"
       }
     ],
     "id": "16",
@@ -1691,17 +1865,20 @@
       {
         "name": "Pumping Speed",
         "value": 300,
-        "unit": "liters per second"
+        "unit": "liters per second",
+        "id": "17"
       },
       {
         "name": "Ultimate Pressure",
         "value": 0.1,
-        "unit": "millibar"
+        "unit": "millibar",
+        "id": "18"
       },
       {
         "name": "Axis",
         "value": "x",
-        "unit": null
+        "unit": null,
+        "id": "19"
       }
     ],
     "id": "17",
@@ -1728,17 +1905,20 @@
       {
         "name": "Pumping Speed",
         "value": 400,
-        "unit": "liters per second"
+        "unit": "liters per second",
+        "id": "17"
       },
       {
         "name": "Ultimate Pressure",
         "value": 0.05,
-        "unit": "millibar"
+        "unit": "millibar",
+        "id": "18"
       },
       {
         "name": "Axis",
         "value": "y",
-        "unit": null
+        "unit": null,
+        "id": "19"
       }
     ],
     "id": "18",
@@ -1765,17 +1945,20 @@
       {
         "name": "Pumping Speed",
         "value": 500,
-        "unit": "liters per second"
+        "unit": "liters per second",
+        "id": "17"
       },
       {
         "name": "Ultimate Pressure",
         "value": 0.01,
-        "unit": "millibar"
+        "unit": "millibar",
+        "id": "18"
       },
       {
         "name": "Axis",
         "value": "x",
-        "unit": null
+        "unit": null,
+        "id": "19"
       }
     ],
     "id": "19",
@@ -1802,17 +1985,20 @@
       {
         "name": "Pumping Speed",
         "value": 300,
-        "unit": "liters per second"
+        "unit": "liters per second",
+        "id": "17"
       },
       {
         "name": "Ultimate Pressure",
         "value": 0.1,
-        "unit": "millibar"
+        "unit": "millibar",
+        "id": "18"
       },
       {
         "name": "Axis",
         "value": "z",
-        "unit": null
+        "unit": null,
+        "id": "19"
       }
     ],
     "id": "20",
@@ -1839,12 +2025,14 @@
       {
         "name": "Pumping Speed",
         "value": 700,
-        "unit": "liters per second"
+        "unit": "liters per second",
+        "id": "20"
       },
       {
         "name": "Compression Ratio",
         "value": 100,
-        "unit": null
+        "unit": null,
+        "id": "21"
       }
     ],
     "id": "21",
@@ -1871,12 +2059,14 @@
       {
         "name": "Pumping Speed",
         "value": 800,
-        "unit": "liters per second"
+        "unit": "liters per second",
+        "id": "20"
       },
       {
         "name": "Compression Ratio",
         "value": 120,
-        "unit": null
+        "unit": null,
+        "id": "21"
       }
     ],
     "id": "22",
@@ -1903,12 +2093,14 @@
       {
         "name": "Pumping Speed",
         "value": 500,
-        "unit": "liters per second"
+        "unit": "liters per second",
+        "id": "22"
       },
       {
         "name": "Backing Pressure",
         "value": 0.2,
-        "unit": "millibar"
+        "unit": "millibar",
+        "id": "23"
       }
     ],
     "id": "23",
@@ -1935,12 +2127,14 @@
       {
         "name": "Pumping Speed",
         "value": 600,
-        "unit": "liters per second"
+        "unit": "liters per second",
+        "id": "22"
       },
       {
         "name": "Backing Pressure",
         "value": 0.3,
-        "unit": "millibar"
+        "unit": "millibar",
+        "id": "23"
       }
     ],
     "id": "24",

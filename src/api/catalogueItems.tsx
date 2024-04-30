@@ -253,12 +253,24 @@ export const useCopyToCatalogueItem = (): UseMutationResult<
           // Information to post (backend will just ignore the extra here - only id and code)
           // Also use Object.assign to copy the data otherwise will modify in place causing issues
           // in tests
+
+          const targetProperties =
+            copyToCatalogueItem.targetCatalogueCategory
+              ?.catalogue_item_properties;
+
+          const properties = catalogueItem.properties.map((property) => {
+            const targetPropertyId = targetProperties?.find(
+              (targetProperty) => property.name === targetProperty.name
+            )?.id;
+            return { id: targetPropertyId, value: property.value };
+          });
+
           const catalogueItemAdd: AddCatalogueItem = Object.assign(
             {},
-            catalogueItem
+            { ...catalogueItem, properties: properties }
           ) as AddCatalogueItem;
 
-          // Assing new parent
+          // Assign new parent
           catalogueItemAdd.catalogue_category_id =
             copyToCatalogueItem.targetCatalogueCategory?.id ?? '';
 

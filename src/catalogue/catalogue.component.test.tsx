@@ -1,25 +1,28 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { HttpResponse, http } from 'msw';
-import { CatalogueCategoryFormData, CatalogueItemProperty } from '../app.types';
+import { CatalogueCategoryProperty, CatalogueItemProperty } from '../app.types';
 import { server } from '../mocks/server';
 import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
 import { renderComponentWithRouterProvider } from '../testUtils';
 
 describe('matchCatalogueItemProperties', () => {
   it('should match catalogue item properties correctly', () => {
-    const formData: CatalogueCategoryFormData[] = [
+    const formData: CatalogueCategoryProperty[] = [
       {
+        id: '1',
         name: 'Name1',
         type: 'string',
         mandatory: true,
       },
       {
+        id: '2',
         name: 'Name2',
         type: 'number',
         mandatory: false,
       },
       {
+        id: '3',
         name: 'Name3',
         type: 'boolean',
         mandatory: true,
@@ -28,15 +31,15 @@ describe('matchCatalogueItemProperties', () => {
 
     const itemProperties: CatalogueItemProperty[] = [
       {
-        name: 'Name1',
+        id: '1',
         value: 'Value1',
       },
       {
-        name: 'Name2',
+        id: '2',
         value: '42',
       },
       {
-        name: 'Name3',
+        id: '3',
         value: true,
       },
     ];
@@ -48,13 +51,15 @@ describe('matchCatalogueItemProperties', () => {
   });
 
   it('should handle missing properties', () => {
-    const formData: CatalogueCategoryFormData[] = [
+    const formData: CatalogueCategoryProperty[] = [
       {
+        id: '1',
         name: 'Name1',
         type: 'string',
         mandatory: true,
       },
       {
+        id: '2',
         name: 'Name2',
         type: 'number',
         mandatory: false,
@@ -63,7 +68,7 @@ describe('matchCatalogueItemProperties', () => {
 
     const itemProperties: CatalogueItemProperty[] = [
       {
-        name: 'Name1',
+        id: '1',
         value: 'Value1',
       },
     ];

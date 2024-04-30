@@ -27,7 +27,7 @@ import {
 import {
   AddCatalogueItem,
   CatalogueCategory,
-  CatalogueCategoryFormData,
+  CatalogueCategoryProperty,
   CatalogueDetailsErrorMessages,
   CatalogueItem,
   CatalogueItemDetailsPlaceholder,
@@ -359,7 +359,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
         if (!propertyValues[index])
           return {
-            name: property.name,
+            id: property.id,
             value: null,
           };
 
@@ -375,7 +375,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         }
 
         return {
-          name: property.name,
+          id: property.id,
           value: typedValue,
         };
       }
@@ -480,7 +480,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         JSON.stringify(updatedProperties) !==
         JSON.stringify(
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          selectedCatalogueItem.properties.map(({ unit, ...rest }) => rest)
+          selectedCatalogueItem.properties.map(({ unit, name, ...rest }) => ({
+            id: rest.id,
+            value: rest.value,
+          }))
         );
 
       const isManufacturerUpdated =
@@ -843,7 +846,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             {parentCatalogueItemPropertiesInfo.length >= 1 ? (
               <Grid container spacing={1.5}>
                 {parentCatalogueItemPropertiesInfo.map(
-                  (property: CatalogueCategoryFormData, index: number) => (
+                  (property: CatalogueCategoryProperty, index: number) => (
                     <Grid item xs={12} key={index}>
                       <Grid container spacing={1.5}>
                         <Grid item xs={11} sx={{ display: 'flex' }}>
