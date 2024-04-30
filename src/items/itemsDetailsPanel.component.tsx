@@ -135,7 +135,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={1}>
+              <Grid item xs={12} sm={6} key={7}>
                 <Typography color="text.primary">System</Typography>
                 <Typography color="text.secondary">
                   <MuiLink
@@ -149,14 +149,14 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={7}>
+              <Grid item xs={12} sm={6} key={8}>
                 <Typography color="text.primary">Last Modified</Typography>
                 <Typography color="text.secondary">
                   {formatDateTimeStrings(itemData.modified_time, true)}
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={8}>
+              <Grid item xs={12} sm={6} key={9}>
                 <Typography color="text.primary">Created</Typography>
                 <Typography color="text.secondary">
                   {formatDateTimeStrings(itemData.created_time, true)}
