@@ -144,7 +144,7 @@ jobs:
 
       - name: Output docker logs (api)
         if: failure()
-        run: docker logs inventory_management_system_api
+        run: docker logs inventory_management_system_api_container
 
       - name: Upload Cypress screenshots
         if: failure()
