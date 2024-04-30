@@ -240,34 +240,6 @@ export const editCatalogueCategories = () => {
   modifyCatalogueCategory({
     editCatalogueCategoryName: 'Spherical Lenses',
     name: 'Spherical Lenses 2',
-    newFormFields: [
-      {
-        name: 'Substrate',
-        type: 'text',
-        mandatory: true,
-        allowed_values: {
-          type: 'list',
-          values: ['N-BK7', 'UV Fused Siilica', 'Fused Silica'],
-        },
-      },
-      {
-        name: 'Diameters',
-        type: 'number',
-        unit: 'mm',
-        mandatory: false,
-      },
-      {
-        name: 'Wavelength Range3',
-        type: 'text',
-        unit: 'nm',
-        mandatory: true,
-      },
-      {
-        name: 'Broken4',
-        type: 'boolean',
-        mandatory: false,
-      },
-    ],
   });
 };
 
