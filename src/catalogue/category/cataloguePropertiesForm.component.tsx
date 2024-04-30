@@ -15,19 +15,19 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
   AllowedValuesList,
-  CatalogueCategoryFormData,
+  AddCatalogueCategoryProperty,
   CatalogueItemPropertiesErrorsType,
   AllowedValuesListErrorsType,
   Unit,
-  CatalogueCategoryFormDataWithPlacementIds,
+  AddCatalogueCategoryPropertyWithPlacementIds,
 } from '../../app.types';
 import { useUnits } from '../../api/units';
 import { generateUniqueId } from '../../utils';
 
 export interface CataloguePropertiesFormProps {
-  formFields: CatalogueCategoryFormDataWithPlacementIds[];
+  formFields: AddCatalogueCategoryPropertyWithPlacementIds[];
   onChangeFormFields: (
-    formFields: CatalogueCategoryFormDataWithPlacementIds[]
+    formFields: AddCatalogueCategoryPropertyWithPlacementIds[]
   ) => void;
   catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[];
   onChangeCatalogueItemPropertiesErrors: (
@@ -37,6 +37,7 @@ export interface CataloguePropertiesFormProps {
   onChangeAllowedValuesListErrors: (
     allowedValuesListErrors: AllowedValuesListErrorsType[]
   ) => void;
+  isDisabled: boolean;
   resetFormError: () => void;
 }
 
@@ -49,6 +50,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     catalogueItemPropertiesErrors,
     allowedValuesListErrors,
     resetFormError,
+    isDisabled,
   } = props;
 
   const { data: units } = useUnits();
@@ -69,7 +71,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   };
 
   const handleDeleteField = (cip_placement_id: string) => {
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] =
+    const updatedFormFields: AddCatalogueCategoryPropertyWithPlacementIds[] =
       JSON.parse(JSON.stringify(formFields));
 
     // Find the index of the item with the given cip_placement_id
@@ -104,10 +106,10 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
 
   const handleChange = (
     cip_placement_id: string,
-    field: keyof CatalogueCategoryFormData,
+    field: keyof AddCatalogueCategoryProperty,
     value: string | boolean | null
   ) => {
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] =
+    const updatedFormFields: AddCatalogueCategoryPropertyWithPlacementIds[] =
       JSON.parse(JSON.stringify(formFields));
 
     const fieldIndex = updatedFormFields.findIndex(
@@ -175,7 +177,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     resetFormError();
   };
   const handleAddListValue = (cip_placement_id: string) => {
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] =
+    const updatedFormFields: AddCatalogueCategoryPropertyWithPlacementIds[] =
       JSON.parse(JSON.stringify(formFields));
 
     // Find the index of the item with the given cip_placement_id
@@ -230,7 +232,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       return;
     }
 
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] =
+    const updatedFormFields: AddCatalogueCategoryPropertyWithPlacementIds[] =
       JSON.parse(JSON.stringify(formFields));
     const currentField = updatedFormFields[fieldIndex];
 
@@ -292,7 +294,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       return;
     }
 
-    const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] =
+    const updatedFormFields: AddCatalogueCategoryPropertyWithPlacementIds[] =
       JSON.parse(JSON.stringify(formFields));
     const currentField = updatedFormFields[fieldIndex];
 
@@ -387,6 +389,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             variant="outlined"
             required={true}
             value={field.name}
+            disabled={isDisabled}
             onChange={(e) =>
               handleChange(field.cip_placement_id, 'name', e.target.value)
             }
@@ -397,9 +400,12 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               catalogueItemPropertyMessage(field.cip_placement_id, 'name')
                 ?.errors?.errorMessage
             }
-            sx={{ minWidth: '150px' }}
+            sx={{ minWidth: '200px', width: '200px' }}
           />
-          <FormControl sx={{ width: '150px', minWidth: '150px' }}>
+          <FormControl
+            disabled={isDisabled}
+            sx={{ width: '140px', minWidth: '140px' }}
+          >
             <InputLabel
               error={
                 !!catalogueItemPropertyMessage(field.cip_placement_id, 'type')
@@ -440,8 +446,8 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
           </FormControl>
 
           <FormControl
-            disabled={field.type === 'boolean'}
-            sx={{ width: '200px', minWidth: '200px' }}
+            disabled={field.type === 'boolean' || isDisabled}
+            sx={{ width: '170px', minWidth: '170px' }}
           >
             <InputLabel
               required={true}
@@ -452,7 +458,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             <Select
               value={field.allowed_values?.type ?? 'any'}
               onChange={(e) => {
-                const updatedFormFields: CatalogueCategoryFormDataWithPlacementIds[] =
+                const updatedFormFields: AddCatalogueCategoryPropertyWithPlacementIds[] =
                   JSON.parse(JSON.stringify(formFields));
                 const fieldIndex = updatedFormFields.findIndex(
                   (formField) =>
@@ -509,6 +515,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
                   <TextField
                     label={`List Item`}
                     aria-label={`List Item ${valueIndex}`}
+                    disabled={isDisabled}
                     variant="outlined"
                     value={listValue.value as string}
                     onChange={(e) =>
@@ -530,27 +537,29 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
                       listValue.av_placement_id
                     )}
                   />
-
-                  <IconButton
-                    aria-label={`Delete list item ${valueIndex}`}
-                    onClick={() =>
-                      handleDeleteListValue(
-                        field.cip_placement_id,
-                        listValue.av_placement_id
-                      )
-                    }
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                  {!isDisabled && (
+                    <IconButton
+                      aria-label={`Delete list item ${valueIndex}`}
+                      onClick={() =>
+                        handleDeleteListValue(
+                          field.cip_placement_id,
+                          listValue.av_placement_id
+                        )
+                      }
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  )}
                 </Stack>
               ))}
-
-              <IconButton
-                aria-label={`Add list item ${index}`}
-                onClick={() => handleAddListValue(field.cip_placement_id)}
-              >
-                <AddIcon />
-              </IconButton>
+              {!isDisabled && (
+                <IconButton
+                  aria-label={`Add list item ${index}`}
+                  onClick={() => handleAddListValue(field.cip_placement_id)}
+                >
+                  <AddIcon />
+                </IconButton>
+              )}
               {catalogueItemPropertyMessage(field.cip_placement_id, 'list') && (
                 <FormHelperText error>
                   {
@@ -562,33 +571,33 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             </Stack>
           )}
 
-          <FormControl
+          <Autocomplete
+            options={units ?? []}
             sx={{ minWidth: '200px' }}
-            disabled={field.type === 'boolean'}
+            getOptionLabel={(option) => option.value}
+            value={units?.find((unit) => unit.value === field.unit) || null}
+            disabled={field.type === 'boolean' || isDisabled}
+            onChange={(_event, newValue: Unit | null) => {
+              handleChange(
+                field.cip_placement_id,
+                'unit',
+                newValue?.value || null
+              );
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Select Unit"
+                variant="outlined"
+                disabled={field.type === 'boolean' || isDisabled}
+              />
+            )}
+          />
+
+          <FormControl
+            disabled={isDisabled}
+            sx={{ width: '150px', minWidth: '150px' }}
           >
-            <Autocomplete
-              options={units ?? []}
-              getOptionLabel={(option) => option.value}
-              value={units?.find((unit) => unit.value === field.unit) || null}
-              disabled={field.type === 'boolean'}
-              onChange={(_event, newValue: Unit | null) => {
-                handleChange(
-                  field.cip_placement_id,
-                  'unit',
-                  newValue?.value || null
-                );
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Select Unit"
-                  variant="outlined"
-                  disabled={field.type === 'boolean'}
-                />
-              )}
-            />
-          </FormControl>
-          <FormControl sx={{ width: '150px', minWidth: '150px' }}>
             <InputLabel
               id={`catalogue-properties-form-select-mandatory-label-${field.cip_placement_id}`}
             >
@@ -617,23 +626,26 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
               alignItems: 'center',
             }}
           >
-            <IconButton
-              aria-label={'Delete catalogue category field entry'}
-              onClick={() => handleDeleteField(field.cip_placement_id)}
-            >
-              <DeleteIcon />
-            </IconButton>
+            {!isDisabled && (
+              <IconButton
+                aria-label={'Delete catalogue category field entry'}
+                onClick={() => handleDeleteField(field.cip_placement_id)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            )}
           </Box>
         </Stack>
       ))}
-
-      <IconButton
-        sx={{ margin: '8px' }}
-        onClick={handleAddField}
-        aria-label={'Add catalogue category field entry'}
-      >
-        <AddIcon />
-      </IconButton>
+      {!isDisabled && (
+        <IconButton
+          sx={{ margin: '8px' }}
+          onClick={handleAddField}
+          aria-label={'Add catalogue category field entry'}
+        >
+          <AddIcon />
+        </IconButton>
+      )}
     </div>
   );
 }

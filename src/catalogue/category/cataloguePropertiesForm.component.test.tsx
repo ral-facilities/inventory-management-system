@@ -2,7 +2,7 @@ import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   CatalogueItemPropertiesErrorsType,
-  CatalogueCategoryFormDataWithPlacementIds,
+  AddCatalogueCategoryPropertyWithPlacementIds,
   AllowedValuesListErrorsType,
 } from '../../app.types';
 import { renderComponentWithRouterProvider } from '../../testUtils';
@@ -35,6 +35,7 @@ describe('Catalogue Properties Form', () => {
       onChangeAllowedValuesListErrors: onChangeAllowedValuesListErrors,
       allowedValuesListErrors: [],
       resetFormError: resetFormError,
+      isDisabled: false,
     };
     user = userEvent.setup();
   });
@@ -45,7 +46,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('renders correctly', async () => {
-    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 1',
@@ -101,6 +102,69 @@ describe('Catalogue Properties Form', () => {
     props = {
       ...props,
       formFields: formFields,
+    };
+    const { asFragment } = createView();
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('renders correctly when disabled', async () => {
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
+      {
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'text',
+        unit: '',
+        mandatory: false,
+      },
+      {
+        cip_placement_id: '2',
+        name: 'Field 2',
+        type: 'number',
+        unit: 'cm',
+        mandatory: true,
+      },
+      {
+        cip_placement_id: '3',
+        name: 'Field 3',
+        type: 'number',
+        unit: 'cm',
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '6', value: '1' },
+            { av_placement_id: '7', value: '2' },
+          ],
+        },
+        mandatory: true,
+      },
+      {
+        cip_placement_id: '4',
+        name: 'Field 4',
+        type: 'string',
+        unit: '',
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '8', value: 'top' },
+            { av_placement_id: '9', value: 'bottom' },
+          ],
+        },
+        mandatory: true,
+      },
+      {
+        cip_placement_id: '5',
+        name: 'Field 5',
+        type: 'string',
+        unit: '',
+        allowed_values: { type: 'list', values: [] },
+        mandatory: true,
+      },
+    ];
+
+    props = {
+      ...props,
+      formFields: formFields,
+      isDisabled: true,
     };
     const { asFragment } = createView();
     expect(asFragment()).toMatchSnapshot();
@@ -356,7 +420,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('display error message for type and name if they are not filled in', async () => {
-    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: '',
@@ -690,7 +754,7 @@ describe('Catalogue Properties Form', () => {
     expect(onChangeCatalogueItemPropertiesErrors).toHaveBeenCalledWith([]);
   });
   it('should delete a list item when the delete icon is click', async () => {
-    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -764,7 +828,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should add a list item when the add icon is clicked', async () => {
-    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -842,7 +906,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should edit a list item when the add icon is clicked', async () => {
-    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -920,7 +984,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should set the allowed values to undefined if switched to any', async () => {
-    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -993,7 +1057,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should set the allowed values to empty if switched to list from any', async () => {
-    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -1060,7 +1124,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should display error for duplicate values and incorrect type values and the error should be removed if the catalogue item property is deleted', async () => {
-    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -1190,7 +1254,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should error for incorrect type values and remove error if a values has been changed for the specfic list item', async () => {
-    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -1273,7 +1337,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should display error for incorrect type values and remove the error if the value has been deleted', async () => {
-    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',
@@ -1353,7 +1417,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should display error for duplicate values and incorrect type values and the error should be removed if the type is changed', async () => {
-    const formFields: CatalogueCategoryFormDataWithPlacementIds[] = [
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
         name: 'Field 3',

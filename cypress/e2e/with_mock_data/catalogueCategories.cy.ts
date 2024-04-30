@@ -608,136 +608,6 @@ describe('Catalogue Category', () => {
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
 
-  it('edits a catalogue category with catalogue properties', () => {
-    cy.visit('/catalogue/1');
-    cy.findByRole('button', {
-      name: 'actions Voltage Meters catalogue category button',
-    }).click();
-
-    cy.findByRole('menuitem', {
-      name: 'edit Voltage Meters catalogue category button',
-    }).click();
-
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findAllByLabelText('Property Name *').first().clear();
-    cy.findAllByLabelText('Property Name *').first().type('Updated Field');
-
-    cy.findByRole('button', { name: 'Save' }).click();
-    cy.findByRole('dialog').should('not.exist');
-
-    cy.findBrowserMockedRequests({
-      method: 'PATCH',
-      url: '/v1/catalogue-categories/:id',
-    }).should(async (patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(await request.json())).equal(
-        JSON.stringify({
-          catalogue_item_properties: [
-            {
-              name: 'Updated Field',
-              type: 'number',
-              unit: 'volts',
-              mandatory: true,
-              allowed_values: null,
-            },
-            {
-              name: 'Accuracy',
-              type: 'string',
-              unit: null,
-              mandatory: true,
-              allowed_values: null,
-            },
-          ],
-        })
-      );
-      expect(request.url.toString()).to.contain('1');
-    });
-  });
-
-  it('displays error message when duplicate names for properties are entered', () => {
-    cy.visit('/catalogue/1');
-    cy.findByRole('button', {
-      name: 'actions Voltage Meters catalogue category button',
-    }).click();
-
-    cy.findByRole('menuitem', {
-      name: 'edit Voltage Meters catalogue category button',
-    }).click();
-
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findAllByLabelText('Property Name *').first().clear();
-    cy.findAllByLabelText('Property Name *').first().type('Updated Field');
-
-    cy.findAllByLabelText('Property Name *').last().clear();
-    cy.findAllByLabelText('Property Name *').last().type('Updated Field');
-
-    cy.findByRole('button', { name: 'Save' }).click();
-
-    cy.findAllByText(
-      'Duplicate property name. Please change the name or remove the property'
-    ).should('exist');
-  });
-
-  it('displays error message when property name field is empty and checks that error states are in the correct location', () => {
-    cy.visit('/catalogue/1');
-    cy.findByRole('button', {
-      name: 'actions Voltage Meters catalogue category button',
-    }).click();
-
-    cy.findByRole('menuitem', {
-      name: 'edit Voltage Meters catalogue category button',
-    }).click();
-
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findAllByLabelText('Property Name *').first().clear();
-
-    cy.findAllByLabelText('Property Name *').last().clear();
-    cy.findAllByLabelText('Property Name *').last().type('Updated Field');
-
-    cy.findByRole('button', { name: 'Save' }).click();
-
-    cy.findAllByText('Please enter a property name').should('exist');
-
-    cy.findAllByLabelText('Delete catalogue category field entry')
-      .first()
-      .click();
-    cy.findAllByText('Please enter a property name').should('not.exist');
-  });
-
-  it('edits a catalogue category from a leaf node to a non-leaf node ', () => {
-    cy.visit('/catalogue/1');
-    cy.findByRole('button', {
-      name: 'actions Voltage Meters catalogue category button',
-    }).click();
-
-    cy.findByRole('menuitem', {
-      name: 'edit Voltage Meters catalogue category button',
-    }).click();
-    cy.findByLabelText('Catalogue Categories').click();
-    cy.findByLabelText('Name *').type('1');
-
-    cy.startSnoopingBrowserMockedRequest();
-
-    cy.findByRole('button', { name: 'Save' }).click();
-    cy.findByRole('dialog').should('not.exist');
-
-    cy.findBrowserMockedRequests({
-      method: 'PATCH',
-      url: '/v1/catalogue-categories/:id',
-    }).should(async (patchRequests) => {
-      expect(patchRequests.length).equal(1);
-      const request = patchRequests[0];
-      expect(JSON.stringify(await request.json())).equal(
-        JSON.stringify({ name: 'Voltage Meters1', is_leaf: false })
-      );
-      expect(request.url.toString()).to.contain('1');
-    });
-  });
-
   it('opens add dialog from directory and then closes it', () => {
     cy.visit('/catalogue/1');
     cy.findByLabelText('Cameras checkbox').click();
@@ -829,6 +699,7 @@ describe('Catalogue Category', () => {
               unit: 'megapixels',
               mandatory: true,
               allowed_values: null,
+              id: '1',
             },
             {
               name: 'Frame Rate',
@@ -836,6 +707,7 @@ describe('Catalogue Category', () => {
               unit: 'fps',
               mandatory: false,
               allowed_values: null,
+              id: '2',
             },
             {
               name: 'Sensor Type',
@@ -843,6 +715,7 @@ describe('Catalogue Category', () => {
               unit: null,
               mandatory: true,
               allowed_values: null,
+              id: '3',
             },
             {
               name: 'Sensor brand',
@@ -850,6 +723,7 @@ describe('Catalogue Category', () => {
               unit: null,
               mandatory: false,
               allowed_values: null,
+              id: '4',
             },
             {
               name: 'Broken',
@@ -857,6 +731,7 @@ describe('Catalogue Category', () => {
               unit: null,
               mandatory: true,
               allowed_values: null,
+              id: '5',
             },
             {
               name: 'Older than five years',
@@ -864,6 +739,7 @@ describe('Catalogue Category', () => {
               unit: null,
               mandatory: false,
               allowed_values: null,
+              id: '6',
             },
           ],
           created_time: '2024-01-01T12:00:00.000+00:00',
@@ -931,6 +807,7 @@ describe('Catalogue Category', () => {
               unit: 'megapixels',
               mandatory: true,
               allowed_values: null,
+              id: '1',
             },
             {
               name: 'Frame Rate',
@@ -938,6 +815,7 @@ describe('Catalogue Category', () => {
               unit: 'fps',
               mandatory: false,
               allowed_values: null,
+              id: '2',
             },
             {
               name: 'Sensor Type',
@@ -945,6 +823,7 @@ describe('Catalogue Category', () => {
               unit: null,
               mandatory: true,
               allowed_values: null,
+              id: '3',
             },
             {
               name: 'Sensor brand',
@@ -952,6 +831,7 @@ describe('Catalogue Category', () => {
               unit: null,
               mandatory: false,
               allowed_values: null,
+              id: '4',
             },
             {
               name: 'Broken',
@@ -959,6 +839,7 @@ describe('Catalogue Category', () => {
               unit: null,
               mandatory: true,
               allowed_values: null,
+              id: '5',
             },
             {
               name: 'Older than five years',
@@ -966,6 +847,7 @@ describe('Catalogue Category', () => {
               unit: null,
               mandatory: false,
               allowed_values: null,
+              id: '6',
             },
           ],
           created_time: '2024-01-01T12:00:00.000+00:00',

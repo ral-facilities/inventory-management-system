@@ -134,7 +134,7 @@ function CatalogueCard(props: CatalogueCardProps) {
               <ListItemIcon>
                 <EditIcon />
               </ListItemIcon>
-              Edit
+              Edit name
             </MenuItem>
             <MenuItem
               key={1}

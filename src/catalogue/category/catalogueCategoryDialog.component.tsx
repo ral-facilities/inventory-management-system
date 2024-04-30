@@ -24,11 +24,11 @@ import {
 } from '../../api/catalogueCategories';
 import {
   AddCatalogueCategory,
+  AddCatalogueCategoryProperty,
   AddCatalogueCategoryWithPlacementIds,
   AllowedValuesListErrorsType,
   CatalogueCategory,
-  CatalogueCategoryFormData,
-  CatalogueCategoryFormDataWithPlacementIds,
+  AddCatalogueCategoryPropertyWithPlacementIds,
   CatalogueItemPropertiesErrorsType,
   EditCatalogueCategory,
   ErrorParsing,
@@ -72,37 +72,40 @@ const CatalogueCategoryDialog = React.memo(
     React.useEffect(() => {
       if (selectedCatalogueCategory) {
         const updatedCatalogueItemProperties =
-          selectedCatalogueCategory.catalogue_item_properties?.map((item) => {
-            // Transform allowed_values to an array of objects with id and value keys
-            const allowedValuesWithId = item.allowed_values?.values.map(
-              (value) => ({
-                av_placement_id: generateUniqueId('av_placement_id_'), // Allowed values (av)
-                value: value,
-              })
-            ) || [
-              {
-                av_placement_id: generateUniqueId('av_placement_id_'),
-                value: '',
-              },
-            ]; // Default case if allowed_values is undefined or empty
-
-            let modifiedCatalogueCategory = {
-              ...item,
-              cip_placement_id: generateUniqueId('cip_placement_id_'),
-            };
-
-            if (item.allowed_values) {
-              modifiedCatalogueCategory = {
-                ...modifiedCatalogueCategory,
-                allowed_values: {
-                  type: item.allowed_values?.type,
-                  values: allowedValuesWithId,
+          selectedCatalogueCategory.catalogue_item_properties?.map(
+            (property) => {
+              // Transform allowed_values to an array of objects with id and value keys
+              const allowedValuesWithId = property.allowed_values?.values.map(
+                (value) => ({
+                  av_placement_id: generateUniqueId('av_placement_id_'), // Allowed values (av)
+                  value: value,
+                })
+              ) || [
+                {
+                  av_placement_id: generateUniqueId('av_placement_id_'),
+                  value: '',
                 },
-              };
-            }
+              ]; // Default case if allowed_values is undefined or empty
 
-            return modifiedCatalogueCategory;
-          }) || undefined;
+              let modifiedCatalogueItemProperties = {
+                ...property,
+                cip_placement_id: generateUniqueId('cip_placement_id_'),
+                id: undefined,
+              };
+
+              if (property.allowed_values) {
+                modifiedCatalogueItemProperties = {
+                  ...modifiedCatalogueItemProperties,
+                  allowed_values: {
+                    type: property.allowed_values?.type,
+                    values: allowedValuesWithId,
+                  },
+                };
+              }
+
+              return modifiedCatalogueItemProperties;
+            }
+          ) || undefined;
 
         const updatedSelectedCatalogueCategory: AddCatalogueCategoryWithPlacementIds =
           JSON.parse(JSON.stringify(selectedCatalogueCategory));
@@ -171,7 +174,7 @@ const CatalogueCategoryDialog = React.memo(
     };
 
     const validateAllowedValuesList = (
-      catalogueItemProperties: CatalogueCategoryFormDataWithPlacementIds[]
+      catalogueItemProperties: AddCatalogueCategoryPropertyWithPlacementIds[]
     ): boolean => {
       let hasErrors = false;
 
@@ -183,7 +186,6 @@ const CatalogueCategoryDialog = React.memo(
               value: String(val.value).trim().toLowerCase(),
             })
           );
-
           const duplicateIds: string[] = [];
           const invalidNumberIds: string[] = [];
           const missingValueIds: string[] = [];
@@ -401,7 +403,7 @@ const CatalogueCategoryDialog = React.memo(
         return;
       }
 
-      let updatedProperties: CatalogueCategoryFormData[] | undefined;
+      let updatedProperties: AddCatalogueCategoryProperty[] | undefined;
       // Inside your component or wherever you're processing the data
       if (categoryData.catalogue_item_properties) {
         updatedProperties = categoryData.catalogue_item_properties.map(
@@ -479,43 +481,6 @@ const CatalogueCategoryDialog = React.memo(
           return;
         }
 
-        let updatedProperties: CatalogueCategoryFormData[] | undefined;
-        // Inside your component or wherever you're processing the data
-        if (categoryData.catalogue_item_properties) {
-          updatedProperties = categoryData.catalogue_item_properties.map(
-            (property) => {
-              const allowedValuesList = property.allowed_values?.values.map(
-                (val) => val.value
-              );
-              if (property.allowed_values?.type === 'list') {
-                // Assuming values are strings, convert them to numbers
-                const convertedValues = convertListToNumbers(
-                  allowedValuesList || []
-                );
-
-                // Update the property with the converted values
-                return {
-                  ...property,
-                  cip_placement_id: undefined,
-                  allowed_values: {
-                    ...property.allowed_values,
-                    values:
-                      property.type === 'number'
-                        ? convertedValues
-                        : allowedValuesList ?? [],
-                  },
-                };
-              }
-              return {
-                ...property,
-                cip_placement_id: undefined,
-              };
-            }
-          );
-        }
-        // Clear the error state and add a new field
-        clearFormFields();
-
         catalogueCategory = {
           id: selectedCatalogueCategory.id,
         };
@@ -523,26 +488,11 @@ const CatalogueCategoryDialog = React.memo(
         const isNameUpdated =
           categoryData.name !== selectedCatalogueCategory?.name;
 
-        const isIsLeafUpdated =
-          categoryData.is_leaf !== selectedCatalogueCategory?.is_leaf;
-        const isCatalogueItemPropertiesUpdated =
-          JSON.stringify(updatedProperties) !==
-          JSON.stringify(
-            selectedCatalogueCategory?.catalogue_item_properties ?? null
-          );
-
         isNameUpdated && (catalogueCategory.name = categoryData.name);
-
-        isIsLeafUpdated && (catalogueCategory.is_leaf = categoryData.is_leaf);
-
-        isCatalogueItemPropertiesUpdated &&
-          (catalogueCategory.catalogue_item_properties = updatedProperties);
 
         if (
           catalogueCategory.id && // Check if id is present
-          (isNameUpdated ||
-            (!!updatedProperties && isCatalogueItemPropertiesUpdated) ||
-            isIsLeafUpdated) // Check if any of these properties have been updated
+          isNameUpdated // Check if any of these properties have been updated
         ) {
           // Only call editCatalogueCategory if id is present and at least one of the properties has been updated
           editCatalogueCategory(trimStringValues(catalogueCategory))
@@ -553,10 +503,7 @@ const CatalogueCategoryDialog = React.memo(
             .catch((error: AxiosError) => {
               const response = error.response?.data as ErrorParsing;
               if (response && error.response?.status === 409) {
-                if (response.detail.includes('child elements'))
-                  setFormError(response.detail);
-                else setNameError(response.detail);
-
+                setNameError(response.detail);
                 return;
               }
 
@@ -566,7 +513,6 @@ const CatalogueCategoryDialog = React.memo(
       }
     }, [
       categoryData,
-      clearFormFields,
       editCatalogueCategory,
       handleClose,
       handleErrorStates,
@@ -601,7 +547,7 @@ const CatalogueCategoryDialog = React.memo(
               />
             </Grid>
             <Grid item>
-              <FormControl sx={{ margin: '8px' }}>
+              <FormControl disabled={type === 'edit'} sx={{ margin: '8px' }}>
                 <FormLabel id="controlled-radio-buttons-group">
                   Catalogue Directory Content
                 </FormLabel>
@@ -644,7 +590,7 @@ const CatalogueCategoryDialog = React.memo(
                   <CataloguePropertiesForm
                     formFields={categoryData.catalogue_item_properties ?? []}
                     onChangeFormFields={(
-                      formFields: CatalogueCategoryFormDataWithPlacementIds[]
+                      formFields: AddCatalogueCategoryPropertyWithPlacementIds[]
                     ) =>
                       handleFormChange({
                         ...categoryData,
@@ -660,6 +606,7 @@ const CatalogueCategoryDialog = React.memo(
                     allowedValuesListErrors={allowedValuesListErrors}
                     onChangeAllowedValuesListErrors={setAllowedValuesListErrors}
                     resetFormError={() => setFormError(undefined)}
+                    isDisabled={type === 'edit'}
                   />
                 </Grid>
               </>
