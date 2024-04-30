@@ -246,7 +246,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
-          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-serial_number-size: 250; --col-serial_number-size: 250; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-asset_number-size: 250; --col-asset_number-size: 250; --header-purchase_order_number-size: 350; --col-purchase_order_number-size: 350; --header-warranty_end_date-size: 350; --col-warranty_end_date-size: 350; --header-delivered_date-size: 350; --col-delivered_date-size: 350; --header-is_defective-size: 200; --col-is_defective-size: 200; --header-usage_status-size: 200; --col-usage_status-size: 200; --header-notes-size: 250; --col-notes-size: 250; --header-system_id-size: 250; --col-system_id-size: 250; --header-row_catalogueItem_properties_Resolution-size: 250; --col-row_catalogueItem_properties_Resolution-size: 250; --header-row_catalogueItem_properties_Frame_Rate-size: 250; --col-row_catalogueItem_properties_Frame_Rate-size: 250; --header-row_catalogueItem_properties_Sensor_Type-size: 250; --col-row_catalogueItem_properties_Sensor_Type-size: 250; --header-row_catalogueItem_properties_Sensor_brand-size: 250; --col-row_catalogueItem_properties_Sensor_brand-size: 250; --header-row_catalogueItem_properties_Broken-size: 250; --col-row_catalogueItem_properties_Broken-size: 250; --header-row_catalogueItem_properties_Older_than_five_years-size: 250; --col-row_catalogueItem_properties_Older_than_five_years-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-serial_number-size: 250; --col-serial_number-size: 250; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-asset_number-size: 250; --col-asset_number-size: 250; --header-purchase_order_number-size: 350; --col-purchase_order_number-size: 350; --header-warranty_end_date-size: 350; --col-warranty_end_date-size: 350; --header-delivered_date-size: 350; --col-delivered_date-size: 350; --header-is_defective-size: 200; --col-is_defective-size: 200; --header-usage_status-size: 200; --col-usage_status-size: 200; --header-notes-size: 250; --col-notes-size: 250; --header-system_id-size: 250; --col-system_id-size: 250; --header-row_catalogueItem_properties_1-size: 250; --col-row_catalogueItem_properties_1-size: 250; --header-row_catalogueItem_properties_2-size: 250; --col-row_catalogueItem_properties_2-size: 250; --header-row_catalogueItem_properties_3-size: 250; --col-row_catalogueItem_properties_3-size: 250; --header-row_catalogueItem_properties_4-size: 250; --col-row_catalogueItem_properties_4-size: 250; --header-row_catalogueItem_properties_5-size: 250; --col-row_catalogueItem_properties_5-size: 250; --header-row_catalogueItem_properties_6-size: 250; --col-row_catalogueItem_properties_6-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
@@ -1665,7 +1665,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
-          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-notes-size: 250; --col-notes-size: 250; --header-row_catalogueItem_properties_Frame_Rate-size: 250; --col-row_catalogueItem_properties_Frame_Rate-size: 250; --header-row_catalogueItem_properties_Sensor_Type-size: 250; --col-row_catalogueItem_properties_Sensor_Type-size: 250; --header-row_catalogueItem_properties_Broken-size: 250; --col-row_catalogueItem_properties_Broken-size: 250;"
+          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40; --header-notes-size: 250; --col-notes-size: 250; --header-row_catalogueItem_properties_2-size: 250; --col-row_catalogueItem_properties_2-size: 250; --header-row_catalogueItem_properties_3-size: 250; --col-row_catalogueItem_properties_3-size: 250; --header-row_catalogueItem_properties_5-size: 250; --col-row_catalogueItem_properties_5-size: 250;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
@@ -1862,7 +1862,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2rzh10-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ei71o6-MuiTableCell-root"
                 colspan="1"
                 data-index="2"
                 scope="col"
@@ -2079,7 +2079,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6mmwmd-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2483gm-MuiTableCell-root"
                 colspan="1"
                 data-index="3"
                 scope="col"
@@ -2244,7 +2244,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-132iqb6-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-jawqbh-MuiTableCell-root"
                 colspan="1"
                 data-index="4"
                 scope="col"
@@ -2492,17 +2492,17 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 </svg>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mnoo1p-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uksksy-MuiTableCell-root"
                 data-index="2"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-bj8662-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-llrwto-MuiTableCell-root"
                 data-index="3"
               >
                 CMOS
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ji9pom-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tz71dk-MuiTableCell-root"
                 data-index="4"
               >
                 Yes
@@ -2561,19 +2561,19 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 </svg>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mnoo1p-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uksksy-MuiTableCell-root"
                 data-index="2"
               >
                 30
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-bj8662-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-llrwto-MuiTableCell-root"
                 data-index="3"
               >
                 CMOS
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ji9pom-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tz71dk-MuiTableCell-root"
                 data-index="4"
               >
                 Yes
@@ -2632,17 +2632,17 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 </svg>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mnoo1p-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uksksy-MuiTableCell-root"
                 data-index="2"
               />
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-bj8662-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-llrwto-MuiTableCell-root"
                 data-index="3"
               >
                 CMOS
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ji9pom-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tz71dk-MuiTableCell-root"
                 data-index="4"
               >
                 No
@@ -2701,19 +2701,19 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 </svg>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-mnoo1p-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uksksy-MuiTableCell-root"
                 data-index="2"
               >
                 30
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-bj8662-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-llrwto-MuiTableCell-root"
                 data-index="3"
               >
                 CMOS
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1ji9pom-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tz71dk-MuiTableCell-root"
                 data-index="4"
               >
                 Yes

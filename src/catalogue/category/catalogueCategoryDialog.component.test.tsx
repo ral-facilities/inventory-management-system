@@ -1,7 +1,10 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../../api/api';
-import { CatalogueCategory, CatalogueCategoryFormData } from '../../app.types';
+import {
+  CatalogueCategory,
+  AddCatalogueCategoryProperty,
+} from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueCategoryDialog, {
@@ -26,7 +29,7 @@ describe('Catalogue Category Dialog', () => {
   const modifyValues = async (values: {
     name?: string;
     // New fields to add (if any)
-    newFormFields?: CatalogueCategoryFormData[];
+    newFormFields?: AddCatalogueCategoryProperty[];
   }) => {
     values.name !== undefined &&
       fireEvent.change(screen.getByLabelText('Name *'), {
@@ -693,120 +696,6 @@ describe('Catalogue Category Dialog', () => {
       vi.clearAllMocks();
     });
 
-    it('edits a catalogue category with content being catalogue items (allowed_values list of numbers)', async () => {
-      props = {
-        ...props,
-        parentId: '1',
-        selectedCatalogueCategory: {
-          id: '4',
-          name: 'Cameras',
-          parent_id: '1',
-          code: 'cameras',
-          is_leaf: true,
-          catalogue_item_properties: [
-            {
-              name: 'Resolution',
-              type: 'number',
-              unit: 'megapixels',
-              mandatory: true,
-            },
-          ],
-        },
-      };
-      createView();
-
-      await modifyValues({
-        name: 'test',
-        newFormFields: [
-          {
-            name: 'radius',
-            type: 'number',
-            unit: 'millimeters',
-            allowed_values: { type: 'list', values: [1, 2, 8] },
-            mandatory: true,
-          },
-        ],
-      });
-
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
-        catalogue_item_properties: [
-          {
-            mandatory: true,
-            name: 'Resolution',
-            type: 'number',
-            unit: 'megapixels',
-          },
-          {
-            allowed_values: { type: 'list', values: [1, 2, 8] },
-            mandatory: true,
-            name: 'radius',
-            type: 'number',
-            unit: 'millimeters',
-          },
-        ],
-        name: 'test',
-      });
-    });
-
-    it('edits a catalogue category with content being catalogue items (allowed_values list of strings)', async () => {
-      props = {
-        ...props,
-        parentId: '1',
-        selectedCatalogueCategory: {
-          id: '4',
-          name: 'Cameras',
-          parent_id: '1',
-          code: 'cameras',
-          is_leaf: true,
-          catalogue_item_properties: [
-            {
-              name: 'Resolution',
-              type: 'number',
-              unit: 'megapixels',
-              mandatory: true,
-            },
-          ],
-        },
-      };
-      createView();
-
-      await modifyValues({
-        name: 'test',
-        newFormFields: [
-          {
-            name: 'radius',
-            type: 'text',
-            unit: 'millimeters',
-            allowed_values: { type: 'list', values: ['1', '2', '8'] },
-            mandatory: true,
-          },
-        ],
-      });
-
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
-        catalogue_item_properties: [
-          {
-            mandatory: true,
-            name: 'Resolution',
-            type: 'number',
-            unit: 'megapixels',
-          },
-          {
-            allowed_values: { type: 'list', values: ['1', '2', '8'] },
-            mandatory: true,
-            name: 'radius',
-            type: 'string',
-            unit: 'millimeters',
-          },
-        ],
-        name: 'test',
-      });
-    });
-
     it('displays warning message when name field is not defined', async () => {
       createView();
 
@@ -832,67 +721,6 @@ describe('Catalogue Category Dialog', () => {
         expect(
           screen.getByText(
             'A catalogue category with the same name already exists within the parent catalogue category'
-          )
-        ).toBeInTheDocument();
-      });
-      expect(onClose).not.toHaveBeenCalled();
-    });
-
-    it('displays child elements warning message', async () => {
-      props = {
-        ...props,
-        parentId: '1',
-        selectedCatalogueCategory: {
-          id: '4',
-          name: 'Cameras',
-          parent_id: '1',
-          code: 'cameras',
-          is_leaf: true,
-          catalogue_item_properties: [
-            {
-              name: 'Resolution',
-              type: 'number',
-              unit: 'megapixels',
-              mandatory: true,
-            },
-          ],
-        },
-      };
-      createView();
-
-      await modifyValues({
-        newFormFields: [
-          {
-            name: 'radius',
-            type: 'number',
-            unit: 'millimeters',
-            mandatory: true,
-          },
-        ],
-      });
-
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-      await user.click(saveButton);
-      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
-        catalogue_item_properties: [
-          {
-            name: 'Resolution',
-            type: 'number',
-            unit: 'megapixels',
-            mandatory: true,
-          },
-          {
-            mandatory: true,
-            name: 'radius',
-            type: 'number',
-            unit: 'millimeters',
-          },
-        ],
-      });
-      await waitFor(() => {
-        expect(
-          screen.getByText(
-            'Catalogue category has child elements and cannot be updated'
           )
         ).toBeInTheDocument();
       });
@@ -928,12 +756,14 @@ describe('Catalogue Category Dialog', () => {
         is_leaf: true,
         catalogue_item_properties: [
           {
+            id: '1',
             name: 'Measurement Range',
             type: 'number',
             unit: 'volts',
             mandatory: true,
           },
           {
+            id: '1',
             name: 'Accuracy',
             type: 'string',
             mandatory: true,
@@ -1001,108 +831,6 @@ describe('Catalogue Category Dialog', () => {
 
       expect(onClose).toHaveBeenCalled();
     });
-
-    it('displays an error message when the type or name field are not filled', async () => {
-      props.selectedCatalogueCategory = {
-        ...mockData,
-        is_leaf: true,
-        catalogue_item_properties: [
-          { name: '', type: 'number', unit: 'millimeters', mandatory: true },
-          { name: 'radius', type: '', unit: 'millimeters', mandatory: true },
-          { name: '', type: '', unit: 'millimeters', mandatory: true },
-        ],
-      };
-      createView();
-
-      await modifyValues({ name: 'test' });
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
-
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-
-      await user.click(saveButton);
-
-      const nameHelperTexts = screen.queryAllByText('Please select a type');
-      const typeHelperTexts = screen.queryAllByText(
-        'Please enter a property name'
-      );
-
-      expect(nameHelperTexts.length).toBe(2);
-      expect(typeHelperTexts.length).toBe(2);
-
-      expect(onClose).not.toHaveBeenCalled();
-    });
-
-    it('displays an error message when the type or name field are not filled and deletes a property to check if errors states are in correct location', async () => {
-      props.selectedCatalogueCategory = {
-        ...mockData,
-        is_leaf: true,
-        catalogue_item_properties: [
-          { name: '', type: 'number', unit: 'millimeters', mandatory: true },
-          { name: '', type: '', unit: 'millimeters', mandatory: true },
-          { name: 'radius', type: '', unit: 'millimeters', mandatory: true },
-        ],
-      };
-      createView();
-
-      await modifyValues({ name: 'test' });
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
-
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-
-      await user.click(saveButton);
-
-      const nameHelperTexts = screen.queryAllByText('Please select a type');
-      const typeHelperTexts = screen.queryAllByText(
-        'Please enter a property name'
-      );
-
-      expect(nameHelperTexts.length).toBe(2);
-      expect(typeHelperTexts.length).toBe(2);
-
-      expect(onClose).not.toHaveBeenCalled();
-
-      await user.click(screen.getAllByTestId('DeleteIcon')[1]);
-
-      const nameHelperTexts2 = screen.queryAllByText('Please select a type');
-      const typeHelperTexts2 = screen.queryAllByText(
-        'Please enter a property name'
-      );
-
-      expect(nameHelperTexts2.length).toBe(1);
-      expect(typeHelperTexts2.length).toBe(1);
-    });
-
-    it('display error if duplicate property names are entered', async () => {
-      props.selectedCatalogueCategory = {
-        ...mockData,
-        is_leaf: true,
-        catalogue_item_properties: [
-          { name: 'Field 1', type: 'text', unit: '', mandatory: false },
-          {
-            name: 'Field 2',
-            type: 'number',
-            unit: 'millimeters',
-            mandatory: true,
-          },
-          { name: 'Field 1', type: 'boolean', mandatory: false },
-        ],
-      };
-      createView();
-
-      await modifyValues({ name: 'test' });
-      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
-
-      const saveButton = screen.getByRole('button', { name: 'Save' });
-
-      await user.click(saveButton);
-
-      const duplicatePropertyNameHelperText = screen.queryAllByText(
-        'Duplicate property name. Please change the name or remove the property'
-      );
-      expect(duplicatePropertyNameHelperText.length).toBe(2);
-
-      expect(onClose).not.toHaveBeenCalled();
-    });
   });
 
   describe('Save as Catalogue Category Dialog', () => {
@@ -1150,6 +878,59 @@ describe('Catalogue Category Dialog', () => {
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
         ...values,
         is_leaf: false,
+      });
+      expect(onClose).toHaveBeenCalled();
+    });
+
+    it('saves as a catalogue category (with properties)', async () => {
+      props.selectedCatalogueCategory = {
+        ...mockData,
+        is_leaf: true,
+        catalogue_item_properties: [
+          {
+            id: '1',
+            name: 'Field 1',
+            type: 'text',
+            unit: '',
+            mandatory: false,
+          },
+          {
+            id: '2',
+            name: 'Field 2',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: true,
+          },
+          { id: '3', name: 'Field 3', type: 'boolean', mandatory: false },
+        ],
+      };
+      createView();
+
+      const values = {
+        name: 'Catalogue Category name',
+      };
+      await modifyValues(values);
+
+      await user.click(screen.getByRole('button', { name: 'Save' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        ...values,
+        is_leaf: true,
+        catalogue_item_properties: [
+          {
+            name: 'Field 1',
+            type: 'text',
+            unit: '',
+            mandatory: false,
+          },
+          {
+            name: 'Field 2',
+            type: 'number',
+            unit: 'millimeters',
+            mandatory: true,
+          },
+          { name: 'Field 3', type: 'boolean', mandatory: false },
+        ],
       });
       expect(onClose).toHaveBeenCalled();
     });

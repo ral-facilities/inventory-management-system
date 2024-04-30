@@ -26,7 +26,7 @@ import {
   AddItem,
   AdvancedSerialNumberOptionsType,
   CatalogueCategory,
-  CatalogueCategoryFormData,
+  CatalogueCategoryProperty,
   CatalogueItem,
   EditItem,
   Item,
@@ -286,7 +286,7 @@ function ItemDialog(props: ItemDialogProps) {
 
         if (!propertyValues[index])
           return {
-            name: property.name,
+            id: property.id,
             value: null,
           };
 
@@ -302,7 +302,7 @@ function ItemDialog(props: ItemDialogProps) {
         }
 
         return {
-          name: property.name,
+          id: property.id,
           value: typedValue,
         };
       }
@@ -422,7 +422,10 @@ function ItemDialog(props: ItemDialogProps) {
         JSON.stringify(updatedProperties) !==
         JSON.stringify(
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          selectedItem.properties.map(({ unit, ...rest }) => rest)
+          selectedItem.properties.map(({ unit, name, ...rest }) => ({
+            id: rest.id,
+            value: rest.value,
+          }))
         );
 
       const isSystemIdUpdated = details.system_id !== selectedItem.system_id;
@@ -822,7 +825,7 @@ function ItemDialog(props: ItemDialogProps) {
             {parentCatalogueItemPropertiesInfo.length >= 1 ? (
               <Grid container spacing={1.5}>
                 {parentCatalogueItemPropertiesInfo.map(
-                  (property: CatalogueCategoryFormData, index: number) => (
+                  (property: CatalogueCategoryProperty, index: number) => (
                     <Grid item xs={12} key={index}>
                       <Grid container spacing={1.5}>
                         <Grid item xs={11} sx={{ display: 'flex' }}>

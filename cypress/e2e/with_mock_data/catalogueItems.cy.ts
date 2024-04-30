@@ -59,12 +59,12 @@ describe('Catalogue Items', () => {
           manufacturer_id: '1',
           notes: 'This is a test note',
           properties: [
-            { name: 'Resolution', value: 18 },
-            { name: 'Frame Rate', value: 60 },
-            { name: 'Sensor Type', value: 'IO' },
-            { name: 'Sensor brand', value: 'pixel' },
-            { name: 'Broken', value: true },
-            { name: 'Older than five years', value: false },
+            { id: '1', value: 18 },
+            { id: '2', value: 60 },
+            { id: '3', value: 'IO' },
+            { id: '4', value: 'pixel' },
+            { id: '5', value: true },
+            { id: '6', value: false },
           ],
         })
       );
@@ -107,8 +107,8 @@ describe('Catalogue Items', () => {
           manufacturer_id: '3',
           notes: 'Need to find new manufacturer. 27',
           properties: [
-            { name: 'Measurement Range', value: 2000 },
-            { name: 'Accuracy', value: null },
+            { id: '7', value: 2000 },
+            { id: '8', value: null },
           ],
         })
       );
@@ -160,12 +160,12 @@ describe('Catalogue Items', () => {
           manufacturer_id: '1',
           notes: null,
           properties: [
-            { name: 'Resolution', value: 18 },
-            { name: 'Frame Rate', value: null },
-            { name: 'Sensor Type', value: 'IO' },
-            { name: 'Sensor brand', value: null },
-            { name: 'Broken', value: true },
-            { name: 'Older than five years', value: null },
+            { id: '1', value: 18 },
+            { id: '2', value: null },
+            { id: '3', value: 'IO' },
+            { id: '4', value: null },
+            { id: '5', value: true },
+            { id: '6', value: null },
           ],
         })
       );
@@ -220,9 +220,9 @@ describe('Catalogue Items', () => {
           manufacturer_id: '1',
           notes: null,
           properties: [
-            { name: 'Pumping Speed', value: 400 },
-            { name: 'Ultimate Pressure', value: 0.2 },
-            { name: 'Axis', value: 'y' },
+            { id: '17', value: 400 },
+            { id: '18', value: 0.2 },
+            { id: '19', value: 'y' },
           ],
         })
       );
@@ -594,8 +594,8 @@ describe('Catalogue Items', () => {
       expect(JSON.stringify(await request.json())).equal(
         JSON.stringify({
           properties: [
-            { name: 'Measurement Range', value: 20000 },
-            { name: 'Accuracy', value: null },
+            { id: '7', value: 20000 },
+            { id: '8', value: null },
           ],
         })
       );
@@ -928,8 +928,8 @@ describe('Catalogue Items', () => {
           name: 'Energy Meters 26',
           description: 'Precision energy meters for accurate measurements. 26',
           properties: [
-            { name: 'Measurement Range', value: 1000, unit: 'Joules' },
-            { name: 'Accuracy', value: '±0.5%', unit: null },
+            { id: '9', value: 1000 },
+            { id: '10', value: '±0.5%' },
           ],
           id: '89',
           manufacturer_id: '1',
@@ -954,12 +954,8 @@ describe('Catalogue Items', () => {
           name: 'Energy Meters 27',
           description: 'Precision energy meters for accurate measurements. 27',
           properties: [
-            { name: 'Measurement Range', value: 2000, unit: 'Joules' },
-            {
-              name: 'Accuracy',
-              value: null,
-              unit: null,
-            },
+            { id: '9', value: 2000 },
+            { id: '10', value: null },
           ],
           id: '6',
           manufacturer_id: '3',

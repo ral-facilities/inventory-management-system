@@ -31,9 +31,9 @@ describe('catalogue items api functions', () => {
         description: '',
         catalogue_category_id: '1',
         properties: [
-          { name: 'test_bool', value: false },
-          { name: 'test_string', value: 'string' },
-          { name: 'test_number', value: 2 },
+          { id: '1', value: false },
+          { id: '2', value: 'string' },
+          { id: '3', value: 2 },
         ],
       };
     });
@@ -52,9 +52,9 @@ describe('catalogue items api functions', () => {
         id: '1',
         name: 'test',
         properties: [
-          { name: 'test_bool', value: false },
-          { name: 'test_string', value: 'string' },
-          { name: 'test_number', value: 2 },
+          { id: '1', value: false },
+          { id: '2', value: 'string' },
+          { id: '3', value: 2 },
         ],
       });
     });
@@ -162,12 +162,12 @@ describe('catalogue items api functions', () => {
         name: 'test',
         description: 'High-resolution cameras for beam characterization. 4',
         properties: [
-          { name: 'Resolution', value: 24, unit: 'megapixels' },
-          { name: 'Frame Rate', value: 240, unit: 'fps' },
-          { name: 'Sensor Type', value: 'CCD', unit: null },
-          { name: 'Sensor brand', value: 'Nikon', unit: null },
-          { name: 'Broken', value: false, unit: null },
-          { name: 'Older than five years', value: true, unit: null },
+          { id: '1', name: 'Resolution', value: 24, unit: 'megapixels' },
+          { id: '2', name: 'Frame Rate', value: 240, unit: 'fps' },
+          { id: '3', name: 'Sensor Type', value: 'CCD', unit: null },
+          { id: '4', name: 'Sensor brand', value: 'Nikon', unit: null },
+          { id: '5', name: 'Broken', value: false, unit: null },
+          { id: '6', name: 'Older than five years', value: true, unit: null },
         ],
         id: '90',
       });
@@ -197,11 +197,7 @@ describe('catalogue items api functions', () => {
             obsolete_reason: null,
             obsolete_replacement_catalogue_item_id: null,
             properties: [
-              {
-                name: 'center wavelength',
-                value: 10,
-                unit: 'nm',
-              },
+              { id: '90', name: 'center wavelength', value: 10, unit: 'nm' },
             ],
             id: '657305e51e468454e97b638b',
           },
@@ -222,11 +218,7 @@ describe('catalogue items api functions', () => {
             obsolete_reason: null,
             obsolete_replacement_catalogue_item_id: null,
             properties: [
-              {
-                name: 'center wavelength',
-                value: 10,
-                unit: 'nm',
-              },
+              { id: '90', name: 'center wavelength', value: 10, unit: 'nm' },
             ],
             id: '657324df1e468454e97b638e',
           },
@@ -321,11 +313,7 @@ describe('catalogue items api functions', () => {
             obsolete_reason: null,
             obsolete_replacement_catalogue_item_id: null,
             properties: [
-              {
-                name: 'center wavelength',
-                value: 10,
-                unit: 'nm',
-              },
+              { id: '90', name: 'center wavelength', value: 10, unit: 'nm' },
             ],
             id: '657305e51e468454e97b638b',
           },
@@ -346,11 +334,7 @@ describe('catalogue items api functions', () => {
             obsolete_reason: null,
             obsolete_replacement_catalogue_item_id: null,
             properties: [
-              {
-                name: 'center wavelength',
-                value: 10,
-                unit: 'nm',
-              },
+              { id: '90', name: 'center wavelength', value: 10, unit: 'nm' },
             ],
             id: '657324df1e468454e97b638e',
           },
@@ -361,6 +345,7 @@ describe('catalogue items api functions', () => {
           parent_id: '655ca56c1c251a2a828ca906',
           catalogue_item_properties: [
             {
+              id: '90',
               name: 'center wavelength',
               type: 'number',
               unit: 'nm',
