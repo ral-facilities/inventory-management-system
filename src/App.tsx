@@ -42,7 +42,7 @@ import UsageStatus from './admin/usageStatus.component.tsx';
 export const paths = {
   any: '*',
   root: '/',
-  admin: '/admin',
+  admin: '/adminPage',
   homepage: '/ims',
   catalogue: '/catalogue/*',
   systems: '/systems/*',

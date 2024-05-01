@@ -27,8 +27,8 @@
     },
     {
       "section": "Inventory Management System",
-      "link": "/admin",
-      "displayName": "Admin",
+      "link": "/adminPage",
+      "displayName": "AdminPage",
       "order": 4
     }
   ],
