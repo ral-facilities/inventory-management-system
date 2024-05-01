@@ -51,8 +51,8 @@ export const paths = {
   catalogueItem: '/catalogue/item/:catalogue_item_id',
   items: '/catalogue/item/:catalogue_item_id/items',
   item: '/catalogue/item/:catalogue_item_id/items/:item_id',
-  units: '/admin/units',
-  usageStatus: '/admin/usage-status',
+  units: '/adminPage/units',
+  usageStatus: '/adminPage/usage-status',
 };
 
 const queryClient = new QueryClient({
