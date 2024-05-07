@@ -201,6 +201,13 @@ export const handlers = [
     async ({ request }) => {
       const body = await request.json();
 
+      if (body.name == 'Error 500') {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      }
+
       return HttpResponse.json(
         {
           id: '1',
@@ -220,6 +227,13 @@ export const handlers = [
     async ({ request, params }) => {
       const body = await request.json();
 
+      if (body.name == 'Error 500') {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      }
+
       const { catalogue_category_id, property_id } = params;
 
       const property = CatalogueCategoriesJSON.find(
@@ -229,10 +243,7 @@ export const handlers = [
       );
 
       return HttpResponse.json(
-        {
-          ...body,
-          ...property,
-        } as CatalogueCategoryProperty,
+        { id: '1', ...property, ...body } as CatalogueCategoryProperty,
         { status: 200 }
       );
     }

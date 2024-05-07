@@ -132,10 +132,13 @@ export const useAddCatalogueCategoryProperty = (): UseMutationResult<
     onSuccess: (data, variables) => {
       const { name } = data;
       queryClient.invalidateQueries({
-        queryKey: ['CatalogueCategories'],
+        queryKey: [
+          'CatalogueCategories',
+          variables.catalogueCategory.parent_id,
+        ],
       });
       queryClient.invalidateQueries({
-        queryKey: ['CatalogueItems'],
+        queryKey: ['CatalogueItems', variables.catalogueCategory.id],
       });
       queryClient.invalidateQueries({
         queryKey: ['Items'],
@@ -196,10 +199,13 @@ export const useEditCatalogueCategoryProperty = (): UseMutationResult<
     onSuccess: (data, variables) => {
       const { name } = data;
       queryClient.invalidateQueries({
-        queryKey: ['CatalogueCategories'],
+        queryKey: [
+          'CatalogueCategories',
+          variables.catalogueCategory.parent_id,
+        ],
       });
       queryClient.invalidateQueries({
-        queryKey: ['CatalogueItems'],
+        queryKey: ['CatalogueItems', variables.catalogueCategory.id],
       });
       queryClient.invalidateQueries({
         queryKey: ['Items'],
