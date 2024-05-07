@@ -3900,13 +3900,13 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-cypress@npm:^3.0.0":
-  version: 3.0.1
-  resolution: "eslint-plugin-cypress@npm:3.0.1"
+  version: 3.2.0
+  resolution: "eslint-plugin-cypress@npm:3.2.0"
   dependencies:
     globals: "npm:^13.20.0"
   peerDependencies:
-    eslint: ">=7 <9"
-  checksum: 10c0/c82c55b4f10f2505f3c82599a705d1d0765fe60c20476972390aab71ab2ef1b6ec296434fa9ff753aa90fc8367d65d16b019d75ef69e2350ac1e391ecee69002
+    eslint: ">=7"
+  checksum: 10c0/c422a5c3a45e5a968bbfb0265cc377f99dd4835325b2ef1519674eb4dae855b81c1d6db7117603f5ff6e9c63ca72138c444810c7404e492926de2f32e596c780
   languageName: node
   linkType: hard
 
