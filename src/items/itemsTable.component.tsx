@@ -28,6 +28,7 @@ import {
   CatalogueCategory,
   CatalogueItem,
   Item,
+  System,
   UsageStatusType,
 } from '../app.types';
 import {
@@ -39,6 +40,7 @@ import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
 import ItemsDetailsPanel from './itemsDetailsPanel.component';
+import { useSystemIds } from '../api/systems';
 
 export interface ItemTableProps {
   catalogueCategory: CatalogueCategory;
@@ -46,12 +48,22 @@ export interface ItemTableProps {
   dense: boolean;
 }
 
+interface TableRowData {
+  item: Item;
+  system?: System;
+}
+
 export function ItemsTable(props: ItemTableProps) {
   const { catalogueCategory, catalogueItem, dense } = props;
 
+  const [tableRows, setTableRows] = React.useState<TableRowData[]>([]);
+
   const noResultsTxt =
     'No results found: Try adding an item by using the Add Item button on the top left of your screen';
-  const { data, isLoading } = useItems(undefined, catalogueItem.id);
+  const { data: itemsData, isLoading: isLoadingItems } = useItems(
+    undefined,
+    catalogueItem.id
+  );
 
   const [deleteItemDialogOpen, setDeleteItemDialogOpen] =
     React.useState<boolean>(false);
@@ -60,13 +72,41 @@ export function ItemsTable(props: ItemTableProps) {
     undefined
   );
 
+  const systemIdSet = new Set<string>(
+    itemsData?.map((item) => item.system_id) ?? []
+  );
+
+  let isLoading = isLoadingItems;
+  const systemList: (System | undefined)[] = useSystemIds(
+    Array.from(systemIdSet.values())
+  ).map((query) => {
+    isLoading = isLoading || query.isLoading;
+    return query.data;
+  });
+
+  //Once loading finished - use same logic as catalogueItemsTable to pair up data
+  React.useEffect(() => {
+    if (!isLoading && itemsData) {
+      setTableRows(
+        itemsData.map((itemData) => ({
+          item: itemData,
+          system: systemList?.find(
+            (system) => system?.id === itemData.system_id
+          ),
+        }))
+      );
+    }
+    //Purposefully leave out systemList from dependencies for same reasons as catalogueItemsTable
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [itemsData, isLoading]);
+
   const [itemDialogType, setItemsDialogType] = React.useState<
     'create' | 'save as' | 'edit'
   >('create');
 
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 32px');
-  const columns = React.useMemo<MRT_ColumnDef<Item>[]>(() => {
+  const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties =
       catalogueCategory?.catalogue_item_properties ?? [];
     const propertyFilters: PropertyFiltersType = {
@@ -78,52 +118,52 @@ export function ItemsTable(props: ItemTableProps) {
     return [
       {
         header: 'Serial Number',
-        accessorFn: (row) => row.serial_number ?? 'No serial number',
+        accessorFn: (row) => row.item.serial_number ?? 'No serial number',
         id: 'serial_number',
         size: 250,
         Cell: ({ row }) => (
-          <MuiLink underline="hover" component={Link} to={row.original.id}>
-            {row.original.serial_number ?? 'No serial number'}
+          <MuiLink underline="hover" component={Link} to={row.original.item.id}>
+            {row.original.item.serial_number ?? 'No serial number'}
           </MuiLink>
         ),
         enableGrouping: false,
       },
       {
         header: 'Last modified',
-        accessorFn: (row) => new Date(row.modified_time),
+        accessorFn: (row) => new Date(row.item.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
         size: 350,
         Cell: ({ row }) =>
-          row.original.modified_time &&
-          formatDateTimeStrings(row.original.modified_time, true),
+          row.original.item.modified_time &&
+          formatDateTimeStrings(row.original.item.modified_time, true),
         enableGrouping: false,
       },
       {
         header: 'Created',
-        accessorFn: (row) => new Date(row.created_time),
+        accessorFn: (row) => new Date(row.item.created_time),
         id: 'created_time',
         filterVariant: 'datetime-range',
         size: 350,
         Cell: ({ row }) =>
-          formatDateTimeStrings(row.original.created_time, true),
+          formatDateTimeStrings(row.original.item.created_time, true),
         enableGrouping: false,
       },
       {
         header: 'Asset Number',
-        accessorFn: (row) => row.asset_number,
+        accessorFn: (row) => row.item.asset_number,
         id: 'asset_number',
         size: 250,
       },
       {
         header: 'Purchase Order Number',
-        accessorFn: (row) => row.purchase_order_number,
+        accessorFn: (row) => row.item.purchase_order_number,
         id: 'purchase_order_number',
         size: 350,
       },
       {
         header: 'Warranty End Date',
-        accessorFn: (row) => new Date(row.warranty_end_date ?? ''),
+        accessorFn: (row) => new Date(row.item.warranty_end_date ?? ''),
         id: 'warranty_end_date',
         filterVariant: 'date-range',
         size: 350,
@@ -132,14 +172,14 @@ export function ItemsTable(props: ItemTableProps) {
             // For ensuring space when grouping
             sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
-            {row.original.warranty_end_date &&
-              formatDateTimeStrings(row.original.warranty_end_date, false)}
+            {row.original.item.warranty_end_date &&
+              formatDateTimeStrings(row.original.item.warranty_end_date, false)}
           </Typography>
         ),
       },
       {
         header: 'Delivered Date',
-        accessorFn: (row) => new Date(row.delivered_date ?? ''),
+        accessorFn: (row) => new Date(row.item.delivered_date ?? ''),
         id: 'delivered_date',
         filterVariant: 'date-range',
         size: 350,
@@ -148,14 +188,14 @@ export function ItemsTable(props: ItemTableProps) {
             // For ensuring space when grouping
             sx={{ marginRight: 0.5, fontSize: 'inherit' }}
           >
-            {row.original.delivered_date &&
-              formatDateTimeStrings(row.original.delivered_date, false)}
+            {row.original.item.delivered_date &&
+              formatDateTimeStrings(row.original.item.delivered_date, false)}
           </Typography>
         ),
       },
       {
         header: 'Is Defective',
-        accessorFn: (row) => (row.is_defective === true ? 'Yes' : 'No'),
+        accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
         id: 'is_defective',
         size: 200,
         filterVariant: 'select',
@@ -167,7 +207,7 @@ export function ItemsTable(props: ItemTableProps) {
           const status = Object.values(UsageStatusType).find(
             (value) =>
               UsageStatusType[value as keyof typeof UsageStatusType] ===
-              row.usage_status
+              row.item.usage_status
           );
           return status || 'Unknown';
         },
@@ -177,17 +217,17 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'Notes',
-        accessorFn: (row) => row.notes ?? '',
+        accessorFn: (row) => row.item.notes ?? '',
         id: 'notes',
         size: 250,
         Cell: ({ row }) =>
-          row.original.notes && (
+          row.original.item.notes && (
             <Tooltip
-              title={row.original.notes}
+              title={row.original.item.notes}
               placement="top"
               enterTouchDelay={0}
               arrow
-              aria-label={`Catalogue item description: ${row.original.notes}`}
+              aria-label={`Catalogue item description: ${row.original.item.notes}`}
             >
               <InfoOutlinedIcon />
             </Tooltip>
@@ -195,43 +235,46 @@ export function ItemsTable(props: ItemTableProps) {
         enableGrouping: false,
       },
       {
-        header: 'System ID',
-        accessorFn: (row) => row.system_id,
-        id: 'system_id',
+        header: 'System',
+        accessorFn: (row) => row.system?.name ?? '',
+        getGroupingValue: (row) => row.system?.id ?? '',
+        id: 'system.name',
         size: 250,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
             component={Link}
-            to={'/systems/' + row.original.system_id}
+            to={'/systems/' + row.original.system?.id}
             // For ensuring space when grouping
             sx={{ marginRight: 0.5 }}
           >
-            {row.original.system_id}
+            {row.original.system?.name}
           </MuiLink>
         ),
       },
       ...viewCatalogueItemProperties.map((property) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
         id: `row.catalogueItem.properties.${property.id}`,
-        accessorFn: (row: Item) => {
+        accessorFn: (row: TableRowData) => {
           if (property.type === 'boolean') {
             return (findPropertyValue(
-              row.properties,
+              row.item.properties,
               property.id
             ) as boolean) === true
               ? 'Yes'
               : 'No';
           } else if (property.type === 'number') {
-            return typeof findPropertyValue(row.properties, property.id) ===
-              'number'
-              ? findPropertyValue(row.properties, property.id)
+            return typeof findPropertyValue(
+              row.item.properties,
+              property.id
+            ) === 'number'
+              ? findPropertyValue(row.item.properties, property.id)
               : 0;
           } else {
             // if the value doesn't exist it return type "true" we need to change this
             // to '' to allow this column to be filterable
 
-            return findPropertyValue(row.properties, property.id);
+            return findPropertyValue(row.item.properties, property.id);
           }
         },
         size: 250,
@@ -240,25 +283,33 @@ export function ItemsTable(props: ItemTableProps) {
             property.type as 'string' | 'boolean' | 'number' | 'null'
           ],
 
-        Cell: ({ row }: { row: MRT_Row<Item> }) => {
+        Cell: ({ row }: { row: MRT_Row<TableRowData> }) => {
           if (
-            typeof findPropertyValue(row.original.properties, property.id) ===
-            'number'
+            typeof findPropertyValue(
+              row.original.item.properties,
+              property.id
+            ) === 'number'
           ) {
-            return findPropertyValue(row.original.properties, property.id) === 0
+            return findPropertyValue(
+              row.original.item.properties,
+              property.id
+            ) === 0
               ? 0
-              : findPropertyValue(row.original.properties, property.id) !== null
-                ? findPropertyValue(row.original.properties, property.id)
+              : findPropertyValue(row.original.item.properties, property.id) !==
+                  null
+                ? findPropertyValue(row.original.item.properties, property.id)
                 : '';
           } else if (
-            typeof findPropertyValue(row.original.properties, property.id) ===
-            'boolean'
+            typeof findPropertyValue(
+              row.original.item.properties,
+              property.id
+            ) === 'boolean'
           ) {
-            return findPropertyValue(row.original.properties, property.id)
+            return findPropertyValue(row.original.item.properties, property.id)
               ? 'Yes'
               : 'No';
           } else {
-            return findPropertyValue(row.original.properties, property.id);
+            return findPropertyValue(row.original.item.properties, property.id);
           }
         },
       })),
@@ -285,7 +336,7 @@ export function ItemsTable(props: ItemTableProps) {
           { ...columns[7], size: 400 },
         ]
       : columns,
-    data: data ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data: tableRows, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     // Features
     enableColumnOrdering: dense ? false : true,
     enableFacetedValues: true,
@@ -349,7 +400,7 @@ export function ItemsTable(props: ItemTableProps) {
     },
     // Functions
     ...onPreservedStatesChange,
-    getRowId: (row) => row.id,
+    getRowId: (row) => row.item.id,
     renderCreateRowDialogContent: ({ table, row }) => {
       return (
         <>
@@ -365,11 +416,11 @@ export function ItemsTable(props: ItemTableProps) {
               itemDialogType === 'create'
                 ? undefined
                 : {
-                    ...row.original,
+                    ...row.original.item,
                     notes:
                       itemDialogType === 'save as'
-                        ? `${row.original.notes || ''}\n\nThis is a copy of the item with this ID: ${row.original.id}`
-                        : row.original.notes,
+                        ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this ID: ${row.original.item.id}`
+                        : row.original.item.notes,
                   }
             }
           />
@@ -407,7 +458,7 @@ export function ItemsTable(props: ItemTableProps) {
       return [
         <MenuItem
           key="edit"
-          aria-label={`Edit item ${row.original.id}`}
+          aria-label={`Edit item ${row.original.item.id}`}
           onClick={() => {
             setItemsDialogType('edit');
             table.setCreatingRow(row);
@@ -422,7 +473,7 @@ export function ItemsTable(props: ItemTableProps) {
         </MenuItem>,
         <MenuItem
           key="save as"
-          aria-label={`Save item ${row.original.id} as`}
+          aria-label={`Save item ${row.original.item.id} as`}
           onClick={() => {
             setItemsDialogType('save as');
             table.setCreatingRow(row);
@@ -437,10 +488,10 @@ export function ItemsTable(props: ItemTableProps) {
         </MenuItem>,
         <MenuItem
           key="delete"
-          aria-label={`Delete item ${row.original.id}`}
+          aria-label={`Delete item ${row.original.item.id}`}
           onClick={() => {
             setDeleteItemDialogOpen(true);
-            setSelectedItem(row.original);
+            setSelectedItem(row.original.item);
             closeMenu();
           }}
           sx={{ m: 0 }}
@@ -455,7 +506,7 @@ export function ItemsTable(props: ItemTableProps) {
     renderDetailPanel: dense
       ? ({ row }) => (
           <ItemsDetailsPanel
-            itemData={row.original}
+            itemData={row.original.item}
             catalogueItemIdData={catalogueItem}
           />
         )

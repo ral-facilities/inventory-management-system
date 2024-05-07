@@ -52,7 +52,7 @@ describe('Items Landing Page', () => {
 
     expect(screen.getByText('Asset Number')).toBeInTheDocument();
 
-    expect(screen.getByText('System ID')).toBeInTheDocument();
+    expect(screen.getByText('System')).toBeInTheDocument();
   });
 
   it('navigates to the system when the system id is clicked', async () => {
@@ -61,8 +61,8 @@ describe('Items Landing Page', () => {
       expect(screen.getByText('Cameras 1')).toBeInTheDocument();
     });
 
-    const systemID = screen.getByText('65328f34a40ff5301575a4e3');
-    expect(systemID).toHaveAttribute(
+    const systemName = screen.getByText('Giant laser');
+    expect(systemName).toHaveAttribute(
       'href',
       '/systems/65328f34a40ff5301575a4e3'
     );
