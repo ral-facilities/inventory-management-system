@@ -8,27 +8,35 @@ import {
   ListItemText,
   MenuItem,
   TableRow,
-  Typography,
 } from '@mui/material';
-import { useUnits } from '../api/units';
+import { useUnits } from '../../api/units';
 import {
   MRT_ColumnDef,
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
-import { Unit } from '../app.types';
-import { usePreservedTableState } from '../common/preservedTableState.component';
+import { Unit } from '../../app.types';
+import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { getPageHeightCalc } from '../utils';
+import { formatDateTimeStrings, getPageHeightCalc } from '../../utils';
 import { useNavigate } from 'react-router-dom';
 //import DeleteManufacturerDialog from '../manufacturer/deleteManufacturerDialog.component';
-import Breadcrumbs from '../view/breadcrumbs.component';
+import Breadcrumbs from '../../view/breadcrumbs.component';
+import UnitsDialog from './unitsDialog.component.tsx';
+import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
 
 function Units() {
   const { data: unitData, isLoading: unitDataLoading } = useUnits();
 
   const tableHeight = getPageHeightCalc('192px');
+
+  const [deleteUnitDialog, setDeleteUnitDialog] =
+    React.useState<boolean>(false);
+
+  const [selectedUnit, setSelectedUnit] = React.useState<Unit | undefined>(
+    undefined
+  );
 
   const columns = React.useMemo<MRT_ColumnDef<Unit>[]>(() => {
     return [
@@ -37,6 +45,28 @@ function Units() {
         accessorFn: (row) => row.value,
         id: 'value',
         Cell: ({ row }) => row.original.value,
+      },
+      {
+        header: 'Last modified',
+        accessorFn: (row) => new Date(row.modified_time),
+        id: 'modified_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        Cell: ({ row }) =>
+          row.original.modified_time &&
+          formatDateTimeStrings(row.original.modified_time, true),
+      },
+      {
+        header: 'Created',
+        accessorFn: (row) => new Date(row.created_time),
+        id: 'created_time',
+        filterVariant: 'datetime-range',
+        size: 350,
+        enableGrouping: false,
+        enableHiding: true,
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.created_time, true),
       },
     ];
   }, []);
@@ -103,7 +133,12 @@ function Units() {
     renderCreateRowDialogContent: () => {
       return (
         <>
-          <Typography>Unit dialog</Typography>
+          <UnitsDialog
+            open={true}
+            onClose={() => {
+              table.setCreatingRow(null);
+            }}
+          />
         </>
       );
     },
@@ -132,15 +167,16 @@ function Units() {
         </Button>
       </Box>
     ),
-    renderRowActionMenuItems: ({ row }) => {
+    renderRowActionMenuItems: ({ closeMenu, row }) => {
       return [
         <MenuItem
-          key="delete"
+          key={'delete'}
           aria-label={`Delete unit ${row.original.value}`}
           onClick={() => {
-            //open unit delete dialog
+            closeMenu();
+            setDeleteUnitDialog(true);
+            setSelectedUnit(row.original);
           }}
-          sx={{ m: 0 }}
         >
           <ListItemIcon>
             <DeleteIcon />
@@ -172,15 +208,13 @@ function Units() {
         />
       </Box>
       <MaterialReactTable table={table} />
-      {/* <DeleteManufacturerDialog
-        open={deleteManufacturerDialog}
-        onClose={() => setDeleteManufacturerDialog(false)}
-        manufacturer={selectedManufacturer}
-      /> */}
+      <DeleteUnitDialog
+        open={deleteUnitDialog}
+        onClose={() => setDeleteUnitDialog(false)}
+        unit={selectedUnit}
+      />
     </div>
   );
-
-  return <Typography>Units</Typography>;
 }
 
 export default Units;

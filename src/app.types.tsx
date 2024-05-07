@@ -319,4 +319,10 @@ export interface AllowedValuesListErrorsType {
 export interface Unit {
   id: string;
   value: string;
+  created_time: string;
+  modified_time: string;
+}
+
+export interface AddUnit {
+  value: string | null;
 }

@@ -36,8 +36,8 @@ import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.comp
 import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
 import ConfigProvider from './configProvider.component';
-import Units from './admin/units.component.tsx';
-import UsageStatus from './admin/usageStatus.component.tsx';
+import Units from './admin/units/units.component.tsx';
+import UsageStatus from './admin/usageStatus/usageStatus.component.tsx';
 
 export const paths = {
   any: '*',

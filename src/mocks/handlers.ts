@@ -5,6 +5,7 @@ import {
   AddItem,
   AddManufacturer,
   AddSystem,
+  AddUnit,
   BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueItem,
@@ -16,6 +17,7 @@ import {
   Item,
   Manufacturer,
   System,
+  Unit,
 } from '../app.types';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
 import CatalogueCategoryBreadcrumbsJSON from './CatalogueCategoryBreadcrumbs.json';
@@ -728,5 +730,61 @@ export const handlers = [
 
   http.get('/v1/units', () => {
     return HttpResponse.json(UnitsJSON, { status: 200 });
+  }),
+
+  http.post<PathParams, AddUnit, Unit | ErrorResponse>(
+    '/v1/units',
+    async ({ request }) => {
+      const body = await request.json();
+
+      if (body.value === 'test_dup') {
+        return HttpResponse.json(
+          {
+            detail: 'A unit with the same name already exists',
+          },
+          { status: 409 }
+        );
+      }
+      if (body.value === 'Error 500') {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      }
+
+      return HttpResponse.json(
+        {
+          id: '10',
+          value: 'Kelvin',
+          code: 'kelvin',
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
+        },
+        { status: 200 }
+      );
+    }
+  ),
+
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/v1/units/:id', ({ params }) => {
+    const { id } = params;
+    const validUnit = UnitsJSON.find((value) => value.id === id);
+    if (validUnit) {
+      if (id === '2') {
+        return HttpResponse.json(
+          {
+            detail: 'The specified unit is a part of a Catalogue category',
+          },
+          { status: 409 }
+        );
+      } else {
+        return HttpResponse.json({ status: 204 });
+      }
+    } else {
+      return HttpResponse.json({ detail: '' }, { status: 400 });
+    }
   }),
 ];
