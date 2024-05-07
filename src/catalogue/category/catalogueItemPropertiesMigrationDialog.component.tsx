@@ -512,7 +512,11 @@ function CatalogueItemPropertiesMigrationDialog(
         hasErrors = true;
       }
 
-      if (!catalogueItemField.default_value && catalogueItemField.mandatory) {
+      if (
+        !catalogueItemField.default_value &&
+        catalogueItemField.mandatory &&
+        propertyMigrationType === 'add'
+      ) {
         setCatalogueItemPropertiesErrors((prev) => [
           ...prev,
           {
@@ -529,7 +533,8 @@ function CatalogueItemPropertiesMigrationDialog(
       if (
         catalogueItemField.default_value &&
         catalogueItemField.type === 'number' &&
-        isNaN(+catalogueItemField.default_value)
+        isNaN(+catalogueItemField.default_value) &&
+        propertyMigrationType === 'add'
       ) {
         setCatalogueItemPropertiesErrors((prev) => [
           ...prev,
