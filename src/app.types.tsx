@@ -326,3 +326,14 @@ export interface Unit {
 export interface AddUnit {
   value: string | null;
 }
+
+export interface UsageStatus {
+  id: string;
+  value: string;
+  created_time: string;
+  modified_time: string;
+}
+
+export interface AddUsageStatus {
+  value: string | null;
+}

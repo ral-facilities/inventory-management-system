@@ -6,6 +6,7 @@ import {
   AddManufacturer,
   AddSystem,
   AddUnit,
+  AddUsageStatus,
   BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueItem,
@@ -18,6 +19,7 @@ import {
   Manufacturer,
   System,
   Unit,
+  UsageStatus,
 } from '../app.types';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
 import CatalogueCategoryBreadcrumbsJSON from './CatalogueCategoryBreadcrumbs.json';
@@ -27,6 +29,7 @@ import ManufacturersJSON from './Manufacturers.json';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import UnitsJSON from './Units.json';
+import UsageStatusJSON from './UsageStatus.json';
 import { generateUniqueId } from '../utils';
 
 /* MSW v2 expects types for responses, this interface covers any empty body
@@ -777,6 +780,68 @@ export const handlers = [
         return HttpResponse.json(
           {
             detail: 'The specified unit is a part of a Catalogue category',
+          },
+          { status: 409 }
+        );
+      } else {
+        return HttpResponse.json({ status: 204 });
+      }
+    } else {
+      return HttpResponse.json({ detail: '' }, { status: 400 });
+    }
+  }),
+
+  // ------------------------------------ Usage Status ------------------------------------------------
+
+  http.get('/v1/usage-statuses', () => {
+    return HttpResponse.json(UsageStatusJSON, { status: 200 });
+  }),
+
+  http.post<PathParams, AddUsageStatus, UsageStatus | ErrorResponse>(
+    '/v1/usage-statuses',
+    async ({ request }) => {
+      const body = await request.json();
+
+      if (body.value === 'test_dup') {
+        return HttpResponse.json(
+          {
+            detail: 'A Usage Status with the same name already exists',
+          },
+          { status: 409 }
+        );
+      }
+      if (body.value === 'Error 500') {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      }
+
+      return HttpResponse.json(
+        {
+          id: '5',
+          value: 'Archived',
+          code: 'archived',
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
+        },
+        { status: 200 }
+      );
+    }
+  ),
+
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/v1/usage-statuses/:id', ({ params }) => {
+    const { id } = params;
+    const validUsageStatus = UsageStatusJSON.find((value) => value.id === id);
+    if (validUsageStatus) {
+      if (id === '2') {
+        return HttpResponse.json(
+          {
+            detail: 'The specified usage status is a part of a Item',
           },
           { status: 409 }
         );
