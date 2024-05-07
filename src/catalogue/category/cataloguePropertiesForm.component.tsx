@@ -1,5 +1,12 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Box, IconButton, Radio, RadioGroup } from '@mui/material';
+import {
+  Box,
+  FormControl,
+  FormControlLabel,
+  IconButton,
+  Radio,
+  RadioGroup,
+} from '@mui/material';
 import React from 'react';
 
 import {
@@ -453,25 +460,34 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
         const { cip_placement_id, ...formFieldWithoutCIP } = formField;
         const formFieldWitId: CatalogueCategoryPropertyMigration =
           formFieldWithoutCIP;
+
         return (
           <Box
             sx={{ display: 'flex', alignItems: 'center' }}
             key={cip_placement_id}
           >
             {onChangeEditCatalogueItemField && (
-              <RadioGroup
-                value={
-                  selectedCatalogueItemField &&
-                  selectedCatalogueItemField.id === formFieldWitId.id
-                    ? 'selected'
-                    : 'not-selected'
-                }
-                onChange={() =>
-                  onChangeEditCatalogueItemField(formFieldWithoutCIP)
-                }
-              >
-                <Radio value="selected" />
-              </RadioGroup>
+              <FormControl>
+                <RadioGroup
+                  aria-label={`${formField.name} radio button group`}
+                  value={
+                    selectedCatalogueItemField &&
+                    selectedCatalogueItemField.id === formFieldWitId.id
+                      ? 'selected'
+                      : 'not-selected'
+                  }
+                  onChange={() => {
+                    onChangeEditCatalogueItemField(formFieldWithoutCIP);
+                  }}
+                >
+                  <FormControlLabel
+                    value="selected"
+                    control={<Radio />}
+                    aria-label={`${formField.name} radio button`}
+                    label="" // Empty label
+                  />
+                </RadioGroup>
+              </FormControl>
             )}
             <CataloguePropertyForm
               type={isDisabled ? 'disabled' : 'normal'}
