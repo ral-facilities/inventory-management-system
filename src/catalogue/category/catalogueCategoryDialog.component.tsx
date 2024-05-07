@@ -313,7 +313,7 @@ const CatalogueCategoryDialog = React.memo(
                   ? categoryData.catalogue_item_properties[i].cip_placement_id
                   : '',
                 errors: {
-                  fieldName: 'list',
+                  fieldName: 'allowed_values',
                   errorMessage: 'Please create a valid list item',
                 },
               },
