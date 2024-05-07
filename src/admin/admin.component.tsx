@@ -16,7 +16,7 @@ function adminPage() {
             padding: '8px', // Add some padding for spacing
           }}
         >
-          <Grid item key={0} xs={12} sm={6}>
+          <Grid item key={0} xs={12} sm={6} md={6} alignContent={'center'}>
             <Button
               component={Link}
               to={'units'}
@@ -31,7 +31,6 @@ function adminPage() {
             >
               <Card
                 sx={{
-                  padding: '8px',
                   width: '100%',
                   display: 'flex',
                   height: '100px', // Set a fixed height for all cards
@@ -55,7 +54,7 @@ function adminPage() {
               </Card>
             </Button>
           </Grid>
-          <Grid item key={1} xs={12} sm={6}>
+          <Grid item key={1} xs={12} sm={6} md={6} alignContent={'center'}>
             <Button
               component={Link}
               to={'usage-status'}
@@ -70,7 +69,6 @@ function adminPage() {
             >
               <Card
                 sx={{
-                  padding: '8px',
                   width: '100%',
                   display: 'flex',
                   height: '100px', // Set a fixed height for all cards
