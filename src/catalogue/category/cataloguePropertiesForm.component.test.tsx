@@ -318,7 +318,6 @@ describe('Catalogue Properties Form', () => {
     const field1RadioButton = screen.getByLabelText('Field 1 radio button');
 
     await user.click(field1RadioButton);
-    screen.debug(field1RadioButton);
 
     await waitFor(() => {
       expect(onChangeEditCatalogueItemField).toBeCalled();
@@ -581,6 +580,61 @@ describe('Catalogue Properties Form', () => {
       },
     ]);
   });
+
+  it('should remove the empty list error message if the allowed value is any', async () => {
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
+      {
+        cip_placement_id: '4',
+        name: 'raduis 2',
+        type: 'number',
+        unit: '',
+        allowed_values: { type: 'list', values: [] },
+        mandatory: false,
+      },
+    ];
+    const catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[] = [
+      {
+        cip_placement_id: '4',
+        errors: {
+          fieldName: 'allowed_values',
+          errorMessage: 'Please create a valid list item',
+        },
+      },
+    ];
+
+    props = {
+      ...props,
+      formFields: formFields,
+      catalogueItemPropertiesErrors: catalogueItemPropertiesErrors,
+    };
+    createView();
+
+    const listHelperTexts = screen.queryAllByText(
+      'Please create a valid list item'
+    );
+
+    expect(listHelperTexts.length).toBe(1);
+
+    const select = screen.getAllByLabelText('Select Allowed values *');
+    await user.click(select[0]);
+
+    const dropdown = screen.getByRole('listbox', {
+      name: 'Select Allowed values',
+    });
+
+    await user.click(within(dropdown).getByRole('option', { name: 'Any' }));
+
+    expect(onChangeFormFields).toHaveBeenCalledTimes(1);
+    expect(onChangeFormFields).toHaveBeenCalledWith([
+      {
+        cip_placement_id: '4',
+        mandatory: false,
+        name: 'raduis 2',
+        type: 'number',
+        unit: '',
+      },
+    ]);
+  }, 10000);
 
   it('display error message for type and name if they are not filled in', async () => {
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [

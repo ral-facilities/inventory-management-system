@@ -676,6 +676,7 @@ describe('catalogue categories api functions', () => {
           name: 'test',
           type: 'number',
           unit: 'test',
+          default_value: 2,
           mandatory: false,
         },
       };

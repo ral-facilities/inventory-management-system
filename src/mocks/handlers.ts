@@ -207,7 +207,7 @@ export const handlers = [
           { status: 500 }
         );
       }
-
+      delete body.default_value;
       return HttpResponse.json(
         {
           id: '1',

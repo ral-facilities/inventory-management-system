@@ -162,17 +162,23 @@ function CatalogueItemPropertiesMigrationDialog(
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const isStepFailed = React.useCallback((step: number) => {
-    switch (step) {
-      case 0:
-        return false;
-      case 1:
-        return false;
+  const isStepFailed = React.useCallback(
+    (step: number) => {
+      switch (step) {
+        case 0:
+          return false;
+        case 1:
+          return false;
 
-      case 2:
-        return false;
-    }
-  }, []);
+        case 2:
+          return (
+            catalogueItemPropertiesErrors.length !== 0 ||
+            allowedValuesListErrors.length !== 0
+          );
+      }
+    },
+    [allowedValuesListErrors.length, catalogueItemPropertiesErrors.length]
+  );
 
   const handleChange = (
     field: keyof CatalogueCategoryPropertyMigration,
@@ -235,6 +241,11 @@ function CatalogueItemPropertiesMigrationDialog(
     const updatedCatalogueItemField: CatalogueCategoryPropertyMigration =
       JSON.parse(JSON.stringify(catalogueItemField));
 
+    let updatedCatalogueItemPropertiesErrors: Omit<
+      CatalogueItemPropertiesErrorsType,
+      'cip_placement_id'
+    >[] = JSON.parse(JSON.stringify(catalogueItemPropertiesErrors));
+
     const updatedAllowedValues: AllowedValuesList = {
       type: 'list',
       values: [
@@ -249,11 +260,23 @@ function CatalogueItemPropertiesMigrationDialog(
     updatedCatalogueItemField.allowed_values = updatedAllowedValues;
     setCatalogueItemField(updatedCatalogueItemField);
     setFormErrorMessage(undefined);
+    updatedCatalogueItemPropertiesErrors = catalogueItemPropertiesErrors.filter(
+      (item) => {
+        return !(item.errors && item.errors.fieldName === 'allowed_values');
+      }
+    );
+
+    setCatalogueItemPropertiesErrors(updatedCatalogueItemPropertiesErrors);
   };
 
   const handleChangeListValues = (av_placement_id: string, value: string) => {
     const updatedCatalogueItemField: CatalogueCategoryPropertyMigration =
       JSON.parse(JSON.stringify(catalogueItemField));
+
+    let updatedCatalogueItemPropertiesErrors: Omit<
+      CatalogueItemPropertiesErrorsType,
+      'cip_placement_id'
+    >[] = JSON.parse(JSON.stringify(catalogueItemPropertiesErrors));
 
     if (updatedCatalogueItemField.allowed_values) {
       // Find the index of the value within the allowed_values array with the provided av_placement_id
@@ -272,7 +295,27 @@ function CatalogueItemPropertiesMigrationDialog(
 
         updatedCatalogueItemField.allowed_values = updatedAllowedValues;
 
+        if (
+          String(
+            catalogueItemField?.allowed_values?.values[valueIndex].value
+          ) === String(catalogueItemField?.default_value)
+        ) {
+          updatedCatalogueItemPropertiesErrors =
+            catalogueItemPropertiesErrors.filter((item) => {
+              return !(
+                item.errors && item.errors.fieldName === 'default_value'
+              );
+            });
+
+          setCatalogueItemPropertiesErrors(
+            updatedCatalogueItemPropertiesErrors
+          );
+
+          updatedCatalogueItemField.default_value = undefined;
+        }
+
         setCatalogueItemField(updatedCatalogueItemField);
+
         setFormErrorMessage(undefined);
 
         // Remove the error when the value is changed
@@ -300,7 +343,17 @@ function CatalogueItemPropertiesMigrationDialog(
     const updatedCatalogueItemField: CatalogueCategoryPropertyMigration =
       JSON.parse(JSON.stringify(catalogueItemField));
 
+    let updatedCatalogueItemPropertiesErrors: Omit<
+      CatalogueItemPropertiesErrorsType,
+      'cip_placement_id'
+    >[] = JSON.parse(JSON.stringify(catalogueItemPropertiesErrors));
+
     if (updatedCatalogueItemField.allowed_values) {
+      // Find the index of the value within the allowed_values array with the provided av_placement_id
+      const valueIndex =
+        updatedCatalogueItemField.allowed_values.values.findIndex(
+          (val) => val.av_placement_id === av_placement_id
+        );
       // Remove the value with the provided av_placement_id from the allowed_values array
       const updatedAllowedValues: AllowedValuesList = {
         type: 'list',
@@ -310,6 +363,18 @@ function CatalogueItemPropertiesMigrationDialog(
       };
 
       updatedCatalogueItemField.allowed_values = updatedAllowedValues;
+      if (
+        String(catalogueItemField?.allowed_values?.values[valueIndex].value) ===
+        String(catalogueItemField?.default_value)
+      ) {
+        updatedCatalogueItemPropertiesErrors =
+          catalogueItemPropertiesErrors.filter((item) => {
+            return !(item.errors && item.errors.fieldName === 'default_value');
+          });
+
+        setCatalogueItemPropertiesErrors(updatedCatalogueItemPropertiesErrors);
+        updatedCatalogueItemField.default_value = undefined;
+      }
 
       setCatalogueItemField(updatedCatalogueItemField);
       setFormErrorMessage(undefined);
@@ -319,9 +384,9 @@ function CatalogueItemPropertiesMigrationDialog(
         (error) => {
           return {
             ...error,
-            errors: (error.errors || []).filter(
-              (item) => item.av_placement_id !== av_placement_id
-            ),
+            errors: (error.errors || [])
+              .filter((item) => item.av_placement_id !== av_placement_id)
+              .filter((item) => item.errorMessage !== 'Duplicate value'),
           };
         }
       );
@@ -454,6 +519,11 @@ function CatalogueItemPropertiesMigrationDialog(
         property.name.trim().toLowerCase()
       );
 
+    const selectedProperty =
+      selectedCatalogueCategory.catalogue_item_properties?.find(
+        (property) => property.id === catalogueItemField?.id
+      );
+
     if (catalogueItemField) {
       if (!catalogueItemField.name.trim()) {
         setCatalogueItemPropertiesErrors((prev) => [
@@ -469,7 +539,9 @@ function CatalogueItemPropertiesMigrationDialog(
       }
 
       if (
-        propertyNames?.includes(catalogueItemField.name.trim().toLowerCase())
+        propertyNames?.includes(catalogueItemField.name.trim().toLowerCase()) &&
+        selectedProperty?.name.trim().toLowerCase() !==
+          catalogueItemField.name.trim().toLowerCase()
       ) {
         setCatalogueItemPropertiesErrors((prev) => [
           ...prev,
@@ -557,7 +629,11 @@ function CatalogueItemPropertiesMigrationDialog(
       }
     }
     return hasErrors;
-  }, [catalogueItemField, selectedCatalogueCategory]);
+  }, [
+    catalogueItemField,
+    propertyMigrationType,
+    selectedCatalogueCategory.catalogue_item_properties,
+  ]);
 
   const handleAddProperty = React.useCallback(() => {
     if (catalogueItemField && propertyMigrationType === 'add') {
@@ -708,6 +784,8 @@ function CatalogueItemPropertiesMigrationDialog(
                       ? undefined
                       : getEmptyCatalogueItemField()
                   );
+                  setAllowedValuesListErrors([]);
+                  setCatalogueItemPropertiesErrors([]);
                 }}
                 label="Select add to a new property or select edit to edit an existing property"
               >
@@ -811,7 +889,7 @@ function CatalogueItemPropertiesMigrationDialog(
             if (isStepFailed(index)) {
               labelProps.optional = (
                 <Typography variant="caption" color="error">
-                  {index === 2 && 'Invalid catalogue item properties'}
+                  {index === 2 && 'Invalid catalogue item property'}
                 </Typography>
               );
               labelProps.error = true;
@@ -822,14 +900,6 @@ function CatalogueItemPropertiesMigrationDialog(
                   {...labelProps}
                   onClick={() => {
                     setActiveStep(index);
-
-                    if (
-                      propertyMigrationType === 'add' &&
-                      index === 3 &&
-                      !catalogueItemField
-                    ) {
-                      setCatalogueItemField(getEmptyCatalogueItemField());
-                    }
                   }}
                 >
                   {label}

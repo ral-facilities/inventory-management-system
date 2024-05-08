@@ -236,8 +236,13 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
             sx={{
               width: '100%',
             }}
-            options={catalogueItemField.allowed_values.values ?? []}
+            options={
+              catalogueItemField.allowed_values.values.filter(
+                (val) => val.value
+              ) ?? []
+            }
             getOptionLabel={(option) => option.value}
+            getOptionKey={(option) => option.av_placement_id}
             value={
               catalogueItemField.allowed_values.values.find(
                 (allowedValue) =>
