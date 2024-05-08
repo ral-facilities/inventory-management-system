@@ -555,9 +555,9 @@ describe('Catalogue Category Dialog', () => {
         screen.getByTestId(`av_placement_id_4: Delete list item`)
       );
 
-      const duplicateHelperTexts2 = screen.queryAllByText('Duplicate value');
+      const duplicateHelperTexts2 = screen.queryByText('Duplicate value');
 
-      expect(duplicateHelperTexts2.length).toEqual(2);
+      expect(duplicateHelperTexts2).not.toBeInTheDocument();
     }, 10000);
 
     it('displays error if the allowed values list is empty', async () => {
