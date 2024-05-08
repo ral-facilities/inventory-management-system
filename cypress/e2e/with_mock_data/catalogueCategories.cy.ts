@@ -164,7 +164,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit Motion catalogue category button',
+      name: 'edit name Motion catalogue category button',
     }).should('be.visible');
     cy.findByRole('menuitem', {
       name: 'save as Motion catalogue category button',
@@ -567,7 +567,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit Amp Meters catalogue category button',
+      name: 'edit name Amp Meters catalogue category button',
     }).click();
     cy.findByLabelText('Name *').type('1');
 
@@ -595,7 +595,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByRole('menuitem', {
-      name: 'edit Beam Characterization catalogue category button',
+      name: 'edit name Beam Characterization catalogue category button',
     }).click();
 
     cy.findByRole('button', { name: 'Save' }).click();
