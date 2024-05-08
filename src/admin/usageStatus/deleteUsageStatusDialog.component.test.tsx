@@ -1,5 +1,5 @@
 import { RenderResult } from '@testing-library/react';
-import { Unit, UsageStatus } from '../../app.types';
+import { UsageStatus } from '../../app.types';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { screen, waitFor } from '@testing-library/react';
