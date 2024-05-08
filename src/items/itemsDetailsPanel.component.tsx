@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { CatalogueItem, Item, UsageStatusType } from '../app.types';
 import { useManufacturer } from '../api/manufacturers';
 import { formatDateTimeStrings } from '../utils';
+import { useSystem } from '../api/systems';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function TabPanel(props: any) {
@@ -45,6 +46,8 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
   const { data: manufacturerData } = useManufacturer(
     catalogueItemIdData.manufacturer_id
   );
+  const { data: systemData } = useSystem(itemData.system_id);
+
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
@@ -133,13 +136,27 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
               </Grid>
 
               <Grid item xs={12} sm={6} key={7}>
+                <Typography color="text.primary">System</Typography>
+                <Typography color="text.secondary">
+                  <MuiLink
+                    component={Link}
+                    underline="hover"
+                    target="_blank"
+                    to={'/systems/' + systemData?.id}
+                  >
+                    {systemData?.name}
+                  </MuiLink>
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12} sm={6} key={8}>
                 <Typography color="text.primary">Last Modified</Typography>
                 <Typography color="text.secondary">
                   {formatDateTimeStrings(itemData.modified_time, true)}
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={8}>
+              <Grid item xs={12} sm={6} key={9}>
                 <Typography color="text.primary">Created</Typography>
                 <Typography color="text.secondary">
                   {formatDateTimeStrings(itemData.created_time, true)}

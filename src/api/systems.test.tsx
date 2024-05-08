@@ -17,6 +17,7 @@ import {
   useEditSystem,
   useMoveToSystem,
   useSystem,
+  useSystemIds,
   useSystems,
   useSystemsBreadcrumbs,
 } from './systems';
@@ -101,6 +102,36 @@ describe('System api functions', () => {
       expect(result.current.data).toEqual(
         SystemsJSON.filter(
           (system) => system.id === '65328f34a40ff5301575a4e3'
+        )[0]
+      );
+    });
+  });
+
+  describe('useSystemIds', () => {
+    it('sends a request to fetch system data and returns a successful response', async () => {
+      const { result } = renderHook(
+        () =>
+          useSystemIds([
+            '65328f34a40ff5301575a4e3',
+            '656ef565ed0773f82e44bc6d',
+          ]),
+        {
+          wrapper: hooksWrapperWithProviders(),
+        }
+      );
+
+      await waitFor(() => {
+        result.current.forEach((query) => expect(query.isSuccess).toBeTruthy());
+      });
+
+      expect(result.current[0].data).toEqual(
+        SystemsJSON.filter(
+          (system) => system.id === '65328f34a40ff5301575a4e3'
+        )[0]
+      );
+      expect(result.current[1].data).toEqual(
+        SystemsJSON.filter(
+          (system) => system.id === '656ef565ed0773f82e44bc6d'
         )[0]
       );
     });

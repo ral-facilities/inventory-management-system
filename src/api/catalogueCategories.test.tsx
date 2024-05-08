@@ -42,7 +42,7 @@ describe('catalogue categories api functions', () => {
         is_leaf: false,
       };
     });
-    it('posts a request to add a user session and returns successful response', async () => {
+    it('posts a request to add a catalogue category and returns successful response', async () => {
       const { result } = renderHook(() => useAddCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -151,7 +151,7 @@ describe('catalogue categories api functions', () => {
       };
     });
 
-    it('posts a request to add a user session and returns successful response', async () => {
+    it('posts a request to delete a catalogue category and returns successful response', async () => {
       const { result } = renderHook(() => useDeleteCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
