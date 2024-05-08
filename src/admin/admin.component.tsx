@@ -1,5 +1,6 @@
 import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+
 function adminPage() {
   return (
     <Grid container>
