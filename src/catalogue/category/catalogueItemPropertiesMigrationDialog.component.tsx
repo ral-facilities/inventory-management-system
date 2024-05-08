@@ -675,6 +675,10 @@ function CatalogueItemPropertiesMigrationDialog(
         }
       }
 
+      if (catalogueItemField.unit) {
+        property.unit = catalogueItemField.unit;
+      }
+
       addCatalogueCategoryProperty({
         catalogueCategory: selectedCatalogueCategory,
         property: property,

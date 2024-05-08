@@ -233,6 +233,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           mandatory: false,
           name: 'test',
           type: 'number',
+          unit: 'millimeters',
         }
       );
     });
@@ -266,6 +267,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           mandatory: false,
           name: 'test',
           type: 'string',
+          unit: 'millimeters',
         }
       );
     });
@@ -293,6 +295,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           mandatory: false,
           name: 'test',
           type: 'number',
+          unit: 'millimeters',
         }
       );
     });
@@ -320,6 +323,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           mandatory: false,
           name: 'test',
           type: 'string',
+          unit: 'millimeters',
         }
       );
     });
@@ -345,6 +349,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           mandatory: false,
           name: 'test',
           type: 'string',
+          unit: 'millimeters',
         }
       );
     });
