@@ -141,7 +141,13 @@ export const useAddCatalogueCategoryProperty = (): UseMutationResult<
         queryKey: ['CatalogueItems', variables.catalogueCategory.id],
       });
       queryClient.invalidateQueries({
+        queryKey: ['CatalogueItem'],
+      });
+      queryClient.invalidateQueries({
         queryKey: ['Items'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['Item'],
       });
 
       handleTransferState([
@@ -208,7 +214,13 @@ export const useEditCatalogueCategoryProperty = (): UseMutationResult<
         queryKey: ['CatalogueItems', variables.catalogueCategory.id],
       });
       queryClient.invalidateQueries({
+        queryKey: ['CatalogueItem'],
+      });
+      queryClient.invalidateQueries({
         queryKey: ['Items'],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['Item'],
       });
       handleTransferState([
         {
