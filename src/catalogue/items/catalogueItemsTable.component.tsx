@@ -38,6 +38,7 @@ import {
 } from '../../app.types';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
+  OverflowTip,
   formatDateTimeStrings,
   generateUniqueName,
   getPageHeightCalc,
@@ -114,10 +115,10 @@ const CopyCatalogueItemsButton = (props: {
 
 export function findPropertyValue(
   properties: CatalogueItemPropertyResponse[],
-  targetName: string | undefined
+  targetId: string | undefined
 ) {
   // Use the find method to locate the object with the target name
-  const foundProperty = properties.find((prop) => prop.name === targetName);
+  const foundProperty = properties.find((prop) => prop.id === targetId);
 
   // Return the value of the 'name' property if the object is found, or "" otherwise
   return foundProperty ? foundProperty.value : '';
@@ -302,17 +303,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         id: 'catalogueItem.description',
         size: 250,
         enableGrouping: false,
-        Cell: ({ row }) =>
+        Cell: ({ cell, row }) =>
           row.original.catalogueItem.description && (
-            <Tooltip
-              title={row.original.catalogueItem.description}
-              placement="top"
-              enterTouchDelay={0}
-              arrow
-              aria-label={`Catalogue item description: ${row.original.catalogueItem.description}`}
-            >
-              <InfoOutlinedIcon />
-            </Tooltip>
+            <OverflowTip columnSize={cell.column.getSize()}>
+              {row.original.catalogueItem.description}
+            </OverflowTip>
           ),
       },
       {
@@ -364,30 +359,27 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       ...viewCatalogueItemProperties.map((property) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
-        id: `row.catalogueItem.properties.${property.name}`,
+        id: `row.catalogueItem.properties.${property.id}`,
         accessorFn: (row: TableRowData) => {
           if (property.type === 'boolean') {
             return (findPropertyValue(
               row.catalogueItem.properties,
-              property.name
+              property.id
             ) as boolean) === true
               ? 'Yes'
               : 'No';
           } else if (property.type === 'number') {
             return typeof findPropertyValue(
               row.catalogueItem.properties,
-              property.name
+              property.id
             ) === 'number'
-              ? findPropertyValue(row.catalogueItem.properties, property.name)
+              ? findPropertyValue(row.catalogueItem.properties, property.id)
               : 0;
           } else {
             // if the value doesn't exist it return type "true" we need to change this
             // to '' to allow this column to be filterable
 
-            return findPropertyValue(
-              row.catalogueItem.properties,
-              property.name
-            );
+            return findPropertyValue(row.catalogueItem.properties, property.id);
           }
         },
         size: 250,
@@ -400,39 +392,39 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           if (
             typeof findPropertyValue(
               row.original.catalogueItem.properties,
-              property.name
+              property.id
             ) === 'number'
           ) {
             return findPropertyValue(
               row.original.catalogueItem.properties,
-              property.name
+              property.id
             ) === 0
               ? 0
               : findPropertyValue(
                     row.original.catalogueItem.properties,
-                    property.name
+                    property.id
                   ) !== null
                 ? findPropertyValue(
                     row.original.catalogueItem.properties,
-                    property.name
+                    property.id
                   )
                 : '';
           } else if (
             typeof findPropertyValue(
               row.original.catalogueItem.properties,
-              property.name
+              property.id
             ) === 'boolean'
           ) {
             return findPropertyValue(
               row.original.catalogueItem.properties,
-              property.name
+              property.id
             )
               ? 'Yes'
               : 'No';
           } else {
             return findPropertyValue(
               row.original.catalogueItem.properties,
-              property.name
+              property.id
             );
           }
         },

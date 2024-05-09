@@ -200,25 +200,25 @@ export function ItemsTable(props: ItemTableProps) {
       },
       ...viewCatalogueItemProperties.map((property) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
-        id: `row.catalogueItem.properties.${property.name}`,
+        id: `row.catalogueItem.properties.${property.id}`,
         accessorFn: (row: Item) => {
           if (property.type === 'boolean') {
             return (findPropertyValue(
               row.properties,
-              property.name
+              property.id
             ) as boolean) === true
               ? 'Yes'
               : 'No';
           } else if (property.type === 'number') {
-            return typeof findPropertyValue(row.properties, property.name) ===
+            return typeof findPropertyValue(row.properties, property.id) ===
               'number'
-              ? findPropertyValue(row.properties, property.name)
+              ? findPropertyValue(row.properties, property.id)
               : 0;
           } else {
             // if the value doesn't exist it return type "true" we need to change this
             // to '' to allow this column to be filterable
 
-            return findPropertyValue(row.properties, property.name);
+            return findPropertyValue(row.properties, property.id);
           }
         },
         size: 250,
@@ -229,25 +229,23 @@ export function ItemsTable(props: ItemTableProps) {
 
         Cell: ({ row }: { row: MRT_Row<Item> }) => {
           if (
-            typeof findPropertyValue(row.original.properties, property.name) ===
+            typeof findPropertyValue(row.original.properties, property.id) ===
             'number'
           ) {
-            return findPropertyValue(row.original.properties, property.name) ===
-              0
+            return findPropertyValue(row.original.properties, property.id) === 0
               ? 0
-              : findPropertyValue(row.original.properties, property.name) !==
-                  null
-                ? findPropertyValue(row.original.properties, property.name)
+              : findPropertyValue(row.original.properties, property.id) !== null
+                ? findPropertyValue(row.original.properties, property.id)
                 : '';
           } else if (
-            typeof findPropertyValue(row.original.properties, property.name) ===
+            typeof findPropertyValue(row.original.properties, property.id) ===
             'boolean'
           ) {
-            return findPropertyValue(row.original.properties, property.name)
+            return findPropertyValue(row.original.properties, property.id)
               ? 'Yes'
               : 'No';
           } else {
-            return findPropertyValue(row.original.properties, property.name);
+            return findPropertyValue(row.original.properties, property.id);
           }
         },
       })),

@@ -191,7 +191,18 @@ describe('Catalogue Items Table', () => {
     ]);
   });
 
-  it('displays descriptions tooltip on hover', async () => {
+  it('displays full description on hover', async () => {
+    // Mocking scrollWidth and clientWidth to make content overflow
+    const mockScrollWidth = 300;
+    const mockClientWidth = 200;
+
+    vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get').mockReturnValue(
+      mockScrollWidth
+    );
+    vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(
+      mockClientWidth
+    );
+
     createView();
 
     await waitFor(() => {
@@ -200,38 +211,38 @@ describe('Catalogue Items Table', () => {
 
     await ensureColumnsVisible(['Description']);
 
+    const infoIcon = screen.getByText(
+      'Precision energy meters for accurate measurements. 26'
+    );
+
     await waitFor(() => {
       expect(
-        screen.getByLabelText(
-          'Catalogue item description: Precision energy meters for accurate measurements. 26'
-        )
-      ).toBeInTheDocument();
+        screen.getAllByText(
+          'Precision energy meters for accurate measurements. 26'
+        ).length
+      ).toBe(1);
     });
-
-    const infoIcon = screen.getByLabelText(
-      'Catalogue item description: Precision energy meters for accurate measurements. 26'
-    );
 
     await user.hover(infoIcon);
 
     await waitFor(() => {
       expect(
-        screen.getByText(
+        screen.getAllByText(
           'Precision energy meters for accurate measurements. 26'
-        )
-      ).toBeInTheDocument();
+        ).length
+      ).toBe(2);
     });
 
     await user.unhover(infoIcon);
 
     await waitFor(() => {
       expect(
-        screen.queryByText(
+        screen.getAllByText(
           'Precision energy meters for accurate measurements. 26'
-        )
-      ).not.toBeInTheDocument();
+        ).length
+      ).toBe(1);
     });
-  });
+  }, 20000);
 
   it('displays notes tooltip on hover', async () => {
     createView();
@@ -679,7 +690,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Grouped by')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOViTiOGqRSsLKqnZmjpYuSmp%2B6ABGauiGhBWhuS6Nza04flHCqArEOGRIfiE5fUpWfkqSWZVhed0tOIT90c1kmnIkk1XhJMI8wjgcPmokALJbWFFUY6kASmJg1Ax7B8suJ%2BhnF0KJAAgnA4PcFABPdpTI5wdBqcZgBrCGGHPLwxEBdCbXjoNgAaz8yNRiw61VI4gQkLqSBxAyGcA%2B8Gy6JcVJp2Nx%2BIJmgAImwELwlGQwKkAHJYIgNc5on6UwXC0V%2BVAi3lk2F5GbEPxuAqoPxkKUytiaIhiLCeBRIe7nciUZnmo1WxS2tgke6oM0Wl02qLuhDicRRNSZLQ%2B61ukiEQzCAAWqmZ3061nQhDD2jkelETNNNAAvkA'
+      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOViTiOGqRSsLKqnZmjpYuSmp%2B6ABGauiGhBWhuS6Nza04flHCqArEOGRIfiE5fUpWfkqSWZVhed0tOIT90c1kmnIkk1XhJMI8wjgcPmokAOy7fPvZh3kn6GcXhSQAHO1TR3DoanGYAawh%2BTxc-0BAXQm146DYAGs-MDQYsOtVSOIEABPOpIGEDIZwaho355LG46Gw%2BEIzQAETYCF4SjIYFSADksEQGucwcsXOJGczWX5UCzaaTwaQZsQ-G4Cqg-GQuTy2JoiGIsJ4FEgsFE2ORKCStJrtYo9ecSHrUOrTTqLQaEOJBYVMiblWbdfqSIRDMIABaqY0HfnWdCEN3aOR6UTEtU0AC%2BQA'
     );
 
     // Reset
@@ -690,7 +701,7 @@ describe('Catalogue Items Table', () => {
     });
     // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
     expect(router.state.location.search).toBe(
-      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQUwA8AHAQwDsATEAGkVQx32PKtuXS1xLBQEtMyAZxp0OjQXgA2eHiLAkUJSZgDmAVzwBJFHgQA6MiQR45Cpao3bdehJgq8AZrzwUA%2Bn2OnFy9Vp36wJDwFF3deT1oANWdsAAIrBGFaeW8LP2sKPEFA3iI%2BAS9zXwS9XkFXTAAjQUxpHUKfS389Kpq6vFcgokluXTwyFFcUoo1XXn8x1nAzRvT9Vtq8HU7gmrIRTj1h2ZKiLCI8VGdBPQBZVbUg4wHYgCVyFRNaTe203f3Dviy9AEEwMEu3AAng03s0wJhBIMVJUiKDiuDIYMUJgVthMEgANauGFw5IzMEZEhA8oolbdXrwppEknuVFBdFYkQAESQJGwvDIKliADk1AhKocqXM9BQ2Ryua5JJzMcKSuNdK5bJlJK4yPzBUgRAhyGoHNwUJdDgYjE9ELr9TwjUg9JdJNqLQbrXoSBQxVkkub1ZbDUEbTppEQABYCM2vBHWMiYHSe9gMXCCUhgIUAXQAvkA'
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQUwA8AHAQwDsATEAGkVQx32PKtuXS1xLBQEtMyAZxp0OjQXgA2eHiLAkUJSZgDmAVzwBJFHgQA6MiQR45Cpao3bdehJgq8AZrzwUA%2Bn2OnFy9Vp36wJDwFF3deT1oANWdsAAIrBGFaeW8LP2sKPEFA3iI%2BAS9zXwS9XkFXTAAjQUxpHUKfS389Kpq6vFcgokluXTwyFFcUoo1XXn8x1nAzRvT9Vtq8HU7gmrIRTj1h2ZKiLCI8VGdBPQB2DZwtmbTd-cO%2BLL0ADgab5rBMQUGVSqJX4ven0GKEwK2wmCQAGtXD8-slrgCMiQAJ7lEErbq9f5NJGo9ygoLgqEiAAiSBI2F4ZBUsQAcmoEJVDti5noKOTKdTXJIqZCWSVxrpXLZMpJXGQGUykCIEOQ1A5uCg1EEkAYjCY2HKFTxlYc9MrJDKtYrdaqSBR2VkkohjTqVXodNIiAALAQa6apRH6MiYHTW9gMXCCUhgZkAXQAvkA'
     );
   });
 

@@ -24,6 +24,12 @@
       "link": "/manufacturers",
       "displayName": "Manufacturers",
       "order": 3
+    },
+    {
+      "section": "Inventory Management System",
+      "link": "/adminPage",
+      "displayName": "AdminPage",
+      "order": 4
     }
   ],
   "pluginHost": "http://localhost:3000"

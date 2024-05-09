@@ -47,42 +47,48 @@
         "type": "number",
         "unit": "megapixels",
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "1"
       },
       {
         "name": "Frame Rate",
         "type": "number",
         "unit": "fps",
         "mandatory": false,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "2"
       },
       {
         "name": "Sensor Type",
         "type": "string",
         "unit": null,
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "3"
       },
       {
         "name": "Sensor brand",
         "type": "string",
         "unit": null,
         "mandatory": false,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "4"
       },
       {
         "name": "Broken",
         "type": "boolean",
         "unit": null,
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "5"
       },
       {
         "name": "Older than five years",
         "type": "boolean",
         "unit": null,
         "mandatory": false,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "6"
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -100,14 +106,16 @@
         "type": "number",
         "unit": "Joules",
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "7"
       },
       {
         "name": "Accuracy",
         "type": "string",
         "unit": null,
         "mandatory": false,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "8"
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -125,14 +133,16 @@
         "type": "number",
         "unit": "Joules",
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "9"
       },
       {
         "name": "Accuracy",
         "type": "string",
         "unit": null,
         "mandatory": false,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "10"
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -150,14 +160,16 @@
         "type": "string",
         "unit": null,
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "11"
       },
       {
         "name": "Spatial Resolution",
         "type": "number",
         "unit": "micrometers",
         "mandatory": false,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "12"
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -184,14 +196,16 @@
         "type": "number",
         "unit": "millimeters",
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "13"
       },
       {
         "name": "Load Capacity",
         "type": "number",
         "unit": "kilograms",
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "14"
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -254,14 +268,16 @@
         "type": "string",
         "unit": null,
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "15"
       },
       {
         "name": "Pumping Speed",
         "type": "number",
         "unit": "liters per second",
         "mandatory": false,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "16"
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -279,21 +295,30 @@
         "type": "number",
         "unit": "liters per second",
         "mandatory": true,
-        "allowed_values": { "type": "list", "values": [300, 400, 500] }
+        "allowed_values": {
+          "type": "list",
+          "values": [300, 400, 500]
+        },
+        "id": "17"
       },
       {
         "name": "Ultimate Pressure",
         "type": "number",
         "unit": "millibar",
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "18"
       },
       {
         "name": "Axis",
         "type": "string",
         "unit": null,
         "mandatory": false,
-        "allowed_values": { "type": "list", "values": ["y", "x", "z"] }
+        "allowed_values": {
+          "type": "list",
+          "values": ["y", "x", "z"]
+        },
+        "id": "19"
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -311,14 +336,16 @@
         "type": "number",
         "unit": "liters per second",
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "20"
       },
       {
         "name": "Compression Ratio",
         "type": "number",
         "mandatory": false,
         "unit": null,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "21"
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -336,14 +363,16 @@
         "type": "number",
         "unit": "liters per second",
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "22"
       },
       {
         "name": "Backing Pressure",
         "type": "number",
         "unit": "millibar",
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "23"
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",
@@ -389,14 +418,16 @@
         "type": "number",
         "unit": "volts",
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "24"
       },
       {
         "name": "Accuracy",
         "type": "string",
         "unit": null,
         "mandatory": true,
-        "allowed_values": null
+        "allowed_values": null,
+        "id": "25"
       }
     ],
     "created_time": "2024-01-01T12:00:00.000+00:00",

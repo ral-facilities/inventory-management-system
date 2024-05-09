@@ -20,7 +20,7 @@ import {
 } from '../api/catalogueCategories';
 import {
   CatalogueCategory,
-  CatalogueCategoryFormData,
+  CatalogueCategoryProperty,
   CatalogueItemProperty,
 } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
@@ -154,13 +154,13 @@ const CopyCategoriesButton = (props: {
 };
 
 export function matchCatalogueItemProperties(
-  form: CatalogueCategoryFormData[],
+  form: CatalogueCategoryProperty[],
   items: CatalogueItemProperty[]
 ): (string | null)[] {
   const result: (string | null)[] = [];
 
   for (const property of form) {
-    const matchingItem = items.find((item) => item.name === property.name);
+    const matchingItem = items.find((item) => item.id === property.id);
     if (matchingItem) {
       // Type check and assign the value
       if (property.type === 'boolean') {

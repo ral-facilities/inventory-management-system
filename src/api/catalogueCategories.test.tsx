@@ -19,7 +19,7 @@ import {
 } from './catalogueCategories';
 import { imsApi } from './api';
 
-describe('catalogue category api functions', () => {
+describe('catalogue categories api functions', () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -32,7 +32,7 @@ describe('catalogue category api functions', () => {
         is_leaf: false,
       };
     });
-    it('posts a request to add a user session and returns successful response', async () => {
+    it('posts a request to add a catalogue category and returns successful response', async () => {
       const { result } = renderHook(() => useAddCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -58,7 +58,7 @@ describe('catalogue category api functions', () => {
         id: '4',
       };
     });
-    it('posts a request to add a user session and returns successful response', async () => {
+    it('posts a request to edit a catalogue category and returns successful response', async () => {
       const { result } = renderHook(() => useEditCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -70,6 +70,7 @@ describe('catalogue category api functions', () => {
       expect(result.current.data).toEqual({
         catalogue_item_properties: [
           {
+            id: '1',
             allowed_values: null,
             mandatory: true,
             name: 'Resolution',
@@ -77,6 +78,7 @@ describe('catalogue category api functions', () => {
             unit: 'megapixels',
           },
           {
+            id: '2',
             allowed_values: null,
             mandatory: false,
             name: 'Frame Rate',
@@ -84,6 +86,7 @@ describe('catalogue category api functions', () => {
             unit: 'fps',
           },
           {
+            id: '3',
             allowed_values: null,
             mandatory: true,
             name: 'Sensor Type',
@@ -91,6 +94,7 @@ describe('catalogue category api functions', () => {
             unit: null,
           },
           {
+            id: '4',
             allowed_values: null,
             mandatory: false,
             name: 'Sensor brand',
@@ -98,6 +102,7 @@ describe('catalogue category api functions', () => {
             unit: null,
           },
           {
+            id: '5',
             allowed_values: null,
             mandatory: true,
             name: 'Broken',
@@ -105,6 +110,7 @@ describe('catalogue category api functions', () => {
             unit: null,
           },
           {
+            id: '6',
             allowed_values: null,
             mandatory: false,
             name: 'Older than five years',
@@ -135,7 +141,7 @@ describe('catalogue category api functions', () => {
       };
     });
 
-    it('posts a request to add a user session and returns successful response', async () => {
+    it('posts a request to delete a catalogue category and returns successful response', async () => {
       const { result } = renderHook(() => useDeleteCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });

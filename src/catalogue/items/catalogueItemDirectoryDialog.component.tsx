@@ -90,8 +90,16 @@ const CatalogueItemDirectoryDialog = (
 
   const handleMoveToCatalogueItem = React.useCallback(() => {
     if (
-      JSON.stringify(parentInfo.catalogue_item_properties) !==
-      JSON.stringify(targetCatalogueCategory?.catalogue_item_properties)
+      JSON.stringify(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        parentInfo.catalogue_item_properties?.map(({ id, ...rest }) => rest)
+      ) !==
+      JSON.stringify(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        targetCatalogueCategory?.catalogue_item_properties?.map(
+          ({ id, ...rest }) => rest
+        )
+      )
     ) {
       setErrorMessage(
         'The destination catalogue item properties must precisely match the current destination. Ensure identical attributes, order, and formatting, with no spacing variations.'
@@ -118,8 +126,16 @@ const CatalogueItemDirectoryDialog = (
 
   const handleCopyToCatalogueItem = React.useCallback(() => {
     if (
-      JSON.stringify(parentInfo.catalogue_item_properties) !==
-      JSON.stringify(targetCatalogueCategory?.catalogue_item_properties)
+      JSON.stringify(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        parentInfo.catalogue_item_properties?.map(({ id, ...rest }) => rest)
+      ) !==
+      JSON.stringify(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        targetCatalogueCategory?.catalogue_item_properties?.map(
+          ({ id, ...rest }) => rest
+        )
+      )
     ) {
       setErrorMessage(
         'The destination catalogue item properties must precisely match the current destination. Ensure identical attributes, order, and formatting, with no spacing variations.'

@@ -5,6 +5,8 @@ import {
   AddItem,
   AddManufacturer,
   AddSystem,
+  AddUnit,
+  AddUsageStatus,
   BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueItem,
@@ -16,6 +18,8 @@ import {
   Item,
   Manufacturer,
   System,
+  Unit,
+  UsageStatus,
 } from '../app.types';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
 import CatalogueCategoryBreadcrumbsJSON from './CatalogueCategoryBreadcrumbs.json';
@@ -25,7 +29,8 @@ import ManufacturersJSON from './Manufacturers.json';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import UnitsJSON from './Units.json';
-import UsageStatusesJSON from './UsageStatuses.json';
+import UsageStatusJSON from './UsageStatus.json';
+import { generateUniqueId } from '../utils';
 
 /* MSW v2 expects types for responses, this interface covers any empty body
    or error with detail */
@@ -66,7 +71,12 @@ export const handlers = [
         parent_id: null,
       };
     }
-
+    body = {
+      ...body,
+      catalogue_item_properties: body.catalogue_item_properties?.map(
+        (property) => ({ ...property, id: generateUniqueId('test_id_') })
+      ),
+    };
     return HttpResponse.json(
       {
         id: '1',
@@ -132,13 +142,6 @@ export const handlers = [
     CatalogueCategory | ErrorResponse
   >('/v1/catalogue-categories/:id', async ({ request, params }) => {
     const { id } = params;
-    const itemData = CatalogueItemsJSON.filter(
-      (catalogueItem) => catalogueItem.catalogue_category_id === id
-    );
-
-    const catalogueData = CatalogueCategoriesJSON.filter(
-      (catalogueData) => catalogueData.parent_id === id
-    );
 
     const obj = CatalogueCategoriesJSON.find(
       (catalogueCategory) => catalogueCategory.id === id
@@ -155,25 +158,6 @@ export const handlers = [
         },
         { status: 409 }
       );
-    }
-    if (body.catalogue_item_properties !== undefined) {
-      if (itemData.length > 0) {
-        return HttpResponse.json(
-          {
-            detail:
-              'Catalogue category has child elements and cannot be updated',
-          },
-          { status: 409 }
-        );
-      } else if (catalogueData.length > 0) {
-        return HttpResponse.json(
-          {
-            detail:
-              'Catalogue category has child elements and cannot be updated',
-          },
-          { status: 409 }
-        );
-      }
     }
 
     if (fullBody.name === 'Error 500') {
@@ -216,7 +200,7 @@ export const handlers = [
   http.post<PathParams, AddCatalogueItem, CatalogueItem | ErrorResponse>(
     '/v1/catalogue-items',
     async ({ request }) => {
-      const body = await request.json();
+      let body = await request.json();
 
       if (
         body.name === 'Error 500' ||
@@ -228,6 +212,24 @@ export const handlers = [
         );
       }
 
+      const catalogueCategoryProperties = CatalogueCategoriesJSON.find(
+        (category) => category.id === body.catalogue_category_id
+      )?.catalogue_item_properties;
+
+      body = {
+        ...body,
+        properties: body.properties?.map((property) => {
+          const extraPropertyData = catalogueCategoryProperties?.find(
+            (catalogueCategoryProperty) =>
+              property.id === catalogueCategoryProperty.id
+          );
+          return {
+            ...property,
+            unit: extraPropertyData?.unit,
+            name: extraPropertyData?.name,
+          };
+        }),
+      };
       return HttpResponse.json(
         {
           ...body,
@@ -606,7 +608,7 @@ export const handlers = [
   http.post<PathParams, AddItem, Item | ErrorResponse>(
     '/v1/items',
     async ({ request }) => {
-      const body = await request.json();
+      let body = await request.json();
 
       if (body.serial_number === 'Error 500') {
         return HttpResponse.json(
@@ -614,6 +616,28 @@ export const handlers = [
           { status: 500 }
         );
       }
+
+      const catalogueItem = CatalogueItemsJSON.find(
+        (catalogueItem) => catalogueItem.id === body.catalogue_item_id
+      );
+      const catalogueCategoryProperties = CatalogueCategoriesJSON.find(
+        (category) => category.id === catalogueItem?.catalogue_category_id
+      )?.catalogue_item_properties;
+
+      body = {
+        ...body,
+        properties: body.properties?.map((property) => {
+          const extraPropertyData = catalogueCategoryProperties?.find(
+            (catalogueCategoryProperty) =>
+              property.id === catalogueCategoryProperty.id
+          );
+          return {
+            ...property,
+            unit: extraPropertyData?.unit,
+            name: extraPropertyData?.name,
+          };
+        }),
+      };
 
       return HttpResponse.json(
         {
@@ -711,9 +735,121 @@ export const handlers = [
     return HttpResponse.json(UnitsJSON, { status: 200 });
   }),
 
-  // ------------------------------------ UsageStatuses ----------------------------------------
+  http.post<PathParams, AddUnit, Unit | ErrorResponse>(
+    '/v1/units',
+    async ({ request }) => {
+      const body = await request.json();
+
+      if (body.value === 'test_dup') {
+        return HttpResponse.json(
+          {
+            detail: 'A unit with the same name already exists',
+          },
+          { status: 409 }
+        );
+      }
+      if (body.value === 'Error 500') {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      }
+
+      return HttpResponse.json(
+        {
+          id: '10',
+          value: 'Kelvin',
+          code: 'kelvin',
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
+        },
+        { status: 200 }
+      );
+    }
+  ),
+
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/v1/units/:id', ({ params }) => {
+    const { id } = params;
+    const validUnit = UnitsJSON.find((value) => value.id === id);
+    if (validUnit) {
+      if (id === '2') {
+        return HttpResponse.json(
+          {
+            detail: 'The specified unit is a part of a Catalogue category',
+          },
+          { status: 409 }
+        );
+      } else {
+        return HttpResponse.json({ status: 204 });
+      }
+    } else {
+      return HttpResponse.json({ detail: '' }, { status: 400 });
+    }
+  }),
+
+  // ------------------------------------ Usage Status ------------------------------------------------
 
   http.get('/v1/usage-statuses', () => {
-    return HttpResponse.json(UsageStatusesJSON, { status: 200 });
+    return HttpResponse.json(UsageStatusJSON, { status: 200 });
+  }),
+
+  http.post<PathParams, AddUsageStatus, UsageStatus | ErrorResponse>(
+    '/v1/usage-statuses',
+    async ({ request }) => {
+      const body = await request.json();
+
+      if (body.value === 'test_dup') {
+        return HttpResponse.json(
+          {
+            detail: 'A Usage Status with the same name already exists',
+          },
+          { status: 409 }
+        );
+      }
+      if (body.value === 'Error 500') {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      }
+
+      return HttpResponse.json(
+        {
+          id: '5',
+          value: 'Archived',
+          code: 'archived',
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
+        },
+        { status: 200 }
+      );
+    }
+  ),
+
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/v1/usage-statuses/:id', ({ params }) => {
+    const { id } = params;
+    const validUsageStatus = UsageStatusJSON.find((value) => value.id === id);
+    if (validUsageStatus) {
+      if (id === '2') {
+        return HttpResponse.json(
+          {
+            detail: 'The specified usage status is a part of a Item',
+          },
+          { status: 409 }
+        );
+      } else {
+        return HttpResponse.json({ status: 204 });
+      }
+    } else {
+      return HttpResponse.json({ detail: '' }, { status: 400 });
+    }
   }),
 ];
