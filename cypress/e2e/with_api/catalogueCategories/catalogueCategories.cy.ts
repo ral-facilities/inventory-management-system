@@ -1,3 +1,4 @@
+import { addUnits } from '../units/functions';
 import {
   addCatalogueCategories,
   copyToCatalogueCategories,
@@ -9,7 +10,7 @@ import {
 
 describe('Catalogue Category', () => {
   beforeEach(() => {
-    cy.dropIMSCollections(['catalogue_categories']);
+    cy.dropIMSCollections(['catalogue_categories', 'units']);
     cy.visit('/catalogue');
   });
   afterEach(() => {
@@ -18,6 +19,23 @@ describe('Catalogue Category', () => {
   });
 
   it('CRUD for catalogue categories', () => {
+    //Prepare data for catalogue categories
+    cy.visit('/adminPage/units');
+    addUnits(
+      [
+        'megapixels',
+        'fps',
+        'Joules',
+        'micrometers',
+        'millimeters',
+        'kilograms',
+        'liters per second',
+        'millibar',
+        'volts',
+      ],
+      true
+    );
+    cy.visit('/catalogue');
     addCatalogueCategories();
     editCatalogueCategories();
     saveAsCatalogueCategories();

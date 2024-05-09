@@ -61,7 +61,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       {
         name: '',
         type: '',
-        unit: undefined,
+        unit_id: undefined,
         mandatory: false,
         allowed_values: undefined,
         cip_placement_id: generateUniqueId('cip_placement_id_'),
@@ -140,7 +140,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
       );
       updatedFormFields[fieldIndex][field] = value;
       if (value === 'boolean') {
-        delete updatedFormFields[fieldIndex].unit;
+        delete updatedFormFields[fieldIndex].unit_id;
         delete updatedFormFields[fieldIndex].allowed_values;
       }
     } else if (field === 'name') {
@@ -581,13 +581,13 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             options={units ?? []}
             sx={{ minWidth: '200px' }}
             getOptionLabel={(option) => option.value}
-            value={units?.find((unit) => unit.value === field.unit) || null}
+            value={units?.find((unit) => unit.id === field.unit_id) || null}
             disabled={field.type === 'boolean' || isDisabled}
             onChange={(_event, newValue: Unit | null) => {
               handleChange(
                 field.cip_placement_id,
-                'unit',
-                newValue?.value || null
+                'unit_id',
+                newValue?.id || null
               );
             }}
             renderInput={(params) => (

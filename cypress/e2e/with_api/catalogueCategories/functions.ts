@@ -208,13 +208,13 @@ export const addCatalogueCategories = (ignoreChecks?: boolean) => {
         {
           name: 'Diameter',
           type: 'number',
-          unit: 'mm',
+          unit: 'megapixels',
           mandatory: false,
         },
         {
           name: 'Wavelength Range',
           type: 'text',
-          unit: 'nm',
+          unit: 'fps',
           mandatory: true,
         },
         {

@@ -223,6 +223,7 @@ export const handlers = [
           return {
             ...property,
             unit: extraPropertyData?.unit,
+            unit_id: extraPropertyData?.unit_id,
             name: extraPropertyData?.name,
           };
         }),

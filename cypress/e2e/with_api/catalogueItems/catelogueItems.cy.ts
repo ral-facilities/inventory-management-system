@@ -3,6 +3,7 @@ import {
   saveAsCatalogueCategory,
 } from '../catalogueCategories/functions';
 import { addManufacturer } from '../manufacturers/functions';
+import { addUnits } from '../units/functions';
 import {
   addCatalogueItem,
   copyToCatalogueItems,
@@ -18,10 +19,26 @@ describe('catalogue items', () => {
       'catalogue_categories',
       'catalogue_items',
       'manufacturers',
+      'units',
     ]);
     // Prepare relevant data for catalogue items
     cy.visit('/manufacturers');
     addManufacturer(true);
+    cy.visit('/adminPage/units');
+    addUnits(
+      [
+        'megapixels',
+        'fps',
+        'Joules',
+        'micrometers',
+        'millimeters',
+        'kilograms',
+        'liters per second',
+        'millibar',
+        'volts',
+      ],
+      true
+    );
     cy.visit('/catalogue');
     addCatalogueCategories(true);
     saveAsCatalogueCategory('Spherical Lenses');
@@ -32,6 +49,7 @@ describe('catalogue items', () => {
       'catalogue_categories',
       'catalogue_items',
       'manufacturers',
+      'units',
     ]);
   });
 

@@ -92,7 +92,7 @@ export type AllowedValues = AllowedValuesList;
 export interface AddCatalogueCategoryProperty {
   name: string;
   type: string;
-  unit?: string;
+  unit_id?: string;
   mandatory: boolean;
   allowed_values?: AllowedValues;
 }
@@ -100,6 +100,7 @@ export interface AddCatalogueCategoryProperty {
 export interface CatalogueCategoryProperty
   extends AddCatalogueCategoryProperty {
   id: string;
+  unit?: string;
 }
 
 export interface AddCatalogueCategoryPropertyWithPlacementIds
@@ -145,6 +146,7 @@ export interface CatalogueItemPropertyResponse {
   name: string;
   value: string | number | boolean | null;
   unit: string | null;
+  unit_id?: string | null;
 }
 
 export interface CatalogueItem extends CatalogueItemDetails {
