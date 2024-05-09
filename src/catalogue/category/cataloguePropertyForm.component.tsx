@@ -273,11 +273,9 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
             }}
             options={['true', 'false']}
             value={
-              catalogueItemField.default_value === true
-                ? 'true'
-                : catalogueItemField.default_value === false
-                  ? 'false'
-                  : null
+              catalogueItemField.default_value
+                ? String(catalogueItemField.default_value)
+                : null
             }
             onChange={(_event, newValue) => {
               handleChange('default_value', newValue || '');

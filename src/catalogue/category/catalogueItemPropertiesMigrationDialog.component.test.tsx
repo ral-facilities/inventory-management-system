@@ -711,6 +711,76 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       );
       expect(invalidTypeError2.length).toEqual(1);
     });
+
+    it('displays default value error for type boolean', async () => {
+      createView();
+      await modifyValues({
+        type: 'Add',
+        formField: {
+          name: 'test',
+          type: 'Boolean',
+          mandatory: true,
+        },
+        justModifyPropertyForm: false,
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      const defaultValueHelperText = screen.getByText(
+        'Please enter a default value'
+      );
+      expect(defaultValueHelperText).toBeInTheDocument();
+
+      await modifyValues({
+        type: 'Add',
+        formField: {
+          type: 'Boolean',
+          default_value: 'true',
+          mandatory: true,
+        },
+        justModifyPropertyForm: true,
+      });
+
+      const defaultValueHelperText2 = screen.queryByText(
+        'Please enter a default value'
+      );
+      expect(defaultValueHelperText2).not.toBeInTheDocument();
+    });
+
+    it('displays default value error for type string without allowed values', async () => {
+      createView();
+      await modifyValues({
+        type: 'Add',
+        formField: {
+          name: 'test',
+          type: 'Text',
+          mandatory: true,
+        },
+        justModifyPropertyForm: false,
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Finish' }));
+
+      const defaultValueHelperText = screen.getByText(
+        'Please enter a default value'
+      );
+      expect(defaultValueHelperText).toBeInTheDocument();
+
+      await modifyValues({
+        type: 'Add',
+        formField: {
+          type: 'Text',
+          default_value: 'true',
+          mandatory: true,
+        },
+        justModifyPropertyForm: true,
+      });
+
+      const defaultValueHelperText2 = screen.queryByText(
+        'Please enter a default value'
+      );
+      expect(defaultValueHelperText2).not.toBeInTheDocument();
+    });
   });
 
   describe('Edit', () => {
