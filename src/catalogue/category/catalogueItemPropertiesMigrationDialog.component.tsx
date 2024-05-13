@@ -734,10 +734,10 @@ function CatalogueItemPropertiesMigrationDialog(
               ? convertedValues
               : allowedValuesList ?? [],
         };
-        isAllowedValuesUpdated = allowedValues.values.some(
-          (value) =>
-            !initialPropertyDetails?.allowed_values?.values.includes(value)
-        );
+
+        isAllowedValuesUpdated =
+          JSON.stringify(initialPropertyDetails?.allowed_values?.values) !==
+          JSON.stringify(allowedValues.values);
 
         isAllowedValuesUpdated && (property.allowed_values = allowedValues);
       }
