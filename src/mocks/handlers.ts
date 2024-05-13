@@ -68,10 +68,15 @@ export const handlers = [
         parent_id: null,
       };
     }
+
     body = {
       ...body,
       catalogue_item_properties: body.catalogue_item_properties?.map(
-        (property) => ({ ...property, id: generateUniqueId('test_id_') })
+        (property) => ({
+          ...property,
+          id: generateUniqueId('test_id_'),
+          unit: UnitsJSON.find((unit) => unit.id === property.unit_id)?.value,
+        })
       ),
     };
     return HttpResponse.json(
