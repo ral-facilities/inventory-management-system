@@ -134,7 +134,7 @@ export const useAddCatalogueCategoryProperty = (): UseMutationResult<
       queryClient.invalidateQueries({
         queryKey: [
           'CatalogueCategories',
-          variables.catalogueCategory.parent_id,
+          variables.catalogueCategory.parent_id ?? 'null',
         ],
       });
       queryClient.invalidateQueries({
@@ -207,7 +207,7 @@ export const useEditCatalogueCategoryProperty = (): UseMutationResult<
       queryClient.invalidateQueries({
         queryKey: [
           'CatalogueCategories',
-          variables.catalogueCategory.parent_id,
+          variables.catalogueCategory.parent_id ?? 'null',
         ],
       });
       queryClient.invalidateQueries({
