@@ -147,12 +147,6 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           });
         }
       } else {
-        const deleteIcons = screen.getAllByLabelText('Delete list item');
-
-        for (let j = 0; j < deleteIcons.length; j++) {
-          await user.click(screen.getAllByTestId('DeleteIcon')[0]);
-        }
-
         for (
           let i = 0;
           i < values.formField.allowed_values.values.length;
@@ -164,9 +158,12 @@ describe('CatalogueCategoryDirectoryDialog', () => {
             })
           );
 
-          const listItem = screen.getAllByLabelText('List Item')[i];
+          const listItemLength = screen.getAllByLabelText('List Item').length;
 
-          fireEvent.change(listItem, {
+          const listItem =
+            screen.getAllByLabelText('List Item')[listItemLength - 1];
+
+          fireEvent.change(within(listItem).getByLabelText('List Item'), {
             target: { value: values.formField.allowed_values.values[i] },
           });
         }
@@ -816,7 +813,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         type: 'Edit',
         editRadio: 'Axis',
         formField: {
-          allowed_values: { type: 'list', values: ['x', 'y', 'z', 'a'] },
+          allowed_values: { type: 'list', values: ['a'] },
         },
         justModifyPropertyForm: false,
       });
@@ -828,7 +825,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         {
           allowed_values: {
             type: 'list',
-            values: ['x', 'y', 'z', 'a'],
+            values: ['y', 'x', 'z', 'a'],
           },
         }
       );
@@ -840,7 +837,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         type: 'Edit',
         editRadio: 'Pumping Speed',
         formField: {
-          allowed_values: { type: 'list', values: [300, 400, 500, 600] },
+          allowed_values: { type: 'list', values: [600] },
         },
         justModifyPropertyForm: false,
       });

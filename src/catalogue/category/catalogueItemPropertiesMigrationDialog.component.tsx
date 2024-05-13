@@ -634,7 +634,6 @@ function CatalogueItemPropertiesMigrationDialog(
     propertyMigrationType,
     selectedCatalogueCategory.catalogue_item_properties,
   ]);
-
   const handleAddProperty = React.useCallback(() => {
     if (catalogueItemField && propertyMigrationType === 'add') {
       const hasErrors = validateProperty();
@@ -863,6 +862,13 @@ function CatalogueItemPropertiesMigrationDialog(
                 handleDeleteListValue={handleDeleteListValue}
                 catalogueItemPropertyMessage={catalogueItemPropertyMessage}
                 allowedValuesListErrorMessage={allowedValuesListErrorMessage}
+                currentCatalogueItemField={
+                  propertyMigrationType === 'edit'
+                    ? updatedCatalogueItemProperties?.find(
+                        (property) => property.id === catalogueItemField.id
+                      )
+                    : undefined
+                }
               />
             )}
           </Grid>

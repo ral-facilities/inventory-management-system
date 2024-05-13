@@ -15,6 +15,7 @@ import {
 import { useUnits } from '../../api/units';
 import {
   AddCatalogueCategoryPropertyTypes,
+  CatalogueCategoryProperty,
   CatalogueItemPropertiesErrorsType,
   Unit,
 } from '../../app.types';
@@ -37,6 +38,7 @@ export interface CataloguePropertyFormProps {
   allowedValuesListErrorMessage: (av_placement_id: string) => string;
   hasAllowedValuesList?: () => boolean;
   cip_placement_id?: string;
+  currentCatalogueItemField?: CatalogueCategoryProperty;
 }
 
 function CataloguePropertyForm(props: CataloguePropertyFormProps) {
@@ -53,6 +55,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
     hasAllowedValuesList,
     cip_placement_id,
     isList,
+    currentCatalogueItemField,
   } = props;
 
   const { data: units } = useUnits();
@@ -157,6 +160,11 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
             }}
           >
             {catalogueItemField.allowed_values.values.map((listValue) => {
+              const initialAllowedValuePlacementIds =
+                currentCatalogueItemField?.allowed_values?.values.map(
+                  (val) => val.av_placement_id
+                );
+
               return (
                 <Stack
                   key={listValue.av_placement_id}
@@ -179,7 +187,12 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
                     data-testid={`${listValue.av_placement_id}: List Item`}
                     variant="outlined"
                     value={listValue.value as string}
-                    disabled={type === 'disabled'}
+                    disabled={
+                      type === 'disabled' ||
+                      initialAllowedValuePlacementIds?.includes(
+                        listValue.av_placement_id
+                      )
+                    }
                     onChange={(e) =>
                       catalogueItemField.allowed_values &&
                       handleChangeListValues(
@@ -194,18 +207,21 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
                       listValue.av_placement_id
                     )}
                   />
-                  {type !== 'disabled' && (
-                    <IconButton
-                      key={listValue.av_placement_id}
-                      aria-label={`Delete list item`}
-                      data-testid={`${listValue.av_placement_id}: Delete list item`}
-                      onClick={() =>
-                        handleDeleteListValue(listValue.av_placement_id)
-                      }
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  )}
+                  {type !== 'disabled' &&
+                    !initialAllowedValuePlacementIds?.includes(
+                      listValue.av_placement_id
+                    ) && (
+                      <IconButton
+                        key={listValue.av_placement_id}
+                        aria-label={`Delete list item`}
+                        data-testid={`${listValue.av_placement_id}: Delete list item`}
+                        onClick={() =>
+                          handleDeleteListValue(listValue.av_placement_id)
+                        }
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    )}
                 </Stack>
               );
             })}
