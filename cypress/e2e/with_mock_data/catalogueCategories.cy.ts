@@ -1446,9 +1446,9 @@ describe('Catalogue Category', () => {
 
     // Initiate missing value errors
 
-    cy.findAllByLabelText('List Item').eq(0).clear();
-    cy.findAllByLabelText('List Item').eq(1).clear();
-    cy.findAllByLabelText('List Item').eq(2).clear();
+    cy.findByRole('button', { name: 'Add list item' }).click();
+    cy.findByRole('button', { name: 'Add list item' }).click();
+    cy.findByRole('button', { name: 'Add list item' }).click();
 
     cy.findByLabelText('Property Name *').clear();
 
@@ -1461,9 +1461,9 @@ describe('Catalogue Category', () => {
 
     cy.findByLabelText('Property Name *').type('Pumping Speed');
 
-    cy.findAllByLabelText('List Item').eq(0).type('test1');
-    cy.findAllByLabelText('List Item').eq(1).type('test1');
-    cy.findAllByLabelText('List Item').eq(2).type('test1');
+    cy.findAllByLabelText('List Item').eq(3).type('test1');
+    cy.findAllByLabelText('List Item').eq(4).type('test1');
+    cy.findAllByLabelText('List Item').eq(5).type('test1');
 
     cy.findByText('Please enter a property name').should('not.exist');
     cy.findByText('Please enter a value').should('not.exist');
@@ -1479,10 +1479,10 @@ describe('Catalogue Category', () => {
 
     cy.findByLabelText('Property Name *').clear();
     cy.findByLabelText('Property Name *').type('test');
-    cy.findAllByLabelText('List Item').eq(1).clear();
-    cy.findAllByLabelText('List Item').eq(1).type('test2');
-    cy.findAllByLabelText('List Item').eq(1).clear();
-    cy.findAllByLabelText('List Item').eq(2).type('test3');
+    cy.findAllByLabelText('List Item').eq(4).clear();
+    cy.findAllByLabelText('List Item').eq(4).type('test2');
+    cy.findAllByLabelText('List Item').eq(5).clear();
+    cy.findAllByLabelText('List Item').eq(5).type('test3');
 
     cy.findByText(
       'Duplicate property name. Please change the name or remove the property'
@@ -1497,16 +1497,18 @@ describe('Catalogue Category', () => {
 
     cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findAllByLabelText('List Item').eq(1).clear();
-    cy.findAllByLabelText('List Item').eq(1).type('test2');
+    cy.findByRole('button', { name: 'Add list item' }).click();
+
+    cy.findAllByLabelText('List Item').eq(3).clear();
+    cy.findAllByLabelText('List Item').eq(3).type('test2');
 
     cy.findByRole('button', { name: 'Finish' }).click();
 
     cy.findAllByText('Please enter a valid number').should('exist');
 
     // Clear the invalid type errors
-    cy.findAllByLabelText('List Item').eq(1).clear();
-    cy.findAllByLabelText('List Item').eq(1).type('400');
+    cy.findAllByLabelText('List Item').eq(3).clear();
+    cy.findAllByLabelText('List Item').eq(3).type('900');
 
     cy.findByText('Please enter a valid number').should('not.exist');
   });
