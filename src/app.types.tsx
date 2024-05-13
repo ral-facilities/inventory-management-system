@@ -253,7 +253,7 @@ export interface ItemDetails {
   system_id: string;
   purchase_order_number: string | null;
   is_defective: boolean;
-  usage_status: string;
+  usage_status_id: string;
   warranty_end_date: string | null;
   asset_number: string | null;
   serial_number: string | null;
@@ -279,6 +279,7 @@ export interface AddItems {
 export interface Item extends ItemDetails {
   properties: CatalogueItemPropertyResponse[];
   id: string;
+  usage_status: string;
   created_time: string;
   modified_time: string;
 }

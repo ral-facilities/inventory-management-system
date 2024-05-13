@@ -29,7 +29,7 @@ import ManufacturersJSON from './Manufacturers.json';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import UnitsJSON from './Units.json';
-import UsageStatusJSON from './UsageStatus.json';
+import UsageStatusJSON from './UsageStatuses.json';
 import { generateUniqueId } from '../utils';
 
 /* MSW v2 expects types for responses, this interface covers any empty body
@@ -624,6 +624,10 @@ export const handlers = [
         (category) => category.id === catalogueItem?.catalogue_category_id
       )?.catalogue_item_properties;
 
+      const usageStatus = UsageStatusJSON.find(
+        (usageStatus) => usageStatus.id == body.usage_status_id
+      );
+
       body = {
         ...body,
         properties: body.properties?.map((property) => {
@@ -643,6 +647,7 @@ export const handlers = [
         {
           ...body,
           id: '1',
+          usage_status: usageStatus?.value,
         } as Item,
         { status: 200 }
       );
@@ -695,6 +700,9 @@ export const handlers = [
         );
 
       const validItem = ItemsJSON.find((value) => value.id === id);
+      const usageStatus = UsageStatusJSON.find(
+        (usageStatus) => usageStatus.id == body.usage_status_id
+      );
 
       if (body.serial_number === 'Error 500')
         return HttpResponse.json(
@@ -707,6 +715,7 @@ export const handlers = [
           ...validItem,
           ...body,
           id: id,
+          usage_status: usageStatus?.value,
         } as Item,
         { status: 200 }
       );

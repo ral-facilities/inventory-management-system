@@ -32,7 +32,7 @@ export interface SystemItemsDialogProps {
 export interface UsageStatusesType {
   item_id: string;
   catalogue_item_id: string;
-  usageStatus: string;
+  usage_status_id: string;
 }
 
 export interface UsageStatusesErrorType
@@ -48,10 +48,10 @@ const convertToSystemUsageStatuses = (
   list: UsageStatusesType[]
 ): MoveItemsToSystemUsageStatus[] => {
   return list
-    .filter((item) => item.usageStatus !== '') // Exclude items with empty usageStatus
+    .filter((item) => item.usage_status_id !== '') // Exclude items with empty usageStatus
     .map((item) => ({
       item_id: item.item_id,
-      usage_status: item.usageStatus,
+      usage_status: item.usage_status_id,
     }));
 };
 
@@ -77,7 +77,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
         (item) => ({
           item_id: item.id,
           catalogue_item_id: item.catalogue_item_id,
-          usageStatus: '',
+          usage_status_id: '',
         })
       );
 
@@ -113,7 +113,7 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   const validateUsageStatus = React.useCallback(() => {
     let hasUsageStatusErrors: boolean = false;
     usageStatuses.forEach((status) => {
-      if (status.usageStatus === '') {
+      if (status.usage_status_id === '') {
         setItemUsageStatusesErrorState((prev) => ({
           ...prev,
           [status.item_id]: {

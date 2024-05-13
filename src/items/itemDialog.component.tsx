@@ -121,7 +121,7 @@ function ItemDialog(props: ItemDialogProps) {
     system_id: null,
     purchase_order_number: null,
     is_defective: null,
-    usage_status: null,
+    usage_status_id: null,
     warranty_end_date: null,
     asset_number: null,
     serial_number: null,
@@ -177,7 +177,7 @@ function ItemDialog(props: ItemDialogProps) {
         system_id: null,
         purchase_order_number: selectedItem.purchase_order_number,
         is_defective: selectedItem.is_defective ? 'true' : 'false',
-        usage_status: selectedItem.usage_status,
+        usage_status_id: selectedItem.usage_status_id,
         warranty_end_date: selectedItem.warranty_end_date
           ? new Date(selectedItem.warranty_end_date)
           : null,
@@ -247,7 +247,7 @@ function ItemDialog(props: ItemDialogProps) {
       system_id: null,
       purchase_order_number: null,
       is_defective: null,
-      usage_status: null,
+      usage_status_id: null,
       warranty_end_date: null,
       asset_number: null,
       serial_number: null,
@@ -320,7 +320,9 @@ function ItemDialog(props: ItemDialogProps) {
       system_id: itemDetails.system_id ?? '',
       purchase_order_number: itemDetails.purchase_order_number,
       is_defective: itemDetails.is_defective === 'true' ? true : false,
-      usage_status: itemDetails.usage_status ? itemDetails.usage_status : 'New',
+      usage_status_id: itemDetails.usage_status_id
+        ? itemDetails.usage_status_id
+        : '0',
       warranty_end_date:
         itemDetails.warranty_end_date &&
         isValidDateTime(itemDetails.warranty_end_date)
@@ -399,7 +401,7 @@ function ItemDialog(props: ItemDialogProps) {
         details.is_defective !== selectedItem.is_defective;
 
       const isUsageStatusUpdated =
-        details.usage_status !== selectedItem.usage_status;
+        details.usage_status_id !== selectedItem.usage_status_id;
 
       const isWarrantyEndDateUpdated =
         details.warranty_end_date !== selectedItem.warranty_end_date;
@@ -435,7 +437,7 @@ function ItemDialog(props: ItemDialogProps) {
       isPurchaseOrderNumberUpdated &&
         (item.purchase_order_number = details.purchase_order_number);
       isIsDefectiveUpdated && (item.is_defective = details.is_defective);
-      isUsageStatusUpdated && (item.usage_status = details.usage_status);
+      isUsageStatusUpdated && (item.usage_status_id = details.usage_status_id);
       isWarrantyEndDateUpdated &&
         (item.warranty_end_date = details.warranty_end_date);
       isAssetNumberUpdated && (item.asset_number = details.asset_number);
@@ -766,15 +768,20 @@ function ItemDialog(props: ItemDialogProps) {
                 <Select
                   required={true}
                   labelId="usage-status"
-                  value={itemDetails.usage_status ?? 'New'}
+                  value={
+                    usageStatuses?.find(
+                      (usageStatus) =>
+                        usageStatus.id == itemDetails.usage_status_id
+                    )?.id ?? '0'
+                  }
                   size="small"
                   onChange={(e) =>
-                    handleItemDetails('usage_status', e.target.value)
+                    handleItemDetails('usage_status_id', e.target.value)
                   }
                   label="Usage status"
                 >
                   {usageStatuses?.map((usageStatus) => (
-                    <MenuItem key={usageStatus.id} value={usageStatus.value}>
+                    <MenuItem key={usageStatus.id} value={usageStatus.id}>
                       {usageStatus.value}
                     </MenuItem>
                   ))}

@@ -189,6 +189,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         Array.from(catalogueItemIdSet).map((catalogue_item_id) => ({
           catalogue_item_id: catalogue_item_id,
           usageStatus: '', // Setting usageStatus to an empty string by default
+          usage_status_id: '',
         }));
 
       onChangeAggregatedCellUsageStatus(initialUsageStatuses);
@@ -349,7 +350,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           (status) =>
                             status.catalogue_item_id ===
                             row.original.catalogueItem?.id
-                        )?.usageStatus ?? ''
+                        )?.usage_status_id ?? ''
                       }
                       onChange={(event) => {
                         if (
@@ -367,7 +368,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
 
                           updatedAggregatedCellUsageStatus[
                             itemIndex
-                          ].usageStatus = event.target.value;
+                          ].usage_status_id = event.target.value;
 
                           onChangeAggregatedCellUsageStatus(
                             updatedAggregatedCellUsageStatus
@@ -388,7 +389,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                               row.original.catalogueItem?.id
                             ) {
                               // Update the usageStatus for the matching item
-                              updatedUsageStatuses[i].usageStatus =
+                              updatedUsageStatuses[i].usage_status_id =
                                 event.target.value;
                             }
                           }
@@ -424,10 +425,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                       label="Usage statuses"
                     >
                       {usageStatusesData?.map((usageStatus) => (
-                        <MenuItem
-                          key={usageStatus.id}
-                          value={usageStatus.value}
-                        >
+                        <MenuItem key={usageStatus.id} value={usageStatus.id}>
                           {usageStatus.value}
                         </MenuItem>
                       ))}
@@ -459,7 +457,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                       value={
                         usageStatuses?.find(
                           (status) => status.item_id === row.original.item.id
-                        )?.usageStatus ?? ''
+                        )?.usage_status_id ?? ''
                       }
                       onChange={(event) => {
                         if (onChangeUsageStatuses && usageStatuses) {
@@ -469,7 +467,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           );
                           const updatedUsageStatuses = [...usageStatuses];
 
-                          updatedUsageStatuses[itemIndex].usageStatus =
+                          updatedUsageStatuses[itemIndex].usage_status_id =
                             event.target.value;
 
                           onChangeUsageStatuses(updatedUsageStatuses);
@@ -503,7 +501,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                             ...aggregatedCellUsageStatus,
                           ];
 
-                          updatedUsageStatuses[itemIndex].usageStatus = '';
+                          updatedUsageStatuses[itemIndex].usage_status_id = '';
 
                           onChangeAggregatedCellUsageStatus(
                             updatedUsageStatuses
@@ -514,10 +512,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                       label="Usage status"
                     >
                       {usageStatusesData?.map((usageStatus) => (
-                        <MenuItem
-                          key={usageStatus.id}
-                          value={usageStatus.value}
-                        >
+                        <MenuItem key={usageStatus.id} value={usageStatus.id}>
                           {usageStatus.value}
                         </MenuItem>
                       ))}
