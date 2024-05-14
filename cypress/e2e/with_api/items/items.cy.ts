@@ -2,7 +2,7 @@ import { addCatalogueCategories } from '../catalogueCategories/functions';
 import { addCatalogueItem } from '../catalogueItems/functions';
 import { addManufacturer } from '../manufacturers/functions';
 import { addSystems } from '../systems/functions';
-import { addUsageStatuses } from '../usageStatus.cy.ts/functions';
+import { addUsageStatuses } from '../usageStatus/functions';
 import { addItem, deleteItem, editItem, saveAsItem } from './functions';
 
 describe('items', () => {
