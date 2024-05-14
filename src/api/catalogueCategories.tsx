@@ -17,7 +17,7 @@ import {
   TransferState,
 } from '../app.types';
 
-import { generateUniqueName } from '../utils';
+import { generateUniqueNameUsingCode } from '../utils';
 import { imsApi } from './api';
 
 const fetchCatalogueCategories = async (
@@ -233,9 +233,10 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
             copyToCatalogueCategory.targetCategory?.id || null;
 
           // Avoid duplicates
-          categoryAdd.name = generateUniqueName(
+          categoryAdd.name = generateUniqueNameUsingCode(
             categoryAdd.name,
-            copyToCatalogueCategory.existingCategoryNames
+            category.code,
+            copyToCatalogueCategory.existingCategoryCodes
           );
 
           return addCatalogueCategory(categoryAdd)

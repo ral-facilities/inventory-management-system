@@ -412,5 +412,36 @@ describe('SystemDirectoryDialog', () => {
       expect(mockOnClose).toHaveBeenCalled();
       expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith({});
     });
+
+    it('copies selected system to a location with a duplicate code but not a duplicate name', async () => {
+      props.selectedSystems = [
+        {
+          ...SystemsJSON[1],
+          name: 'smaller laser',
+        } as System,
+      ];
+      createView();
+
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByText('Giant laser'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Copy here' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
+        ...props.selectedSystems[0],
+        name: 'smaller laser_copy_1',
+        parent_id: '65328f34a40ff5301575a4e3',
+      });
+
+      expect(mockOnClose).toHaveBeenCalled();
+      expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith({});
+    });
   });
 });

@@ -379,6 +379,35 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
+    it('copies a catalogue category to a location with a duplicate code but not a duplicate name', async () => {
+      props.selectedCategories = [
+        {
+          id: '111',
+          name: 'Vacuum pumps',
+          parent_id: null,
+          code: 'vacuum-pumps',
+          is_leaf: false,
+        },
+      ];
+
+      props.parentCategoryId = '3';
+      createView();
+
+      const copyButton = screen.getByRole('button', { name: 'Copy here' });
+      await waitFor(() => {
+        expect(copyButton).not.toBeDisabled();
+      });
+      await user.click(copyButton);
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
+        ...props.selectedCategories[0],
+        name: 'Vacuum pumps_copy_1',
+        parent_id: '3',
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    });
+
     it('displays descriptions tooltip on hover', async () => {
       props.selectedCategories = [
         {

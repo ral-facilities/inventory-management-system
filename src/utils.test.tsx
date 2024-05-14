@@ -5,6 +5,8 @@ import {
   generateUniqueId,
   OverflowTip,
   sortDataList,
+  generateUniqueNameUsingCode,
+  generateCode,
 } from './utils';
 import userEvent from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from './testUtils';
@@ -65,6 +67,42 @@ describe('Utility functions', () => {
           test_object: { test_string: 'test_string', test_string2: 'test2' },
         },
       });
+    });
+  });
+
+  describe('generateUniqueNameUsingCode', () => {
+    it('should return the original name if the code is unique', () => {
+      const name = 'TestName';
+      const code = 'TestCode';
+      const existingCodes = ['ExistingCode1', 'ExistingCode2'];
+
+      const result = generateUniqueNameUsingCode(name, code, existingCodes);
+
+      expect(result).toBe(name);
+    });
+
+    it('should generate unique name and code if the code already exists', () => {
+      const name = 'TestName';
+      const code = 'ExistingCode';
+      const existingCodes = [
+        'ExistingCode',
+        'ExistingCode_copy_1',
+        'ExistingCode_copy_2',
+      ];
+
+      const result = generateUniqueNameUsingCode(name, code, existingCodes);
+
+      expect(result).toBe('TestName_copy_3'); // Expected result for this scenario
+    });
+
+    it('should handle empty existingCodes array', () => {
+      const name = 'TestName';
+      const code = 'TestCode';
+      const existingCodes = [];
+
+      const result = generateUniqueNameUsingCode(name, code, existingCodes);
+
+      expect(result).toBe(name);
     });
   });
 

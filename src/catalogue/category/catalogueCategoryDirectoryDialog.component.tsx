@@ -102,8 +102,8 @@ const CatalogueCategoryDirectoryDialog = (
       (!targetCategoryLoading || parentCategoryId === null) &&
       catalogueCategoryData !== undefined
     ) {
-      const existingCategoryNames: string[] = catalogueCategoryData.map(
-        (category) => category.name
+      const existingCategoryCodes: string[] = catalogueCategoryData.map(
+        (category) => category.code
       );
 
       copyToCatalogueCategory({
@@ -111,7 +111,7 @@ const CatalogueCategoryDirectoryDialog = (
         // Only reason for targetSystem to be undefined here is if not loading at all
         // which happens when at root
         targetCategory: targetCategory || null,
-        existingCategoryNames: existingCategoryNames,
+        existingCategoryCodes: existingCategoryCodes,
       }).then((response) => {
         handleTransferState(response);
         onChangeSelectedCategories([]);
