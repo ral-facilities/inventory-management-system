@@ -814,14 +814,14 @@ describe('Systems', () => {
         expect(JSON.stringify(await patchRequests[0].json())).equal(
           JSON.stringify({
             system_id: '65328f34a40ff5301575a4e3',
-            usage_status: 'Scrapped',
+            usage_status_id: '3',
           })
         );
         expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
         expect(JSON.stringify(await patchRequests[1].json())).equal(
           JSON.stringify({
             system_id: '65328f34a40ff5301575a4e3',
-            usage_status: 'Scrapped',
+            usage_status_id: '3',
           })
         );
       });
