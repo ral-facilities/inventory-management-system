@@ -1,15 +1,14 @@
 import { screen, waitFor } from '@testing-library/react';
-import {
-  generateUniqueName,
-  trimStringValues,
-  generateUniqueId,
-  OverflowTip,
-  sortDataList,
-  generateUniqueNameUsingCode,
-  generateCode,
-} from './utils';
 import userEvent from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from './testUtils';
+import {
+  OverflowTip,
+  generateUniqueId,
+  generateUniqueName,
+  generateUniqueNameUsingCode,
+  sortDataList,
+  trimStringValues,
+} from './utils';
 
 describe('Utility functions', () => {
   afterEach(() => {
