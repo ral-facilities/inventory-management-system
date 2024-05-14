@@ -119,7 +119,7 @@ jobs:
           --env API__ALLOWED_CORS_HEADERS='["*"]' \
           --env API__ALLOWED_CORS_ORIGINS='["*"]' \
           --env API__ALLOWED_CORS_METHODS='["*"]' \
-          harbor.stfc.ac.uk/inventory-management-system/ims-api:develop
+          harbor.stfc.ac.uk/inventory-management-system/ims-api:pr-253
 
       - name: Checkout repo
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4
