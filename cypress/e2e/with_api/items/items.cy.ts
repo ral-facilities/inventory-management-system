@@ -2,6 +2,7 @@ import { addCatalogueCategories } from '../catalogueCategories/functions';
 import { addCatalogueItem } from '../catalogueItems/functions';
 import { addManufacturer } from '../manufacturers/functions';
 import { addSystems } from '../systems/functions';
+import { addUsageStatuses } from '../usageStatus.cy.ts/functions';
 import { addItem, deleteItem, editItem, saveAsItem } from './functions';
 
 describe('items', () => {
@@ -12,6 +13,7 @@ describe('items', () => {
       'manufacturers',
       'items',
       'systems',
+      'usage_statuses',
     ]);
     // Prepare relevant data for items
     cy.visit('/manufacturers');
@@ -21,6 +23,8 @@ describe('items', () => {
     cy.visit('/catalogue');
     addCatalogueCategories(true);
     addCatalogueItem(true);
+    cy.visit('/adminPage/usage-status');
+    addUsageStatuses(['New', 'Used']);
   });
   afterEach(() => {
     cy.clearMocks();
@@ -30,6 +34,7 @@ describe('items', () => {
       'manufacturers',
       'items',
       'systems',
+      'usage_statuses',
     ]);
   });
 
