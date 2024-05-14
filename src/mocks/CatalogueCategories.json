@@ -55,7 +55,7 @@
         "name": "Frame Rate",
         "type": "number",
         "unit": "fps",
-        "unit_id": "9",
+        "unit_id": "2",
         "mandatory": false,
         "allowed_values": null,
         "id": "2"
@@ -82,6 +82,7 @@
         "name": "Broken",
         "type": "boolean",
         "unit": null,
+        "unit_id": null,
         "mandatory": true,
         "allowed_values": null,
         "id": "5"
@@ -110,6 +111,7 @@
         "name": "Measurement Range",
         "type": "number",
         "unit": "Joules",
+        "unit_id": "3",
         "mandatory": true,
         "allowed_values": null,
         "id": "7"
@@ -138,6 +140,7 @@
         "name": "Measurement Range",
         "type": "number",
         "unit": "Joules",
+        "unit_id": "3",
         "mandatory": true,
         "allowed_values": null,
         "id": "9"
@@ -168,7 +171,8 @@
         "unit": null,
         "mandatory": true,
         "allowed_values": null,
-        "id": "11"
+        "id": "11",
+        "unit_id": null
       },
       {
         "name": "Spatial Resolution",
@@ -311,7 +315,8 @@
           "type": "list",
           "values": [300, 400, 500]
         },
-        "id": "17"
+        "id": "17",
+        "unit_id": "7"
       },
       {
         "name": "Ultimate Pressure",

@@ -76,6 +76,7 @@ describe('catalogue categories api functions', () => {
             name: 'Resolution',
             type: 'number',
             unit: 'megapixels',
+            unit_id: '1',
           },
           {
             id: '2',
@@ -84,6 +85,7 @@ describe('catalogue categories api functions', () => {
             name: 'Frame Rate',
             type: 'number',
             unit: 'fps',
+            unit_id: '2',
           },
           {
             id: '3',
@@ -92,6 +94,7 @@ describe('catalogue categories api functions', () => {
             name: 'Sensor Type',
             type: 'string',
             unit: null,
+            unit_id: null,
           },
           {
             id: '4',
@@ -100,6 +103,7 @@ describe('catalogue categories api functions', () => {
             name: 'Sensor brand',
             type: 'string',
             unit: null,
+            unit_id: null,
           },
           {
             id: '5',
@@ -108,6 +112,7 @@ describe('catalogue categories api functions', () => {
             name: 'Broken',
             type: 'boolean',
             unit: null,
+            unit_id: null,
           },
           {
             id: '6',
@@ -116,6 +121,7 @@ describe('catalogue categories api functions', () => {
             name: 'Older than five years',
             type: 'boolean',
             unit: null,
+            unit_id: null,
           },
         ],
         code: 'cameras',
