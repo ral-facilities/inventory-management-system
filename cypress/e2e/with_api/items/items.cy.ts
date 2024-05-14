@@ -16,6 +16,8 @@ describe('items', () => {
       'usage_statuses',
     ]);
     // Prepare relevant data for items
+    cy.visit('/adminPage/usage-status');
+    addUsageStatuses(['New', 'Used']);
     cy.visit('/manufacturers');
     addManufacturer(true);
     cy.visit('/systems');
@@ -23,8 +25,6 @@ describe('items', () => {
     cy.visit('/catalogue');
     addCatalogueCategories(true);
     addCatalogueItem(true);
-    cy.visit('/adminPage/usage-status');
-    addUsageStatuses(['New', 'Used']);
   });
   afterEach(() => {
     cy.clearMocks();

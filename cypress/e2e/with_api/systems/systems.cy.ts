@@ -26,7 +26,7 @@ describe('systems', () => {
     ]);
     // Prepare relevant data for systems
     cy.visit('adminPage/usage-status');
-    addUsageStatuses(['New', 'Used']);
+    addUsageStatuses(['New', 'In Use', 'Used', 'Scrapped']);
     cy.visit('/manufacturers');
     addManufacturer(true);
     cy.visit('/systems');
