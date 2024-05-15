@@ -51,7 +51,7 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
     endIndex
   );
 
-  const cardViewHeight = getPageHeightCalc('100px');
+  const cardViewHeight = getPageHeightCalc('0px');
   const cardViewCardsHeight = getPageHeightCalc('100px + 72px');
 
   return (
