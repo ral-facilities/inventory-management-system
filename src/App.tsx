@@ -27,7 +27,6 @@ import {
 } from './state/scigateway.actions';
 import ViewTabs from './view/viewTabs.component';
 import { HomePage } from './homePage/homePage.component';
-import adminPage from './admin/admin.component';
 import Catalogue from './catalogue/catalogue.component';
 import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
 import Systems from './systems/systems.component';
@@ -36,8 +35,7 @@ import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.comp
 import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
 import ConfigProvider from './configProvider.component';
-import Units from './admin/units.component.tsx';
-import UsageStatus from './admin/usageStatus.component.tsx';
+import AdminPage from './admin/admin.component';
 
 export const paths = {
   any: '*',
@@ -81,9 +79,9 @@ const router = createBrowserRouter([
       { path: paths.any, Component: ViewTabs },
       { path: paths.root, Component: HomePage },
       { path: paths.homepage, Component: HomePage },
-      { path: paths.admin, Component: adminPage },
-      { path: paths.units, Component: Units },
-      { path: paths.usageStatus, Component: UsageStatus },
+      { path: paths.admin, Component: AdminPage },
+      { path: paths.units, Component: AdminPage },
+      { path: paths.usageStatus, Component: AdminPage },
       { path: paths.catalogue, Component: Catalogue },
       {
         path: paths.catalogueItem,

@@ -1,7 +1,45 @@
+import { NavigateNext } from '@mui/icons-material';
 import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import Breadcrumbs from '../view/breadcrumbs.component';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import Units from './units.component';
+import { BreadcrumbsInfo } from '../app.types';
 
-function adminPage() {
+export const useNavigateToAdminFunction = () => {
+  const navigate = useNavigate();
+
+  return React.useCallback(
+    (newPath: string | null) => {
+      navigate(`/adminPage${newPath ? `/${newPath}` : ''}`);
+    },
+    [navigate]
+  );
+};
+// returns the admin function from the path (null when just on adminPage)
+export const useAdminFunction = (): string | null => {
+  const location = useLocation();
+
+  return React.useMemo(() => {
+    let adminFunction: string | null = location.pathname.replace(
+      '/adminPage',
+      ''
+    );
+    adminFunction =
+      adminFunction === '' ? null : adminFunction.replace('/', '');
+    return adminFunction;
+  }, [location.pathname]);
+};
+
+function AdminPage() {
+  const navigateToAdminFunction = useNavigateToAdminFunction();
+  const adminFunction = useAdminFunction();
+
+  const adminBreadCrumbs: BreadcrumbsInfo = {
+    trail: [['', adminFunction ?? 'admin']],
+    full_trail: true,
+  };
+
   return (
     <Grid container>
       <Grid container>
@@ -9,96 +47,117 @@ function adminPage() {
           item
           container
           alignItems="center"
-          justifyContent="space-between"
+          justifyContent="space-between" // Align items and distribute space along the main axis
           sx={{
             display: 'flex',
             height: '100%',
             width: '100%',
-            padding: '8px', // Add some padding for spacing
+            padding: '4px', // Add some padding for spacing
           }}
         >
-          <Grid item key={0} xs={12} sm={6}>
-            <Button
-              component={Link}
-              to={'units'}
-              fullWidth
-              sx={{
-                display: 'flex',
-                width: '100%',
-                textDecoration: 'none',
-                color: 'inherit',
-                position: 'relative', // Make the parent container relative
-              }}
-            >
-              <Card
-                sx={{
-                  padding: '8px',
-                  width: '100%',
-                  display: 'flex',
-                  height: '100px', // Set a fixed height for all cards
-                }}
-              >
-                <CardContent
-                  sx={{
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    minWidth: 0,
-                  }}
-                >
-                  <Grid>
-                    <Grid position={'relative'}>
-                      <Typography>Units</Typography>
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
-            </Button>
-          </Grid>
-          <Grid item key={1} xs={12} sm={6}>
-            <Button
-              component={Link}
-              to={'usage-status'}
-              fullWidth
-              sx={{
-                display: 'flex',
-                width: '100%',
-                textDecoration: 'none',
-                color: 'inherit',
-                position: 'relative', // Make the parent container relative
-              }}
-            >
-              <Card
-                sx={{
-                  padding: '8px',
-                  width: '100%',
-                  display: 'flex',
-                  height: '100px', // Set a fixed height for all cards
-                }}
-              >
-                <CardContent
-                  sx={{
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    minWidth: 0,
-                  }}
-                >
-                  <Grid>
-                    <Grid position={'relative'}>
-                      <Typography>Usage Status</Typography>
-                    </Grid>
-                  </Grid>
-                </CardContent>
-              </Card>
-            </Button>
-          </Grid>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Breadcrumbs
+              onChangeNode={navigateToAdminFunction}
+              breadcrumbsInfo={adminBreadCrumbs}
+              onChangeNavigateHome={() => navigateToAdminFunction(null)}
+              navigateHomeAriaLabel={'navigate to admin page'}
+            />
+            <NavigateNext
+              fontSize="medium"
+              sx={{ color: 'text.secondary', margin: 1 }}
+            />
+          </div>
         </Grid>
       </Grid>
+      {adminFunction === null && (
+        <Grid container flexDirection={'column'}>
+          <Grid item container xs={12} overflow={'auto'}>
+            <Grid item key={0} xs={12} sm={6}>
+              <Button
+                component={Link}
+                to={'units'}
+                fullWidth
+                sx={{
+                  display: 'flex',
+                  width: '100%',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  position: 'relative', // Make the parent container relative
+                }}
+              >
+                <Card
+                  sx={{
+                    padding: '8px',
+                    width: '100%',
+                    display: 'flex',
+                    height: '100px', // Set a fixed height for all cards
+                  }}
+                >
+                  <CardContent
+                    sx={{
+                      width: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      minWidth: 0,
+                    }}
+                  >
+                    <Grid>
+                      <Grid position={'relative'}>
+                        <Typography>Units</Typography>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
+              </Button>
+            </Grid>
+            <Grid item key={1} xs={12} sm={6}>
+              <Button
+                component={Link}
+                to={'usage-status'}
+                fullWidth
+                sx={{
+                  display: 'flex',
+                  width: '100%',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  position: 'relative', // Make the parent container relative
+                }}
+              >
+                <Card
+                  sx={{
+                    padding: '8px',
+                    width: '100%',
+                    display: 'flex',
+                    height: '100px', // Set a fixed height for all cards
+                  }}
+                >
+                  <CardContent
+                    sx={{
+                      width: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      minWidth: 0,
+                    }}
+                  >
+                    <Grid>
+                      <Grid position={'relative'}>
+                        <Typography>Usage Status</Typography>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      )}
+
+      {adminFunction === 'units' && <Units />}
+      {adminFunction === 'usage-status'}
     </Grid>
   );
 }
 
-export default adminPage;
+export default AdminPage;
