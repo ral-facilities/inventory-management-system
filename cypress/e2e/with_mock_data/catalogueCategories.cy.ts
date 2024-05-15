@@ -1128,7 +1128,7 @@ describe('Catalogue Category', () => {
     });
   });
 
-  it('add a new property (type number and with allowed values )', () => {
+  it('add a new property (type number and with allowed values)', () => {
     cy.visit('/catalogue/10');
 
     cy.findByRole('button', {
