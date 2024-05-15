@@ -1,6 +1,6 @@
 describe('Admin Page', () => {
   beforeEach(() => {
-    cy.visit('/adminPage');
+    cy.visit('/adminpage');
   });
 
   it('should render admin page correctly', () => {
