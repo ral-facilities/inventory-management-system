@@ -600,7 +600,7 @@ describe('catalogue categories api functions', () => {
         },
       };
     });
-    it('patches a request to edit a property and returns successful response', async () => {
+    it('sends a patch request to edit a property and returns successful response', async () => {
       const { result } = renderHook(() => useEditCatalogueCategoryProperty(), {
         wrapper: hooksWrapperWithProviders(),
       });
