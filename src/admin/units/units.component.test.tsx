@@ -1,7 +1,7 @@
 import { renderComponentWithRouterProvider } from '../../testUtils';
-import Units from './units.component';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import Units from './units.component';
 
 describe('Units', () => {
   let user: UserEvent;

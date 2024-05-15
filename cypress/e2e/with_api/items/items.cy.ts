@@ -18,7 +18,7 @@ describe('items', () => {
     // Prepare relevant data for items
     cy.visit('/manufacturers');
     addManufacturer(true);
-    cy.visit('/adminPage/units');
+    cy.visit('/adminpage/units');
     addUnits(['mm', 'nm'], true);
     cy.visit('/systems');
     addSystems(true);

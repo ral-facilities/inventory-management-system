@@ -16,7 +16,7 @@ export const useNavigateToAdminFunction = () => {
     [navigate]
   );
 };
-// returns the admin function from the path (null when just on adminPage)
+// returns the admin function from the path (null when just on adminpage)
 export const useAdminFunction = (): string | null => {
   const location = useLocation();
 

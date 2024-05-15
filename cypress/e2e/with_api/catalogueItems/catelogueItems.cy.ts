@@ -24,7 +24,7 @@ describe('catalogue items', () => {
     // Prepare relevant data for catalogue items
     cy.visit('/manufacturers');
     addManufacturer(true);
-    cy.visit('/adminPage/units');
+    cy.visit('/adminpage/units');
     addUnits(['mm', 'nm'], true);
     cy.visit('/catalogue');
     addCatalogueCategories(true);

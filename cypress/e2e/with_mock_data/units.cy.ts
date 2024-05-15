@@ -1,6 +1,6 @@
 describe('Units', () => {
   beforeEach(() => {
-    cy.visit('/adminPage/units');
+    cy.visit('/adminpage/units');
   });
   afterEach(() => {
     cy.clearMocks();
