@@ -2,6 +2,7 @@ import { addCatalogueCategories } from '../catalogueCategories/functions';
 import { addCatalogueItem } from '../catalogueItems/functions';
 import { addItem } from '../items/functions';
 import { addManufacturer } from '../manufacturers/functions';
+import { addUnits } from '../units/functions';
 import {
   addSystems,
   copyToSystems,
@@ -21,10 +22,13 @@ describe('systems', () => {
       'manufacturers',
       'items',
       'systems',
+      'units',
     ]);
     // Prepare relevant data for systems
     cy.visit('/manufacturers');
     addManufacturer(true);
+    cy.visit('/adminPage/units');
+    addUnits(['mm', 'nm'], true);
     cy.visit('/systems');
     addSystems();
     cy.visit('/catalogue');
@@ -41,6 +45,7 @@ describe('systems', () => {
       'manufacturers',
       'items',
       'systems',
+      'units',
     ]);
   });
 

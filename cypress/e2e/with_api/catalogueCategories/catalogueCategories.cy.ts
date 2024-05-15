@@ -15,26 +15,13 @@ describe('Catalogue Category', () => {
   });
   afterEach(() => {
     cy.clearMocks();
-    cy.dropIMSCollections(['catalogue_categories']);
+    cy.dropIMSCollections(['catalogue_categories', 'units']);
   });
 
   it('CRUD for catalogue categories', () => {
     //Prepare data for catalogue categories
     cy.visit('/adminPage/units');
-    addUnits(
-      [
-        'megapixels',
-        'fps',
-        'Joules',
-        'micrometers',
-        'millimeters',
-        'kilograms',
-        'liters per second',
-        'millibar',
-        'volts',
-      ],
-      true
-    );
+    addUnits(['mm', 'nm'], true);
     cy.visit('/catalogue');
     addCatalogueCategories();
     editCatalogueCategories();

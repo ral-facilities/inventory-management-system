@@ -25,20 +25,7 @@ describe('catalogue items', () => {
     cy.visit('/manufacturers');
     addManufacturer(true);
     cy.visit('/adminPage/units');
-    addUnits(
-      [
-        'megapixels',
-        'fps',
-        'Joules',
-        'micrometers',
-        'millimeters',
-        'kilograms',
-        'liters per second',
-        'millibar',
-        'volts',
-      ],
-      true
-    );
+    addUnits(['mm', 'nm'], true);
     cy.visit('/catalogue');
     addCatalogueCategories(true);
     saveAsCatalogueCategory('Spherical Lenses');

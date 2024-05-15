@@ -2,6 +2,7 @@ import { addCatalogueCategories } from '../catalogueCategories/functions';
 import { addCatalogueItem } from '../catalogueItems/functions';
 import { addManufacturer } from '../manufacturers/functions';
 import { addSystems } from '../systems/functions';
+import { addUnits } from '../units/functions';
 import { addItem, deleteItem, editItem, saveAsItem } from './functions';
 
 describe('items', () => {
@@ -12,10 +13,13 @@ describe('items', () => {
       'manufacturers',
       'items',
       'systems',
+      'units',
     ]);
     // Prepare relevant data for items
     cy.visit('/manufacturers');
     addManufacturer(true);
+    cy.visit('/adminPage/units');
+    addUnits(['mm', 'nm'], true);
     cy.visit('/systems');
     addSystems(true);
     cy.visit('/catalogue');
@@ -30,6 +34,7 @@ describe('items', () => {
       'manufacturers',
       'items',
       'systems',
+      'units',
     ]);
   });
 
