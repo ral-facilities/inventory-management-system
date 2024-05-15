@@ -1,6 +1,6 @@
-import Admin from './admin.component';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import { screen, waitFor } from '@testing-library/react';
+import AdminPage from './admin.component';
 
 const mockedUseNavigate = vi.fn();
 
@@ -10,12 +10,12 @@ vi.mock('react-router-dom', async () => ({
 }));
 
 describe('AdminPage', () => {
-  const createView = () => {
-    return renderComponentWithRouterProvider(<Admin />);
+  const createView = (path: string) => {
+    return renderComponentWithRouterProvider(<AdminPage />, 'admin', path);
   };
 
   it('renders admin page correctly', async () => {
-    createView();
+    createView('/adminpage');
 
     await waitFor(() => {
       expect(screen.getByText('Units')).toBeInTheDocument();

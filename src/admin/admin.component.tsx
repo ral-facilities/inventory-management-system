@@ -11,7 +11,7 @@ export const useNavigateToAdminFunction = () => {
 
   return React.useCallback(
     (newPath: string | null) => {
-      navigate(`/adminPage${newPath ? `/${newPath}` : ''}`);
+      navigate(`/adminpage${newPath ? `/${newPath}` : ''}`);
     },
     [navigate]
   );
@@ -22,7 +22,7 @@ export const useAdminFunction = (): string | null => {
 
   return React.useMemo(() => {
     let adminFunction: string | null = location.pathname.replace(
-      '/adminPage',
+      '/adminpage',
       ''
     );
     adminFunction =
@@ -35,10 +35,12 @@ function AdminPage() {
   const navigateToAdminFunction = useNavigateToAdminFunction();
   const adminFunction = useAdminFunction();
 
-  const adminBreadCrumbs: BreadcrumbsInfo = {
-    trail: [['', adminFunction ?? 'admin']],
-    full_trail: true,
-  };
+  const adminBreadCrumbs: BreadcrumbsInfo | undefined = adminFunction
+    ? {
+        trail: [['', adminFunction ?? 'admin']],
+        full_trail: true,
+      }
+    : undefined;
 
   return (
     <Grid container>
