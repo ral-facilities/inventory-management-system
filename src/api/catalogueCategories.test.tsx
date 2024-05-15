@@ -68,7 +68,7 @@ describe('catalogue categories api functions', () => {
         id: '4',
       };
     });
-    it('patches a request to edit a catalogue category and returns successful response', async () => {
+    it('sends a patch request to edit a catalogue category and returns successful response', async () => {
       const { result } = renderHook(() => useEditCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
