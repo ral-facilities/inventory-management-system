@@ -639,7 +639,7 @@ describe('catalogue categories api functions', () => {
       ]);
     });
 
-    it('patches a request to edit a property and returns unsuccessful response', async () => {
+    it('sends a patch request to edit a property and returns unsuccessful response', async () => {
       mockDataEditProperty.property.name = 'Error 500';
       const { result } = renderHook(() => useEditCatalogueCategoryProperty(), {
         wrapper: hooksWrapperWithProviders(),
