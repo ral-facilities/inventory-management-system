@@ -516,7 +516,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       const duplicateName = screen.getByText(
-        'Duplicate property name. Please change the name or remove the property'
+        'Duplicate property name. Please change the name'
       );
 
       expect(duplicateName).toBeInTheDocument();
@@ -530,7 +530,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       });
 
       const duplicateName2 = screen.queryByText(
-        'Duplicate property name. Please change the name or remove the property'
+        'Duplicate property name. Please change the name'
       );
 
       expect(duplicateName2).not.toBeInTheDocument();
@@ -899,7 +899,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
       const nameError = screen.getByText(
-        'Duplicate property name. Please change the name or remove the property'
+        'Duplicate property name. Please change the name'
       );
 
       expect(nameError).toBeInTheDocument();
@@ -913,7 +913,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       });
 
       const nameError2 = screen.queryByText(
-        'Duplicate property name. Please change the name or remove the property'
+        'Duplicate property name. Please change the name'
       );
 
       expect(nameError2).not.toBeInTheDocument();

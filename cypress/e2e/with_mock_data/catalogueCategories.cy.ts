@@ -1247,9 +1247,9 @@ describe('Catalogue Category', () => {
 
     cy.findByRole('button', { name: 'Finish' }).click();
 
-    cy.findByText(
-      'Duplicate property name. Please change the name or remove the property'
-    ).should('exist');
+    cy.findByText('Duplicate property name. Please change the name').should(
+      'exist'
+    );
     cy.findAllByText('Duplicate value').should('have.length', 2);
 
     // Clear duplicate value errors and initiate invalid type errors
@@ -1265,9 +1265,9 @@ describe('Catalogue Category', () => {
     cy.findByLabelText('Select Default value *').click();
     cy.findAllByRole('option', { name: 'test2' }).first().click();
 
-    cy.findByText(
-      'Duplicate property name. Please change the name or remove the property'
-    ).should('not.exist');
+    cy.findByText('Duplicate property name. Please change the name').should(
+      'not.exist'
+    );
     cy.findByText('Duplicate value').should('not.exist');
     cy.findByRole('button', { name: 'Finish' }).click();
 
@@ -1470,9 +1470,9 @@ describe('Catalogue Category', () => {
 
     cy.findByRole('button', { name: 'Finish' }).click();
 
-    cy.findByText(
-      'Duplicate property name. Please change the name or remove the property'
-    ).should('exist');
+    cy.findByText('Duplicate property name. Please change the name').should(
+      'exist'
+    );
     cy.findAllByText('Duplicate value').should('have.length', 3);
 
     // Clear duplicate value errors
@@ -1484,9 +1484,9 @@ describe('Catalogue Category', () => {
     cy.findAllByLabelText('List Item').eq(5).clear();
     cy.findAllByLabelText('List Item').eq(5).type('test3');
 
-    cy.findByText(
-      'Duplicate property name. Please change the name or remove the property'
-    ).should('not.exist');
+    cy.findByText('Duplicate property name. Please change the name').should(
+      'not.exist'
+    );
     cy.findByText('Duplicate value').should('not.exist');
 
     // initiate invalid type errors

@@ -605,6 +605,7 @@ describe('catalogue categories api functions', () => {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
+
       result.current.mutate(mockDataEditProperty);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();

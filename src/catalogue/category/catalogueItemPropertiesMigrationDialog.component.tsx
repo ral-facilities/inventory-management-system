@@ -51,6 +51,19 @@ export interface CatalogueItemPropertiesMigrationDialogProps {
   resetSelectedCatalogueCategory: () => void;
 }
 
+// Stepper
+const STEPS_ADD = [
+  'Please Select Edit or Add',
+  'Current properties',
+  'Add catalogue item property',
+];
+
+const STEPS_EDIT = [
+  'Please Select Edit or Add',
+  'Please select one property to edit',
+  'Edit catalogue item property',
+];
+
 function CatalogueItemPropertiesMigrationDialog(
   props: CatalogueItemPropertiesMigrationDialogProps
 ) {
@@ -126,21 +139,8 @@ function CatalogueItemPropertiesMigrationDialog(
   updatedSelectedCatalogueCategory.catalogue_item_properties =
     updatedCatalogueItemProperties;
 
-  // Stepper
-  const STEPSADD = [
-    'Please Select Edit or Add',
-    'Current properties',
-    'Add catalogue item property',
-  ];
-
-  const STEPSEDIT = [
-    'Please Select Edit or Add',
-    'Please select one property to edit',
-    'Edit catalogue item property',
-  ];
-
   const [activeStep, setActiveStep] = React.useState<number>(0);
-  const [steps, setSteps] = React.useState<string[]>([STEPSADD[0]]);
+  const [steps, setSteps] = React.useState<string[]>([STEPS_ADD[0]]);
 
   const [catalogueItemField, setCatalogueItemField] = React.useState<
     CatalogueCategoryPropertyMigration | undefined
@@ -433,7 +433,7 @@ function CatalogueItemPropertiesMigrationDialog(
     catalogueItemField: CatalogueCategoryPropertyMigration
   ) => {
     setCatalogueItemField(catalogueItemField);
-    setSteps(STEPSEDIT);
+    setSteps(STEPS_EDIT);
   };
 
   const validateAllowedValuesList = (
@@ -548,8 +548,7 @@ function CatalogueItemPropertiesMigrationDialog(
           {
             errors: {
               fieldName: 'name',
-              errorMessage:
-                'Duplicate property name. Please change the name or remove the property',
+              errorMessage: 'Duplicate property name. Please change the name',
             },
           },
         ]);
@@ -779,8 +778,8 @@ function CatalogueItemPropertiesMigrationDialog(
 
                   setSteps(
                     e.target.value === 'edit'
-                      ? [STEPSEDIT[0], STEPSEDIT[1]]
-                      : STEPSADD
+                      ? [STEPS_EDIT[0], STEPS_EDIT[1]]
+                      : STEPS_ADD
                   );
                   setCatalogueItemField(
                     e.target.value === 'edit'
@@ -928,7 +927,7 @@ function CatalogueItemPropertiesMigrationDialog(
           Back
         </Button>
 
-        {activeStep === STEPSADD.length - 1 ? (
+        {activeStep === STEPS_ADD.length - 1 ? (
           <Button
             disabled={
               catalogueItemPropertiesErrors.length !== 0 ||

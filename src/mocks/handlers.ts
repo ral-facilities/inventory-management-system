@@ -220,7 +220,7 @@ export const handlers = [
 
   http.patch<
     PathParams,
-    CatalogueCategoryPropertyMigration,
+    Partial<CatalogueCategoryPropertyMigration>,
     CatalogueCategoryProperty | ErrorResponse
   >(
     '/v1/catalogue-categories/:catalogue_category_id/properties/:property_id',

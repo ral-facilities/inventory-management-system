@@ -178,7 +178,7 @@ const editCatalogueCategoryProperty = async (
   const { id, ...propertyBody } = editPropertyMigration.property;
   return imsApi
     .patch<CatalogueCategoryProperty>(
-      `/v1/catalogue-categories/${editPropertyMigration.catalogueCategory.id}/properties/${editPropertyMigration.property.id}`,
+      `/v1/catalogue-categories/${editPropertyMigration.catalogueCategory.id}/properties/${id}`,
       propertyBody
     )
     .then((response) => response.data);
@@ -190,7 +190,6 @@ export const useEditCatalogueCategoryProperty = (): UseMutationResult<
   EditPropertyMigration
 > => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (editPropertyMigration: EditPropertyMigration) => {
       handleTransferState([
