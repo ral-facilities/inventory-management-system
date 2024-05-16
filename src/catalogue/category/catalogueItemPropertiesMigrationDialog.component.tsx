@@ -765,8 +765,8 @@ function CatalogueItemPropertiesMigrationDialog(
           <Box>
             <FormControl sx={{ textAlign: 'center', margin: 1 }} fullWidth>
               <InputLabel id={'select-edit-or-add'}>
-                Select add to a new property or select edit to edit an existing
-                property
+                Select Edit to edit an existing property or select Add to add a
+                new property
               </InputLabel>
               <Select
                 labelId={'select-edit-or-add'}
@@ -789,7 +789,7 @@ function CatalogueItemPropertiesMigrationDialog(
                   setAllowedValuesListErrors([]);
                   setCatalogueItemPropertiesErrors([]);
                 }}
-                label="Select add to a new property or select edit to edit an existing property"
+                label="Select Edit to edit an existing property or select Add to add a new property"
               >
                 <MenuItem value={'edit'}>Edit</MenuItem>
                 <MenuItem value={'add'}>Add</MenuItem>
@@ -815,7 +815,7 @@ function CatalogueItemPropertiesMigrationDialog(
               />
               <Typography variant="body1">
                 This action will modify all existing catalogue items and items
-                with this catalogue category. Please proceed with caution.
+                within this catalogue category. Please proceed with caution.
               </Typography>
             </Paper>
           </Box>

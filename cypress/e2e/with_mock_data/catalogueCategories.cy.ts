@@ -931,7 +931,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByLabelText(
-      'Select add to a new property or select edit to edit an existing property'
+      'Select Edit to edit an existing property or select Add to add a new property'
     ).click();
     cy.findByRole('option', { name: 'Add' }).click();
 
@@ -979,7 +979,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByLabelText(
-      'Select add to a new property or select edit to edit an existing property'
+      'Select Edit to edit an existing property or select Add to add a new property'
     ).click();
     cy.findByRole('option', { name: 'Add' }).click();
 
@@ -1031,7 +1031,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByLabelText(
-      'Select add to a new property or select edit to edit an existing property'
+      'Select Edit to edit an existing property or select Add to add a new property'
     ).click();
     cy.findByRole('option', { name: 'Add' }).click();
 
@@ -1079,7 +1079,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByLabelText(
-      'Select add to a new property or select edit to edit an existing property'
+      'Select Edit to edit an existing property or select Add to add a new property'
     ).click();
     cy.findByRole('option', { name: 'Add' }).click();
 
@@ -1140,7 +1140,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByLabelText(
-      'Select add to a new property or select edit to edit an existing property'
+      'Select Edit to edit an existing property or select Add to add a new property'
     ).click();
     cy.findByRole('option', { name: 'Add' }).click();
 
@@ -1201,7 +1201,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByLabelText(
-      'Select add to a new property or select edit to edit an existing property'
+      'Select Edit to edit an existing property or select Add to add a new property'
     ).click();
     cy.findByRole('option', { name: 'Add' }).click();
 
@@ -1298,7 +1298,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByLabelText(
-      'Select add to a new property or select edit to edit an existing property'
+      'Select Edit to edit an existing property or select Add to add a new property'
     ).click();
     cy.findByRole('option', { name: 'Edit' }).click();
 
@@ -1346,7 +1346,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByLabelText(
-      'Select add to a new property or select edit to edit an existing property'
+      'Select Edit to edit an existing property or select Add to add a new property'
     ).click();
     cy.findByRole('option', { name: 'Edit' }).click();
 
@@ -1390,7 +1390,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByLabelText(
-      'Select add to a new property or select edit to edit an existing property'
+      'Select Edit to edit an existing property or select Add to add a new property'
     ).click();
     cy.findByRole('option', { name: 'Edit' }).click();
 
@@ -1434,7 +1434,7 @@ describe('Catalogue Category', () => {
     }).click();
 
     cy.findByLabelText(
-      'Select add to a new property or select edit to edit an existing property'
+      'Select Edit to edit an existing property or select Add to add a new property'
     ).click();
     cy.findByRole('option', { name: 'Edit' }).click();
 

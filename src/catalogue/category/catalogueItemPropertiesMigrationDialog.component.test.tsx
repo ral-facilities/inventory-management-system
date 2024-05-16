@@ -42,12 +42,12 @@ describe('CatalogueCategoryDirectoryDialog', () => {
     if (!values.justModifyPropertyForm) {
       await user.click(
         screen.getByLabelText(
-          'Select add to a new property or select edit to edit an existing property'
+          'Select Edit to edit an existing property or select Add to add a new property'
         )
       );
 
       const dropdown = screen.getByRole('listbox', {
-        name: 'Select add to a new property or select edit to edit an existing property',
+        name: 'Select Edit to edit an existing property or select Add to add a new property',
       });
       await user.click(
         within(dropdown).getByRole('option', {
@@ -381,12 +381,12 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       await user.click(
         screen.getByLabelText(
-          'Select add to a new property or select edit to edit an existing property'
+          'Select Edit to edit an existing property or select Add to add a new property'
         )
       );
 
       const dropdown = screen.getByRole('listbox', {
-        name: 'Select add to a new property or select edit to edit an existing property',
+        name: 'Select Edit to edit an existing property or select Add to add a new property',
       });
       await user.click(
         within(dropdown).getByRole('option', {

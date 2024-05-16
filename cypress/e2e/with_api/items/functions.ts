@@ -136,7 +136,7 @@ export const editProperty = () => {
   }).click();
 
   cy.findByLabelText(
-    'Select add to a new property or select edit to edit an existing property'
+    'Select Edit to edit an existing property or select Add to add a new property'
   ).click();
 
   cy.findByRole('option', { name: 'Edit' }).click();
@@ -185,7 +185,7 @@ export const addProperty = () => {
   }).click();
 
   cy.findByLabelText(
-    'Select add to a new property or select edit to edit an existing property'
+    'Select Edit to edit an existing property or select Add to add a new property'
   ).click();
 
   cy.findByRole('option', { name: 'Add' }).click();
