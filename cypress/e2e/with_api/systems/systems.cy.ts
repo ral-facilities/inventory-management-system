@@ -2,6 +2,7 @@ import { addCatalogueCategories } from '../catalogueCategories/functions';
 import { addCatalogueItem } from '../catalogueItems/functions';
 import { addItem } from '../items/functions';
 import { addManufacturer } from '../manufacturers/functions';
+import { addUsageStatuses } from '../usageStatus.cy.ts/functions';
 import {
   addSystems,
   copyToSystems,
@@ -21,8 +22,11 @@ describe('systems', () => {
       'manufacturers',
       'items',
       'systems',
+      'usage_statuses',
     ]);
     // Prepare relevant data for systems
+    cy.visit('/admin-ims/usage-status');
+    addUsageStatuses(['New', 'In Use', 'Used', 'Scrapped']);
     cy.visit('/manufacturers');
     addManufacturer(true);
     cy.visit('/systems');
@@ -41,6 +45,7 @@ describe('systems', () => {
       'manufacturers',
       'items',
       'systems',
+      'usage_statuses',
     ]);
   });
 
