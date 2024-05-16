@@ -21,7 +21,7 @@ import {
 import { useCatalogueItem } from '../api/catalogueItems';
 import { useItem } from '../api/items';
 import { useManufacturer } from '../api/manufacturers';
-import { BreadcrumbsInfo, UsageStatusType } from '../app.types';
+import { BreadcrumbsInfo } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ItemDialog from './itemDialog.component';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
@@ -256,7 +256,7 @@ function ItemsLandingPage() {
                       Usage Status
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {Object.values(UsageStatusType)[itemData.usage_status]}
+                      {itemData.usage_status}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>

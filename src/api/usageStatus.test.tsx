@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import UsageStatusesJSON from '../mocks/UsageStatus.json';
+import UsageStatusesJSON from '../mocks/UsageStatuses.json';
 import { hooksWrapperWithProviders } from '../testUtils';
 import { AddUsageStatus, UsageStatus } from '../app.types';
 import {

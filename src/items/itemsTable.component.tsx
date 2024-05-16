@@ -24,12 +24,7 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useItems } from '../api/items';
-import {
-  CatalogueCategory,
-  CatalogueItem,
-  Item,
-  UsageStatusType,
-} from '../app.types';
+import { CatalogueCategory, CatalogueItem, Item } from '../app.types';
 import {
   PropertyFiltersType,
   findPropertyValue,
@@ -162,15 +157,7 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'Usage Status',
-        accessorFn: (row) => {
-          // Assuming row.usage_status contains the numeric value corresponding to the enum
-          const status = Object.values(UsageStatusType).find(
-            (value) =>
-              UsageStatusType[value as keyof typeof UsageStatusType] ===
-              row.usage_status
-          );
-          return status || 'Unknown';
-        },
+        accessorFn: (row) => row.usage_status,
         id: 'usage_status',
         size: 200,
         filterVariant: 'select',

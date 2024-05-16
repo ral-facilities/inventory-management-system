@@ -799,7 +799,7 @@ describe('Systems', () => {
         });
 
       cy.findAllByRole('combobox').eq(1).click();
-      cy.findByText('Scrapped').click();
+      cy.findByRole('option', { name: 'Scrapped' }).click();
 
       cy.findByRole('button', { name: 'Finish' }).click();
 
@@ -814,14 +814,14 @@ describe('Systems', () => {
         expect(JSON.stringify(await patchRequests[0].json())).equal(
           JSON.stringify({
             system_id: '65328f34a40ff5301575a4e3',
-            usage_status: 3,
+            usage_status_id: '3',
           })
         );
         expect(patchRequests[1].url.toString()).to.contain('/4mYoI7pr');
         expect(JSON.stringify(await patchRequests[1].json())).equal(
           JSON.stringify({
             system_id: '65328f34a40ff5301575a4e3',
-            usage_status: 3,
+            usage_status_id: '3',
           })
         );
       });
@@ -861,7 +861,7 @@ describe('Systems', () => {
       cy.findAllByLabelText('Expand all').eq(2).click();
       cy.findAllByText('Please select a usage status').should('have.length', 2);
       cy.findAllByRole('combobox').eq(1).click();
-      cy.findByText('Scrapped').click();
+      cy.findByRole('option', { name: 'Scrapped' }).click();
       cy.findAllByText('Please select a usage status').should('have.length', 0);
       cy.findByText('Please select a usage status for all items').should(
         'not.exist'

@@ -2,7 +2,7 @@ import { addCatalogueCategories } from '../catalogueCategories/functions';
 import { addCatalogueItem } from '../catalogueItems/functions';
 import { addItem } from '../items/functions';
 import { addManufacturer } from '../manufacturers/functions';
-import { addUsageStatuses } from '../usageStatus.cy.ts/functions';
+import { addUsageStatuses } from '../usageStatus/functions';
 import {
   addSystems,
   copyToSystems,

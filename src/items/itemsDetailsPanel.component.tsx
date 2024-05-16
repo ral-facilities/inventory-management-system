@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { CatalogueItem, Item, UsageStatusType } from '../app.types';
+import { CatalogueItem, Item } from '../app.types';
 import { useManufacturer } from '../api/manufacturers';
 import { formatDateTimeStrings } from '../utils';
 
@@ -128,7 +128,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
               <Grid item xs={12} sm={6} key={6}>
                 <Typography color="text.primary">Usage Status</Typography>
                 <Typography color="text.secondary">
-                  {Object.values(UsageStatusType)[itemData.usage_status]}
+                  {itemData.usage_status}
                 </Typography>
               </Grid>
 

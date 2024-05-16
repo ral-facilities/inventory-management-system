@@ -243,11 +243,9 @@ export interface CopyToSystem {
   existingSystemNames: string[];
 }
 
-export enum UsageStatusType {
-  new = 0,
-  inUse = 1,
-  used = 2,
-  scrapped = 3,
+export interface UsageStatus {
+  id: string;
+  value: string;
 }
 
 export interface ItemDetails {
@@ -255,7 +253,7 @@ export interface ItemDetails {
   system_id: string;
   purchase_order_number: string | null;
   is_defective: boolean;
-  usage_status: UsageStatusType;
+  usage_status_id: string;
   warranty_end_date: string | null;
   asset_number: string | null;
   serial_number: string | null;
@@ -281,6 +279,7 @@ export interface AddItems {
 export interface Item extends ItemDetails {
   properties: CatalogueItemPropertyResponse[];
   id: string;
+  usage_status: string;
   created_time: string;
   modified_time: string;
 }
@@ -291,7 +290,7 @@ export interface EditItem extends Partial<AddItem> {
 
 export interface MoveItemsToSystemUsageStatus {
   item_id: string;
-  usage_status: UsageStatusType;
+  usage_status: string;
 }
 export interface MoveItemsToSystem {
   usageStatuses: MoveItemsToSystemUsageStatus[];

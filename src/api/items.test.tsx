@@ -39,7 +39,7 @@ describe('items api functions', () => {
         system_id: '65328f34a40ff5301575a4e3',
         purchase_order_number: 'fdsfdfs',
         is_defective: false,
-        usage_status: 0,
+        usage_status_id: '0',
         warranty_end_date: '2024-01-28T00:00:00.000Z',
         asset_number: 'ewqewq',
         serial_number: 'mxewe',
@@ -95,7 +95,8 @@ describe('items api functions', () => {
         purchase_order_number: 'fdsfdfs',
         serial_number: 'mxewe',
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 0,
+        usage_status: 'New',
+        usage_status_id: '0',
         warranty_end_date: '2024-01-28T00:00:00.000Z',
       });
     });
@@ -195,7 +196,7 @@ describe('items api functions', () => {
         purchase_order_number: '6JYHEjwN',
         serial_number: 'test',
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 1,
+        usage_status_id: '1',
         warranty_end_date: '2023-04-04T23:00:00.000Z',
         created_time: '2024-01-01T12:00:00.000+00:00',
         modified_time: '2024-01-02T13:10:10.000+00:00',
@@ -210,8 +211,8 @@ describe('items api functions', () => {
     ];
 
     const mockUsageStatuses: MoveItemsToSystemUsageStatus[] = [
-      { item_id: 'KvT2Ox7n', usage_status: 0 },
-      { item_id: 'G463gOIA', usage_status: 0 },
+      { item_id: 'KvT2Ox7n', usage_status: '0' },
+      { item_id: 'G463gOIA', usage_status: '0' },
     ];
 
     let moveItemsToSystem: MoveItemsToSystem;
@@ -250,7 +251,7 @@ describe('items api functions', () => {
       moveItemsToSystem.selectedItems.map((item) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
           system_id: moveItemsToSystem.targetSystem.id,
-          usage_status: moveItemsToSystem.usageStatuses.find(
+          usage_status_id: moveItemsToSystem.usageStatuses.find(
             (status) => status.item_id === item.id
           )?.usage_status,
         })
@@ -272,7 +273,7 @@ describe('items api functions', () => {
       };
       moveItemsToSystem.usageStatuses = [
         ...moveItemsToSystem.usageStatuses,
-        { item_id: 'Error 409', usage_status: 2 },
+        { item_id: 'Error 409', usage_status: '2' },
       ];
 
       // Fail just the 1st system
@@ -293,7 +294,7 @@ describe('items api functions', () => {
       moveItemsToSystem.selectedItems.map((item) =>
         expect(axiosPatchSpy).toHaveBeenCalledWith(`/v1/items/${item.id}`, {
           system_id: 'new_system_id',
-          usage_status: moveItemsToSystem.usageStatuses.find(
+          usage_status_id: moveItemsToSystem.usageStatuses.find(
             (status) => status.item_id === item.id
           )?.usage_status,
         })
