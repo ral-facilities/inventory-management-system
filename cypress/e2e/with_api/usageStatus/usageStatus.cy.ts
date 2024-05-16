@@ -3,7 +3,7 @@ import { addUsageStatuses, deleteUsageStatuses } from './functions';
 describe('Usage Statuses', () => {
   beforeEach(() => {
     cy.dropIMSCollections(['usage_statuses']);
-    cy.visit('/adminPage/usage-status');
+    cy.visit('/admin-ims/usage-status');
   });
   afterEach(() => {
     cy.clearMocks();

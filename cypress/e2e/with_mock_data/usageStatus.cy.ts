@@ -1,6 +1,6 @@
 describe('UsageStatus', () => {
   beforeEach(() => {
-    cy.visit('/adminPage/usage-status');
+    cy.visit('/admin-ims/usage-status');
   });
   afterEach(() => {
     cy.clearMocks();
