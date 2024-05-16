@@ -19,8 +19,6 @@ import { usePreservedTableState } from '../../common/preservedTableState.compone
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { formatDateTimeStrings, getPageHeightCalc } from '../../utils';
-import { useNavigate } from 'react-router-dom';
-import Breadcrumbs from '../../view/breadcrumbs.component';
 import { useUsageStatuses } from '../../api/usageStatus';
 import UsageStatusDialog from './usageStatusDialog.component.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
@@ -187,26 +185,8 @@ function UsageStatusComponent() {
     },
   });
 
-  const navigate = useNavigate();
-  const onChangeNode = React.useCallback(() => {
-    navigate('/adminPage');
-  }, [navigate]);
-
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      <Box
-        sx={{
-          py: '20px',
-          paddingLeft: '4px',
-        }}
-      >
-        <Breadcrumbs
-          onChangeNode={onChangeNode}
-          onChangeNavigateHome={onChangeNode}
-          breadcrumbsInfo={undefined}
-          navigateHomeAriaLabel="navigate to admin page"
-        />
-      </Box>
       <MaterialReactTable table={table} />
       <DeleteUsageStatusDialog
         open={deleteUsageStatusDialog}

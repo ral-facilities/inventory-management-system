@@ -189,7 +189,7 @@ function Units() {
 
   const navigate = useNavigate();
   const onChangeNode = React.useCallback(() => {
-    navigate('/adminPage');
+    navigate('/admin-ims');
   }, [navigate]);
 
   return (
