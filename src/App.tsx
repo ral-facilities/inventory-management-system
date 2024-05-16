@@ -40,7 +40,7 @@ import AdminPage from './admin/admin.component';
 export const paths = {
   any: '*',
   root: '/',
-  admin: '/adminpage',
+  admin: '/admin-ims',
   homepage: '/ims',
   catalogue: '/catalogue/*',
   systems: '/systems/*',
@@ -49,8 +49,8 @@ export const paths = {
   catalogueItem: '/catalogue/item/:catalogue_item_id',
   items: '/catalogue/item/:catalogue_item_id/items',
   item: '/catalogue/item/:catalogue_item_id/items/:item_id',
-  units: '/adminpage/units',
-  usageStatus: '/adminpage/usage-status',
+  units: '/admin-ims/units',
+  usageStatus: '/admin-ims/usage-status',
 };
 
 const queryClient = new QueryClient({

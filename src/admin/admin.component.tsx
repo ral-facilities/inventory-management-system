@@ -11,7 +11,7 @@ export const useNavigateToAdminFunction = () => {
 
   return React.useCallback(
     (newPath: string | null) => {
-      navigate(`/adminpage${newPath ? `/${newPath}` : ''}`);
+      navigate(`/admin-ims${newPath ? `/${newPath}` : ''}`);
     },
     [navigate]
   );
@@ -22,7 +22,7 @@ export const useAdminFunction = (): string | null => {
 
   return React.useMemo(() => {
     let adminFunction: string | null = location.pathname.replace(
-      '/adminpage',
+      '/admin-ims',
       ''
     );
     adminFunction =
