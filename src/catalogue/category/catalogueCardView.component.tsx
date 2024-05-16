@@ -51,7 +51,7 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
     endIndex
   );
 
-  const cardViewHeight = getPageHeightCalc('0px');
+  const cardViewHeight = getPageHeightCalc('100px');
   const cardViewCardsHeight = getPageHeightCalc('100px + 72px');
 
   return (
@@ -79,7 +79,14 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
         ))}
       </Grid>
 
-      <Grid container item margin={0} marginTop={'auto'}>
+      <Grid
+        container
+        item
+        margin={0}
+        marginTop={'auto'}
+        flexWrap={'nowrap'}
+        minWidth={'500px'}
+      >
         <Grid item xs={6} justifyContent={'left'} alignSelf={'center'}>
           <Typography
             sx={{ paddingTop: '16px', paddingLeft: '8px', margin: '8px' }}
@@ -95,6 +102,7 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
           justifyContent={'flex-end'}
           flexDirection={'row'}
           alignSelf={'center'}
+          flexWrap={'nowrap'}
         >
           <Grid item flexDirection={'row'}>
             <FormControl
@@ -102,15 +110,17 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
               sx={{
                 paddingTop: '16px',
                 margin: 1,
-                minWidth: '120px',
                 display: 'flex',
                 flexDirection: 'row',
+                flexWrap: 'nowrap',
               }}
             >
               <Typography
                 sx={{
                   padding: 1,
                   color: 'text.secondary',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
                 }}
               >
                 {'Categories per page'}
@@ -141,7 +151,10 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
           <Grid
             item
             flexDirection={'row'}
-            sx={{ paddingTop: '18px', margin: '8px' }}
+            sx={{
+              paddingTop: '18px',
+              margin: '8px',
+            }}
           >
             <Pagination
               variant="outlined"
@@ -159,7 +172,11 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
               }
               size="medium"
               color="secondary"
-              sx={{ textAlign: 'center' }}
+              sx={{
+                '& > .MuiPagination-ul': {
+                  flexWrap: 'nowrap',
+                },
+              }}
               aria-label="pagination"
               className="catalogue-categories-pagination"
             />
