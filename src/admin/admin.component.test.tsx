@@ -15,7 +15,7 @@ describe('AdminPage', () => {
   };
 
   it('renders admin page correctly', async () => {
-    createView('/adminpage');
+    createView('/admin-ims');
 
     await waitFor(() => {
       expect(screen.getByText('Units')).toBeInTheDocument();

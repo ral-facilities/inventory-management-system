@@ -3,7 +3,7 @@ import { addUnits, deleteUnits } from './functions';
 describe('Units', () => {
   beforeEach(() => {
     cy.dropIMSCollections(['units']);
-    cy.visit('/adminpage/units');
+    cy.visit('/admin-ims/units');
   });
   afterEach(() => {
     cy.clearMocks();

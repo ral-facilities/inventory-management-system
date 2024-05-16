@@ -20,7 +20,7 @@ describe('Catalogue Category', () => {
 
   it('CRUD for catalogue categories', () => {
     //Prepare data for catalogue categories
-    cy.visit('/adminpage/units');
+    cy.visit('/admin-ims/units');
     addUnits(['mm', 'nm'], true);
     cy.visit('/catalogue');
     addCatalogueCategories();
