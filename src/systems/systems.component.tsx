@@ -455,7 +455,12 @@ function Systems() {
                     </Table>
                   </TableContainer>
                   <Box sx={{ paddingTop: '8px' }}>
-                    <Typography sx={{ paddingLeft: '8px' }}>
+                    <Typography
+                      sx={{
+                        paddingLeft: '8px',
+                        textAlign: { sm: 'center', md: 'left' },
+                      }}
+                    >
                       {subsystemsTable.getFilteredRowModel().rows.length ==
                       subsystemsData?.length
                         ? `Total Systems: ${subsystemsData.length}`

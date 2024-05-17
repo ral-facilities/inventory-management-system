@@ -5,6 +5,8 @@ import {
   Pagination,
   Select,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { CatalogueCategory } from '../../app.types';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
@@ -51,8 +53,13 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
     endIndex
   );
 
+  // Display total and pagination on separate lines if on a small screen
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const cardViewHeight = getPageHeightCalc('100px');
-  const cardViewCardsHeight = getPageHeightCalc('100px + 72px');
+  const cardViewCardsHeight = getPageHeightCalc(
+    `100px + ${smallScreen ? '128px' : '72px'}`
+  );
 
   return (
     <Grid
@@ -79,108 +86,88 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
         ))}
       </Grid>
 
-      <Grid
-        container
-        item
-        margin={0}
-        marginTop={'auto'}
-        flexWrap={'nowrap'}
-        minWidth={'500px'}
-      >
-        <Grid item xs={6} justifyContent={'left'} alignSelf={'center'}>
+      <Grid item container marginTop={'auto'} direction="row">
+        <Grid item xs={12} sm="auto">
           <Typography
-            sx={{ paddingTop: '16px', paddingLeft: '8px', margin: '8px' }}
+            sx={{ paddingTop: '20px', paddingLeft: '8px', margin: '8px' }}
           >
             {`Total Categories: ${catalogueCategoryData.length}`}
           </Typography>
         </Grid>
 
         <Grid
-          container
           item
-          xs={6}
-          justifyContent={'flex-end'}
-          flexDirection={'row'}
-          alignSelf={'center'}
-          flexWrap={'nowrap'}
+          flexWrap="nowrap"
+          flexDirection="row"
+          display="flex"
+          alignItems="center"
+          justifyContent="flex-end"
+          sm
         >
-          <Grid item flexDirection={'row'}>
-            <FormControl
-              variant="standard"
-              sx={{
-                paddingTop: '16px',
-                margin: 1,
-                display: 'flex',
-                flexDirection: 'row',
-                flexWrap: 'nowrap',
-              }}
-            >
-              <Typography
-                sx={{
-                  padding: 1,
-                  color: 'text.secondary',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                }}
-              >
-                {'Categories per page'}
-              </Typography>
-              <Select
-                disableUnderline
-                value={preservedState.pagination.pageSize}
-                inputProps={{
-                  name: 'Max Results',
-                  labelId: 'select-max-results',
-                  'aria-label': 'Categories per page',
-                }}
-                onChange={(event) =>
-                  onPreservedStatesChange.onPaginationChange({
-                    pageSize: +event.target.value,
-                    pageIndex: 1,
-                  })
-                }
-                label={'Max Results'}
-              >
-                <MenuItem value={'30'}>30</MenuItem>
-                <MenuItem value={'45'}>45</MenuItem>
-                <MenuItem value={'60'}>60</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-
-          <Grid
-            item
-            flexDirection={'row'}
+          <FormControl
+            variant="standard"
             sx={{
-              paddingTop: '18px',
-              margin: '8px',
+              paddingTop: '16px',
+              margin: 1,
+              display: 'flex',
+              flexDirection: 'row',
             }}
           >
-            <Pagination
-              variant="outlined"
-              shape="rounded"
-              count={Math.ceil(
-                catalogueCategoryData?.length /
-                  preservedState.pagination.pageSize
-              )}
-              page={preservedState.pagination.pageIndex}
-              onChange={(_event, value) =>
-                onPreservedStatesChange.onPaginationChange((prevState) => ({
-                  ...prevState,
-                  pageIndex: value,
-                }))
-              }
-              size="medium"
-              color="secondary"
+            <Typography
               sx={{
-                '& > .MuiPagination-ul': {
-                  flexWrap: 'nowrap',
-                },
+                paddingX: 1,
+                paddingTop: 0.5,
+                color: 'text.secondary',
+                whiteSpace: 'nowrap',
               }}
-              aria-label="pagination"
-              className="catalogue-categories-pagination"
-            />
-          </Grid>
+            >
+              {'Categories per page'}
+            </Typography>
+            <Select
+              disableUnderline
+              value={preservedState.pagination.pageSize}
+              inputProps={{
+                name: 'Max Results',
+                labelId: 'select-max-results',
+                'aria-label': 'Categories per page',
+              }}
+              onChange={(event) =>
+                onPreservedStatesChange.onPaginationChange({
+                  pageSize: +event.target.value,
+                  pageIndex: 1,
+                })
+              }
+              label={'Max Results'}
+            >
+              <MenuItem value={'30'}>30</MenuItem>
+              <MenuItem value={'45'}>45</MenuItem>
+              <MenuItem value={'60'}>60</MenuItem>
+            </Select>
+          </FormControl>
+          <Pagination
+            variant="outlined"
+            shape="rounded"
+            count={Math.ceil(
+              catalogueCategoryData?.length / preservedState.pagination.pageSize
+            )}
+            page={preservedState.pagination.pageIndex}
+            onChange={(_event, value) =>
+              onPreservedStatesChange.onPaginationChange((prevState) => ({
+                ...prevState,
+                pageIndex: value,
+              }))
+            }
+            size="medium"
+            color="secondary"
+            aria-label="pagination"
+            className="catalogue-categories-pagination"
+            sx={{
+              paddingTop: 2,
+              '& > .MuiPagination-ul': {
+                flexWrap: 'nowrap',
+              },
+            }}
+          />
         </Grid>
       </Grid>
     </Grid>
