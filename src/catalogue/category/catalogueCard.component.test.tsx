@@ -8,7 +8,8 @@ describe('Catalogue Card', () => {
   let user: UserEvent;
 
   const onChangeOpenDeleteDialog = vi.fn();
-  const onChangeOpenEditDialog = vi.fn();
+  const onChangeOpenEditNameDialog = vi.fn();
+  const onChangeOpenEditPropertiesDialog = vi.fn();
   const onToggleSelect = vi.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(<CatalogueCard {...props} />);
@@ -22,7 +23,8 @@ describe('Catalogue Card', () => {
       code: 'beam-characterization',
       is_leaf: false,
       onChangeOpenDeleteDialog: onChangeOpenDeleteDialog,
-      onChangeOpenEditDialog: onChangeOpenEditDialog,
+      onChangeOpenEditNameDialog: onChangeOpenEditNameDialog,
+      onChangeOpenEditPropertiesDialog: onChangeOpenEditPropertiesDialog,
       isSelected: false,
       onToggleSelect: onToggleSelect,
       created_time: '2024-01-01T12:00:00.000+00:00',
@@ -37,14 +39,19 @@ describe('Catalogue Card', () => {
   });
 
   it('opens the actions menu and closes it', async () => {
+    props.is_leaf = true;
     createView();
     const actionsButton = screen.getByRole('button', {
       name: 'actions Beam Characterization catalogue category button',
     });
     await user.click(actionsButton);
 
-    const editButton = screen.getByRole('menuitem', {
-      name: 'edit Beam Characterization catalogue category button',
+    const editNameButton = screen.getByRole('menuitem', {
+      name: 'edit name Beam Characterization catalogue category button',
+    });
+
+    const editPropertiesButton = screen.getByRole('menuitem', {
+      name: 'edit properties Beam Characterization catalogue category button',
     });
 
     const saveAsButton = screen.getByRole('menuitem', {
@@ -55,17 +62,18 @@ describe('Catalogue Card', () => {
       name: 'delete Beam Characterization catalogue category button',
     });
 
-    expect(editButton).toBeVisible();
+    expect(editNameButton).toBeVisible();
+    expect(editPropertiesButton).toBeVisible();
     expect(deleteButton).toBeVisible();
     expect(saveAsButton).toBeVisible();
 
-    await user.click(editButton);
+    await user.click(editNameButton);
     await user.click(
       screen.getByRole('button', {
         name: 'actions Beam Characterization catalogue category button',
       })
     );
-    expect(editButton).not.toBeVisible();
+    expect(editNameButton).not.toBeVisible();
   });
 
   it('opens the delete dialog', async () => {
@@ -92,7 +100,7 @@ describe('Catalogue Card', () => {
     expect(onToggleSelect).toHaveBeenCalled();
   });
 
-  it('opens the edit dialog', async () => {
+  it('opens the edit name dialog', async () => {
     createView();
     const actionsButton = screen.getByRole('button', {
       name: 'actions Beam Characterization catalogue category button',
@@ -100,10 +108,26 @@ describe('Catalogue Card', () => {
     await user.click(actionsButton);
 
     const editButton = screen.getByRole('menuitem', {
-      name: 'edit Beam Characterization catalogue category button',
+      name: 'edit name Beam Characterization catalogue category button',
     });
     await user.click(editButton);
 
-    expect(onChangeOpenEditDialog).toHaveBeenCalled();
+    expect(onChangeOpenEditNameDialog).toHaveBeenCalled();
+  });
+
+  it('opens the edit properties dialog', async () => {
+    props.is_leaf = true;
+    createView();
+    const actionsButton = screen.getByRole('button', {
+      name: 'actions Beam Characterization catalogue category button',
+    });
+    await user.click(actionsButton);
+
+    const editButton = screen.getByRole('menuitem', {
+      name: 'edit properties Beam Characterization catalogue category button',
+    });
+    await user.click(editButton);
+
+    expect(onChangeOpenEditPropertiesDialog).toHaveBeenCalled();
   });
 });

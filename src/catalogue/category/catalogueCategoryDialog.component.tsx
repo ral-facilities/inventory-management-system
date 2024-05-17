@@ -38,7 +38,7 @@ import handleIMS_APIError from '../../handleIMS_APIError';
 import { generateUniqueId, trimStringValues } from '../../utils';
 
 // Function to convert a list of strings to a list of numbers
-const convertListToNumbers = (values: string[]): number[] => {
+export const convertListToNumbers = (values: string[]): number[] => {
   return values.map((value) => parseFloat(value));
 };
 export interface CatalogueCategoryDialogProps {

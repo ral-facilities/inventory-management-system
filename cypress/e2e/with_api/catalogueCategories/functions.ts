@@ -18,7 +18,7 @@ const modifyCatalogueCategory = (
     }).click();
 
     cy.findByRole('menuitem', {
-      name: `edit ${values.editCatalogueCategoryName} catalogue category button`,
+      name: `edit name ${values.editCatalogueCategoryName} catalogue category button`,
     }).click();
 
     if (values.newFormFields) {
