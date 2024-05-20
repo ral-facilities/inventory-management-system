@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 
-function UsageStatus() {
+function UsageStatuses() {
   return <Typography>Work in progress</Typography>;
 }
 
-export default UsageStatus;
+export default UsageStatuses;

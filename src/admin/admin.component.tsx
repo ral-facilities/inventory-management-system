@@ -11,7 +11,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
 import Units from './units.component';
 import { BreadcrumbsInfo } from '../app.types';
-import UsageStatus from './usageStatus.component';
+import UsageStatuses from './usageStatus.component';
 
 export const useNavigateToAdminFunction = () => {
   const navigate = useNavigate();
@@ -50,8 +50,8 @@ function AdminPage() {
             adminPageName ?? '',
             adminPageName === 'units'
               ? 'Units'
-              : adminPageName == 'usage-status'
-                ? 'Usage status'
+              : adminPageName == 'usage-statuses'
+                ? 'Usage statuses'
                 : '',
           ],
         ],
@@ -136,7 +136,7 @@ function AdminPage() {
             <Grid item key={1} xs={12} sm={6}>
               <Button
                 component={Link}
-                to={'usage-status'}
+                to={'usage-statuses'}
                 fullWidth
                 sx={{
                   display: 'flex',
@@ -165,7 +165,7 @@ function AdminPage() {
                   >
                     <Grid>
                       <Grid position={'relative'}>
-                        <Typography>Usage Status</Typography>
+                        <Typography>Usage Statuses</Typography>
                       </Grid>
                     </Grid>
                   </CardContent>
@@ -177,7 +177,7 @@ function AdminPage() {
       )}
 
       {adminPageName === 'units' && <Units />}
-      {adminPageName === 'usage-status' && <UsageStatus />}
+      {adminPageName === 'usage-statuses' && <UsageStatuses />}
     </Grid>
   );
 }
