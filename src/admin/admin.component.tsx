@@ -1,5 +1,11 @@
-import { NavigateNext } from '@mui/icons-material';
-import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+} from '@mui/material';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
@@ -58,16 +64,19 @@ function AdminPage() {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Breadcrumbs
-              onChangeNode={navigateToAdminFunction}
-              breadcrumbsInfo={adminBreadCrumbs}
-              onChangeNavigateHome={() => navigateToAdminFunction(null)}
-              navigateHomeAriaLabel={'navigate to admin page'}
-            />
-            <NavigateNext
-              fontSize="medium"
-              sx={{ color: 'text.secondary', margin: 1 }}
-            />
+            <Box
+              sx={{
+                py: '20px',
+                paddingLeft: '4px',
+              }}
+            >
+              <Breadcrumbs
+                onChangeNode={navigateToAdminFunction}
+                breadcrumbsInfo={adminBreadCrumbs}
+                onChangeNavigateHome={() => navigateToAdminFunction(null)}
+                navigateHomeAriaLabel={'navigate to admin page'}
+              />
+            </Box>
           </div>
         </Grid>
       </Grid>
