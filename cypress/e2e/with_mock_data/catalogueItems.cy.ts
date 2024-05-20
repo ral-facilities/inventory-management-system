@@ -661,6 +661,7 @@ describe('Catalogue Items', () => {
 
     cy.startSnoopingBrowserMockedRequest();
     cy.findByText('Finish').click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',
@@ -692,6 +693,7 @@ describe('Catalogue Items', () => {
 
     cy.startSnoopingBrowserMockedRequest();
     cy.findByText('Finish').click();
+    cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
       method: 'PATCH',

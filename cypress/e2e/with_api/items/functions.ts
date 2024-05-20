@@ -124,6 +124,110 @@ const modifyItem = (
   }
 };
 
+export const editProperty = () => {
+  cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByText('Lenses').click();
+  cy.findByRole('button', {
+    name: `actions Spherical Lenses catalogue category button`,
+  }).click();
+
+  cy.findByRole('menuitem', {
+    name: `edit properties Spherical Lenses catalogue category button`,
+  }).click();
+
+  cy.findByLabelText(
+    'Select Edit to edit an existing property or select Add to add a new property'
+  ).click();
+
+  cy.findByRole('option', { name: 'Edit' }).click();
+  cy.findByRole('button', { name: 'Next' }).click();
+  cy.findByLabelText('Shape radio button').click();
+
+  cy.findByRole('button', { name: 'Next' }).click();
+
+  cy.findByLabelText('Property Name *').clear();
+  cy.findByLabelText('Property Name *').type('Type');
+
+  cy.findByRole('button', { name: 'Add list item' }).click();
+  cy.findAllByLabelText('List Item').last().type('flat');
+
+  cy.findByRole('button', { name: 'Finish' }).click();
+
+  cy.findByText('Spherical Lenses').click();
+  cy.findByText('Plano-Convex Lens').click();
+
+  cy.findByText('Type').should('exist');
+
+  cy.findByText('Items').click();
+
+  cy.findAllByText('MX4332424').first().click();
+  cy.findByText('Type').should('exist');
+
+  cy.findByText('Edit').click();
+  cy.findByRole('button', { name: 'Next' }).click();
+  cy.findByLabelText('Type *').click();
+  cy.findByRole('option', { name: 'flat' }).click();
+  cy.findByDisplayValue('flat').should('exist');
+
+  cy.findByRole('button', { name: 'Cancel' }).click();
+
+  cy.findByText('Items').click();
+};
+export const addProperty = () => {
+  cy.findByRole('button', { name: 'navigate to catalogue home' }).click();
+  cy.findByText('Lenses').click();
+  cy.findByRole('button', {
+    name: `actions Spherical Lenses catalogue category button`,
+  }).click();
+
+  cy.findByRole('menuitem', {
+    name: `edit properties Spherical Lenses catalogue category button`,
+  }).click();
+
+  cy.findByLabelText(
+    'Select Edit to edit an existing property or select Add to add a new property'
+  ).click();
+
+  cy.findByRole('option', { name: 'Add' }).click();
+
+  cy.findByRole('button', { name: 'Next' }).click();
+
+  cy.findByRole('button', { name: 'Next' }).click();
+
+  cy.findByLabelText('Property Name *').type('Shape');
+  cy.findByLabelText('Select Type *').click();
+  cy.findByText('Text').click();
+  cy.findAllByLabelText('Select is mandatory?').last().click();
+  cy.findByRole('option', { name: 'Yes' }).click();
+
+  cy.findByLabelText('Select Allowed values *').click();
+  cy.findByRole('option', { name: 'List' }).click();
+
+  cy.findByRole('button', { name: 'Add list item' }).click();
+  cy.findAllByLabelText('List Item').eq(0).type('convex');
+
+  cy.findByRole('button', { name: 'Add list item' }).click();
+  cy.findAllByLabelText('List Item').eq(1).type('concave');
+
+  cy.findByLabelText('Select Default value *').click();
+  cy.findByRole('option', { name: 'convex' }).click();
+  cy.findByRole('button', { name: 'Finish' }).click();
+
+  cy.findByText('Spherical Lenses').click();
+  cy.findByText('Plano-Convex Lens').click();
+
+  cy.findByText('Shape').should('exist');
+  cy.findByText('convex').should('exist');
+
+  cy.findByText('Items').click();
+
+  cy.findAllByText('MX4332424').first().click();
+  cy.findByText('Shape').should('exist');
+  cy.findByText('convex').should('exist');
+
+  cy.findByText('Items').click();
+};
+
 export const saveAsItem = (serialNumber: string, index: number) => {
   cy.findAllByLabelText('Row Actions').eq(index).click();
   cy.findByText(`Save as`).click();

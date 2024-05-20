@@ -2,6 +2,7 @@ import {
   UseMutationResult,
   UseQueryResult,
   useMutation,
+  useQueries,
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
@@ -41,6 +42,15 @@ const fetchSystems = async (parent_id?: string): Promise<System[]> => {
 
   return imsApi.get(`/v1/systems`, { params: queryParams }).then((response) => {
     return response.data;
+  });
+};
+
+export const useSystemIds = (ids: string[]): UseQueryResult<System>[] => {
+  return useQueries({
+    queries: ids.map((id) => ({
+      queryKey: ['System', id],
+      queryFn: () => fetchSystem(id),
+    })),
   });
 };
 

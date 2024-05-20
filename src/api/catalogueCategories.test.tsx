@@ -1,23 +1,33 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import {
   AddCatalogueCategory,
+  AddPropertyMigration,
   CatalogueCategory,
   CopyToCatalogueCategory,
   EditCatalogueCategory,
+  EditPropertyMigration,
   MoveToCatalogueCategory,
 } from '../app.types';
-import { hooksWrapperWithProviders } from '../testUtils';
+import {
+  getCatalogueCategoryById,
+  hooksWrapperWithProviders,
+} from '../testUtils';
 import {
   useAddCatalogueCategory,
+  useAddCatalogueCategoryProperty,
   useCatalogueBreadcrumbs,
   useCatalogueCategories,
   useCatalogueCategory,
   useCopyToCatalogueCategory,
   useDeleteCatalogueCategory,
   useEditCatalogueCategory,
+  useEditCatalogueCategoryProperty,
   useMoveToCatalogueCategory,
 } from './catalogueCategories';
 import { imsApi } from './api';
+import handleTransferState from '../handleTransferState';
+
+vi.mock('../handleTransferState');
 
 describe('catalogue categories api functions', () => {
   afterEach(() => {
@@ -58,7 +68,7 @@ describe('catalogue categories api functions', () => {
         id: '4',
       };
     });
-    it('posts a request to edit a catalogue category and returns successful response', async () => {
+    it('sends a patch request to edit a catalogue category and returns successful response', async () => {
       const { result } = renderHook(() => useEditCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
@@ -396,11 +406,13 @@ describe('catalogue categories api functions', () => {
         is_leaf: true,
         catalogue_item_properties: [
           {
+            id: '1',
             name: 'Wavefront Measurement Range',
             type: 'string',
             mandatory: true,
           },
           {
+            id: '2',
             name: 'Spatial Resolution',
             type: 'number',
             unit: 'micrometers',
@@ -416,16 +428,13 @@ describe('catalogue categories api functions', () => {
         is_leaf: true,
         catalogue_item_properties: [
           {
+            id: '3',
             name: 'Measurement Range',
             type: 'number',
             unit: 'Joules',
             mandatory: true,
           },
-          {
-            name: 'Accuracy',
-            type: 'string',
-            mandatory: false,
-          },
+          { id: '4', name: 'Accuracy', type: 'string', mandatory: false },
         ],
       },
     ];
@@ -580,6 +589,164 @@ describe('catalogue categories api functions', () => {
           message: 'Successfully copied to Root',
           name: 'Energy Meters_copy_1',
           state: 'success',
+        },
+      ]);
+    });
+  });
+
+  describe('useEditCatalogueCategoryProperty', () => {
+    let mockDataEditProperty: EditPropertyMigration;
+    beforeEach(() => {
+      mockDataEditProperty = {
+        catalogueCategory: getCatalogueCategoryById('12'),
+        property: {
+          id: '19',
+          name: 'test',
+          allowed_values: { type: 'list', values: ['x', 'y', 'z', 'a'] },
+        },
+      };
+    });
+    it('sends a patch request to edit a property and returns successful response', async () => {
+      const { result } = renderHook(() => useEditCatalogueCategoryProperty(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+      expect(result.current.isIdle).toBe(true);
+
+      result.current.mutate(mockDataEditProperty);
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual({
+        allowed_values: {
+          type: 'list',
+          values: ['x', 'y', 'z', 'a'],
+        },
+        id: '19',
+        mandatory: false,
+        name: 'test',
+        type: 'string',
+        unit: null,
+      });
+
+      expect(handleTransferState).toBeCalledTimes(2);
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Editing property test in Dry Vacuum Pumps',
+          name: 'Dry Vacuum Pumps',
+          state: 'information',
+        },
+      ]);
+
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Successfully edited property test in Dry Vacuum Pumps',
+          name: 'Dry Vacuum Pumps',
+          state: 'success',
+        },
+      ]);
+    });
+
+    it('sends a patch request to edit a property and returns unsuccessful response', async () => {
+      mockDataEditProperty.property.name = 'Error 500';
+      const { result } = renderHook(() => useEditCatalogueCategoryProperty(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate(mockDataEditProperty);
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeFalsy();
+      });
+      expect(handleTransferState).toBeCalledTimes(2);
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Editing property Error 500 in Dry Vacuum Pumps',
+          name: 'Dry Vacuum Pumps',
+          state: 'information',
+        },
+      ]);
+
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Something went wrong',
+          name: 'Dry Vacuum Pumps',
+          state: 'error',
+        },
+      ]);
+    });
+  });
+  describe('useAddCatalogueCategoryProperty', () => {
+    let mockDataAddProperty: AddPropertyMigration;
+    beforeEach(() => {
+      mockDataAddProperty = {
+        catalogueCategory: getCatalogueCategoryById('4'),
+        property: {
+          name: 'test',
+          type: 'number',
+          unit: 'test',
+          default_value: 2,
+          mandatory: false,
+        },
+      };
+    });
+    it('posts a request to add property and returns successful response', async () => {
+      const { result } = renderHook(() => useAddCatalogueCategoryProperty(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate(mockDataAddProperty);
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeTruthy();
+      });
+      expect(result.current.data).toEqual({
+        id: '1',
+        mandatory: false,
+        name: 'test',
+        type: 'number',
+        unit: 'test',
+      });
+
+      expect(handleTransferState).toBeCalledTimes(2);
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Adding property test in Cameras',
+          name: 'Cameras',
+          state: 'information',
+        },
+      ]);
+
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Successfully added property test in Cameras',
+          name: 'Cameras',
+          state: 'success',
+        },
+      ]);
+    });
+
+    it('posts a request to add property and returns unsuccessful response', async () => {
+      mockDataAddProperty.property.name = 'Error 500';
+      const { result } = renderHook(() => useAddCatalogueCategoryProperty(), {
+        wrapper: hooksWrapperWithProviders(),
+      });
+      expect(result.current.isIdle).toBe(true);
+      result.current.mutate(mockDataAddProperty);
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBeFalsy();
+      });
+      expect(handleTransferState).toBeCalledTimes(2);
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Adding property Error 500 in Cameras',
+          name: 'Cameras',
+          state: 'information',
+        },
+      ]);
+
+      expect(handleTransferState).toHaveBeenCalledWith([
+        {
+          message: 'Something went wrong',
+          name: 'Cameras',
+          state: 'error',
         },
       ]);
     });

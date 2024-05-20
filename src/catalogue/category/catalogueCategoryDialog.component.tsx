@@ -38,7 +38,7 @@ import handleIMS_APIError from '../../handleIMS_APIError';
 import { generateUniqueId, trimStringValues } from '../../utils';
 
 // Function to convert a list of strings to a list of numbers
-const convertListToNumbers = (values: string[]): number[] => {
+export const convertListToNumbers = (values: string[]): number[] => {
   return values.map((value) => parseFloat(value));
 };
 export interface CatalogueCategoryDialogProps {
@@ -313,7 +313,7 @@ const CatalogueCategoryDialog = React.memo(
                   ? categoryData.catalogue_item_properties[i].cip_placement_id
                   : '',
                 errors: {
-                  fieldName: 'list',
+                  fieldName: 'allowed_values',
                   errorMessage: 'Please create a valid list item',
                 },
               },

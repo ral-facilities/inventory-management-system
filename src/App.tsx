@@ -40,7 +40,7 @@ import AdminPage from './admin/admin.component';
 export const paths = {
   any: '*',
   root: '/',
-  admin: '/admin-ims',
+  admin: '/admin-ims/*',
   homepage: '/ims',
   catalogue: '/catalogue/*',
   systems: '/systems/*',
@@ -49,8 +49,6 @@ export const paths = {
   catalogueItem: '/catalogue/item/:catalogue_item_id',
   items: '/catalogue/item/:catalogue_item_id/items',
   item: '/catalogue/item/:catalogue_item_id/items/:item_id',
-  units: '/admin-ims/units',
-  usageStatus: '/admin-ims/usage-status',
 };
 
 const queryClient = new QueryClient({
@@ -80,8 +78,6 @@ const router = createBrowserRouter([
       { path: paths.root, Component: HomePage },
       { path: paths.homepage, Component: HomePage },
       { path: paths.admin, Component: AdminPage },
-      { path: paths.units, Component: AdminPage },
-      { path: paths.usageStatus, Component: AdminPage },
       { path: paths.catalogue, Component: Catalogue },
       {
         path: paths.catalogueItem,

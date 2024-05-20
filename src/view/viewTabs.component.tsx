@@ -71,7 +71,9 @@ function ViewTabs() {
 
   const handleChange = (_event: React.SyntheticEvent, newValue: TabValue) => {
     setValue(newValue);
-    navigate(`/${newValue.toLowerCase()}`);
+    navigate(
+      `/${newValue === 'Admin' ? newValue.toLowerCase() + '-ims' : newValue.toLowerCase()}`
+    );
   };
 
   return (
