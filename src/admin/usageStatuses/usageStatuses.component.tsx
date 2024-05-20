@@ -14,12 +14,12 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
-import { UsageStatus } from '../../app.types';
-import { usePreservedTableState } from '../../common/preservedTableState.component';
+import { UsageStatus } from '../../app.types.tsx';
+import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { formatDateTimeStrings, getPageHeightCalc } from '../../utils';
-import { useUsageStatuses } from '../../api/usageStatus';
+import { formatDateTimeStrings, getPageHeightCalc } from '../../utils.tsx';
+import { useUsageStatuses } from '../../api/usageStatus.tsx';
 import UsageStatusDialog from './usageStatusDialog.component.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
 

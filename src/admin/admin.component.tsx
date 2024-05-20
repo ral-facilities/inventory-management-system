@@ -10,7 +10,7 @@ import Breadcrumbs from '../view/breadcrumbs.component';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
 import { BreadcrumbsInfo } from '../app.types';
-import UsageStatusComponent from './usageStatus/usageStatus.component';
+import UsageStatusComponent from './usageStatuses/usageStatuses.component';
 
 export const useNavigateToAdminFunction = () => {
   const navigate = useNavigate();

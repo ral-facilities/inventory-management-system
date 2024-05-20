@@ -2,7 +2,7 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import UsageStatusComponent from './usageStatus.component';
+import UsageStatusComponent from './usageStatuses.component';
 
 describe('Units', () => {
   let user: UserEvent;
