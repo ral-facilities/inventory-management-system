@@ -75,7 +75,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
   }, [handleErrors, addUsageStatus, usageStatusDetails, handleClose]);
 
   return (
-    <Dialog open={open} maxWidth="lg" fullWidth>
+    <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>Add Usage Status</DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={1}>
