@@ -1,10 +1,9 @@
 import { renderComponentWithRouterProvider } from '../../testUtils';
-
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import UsageStatusComponent from './usageStatuses.component';
 
-describe('Units', () => {
+describe('Usage statuses', () => {
   let user: UserEvent;
   const createView = () => {
     return renderComponentWithRouterProvider(<UsageStatusComponent />);
