@@ -74,7 +74,7 @@ describe('delete Unit dialog', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'The specified usage status is a part of a Item. Please delete the Item first'
+          'This usage status is currently used by one or more items. Remove all uses before deleting it here.'
         )
       ).toBeInTheDocument();
     });

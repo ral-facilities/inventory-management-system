@@ -44,7 +44,9 @@ const DeleteUsageStatusDialog = (props: DeleteUsageStatusProps) => {
         .catch((error: AxiosError) => {
           const response = error.response?.data as ErrorParsing;
           if (response && error.response?.status === 409) {
-            setFormError(`${response.detail}. Please delete the Item first`);
+            setFormError(
+              `This usage status is currently used by one or more items. Remove all uses before deleting it here.`
+            );
             return;
           }
           handleIMS_APIError(error);
