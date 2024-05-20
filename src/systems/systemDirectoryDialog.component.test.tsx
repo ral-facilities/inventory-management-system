@@ -413,10 +413,11 @@ describe('SystemDirectoryDialog', () => {
       expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith({});
     });
 
-    it('copies selected system to a location with a duplicate code but not a duplicate name', async () => {
+    it('copies selected system to a location with a duplicate code and not a duplicate name', async () => {
       props.selectedSystems = [
         {
           ...SystemsJSON[1],
+          // 'Smaller laser' exists in mock data
           name: 'smaller laser',
         } as System,
       ];
@@ -437,6 +438,32 @@ describe('SystemDirectoryDialog', () => {
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...props.selectedSystems[0],
         name: 'smaller laser_copy_1',
+        parent_id: '65328f34a40ff5301575a4e3',
+      });
+
+      expect(mockOnClose).toHaveBeenCalled();
+      expect(mockOnChangeSelectedSystems).toHaveBeenCalledWith({});
+    });
+
+    it('copies selected system to a location with a duplicate code and duplicate name', async () => {
+      props.selectedSystems = [SystemsJSON[1] as System];
+      createView();
+
+      await waitFor(() => {
+        expect(screen.getByText('Giant laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByText('Giant laser'));
+
+      await waitFor(() => {
+        expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Copy here' }));
+
+      expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
+        ...props.selectedSystems[0],
+        name: 'Smaller laser_copy_1',
         parent_id: '65328f34a40ff5301575a4e3',
       });
 
