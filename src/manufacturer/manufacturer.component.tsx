@@ -39,7 +39,7 @@ function ManufacturerComponent() {
     Manufacturer | undefined
   >(undefined);
 
-  const tableHeight = getPageHeightCalc('192px');
+  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const [maufacturerDialogType, setMaufacturerDialogType] = React.useState<
     'edit' | 'create'
@@ -271,6 +271,13 @@ function ManufacturerComponent() {
         </MenuItem>,
       ];
     },
+    renderBottomToolbarCustomActions: ({ table }) => (
+      <Typography sx={{ paddingLeft: '8px' }}>
+        {table.getFilteredRowModel().rows.length == ManufacturerData?.length
+          ? `Total Manufacturers: ${ManufacturerData.length}`
+          : `Returned ${table.getFilteredRowModel().rows.length} out of ${ManufacturerData?.length} Manufacturers`}
+      </Typography>
+    ),
   });
 
   const navigate = useNavigate();

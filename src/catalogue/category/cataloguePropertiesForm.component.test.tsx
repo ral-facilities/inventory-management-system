@@ -17,6 +17,7 @@ describe('Catalogue Properties Form', () => {
   const onChangeFormFields = vi.fn();
   const onChangeCatalogueItemPropertiesErrors = vi.fn();
   const onChangeAllowedValuesListErrors = vi.fn();
+  const onChangeEditCatalogueItemField = vi.fn();
 
   const resetFormError = vi.fn();
   const createView = () => {
@@ -168,6 +169,167 @@ describe('Catalogue Properties Form', () => {
     };
     const { asFragment } = createView();
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('renders correctly for migration dialog', async () => {
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
+      {
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'text',
+        unit: '',
+        mandatory: false,
+      },
+      {
+        cip_placement_id: '2',
+        name: 'Field 2',
+        type: 'number',
+        unit: 'cm',
+        mandatory: true,
+      },
+      {
+        cip_placement_id: '3',
+        name: 'Field 3',
+        type: 'number',
+        unit: 'cm',
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '6', value: '1' },
+            { av_placement_id: '7', value: '2' },
+          ],
+        },
+        mandatory: true,
+      },
+      {
+        cip_placement_id: '4',
+        name: 'Field 4',
+        type: 'string',
+        unit: '',
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '8', value: 'top' },
+            { av_placement_id: '9', value: 'bottom' },
+          ],
+        },
+        mandatory: true,
+      },
+      {
+        cip_placement_id: '5',
+        name: 'Field 5',
+        type: 'string',
+        unit: '',
+        allowed_values: { type: 'list', values: [] },
+        mandatory: true,
+      },
+    ];
+
+    props = {
+      formFields: formFields,
+      isDisabled: true,
+      onChangeEditCatalogueItemField: onChangeEditCatalogueItemField,
+      selectedCatalogueItemField: {
+        name: 'Field 5',
+        type: 'string',
+        unit: '',
+        allowed_values: { type: 'list', values: [] },
+        mandatory: true,
+      },
+    };
+    const { asFragment } = createView();
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('should select the radio button when clicked', async () => {
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
+      {
+        id: '1',
+        cip_placement_id: '1',
+        name: 'Field 1',
+        type: 'text',
+        unit: '',
+        mandatory: false,
+      },
+      {
+        id: '2',
+        cip_placement_id: '2',
+        name: 'Field 2',
+        type: 'number',
+        unit: 'cm',
+        mandatory: true,
+      },
+      {
+        id: '3',
+        cip_placement_id: '3',
+        name: 'Field 3',
+        type: 'number',
+        unit: 'cm',
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '6', value: '1' },
+            { av_placement_id: '7', value: '2' },
+          ],
+        },
+        mandatory: true,
+      },
+      {
+        id: '4',
+        cip_placement_id: '4',
+        name: 'Field 4',
+        type: 'string',
+        unit: '',
+        allowed_values: {
+          type: 'list',
+          values: [
+            { av_placement_id: '8', value: 'top' },
+            { av_placement_id: '9', value: 'bottom' },
+          ],
+        },
+        mandatory: true,
+      },
+      {
+        id: '5',
+        cip_placement_id: '5',
+        name: 'Field 5',
+        type: 'string',
+        unit: '',
+        allowed_values: { type: 'list', values: [] },
+        mandatory: true,
+      },
+    ];
+
+    props = {
+      formFields: formFields,
+      isDisabled: true,
+      onChangeEditCatalogueItemField: onChangeEditCatalogueItemField,
+      selectedCatalogueItemField: {
+        id: '5',
+        name: 'Field 5',
+        type: 'string',
+        unit: '',
+        allowed_values: { type: 'list', values: [] },
+        mandatory: true,
+      },
+    };
+    createView();
+
+    const field1RadioButton = screen.getByLabelText('Field 1 radio button');
+
+    await user.click(field1RadioButton);
+
+    await waitFor(() => {
+      expect(onChangeEditCatalogueItemField).toBeCalled();
+    });
+
+    expect(onChangeEditCatalogueItemField).toHaveBeenCalledWith({
+      id: '1',
+      mandatory: false,
+      name: 'Field 1',
+      type: 'text',
+      unit: '',
+    });
   });
 
   it('should add a new field when clicking on the add button', async () => {
@@ -419,6 +581,61 @@ describe('Catalogue Properties Form', () => {
     ]);
   });
 
+  it('should remove the empty list error message if the allowed value is any', async () => {
+    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
+      {
+        cip_placement_id: '4',
+        name: 'raduis 2',
+        type: 'number',
+        unit: '',
+        allowed_values: { type: 'list', values: [] },
+        mandatory: false,
+      },
+    ];
+    const catalogueItemPropertiesErrors: CatalogueItemPropertiesErrorsType[] = [
+      {
+        cip_placement_id: '4',
+        errors: {
+          fieldName: 'allowed_values',
+          errorMessage: 'Please create a valid list item',
+        },
+      },
+    ];
+
+    props = {
+      ...props,
+      formFields: formFields,
+      catalogueItemPropertiesErrors: catalogueItemPropertiesErrors,
+    };
+    createView();
+
+    const listHelperTexts = screen.queryAllByText(
+      'Please create a valid list item'
+    );
+
+    expect(listHelperTexts.length).toBe(1);
+
+    const select = screen.getAllByLabelText('Select Allowed values *');
+    await user.click(select[0]);
+
+    const dropdown = screen.getByRole('listbox', {
+      name: 'Select Allowed values',
+    });
+
+    await user.click(within(dropdown).getByRole('option', { name: 'Any' }));
+
+    expect(onChangeFormFields).toHaveBeenCalledTimes(1);
+    expect(onChangeFormFields).toHaveBeenCalledWith([
+      {
+        cip_placement_id: '4',
+        mandatory: false,
+        name: 'raduis 2',
+        type: 'number',
+        unit: '',
+      },
+    ]);
+  }, 10000);
+
   it('display error message for type and name if they are not filled in', async () => {
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
@@ -470,7 +687,7 @@ describe('Catalogue Properties Form', () => {
       {
         cip_placement_id: '4',
         errors: {
-          fieldName: 'list',
+          fieldName: 'allowed_values',
           errorMessage: 'Please create a valid list item',
         },
       },
@@ -496,9 +713,7 @@ describe('Catalogue Properties Form', () => {
     expect(listHelperTexts.length).toBe(1);
 
     // Click on the add button
-    await user.click(
-      await screen.getAllByRole('button', { name: 'Add list item 3' })[0]
-    );
+    await user.click(screen.getByRole('button', { name: 'Add list item' }));
 
     const formName = screen.getAllByLabelText('Property Name *');
     const formType = screen.getAllByLabelText('Select Type *');
@@ -670,6 +885,7 @@ describe('Catalogue Properties Form', () => {
 
     expect(onChangeCatalogueItemPropertiesErrors).toHaveBeenCalledWith([]);
   });
+
   it('should delete a list item when the delete icon is click', async () => {
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
@@ -709,9 +925,7 @@ describe('Catalogue Properties Form', () => {
     createView();
 
     // Click on the add button
-    await user.click(
-      screen.getAllByRole('button', { name: 'Delete list item 0' })[0]
-    );
+    await user.click(screen.getByTestId('3: Delete list item'));
 
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
@@ -784,7 +998,7 @@ describe('Catalogue Properties Form', () => {
 
     // Click on the add button
     await user.click(
-      screen.getAllByRole('button', { name: 'Add list item 0' })[0]
+      screen.getAllByRole('button', { name: 'Add list item' })[0]
     );
 
     await waitFor(() => {
@@ -861,9 +1075,9 @@ describe('Catalogue Properties Form', () => {
     createView();
 
     // Click on the add button
-    const listItem1 = screen.getAllByLabelText('List Item 1');
+    const listItem1 = screen.getByTestId('4: List Item');
 
-    fireEvent.change(within(listItem1[0]).getByLabelText('List Item'), {
+    fireEvent.change(within(listItem1).getByLabelText('List Item'), {
       target: { value: '6' },
     });
     await waitFor(() => {
@@ -1132,7 +1346,7 @@ describe('Catalogue Properties Form', () => {
 
     await user.click(
       screen.getAllByRole('button', {
-        name: 'Delete catalogue category field entry',
+        name: 'Delete catalogue Item Field entry',
       })[0]
     );
 
@@ -1218,9 +1432,9 @@ describe('Catalogue Properties Form', () => {
     expect(invalidNumberHelperText.length).toEqual(2);
 
     // Click on the add button
-    const listItem1 = screen.getAllByLabelText('List Item 1');
+    const listItem1 = screen.getByTestId('6: List Item');
 
-    fireEvent.change(within(listItem1[0]).getByLabelText('List Item'), {
+    fireEvent.change(within(listItem1).getByLabelText('List Item'), {
       target: { value: '6' },
     });
 
@@ -1301,11 +1515,9 @@ describe('Catalogue Properties Form', () => {
     expect(invalidNumberHelperText.length).toEqual(2);
 
     // Click on the add button
-    const listItemDelete = screen.getAllByRole('button', {
-      name: `Delete list item 1`,
-    });
+    const listItemDelete = screen.getByTestId('6: Delete list item');
 
-    await user.click(listItemDelete[0]);
+    await user.click(listItemDelete);
 
     await waitFor(() => {
       expect(onChangeFormFields).toHaveBeenCalledWith([
