@@ -1,10 +1,10 @@
 import {
   RenderResult,
-  act,
   fireEvent,
   screen,
   waitFor,
 } from '@testing-library/react';
+import { act } from 'react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { Item } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
@@ -124,5 +124,14 @@ describe('delete item dialog', () => {
 
     expect(handleIMS_APIError).toHaveBeenCalled();
     expect(onClose).not.toHaveBeenCalled();
+  });
+  it('renders correctly when items has no serial number', async () => {
+    props.item = { ...getItemById('wKsFzrSq'), serial_number: null };
+    createView();
+    let baseElement;
+    await act(async () => {
+      baseElement = createView().baseElement;
+    });
+    expect(baseElement).toMatchSnapshot();
   });
 });
