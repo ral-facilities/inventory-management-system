@@ -160,7 +160,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     requestOrigin,
   } = props;
   // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 32px');
+  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const { data: catalogueItemsData, isLoading: isLoadingCatalogueItems } =
     useCatalogueItems(parentInfo.id);
@@ -767,6 +767,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         </>
       );
     },
+    renderBottomToolbarCustomActions: ({ table }) => (
+      <Typography sx={{ paddingLeft: '8px' }}>
+        {table.getFilteredRowModel().rows.length == catalogueItemsData?.length
+          ? `Total Catalogue Items: ${catalogueItemsData.length}`
+          : `Returned ${table.getFilteredRowModel().rows.length} out of ${catalogueItemsData?.length} Catalogue Items`}
+      </Typography>
+    ),
+
     renderTopToolbarCustomActions: ({ table }) =>
       dense && requestOrigin === 'move to' ? undefined : (
         <Box sx={{ display: 'flex' }}>

@@ -174,7 +174,7 @@ function ItemDialog(props: ItemDialogProps) {
     if (selectedItem && open) {
       setItemDetails({
         catalogue_item_id: null,
-        system_id: null,
+        system_id: selectedItem.system_id,
         purchase_order_number: selectedItem.purchase_order_number,
         is_defective: selectedItem.is_defective ? 'true' : 'false',
         usage_status_id: selectedItem.usage_status_id,

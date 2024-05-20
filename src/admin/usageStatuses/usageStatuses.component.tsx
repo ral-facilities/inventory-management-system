@@ -23,7 +23,7 @@ import { useUsageStatuses } from '../../api/usageStatus.tsx';
 import UsageStatusDialog from './usageStatusDialog.component.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
 
-function UsageStatusComponent() {
+function UsageStatuses() {
   const { data: usageStatusData, isLoading: usageStatusDataLoading } =
     useUsageStatuses();
 
@@ -197,4 +197,4 @@ function UsageStatusComponent() {
   );
 }
 
-export default UsageStatusComponent;
+export default UsageStatuses;

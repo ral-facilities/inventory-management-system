@@ -55,9 +55,17 @@ describe('Items Table', () => {
   it('renders correctly part 1 due column virtualisation', async () => {
     const view = createView();
 
-    await waitFor(() => {
-      expect(screen.getByText('Serial Number')).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.getByText('5YUQDDjKpz2z')).toBeInTheDocument();
+      },
+      { timeout: 5000 }
+    );
+    // Wait for all progress bars to disappear
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     expect(view.asFragment()).toMatchSnapshot();
   });
 
@@ -74,9 +82,9 @@ describe('Items Table', () => {
 
   it('renders correctly part 3 due column virtualisation and checks that the href is correct for the system ID', async () => {
     createView();
-    await ensureColumnsVisible(['Warranty End Date', 'System ID', 'Created']);
+    await ensureColumnsVisible(['Warranty End Date', 'System', 'Created']);
 
-    const systemID = screen.getAllByText('65328f34a40ff5301575a4e3');
+    const systemID = screen.getAllByText('Giant laser');
     expect(systemID[0]).toHaveAttribute(
       'href',
       '/systems/65328f34a40ff5301575a4e3'

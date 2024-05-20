@@ -20,6 +20,6 @@ describe('AdminPage', () => {
     await waitFor(() => {
       expect(screen.getByText('Units')).toBeInTheDocument();
     });
-    expect(screen.getByText('Usage Status')).toBeInTheDocument();
+    expect(screen.getByText('Usage Statuses')).toBeInTheDocument();
   });
 });

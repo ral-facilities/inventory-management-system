@@ -225,6 +225,24 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
+                        System
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                          href="/systems/undefined"
+                          target="_blank"
+                        />
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
                         Last Modified
                       </p>
                       <p
@@ -737,6 +755,24 @@ exports[`Catalogue Items details panel > renders details panel correctly (no dat
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
                         In Use
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
+                        System
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                          href="/systems/undefined"
+                          target="_blank"
+                        />
                       </p>
                     </div>
                     <div
@@ -1265,6 +1301,24 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
+                        System
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                          href="/systems/undefined"
+                          target="_blank"
+                        />
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
                         Last Modified
                       </p>
                       <p
@@ -1777,6 +1831,24 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
                         In Use
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
+                        System
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                          href="/systems/undefined"
+                          target="_blank"
+                        />
                       </p>
                     </div>
                     <div
@@ -2307,6 +2379,26 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
                         In Use
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
+                        System
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                          href="/systems/65328f34a40ff5301575a4e3"
+                          target="_blank"
+                        >
+                          Giant laser
+                        </a>
                       </p>
                     </div>
                     <div
@@ -2862,6 +2954,26 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
                       >
+                        System
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                          href="/systems/65328f34a40ff5301575a4e3"
+                          target="_blank"
+                        >
+                          Giant laser
+                        </a>
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
                         Last Modified
                       </p>
                       <p
@@ -3401,6 +3513,26 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
                         In Use
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      >
+                        System
+                      </p>
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      >
+                        <a
+                          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                          href="/systems/65328f34a40ff5301575a4e3"
+                          target="_blank"
+                        >
+                          Giant laser
+                        </a>
                       </p>
                     </div>
                     <div

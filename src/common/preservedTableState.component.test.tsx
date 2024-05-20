@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import LZString from 'lz-string';
 import { MRT_VisibilityState } from 'material-react-table';
-import { act } from 'react-dom/test-utils';
+import { act } from 'react';
 import { hooksWrapperWithProviders } from '../testUtils';
 import { usePreservedTableState } from './preservedTableState.component';
 

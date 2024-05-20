@@ -3,7 +3,14 @@ import { addCatalogueItem } from '../catalogueItems/functions';
 import { addManufacturer } from '../manufacturers/functions';
 import { addSystems } from '../systems/functions';
 import { addUsageStatuses } from '../usageStatus/functions';
-import { addItem, deleteItem, editItem, saveAsItem } from './functions';
+import {
+  addItem,
+  addProperty,
+  deleteItem,
+  editItem,
+  editProperty,
+  saveAsItem,
+} from './functions';
 
 describe('items', () => {
   beforeEach(() => {
@@ -16,7 +23,7 @@ describe('items', () => {
       'usage_statuses',
     ]);
     // Prepare relevant data for items
-    cy.visit('/admin-ims/usage-status');
+    cy.visit('/admin-ims/usage-statuses');
     addUsageStatuses(['New', 'Used']);
     cy.visit('/manufacturers');
     addManufacturer(true);
@@ -42,6 +49,8 @@ describe('items', () => {
     addItem();
     editItem();
     saveAsItem('MX4332424', 0);
+    addProperty();
+    editProperty();
     deleteItem('MX4332424', 0);
     deleteItem('MX4332424', 0);
   });
