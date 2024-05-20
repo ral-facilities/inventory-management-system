@@ -214,32 +214,6 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
             </div>
           </div>
         </div>
-        <div
-          class="MuiCollapse-root MuiCollapse-vertical css-1xe2rkg-MuiCollapse-root"
-          style="min-height: 0px; height: 0px; transition-duration: 300ms;"
-        >
-          <div
-            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
-          >
-            <div
-              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
-            >
-              <span
-                aria-busy="true"
-                aria-label="Loading"
-                class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate css-qprkun-MuiLinearProgress-root"
-                role="progressbar"
-              >
-                <span
-                  class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate css-5ir5xx-MuiLinearProgress-bar1"
-                />
-                <span
-                  class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate css-1r8wrcl-MuiLinearProgress-bar2"
-                />
-              </span>
-            </div>
-          </div>
-        </div>
       </div>
       <div
         class="MuiTableContainer-root css-d4d85z-MuiTableContainer-root"
@@ -1256,32 +1230,6 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
       <div
         class="MuiBox-root css-10gei56"
       >
-        <div
-          class="MuiCollapse-root MuiCollapse-vertical css-nly5v0-MuiCollapse-root"
-          style="min-height: 0px; height: 0px; transition-duration: 300ms;"
-        >
-          <div
-            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
-          >
-            <div
-              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
-            >
-              <span
-                aria-busy="true"
-                aria-label="Loading"
-                class="MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate css-qprkun-MuiLinearProgress-root"
-                role="progressbar"
-              >
-                <span
-                  class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate css-5ir5xx-MuiLinearProgress-bar1"
-                />
-                <span
-                  class="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar2Indeterminate css-1r8wrcl-MuiLinearProgress-bar2"
-                />
-              </span>
-            </div>
-          </div>
-        </div>
         <div
           class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
           style="min-height: 0px;"
