@@ -6,7 +6,7 @@ export const TAB_VALUES = [
   'Catalogue',
   'Systems',
   'Manufacturers',
-  'Admin-ims',
+  'Admin',
 ] as const;
 export type TabValue = (typeof TAB_VALUES)[number];
 

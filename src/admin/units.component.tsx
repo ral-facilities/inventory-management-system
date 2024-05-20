@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 
 function Units() {
-  return <Typography>Units</Typography>;
+  return <Typography>Work in progress</Typography>;
 }
 
 export default Units;

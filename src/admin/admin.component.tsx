@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
 import Units from './units.component';
 import { BreadcrumbsInfo } from '../app.types';
+import UsageStatus from './usageStatus.component';
 
 export const useNavigateToAdminFunction = () => {
   const navigate = useNavigate();
@@ -16,28 +17,38 @@ export const useNavigateToAdminFunction = () => {
     [navigate]
   );
 };
+
 // returns the admin function from the path (null when just on adminPage)
-export const useAdminFunction = (): string | null => {
+export const useGetAdminPageName = (): string | null => {
   const location = useLocation();
 
   return React.useMemo(() => {
-    let adminFunction: string | null = location.pathname.replace(
+    let adminPageName: string | null = location.pathname.replace(
       '/admin-ims',
       ''
     );
-    adminFunction =
-      adminFunction === '' ? null : adminFunction.replace('/', '');
-    return adminFunction;
+    adminPageName =
+      adminPageName === '' ? null : adminPageName.replace('/', '');
+    return adminPageName;
   }, [location.pathname]);
 };
 
 function AdminPage() {
   const navigateToAdminFunction = useNavigateToAdminFunction();
-  const adminFunction = useAdminFunction();
+  const adminPageName = useGetAdminPageName();
 
-  const adminBreadCrumbs: BreadcrumbsInfo | undefined = adminFunction
+  const adminBreadCrumbs: BreadcrumbsInfo | undefined = adminPageName
     ? {
-        trail: [['', adminFunction ?? 'admin']],
+        trail: [
+          [
+            adminPageName ?? '',
+            adminPageName === 'units'
+              ? 'Units'
+              : adminPageName == 'usage-status'
+                ? 'Usage status'
+                : '',
+          ],
+        ],
         full_trail: true,
       }
     : undefined;
@@ -71,7 +82,7 @@ function AdminPage() {
           </div>
         </Grid>
       </Grid>
-      {adminFunction === null && (
+      {adminPageName === null && (
         <Grid container flexDirection={'column'}>
           <Grid item container xs={12} overflow={'auto'}>
             <Grid item key={0} xs={12} sm={6}>
@@ -156,8 +167,8 @@ function AdminPage() {
         </Grid>
       )}
 
-      {adminFunction === 'units' && <Units />}
-      {adminFunction === 'usage-status'}
+      {adminPageName === 'units' && <Units />}
+      {adminPageName === 'usage-status' && <UsageStatus />}
     </Grid>
   );
 }

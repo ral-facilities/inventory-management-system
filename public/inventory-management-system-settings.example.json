@@ -28,7 +28,7 @@
     {
       "section": "Inventory Management System",
       "link": "/admin-ims",
-      "displayName": "Admin-ims",
+      "displayName": "Admin",
       "order": 4
     }
   ],
