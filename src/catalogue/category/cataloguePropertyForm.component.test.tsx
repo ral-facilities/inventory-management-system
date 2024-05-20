@@ -110,4 +110,40 @@ describe('Catalogue Property Form', () => {
     const { asFragment } = createView();
     expect(asFragment()).toMatchSnapshot();
   });
+
+  it('renders correctly for add migration', async () => {
+    props.catalogueItemField = {
+      name: 'Field 5',
+      type: 'string',
+      unit: '',
+      allowed_values: {
+        type: 'list',
+        values: [{ av_placement_id: '2', value: 'test' }],
+      },
+      mandatory: true,
+    };
+    props.isList = true;
+    props.cip_placement_id = '1';
+    props.type = 'add migration';
+    const { asFragment } = createView();
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('renders correctly for edit migration', async () => {
+    props.catalogueItemField = {
+      name: 'Field 5',
+      type: 'string',
+      unit: '',
+      allowed_values: {
+        type: 'list',
+        values: [{ av_placement_id: '2', value: 'test' }],
+      },
+      mandatory: true,
+    };
+    props.isList = true;
+    props.cip_placement_id = '1';
+    props.type = 'edit migration';
+    const { asFragment } = createView();
+    expect(asFragment()).toMatchSnapshot();
+  });
 });

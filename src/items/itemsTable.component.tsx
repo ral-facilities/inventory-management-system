@@ -503,6 +503,14 @@ export function ItemsTable(props: ItemTableProps) {
         </MenuItem>,
       ];
     },
+    renderBottomToolbarCustomActions: ({ table }) => (
+      <Typography sx={{ paddingLeft: '8px' }}>
+        {table.getFilteredRowModel().rows.length == itemsData?.length
+          ? `Total Items: ${itemsData.length}`
+          : `Returned ${table.getFilteredRowModel().rows.length} out of ${itemsData?.length} Items`}
+      </Typography>
+    ),
+
     renderDetailPanel: dense
       ? ({ row }) => (
           <ItemsDetailsPanel

@@ -687,6 +687,14 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         )}
       </Box>
     ),
+    renderBottomToolbarCustomActions: ({ table }) => (
+      <Typography sx={{ paddingLeft: '8px' }}>
+        {table.getFilteredRowModel().rows.length == itemsData?.length
+          ? `Total Items: ${itemsData.length}`
+          : `Returned ${table.getFilteredRowModel().rows.length} out of ${itemsData?.length} Items`}
+      </Typography>
+    ),
+
     renderDetailPanel: ({ row }) =>
       row.original.catalogueItem !== undefined ? (
         <ItemsDetailsPanel
