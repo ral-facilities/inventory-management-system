@@ -55,9 +55,17 @@ describe('Items Table', () => {
   it('renders correctly part 1 due column virtualisation', async () => {
     const view = createView();
 
-    await waitFor(() => {
-      expect(screen.getByText('5YUQDDjKpz2z')).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.getByText('5YUQDDjKpz2z')).toBeInTheDocument();
+      },
+      { timeout: 5000 }
+    );
+    // Wait for all progress bars to disappear
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     expect(view.asFragment()).toMatchSnapshot();
   });
 
