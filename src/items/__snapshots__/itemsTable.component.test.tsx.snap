@@ -1293,7 +1293,7 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
               class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
             >
               <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-dxfizy-MuiPaper-root-MuiAlert-root"
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
                 role="alert"
               >
                 <div
@@ -1316,9 +1316,13 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
         <div
           class="MuiBox-root css-1llu0od"
         >
-          <span />
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
+          >
+            Total Items: 4
+          </p>
           <div
-            class="MuiBox-root css-qpxlqp"
+            class="MuiBox-root css-nokk8"
           >
             <div
               class="MuiTablePagination-root MuiBox-root css-8k4lth"
@@ -2738,7 +2742,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
               class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
             >
               <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-dxfizy-MuiPaper-root-MuiAlert-root"
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
                 role="alert"
               >
                 <div
@@ -2761,9 +2765,13 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
         <div
           class="MuiBox-root css-1llu0od"
         >
-          <span />
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
+          >
+            Total Items: 4
+          </p>
           <div
-            class="MuiBox-root css-qpxlqp"
+            class="MuiBox-root css-nokk8"
           >
             <div
               class="MuiTablePagination-root MuiBox-root css-8k4lth"
@@ -4225,7 +4233,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
               class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
             >
               <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-dxfizy-MuiPaper-root-MuiAlert-root"
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
                 role="alert"
               >
                 <div
@@ -4248,9 +4256,13 @@ exports[`Items Table > renders the dense table correctly 1`] = `
         <div
           class="MuiBox-root css-1llu0od"
         >
-          <span />
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
+          >
+            Total Items: 4
+          </p>
           <div
-            class="MuiBox-root css-qpxlqp"
+            class="MuiBox-root css-nokk8"
           >
             <div
               class="MuiTablePagination-root MuiBox-root css-8k4lth"

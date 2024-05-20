@@ -5,6 +5,8 @@ import {
   Pagination,
   Select,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { CatalogueCategory } from '../../app.types';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
@@ -55,25 +57,24 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
     endIndex
   );
 
+  // Display total and pagination on separate lines if on a small screen
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const cardViewHeight = getPageHeightCalc('100px');
+  const cardViewCardsHeight = getPageHeightCalc(
+    `100px + ${smallScreen ? '128px' : '72px'}`
+  );
+
   return (
-    <Grid container flexDirection={'column'}>
-      <Grid
-        container
-        item
-        xs={12}
-        maxHeight={getPageHeightCalc('150px')}
-        overflow={'auto'}
-      >
+    <Grid
+      container
+      flexDirection={'column'}
+      height={cardViewHeight}
+      maxHeight={cardViewHeight}
+    >
+      <Grid container item maxHeight={cardViewCardsHeight} overflow={'auto'}>
         {displayedCatalogueCategories?.map((item, index) => (
-          <Grid
-            item
-            key={index}
-            xs={12}
-            sm={6}
-            md={4}
-            flexDirection={'column'}
-            alignContent={'center'}
-          >
+          <Grid item key={index} sm={6} md={4} width={'100%'}>
             <CatalogueCard
               {...item}
               onChangeOpenDeleteDialog={onChangeOpenDeleteCategoryDialog}
@@ -91,32 +92,40 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
           </Grid>
         ))}
       </Grid>
-      <Grid
-        container
-        item
-        alignItems="center"
-        justifyContent="right"
-        xs={12}
-        px={1}
-        py={1.5}
-        position={'fixed'}
-        bottom={12}
-        right={0}
-      >
-        <Grid item>
+
+      <Grid item container marginTop={'auto'} direction="row">
+        <Grid item xs={12} sm="auto">
+          <Typography
+            sx={{ paddingTop: '20px', paddingLeft: '8px', margin: '8px' }}
+          >
+            {`Total Categories: ${catalogueCategoryData.length}`}
+          </Typography>
+        </Grid>
+
+        <Grid
+          item
+          flexWrap="nowrap"
+          flexDirection="row"
+          display="flex"
+          alignItems="center"
+          justifyContent="flex-end"
+          sm
+        >
           <FormControl
             variant="standard"
             sx={{
+              paddingTop: '16px',
               margin: 1,
-              minWidth: '120px',
               display: 'flex',
               flexDirection: 'row',
             }}
           >
             <Typography
               sx={{
-                padding: 2,
+                paddingX: 1,
+                paddingTop: 0.5,
                 color: 'text.secondary',
+                whiteSpace: 'nowrap',
               }}
             >
               {'Categories per page'}
@@ -142,9 +151,6 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
               <MenuItem value={'60'}>60</MenuItem>
             </Select>
           </FormControl>
-        </Grid>
-
-        <Grid item>
           <Pagination
             variant="outlined"
             shape="rounded"
@@ -160,9 +166,14 @@ function CatalogueCardView(props: CatalogueCardViewProps) {
             }
             size="medium"
             color="secondary"
-            sx={{ textAlign: 'center' }}
             aria-label="pagination"
             className="catalogue-categories-pagination"
+            sx={{
+              paddingTop: 2,
+              '& > .MuiPagination-ul': {
+                flexWrap: 'nowrap',
+              },
+            }}
           />
         </Grid>
       </Grid>

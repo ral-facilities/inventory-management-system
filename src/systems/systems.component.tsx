@@ -28,9 +28,9 @@ import {
   // To resolve react/jsx-pascal-case
   MRT_GlobalFilterTextField as MRTGlobalFilterTextField,
   MRT_TableBodyCellValue as MRTTableBodyCellValue,
-  MRT_TablePagination as MRTTablePagination,
   MRT_ColumnDef,
   MRT_RowSelectionState,
+  MRT_TablePagination,
   useMaterialReactTable,
 } from 'material-react-table';
 import React from 'react';
@@ -454,7 +454,20 @@ function Systems() {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                  <MRTTablePagination table={subsystemsTable} />
+                  <Box sx={{ paddingTop: '8px' }}>
+                    <Typography
+                      sx={{
+                        paddingLeft: '8px',
+                        textAlign: { sm: 'center', md: 'left' },
+                      }}
+                    >
+                      {subsystemsTable.getFilteredRowModel().rows.length ==
+                      subsystemsData?.length
+                        ? `Total Systems: ${subsystemsData.length}`
+                        : `Returned ${subsystemsTable.getFilteredRowModel().rows.length} out of ${subsystemsData?.length} Systems`}
+                    </Typography>
+                    <MRT_TablePagination table={subsystemsTable} />
+                  </Box>
                 </Stack>
               </>
             )}
