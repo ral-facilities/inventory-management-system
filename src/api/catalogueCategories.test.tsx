@@ -626,6 +626,7 @@ describe('catalogue categories api functions', () => {
         name: 'test',
         type: 'string',
         unit: null,
+        unit_id: null,
       });
 
       expect(handleTransferState).toBeCalledTimes(2);

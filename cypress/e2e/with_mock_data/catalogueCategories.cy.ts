@@ -1025,7 +1025,7 @@ describe('Catalogue Category', () => {
           type: 'number',
           mandatory: false,
           default_value: 1,
-          unit: 'millimeters',
+          unit_id: '5',
         })
       );
     });
