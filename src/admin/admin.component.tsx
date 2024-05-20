@@ -11,7 +11,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
 import Units from './units.component';
 import { BreadcrumbsInfo } from '../app.types';
-import UsageStatuses from './usageStatus.component';
+import UsageStatuses from './usageStatuses.component';
 
 export const useNavigateToAdminFunction = () => {
   const navigate = useNavigate();
