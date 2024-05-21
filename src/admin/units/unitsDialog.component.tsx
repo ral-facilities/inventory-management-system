@@ -70,7 +70,7 @@ function UnitsDialog(props: UnitsDialogProps) {
   }, [handleErrors, unitDetails, addUnit, handleClose]);
 
   return (
-    <Dialog open={open} maxWidth="lg" fullWidth>
+    <Dialog open={open} maxWidth="sm" fullWidth>
       <DialogTitle>Add Unit</DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={1}>
