@@ -519,7 +519,7 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     }, 10000);
 
-    it('displays duplicate values values with different significant figures  (allowed_values list of numbers)', async () => {
+    it('displays duplicate values values with different significant figures (allowed_values list of numbers)', async () => {
       createView();
 
       await modifyValues({
