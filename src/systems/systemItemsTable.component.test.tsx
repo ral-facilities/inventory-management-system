@@ -428,8 +428,8 @@ describe('SystemItemsTable', () => {
 
       await waitFor(() => {
         expect(onChangeAggregatedCellUsageStatus).toHaveBeenCalledWith([
-          { catalogue_item_id: '1', usageStatus: '', usage_status_id: '' },
-          { catalogue_item_id: '25', usageStatus: '', usage_status_id: '' },
+          { catalogue_item_id: '1', usage_status_id: '' },
+          { catalogue_item_id: '25', usage_status_id: '' },
         ]);
       });
     });

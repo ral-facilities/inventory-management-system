@@ -227,6 +227,10 @@ describe('ItemDialog', () => {
     it('adds an item with just the default values', async () => {
       createView();
 
+      await modifyDetailsValues({
+        usageStatus: 'Used',
+      });
+
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -254,7 +258,7 @@ describe('ItemDialog', () => {
         purchase_order_number: null,
         serial_number: null,
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status_id: '0',
+        usage_status_id: '2',
         warranty_end_date: null,
       });
     });
@@ -265,6 +269,7 @@ describe('ItemDialog', () => {
       await modifyDetailsValues({
         serialNumber: 'test12 %s',
         serialNumberAdvancedOptions: { quantity: '2', startingValue: '10' },
+        usageStatus: 'New',
       });
 
       //navigate through stepper
@@ -370,6 +375,10 @@ describe('ItemDialog', () => {
       };
       createView();
 
+      await modifyDetailsValues({
+        usageStatus: 'Used',
+      });
+
       await user.click(screen.getByText('Add item properties'));
 
       fireEvent.change(
@@ -410,7 +419,7 @@ describe('ItemDialog', () => {
         purchase_order_number: null,
         serial_number: null,
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status_id: '0',
+        usage_status_id: '2',
         warranty_end_date: null,
       });
     });
@@ -819,6 +828,7 @@ describe('ItemDialog', () => {
       createView();
       await modifyDetailsValues({
         serialNumber: 'Error 500',
+        usageStatus: 'Used',
       });
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
