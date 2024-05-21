@@ -2,7 +2,7 @@ import { addCatalogueCategories } from '../catalogueCategories/functions';
 import { addCatalogueItem } from '../catalogueItems/functions';
 import { addManufacturer } from '../manufacturers/functions';
 import { addSystems } from '../systems/functions';
-import { addUsageStatuses } from '../usageStatus/functions';
+import { addUsageStatuses } from '../usageStatuses/functions';
 import {
   addItem,
   addProperty,
