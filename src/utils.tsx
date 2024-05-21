@@ -1,4 +1,4 @@
-import { Tooltip } from '@mui/material';
+import { Tooltip, Typography } from '@mui/material';
 import { format, parseISO } from 'date-fns';
 import React, { useRef } from 'react';
 
@@ -91,7 +91,7 @@ export const formatDateTimeStrings = (
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const OverflowTip = ({ children, columnSize }: any) => {
+export const OverflowTip = ({ children, columnSize, type }: any) => {
   const [isOverflowed, setIsOverflow] = React.useState(false);
   const overflowElementRef = useRef<HTMLInputElement | null>(null);
   React.useEffect(() => {
@@ -101,7 +101,7 @@ export const OverflowTip = ({ children, columnSize }: any) => {
           overflowElementRef.current.clientWidth
       );
     }
-  }, [columnSize]);
+  }, [columnSize, type]);
   return (
     <Tooltip
       role="tooltip"
@@ -111,16 +111,17 @@ export const OverflowTip = ({ children, columnSize }: any) => {
       enterTouchDelay={0}
       arrow
     >
-      <div
+      <Typography
         ref={overflowElementRef}
         style={{
           whiteSpace: 'nowrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
+          fontSize: type !== 'card' ? 'inherit' : undefined,
         }}
       >
         {children}
-      </div>
+      </Typography>
     </Tooltip>
   );
 };
