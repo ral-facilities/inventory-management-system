@@ -39,18 +39,18 @@ export const useGetAdminPageName = (): string | null => {
   }, [location.pathname]);
 };
 
+const adminBreadCrumbsTrails: { [key: string]: [string, string] } = {
+  ['units']: ['units', 'Units'],
+  ['usage-statuses']: ['usage-statuses', 'Usage statuses'],
+};
+
 function AdminPage() {
   const navigateToAdminFunction = useNavigateToAdminFunction();
   const adminPageName = useGetAdminPageName();
 
-  const adminBreadCrumbsNames: { [key: string]: [string, string] } = {
-    ['units']: ['Units', 'Units'],
-    ['usage-statuses']: ['Usage statuses', 'Usage statuses'],
-  };
-
   const adminBreadCrumbs: BreadcrumbsInfo | undefined = adminPageName
     ? {
-        trail: [adminBreadCrumbsNames[adminPageName] ?? ['', '']],
+        trail: [adminBreadCrumbsTrails[adminPageName] ?? ['', '']],
         full_trail: true,
       }
     : undefined;
@@ -162,7 +162,7 @@ function AdminPage() {
 
       {adminPageName === 'units' && <Units />}
       {adminPageName === 'usage-statuses' && <UsageStatuses />}
-      {adminPageName !== undefined &&
+      {adminPageName !== null &&
         adminPageName !== 'units' &&
         adminPageName !== 'usage-statuses' && (
           <Box
@@ -175,9 +175,7 @@ function AdminPage() {
               No results found
             </Typography>
             <Typography sx={{ textAlign: 'center' }}>
-              The admin function you searched for does not exist. Please
-              navigate home by pressing the home button at the top left of your
-              screen.
+              {`The admin URL route you're trying to access doesn't exist. Please return to the homepage by clicking the home button at the top left of your screen.`}
             </Typography>
           </Box>
         )}

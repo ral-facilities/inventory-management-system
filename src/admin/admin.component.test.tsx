@@ -31,7 +31,7 @@ describe('AdminPage', () => {
     });
     expect(
       screen.getByText(
-        'The admin function you searched for does not exist. Please navigate home by pressing the home button at the top left of your screen.'
+        `The admin URL route you're trying to access doesn't exist. Please return to the homepage by clicking the home button at the top left of your screen.`
       )
     ).toBeInTheDocument();
   });
