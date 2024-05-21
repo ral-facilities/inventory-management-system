@@ -315,7 +315,7 @@ export interface EditItem extends Partial<AddItem> {
 
 export interface MoveItemsToSystemUsageStatus {
   item_id: string;
-  usage_status: string;
+  usage_status_id: string;
 }
 export interface MoveItemsToSystem {
   usageStatuses: MoveItemsToSystemUsageStatus[];
@@ -353,5 +353,5 @@ export interface UsageStatus {
 }
 
 export interface AddUsageStatus {
-  value: string | null;
+  value: string;
 }

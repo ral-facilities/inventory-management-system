@@ -44,7 +44,7 @@ import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { trimStringValues } from '../utils';
 import handleTransferState from '../handleTransferState';
-import { useUsageStatuses } from '../api/usageStatus';
+import { useUsageStatuses } from '../api/usageStatuses';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
   // Attempt to create a Date object from the input
@@ -133,6 +133,9 @@ function ItemDialog(props: ItemDialogProps) {
     warranty_end_date: boolean;
     delivered_date: boolean;
   }>({ warranty_end_date: false, delivered_date: false });
+
+  const [hasUsageStatusErrors, setHasUsageStatusErrors] =
+    React.useState<boolean>(false);
 
   const [propertyValues, setPropertyValues] = React.useState<(string | null)[]>(
     []
@@ -314,6 +317,15 @@ function ItemDialog(props: ItemDialogProps) {
     return { hasPropertiesErrors, updatedProperties };
   }, [propertyErrors, parentCatalogueItemPropertiesInfo, propertyValues]);
 
+  const handleUsageStatusErrors = React.useCallback(() => {
+    if (itemDetails.usage_status_id == '' || !itemDetails.usage_status_id) {
+      setHasUsageStatusErrors(true);
+      return true;
+    } else {
+      return false;
+    }
+  }, [itemDetails.usage_status_id]);
+
   const details: ItemDetails = React.useMemo(() => {
     return {
       catalogue_item_id: catalogueItem?.id ?? '',
@@ -322,7 +334,7 @@ function ItemDialog(props: ItemDialogProps) {
       is_defective: itemDetails.is_defective === 'true' ? true : false,
       usage_status_id: itemDetails.usage_status_id
         ? itemDetails.usage_status_id
-        : '0',
+        : '',
       warranty_end_date:
         itemDetails.warranty_end_date &&
         isValidDateTime(itemDetails.warranty_end_date)
@@ -355,7 +367,8 @@ function ItemDialog(props: ItemDialogProps) {
     const { updatedProperties, hasPropertiesErrors } =
       handleFormPropertiesErrorStates();
 
-    if (hasPropertiesErrors) return;
+    const hasUsageStatusError = handleUsageStatusErrors();
+    if (hasPropertiesErrors || hasUsageStatusError) return;
 
     const item: AddItem = {
       ...details,
@@ -380,11 +393,13 @@ function ItemDialog(props: ItemDialogProps) {
     }
   }, [
     handleFormPropertiesErrorStates,
+    handleUsageStatusErrors,
     details,
-    advancedSerialNumberOptions,
+    advancedSerialNumberOptions.quantity,
+    advancedSerialNumberOptions.startingValue,
     addItems,
-    addItem,
     handleClose,
+    addItem,
   ]);
 
   const handleEditItem = React.useCallback(() => {
@@ -392,7 +407,9 @@ function ItemDialog(props: ItemDialogProps) {
       const { updatedProperties, hasPropertiesErrors } =
         handleFormPropertiesErrorStates();
 
-      if (hasPropertiesErrors) return;
+      const hasUsageStatusError = handleUsageStatusErrors();
+
+      if (hasPropertiesErrors || hasUsageStatusError) return;
 
       const isPurchaseOrderNumberUpdated =
         details.purchase_order_number !== selectedItem.purchase_order_number;
@@ -473,7 +490,16 @@ function ItemDialog(props: ItemDialogProps) {
   }, [
     selectedItem,
     handleFormPropertiesErrorStates,
-    details,
+    handleUsageStatusErrors,
+    details.purchase_order_number,
+    details.is_defective,
+    details.usage_status_id,
+    details.warranty_end_date,
+    details.asset_number,
+    details.serial_number,
+    details.delivered_date,
+    details.notes,
+    details.system_id,
     editItem,
     handleClose,
   ]);
@@ -489,6 +515,13 @@ function ItemDialog(props: ItemDialogProps) {
   const handleNext = React.useCallback(
     (step: number) => {
       switch (step) {
+        case 0: {
+          const hasUsageStatusError = handleUsageStatusErrors();
+          return (
+            !hasUsageStatusError &&
+            setActiveStep((prevActiveStep) => prevActiveStep + 1)
+          );
+        }
         case 1: {
           const { hasPropertiesErrors } = handleFormPropertiesErrorStates();
           return (
@@ -500,7 +533,7 @@ function ItemDialog(props: ItemDialogProps) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     },
-    [handleFormPropertiesErrorStates]
+    [handleFormPropertiesErrorStates, handleUsageStatusErrors]
   );
 
   const handleBack = () => {
@@ -552,6 +585,7 @@ function ItemDialog(props: ItemDialogProps) {
             Object.values(hasDateErrors).some(
               (value: boolean) => value === true
             ) ||
+            hasUsageStatusErrors ||
             !!hasSerialNumberErrors ||
             !!hasQuantityErrors ||
             !!hasStartingValueErrors
@@ -567,6 +601,7 @@ function ItemDialog(props: ItemDialogProps) {
       hasQuantityErrors,
       hasSerialNumberErrors,
       hasStartingValueErrors,
+      hasUsageStatusErrors,
       propertyErrors,
     ]
   );
@@ -762,7 +797,11 @@ function ItemDialog(props: ItemDialogProps) {
             </Grid>
             <Grid item xs={12}>
               <FormControl size="small" fullWidth>
-                <InputLabel required={true} id="usage-status">
+                <InputLabel
+                  required={true}
+                  error={hasUsageStatusErrors}
+                  id="usage-status"
+                >
                   Usage status
                 </InputLabel>
                 <Select
@@ -772,12 +811,14 @@ function ItemDialog(props: ItemDialogProps) {
                     usageStatuses?.find(
                       (usageStatus) =>
                         usageStatus.id == itemDetails.usage_status_id
-                    )?.id ?? '0'
+                    )?.id ?? ''
                   }
                   size="small"
-                  onChange={(e) =>
-                    handleItemDetails('usage_status_id', e.target.value)
-                  }
+                  onChange={(e) => {
+                    setHasUsageStatusErrors(false);
+                    handleItemDetails('usage_status_id', e.target.value);
+                  }}
+                  error={hasUsageStatusErrors}
                   label="Usage status"
                 >
                   {usageStatuses?.map((usageStatus) => (
@@ -786,6 +827,11 @@ function ItemDialog(props: ItemDialogProps) {
                     </MenuItem>
                   ))}
                 </Select>
+                {hasUsageStatusErrors && (
+                  <FormHelperText error>
+                    Please select a Usage Status
+                  </FormHelperText>
+                )}
               </FormControl>
             </Grid>
 
@@ -1094,6 +1140,7 @@ function ItemDialog(props: ItemDialogProps) {
               Object.values(hasDateErrors).some(
                 (value: boolean) => value === true
               ) ||
+              hasUsageStatusErrors ||
               !!hasSerialNumberErrors ||
               !!hasQuantityErrors ||
               !!hasStartingValueErrors

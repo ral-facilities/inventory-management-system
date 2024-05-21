@@ -211,8 +211,8 @@ describe('items api functions', () => {
     ];
 
     const mockUsageStatuses: MoveItemsToSystemUsageStatus[] = [
-      { item_id: 'KvT2Ox7n', usage_status: '0' },
-      { item_id: 'G463gOIA', usage_status: '0' },
+      { item_id: 'KvT2Ox7n', usage_status_id: '0' },
+      { item_id: 'G463gOIA', usage_status_id: '0' },
     ];
 
     let moveItemsToSystem: MoveItemsToSystem;
@@ -253,7 +253,7 @@ describe('items api functions', () => {
           system_id: moveItemsToSystem.targetSystem.id,
           usage_status_id: moveItemsToSystem.usageStatuses.find(
             (status) => status.item_id === item.id
-          )?.usage_status,
+          )?.usage_status_id,
         })
       );
       expect(result.current.data).toEqual(
@@ -273,7 +273,7 @@ describe('items api functions', () => {
       };
       moveItemsToSystem.usageStatuses = [
         ...moveItemsToSystem.usageStatuses,
-        { item_id: 'Error 409', usage_status: '2' },
+        { item_id: 'Error 409', usage_status_id: '2' },
       ];
 
       // Fail just the 1st system
@@ -296,7 +296,7 @@ describe('items api functions', () => {
           system_id: 'new_system_id',
           usage_status_id: moveItemsToSystem.usageStatuses.find(
             (status) => status.item_id === item.id
-          )?.usage_status,
+          )?.usage_status_id,
         })
       );
       expect(result.current.data).toEqual(

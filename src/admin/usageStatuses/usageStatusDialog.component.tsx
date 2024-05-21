@@ -13,7 +13,7 @@ import {
   Grid,
   TextField,
 } from '@mui/material';
-import { useAddUsageStatus } from '../../api/usageStatus';
+import { useAddUsageStatus } from '../../api/usageStatuses';
 
 export interface UsageStatusDialogProps {
   open: boolean;
@@ -23,10 +23,9 @@ export interface UsageStatusDialogProps {
 function UsageStatusDialog(props: UsageStatusDialogProps) {
   const { open, onClose } = props;
 
-  const [usageStatusDetails, setUsageStatusDetails] =
-    React.useState<AddUsageStatus>({
-      value: null,
-    });
+  const [usageStatusDetails, setUsageStatusDetails] = React.useState<
+    AddUsageStatus | undefined
+  >(undefined);
 
   const [valueError, setValueError] = React.useState<string | undefined>(
     undefined
@@ -36,9 +35,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
     useAddUsageStatus();
 
   const handleClose = React.useCallback(() => {
-    setUsageStatusDetails({
-      value: null,
-    });
+    setUsageStatusDetails(undefined);
     setValueError(undefined);
     onClose();
   }, [onClose]);
@@ -46,8 +43,8 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
   const handleErrors = React.useCallback((): boolean => {
     let hasErrors = false;
     if (
-      !usageStatusDetails.value ||
-      usageStatusDetails.value.trim().length === 0
+      !usageStatusDetails?.value ||
+      usageStatusDetails?.value.trim().length === 0
     ) {
       hasErrors = true;
       setValueError('Please enter a value');
@@ -56,7 +53,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
     return hasErrors;
   }, [usageStatusDetails]);
 
-  const handleAddUnit = React.useCallback(() => {
+  const handleAddUsageStatus = React.useCallback(() => {
     const hasErrors = handleErrors();
 
     if (hasErrors) {
@@ -84,7 +81,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
               label="Value"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={usageStatusDetails.value}
+              value={usageStatusDetails?.value}
               onChange={(event) => {
                 setUsageStatusDetails({ value: event.target.value });
                 setValueError(undefined);
@@ -118,7 +115,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={handleAddUnit}
+            onClick={handleAddUsageStatus}
             disabled={isAddPending || valueError !== undefined}
           >
             Save

@@ -222,7 +222,7 @@ export const useMoveItemsToSystem = (): UseMutationResult<
             system_id: moveItemsToSystem.targetSystem?.id || '',
             usage_status_id: moveItemsToSystem.usageStatuses.find(
               (status) => status.item_id === item.id
-            )?.usage_status,
+            )?.usage_status_id,
           })
             .then((result: Item) => {
               const targetSystemName =

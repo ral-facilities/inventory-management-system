@@ -31,7 +31,7 @@ import SystemItemsDialog, {
   UsageStatusesType,
 } from './systemItemsDialog.component';
 import { formatDateTimeStrings } from '../utils';
-import { useUsageStatuses } from '../api/usageStatus';
+import { useUsageStatuses } from '../api/usageStatuses';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
@@ -188,7 +188,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       const initialUsageStatuses: Omit<UsageStatusesType, 'item_id'>[] =
         Array.from(catalogueItemIdSet).map((catalogue_item_id) => ({
           catalogue_item_id: catalogue_item_id,
-          usageStatus: '', // Setting usageStatus to an empty string by default
           usage_status_id: '',
         }));
 

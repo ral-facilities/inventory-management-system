@@ -481,7 +481,6 @@ describe('ItemDialog', () => {
         warrantyEndDate: '17/02/',
         deliveredDate: '23/09/',
         isDefective: 'Yes',
-        usageStatus: 'Used',
       });
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
@@ -519,6 +518,7 @@ describe('ItemDialog', () => {
       await modifyDetailsValues({
         warrantyEndDate: '17/02/2000',
         deliveredDate: '23/09/2000',
+        usageStatus: 'Used',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -661,6 +661,30 @@ describe('ItemDialog', () => {
         warranty_end_date: '2035-02-17T00:00:00.000Z',
       });
     }, 10000);
+
+    it('displays error message when usage status not selected', async () => {
+      createView();
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByText('Invalid item details')).toBeInTheDocument();
+      expect(
+        screen.getByText('Please select a Usage Status')
+      ).toBeInTheDocument();
+
+      await modifyDetailsValues({
+        usageStatus: 'Used',
+      });
+
+      expect(screen.queryByRole('button', { name: 'Next' })).not.toBeDisabled();
+      expect(
+        screen.queryByText('Invalid item details')
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByText('Please select a Usage Status')
+      ).not.toBeInTheDocument();
+    });
 
     it('displays error message when mandatory property values missing', async () => {
       createView();

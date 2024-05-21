@@ -51,7 +51,7 @@ const convertToSystemUsageStatuses = (
     .filter((item) => item.usage_status_id !== '') // Exclude items with empty usageStatus
     .map((item) => ({
       item_id: item.item_id,
-      usage_status: item.usage_status_id,
+      usage_status_id: item.usage_status_id,
     }));
 };
 
