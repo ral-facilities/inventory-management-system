@@ -50,7 +50,7 @@ function AdminPage() {
 
   const adminBreadCrumbs: BreadcrumbsInfo | undefined = adminPageName
     ? {
-        trail: [adminBreadCrumbsNames[adminPageName]],
+        trail: [adminBreadCrumbsNames[adminPageName] ?? ['', '']],
         full_trail: true,
       }
     : undefined;
@@ -162,7 +162,7 @@ function AdminPage() {
 
       {adminPageName === 'units' && <Units />}
       {adminPageName === 'usage-statuses' && <UsageStatuses />}
-      {adminPageName !== null &&
+      {adminPageName !== undefined &&
         adminPageName !== 'units' &&
         adminPageName !== 'usage-statuses' && (
           <Box
