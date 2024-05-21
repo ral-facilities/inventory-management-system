@@ -43,18 +43,14 @@ function AdminPage() {
   const navigateToAdminFunction = useNavigateToAdminFunction();
   const adminPageName = useGetAdminPageName();
 
+  const adminBreadCrumbsNames: { [key: string]: [string, string] } = {
+    ['units']: ['Units', 'Units'],
+    ['usage-statuses']: ['Usage statuses', 'Usage statuses'],
+  };
+
   const adminBreadCrumbs: BreadcrumbsInfo | undefined = adminPageName
     ? {
-        trail: [
-          [
-            adminPageName ?? '',
-            adminPageName === 'units'
-              ? 'Units'
-              : adminPageName == 'usage-statuses'
-                ? 'Usage statuses'
-                : '',
-          ],
-        ],
+        trail: [adminBreadCrumbsNames[adminPageName]],
         full_trail: true,
       }
     : undefined;
@@ -62,35 +58,23 @@ function AdminPage() {
   return (
     <Grid container>
       <Grid container>
-        <Grid
-          item
-          container
-          alignItems="center"
-          justifyContent="space-between" // Align items and distribute space along the main axis
-          sx={{
-            display: 'flex',
-            height: '100%',
-            width: '100%',
-            padding: '4px', // Add some padding for spacing
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Box
-              sx={{
-                py: '20px',
-                paddingLeft: '4px',
-              }}
-            >
-              <Breadcrumbs
-                onChangeNode={navigateToAdminFunction}
-                breadcrumbsInfo={adminBreadCrumbs}
-                onChangeNavigateHome={() => navigateToAdminFunction(null)}
-                navigateHomeAriaLabel={'navigate to admin page'}
-              />
-            </Box>
-          </div>
-        </Grid>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Box
+            sx={{
+              py: '20px',
+              paddingLeft: '4px',
+            }}
+          >
+            <Breadcrumbs
+              onChangeNode={navigateToAdminFunction}
+              breadcrumbsInfo={adminBreadCrumbs}
+              onChangeNavigateHome={() => navigateToAdminFunction(null)}
+              navigateHomeAriaLabel={'navigate to admin page'}
+            />
+          </Box>
+        </div>
       </Grid>
+
       {adminPageName === null && (
         <Grid container flexDirection={'column'}>
           <Grid item container xs={12} overflow={'auto'}>
@@ -178,6 +162,25 @@ function AdminPage() {
 
       {adminPageName === 'units' && <Units />}
       {adminPageName === 'usage-statuses' && <UsageStatuses />}
+      {adminPageName !== null &&
+        adminPageName !== 'units' &&
+        adminPageName !== 'usage-statuses' && (
+          <Box
+            sx={{
+              width: '100%',
+              justifyContent: 'center',
+            }}
+          >
+            <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+              No results found
+            </Typography>
+            <Typography sx={{ textAlign: 'center' }}>
+              The admin function you searched for does not exist. Please
+              navigate home by pressing the home button at the top left of your
+              screen.
+            </Typography>
+          </Box>
+        )}
     </Grid>
   );
 }
