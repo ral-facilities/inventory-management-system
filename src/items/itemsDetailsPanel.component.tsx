@@ -76,7 +76,11 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
               <Typography sx={{ my: 1 }} variant="h6">
                 Description:
               </Typography>
-              <Typography sx={{ mb: 1 }} variant="body1" color="text.secondary">
+              <Typography
+                sx={{ mb: 1, whiteSpace: 'pre-line' }}
+                variant="body1"
+                color="text.secondary"
+              >
                 {catalogueItemIdData.description ?? 'None'}
               </Typography>
             </Grid>
@@ -248,7 +252,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
 
         <TabPanel value={tabValue} index={3}>
           <Grid item xs={12}>
-            <Typography color="text.secondary">
+            <Typography color="text.secondary" whiteSpace="pre-line">
               {itemData.notes ?? 'None'}
             </Typography>
           </Grid>
