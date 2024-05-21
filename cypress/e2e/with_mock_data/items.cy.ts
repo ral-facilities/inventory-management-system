@@ -65,6 +65,9 @@ describe('Items', () => {
   it('adds an item with only mandatory fields', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
 
+    cy.findByLabelText('Usage status *').click();
+    cy.findByText('New').click();
+
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Next' }).click();
@@ -110,6 +113,8 @@ describe('Items', () => {
     cy.findByLabelText('Serial number').type('test %s');
     cy.findByLabelText('Quantity').type('3');
     cy.findByLabelText('Starting value').type('2');
+    cy.findByLabelText('Usage status *').click();
+    cy.findByText('New').click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -213,6 +218,10 @@ describe('Items', () => {
   it('adds an item with only mandatory fields (allowed list of values)', () => {
     cy.visit('/catalogue/item/17/items');
     cy.findByRole('button', { name: 'Add Item' }).click();
+
+    cy.findByLabelText('Usage status *').click();
+    cy.findByText('New').click();
+
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByLabelText('Ultimate Pressure (millibar) *').clear();
@@ -337,6 +346,13 @@ describe('Items', () => {
     cy.findByLabelText('Delivered date').type('12/02/2000');
     cy.findByText('Exceeded maximum date').should('not.exist');
     cy.findByText('Date format: dd/MM/yyyy').should('not.exist');
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByText('Please select a Usage Status').should('exist');
+
+    cy.findByLabelText('Usage status *').click();
+    cy.findByText('New').click();
 
     cy.findByRole('button', { name: 'Next' }).click();
 
