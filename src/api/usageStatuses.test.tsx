@@ -6,7 +6,7 @@ import {
   useAddUsageStatus,
   useDeleteUsageStatus,
   useUsageStatuses,
-} from './usageStatus';
+} from './usageStatuses';
 
 describe('usage status api functions', () => {
   afterEach(() => {
@@ -28,9 +28,9 @@ describe('usage status api functions', () => {
   });
 
   describe('useAddUsageStatus', () => {
-    let mockdataAdd: AddUsageStatus;
+    let mockDataAdd: AddUsageStatus;
     beforeEach(() => {
-      mockdataAdd = {
+      mockDataAdd = {
         value: 'test',
       };
     });
@@ -40,7 +40,7 @@ describe('usage status api functions', () => {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockdataAdd);
+      result.current.mutate(mockDataAdd);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
@@ -54,7 +54,7 @@ describe('usage status api functions', () => {
     });
   });
 
-  describe('useDeleteUnit', () => {
+  describe('useDeleteUsageStatus', () => {
     let mockDataView: UsageStatus;
     beforeEach(() => {
       mockDataView = {

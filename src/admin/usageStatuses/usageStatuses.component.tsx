@@ -19,7 +19,7 @@ import { usePreservedTableState } from '../../common/preservedTableState.compone
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { formatDateTimeStrings, getPageHeightCalc } from '../../utils.tsx';
-import { useUsageStatuses } from '../../api/usageStatus.tsx';
+import { useUsageStatuses } from '../../api/usageStatuses.tsx';
 import UsageStatusDialog from './usageStatusDialog.component.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
 

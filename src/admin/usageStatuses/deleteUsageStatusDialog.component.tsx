@@ -12,7 +12,7 @@ import {
   FormHelperText,
 } from '@mui/material';
 import WarningIcon from '@mui/icons-material/Warning';
-import { useDeleteUsageStatus } from '../../api/usageStatus';
+import { useDeleteUsageStatus } from '../../api/usageStatuses';
 
 export interface DeleteUsageStatusProps {
   open: boolean;
