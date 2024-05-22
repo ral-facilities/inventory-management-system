@@ -318,12 +318,17 @@ function ItemDialog(props: ItemDialogProps) {
   }, [propertyErrors, parentCatalogueItemPropertiesInfo, propertyValues]);
 
   const handleUsageStatusErrors = React.useCallback(() => {
-    if (itemDetails.usage_status_id == '' || !itemDetails.usage_status_id) {
+    let hasUsageStatusError = false;
+
+    if (
+      itemDetails.usage_status_id == '' ||
+      itemDetails.usage_status_id == null
+    ) {
       setHasUsageStatusErrors(true);
-      return true;
-    } else {
-      return false;
+      hasUsageStatusError = true;
     }
+
+    return { hasUsageStatusError };
   }, [itemDetails.usage_status_id]);
 
   const details: ItemDetails = React.useMemo(() => {
@@ -367,7 +372,7 @@ function ItemDialog(props: ItemDialogProps) {
     const { updatedProperties, hasPropertiesErrors } =
       handleFormPropertiesErrorStates();
 
-    const hasUsageStatusError = handleUsageStatusErrors();
+    const { hasUsageStatusError } = handleUsageStatusErrors();
     if (hasPropertiesErrors || hasUsageStatusError) return;
 
     const item: AddItem = {
@@ -407,7 +412,7 @@ function ItemDialog(props: ItemDialogProps) {
       const { updatedProperties, hasPropertiesErrors } =
         handleFormPropertiesErrorStates();
 
-      const hasUsageStatusError = handleUsageStatusErrors();
+      const { hasUsageStatusError } = handleUsageStatusErrors();
 
       if (hasPropertiesErrors || hasUsageStatusError) return;
 
@@ -491,15 +496,7 @@ function ItemDialog(props: ItemDialogProps) {
     selectedItem,
     handleFormPropertiesErrorStates,
     handleUsageStatusErrors,
-    details.purchase_order_number,
-    details.is_defective,
-    details.usage_status_id,
-    details.warranty_end_date,
-    details.asset_number,
-    details.serial_number,
-    details.delivered_date,
-    details.notes,
-    details.system_id,
+    details,
     editItem,
     handleClose,
   ]);
@@ -516,7 +513,7 @@ function ItemDialog(props: ItemDialogProps) {
     (step: number) => {
       switch (step) {
         case 0: {
-          const hasUsageStatusError = handleUsageStatusErrors();
+          const { hasUsageStatusError } = handleUsageStatusErrors();
           return (
             !hasUsageStatusError &&
             setActiveStep((prevActiveStep) => prevActiveStep + 1)

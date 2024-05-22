@@ -137,7 +137,7 @@ describe('ItemDialog', () => {
     if (values.usageStatus !== undefined) {
       fireEvent.mouseDown(screen.getByLabelText('Usage status *'));
       fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.usageStatus)
+        await within(screen.getByRole('listbox')).findByText(values.usageStatus)
       );
     }
   };

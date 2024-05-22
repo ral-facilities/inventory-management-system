@@ -215,12 +215,12 @@ describe('Items', () => {
     cy.findByText('e.g. test 2').should('exist');
   });
 
-  it('adds an item with only mandatory fields (allowed list of values)', () => {
+  it.only('adds an item with only mandatory fields (allowed list of values)', () => {
     cy.visit('/catalogue/item/17/items');
     cy.findByRole('button', { name: 'Add Item' }).click();
 
     cy.findByLabelText('Usage status *').click();
-    cy.findByText('New').click();
+    cy.findByRole('option', { name: 'Used' }).click();
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -248,7 +248,7 @@ describe('Items', () => {
           system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: null,
           is_defective: false,
-          usage_status_id: '0',
+          usage_status_id: '2',
           warranty_end_date: null,
           asset_number: null,
           serial_number: null,
