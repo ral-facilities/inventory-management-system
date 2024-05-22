@@ -215,7 +215,7 @@ describe('Items', () => {
     cy.findByText('e.g. test 2').should('exist');
   });
 
-  it.only('adds an item with only mandatory fields (allowed list of values)', () => {
+  it('adds an item with only mandatory fields (allowed list of values)', () => {
     cy.visit('/catalogue/item/17/items');
     cy.findByRole('button', { name: 'Add Item' }).click();
 
