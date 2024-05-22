@@ -79,7 +79,7 @@ function UnitsDialog(props: UnitsDialogProps) {
               label="Value"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={unitDetails.value}
+              value={unitDetails.value ?? ''}
               onChange={(event) => {
                 setUnitDetails({ value: event.target.value });
                 setValueError(undefined);
