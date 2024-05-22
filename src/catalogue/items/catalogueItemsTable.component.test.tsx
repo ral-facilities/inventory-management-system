@@ -244,40 +244,6 @@ describe('Catalogue Items Table', () => {
     });
   }, 20000);
 
-  it('displays notes tooltip on hover', async () => {
-    createView();
-
-    await ensureColumnsVisible(['Notes']);
-
-    await waitFor(() => {
-      expect(
-        screen.getByLabelText(
-          'Catalogue item note: Need to find new manufacturer. 26'
-        )
-      ).toBeInTheDocument();
-    });
-
-    const infoIcon = screen.getByLabelText(
-      'Catalogue item note: Need to find new manufacturer. 26'
-    );
-
-    await user.hover(infoIcon);
-
-    await waitFor(() => {
-      expect(
-        screen.getByText('Need to find new manufacturer. 26')
-      ).toBeInTheDocument();
-    });
-
-    await user.unhover(infoIcon);
-
-    await waitFor(() => {
-      expect(
-        screen.queryByText('Need to find new manufacturer. 26')
-      ).not.toBeInTheDocument();
-    });
-  });
-
   it('opens the delete catalogue item dialog and can delete an item', async () => {
     createView();
 

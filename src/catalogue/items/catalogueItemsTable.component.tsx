@@ -19,6 +19,7 @@ import {
   Typography,
 } from '@mui/material';
 import {
+  MRT_Cell,
   MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
@@ -238,7 +239,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) => row.catalogueItem.name,
         id: 'catalogueItem.name',
         size: 200,
-        Cell: ({ renderedCellValue, row }) =>
+        Cell: ({ renderedCellValue, row, cell }) =>
           dense ? (
             <Typography
               sx={{
@@ -252,13 +253,18 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               {renderedCellValue}
             </Typography>
           ) : (
-            <MuiLink
-              underline="hover"
-              component={Link}
-              to={`item/${row.original.catalogueItem.id}`}
+            <OverflowTip
+              sx={{ fontSize: 'inherit' }}
+              columnSize={cell.column.getSize()}
             >
-              {renderedCellValue}
-            </MuiLink>
+              <MuiLink
+                underline="hover"
+                component={Link}
+                to={`item/${row.original.catalogueItem.id}`}
+              >
+                {renderedCellValue}
+              </MuiLink>
+            </OverflowTip>
           ),
       },
       {
@@ -268,9 +274,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         filterVariant: 'datetime-range',
         size: 350,
         enableGrouping: false,
-        Cell: ({ row }) =>
-          row.original.catalogueItem.modified_time &&
-          formatDateTimeStrings(row.original.catalogueItem.modified_time, true),
+        Cell: ({ cell, row }) => (
+          <OverflowTip
+            sx={{ fontSize: 'inherit' }}
+            columnSize={cell.column.getSize()}
+          >
+            {formatDateTimeStrings(
+              row.original.catalogueItem.modified_time,
+              true
+            )}
+          </OverflowTip>
+        ),
       },
       {
         header: 'Created',
@@ -280,8 +294,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         size: 350,
         enableGrouping: false,
         enableHiding: true,
-        Cell: ({ row }) =>
-          formatDateTimeStrings(row.original.catalogueItem.created_time, true),
+        Cell: ({ cell, row }) => (
+          <OverflowTip
+            sx={{ fontSize: 'inherit' }}
+            columnSize={cell.column.getSize()}
+          >
+            {formatDateTimeStrings(
+              row.original.catalogueItem.created_time,
+              true
+            )}
+          </OverflowTip>
+        ),
       },
       {
         header: 'View Items',
@@ -305,7 +328,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         enableGrouping: false,
         Cell: ({ cell, row }) =>
           row.original.catalogueItem.description && (
-            <OverflowTip columnSize={cell.column.getSize()}>
+            <OverflowTip
+              sx={{ fontSize: 'inherit' }}
+              columnSize={cell.column.getSize()}
+            >
               {row.original.catalogueItem.description}
             </OverflowTip>
           ),
@@ -344,17 +370,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         id: 'catalogueItem.obsolete_reason',
         size: 250,
         enableGrouping: false,
-        Cell: ({ row }) =>
+        Cell: ({ cell, row }) =>
           row.original.catalogueItem.obsolete_reason && (
-            <Tooltip
-              title={row.original.catalogueItem.obsolete_reason}
-              placement="top"
-              enterTouchDelay={0}
-              arrow
-              aria-label={`Catalogue item obsolete reason: ${row.original.catalogueItem.obsolete_reason}`}
+            <OverflowTip
+              sx={{ fontSize: 'inherit' }}
+              columnSize={cell.column.getSize()}
             >
-              <InfoOutlinedIcon />
-            </Tooltip>
+              {row.original.catalogueItem.obsolete_reason}
+            </OverflowTip>
           ),
       },
       ...viewCatalogueItemProperties.map((property) => ({
@@ -388,7 +411,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             property.type as 'string' | 'boolean' | 'number' | 'null'
           ],
 
-        Cell: ({ row }: { row: MRT_Row<TableRowData> }) => {
+        Cell: ({
+          row,
+          cell,
+        }: {
+          row: MRT_Row<TableRowData>;
+          cell: MRT_Cell<TableRowData, unknown>;
+        }) => {
           if (
             typeof findPropertyValue(
               row.original.catalogueItem.properties,
@@ -422,9 +451,16 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               ? 'Yes'
               : 'No';
           } else {
-            return findPropertyValue(
-              row.original.catalogueItem.properties,
-              property.id
+            return (
+              <OverflowTip
+                sx={{ fontSize: 'inherit' }}
+                columnSize={cell.column.getSize()}
+              >
+                {findPropertyValue(
+                  row.original.catalogueItem.properties,
+                  property.id
+                )}
+              </OverflowTip>
             );
           }
         },
@@ -483,17 +519,22 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) => row.catalogueItem.drawing_link ?? '',
         id: 'catalogueItem.drawing_link',
         size: 250,
-        Cell: ({ row }) =>
+        Cell: ({ cell, row }) =>
           row.original.catalogueItem.drawing_link && (
-            <MuiLink
-              underline="hover"
-              target="_blank"
-              href={row.original.catalogueItem.drawing_link}
-              // For ensuring space when grouping
-              sx={{ marginRight: 0.5 }}
+            <OverflowTip
+              sx={{ fontSize: 'inherit' }}
+              columnSize={cell.column.getSize()}
             >
-              {row.original.catalogueItem.drawing_link}
-            </MuiLink>
+              <MuiLink
+                underline="hover"
+                target="_blank"
+                href={row.original.catalogueItem.drawing_link}
+                // For ensuring space when grouping
+                sx={{ marginRight: 0.5 }}
+              >
+                {row.original.catalogueItem.drawing_link}
+              </MuiLink>
+            </OverflowTip>
           ),
       },
       {
@@ -501,37 +542,57 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) => row.catalogueItem.item_model_number ?? '',
         id: 'catalogueItem.item_model_number',
         size: 250,
+        Cell: ({ cell, row }) => (
+          <OverflowTip
+            sx={{ fontSize: 'inherit' }}
+            columnSize={cell.column.getSize()}
+          >
+            {row.original.catalogueItem.item_model_number}
+          </OverflowTip>
+        ),
       },
       {
         header: 'Manufacturer Name',
         accessorFn: (row) => row.manufacturer?.name,
         id: 'manufacturer.name',
-        Cell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            to={`/manufacturers/${row.original.catalogueItem.manufacturer_id}`}
-            // For ensuring space when grouping
-            sx={{ marginRight: 0.5 }}
+        size: 250,
+        Cell: ({ cell, row }) => (
+          <OverflowTip
+            sx={{ fontSize: 'inherit' }}
+            columnSize={cell.column.getSize()}
           >
-            {row.original.manufacturer?.name}
-          </MuiLink>
+            <MuiLink
+              underline="hover"
+              component={Link}
+              to={`/manufacturers/${row.original.catalogueItem.manufacturer_id}`}
+              // For ensuring space when grouping
+              sx={{ marginRight: 0.5 }}
+            >
+              {row.original.manufacturer?.name}
+            </MuiLink>
+          </OverflowTip>
         ),
       },
       {
         header: 'Manufacturer URL',
         accessorFn: (row) => row.manufacturer?.url,
         id: 'manufacturer.url',
-        Cell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            target="_blank"
-            href={row.original.manufacturer?.url ?? undefined}
-            // For ensuring space when grouping
-            sx={{ marginRight: 0.5 }}
+        size: 250,
+        Cell: ({ cell, row }) => (
+          <OverflowTip
+            sx={{ fontSize: 'inherit' }}
+            columnSize={cell.column.getSize()}
           >
-            {row.original.manufacturer?.url}
-          </MuiLink>
+            <MuiLink
+              underline="hover"
+              target="_blank"
+              href={row.original.manufacturer?.url ?? undefined}
+              // For ensuring space when grouping
+              sx={{ marginRight: 0.5 }}
+            >
+              {row.original.manufacturer?.url}
+            </MuiLink>
+          </OverflowTip>
         ),
       },
       {
@@ -539,6 +600,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) =>
           `${row.manufacturer?.address.address_line}${row.manufacturer?.address.town}${row.manufacturer?.address.county}${row.manufacturer?.address.postcode}${row.manufacturer?.address.country}`,
         id: 'manufacturer.address',
+        size: 250,
         Cell: ({ row }) => (
           <div style={{ display: 'inline-block' }}>
             <Typography sx={{ fontSize: 'inherit' }}>
@@ -563,7 +625,15 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Manufacturer Telephone',
         accessorFn: (row) => row.manufacturer?.telephone,
         id: 'manufacturer.telephone',
-        Cell: ({ row }) => row.original.manufacturer?.telephone,
+        size: 250,
+        Cell: ({ cell, row }) => (
+          <OverflowTip
+            sx={{ fontSize: 'inherit' }}
+            columnSize={cell.column.getSize()}
+          >
+            {row.original.manufacturer?.telephone}
+          </OverflowTip>
+        ),
       },
       {
         header: 'Notes',
@@ -571,17 +641,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         id: 'catalogueItem.notes',
         size: 250,
         enableGrouping: false,
-        Cell: ({ row }) =>
+        Cell: ({ cell, row }) =>
           row.original.catalogueItem.notes && (
-            <Tooltip
-              title={row.original.catalogueItem.notes}
-              placement="top"
-              enterTouchDelay={0}
-              arrow
-              aria-label={`Catalogue item note: ${row.original.catalogueItem.notes}`}
+            <OverflowTip
+              sx={{ fontSize: 'inherit' }}
+              columnSize={cell.column.getSize()}
             >
-              <InfoOutlinedIcon />
-            </Tooltip>
+              {row.original.catalogueItem.notes}
+            </OverflowTip>
           ),
       },
     ];

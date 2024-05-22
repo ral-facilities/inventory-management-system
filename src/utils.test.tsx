@@ -8,6 +8,7 @@ import {
 } from './utils';
 import userEvent from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from './testUtils';
+import { Link } from '@mui/material';
 
 describe('Utility functions', () => {
   afterEach(() => {
@@ -88,6 +89,9 @@ describe('Utility functions', () => {
   });
 
   describe('OverflowTip', () => {
+    afterEach(() => {
+      vi.clearAllMocks();
+    });
     it('renders children without tooltip when content does not overflow', async () => {
       renderComponentWithRouterProvider(
         <OverflowTip columnSize={200}>
@@ -105,6 +109,26 @@ describe('Utility functions', () => {
 
       expect(
         screen.getAllByText("Some text that doesn't overflow").length
+      ).toBe(1);
+    });
+
+    it('renders link without tooltip when content does not overflow', async () => {
+      renderComponentWithRouterProvider(
+        <OverflowTip columnSize={200}>
+          <Link href="#">Some link that doesn&#39;t overflow</Link>
+        </OverflowTip>
+      );
+
+      const overFlowTip = screen.getByText("Some link that doesn't overflow");
+
+      expect(
+        screen.getAllByText("Some link that doesn't overflow").length
+      ).toBe(1);
+
+      await userEvent.hover(overFlowTip);
+
+      expect(
+        screen.getAllByText("Some link that doesn't overflow").length
       ).toBe(1);
     });
 
@@ -146,6 +170,50 @@ describe('Utility functions', () => {
       await waitFor(() => {
         expect(
           screen.getAllByText('Some long text that overflows').length
+        ).toBe(1);
+      });
+    });
+
+    it('renders link with tooltip when content overflows', async () => {
+      // Mocking scrollWidth and clientWidth to make content overflow
+      const mockScrollWidth = 300;
+      const mockClientWidth = 200;
+
+      vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get').mockReturnValue(
+        mockScrollWidth
+      );
+      vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(
+        mockClientWidth
+      );
+
+      renderComponentWithRouterProvider(
+        <OverflowTip columnSize={200}>
+          <Link href="#">Some long link text that overflows</Link>
+        </OverflowTip>
+      );
+      const overFlowTip = screen.getByText(
+        'Some long link text that overflows'
+      );
+
+      await waitFor(() => {
+        expect(
+          screen.getAllByText('Some long link text that overflows').length
+        ).toBe(1);
+      });
+
+      await userEvent.hover(overFlowTip);
+
+      await waitFor(() => {
+        expect(
+          screen.getAllByText('Some long link text that overflows').length
+        ).toBe(2);
+      });
+
+      await userEvent.unhover(overFlowTip);
+
+      await waitFor(() => {
+        expect(
+          screen.getAllByText('Some long link text that overflows').length
         ).toBe(1);
       });
     });

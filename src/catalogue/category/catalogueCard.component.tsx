@@ -94,7 +94,7 @@ function CatalogueCard(props: CatalogueCardProps) {
             minWidth: 0,
           }}
         >
-          <OverflowTip type="card">{catalogueCategory.name}</OverflowTip>
+          <OverflowTip>{catalogueCategory.name}</OverflowTip>
         </CardContent>
         <CardActions>
           <IconButton

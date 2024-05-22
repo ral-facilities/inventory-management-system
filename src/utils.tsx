@@ -90,10 +90,20 @@ export const formatDateTimeStrings = (
   return formattedDate;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const OverflowTip = ({ children, columnSize, type }: any) => {
+interface OverflowTipProps {
+  children: React.ReactNode;
+  columnSize?: number;
+  sx?: React.CSSProperties;
+}
+
+export const OverflowTip: React.FC<OverflowTipProps> = ({
+  children,
+  columnSize,
+  sx,
+}) => {
   const [isOverflowed, setIsOverflow] = React.useState(false);
-  const overflowElementRef = useRef<HTMLInputElement | null>(null);
+  const overflowElementRef = useRef<HTMLDivElement | null>(null);
+
   React.useEffect(() => {
     if (overflowElementRef.current) {
       setIsOverflow(
@@ -101,11 +111,22 @@ export const OverflowTip = ({ children, columnSize, type }: any) => {
           overflowElementRef.current.clientWidth
       );
     }
-  }, [columnSize, type]);
+  }, [columnSize]);
+
+  // Function to extract plain text from children
+  const getTextContent = (children: React.ReactNode): string => {
+    if (typeof children === 'string') {
+      return children;
+    } else if (React.isValidElement(children)) {
+      return getTextContent(children.props.children);
+    }
+    return '';
+  };
+
   return (
     <Tooltip
       role="tooltip"
-      title={children}
+      title={getTextContent(children)}
       disableHoverListener={!isOverflowed}
       placement="top"
       enterTouchDelay={0}
@@ -113,11 +134,11 @@ export const OverflowTip = ({ children, columnSize, type }: any) => {
     >
       <Typography
         ref={overflowElementRef}
-        style={{
+        sx={{
           whiteSpace: 'nowrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
-          fontSize: type !== 'card' ? 'inherit' : undefined,
+          ...sx,
         }}
       >
         {children}
