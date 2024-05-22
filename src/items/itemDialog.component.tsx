@@ -804,7 +804,9 @@ function ItemDialog(props: ItemDialogProps) {
                   title={
                     <div>
                       <Typography>Catalogue item note:</Typography>
-                      <Typography>{catalogueItem?.notes ?? 'None'}</Typography>
+                      <Typography whiteSpace="pre-line">
+                        {catalogueItem?.notes ?? 'None'}
+                      </Typography>
                     </div>
                   }
                   placement="right"
