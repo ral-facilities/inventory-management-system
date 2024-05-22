@@ -81,7 +81,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
               label="Value"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }}
-              value={usageStatusDetails?.value}
+              value={usageStatusDetails?.value ?? ''}
               onChange={(event) => {
                 setUsageStatusDetails({ value: event.target.value });
                 setValueError(undefined);
