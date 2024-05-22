@@ -22,4 +22,17 @@ describe('AdminPage', () => {
     });
     expect(screen.getByText('Usage Statuses')).toBeInTheDocument();
   });
+
+  it('renders no results page for invalid url', async () => {
+    createView('/admin-ims/testFake');
+
+    await waitFor(() => {
+      expect(screen.getByText('No results found')).toBeInTheDocument();
+    });
+    expect(
+      screen.getByText(
+        `The admin URL route you're trying to access doesn't exist. Please return to the homepage by clicking the home button at the top left of your screen.`
+      )
+    ).toBeInTheDocument();
+  });
 });

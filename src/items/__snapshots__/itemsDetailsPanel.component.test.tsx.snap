@@ -113,7 +113,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1deohxu-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 1
                     </p>
@@ -523,7 +523,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1pax5hk-MuiTypography-root"
                   >
                     TnB0SBoekEtWRijmClwV
                   </p>
@@ -651,7 +651,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (no dat
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1deohxu-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 1
                     </p>
@@ -1061,7 +1061,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (no dat
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1pax5hk-MuiTypography-root"
                   >
                     zolZDKKuvAoTFRUWeZNA
                   </p>
@@ -1189,7 +1189,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1deohxu-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 1
                     </p>
@@ -1599,7 +1599,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1pax5hk-MuiTypography-root"
                   >
                     None
                   </p>
@@ -1727,7 +1727,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1deohxu-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 1
                     </p>
@@ -2137,7 +2137,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1pax5hk-MuiTypography-root"
                   >
                     6Y5XTJfBrNNx8oltI9HE
                   </p>
@@ -2275,7 +2275,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1deohxu-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 1
                     </p>
@@ -2704,7 +2704,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1pax5hk-MuiTypography-root"
                   >
                     6Y5XTJfBrNNx8oltI9HE
                   </p>
@@ -2842,7 +2842,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1deohxu-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 1
                     </p>
@@ -3271,7 +3271,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1pax5hk-MuiTypography-root"
                   >
                     6Y5XTJfBrNNx8oltI9HE
                   </p>
@@ -3409,7 +3409,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1eav3hy-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1deohxu-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 1
                     </p>
@@ -3838,7 +3838,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-1pax5hk-MuiTypography-root"
                   >
                     6Y5XTJfBrNNx8oltI9HE
                   </p>

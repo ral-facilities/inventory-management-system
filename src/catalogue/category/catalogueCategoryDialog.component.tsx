@@ -193,10 +193,13 @@ const CatalogueCategoryDialog = React.memo(
 
           trimmedLowerCaseValues.forEach((value, i) => {
             for (let j = i + 1; j < trimmedLowerCaseValues.length; j++) {
-              if (
-                value.value === trimmedLowerCaseValues[j].value &&
-                value.value
-              ) {
+              const isDuplicate =
+                property.type === 'number'
+                  ? Number(value.value) ===
+                    Number(trimmedLowerCaseValues[j].value)
+                  : value.value === trimmedLowerCaseValues[j].value;
+
+              if (isDuplicate && value.value) {
                 duplicateIds.push(
                   value.av_placement_id,
                   trimmedLowerCaseValues[j].av_placement_id

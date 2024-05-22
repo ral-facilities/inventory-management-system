@@ -435,7 +435,7 @@ describe('Items', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Delete').click();
 
-    cy.findByText('ID: KvT2Ox7n').should('exist');
+    cy.findByText('Serial Number: 5YUQDDjKpz2z').should('exist');
 
     cy.startSnoopingBrowserMockedRequest();
 
