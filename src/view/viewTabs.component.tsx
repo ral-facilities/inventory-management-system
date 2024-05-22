@@ -62,6 +62,8 @@ function ViewTabs() {
 
       if (tabValue !== value && tabValue !== '') {
         tabValue = tabValue.charAt(0).toUpperCase() + tabValue.slice(1);
+        tabValue =
+          tabValue === 'Admin-ims' ? tabValue.replace('-ims', '') : tabValue;
         if (TAB_VALUES.includes(tabValue as TabValue))
           setValue(tabValue as TabValue);
         else setValue(false);
