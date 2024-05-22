@@ -815,7 +815,7 @@ export const handlers = [
       if (body.value === 'test_dup') {
         return HttpResponse.json(
           {
-            detail: 'A Usage Status with the same name already exists',
+            detail: 'A Usage Status with the same value already exists',
           },
           { status: 409 }
         );
@@ -851,7 +851,7 @@ export const handlers = [
       if (id === '2') {
         return HttpResponse.json(
           {
-            detail: 'The specified usage status is a part of a Item',
+            detail: 'The specified usage status is a part of an Item',
           },
           { status: 409 }
         );

@@ -22,7 +22,7 @@ describe('UsageStatus', () => {
 
     cy.findByLabelText('Value *').type('test_dup');
     cy.findByRole('button', { name: 'Save' }).click();
-    cy.findByText('A usage status with the same name already exists').should(
+    cy.findByText('A usage status with the same value already exists').should(
       'be.visible'
     );
 

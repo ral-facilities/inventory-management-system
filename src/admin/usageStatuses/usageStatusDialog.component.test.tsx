@@ -48,7 +48,7 @@ describe('Usage status dialog', () => {
 
     await user.click(saveButton);
     const helperText = screen.getByText(
-      'A usage status with the same name already exists'
+      'A usage status with the same value already exists'
     );
     expect(helperText).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();

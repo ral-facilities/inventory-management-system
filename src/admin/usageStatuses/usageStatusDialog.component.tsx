@@ -64,7 +64,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
       .then(() => handleClose())
       .catch((error: AxiosError) => {
         if (error.response?.status === 409) {
-          setValueError('A usage status with the same name already exists');
+          setValueError('A usage status with the same value already exists');
           return;
         }
         handleIMS_APIError(error);
