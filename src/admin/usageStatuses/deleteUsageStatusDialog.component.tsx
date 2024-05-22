@@ -35,7 +35,7 @@ const DeleteUsageStatusDialog = (props: DeleteUsageStatusProps) => {
     onClose();
   }, [onClose]);
 
-  const handleDeleteUnit = React.useCallback(() => {
+  const handleDeleteUsageStatus = React.useCallback(() => {
     if (usageStatus) {
       deleteUsageStatus(usageStatus.id)
         .then(() => {
@@ -60,16 +60,19 @@ const DeleteUsageStatusDialog = (props: DeleteUsageStatusProps) => {
     <Dialog open={open} maxWidth="lg">
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
         <WarningIcon sx={{ marginRight: 1 }} />
-        Delete Unit
+        Delete Usage Status
       </DialogTitle>
       <DialogContent>
         Are you sure you want to permanently delete{' '}
-        <strong data-testid="delete-unit-value">{usageStatus?.value}</strong>?
+        <strong data-testid="delete-usage-status-value">
+          {usageStatus?.value}
+        </strong>
+        ?
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
         <Button
-          onClick={handleDeleteUnit}
+          onClick={handleDeleteUsageStatus}
           disabled={isDeletePending || formError != undefined}
         >
           Continue

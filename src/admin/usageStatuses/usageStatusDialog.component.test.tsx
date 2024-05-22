@@ -7,7 +7,7 @@ import UsageStatusDialog, {
   UsageStatusDialogProps,
 } from './usageStatusDialog.component';
 
-describe('Units dialog', () => {
+describe('Usage status dialog', () => {
   let props: UsageStatusDialogProps;
   let user: UserEvent;
   let axiosPostSpy;
@@ -33,7 +33,7 @@ describe('Units dialog', () => {
     expect(screen.getByText('Cancel')).toBeInTheDocument();
   });
 
-  it('shows errors correctly', async () => {
+  it('displays errors correctly', async () => {
     createView();
 
     const saveButton = screen.getByRole('button', { name: 'Save' });

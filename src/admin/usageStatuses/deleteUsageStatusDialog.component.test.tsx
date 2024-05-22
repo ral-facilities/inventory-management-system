@@ -10,7 +10,7 @@ import DeleteUsageStatusDialog, {
 
 vi.mock('../../handleIMS_APIError');
 
-describe('delete Unit dialog', () => {
+describe('Delete Usage status dialog', () => {
   let props: DeleteUsageStatusProps;
   let user: UserEvent;
   const onClose = vi.fn();
@@ -55,7 +55,7 @@ describe('delete Unit dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
-  it('calls handleDeleteSession when continue button is clicked with a valid session name', async () => {
+  it('calls handleDeleteUsageStatus when the continue button is clicked and the usage status is not currently used by one or more items ', async () => {
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
@@ -65,7 +65,7 @@ describe('delete Unit dialog', () => {
     });
   });
 
-  it('displays error message when user tries to delete a unit that is in a Catalogue category', async () => {
+  it('displays error message when user tries to delete a usage status that is in an Item', async () => {
     usageStatus.id = '2';
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });

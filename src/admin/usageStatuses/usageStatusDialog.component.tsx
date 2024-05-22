@@ -80,7 +80,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
             <TextField
               label="Value"
               required={true}
-              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              sx={{ marginLeft: '4px', my: '8px' }}
               value={usageStatusDetails?.value}
               onChange={(event) => {
                 setUsageStatusDetails({ value: event.target.value });

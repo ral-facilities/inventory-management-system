@@ -345,13 +345,12 @@ export interface Unit {
   value: string;
 }
 
-export interface UsageStatus {
-  id: string;
-  value: string;
-  created_time: string;
-  modified_time: string;
-}
-
 export interface AddUsageStatus {
   value: string;
+}
+export interface UsageStatus extends AddUsageStatus {
+  id: string;
+  code: string;
+  created_time: string;
+  modified_time: string;
 }
