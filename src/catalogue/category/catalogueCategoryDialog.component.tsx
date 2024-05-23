@@ -659,7 +659,7 @@ const CatalogueCategoryDialog = React.memo(
                 ) : null
               }
             >
-              {isAddPending || isEditPending ? 'Saving...' : 'Save'}
+              Save
             </Button>
           </Box>
           {formError && (

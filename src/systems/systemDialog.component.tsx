@@ -329,7 +329,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               ) : null
             }
           >
-            {isAddPending || isEditPending ? 'Saving...' : 'Save'}
+            Save
           </Button>
         </Box>
         {formError && (

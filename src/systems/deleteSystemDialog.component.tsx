@@ -72,7 +72,7 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
           disabled={isDeletePending || errorMessage !== undefined}
           endIcon={isDeletePending ? <CircularProgress size={20} /> : null}
         >
-          {isDeletePending ? 'Deleting...' : 'Continue'}
+          Continue
         </Button>
       </DialogActions>
       {errorMessage !== undefined && (

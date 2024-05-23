@@ -94,7 +94,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
           disabled={isDeletePending || error}
           endIcon={isDeletePending ? <CircularProgress size={20} /> : null}
         >
-          {isDeletePending ? 'Deleting...' : 'Continue'}
+          Continue
         </Button>
       </DialogActions>
       {error && (

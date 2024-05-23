@@ -81,7 +81,7 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
           disabled={isDeletePending || error}
           endIcon={isDeletePending ? <CircularProgress size={18} /> : null}
         >
-          {isDeletePending ? 'Deleting...' : 'Continue'}
+          Continue
         </Button>
       </DialogActions>
       {error && (

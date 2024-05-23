@@ -552,7 +552,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               ) : null
             }
           >
-            {isAddPending || isEditPending ? 'Saving...' : 'Save'}
+            Save
           </Button>
           <Box></Box>
         </Box>
