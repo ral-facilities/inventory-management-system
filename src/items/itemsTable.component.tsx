@@ -24,13 +24,8 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useItems } from '../api/items';
-import {
-  CatalogueCategory,
-  CatalogueItem,
-  Item,
-  System,
-  UsageStatusType,
-} from '../app.types';
+import { useSystemIds } from '../api/systems';
+import { CatalogueCategory, CatalogueItem, Item, System } from '../app.types';
 import {
   PropertyFiltersType,
   findPropertyValue,
@@ -40,7 +35,6 @@ import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
 import ItemsDetailsPanel from './itemsDetailsPanel.component';
-import { useSystemIds } from '../api/systems';
 
 export interface ItemTableProps {
   catalogueCategory: CatalogueCategory;
@@ -202,15 +196,7 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'Usage Status',
-        accessorFn: (row) => {
-          // Assuming row.usage_status contains the numeric value corresponding to the enum
-          const status = Object.values(UsageStatusType).find(
-            (value) =>
-              UsageStatusType[value as keyof typeof UsageStatusType] ===
-              row.item.usage_status
-          );
-          return status || 'Unknown';
-        },
+        accessorFn: (row) => row.item.usage_status,
         id: 'usage_status',
         size: 200,
         filterVariant: 'select',
