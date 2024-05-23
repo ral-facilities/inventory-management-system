@@ -23,7 +23,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCatalogueItemIds } from '../api/catalogueItems';
 import { useItems } from '../api/items';
-import { CatalogueItem, Item, System, UsageStatusType } from '../app.types';
+import { CatalogueItem, Item, System } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import SystemItemsDialog, {
@@ -31,6 +31,7 @@ import SystemItemsDialog, {
   UsageStatusesType,
 } from './systemItemsDialog.component';
 import { formatDateTimeStrings } from '../utils';
+import { useUsageStatuses } from '../api/usageStatuses';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
@@ -108,6 +109,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     undefined
   );
 
+  const { data: usageStatusesData } = useUsageStatuses();
+
   // Obtain the selected system data, not just the selection state
   const selectedRowIds = Object.keys(rowSelection);
   const selectedItems =
@@ -176,15 +179,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, itemsData, moveToSelectedItems]);
 
-  const status = (usageStatus: UsageStatusType | undefined | '') => {
-    if (typeof usageStatus !== 'number') return '';
-    const status = Object.values(UsageStatusType).find(
-      (value) =>
-        UsageStatusType[value as keyof typeof UsageStatusType] === usageStatus
-    );
-    return status || '';
-  };
-
   React.useEffect(() => {
     if (
       onChangeAggregatedCellUsageStatus &&
@@ -194,7 +188,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       const initialUsageStatuses: Omit<UsageStatusesType, 'item_id'>[] =
         Array.from(catalogueItemIdSet).map((catalogue_item_id) => ({
           catalogue_item_id: catalogue_item_id,
-          usageStatus: '', // Setting usageStatus to an empty string by default
+          usage_status_id: '',
         }));
 
       onChangeAggregatedCellUsageStatus(initialUsageStatuses);
@@ -333,15 +327,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Usage Status',
-        accessorFn: (row) => {
-          // Assuming row.usage_status contains the numeric value corresponding to the enum
-          const status = Object.values(UsageStatusType).find(
-            (value) =>
-              UsageStatusType[value as keyof typeof UsageStatusType] ===
-              row.item.usage_status
-          );
-          return status || 'Unknown';
-        },
+        accessorFn:
+          type === 'usageStatus' ? undefined : (row) => row.item.usage_status,
         id: 'item.usage_status',
         size: 200,
         filterVariant: 'select',
@@ -359,13 +346,11 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                       labelId={`usage-statuses-${row.original.catalogueItem?.name}`}
                       size="small"
                       value={
-                        status(
-                          aggregatedCellUsageStatus?.find(
-                            (status) =>
-                              status.catalogue_item_id ===
-                              row.original.catalogueItem?.id
-                          )?.usageStatus
-                        ) ?? ''
+                        aggregatedCellUsageStatus?.find(
+                          (status) =>
+                            status.catalogue_item_id ===
+                            row.original.catalogueItem?.id
+                        )?.usage_status_id ?? ''
                       }
                       onChange={(event) => {
                         if (
@@ -383,10 +368,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
 
                           updatedAggregatedCellUsageStatus[
                             itemIndex
-                          ].usageStatus =
-                            UsageStatusType[
-                              event.target.value as keyof typeof UsageStatusType
-                            ];
+                          ].usage_status_id = event.target.value;
 
                           onChangeAggregatedCellUsageStatus(
                             updatedAggregatedCellUsageStatus
@@ -407,11 +389,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                               row.original.catalogueItem?.id
                             ) {
                               // Update the usageStatus for the matching item
-                              updatedUsageStatuses[i].usageStatus =
-                                UsageStatusType[
-                                  event.target
-                                    .value as keyof typeof UsageStatusType
-                                ];
+                              updatedUsageStatuses[i].usage_status_id =
+                                event.target.value;
                             }
                           }
 
@@ -445,10 +424,11 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                       }}
                       label="Usage statuses"
                     >
-                      <MenuItem value={'new'}>New</MenuItem>
-                      <MenuItem value={'inUse'}>In Use</MenuItem>
-                      <MenuItem value={'used'}>Used</MenuItem>
-                      <MenuItem value={'scrapped'}>Scrapped</MenuItem>
+                      {usageStatusesData?.map((usageStatus) => (
+                        <MenuItem key={usageStatus.id} value={usageStatus.id}>
+                          {usageStatus.value}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
                 );
@@ -475,11 +455,9 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                       labelId={`usage-status-${row.original.item.id}`}
                       size="small"
                       value={
-                        status(
-                          usageStatuses?.find(
-                            (status) => status.item_id === row.original.item.id
-                          )?.usageStatus
-                        ) ?? ''
+                        usageStatuses?.find(
+                          (status) => status.item_id === row.original.item.id
+                        )?.usage_status_id ?? ''
                       }
                       onChange={(event) => {
                         if (onChangeUsageStatuses && usageStatuses) {
@@ -489,10 +467,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           );
                           const updatedUsageStatuses = [...usageStatuses];
 
-                          updatedUsageStatuses[itemIndex].usageStatus =
-                            UsageStatusType[
-                              event.target.value as keyof typeof UsageStatusType
-                            ];
+                          updatedUsageStatuses[itemIndex].usage_status_id =
+                            event.target.value;
 
                           onChangeUsageStatuses(updatedUsageStatuses);
                         }
@@ -525,7 +501,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                             ...aggregatedCellUsageStatus,
                           ];
 
-                          updatedUsageStatuses[itemIndex].usageStatus = '';
+                          updatedUsageStatuses[itemIndex].usage_status_id = '';
 
                           onChangeAggregatedCellUsageStatus(
                             updatedUsageStatuses
@@ -535,10 +511,11 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                       error={usageStatusCellError}
                       label="Usage status"
                     >
-                      <MenuItem value={'new'}>New</MenuItem>
-                      <MenuItem value={'inUse'}>In Use</MenuItem>
-                      <MenuItem value={'used'}>Used</MenuItem>
-                      <MenuItem value={'scrapped'}>Scrapped</MenuItem>
+                      {usageStatusesData?.map((usageStatus) => (
+                        <MenuItem key={usageStatus.id} value={usageStatus.id}>
+                          {usageStatus.value}
+                        </MenuItem>
+                      ))}
                     </Select>
                     {usageStatusCellError && (
                       <FormHelperText error>
@@ -562,6 +539,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     onChangeUsageStatuses,
     type,
     usageStatuses,
+    usageStatusesData,
   ]);
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
@@ -689,9 +667,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     ),
     renderBottomToolbarCustomActions: ({ table }) => (
       <Typography sx={{ paddingLeft: '8px' }}>
-        {table.getFilteredRowModel().rows.length == itemsData?.length
-          ? `Total Items: ${itemsData.length}`
-          : `Returned ${table.getFilteredRowModel().rows.length} out of ${itemsData?.length} Items`}
+        {table.getFilteredRowModel().rows.length ==
+        (type == 'normal' ? itemsData : moveToSelectedItems)?.length
+          ? `Total Items: ${(type == 'normal' ? itemsData : moveToSelectedItems)?.length}`
+          : `Returned ${table.getFilteredRowModel().rows.length} out of ${(type == 'normal' ? itemsData : moveToSelectedItems)?.length} Items`}
       </Typography>
     ),
 
