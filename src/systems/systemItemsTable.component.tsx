@@ -548,7 +548,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       grouping: ['catalogueItem.name'],
       pagination: { pageSize: 15, pageIndex: 0 },
     },
-    storeInUrl: true,
+    storeInUrl: type === 'normal',
   });
 
   const noResultsText = 'No items found';
