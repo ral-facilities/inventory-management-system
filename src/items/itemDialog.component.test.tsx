@@ -213,6 +213,10 @@ describe('ItemDialog', () => {
 
       createView();
 
+      await modifyDetailsValues({
+        usageStatus: 'Used',
+      });
+
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
