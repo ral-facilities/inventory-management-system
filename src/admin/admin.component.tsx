@@ -6,12 +6,12 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import Breadcrumbs from '../view/breadcrumbs.component';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import React from 'react';
-import Units from './units.component';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { BreadcrumbsInfo } from '../app.types';
-import UsageStatuses from './usageStatuses.component';
+import Breadcrumbs from '../view/breadcrumbs.component';
+import Units from './units/units.component';
+import UsageStatuses from './usageStatuses/usageStatuses.component';
 
 export const useNavigateToAdminFunction = () => {
   const navigate = useNavigate();

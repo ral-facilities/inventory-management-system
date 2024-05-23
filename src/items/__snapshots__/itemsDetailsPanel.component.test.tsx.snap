@@ -216,7 +216,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        scrapped
+                        Scrapped
                       </p>
                     </div>
                     <div
@@ -754,7 +754,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (no dat
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        inUse
+                        In Use
                       </p>
                     </div>
                     <div
@@ -1292,7 +1292,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        new
+                        New
                       </p>
                     </div>
                     <div
@@ -1830,7 +1830,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        inUse
+                        In Use
                       </p>
                     </div>
                     <div
@@ -2378,7 +2378,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        inUse
+                        In Use
                       </p>
                     </div>
                     <div
@@ -2945,7 +2945,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        inUse
+                        In Use
                       </p>
                     </div>
                     <div
@@ -3512,7 +3512,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                       >
-                        inUse
+                        In Use
                       </p>
                     </div>
                     <div

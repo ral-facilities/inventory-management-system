@@ -51,7 +51,7 @@ describe('SystemItemsDialog', () => {
     const dropdown = await screen.findByRole('listbox');
 
     await user.click(
-      within(dropdown).getByRole('option', { name: values.usageStatus })
+      await within(dropdown).findByRole('option', { name: values.usageStatus })
     );
   };
   it('calls onClose when Cancel button is clicked', async () => {
@@ -285,7 +285,7 @@ describe('SystemItemsDialog', () => {
         expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
       );
 
-      await selectUsageStatus({ index: 1, usageStatus: 'Used' });
+      await selectUsageStatus({ index: 0, usageStatus: 'Used' });
 
       expect(
         await screen.findByRole('button', { name: 'Finish' })
@@ -328,12 +328,12 @@ describe('SystemItemsDialog', () => {
       await user.click(screen.getAllByLabelText('Expand all')[1]);
 
       await selectUsageStatus({
-        index: 2,
+        index: 1,
         usageStatus: 'Used',
       });
 
       await selectUsageStatus({
-        index: 3,
+        index: 2,
         usageStatus: 'Used',
       });
 
@@ -344,11 +344,11 @@ describe('SystemItemsDialog', () => {
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/KvT2Ox7n', {
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 2,
+        usage_status_id: '2',
       });
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/items/G463gOIA', {
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 2,
+        usage_status_id: '2',
       });
 
       expect(mockOnClose).toHaveBeenCalled();

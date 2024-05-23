@@ -65,6 +65,9 @@ describe('Items', () => {
   it('adds an item with only mandatory fields', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
 
+    cy.findByLabelText('Usage status *').click();
+    cy.findByText('New').click();
+
     cy.startSnoopingBrowserMockedRequest();
 
     cy.findByRole('button', { name: 'Next' }).click();
@@ -85,7 +88,7 @@ describe('Items', () => {
           system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: null,
           is_defective: false,
-          usage_status: 0,
+          usage_status_id: '0',
           warranty_end_date: null,
           asset_number: null,
           serial_number: null,
@@ -110,6 +113,8 @@ describe('Items', () => {
     cy.findByLabelText('Serial number').type('test %s');
     cy.findByLabelText('Quantity').type('3');
     cy.findByLabelText('Starting value').type('2');
+    cy.findByLabelText('Usage status *').click();
+    cy.findByText('New').click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -133,7 +138,7 @@ describe('Items', () => {
             system_id: '65328f34a40ff5301575a4e3',
             purchase_order_number: null,
             is_defective: false,
-            usage_status: 0,
+            usage_status_id: '0',
             warranty_end_date: null,
             asset_number: null,
             serial_number: `test ${i + 2}`,
@@ -213,6 +218,10 @@ describe('Items', () => {
   it('adds an item with only mandatory fields (allowed list of values)', () => {
     cy.visit('/catalogue/item/17/items');
     cy.findByRole('button', { name: 'Add Item' }).click();
+
+    cy.findByLabelText('Usage status *').click();
+    cy.findByRole('option', { name: 'Used' }).click();
+
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByLabelText('Ultimate Pressure (millibar) *').clear();
@@ -239,7 +248,7 @@ describe('Items', () => {
           system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: null,
           is_defective: false,
-          usage_status: 0,
+          usage_status_id: '2',
           warranty_end_date: null,
           asset_number: null,
           serial_number: null,
@@ -300,7 +309,7 @@ describe('Items', () => {
           system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: 'test23',
           is_defective: true,
-          usage_status: 3,
+          usage_status_id: '3',
           warranty_end_date: '2028-02-12T00:00:00.000Z',
           asset_number: 'test13221',
           serial_number: 'test1234',
@@ -337,6 +346,13 @@ describe('Items', () => {
     cy.findByLabelText('Delivered date').type('12/02/2000');
     cy.findByText('Exceeded maximum date').should('not.exist');
     cy.findByText('Date format: dd/MM/yyyy').should('not.exist');
+
+    cy.findByRole('button', { name: 'Next' }).click();
+
+    cy.findByText('Please select a Usage Status').should('exist');
+
+    cy.findByLabelText('Usage status *').click();
+    cy.findByText('New').click();
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -457,7 +473,7 @@ describe('Items', () => {
           system_id: '65328f34a40ff5301575a4e3',
           purchase_order_number: '6JYHEjwN',
           is_defective: false,
-          usage_status: 1,
+          usage_status_id: '1',
           warranty_end_date: '2023-04-04T23:00:00.000Z',
           asset_number: 'LyH8yp1FHf',
           serial_number: '5YUQDDjKpz2z',
@@ -529,7 +545,7 @@ describe('Items', () => {
         JSON.stringify({
           serial_number: 'Zf7P8Qu8TD8ctest1234',
           purchase_order_number: 'hpGBgi0dtest23',
-          usage_status: 3,
+          usage_status_id: '3',
           warranty_end_date: '2028-02-12T23:00:00.000Z',
           asset_number: '75YWiLwy54test13221',
           delivered_date: '2028-02-12T00:00:00.000Z',
