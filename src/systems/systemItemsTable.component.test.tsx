@@ -298,41 +298,41 @@ describe('SystemItemsTable', () => {
 
         if (values.cameras1Item1) {
           await selectUsageStatus({
-            index: 1,
+            index: 0,
             usage_status_id: values.cameras1Item1,
           });
         }
 
         if (values.cameras1Item2) {
           await selectUsageStatus({
-            index: 2,
+            index: 1,
             usage_status_id: values.cameras1Item2,
           });
         }
 
         if (values.cameras6Item1) {
           await selectUsageStatus({
-            index: 3,
+            index: 2,
             usage_status_id: values.cameras6Item1,
           });
         }
 
         if (values.cameras6Item2) {
           await selectUsageStatus({
-            index: 4,
+            index: 3,
             usage_status_id: values.cameras6Item2,
           });
         }
       }
       values.cameras1 &&
         (await selectUsageStatus({
-          index: 1,
+          index: 0,
           usage_status_id: values.cameras1,
         }));
 
       values.cameras6 &&
         (await selectUsageStatus({
-          index: 2,
+          index: 1,
           usage_status_id: values.cameras6,
         }));
     };
@@ -455,10 +455,10 @@ describe('SystemItemsTable', () => {
       );
 
       expect(
-        within(screen.getAllByRole('combobox')[1]).getByText('New')
+        within(screen.getAllByRole('combobox')[0]).getByText('New')
       ).toBeInTheDocument();
       expect(
-        within(screen.getAllByRole('combobox')[2]).getByText('In Use')
+        within(screen.getAllByRole('combobox')[1]).getByText('In Use')
       ).toBeInTheDocument();
     });
 

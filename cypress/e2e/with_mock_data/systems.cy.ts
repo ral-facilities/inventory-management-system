@@ -798,7 +798,7 @@ describe('Systems', () => {
           cy.findByRole('button', { name: 'Next' }).click();
         });
 
-      cy.findAllByRole('combobox').eq(1).click();
+      cy.findAllByRole('combobox').eq(0).click();
       cy.findByRole('option', { name: 'Scrapped' }).click();
 
       cy.findByRole('button', { name: 'Finish' }).click();
@@ -860,7 +860,7 @@ describe('Systems', () => {
       );
       cy.findAllByLabelText('Expand all').eq(2).click();
       cy.findAllByText('Please select a usage status').should('have.length', 2);
-      cy.findAllByRole('combobox').eq(1).click();
+      cy.findAllByRole('combobox').eq(0).click();
       cy.findByRole('option', { name: 'Scrapped' }).click();
       cy.findAllByText('Please select a usage status').should('have.length', 0);
       cy.findByText('Please select a usage status for all items').should(
