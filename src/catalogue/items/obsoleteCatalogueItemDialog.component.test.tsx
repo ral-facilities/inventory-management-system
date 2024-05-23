@@ -10,6 +10,8 @@ import handleIMS_APIError from '../../handleIMS_APIError';
 import ObsoleteCatalogueItemDialog, {
   ObsoleteCatalogueItemDialogProps,
 } from './obsoleteCatalogueItemDialog.component';
+import { server } from '../../mocks/server';
+import { http } from 'msw';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -197,6 +199,28 @@ describe('Obsolete Catalogue Item Dialog', () => {
     });
 
     expect(mockOnClose).not.toHaveBeenCalled();
+  });
+
+  it('disabled button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.patch('/v1/catalogue-items/:id', () => {
+        return new Promise(() => {});
+      })
+    );
+
+    props.catalogueItem = getCatalogueItemById('1');
+
+    createView();
+
+    await modifyForm(false, {
+      is_obsolete: true,
+    });
+
+    const finishButton = screen.getByRole('button', { name: 'Finish' });
+    await user.click(finishButton);
+
+    expect(finishButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
   it('renders exisiting data correctly (not obsolete)', async () => {

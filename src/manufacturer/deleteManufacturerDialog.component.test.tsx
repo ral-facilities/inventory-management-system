@@ -11,6 +11,8 @@ import { renderComponentWithRouterProvider } from '../testUtils';
 import DeleteManufacturerDialog, {
   DeleteManufacturerProps,
 } from './deleteManufacturerDialog.component';
+import { server } from '../mocks/server';
+import { http } from 'msw';
 
 vi.mock('../handleIMS_APIError');
 
@@ -55,6 +57,22 @@ describe('Delete Manufacturer Dialog', () => {
     expect(screen.getByTestId('delete-manufacturer-name')).toHaveTextContent(
       'test'
     );
+  });
+
+  it('disabled button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.delete('/v1/manufacturers/:id', () => {
+        return new Promise(() => {});
+      })
+    );
+
+    createView();
+
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    expect(continueButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
   it('calls onClose when Close clicked', async () => {

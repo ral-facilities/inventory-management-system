@@ -12,6 +12,8 @@ import { getItemById, renderComponentWithRouterProvider } from '../testUtils';
 import DeleteItemDialog, {
   DeleteItemDialogProps,
 } from './deleteItemDialog.component';
+import { http } from 'msw';
+import { server } from '../mocks/server';
 
 vi.mock('../handleIMS_APIError');
 
@@ -63,6 +65,22 @@ describe('delete item dialog', () => {
       ).toBeInTheDocument();
     });
     expect(baseElement).toMatchSnapshot();
+  });
+
+  it('disabled button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.delete('/v1/items/:id', () => {
+        return new Promise(() => {});
+      })
+    );
+
+    createView();
+
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    expect(continueButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
   it('calls onClose when Close button is clicked', async () => {
