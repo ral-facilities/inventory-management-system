@@ -2,6 +2,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -78,8 +79,9 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
         <Button
           onClick={handleDeleteManufacturer}
           disabled={isDeletePending || error}
+          endIcon={isDeletePending ? <CircularProgress size={18} /> : null}
         >
-          Continue
+          {isDeletePending ? 'Deleting...' : 'Continue'}
         </Button>
       </DialogActions>
       {error && (

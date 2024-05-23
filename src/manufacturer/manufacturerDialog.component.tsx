@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -545,9 +546,15 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               addressPostcodeError !== undefined ||
               countryError !== undefined
             }
+            endIcon={
+              isAddPending || isEditPending ? (
+                <CircularProgress size={20} />
+              ) : null
+            }
           >
-            Save
+            {isAddPending || isEditPending ? 'Saving...' : 'Save'}
           </Button>
+          <Box></Box>
         </Box>
         {formError && (
           <FormHelperText sx={{ marginBottom: '16px' }} error>
