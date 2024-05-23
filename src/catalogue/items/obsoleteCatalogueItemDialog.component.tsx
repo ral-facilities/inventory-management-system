@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -329,6 +330,7 @@ const ObsoleteCatalogueItemDialog = (
           <Button
             onClick={handleFinish}
             disabled={isEditPending || formError !== undefined}
+            endIcon={isEditPending ? <CircularProgress size={16} /> : null}
           >
             Finish
           </Button>
