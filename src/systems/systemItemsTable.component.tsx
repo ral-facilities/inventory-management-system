@@ -327,7 +327,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Usage Status',
-        accessorFn: (row) => row.item.usage_status,
+        accessorFn:
+          type === 'usageStatus' ? undefined : (row) => row.item.usage_status,
         id: 'item.usage_status',
         size: 200,
         filterVariant: 'select',
