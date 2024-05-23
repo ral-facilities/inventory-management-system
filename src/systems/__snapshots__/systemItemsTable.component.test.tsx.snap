@@ -3173,7 +3173,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
         <p
           class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
         >
-          Returned 4 out of undefined Items
+          Total Items: 4
         </p>
         <div
           class="MuiBox-root css-nokk8"
