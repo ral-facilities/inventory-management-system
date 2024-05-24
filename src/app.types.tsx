@@ -71,7 +71,7 @@ export interface EditManufacturer {
 
 export interface ManufacturerDetails {
   name: string;
-  url?: string | null;
+  url: string | null;
   address: AddAddress;
   telephone: string | null;
 }
