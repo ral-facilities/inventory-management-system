@@ -40,7 +40,7 @@ export interface CopyToCatalogueCategory {
   targetCategory: CatalogueCategory | null;
   // Existing known catalogue category names at the destination
   // (for appending to the names to avoid duplication)
-  existingCategoryNames: string[];
+  existingCategoryCodes: string[];
 }
 
 export interface CatalogueCategory {
@@ -265,7 +265,7 @@ export interface CopyToSystem {
   targetSystem: System | null;
   // Existing known system names at the destination
   // (for appending to the names to avoid duplication)
-  existingSystemNames: string[];
+  existingSystemCodes: string[];
 }
 
 export interface UsageStatus {

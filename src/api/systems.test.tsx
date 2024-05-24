@@ -383,7 +383,7 @@ describe('System api functions', () => {
         // Prevent test interference if modifying the selected systems
         selectedSystems: JSON.parse(JSON.stringify(mockSystems)),
         targetSystem: null,
-        existingSystemNames: [],
+        existingSystemCodes: [],
       };
 
       axiosPostSpy = vi.spyOn(imsApi, 'post');
@@ -461,11 +461,11 @@ describe('System api functions', () => {
         { ...(SystemsJSON[0] as System), name: 'System1', code: 'system1' },
         { ...(SystemsJSON[1] as System), name: 'System2', code: 'system2' },
       ];
-      copyToSystem.existingSystemNames = [
-        'System1',
-        'System2',
-        'System2_copy_1',
-        'System2_copy_2',
+      copyToSystem.existingSystemCodes = [
+        'system1',
+        'system2',
+        'system2_copy_1',
+        'system2_copy_2',
       ];
 
       const { result } = renderHook(() => useCopyToSystem(), {
