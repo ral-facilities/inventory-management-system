@@ -746,6 +746,29 @@ describe('Catalogue Category Dialog', () => {
       vi.clearAllMocks();
     });
 
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.patch('/v1/catalogue-categories/:id', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      props.selectedCatalogueCategory = {
+        ...mockData,
+        id: '4',
+      };
+
+      createView();
+
+      await modifyValues({ name: 'update' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
+    });
+
     it('displays warning message when name field is not defined', async () => {
       createView();
 

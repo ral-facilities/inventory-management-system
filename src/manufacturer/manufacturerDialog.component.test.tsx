@@ -148,7 +148,7 @@ describe('Add manufacturer dialog', () => {
 
       createView();
 
-      await modifyManufacturerValues({
+      modifyManufacturerValues({
         name: 'Manufacturer D',
         addressLine: '4 Example Street',
         postcode: 'OX1 2AB',
@@ -278,6 +278,26 @@ describe('Add manufacturer dialog', () => {
       };
 
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
+    });
+
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.patch('/v1/manufacturers/:id', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      createView();
+
+      modifyManufacturerValues({
+        name: 'Manufacturer D',
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
     it('Edits a manufacturer correctly', async () => {

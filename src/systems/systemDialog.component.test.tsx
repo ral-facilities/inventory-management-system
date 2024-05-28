@@ -247,6 +247,24 @@ describe('Systems Dialog', () => {
       expect(screen.getByText('Edit System')).toBeInTheDocument();
     });
 
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.patch('/v1/systems/:id', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      createView();
+
+      modifyValues({ name: 'test' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
+    });
+
     it('calls onClose when cancel is clicked', async () => {
       createView();
 

@@ -677,6 +677,33 @@ describe('Catalogue Items Dialog', () => {
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
     });
 
+    it('disables finish button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.patch('/v1/catalogue-items/:id', () => {
+          return new Promise(() => {});
+        })
+      );
+      props = {
+        ...props,
+        parentInfo: getCatalogueCategoryById('4'),
+        selectedCatalogueItem: getCatalogueItemById('1'),
+      };
+
+      createView();
+
+      await modifyValues({
+        name: 'update',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      const finishButton = screen.getByRole('button', { name: 'Finish' });
+      await user.click(finishButton);
+
+      expect(finishButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
+    });
+
     it('Edit a catalogue item (catalogue detail)', async () => {
       props = {
         ...props,
