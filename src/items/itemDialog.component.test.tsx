@@ -204,7 +204,7 @@ describe('ItemDialog', () => {
       axiosPostSpy = vi.spyOn(imsApi, 'post');
     });
 
-    it('disabled button and shows circular progress indicator when request is pending', async () => {
+    it('disables finish button and shows circular progress indicator when request is pending', async () => {
       server.use(
         http.post('/v1/items', () => {
           return new Promise(() => {});

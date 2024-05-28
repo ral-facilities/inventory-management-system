@@ -92,7 +92,7 @@ describe('Systems Dialog', () => {
       expect(screen.getByText('Add Subsystem')).toBeInTheDocument();
     });
 
-    it('disabled button and shows circular progress indicator when request is pending', async () => {
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
       server.use(
         http.post('/v1/systems', () => {
           return new Promise(() => {});
@@ -101,7 +101,7 @@ describe('Systems Dialog', () => {
 
       createView();
 
-      await modifyValues({ name: 'test' });
+      modifyValues({ name: 'test' });
 
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);

@@ -180,7 +180,7 @@ describe('Catalogue Items Dialog', () => {
     expect(baseElement).toMatchSnapshot();
   });
 
-  it('disabled button and shows circular progress indicator when request is pending', async () => {
+  it('disables finish button and shows circular progress indicator when request is pending', async () => {
     server.use(
       http.post('/v1/catalogue-items', () => {
         return new Promise(() => {});

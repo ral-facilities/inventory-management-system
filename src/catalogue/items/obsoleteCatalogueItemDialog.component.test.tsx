@@ -201,7 +201,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     expect(mockOnClose).not.toHaveBeenCalled();
   });
 
-  it('disabled button and shows circular progress indicator when request is pending', async () => {
+  it('disables finish button and shows circular progress indicator when request is pending', async () => {
     server.use(
       http.patch('/v1/catalogue-items/:id', () => {
         return new Promise(() => {});

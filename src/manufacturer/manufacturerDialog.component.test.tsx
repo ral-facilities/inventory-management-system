@@ -139,7 +139,7 @@ describe('Add manufacturer dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
-    it('disabled button and shows circular progress indicator when request is pending', async () => {
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
       server.use(
         http.post('/v1/manufacturers', () => {
           return new Promise(() => {});

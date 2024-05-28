@@ -56,7 +56,7 @@ describe('delete Catalogue Category dialogue', () => {
     ).toHaveTextContent('test');
   });
 
-  it('disabled button and shows circular progress indicator when request is pending', async () => {
+  it('disables continue button and shows circular progress indicator when request is pending', async () => {
     server.use(
       http.delete('/v1/catalogue-items/:id', () => {
         return new Promise(() => {});

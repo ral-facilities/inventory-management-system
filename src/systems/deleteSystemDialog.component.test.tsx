@@ -66,7 +66,7 @@ describe('DeleteSystemDialog', () => {
     );
   });
 
-  it('disabled button and shows circular progress indicator when request is pending', async () => {
+  it('disables finish button and shows circular progress indicator when request is pending', async () => {
     server.use(
       http.delete('/v1/systems/:id', () => {
         return new Promise(() => {});

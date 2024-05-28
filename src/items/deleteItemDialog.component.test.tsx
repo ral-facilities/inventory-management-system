@@ -67,7 +67,7 @@ describe('delete item dialog', () => {
     expect(baseElement).toMatchSnapshot();
   });
 
-  it('disabled button and shows circular progress indicator when request is pending', async () => {
+  it('disables continue button and shows circular progress indicator when request is pending', async () => {
     server.use(
       http.delete('/v1/items/:id', () => {
         return new Promise(() => {});

@@ -59,7 +59,7 @@ describe('Delete Manufacturer Dialog', () => {
     );
   });
 
-  it('disabled button and shows circular progress indicator when request is pending', async () => {
+  it('disables continue button and shows circular progress indicator when request is pending', async () => {
     server.use(
       http.delete('/v1/manufacturers/:id', () => {
         return new Promise(() => {});

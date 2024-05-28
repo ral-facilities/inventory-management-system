@@ -185,7 +185,7 @@ describe('Catalogue Category Dialog', () => {
       expect(screen.getByText('Cancel')).toBeInTheDocument();
     });
 
-    it('disabled button and shows circular progress indicator when request is pending', async () => {
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
       server.use(
         http.post('/v1/catalogue-categories', () => {
           return new Promise(() => {});
