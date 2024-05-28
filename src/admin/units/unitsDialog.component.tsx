@@ -78,7 +78,7 @@ function UnitsDialog(props: UnitsDialogProps) {
             <TextField
               label="Value"
               required={true}
-              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
+              sx={{ marginLeft: '4px', my: '8px' }}
               value={unitDetails.value ?? ''}
               onChange={(event) => {
                 setUnitDetails({ value: event.target.value });

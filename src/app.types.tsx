@@ -342,15 +342,14 @@ export interface AllowedValuesListErrorsType {
   errors: { av_placement_id: string; errorMessage: string }[] | null;
 }
 
-export interface Unit {
-  id: string;
+export interface AddUnit {
   value: string;
+}
+export interface Unit extends AddUnit {
+  id: string;
+  code: string;
   created_time: string;
   modified_time: string;
-}
-
-export interface AddUnit {
-  value: string | null;
 }
 
 export interface AddUsageStatus {
