@@ -554,7 +554,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           >
             Save
           </Button>
-          <Box></Box>
         </Box>
         {formError && (
           <FormHelperText sx={{ marginBottom: '16px' }} error>
