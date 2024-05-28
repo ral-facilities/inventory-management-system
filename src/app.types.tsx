@@ -78,6 +78,7 @@ export interface ManufacturerDetails {
 
 export interface Manufacturer extends ManufacturerDetails {
   id: string;
+  code: string;
   created_time: string;
   modified_time: string;
 }

@@ -488,6 +488,7 @@ export const handlers = [
         {
           id: '1',
           name: 'test',
+          code: 'test',
           url: null,
           address: {
             address_line: 'test',
