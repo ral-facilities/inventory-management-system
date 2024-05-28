@@ -5,7 +5,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
@@ -15,7 +14,6 @@ import {
   MenuItem,
   Link as MuiLink,
   TableRow,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import {
