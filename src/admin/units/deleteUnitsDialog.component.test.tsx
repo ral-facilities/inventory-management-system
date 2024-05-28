@@ -52,7 +52,7 @@ describe('delete Unit dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
-  it('calls handleDeleteSession when continue button is clicked with a valid session name', async () => {
+  it('calls handleDeleteSession when continue button is clicked', async () => {
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
