@@ -62,7 +62,7 @@ function UnitsDialog(props: UnitsDialogProps) {
       .then(() => handleClose())
       .catch((error: AxiosError) => {
         if (error.response?.status === 409) {
-          setValueError('A unit with the value name already exists');
+          setValueError('A unit with the same value already exists');
           return;
         }
         handleIMS_APIError(error);

@@ -707,7 +707,6 @@ describe('catalogue categories api functions', () => {
         mandatory: false,
         name: 'test',
         type: 'number',
-        unit: 'megapixels',
         unit_id: '1',
       });
 
