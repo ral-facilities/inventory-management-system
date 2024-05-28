@@ -259,6 +259,7 @@ describe('catalogue categories api functions', () => {
             name: 'Spatial Resolution',
             type: 'number',
             unit: 'micrometers',
+            unit_id: '4',
             mandatory: false,
           },
         ],
@@ -274,6 +275,7 @@ describe('catalogue categories api functions', () => {
             name: 'Measurement Range',
             type: 'number',
             unit: 'Joules',
+            unit_id: '3',
             mandatory: true,
           },
           {
@@ -416,6 +418,7 @@ describe('catalogue categories api functions', () => {
             name: 'Spatial Resolution',
             type: 'number',
             unit: 'micrometers',
+            unit_id: '4',
             mandatory: false,
           },
         ],
@@ -432,6 +435,7 @@ describe('catalogue categories api functions', () => {
             name: 'Measurement Range',
             type: 'number',
             unit: 'Joules',
+            unit_id: '3',
             mandatory: true,
           },
           { id: '4', name: 'Accuracy', type: 'string', mandatory: false },
@@ -683,7 +687,7 @@ describe('catalogue categories api functions', () => {
         property: {
           name: 'test',
           type: 'number',
-          unit: 'test',
+          unit_id: '1',
           default_value: 2,
           mandatory: false,
         },
@@ -703,7 +707,8 @@ describe('catalogue categories api functions', () => {
         mandatory: false,
         name: 'test',
         type: 'number',
-        unit: 'test',
+        unit: 'megapixels',
+        unit_id: '1',
       });
 
       expect(handleTransferState).toBeCalledTimes(2);
