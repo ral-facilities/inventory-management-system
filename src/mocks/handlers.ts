@@ -819,7 +819,7 @@ export const handlers = [
       if (body.value === 'test_dup') {
         return HttpResponse.json(
           {
-            detail: 'A unit with the same name already exists',
+            detail: 'A unit with the same value already exists',
           },
           { status: 409 }
         );
@@ -855,7 +855,7 @@ export const handlers = [
       if (id === '2') {
         return HttpResponse.json(
           {
-            detail: 'The specified unit is a part of a Catalogue category',
+            detail: 'The specified unit is part of a Catalogue category',
           },
           { status: 409 }
         );
