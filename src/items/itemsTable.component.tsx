@@ -99,7 +99,7 @@ export function ItemsTable(props: ItemTableProps) {
   >('create');
 
   // Breadcrumbs + Mui table V2 + extra
-  const tableHeight = getPageHeightCalc('50px + 110px + 32px');
+  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     const viewCatalogueItemProperties =
       catalogueCategory?.catalogue_item_properties ?? [];

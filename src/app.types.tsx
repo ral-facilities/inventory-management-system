@@ -40,7 +40,7 @@ export interface CopyToCatalogueCategory {
   targetCategory: CatalogueCategory | null;
   // Existing known catalogue category names at the destination
   // (for appending to the names to avoid duplication)
-  existingCategoryNames: string[];
+  existingCategoryCodes: string[];
 }
 
 export interface CatalogueCategory {
@@ -71,13 +71,14 @@ export interface EditManufacturer {
 
 export interface ManufacturerDetails {
   name: string;
-  url?: string | null;
+  url: string | null;
   address: AddAddress;
   telephone: string | null;
 }
 
 export interface Manufacturer extends ManufacturerDetails {
   id: string;
+  code: string;
   created_time: string;
   modified_time: string;
 }
@@ -267,7 +268,7 @@ export interface CopyToSystem {
   targetSystem: System | null;
   // Existing known system names at the destination
   // (for appending to the names to avoid duplication)
-  existingSystemNames: string[];
+  existingSystemCodes: string[];
 }
 
 export interface UsageStatus {
