@@ -982,6 +982,7 @@
         "name": "Sensor Type",
         "value": "CMOS",
         "unit": null,
+        "unit_id": null,
         "id": "3"
       },
       {
@@ -1443,6 +1444,7 @@
         "name": "Broken",
         "value": false,
         "unit": null,
+        "unit_id": null,
         "id": "5"
       },
       {
@@ -2052,6 +2054,7 @@
         "name": "Axis",
         "value": "x",
         "unit": null,
+        "unit_id": null,
         "id": "19"
       }
     ],
@@ -2094,6 +2097,7 @@
         "name": "Axis",
         "value": "y",
         "unit": null,
+        "unit_id": null,
         "id": "19"
       }
     ],

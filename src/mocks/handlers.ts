@@ -80,7 +80,9 @@ export const handlers = [
         (property) => ({
           ...property,
           id: generateUniqueId('test_id_'),
-          unit: UnitsJSON.find((unit) => unit.id === property.unit_id)?.value,
+          unit:
+            UnitsJSON.find((unit) => unit.id === property.unit_id)?.value ??
+            null,
         })
       ),
     };
@@ -702,7 +704,7 @@ export const handlers = [
           );
           return {
             ...property,
-            unit: extraPropertyData?.unit,
+            unit: extraPropertyData?.unit ?? null,
             name: extraPropertyData?.name,
           };
         }),
