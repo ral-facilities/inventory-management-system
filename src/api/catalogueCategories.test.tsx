@@ -441,7 +441,7 @@ describe('catalogue categories api functions', () => {
       copyToCatalogueCategory = {
         selectedCategories: mockCatalogueCategories,
         targetCategory: null,
-        existingCategoryNames: [],
+        existingCategoryCodes: [],
       };
 
       axiosPostSpy = vi.spyOn(imsApi, 'post');
@@ -461,7 +461,7 @@ describe('catalogue categories api functions', () => {
       result.current.mutate({
         selectedCategories: mockCatalogueCategories,
         targetCategory: null,
-        existingCategoryNames: [''],
+        existingCategoryCodes: [''],
       });
 
       await waitFor(() => {
@@ -512,7 +512,7 @@ describe('catalogue categories api functions', () => {
       result.current.mutate({
         selectedCategories: mockCatalogueCategories,
         targetCategory: targetCategory,
-        existingCategoryNames: [''],
+        existingCategoryCodes: [''],
       });
 
       await waitFor(() => {
@@ -551,9 +551,9 @@ describe('catalogue categories api functions', () => {
 
       expect(result.current.isIdle).toBe(true);
 
-      copyToCatalogueCategory.existingCategoryNames = [
-        ...mockCatalogueCategories.map((category) => category.name),
-        mockCatalogueCategories[1].name + '_copy_1',
+      copyToCatalogueCategory.existingCategoryCodes = [
+        ...mockCatalogueCategories.map((category) => category.code),
+        mockCatalogueCategories[1].code + '_copy_1',
       ];
       result.current.mutate(copyToCatalogueCategory);
 

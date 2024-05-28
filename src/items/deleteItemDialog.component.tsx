@@ -81,7 +81,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
         <Typography>
           Are you sure you want to permanently delete this item with{' '}
           <strong data-testid={`delete-item-${item?.id}`}>
-            {`ID: ${item?.id} `}
+            {`Serial Number: ${item?.serial_number ?? 'No serial number'}`}
           </strong>
           ?
         </Typography>

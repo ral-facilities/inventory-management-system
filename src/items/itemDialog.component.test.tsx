@@ -137,7 +137,7 @@ describe('ItemDialog', () => {
     if (values.usageStatus !== undefined) {
       fireEvent.mouseDown(screen.getByLabelText('Usage status *'));
       fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.usageStatus)
+        await within(screen.getByRole('listbox')).findByText(values.usageStatus)
       );
     }
   };
@@ -227,6 +227,10 @@ describe('ItemDialog', () => {
     it('adds an item with just the default values', async () => {
       createView();
 
+      await modifyDetailsValues({
+        usageStatus: 'Used',
+      });
+
       //navigate through stepper
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -254,7 +258,7 @@ describe('ItemDialog', () => {
         purchase_order_number: null,
         serial_number: null,
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 0,
+        usage_status_id: '2',
         warranty_end_date: null,
       });
     });
@@ -265,6 +269,7 @@ describe('ItemDialog', () => {
       await modifyDetailsValues({
         serialNumber: 'test12 %s',
         serialNumberAdvancedOptions: { quantity: '2', startingValue: '10' },
+        usageStatus: 'New',
       });
 
       //navigate through stepper
@@ -313,7 +318,7 @@ describe('ItemDialog', () => {
           purchase_order_number: null,
           serial_number: `test12 ${i + 10}`,
           system_id: '65328f34a40ff5301575a4e3',
-          usage_status: 0,
+          usage_status_id: '0',
           warranty_end_date: null,
         });
       }
@@ -370,6 +375,10 @@ describe('ItemDialog', () => {
       };
       createView();
 
+      await modifyDetailsValues({
+        usageStatus: 'Used',
+      });
+
       await user.click(screen.getByText('Add item properties'));
 
       fireEvent.change(
@@ -410,7 +419,7 @@ describe('ItemDialog', () => {
         purchase_order_number: null,
         serial_number: null,
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 0,
+        usage_status_id: '2',
         warranty_end_date: null,
       });
     });
@@ -465,7 +474,7 @@ describe('ItemDialog', () => {
         purchase_order_number: 'test21',
         serial_number: 'test12',
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 2,
+        usage_status_id: '2',
         warranty_end_date: '2035-02-17T00:00:00.000Z',
       });
     }, 10000);
@@ -481,7 +490,6 @@ describe('ItemDialog', () => {
         warrantyEndDate: '17/02/',
         deliveredDate: '23/09/',
         isDefective: 'Yes',
-        usageStatus: 'Used',
       });
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
@@ -519,6 +527,7 @@ describe('ItemDialog', () => {
       await modifyDetailsValues({
         warrantyEndDate: '17/02/2000',
         deliveredDate: '23/09/2000',
+        usageStatus: 'Used',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -657,10 +666,34 @@ describe('ItemDialog', () => {
         purchase_order_number: 'test21',
         serial_number: null,
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status: 2,
+        usage_status_id: '2',
         warranty_end_date: '2035-02-17T00:00:00.000Z',
       });
     }, 10000);
+
+    it('displays error message when usage status not selected', async () => {
+      createView();
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+      expect(screen.getByText('Invalid item details')).toBeInTheDocument();
+      expect(
+        screen.getByText('Please select a Usage Status')
+      ).toBeInTheDocument();
+
+      await modifyDetailsValues({
+        usageStatus: 'Used',
+      });
+
+      expect(screen.queryByRole('button', { name: 'Next' })).not.toBeDisabled();
+      expect(
+        screen.queryByText('Invalid item details')
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByText('Please select a Usage Status')
+      ).not.toBeInTheDocument();
+    });
 
     it('displays error message when mandatory property values missing', async () => {
       createView();
@@ -795,6 +828,7 @@ describe('ItemDialog', () => {
       createView();
       await modifyDetailsValues({
         serialNumber: 'Error 500',
+        usageStatus: 'Used',
       });
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -832,7 +866,7 @@ describe('ItemDialog', () => {
         purchase_order_number: 'tIWiCOow',
         serial_number: 'vYs9Vxx6yWbn',
         system_id: '656ef565ed0773f82e44bc6d',
-        usage_status: 2,
+        usage_status_id: '2',
         warranty_end_date: '2023-05-18T23:00:00.000Z',
       });
     }, 10000);

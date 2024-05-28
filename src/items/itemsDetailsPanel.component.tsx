@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { CatalogueItem, Item, UsageStatusType } from '../app.types';
+import { CatalogueItem, Item } from '../app.types';
 import { useManufacturer } from '../api/manufacturers';
 import { formatDateTimeStrings } from '../utils';
 import { useSystem } from '../api/systems';
@@ -76,7 +76,11 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
               <Typography sx={{ my: 1 }} variant="h6">
                 Description:
               </Typography>
-              <Typography sx={{ mb: 1 }} variant="body1" color="text.secondary">
+              <Typography
+                sx={{ mb: 1, whiteSpace: 'pre-line' }}
+                variant="body1"
+                color="text.secondary"
+              >
                 {catalogueItemIdData.description ?? 'None'}
               </Typography>
             </Grid>
@@ -131,7 +135,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
               <Grid item xs={12} sm={6} key={6}>
                 <Typography color="text.primary">Usage Status</Typography>
                 <Typography color="text.secondary">
-                  {Object.values(UsageStatusType)[itemData.usage_status]}
+                  {itemData.usage_status}
                 </Typography>
               </Grid>
 
@@ -248,7 +252,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
 
         <TabPanel value={tabValue} index={3}>
           <Grid item xs={12}>
-            <Typography color="text.secondary">
+            <Typography color="text.secondary" whiteSpace="pre-line">
               {itemData.notes ?? 'None'}
             </Typography>
           </Grid>

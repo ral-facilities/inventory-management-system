@@ -6,6 +6,7 @@ export const TAB_VALUES = [
   'Catalogue',
   'Systems',
   'Manufacturers',
+  'Admin',
 ] as const;
 export type TabValue = (typeof TAB_VALUES)[number];
 
@@ -39,7 +40,7 @@ export interface CopyToCatalogueCategory {
   targetCategory: CatalogueCategory | null;
   // Existing known catalogue category names at the destination
   // (for appending to the names to avoid duplication)
-  existingCategoryNames: string[];
+  existingCategoryCodes: string[];
 }
 
 export interface CatalogueCategory {
@@ -70,7 +71,7 @@ export interface EditManufacturer {
 
 export interface ManufacturerDetails {
   name: string;
-  url?: string | null;
+  url: string | null;
   address: AddAddress;
   telephone: string | null;
 }
@@ -264,14 +265,12 @@ export interface CopyToSystem {
   targetSystem: System | null;
   // Existing known system names at the destination
   // (for appending to the names to avoid duplication)
-  existingSystemNames: string[];
+  existingSystemCodes: string[];
 }
 
-export enum UsageStatusType {
-  new = 0,
-  inUse = 1,
-  used = 2,
-  scrapped = 3,
+export interface UsageStatus {
+  id: string;
+  value: string;
 }
 
 export interface ItemDetails {
@@ -279,7 +278,7 @@ export interface ItemDetails {
   system_id: string;
   purchase_order_number: string | null;
   is_defective: boolean;
-  usage_status: UsageStatusType;
+  usage_status_id: string;
   warranty_end_date: string | null;
   asset_number: string | null;
   serial_number: string | null;
@@ -305,6 +304,7 @@ export interface AddItems {
 export interface Item extends ItemDetails {
   properties: CatalogueItemPropertyResponse[];
   id: string;
+  usage_status: string;
   created_time: string;
   modified_time: string;
 }
@@ -315,7 +315,7 @@ export interface EditItem extends Partial<AddItem> {
 
 export interface MoveItemsToSystemUsageStatus {
   item_id: string;
-  usage_status: UsageStatusType;
+  usage_status_id: string;
 }
 export interface MoveItemsToSystem {
   usageStatuses: MoveItemsToSystemUsageStatus[];
@@ -343,4 +343,14 @@ export interface AllowedValuesListErrorsType {
 export interface Unit {
   id: string;
   value: string;
+}
+
+export interface AddUsageStatus {
+  value: string;
+}
+export interface UsageStatus extends AddUsageStatus {
+  id: string;
+  code: string;
+  created_time: string;
+  modified_time: string;
 }

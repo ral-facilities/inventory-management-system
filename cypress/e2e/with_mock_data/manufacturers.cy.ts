@@ -262,6 +262,27 @@ describe('Manufacturer', () => {
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
 
+  it('can clear url field and has no errors', () => {
+    cy.visit('/manufacturers');
+    cy.findAllByLabelText('Row Actions').first().click();
+    cy.findByText('Edit').click();
+    cy.findByLabelText('URL').clear();
+
+    cy.startSnoopingBrowserMockedRequest();
+
+    cy.findByRole('button', { name: 'Save' }).click();
+    cy.findByRole('dialog').should('not.exist');
+
+    cy.findBrowserMockedRequests({
+      method: 'PATCH',
+      url: '/v1/manufacturers/:id',
+    }).should(async (patchRequests) => {
+      expect(patchRequests.length).equal(1);
+      const request = patchRequests[0];
+      expect(JSON.stringify(await request.json())).equal('{"url":null}');
+    });
+  });
+
   it('not changing any fields shows error', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();

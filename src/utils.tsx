@@ -18,6 +18,25 @@ export const generateUniqueName = (
   return newName;
 };
 
+/* Returns a name avoiding duplicates by appending _copy_n for nth copy using code */
+export const generateUniqueNameUsingCode = (
+  name: string,
+  code: string,
+  existingCodes: string[]
+): string => {
+  let count = 1;
+  let newName = name;
+  let newCode = code;
+
+  while (existingCodes.includes(newCode)) {
+    newName = `${name}_copy_${count}`;
+    newCode = `${code}_copy_${count}`;
+    count++;
+  }
+
+  return newName;
+};
+
 /* Returns whether running in development mode */
 export const isRunningInDevelopment = (): boolean => {
   return import.meta.env.DEV;

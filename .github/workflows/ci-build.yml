@@ -35,7 +35,7 @@ jobs:
 
       - name: Upload coverage reports to Codecov
         if: success()
-        uses: codecov/codecov-action@6d798873df2b1b8e5846dba6fb86631229fbcb17 # v4
+        uses: codecov/codecov-action@125fc84a9a348dbcf27191600683ec096ec9021c # v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
@@ -74,7 +74,7 @@ jobs:
 
     steps:
       - name: Clone api repo
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
+        uses: actions/checkout@b80ff79f1755d06ba70441c368a6fe801f5f3a62
         with:
           repository: ral-facilities/inventory-management-system-api
           ref: develop

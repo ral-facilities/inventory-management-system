@@ -152,7 +152,7 @@ function CatalogueItemsLandingPage() {
               Description:
             </Typography>
             <Typography
-              sx={{ margin: 1, textAlign: 'center' }}
+              sx={{ margin: 1, textAlign: 'center', whiteSpace: 'pre-line' }}
               variant="body1"
               color="text.secondary"
             >
@@ -464,7 +464,7 @@ function CatalogueItemsLandingPage() {
               Notes:
             </Typography>
             <Typography
-              sx={{ margin: 1, textAlign: 'center' }}
+              sx={{ margin: 1, textAlign: 'center', whiteSpace: 'pre-line' }}
               variant="body1"
               color="text.secondary"
             >

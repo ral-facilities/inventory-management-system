@@ -519,6 +519,35 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     }, 10000);
 
+    it('displays duplicate values values with different significant figures (allowed_values list of numbers)', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            allowed_values: { type: 'list', values: ['1.0', '1'] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const duplicateHelperTexts = screen.queryAllByText('Duplicate value');
+
+      expect(duplicateHelperTexts.length).toEqual(2);
+
+      expect(onClose).not.toHaveBeenCalled();
+    }, 10000);
+
     it('displays duplicate values and incorrect type error and deletes an allowed value to check if errors states are in correct location (allowed_values list of numbers)', async () => {
       createView();
 
