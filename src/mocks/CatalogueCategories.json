@@ -169,10 +169,10 @@
         "name": "Wavefront Measurement Range",
         "type": "string",
         "unit": null,
+        "unit_id": null,
         "mandatory": true,
         "allowed_values": null,
-        "id": "11",
-        "unit_id": null
+        "id": "11"
       },
       {
         "name": "Spatial Resolution",
@@ -310,13 +310,13 @@
         "name": "Pumping Speed",
         "type": "number",
         "unit": "liters per second",
+        "unit_id": "7",
         "mandatory": true,
         "allowed_values": {
           "type": "list",
           "values": [300, 400, 500]
         },
-        "id": "17",
-        "unit_id": "7"
+        "id": "17"
       },
       {
         "name": "Ultimate Pressure",
