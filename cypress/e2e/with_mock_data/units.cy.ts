@@ -69,7 +69,7 @@ describe('Units', () => {
     cy.findByRole('button', { name: 'Continue' }).click();
 
     cy.findByText(
-      'The specified unit is a part of a Catalogue category. Please delete the Catalogue category first'
+      'This unit is currently used by one or more catalogue categories. Remove all uses before deleting it here.'
     );
   });
 });

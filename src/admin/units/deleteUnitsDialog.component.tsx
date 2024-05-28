@@ -45,7 +45,7 @@ const DeleteUnitDialog = (props: DeleteUnitProps) => {
           const response = error.response?.data as ErrorParsing;
           if (response && error.response?.status === 409) {
             setFormError(
-              `${response.detail}. Please delete the Catalogue category first`
+              `This unit is currently used by one or more catalogue categories. Remove all uses before deleting it here.`
             );
             return;
           }
