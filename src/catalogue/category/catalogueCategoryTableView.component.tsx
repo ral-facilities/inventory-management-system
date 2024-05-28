@@ -9,7 +9,11 @@ import React from 'react';
 import { CatalogueCategory } from '../../app.types';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 import AddIcon from '@mui/icons-material/Add';
-import { formatDateTimeStrings, generateUniqueName } from '../../utils';
+import {
+  OverflowTip,
+  formatDateTimeStrings,
+  generateUniqueName,
+} from '../../utils';
 
 export interface CatalogueCategoryTableViewProps {
   selectedCategories: CatalogueCategory[];
@@ -49,20 +53,21 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         accessorFn: (row) => row.name,
         id: 'name',
         size: 567.5,
-        Cell: ({ renderedCellValue, row }) => {
+        Cell: ({ renderedCellValue, row, cell }) => {
           const canPlaceHere =
             (!row.original.is_leaf &&
               (requestType !== 'moveTo' ||
                 !selectedCatalogueCategoryIds.includes(row.original.id))) ||
             requestType === 'standard';
           return (
-            <Typography
+            <OverflowTip
               sx={{
                 color: canPlaceHere ? 'inherit' : 'action.disabled',
               }}
+              columnSize={cell.column.getSize()}
             >
               {renderedCellValue}
-            </Typography>
+            </OverflowTip>
           );
         },
       },
@@ -73,9 +78,12 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         filterVariant: 'datetime-range',
         size: 567.5,
         enableGrouping: false,
-        Cell: ({ row }) =>
-          row.original.modified_time &&
-          formatDateTimeStrings(row.original.modified_time, true),
+        Cell: ({ row, cell }) =>
+          row.original.modified_time && (
+            <OverflowTip columnSize={cell.column.getSize()}>
+              {formatDateTimeStrings(row.original.modified_time, true)}
+            </OverflowTip>
+          ),
       },
     ];
   }, [requestType, selectedCatalogueCategoryIds]);
@@ -88,7 +96,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     enableColumnOrdering: false,
     enableColumnPinning: false,
     enableTopToolbar: true,
-    enableColumnResizing: false,
+    enableColumnResizing: true,
     enableFacetedValues: true,
     enableRowActions: false,
     enableGlobalFilter: false,

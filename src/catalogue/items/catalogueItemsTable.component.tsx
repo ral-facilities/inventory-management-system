@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import {
   MRT_Cell,
+  MRT_Column,
   MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
@@ -239,8 +240,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         size: 200,
         Cell: ({ renderedCellValue, row, cell }) =>
           dense ? (
-            <Typography
+            <OverflowTip
               sx={{
+                fontSize: 'inherit',
                 color:
                   isItemSelectable === undefined ||
                   isItemSelectable(row.original.catalogueItem)
@@ -249,7 +251,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               }}
             >
               {renderedCellValue}
-            </Typography>
+            </OverflowTip>
           ) : (
             <OverflowTip
               sx={{ fontSize: 'inherit' }}
@@ -380,6 +382,14 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       ...viewCatalogueItemProperties.map((property) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
+        Header: ({ column }: { column: MRT_Column<TableRowData, unknown> }) => (
+          <OverflowTip
+            columnSize={column.getSize()}
+            sx={{ fontSize: 'inherit', fontWeight: 'inherit' }}
+          >
+            {column.columnDef.header}
+          </OverflowTip>
+        ),
         id: `row.catalogueItem.properties.${property.id}`,
         accessorFn: (row: TableRowData) => {
           if (property.type === 'boolean') {
@@ -403,7 +413,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             return findPropertyValue(row.catalogueItem.properties, property.id);
           }
         },
-        size: 250,
+        size: 300,
         filterVariant:
           propertyFilters[
             property.type as 'string' | 'boolean' | 'number' | 'null'
@@ -489,7 +499,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Time to replace (days)',
         accessorFn: (row) => row.catalogueItem.days_to_replace,
         id: 'catalogueItem.days_to_replace',
-        size: 250,
+        size: 300,
         filterVariant: 'range',
       },
       {
@@ -511,6 +521,15 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Drawing Number',
         accessorFn: (row) => row.catalogueItem.drawing_number ?? '',
         size: 250,
+        Cell: ({ renderedCellValue, cell }) =>
+          renderedCellValue && (
+            <OverflowTip
+              sx={{ fontSize: 'inherit' }}
+              columnSize={cell.column.getSize()}
+            >
+              {renderedCellValue}
+            </OverflowTip>
+          ),
       },
       {
         header: 'Drawing Link',
@@ -598,7 +617,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) =>
           `${row.manufacturer?.address.address_line}${row.manufacturer?.address.town}${row.manufacturer?.address.county}${row.manufacturer?.address.postcode}${row.manufacturer?.address.country}`,
         id: 'manufacturer.address',
-        size: 250,
+        size: 300,
         Cell: ({ row }) => (
           <div style={{ display: 'inline-block' }}>
             <Typography sx={{ fontSize: 'inherit' }}>
@@ -623,7 +642,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         header: 'Manufacturer Telephone',
         accessorFn: (row) => row.manufacturer?.telephone,
         id: 'manufacturer.telephone',
-        size: 250,
+        size: 300,
         Cell: ({ cell, row }) => (
           <OverflowTip
             sx={{ fontSize: 'inherit' }}
@@ -699,22 +718,27 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const table = useMaterialReactTable({
     // Data
-    columns: dense ? [{ ...columns[0], size: 1135 }] : columns, // If dense only show the name column
+    columns: dense
+      ? [
+          { ...columns[0], size: 680 },
+          { ...columns[1], size: 680 },
+        ]
+      : columns, // If dense only show the name column
     data: tableRows ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     // Features
-    enableColumnOrdering: dense ? false : true,
+    enableColumnOrdering: !dense,
     enableFacetedValues: true,
-    enableColumnResizing: dense ? false : true,
-    enableRowActions: dense ? false : true,
+    enableColumnResizing: true,
+    enableRowActions: !dense,
     enableStickyHeader: true,
     enableDensityToggle: false,
     enableRowSelection: true,
-    enableHiding: dense ? false : true,
+    enableHiding: !dense,
     enableTopToolbar: true,
-    enableMultiRowSelection: dense ? false : true,
+    enableMultiRowSelection: !dense,
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
-    enableColumnVirtualization: dense ? false : true,
+    enableColumnVirtualization: !dense,
     enableGlobalFilter: !dense,
     enableGrouping: !dense,
     enablePagination: true,
