@@ -24,7 +24,7 @@ function UnitsDialog(props: UnitsDialogProps) {
   const { open, onClose } = props;
 
   const [unitDetails, setUnitDetails] = React.useState<AddUnit>({
-    value: null,
+    value: '',
   });
 
   const [valueError, setValueError] = React.useState<string | undefined>(
@@ -35,7 +35,7 @@ function UnitsDialog(props: UnitsDialogProps) {
 
   const handleClose = React.useCallback(() => {
     setUnitDetails({
-      value: null,
+      value: '',
     });
     setValueError(undefined);
     onClose();
