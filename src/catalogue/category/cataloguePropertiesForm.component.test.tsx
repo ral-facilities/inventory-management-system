@@ -20,6 +20,8 @@ describe('Catalogue Properties Form', () => {
   const onChangeEditCatalogueItemField = vi.fn();
 
   const resetFormError = vi.fn();
+
+  //interface test
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CataloguePropertiesForm {...props} />
@@ -171,21 +173,20 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '1',
         name: 'Field 1',
         type: 'text',
-        unit: '',
         mandatory: false,
       },
       {
         cip_placement_id: '2',
         name: 'Field 2',
         type: 'number',
-        unit: 'cm',
+        unit_id: '0',
         mandatory: true,
       },
       {
         cip_placement_id: '3',
         name: 'Field 3',
         type: 'number',
-        unit: 'cm',
+        unit_id: '0',
         allowed_values: {
           type: 'list',
           values: [
@@ -199,7 +200,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '4',
         name: 'Field 4',
         type: 'string',
-        unit: '',
         allowed_values: {
           type: 'list',
           values: [
@@ -213,7 +213,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '5',
         name: 'Field 5',
         type: 'string',
-        unit: '',
         allowed_values: { type: 'list', values: [] },
         mandatory: true,
       },
@@ -226,7 +225,6 @@ describe('Catalogue Properties Form', () => {
       selectedCatalogueItemField: {
         name: 'Field 5',
         type: 'string',
-        unit: '',
         allowed_values: { type: 'list', values: [] },
         mandatory: true,
       },
@@ -242,7 +240,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '1',
         name: 'Field 1',
         type: 'text',
-        unit: '',
         mandatory: false,
       },
       {
@@ -250,7 +247,7 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '2',
         name: 'Field 2',
         type: 'number',
-        unit: 'cm',
+        unit_id: '0',
         mandatory: true,
       },
       {
@@ -258,7 +255,7 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '3',
         name: 'Field 3',
         type: 'number',
-        unit: 'cm',
+        unit_id: '0',
         allowed_values: {
           type: 'list',
           values: [
@@ -273,7 +270,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '4',
         name: 'Field 4',
         type: 'string',
-        unit: '',
         allowed_values: {
           type: 'list',
           values: [
@@ -288,7 +284,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '5',
         name: 'Field 5',
         type: 'string',
-        unit: '',
         allowed_values: { type: 'list', values: [] },
         mandatory: true,
       },
@@ -302,7 +297,6 @@ describe('Catalogue Properties Form', () => {
         id: '5',
         name: 'Field 5',
         type: 'string',
-        unit: '',
         allowed_values: { type: 'list', values: [] },
         mandatory: true,
       },
@@ -322,7 +316,6 @@ describe('Catalogue Properties Form', () => {
       mandatory: false,
       name: 'Field 1',
       type: 'text',
-      unit: '',
     });
   });
 
@@ -576,7 +569,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '4',
         name: 'raduis 2',
         type: 'number',
-        unit: '',
         allowed_values: { type: 'list', values: [] },
         mandatory: false,
       },
@@ -620,7 +612,6 @@ describe('Catalogue Properties Form', () => {
         mandatory: false,
         name: 'raduis 2',
         type: 'number',
-        unit: '',
       },
     ]);
   }, 10000);
