@@ -78,6 +78,7 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
                     ev.preventDefault();
                     onChangeNode(id as string);
                   }}
+                  aria-label={`breadcrumb-${name}`}
                 >
                   {name}
                 </Link>
