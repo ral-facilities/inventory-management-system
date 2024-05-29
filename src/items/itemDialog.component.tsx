@@ -30,7 +30,6 @@ import {
   Item,
   ItemDetails,
   ItemDetailsPlaceholder,
-  UsageStatusType,
 } from '../app.types';
 import { DatePicker } from '@mui/x-date-pickers';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -43,6 +42,7 @@ import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { addValueToFrontOfList, trimStringValues } from '../utils';
 import handleTransferState from '../handleTransferState';
+import { useUsageStatuses } from '../api/usageStatuses';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
   // Attempt to create a Date object from the input
@@ -119,7 +119,7 @@ function ItemDialog(props: ItemDialogProps) {
     system_id: null,
     purchase_order_number: null,
     is_defective: null,
-    usage_status: null,
+    usage_status_id: null,
     warranty_end_date: null,
     asset_number: null,
     serial_number: null,
@@ -131,6 +131,9 @@ function ItemDialog(props: ItemDialogProps) {
     warranty_end_date: boolean;
     delivered_date: boolean;
   }>({ warranty_end_date: false, delivered_date: false });
+
+  const [hasUsageStatusErrors, setHasUsageStatusErrors] =
+    React.useState<boolean>(false);
 
   const [propertyValues, setPropertyValues] = React.useState<(string | null)[]>(
     []
@@ -152,6 +155,7 @@ function ItemDialog(props: ItemDialogProps) {
     string | undefined
   >(undefined);
 
+  const { data: usageStatuses } = useUsageStatuses();
   const { mutateAsync: addItem, isPending: isAddItemPending } = useAddItem();
   const { mutateAsync: addItems, isPending: isAddItemsPending } = useAddItems();
   const { mutateAsync: editItem, isPending: isEditItemPending } = useEditItem();
@@ -171,10 +175,10 @@ function ItemDialog(props: ItemDialogProps) {
     if (selectedItem && open) {
       setItemDetails({
         catalogue_item_id: null,
-        system_id: null,
+        system_id: selectedItem.system_id,
         purchase_order_number: selectedItem.purchase_order_number,
         is_defective: selectedItem.is_defective ? 'true' : 'false',
-        usage_status: UsageStatusType[selectedItem.usage_status],
+        usage_status_id: selectedItem.usage_status_id,
         warranty_end_date: selectedItem.warranty_end_date
           ? new Date(selectedItem.warranty_end_date)
           : null,
@@ -244,7 +248,7 @@ function ItemDialog(props: ItemDialogProps) {
       system_id: null,
       purchase_order_number: null,
       is_defective: null,
-      usage_status: null,
+      usage_status_id: null,
       warranty_end_date: null,
       asset_number: null,
       serial_number: null,
@@ -311,17 +315,29 @@ function ItemDialog(props: ItemDialogProps) {
     return { hasPropertiesErrors, updatedProperties };
   }, [propertyErrors, parentCatalogueItemPropertiesInfo, propertyValues]);
 
+  const handleUsageStatusErrors = React.useCallback(() => {
+    let hasUsageStatusError = false;
+
+    if (
+      itemDetails.usage_status_id == '' ||
+      itemDetails.usage_status_id == null
+    ) {
+      setHasUsageStatusErrors(true);
+      hasUsageStatusError = true;
+    }
+
+    return { hasUsageStatusError };
+  }, [itemDetails.usage_status_id]);
+
   const details: ItemDetails = React.useMemo(() => {
     return {
       catalogue_item_id: catalogueItem?.id ?? '',
       system_id: itemDetails.system_id ?? '',
       purchase_order_number: itemDetails.purchase_order_number,
       is_defective: itemDetails.is_defective === 'true' ? true : false,
-      usage_status: itemDetails.usage_status
-        ? UsageStatusType[
-            itemDetails.usage_status as keyof typeof UsageStatusType
-          ]
-        : UsageStatusType.new,
+      usage_status_id: itemDetails.usage_status_id
+        ? itemDetails.usage_status_id
+        : '',
       warranty_end_date:
         itemDetails.warranty_end_date &&
         isValidDateTime(itemDetails.warranty_end_date)
@@ -354,7 +370,8 @@ function ItemDialog(props: ItemDialogProps) {
     const { updatedProperties, hasPropertiesErrors } =
       handleFormPropertiesErrorStates();
 
-    if (hasPropertiesErrors) return;
+    const { hasUsageStatusError } = handleUsageStatusErrors();
+    if (hasPropertiesErrors || hasUsageStatusError) return;
 
     const item: AddItem = {
       ...details,
@@ -379,11 +396,13 @@ function ItemDialog(props: ItemDialogProps) {
     }
   }, [
     handleFormPropertiesErrorStates,
+    handleUsageStatusErrors,
     details,
-    advancedSerialNumberOptions,
+    advancedSerialNumberOptions.quantity,
+    advancedSerialNumberOptions.startingValue,
     addItems,
-    addItem,
     handleClose,
+    addItem,
   ]);
 
   const handleEditItem = React.useCallback(() => {
@@ -391,7 +410,9 @@ function ItemDialog(props: ItemDialogProps) {
       const { updatedProperties, hasPropertiesErrors } =
         handleFormPropertiesErrorStates();
 
-      if (hasPropertiesErrors) return;
+      const { hasUsageStatusError } = handleUsageStatusErrors();
+
+      if (hasPropertiesErrors || hasUsageStatusError) return;
 
       const isPurchaseOrderNumberUpdated =
         details.purchase_order_number !== selectedItem.purchase_order_number;
@@ -400,7 +421,7 @@ function ItemDialog(props: ItemDialogProps) {
         details.is_defective !== selectedItem.is_defective;
 
       const isUsageStatusUpdated =
-        details.usage_status !== selectedItem.usage_status;
+        details.usage_status_id !== selectedItem.usage_status_id;
 
       const isWarrantyEndDateUpdated =
         details.warranty_end_date !== selectedItem.warranty_end_date;
@@ -436,7 +457,7 @@ function ItemDialog(props: ItemDialogProps) {
       isPurchaseOrderNumberUpdated &&
         (item.purchase_order_number = details.purchase_order_number);
       isIsDefectiveUpdated && (item.is_defective = details.is_defective);
-      isUsageStatusUpdated && (item.usage_status = details.usage_status);
+      isUsageStatusUpdated && (item.usage_status_id = details.usage_status_id);
       isWarrantyEndDateUpdated &&
         (item.warranty_end_date = details.warranty_end_date);
       isAssetNumberUpdated && (item.asset_number = details.asset_number);
@@ -472,6 +493,7 @@ function ItemDialog(props: ItemDialogProps) {
   }, [
     selectedItem,
     handleFormPropertiesErrorStates,
+    handleUsageStatusErrors,
     details,
     editItem,
     handleClose,
@@ -488,6 +510,13 @@ function ItemDialog(props: ItemDialogProps) {
   const handleNext = React.useCallback(
     (step: number) => {
       switch (step) {
+        case 0: {
+          const { hasUsageStatusError } = handleUsageStatusErrors();
+          return (
+            !hasUsageStatusError &&
+            setActiveStep((prevActiveStep) => prevActiveStep + 1)
+          );
+        }
         case 1: {
           const { hasPropertiesErrors } = handleFormPropertiesErrorStates();
           return (
@@ -499,7 +528,7 @@ function ItemDialog(props: ItemDialogProps) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }
     },
-    [handleFormPropertiesErrorStates]
+    [handleFormPropertiesErrorStates, handleUsageStatusErrors]
   );
 
   const handleBack = () => {
@@ -551,6 +580,7 @@ function ItemDialog(props: ItemDialogProps) {
             Object.values(hasDateErrors).some(
               (value: boolean) => value === true
             ) ||
+            hasUsageStatusErrors ||
             !!hasSerialNumberErrors ||
             !!hasQuantityErrors ||
             !!hasStartingValueErrors
@@ -566,6 +596,7 @@ function ItemDialog(props: ItemDialogProps) {
       hasQuantityErrors,
       hasSerialNumberErrors,
       hasStartingValueErrors,
+      hasUsageStatusErrors,
       propertyErrors,
     ]
   );
@@ -814,6 +845,41 @@ function ItemDialog(props: ItemDialogProps) {
                     />
                   )}
                 />
+                {/* <InputLabel
+                  required={true}
+                  error={hasUsageStatusErrors}
+                  id="usage-status"
+                >
+                  Usage status
+                </InputLabel> */}
+                {/* <Select
+                  required={true}
+                  labelId="usage-status"
+                  value={
+                    usageStatuses?.find(
+                      (usageStatus) =>
+                        usageStatus.id == itemDetails.usage_status_id
+                    )?.id ?? ''
+                  }
+                  size="small"
+                  onChange={(e) => {
+                    setHasUsageStatusErrors(false);
+                    handleItemDetails('usage_status_id', e.target.value);
+                  }}
+                  error={hasUsageStatusErrors}
+                  label="Usage status"
+                >
+                  {usageStatuses?.map((usageStatus) => (
+                    <MenuItem key={usageStatus.id} value={usageStatus.id}>
+                      {usageStatus.value}
+                    </MenuItem>
+                  ))}
+                </Select> */}
+                {hasUsageStatusErrors && (
+                  <FormHelperText error>
+                    Please select a Usage Status
+                  </FormHelperText>
+                )}
               </FormControl>
             </Grid>
 
@@ -837,7 +903,9 @@ function ItemDialog(props: ItemDialogProps) {
                   title={
                     <div>
                       <Typography>Catalogue item note:</Typography>
-                      <Typography>{catalogueItem?.notes ?? 'None'}</Typography>
+                      <Typography whiteSpace="pre-line">
+                        {catalogueItem?.notes ?? 'None'}
+                      </Typography>
                     </div>
                   }
                   placement="right"
@@ -1111,6 +1179,7 @@ function ItemDialog(props: ItemDialogProps) {
               Object.values(hasDateErrors).some(
                 (value: boolean) => value === true
               ) ||
+              hasUsageStatusErrors ||
               !!hasSerialNumberErrors ||
               !!hasQuantityErrors ||
               !!hasStartingValueErrors

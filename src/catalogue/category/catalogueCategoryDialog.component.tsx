@@ -38,7 +38,7 @@ import handleIMS_APIError from '../../handleIMS_APIError';
 import { generateUniqueId, trimStringValues } from '../../utils';
 
 // Function to convert a list of strings to a list of numbers
-const convertListToNumbers = (values: string[]): number[] => {
+export const convertListToNumbers = (values: string[]): number[] => {
   return values.map((value) => parseFloat(value));
 };
 export interface CatalogueCategoryDialogProps {
@@ -193,10 +193,13 @@ const CatalogueCategoryDialog = React.memo(
 
           trimmedLowerCaseValues.forEach((value, i) => {
             for (let j = i + 1; j < trimmedLowerCaseValues.length; j++) {
-              if (
-                value.value === trimmedLowerCaseValues[j].value &&
-                value.value
-              ) {
+              const isDuplicate =
+                property.type === 'number'
+                  ? Number(value.value) ===
+                    Number(trimmedLowerCaseValues[j].value)
+                  : value.value === trimmedLowerCaseValues[j].value;
+
+              if (isDuplicate && value.value) {
                 duplicateIds.push(
                   value.av_placement_id,
                   trimmedLowerCaseValues[j].av_placement_id
@@ -313,7 +316,7 @@ const CatalogueCategoryDialog = React.memo(
                   ? categoryData.catalogue_item_properties[i].cip_placement_id
                   : '',
                 errors: {
-                  fieldName: 'list',
+                  fieldName: 'allowed_values',
                   errorMessage: 'Please create a valid list item',
                 },
               },

@@ -21,11 +21,12 @@ import {
 import { useCatalogueItem } from '../api/catalogueItems';
 import { useItem } from '../api/items';
 import { useManufacturer } from '../api/manufacturers';
-import { BreadcrumbsInfo, UsageStatusType } from '../app.types';
+import { BreadcrumbsInfo } from '../app.types';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ItemDialog from './itemDialog.component';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 import { formatDateTimeStrings } from '../utils';
+import { useSystem } from '../api/systems';
 
 function ItemsLandingPage() {
   // Navigation
@@ -46,6 +47,8 @@ function ItemsLandingPage() {
   const { data: catalogueBreadcrumbs } = useCatalogueBreadcrumbs(
     catalogueItemData?.catalogue_category_id
   );
+
+  const { data: systemData } = useSystem(itemData?.system_id);
 
   const [itemLandingBreadcrumbs, setItemLandingBreadcrumbs] = React.useState<
     BreadcrumbsInfo | undefined
@@ -156,7 +159,7 @@ function ItemsLandingPage() {
               Description:
             </Typography>
             <Typography
-              sx={{ margin: 1, textAlign: 'center' }}
+              sx={{ margin: 1, textAlign: 'center', whiteSpace: 'pre-line' }}
               variant="body1"
               color="text.secondary"
             >
@@ -256,20 +259,20 @@ function ItemsLandingPage() {
                       Usage Status
                     </Typography>
                     <Typography align="left" color="text.secondary">
-                      {Object.values(UsageStatusType)[itemData.usage_status]}
+                      {itemData.usage_status}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
                     <Typography align="left" color="text.primary">
-                      System ID
+                      System
                     </Typography>
                     <Typography align="left" color="text.secondary">
                       <MuiLink
                         underline="hover"
                         component={Link}
-                        to={'/systems/' + itemData.system_id}
+                        to={'/systems/' + systemData?.id}
                       >
-                        {itemData.system_id}
+                        {systemData?.name}
                       </MuiLink>
                     </Typography>
                   </Grid>
@@ -436,7 +439,7 @@ function ItemsLandingPage() {
               Notes:
             </Typography>
             <Typography
-              sx={{ margin: 1, textAlign: 'center' }}
+              sx={{ margin: 1, textAlign: 'center', whiteSpace: 'pre-line' }}
               variant="body1"
               color="text.secondary"
             >

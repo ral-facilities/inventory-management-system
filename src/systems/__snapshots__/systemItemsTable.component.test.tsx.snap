@@ -1953,7 +1953,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-9g11ld-MuiTableCell-root"
               data-index="8"
             >
-              inUse
+              In Use
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -2102,7 +2102,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-dxfizy-MuiPaper-root-MuiAlert-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
               role="alert"
             >
               <div
@@ -2150,9 +2150,13 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
       <div
         class="MuiBox-root css-1llu0od"
       >
-        <span />
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
+        >
+          Total Items: 3
+        </p>
         <div
-          class="MuiBox-root css-qpxlqp"
+          class="MuiBox-root css-nokk8"
         >
           <div
             class="MuiTablePagination-root MuiBox-root css-8k4lth"
@@ -2783,7 +2787,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
               </div>
             </th>
             <th
-              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-vhcwyf-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-kd7qqp-MuiTableCell-root"
               colspan="1"
               data-index="3"
               scope="col"
@@ -2792,43 +2796,13 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                 class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
               >
                 <div
-                  class="Mui-TableHeadCell-Content-Labels MuiBox-root css-68rqdf"
+                  class="Mui-TableHeadCell-Content-Labels MuiBox-root css-1byo2ey"
                 >
                   <div
                     class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                   >
                     Usage Status
                   </div>
-                  <span
-                    aria-label="Sort by Usage Status ascending"
-                    class="MuiBadge-root css-1c32n2y-MuiBadge-root"
-                    data-mui-internal-clone-element="true"
-                  >
-                    <span
-                      aria-label="Sort by Usage Status ascending"
-                      class="MuiButtonBase-root MuiTableSortLabel-root Mui-active css-118d58w-MuiButtonBase-root-MuiTableSortLabel-root"
-                      role="button"
-                      tabindex="0"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiTableSortLabel-icon MuiTableSortLabel-iconDirectionAsc css-1vweko9-MuiSvgIcon-root-MuiTableSortLabel-icon"
-                        data-testid="SyncAltIcon"
-                        focusable="false"
-                        style="transform: rotate(-90deg) scaleX(0.9) translateX(-1px);"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="m18 12 4-4-4-4v3H3v2h15zM6 12l-4 4 4 4v-3h15v-2H6z"
-                        />
-                      </svg>
-                    </span>
-                    <span
-                      class="MuiBadge-badge MuiBadge-standard MuiBadge-invisible MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightCircular MuiBadge-overlapCircular css-2v5rxe-MuiBadge-badge"
-                    >
-                      0
-                    </span>
-                  </span>
                 </div>
                 <div
                   class="Mui-TableHeadCell-Content-Actions MuiBox-root css-epvm6"
@@ -2876,93 +2850,6 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                     />
                   </button>
-                </div>
-              </div>
-              <div
-                class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-pwcg7p-MuiCollapse-root"
-                style="min-height: 0px;"
-              >
-                <div
-                  class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
-                >
-                  <div
-                    class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
-                  >
-                    <div
-                      class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-jk1t0h-MuiFormControl-root-MuiTextField-root"
-                    >
-                      <div
-                        class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
-                      >
-                        <div
-                          aria-controls=":rc1:"
-                          aria-expanded="false"
-                          aria-haspopup="listbox"
-                          aria-label="Filter by Usage Status"
-                          aria-labelledby=":rc0:"
-                          class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                          id=":rc0:"
-                          role="combobox"
-                          tabindex="0"
-                        >
-                          <div
-                            class="MuiBox-root css-1tzeee1"
-                          >
-                            Filter by Usage Status
-                          </div>
-                        </div>
-                        <input
-                          aria-hidden="true"
-                          aria-invalid="false"
-                          autocomplete="new-password"
-                          class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                          tabindex="-1"
-                          title="Filter by Usage Status"
-                          value=""
-                        />
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconStandard css-pqjvzy-MuiSvgIcon-root-MuiSelect-icon"
-                          data-testid="ArrowDropDownIcon"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M7 10l5 5 5-5z"
-                          />
-                        </svg>
-                        <div
-                          class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-3yq2xl-MuiInputAdornment-root"
-                        >
-                          <span
-                            aria-label="Clear filter"
-                            class=""
-                            data-mui-internal-clone-element="true"
-                          >
-                            <button
-                              aria-label="Clear filter"
-                              class="MuiButtonBase-root Mui-disabled MuiIconButton-root Mui-disabled MuiIconButton-sizeSmall css-1so9ih7-MuiButtonBase-root-MuiIconButton-root"
-                              disabled=""
-                              tabindex="-1"
-                              type="button"
-                            >
-                              <svg
-                                aria-hidden="true"
-                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                data-testid="CloseIcon"
-                                focusable="false"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                />
-                              </svg>
-                            </button>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </th>
@@ -3045,7 +2932,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                   class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":rc5:"
+                    aria-controls=":rc1:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-labelledby="usage-statuses-Cameras 1"
@@ -3167,7 +3054,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                   class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":rc7:"
+                    aria-controls=":rc3:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-labelledby="usage-statuses-Cameras 6"
@@ -3235,7 +3122,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
             class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-dxfizy-MuiPaper-root-MuiAlert-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
               role="alert"
             >
               <div
@@ -3283,9 +3170,13 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
       <div
         class="MuiBox-root css-1llu0od"
       >
-        <span />
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
+        >
+          Total Items: 4
+        </p>
         <div
-          class="MuiBox-root css-qpxlqp"
+          class="MuiBox-root css-nokk8"
         >
           <div
             class="MuiTablePagination-root MuiBox-root css-8k4lth"
@@ -3303,7 +3194,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                 class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
-                  aria-controls=":rc3:"
+                  aria-controls=":rbv:"
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-label="Rows per page"

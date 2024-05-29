@@ -6,6 +6,7 @@ export const TAB_VALUES = [
   'Catalogue',
   'Systems',
   'Manufacturers',
+  'Admin',
 ] as const;
 export type TabValue = (typeof TAB_VALUES)[number];
 
@@ -94,7 +95,32 @@ export interface AddCatalogueCategoryProperty {
   unit?: string;
   mandatory: boolean;
   allowed_values?: AllowedValues;
+  default_value?: string | number | boolean;
 }
+
+export interface CatalogueCategoryPropertyMigration {
+  id?: string;
+  name: string;
+  type: string;
+  unit?: string;
+  mandatory: boolean;
+  allowed_values?: AllowedValues;
+  default_value?: string | number | boolean;
+}
+
+export interface AddPropertyMigration {
+  catalogueCategory: CatalogueCategory;
+  property: CatalogueCategoryPropertyMigration;
+}
+
+export interface EditPropertyMigration {
+  catalogueCategory: CatalogueCategory;
+  property: Partial<CatalogueCategoryPropertyMigration>;
+}
+
+export type AddCatalogueCategoryPropertyTypes =
+  | AddCatalogueCategoryProperty
+  | CatalogueCategoryPropertyMigration;
 
 export interface CatalogueCategoryProperty
   extends AddCatalogueCategoryProperty {
@@ -188,7 +214,7 @@ interface EditAddress {
 export interface TransferState {
   name: string;
   message: string;
-  state: 'success' | 'error';
+  state: 'success' | 'error' | 'information';
 }
 export interface BreadcrumbsInfo {
   trail: [id: string, name: string][];
@@ -242,11 +268,9 @@ export interface CopyToSystem {
   existingSystemNames: string[];
 }
 
-export enum UsageStatusType {
-  new = 0,
-  inUse = 1,
-  used = 2,
-  scrapped = 3,
+export interface UsageStatus {
+  id: string;
+  value: string;
 }
 
 export interface ItemDetails {
@@ -254,7 +278,7 @@ export interface ItemDetails {
   system_id: string;
   purchase_order_number: string | null;
   is_defective: boolean;
-  usage_status: UsageStatusType;
+  usage_status_id: string;
   warranty_end_date: string | null;
   asset_number: string | null;
   serial_number: string | null;
@@ -280,6 +304,7 @@ export interface AddItems {
 export interface Item extends ItemDetails {
   properties: CatalogueItemPropertyResponse[];
   id: string;
+  usage_status: string;
   created_time: string;
   modified_time: string;
 }
@@ -290,7 +315,7 @@ export interface EditItem extends Partial<AddItem> {
 
 export interface MoveItemsToSystemUsageStatus {
   item_id: string;
-  usage_status: UsageStatusType;
+  usage_status_id: string;
 }
 export interface MoveItemsToSystem {
   usageStatuses: MoveItemsToSystemUsageStatus[];
@@ -301,7 +326,7 @@ export interface MoveItemsToSystem {
 export interface CatalogueItemPropertiesErrorsType {
   cip_placement_id: string;
   errors: {
-    fieldName: 'name' | 'type' | 'unit' | 'mandatory' | 'list';
+    fieldName: keyof AddCatalogueCategoryProperty;
     errorMessage: string;
   } | null;
 }
@@ -318,4 +343,14 @@ export interface AllowedValuesListErrorsType {
 export interface Unit {
   id: string;
   value: string;
+}
+
+export interface AddUsageStatus {
+  value: string;
+}
+export interface UsageStatus extends AddUsageStatus {
+  id: string;
+  code: string;
+  created_time: string;
+  modified_time: string;
 }

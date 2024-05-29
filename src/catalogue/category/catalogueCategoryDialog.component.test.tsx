@@ -10,6 +10,7 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
+import { resetUniqueIdCounter } from '../../utils';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -130,26 +131,23 @@ describe('Catalogue Category Dialog', () => {
             // Add list items if allowed_values is of type 'list'
             for (let j = 0; j < field.allowed_values.values.length; j++) {
               await user.click(
-                screen.getByRole('button', {
-                  name: `Add list item ${i + numberOfCurrentFields}`,
-                })
+                screen.getAllByRole('button', {
+                  name: `Add list item`,
+                })[i + numberOfCurrentFields]
               );
 
               await waitFor(() => {
-                screen.getAllByLabelText(`List Item ${j}`);
+                screen.getByTestId(
+                  `av_placement_id_${i + j + values.newFormFields.length + 1}: List Item`
+                );
               });
-              const listItems = screen.getAllByLabelText(`List Item ${j}`);
-
-              fireEvent.change(
-                within(
-                  listItems[
-                    i + numberOfCurrentFields - allowedValuesSelects.length + 1
-                  ]
-                ).getByLabelText('List Item'),
-                {
-                  target: { value: field.allowed_values.values[j] },
-                }
+              const listItem = screen.getByTestId(
+                `av_placement_id_${i + j + values.newFormFields.length + 1}: List Item`
               );
+
+              fireEvent.change(within(listItem).getByLabelText('List Item'), {
+                target: { value: field.allowed_values.values[j] },
+              });
             }
           }
         }
@@ -175,6 +173,7 @@ describe('Catalogue Category Dialog', () => {
     afterEach(() => {
       vi.clearAllMocks();
       axiosPostSpy.mockRestore();
+      resetUniqueIdCounter();
     });
 
     it('renders text correctly', async () => {
@@ -520,6 +519,35 @@ describe('Catalogue Category Dialog', () => {
       expect(onClose).not.toHaveBeenCalled();
     }, 10000);
 
+    it('displays duplicate values values with different significant figures (allowed_values list of numbers)', async () => {
+      createView();
+
+      await modifyValues({
+        name: 'test',
+        newFormFields: [
+          {
+            name: 'radius',
+            type: 'number',
+            unit: 'millimeters',
+            allowed_values: { type: 'list', values: ['1.0', '1'] },
+            mandatory: true,
+          },
+        ],
+      });
+
+      expect(screen.getByText('Catalogue Item Fields')).toBeInTheDocument();
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await waitFor(() => user.click(saveButton));
+
+      const duplicateHelperTexts = screen.queryAllByText('Duplicate value');
+
+      expect(duplicateHelperTexts.length).toEqual(2);
+
+      expect(onClose).not.toHaveBeenCalled();
+    }, 10000);
+
     it('displays duplicate values and incorrect type error and deletes an allowed value to check if errors states are in correct location (allowed_values list of numbers)', async () => {
       createView();
 
@@ -552,11 +580,13 @@ describe('Catalogue Category Dialog', () => {
 
       expect(onClose).not.toHaveBeenCalled();
 
-      await user.click(screen.getByLabelText('Delete list item 2'));
+      await user.click(
+        screen.getByTestId(`av_placement_id_4: Delete list item`)
+      );
 
-      const duplicateHelperTexts2 = screen.queryAllByText('Duplicate value');
+      const duplicateHelperTexts2 = screen.queryByText('Duplicate value');
 
-      expect(duplicateHelperTexts2.length).toEqual(2);
+      expect(duplicateHelperTexts2).not.toBeInTheDocument();
     }, 10000);
 
     it('displays error if the allowed values list is empty', async () => {

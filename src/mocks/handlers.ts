@@ -1,12 +1,15 @@
 import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
   AddCatalogueCategory,
+  CatalogueCategoryPropertyMigration,
   AddCatalogueItem,
   AddItem,
   AddManufacturer,
   AddSystem,
+  AddUsageStatus,
   BreadcrumbsInfo,
   CatalogueCategory,
+  CatalogueCategoryProperty,
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
@@ -16,6 +19,7 @@ import {
   Item,
   Manufacturer,
   System,
+  UsageStatus,
 } from '../app.types';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
 import CatalogueCategoryBreadcrumbsJSON from './CatalogueCategoryBreadcrumbs.json';
@@ -25,6 +29,7 @@ import ManufacturersJSON from './Manufacturers.json';
 import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import UnitsJSON from './Units.json';
+import UsageStatusJSON from './UsageStatuses.json';
 import { generateUniqueId } from '../utils';
 
 /* MSW v2 expects types for responses, this interface covers any empty body
@@ -189,6 +194,63 @@ export const handlers = [
       return HttpResponse.json({ detail: '' }, { status: 400 });
     }
   }),
+
+  http.post<
+    PathParams,
+    CatalogueCategoryPropertyMigration,
+    CatalogueCategoryProperty | ErrorResponse
+  >(
+    '/v1/catalogue-categories/:catalogue_category_id/properties',
+    async ({ request }) => {
+      const body = await request.json();
+
+      if (body.name == 'Error 500') {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      }
+      delete body.default_value;
+      return HttpResponse.json(
+        {
+          id: '1',
+          ...body,
+        } as CatalogueCategoryProperty,
+        { status: 200 }
+      );
+    }
+  ),
+
+  http.patch<
+    PathParams,
+    Partial<CatalogueCategoryPropertyMigration>,
+    CatalogueCategoryProperty | ErrorResponse
+  >(
+    '/v1/catalogue-categories/:catalogue_category_id/properties/:property_id',
+    async ({ request, params }) => {
+      const body = await request.json();
+
+      if (body.name == 'Error 500') {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      }
+
+      const { catalogue_category_id, property_id } = params;
+
+      const property = CatalogueCategoriesJSON.find(
+        (category) => category.id === catalogue_category_id
+      )?.catalogue_item_properties?.find(
+        (property) => property.id === property_id
+      );
+
+      return HttpResponse.json(
+        { id: '1', ...property, ...body } as CatalogueCategoryProperty,
+        { status: 200 }
+      );
+    }
+  ),
 
   // ------------------------------------ CATALOGUE ITEMS ------------------------------------
 
@@ -619,6 +681,10 @@ export const handlers = [
         (category) => category.id === catalogueItem?.catalogue_category_id
       )?.catalogue_item_properties;
 
+      const usageStatus = UsageStatusJSON.find(
+        (usageStatus) => usageStatus.id == body.usage_status_id
+      );
+
       body = {
         ...body,
         properties: body.properties?.map((property) => {
@@ -638,6 +704,7 @@ export const handlers = [
         {
           ...body,
           id: '1',
+          usage_status: usageStatus?.value,
         } as Item,
         { status: 200 }
       );
@@ -690,6 +757,9 @@ export const handlers = [
         );
 
       const validItem = ItemsJSON.find((value) => value.id === id);
+      const usageStatus = UsageStatusJSON.find(
+        (usageStatus) => usageStatus.id == body.usage_status_id
+      );
 
       if (body.serial_number === 'Error 500')
         return HttpResponse.json(
@@ -702,6 +772,7 @@ export const handlers = [
           ...validItem,
           ...body,
           id: id,
+          usage_status: usageStatus?.value,
         } as Item,
         { status: 200 }
       );
@@ -728,5 +799,67 @@ export const handlers = [
 
   http.get('/v1/units', () => {
     return HttpResponse.json(UnitsJSON, { status: 200 });
+  }),
+
+  // ------------------------------------ Usage Status ------------------------------------------------
+
+  http.get('/v1/usage-statuses', () => {
+    return HttpResponse.json(UsageStatusJSON, { status: 200 });
+  }),
+
+  http.post<PathParams, AddUsageStatus, UsageStatus | ErrorResponse>(
+    '/v1/usage-statuses',
+    async ({ request }) => {
+      const body = await request.json();
+
+      if (body.value === 'test_dup') {
+        return HttpResponse.json(
+          {
+            detail: 'A Usage Status with the same value already exists',
+          },
+          { status: 409 }
+        );
+      }
+      if (body.value === 'Error 500') {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      }
+
+      return HttpResponse.json(
+        {
+          id: '5',
+          value: 'Archived',
+          code: 'archived',
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
+        },
+        { status: 200 }
+      );
+    }
+  ),
+
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/v1/usage-statuses/:id', ({ params }) => {
+    const { id } = params;
+    const validUsageStatus = UsageStatusJSON.find((value) => value.id === id);
+    if (validUsageStatus) {
+      if (id === '2') {
+        return HttpResponse.json(
+          {
+            detail: 'The specified usage status is a part of an Item',
+          },
+          { status: 409 }
+        );
+      } else {
+        return HttpResponse.json({ status: 204 });
+      }
+    } else {
+      return HttpResponse.json({ detail: '' }, { status: 400 });
+    }
   }),
 ];

@@ -35,10 +35,12 @@ import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.comp
 import Items from './items/items.component';
 import ItemsLandingPage from './items/itemsLandingPage.component';
 import ConfigProvider from './configProvider.component';
+import AdminPage from './admin/admin.component';
 
 export const paths = {
   any: '*',
   root: '/',
+  admin: '/admin-ims/*',
   homepage: '/ims',
   catalogue: '/catalogue/*',
   systems: '/systems/*',
@@ -75,6 +77,7 @@ const router = createBrowserRouter([
       { path: paths.any, Component: ViewTabs },
       { path: paths.root, Component: HomePage },
       { path: paths.homepage, Component: HomePage },
+      { path: paths.admin, Component: AdminPage },
       { path: paths.catalogue, Component: Catalogue },
       {
         path: paths.catalogueItem,

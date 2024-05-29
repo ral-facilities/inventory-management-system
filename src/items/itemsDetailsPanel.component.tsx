@@ -9,9 +9,10 @@ import {
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { CatalogueItem, Item, UsageStatusType } from '../app.types';
+import { CatalogueItem, Item } from '../app.types';
 import { useManufacturer } from '../api/manufacturers';
 import { formatDateTimeStrings } from '../utils';
+import { useSystem } from '../api/systems';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function TabPanel(props: any) {
@@ -45,6 +46,8 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
   const { data: manufacturerData } = useManufacturer(
     catalogueItemIdData.manufacturer_id
   );
+  const { data: systemData } = useSystem(itemData.system_id);
+
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
@@ -73,7 +76,11 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
               <Typography sx={{ my: 1 }} variant="h6">
                 Description:
               </Typography>
-              <Typography sx={{ mb: 1 }} variant="body1" color="text.secondary">
+              <Typography
+                sx={{ mb: 1, whiteSpace: 'pre-line' }}
+                variant="body1"
+                color="text.secondary"
+              >
                 {catalogueItemIdData.description ?? 'None'}
               </Typography>
             </Grid>
@@ -128,18 +135,32 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
               <Grid item xs={12} sm={6} key={6}>
                 <Typography color="text.primary">Usage Status</Typography>
                 <Typography color="text.secondary">
-                  {Object.values(UsageStatusType)[itemData.usage_status]}
+                  {itemData.usage_status}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={7}>
+                <Typography color="text.primary">System</Typography>
+                <Typography color="text.secondary">
+                  <MuiLink
+                    component={Link}
+                    underline="hover"
+                    target="_blank"
+                    to={'/systems/' + systemData?.id}
+                  >
+                    {systemData?.name}
+                  </MuiLink>
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12} sm={6} key={8}>
                 <Typography color="text.primary">Last Modified</Typography>
                 <Typography color="text.secondary">
                   {formatDateTimeStrings(itemData.modified_time, true)}
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6} key={8}>
+              <Grid item xs={12} sm={6} key={9}>
                 <Typography color="text.primary">Created</Typography>
                 <Typography color="text.secondary">
                   {formatDateTimeStrings(itemData.created_time, true)}
@@ -231,7 +252,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
 
         <TabPanel value={tabValue} index={3}>
           <Grid item xs={12}>
-            <Typography color="text.secondary">
+            <Typography color="text.secondary" whiteSpace="pre-line">
               {itemData.notes ?? 'None'}
             </Typography>
           </Grid>

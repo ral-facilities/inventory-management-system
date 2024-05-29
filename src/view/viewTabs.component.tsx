@@ -62,6 +62,8 @@ function ViewTabs() {
 
       if (tabValue !== value && tabValue !== '') {
         tabValue = tabValue.charAt(0).toUpperCase() + tabValue.slice(1);
+        tabValue =
+          tabValue === 'Admin-ims' ? tabValue.replace('-ims', '') : tabValue;
         if (TAB_VALUES.includes(tabValue as TabValue))
           setValue(tabValue as TabValue);
         else setValue(false);
@@ -71,7 +73,9 @@ function ViewTabs() {
 
   const handleChange = (_event: React.SyntheticEvent, newValue: TabValue) => {
     setValue(newValue);
-    navigate(`/${newValue.toLowerCase()}`);
+    navigate(
+      `/${newValue === 'Admin' ? newValue.toLowerCase() + '-ims' : newValue.toLowerCase()}`
+    );
   };
 
   return (
