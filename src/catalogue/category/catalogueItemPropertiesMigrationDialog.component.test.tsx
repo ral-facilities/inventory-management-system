@@ -17,7 +17,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   const onClose = vi.fn();
   const resetSelectedCatalogueCategory = vi.fn();
 
-  interface testCatalogueCategoryPropertyMigration
+  interface TestCatalogueCategoryPropertyMigration
     extends CatalogueCategoryPropertyMigration {
     unit?: string;
   }
@@ -41,7 +41,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   const modifyValues = async (values: {
     type: 'Edit' | 'Add';
     editRadio?: string;
-    formField: Partial<testCatalogueCategoryPropertyMigration>;
+    formField: Partial<TestCatalogueCategoryPropertyMigration>;
     justModifyPropertyForm: boolean;
   }) => {
     if (!values.justModifyPropertyForm) {

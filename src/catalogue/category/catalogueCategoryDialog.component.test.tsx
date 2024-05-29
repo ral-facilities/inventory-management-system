@@ -20,7 +20,7 @@ describe('Catalogue Category Dialog', () => {
   let props: CatalogueCategoryDialogProps;
   let user: UserEvent;
 
-  interface testAddCatalogueCategoryProperty
+  interface TestAddCatalogueCategoryProperty
     extends AddCatalogueCategoryProperty {
     unit?: string;
   }
@@ -34,7 +34,7 @@ describe('Catalogue Category Dialog', () => {
   const modifyValues = async (values: {
     name?: string;
     // New fields to add (if any)
-    newFormFields?: testAddCatalogueCategoryProperty[];
+    newFormFields?: TestAddCatalogueCategoryProperty[];
   }) => {
     values.name !== undefined &&
       fireEvent.change(screen.getByLabelText('Name *'), {

@@ -445,7 +445,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '1',
         name: 'Field 1',
         type: 'text',
-
         mandatory: false,
       },
     ];
@@ -469,7 +468,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '1',
         name: 'Field 1',
         type: 'text',
-
         mandatory: true,
       },
     ]);
@@ -481,7 +479,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '1',
         name: 'Field 1',
         type: 'text',
-
         mandatory: false,
       },
     ];
@@ -518,7 +515,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '1',
         name: 'Field 1',
         type: 'boolean',
-
         mandatory: false,
       },
     ];
@@ -534,7 +530,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '1',
         name: 'Field 1',
         type: 'number',
-
         mandatory: false,
       },
     ];
@@ -622,28 +617,24 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '1',
         name: '',
         type: 'number',
-
         mandatory: false,
       },
       {
         cip_placement_id: '2',
         name: '',
         type: '',
-
         mandatory: false,
       },
       {
         cip_placement_id: '3',
         name: 'raduis 1',
         type: '',
-
         mandatory: false,
       },
       {
         cip_placement_id: '4',
         name: 'raduis 2',
         type: 'number',
-
         allowed_values: { type: 'list', values: [] },
         mandatory: false,
       },
@@ -756,7 +747,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '1',
         name: 'Field',
         type: 'text',
-
         mandatory: false,
       },
       {
@@ -820,7 +810,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '1',
         name: 'Field',
         type: 'text',
-
         mandatory: false,
       },
       {
@@ -894,7 +883,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '2',
         name: 'Field 4',
         type: 'string',
-
         allowed_values: {
           type: 'list',
           values: [
@@ -1042,7 +1030,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '2',
         name: 'Field 4',
         type: 'string',
-
         allowed_values: {
           type: 'list',
           values: [
@@ -1119,7 +1106,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '2',
         name: 'Field 4',
         type: 'string',
-
         allowed_values: {
           type: 'list',
           values: [
@@ -1184,7 +1170,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '2',
         name: 'Field 4',
         type: 'string',
-
         allowed_values: {
           type: 'list',
           values: [
@@ -1547,7 +1532,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '2',
         name: 'Field 4',
         type: 'string',
-
         allowed_values: {
           type: 'list',
           values: [
