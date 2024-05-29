@@ -30,6 +30,7 @@ import {
   Item,
   ItemDetails,
   ItemDetailsPlaceholder,
+  UsageStatus,
 } from '../app.types';
 import { DatePicker } from '@mui/x-date-pickers';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -40,7 +41,7 @@ import handleIMS_APIError from '../handleIMS_APIError';
 import { SystemsTableView } from '../systems/systemsTableView.component';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { addValueToFrontOfList, trimStringValues } from '../utils';
+import { trimStringValues } from '../utils';
 import handleTransferState from '../handleTransferState';
 import { useUsageStatuses } from '../api/usageStatuses';
 const maxYear = 2100;
@@ -773,7 +774,7 @@ function ItemDialog(props: ItemDialogProps) {
               <FormControl fullWidth>
                 <Autocomplete
                   id="is-defective"
-                  value={itemDetails.is_defective ?? 'No'}
+                  value={itemDetails.is_defective == 'true' ? 'Yes' : 'No'}
                   size="small"
                   onChange={(_event, value) =>
                     handleItemDetails(
@@ -784,12 +785,6 @@ function ItemDialog(props: ItemDialogProps) {
                   sx={{ alignItems: 'center' }}
                   fullWidth
                   options={['Yes', 'No']}
-                  isOptionEqualToValue={(option, value) =>
-                    value == '' ||
-                    (value == 'false' && option == 'No') ||
-                    value == 'true' ||
-                    option == 'Yes'
-                  }
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -804,82 +799,39 @@ function ItemDialog(props: ItemDialogProps) {
               <FormControl size="small" fullWidth>
                 <Autocomplete
                   id="usage-status"
-                  value={itemDetails.usage_status ?? 'New'}
+                  value={
+                    usageStatuses?.find(
+                      (usageStatus) =>
+                        usageStatus.id == itemDetails.usage_status_id
+                    ) ?? null
+                  }
                   size="small"
-                  onChange={(_event, value) => {
-                    let newValue = null;
-                    switch (value) {
-                      case 'New':
-                        newValue = 'new';
-                        break;
-                      case 'In Use':
-                        newValue = 'inUse';
-                        break;
-                      case 'Scrapped':
-                        newValue = 'scrapped';
-                        break;
-                      case 'Used':
-                        newValue = 'used';
-                        break;
-
-                      default:
-                        newValue = '';
-                        break;
-                    }
-                    handleItemDetails('usage_status', newValue);
+                  onChange={(_event, usageStatus: UsageStatus | null) => {
+                    setHasUsageStatusErrors(false);
+                    handleItemDetails(
+                      'usage_status_id',
+                      usageStatus?.id ?? null
+                    );
                   }}
                   sx={{ alignItems: 'center' }}
                   fullWidth
-                  options={['New', 'In Use', 'Used', 'Scrapped']}
+                  options={usageStatuses ?? []}
                   isOptionEqualToValue={(option, value) =>
-                    (option == 'New' && value.toLowerCase() == 'new') ||
-                    (option == 'In Use' && value == 'inUse') ||
-                    (option == 'Scrapped' && value == 'scrapped') ||
-                    (option == 'Used' && value == 'used')
+                    option.id == value.id
                   }
+                  getOptionLabel={(option) => option.value}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       required={true}
                       label="Usage status"
+                      error={hasUsageStatusErrors}
+                      helperText={
+                        hasUsageStatusErrors && 'Please select a Usage Status'
+                      }
                     />
                   )}
                 />
-                {/* <InputLabel
-                  required={true}
-                  error={hasUsageStatusErrors}
-                  id="usage-status"
-                >
-                  Usage status
-                </InputLabel> */}
-                {/* <Select
-                  required={true}
-                  labelId="usage-status"
-                  value={
-                    usageStatuses?.find(
-                      (usageStatus) =>
-                        usageStatus.id == itemDetails.usage_status_id
-                    )?.id ?? ''
-                  }
-                  size="small"
-                  onChange={(e) => {
-                    setHasUsageStatusErrors(false);
-                    handleItemDetails('usage_status_id', e.target.value);
-                  }}
-                  error={hasUsageStatusErrors}
-                  label="Usage status"
-                >
-                  {usageStatuses?.map((usageStatus) => (
-                    <MenuItem key={usageStatus.id} value={usageStatus.id}>
-                      {usageStatus.value}
-                    </MenuItem>
-                  ))}
-                </Select> */}
-                {hasUsageStatusErrors && (
-                  <FormHelperText error>
-                    Please select a Usage Status
-                  </FormHelperText>
-                )}
               </FormControl>
             </Grid>
 
@@ -942,14 +894,12 @@ function ItemDialog(props: ItemDialogProps) {
                                 onChange={(_event, value) => {
                                   handlePropertyChange(
                                     index,
-                                    (value == 'None'
-                                      ? ''
-                                      : value?.toLowerCase()) as string
+                                    value?.toLowerCase() as string
                                   );
                                 }}
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                                options={['None', 'True', 'False']}
+                                options={['True', 'False']}
                                 isOptionEqualToValue={(option, value) =>
                                   option.toLowerCase() == value || value == ''
                                 }
@@ -977,17 +927,11 @@ function ItemDialog(props: ItemDialogProps) {
                                 value={(propertyValues[index] as string) ?? ''}
                                 size="small"
                                 onChange={(_event, value) => {
-                                  handlePropertyChange(
-                                    index,
-                                    value == 'None' ? '' : value
-                                  );
+                                  handlePropertyChange(index, value);
                                 }}
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                                options={addValueToFrontOfList(
-                                  property.allowed_values.values,
-                                  'None'
-                                )}
+                                options={property.allowed_values.values}
                                 getOptionLabel={(option) => option.toString()}
                                 isOptionEqualToValue={(option, value) =>
                                   option.toString() === value.toString() ||

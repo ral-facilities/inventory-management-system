@@ -40,11 +40,7 @@ import { Autocomplete } from '@mui/material';
 import { useManufacturers } from '../../api/manufacturers';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import {
-  addValueToFrontOfList,
-  sortDataList,
-  trimStringValues,
-} from '../../utils';
+import { sortDataList, trimStringValues } from '../../utils';
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
@@ -862,16 +858,15 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 onChange={(_event, value) => {
                                   handlePropertyChange(
                                     index,
-                                    (value == 'None'
-                                      ? ''
-                                      : value?.toLowerCase()) as string
+                                    value?.toLowerCase() as string
                                   );
                                 }}
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                                options={['None', 'True', 'False']}
+                                options={['True', 'False']}
                                 isOptionEqualToValue={(option, value) =>
-                                  option.toLowerCase() == value || value == ''
+                                  option.toLowerCase() == value.toLowerCase() ||
+                                  value == ''
                                 }
                                 renderInput={(params) => (
                                   <TextField
@@ -897,17 +892,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 value={(propertyValues[index] as string) ?? ''}
                                 size="small"
                                 onChange={(_event, value) => {
-                                  handlePropertyChange(
-                                    index,
-                                    value == 'None' ? '' : value
-                                  );
+                                  handlePropertyChange(index, value);
                                 }}
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                                options={addValueToFrontOfList(
-                                  property.allowed_values.values,
-                                  'None'
-                                )}
+                                options={property.allowed_values.values}
                                 getOptionLabel={(option) => option.toString()}
                                 isOptionEqualToValue={(option, value) =>
                                   option.toString() === value.toString() ||
