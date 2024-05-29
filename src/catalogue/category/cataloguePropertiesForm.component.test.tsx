@@ -433,7 +433,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '1',
         name: 'Field 1',
         type: 'number',
-
         mandatory: false,
       },
     ]);
