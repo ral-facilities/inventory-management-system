@@ -482,7 +482,7 @@ describe('Catalogue Items Table', () => {
     const rowToggleSelect = screen.getAllByLabelText('Toggle select row');
     await user.click(rowToggleSelect[1]);
 
-    expect(screen.getByRole('button', { name: 'Move to' })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Move to' })).toBeInTheDocument();
     const moveToButton = screen.getByRole('button', { name: 'Move to' });
 
     await user.click(moveToButton);
@@ -503,7 +503,7 @@ describe('Catalogue Items Table', () => {
     const rowToggleSelect = screen.getAllByLabelText('Toggle select row');
     await user.click(rowToggleSelect[1]);
 
-    expect(screen.getByRole('button', { name: 'Copy to' })).toBeInTheDocument();
+    expect(await screen.findByRole('button', { name: 'Copy to' })).toBeInTheDocument();
     const copyToButton = screen.getByRole('button', { name: 'Copy to' });
 
     await user.click(copyToButton);
