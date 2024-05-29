@@ -14,7 +14,6 @@ import {
   StepLabel,
   Stepper,
   TextField,
-  Typography,
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
@@ -225,21 +224,19 @@ const ObsoleteCatalogueItemDialog = (
         );
       case 1:
         return (
-          <>
-            <Typography>Obsolete Reason</Typography>
-            <TextField
-              value={obsoleteDetails.obsolete_reason || ''}
-              onChange={(e) =>
-                handleObsoleteDetailChanged({
-                  ...obsoleteDetails,
-                  obsolete_reason: e.target.value,
-                })
-              }
-              minRows={16}
-              multiline
-              fullWidth
-            />
-          </>
+          <TextField
+            label="Obsolete Reason"
+            value={obsoleteDetails.obsolete_reason || ''}
+            onChange={(e) =>
+              handleObsoleteDetailChanged({
+                ...obsoleteDetails,
+                obsolete_reason: e.target.value,
+              })
+            }
+            minRows={16}
+            multiline
+            fullWidth
+          />
         );
       case 2:
         return (
