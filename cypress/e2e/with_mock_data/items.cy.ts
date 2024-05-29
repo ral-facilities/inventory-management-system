@@ -328,7 +328,7 @@ describe('Items', () => {
     });
   });
 
-  it.only('displays messages for incorrect input types', () => {
+  it('displays messages for incorrect input types', () => {
     cy.findByRole('button', { name: 'Add Item' }).click();
 
     cy.findByLabelText('Warranty end date').type('12/02/');
@@ -358,6 +358,7 @@ describe('Items', () => {
 
     cy.findByLabelText('Resolution (megapixels) *').clear();
     cy.findByLabelText('Sensor Type *').clear();
+    cy.findByLabelText('Broken *').clear();
 
     cy.findByRole('button', { name: 'Next' }).click();
 
