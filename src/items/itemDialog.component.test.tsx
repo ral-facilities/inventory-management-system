@@ -220,7 +220,7 @@ describe('ItemDialog', () => {
       createView();
 
       await modifyDetailsValues({
-        usageStatus: 'Used',
+        usageStatus: 'U{arrowdown}{arrowdown}{enter}',
       });
 
       //navigate through stepper
@@ -261,7 +261,7 @@ describe('ItemDialog', () => {
       await modifyDetailsValues({
         serialNumber: 'test12 %s',
         serialNumberAdvancedOptions: { quantity: '2', startingValue: '10' },
-        usageStatus: 'New',
+        usageStatus: 'N{arrowdown}{enter}',
       });
 
       //navigate through stepper
@@ -368,7 +368,7 @@ describe('ItemDialog', () => {
       createView();
 
       await modifyDetailsValues({
-        usageStatus: 'Used',
+        usageStatus: 'U{arrowdown}{arrowdown}{enter}',
       });
 
       await user.click(screen.getByText('Add item properties'));
@@ -676,7 +676,7 @@ describe('ItemDialog', () => {
       ).toBeInTheDocument();
 
       await modifyDetailsValues({
-        usageStatus: 'Used',
+        usageStatus: 'U{arrowdown}{arrowdown}{enter}',
       });
 
       expect(screen.queryByRole('button', { name: 'Next' })).not.toBeDisabled();
@@ -707,7 +707,7 @@ describe('ItemDialog', () => {
       await modifyPropertiesValues({
         resolution: '',
         sensorType: '',
-        broken: 'N{arrowdown}{enter}',
+        broken: '{delete}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -821,7 +821,7 @@ describe('ItemDialog', () => {
       createView();
       await modifyDetailsValues({
         serialNumber: 'Error 500',
-        usageStatus: 'Used',
+        usageStatus: 'U{arrowdown}{enter}',
       });
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));

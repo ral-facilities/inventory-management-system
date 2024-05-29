@@ -731,7 +731,7 @@ describe('Catalogue Items Dialog', () => {
       await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
 
       const axisAutocomplete = screen.getAllByRole('combobox')[1];
-      await user.type(axisAutocomplete, 'N{arrowdown}{enter}');
+      await user.type(axisAutocomplete, 'y{arrowdown}{enter}');
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -741,7 +741,7 @@ describe('Catalogue Items Dialog', () => {
           { id: '18', value: 10 },
           {
             id: '19',
-            value: null,
+            value: 'y',
           },
         ],
       });
@@ -802,7 +802,7 @@ describe('Catalogue Items Dialog', () => {
         frameRate: '',
         sensorType: '',
         sensorBrand: '',
-        broken: 'N{arrowdown}{enter}',
+        broken: '{delete}',
         older: 'N{arrowdown}{enter}',
       });
 
