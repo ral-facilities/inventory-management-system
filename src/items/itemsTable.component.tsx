@@ -2,7 +2,6 @@ import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
@@ -11,10 +10,11 @@ import {
   ListItemText,
   MenuItem,
   Link as MuiLink,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import {
+  MRT_Cell,
+  MRT_Column,
   MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
@@ -31,7 +31,11 @@ import {
   findPropertyValue,
 } from '../catalogue/items/catalogueItemsTable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
-import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
+import {
+  OverflowTip,
+  formatDateTimeStrings,
+  getPageHeightCalc,
+} from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
 import ItemsDetailsPanel from './itemsDetailsPanel.component';
@@ -115,22 +119,38 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) => row.item.serial_number ?? 'No serial number',
         id: 'serial_number',
         size: 250,
-        Cell: ({ row }) => (
-          <MuiLink underline="hover" component={Link} to={row.original.item.id}>
-            {row.original.item.serial_number ?? 'No serial number'}
-          </MuiLink>
+        Cell: ({ row, cell }) => (
+          <OverflowTip
+            columnSize={cell.column.getSize()}
+            sx={{ fontSize: 'inherit' }}
+          >
+            <MuiLink
+              underline="hover"
+              component={Link}
+              to={row.original.item.id}
+            >
+              {row.original.item.serial_number ?? 'No serial number'}
+            </MuiLink>
+          </OverflowTip>
         ),
         enableGrouping: false,
       },
+
       {
         header: 'Last modified',
         accessorFn: (row) => new Date(row.item.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
         size: 350,
-        Cell: ({ row }) =>
-          row.original.item.modified_time &&
-          formatDateTimeStrings(row.original.item.modified_time, true),
+        Cell: ({ row, cell }) =>
+          row.original.item.modified_time && (
+            <OverflowTip
+              columnSize={cell.column.getSize()}
+              sx={{ fontSize: 'inherit' }}
+            >
+              {formatDateTimeStrings(row.original.item.modified_time, true)}
+            </OverflowTip>
+          ),
         enableGrouping: false,
       },
       {
@@ -139,21 +159,44 @@ export function ItemsTable(props: ItemTableProps) {
         id: 'created_time',
         filterVariant: 'datetime-range',
         size: 350,
-        Cell: ({ row }) =>
-          formatDateTimeStrings(row.original.item.created_time, true),
+        Cell: ({ row, cell }) => (
+          <OverflowTip
+            columnSize={cell.column.getSize()}
+            sx={{ fontSize: 'inherit' }}
+          >
+            {formatDateTimeStrings(row.original.item.created_time, true)}
+          </OverflowTip>
+        ),
         enableGrouping: false,
       },
+
       {
         header: 'Asset Number',
         accessorFn: (row) => row.item.asset_number,
         id: 'asset_number',
         size: 250,
+        Cell: ({ renderedCellValue, cell }) => (
+          <OverflowTip
+            columnSize={cell.column.getSize()}
+            sx={{ fontSize: 'inherit' }}
+          >
+            {renderedCellValue}
+          </OverflowTip>
+        ),
       },
       {
         header: 'Purchase Order Number',
         accessorFn: (row) => row.item.purchase_order_number,
         id: 'purchase_order_number',
         size: 350,
+        Cell: ({ renderedCellValue, cell }) => (
+          <OverflowTip
+            columnSize={cell.column.getSize()}
+            sx={{ fontSize: 'inherit' }}
+          >
+            {renderedCellValue}
+          </OverflowTip>
+        ),
       },
       {
         header: 'Warranty End Date',
@@ -161,14 +204,14 @@ export function ItemsTable(props: ItemTableProps) {
         id: 'warranty_end_date',
         filterVariant: 'date-range',
         size: 350,
-        Cell: ({ row }) => (
-          <Typography
-            // For ensuring space when grouping
-            sx={{ marginRight: 0.5, fontSize: 'inherit' }}
+        Cell: ({ row, cell }) => (
+          <OverflowTip
+            columnSize={cell.column.getSize()}
+            sx={{ fontSize: 'inherit', marginRight: 0.5 }}
           >
             {row.original.item.warranty_end_date &&
               formatDateTimeStrings(row.original.item.warranty_end_date, false)}
-          </Typography>
+          </OverflowTip>
         ),
       },
       {
@@ -177,14 +220,14 @@ export function ItemsTable(props: ItemTableProps) {
         id: 'delivered_date',
         filterVariant: 'date-range',
         size: 350,
-        Cell: ({ row }) => (
-          <Typography
-            // For ensuring space when grouping
-            sx={{ marginRight: 0.5, fontSize: 'inherit' }}
+        Cell: ({ row, cell }) => (
+          <OverflowTip
+            columnSize={cell.column.getSize()}
+            sx={{ fontSize: 'inherit', marginRight: 0.5 }}
           >
             {row.original.item.delivered_date &&
               formatDateTimeStrings(row.original.item.delivered_date, false)}
-          </Typography>
+          </OverflowTip>
         ),
       },
       {
@@ -200,25 +243,14 @@ export function ItemsTable(props: ItemTableProps) {
         id: 'usage_status',
         size: 200,
         filterVariant: 'select',
-      },
-      {
-        header: 'Notes',
-        accessorFn: (row) => row.item.notes ?? '',
-        id: 'notes',
-        size: 250,
-        Cell: ({ row }) =>
-          row.original.item.notes && (
-            <Tooltip
-              title={row.original.item.notes}
-              placement="top"
-              enterTouchDelay={0}
-              arrow
-              aria-label={`Catalogue item description: ${row.original.item.notes}`}
-            >
-              <InfoOutlinedIcon />
-            </Tooltip>
-          ),
-        enableGrouping: false,
+        Cell: ({ renderedCellValue, cell }) => (
+          <OverflowTip
+            columnSize={cell.column.getSize()}
+            sx={{ fontSize: 'inherit' }}
+          >
+            {renderedCellValue}
+          </OverflowTip>
+        ),
       },
       {
         header: 'System',
@@ -226,20 +258,50 @@ export function ItemsTable(props: ItemTableProps) {
         getGroupingValue: (row) => row.system?.id ?? '',
         id: 'system.name',
         size: 250,
-        Cell: ({ row }) => (
-          <MuiLink
-            underline="hover"
-            component={Link}
-            to={'/systems/' + row.original.system?.id}
-            // For ensuring space when grouping
-            sx={{ marginRight: 0.5 }}
+        Cell: ({ row, cell }) => (
+          <OverflowTip
+            columnSize={cell.column.getSize()}
+            sx={{ fontSize: 'inherit' }}
           >
-            {row.original.system?.name}
-          </MuiLink>
+            <MuiLink
+              underline="hover"
+              component={Link}
+              to={'/systems/' + row.original.system?.id}
+              // For ensuring space when grouping
+              sx={{ marginRight: 0.5 }}
+            >
+              {row.original.system?.name}
+            </MuiLink>
+          </OverflowTip>
         ),
       },
+      {
+        header: 'Notes',
+        accessorFn: (row) => row.item.notes ?? '',
+        id: 'notes',
+        size: 250,
+        Cell: ({ row, cell }) =>
+          row.original.item.notes && (
+            <OverflowTip
+              columnSize={cell.column.getSize()}
+              sx={{ fontSize: 'inherit' }}
+            >
+              {row.original.item.notes}
+            </OverflowTip>
+          ),
+        enableGrouping: false,
+      },
+
       ...viewCatalogueItemProperties.map((property) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
+        Header: ({ column }: { column: MRT_Column<TableRowData, unknown> }) => (
+          <OverflowTip
+            columnSize={column.getSize()}
+            sx={{ fontSize: 'inherit', fontWeight: 'inherit' }}
+          >
+            {column.columnDef.header}
+          </OverflowTip>
+        ),
         id: `row.catalogueItem.properties.${property.id}`,
         accessorFn: (row: TableRowData) => {
           if (property.type === 'boolean') {
@@ -269,7 +331,13 @@ export function ItemsTable(props: ItemTableProps) {
             property.type as 'string' | 'boolean' | 'number' | 'null'
           ],
 
-        Cell: ({ row }: { row: MRT_Row<TableRowData> }) => {
+        Cell: ({
+          row,
+          cell,
+        }: {
+          row: MRT_Row<TableRowData>;
+          cell: MRT_Cell<TableRowData, unknown>;
+        }) => {
           if (
             typeof findPropertyValue(
               row.original.item.properties,
@@ -295,7 +363,14 @@ export function ItemsTable(props: ItemTableProps) {
               ? 'Yes'
               : 'No';
           } else {
-            return findPropertyValue(row.original.item.properties, property.id);
+            return (
+              <OverflowTip
+                sx={{ fontSize: 'inherit' }}
+                columnSize={cell.column.getSize()}
+              >
+                {findPropertyValue(row.original.item.properties, property.id)}
+              </OverflowTip>
+            );
           }
         },
       })),
