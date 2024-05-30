@@ -817,7 +817,7 @@ describe('ItemDialog', () => {
       ).not.toBeInTheDocument();
     }, 10000);
 
-    it.only('displays error message when mandatory property with allowed values is missing', async () => {
+    it('displays error message when mandatory property with allowed values is missing', async () => {
       props = {
         ...props,
         catalogueCategory: getCatalogueCategoryById('12'),
@@ -844,7 +844,6 @@ describe('ItemDialog', () => {
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
 
-      //const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
       await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
 
       expect(mandatoryFieldHelperText).not.toBeInTheDocument();
