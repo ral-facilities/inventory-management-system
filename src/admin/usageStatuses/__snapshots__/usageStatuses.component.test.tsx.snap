@@ -242,7 +242,7 @@ exports[`Usage statuses > renders table correctly 1`] = `
         </div>
       </div>
       <div
-        class="MuiTableContainer-root css-mv89wz-MuiTableContainer-root"
+        class="MuiTableContainer-root css-15zpm7g-MuiTableContainer-root"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"

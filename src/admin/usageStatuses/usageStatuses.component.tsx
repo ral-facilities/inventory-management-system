@@ -27,7 +27,7 @@ function UsageStatuses() {
   const { data: usageStatusData, isLoading: usageStatusDataLoading } =
     useUsageStatuses();
 
-  const tableHeight = getPageHeightCalc('200px');
+  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const [deleteUsageStatusDialog, setDeleteUsageStatusDialog] =
     React.useState<boolean>(false);

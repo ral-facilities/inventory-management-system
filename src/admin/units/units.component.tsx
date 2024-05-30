@@ -26,7 +26,7 @@ import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
 function Units() {
   const { data: unitData, isLoading: unitDataLoading } = useUnits();
 
-  const tableHeight = getPageHeightCalc('200px');
+  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const [deleteUnitDialog, setDeleteUnitDialog] =
     React.useState<boolean>(false);
