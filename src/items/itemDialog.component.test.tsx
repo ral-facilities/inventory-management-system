@@ -817,6 +817,40 @@ describe('ItemDialog', () => {
       ).not.toBeInTheDocument();
     }, 10000);
 
+    it.only('displays error message when mandatory property with allowed values is missing', async () => {
+      props = {
+        ...props,
+        catalogueCategory: getCatalogueCategoryById('12'),
+        catalogueItem: getCatalogueItemById('17'),
+      };
+      createView();
+
+      await modifyDetailsValues({
+        usageStatus: 'U{arrowdown}{arrowdown}{enter}',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(pumpingSpeedAutoComplete, '{delete}');
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      const mandatoryFieldHelperText = screen.getByText(
+        'Please enter a valid value as this field is mandatory'
+      );
+
+      expect(mandatoryFieldHelperText).toBeInTheDocument();
+
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+
+      //const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
+
+      expect(mandatoryFieldHelperText).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Next' })).not.toBeDisabled();
+    });
+
     it('displays warning message when an unknown error occurs', async () => {
       createView();
       await modifyDetailsValues({
