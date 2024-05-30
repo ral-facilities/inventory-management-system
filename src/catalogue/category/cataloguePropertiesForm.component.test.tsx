@@ -1240,7 +1240,6 @@ describe('Catalogue Properties Form', () => {
         cip_placement_id: '2',
         name: 'Field 4',
         type: 'string',
-
         allowed_values: {
           type: 'list',
           values: [
