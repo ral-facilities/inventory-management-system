@@ -8,6 +8,7 @@ import {
   ListItemText,
   MenuItem,
   TableRow,
+  Typography,
 } from '@mui/material';
 import { useUnits } from '../../api/units';
 import {
@@ -83,7 +84,6 @@ function Units() {
     data: unitData ?? [],
     // Features
     enableColumnOrdering: true,
-    enableColumnResizing: true,
     enableFacetedValues: true,
     enableRowActions: true,
     enableStickyHeader: true,
@@ -182,6 +182,13 @@ function Units() {
         </MenuItem>,
       ];
     },
+    renderBottomToolbarCustomActions: ({ table }) => (
+      <Typography sx={{ paddingLeft: '8px' }}>
+        {table.getFilteredRowModel().rows.length == unitData?.length
+          ? `Total Units: ${unitData.length}`
+          : `Returned ${table.getFilteredRowModel().rows.length} out of ${unitData?.length} Units`}
+      </Typography>
+    ),
   });
 
   return (

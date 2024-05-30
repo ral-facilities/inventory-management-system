@@ -245,17 +245,17 @@ exports[`Usage statuses > renders table correctly 1`] = `
         class="MuiTableContainer-root css-15zpm7g-MuiTableContainer-root"
       >
         <table
-          class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
-          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-value-size: 180; --col-value-size: 180; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-created_time-size: 350; --col-created_time-size: 350; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+          class="MuiTable-root MuiTable-stickyHeader css-1y6k1sx-MuiTable-root"
+          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-value-size: 180; --col-value-size: 180; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-created_time-size: 350; --col-created_time-size: 350;"
         >
           <thead
-            class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
+            class="MuiTableHead-root css-dk8izd-MuiTableHead-root"
           >
             <tr
-              class="MuiTableRow-root MuiTableRow-head css-ssspk8-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-head css-7sv680-MuiTableRow-root"
             >
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-14og0m0-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-8xigsx-MuiTableCell-root"
                 colspan="1"
                 data-index="0"
                 scope="col"
@@ -278,13 +278,13 @@ exports[`Usage statuses > renders table correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1adkw6q-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17b04qq-MuiTableCell-root"
                 colspan="1"
                 data-index="1"
                 scope="col"
               >
                 <div
-                  class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
+                  class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
                 >
                   <div
                     class="Mui-TableHeadCell-Content-Labels MuiBox-root css-68rqdf"
@@ -372,13 +372,6 @@ exports[`Usage statuses > renders table correctly 1`] = `
                       />
                     </button>
                   </div>
-                  <div
-                    class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1ug570k"
-                  >
-                    <hr
-                      class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-f5y87h-MuiDivider-root"
-                    />
-                  </div>
                 </div>
                 <div
                   class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-pwcg7p-MuiCollapse-root"
@@ -443,13 +436,13 @@ exports[`Usage statuses > renders table correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1xga52j-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2jn5i7-MuiTableCell-root"
                 colspan="1"
                 data-index="2"
                 scope="col"
               >
                 <div
-                  class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
+                  class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
                 >
                   <div
                     class="Mui-TableHeadCell-Content-Labels MuiBox-root css-68rqdf"
@@ -536,13 +529,6 @@ exports[`Usage statuses > renders table correctly 1`] = `
                         class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                       />
                     </button>
-                  </div>
-                  <div
-                    class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1ug570k"
-                  >
-                    <hr
-                      class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-f5y87h-MuiDivider-root"
-                    />
                   </div>
                 </div>
                 <div
@@ -654,13 +640,13 @@ exports[`Usage statuses > renders table correctly 1`] = `
                 </div>
               </th>
               <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qr4xtz-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1pi1ouf-MuiTableCell-root"
                 colspan="1"
                 data-index="3"
                 scope="col"
               >
                 <div
-                  class="Mui-TableHeadCell-Content MuiBox-root css-c8wlay"
+                  class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
                 >
                   <div
                     class="Mui-TableHeadCell-Content-Labels MuiBox-root css-68rqdf"
@@ -747,13 +733,6 @@ exports[`Usage statuses > renders table correctly 1`] = `
                         class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                       />
                     </button>
-                  </div>
-                  <div
-                    class="Mui-TableHeadCell-ResizeHandle-Wrapper MuiBox-root css-1ug570k"
-                  >
-                    <hr
-                      class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem Mui-TableHeadCell-ResizeHandle-Divider css-f5y87h-MuiDivider-root"
-                    />
                   </div>
                 </div>
                 <div
@@ -864,40 +843,19 @@ exports[`Usage statuses > renders table correctly 1`] = `
                   </div>
                 </div>
               </th>
-              <th
-                class="MuiTableCell-root MuiTableCell-head MuiTableCell-stickyHeader MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mc0kk9-MuiTableCell-root"
-                colspan="1"
-                data-index="4"
-                scope="col"
-              >
-                <div
-                  class="Mui-TableHeadCell-Content MuiBox-root css-1w86f15"
-                >
-                  <div
-                    class="Mui-TableHeadCell-Content-Labels MuiBox-root css-4ng264"
-                  >
-                    <div
-                      class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-10aqj5p"
-                    />
-                  </div>
-                  <div
-                    class="Mui-TableHeadCell-Content-Actions MuiBox-root css-epvm6"
-                  />
-                </div>
-              </th>
             </tr>
           </thead>
           <tbody
-            class="MuiTableBody-root css-129p5vw-MuiTableBody-root"
+            class="MuiTableBody-root css-29nbga-MuiTableBody-root"
           >
             <tr
               aria-label="New row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
               data-index="0"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w172ft-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
                 data-index="0"
               >
                 <button
@@ -924,36 +882,32 @@ exports[`Usage statuses > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mkp6tz-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
                 data-index="1"
               >
                 New
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
                 data-index="2"
               >
                 02 Jan 2024 13:10
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
                 data-index="3"
               >
                 01 Jan 2024 12:00
               </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
-                data-index="4"
-              />
             </tr>
             <tr
               aria-label="In Use row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
               data-index="1"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w172ft-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
                 data-index="0"
               >
                 <button
@@ -980,36 +934,32 @@ exports[`Usage statuses > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mkp6tz-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
                 data-index="1"
               >
                 In Use
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
                 data-index="2"
               >
                 02 Jan 2024 13:10
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
                 data-index="3"
               >
                 01 Jan 2024 12:00
               </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
-                data-index="4"
-              />
             </tr>
             <tr
               aria-label="Used row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
               data-index="2"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w172ft-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
                 data-index="0"
               >
                 <button
@@ -1036,36 +986,32 @@ exports[`Usage statuses > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mkp6tz-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
                 data-index="1"
               >
                 Used
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
                 data-index="2"
               >
                 02 Jan 2024 13:10
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
                 data-index="3"
               >
                 01 Jan 2024 12:00
               </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
-                data-index="4"
-              />
             </tr>
             <tr
               aria-label="Scrapped row"
-              class="MuiTableRow-root MuiTableRow-root css-i1y727-MuiTableRow-root-MuiTableRow-root"
+              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
               data-index="3"
               role="row"
             >
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1w172ft-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
                 data-index="0"
               >
                 <button
@@ -1092,31 +1038,27 @@ exports[`Usage statuses > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mkp6tz-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
                 data-index="1"
               >
                 Scrapped
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
                 data-index="2"
               >
                 02 Jan 2024 13:10
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
                 data-index="3"
               >
                 01 Jan 2024 12:00
               </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
-                data-index="4"
-              />
             </tr>
           </tbody>
           <tfoot
-            class="MuiTableFooter-root css-4ar9ic-MuiTableFooter-root"
+            class="MuiTableFooter-root css-131pszo-MuiTableFooter-root"
           />
         </table>
       </div>
@@ -1160,7 +1102,7 @@ exports[`Usage statuses > renders table correctly 1`] = `
               class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
             >
               <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-dxfizy-MuiPaper-root-MuiAlert-root"
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-colorInfo MuiAlert-standardInfo MuiAlert-standard css-3fnbcm-MuiPaper-root-MuiAlert-root"
                 role="alert"
               >
                 <div
@@ -1183,9 +1125,13 @@ exports[`Usage statuses > renders table correctly 1`] = `
         <div
           class="MuiBox-root css-1llu0od"
         >
-          <span />
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
+          >
+            Total Usage Statuses: 4
+          </p>
           <div
-            class="MuiBox-root css-qpxlqp"
+            class="MuiBox-root css-nokk8"
           >
             <div
               class="MuiTablePagination-root MuiBox-root css-8k4lth"
