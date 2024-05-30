@@ -878,35 +878,40 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           >
             Add Catalogue Item
           </Button>
-          {selectedRowIds.length > 0 && (
-            <>
-              <MoveCatalogueItemsButton
-                selectedItems={selectedCatalogueItems}
-                onChangeSelectedItems={setRowSelection}
-                parentCategoryId={parentInfo.id}
-                parentInfo={parentInfo}
-              />
-              <CopyCatalogueItemsButton
-                selectedItems={selectedCatalogueItems}
-                onChangeSelectedItems={setRowSelection}
-                parentCategoryId={parentInfo.id}
-                parentInfo={parentInfo}
-              />
-            </>
-          )}
-          {requestOrigin === undefined && (
-            <Button
-              startIcon={<ClearIcon />}
-              sx={{ mx: 0.5 }}
-              variant="outlined"
-              disabled={preservedState.columnFilters.length === 0}
-              onClick={() => {
-                table.resetColumnFilters();
-              }}
-            >
-              Clear Filters
-            </Button>
-          )}
+          {
+            // Don't show for the move to and obsolete dialogues
+            requestOrigin === undefined && (
+              <>
+                {selectedRowIds.length > 0 && (
+                  <>
+                    <MoveCatalogueItemsButton
+                      selectedItems={selectedCatalogueItems}
+                      onChangeSelectedItems={setRowSelection}
+                      parentCategoryId={parentInfo.id}
+                      parentInfo={parentInfo}
+                    />
+                    <CopyCatalogueItemsButton
+                      selectedItems={selectedCatalogueItems}
+                      onChangeSelectedItems={setRowSelection}
+                      parentCategoryId={parentInfo.id}
+                      parentInfo={parentInfo}
+                    />
+                  </>
+                )}
+                <Button
+                  startIcon={<ClearIcon />}
+                  sx={{ mx: 0.5 }}
+                  variant="outlined"
+                  disabled={preservedState.columnFilters.length === 0}
+                  onClick={() => {
+                    table.resetColumnFilters();
+                  }}
+                >
+                  Clear Filters
+                </Button>
+              </>
+            )
+          }
         </Box>
       ),
     renderRowActionMenuItems: ({ closeMenu, row, table }) => {
