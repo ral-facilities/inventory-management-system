@@ -336,7 +336,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         options={units ?? []}
         getOptionLabel={(option) => option.value}
         value={
-          units?.find((unit) => unit.value === catalogueItemField.unit) || null
+          units?.find((unit) => unit.id === catalogueItemField.unit_id) || null
         }
         disabled={
           catalogueItemField.type === 'boolean' ||
@@ -344,7 +344,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           type === 'edit migration'
         }
         onChange={(_event, newValue: Unit | null) => {
-          handleChange('unit', newValue?.value || null);
+          handleChange('unit_id', newValue?.id || null);
         }}
         renderInput={(params) => (
           <TextField

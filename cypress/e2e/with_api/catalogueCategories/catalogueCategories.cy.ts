@@ -1,3 +1,4 @@
+import { addUnits } from '../units/functions';
 import {
   addCatalogueCategories,
   copyToCatalogueCategories,
@@ -9,15 +10,19 @@ import {
 
 describe('Catalogue Category', () => {
   beforeEach(() => {
-    cy.dropIMSCollections(['catalogue_categories']);
+    cy.dropIMSCollections(['catalogue_categories', 'units']);
     cy.visit('/catalogue');
   });
   afterEach(() => {
     cy.clearMocks();
-    cy.dropIMSCollections(['catalogue_categories']);
+    cy.dropIMSCollections(['catalogue_categories', 'units']);
   });
 
   it('CRUD for catalogue categories', () => {
+    //Prepare data for catalogue categories
+    cy.visit('/admin-ims/units');
+    addUnits(['mm', 'nm'], true);
+    cy.visit('/catalogue');
     addCatalogueCategories();
     editCatalogueCategories();
     saveAsCatalogueCategories();

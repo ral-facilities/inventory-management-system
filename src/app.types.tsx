@@ -93,7 +93,7 @@ export type AllowedValues = AllowedValuesList;
 export interface AddCatalogueCategoryProperty {
   name: string;
   type: string;
-  unit?: string;
+  unit_id?: string;
   mandatory: boolean;
   allowed_values?: AllowedValues;
   default_value?: string | number | boolean;
@@ -103,7 +103,7 @@ export interface CatalogueCategoryPropertyMigration {
   id?: string;
   name: string;
   type: string;
-  unit?: string;
+  unit_id?: string;
   mandatory: boolean;
   allowed_values?: AllowedValues;
   default_value?: string | number | boolean;
@@ -126,6 +126,7 @@ export type AddCatalogueCategoryPropertyTypes =
 export interface CatalogueCategoryProperty
   extends AddCatalogueCategoryProperty {
   id: string;
+  unit?: string;
 }
 
 export interface AddCatalogueCategoryPropertyWithPlacementIds
@@ -171,6 +172,7 @@ export interface CatalogueItemPropertyResponse {
   name: string;
   value: string | number | boolean | null;
   unit: string | null;
+  unit_id?: string | null;
 }
 
 export interface CatalogueItem extends CatalogueItemDetails {
@@ -341,9 +343,14 @@ export interface AllowedValuesListErrorsType {
   errors: { av_placement_id: string; errorMessage: string }[] | null;
 }
 
-export interface Unit {
-  id: string;
+export interface AddUnit {
   value: string;
+}
+export interface Unit extends AddUnit {
+  id: string;
+  code: string;
+  created_time: string;
+  modified_time: string;
 }
 
 export interface AddUsageStatus {

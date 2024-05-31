@@ -17,6 +17,11 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   const onClose = vi.fn();
   const resetSelectedCatalogueCategory = vi.fn();
 
+  interface TestCatalogueCategoryPropertyMigration
+    extends CatalogueCategoryPropertyMigration {
+    unit?: string;
+  }
+
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CatalogueItemPropertiesMigrationDialog {...props} />
@@ -36,7 +41,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   const modifyValues = async (values: {
     type: 'Edit' | 'Add';
     editRadio?: string;
-    formField: Partial<CatalogueCategoryPropertyMigration>;
+    formField: Partial<TestCatalogueCategoryPropertyMigration>;
     justModifyPropertyForm: boolean;
   }) => {
     if (!values.justModifyPropertyForm) {
@@ -230,7 +235,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           mandatory: false,
           name: 'test',
           type: 'number',
-          unit: 'millimeters',
+          unit_id: '5',
         }
       );
     });
@@ -264,7 +269,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           mandatory: false,
           name: 'test',
           type: 'string',
-          unit: 'millimeters',
+          unit_id: '5',
         }
       );
     });
@@ -292,7 +297,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           mandatory: false,
           name: 'test',
           type: 'number',
-          unit: 'millimeters',
+          unit_id: '5',
         }
       );
     });
@@ -320,7 +325,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           mandatory: false,
           name: 'test',
           type: 'string',
-          unit: 'millimeters',
+          unit_id: '5',
         }
       );
     });
@@ -346,7 +351,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           mandatory: false,
           name: 'test',
           type: 'string',
-          unit: 'millimeters',
+          unit_id: '5',
         }
       );
     });
