@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Usage statuses > renders table correctly 1`] = `
+exports[`Units > renders table correctly 1`] = `
 <DocumentFragment>
   <div
     style="width: 100%; height: 100%;"
@@ -47,7 +47,7 @@ exports[`Usage statuses > renders table correctly 1`] = `
                   />
                 </svg>
               </span>
-              Add Usage Status
+              Add Unit
               <span
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
@@ -849,7 +849,7 @@ exports[`Usage statuses > renders table correctly 1`] = `
             class="MuiTableBody-root css-29nbga-MuiTableBody-root"
           >
             <tr
-              aria-label="New row"
+              aria-label="megapixels row"
               class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
               data-index="0"
               role="row"
@@ -885,7 +885,7 @@ exports[`Usage statuses > renders table correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
                 data-index="1"
               >
-                New
+                megapixels
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
@@ -901,7 +901,7 @@ exports[`Usage statuses > renders table correctly 1`] = `
               </td>
             </tr>
             <tr
-              aria-label="In Use row"
+              aria-label="fps row"
               class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
               data-index="1"
               role="row"
@@ -937,7 +937,7 @@ exports[`Usage statuses > renders table correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
                 data-index="1"
               >
-                In Use
+                fps
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
@@ -953,7 +953,7 @@ exports[`Usage statuses > renders table correctly 1`] = `
               </td>
             </tr>
             <tr
-              aria-label="Used row"
+              aria-label="Joules row"
               class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
               data-index="2"
               role="row"
@@ -989,7 +989,7 @@ exports[`Usage statuses > renders table correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
                 data-index="1"
               >
-                Used
+                Joules
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
@@ -1005,7 +1005,7 @@ exports[`Usage statuses > renders table correctly 1`] = `
               </td>
             </tr>
             <tr
-              aria-label="Scrapped row"
+              aria-label="micrometers row"
               class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
               data-index="3"
               role="row"
@@ -1041,7 +1041,267 @@ exports[`Usage statuses > renders table correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
                 data-index="1"
               >
-                Scrapped
+                micrometers
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
+                data-index="2"
+              >
+                02 Jan 2024 13:10
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
+                data-index="3"
+              >
+                01 Jan 2024 12:00
+              </td>
+            </tr>
+            <tr
+              aria-label="millimeters row"
+              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
+              data-index="4"
+              role="row"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
+                data-index="0"
+              >
+                <button
+                  aria-label="Row Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="MoreHorizIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
+                data-index="1"
+              >
+                millimeters
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
+                data-index="2"
+              >
+                02 Jan 2024 13:10
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
+                data-index="3"
+              >
+                01 Jan 2024 12:00
+              </td>
+            </tr>
+            <tr
+              aria-label="kilograms row"
+              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
+              data-index="5"
+              role="row"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
+                data-index="0"
+              >
+                <button
+                  aria-label="Row Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="MoreHorizIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
+                data-index="1"
+              >
+                kilograms
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
+                data-index="2"
+              >
+                02 Jan 2024 13:10
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
+                data-index="3"
+              >
+                01 Jan 2024 12:00
+              </td>
+            </tr>
+            <tr
+              aria-label="liters per second row"
+              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
+              data-index="6"
+              role="row"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
+                data-index="0"
+              >
+                <button
+                  aria-label="Row Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="MoreHorizIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
+                data-index="1"
+              >
+                liters per second
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
+                data-index="2"
+              >
+                02 Jan 2024 13:10
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
+                data-index="3"
+              >
+                01 Jan 2024 12:00
+              </td>
+            </tr>
+            <tr
+              aria-label="millibar row"
+              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
+              data-index="7"
+              role="row"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
+                data-index="0"
+              >
+                <button
+                  aria-label="Row Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="MoreHorizIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
+                data-index="1"
+              >
+                millibar
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
+                data-index="2"
+              >
+                02 Jan 2024 13:10
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
+                data-index="3"
+              >
+                01 Jan 2024 12:00
+              </td>
+            </tr>
+            <tr
+              aria-label="volts row"
+              class="MuiTableRow-root MuiTableRow-root css-d0n2b6-MuiTableRow-root-MuiTableRow-root"
+              data-index="8"
+              role="row"
+            >
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1hv5s0e-MuiTableCell-root"
+                data-index="0"
+              >
+                <button
+                  aria-label="Row Actions"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-mvfa5q-MuiButtonBase-root-MuiIconButton-root"
+                  data-mui-internal-clone-element="true"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="MoreHorizIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
+                data-index="1"
+              >
+                volts
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
@@ -1128,7 +1388,7 @@ exports[`Usage statuses > renders table correctly 1`] = `
           <p
             class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
           >
-            Total Usage Statuses: 4
+            Total Units: 9
           </p>
           <div
             class="MuiBox-root css-nokk8"
