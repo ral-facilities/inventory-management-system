@@ -482,11 +482,7 @@ describe('Catalogue Items Table', () => {
     const rowToggleSelect = screen.getAllByLabelText('Toggle select row');
     await user.click(rowToggleSelect[1]);
 
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Move to' })
-      ).toBeInTheDocument();
-    });
+    expect(await screen.findByRole('button', { name: 'Move to' })).toBeInTheDocument();
     const moveToButton = screen.getByRole('button', { name: 'Move to' });
 
     await user.click(moveToButton);
@@ -507,11 +503,7 @@ describe('Catalogue Items Table', () => {
     const rowToggleSelect = screen.getAllByLabelText('Toggle select row');
     await user.click(rowToggleSelect[1]);
 
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: 'Copy to' })
-      ).toBeInTheDocument();
-    });
+    expect(await screen.findByRole('button', { name: 'Copy to' })).toBeInTheDocument();
     const copyToButton = screen.getByRole('button', { name: 'Copy to' });
 
     await user.click(copyToButton);
@@ -521,6 +513,46 @@ describe('Catalogue Items Table', () => {
     await waitFor(() => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
+  });
+
+  it('does not display move or copy buttons for move to requestOrigin', async () => {
+    props.requestOrigin = 'move to';
+
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    const rowToggleSelect = screen.getAllByLabelText('Toggle select row');
+    await user.click(rowToggleSelect[1]);
+
+    expect(
+      screen.queryByRole('button', { name: 'Move to' })
+    ).not.toBeInTheDocument();
+
+    expect(
+      screen.queryByRole('button', { name: 'Copy to' })
+    ).not.toBeInTheDocument();
+  });
+
+  it('does not display move or copy buttons for obsolete requestOrigin', async () => {
+    props.requestOrigin = 'obsolete';
+
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    const rowToggleSelect = screen.getAllByLabelText('Toggle select row');
+    await user.click(rowToggleSelect[1]);
+
+    expect(
+      screen.queryByRole('button', { name: 'Move to' })
+    ).not.toBeInTheDocument();
+
+    expect(
+      screen.queryByRole('button', { name: 'Copy to' })
+    ).not.toBeInTheDocument();
   });
 
   it('navigates to the manufacturer url', async () => {
