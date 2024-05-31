@@ -26,7 +26,7 @@ interface State {
 // State as will be stored in search params (undefined => should not be present in the url)
 interface StateSearchParams extends Partial<State> {}
 
-/* This matches the definition found in tanstack table (couldn't be direcly imported
+/* This matches the definition found in tanstack table (couldn't be directly imported
    as its a dependency of MRT) */
 type Updater<T> = T | ((old: T) => T);
 
@@ -34,7 +34,7 @@ type Updater<T> = T | ((old: T) => T);
 const getValueFromUpdater = <T,>(updater: Updater<T>, currentValue: T) =>
   updater instanceof Function ? (updater(currentValue) as T) : (updater as T);
 
-/* Attempts to decompress state from URL, returns '{}' if its null or not decompressable
+/* Attempts to decompress state from URL, returns '{}' if its null or not de-compressible
    (which appears rare) */
 const decompressState = (compressedStateOrNull: string | null) => {
   if (compressedStateOrNull !== null) {
@@ -127,7 +127,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
           // Update the internal state to reflect the browser level change
 
           // Ensures the same pagination state is recalled when going back, seems MRT treats pagination
-          // slightly diferently to column order as it doesn't appear to have the same issue
+          // slightly differently to column order as it doesn't appear to have the same issue
           if (lastLocationUpdate.current.pathname !== location.pathname)
             firstUpdate.current.p = undefined;
 
@@ -156,7 +156,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       // Use given default or {}
       cVis: props?.initialState?.columnVisibility || {},
       gFil: undefined,
-      // Intial MRT assigned value is in first update, must be assigned here for column ordering to work correctly
+      // Initial MRT assigned value is in first update, must be assigned here for column ordering to work correctly
       // when it is the first thing done
       g: props?.initialState?.grouping || [],
       cO: firstUpdate.current?.cO || [],
@@ -182,7 +182,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       srt: parsedState.srt || defaultState.srt,
       cVis: parsedState.cVis || defaultState.cVis,
       gFil: parsedState.gFil || defaultState.gFil,
-      // Intial MRT assigned value is in first update, must be assigned here for column ordering to work correctly
+      // Initial MRT assigned value is in first update, must be assigned here for column ordering to work correctly
       // when it is the first thing done
       g: parsedState.g || defaultState.g,
       cO: parsedState.cO || defaultState.cO,
@@ -231,9 +231,34 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
           updaterOrValue,
           prevState.cF || defaultState.cF
         );
+
+        // This will be true only if its a single filter that has been cleared
+        let isDefaultState = newValue.length === 0;
+
+        // For fields with multiple filters e.g. a minimum and maximum, the filter length
+        // does not go back to 0, so each individual value needs to be checked instead
+        if (!isDefaultState) {
+          // Now assume it is a default state unless found otherwise
+          isDefaultState = true;
+
+          filterLoop: for (const filter of newValue) {
+            // Check for multiple filters e.g. min/max
+            if (filter.value instanceof Array) {
+              // In this case each value must the default empty value to be classed as the default
+              for (const value of filter.value) {
+                // MRT seemingly uses these interchangeably between renders
+                if (value !== '' && value !== undefined) {
+                  isDefaultState = false;
+                  break filterLoop;
+                }
+              }
+            }
+          }
+        }
+
         return {
           ...prevState,
-          cF: newValue.length === 0 ? undefined : newValue,
+          cF: isDefaultState ? undefined : newValue,
         };
       });
     },
@@ -335,7 +360,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       if (
         firstUpdate.current.cO === undefined &&
         // This is done additionally as on page load with a value in the url, no such issue
-        // occurs here, equally we can't know what the default order was anymore so it should
+        // occurs here, equally we can't know what the default order was any more so it should
         // never be removed from the url
         parsedState.cO === undefined
       ) {
