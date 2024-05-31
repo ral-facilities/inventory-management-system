@@ -11,6 +11,7 @@ import {
 } from 'material-react-table';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
+import { ColumnFilter } from '@tanstack/react-table';
 
 // State as will be stored after parsing from search params
 interface State {
@@ -23,8 +24,17 @@ interface State {
   p: MRT_PaginationState;
 }
 
-// State as will be stored in search params (undefined => should not be present in the url)
-interface StateSearchParams extends Partial<State> {}
+// State but where undefined => should not be present in the url
+interface StatePartial extends Partial<State> {}
+
+// State but defined as it will be stored in URL search params (includes potential type information)
+interface SearchParamsColumnFilter extends ColumnFilter {
+  type: 'string' | 'date';
+}
+
+interface StateSearchParams extends StatePartial {
+  cF?: SearchParamsColumnFilter[];
+}
 
 /* This matches the definition found in tanstack table (couldn't be directly imported
    as its a dependency of MRT) */
@@ -48,10 +58,12 @@ const decompressState = (compressedStateOrNull: string | null) => {
 };
 
 /* Parses the unparsed state returning nothing if it's null or unparsable */
-const getDefaultParsedState = (unparsedState: string) => {
+const getParsedState = (unparsedState: string): StatePartial => {
   if (unparsedState !== null) {
     try {
-      return JSON.parse(unparsedState);
+      // TODO: Convert parsed types before returning
+      const parsedState = JSON.parse(unparsedState) as StateSearchParams;
+      return parsedState;
     } catch (_error) {
       // Do nothing, error shouldn't appear to the user
     }
@@ -77,7 +89,7 @@ interface UsePreservedTableStateProps {
 export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   const mrtGroupedColumnMode = props?.mrtGroupedColumnMode ?? 'reorder';
 
-  const firstUpdate = useRef<StateSearchParams>({});
+  const firstUpdate = useRef<StatePartial>({});
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
 
@@ -93,13 +105,14 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     : null;
   const unparsedState = decompressState(compressedState);
 
-  const [parsedState, setParsedState] = useState<StateSearchParams>(
-    getDefaultParsedState(unparsedState)
+  const [parsedState, setParsedState] = useState<StatePartial>(
+    getParsedState(unparsedState)
   );
 
   // Update the search params only if necessary
   useEffect(() => {
     if (props?.storeInUrl) {
+      // TODO: Convert parsed state types as appropriate before stringifying
       const newUnparsedState = JSON.stringify(parsedState);
       // Wait for a column order change if required
       if (
@@ -131,7 +144,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
           if (lastLocationUpdate.current.pathname !== location.pathname)
             firstUpdate.current.p = undefined;
 
-          setParsedState(getDefaultParsedState(unparsedState));
+          setParsedState(getParsedState(unparsedState));
         }
       }
 
@@ -206,8 +219,11 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     ]
   );
 
+  console.log('UNPARSED:', unparsedState);
+  console.log('STATE:', state);
+
   const updateSearchParams = useCallback(
-    (stateUpdater: Updater<StateSearchParams>) => {
+    (stateUpdater: Updater<StatePartial>) => {
       // Use function version to ensure multiple can be changed in the same render
       // e.g. grouping also changes ordering
       setParsedState((prevState) => {
@@ -226,7 +242,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
 
   const setColumnFilters = useCallback(
     (updaterOrValue: Updater<MRT_ColumnFiltersState>) => {
-      updateSearchParams((prevState: StateSearchParams) => {
+      updateSearchParams((prevState: StatePartial) => {
         const newValue = getValueFromUpdater(
           updaterOrValue,
           prevState.cF || defaultState.cF
@@ -267,7 +283,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
 
   const setSorting = useCallback(
     (updaterOrValue: Updater<MRT_SortingState>) => {
-      updateSearchParams((prevState: StateSearchParams) => {
+      updateSearchParams((prevState: StatePartial) => {
         const newValue = getValueFromUpdater(
           updaterOrValue,
           prevState.srt || defaultState.srt
@@ -283,7 +299,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
 
   const setColumnVisibility = useCallback(
     (updaterOrValue: Updater<MRT_VisibilityState>) => {
-      updateSearchParams((prevState: StateSearchParams): StateSearchParams => {
+      updateSearchParams((prevState: StatePartial): StatePartial => {
         const newValue = getValueFromUpdater(
           updaterOrValue,
           prevState.cVis || defaultState.cVis
@@ -317,7 +333,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
 
   const setGlobalFilter = useCallback(
     (updaterOrValue: Updater<string | undefined>) => {
-      updateSearchParams((prevState: StateSearchParams) => {
+      updateSearchParams((prevState: StatePartial) => {
         const newValue = getValueFromUpdater(
           updaterOrValue,
           prevState.gFil || defaultState.gFil
@@ -333,7 +349,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
 
   const setGroupingState = useCallback(
     (updaterOrValue: Updater<MRT_GroupingState>) => {
-      updateSearchParams((prevState: StateSearchParams) => {
+      updateSearchParams((prevState: StatePartial) => {
         const prevStateValue = prevState.g || defaultState.g;
         const newValue = getValueFromUpdater(updaterOrValue, prevStateValue);
         // Check if adding a group
@@ -367,7 +383,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         firstUpdate.current.cO = getValueFromUpdater(updaterOrValue, state.cO);
         return;
       }
-      updateSearchParams((prevState: StateSearchParams): StateSearchParams => {
+      updateSearchParams((prevState: StatePartial): StatePartial => {
         const newValue = getValueFromUpdater(
           updaterOrValue,
           prevState.cO || defaultState.cO
@@ -395,7 +411,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
         firstUpdate.current.p = getValueFromUpdater(updaterOrValue, state.p);
         return;
       }
-      updateSearchParams((prevState: StateSearchParams) => {
+      updateSearchParams((prevState: StatePartial) => {
         const newValue = getValueFromUpdater(
           updaterOrValue,
           prevState.p || defaultState.p
