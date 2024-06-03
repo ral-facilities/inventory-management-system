@@ -63,55 +63,96 @@ const decompressState = (compressedStateOrNull: string | null) => {
   return '{}';
 };
 
-/* Parses the unparsed state returning nothing if it's null or unparsable */
+/* Parses a column filter value from the search param value to an internal state value */
+const convertSearchParamColumnFilterValue = (
+  filterValue: SearchParamsColumnFilterValue
+): unknown => {
+  if (filterValue.type === 'date')
+    return new Date(
+      // Type should be string, but TypeScript doesn't know that
+      typeof filterValue.value === 'string' ? filterValue.value : ''
+    );
+  else return filterValue.value;
+};
+
+/* Converts the state found in the search params to an internal one (they are the same but with different
+   types for the column filters) */
+const convertStateSearchParams = (
+  parsedStateSearchParams: StateSearchParams
+): StatePartial => {
+  let newCF = undefined;
+
+  if (parsedStateSearchParams.cF) {
+    newCF = [];
+
+    // Parse each filter
+    for (const filter of parsedStateSearchParams.cF) {
+      // Check for multiple filters e.g. min/max
+      if (filter.value instanceof Array) {
+        // Need to convert each individual value
+        const newFilterValue = [];
+
+        for (const filterValue of filter.value)
+          newFilterValue.push(convertSearchParamColumnFilterValue(filterValue));
+
+        newCF.push({ id: filter.id, value: newFilterValue });
+      } else
+        newCF.push({
+          id: filter.id,
+          value: convertSearchParamColumnFilterValue(filter.value),
+        });
+    }
+  }
+  return { ...parsedStateSearchParams, cF: newCF };
+};
+
+/* Converts a column filter value from the internal state value to a search param value */
+const convertInternalColumnFilterValue = (
+  filterValue: unknown
+): SearchParamsColumnFilterValue => {
+  if (filterValue instanceof Date)
+    return { type: 'date', value: filterValue.toISOString() };
+  else return { type: 'string', value: filterValue };
+};
+
+/* Converts the internal state to the one found in the search params (they are the same but with different
+   types for the column filters) */
+const convertInternalState = (parsedState: StatePartial): StateSearchParams => {
+  let newCF = undefined;
+
+  if (parsedState.cF) {
+    newCF = [];
+
+    // Parse each filter
+    for (const filter of parsedState.cF) {
+      // Check for multiple filters e.g. min/max
+      if (filter.value instanceof Array) {
+        const newFilterValue: SearchParamsColumnFilterValue[] = [];
+
+        for (const filterValue of filter.value)
+          newFilterValue.push(convertInternalColumnFilterValue(filterValue));
+
+        newCF.push({ id: filter.id, value: newFilterValue });
+      } else
+        newCF.push({
+          id: filter.id,
+          value: convertInternalColumnFilterValue(filter.value),
+        });
+    }
+  }
+
+  return { ...parsedState, cF: newCF };
+};
+
+/* Parses the unparsed state returning nothing if it's null or not parsable */
 const getParsedState = (unparsedState: string): StatePartial => {
   if (unparsedState !== null) {
     try {
-      const parsedState = JSON.parse(unparsedState) as StateSearchParams;
+      const parsedStateSearchParams = JSON.parse(
+        unparsedState
+      ) as StateSearchParams;
 
-      // State is same as that in the search params, only with a different type for column filters, so
-      // convert these as appropriate
-      let newCF = undefined;
-
-      if (parsedState.cF) {
-        newCF = [];
-
-        // Parse each filter
-        for (const filter of parsedState.cF) {
-          // Check for multiple filters e.g. min/max
-          if (filter.value instanceof Array) {
-            // Need to convert each individual value
-            let newFilterValue = [];
-
-            for (const filterValue of filter.value) {
-              if (filterValue.type === 'date')
-                newFilterValue.push(
-                  new Date(
-                    typeof filterValue.value === 'string'
-                      ? filterValue.value
-                      : ''
-                  )
-                );
-              else newFilterValue.push(filterValue.value);
-            }
-
-            newCF.push({ id: filter.id, value: newFilterValue });
-          } else {
-            // Convert the filter value as appropriate
-            let newFilterValue;
-
-            if (filter.value.type === 'date')
-              newFilterValue = new Date(
-                typeof filter.value.value === 'string' ? filter.value.value : ''
-              );
-            else newFilterValue = filter.value.value;
-
-            newCF.push({ id: filter.id, value: newFilterValue });
-          }
-        }
-      }
-
-      return { ...parsedState, cF: newCF };
+      return convertStateSearchParams(parsedStateSearchParams);
     } catch (_error) {
       // Do nothing, error shouldn't appear to the user
     }
@@ -160,47 +201,10 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   // Update the search params only if necessary
   useEffect(() => {
     if (props?.storeInUrl) {
-      // Search params state is the same, only with a different type for column filters so
-      // convert these as appropriate
-      let newCF = undefined;
-
-      if (parsedState.cF) {
-        newCF = [];
-
-        // Parse each filter
-        for (const filter of parsedState.cF) {
-          // Check for multiple filters e.g. min/max
-          if (filter.value instanceof Array) {
-            let newFilterValue: SearchParamsColumnFilterValue[] = [];
-
-            for (const filterValue of filter.value) {
-              if (filterValue instanceof Date)
-                newFilterValue.push({
-                  type: 'date',
-                  value: filterValue.toISOString(),
-                });
-              else newFilterValue.push({ type: 'string', value: filterValue });
-            }
-
-            newCF.push({ id: filter.id, value: newFilterValue });
-          } else {
-            if (filter.value instanceof Date)
-              newCF.push({
-                id: filter.id,
-                value: { type: 'date', value: filter.value.toISOString() },
-              });
-            else
-              newCF.push({
-                id: filter.id,
-                value: { type: 'string', value: filter.value },
-              });
-          }
-        }
-      }
-      // TODO: Change name in getParsedState to reflect
-      const parsedStateSearchParams = { ...parsedState, cF: newCF };
-
+      // Get the expected unparsed state in the URL for the current internal state
+      const parsedStateSearchParams = convertInternalState(parsedState);
       const newUnparsedState = JSON.stringify(parsedStateSearchParams);
+
       // Wait for a column order change if required
       if (
         unparsedState !== newUnparsedState &&
