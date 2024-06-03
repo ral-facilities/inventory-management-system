@@ -434,7 +434,7 @@ describe('SystemItemsTable', () => {
       });
     });
 
-    it.only('selects the correct usage status text value according to the number value', async () => {
+    it('selects the correct usage status text value according to the number value', async () => {
       props.aggregatedCellUsageStatus = [
         { catalogue_item_id: '1', usage_status_id: '0' },
         { catalogue_item_id: '25', usage_status_id: '1' },
