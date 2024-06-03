@@ -650,11 +650,12 @@ describe('Catalogue Items Table', () => {
       '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc0gWosSyowt2zfUd8CalYvCgB2FudR8ZqpyJmsOYW9GAoADjXQ1yzIsCwYKpxY31l5dMnL8WvblixCqyxqAGsmPdHkNWls3pQGMgAJ4wL4-YqlIwmMGvDqQmFw1DfWiWP7-M4gAAi1GQligEhw1gAcngyLF5oTweiKAxSeTKUwMBSCaCXhcWQ1yExNJ4MEwJHSGdRCWRkJLuGBUHhaNRJNJkSEQHKFaVlaqKCqMLL5XhFfr5hRkAw2V4HCjnDqzXqVZbSElfAALQKa4ZtWrZCRYUj2pwAXzDQA'
     );
 
-    const minInput = screen.getByLabelText('Min');
-    await user.type(minInput, '800');
-
+    // Do max first, as it technically has no effect on the outcome of the filter
     const maxInput = screen.getByLabelText('Max');
     await user.type(maxInput, '1000');
+
+    const minInput = screen.getByLabelText('Min');
+    await user.type(minInput, '800');
 
     await waitFor(() => {
       expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
