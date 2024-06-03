@@ -137,7 +137,34 @@ describe('Preserved table state functions', () => {
       // This test was constructed using the following:
 
       // const testState: StateSearchParams = {
-      //   cF: [{ id: 'catalogueItem.name', value: 'nameFilter' }],
+      //   cF: [
+      //     {
+      //       // Single string field
+      //       id: 'catalogueItem.name',
+      //       value: { type: 'string', value: 'nameFilter' },
+      //     },
+      //     {
+      //       // Single date field
+      //       id: 'catalogueItem.modified_time',
+      //       value: { type: 'date', value: '2024-06-11T23:00:00.000Z' },
+      //     },
+      //     {
+      //       // Min/Max string field (with max as undefined)
+      //       id: 'catalogueItem.days_to_rework',
+      //       value: [
+      //         { type: 'string', value: '20' },
+      //         { type: 'string', value: undefined },
+      //       ],
+      //     },
+      //     {
+      //       // Min/Max date field (with min as undefined)
+      //       id: 'catalogueItem.created_time',
+      //       value: [
+      //         { type: 'string', value: undefined },
+      //         { type: 'date', value: '2024-06-11T23:00:00.000Z' },
+      //       ],
+      //     },
+      //   ],
       //   srt: [{ id: 'catalogueItem.name', desc: true }],
       //   cVis: {
       //     'catalogueItem.created_time': false,
@@ -150,7 +177,7 @@ describe('Preserved table state functions', () => {
       // };
       // console.log(
       //   LZString.compressToEncodedURIComponent(JSON.stringify(testState))
-      // )
+      // );
 
       const { result } = renderHook(
         () =>
@@ -161,14 +188,25 @@ describe('Preserved table state functions', () => {
           wrapper: hooksWrapperWithProviders({
             urlPathKey: 'any',
             initialEntry:
-              '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJq9jEC2FAE4gAvgF1WAZ0EYY8EMlRhMOAiXJU6DJqyTFJYGBkElxrMADUEkmKGVY8RMhRphBxTMSQB9DAkYwAGY4ksTmKo7qLtR6BoIIAA5+uLRBIcQirPh82Kj4eABGODlCLCD4cugOas6a1t64BZK42MQUIBLgAPKVlDIAtIK4AO79xAAeCWi0KKx9GIMj-WhgybQ2nQm2IFP4xADKCABeTNAAzAAMrLtkMxMwAKwiIkA',
+              '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJD1GEBNgriQAX03NEKYWEw4CJclWqVcSBADMExJAH0MCRrI7Yu0HgIVJMTKweXiAATAAMoQAsALThAGwxAIxJACqhAMzQ4eHZ4dQ54QBaWjp6qIZYeERkFDT+vCLOuI7ixADuuOIA1u7yMPAgfIKoYpLSfZ4KEVq6Q76jElIymgC6ZSDIFUbVpnXUYG0BTi5uQf1wPiPCY8uzV34BkyER0XGJKelZOXkFOSVrNasETiDADcoGHYmWrmJSBEBIYgiMAwCQkIHgABqCBE3HQVWhZhoh2Ix2criENhwImIrEqxhqROoiORkn4LlwtBgVOwNJ0IHwKmwqHweAARjghepZDI4PiGXtzDjHLgxSJcNhiBQQKs6QB5AYgSigmLiXDtGLEAAe-DQtBQrGNGFN5piaDAHNouN1IH4eNt+GIAGUEAAvIQZcKsANke3WmAAVm0QA',
           }),
         }
       );
 
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
-          columnFilters: [{ id: 'catalogueItem.name', value: 'nameFilter' }],
+          columnFilters: [
+            { id: 'catalogueItem.name', value: 'nameFilter' },
+            {
+              id: 'catalogueItem.modified_time',
+              value: '2024-06-11T23:00:00.000Z',
+            },
+            { id: 'catalogueItem.days_to_rework', value: ['20', null] },
+            {
+              id: 'catalogueItem.created_time',
+              value: [null, '2024-06-11T23:00:00.000Z'],
+            },
+          ],
           sorting: [{ id: 'catalogueItem.name', desc: true }],
           columnVisibility: {
             'catalogueItem.created_time': false,
@@ -187,7 +225,7 @@ describe('Preserved table state functions', () => {
       window.history.pushState(
         {},
         '',
-        '/?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJq9jEC2FAE4gAvgF1WAZ0EYY8EMlRhMOAiXJU6DJqyTFJYGBkElxrMADUEkmKGVY8RMhRphBxTMSQB9DAkYwAGY4ksTmKo7qLtR6BoIIAA5+uLRBIcQirPh82Kj4eABGODlCLCD4cugOas6a1t64BZK42MQUIBLgAPKVlDIAtIK4AO79xAAeCWi0KKx9GIMj-WhgybQ2nQm2IFP4xADKCABeTNAAzAAMrLtkMxMwAKwiIkA'
+        '/?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJD1GEBNgriQAX03NEKYWEw4CJclWqVcSBADMExJAH0MCRrI7Yu0HgIVJMTKweXiAATAAMoQAsALThAGwxAIxJACqhAMzQ4eHZ4dQ54QBaWjp6qIZYeERkFDT+vCLOuI7ixADuuOIA1u7yMPAgfIKoYpLSfZ4KEVq6Q76jElIymgC6ZSDIFUbVpnXUYG0BTi5uQf1wPiPCY8uzV34BkyER0XGJKelZOXkFOSVrNasETiDADcoGHYmWrmJSBEBIYgiMAwCQkIHgABqCBE3HQVWhZhoh2Ix2criENhwImIrEqxhqROoiORkn4LlwtBgVOwNJ0IHwKmwqHweAARjghepZDI4PiGXtzDjHLgxSJcNhiBQQKs6QB5AYgSigmLiXDtGLEAAe-DQtBQrGNGFN5piaDAHNouN1IH4eNt+GIAGUEAAvIQZcKsANke3WmAAVm0QA'
       );
       const { result } = renderHookWithBrowserRouterURL(
         () =>
@@ -217,7 +255,18 @@ describe('Preserved table state functions', () => {
       await waitFor(() =>
         expect(JSON.stringify(result.current.preservedState)).toBe(
           JSON.stringify({
-            columnFilters: [{ id: 'catalogueItem.name', value: 'nameFilter' }],
+            columnFilters: [
+              { id: 'catalogueItem.name', value: 'nameFilter' },
+              {
+                id: 'catalogueItem.modified_time',
+                value: '2024-06-11T23:00:00.000Z',
+              },
+              { id: 'catalogueItem.days_to_rework', value: ['20', null] },
+              {
+                id: 'catalogueItem.created_time',
+                value: [null, '2024-06-11T23:00:00.000Z'],
+              },
+            ],
             sorting: [{ id: 'catalogueItem.name', desc: true }],
             columnVisibility: {
               'catalogueItem.created_time': false,
@@ -243,14 +292,25 @@ describe('Preserved table state functions', () => {
           wrapper: hooksWrapperWithProviders({
             urlPathKey: 'any',
             initialEntry:
-              '?subState=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJq9jEC2FAE4gAvgF1WAZ0EYY8EMlRhMOAiXJU6DJqyTFJYGBkElxrMADUEkmKGVY8RMhRphBxTMSQB9DAkYwAGY4ksTmKo7qLtR6BoIIAA5+uLRBIcQirPh82Kj4eABGODlCLCD4cugOas6a1t64BZK42MQUIBLgAPKVlDIAtIK4AO79xAAeCWi0KKx9GIMj-WhgybQ2nQm2IFP4xADKCABeTNAAzAAMrLtkMxMwAKwiIkA',
+              '?subState=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJD1GEBNgriQAX03NEKYWEw4CJclWqVcSBADMExJAH0MCRrI7Yu0HgIVJMTKweXiAATAAMoQAsALThAGwxAIxJACqhAMzQ4eHZ4dQ54QBaWjp6qIZYeERkFDT+vCLOuI7ixADuuOIA1u7yMPAgfIKoYpLSfZ4KEVq6Q76jElIymgC6ZSDIFUbVpnXUYG0BTi5uQf1wPiPCY8uzV34BkyER0XGJKelZOXkFOSVrNasETiDADcoGHYmWrmJSBEBIYgiMAwCQkIHgABqCBE3HQVWhZhoh2Ix2criENhwImIrEqxhqROoiORkn4LlwtBgVOwNJ0IHwKmwqHweAARjghepZDI4PiGXtzDjHLgxSJcNhiBQQKs6QB5AYgSigmLiXDtGLEAAe-DQtBQrGNGFN5piaDAHNouN1IH4eNt+GIAGUEAAvIQZcKsANke3WmAAVm0QA',
           }),
         }
       );
 
       expect(JSON.stringify(result.current.preservedState)).toBe(
         JSON.stringify({
-          columnFilters: [{ id: 'catalogueItem.name', value: 'nameFilter' }],
+          columnFilters: [
+            { id: 'catalogueItem.name', value: 'nameFilter' },
+            {
+              id: 'catalogueItem.modified_time',
+              value: '2024-06-11T23:00:00.000Z',
+            },
+            { id: 'catalogueItem.days_to_rework', value: ['20', null] },
+            {
+              id: 'catalogueItem.created_time',
+              value: [null, '2024-06-11T23:00:00.000Z'],
+            },
+          ],
           sorting: [{ id: 'catalogueItem.name', desc: true }],
           columnVisibility: {
             'catalogueItem.created_time': false,
@@ -315,7 +375,7 @@ describe('Preserved table state functions', () => {
       );
 
       expect(window.location.search).toBe(
-        '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJqFAzhiAF8AugKA'
+        '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJAUxIAL4qAuiqA'
       );
 
       // Now change back to a default value
