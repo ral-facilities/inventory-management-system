@@ -905,7 +905,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                 size="small"
                                 sx={{ alignItems: 'center' }}
                               >
-                                {property.name}
+                                {`${property.name} ${
+                                  property.unit ? `(${property.unit})` : ''
+                                }`}
                               </InputLabel>
                               <Select
                                 value={(propertyValues[index] as string) ?? ''}
@@ -922,7 +924,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                     event.target.value as string
                                   )
                                 }
-                                label={property.name}
+                                label={`${property.name} ${
+                                  property.unit ? `(${property.unit})` : ''
+                                }`}
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
                               >
@@ -985,7 +989,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                             title={
                               <div>
                                 <Typography>Name: {property.name}</Typography>
-                                <Typography>Unit: {property.unit}</Typography>
+                                <Typography>
+                                  Unit: {property.unit ?? 'None'}
+                                </Typography>
                                 <Typography>
                                   Type:{' '}
                                   {property.type === 'string'

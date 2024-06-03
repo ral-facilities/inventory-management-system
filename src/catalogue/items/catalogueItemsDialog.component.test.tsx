@@ -267,7 +267,9 @@ describe('Catalogue Items Dialog', () => {
       target: { value: '10' },
     });
 
-    fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+    fireEvent.mouseDown(
+      screen.getByLabelText('Pumping Speed (liters per second) *')
+    );
     fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
 
     fireEvent.mouseDown(screen.getByLabelText('Axis'));
@@ -700,7 +702,9 @@ describe('Catalogue Items Dialog', () => {
         }
       );
 
-      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      fireEvent.mouseDown(
+        screen.getByLabelText('Pumping Speed (liters per second) *')
+      );
       fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
 
       fireEvent.mouseDown(screen.getByLabelText('Axis'));
@@ -737,7 +741,9 @@ describe('Catalogue Items Dialog', () => {
         }
       );
 
-      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
+      fireEvent.mouseDown(
+        screen.getByLabelText('Pumping Speed (liters per second) *')
+      );
       fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
 
       fireEvent.mouseDown(screen.getByLabelText('Axis'));

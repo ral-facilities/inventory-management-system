@@ -185,7 +185,7 @@ describe('Catalogue Items', () => {
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findByLabelText('Ultimate Pressure (millibar) *').type('0.2');
-    cy.findByLabelText('Pumping Speed *').click();
+    cy.findByLabelText('Pumping Speed (liters per second) *').click();
     cy.findByRole('option', { name: '400' }).click();
 
     cy.findByLabelText('Axis').click();
