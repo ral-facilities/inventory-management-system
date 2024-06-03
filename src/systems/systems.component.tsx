@@ -37,7 +37,7 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { System } from '../app.types';
-import { generateUniqueName, getPageHeightCalc } from '../utils';
+import { OverflowTip, generateUniqueName, getPageHeightCalc } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
@@ -161,6 +161,17 @@ const columns: MRT_ColumnDef<System>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
+    Cell: ({ cell, row }) => (
+      <OverflowTip
+        columnSize={cell.column.getSize()}
+        sx={{
+          fontSize: 'inherit',
+          maxWidth: { md: '9vw', xs: '82vw' },
+        }}
+      >
+        {row.original.name}
+      </OverflowTip>
+    ),
   },
 ];
 
