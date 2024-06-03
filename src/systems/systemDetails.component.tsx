@@ -14,7 +14,7 @@ import { getSystemImportanceColour, useSystem } from '../api/systems';
 import { System } from '../app.types';
 import SystemDialog from './systemDialog.component';
 import { SystemItemsTable } from './systemItemsTable.component';
-import { formatDateTimeStrings } from '../utils';
+import { OverflowTip, formatDateTimeStrings } from '../utils';
 
 interface SystemButtonProps {
   system: System;
@@ -73,13 +73,18 @@ function SystemDetails(props: SystemDetailsProps) {
           margin: 1.5,
         }}
       >
-        <Typography variant="h6" fontWeight="bold">
+        <OverflowTip
+          sx={{
+            typography: 'h6',
+            fontWeight: 'bold',
+          }}
+        >
           {system === undefined
             ? !systemLoading && props.id !== null
               ? 'System not found'
               : 'No system selected'
             : system.name}
-        </Typography>
+        </OverflowTip>
         {system !== undefined && <EditSystemButton system={system} />}
       </Box>
       <Divider role="presentation" />
