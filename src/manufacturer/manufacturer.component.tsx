@@ -23,7 +23,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useManufacturers } from '../api/manufacturers';
 import { Manufacturer } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
-import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
+import {
+  formatDateTimeStrings,
+  getPageHeightCalc,
+  getTableRowCountText,
+} from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
@@ -273,9 +277,11 @@ function ManufacturerComponent() {
     },
     renderBottomToolbarCustomActions: ({ table }) => (
       <Typography sx={{ paddingLeft: '8px' }}>
-        {table.getFilteredRowModel().rows.length == ManufacturerData?.length
-          ? `Total Manufacturers: ${ManufacturerData.length}`
-          : `Returned ${table.getFilteredRowModel().rows.length} out of ${ManufacturerData?.length} Manufacturers`}
+        {getTableRowCountText(
+          table.getFilteredRowModel().rows.length,
+          ManufacturerData?.length ?? 0,
+          'Manufacturers'
+        )}
       </Typography>
     ),
   });

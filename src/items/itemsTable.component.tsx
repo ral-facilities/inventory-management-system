@@ -31,7 +31,11 @@ import {
   findPropertyValue,
 } from '../catalogue/items/catalogueItemsTable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
-import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
+import {
+  formatDateTimeStrings,
+  getPageHeightCalc,
+  getTableRowCountText,
+} from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
 import ItemsDetailsPanel from './itemsDetailsPanel.component';
@@ -491,9 +495,11 @@ export function ItemsTable(props: ItemTableProps) {
     },
     renderBottomToolbarCustomActions: ({ table }) => (
       <Typography sx={{ paddingLeft: '8px' }}>
-        {table.getFilteredRowModel().rows.length == itemsData?.length
-          ? `Total Items: ${itemsData.length}`
-          : `Returned ${table.getFilteredRowModel().rows.length} out of ${itemsData?.length} Items`}
+        {getTableRowCountText(
+          table.getFilteredRowModel().rows.length,
+          itemsData?.length ?? 0,
+          'Items'
+        )}
       </Typography>
     ),
 

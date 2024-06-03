@@ -20,7 +20,11 @@ import { Unit } from '../../app.types';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { formatDateTimeStrings, getPageHeightCalc } from '../../utils';
+import {
+  formatDateTimeStrings,
+  getPageHeightCalc,
+  getTableRowCountText,
+} from '../../utils';
 import UnitsDialog from './unitsDialog.component.tsx';
 import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
 
@@ -184,9 +188,11 @@ function Units() {
     },
     renderBottomToolbarCustomActions: ({ table }) => (
       <Typography sx={{ paddingLeft: '8px' }}>
-        {table.getFilteredRowModel().rows.length == unitData?.length
-          ? `Total Units: ${unitData.length}`
-          : `Returned ${table.getFilteredRowModel().rows.length} out of ${unitData?.length} Units`}
+        {getTableRowCountText(
+          table.getFilteredRowModel().rows.length,
+          unitData?.length ?? 0,
+          'Units'
+        )}
       </Typography>
     ),
   });

@@ -19,7 +19,11 @@ import { UsageStatus } from '../../app.types.tsx';
 import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { formatDateTimeStrings, getPageHeightCalc } from '../../utils.tsx';
+import {
+  formatDateTimeStrings,
+  getPageHeightCalc,
+  getTableRowCountText,
+} from '../../utils.tsx';
 import { useUsageStatuses } from '../../api/usageStatuses.tsx';
 import UsageStatusDialog from './usageStatusDialog.component.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
@@ -185,9 +189,11 @@ function UsageStatuses() {
     },
     renderBottomToolbarCustomActions: ({ table }) => (
       <Typography sx={{ paddingLeft: '8px' }}>
-        {table.getFilteredRowModel().rows.length == usageStatusData?.length
-          ? `Total Usage Statuses: ${usageStatusData.length}`
-          : `Returned ${table.getFilteredRowModel().rows.length} out of ${usageStatusData?.length} Usage Statuses`}
+        {getTableRowCountText(
+          table.getFilteredRowModel().rows.length,
+          usageStatusData?.length ?? 0,
+          'Usage Statuses'
+        )}
       </Typography>
     ),
   });

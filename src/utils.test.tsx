@@ -6,6 +6,7 @@ import {
   generateUniqueId,
   generateUniqueName,
   generateUniqueNameUsingCode,
+  getTableRowCountText,
   sortDataList,
   trimStringValues,
 } from './utils';
@@ -185,6 +186,20 @@ describe('Utility functions', () => {
           screen.getAllByText('Some long text that overflows').length
         ).toBe(1);
       });
+    });
+  });
+
+  describe('getTotalRowCountText', () => {
+    it('returns total rows when there are no filters applied to table', () => {
+      const result = getTableRowCountText(10, 10, 'Tests');
+
+      expect(result).toEqual('Total Tests: 10');
+    });
+
+    it('returns correct text for when there are filtered rows', () => {
+      const result = getTableRowCountText(5, 10, 'Tests');
+
+      expect(result).toEqual('Returned 5 out of 10 Tests');
     });
   });
 
