@@ -367,6 +367,24 @@ describe('Add manufacturer dialog', () => {
       expect(screen.getByText('Please enter a valid URL')).toBeInTheDocument();
     });
 
+    it('can clear URL without any errors', async () => {
+      createView();
+
+      modifyManufacturerValues({
+        url: '',
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+
+      await user.click(saveButton);
+
+      expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/manufacturers/1', {
+        url: null,
+      });
+
+      expect(onClose).toHaveBeenCalled();
+    });
+
     it('Duplicate name displays error message', async () => {
       createView();
       modifyManufacturerValues({

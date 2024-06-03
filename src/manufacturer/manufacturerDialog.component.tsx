@@ -50,7 +50,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   const [manufacturerDetails, setManufacturerDetails] =
     React.useState<ManufacturerDetails>({
       name: '',
-      url: undefined,
+      url: null,
       address: {
         address_line: '',
         town: null,
@@ -96,7 +96,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   const handleClose = React.useCallback(() => {
     setManufacturerDetails({
       name: '',
-      url: undefined,
+      url: null,
       address: {
         address_line: '',
         town: null,
@@ -119,13 +119,14 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     let hasErrors = false;
 
     //check url is valid
+
     if (
-      manufacturerDetails.url ||
-      manufacturerDetails.url?.trim().length === 0
+      manufacturerDetails.url !== null &&
+      !isValidUrl(manufacturerDetails.url ?? '')
     ) {
-      if (!isValidUrl(manufacturerDetails.url)) {
-        hasErrors = true;
+      if (manufacturerDetails.url?.trim()) {
         setUrlError('Please enter a valid URL');
+        hasErrors = true;
       }
     }
 
@@ -365,7 +366,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               onChange={(event) => {
                 setManufacturerDetails({
                   ...manufacturerDetails,
-                  url: event.target.value,
+                  url:
+                    event.target.value.trim() === ''
+                      ? null
+                      : event.target.value,
                 });
 
                 setUrlError(undefined);

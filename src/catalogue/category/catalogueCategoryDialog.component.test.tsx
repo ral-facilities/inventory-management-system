@@ -22,6 +22,10 @@ describe('Catalogue Category Dialog', () => {
   let props: CatalogueCategoryDialogProps;
   let user: UserEvent;
 
+  interface TestAddCatalogueCategoryProperty
+    extends AddCatalogueCategoryProperty {
+    unit?: string;
+  }
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CatalogueCategoryDialog {...props} />
@@ -32,7 +36,7 @@ describe('Catalogue Category Dialog', () => {
   const modifyValues = async (values: {
     name?: string;
     // New fields to add (if any)
-    newFormFields?: AddCatalogueCategoryProperty[];
+    newFormFields?: TestAddCatalogueCategoryProperty[];
   }) => {
     values.name !== undefined &&
       fireEvent.change(screen.getByLabelText('Name *'), {
@@ -331,7 +335,7 @@ describe('Catalogue Category Dialog', () => {
             mandatory: true,
             name: 'radius',
             type: 'number',
-            unit: 'millimeters',
+            unit_id: '5',
           },
         ],
         is_leaf: true,
@@ -370,7 +374,7 @@ describe('Catalogue Category Dialog', () => {
             mandatory: true,
             name: 'radius',
             type: 'number',
-            unit: 'millimeters',
+            unit_id: '5',
           },
         ],
         is_leaf: true,
@@ -409,7 +413,7 @@ describe('Catalogue Category Dialog', () => {
             mandatory: true,
             name: 'radius',
             type: 'string',
-            unit: 'millimeters',
+            unit_id: '5',
           },
         ],
         is_leaf: true,

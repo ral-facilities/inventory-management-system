@@ -673,8 +673,8 @@ function CatalogueItemPropertiesMigrationDialog(
         }
       }
 
-      if (catalogueItemField.unit) {
-        property.unit = catalogueItemField.unit;
+      if (catalogueItemField.unit_id) {
+        property.unit_id = catalogueItemField.unit_id;
       }
 
       addCatalogueCategoryProperty({
