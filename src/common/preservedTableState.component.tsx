@@ -27,9 +27,15 @@ interface State {
 // State but where undefined => should not be present in the url
 interface StatePartial extends Partial<State> {}
 
+// Column filter value but defined as it will be stored in URL search params (includes type information)
+interface SearchParamsColumnFilterValue {
+  type: 'string' | 'date';
+  value: unknown;
+}
+
 // State but defined as it will be stored in URL search params (includes potential type information)
 interface SearchParamsColumnFilter extends ColumnFilter {
-  type: 'string' | 'date';
+  value: SearchParamsColumnFilterValue | SearchParamsColumnFilterValue[];
 }
 
 interface StateSearchParams extends StatePartial {
@@ -61,9 +67,51 @@ const decompressState = (compressedStateOrNull: string | null) => {
 const getParsedState = (unparsedState: string): StatePartial => {
   if (unparsedState !== null) {
     try {
-      // TODO: Convert parsed types before returning
       const parsedState = JSON.parse(unparsedState) as StateSearchParams;
-      return parsedState;
+
+      // State is same as that in the search params, only with a different type for column filters, so
+      // convert these as appropriate
+      let newCF = undefined;
+
+      if (parsedState.cF) {
+        newCF = [];
+
+        // Parse each filter
+        for (const filter of parsedState.cF) {
+          // Check for multiple filters e.g. min/max
+          if (filter.value instanceof Array) {
+            // Need to convert each individual value
+            let newFilterValue = [];
+
+            for (const filterValue of filter.value) {
+              if (filterValue.type === 'date')
+                newFilterValue.push(
+                  new Date(
+                    typeof filterValue.value === 'string'
+                      ? filterValue.value
+                      : ''
+                  )
+                );
+              else newFilterValue.push(filterValue.value);
+            }
+
+            newCF.push({ id: filter.id, value: newFilterValue });
+          } else {
+            // Convert the filter value as appropriate
+            let newFilterValue;
+
+            if (filter.value.type === 'date')
+              newFilterValue = new Date(
+                typeof filter.value.value === 'string' ? filter.value.value : ''
+              );
+            else newFilterValue = filter.value.value;
+
+            newCF.push({ id: filter.id, value: newFilterValue });
+          }
+        }
+      }
+
+      return { ...parsedState, cF: newCF };
     } catch (_error) {
       // Do nothing, error shouldn't appear to the user
     }
@@ -112,8 +160,47 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
   // Update the search params only if necessary
   useEffect(() => {
     if (props?.storeInUrl) {
-      // TODO: Convert parsed state types as appropriate before stringifying
-      const newUnparsedState = JSON.stringify(parsedState);
+      // Search params state is the same, only with a different type for column filters so
+      // convert these as appropriate
+      let newCF = undefined;
+
+      if (parsedState.cF) {
+        newCF = [];
+
+        // Parse each filter
+        for (const filter of parsedState.cF) {
+          // Check for multiple filters e.g. min/max
+          if (filter.value instanceof Array) {
+            let newFilterValue: SearchParamsColumnFilterValue[] = [];
+
+            for (const filterValue of filter.value) {
+              if (filterValue instanceof Date)
+                newFilterValue.push({
+                  type: 'date',
+                  value: filterValue.toISOString(),
+                });
+              else newFilterValue.push({ type: 'string', value: filterValue });
+            }
+
+            newCF.push({ id: filter.id, value: newFilterValue });
+          } else {
+            if (filter.value instanceof Date)
+              newCF.push({
+                id: filter.id,
+                value: { type: 'date', value: filter.value.toISOString() },
+              });
+            else
+              newCF.push({
+                id: filter.id,
+                value: { type: 'string', value: filter.value },
+              });
+          }
+        }
+      }
+      // TODO: Change name in getParsedState to reflect
+      const parsedStateSearchParams = { ...parsedState, cF: newCF };
+
+      const newUnparsedState = JSON.stringify(parsedStateSearchParams);
       // Wait for a column order change if required
       if (
         unparsedState !== newUnparsedState &&
@@ -268,7 +355,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
                   break filterLoop;
                 }
               }
-            }
+            } else if (filter.value) isDefaultState = false;
           }
         }
 
