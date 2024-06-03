@@ -86,6 +86,7 @@ describe('catalogue categories api functions', () => {
             name: 'Resolution',
             type: 'number',
             unit: 'megapixels',
+            unit_id: '1',
           },
           {
             id: '2',
@@ -94,6 +95,7 @@ describe('catalogue categories api functions', () => {
             name: 'Frame Rate',
             type: 'number',
             unit: 'fps',
+            unit_id: '2',
           },
           {
             id: '3',
@@ -102,6 +104,7 @@ describe('catalogue categories api functions', () => {
             name: 'Sensor Type',
             type: 'string',
             unit: null,
+            unit_id: null,
           },
           {
             id: '4',
@@ -110,6 +113,7 @@ describe('catalogue categories api functions', () => {
             name: 'Sensor brand',
             type: 'string',
             unit: null,
+            unit_id: null,
           },
           {
             id: '5',
@@ -118,6 +122,7 @@ describe('catalogue categories api functions', () => {
             name: 'Broken',
             type: 'boolean',
             unit: null,
+            unit_id: null,
           },
           {
             id: '6',
@@ -126,6 +131,7 @@ describe('catalogue categories api functions', () => {
             name: 'Older than five years',
             type: 'boolean',
             unit: null,
+            unit_id: null,
           },
         ],
         code: 'cameras',
@@ -253,6 +259,7 @@ describe('catalogue categories api functions', () => {
             name: 'Spatial Resolution',
             type: 'number',
             unit: 'micrometers',
+            unit_id: '4',
             mandatory: false,
           },
         ],
@@ -268,6 +275,7 @@ describe('catalogue categories api functions', () => {
             name: 'Measurement Range',
             type: 'number',
             unit: 'Joules',
+            unit_id: '3',
             mandatory: true,
           },
           {
@@ -410,6 +418,7 @@ describe('catalogue categories api functions', () => {
             name: 'Spatial Resolution',
             type: 'number',
             unit: 'micrometers',
+            unit_id: '4',
             mandatory: false,
           },
         ],
@@ -426,6 +435,7 @@ describe('catalogue categories api functions', () => {
             name: 'Measurement Range',
             type: 'number',
             unit: 'Joules',
+            unit_id: '3',
             mandatory: true,
           },
           { id: '4', name: 'Accuracy', type: 'string', mandatory: false },
@@ -441,7 +451,7 @@ describe('catalogue categories api functions', () => {
       copyToCatalogueCategory = {
         selectedCategories: mockCatalogueCategories,
         targetCategory: null,
-        existingCategoryNames: [],
+        existingCategoryCodes: [],
       };
 
       axiosPostSpy = vi.spyOn(imsApi, 'post');
@@ -461,7 +471,7 @@ describe('catalogue categories api functions', () => {
       result.current.mutate({
         selectedCategories: mockCatalogueCategories,
         targetCategory: null,
-        existingCategoryNames: [''],
+        existingCategoryCodes: [''],
       });
 
       await waitFor(() => {
@@ -512,7 +522,7 @@ describe('catalogue categories api functions', () => {
       result.current.mutate({
         selectedCategories: mockCatalogueCategories,
         targetCategory: targetCategory,
-        existingCategoryNames: [''],
+        existingCategoryCodes: [''],
       });
 
       await waitFor(() => {
@@ -551,9 +561,9 @@ describe('catalogue categories api functions', () => {
 
       expect(result.current.isIdle).toBe(true);
 
-      copyToCatalogueCategory.existingCategoryNames = [
-        ...mockCatalogueCategories.map((category) => category.name),
-        mockCatalogueCategories[1].name + '_copy_1',
+      copyToCatalogueCategory.existingCategoryCodes = [
+        ...mockCatalogueCategories.map((category) => category.code),
+        mockCatalogueCategories[1].code + '_copy_1',
       ];
       result.current.mutate(copyToCatalogueCategory);
 
@@ -620,6 +630,7 @@ describe('catalogue categories api functions', () => {
         name: 'test',
         type: 'string',
         unit: null,
+        unit_id: null,
       });
 
       expect(handleTransferState).toBeCalledTimes(2);
@@ -676,7 +687,7 @@ describe('catalogue categories api functions', () => {
         property: {
           name: 'test',
           type: 'number',
-          unit: 'test',
+          unit_id: '1',
           default_value: 2,
           mandatory: false,
         },
@@ -696,7 +707,7 @@ describe('catalogue categories api functions', () => {
         mandatory: false,
         name: 'test',
         type: 'number',
-        unit: 'test',
+        unit_id: '1',
       });
 
       expect(handleTransferState).toBeCalledTimes(2);

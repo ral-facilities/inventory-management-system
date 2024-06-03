@@ -8,6 +8,7 @@ import {
   ListItemText,
   MenuItem,
   TableRow,
+  Typography,
 } from '@mui/material';
 import {
   MRT_ColumnDef,
@@ -27,7 +28,7 @@ function UsageStatuses() {
   const { data: usageStatusData, isLoading: usageStatusDataLoading } =
     useUsageStatuses();
 
-  const tableHeight = getPageHeightCalc('200px');
+  const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
   const [deleteUsageStatusDialog, setDeleteUsageStatusDialog] =
     React.useState<boolean>(false);
@@ -84,7 +85,6 @@ function UsageStatuses() {
     data: usageStatusData ?? [],
     // Features
     enableColumnOrdering: true,
-    enableColumnResizing: true,
     enableFacetedValues: true,
     enableRowActions: true,
     enableStickyHeader: true,
@@ -183,6 +183,13 @@ function UsageStatuses() {
         </MenuItem>,
       ];
     },
+    renderBottomToolbarCustomActions: ({ table }) => (
+      <Typography sx={{ paddingLeft: '8px' }}>
+        {table.getFilteredRowModel().rows.length == usageStatusData?.length
+          ? `Total Usage Statuses: ${usageStatusData.length}`
+          : `Returned ${table.getFilteredRowModel().rows.length} out of ${usageStatusData?.length} Usage Statuses`}
+      </Typography>
+    ),
   });
 
   return (
