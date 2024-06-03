@@ -632,7 +632,10 @@ describe('Catalogue Items', () => {
   it('check table state persists on page reload', () => {
     cy.findByText('Cameras 1').should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+
     cy.findByLabelText('Filter by Name').type('Cameras 15');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+
     cy.findByText('Cameras 1').should('not.exist');
     cy.findByRole('link', { name: 'Cameras 15' }).should('exist');
     cy.location('search').should(
@@ -648,6 +651,21 @@ describe('Catalogue Items', () => {
       'eq',
       '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJABhBsXFoRAAgCMAVhABffQF19QA'
     );
+  });
+
+  it('can load and clear date filters', () => {
+    cy.visit(
+      '/catalogue/4?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0luSCAZgsUgPoYKXEgA0IANxwkY8EBgCeABx7QQSTD35DsIuQCYADOoAsAWk0BGAwGYAKps3RL1zdUuaAWiAC%2BvUJJmoAzhgBOCAB2%2BHyCwrIgrgC6LjFAA'
+    );
+
+    cy.findByText('Cameras 25').should('exist');
+
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+
+    cy.findByText('Cameras 1').should('exist');
+    cy.findByText('Cameras 25').should('not.exist');
+
+    cy.location('search').should('eq', '');
   });
 
   it('make an item obsolete (no details)', () => {
