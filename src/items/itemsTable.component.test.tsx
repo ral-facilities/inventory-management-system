@@ -261,7 +261,7 @@ describe('Items Table', () => {
     });
 
     expect(screen.getByLabelText('Notes')).toHaveValue(
-      '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this ID: KvT2Ox7n'
+      '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z'
     );
   });
 
@@ -289,7 +289,7 @@ describe('Items Table', () => {
     });
 
     expect(screen.getByLabelText('Notes')).toHaveValue(
-      '\n\nThis is a copy of the item with this ID: 3lmRHP8q'
+      '\n\nThis is a copy of the item with this Serial Number: RncNJlDk1pXC'
     );
   });
 
