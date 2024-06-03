@@ -2,6 +2,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import ErrorIcon from '@mui/icons-material/Error';
 import {
+  Autocomplete,
   Box,
   Button,
   FormControl,
@@ -10,6 +11,7 @@ import {
   MenuItem,
   Link as MuiLink,
   Select,
+  TextField,
   Typography,
 } from '@mui/material';
 import {
@@ -23,7 +25,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCatalogueItemIds } from '../api/catalogueItems';
 import { useItems } from '../api/items';
-import { CatalogueItem, Item, System } from '../app.types';
+import { CatalogueItem, Item, System, UsageStatus } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import SystemItemsDialog, {
@@ -337,22 +339,23 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             ? ({ row }) => {
                 return (
                   <FormControl size="small" fullWidth>
-                    <InputLabel
+                    <Autocomplete
                       id={`usage-statuses-${row.original.catalogueItem?.name}`}
-                    >
-                      Usage statuses
-                    </InputLabel>
-                    <Select
-                      labelId={`usage-statuses-${row.original.catalogueItem?.name}`}
                       size="small"
                       value={
-                        aggregatedCellUsageStatus?.find(
-                          (status) =>
-                            status.catalogue_item_id ===
-                            row.original.catalogueItem?.id
-                        )?.usage_status_id ?? ''
+                        usageStatusesData?.find(
+                          (usageStatus) =>
+                            usageStatus.id ==
+                            aggregatedCellUsageStatus?.find(
+                              (status) =>
+                                status.catalogue_item_id ===
+                                row.original.catalogueItem?.id
+                            )?.usage_status_id
+                        ) ?? null
                       }
-                      onChange={(event) => {
+                      options={usageStatusesData ?? []}
+                      getOptionLabel={(usageStatus) => usageStatus.value}
+                      onChange={(_event, usageStatus: UsageStatus | null) => {
                         if (
                           onChangeAggregatedCellUsageStatus &&
                           aggregatedCellUsageStatus
@@ -368,7 +371,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
 
                           updatedAggregatedCellUsageStatus[
                             itemIndex
-                          ].usage_status_id = event.target.value;
+                          ].usage_status_id = usageStatus?.id ?? '';
 
                           onChangeAggregatedCellUsageStatus(
                             updatedAggregatedCellUsageStatus
@@ -390,7 +393,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                             ) {
                               // Update the usageStatus for the matching item
                               updatedUsageStatuses[i].usage_status_id =
-                                event.target.value;
+                                usageStatus?.id ?? '';
                             }
                           }
 
@@ -422,14 +425,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           );
                         }
                       }}
-                      label="Usage statuses"
-                    >
-                      {usageStatusesData?.map((usageStatus) => (
-                        <MenuItem key={usageStatus.id} value={usageStatus.id}>
-                          {usageStatus.value}
-                        </MenuItem>
-                      ))}
-                    </Select>
+                      sx={{ alignItems: 'center' }}
+                      fullWidth
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          required={true}
+                          label="Usage statuses"
+                        />
+                      )}
+                    />
                   </FormControl>
                 );
               }
@@ -443,23 +448,22 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 );
                 return (
                   <FormControl size="small" fullWidth>
-                    <InputLabel
-                      required={true}
-                      id={`usage-status-${row.original.item.id}`}
-                      error={usageStatusCellError}
-                    >
-                      Usage status
-                    </InputLabel>
-                    <Select
-                      required={true}
-                      labelId={`usage-status-${row.original.item.id}`}
+                    <Autocomplete
+                      id={`usage-statuses-${row.original.catalogueItem?.name}`}
                       size="small"
                       value={
-                        usageStatuses?.find(
-                          (status) => status.item_id === row.original.item.id
-                        )?.usage_status_id ?? ''
+                        usageStatusesData?.find(
+                          (usageStatus) =>
+                            usageStatus.id ==
+                            usageStatuses?.find(
+                              (status) =>
+                                status.item_id === row.original.item.id
+                            )?.usage_status_id
+                        ) ?? null
                       }
-                      onChange={(event) => {
+                      options={usageStatusesData ?? []}
+                      getOptionLabel={(usageStatus) => usageStatus.value}
+                      onChange={(_event, usageStatus: UsageStatus | null) => {
                         if (onChangeUsageStatuses && usageStatuses) {
                           const itemIndex = usageStatuses.findIndex(
                             (status: UsageStatusesType) =>
@@ -468,7 +472,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           const updatedUsageStatuses = [...usageStatuses];
 
                           updatedUsageStatuses[itemIndex].usage_status_id =
-                            event.target.value;
+                            usageStatus?.id ?? '';
 
                           onChangeUsageStatuses(updatedUsageStatuses);
                         }
@@ -508,23 +512,22 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           );
                         }
                       }}
-                      error={usageStatusCellError}
-                      label="Usage status"
-                    >
-                      {usageStatusesData?.map((usageStatus) => (
-                        <MenuItem key={usageStatus.id} value={usageStatus.id}>
-                          {usageStatus.value}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    {usageStatusCellError && (
-                      <FormHelperText error>
-                        {
-                          itemUsageStatusesErrorState[row.original.item.id]
-                            .message
-                        }
-                      </FormHelperText>
-                    )}
+                      sx={{ alignItems: 'center' }}
+                      fullWidth
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          required={true}
+                          label="Usage statuses"
+                          error={usageStatusCellError}
+                          helperText={
+                            usageStatusCellError &&
+                            itemUsageStatusesErrorState[row.original.item.id]
+                              .message
+                          }
+                        />
+                      )}
+                    />
                   </FormControl>
                 );
               }
