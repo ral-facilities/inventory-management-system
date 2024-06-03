@@ -391,6 +391,47 @@ describe('Preserved table state functions', () => {
       expect(window.location.search).toBe('');
     });
 
+    it('onColumnFiltersChange updates the state and url correctly when have multiple filters', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () => usePreservedTableState({ storeInUrl: true }),
+        '/'
+      );
+
+      // Change the state to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFiltersChange([
+          { id: 'catalogueItem.cost', value: ['20', '30'] },
+        ])
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilters)
+        ).toBe(
+          JSON.stringify([{ id: 'catalogueItem.cost', value: ['20', '30'] }])
+        )
+      );
+
+      expect(window.location.search).toBe(
+        '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0YuAzhiADQgBuOJM8IGAngAdiqRgCcEAO3wt2nYdBAAmAAwgAvs1D8hIjOKkyO2LgoDMqtQF0raoA'
+      );
+
+      // Now change back to a default value (in this case we test what would happen if clearing the second filter
+      // like it would be cleared by clicking the x in MRT, and the other by using backspace)
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFiltersChange([
+          { id: 'catalogueItem.cost', value: ['', undefined] },
+        ])
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilters)
+        ).toBe(JSON.stringify([]))
+      );
+      expect(window.location.search).toBe('');
+    });
+
     it('onSortingChange updates the state and url correctly', async () => {
       const { result } = renderHookWithBrowserRouterURL(
         () => usePreservedTableState({ storeInUrl: true }),

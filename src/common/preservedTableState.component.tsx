@@ -310,9 +310,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     ]
   );
 
-  console.log('UNPARSED:', unparsedState);
-  console.log('STATE:', state);
-
   const updateSearchParams = useCallback(
     (stateUpdater: Updater<StatePartial>) => {
       // Use function version to ensure multiple can be changed in the same render
