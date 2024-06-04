@@ -6,6 +6,8 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { screen, waitFor } from '@testing-library/react';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { server } from '../../mocks/server';
+import { http } from 'msw';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -50,6 +52,21 @@ describe('delete Unit dialog', () => {
     );
     expect(helperTexts).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('disables continue button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.delete('/v1/units/:id', () => {
+        return new Promise(() => {});
+      })
+    );
+
+    createView();
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    expect(continueButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
   it('calls handleDeleteSession when continue button is clicked', async () => {

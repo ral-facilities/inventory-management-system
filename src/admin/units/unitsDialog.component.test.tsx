@@ -4,6 +4,8 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import { UnitsDialogProps } from './unitsDialog.component';
 import UnitsDialog from './unitsDialog.component';
 import { fireEvent, screen } from '@testing-library/react';
+import { server } from '../../mocks/server';
+import { http } from 'msw';
 
 describe('Units dialog', () => {
   let props: UnitsDialogProps;
@@ -50,6 +52,26 @@ describe('Units dialog', () => {
     );
     expect(helperText).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('disables save button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.post('/v1/units', () => {
+        return new Promise(() => {});
+      })
+    );
+
+    createView();
+
+    fireEvent.change(screen.getByLabelText('Value *'), {
+      target: { value: 'test' },
+    });
+
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+    await user.click(saveButton);
+
+    expect(saveButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
   it('adds a unit', async () => {

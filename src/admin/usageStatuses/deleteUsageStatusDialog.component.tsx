@@ -10,6 +10,7 @@ import {
   Button,
   Box,
   FormHelperText,
+  CircularProgress,
 } from '@mui/material';
 import WarningIcon from '@mui/icons-material/Warning';
 import { useDeleteUsageStatus } from '../../api/usageStatuses';
@@ -74,6 +75,7 @@ const DeleteUsageStatusDialog = (props: DeleteUsageStatusProps) => {
         <Button
           onClick={handleDeleteUsageStatus}
           disabled={isDeletePending || formError != undefined}
+          endIcon={isDeletePending ? <CircularProgress size={20} /> : null}
         >
           Continue
         </Button>
