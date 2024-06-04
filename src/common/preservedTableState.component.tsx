@@ -169,24 +169,15 @@ interface UsePreservedTableStateProps {
   // Whether this is being used just for pagination (if that is the case, assuming not in MRT and so
   // don't ignore initial update)
   paginationOnly?: boolean;
-  // When grouping via drag and drop, this is required to know when reordering is enabled as the
-  // column order state change would otherwise happen as a separate state change being pushed to the url
-  // breaking it (default: 'reorder' just like MRT)
-  mrtGroupedColumnMode?: false | 'reorder' | 'remove';
 }
 
 export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
-  const mrtGroupedColumnMode = props?.mrtGroupedColumnMode ?? 'reorder';
-
   const firstUpdate = useRef<StatePartial>({});
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
 
   // Keeps track of the last location state update to occur (for detecting browser changes e.g. back button being clicked)
   const lastLocationUpdate = useRef(location);
-
-  // Keeps track of grouping state changes (for fixing issue with drag and drop causing an additional url push for column ordering)
-  const waitForColumnOrder = useRef(false);
 
   const urlParamName = props?.urlParamName || 'state';
   const compressedState = props?.storeInUrl
@@ -206,10 +197,7 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       const newUnparsedState = JSON.stringify(parsedStateSearchParams);
 
       // Wait for a column order change if required
-      if (
-        unparsedState !== newUnparsedState &&
-        (mrtGroupedColumnMode !== 'reorder' || !waitForColumnOrder.current)
-      ) {
+      if (unparsedState !== newUnparsedState) {
         // Only set the search params if its just a current page state change and not a browser level change
         // such as clicking the back button
         if (
@@ -243,7 +231,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
     }
   }, [
     location,
-    mrtGroupedColumnMode,
     parsedState,
     props?.storeInUrl,
     searchParams,
@@ -440,16 +427,14 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
       updateSearchParams((prevState: StatePartial) => {
         const prevStateValue = prevState.g || defaultState.g;
         const newValue = getValueFromUpdater(updaterOrValue, prevStateValue);
-        // Check if adding a group
-        if (newValue.length > prevStateValue.length)
-          waitForColumnOrder.current = true;
+
+        // Check whether the new state is the default one
+        const isDefaultState =
+          JSON.stringify(newValue) === JSON.stringify(defaultState.g);
 
         return {
           ...prevState,
-          g:
-            JSON.stringify(newValue) === JSON.stringify(defaultState.g)
-              ? undefined
-              : newValue,
+          g: isDefaultState ? undefined : newValue,
         };
       });
     },
@@ -476,7 +461,6 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
           updaterOrValue,
           prevState.cO || defaultState.cO
         );
-        if (waitForColumnOrder.current) waitForColumnOrder.current = false;
         return {
           ...prevState,
           cO:

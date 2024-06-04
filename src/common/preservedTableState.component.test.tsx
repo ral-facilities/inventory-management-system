@@ -655,12 +655,11 @@ describe('Preserved table state functions', () => {
       expect(window.location.search).toBe('');
     });
 
-    it('onGroupingChange updates the state and url correctly (when mrtGroupedColumnMode is false)', async () => {
+    it('onGroupingChange updates the state and url correctly', async () => {
       const { result } = renderHookWithBrowserRouterURL(
         () =>
           usePreservedTableState({
             storeInUrl: true,
-            mrtGroupedColumnMode: false,
           }),
         '/'
       );
@@ -680,53 +679,6 @@ describe('Preserved table state functions', () => {
 
       expect(window.location.search).toBe(
         '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6ASwGcB9dAIwvVR0JAF0BfIA'
-      );
-
-      // Now change back to a default value
-      act(() => result.current.onPreservedStatesChange.onGroupingChange([]));
-
-      await waitFor(() =>
-        expect(JSON.stringify(result.current.preservedState.grouping)).toBe(
-          JSON.stringify([])
-        )
-      );
-      expect(window.location.search).toBe('');
-    });
-
-    it('onGroupingChange updates the state and url correctly (when mrtGroupedColumnMode is the default value of reorder)', async () => {
-      const { result } = renderHookWithBrowserRouterURL(
-        () =>
-          usePreservedTableState({
-            storeInUrl: true,
-          }),
-        '/'
-      );
-
-      // First change of column order should define the default order (MRT will call this once on page load)
-      act(() => result.current.onPreservedStatesChange.onColumnOrderChange([]));
-
-      // Change the state to a non-default value
-      act(() =>
-        result.current.onPreservedStatesChange.onGroupingChange([
-          'catalogueItem.is_obsolete',
-        ])
-      );
-
-      await waitFor(() =>
-        expect(JSON.stringify(result.current.preservedState.grouping)).toBe(
-          JSON.stringify(['catalogueItem.is_obsolete'])
-        )
-      );
-
-      // State should not change until conColumnOrderChange is also called
-      expect(window.location.search).toBe('');
-
-      act(() => result.current.onPreservedStatesChange.onColumnOrderChange([]));
-
-      await waitFor(() =>
-        expect(window.location.search).toBe(
-          '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6ASwGcB9dAIwvVR0JAF0BfIA'
-        )
       );
 
       // Now change back to a default value
