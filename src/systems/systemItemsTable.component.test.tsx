@@ -158,7 +158,7 @@ describe('SystemItemsTable', () => {
     it('can select and deselect items', async () => {
       createView();
 
-      // Name (obtained from catalouge category item)
+      // Name (obtained from catalogue category item)
       await waitFor(
         () => {
           expect(

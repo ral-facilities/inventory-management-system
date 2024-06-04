@@ -1,5 +1,14 @@
-import { Tooltip, Typography } from '@mui/material';
+import {
+  SxProps,
+  TableCell,
+  type TableCellProps,
+  Theme,
+  Tooltip,
+  Typography,
+  TableCellBaseProps,
+} from '@mui/material';
 import { format, parseISO } from 'date-fns';
+import { MRT_Column } from 'material-react-table';
 import React, { useRef } from 'react';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
@@ -109,16 +118,53 @@ export const formatDateTimeStrings = (
   return formattedDate;
 };
 
+const getTextContent = (
+  children: React.ReactNode,
+  isMRTCell: boolean
+): string | React.ReactNode => {
+  if (isMRTCell) {
+    if (typeof children === 'string') {
+      return children;
+    } else if (React.isValidElement(children)) {
+      if (children.props.children[0] && children.props.children[0].props.cell) {
+        const childCell = children.props.children[0].props.cell;
+        if (childCell.renderValue() instanceof Date) {
+          return children;
+        } else {
+          if (childCell.getIsGrouped()) {
+            return `${String(childCell.renderValue())} (${childCell.row.subRows?.length})`;
+          } else {
+            return String(childCell.renderValue());
+          }
+        }
+      }
+    }
+  } else {
+    if (typeof children === 'string') {
+      return children;
+    } else if (React.isValidElement(children)) {
+      return getTextContent(children.props.children, false);
+    } else if (Array.isArray(children)) {
+      return children.map((child) => getTextContent(child, false)).join(' ');
+    }
+  }
+  return '';
+};
+
 interface OverflowTipProps {
   children: React.ReactNode;
   columnSize?: number;
-  sx?: React.CSSProperties;
+  sx?: SxProps<Theme>;
+  disableParagraph?: boolean;
+  isMRTCell?: boolean;
 }
 
 export const OverflowTip: React.FC<OverflowTipProps> = ({
   children,
   columnSize,
   sx,
+  disableParagraph = false,
+  isMRTCell = false,
 }) => {
   const [isOverflowed, setIsOverflow] = React.useState(false);
   const overflowElementRef = useRef<HTMLDivElement | null>(null);
@@ -132,20 +178,10 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
     }
   }, [columnSize]);
 
-  // Function to extract plain text from children
-  const getTextContent = (children: React.ReactNode): string => {
-    if (typeof children === 'string') {
-      return children;
-    } else if (React.isValidElement(children)) {
-      return getTextContent(children.props.children);
-    }
-    return '';
-  };
-
   return (
     <Tooltip
       role="tooltip"
-      title={getTextContent(children)}
+      title={getTextContent(children, isMRTCell)}
       disableHoverListener={!isOverflowed}
       placement="top"
       enterTouchDelay={0}
@@ -153,6 +189,7 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
     >
       <Typography
         ref={overflowElementRef}
+        component={disableParagraph ? 'div' : 'p'}
         sx={{
           whiteSpace: 'nowrap',
           overflow: 'hidden',
@@ -165,6 +202,46 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
     </Tooltip>
   );
 };
+
+export interface TableCellOverFlowTipProps extends TableCellProps {
+  columnSize?: number;
+  overFlowTipSx?: SxProps<Theme>;
+}
+export const TableBodyCellOverFlowTip: React.FC<TableCellOverFlowTipProps> = (
+  props
+): JSX.Element => {
+  const { columnSize, overFlowTipSx, ...tableCellProps } = props;
+  return (
+    <TableCell {...tableCellProps}>
+      <OverflowTip
+        columnSize={columnSize}
+        disableParagraph={true}
+        isMRTCell={true}
+        sx={{ fontSize: 'inherit', ...overFlowTipSx }}
+      >
+        {tableCellProps.children}
+      </OverflowTip>
+    </TableCell>
+  );
+};
+
+
+
+interface MRTColumnProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  column: MRT_Column<any, unknown>;
+}
+
+export const TableHeaderOverflowTip: React.FC<MRTColumnProps> = ({
+  column,
+}) => (
+  <OverflowTip
+    columnSize={column.getSize()}
+    sx={{ fontSize: 'inherit', fontWeight: 'inherit' }}
+  >
+    {column.columnDef.header}
+  </OverflowTip>
+);
 
 let lastId = 0;
 

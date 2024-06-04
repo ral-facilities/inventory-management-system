@@ -10,6 +10,7 @@ import {
   MenuItem,
   Link as MuiLink,
   Select,
+  TableCellBaseProps,
   Typography,
 } from '@mui/material';
 import {
@@ -23,15 +24,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCatalogueItemIds } from '../api/catalogueItems';
 import { useItems } from '../api/items';
+import { useUsageStatuses } from '../api/usageStatuses';
 import { CatalogueItem, Item, System } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
+import {
+  OverflowTip,
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
+  TableHeaderOverflowTip,
+  formatDateTimeStrings,
+} from '../utils';
 import SystemItemsDialog, {
   ItemUsageStatusesErrorStateType,
   UsageStatusesType,
 } from './systemItemsDialog.component';
-import { formatDateTimeStrings } from '../utils';
-import { useUsageStatuses } from '../api/usageStatuses';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
@@ -203,6 +210,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     return [
       {
         header: 'Catalogue Item',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem?.name,
         id: 'catalogueItem.name',
         Cell:
@@ -221,7 +229,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
             : undefined,
         size: 250,
         GroupedCell: ({ row, table }) => {
-          const { grouping } = table.getState();
+          const { columnSizing } = table.getState();
           const nameGroupedCellError = itemUsageStatusesErrorState
             ? Object.values(itemUsageStatusesErrorState).filter(
                 (errorState) =>
@@ -236,34 +244,44 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 display: 'flex',
                 alignItems: 'center',
                 color: nameGroupedCellError ? 'error.main' : 'inherit',
+                width: '100%',
               }}
             >
               {nameGroupedCellError && (
                 <ErrorIcon sx={{ color: 'error.main' }} />
               )}
-              {type === 'normal' ? (
-                <MuiLink
-                  underline="hover"
-                  component={Link}
-                  to={`/catalogue/item/${row.original.item.catalogue_item_id}`}
-                  // For ensuring space when grouping
-                  sx={{ mx: 0.5 }}
-                >
-                  {row.getValue(grouping[grouping.length - 1])}
-                </MuiLink>
-              ) : (
-                <Box sx={{ mx: 0.5 }}>
-                  {row.getValue(grouping[grouping.length - 1])}
-                </Box>
-              )}
+              <OverflowTip
+                columnSize={columnSizing['catalogueItem.name'] ?? 250}
+                disableParagraph
+                sx={{
+                  fontSize: 'inherit',
+                  mx: 0.5,
+                  width: type === 'normal' ? undefined : '14vw',
+                }}
+              >
+                {type === 'normal' ? (
+                  <MuiLink
+                    underline="hover"
+                    component={Link}
+                    to={`/catalogue/item/${row.original.item.catalogue_item_id}`}
+                    // For ensuring space when grouping
+                    sx={{ mx: 0.5, fontSize: 'inherit' }}
+                  >
+                    {row.original?.catalogueItem?.name}
+                  </MuiLink>
+                ) : (
+                  row.original?.catalogueItem?.name
+                )}
 
-              {`(${row.subRows?.length})`}
+                {`(${row.subRows?.length})`}
+              </OverflowTip>
             </Box>
           );
         },
       },
       {
         header: 'Serial Number',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.serial_number ?? 'No serial number',
         id: 'item.serial_number',
         size: 250,
@@ -283,6 +301,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Last modified',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.modified_time),
         id: 'item.modified_time',
         filterVariant: 'datetime-range',
@@ -294,6 +313,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Created',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.created_time),
         id: 'item.created_time',
         filterVariant: 'datetime-range',
@@ -304,22 +324,18 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Delivered Date',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.delivered_date ?? ''),
         id: 'item.delivered_date',
         filterVariant: 'date-range',
         size: 350,
-        Cell: ({ row }) => (
-          <Typography
-            // For ensuring space when grouping
-            sx={{ marginRight: 0.5, fontSize: 'inherit' }}
-          >
-            {row.original.item.delivered_date &&
-              formatDateTimeStrings(row.original.item.delivered_date, false)}
-          </Typography>
-        ),
+        Cell: ({ row }) =>
+          row.original.item.delivered_date &&
+          formatDateTimeStrings(row.original.item.delivered_date, false),
       },
       {
         header: 'Is Defective',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
         id: 'item.is_defective',
         size: 200,
@@ -327,6 +343,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Usage Status',
+        Header: TableHeaderOverflowTip,
         accessorFn:
           type === 'usageStatus' ? undefined : (row) => row.item.usage_status,
         id: 'item.usage_status',
@@ -603,6 +620,32 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       showProgressBars: isLoading,
       rowSelection: rowSelection,
     },
+
+    muiTableBodyCellProps: ({ cell, column }) =>
+      //Ignore the usages statuses cell in the dialog as this is a
+      // select component and does not need to overflow
+      (column.id === 'item.usage_status' && type === 'usageStatus') ||
+      // The overflow of this column group is done manually in the column definition
+      (column.id === 'catalogueItem.name' && column.getIsGrouped()) ||
+      // Ignore MRT rendered cells e.g. expand , spacer etc
+      column.id.startsWith('mrt')
+        ? {}
+        : {
+            component: (props: TableCellBaseProps) => {
+              return (
+                <TableBodyCellOverFlowTip
+                  {...({
+                    ...props,
+                    columnSize: cell.column.getSize(),
+                    overFlowTipSx: {
+                      width: type === 'usageStatus' ? '10vw' : undefined,
+                    },
+                  } as TableCellOverFlowTipProps)}
+                />
+              );
+            },
+          },
+
     // MUI
     muiTablePaperProps: ({ table }) => ({
       // sx doesn't work here currently - see https://www.material-react-table.com/docs/guides/full-screen-toggle
