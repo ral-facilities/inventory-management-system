@@ -9,6 +9,8 @@ import {
 import ManufacturerDialog, {
   ManufacturerDialogProps,
 } from './manufacturerDialog.component';
+import { server } from '../mocks/server';
+import { http } from 'msw';
 
 vi.mock('../handleIMS_APIError');
 
@@ -137,6 +139,29 @@ describe('Add manufacturer dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.post('/v1/manufacturers', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      createView();
+
+      modifyManufacturerValues({
+        name: 'Manufacturer D',
+        addressLine: '4 Example Street',
+        postcode: 'OX1 2AB',
+        country: 'United Kingdom',
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
+    });
+
     it('calls onClose when Close button is clicked', async () => {
       createView();
       const cancelButton = screen.getByRole('button', { name: 'Cancel' });
@@ -253,6 +278,26 @@ describe('Add manufacturer dialog', () => {
       };
 
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
+    });
+
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.patch('/v1/manufacturers/:id', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      createView();
+
+      modifyManufacturerValues({
+        name: 'Manufacturer D',
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
     it('Edits a manufacturer correctly', async () => {
