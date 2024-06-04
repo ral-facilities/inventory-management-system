@@ -11,6 +11,8 @@ import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
 import { resetUniqueIdCounter } from '../../utils';
+import { server } from '../../mocks/server';
+import { http } from 'msw';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -185,6 +187,24 @@ describe('Catalogue Category Dialog', () => {
       expect(screen.getByLabelText('Name *')).toBeInTheDocument();
       expect(screen.getByText('Save')).toBeInTheDocument();
       expect(screen.getByText('Cancel')).toBeInTheDocument();
+    });
+
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.post('/v1/catalogue-categories', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      createView();
+
+      await modifyValues({ name: 'test' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
     it('displays warning message when name field is not defined', async () => {
@@ -728,6 +748,29 @@ describe('Catalogue Category Dialog', () => {
 
     afterEach(() => {
       vi.clearAllMocks();
+    });
+
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.patch('/v1/catalogue-categories/:id', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      props.selectedCatalogueCategory = {
+        ...mockData,
+        id: '4',
+      };
+
+      createView();
+
+      await modifyValues({ name: 'update' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
     it('displays warning message when name field is not defined', async () => {

@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -651,6 +652,11 @@ const CatalogueCategoryDialog = React.memo(
                 nameError !== undefined ||
                 catalogueItemPropertiesErrors.length !== 0 ||
                 allowedValuesListErrors.length !== 0
+              }
+              endIcon={
+                isAddPending || isEditPending ? (
+                  <CircularProgress size={20} />
+                ) : null
               }
             >
               Save

@@ -6,6 +6,8 @@ import { fireEvent, screen } from '@testing-library/react';
 import UsageStatusDialog, {
   UsageStatusDialogProps,
 } from './usageStatusDialog.component';
+import { server } from '../../mocks/server';
+import { http } from 'msw';
 
 describe('Usage status dialog', () => {
   let props: UsageStatusDialogProps;
@@ -52,6 +54,26 @@ describe('Usage status dialog', () => {
     );
     expect(helperText).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('disables save button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.post('/v1/usage-statuses', () => {
+        return new Promise(() => {});
+      })
+    );
+
+    createView();
+
+    fireEvent.change(screen.getByLabelText('Value *'), {
+      target: { value: 'test' },
+    });
+
+    const saveButton = screen.getByRole('button', { name: 'Save' });
+    await user.click(saveButton);
+
+    expect(saveButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
   it('adds a usage status', async () => {
