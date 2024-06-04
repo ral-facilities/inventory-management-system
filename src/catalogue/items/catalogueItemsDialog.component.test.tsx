@@ -195,7 +195,7 @@ describe('Catalogue Items Dialog', () => {
     await modifyValues({
       resolution: '12',
       sensorType: 'IO',
-      broken: 'True',
+      broken: 'T{arrowdown}{enter}',
     });
 
     const finishButton = screen.getByRole('button', { name: 'Finish' });
