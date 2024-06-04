@@ -6,6 +6,7 @@ import { AxiosError } from 'axios';
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -117,6 +118,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
             sx={{ width: '50%', mx: 1 }}
             onClick={handleAddUsageStatus}
             disabled={isAddPending || valueError !== undefined}
+            endIcon={isAddPending ? <CircularProgress size={20} /> : null}
           >
             Save
           </Button>

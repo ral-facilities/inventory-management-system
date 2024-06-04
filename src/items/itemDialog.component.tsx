@@ -3,6 +3,7 @@ import {
   Autocomplete,
   Box,
   Button,
+  CircularProgress,
   Collapse,
   Dialog,
   DialogActions,
@@ -1130,6 +1131,11 @@ function ItemDialog(props: ItemDialogProps) {
             }
             onClick={type === 'edit' ? handleEditItem : handleAddItem}
             sx={{ mr: 3 }}
+            endIcon={
+              isAddItemsPending || isAddItemPending || isEditItemPending ? (
+                <CircularProgress size={16} />
+              ) : null
+            }
           >
             Finish
           </Button>

@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -548,6 +549,11 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               addressLineError !== undefined ||
               addressPostcodeError !== undefined ||
               countryError !== undefined
+            }
+            endIcon={
+              isAddPending || isEditPending ? (
+                <CircularProgress size={20} />
+              ) : null
             }
           >
             Save

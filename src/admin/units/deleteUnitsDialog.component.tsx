@@ -11,6 +11,7 @@ import {
   Button,
   Box,
   FormHelperText,
+  CircularProgress,
 } from '@mui/material';
 import WarningIcon from '@mui/icons-material/Warning';
 
@@ -71,6 +72,7 @@ const DeleteUnitDialog = (props: DeleteUnitProps) => {
         <Button
           onClick={handleDeleteUnit}
           disabled={isDeletePending || formError != undefined}
+          endIcon={isDeletePending ? <CircularProgress size={20} /> : null}
         >
           Continue
         </Button>
