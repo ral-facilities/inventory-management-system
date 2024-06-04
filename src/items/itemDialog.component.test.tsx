@@ -261,7 +261,7 @@ describe('ItemDialog', () => {
       await modifyDetailsValues({
         serialNumber: 'test12 %s',
         serialNumberAdvancedOptions: { quantity: '2', startingValue: '10' },
-        usageStatus: 'N{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{arrowdown}{enter}',
       });
 
       //navigate through stepper
@@ -310,7 +310,7 @@ describe('ItemDialog', () => {
           purchase_order_number: null,
           serial_number: `test12 ${i + 10}`,
           system_id: '65328f34a40ff5301575a4e3',
-          usage_status_id: '0',
+          usage_status_id: '2',
           warranty_end_date: null,
         });
       }
@@ -482,7 +482,7 @@ describe('ItemDialog', () => {
         warrantyEndDate: '17/02/',
         deliveredDate: '23/09/',
         isDefective: 'Y{arrowdown}{enter}',
-        usageStatus: 'U{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{arrowdown}{enter}',
       });
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
@@ -520,7 +520,6 @@ describe('ItemDialog', () => {
       await modifyDetailsValues({
         warrantyEndDate: '17/02/2000',
         deliveredDate: '23/09/2000',
-        usageStatus: 'Used',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -699,7 +698,7 @@ describe('ItemDialog', () => {
         warrantyEndDate: '17/02/2035',
         deliveredDate: '23/09/2045',
         isDefective: 'Y{arrowdown}{enter}',
-        usageStatus: 'U{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -755,7 +754,7 @@ describe('ItemDialog', () => {
         warrantyEndDate: '17',
         deliveredDate: '23',
         isDefective: 'Y{arrowdown}{enter}',
-        usageStatus: 'U{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{arrowdown}{enter}',
       });
 
       const validDateHelperText = screen.getAllByText(
@@ -854,7 +853,7 @@ describe('ItemDialog', () => {
       createView();
       await modifyDetailsValues({
         serialNumber: 'Error 500',
-        usageStatus: 'U{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{arrowdown}{enter}',
       });
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -1092,7 +1091,7 @@ describe('ItemDialog', () => {
         warrantyEndDate: '17',
         deliveredDate: '23',
         isDefective: 'Y{arrowdown}{enter}',
-        usageStatus: 'U{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
