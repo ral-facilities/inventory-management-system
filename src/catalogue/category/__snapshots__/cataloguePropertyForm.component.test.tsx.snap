@@ -264,7 +264,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
       </button>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-18fodn4-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-n1500r-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -665,7 +665,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
       </button>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1nvz58e-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-6g4c9y-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -1090,7 +1090,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
       </button>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1nvz58e-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-6g4c9y-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -1513,7 +1513,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
       </button>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1nvz58e-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-6g4c9y-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -1897,7 +1897,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-1nvz58e-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-6g4c9y-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -2259,7 +2259,7 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-18fodn4-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-n1500r-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
