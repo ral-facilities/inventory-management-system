@@ -7,6 +7,8 @@ import handleIMS_APIError from '../../handleIMS_APIError';
 import DeleteUsageStatusDialog, {
   DeleteUsageStatusProps,
 } from './deleteUsageStatusDialog.component';
+import { server } from '../../mocks/server';
+import { http } from 'msw';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -53,6 +55,21 @@ describe('Delete Usage status dialog', () => {
     );
     expect(helperTexts).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('disables continue button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.delete('/v1/usage-statuses/:id', () => {
+        return new Promise(() => {});
+      })
+    );
+
+    createView();
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    expect(continueButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
   it('calls handleDeleteUsageStatus when the continue button is clicked and the usage status is not currently used by one or more items ', async () => {

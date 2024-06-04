@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Chip,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -321,6 +322,11 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               isEditPending ||
               formError !== undefined ||
               nameError !== undefined
+            }
+            endIcon={
+              isAddPending || isEditPending ? (
+                <CircularProgress size={20} />
+              ) : null
             }
           >
             Save

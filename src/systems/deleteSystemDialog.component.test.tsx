@@ -9,6 +9,8 @@ import {
   DeleteSystemDialog,
   DeleteSystemDialogProps,
 } from './deleteSystemDialog.component';
+import { server } from '../mocks/server';
+import { http } from 'msw';
 
 vi.mock('../handleIMS_APIError');
 
@@ -62,6 +64,22 @@ describe('DeleteSystemDialog', () => {
     expect(screen.getByTestId('delete-system-name')).toHaveTextContent(
       'Plasma Beam'
     );
+  });
+
+  it('disables finish button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.delete('/v1/systems/:id', () => {
+        return new Promise(() => {});
+      })
+    );
+
+    createView();
+
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    expect(continueButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
   it('calls onClose when cancel button is clicked', async () => {

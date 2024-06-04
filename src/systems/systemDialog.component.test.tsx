@@ -5,6 +5,8 @@ import { System, SystemImportanceType } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemDialog, { SystemDialogProps } from './systemDialog.component';
+import { server } from '../mocks/server';
+import { http } from 'msw';
 
 vi.mock('../handleIMS_APIError');
 
@@ -88,6 +90,24 @@ describe('Systems Dialog', () => {
       createView();
 
       expect(screen.getByText('Add Subsystem')).toBeInTheDocument();
+    });
+
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.post('/v1/systems', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      createView();
+
+      modifyValues({ name: 'test' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
     it('calls onClose when cancel is clicked', async () => {
@@ -225,6 +245,24 @@ describe('Systems Dialog', () => {
       createView();
 
       expect(screen.getByText('Edit System')).toBeInTheDocument();
+    });
+
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.patch('/v1/systems/:id', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      createView();
+
+      modifyValues({ name: 'test' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
     it('calls onClose when cancel is clicked', async () => {
