@@ -293,6 +293,34 @@ describe('Items Table', () => {
     );
   });
 
+  it('can open the save as dialog and checks that the notes have been updated with no serial number', async () => {
+    props.catalogueCategory = getCatalogueCategoryById('4');
+    props.catalogueItem = getCatalogueItemById('32');
+    createView();
+
+    const serialNumber = 'No serial number';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[3]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Save as')).toBeInTheDocument();
+    });
+
+    const saveAsButton = screen.getByText('Save as');
+    await user.click(saveAsButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    expect(screen.getByLabelText('Notes')).toHaveValue(
+      'MJuSPgXEiXmBbf1Vlq4B\n\nThis is a copy of the item with this Serial Number: No serial number'
+    );
+  });
+
   it('can open the save as dialog (no delivered date or warranty date) and close it again', async () => {
     props.catalogueCategory = getCatalogueCategoryById('4');
     props.catalogueItem = getCatalogueItemById('3');
