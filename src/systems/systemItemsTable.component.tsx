@@ -321,7 +321,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
         id: 'item.is_defective',
         size: 200,
-        filterVariant: 'select',
+        filterVariant: 'autocomplete',
       },
       {
         header: 'Usage Status',
@@ -329,7 +329,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           type === 'usageStatus' ? undefined : (row) => row.item.usage_status,
         id: 'item.usage_status',
         size: 200,
-        filterVariant: 'select',
+        filterVariant: 'autocomplete',
         AggregatedCell:
           type === 'usageStatus'
             ? ({ row }) => {
