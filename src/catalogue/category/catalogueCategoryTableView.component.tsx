@@ -1,4 +1,5 @@
-import { Box, Button, TableRow, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import { Box, Button, TableCellBaseProps, TableRow } from '@mui/material';
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -7,13 +8,13 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { CatalogueCategory } from '../../app.types';
-import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
-import AddIcon from '@mui/icons-material/Add';
 import {
-  OverflowTip,
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
   formatDateTimeStrings,
   generateUniqueName,
 } from '../../utils';
+import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
 
 export interface CatalogueCategoryTableViewProps {
   selectedCategories: CatalogueCategory[];
@@ -53,23 +54,6 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         accessorFn: (row) => row.name,
         id: 'name',
         size: 567.5,
-        Cell: ({ renderedCellValue, row, cell }) => {
-          const canPlaceHere =
-            (!row.original.is_leaf &&
-              (requestType !== 'moveTo' ||
-                !selectedCatalogueCategoryIds.includes(row.original.id))) ||
-            requestType === 'standard';
-          return (
-            <OverflowTip
-              sx={{
-                color: canPlaceHere ? 'inherit' : 'action.disabled',
-              }}
-              columnSize={cell.column.getSize()}
-            >
-              {renderedCellValue}
-            </OverflowTip>
-          );
-        },
       },
       {
         header: 'Last modified',
@@ -78,15 +62,12 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         filterVariant: 'datetime-range',
         size: 567.5,
         enableGrouping: false,
-        Cell: ({ row, cell }) =>
-          row.original.modified_time && (
-            <OverflowTip columnSize={cell.column.getSize()}>
-              {formatDateTimeStrings(row.original.modified_time, true)}
-            </OverflowTip>
-          ),
+        Cell: ({ row }) =>
+          row.original.modified_time &&
+          formatDateTimeStrings(row.original.modified_time, true),
       },
     ];
-  }, [requestType, selectedCatalogueCategoryIds]);
+  }, []);
 
   const table = useMaterialReactTable({
     // Data
@@ -96,7 +77,6 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     enableColumnOrdering: false,
     enableColumnPinning: false,
     enableTopToolbar: true,
-    enableColumnResizing: true,
     enableFacetedValues: true,
     enableRowActions: false,
     enableGlobalFilter: false,
@@ -143,6 +123,31 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         },
       };
     },
+    muiTableBodyCellProps: ({ column, row }) =>
+      // Ignore MRT rendered cells e.g. expand , spacer etc
+      column.id.startsWith('mrt')
+        ? {}
+        : {
+            component: (props: TableCellBaseProps) => {
+              const canPlaceHere =
+                (!row.original.is_leaf &&
+                  (requestType !== 'moveTo' ||
+                    !selectedCatalogueCategoryIds.includes(row.original.id))) ||
+                requestType === 'standard';
+              return (
+                <TableBodyCellOverFlowTip
+                  {...({
+                    ...props,
+                    columnSize: column.getSize(),
+                    overFlowTipSx: {
+                      width: '25vw',
+                      color: canPlaceHere ? 'inherit' : 'action.disabled',
+                    },
+                  } as TableCellOverFlowTipProps)}
+                />
+              );
+            },
+          },
     muiTableContainerProps: { sx: { height: '360.4px' } },
     muiSearchTextFieldProps: {
       size: 'small',
