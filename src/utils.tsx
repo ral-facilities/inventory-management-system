@@ -1,14 +1,19 @@
 import {
   SxProps,
   TableCell,
-  type TableCellProps,
   Theme,
   Tooltip,
   Typography,
-  TableCellBaseProps,
+  type TableCellProps,
 } from '@mui/material';
 import { format, parseISO } from 'date-fns';
-import { MRT_Column } from 'material-react-table';
+import {
+  MRT_Cell,
+  MRT_Column,
+  MRT_Row,
+  MRT_RowData,
+  MRT_TableInstance,
+} from 'material-react-table';
 import React, { useRef } from 'react';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
@@ -225,14 +230,12 @@ export const TableBodyCellOverFlowTip: React.FC<TableCellOverFlowTipProps> = (
   );
 };
 
-
-
-interface MRTColumnProps {
+interface MRTHeaderProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   column: MRT_Column<any, unknown>;
 }
 
-export const TableHeaderOverflowTip: React.FC<MRTColumnProps> = ({
+export const TableHeaderOverflowTip: React.FC<MRTHeaderProps> = ({
   column,
 }) => (
   <OverflowTip
@@ -242,6 +245,42 @@ export const TableHeaderOverflowTip: React.FC<MRTColumnProps> = ({
     {column.columnDef.header}
   </OverflowTip>
 );
+
+interface MRTGroupedCellProps<TData extends MRT_RowData> {
+  row: MRT_Row<TData>;
+  table: MRT_TableInstance<TData>;
+  cell: MRT_Cell<TData, unknown>;
+  column: MRT_Column<TData, unknown>;
+}
+
+interface ModifiedMRTGroupedCellProps<TData extends MRT_RowData>
+  extends MRTGroupedCellProps<TData> {
+  emptyCellPlaceholderText: string;
+}
+
+export const TableGroupedCell = <TData extends MRT_RowData>(
+  props: ModifiedMRTGroupedCellProps<TData>
+) => {
+  const { row, column, emptyCellPlaceholderText } = props;
+  const columnID = column.id;
+  const columnSize = column.getSize();
+
+  return (
+    <OverflowTip
+      columnSize={columnSize}
+      disableParagraph
+      sx={{
+        fontSize: 'inherit',
+        mx: 0.5,
+      }}
+    >
+      {row.original.item[columnID]
+        ? formatDateTimeStrings(row.original.item[columnID], false)
+        : emptyCellPlaceholderText}{' '}
+      {`(${row.subRows?.length})`}
+    </OverflowTip>
+  );
+};
 
 let lastId = 0;
 

@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   getCatalogueCategoryById,
@@ -89,6 +89,68 @@ describe('Items Table', () => {
       'href',
       '/systems/65328f34a40ff5301575a4e3'
     );
+  });
+
+  it('displays delivered date grouped cell', async () => {
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    const deliveredDate = '17 Mar 2023';
+
+    expect(await screen.findByText(serialNumber)).toBeInTheDocument();
+
+    // Get the table element (assuming it has a specific class or role)
+    const table = screen.getByTestId('items-table-container');
+
+    fireEvent.scroll(table, { target: { scrollLeft: 300 } });
+
+    // Check if the delivered date cell is visible after scrolling
+    expect(await screen.findByText(deliveredDate)).toBeInTheDocument();
+
+    // Delivered date column action button
+    await user.click(
+      screen.getAllByRole('button', { name: 'Column Actions' })[5]
+    );
+
+    await user.click(await screen.findByText('Group by Delivered Date'));
+
+    fireEvent.scroll(table, { target: { scrollLeft: 300 } });
+
+    // Check if the delivered date grouped cell is visible after scrolling
+    expect(
+      await screen.findByRole('tooltip', { name: '17 Mar 2023 (1)' })
+    ).toBeInTheDocument();
+  });
+
+  it('displays warranty end date grouped cell', async () => {
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    const warrantyEndDate = '04 Apr 2023';
+
+    expect(await screen.findByText(serialNumber)).toBeInTheDocument();
+
+    // Get the table element (assuming it has a specific class or role)
+    const table = screen.getByTestId('items-table-container');
+
+    fireEvent.scroll(table, { target: { scrollLeft: 200 } });
+
+    // Check if the warranty end date cell is visible after scrolling
+    expect(await screen.findByText(warrantyEndDate)).toBeInTheDocument();
+
+    // Warranty end dat column actions button
+    await user.click(
+      screen.getAllByRole('button', { name: 'Column Actions' })[4]
+    );
+
+    await user.click(await screen.findByText('Group by Warranty End Date'));
+
+    fireEvent.scroll(table, { target: { scrollLeft: 200 } });
+
+    // Check if the warranty end date grouped cell is visible after scrolling
+    expect(
+      await screen.findByRole('tooltip', { name: '04 Apr 2023 (1)' })
+    ).toBeInTheDocument();
   });
 
   it('opens and closes the add item dialog', async () => {

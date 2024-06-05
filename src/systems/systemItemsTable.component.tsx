@@ -15,7 +15,9 @@ import {
 } from '@mui/material';
 import {
   MRT_ColumnDef,
+  MRT_Row,
   MRT_RowSelectionState,
+  MRT_TableInstance,
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
@@ -32,6 +34,7 @@ import {
   OverflowTip,
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
+  TableGroupedCell,
   TableHeaderOverflowTip,
   formatDateTimeStrings,
 } from '../utils';
@@ -332,6 +335,12 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
         Cell: ({ row }) =>
           row.original.item.delivered_date &&
           formatDateTimeStrings(row.original.item.delivered_date, false),
+
+        GroupedCell: (props) =>
+          TableGroupedCell({
+            ...props,
+            emptyCellPlaceholderText: 'No delivered date',
+          }),
       },
       {
         header: 'Is Defective',
@@ -625,8 +634,10 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       //Ignore the usages statuses cell in the dialog as this is a
       // select component and does not need to overflow
       (column.id === 'item.usage_status' && type === 'usageStatus') ||
-      // The overflow of this column group is done manually in the column definition
-      (column.id === 'catalogueItem.name' && column.getIsGrouped()) ||
+      // The overflow of these column groups is done manually in the column definition
+      ((column.id === 'catalogueItem.name' ||
+        column.id === 'item.delivered_date') &&
+        column.getIsGrouped()) ||
       // Ignore MRT rendered cells e.g. expand , spacer etc
       column.id.startsWith('mrt')
         ? {}

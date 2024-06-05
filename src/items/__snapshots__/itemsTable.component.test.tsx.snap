@@ -217,10 +217,11 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
       </div>
       <div
         class="MuiTableContainer-root css-15zpm7g-MuiTableContainer-root"
+        data-testid="items-table-container"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
-          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-serial_number-size: 250; --col-serial_number-size: 250; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-asset_number-size: 250; --col-asset_number-size: 250; --header-purchase_order_number-size: 350; --col-purchase_order_number-size: 350; --header-warranty_end_date-size: 350; --col-warranty_end_date-size: 350; --header-delivered_date-size: 350; --col-delivered_date-size: 350; --header-is_defective-size: 200; --col-is_defective-size: 200; --header-usage_status-size: 200; --col-usage_status-size: 200; --header-notes-size: 250; --col-notes-size: 250; --header-system_name-size: 250; --col-system_name-size: 250; --header-row_catalogueItem_properties_1-size: 250; --col-row_catalogueItem_properties_1-size: 250; --header-row_catalogueItem_properties_2-size: 250; --col-row_catalogueItem_properties_2-size: 250; --header-row_catalogueItem_properties_3-size: 250; --col-row_catalogueItem_properties_3-size: 250; --header-row_catalogueItem_properties_4-size: 250; --col-row_catalogueItem_properties_4-size: 250; --header-row_catalogueItem_properties_5-size: 250; --col-row_catalogueItem_properties_5-size: 250; --header-row_catalogueItem_properties_6-size: 250; --col-row_catalogueItem_properties_6-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
+          style="--header-mrt_row_actions-size: 70; --col-mrt_row_actions-size: 70; --header-serial_number-size: 250; --col-serial_number-size: 250; --header-modified_time-size: 350; --col-modified_time-size: 350; --header-asset_number-size: 250; --col-asset_number-size: 250; --header-purchase_order_number-size: 350; --col-purchase_order_number-size: 350; --header-warranty_end_date-size: 350; --col-warranty_end_date-size: 350; --header-delivered_date-size: 350; --col-delivered_date-size: 350; --header-is_defective-size: 200; --col-is_defective-size: 200; --header-usage_status-size: 200; --col-usage_status-size: 200; --header-system_name-size: 250; --col-system_name-size: 250; --header-notes-size: 250; --col-notes-size: 250; --header-row_catalogueItem_properties_1-size: 250; --col-row_catalogueItem_properties_1-size: 250; --header-row_catalogueItem_properties_2-size: 250; --col-row_catalogueItem_properties_2-size: 250; --header-row_catalogueItem_properties_3-size: 250; --col-row_catalogueItem_properties_3-size: 250; --header-row_catalogueItem_properties_4-size: 250; --col-row_catalogueItem_properties_4-size: 250; --header-row_catalogueItem_properties_5-size: 250; --col-row_catalogueItem_properties_5-size: 250; --header-row_catalogueItem_properties_6-size: 250; --col-row_catalogueItem_properties_6-size: 250; --header-mrt_row_spacer-size: 40; --col-mrt_row_spacer-size: 40;"
         >
           <thead
             class="MuiTableHead-root css-q4cnup-MuiTableHead-root"
@@ -1000,30 +1001,58 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4m1cvd-MuiTableCell-root"
                 data-index="1"
               >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/KvT2Ox7n"
+                <p
+                  aria-label="5YUQDDjKpz2z"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  5YUQDDjKpz2z
-                </a>
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="/KvT2Ox7n"
+                  >
+                    5YUQDDjKpz2z
+                  </a>
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2nncca-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <p
+                  aria-label="02 Jan 2024 13:10"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13enbsi-MuiTableCell-root"
                 data-index="3"
               >
-                LyH8yp1FHf
+                <p
+                  aria-label="LyH8yp1FHf"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  LyH8yp1FHf
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m3ias4-MuiTableCell-root"
                 data-index="4"
               >
-                6JYHEjwN
+                <p
+                  aria-label="6JYHEjwN"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  6JYHEjwN
+                </p>
               </td>
               <td
                 style="display: flex; width: 2600px;"
@@ -1064,30 +1093,58 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4m1cvd-MuiTableCell-root"
                 data-index="1"
               >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/G463gOIA"
+                <p
+                  aria-label="vYs9Vxx6yWbn"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  vYs9Vxx6yWbn
-                </a>
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="/G463gOIA"
+                  >
+                    vYs9Vxx6yWbn
+                  </a>
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2nncca-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <p
+                  aria-label="02 Jan 2024 13:10"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13enbsi-MuiTableCell-root"
                 data-index="3"
               >
-                03MXnOfP5C
+                <p
+                  aria-label="03MXnOfP5C"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  03MXnOfP5C
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m3ias4-MuiTableCell-root"
                 data-index="4"
               >
-                tIWiCOow
+                <p
+                  aria-label="tIWiCOow"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  tIWiCOow
+                </p>
               </td>
               <td
                 style="display: flex; width: 2600px;"
@@ -1128,30 +1185,58 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4m1cvd-MuiTableCell-root"
                 data-index="1"
               >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/9yh39Mcg"
+                <p
+                  aria-label="PcfCM1jp0SUV"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  PcfCM1jp0SUV
-                </a>
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="/9yh39Mcg"
+                  >
+                    PcfCM1jp0SUV
+                  </a>
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2nncca-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <p
+                  aria-label="02 Jan 2024 13:10"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13enbsi-MuiTableCell-root"
                 data-index="3"
               >
-                dvI4GyEsFt
+                <p
+                  aria-label="dvI4GyEsFt"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  dvI4GyEsFt
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m3ias4-MuiTableCell-root"
                 data-index="4"
               >
-                Qf65nCwO
+                <p
+                  aria-label="Qf65nCwO"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Qf65nCwO
+                </p>
               </td>
               <td
                 style="display: flex; width: 2600px;"
@@ -1192,30 +1277,58 @@ exports[`Items Table > renders correctly part 1 due column virtualisation 1`] = 
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4m1cvd-MuiTableCell-root"
                 data-index="1"
               >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/wKsFzrSq"
+                <p
+                  aria-label="Zf7P8Qu8TD8c"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  Zf7P8Qu8TD8c
-                </a>
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="/wKsFzrSq"
+                  >
+                    Zf7P8Qu8TD8c
+                  </a>
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-2nncca-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <p
+                  aria-label="02 Jan 2024 13:10"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-13enbsi-MuiTableCell-root"
                 data-index="3"
               >
-                75YWiLwy54
+                <p
+                  aria-label="75YWiLwy54"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  75YWiLwy54
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1m3ias4-MuiTableCell-root"
                 data-index="4"
               >
-                hpGBgi0d
+                <p
+                  aria-label="hpGBgi0d"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  hpGBgi0d
+                </p>
               </td>
               <td
                 style="display: flex; width: 2600px;"
@@ -1504,7 +1617,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                         aria-invalid="false"
                         autocomplete="new-password"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r10:"
+                        id=":r1g:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -1610,6 +1723,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
       </div>
       <div
         class="MuiTableContainer-root css-15zpm7g-MuiTableContainer-root"
+        data-testid="items-table-container"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-ts728e-MuiTable-root"
@@ -1768,7 +1882,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                             aria-label="Filter by Notes"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r36:"
+                            id=":r46:"
                             placeholder="Filter by Notes"
                             title="Filter by Notes"
                             type="text"
@@ -1824,7 +1938,14 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
-                      Frame Rate (fps)
+                      <p
+                        aria-label="Frame Rate (fps)"
+                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        Frame Rate (fps)
+                      </p>
                     </div>
                     <span
                       aria-label="Sort by Frame Rate (fps) descending"
@@ -1936,7 +2057,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r3f:"
+                              id=":r4g:"
                               placeholder="Min"
                               title="Min"
                               type="text"
@@ -1984,7 +2105,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r3h:"
+                              id=":r4i:"
                               placeholder="Max"
                               title="Max"
                               type="text"
@@ -2041,7 +2162,14 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
-                      Sensor Type 
+                      <p
+                        aria-label="Sensor Type "
+                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        Sensor Type 
+                      </p>
                     </div>
                     <span
                       aria-label="Sort by Sensor Type  ascending"
@@ -2150,7 +2278,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                             aria-label="Filter by Sensor Type "
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r3m:"
+                            id=":r4q:"
                             placeholder="Filter by Sensor Type "
                             title="Filter by Sensor Type "
                             type="text"
@@ -2206,7 +2334,14 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
-                      Broken 
+                      <p
+                        aria-label="Broken "
+                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        Broken 
+                      </p>
                     </div>
                     <span
                       aria-label="Sort by Broken  ascending"
@@ -2311,13 +2446,13 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
                           <div
-                            aria-controls=":r3s:"
+                            aria-controls=":r55:"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Broken "
-                            aria-labelledby=":r3r:"
+                            aria-labelledby=":r54:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":r3r:"
+                            id=":r54:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -2425,29 +2560,38 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sc3h6t-MuiTableCell-root"
                 data-index="1"
               >
-                <svg
-                  aria-hidden="true"
-                  aria-label="Catalogue item description: 6Y5XTJfBrNNx8oltI9HE"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                <p
+                  aria-label="6Y5XTJfBrNNx8oltI9HE"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
-                  data-testid="InfoOutlinedIcon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
+                  role="tooltip"
                 >
-                  <path
-                    d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
-                  />
-                </svg>
+                  6Y5XTJfBrNNx8oltI9HE
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uksksy-MuiTableCell-root"
                 data-index="2"
-              />
+              >
+                <p
+                  aria-label=""
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                />
+              </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-llrwto-MuiTableCell-root"
                 data-index="3"
               >
-                CMOS
+                <p
+                  aria-label="CMOS"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  CMOS
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tz71dk-MuiTableCell-root"
@@ -2494,19 +2638,14 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sc3h6t-MuiTableCell-root"
                 data-index="1"
               >
-                <svg
-                  aria-hidden="true"
-                  aria-label="Catalogue item description: rRXBHQFbF3zts6XS279k"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                <p
+                  aria-label="rRXBHQFbF3zts6XS279k"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
-                  data-testid="InfoOutlinedIcon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
+                  role="tooltip"
                 >
-                  <path
-                    d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
-                  />
-                </svg>
+                  rRXBHQFbF3zts6XS279k
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uksksy-MuiTableCell-root"
@@ -2518,7 +2657,14 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-llrwto-MuiTableCell-root"
                 data-index="3"
               >
-                CMOS
+                <p
+                  aria-label="CMOS"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  CMOS
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tz71dk-MuiTableCell-root"
@@ -2565,29 +2711,38 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sc3h6t-MuiTableCell-root"
                 data-index="1"
               >
-                <svg
-                  aria-hidden="true"
-                  aria-label="Catalogue item description: 9Jgm0xJKSkmYG5fOdw6k"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                <p
+                  aria-label="9Jgm0xJKSkmYG5fOdw6k"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
-                  data-testid="InfoOutlinedIcon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
+                  role="tooltip"
                 >
-                  <path
-                    d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
-                  />
-                </svg>
+                  9Jgm0xJKSkmYG5fOdw6k
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uksksy-MuiTableCell-root"
                 data-index="2"
-              />
+              >
+                <p
+                  aria-label=""
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                />
+              </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-llrwto-MuiTableCell-root"
                 data-index="3"
               >
-                CMOS
+                <p
+                  aria-label="CMOS"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  CMOS
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tz71dk-MuiTableCell-root"
@@ -2634,19 +2789,14 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sc3h6t-MuiTableCell-root"
                 data-index="1"
               >
-                <svg
-                  aria-hidden="true"
-                  aria-label="Catalogue item description: zolZDKKuvAoTFRUWeZNA"
-                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                <p
+                  aria-label="zolZDKKuvAoTFRUWeZNA"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
                   data-mui-internal-clone-element="true"
-                  data-testid="InfoOutlinedIcon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
+                  role="tooltip"
                 >
-                  <path
-                    d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
-                  />
-                </svg>
+                  zolZDKKuvAoTFRUWeZNA
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1uksksy-MuiTableCell-root"
@@ -2658,7 +2808,14 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-llrwto-MuiTableCell-root"
                 data-index="3"
               >
-                CMOS
+                <p
+                  aria-label="CMOS"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  CMOS
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-tz71dk-MuiTableCell-root"
@@ -2737,7 +2894,7 @@ exports[`Items Table > renders correctly part 2 due column virtualisation 1`] = 
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r14:"
+                    aria-controls=":r1k:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
@@ -2852,6 +3009,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
     >
       <div
         class="MuiTableContainer-root css-14c53ac-MuiTableContainer-root"
+        data-testid="items-table-container"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-1y6k1sx-MuiTable-root"
@@ -3013,7 +3171,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                             aria-label="Filter by Serial Number"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rjr:"
+                            id=":rvj:"
                             placeholder="Filter by Serial Number"
                             title="Filter by Serial Number"
                             type="text"
@@ -3154,7 +3312,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":rjv:"
+                              id=":rvn:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -3199,7 +3357,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":rk1:"
+                              id=":rvp:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -3338,7 +3496,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":rk5:"
+                              id=":rvt:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -3383,7 +3541,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":rk7:"
+                              id=":rvv:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -3522,7 +3680,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":rkb:"
+                              id=":r103:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -3567,7 +3725,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":rkd:"
+                              id=":r105:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -3699,13 +3857,13 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd css-953pxc-MuiInputBase-root-MuiInput-root"
                         >
                           <div
-                            aria-controls=":rki:"
+                            aria-controls=":r10a:"
                             aria-expanded="false"
                             aria-haspopup="listbox"
                             aria-label="Filter by Is Defective"
-                            aria-labelledby=":rkh:"
+                            aria-labelledby=":r109:"
                             class="MuiSelect-select MuiSelect-standard MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-2jdjhv-MuiSelect-select-MuiInputBase-input-MuiInput-input"
-                            id=":rkh:"
+                            id=":r109:"
                             role="combobox"
                             tabindex="0"
                           >
@@ -3816,25 +3974,42 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6yf0oe-MuiTableCell-root"
                 data-index="1"
               >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/KvT2Ox7n"
+                <p
+                  aria-label="5YUQDDjKpz2z"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  5YUQDDjKpz2z
-                </a>
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="/KvT2Ox7n"
+                  >
+                    5YUQDDjKpz2z
+                  </a>
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <p
+                  aria-label="02 Jan 2024 13:10"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yxmfic-MuiTableCell-root"
                 data-index="3"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
+                  aria-label="04 Apr 2023"
+                  class="MuiTypography-root MuiTypography-body1 css-fe1h52-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
                   04 Apr 2023
                 </p>
@@ -3844,7 +4019,10 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 data-index="4"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
+                  aria-label="17 Mar 2023"
+                  class="MuiTypography-root MuiTypography-body1 css-fe1h52-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
                   17 Mar 2023
                 </p>
@@ -3906,25 +4084,42 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6yf0oe-MuiTableCell-root"
                 data-index="1"
               >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/G463gOIA"
+                <p
+                  aria-label="vYs9Vxx6yWbn"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  vYs9Vxx6yWbn
-                </a>
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="/G463gOIA"
+                  >
+                    vYs9Vxx6yWbn
+                  </a>
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <p
+                  aria-label="02 Jan 2024 13:10"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yxmfic-MuiTableCell-root"
                 data-index="3"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
+                  aria-label="18 May 2023"
+                  class="MuiTypography-root MuiTypography-body1 css-fe1h52-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
                   18 May 2023
                 </p>
@@ -3934,7 +4129,10 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 data-index="4"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
+                  aria-label="11 May 2023"
+                  class="MuiTypography-root MuiTypography-body1 css-fe1h52-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
                   11 May 2023
                 </p>
@@ -3996,25 +4194,42 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6yf0oe-MuiTableCell-root"
                 data-index="1"
               >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/9yh39Mcg"
+                <p
+                  aria-label="PcfCM1jp0SUV"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  PcfCM1jp0SUV
-                </a>
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="/9yh39Mcg"
+                  >
+                    PcfCM1jp0SUV
+                  </a>
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <p
+                  aria-label="02 Jan 2024 13:10"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yxmfic-MuiTableCell-root"
                 data-index="3"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
+                  aria-label="18 Jul 2023"
+                  class="MuiTypography-root MuiTypography-body1 css-fe1h52-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
                   18 Jul 2023
                 </p>
@@ -4024,7 +4239,10 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 data-index="4"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
+                  aria-label="16 Jun 2023"
+                  class="MuiTypography-root MuiTypography-body1 css-fe1h52-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
                   16 Jun 2023
                 </p>
@@ -4086,25 +4304,42 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-6yf0oe-MuiTableCell-root"
                 data-index="1"
               >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/wKsFzrSq"
+                <p
+                  aria-label="Zf7P8Qu8TD8c"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  Zf7P8Qu8TD8c
-                </a>
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="/wKsFzrSq"
+                  >
+                    Zf7P8Qu8TD8c
+                  </a>
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <p
+                  aria-label="02 Jan 2024 13:10"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </p>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yxmfic-MuiTableCell-root"
                 data-index="3"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
+                  aria-label="04 Oct 2023"
+                  class="MuiTypography-root MuiTypography-body1 css-fe1h52-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
                   04 Oct 2023
                 </p>
@@ -4114,7 +4349,10 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                 data-index="4"
               >
                 <p
-                  class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
+                  aria-label="05 Dec 2023"
+                  class="MuiTypography-root MuiTypography-body1 css-fe1h52-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
                   05 Dec 2023
                 </p>
@@ -4228,7 +4466,7 @@ exports[`Items Table > renders the dense table correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":rkk:"
+                    aria-controls=":r10c:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"

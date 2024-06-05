@@ -33,6 +33,7 @@ import {
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
   OverflowTip,
+  TableGroupedCell,
   formatDateTimeStrings,
   getPageHeightCalc,
 } from '../utils';
@@ -213,6 +214,11 @@ export function ItemsTable(props: ItemTableProps) {
               formatDateTimeStrings(row.original.item.warranty_end_date, false)}
           </OverflowTip>
         ),
+        GroupedCell: (props) =>
+          TableGroupedCell({
+            ...props,
+            emptyCellPlaceholderText: 'No warranty end date',
+          }),
       },
       {
         header: 'Delivered Date',
@@ -229,6 +235,11 @@ export function ItemsTable(props: ItemTableProps) {
               formatDateTimeStrings(row.original.item.delivered_date, false)}
           </OverflowTip>
         ),
+        GroupedCell: (props) =>
+          TableGroupedCell({
+            ...props,
+            emptyCellPlaceholderText: 'No delivered date',
+          }),
       },
       {
         header: 'Is Defective',
@@ -448,6 +459,8 @@ export function ItemsTable(props: ItemTableProps) {
     // MUI
     muiTableContainerProps: {
       sx: { height: dense ? '360.4px' : tableHeight },
+      // @ts-expect-error: MRT Table Container props does not have data-testid
+      'data-testid': 'items-table-container',
     },
     muiSearchTextFieldProps: {
       size: 'small',
