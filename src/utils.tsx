@@ -160,7 +160,6 @@ export function sortDataList(data: any[], sortedValue: string) {
   return data.sort((a, b) => a[sortedValue].localeCompare(b[sortedValue]));
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getTableRowCountText(
   tableRowCount: number,
   dataLength: number,
