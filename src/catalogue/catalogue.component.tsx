@@ -286,6 +286,9 @@ function Catalogue() {
     setSelectedCategories([]);
   }, [parentId]);
 
+  console.log(catalogueCategoryData);
+  console.log(parentInfo?.is_leaf);
+  console.log(catalogueCategoryDetailLoading);
   return (
     <Grid container>
       <Grid container>
@@ -380,6 +383,7 @@ function Catalogue() {
         )}
 
       {catalogueCategoryData &&
+        catalogueCategoryData.length > 0 &&
         !parentInfo?.is_leaf &&
         !catalogueCategoryDetailLoading && (
           <CatalogueCardView
