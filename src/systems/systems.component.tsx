@@ -37,7 +37,11 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { System } from '../app.types';
-import { generateUniqueName, getPageHeightCalc } from '../utils';
+import {
+  generateUniqueName,
+  getPageHeightCalc,
+  getTableRowCountText,
+} from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
@@ -155,17 +159,17 @@ const CopySystemsButton = (props: {
   );
 };
 
-const getTableCountText = (
-  numRowsDisplayed: number,
-  numSystems: number,
-  isRoot: boolean
-) => {
-  const systemsText = isRoot ? 'Systems' : 'Subsystems';
-  if (numRowsDisplayed === numSystems)
-    return `Total ${systemsText}: ${numSystems}`;
-  else
-    return `Returned ${numRowsDisplayed} out of ${numSystems} ${systemsText}`;
-};
+// const getTableCountText = (
+//   numRowsDisplayed: number,
+//   numSystems: number,
+//   isRoot: boolean
+// ) => {
+//   const systemsText = isRoot ? 'Systems' : 'Subsystems';
+//   if (numRowsDisplayed === numSystems)
+//     return `Total ${systemsText}: ${numSystems}`;
+//   else
+//     return `Returned ${numRowsDisplayed} out of ${numSystems} ${systemsText}`;
+// };
 
 type MenuDialogType = SystemDialogType | 'delete';
 
@@ -473,10 +477,10 @@ function Systems() {
                         textAlign: { sm: 'center', md: 'left' },
                       }}
                     >
-                      {getTableCountText(
+                      {getTableRowCountText(
                         subsystemsTable.getFilteredRowModel().rows.length,
                         subsystemsData?.length ?? 0,
-                        systemId === null
+                        systemId === null ? 'Systems' : 'Subsytems'
                       )}
                     </Typography>
                     <MRT_TablePagination table={subsystemsTable} />
