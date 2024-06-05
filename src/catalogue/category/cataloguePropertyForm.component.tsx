@@ -63,6 +63,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
   return (
     <Stack direction={isList ? 'row' : 'column'} spacing={1} padding={1}>
       <TextField
+        id="catalogue-property-name-input"
         label="Property Name"
         variant="outlined"
         required={true}
@@ -178,6 +179,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
                   spacing={1}
                 >
                   <TextField
+                    id={`${listValue}-input`}
                     sx={{
                       width: isList ? undefined : '100%',
                       minWidth: isList ? '150px' : undefined,
@@ -249,6 +251,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         !isList &&
         (catalogueItemField.allowed_values?.type === 'list' ? (
           <Autocomplete
+            id="catalogue-property-default-value-list-input"
             sx={{
               width: '100%',
             }}
@@ -284,6 +287,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           />
         ) : catalogueItemField.type === 'boolean' ? (
           <Autocomplete
+            id="catalogue-property-default-value-boolean-input"
             sx={{
               width: '100%',
             }}
@@ -329,6 +333,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           />
         ))}
       <Autocomplete
+        id="catalogue-property-unit-input"
         sx={{
           width: isList ? '200px' : '100%',
           minWidth: isList ? '200px' : undefined,

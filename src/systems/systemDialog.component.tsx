@@ -218,6 +218,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         <Grid container direction="column" spacing={2}>
           <Grid item sx={{ mt: 1 }}>
             <TextField
+              id="system-name-input"
               label="Name"
               required={true}
               value={systemData.name}
@@ -232,6 +233,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           </Grid>
           <Grid item>
             <TextField
+              id="system-description-input"
               label="Description"
               value={systemData.description ?? ''}
               onChange={(event) => {
@@ -246,6 +248,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           </Grid>
           <Grid item>
             <TextField
+              id="system-location-input"
               label="Location"
               value={systemData.location ?? ''}
               onChange={(event) => {
@@ -259,6 +262,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           </Grid>
           <Grid item>
             <TextField
+              id="system-owner-input"
               label="Owner"
               value={systemData.owner ?? ''}
               onChange={(event) => {
