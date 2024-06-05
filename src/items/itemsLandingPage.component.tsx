@@ -457,8 +457,10 @@ function ItemsLandingPage() {
               marginTop: 1,
             }}
           >
-            <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
-            <Typography>
+            <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+              No result found
+            </Typography>
+            <Typography sx={{ textAlign: 'center' }}>
               This item doesn&#39;t exist. Please click the Home button to
               navigate to the catalogue home
             </Typography>
