@@ -7,6 +7,7 @@ import {
   ListItemIcon,
   ListItemText,
   MenuItem,
+  TableCellBaseProps,
   TableRow,
   Typography,
 } from '@mui/material';
@@ -20,7 +21,12 @@ import { Unit } from '../../app.types';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { formatDateTimeStrings, getPageHeightCalc } from '../../utils';
+import {
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
+  formatDateTimeStrings,
+  getPageHeightCalc,
+} from '../../utils';
 import UnitsDialog from './unitsDialog.component.tsx';
 import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
 
@@ -113,6 +119,23 @@ function Units() {
     muiTableBodyRowProps: ({ row }) => {
       return { component: TableRow, 'aria-label': `${row.original.value} row` };
     },
+    muiTableBodyCellProps: ({ column }) =>
+      // Ignore MRT rendered cells e.g. expand , spacer etc
+      column.id.startsWith('mrt')
+        ? {}
+        : {
+            component: (props: TableCellBaseProps) => {
+              return (
+                <TableBodyCellOverFlowTip
+                  {...({
+                    ...props,
+                    columnSize: column.getSize(),
+                    overFlowTipSx: { width: '25vw' },
+                  } as TableCellOverFlowTipProps)}
+                />
+              );
+            },
+          },
     muiTablePaperProps: { sx: { maxHeight: '100%' } },
     muiTableContainerProps: { sx: { height: tableHeight } },
     muiSearchTextFieldProps: {

@@ -882,22 +882,41 @@ exports[`Units > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
-                megapixels
+                <div
+                  aria-label="megapixels"
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  megapixels
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
-                01 Jan 2024 12:00
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
               </td>
             </tr>
             <tr
@@ -934,22 +953,41 @@ exports[`Units > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
-                fps
+                <div
+                  aria-label="fps"
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  fps
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
-                01 Jan 2024 12:00
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
               </td>
             </tr>
             <tr
@@ -986,22 +1024,41 @@ exports[`Units > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
-                Joules
+                <div
+                  aria-label="Joules"
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  Joules
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
-                01 Jan 2024 12:00
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
               </td>
             </tr>
             <tr
@@ -1038,22 +1095,41 @@ exports[`Units > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
-                micrometers
+                <div
+                  aria-label="micrometers"
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  micrometers
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
-                01 Jan 2024 12:00
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
               </td>
             </tr>
             <tr
@@ -1090,22 +1166,41 @@ exports[`Units > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
-                millimeters
+                <div
+                  aria-label="millimeters"
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  millimeters
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
-                01 Jan 2024 12:00
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
               </td>
             </tr>
             <tr
@@ -1142,22 +1237,41 @@ exports[`Units > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
-                kilograms
+                <div
+                  aria-label="kilograms"
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  kilograms
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
-                01 Jan 2024 12:00
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
               </td>
             </tr>
             <tr
@@ -1194,22 +1308,41 @@ exports[`Units > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
-                liters per second
+                <div
+                  aria-label="liters per second"
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  liters per second
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
-                01 Jan 2024 12:00
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
               </td>
             </tr>
             <tr
@@ -1246,22 +1379,41 @@ exports[`Units > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
-                millibar
+                <div
+                  aria-label="millibar"
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  millibar
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
-                01 Jan 2024 12:00
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
               </td>
             </tr>
             <tr
@@ -1298,22 +1450,41 @@ exports[`Units > renders table correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-q3i8x2-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1sd6a54-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
-                volts
+                <div
+                  aria-label="volts"
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  volts
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15iirbi-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-pz83si-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
-                02 Jan 2024 13:10
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-5xzd06-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-4aklm5-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
-                01 Jan 2024 12:00
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
               </td>
             </tr>
           </tbody>
