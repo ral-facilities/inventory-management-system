@@ -238,7 +238,14 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
-                      Name
+                      <p
+                        aria-label="Name"
+                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        Name
+                      </p>
                     </div>
                     <span
                       aria-label="Sort by Name ascending"
@@ -327,7 +334,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                             aria-label="Filter by Name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r25n:"
+                            id=":r301:"
                             placeholder="Filter by Name"
                             title="Filter by Name"
                             type="text"
@@ -383,7 +390,14 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
-                      Last modified
+                      <p
+                        aria-label="Last modified"
+                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        Last modified
+                      </p>
                     </div>
                     <span
                       aria-label="Sort by Last modified descending"
@@ -475,7 +489,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r25r:"
+                              id=":r306:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -520,7 +534,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r25t:"
+                              id=":r308:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -671,30 +685,29 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qa3y6f-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ylasva-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
-                <p
+                <div
                   aria-label="Energy Meters 26"
-                  class="MuiTypography-root MuiTypography-body1 css-pt7v68-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-z2o969-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
                   Energy Meters 26
-                </p>
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yatabr-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mffjsc-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
-                <p
-                  aria-label="02 Jan 2024 13:10"
-                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-z2o969-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
                   02 Jan 2024 13:10
-                </p>
+                </div>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -798,30 +811,29 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qa3y6f-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ylasva-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
-                <p
+                <div
                   aria-label="Energy Meters 27"
-                  class="MuiTypography-root MuiTypography-body1 css-pt7v68-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-z2o969-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
                   Energy Meters 27
-                </p>
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yatabr-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mffjsc-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
-                <p
-                  aria-label="02 Jan 2024 13:10"
-                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-z2o969-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
                   02 Jan 2024 13:10
-                </p>
+                </div>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -925,30 +937,29 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qa3y6f-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ylasva-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
-                <p
+                <div
                   aria-label="Energy Meters 28"
-                  class="MuiTypography-root MuiTypography-body1 css-pt7v68-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-z2o969-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
                   Energy Meters 28
-                </p>
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yatabr-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mffjsc-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
-                <p
-                  aria-label="02 Jan 2024 13:10"
-                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-z2o969-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
                   02 Jan 2024 13:10
-                </p>
+                </div>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -1052,30 +1063,29 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                 </span>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qa3y6f-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ylasva-MuiTableCell-root-MuiTableCell-root"
                 data-index="2"
               >
-                <p
+                <div
                   aria-label="Energy Meters 29"
-                  class="MuiTypography-root MuiTypography-body1 css-pt7v68-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-body1 css-z2o969-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
                   Energy Meters 29
-                </p>
+                </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yatabr-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1mffjsc-MuiTableCell-root-MuiTableCell-root"
                 data-index="3"
               >
-                <p
-                  aria-label="02 Jan 2024 13:10"
-                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-z2o969-MuiTypography-root"
                   data-mui-internal-clone-element="true"
                   role="tooltip"
                 >
                   02 Jan 2024 13:10
-                </p>
+                </div>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -1186,7 +1196,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r25v:"
+                    aria-controls=":r30a:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"
