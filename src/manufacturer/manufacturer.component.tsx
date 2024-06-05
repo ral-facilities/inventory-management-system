@@ -9,6 +9,7 @@ import {
   ListItemText,
   MenuItem,
   Link as MuiLink,
+  TableCellBaseProps,
   TableRow,
   Typography,
 } from '@mui/material';
@@ -23,7 +24,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useManufacturers } from '../api/manufacturers';
 import { Manufacturer } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
-import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
+import {
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
+  TableHeaderOverflowTip,
+  formatDateTimeStrings,
+  getPageHeightCalc,
+} from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
@@ -49,6 +56,7 @@ function ManufacturerComponent() {
     return [
       {
         header: 'Name',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.name,
         id: 'name',
         size: 400,
@@ -65,6 +73,7 @@ function ManufacturerComponent() {
       },
       {
         header: 'Last modified',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
@@ -76,6 +85,7 @@ function ManufacturerComponent() {
       },
       {
         header: 'Created',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.created_time),
         id: 'created_time',
         filterVariant: 'datetime-range',
@@ -87,6 +97,7 @@ function ManufacturerComponent() {
       },
       {
         header: 'URL',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.url ?? '',
         id: 'url',
         size: 500,
@@ -99,6 +110,7 @@ function ManufacturerComponent() {
       },
       {
         header: 'Address',
+        Header: TableHeaderOverflowTip,
         // Stitch together for filtering
         accessorFn: (row) =>
           `${row.address.address_line} ${row.address.town} ${row.address.county} ${row.address.postcode} ${row.address.country}`,
@@ -126,6 +138,7 @@ function ManufacturerComponent() {
       },
       {
         header: 'Telephone number',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.telephone,
         id: 'telephone',
         size: 250,
@@ -193,6 +206,23 @@ function ManufacturerComponent() {
       shape: 'rounded',
       variant: 'outlined',
     },
+
+    muiTableBodyCellProps: ({ column }) =>
+      // Ignore MRT rendered cells e.g. expand , spacer etc
+      column.id.startsWith('mrt')
+        ? {}
+        : {
+            component: (props: TableCellBaseProps) => {
+              return (
+                <TableBodyCellOverFlowTip
+                  {...({
+                    ...props,
+                    columnSize: column.getSize(),
+                  } as TableCellOverFlowTipProps)}
+                />
+              );
+            },
+          },
     // Functions
     ...onPreservedStatesChange,
     renderCreateRowDialogContent: ({ table }) => {
