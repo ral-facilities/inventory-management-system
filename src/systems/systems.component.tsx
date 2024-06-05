@@ -480,7 +480,7 @@ function Systems() {
                       {getTableRowCountText(
                         subsystemsTable.getFilteredRowModel().rows.length,
                         subsystemsData?.length ?? 0,
-                        systemId === null ? 'Systems' : 'Subsytems'
+                        systemId === null ? 'Systems' : 'Subsystems'
                       )}
                     </Typography>
                     <MRT_TablePagination table={subsystemsTable} />
