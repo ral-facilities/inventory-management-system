@@ -15,9 +15,7 @@ import {
 } from '@mui/material';
 import {
   MRT_ColumnDef,
-  MRT_Row,
   MRT_RowSelectionState,
-  MRT_TableInstance,
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
