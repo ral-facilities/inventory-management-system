@@ -286,9 +286,6 @@ function Catalogue() {
     setSelectedCategories([]);
   }, [parentId]);
 
-  console.log(catalogueCategoryData);
-  console.log(parentInfo?.is_leaf);
-  console.log(catalogueCategoryDetailLoading);
   return (
     <Grid container>
       <Grid container>
