@@ -63,7 +63,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
   return (
     <Stack direction={isList ? 'row' : 'column'} spacing={1} padding={1}>
       <TextField
-        id="catalogue-property-name-input"
+        id={`${cip_placement_id}-property-name-input`}
         label="Property Name"
         variant="outlined"
         required={true}
@@ -179,7 +179,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
                   spacing={1}
                 >
                   <TextField
-                    id={`${listValue}-input`}
+                    id={`${listValue.av_placement_id}-list-item-input`}
                     sx={{
                       width: isList ? undefined : '100%',
                       minWidth: isList ? '150px' : undefined,
@@ -333,7 +333,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           />
         ))}
       <Autocomplete
-        id="catalogue-property-unit-input"
+        id={`${cip_placement_id}-propety-unit-input`}
         sx={{
           width: isList ? '200px' : '100%',
           minWidth: isList ? '200px' : undefined,
