@@ -10,11 +10,10 @@ import {
   ListItemText,
   MenuItem,
   Link as MuiLink,
+  TableCellBaseProps,
   Typography,
 } from '@mui/material';
 import {
-  MRT_Cell,
-  MRT_Column,
   MRT_Row,
   MaterialReactTable,
   useMaterialReactTable,
@@ -32,8 +31,10 @@ import {
 } from '../catalogue/items/catalogueItemsTable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
-  OverflowTip,
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
   TableGroupedCell,
+  TableHeaderOverflowTip,
   formatDateTimeStrings,
   getPageHeightCalc,
 } from '../utils';
@@ -117,103 +118,66 @@ export function ItemsTable(props: ItemTableProps) {
     return [
       {
         header: 'Serial Number',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.serial_number ?? 'No serial number',
         id: 'serial_number',
         size: 250,
-        Cell: ({ row, cell }) => (
-          <OverflowTip
-            columnSize={cell.column.getSize()}
-            sx={{ fontSize: 'inherit' }}
-          >
-            <MuiLink
-              underline="hover"
-              component={Link}
-              to={row.original.item.id}
-            >
-              {row.original.item.serial_number ?? 'No serial number'}
-            </MuiLink>
-          </OverflowTip>
+        Cell: ({ row }) => (
+          <MuiLink underline="hover" component={Link} to={row.original.item.id}>
+            {row.original.item.serial_number ?? 'No serial number'}
+          </MuiLink>
         ),
         enableGrouping: false,
       },
 
       {
         header: 'Last modified',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
         size: 350,
-        Cell: ({ row, cell }) =>
-          row.original.item.modified_time && (
-            <OverflowTip
-              columnSize={cell.column.getSize()}
-              sx={{ fontSize: 'inherit' }}
-            >
-              {formatDateTimeStrings(row.original.item.modified_time, true)}
-            </OverflowTip>
-          ),
+        Cell: ({ row }) =>
+          row.original.item.modified_time &&
+          formatDateTimeStrings(row.original.item.modified_time, true),
         enableGrouping: false,
       },
       {
         header: 'Created',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.created_time),
         id: 'created_time',
         filterVariant: 'datetime-range',
         size: 350,
-        Cell: ({ row, cell }) => (
-          <OverflowTip
-            columnSize={cell.column.getSize()}
-            sx={{ fontSize: 'inherit' }}
-          >
-            {formatDateTimeStrings(row.original.item.created_time, true)}
-          </OverflowTip>
-        ),
+        Cell: ({ row }) =>
+          formatDateTimeStrings(row.original.item.created_time, true),
         enableGrouping: false,
       },
 
       {
         header: 'Asset Number',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.asset_number,
         id: 'asset_number',
         size: 250,
-        Cell: ({ renderedCellValue, cell }) => (
-          <OverflowTip
-            columnSize={cell.column.getSize()}
-            sx={{ fontSize: 'inherit' }}
-          >
-            {renderedCellValue}
-          </OverflowTip>
-        ),
       },
       {
         header: 'Purchase Order Number',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.purchase_order_number,
         id: 'purchase_order_number',
         size: 350,
-        Cell: ({ renderedCellValue, cell }) => (
-          <OverflowTip
-            columnSize={cell.column.getSize()}
-            sx={{ fontSize: 'inherit' }}
-          >
-            {renderedCellValue}
-          </OverflowTip>
-        ),
       },
       {
         header: 'Warranty End Date',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.warranty_end_date ?? ''),
         id: 'warranty_end_date',
         filterVariant: 'date-range',
         size: 350,
-        Cell: ({ row, cell }) => (
-          <OverflowTip
-            columnSize={cell.column.getSize()}
-            sx={{ fontSize: 'inherit', marginRight: 0.5 }}
-          >
-            {row.original.item.warranty_end_date &&
-              formatDateTimeStrings(row.original.item.warranty_end_date, false)}
-          </OverflowTip>
-        ),
+        Cell: ({ row }) =>
+          row.original.item.warranty_end_date &&
+          formatDateTimeStrings(row.original.item.warranty_end_date, false),
         GroupedCell: (props) =>
           TableGroupedCell({
             ...props,
@@ -222,19 +186,14 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'Delivered Date',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.delivered_date ?? ''),
         id: 'delivered_date',
         filterVariant: 'date-range',
         size: 350,
-        Cell: ({ row, cell }) => (
-          <OverflowTip
-            columnSize={cell.column.getSize()}
-            sx={{ fontSize: 'inherit', marginRight: 0.5 }}
-          >
-            {row.original.item.delivered_date &&
-              formatDateTimeStrings(row.original.item.delivered_date, false)}
-          </OverflowTip>
-        ),
+        Cell: ({ row }) =>
+          row.original.item.delivered_date &&
+          formatDateTimeStrings(row.original.item.delivered_date, false),
         GroupedCell: (props) =>
           TableGroupedCell({
             ...props,
@@ -243,6 +202,7 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'Is Defective',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
         id: 'is_defective',
         size: 200,
@@ -250,69 +210,43 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'Usage Status',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.usage_status,
         id: 'usage_status',
         size: 200,
         filterVariant: 'select',
-        Cell: ({ renderedCellValue, cell }) => (
-          <OverflowTip
-            columnSize={cell.column.getSize()}
-            sx={{ fontSize: 'inherit' }}
-          >
-            {renderedCellValue}
-          </OverflowTip>
-        ),
       },
       {
         header: 'System',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.system?.name ?? '',
         getGroupingValue: (row) => row.system?.id ?? '',
         id: 'system.name',
         size: 250,
-        Cell: ({ row, cell }) => (
-          <OverflowTip
-            columnSize={cell.column.getSize()}
-            sx={{ fontSize: 'inherit' }}
+        Cell: ({ row }) => (
+          <MuiLink
+            underline="hover"
+            component={Link}
+            to={'/systems/' + row.original.system?.id}
+            // For ensuring space when grouping
+            sx={{ marginRight: 0.5 }}
           >
-            <MuiLink
-              underline="hover"
-              component={Link}
-              to={'/systems/' + row.original.system?.id}
-              // For ensuring space when grouping
-              sx={{ marginRight: 0.5 }}
-            >
-              {row.original.system?.name}
-            </MuiLink>
-          </OverflowTip>
+            {row.original.system?.name}
+          </MuiLink>
         ),
       },
       {
         header: 'Notes',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.notes ?? '',
         id: 'notes',
         size: 250,
-        Cell: ({ row, cell }) =>
-          row.original.item.notes && (
-            <OverflowTip
-              columnSize={cell.column.getSize()}
-              sx={{ fontSize: 'inherit' }}
-            >
-              {row.original.item.notes}
-            </OverflowTip>
-          ),
         enableGrouping: false,
       },
 
       ...viewCatalogueItemProperties.map((property) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
-        Header: ({ column }: { column: MRT_Column<TableRowData, unknown> }) => (
-          <OverflowTip
-            columnSize={column.getSize()}
-            sx={{ fontSize: 'inherit', fontWeight: 'inherit' }}
-          >
-            {column.columnDef.header}
-          </OverflowTip>
-        ),
+        Header: TableHeaderOverflowTip,
         id: `row.catalogueItem.properties.${property.id}`,
         accessorFn: (row: TableRowData) => {
           if (property.type === 'boolean') {
@@ -342,13 +276,7 @@ export function ItemsTable(props: ItemTableProps) {
             property.type as 'string' | 'boolean' | 'number' | 'null'
           ],
 
-        Cell: ({
-          row,
-          cell,
-        }: {
-          row: MRT_Row<TableRowData>;
-          cell: MRT_Cell<TableRowData, unknown>;
-        }) => {
+        Cell: ({ row }: { row: MRT_Row<TableRowData> }) => {
           if (
             typeof findPropertyValue(
               row.original.item.properties,
@@ -374,14 +302,7 @@ export function ItemsTable(props: ItemTableProps) {
               ? 'Yes'
               : 'No';
           } else {
-            return (
-              <OverflowTip
-                sx={{ fontSize: 'inherit' }}
-                columnSize={cell.column.getSize()}
-              >
-                {findPropertyValue(row.original.item.properties, property.id)}
-              </OverflowTip>
-            );
+            return findPropertyValue(row.original.item.properties, property.id);
           }
         },
       })),
@@ -462,6 +383,28 @@ export function ItemsTable(props: ItemTableProps) {
       // @ts-expect-error: MRT Table Container props does not have data-testid
       'data-testid': 'items-table-container',
     },
+    muiTableBodyCellProps: ({ column }) =>
+      // The overflow of these column groups is done manually in the column definition
+      ((column.id === 'warranty_end_date' || column.id === 'delivered_date') &&
+        column.getIsGrouped()) ||
+      // Ignore MRT rendered cells e.g. expand , spacer etc
+      column.id.startsWith('mrt')
+        ? {}
+        : {
+            component: (props: TableCellBaseProps) => {
+              return (
+                <TableBodyCellOverFlowTip
+                  {...({
+                    ...props,
+                    columnSize: column.getSize(),
+                    overFlowTipSx: {
+                      width: dense ? '25vw' : undefined,
+                    },
+                  } as TableCellOverFlowTipProps)}
+                />
+              );
+            },
+          },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',

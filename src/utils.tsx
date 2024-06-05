@@ -10,6 +10,7 @@ import { format, parseISO } from 'date-fns';
 import {
   MRT_Cell,
   MRT_Column,
+  MRT_Header,
   MRT_Row,
   MRT_RowData,
   MRT_TableInstance,
@@ -230,21 +231,25 @@ export const TableBodyCellOverFlowTip: React.FC<TableCellOverFlowTipProps> = (
   );
 };
 
-interface MRTHeaderProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  column: MRT_Column<any, unknown>;
+interface MRTHeaderProps<TData extends MRT_RowData> {
+  column: MRT_Column<TData, unknown>;
+  header: MRT_Header<TData>;
+  table: MRT_TableInstance<TData>;
 }
 
-export const TableHeaderOverflowTip: React.FC<MRTHeaderProps> = ({
-  column,
-}) => (
-  <OverflowTip
-    columnSize={column.getSize()}
-    sx={{ fontSize: 'inherit', fontWeight: 'inherit' }}
-  >
-    {column.columnDef.header}
-  </OverflowTip>
-);
+export const TableHeaderOverflowTip = <TData extends MRT_RowData>(
+  props: MRTHeaderProps<TData>
+) => {
+  const { column } = props;
+  return (
+    <OverflowTip
+      columnSize={column.getSize()}
+      sx={{ fontSize: 'inherit', fontWeight: 'inherit' }}
+    >
+      {column.columnDef.header}
+    </OverflowTip>
+  );
+};
 
 interface MRTGroupedCellProps<TData extends MRT_RowData> {
   row: MRT_Row<TData>;
