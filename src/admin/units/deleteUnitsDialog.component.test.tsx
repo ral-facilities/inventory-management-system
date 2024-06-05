@@ -1,30 +1,27 @@
 import { RenderResult } from '@testing-library/react';
-import { UsageStatus } from '../../app.types';
+import { Unit } from '../../app.types';
+import { DeleteUnitProps } from './deleteUnitsDialog.component';
+import DeleteUnitDialog from './deleteUnitsDialog.component';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { screen, waitFor } from '@testing-library/react';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import DeleteUsageStatusDialog, {
-  DeleteUsageStatusProps,
-} from './deleteUsageStatusDialog.component';
 import { server } from '../../mocks/server';
 import { http } from 'msw';
 
 vi.mock('../../handleIMS_APIError');
 
-describe('Delete Usage status dialog', () => {
-  let props: DeleteUsageStatusProps;
+describe('delete Unit dialog', () => {
+  let props: DeleteUnitProps;
   let user: UserEvent;
   const onClose = vi.fn();
-  let usageStatus: UsageStatus;
+  let unit: Unit;
   const createView = (): RenderResult => {
-    return renderComponentWithRouterProvider(
-      <DeleteUsageStatusDialog {...props} />
-    );
+    return renderComponentWithRouterProvider(<DeleteUnitDialog {...props} />);
   };
 
   beforeEach(() => {
-    (usageStatus = {
+    (unit = {
       id: '1',
       value: 'test',
       created_time: '2024-01-01T12:00:00.000+00:00',
@@ -33,7 +30,7 @@ describe('Delete Usage status dialog', () => {
       (props = {
         open: true,
         onClose: onClose,
-        usageStatus: usageStatus,
+        unit: unit,
       });
     user = userEvent.setup();
   });
@@ -45,7 +42,7 @@ describe('Delete Usage status dialog', () => {
   it('displays warning message when session data is not loaded', async () => {
     props = {
       ...props,
-      usageStatus: undefined,
+      unit: undefined,
     };
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
@@ -59,7 +56,7 @@ describe('Delete Usage status dialog', () => {
 
   it('disables continue button and shows circular progress indicator when request is pending', async () => {
     server.use(
-      http.delete('/v1/usage-statuses/:id', () => {
+      http.delete('/v1/units/:id', () => {
         return new Promise(() => {});
       })
     );
@@ -72,7 +69,7 @@ describe('Delete Usage status dialog', () => {
     expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
-  it('calls handleDeleteUsageStatus when the continue button is clicked and the usage status is not currently used by one or more items ', async () => {
+  it('calls handleDeleteSession when continue button is clicked', async () => {
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
@@ -82,8 +79,8 @@ describe('Delete Usage status dialog', () => {
     });
   });
 
-  it('displays error message when user tries to delete a usage status that is in an Item', async () => {
-    usageStatus.id = '2';
+  it('displays error message when user tries to delete a unit that is in a Catalogue category', async () => {
+    unit.id = '2';
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
@@ -91,14 +88,14 @@ describe('Delete Usage status dialog', () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          'This usage status is currently used by one or more items. Remove all uses before deleting it here.'
+          'This unit is currently used by one or more catalogue categories. Remove all uses before deleting it here.'
         )
       ).toBeInTheDocument();
     });
   });
 
   it('displays error message if an unknown error occurs', async () => {
-    usageStatus.id = '1190';
+    unit.id = '1190';
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);

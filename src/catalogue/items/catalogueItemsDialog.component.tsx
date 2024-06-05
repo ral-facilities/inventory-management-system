@@ -3,6 +3,7 @@ import AddIcon from '@mui/icons-material/Add';
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -1100,6 +1101,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               type === 'edit' ? handleEditCatalogueItem : handleAddCatalogueItem
             }
             sx={{ mr: 3 }}
+            endIcon={
+              isAddPending || isEditPending ? (
+                <CircularProgress size={16} />
+              ) : null
+            }
           >
             Finish
           </Button>

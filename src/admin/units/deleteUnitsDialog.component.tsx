@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
-import { ErrorParsing, UsageStatus } from '../../app.types';
+import { useDeleteUnit } from '../../api/units';
+import { ErrorParsing, Unit } from '../../app.types';
 import React from 'react';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import {
@@ -13,32 +14,31 @@ import {
   CircularProgress,
 } from '@mui/material';
 import WarningIcon from '@mui/icons-material/Warning';
-import { useDeleteUsageStatus } from '../../api/usageStatuses';
 
-export interface DeleteUsageStatusProps {
+export interface DeleteUnitProps {
   open: boolean;
   onClose: () => void;
-  usageStatus: UsageStatus | undefined;
+  unit: Unit | undefined;
 }
 
-const DeleteUsageStatusDialog = (props: DeleteUsageStatusProps) => {
-  const { open, onClose, usageStatus } = props;
+const DeleteUnitDialog = (props: DeleteUnitProps) => {
+  const { open, onClose, unit } = props;
 
   const [formError, setFormError] = React.useState<string | undefined>(
     undefined
   );
 
-  const { mutateAsync: deleteUsageStatus, isPending: isDeletePending } =
-    useDeleteUsageStatus();
+  const { mutateAsync: deleteUnit, isPending: isDeletePending } =
+    useDeleteUnit();
 
   const handleClose = React.useCallback(() => {
     setFormError(undefined);
     onClose();
   }, [onClose]);
 
-  const handleDeleteUsageStatus = React.useCallback(() => {
-    if (usageStatus) {
-      deleteUsageStatus(usageStatus.id)
+  const handleDeleteUnit = React.useCallback(() => {
+    if (unit) {
+      deleteUnit(unit.id)
         .then(() => {
           onClose();
         })
@@ -46,7 +46,7 @@ const DeleteUsageStatusDialog = (props: DeleteUsageStatusProps) => {
           const response = error.response?.data as ErrorParsing;
           if (response && error.response?.status === 409) {
             setFormError(
-              `This usage status is currently used by one or more items. Remove all uses before deleting it here.`
+              `This unit is currently used by one or more catalogue categories. Remove all uses before deleting it here.`
             );
             return;
           }
@@ -55,25 +55,22 @@ const DeleteUsageStatusDialog = (props: DeleteUsageStatusProps) => {
     } else {
       setFormError('No data provided. Please refresh and try again');
     }
-  }, [deleteUsageStatus, onClose, usageStatus]);
+  }, [deleteUnit, onClose, unit]);
 
   return (
     <Dialog open={open} maxWidth="lg">
       <DialogTitle sx={{ display: 'inline-flex', alignItems: 'center' }}>
         <WarningIcon sx={{ marginRight: 1 }} />
-        Delete Usage Status
+        Delete Unit
       </DialogTitle>
       <DialogContent>
         Are you sure you want to permanently delete{' '}
-        <strong data-testid="delete-usage-status-value">
-          {usageStatus?.value}
-        </strong>
-        ?
+        <strong data-testid="delete-unit-value">{unit?.value}</strong>?
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
         <Button
-          onClick={handleDeleteUsageStatus}
+          onClick={handleDeleteUnit}
           disabled={isDeletePending || formError != undefined}
           endIcon={isDeletePending ? <CircularProgress size={20} /> : null}
         >
@@ -99,4 +96,4 @@ const DeleteUsageStatusDialog = (props: DeleteUsageStatusProps) => {
   );
 };
 
-export default DeleteUsageStatusDialog;
+export default DeleteUnitDialog;

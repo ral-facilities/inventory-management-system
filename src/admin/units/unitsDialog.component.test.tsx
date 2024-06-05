@@ -1,21 +1,19 @@
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../../api/api';
 import { renderComponentWithRouterProvider } from '../../testUtils';
-
+import { UnitsDialogProps } from './unitsDialog.component';
+import UnitsDialog from './unitsDialog.component';
 import { fireEvent, screen } from '@testing-library/react';
-import UsageStatusDialog, {
-  UsageStatusDialogProps,
-} from './usageStatusDialog.component';
 import { server } from '../../mocks/server';
 import { http } from 'msw';
 
-describe('Usage status dialog', () => {
-  let props: UsageStatusDialogProps;
+describe('Units dialog', () => {
+  let props: UnitsDialogProps;
   let user: UserEvent;
   let axiosPostSpy;
   const onClose = vi.fn();
   const createView = () => {
-    return renderComponentWithRouterProvider(<UsageStatusDialog {...props} />);
+    return renderComponentWithRouterProvider(<UnitsDialog {...props} />);
   };
 
   beforeEach(() => {
@@ -35,7 +33,7 @@ describe('Usage status dialog', () => {
     expect(screen.getByText('Cancel')).toBeInTheDocument();
   });
 
-  it('displays errors correctly', async () => {
+  it('shows errors correctly', async () => {
     createView();
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
@@ -50,7 +48,7 @@ describe('Usage status dialog', () => {
 
     await user.click(saveButton);
     const helperText = screen.getByText(
-      'A usage status with the same value already exists'
+      'A unit with the same value already exists'
     );
     expect(helperText).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
@@ -58,7 +56,7 @@ describe('Usage status dialog', () => {
 
   it('disables save button and shows circular progress indicator when request is pending', async () => {
     server.use(
-      http.post('/v1/usage-statuses', () => {
+      http.post('/v1/units', () => {
         return new Promise(() => {});
       })
     );
@@ -76,7 +74,7 @@ describe('Usage status dialog', () => {
     expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
-  it('adds a usage status', async () => {
+  it('adds a unit', async () => {
     createView();
 
     fireEvent.change(screen.getByLabelText('Value *'), {
@@ -86,7 +84,7 @@ describe('Usage status dialog', () => {
     const saveButton = screen.getByRole('button', { name: 'Save' });
     await user.click(saveButton);
 
-    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/usage-statuses', {
+    expect(axiosPostSpy).toHaveBeenCalledWith('/v1/units', {
       value: 'test',
     });
     expect(onClose).toHaveBeenCalled();

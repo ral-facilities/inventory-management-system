@@ -12,6 +12,8 @@ import ItemDialog, {
   ItemDialogProps,
   isValidDateTime,
 } from './itemDialog.component';
+import { server } from '../mocks/server';
+import { http } from 'msw';
 
 vi.mock('../handleIMS_APIError');
 
@@ -200,6 +202,34 @@ describe('ItemDialog', () => {
 
     beforeEach(() => {
       axiosPostSpy = vi.spyOn(imsApi, 'post');
+    });
+
+    it('disables finish button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.post('/v1/items', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      createView();
+
+      await modifyDetailsValues({
+        usageStatus: 'Used',
+      });
+
+      //navigate through stepper
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      await modifySystemValue({
+        system: 'Giant laser',
+      });
+
+      const finishButton = screen.getByRole('button', { name: 'Finish' });
+      await user.click(finishButton);
+
+      expect(finishButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
     it('displays no item properties message', async () => {
@@ -921,6 +951,30 @@ describe('ItemDialog', () => {
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
       props.selectedItem = getItemById('G463gOIA');
       props.type = 'edit';
+    });
+
+    it('disables finish button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.patch('/v1/items/:id', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      createView();
+
+      await modifyDetailsValues({
+        serialNumber: 'test12',
+      });
+
+      //navigate through stepper
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      const finishButton = screen.getByRole('button', { name: 'Finish' });
+      await user.click(finishButton);
+
+      expect(finishButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
     it('edit an item (all input values)', async () => {

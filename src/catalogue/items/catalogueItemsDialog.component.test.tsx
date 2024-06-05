@@ -17,6 +17,8 @@ import CatalogueItemsDialog, {
 
 import { imsApi } from '../../api/api';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { server } from '../../mocks/server';
+import { http } from 'msw';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -176,6 +178,41 @@ describe('Catalogue Items Dialog', () => {
 
     await user.click(screen.getByText('Add catalogue item properties'));
     expect(baseElement).toMatchSnapshot();
+  });
+
+  it('disables finish button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.post('/v1/catalogue-items', () => {
+        return new Promise(() => {});
+      })
+    );
+    props = {
+      ...props,
+      parentInfo: getCatalogueCategoryById('4'),
+    };
+
+    createView();
+
+    await modifyValues({
+      costGbp: '200',
+      daysToReplace: '5',
+      name: 'test',
+      manufacturer: 'Man{arrowdown}{enter}',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+
+    await modifyValues({
+      resolution: '12',
+      sensorType: 'IO',
+      broken: 'True',
+    });
+
+    const finishButton = screen.getByRole('button', { name: 'Finish' });
+    await user.click(finishButton);
+
+    expect(finishButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
   it('adds a catalogue item', async () => {
@@ -640,6 +677,33 @@ describe('Catalogue Items Dialog', () => {
       };
 
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
+    });
+
+    it('disables finish button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.patch('/v1/catalogue-items/:id', () => {
+          return new Promise(() => {});
+        })
+      );
+      props = {
+        ...props,
+        parentInfo: getCatalogueCategoryById('4'),
+        selectedCatalogueItem: getCatalogueItemById('1'),
+      };
+
+      createView();
+
+      await modifyValues({
+        name: 'update',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      const finishButton = screen.getByRole('button', { name: 'Finish' });
+      await user.click(finishButton);
+
+      expect(finishButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
     it('Edit a catalogue item (catalogue detail)', async () => {

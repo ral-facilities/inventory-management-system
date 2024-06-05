@@ -11,6 +11,8 @@ import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
 import { resetUniqueIdCounter } from '../../utils';
+import { server } from '../../mocks/server';
+import { http } from 'msw';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -20,6 +22,10 @@ describe('Catalogue Category Dialog', () => {
   let props: CatalogueCategoryDialogProps;
   let user: UserEvent;
 
+  interface TestAddCatalogueCategoryProperty
+    extends AddCatalogueCategoryProperty {
+    unit?: string;
+  }
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CatalogueCategoryDialog {...props} />
@@ -30,7 +36,7 @@ describe('Catalogue Category Dialog', () => {
   const modifyValues = async (values: {
     name?: string;
     // New fields to add (if any)
-    newFormFields?: AddCatalogueCategoryProperty[];
+    newFormFields?: TestAddCatalogueCategoryProperty[];
   }) => {
     values.name !== undefined &&
       fireEvent.change(screen.getByLabelText('Name *'), {
@@ -183,6 +189,24 @@ describe('Catalogue Category Dialog', () => {
       expect(screen.getByText('Cancel')).toBeInTheDocument();
     });
 
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.post('/v1/catalogue-categories', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      createView();
+
+      await modifyValues({ name: 'test' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
+    });
+
     it('displays warning message when name field is not defined', async () => {
       createView();
 
@@ -311,7 +335,7 @@ describe('Catalogue Category Dialog', () => {
             mandatory: true,
             name: 'radius',
             type: 'number',
-            unit: 'millimeters',
+            unit_id: '5',
           },
         ],
         is_leaf: true,
@@ -350,7 +374,7 @@ describe('Catalogue Category Dialog', () => {
             mandatory: true,
             name: 'radius',
             type: 'number',
-            unit: 'millimeters',
+            unit_id: '5',
           },
         ],
         is_leaf: true,
@@ -389,7 +413,7 @@ describe('Catalogue Category Dialog', () => {
             mandatory: true,
             name: 'radius',
             type: 'string',
-            unit: 'millimeters',
+            unit_id: '5',
           },
         ],
         is_leaf: true,
@@ -724,6 +748,29 @@ describe('Catalogue Category Dialog', () => {
 
     afterEach(() => {
       vi.clearAllMocks();
+    });
+
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.patch('/v1/catalogue-categories/:id', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      props.selectedCatalogueCategory = {
+        ...mockData,
+        id: '4',
+      };
+
+      createView();
+
+      await modifyValues({ name: 'update' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
     it('displays warning message when name field is not defined', async () => {

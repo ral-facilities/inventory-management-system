@@ -1,5 +1,6 @@
 import React from 'react';
-import { AddUsageStatus } from '../../app.types';
+import { useAddUnit } from '../../api/units';
+import { AddUnit } from '../../app.types';
 import { trimStringValues } from '../../utils';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { AxiosError } from 'axios';
@@ -14,67 +15,64 @@ import {
   Grid,
   TextField,
 } from '@mui/material';
-import { useAddUsageStatus } from '../../api/usageStatuses';
 
-export interface UsageStatusDialogProps {
+export interface UnitsDialogProps {
   open: boolean;
   onClose: () => void;
 }
 
-function UsageStatusDialog(props: UsageStatusDialogProps) {
+function UnitsDialog(props: UnitsDialogProps) {
   const { open, onClose } = props;
 
-  const [usageStatusDetails, setUsageStatusDetails] = React.useState<
-    AddUsageStatus | undefined
-  >(undefined);
+  const [unitDetails, setUnitDetails] = React.useState<AddUnit>({
+    value: '',
+  });
 
   const [valueError, setValueError] = React.useState<string | undefined>(
     undefined
   );
 
-  const { mutateAsync: addUsageStatus, isPending: isAddPending } =
-    useAddUsageStatus();
+  const { mutateAsync: addUnit, isPending: isAddPending } = useAddUnit();
 
   const handleClose = React.useCallback(() => {
-    setUsageStatusDetails(undefined);
+    setUnitDetails({
+      value: '',
+    });
     setValueError(undefined);
     onClose();
   }, [onClose]);
 
   const handleErrors = React.useCallback((): boolean => {
     let hasErrors = false;
-    if (
-      !usageStatusDetails?.value ||
-      usageStatusDetails?.value.trim().length === 0
-    ) {
+    if (!unitDetails.value || unitDetails.value.trim().length === 0) {
       hasErrors = true;
       setValueError('Please enter a value');
     }
 
     return hasErrors;
-  }, [usageStatusDetails]);
+  }, [unitDetails]);
 
-  const handleAddUsageStatus = React.useCallback(() => {
+  const handleAddUnit = React.useCallback(() => {
     const hasErrors = handleErrors();
 
     if (hasErrors) {
       return;
     }
 
-    addUsageStatus(trimStringValues(usageStatusDetails))
+    addUnit(trimStringValues(unitDetails))
       .then(() => handleClose())
       .catch((error: AxiosError) => {
         if (error.response?.status === 409) {
-          setValueError('A usage status with the same value already exists');
+          setValueError('A unit with the same value already exists');
           return;
         }
         handleIMS_APIError(error);
       });
-  }, [handleErrors, addUsageStatus, usageStatusDetails, handleClose]);
+  }, [handleErrors, unitDetails, addUnit, handleClose]);
 
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
-      <DialogTitle>Add Usage Status</DialogTitle>
+      <DialogTitle>Add Unit</DialogTitle>
       <DialogContent>
         <Grid container direction="column" spacing={1}>
           <Grid item sx={{ mt: 1 }}>
@@ -82,9 +80,9 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
               label="Value"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }}
-              value={usageStatusDetails?.value ?? ''}
+              value={unitDetails.value ?? ''}
               onChange={(event) => {
-                setUsageStatusDetails({ value: event.target.value });
+                setUnitDetails({ value: event.target.value });
                 setValueError(undefined);
               }}
               error={valueError !== undefined}
@@ -116,7 +114,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={handleAddUsageStatus}
+            onClick={handleAddUnit}
             disabled={isAddPending || valueError !== undefined}
             endIcon={isAddPending ? <CircularProgress size={20} /> : null}
           >
@@ -128,4 +126,4 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
   );
 }
 
-export default UsageStatusDialog;
+export default UnitsDialog;

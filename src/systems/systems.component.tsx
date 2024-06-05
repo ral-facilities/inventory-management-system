@@ -155,6 +155,18 @@ const CopySystemsButton = (props: {
   );
 };
 
+const getTableCountText = (
+  numRowsDisplayed: number,
+  numSystems: number,
+  isRoot: boolean
+) => {
+  const systemsText = isRoot ? 'Systems' : 'Subsystems';
+  if (numRowsDisplayed === numSystems)
+    return `Total ${systemsText}: ${numSystems}`;
+  else
+    return `Returned ${numRowsDisplayed} out of ${numSystems} ${systemsText}`;
+};
+
 type MenuDialogType = SystemDialogType | 'delete';
 
 const columns: MRT_ColumnDef<System>[] = [
@@ -472,10 +484,11 @@ function Systems() {
                         textAlign: { sm: 'center', md: 'left' },
                       }}
                     >
-                      {subsystemsTable.getFilteredRowModel().rows.length ==
-                      subsystemsData?.length
-                        ? `Total Systems: ${subsystemsData.length}`
-                        : `Returned ${subsystemsTable.getFilteredRowModel().rows.length} out of ${subsystemsData?.length} Systems`}
+                      {getTableCountText(
+                        subsystemsTable.getFilteredRowModel().rows.length,
+                        subsystemsData?.length ?? 0,
+                        systemId === null
+                      )}
                     </Typography>
                     <MRT_TablePagination table={subsystemsTable} />
                   </Box>

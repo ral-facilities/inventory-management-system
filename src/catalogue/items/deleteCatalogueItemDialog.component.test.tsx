@@ -11,6 +11,8 @@ import { renderComponentWithRouterProvider } from '../../testUtils';
 import DeleteCatalogueItemDialog, {
   DeleteCatalogueItemDialogProps,
 } from './deleteCatalogueItemDialog.component';
+import { server } from '../../mocks/server';
+import { http } from 'msw';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -52,6 +54,22 @@ describe('delete Catalogue Category dialogue', () => {
     expect(
       screen.getByTestId('delete-catalogue-category-name')
     ).toHaveTextContent('test');
+  });
+
+  it('disables continue button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.delete('/v1/catalogue-items/:id', () => {
+        return new Promise(() => {});
+      })
+    );
+
+    createView();
+
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    expect(continueButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
   it('calls onClose when Close button is clicked', async () => {
@@ -96,7 +114,7 @@ describe('delete Catalogue Category dialogue', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
-  it('calls handleDeleteSession when continue button is clicked with a valid session name', async () => {
+  it('calls handleDeleteSession when continue button is clicked', async () => {
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
