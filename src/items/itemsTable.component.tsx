@@ -409,7 +409,7 @@ export function ItemsTable(props: ItemTableProps) {
                     ...row.original.item,
                     notes:
                       itemDialogType === 'save as'
-                        ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this ID: ${row.original.item.id}`
+                        ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this Serial Number: ${row.original.item.serial_number ?? 'No serial number'}`
                         : row.original.item.notes,
                   }
             }
