@@ -120,7 +120,7 @@ export function ItemsTable(props: ItemTableProps) {
         header: 'Serial Number',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.serial_number ?? 'No serial number',
-        id: 'serial_number',
+        id: 'item.serial_number',
         size: 250,
         Cell: ({ row }) => (
           <MuiLink underline="hover" component={Link} to={row.original.item.id}>
@@ -134,7 +134,7 @@ export function ItemsTable(props: ItemTableProps) {
         header: 'Last modified',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.modified_time),
-        id: 'modified_time',
+        id: 'item.modified_time',
         filterVariant: 'datetime-range',
         size: 350,
         Cell: ({ row }) =>
@@ -146,7 +146,7 @@ export function ItemsTable(props: ItemTableProps) {
         header: 'Created',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.created_time),
-        id: 'created_time',
+        id: 'item.created_time',
         filterVariant: 'datetime-range',
         size: 350,
         Cell: ({ row }) =>
@@ -158,21 +158,21 @@ export function ItemsTable(props: ItemTableProps) {
         header: 'Asset Number',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.asset_number,
-        id: 'asset_number',
+        id: 'item.asset_number',
         size: 250,
       },
       {
         header: 'Purchase Order Number',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.purchase_order_number,
-        id: 'purchase_order_number',
+        id: 'item.purchase_order_number',
         size: 350,
       },
       {
         header: 'Warranty End Date',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.warranty_end_date ?? ''),
-        id: 'warranty_end_date',
+        id: 'item.warranty_end_date',
         filterVariant: 'date-range',
         size: 350,
         Cell: ({ row }) =>
@@ -182,13 +182,14 @@ export function ItemsTable(props: ItemTableProps) {
           TableGroupedCell({
             ...props,
             emptyCellPlaceholderText: 'No warranty end date',
+            type: 'Date',
           }),
       },
       {
         header: 'Delivered Date',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.delivered_date ?? ''),
-        id: 'delivered_date',
+        id: 'item.delivered_date',
         filterVariant: 'date-range',
         size: 350,
         Cell: ({ row }) =>
@@ -198,13 +199,14 @@ export function ItemsTable(props: ItemTableProps) {
           TableGroupedCell({
             ...props,
             emptyCellPlaceholderText: 'No delivered date',
+            type: 'Date',
           }),
       },
       {
         header: 'Is Defective',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
-        id: 'is_defective',
+        id: 'item.is_defective',
         size: 200,
         filterVariant: 'select',
       },
@@ -212,7 +214,7 @@ export function ItemsTable(props: ItemTableProps) {
         header: 'Usage Status',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.usage_status,
-        id: 'usage_status',
+        id: 'item.usage_status',
         size: 200,
         filterVariant: 'select',
       },
@@ -239,7 +241,7 @@ export function ItemsTable(props: ItemTableProps) {
         header: 'Notes',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.notes ?? '',
-        id: 'notes',
+        id: 'item.notes',
         size: 250,
         enableGrouping: false,
       },
@@ -247,7 +249,7 @@ export function ItemsTable(props: ItemTableProps) {
       ...viewCatalogueItemProperties.map((property) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
         Header: TableHeaderOverflowTip,
-        id: `row.catalogueItem.properties.${property.id}`,
+        id: `item.properties.${property.id}`,
         accessorFn: (row: TableRowData) => {
           if (property.type === 'boolean') {
             return (findPropertyValue(
@@ -385,7 +387,8 @@ export function ItemsTable(props: ItemTableProps) {
     },
     muiTableBodyCellProps: ({ column }) =>
       // The overflow of these column groups is done manually in the column definition
-      ((column.id === 'warranty_end_date' || column.id === 'delivered_date') &&
+      ((column.id === 'item.warranty_end_date' ||
+        column.id === 'item.delivered_date') &&
         column.getIsGrouped()) ||
       // Ignore MRT rendered cells e.g. expand , spacer etc
       column.id.startsWith('mrt')
@@ -436,7 +439,7 @@ export function ItemsTable(props: ItemTableProps) {
                     ...row.original.item,
                     notes:
                       itemDialogType === 'save as'
-                        ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this ID: ${row.original.item.id}`
+                        ? `${row.original.item.notes || ''}\n\nThis is a copy of the item with this Serial Number: ${row.original.item.serial_number ?? 'No serial number'}`
                         : row.original.item.notes,
                   }
             }

@@ -338,6 +338,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
           TableGroupedCell({
             ...props,
             emptyCellPlaceholderText: 'No delivered date',
+            type: 'Date',
           }),
       },
       {

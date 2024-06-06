@@ -102,14 +102,14 @@ describe('Items Table', () => {
     // Get the table element (assuming it has a specific class or role)
     const table = screen.getByTestId('items-table-container');
 
-    fireEvent.scroll(table, { target: { scrollLeft: 300 } });
+    fireEvent.scroll(table, { target: { scrollLeft: 500 } });
 
     // Check if the delivered date cell is visible after scrolling
     expect(await screen.findByText(deliveredDate)).toBeInTheDocument();
 
     // Delivered date column action button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[5]
+      screen.getAllByRole('button', { name: 'Column Actions' })[6]
     );
 
     await user.click(await screen.findByText('Group by Delivered Date'));
@@ -133,19 +133,19 @@ describe('Items Table', () => {
     // Get the table element (assuming it has a specific class or role)
     const table = screen.getByTestId('items-table-container');
 
-    fireEvent.scroll(table, { target: { scrollLeft: 200 } });
+    fireEvent.scroll(table, { target: { scrollLeft: 300 } });
 
     // Check if the warranty end date cell is visible after scrolling
     expect(await screen.findByText(warrantyEndDate)).toBeInTheDocument();
 
     // Warranty end dat column actions button
     await user.click(
-      screen.getAllByRole('button', { name: 'Column Actions' })[4]
+      screen.getAllByRole('button', { name: 'Column Actions' })[5]
     );
 
     await user.click(await screen.findByText('Group by Warranty End Date'));
 
-    fireEvent.scroll(table, { target: { scrollLeft: 200 } });
+    fireEvent.scroll(table, { target: { scrollLeft: 300 } });
 
     // Check if the warranty end date grouped cell is visible after scrolling
     expect(
@@ -323,7 +323,7 @@ describe('Items Table', () => {
     });
 
     expect(screen.getByLabelText('Notes')).toHaveValue(
-      '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this ID: KvT2Ox7n'
+      '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z'
     );
   });
 
@@ -351,7 +351,35 @@ describe('Items Table', () => {
     });
 
     expect(screen.getByLabelText('Notes')).toHaveValue(
-      '\n\nThis is a copy of the item with this ID: 3lmRHP8q'
+      '\n\nThis is a copy of the item with this Serial Number: RncNJlDk1pXC'
+    );
+  });
+
+  it('can open the save as dialog and checks that the notes have been updated with no serial number', async () => {
+    props.catalogueCategory = getCatalogueCategoryById('4');
+    props.catalogueItem = getCatalogueItemById('32');
+    createView();
+
+    const serialNumber = 'No serial number';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[3]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Save as')).toBeInTheDocument();
+    });
+
+    const saveAsButton = screen.getByText('Save as');
+    await user.click(saveAsButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    expect(screen.getByLabelText('Notes')).toHaveValue(
+      'MJuSPgXEiXmBbf1Vlq4B\n\nThis is a copy of the item with this Serial Number: No serial number'
     );
   });
 

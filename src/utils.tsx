@@ -258,17 +258,27 @@ interface MRTGroupedCellProps<TData extends MRT_RowData> {
   column: MRT_Column<TData, unknown>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getNestedProperty(obj: any, path: string): any {
+  return path
+    .split('.')
+    .reduce((o, p) => (o && o[p] !== undefined ? o[p] : undefined), obj);
+}
+
 interface ModifiedMRTGroupedCellProps<TData extends MRT_RowData>
   extends MRTGroupedCellProps<TData> {
   emptyCellPlaceholderText: string;
+  type?: 'Date';
 }
 
 export const TableGroupedCell = <TData extends MRT_RowData>(
   props: ModifiedMRTGroupedCellProps<TData>
 ) => {
-  const { row, column, emptyCellPlaceholderText } = props;
+  const { row, column, emptyCellPlaceholderText, type } = props;
   const columnID = column.id;
   const columnSize = column.getSize();
+
+  const cellData = getNestedProperty(row.original, columnID);
 
   return (
     <OverflowTip
@@ -279,8 +289,10 @@ export const TableGroupedCell = <TData extends MRT_RowData>(
         mx: 0.5,
       }}
     >
-      {row.original.item[columnID]
-        ? formatDateTimeStrings(row.original.item[columnID], false)
+      {cellData
+        ? type === 'Date'
+          ? formatDateTimeStrings(cellData, false)
+          : cellData
         : emptyCellPlaceholderText}{' '}
       {`(${row.subRows?.length})`}
     </OverflowTip>
