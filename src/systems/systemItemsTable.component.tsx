@@ -445,7 +445,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 return (
                   <FormControl size="small" fullWidth>
                     <Autocomplete
-                      id={`usage-statuses-${row.original.catalogueItem?.name}`}
+                      id={`usage-statuses-${row.original.item?.serial_number}`}
                       size="small"
                       value={
                         usageStatusesData?.find(
