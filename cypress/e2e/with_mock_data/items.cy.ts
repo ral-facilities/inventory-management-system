@@ -358,8 +358,7 @@ describe('Items', () => {
 
     cy.findByLabelText('Resolution (megapixels) *').clear();
     cy.findByLabelText('Sensor Type *').clear();
-    cy.findByLabelText('Broken *').click();
-    cy.findByRole('option', { name: 'None' }).click();
+    cy.findByLabelText('Broken *').clear();
 
     cy.findByRole('button', { name: 'Next' }).click();
 
@@ -479,7 +478,7 @@ describe('Items', () => {
           serial_number: '5YUQDDjKpz2z',
           delivered_date: '2023-03-17T00:00:00.000Z',
           notes:
-            '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this ID: KvT2Ox7n',
+            '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z',
           properties: [
             { id: '1', value: 0 },
             { id: '2', value: null },
