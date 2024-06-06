@@ -779,7 +779,7 @@ function ItemDialog(props: ItemDialogProps) {
             <Grid item xs={12}>
               <FormControl fullWidth>
                 <Autocomplete
-                  id="is-defective"
+                  id="item-is-defective-input"
                   value={itemDetails.is_defective == 'true' ? 'Yes' : 'No'}
                   size="small"
                   onChange={(_event, value) =>
@@ -804,7 +804,7 @@ function ItemDialog(props: ItemDialogProps) {
             <Grid item xs={12}>
               <FormControl size="small" fullWidth>
                 <Autocomplete
-                  id="usage-status"
+                  id="item-usage-status-input"
                   value={
                     usageStatuses?.find(
                       (usageStatus) =>
