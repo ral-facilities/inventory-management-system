@@ -423,6 +423,10 @@ describe('Items Table', () => {
     await waitFor(() => {
       expect(screen.getByText('5YUQDDjKpz2z')).toBeInTheDocument();
     });
+    // Ensure no loading bars visible
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
 
     expect(view.asFragment()).toMatchSnapshot();
   });
