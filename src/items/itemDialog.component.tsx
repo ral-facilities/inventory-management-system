@@ -942,7 +942,9 @@ function ItemDialog(props: ItemDialogProps) {
                                   <TextField
                                     {...params}
                                     required={property.mandatory ?? false}
-                                    label={property.name}
+                                    label={`${property.name} ${
+                                      property.unit ? `(${property.unit})` : ''
+                                    }`}
                                     error={propertyErrors[index]}
                                     helperText={
                                       propertyErrors[index] &&
