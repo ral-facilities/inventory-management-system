@@ -63,7 +63,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
   return (
     <Stack direction={isList ? 'row' : 'column'} spacing={1} padding={1}>
       <TextField
-        id={`property-name-input${cip_placement_id ?? ''}`}
+        id={`property-name-input-${cip_placement_id ?? ''}`}
         label="Property Name"
         variant="outlined"
         required={true}
@@ -87,7 +87,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         <InputLabel
           error={!!catalogueItemPropertyMessage('type')}
           required={true}
-          id={`catalogue-properties-form-select-type-label${cip_placement_id ?? ''}`}
+          id={`catalogue-properties-form-select-type-label-${cip_placement_id ?? ''}`}
         >
           Select Type
         </InputLabel>
@@ -105,7 +105,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           }}
           error={!!catalogueItemPropertyMessage('type')}
           label="Select Type"
-          labelId={`catalogue-properties-form-select-type-label${cip_placement_id ?? ''}`}
+          labelId={`catalogue-properties-form-select-type-label-${cip_placement_id ?? ''}`}
           required={true}
         >
           <MenuItem value="boolean">Boolean</MenuItem>
@@ -131,7 +131,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
       >
         <InputLabel
           required={true}
-          id={`catalogue-properties-form-select-allowed-values-label${cip_placement_id ?? ''}`}
+          id={`catalogue-properties-form-select-allowed-values-label-${cip_placement_id ?? ''}`}
         >
           Select Allowed values
         </InputLabel>
@@ -141,7 +141,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
             handleChange('allowed_values', e.target.value);
           }}
           label="Select Allowed values"
-          labelId={`catalogue-properties-form-select-allowed-values-label${cip_placement_id ?? ''}`}
+          labelId={`catalogue-properties-form-select-allowed-values-label-${cip_placement_id ?? ''}`}
           required={true}
         >
           <MenuItem value="any">Any</MenuItem>
@@ -179,7 +179,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
                   spacing={1}
                 >
                   <TextField
-                    id={`${listValue.av_placement_id}-list-item-input`}
+                    id={`list-item-input-${listValue.av_placement_id}`}
                     sx={{
                       width: isList ? undefined : '100%',
                       minWidth: isList ? '150px' : undefined,
@@ -333,7 +333,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           />
         ))}
       <Autocomplete
-        id={`property-unit-input${cip_placement_id ?? ''}`}
+        id={`property-unit-input-${cip_placement_id ?? ''}`}
         sx={{
           width: isList ? '200px' : '100%',
           minWidth: isList ? '200px' : undefined,
@@ -372,7 +372,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         }}
       >
         <InputLabel
-          id={`catalogue-properties-form-select-mandatory-label${cip_placement_id ?? ''}`}
+          id={`catalogue-properties-form-select-mandatory-label-${cip_placement_id ?? ''}`}
         >
           Select is mandatory?
         </InputLabel>
@@ -380,7 +380,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           value={catalogueItemField.mandatory ? 'yes' : 'no'}
           onChange={(e) => handleChange('mandatory', e.target.value === 'yes')}
           label="Select is mandatory?"
-          labelId={`catalogue-properties-form-select-mandatory-label${cip_placement_id ?? ''}`}
+          labelId={`catalogue-properties-form-select-mandatory-label-${cip_placement_id ?? ''}`}
         >
           <MenuItem value="yes">Yes</MenuItem>
           <MenuItem value="no">No</MenuItem>

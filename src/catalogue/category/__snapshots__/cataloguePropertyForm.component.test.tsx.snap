@@ -11,8 +11,8 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        for="property-name-input"
-        id="property-name-input-label"
+        for="property-name-input-1"
+        id="property-name-input-1-label"
       >
         Property Name
         <span
@@ -28,7 +28,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
         <input
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-          id="property-name-input"
+          id="property-name-input-1"
           required=""
           type="text"
           value="Field 5"
@@ -53,7 +53,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-type-label"
+        id="catalogue-properties-form-select-type-label-1"
       >
         Select Type
         <span
@@ -71,7 +71,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
           aria-controls=":r1:"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-type-label"
+          aria-labelledby="catalogue-properties-form-select-type-label-1"
           class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
           tabindex="0"
@@ -117,7 +117,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-allowed-values-label"
+        id="catalogue-properties-form-select-allowed-values-label-1"
       >
         Select Allowed values
         <span
@@ -135,7 +135,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
           aria-controls=":r2:"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-allowed-values-label"
+          aria-labelledby="catalogue-properties-form-select-allowed-values-label-1"
           class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
           tabindex="0"
@@ -189,8 +189,8 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="1-list-item-input"
-            id="1-list-item-input-label"
+            for="list-item-input-1"
+            id="list-item-input-1-label"
           >
             List Item
           </label>
@@ -200,7 +200,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-              id="1-list-item-input"
+              id="list-item-input-1"
               type="text"
               value="test"
             />
@@ -272,8 +272,8 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
-          for="property-unit-input"
-          id="property-unit-input-label"
+          for="property-unit-input-1"
+          id="property-unit-input-1-label"
         >
           Select Unit
         </label>
@@ -287,7 +287,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-            id="property-unit-input"
+            id="property-unit-input-1"
             role="combobox"
             spellcheck="false"
             type="text"
@@ -340,7 +340,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-mandatory-label"
+        id="catalogue-properties-form-select-mandatory-label-1"
       >
         Select is mandatory?
       </label>
@@ -351,7 +351,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
           aria-controls=":r6:"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-mandatory-label"
+          aria-labelledby="catalogue-properties-form-select-mandatory-label-1"
           class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
           tabindex="0"
@@ -412,8 +412,8 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        for="property-name-input1"
-        id="property-name-input1-label"
+        for="property-name-input-1"
+        id="property-name-input-1-label"
       >
         Property Name
         <span
@@ -429,7 +429,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
         <input
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-          id="property-name-input1"
+          id="property-name-input-1"
           required=""
           type="text"
           value="Field 5"
@@ -454,7 +454,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-type-label1"
+        id="catalogue-properties-form-select-type-label-1"
       >
         Select Type
         <span
@@ -472,7 +472,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
           aria-controls=":rt:"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-type-label1"
+          aria-labelledby="catalogue-properties-form-select-type-label-1"
           class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
           tabindex="0"
@@ -518,7 +518,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-allowed-values-label1"
+        id="catalogue-properties-form-select-allowed-values-label-1"
       >
         Select Allowed values
         <span
@@ -536,7 +536,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
           aria-controls=":ru:"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-allowed-values-label1"
+          aria-labelledby="catalogue-properties-form-select-allowed-values-label-1"
           class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
           tabindex="0"
@@ -590,8 +590,8 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="2-list-item-input"
-            id="2-list-item-input-label"
+            for="list-item-input-2"
+            id="list-item-input-2-label"
           >
             List Item
           </label>
@@ -601,7 +601,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-              id="2-list-item-input"
+              id="list-item-input-2"
               type="text"
               value="test"
             />
@@ -673,8 +673,8 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
-          for="property-unit-input1"
-          id="property-unit-input1-label"
+          for="property-unit-input-1"
+          id="property-unit-input-1-label"
         >
           Select Unit
         </label>
@@ -688,7 +688,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-            id="property-unit-input1"
+            id="property-unit-input-1"
             role="combobox"
             spellcheck="false"
             type="text"
@@ -741,7 +741,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-mandatory-label1"
+        id="catalogue-properties-form-select-mandatory-label-1"
       >
         Select is mandatory?
       </label>
@@ -752,7 +752,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
           aria-controls=":r12:"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-mandatory-label1"
+          aria-labelledby="catalogue-properties-form-select-mandatory-label-1"
           class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
           tabindex="0"
@@ -835,8 +835,8 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        for="property-name-input1"
-        id="property-name-input1-label"
+        for="property-name-input-1"
+        id="property-name-input-1-label"
       >
         Property Name
         <span
@@ -852,7 +852,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
         <input
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-          id="property-name-input1"
+          id="property-name-input-1"
           required=""
           type="text"
           value="Field 5"
@@ -877,7 +877,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-type-label1"
+        id="catalogue-properties-form-select-type-label-1"
       >
         Select Type
         <span
@@ -896,7 +896,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
           aria-disabled="true"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-type-label1"
+          aria-labelledby="catalogue-properties-form-select-type-label-1"
           class="MuiSelect-select MuiSelect-outlined Mui-disabled MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
         >
@@ -942,7 +942,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-allowed-values-label1"
+        id="catalogue-properties-form-select-allowed-values-label-1"
       >
         Select Allowed values
         <span
@@ -961,7 +961,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
           aria-disabled="true"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-allowed-values-label1"
+          aria-labelledby="catalogue-properties-form-select-allowed-values-label-1"
           class="MuiSelect-select MuiSelect-outlined Mui-disabled MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
         >
@@ -1015,8 +1015,8 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="2-list-item-input"
-            id="2-list-item-input-label"
+            for="list-item-input-2"
+            id="list-item-input-2-label"
           >
             List Item
           </label>
@@ -1026,7 +1026,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-              id="2-list-item-input"
+              id="list-item-input-2"
               type="text"
               value="test"
             />
@@ -1098,8 +1098,8 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
-          for="property-unit-input1"
-          id="property-unit-input1-label"
+          for="property-unit-input-1"
+          id="property-unit-input-1-label"
         >
           Select Unit
         </label>
@@ -1114,7 +1114,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
             autocomplete="off"
             class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
             disabled=""
-            id="property-unit-input1"
+            id="property-unit-input-1"
             role="combobox"
             spellcheck="false"
             type="text"
@@ -1165,7 +1165,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-mandatory-label1"
+        id="catalogue-properties-form-select-mandatory-label-1"
       >
         Select is mandatory?
       </label>
@@ -1177,7 +1177,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
           aria-disabled="true"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-mandatory-label1"
+          aria-labelledby="catalogue-properties-form-select-mandatory-label-1"
           class="MuiSelect-select MuiSelect-outlined Mui-disabled MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
         >
@@ -1260,8 +1260,8 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        for="property-name-input1"
-        id="property-name-input1-label"
+        for="property-name-input-1"
+        id="property-name-input-1-label"
       >
         Property Name
         <span
@@ -1277,7 +1277,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
         <input
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-          id="property-name-input1"
+          id="property-name-input-1"
           required=""
           type="text"
           value="Field 5"
@@ -1302,7 +1302,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-type-label1"
+        id="catalogue-properties-form-select-type-label-1"
       >
         Select Type
         <span
@@ -1320,7 +1320,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
           aria-controls=":r8:"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-type-label1"
+          aria-labelledby="catalogue-properties-form-select-type-label-1"
           class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
           tabindex="0"
@@ -1366,7 +1366,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-allowed-values-label1"
+        id="catalogue-properties-form-select-allowed-values-label-1"
       >
         Select Allowed values
         <span
@@ -1384,7 +1384,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
           aria-controls=":r9:"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-allowed-values-label1"
+          aria-labelledby="catalogue-properties-form-select-allowed-values-label-1"
           class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
           tabindex="0"
@@ -1438,8 +1438,8 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="2-list-item-input"
-            id="2-list-item-input-label"
+            for="list-item-input-2"
+            id="list-item-input-2-label"
           >
             List Item
           </label>
@@ -1449,7 +1449,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-              id="2-list-item-input"
+              id="list-item-input-2"
               type="text"
               value="test"
             />
@@ -1521,8 +1521,8 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
-          for="property-unit-input1"
-          id="property-unit-input1-label"
+          for="property-unit-input-1"
+          id="property-unit-input-1-label"
         >
           Select Unit
         </label>
@@ -1536,7 +1536,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-            id="property-unit-input1"
+            id="property-unit-input-1"
             role="combobox"
             spellcheck="false"
             type="text"
@@ -1589,7 +1589,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-mandatory-label1"
+        id="catalogue-properties-form-select-mandatory-label-1"
       >
         Select is mandatory?
       </label>
@@ -1600,7 +1600,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
           aria-controls=":rd:"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-mandatory-label1"
+          aria-labelledby="catalogue-properties-form-select-mandatory-label-1"
           class="MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
           tabindex="0"
@@ -1683,8 +1683,8 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        for="property-name-input1"
-        id="property-name-input1-label"
+        for="property-name-input-1"
+        id="property-name-input-1-label"
       >
         Property Name
         <span
@@ -1701,7 +1701,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
           disabled=""
-          id="property-name-input1"
+          id="property-name-input-1"
           required=""
           type="text"
           value="Field 5"
@@ -1726,7 +1726,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-type-label1"
+        id="catalogue-properties-form-select-type-label-1"
       >
         Select Type
         <span
@@ -1745,7 +1745,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
           aria-disabled="true"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-type-label1"
+          aria-labelledby="catalogue-properties-form-select-type-label-1"
           class="MuiSelect-select MuiSelect-outlined Mui-disabled MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
         >
@@ -1791,7 +1791,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-allowed-values-label1"
+        id="catalogue-properties-form-select-allowed-values-label-1"
       >
         Select Allowed values
         <span
@@ -1810,7 +1810,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
           aria-disabled="true"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-allowed-values-label1"
+          aria-labelledby="catalogue-properties-form-select-allowed-values-label-1"
           class="MuiSelect-select MuiSelect-outlined Mui-disabled MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
         >
@@ -1864,8 +1864,8 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="2-list-item-input"
-            id="2-list-item-input-label"
+            for="list-item-input-2"
+            id="list-item-input-2-label"
           >
             List Item
           </label>
@@ -1876,7 +1876,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               disabled=""
-              id="2-list-item-input"
+              id="list-item-input-2"
               type="text"
               value="test"
             />
@@ -1905,8 +1905,8 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
-          for="property-unit-input1"
-          id="property-unit-input1-label"
+          for="property-unit-input-1"
+          id="property-unit-input-1-label"
         >
           Select Unit
         </label>
@@ -1921,7 +1921,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
             autocomplete="off"
             class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
             disabled=""
-            id="property-unit-input1"
+            id="property-unit-input-1"
             role="combobox"
             spellcheck="false"
             type="text"
@@ -1972,7 +1972,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-mandatory-label1"
+        id="catalogue-properties-form-select-mandatory-label-1"
       >
         Select is mandatory?
       </label>
@@ -1984,7 +1984,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
           aria-disabled="true"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-mandatory-label1"
+          aria-labelledby="catalogue-properties-form-select-mandatory-label-1"
           class="MuiSelect-select MuiSelect-outlined Mui-disabled MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
         >
@@ -2045,8 +2045,8 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        for="property-name-input"
-        id="property-name-input-label"
+        for="property-name-input-1"
+        id="property-name-input-1-label"
       >
         Property Name
         <span
@@ -2063,7 +2063,7 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
           disabled=""
-          id="property-name-input"
+          id="property-name-input-1"
           required=""
           type="text"
           value="Field 5"
@@ -2088,7 +2088,7 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-type-label"
+        id="catalogue-properties-form-select-type-label-1"
       >
         Select Type
         <span
@@ -2107,7 +2107,7 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
           aria-disabled="true"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-type-label"
+          aria-labelledby="catalogue-properties-form-select-type-label-1"
           class="MuiSelect-select MuiSelect-outlined Mui-disabled MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
         >
@@ -2153,7 +2153,7 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-allowed-values-label"
+        id="catalogue-properties-form-select-allowed-values-label-1"
       >
         Select Allowed values
         <span
@@ -2172,7 +2172,7 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
           aria-disabled="true"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-allowed-values-label"
+          aria-labelledby="catalogue-properties-form-select-allowed-values-label-1"
           class="MuiSelect-select MuiSelect-outlined Mui-disabled MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
         >
@@ -2226,8 +2226,8 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="1-list-item-input"
-            id="1-list-item-input-label"
+            for="list-item-input-1"
+            id="list-item-input-1-label"
           >
             List Item
           </label>
@@ -2238,7 +2238,7 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               disabled=""
-              id="1-list-item-input"
+              id="list-item-input-1"
               type="text"
               value="test"
             />
@@ -2267,8 +2267,8 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
-          for="property-unit-input"
-          id="property-unit-input-label"
+          for="property-unit-input-1"
+          id="property-unit-input-1-label"
         >
           Select Unit
         </label>
@@ -2283,7 +2283,7 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
             autocomplete="off"
             class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
             disabled=""
-            id="property-unit-input"
+            id="property-unit-input-1"
             role="combobox"
             spellcheck="false"
             type="text"
@@ -2334,7 +2334,7 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        id="catalogue-properties-form-select-mandatory-label"
+        id="catalogue-properties-form-select-mandatory-label-1"
       >
         Select is mandatory?
       </label>
@@ -2346,7 +2346,7 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
           aria-disabled="true"
           aria-expanded="false"
           aria-haspopup="listbox"
-          aria-labelledby="catalogue-properties-form-select-mandatory-label"
+          aria-labelledby="catalogue-properties-form-select-mandatory-label-1"
           class="MuiSelect-select MuiSelect-outlined Mui-disabled MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
           role="combobox"
         >

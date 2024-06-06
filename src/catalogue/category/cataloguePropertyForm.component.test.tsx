@@ -49,13 +49,14 @@ describe('Catalogue Property Form', () => {
     props.catalogueItemField = {
       name: 'Field 5',
       type: 'string',
-      unit: '',
+      unit_id: '0',
       allowed_values: {
         type: 'list',
         values: [{ av_placement_id: '1', value: 'test' }],
       },
       mandatory: true,
     };
+    props.cip_placement_id = '1';
     const { asFragment } = createView();
     expect(asFragment()).toMatchSnapshot();
   });
@@ -64,7 +65,7 @@ describe('Catalogue Property Form', () => {
     props.catalogueItemField = {
       name: 'Field 5',
       type: 'string',
-      unit: '',
+      unit_id: '0',
       allowed_values: {
         type: 'list',
         values: [{ av_placement_id: '2', value: 'test' }],
@@ -81,7 +82,7 @@ describe('Catalogue Property Form', () => {
     props.catalogueItemField = {
       name: 'Field 5',
       type: 'string',
-      unit: '',
+      unit_id: '0',
       allowed_values: {
         type: 'list',
         values: [{ av_placement_id: '1', value: 'test' }],
@@ -89,6 +90,7 @@ describe('Catalogue Property Form', () => {
       mandatory: true,
     };
     props.type = 'disabled';
+    props.cip_placement_id = '1';
     const { asFragment } = createView();
     expect(asFragment()).toMatchSnapshot();
   });
@@ -97,7 +99,7 @@ describe('Catalogue Property Form', () => {
     props.catalogueItemField = {
       name: 'Field 5',
       type: 'string',
-      unit: '',
+      unit_id: '0',
       allowed_values: {
         type: 'list',
         values: [{ av_placement_id: '2', value: 'test' }],
@@ -115,7 +117,7 @@ describe('Catalogue Property Form', () => {
     props.catalogueItemField = {
       name: 'Field 5',
       type: 'string',
-      unit: '',
+      unit_id: '0',
       allowed_values: {
         type: 'list',
         values: [{ av_placement_id: '2', value: 'test' }],
@@ -133,7 +135,7 @@ describe('Catalogue Property Form', () => {
     props.catalogueItemField = {
       name: 'Field 5',
       type: 'string',
-      unit: '',
+      unit_id: '0',
       allowed_values: {
         type: 'list',
         values: [{ av_placement_id: '2', value: 'test' }],
