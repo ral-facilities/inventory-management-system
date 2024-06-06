@@ -79,7 +79,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
         <Grid container direction="column" spacing={1}>
           <Grid item sx={{ mt: 1 }}>
             <TextField
-              id="usage-status-input"
+              id="usage-status-value-input"
               label="Value"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }}

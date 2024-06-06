@@ -63,7 +63,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
   return (
     <Stack direction={isList ? 'row' : 'column'} spacing={1} padding={1}>
       <TextField
-        id={`${cip_placement_id}-property-name-input`}
+        id={`property-name-input${cip_placement_id ?? ''}`}
         label="Property Name"
         variant="outlined"
         required={true}
@@ -318,7 +318,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           <TextField
             required={catalogueItemField.mandatory}
             label="Default value"
-            id={`catalogue-category-form-data-default-value-${cip_placement_id}`}
+            id={`catalogue-category-form-data-default-value-${cip_placement_id ?? ''}`}
             variant="outlined"
             value={catalogueItemField.default_value ?? ''}
             onChange={(e) => handleChange('default_value', e.target.value)}
@@ -333,7 +333,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           />
         ))}
       <Autocomplete
-        id={`${cip_placement_id}-propety-unit-input`}
+        id={`property-unit-input${cip_placement_id ?? ''}`}
         sx={{
           width: isList ? '200px' : '100%',
           minWidth: isList ? '200px' : undefined,
