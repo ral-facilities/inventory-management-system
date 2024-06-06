@@ -358,8 +358,7 @@ describe('Items', () => {
 
     cy.findByLabelText('Resolution (megapixels) *').clear();
     cy.findByLabelText('Sensor Type *').clear();
-    cy.findByLabelText('Broken *').click();
-    cy.findByRole('option', { name: 'None' }).click();
+    cy.findByLabelText('Broken *').clear();
 
     cy.findByRole('button', { name: 'Next' }).click();
 
