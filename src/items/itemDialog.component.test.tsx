@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor, within } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../api/api';
 import handleIMS_APIError from '../handleIMS_APIError';
@@ -130,17 +130,13 @@ describe('ItemDialog', () => {
       ));
 
     if (values.isDefective !== undefined) {
-      fireEvent.mouseDown(screen.getByLabelText('Is defective *'));
-      fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.isDefective)
-      );
+      const isDefectiveAutocomplete = screen.getAllByRole('combobox')[0];
+      await user.type(isDefectiveAutocomplete, values.isDefective);
     }
 
     if (values.usageStatus !== undefined) {
-      fireEvent.mouseDown(screen.getByLabelText('Usage status *'));
-      fireEvent.click(
-        await within(screen.getByRole('listbox')).findByText(values.usageStatus)
-      );
+      const usageStatusAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(usageStatusAutocomplete, values.usageStatus);
     }
   };
 
@@ -163,17 +159,13 @@ describe('ItemDialog', () => {
       });
 
     if (values.broken !== undefined) {
-      fireEvent.mouseDown(screen.getByLabelText('Broken *'));
-      fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.broken)
-      );
+      const brokenAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(brokenAutoComplete, values.broken);
     }
 
     if (values.older !== undefined) {
-      fireEvent.mouseDown(screen.getByLabelText('Older than five years'));
-      fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.older)
-      );
+      const olderAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(olderAutocomplete, values.older);
     }
 
     values.sensorBrand !== undefined &&
@@ -214,7 +206,7 @@ describe('ItemDialog', () => {
       createView();
 
       await modifyDetailsValues({
-        usageStatus: 'Used',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       //navigate through stepper
@@ -258,7 +250,7 @@ describe('ItemDialog', () => {
       createView();
 
       await modifyDetailsValues({
-        usageStatus: 'Used',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       //navigate through stepper
@@ -288,7 +280,7 @@ describe('ItemDialog', () => {
         purchase_order_number: null,
         serial_number: null,
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status_id: '2',
+        usage_status_id: '1',
         warranty_end_date: null,
       });
     });
@@ -299,7 +291,7 @@ describe('ItemDialog', () => {
       await modifyDetailsValues({
         serialNumber: 'test12 %s',
         serialNumberAdvancedOptions: { quantity: '2', startingValue: '10' },
-        usageStatus: 'New',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       //navigate through stepper
@@ -348,7 +340,7 @@ describe('ItemDialog', () => {
           purchase_order_number: null,
           serial_number: `test12 ${i + 10}`,
           system_id: '65328f34a40ff5301575a4e3',
-          usage_status_id: '0',
+          usage_status_id: '1',
           warranty_end_date: null,
         });
       }
@@ -406,7 +398,7 @@ describe('ItemDialog', () => {
       createView();
 
       await modifyDetailsValues({
-        usageStatus: 'Used',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       await user.click(screen.getByText('Add item properties'));
@@ -418,13 +410,11 @@ describe('ItemDialog', () => {
         }
       );
 
-      fireEvent.mouseDown(
-        screen.getByLabelText('Pumping Speed (liters per second) *')
-      );
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+      const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
 
-      fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
+      const axisAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(axisAutocomplete, 'z{arrowdown}{enter}');
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
@@ -451,7 +441,7 @@ describe('ItemDialog', () => {
         purchase_order_number: null,
         serial_number: null,
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status_id: '2',
+        usage_status_id: '1',
         warranty_end_date: null,
       });
     });
@@ -466,8 +456,8 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17/02/2035',
         deliveredDate: '23/09/2045',
-        isDefective: 'Yes',
-        usageStatus: 'Used',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -477,8 +467,8 @@ describe('ItemDialog', () => {
         frameRate: '60',
         sensorType: 'IO',
         sensorBrand: 'pixel',
-        broken: 'True',
-        older: 'False',
+        broken: 'T{arrowdown}{enter}',
+        older: 'F{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -506,7 +496,7 @@ describe('ItemDialog', () => {
         purchase_order_number: 'test21',
         serial_number: 'test12',
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status_id: '2',
+        usage_status_id: '1',
         warranty_end_date: '2035-02-17T00:00:00.000Z',
       });
     }, 10000);
@@ -521,7 +511,8 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17/02/',
         deliveredDate: '23/09/',
-        isDefective: 'Yes',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
@@ -559,7 +550,6 @@ describe('ItemDialog', () => {
       await modifyDetailsValues({
         warrantyEndDate: '17/02/2000',
         deliveredDate: '23/09/2000',
-        usageStatus: 'Used',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -658,8 +648,8 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17/02/2035',
         deliveredDate: '23/09/2045',
-        isDefective: 'Yes',
-        usageStatus: 'Used',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -669,8 +659,8 @@ describe('ItemDialog', () => {
         frameRate: '60',
         sensorType: 'IO',
         sensorBrand: 'pixel',
-        broken: 'False',
-        older: 'True',
+        broken: 'F{arrowdown}{enter}',
+        older: 'T{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -698,7 +688,7 @@ describe('ItemDialog', () => {
         purchase_order_number: 'test21',
         serial_number: null,
         system_id: '65328f34a40ff5301575a4e3',
-        usage_status_id: '2',
+        usage_status_id: '1',
         warranty_end_date: '2035-02-17T00:00:00.000Z',
       });
     }, 10000);
@@ -715,7 +705,7 @@ describe('ItemDialog', () => {
       ).toBeInTheDocument();
 
       await modifyDetailsValues({
-        usageStatus: 'Used',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       expect(screen.queryByRole('button', { name: 'Next' })).not.toBeDisabled();
@@ -737,8 +727,8 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17/02/2035',
         deliveredDate: '23/09/2045',
-        isDefective: 'Yes',
-        usageStatus: 'Used',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -746,7 +736,7 @@ describe('ItemDialog', () => {
       await modifyPropertiesValues({
         resolution: '',
         sensorType: '',
-        broken: 'None',
+        broken: '{delete}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -765,7 +755,7 @@ describe('ItemDialog', () => {
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
 
       await modifyPropertiesValues({
-        broken: 'False',
+        broken: 'F{arrowdown}{enter}',
         resolution: '12',
         frameRate: '60',
         sensorType: 'IO',
@@ -793,8 +783,8 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17',
         deliveredDate: '23',
-        isDefective: 'Yes',
-        usageStatus: 'Used',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       const validDateHelperText = screen.getAllByText(
@@ -856,11 +846,44 @@ describe('ItemDialog', () => {
       ).not.toBeInTheDocument();
     }, 10000);
 
+    it('displays error message when mandatory property with allowed values is missing', async () => {
+      props = {
+        ...props,
+        catalogueCategory: getCatalogueCategoryById('12'),
+        catalogueItem: getCatalogueItemById('17'),
+      };
+      createView();
+
+      await modifyDetailsValues({
+        usageStatus: 'U{arrowdown}{enter}',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(pumpingSpeedAutoComplete, '{delete}');
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      const mandatoryFieldHelperText = screen.getByText(
+        'Please enter a valid value as this field is mandatory'
+      );
+
+      expect(mandatoryFieldHelperText).toBeInTheDocument();
+
+      expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
+
+      await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
+
+      expect(mandatoryFieldHelperText).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Next' })).not.toBeDisabled();
+    });
+
     it('displays warning message when an unknown error occurs', async () => {
       createView();
       await modifyDetailsValues({
         serialNumber: 'Error 500',
-        usageStatus: 'Used',
+        usageStatus: 'U{arrowdown}{enter}',
       });
       await user.click(screen.getByRole('button', { name: 'Next' }));
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -963,7 +986,7 @@ describe('ItemDialog', () => {
       createView();
 
       await modifyDetailsValues({
-        serialNumber: 'test12',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       //navigate through stepper
@@ -987,8 +1010,8 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17/02/2035',
         deliveredDate: '23/09/2045',
-        isDefective: 'Yes',
-        usageStatus: 'Used',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -998,8 +1021,8 @@ describe('ItemDialog', () => {
         frameRate: '60',
         sensorType: 'IO',
         sensorBrand: 'pixel',
-        broken: 'True',
-        older: 'False',
+        broken: 'T{arrowdown}{enter}',
+        older: 'F{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -1052,13 +1075,12 @@ describe('ItemDialog', () => {
         }
       );
 
-      fireEvent.mouseDown(
-        screen.getByLabelText('Pumping Speed (liters per second) *')
-      );
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+      const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
 
-      fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('z'));
+      const axisAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(axisAutocomplete, 'z{arrowdown}{enter}');
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -1091,13 +1113,12 @@ describe('ItemDialog', () => {
         }
       );
 
-      fireEvent.mouseDown(
-        screen.getByLabelText('Pumping Speed (liters per second) *')
-      );
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+      const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
 
-      fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('None'));
+      const axisAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(axisAutocomplete, 'N{enter}');
+
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -1123,8 +1144,8 @@ describe('ItemDialog', () => {
         notes: 'test',
         warrantyEndDate: '17',
         deliveredDate: '23',
-        isDefective: 'Yes',
-        usageStatus: 'Used',
+        isDefective: 'Y{arrowdown}{enter}',
+        usageStatus: 'U{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -1132,7 +1153,7 @@ describe('ItemDialog', () => {
       await modifyPropertiesValues({
         resolution: 'rwererw',
         sensorType: '',
-        broken: 'None',
+        broken: 'N{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));

@@ -491,12 +491,8 @@ describe('SystemItemsTable', () => {
         { timeout: 4000 }
       );
 
-      expect(
-        within(screen.getAllByRole('combobox')[0]).getByText('New')
-      ).toBeInTheDocument();
-      expect(
-        within(screen.getAllByRole('combobox')[1]).getByText('In Use')
-      ).toBeInTheDocument();
+      expect(screen.getAllByRole('combobox')[0].value).toBe('New');
+      expect(screen.getAllByRole('combobox')[1].value).toBe('In Use');
     });
 
     it('displays errors messages correctly', async () => {
