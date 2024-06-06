@@ -159,18 +159,6 @@ const CopySystemsButton = (props: {
   );
 };
 
-// const getTableCountText = (
-//   numRowsDisplayed: number,
-//   numSystems: number,
-//   isRoot: boolean
-// ) => {
-//   const systemsText = isRoot ? 'Systems' : 'Subsystems';
-//   if (numRowsDisplayed === numSystems)
-//     return `Total ${systemsText}: ${numSystems}`;
-//   else
-//     return `Returned ${numRowsDisplayed} out of ${numSystems} ${systemsText}`;
-// };
-
 type MenuDialogType = SystemDialogType | 'delete';
 
 const columns: MRT_ColumnDef<System>[] = [
