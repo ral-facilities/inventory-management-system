@@ -108,7 +108,7 @@ export function ItemsTable(props: ItemTableProps) {
     const viewCatalogueItemProperties =
       catalogueCategory?.catalogue_item_properties ?? [];
     const propertyFilters: PropertyFiltersType = {
-      boolean: 'select',
+      boolean: 'autocomplete',
       string: 'text',
       number: 'range',
       null: 'text',
@@ -196,14 +196,14 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
         id: 'is_defective',
         size: 200,
-        filterVariant: 'select',
+        filterVariant: 'autocomplete',
       },
       {
         header: 'Usage Status',
         accessorFn: (row) => row.item.usage_status,
         id: 'usage_status',
         size: 200,
-        filterVariant: 'select',
+        filterVariant: 'autocomplete',
       },
       {
         header: 'Notes',
