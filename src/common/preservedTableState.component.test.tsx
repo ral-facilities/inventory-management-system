@@ -432,6 +432,123 @@ describe('Preserved table state functions', () => {
       expect(window.location.search).toBe('');
     });
 
+    it('onColumnFiltersChange updates the state and url correctly when have multiple date filters', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () => usePreservedTableState({ storeInUrl: true }),
+        '/'
+      );
+
+      // Change the state to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFiltersChange([
+          {
+            id: 'catalogueItem.modifiedTime',
+            value: [
+              new Date('2024-01-06T23:00:00.000Z'),
+              new Date('2024-06-06T23:00:00.000Z'),
+            ],
+          },
+        ])
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilters)
+        ).toBe(
+          JSON.stringify([
+            {
+              id: 'catalogueItem.modifiedTime',
+              value: [
+                new Date('2024-01-06T23:00:00.000Z'),
+                new Date('2024-06-06T23:00:00.000Z'),
+              ],
+            },
+          ])
+        )
+      );
+
+      expect(window.location.search).toBe(
+        '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0luSCAZgsUgCoKXEgA0IAbjhIx4IDAE8ADt2ggkmbn0HZhsgEwAGNQBYAtBoCM%2BgGxs1AZmgaNVjdWsaAWiAC%2BPUBOmp5FXgKEyIJo6JiZmlta29tbOLgC68S5AA'
+      );
+    });
+
+    it('onColumnFiltersChange updates the state and url correctly when have an invalid but complete date filter', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () => usePreservedTableState({ storeInUrl: true }),
+        '/'
+      );
+
+      // Change the state to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFiltersChange([
+          {
+            id: 'catalogueItem.modifiedTime',
+            value: [
+              new Date('0001-12-06T23:00:00.000Z'),
+              new Date('2024-06-06T23:00:00.000Z'),
+            ],
+          },
+        ])
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilters)
+        ).toBe(
+          JSON.stringify([
+            {
+              id: 'catalogueItem.modifiedTime',
+              value: [
+                new Date('0001-12-06T23:00:00.000Z'),
+                new Date('2024-06-06T23:00:00.000Z'),
+              ],
+            },
+          ])
+        )
+      );
+
+      expect(window.location.search).toBe(
+        '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0luSCAZgsUgCoKXEgA0IAbjhIx4IDAE8ADt2ggkmbn0HZhsgAwaAjAFpNAJm1qAbGz0BmaBstrqGtQC0QAXx6gJ01PIq8BQmSD01PQAWQyMw0wsrDVsNRycAXUSnIA'
+      );
+    });
+
+    it('onColumnFiltersChange updates the state correctly but not the url when have an invalid incomplete date filter', async () => {
+      const { result } = renderHookWithBrowserRouterURL(
+        () => usePreservedTableState({ storeInUrl: true }),
+        '/'
+      );
+
+      // Change the state to a non-default value
+      act(() =>
+        result.current.onPreservedStatesChange.onColumnFiltersChange([
+          {
+            id: 'catalogueItem.modifiedTime',
+            value: [
+              new Date('Invalid Date'),
+              new Date('2024-06-06T23:00:00.000Z'),
+            ],
+          },
+        ])
+      );
+
+      await waitFor(() =>
+        expect(
+          JSON.stringify(result.current.preservedState.columnFilters)
+        ).toBe(
+          JSON.stringify([
+            {
+              id: 'catalogueItem.modifiedTime',
+              value: [null, new Date('2024-06-06T23:00:00.000Z')],
+            },
+          ])
+        )
+      );
+
+      expect(window.location.search).toBe(
+        '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0luSCAZgsUgCoKXEgA0IAbjhIx4IDAE8ADt2ggAzhgBOCAHb5eAoTJAgAvj1ATpqJJm59B2YbIBMABhsAWALR2AbK7dsbAZmh27fztqALsALT0AXV1ooA'
+      );
+    });
+
     it('onSortingChange updates the state and url correctly', async () => {
       const { result } = renderHookWithBrowserRouterURL(
         () => usePreservedTableState({ storeInUrl: true }),

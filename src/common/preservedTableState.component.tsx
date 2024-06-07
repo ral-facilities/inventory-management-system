@@ -24,16 +24,16 @@ interface State {
   p: MRT_PaginationState;
 }
 
-// State but where undefined => should not be present in the url
+/* State but where undefined => should not be present in the url */
 interface StatePartial extends Partial<State> {}
 
-// Column filter value but defined as it will be stored in URL search params (includes type information)
+/* Column filter value but defined as it will be stored in URL search params (includes type information) */
 interface SearchParamsColumnFilterValue {
   type: 'string' | 'date';
   value: unknown;
 }
 
-// State but defined as it will be stored in URL search params (includes potential type information)
+/* State but defined as it will be stored in URL search params (includes potential type information) */
 interface SearchParamsColumnFilter extends ColumnFilter {
   value: SearchParamsColumnFilterValue | SearchParamsColumnFilterValue[];
 }
@@ -110,9 +110,13 @@ const convertStateSearchParams = (
 const convertInternalColumnFilterValue = (
   filterValue: unknown
 ): SearchParamsColumnFilterValue => {
-  if (filterValue instanceof Date)
-    return { type: 'date', value: filterValue.toISOString() };
-  else return { type: 'string', value: filterValue };
+  if (filterValue instanceof Date) {
+    if (!isNaN(filterValue.getTime()))
+      return { type: 'date', value: filterValue.toISOString() };
+    // If date is invalid and not complete, just leave empty in the URL
+    // otherwise will have a red box with nothing in it
+    else return { type: 'string', value: '' };
+  } else return { type: 'string', value: filterValue };
 };
 
 /* Converts the internal state to the one found in the search params (they are the same but with different
@@ -337,8 +341,15 @@ export const usePreservedTableState = (props?: UsePreservedTableStateProps) => {
             if (filter.value instanceof Array) {
               // In this case each value must the default empty value to be classed as the default
               for (const value of filter.value) {
-                // MRT seemingly uses these interchangeably between renders
-                if (value !== '' && value !== undefined) {
+                if (
+                  // MRT seemingly uses these interchangeably between renders
+                  value !== '' &&
+                  value !== undefined &&
+                  // Dates that are invalid because they aren't complete should not be stored
+                  // if possible (this won't stop it if there is another date within the same filter
+                  // that is valid)
+                  !(value instanceof Date && isNaN(value.getTime()))
+                ) {
                   isDefaultState = false;
                   break filterLoop;
                 }
