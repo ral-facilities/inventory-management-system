@@ -620,15 +620,15 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     // Data
     columns: dense
       ? [
-          { ...columns[0], size: 680 },
-          { ...columns[1], size: 680 },
+          { ...columns[0], size: undefined },
+          { ...columns[1], size: undefined },
         ]
       : columns, // If dense only show the name column
     data: tableRows ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     // Features
     enableColumnOrdering: !dense,
     enableFacetedValues: true,
-    enableColumnResizing: true,
+    enableColumnResizing: !dense,
     enableRowActions: !dense,
     enableStickyHeader: true,
     enableDensityToggle: false,
@@ -717,7 +717,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                   {...({
                     ...props,
                     overFlowTipSx: {
-                      width: dense ? '25vw' : undefined,
+                      // This is 5vm smaller to account for the select and expand columns.
+                      width: dense ? '20vw' : undefined,
                       color:
                         isItemSelectable === undefined ||
                         isItemSelectable(row.original.catalogueItem)

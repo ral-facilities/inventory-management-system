@@ -125,7 +125,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
                   {...({
                     ...props,
                     overFlowTipSx: {
-                      width: '10vw',
+                      width: '25vw',
                       color: canPlaceHere ? 'inherit' : 'action.disabled',
                     },
                   } as TableCellOverFlowTipProps)}

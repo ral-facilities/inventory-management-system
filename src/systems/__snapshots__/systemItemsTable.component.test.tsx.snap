@@ -3245,7 +3245,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
             >
               <div
                 aria-label="null"
-                class="MuiTypography-root MuiTypography-body1 css-ho33mf-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
               />
@@ -3398,7 +3398,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
             >
               <div
                 aria-label="null"
-                class="MuiTypography-root MuiTypography-body1 css-ho33mf-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 css-1ud1j2o-MuiTypography-root"
                 data-mui-internal-clone-element="true"
                 role="tooltip"
               />

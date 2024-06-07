@@ -644,7 +644,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                   {...({
                     ...props,
                     overFlowTipSx: {
-                      width: type === 'usageStatus' ? '10vw' : undefined,
+                      width: type === 'usageStatus' ? '25vw' : undefined,
                     },
                   } as TableCellOverFlowTipProps)}
                 />
