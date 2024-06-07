@@ -227,8 +227,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               )
             : undefined,
         size: 250,
-        GroupedCell: ({ row, table }) => {
-          const { columnSizing } = table.getState();
+        GroupedCell: ({ row }) => {
           const nameGroupedCellError = itemUsageStatusesErrorState
             ? Object.values(itemUsageStatusesErrorState).filter(
                 (errorState) =>
@@ -250,7 +249,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 <ErrorIcon sx={{ color: 'error.main' }} />
               )}
               <OverflowTip
-                columnSize={columnSizing['catalogueItem.name'] ?? 250}
                 disableParagraph
                 sx={{
                   fontSize: 'inherit',
@@ -628,7 +626,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       rowSelection: rowSelection,
     },
 
-    muiTableBodyCellProps: ({ cell, column }) =>
+    muiTableBodyCellProps: ({ column }) =>
       //Ignore the usages statuses cell in the dialog as this is a
       // select component and does not need to overflow
       (column.id === 'item.usage_status' && type === 'usageStatus') ||
@@ -645,7 +643,6 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 <TableBodyCellOverFlowTip
                   {...({
                     ...props,
-                    columnSize: cell.column.getSize(),
                     overFlowTipSx: {
                       width: type === 'usageStatus' ? '10vw' : undefined,
                     },

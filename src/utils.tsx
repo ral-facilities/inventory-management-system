@@ -182,7 +182,7 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
           overflowElementRef.current.clientWidth
       );
     }
-  }, [columnSize]);
+  }, [children, columnSize]);
 
   return (
     <Tooltip
@@ -210,17 +210,15 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
 };
 
 export interface TableCellOverFlowTipProps extends TableCellProps {
-  columnSize?: number;
   overFlowTipSx?: SxProps<Theme>;
 }
 export const TableBodyCellOverFlowTip: React.FC<TableCellOverFlowTipProps> = (
   props
 ): JSX.Element => {
-  const { columnSize, overFlowTipSx, ...tableCellProps } = props;
+  const { overFlowTipSx, ...tableCellProps } = props;
   return (
     <TableCell {...tableCellProps}>
       <OverflowTip
-        columnSize={columnSize}
         disableParagraph={true}
         isMRTCell={true}
         sx={{ fontSize: 'inherit', ...overFlowTipSx }}
@@ -276,13 +274,11 @@ export const TableGroupedCell = <TData extends MRT_RowData>(
 ) => {
   const { row, column, emptyCellPlaceholderText, type } = props;
   const columnID = column.id;
-  const columnSize = column.getSize();
 
   const cellData = getNestedProperty(row.original, columnID);
 
   return (
     <OverflowTip
-      columnSize={columnSize}
       disableParagraph
       sx={{
         fontSize: 'inherit',

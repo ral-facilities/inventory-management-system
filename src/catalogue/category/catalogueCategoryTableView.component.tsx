@@ -138,7 +138,6 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
                 <TableBodyCellOverFlowTip
                   {...({
                     ...props,
-                    columnSize: column.getSize(),
                     overFlowTipSx: {
                       width: '25vw',
                       color: canPlaceHere ? 'inherit' : 'action.disabled',

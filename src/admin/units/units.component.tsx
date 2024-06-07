@@ -129,7 +129,6 @@ function Units() {
                 <TableBodyCellOverFlowTip
                   {...({
                     ...props,
-                    columnSize: column.getSize(),
                     overFlowTipSx: { width: '25vw' },
                   } as TableCellOverFlowTipProps)}
                 />

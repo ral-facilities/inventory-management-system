@@ -399,7 +399,6 @@ export function ItemsTable(props: ItemTableProps) {
                 <TableBodyCellOverFlowTip
                   {...({
                     ...props,
-                    columnSize: column.getSize(),
                     overFlowTipSx: {
                       width: dense ? '25vw' : undefined,
                     },

@@ -130,7 +130,6 @@ function UsageStatuses() {
                 <TableBodyCellOverFlowTip
                   {...({
                     ...props,
-                    columnSize: column.getSize(),
                     overFlowTipSx: { width: '25vw' },
                   } as TableCellOverFlowTipProps)}
                 />

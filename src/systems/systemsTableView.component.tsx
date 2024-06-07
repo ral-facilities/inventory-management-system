@@ -111,7 +111,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         },
       };
     },
-    muiTableBodyCellProps: ({ cell, column, row }) =>
+    muiTableBodyCellProps: ({ column, row }) =>
       // Ignore MRT rendered cells e.g. expand , spacer etc
       column.id.startsWith('mrt')
         ? {}
@@ -124,7 +124,6 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
                 <TableBodyCellOverFlowTip
                   {...({
                     ...props,
-                    columnSize: cell.column.getSize(),
                     overFlowTipSx: {
                       width: '10vw',
                       color: canPlaceHere ? 'inherit' : 'action.disabled',

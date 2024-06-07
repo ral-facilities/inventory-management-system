@@ -173,17 +173,18 @@ const columns: MRT_ColumnDef<System>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
-    Cell: ({ cell, row }) => (
-      <OverflowTip
-        columnSize={cell.column.getSize()}
-        sx={{
-          fontSize: 'inherit',
-          maxWidth: { md: '9vw', xs: '82vw' },
-        }}
-      >
-        {row.original.name}
-      </OverflowTip>
-    ),
+    Cell: ({ row }) => {
+      return (
+        <OverflowTip
+          sx={{
+            fontSize: 'inherit',
+            maxWidth: { md: '9vw', xs: '82vw' },
+          }}
+        >
+          {row.original.name}
+        </OverflowTip>
+      );
+    },
   },
 ];
 

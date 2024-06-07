@@ -217,7 +217,6 @@ function ManufacturerComponent() {
                 <TableBodyCellOverFlowTip
                   {...({
                     ...props,
-                    columnSize: column.getSize(),
                   } as TableCellOverFlowTipProps)}
                 />
               );
