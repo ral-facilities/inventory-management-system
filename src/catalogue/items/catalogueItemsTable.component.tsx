@@ -144,7 +144,7 @@ export interface CatalogueItemsTableProps {
 }
 
 export type PropertyFiltersType = {
-  boolean: 'select' | 'text' | 'range';
+  boolean: 'select' | 'text' | 'range' | 'autocomplete';
   string: 'select' | 'text' | 'range';
   number: 'select' | 'text' | 'range';
   null: 'select' | 'text' | 'range';
@@ -227,7 +227,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     const viewCatalogueItemProperties =
       parentInfo.catalogue_item_properties ?? [];
     const propertyFilters: PropertyFiltersType = {
-      boolean: 'select',
+      boolean: 'autocomplete',
       string: 'text',
       number: 'range',
       null: 'text',
@@ -316,7 +316,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
           row.catalogueItem.is_obsolete === true ? 'Yes' : 'No',
         id: 'catalogueItem.is_obsolete',
         size: 200,
-        filterVariant: 'select',
+        filterVariant: 'autocomplete',
       },
       {
         header: 'Obsolete replacement link',
