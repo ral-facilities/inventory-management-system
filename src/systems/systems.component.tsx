@@ -178,7 +178,7 @@ const columns: MRT_ColumnDef<System>[] = [
         <OverflowTip
           sx={{
             fontSize: 'inherit',
-            maxWidth: { md: '9vw', xs: '82vw' },
+            maxWidth: { md: 'max(9vw, 180px)', xs: '68vw' },
           }}
         >
           {row.original.name}
