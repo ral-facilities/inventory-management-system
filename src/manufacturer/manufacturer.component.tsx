@@ -24,16 +24,16 @@ import { useManufacturers } from '../api/manufacturers';
 import { Manufacturer } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
+  displayTableRowCountText,
   formatDateTimeStrings,
   getPageHeightCalc,
-  getTableRowCountText,
 } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
 
 function ManufacturerComponent() {
-  const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
+  const { data: manufacturerData, isLoading: manufacturerDataLoading } =
     useManufacturers();
 
   const [deleteManufacturerDialog, setDeleteManufacturerDialog] =
@@ -151,7 +151,7 @@ function ManufacturerComponent() {
   const table = useMaterialReactTable({
     // Data
     columns: columns, // If dense only show the name column
-    data: ManufacturerData ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data: manufacturerData ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     // Features
     enableColumnOrdering: true,
     enableColumnResizing: true,
@@ -179,7 +179,7 @@ function ManufacturerComponent() {
     },
     state: {
       ...preservedState,
-      showProgressBars: ManufacturerDataLoading, //or showSkeletons
+      showProgressBars: manufacturerDataLoading, //or showSkeletons
     },
     // MUI
     muiTableBodyRowProps: ({ row }) => {
@@ -275,15 +275,10 @@ function ManufacturerComponent() {
         </MenuItem>,
       ];
     },
-    renderBottomToolbarCustomActions: ({ table }) => (
-      <Typography sx={{ paddingLeft: '8px' }}>
-        {getTableRowCountText(
-          table.getFilteredRowModel().rows.length,
-          ManufacturerData?.length ?? 0,
-          'Manufacturers'
-        )}
-      </Typography>
-    ),
+    renderBottomToolbarCustomActions: ({ table }) =>
+      displayTableRowCountText(table, manufacturerData, 'Manufacturers', {
+        paddingLeft: '8px',
+      }),
   });
 
   const navigate = useNavigate();

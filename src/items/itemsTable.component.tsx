@@ -32,9 +32,9 @@ import {
 } from '../catalogue/items/catalogueItemsTable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
+  displayTableRowCountText,
   formatDateTimeStrings,
   getPageHeightCalc,
-  getTableRowCountText,
 } from '../utils';
 import DeleteItemDialog from './deleteItemDialog.component';
 import ItemDialog from './itemDialog.component';
@@ -493,15 +493,10 @@ export function ItemsTable(props: ItemTableProps) {
         </MenuItem>,
       ];
     },
-    renderBottomToolbarCustomActions: ({ table }) => (
-      <Typography sx={{ paddingLeft: '8px' }}>
-        {getTableRowCountText(
-          table.getFilteredRowModel().rows.length,
-          itemsData?.length ?? 0,
-          'Items'
-        )}
-      </Typography>
-    ),
+    renderBottomToolbarCustomActions: ({ table }) =>
+      displayTableRowCountText(table, itemsData, 'Items', {
+        paddingLeft: '8px',
+      }),
 
     renderDetailPanel: dense
       ? ({ row }) => (

@@ -8,7 +8,6 @@ import {
   ListItemText,
   MenuItem,
   TableRow,
-  Typography,
 } from '@mui/material';
 import {
   MRT_ColumnDef,
@@ -20,9 +19,9 @@ import { usePreservedTableState } from '../../common/preservedTableState.compone
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import {
+  displayTableRowCountText,
   formatDateTimeStrings,
   getPageHeightCalc,
-  getTableRowCountText,
 } from '../../utils.tsx';
 import { useUsageStatuses } from '../../api/usageStatuses.tsx';
 import UsageStatusDialog from './usageStatusDialog.component.tsx';
@@ -187,15 +186,10 @@ function UsageStatuses() {
         </MenuItem>,
       ];
     },
-    renderBottomToolbarCustomActions: ({ table }) => (
-      <Typography sx={{ paddingLeft: '8px' }}>
-        {getTableRowCountText(
-          table.getFilteredRowModel().rows.length,
-          usageStatusData?.length ?? 0,
-          'Usage Statuses'
-        )}
-      </Typography>
-    ),
+    renderBottomToolbarCustomActions: ({ table }) =>
+      displayTableRowCountText(table, usageStatusData, 'Usage Statuses', {
+        paddingLeft: '8px',
+      }),
   });
 
   return (

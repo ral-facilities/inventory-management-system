@@ -39,10 +39,10 @@ import {
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
   OverflowTip,
+  displayTableRowCountText,
   formatDateTimeStrings,
   generateUniqueName,
   getPageHeightCalc,
-  getTableRowCountText,
 } from '../../utils';
 import CatalogueItemDirectoryDialog from './catalogueItemDirectoryDialog.component';
 import CatalogueItemsDetailsPanel from './catalogueItemsDetailsPanel.component';
@@ -768,15 +768,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         </>
       );
     },
-    renderBottomToolbarCustomActions: ({ table }) => (
-      <Typography sx={{ paddingLeft: '8px' }}>
-        {getTableRowCountText(
-          table.getFilteredRowModel().rows.length,
-          catalogueItemsData?.length ?? 0,
-          'Catalogue Items'
-        )}
-      </Typography>
-    ),
+    renderBottomToolbarCustomActions: ({ table }) =>
+      displayTableRowCountText(table, catalogueItemsData, 'Catalogue Items', {
+        paddingLeft: '8px',
+      }),
 
     renderTopToolbarCustomActions: ({ table }) =>
       dense && requestOrigin === 'move to' ? undefined : (

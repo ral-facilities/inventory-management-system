@@ -38,9 +38,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { System } from '../app.types';
 import {
+  displayTableRowCountText,
   generateUniqueName,
   getPageHeightCalc,
-  getTableRowCountText,
 } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
@@ -459,18 +459,15 @@ function Systems() {
                     </Table>
                   </TableContainer>
                   <Box sx={{ paddingTop: '8px' }}>
-                    <Typography
-                      sx={{
+                    {displayTableRowCountText(
+                      subsystemsTable,
+                      subsystemsData,
+                      systemId === null ? 'Systems' : 'Subsystems',
+                      {
                         paddingLeft: '8px',
                         textAlign: { sm: 'center', md: 'left' },
-                      }}
-                    >
-                      {getTableRowCountText(
-                        subsystemsTable.getFilteredRowModel().rows.length,
-                        subsystemsData?.length ?? 0,
-                        systemId === null ? 'Systems' : 'Subsystems'
-                      )}
-                    </Typography>
+                      }
+                    )}
                     <MRT_TablePagination table={subsystemsTable} />
                   </Box>
                 </Stack>

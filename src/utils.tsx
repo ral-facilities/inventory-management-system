@@ -1,5 +1,7 @@
-import { Tooltip } from '@mui/material';
+import { Theme } from '@emotion/react';
+import { SxProps, Tooltip, Typography } from '@mui/material';
 import { format, parseISO } from 'date-fns';
+import { MRT_RowData, MRT_TableInstance } from 'material-react-table';
 import React, { useRef } from 'react';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
@@ -160,12 +162,19 @@ export function sortDataList(data: any[], sortedValue: string) {
   return data.sort((a, b) => a[sortedValue].localeCompare(b[sortedValue]));
 }
 
-export function getTableRowCountText(
-  tableRowCount: number,
-  dataLength: number,
-  dataName: string
-): string {
-  return tableRowCount === dataLength
-    ? `Total ${dataName}: ${dataLength}`
-    : `Returned ${tableRowCount} out of ${dataLength} ${dataName}`;
-}
+export const displayTableRowCountText = <TData extends MRT_RowData>(
+  table: MRT_TableInstance<TData>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any,
+  dataName: string,
+  sx?: SxProps<Theme>
+) => {
+  const tableRowCount = table.getFilteredRowModel().rows.length;
+  const dataLength = data?.length ?? 0;
+  const tableRowCountText =
+    tableRowCount === dataLength
+      ? `Total ${dataName}: ${dataLength}`
+      : `Returned ${tableRowCount} out of ${dataLength} ${dataName}`;
+
+  return <Typography sx={{ ...sx }}>{tableRowCountText}</Typography>;
+};
