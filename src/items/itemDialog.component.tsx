@@ -960,7 +960,7 @@ function ItemDialog(props: ItemDialogProps) {
                             </FormControl>
                           ) : (
                             <TextField
-                              id={`item-${property.name}-input`}
+                              id={`item-${property.id}-input`}
                               label={`${property.name} ${
                                 property.unit ? `(${property.unit})` : ''
                               }`}
