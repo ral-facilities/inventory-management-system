@@ -126,13 +126,6 @@ describe('Utility functions', () => {
   });
 
   describe('OverflowTip', () => {
-    beforeEach(() => {
-      window.ResizeObserver = vi.fn().mockImplementation(() => ({
-        disconnect: vi.fn(),
-        observe: vi.fn(),
-        unobserve: vi.fn(),
-      }));
-    });
     afterEach(() => {
       vi.clearAllMocks();
     });
