@@ -1,7 +1,6 @@
 import { Theme } from '@emotion/react';
 import { SxProps, Tooltip, Typography } from '@mui/material';
 import { format, parseISO } from 'date-fns';
-import { MRT_RowData, MRT_TableInstance } from 'material-react-table';
 import React, { useRef } from 'react';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
