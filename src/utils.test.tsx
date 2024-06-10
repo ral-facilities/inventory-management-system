@@ -126,14 +126,19 @@ describe('Utility functions', () => {
   });
 
   describe('OverflowTip', () => {
+    beforeEach(() => {
+      window.ResizeObserver = vi.fn().mockImplementation(() => ({
+        disconnect: vi.fn(),
+        observe: vi.fn(),
+        unobserve: vi.fn(),
+      }));
+    });
     afterEach(() => {
       vi.clearAllMocks();
     });
     it('renders children without tooltip when content does not overflow', async () => {
       renderComponentWithRouterProvider(
-        <OverflowTip columnSize={200}>
-          {"Some text that doesn't overflow"}
-        </OverflowTip>
+        <OverflowTip>{"Some text that doesn't overflow"}</OverflowTip>
       );
 
       const overFlowTip = screen.getByText("Some text that doesn't overflow");
@@ -151,7 +156,7 @@ describe('Utility functions', () => {
 
     it('renders link without tooltip when content does not overflow', async () => {
       renderComponentWithRouterProvider(
-        <OverflowTip columnSize={200}>
+        <OverflowTip>
           <Link href="#">Some link that doesn&#39;t overflow</Link>
         </OverflowTip>
       );
@@ -171,20 +176,28 @@ describe('Utility functions', () => {
 
     it('renders children with tooltip when content overflows', async () => {
       // Mocking scrollWidth and clientWidth to make content overflow
-      const mockScrollWidth = 300;
-      const mockClientWidth = 200;
+      const observeMock = vi.fn((callback) => {
+        // Simulate the ResizeObserver callback with overflow
+        callback([
+          {
+            target: {
+              scrollWidth: 300,
+              clientWidth: 200,
+            },
+            borderBoxSize: [{ inlineSize: 200 }],
+          },
+        ]);
+      });
 
-      vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get').mockReturnValue(
-        mockScrollWidth
-      );
-      vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(
-        mockClientWidth
-      );
+      // Mocking the ResizeObserver
+      window.ResizeObserver = vi.fn().mockImplementation((callback) => ({
+        observe: () => observeMock(callback),
+        disconnect: vi.fn(),
+        unobserve: vi.fn(),
+      }));
 
       renderComponentWithRouterProvider(
-        <OverflowTip columnSize={200}>
-          Some long text that overflows
-        </OverflowTip>
+        <OverflowTip>Some long text that overflows</OverflowTip>
       );
       const overFlowTip = screen.getByText('Some long text that overflows');
 
@@ -213,18 +226,28 @@ describe('Utility functions', () => {
 
     it('renders link with tooltip when content overflows', async () => {
       // Mocking scrollWidth and clientWidth to make content overflow
-      const mockScrollWidth = 300;
-      const mockClientWidth = 200;
+      const observeMock = vi.fn((callback) => {
+        // Simulate the ResizeObserver callback with overflow
+        callback([
+          {
+            target: {
+              scrollWidth: 300,
+              clientWidth: 200,
+            },
+            borderBoxSize: [{ inlineSize: 200 }],
+          },
+        ]);
+      });
 
-      vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get').mockReturnValue(
-        mockScrollWidth
-      );
-      vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(
-        mockClientWidth
-      );
+      // Mocking the ResizeObserver
+      window.ResizeObserver = vi.fn().mockImplementation((callback) => ({
+        observe: () => observeMock(callback),
+        disconnect: vi.fn(),
+        unobserve: vi.fn(),
+      }));
 
       renderComponentWithRouterProvider(
-        <OverflowTip columnSize={200}>
+        <OverflowTip>
           <Link href="#">Some long link text that overflows</Link>
         </OverflowTip>
       );

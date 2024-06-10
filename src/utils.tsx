@@ -15,7 +15,7 @@ import {
   MRT_RowData,
   MRT_TableInstance,
 } from 'material-react-table';
-import React, { useRef } from 'react';
+import React from 'react';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -159,7 +159,6 @@ const getTextContent = (
 
 interface OverflowTipProps {
   children: React.ReactNode;
-  columnSize?: number;
   sx?: SxProps<Theme>;
   disableParagraph?: boolean;
   isMRTCell?: boolean;
@@ -167,25 +166,54 @@ interface OverflowTipProps {
 
 export const OverflowTip: React.FC<OverflowTipProps> = ({
   children,
-  columnSize,
   sx,
   disableParagraph = false,
   isMRTCell = false,
 }) => {
   const [isOverflowed, setIsOverflow] = React.useState(false);
-  const overflowElementRef = useRef<HTMLDivElement | null>(null);
 
-  React.useEffect(() => {
-    if (overflowElementRef.current) {
-      setIsOverflow(
-        overflowElementRef.current.scrollWidth >
-          overflowElementRef.current.clientWidth
-      );
-    }
-  }, [children, columnSize]);
+  const tooltipResizeObserver = React.useRef<ResizeObserver>(
+    new ResizeObserver((entries) => {
+      console.log(entries);
+      const tooltipTargetElement = entries[0].target;
+      // Check that the element has been rendered and set the viewable
+      // as false before checking to see the element has exceeded maximum width.
+      if (tooltipTargetElement && entries[0].borderBoxSize.length > 0) {
+        // Width of the tooltip contents including padding and borders
+        // This is rounded as window.innerWidth and tooltip.scrollWidth are always integer
+        const currentTargetWidth = Math.round(
+          entries[0].borderBoxSize[0].inlineSize
+        );
+        const minWidthToFitContentOfTarget = tooltipTargetElement.scrollWidth;
+        const isContentOfTargetOverflowing =
+          minWidthToFitContentOfTarget > currentTargetWidth;
+
+        setIsOverflow(isContentOfTargetOverflowing);
+      }
+    })
+  );
+
+  // need to use a useCallback instead of a useRef for this
+  // see https://reactjs.org/docs/hooks-faq.html#how-can-i-measure-a-dom-node
+  const tooltipRef = React.useCallback(
+    (container: HTMLDivElement) => {
+      if (container !== null) {
+        tooltipResizeObserver.current.observe(container);
+      } else if (tooltipResizeObserver.current) {
+        // When element is unmounted we know container is null so time to clean up
+        tooltipResizeObserver.current.disconnect();
+      }
+    },
+    // The children prop is needed in the dependency array to
+    // trigger the resize check when a table value is edited,
+    // as the value could become small and not need the overflow, or the opposite
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [children]
+  );
 
   return (
     <Tooltip
+      ref={tooltipRef}
       role="tooltip"
       title={getTextContent(children, isMRTCell)}
       disableHoverListener={!isOverflowed}
@@ -194,7 +222,6 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
       arrow
     >
       <Typography
-        ref={overflowElementRef}
         component={disableParagraph ? 'div' : 'p'}
         sx={{
           whiteSpace: 'nowrap',
@@ -240,10 +267,7 @@ export const TableHeaderOverflowTip = <TData extends MRT_RowData>(
 ) => {
   const { column } = props;
   return (
-    <OverflowTip
-      columnSize={column.getSize()}
-      sx={{ fontSize: 'inherit', fontWeight: 'inherit' }}
-    >
+    <OverflowTip sx={{ fontSize: 'inherit', fontWeight: 'inherit' }}>
       {column.columnDef.header}
     </OverflowTip>
   );
