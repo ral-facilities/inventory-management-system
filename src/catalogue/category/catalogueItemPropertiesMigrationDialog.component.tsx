@@ -876,9 +876,9 @@ function CatalogueItemPropertiesMigrationDialog(
   };
   return (
     <Dialog
-      PaperProps={{ sx: { height: '850px', width: '1250px' } }}
+      PaperProps={{ sx: { height: '850px' } }}
       open={open}
-      maxWidth="xl"
+      maxWidth="lg"
       fullWidth
     >
       <DialogTitle>Edit Catalogue Item properties</DialogTitle>
