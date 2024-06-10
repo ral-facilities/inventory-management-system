@@ -384,7 +384,7 @@ function Systems() {
           <Grid
             item
             xs={12}
-            md={2}
+            md
             minWidth={MIN_SUBSYSTEMS_WIDTH}
             textAlign="left"
             padding={1}
@@ -502,6 +502,7 @@ function Systems() {
             textAlign="left"
             padding={1}
             xs
+            md={10}
             sx={{
               maxWidth: {
                 xs: '100%',

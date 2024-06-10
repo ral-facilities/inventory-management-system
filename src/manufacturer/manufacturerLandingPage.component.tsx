@@ -237,8 +237,10 @@ function ManufacturerLandingPage() {
               marginTop: '8px',
             }}
           >
-            <Typography sx={{ fontWeight: 'bold' }}>No result found</Typography>
-            <Typography>
+            <Typography sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+              No result found
+            </Typography>
+            <Typography sx={{ textAlign: 'center' }}>
               This manufacturer doesn&#39;t exist. Please click the Home button
               to navigate to the manufacturer table
             </Typography>
