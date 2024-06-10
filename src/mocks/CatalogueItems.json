@@ -1,5 +1,41 @@
 [
   {
+    "catalogue_category_id": "9086",
+    "name": "Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow",
+    "description": "High-resolution cameras for beam characterization. 1",
+    "properties": [
+      {
+        "name": "Resolution",
+        "value": 12,
+        "unit": "megapixels",
+        "unit_id": "1",
+        "id": "78990"
+      },
+      {
+        "name": "Frame Rate",
+        "value": 30,
+        "unit": "fps",
+        "unit_id": "2",
+        "id": "78991"
+      }
+    ],
+    "id": "567786",
+    "manufacturer_id": "1",
+    "cost_gbp": 500,
+    "cost_to_rework_gbp": null,
+    "days_to_replace": 7,
+    "days_to_rework": null,
+    "drawing_number": null,
+    "drawing_link": null,
+    "item_model_number": null,
+    "is_obsolete": false,
+    "obsolete_replacement_catalogue_item_id": null,
+    "obsolete_reason": null,
+    "notes": null,
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
+  },
+  {
     "catalogue_category_id": "4",
     "name": "Cameras 1",
     "description": "High-resolution cameras for beam characterization. 1",

@@ -174,7 +174,6 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
 
   const tooltipResizeObserver = React.useRef<ResizeObserver>(
     new ResizeObserver((entries) => {
-      console.log(entries);
       const tooltipTargetElement = entries[0].target;
       // Check that the element has been rendered and set the viewable
       // as false before checking to see the element has exceeded maximum width.
