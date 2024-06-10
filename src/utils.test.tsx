@@ -3,10 +3,10 @@ import userEvent from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from './testUtils';
 import {
   OverflowTip,
+  displayTableRowCountText,
   generateUniqueId,
   generateUniqueName,
   generateUniqueNameUsingCode,
-  getTableRowCountText,
   sortDataList,
   trimStringValues,
 } from './utils';
@@ -189,17 +189,21 @@ describe('Utility functions', () => {
     });
   });
 
-  describe('getTotalRowCountText', () => {
-    it('returns total rows when there are no filters applied to table', () => {
-      const result = getTableRowCountText(10, 10, 'Tests');
+  describe('displayTableRowCountText', () => {
+    it('renders total rows when there are no filters applied to table', () => {
+      renderComponentWithRouterProvider(
+        <>{displayTableRowCountText(3, 3, 'Utils', null)}</>
+      );
 
-      expect(result).toEqual('Total Tests: 10');
+      expect(screen.getByText('Total Utils: 3')).toBeInTheDocument();
     });
 
     it('returns correct text for when there are filtered rows', () => {
-      const result = getTableRowCountText(5, 10, 'Tests');
+      renderComponentWithRouterProvider(
+        <>{displayTableRowCountText(2, 3, 'Utils', null)}</>
+      );
 
-      expect(result).toEqual('Returned 5 out of 10 Tests');
+      expect(screen.getByText('Returned 2 out of 3 Utils')).toBeInTheDocument();
     });
   });
 
