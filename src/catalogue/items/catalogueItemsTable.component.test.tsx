@@ -14,11 +14,11 @@ describe('Catalogue Items Table', () => {
   let props: CatalogueItemsTableProps;
   let user: UserEvent;
 
-  const createView = () => {
+  const createView = (initialEntry?: string) => {
     return renderComponentWithRouterProvider(
       <CatalogueItemsTable {...props} />,
       'any',
-      '/'
+      initialEntry ?? '/'
     );
   };
 
@@ -482,7 +482,9 @@ describe('Catalogue Items Table', () => {
     const rowToggleSelect = screen.getAllByLabelText('Toggle select row');
     await user.click(rowToggleSelect[1]);
 
-    expect(await screen.findByRole('button', { name: 'Move to' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('button', { name: 'Move to' })
+    ).toBeInTheDocument();
     const moveToButton = screen.getByRole('button', { name: 'Move to' });
 
     await user.click(moveToButton);
@@ -503,7 +505,9 @@ describe('Catalogue Items Table', () => {
     const rowToggleSelect = screen.getAllByLabelText('Toggle select row');
     await user.click(rowToggleSelect[1]);
 
-    expect(await screen.findByRole('button', { name: 'Copy to' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('button', { name: 'Copy to' })
+    ).toBeInTheDocument();
     const copyToButton = screen.getByRole('button', { name: 'Copy to' });
 
     await user.click(copyToButton);
@@ -606,14 +610,13 @@ describe('Catalogue Items Table', () => {
     expect(router.state.location.search).toBe('');
 
     const nameInput = screen.getByLabelText('Filter by Name');
-
     await user.type(nameInput, '29');
 
     await waitFor(() => {
       expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJqATAJwgBfALoCgA'
+      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJAAmAJwgAvmoC6aoA'
     );
 
     await user.click(clearFiltersButton);
@@ -622,6 +625,53 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe('');
+  });
+
+  it('can change the table filters and clear the table filters (min and max values)', async () => {
+    // This tests the case where min/max column filters are used as there was a bug where
+    // they wouldn't correctly reset when the clear filters button was clicked
+
+    // Start in a state with just the name and cost columns (ensureColumnsVisible seems to effect the document in a way
+    // that prevents anything outside of the show/hide menu from being found even when using escape/clicking on the document
+    // body first)
+    const { router } = createView(
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc0gWosSyowt2zfUd8CalYvCgB2FudR8ZqpyJmsOYW9GAoADjXQ1yzIsCwYKpxY31l5dMnL8WvblixCqyxqAGsmPdHkNWls3pQGMgAJ4wL4-YqlIwmMGvDqQmFw1DfWiWP7-M4gAAi1GQligEhw1gAcngyLF5oTweiKAxSeTKUwMBSCaCXhcWQ1yExNJ4MEwJHSGdRCWRkJLuGBUHhaNRJNJkSEQHKFaVlaqKCqMLL5XhFfr5hRkAw2V4HCjnDqzXqVZbSElfAALQKa4ZtWrZCRYUj2pwAXzDQA'
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+    expect(clearFiltersButton).toBeDisabled();
+    expect(router.state.location.search).toBe(
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc0gWosSyowt2zfUd8CalYvCgB2FudR8ZqpyJmsOYW9GAoADjXQ1yzIsCwYKpxY31l5dMnL8WvblixCqyxqAGsmPdHkNWls3pQGMgAJ4wL4-YqlIwmMGvDqQmFw1DfWiWP7-M4gAAi1GQligEhw1gAcngyLF5oTweiKAxSeTKUwMBSCaCXhcWQ1yExNJ4MEwJHSGdRCWRkJLuGBUHhaNRJNJkSEQHKFaVlaqKCqMLL5XhFfr5hRkAw2V4HCjnDqzXqVZbSElfAALQKa4ZtWrZCRYUj2pwAXzDQA'
+    );
+
+    // Do max first, as it technically has no effect on the outcome of the filter
+    const maxInput = screen.getByLabelText('Max');
+    await user.type(maxInput, '1000');
+
+    const minInput = screen.getByLabelText('Min');
+    await user.type(minInput, '800');
+
+    await waitFor(() => {
+      expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
+    });
+    expect(router.state.location.search).toBe(
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc0gWosSyowt2zfUd8CalYvCgB2FudR8ZqpyJmsOYW9GAoADjXQ1yzIsCwYKpxY31l5dMnL8WvblixCqyxqAGsmPdHkNWls3pQGMgAJ4wL4-YqlIwmMGvDqQmFw1DfWiWP7-M4gAAi1GQligEhw1gAcngyLF5oTweiKAxSeTKUwMBSCaCXhcWQ1yExNJ4MEwJHSGdRCWRkJLuGBUHhaNRJNJkSEQHKFaVlaqKCqMLL5XhFfr5hRkAw2V4HCjnDqzXqVZbSElfAALQKa4ZtWrZCRYUj2pwAX0UADEEABtUBQZrwf3bd43O4PEACABumEIsdAqGhcwQIFu1ApOEzIBzGDzSeOAAYGyAIwWi0ZS3IK1Wa3WQABGJvNsMAXVHYaAA'
+    );
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    expect(router.state.location.search).toBe(
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc0gWosSyowt2zfUd8CalYvCgB2FudR8ZqpyJmsOYW9GAoADjXQ1yzIsCwYKpxY31l5dMnL8WvblixCqyxqAGsmPdHkNWls3pQGMgAJ4wL4-YqlIwmMGvDqQmFw1DfWiWP7-M4gAAi1GQligEhw1gAcngyLF5oTweiKAxSeTKUwMBSCaCXhcWQ1yExNJ4MEwJHSGdRCWRkJLuGBUHhaNRJNJkSEQHKFaVlaqKCqMLL5XhFfr5hRkAw2V4HCjnDqzXqVZbSElfAALQKa4ZtWrZCRYUj2pwAXzDQA'
+    );
   });
 
   it('can sort the table columns', async () => {

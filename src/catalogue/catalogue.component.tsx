@@ -380,6 +380,7 @@ function Catalogue() {
         )}
 
       {catalogueCategoryData &&
+        catalogueCategoryData.length > 0 &&
         !parentInfo?.is_leaf &&
         !catalogueCategoryDetailLoading && (
           <CatalogueCardView
