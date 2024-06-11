@@ -160,6 +160,7 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) => row.item.asset_number,
         id: 'item.asset_number',
         size: 250,
+        GroupedCell: TableGroupedCell,
       },
       {
         header: 'Purchase Order Number',
@@ -167,6 +168,7 @@ export function ItemsTable(props: ItemTableProps) {
         accessorFn: (row) => row.item.purchase_order_number,
         id: 'item.purchase_order_number',
         size: 350,
+        GroupedCell: TableGroupedCell,
       },
       {
         header: 'Warranty End Date',
@@ -248,6 +250,7 @@ export function ItemsTable(props: ItemTableProps) {
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
         Header: TableHeaderOverflowTip,
         id: `item.properties.${property.id}`,
+        GroupedCell: TableGroupedCell,
         accessorFn: (row: TableRowData) => {
           if (property.type === 'boolean') {
             return (findPropertyValue(
@@ -383,28 +386,37 @@ export function ItemsTable(props: ItemTableProps) {
       // @ts-expect-error: MRT Table Container props does not have data-testid
       'data-testid': 'items-table-container',
     },
-    muiTableBodyCellProps: ({ column }) =>
-      // The overflow of these column groups is done manually in the column definition
-      ((column.id === 'item.warranty_end_date' ||
-        column.id === 'item.delivered_date') &&
-        column.getIsGrouped()) ||
-      // Ignore MRT rendered cells e.g. expand , spacer etc
-      column.id.startsWith('mrt')
-        ? {}
-        : {
-            component: (props: TableCellBaseProps) => {
-              return (
-                <TableBodyCellOverFlowTip
-                  {...({
-                    ...props,
-                    overFlowTipSx: {
-                      width: dense ? '25vw' : undefined,
-                    },
-                  } as TableCellOverFlowTipProps)}
-                />
-              );
-            },
-          },
+    muiTableBodyCellProps: ({ column }) => {
+      const disabledGroupedHeaderColumnIDs = [
+        'item.asset_number',
+        'item.purchase_order_number',
+        'item.warranty_end_date',
+        'item.delivered_date',
+      ];
+      return (
+        // Ignore MRT rendered cells e.g. expand , spacer etc
+        column.id.startsWith('mrt') ||
+          // Ignore for grouped cells done manually
+          ((disabledGroupedHeaderColumnIDs.some((id) => id === column.id) ||
+            column.id.startsWith('item.properties')) &&
+            column.getIsGrouped())
+          ? {}
+          : {
+              component: (props: TableCellBaseProps) => {
+                return (
+                  <TableBodyCellOverFlowTip
+                    {...({
+                      ...props,
+                      overFlowTipSx: {
+                        width: dense ? '25vw' : undefined,
+                      },
+                    } as TableCellOverFlowTipProps)}
+                  />
+                );
+              },
+            }
+      );
+    },
     muiSearchTextFieldProps: {
       size: 'small',
       variant: 'outlined',
