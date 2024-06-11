@@ -768,8 +768,6 @@ describe('Catalogue Items Table', () => {
       await screen.findByRole('tooltip', { name: 'Accuracy' })
     ).toBeInTheDocument();
 
-    screen.debug();
-
     // Check if the accuracy grouped cell is visible after scrolling
     expect(
       await screen.findByRole('tooltip', {
