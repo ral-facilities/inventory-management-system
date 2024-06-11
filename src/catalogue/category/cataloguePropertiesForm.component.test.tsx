@@ -29,6 +29,7 @@ describe('Catalogue Properties Form', () => {
   };
 
   beforeEach(() => {
+    vi.resetAllMocks();
     props = {
       formFields: [],
       onChangeFormFields: onChangeFormFields,
@@ -49,6 +50,9 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('renders correctly', async () => {
+    vi.mock('uuid', () => {
+      return { v4: vi.fn(() => '00000000-0000-0000-0000-000000000000') };
+    });
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
@@ -108,6 +112,9 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('renders correctly when disabled', async () => {
+    vi.mock('uuid', () => {
+      return { v4: vi.fn(() => '00000000-0000-0000-0000-000000000000') };
+    });
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
@@ -168,6 +175,9 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('renders correctly for migration dialog', async () => {
+    vi.mock('uuid', () => {
+      return { v4: vi.fn(() => '00000000-0000-0000-0000-000000000000') };
+    });
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
