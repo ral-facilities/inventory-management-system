@@ -15,8 +15,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="c82e3096-1ae2-45a3-8676-77a61b6aec52"
-            id="c82e3096-1ae2-45a3-8676-77a61b6aec52-label"
+            for="36b6b193-4b9a-46f8-b6e1-a69fa9f9853d"
+            id="36b6b193-4b9a-46f8-b6e1-a69fa9f9853d-label"
           >
             Property Name
             <span
@@ -32,7 +32,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-              id="c82e3096-1ae2-45a3-8676-77a61b6aec52"
+              id="36b6b193-4b9a-46f8-b6e1-a69fa9f9853d"
               required=""
               type="text"
               value="Field 1"
@@ -60,8 +60,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="648ae5f0-fb57-4ac8-9d41-7fe2ccaee34d"
-              id="648ae5f0-fb57-4ac8-9d41-7fe2ccaee34d-label"
+              for="dfebbde8-49c9-4de7-9553-fe75d79095d4"
+              id="dfebbde8-49c9-4de7-9553-fe75d79095d4-label"
             >
               Select Type
               <span
@@ -81,7 +81,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="648ae5f0-fb57-4ac8-9d41-7fe2ccaee34d"
+                id="dfebbde8-49c9-4de7-9553-fe75d79095d4"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -160,8 +160,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="93fb8315-e2cb-4400-b24e-9787bcd4713c"
-              id="93fb8315-e2cb-4400-b24e-9787bcd4713c-label"
+              for="ae94a470-4930-4710-8ef8-68a0c852b2f3"
+              id="ae94a470-4930-4710-8ef8-68a0c852b2f3-label"
             >
               Select Allowed values
               <span
@@ -181,7 +181,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="93fb8315-e2cb-4400-b24e-9787bcd4713c"
+                id="ae94a470-4930-4710-8ef8-68a0c852b2f3"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -260,8 +260,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="598abaa9-6c81-40b3-9bde-4381a994c9db"
-              id="598abaa9-6c81-40b3-9bde-4381a994c9db-label"
+              for="507d64ca-9169-4f2d-aa0d-eb5d3b08511d"
+              id="507d64ca-9169-4f2d-aa0d-eb5d3b08511d-label"
             >
               Select Unit
             </label>
@@ -275,7 +275,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="598abaa9-6c81-40b3-9bde-4381a994c9db"
+                id="507d64ca-9169-4f2d-aa0d-eb5d3b08511d"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -331,8 +331,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="cf1d8e0b-2160-48fc-a12a-df1ce4a20d9c"
-              id="cf1d8e0b-2160-48fc-a12a-df1ce4a20d9c-label"
+              for="219afdfd-3589-471a-ba4f-b915ec17a6bb"
+              id="219afdfd-3589-471a-ba4f-b915ec17a6bb-label"
             >
               Select is mandatory?
             </label>
@@ -346,7 +346,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="cf1d8e0b-2160-48fc-a12a-df1ce4a20d9c"
+                id="219afdfd-3589-471a-ba4f-b915ec17a6bb"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -458,8 +458,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="5a055f2a-7f4d-455e-a86c-109967b5349c"
-            id="5a055f2a-7f4d-455e-a86c-109967b5349c-label"
+            for="f37b6d4f-2c70-4f7b-aaf0-cff6b7c8d7f4"
+            id="f37b6d4f-2c70-4f7b-aaf0-cff6b7c8d7f4-label"
           >
             Property Name
             <span
@@ -475,7 +475,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-              id="5a055f2a-7f4d-455e-a86c-109967b5349c"
+              id="f37b6d4f-2c70-4f7b-aaf0-cff6b7c8d7f4"
               required=""
               type="text"
               value="Field 2"
@@ -503,8 +503,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="fa6fb5de-0225-4717-9188-599015bfd1a9"
-              id="fa6fb5de-0225-4717-9188-599015bfd1a9-label"
+              for="45e6dee7-c0df-4b2c-b53a-772d651c7849"
+              id="45e6dee7-c0df-4b2c-b53a-772d651c7849-label"
             >
               Select Type
               <span
@@ -524,7 +524,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="fa6fb5de-0225-4717-9188-599015bfd1a9"
+                id="45e6dee7-c0df-4b2c-b53a-772d651c7849"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -603,8 +603,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="08b58972-19d0-4fdf-82a9-90487abaa8c7"
-              id="08b58972-19d0-4fdf-82a9-90487abaa8c7-label"
+              for="337373e2-d4ad-47a2-8923-5ad71ff8757c"
+              id="337373e2-d4ad-47a2-8923-5ad71ff8757c-label"
             >
               Select Allowed values
               <span
@@ -624,7 +624,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="08b58972-19d0-4fdf-82a9-90487abaa8c7"
+                id="337373e2-d4ad-47a2-8923-5ad71ff8757c"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -703,8 +703,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="c6d3d525-b56e-4c95-8e19-8f18bd5c89da"
-              id="c6d3d525-b56e-4c95-8e19-8f18bd5c89da-label"
+              for="e86519d4-d91e-4c1b-bb12-67fcf50e9f49"
+              id="e86519d4-d91e-4c1b-bb12-67fcf50e9f49-label"
             >
               Select Unit
             </label>
@@ -718,7 +718,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="c6d3d525-b56e-4c95-8e19-8f18bd5c89da"
+                id="e86519d4-d91e-4c1b-bb12-67fcf50e9f49"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -774,8 +774,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="2e45a6c7-af12-452b-a310-3c936140c140"
-              id="2e45a6c7-af12-452b-a310-3c936140c140-label"
+              for="2a334f7f-95c4-4b70-92a2-35ecc2b29516"
+              id="2a334f7f-95c4-4b70-92a2-35ecc2b29516-label"
             >
               Select is mandatory?
             </label>
@@ -789,7 +789,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="2e45a6c7-af12-452b-a310-3c936140c140"
+                id="2a334f7f-95c4-4b70-92a2-35ecc2b29516"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -901,8 +901,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="48b432a5-b0bb-4dd0-b0a7-36c13cea5f84"
-            id="48b432a5-b0bb-4dd0-b0a7-36c13cea5f84-label"
+            for="a2c0d360-cdf8-4a2a-ae7c-93b9e3524c72"
+            id="a2c0d360-cdf8-4a2a-ae7c-93b9e3524c72-label"
           >
             Property Name
             <span
@@ -918,7 +918,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-              id="48b432a5-b0bb-4dd0-b0a7-36c13cea5f84"
+              id="a2c0d360-cdf8-4a2a-ae7c-93b9e3524c72"
               required=""
               type="text"
               value="Field 3"
@@ -946,8 +946,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="ed42eb06-1e30-4dd3-a44e-140b7cbec500"
-              id="ed42eb06-1e30-4dd3-a44e-140b7cbec500-label"
+              for="548b187f-81e7-42bf-9c71-f28104f345bf"
+              id="548b187f-81e7-42bf-9c71-f28104f345bf-label"
             >
               Select Type
               <span
@@ -967,7 +967,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="ed42eb06-1e30-4dd3-a44e-140b7cbec500"
+                id="548b187f-81e7-42bf-9c71-f28104f345bf"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -1046,8 +1046,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="e350cbf4-01f3-4b8d-8220-a3218d766af5"
-              id="e350cbf4-01f3-4b8d-8220-a3218d766af5-label"
+              for="61dac337-196d-4a7b-8d40-25ae1ce66dfa"
+              id="61dac337-196d-4a7b-8d40-25ae1ce66dfa-label"
             >
               Select Allowed values
               <span
@@ -1067,7 +1067,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="e350cbf4-01f3-4b8d-8220-a3218d766af5"
+                id="61dac337-196d-4a7b-8d40-25ae1ce66dfa"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -1297,8 +1297,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="cfb1182a-10b2-4f2c-9698-a2fcdc35c6e5"
-              id="cfb1182a-10b2-4f2c-9698-a2fcdc35c6e5-label"
+              for="1a6dfed7-a9f9-48a7-85c0-d6e5aabd3547"
+              id="1a6dfed7-a9f9-48a7-85c0-d6e5aabd3547-label"
             >
               Select Unit
             </label>
@@ -1312,7 +1312,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="cfb1182a-10b2-4f2c-9698-a2fcdc35c6e5"
+                id="1a6dfed7-a9f9-48a7-85c0-d6e5aabd3547"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -1368,8 +1368,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="3f917289-3408-4e5e-86bf-436608964fa0"
-              id="3f917289-3408-4e5e-86bf-436608964fa0-label"
+              for="523e0dc0-ed7e-489f-8ef2-66859535336c"
+              id="523e0dc0-ed7e-489f-8ef2-66859535336c-label"
             >
               Select is mandatory?
             </label>
@@ -1383,7 +1383,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="3f917289-3408-4e5e-86bf-436608964fa0"
+                id="523e0dc0-ed7e-489f-8ef2-66859535336c"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -1495,8 +1495,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="3b278d97-c2bc-4763-bcf6-f76488253e19"
-            id="3b278d97-c2bc-4763-bcf6-f76488253e19-label"
+            for="92258b4a-97ec-49b1-a4c3-7bfb685593c7"
+            id="92258b4a-97ec-49b1-a4c3-7bfb685593c7-label"
           >
             Property Name
             <span
@@ -1512,7 +1512,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-              id="3b278d97-c2bc-4763-bcf6-f76488253e19"
+              id="92258b4a-97ec-49b1-a4c3-7bfb685593c7"
               required=""
               type="text"
               value="Field 4"
@@ -1540,8 +1540,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="7a3a6ded-0b05-4571-a5d9-2379abd670e8"
-              id="7a3a6ded-0b05-4571-a5d9-2379abd670e8-label"
+              for="2ddbf23f-25e1-49c5-933f-0cb78fc149bd"
+              id="2ddbf23f-25e1-49c5-933f-0cb78fc149bd-label"
             >
               Select Type
               <span
@@ -1561,7 +1561,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="7a3a6ded-0b05-4571-a5d9-2379abd670e8"
+                id="2ddbf23f-25e1-49c5-933f-0cb78fc149bd"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -1640,8 +1640,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="ee5e4cd1-fc02-4628-b18e-3b94586a7014"
-              id="ee5e4cd1-fc02-4628-b18e-3b94586a7014-label"
+              for="996db505-3e54-4fbe-923d-afa16ff78f70"
+              id="996db505-3e54-4fbe-923d-afa16ff78f70-label"
             >
               Select Allowed values
               <span
@@ -1661,7 +1661,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="ee5e4cd1-fc02-4628-b18e-3b94586a7014"
+                id="996db505-3e54-4fbe-923d-afa16ff78f70"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -1891,8 +1891,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="3141234c-474c-4ef0-b90c-310ad16488ff"
-              id="3141234c-474c-4ef0-b90c-310ad16488ff-label"
+              for="1c79e2e3-d576-41df-a135-9fe813e2becb"
+              id="1c79e2e3-d576-41df-a135-9fe813e2becb-label"
             >
               Select Unit
             </label>
@@ -1906,7 +1906,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="3141234c-474c-4ef0-b90c-310ad16488ff"
+                id="1c79e2e3-d576-41df-a135-9fe813e2becb"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -1962,8 +1962,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="2fae743b-d586-4f55-b244-576aeeb8084b"
-              id="2fae743b-d586-4f55-b244-576aeeb8084b-label"
+              for="dbb38133-df23-4e7a-b62a-688bd3a3f67c"
+              id="dbb38133-df23-4e7a-b62a-688bd3a3f67c-label"
             >
               Select is mandatory?
             </label>
@@ -1977,7 +1977,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="2fae743b-d586-4f55-b244-576aeeb8084b"
+                id="dbb38133-df23-4e7a-b62a-688bd3a3f67c"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -2089,8 +2089,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="b53e3d24-85f9-4ef6-b48b-051362f87642"
-            id="b53e3d24-85f9-4ef6-b48b-051362f87642-label"
+            for="05b52565-60c0-4257-82cf-7e4666baa33b"
+            id="05b52565-60c0-4257-82cf-7e4666baa33b-label"
           >
             Property Name
             <span
@@ -2106,7 +2106,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <input
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-              id="b53e3d24-85f9-4ef6-b48b-051362f87642"
+              id="05b52565-60c0-4257-82cf-7e4666baa33b"
               required=""
               type="text"
               value="Field 5"
@@ -2134,8 +2134,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="9b2a1cde-b266-4281-af6a-99cbf92482c3"
-              id="9b2a1cde-b266-4281-af6a-99cbf92482c3-label"
+              for="b96d0357-1d93-492b-90e9-0f57198303de"
+              id="b96d0357-1d93-492b-90e9-0f57198303de-label"
             >
               Select Type
               <span
@@ -2155,7 +2155,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="9b2a1cde-b266-4281-af6a-99cbf92482c3"
+                id="b96d0357-1d93-492b-90e9-0f57198303de"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -2234,8 +2234,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="9899e3de-484a-4909-a101-2ea9f16459b2"
-              id="9899e3de-484a-4909-a101-2ea9f16459b2-label"
+              for="3da0685e-fe43-4c2a-9a5f-38d5331b82cc"
+              id="3da0685e-fe43-4c2a-9a5f-38d5331b82cc-label"
             >
               Select Allowed values
               <span
@@ -2255,7 +2255,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="9899e3de-484a-4909-a101-2ea9f16459b2"
+                id="3da0685e-fe43-4c2a-9a5f-38d5331b82cc"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -2359,8 +2359,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="2697481d-66af-4c75-af87-473b65eefdc3"
-              id="2697481d-66af-4c75-af87-473b65eefdc3-label"
+              for="4a2fd5b4-2c5a-489e-8960-d51cdb0cd791"
+              id="4a2fd5b4-2c5a-489e-8960-d51cdb0cd791-label"
             >
               Select Unit
             </label>
@@ -2374,7 +2374,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="2697481d-66af-4c75-af87-473b65eefdc3"
+                id="4a2fd5b4-2c5a-489e-8960-d51cdb0cd791"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -2430,8 +2430,8 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="265d8069-8d95-44f2-82e8-1c9bd3c9474c"
-              id="265d8069-8d95-44f2-82e8-1c9bd3c9474c-label"
+              for="1847cef5-e44c-4a06-af6b-083afa32e3d2"
+              id="1847cef5-e44c-4a06-af6b-083afa32e3d2-label"
             >
               Select is mandatory?
             </label>
@@ -2445,7 +2445,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
                 autocapitalize="none"
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-                id="265d8069-8d95-44f2-82e8-1c9bd3c9474c"
+                id="1847cef5-e44c-4a06-af6b-083afa32e3d2"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -2643,8 +2643,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="7c0262f5-ff6e-409d-8511-babb9c9ae7dc"
-            id="7c0262f5-ff6e-409d-8511-babb9c9ae7dc-label"
+            for="a3710b87-f93e-440a-8077-c8c5463c2e77"
+            id="a3710b87-f93e-440a-8077-c8c5463c2e77-label"
           >
             Property Name
             <span
@@ -2661,7 +2661,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               disabled=""
-              id="7c0262f5-ff6e-409d-8511-babb9c9ae7dc"
+              id="a3710b87-f93e-440a-8077-c8c5463c2e77"
               required=""
               type="text"
               value="Field 1"
@@ -2689,8 +2689,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="67930802-7ebe-4f7d-966b-fdb2490f6414"
-              id="67930802-7ebe-4f7d-966b-fdb2490f6414-label"
+              for="365a6d1b-49af-4f3f-a32b-2bb5ea610081"
+              id="365a6d1b-49af-4f3f-a32b-2bb5ea610081-label"
             >
               Select Type
               <span
@@ -2711,7 +2711,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="67930802-7ebe-4f7d-966b-fdb2490f6414"
+                id="365a6d1b-49af-4f3f-a32b-2bb5ea610081"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -2766,8 +2766,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="2e8c679a-a477-40f4-874b-156ebfea7ed6"
-              id="2e8c679a-a477-40f4-874b-156ebfea7ed6-label"
+              for="1a21156d-983c-4cd9-a505-9ce7f2168aaf"
+              id="1a21156d-983c-4cd9-a505-9ce7f2168aaf-label"
             >
               Select Allowed values
               <span
@@ -2788,7 +2788,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="2e8c679a-a477-40f4-874b-156ebfea7ed6"
+                id="1a21156d-983c-4cd9-a505-9ce7f2168aaf"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -2843,8 +2843,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="21c5f09a-9b8d-4043-b71a-3cc43fd5bdf9"
-              id="21c5f09a-9b8d-4043-b71a-3cc43fd5bdf9-label"
+              for="e98983c5-8551-4cc0-81bd-ed5a6ecce3e2"
+              id="e98983c5-8551-4cc0-81bd-ed5a6ecce3e2-label"
             >
               Select Unit
             </label>
@@ -2859,7 +2859,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="21c5f09a-9b8d-4043-b71a-3cc43fd5bdf9"
+                id="e98983c5-8551-4cc0-81bd-ed5a6ecce3e2"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -2913,8 +2913,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="6f89236a-535f-40e3-a6a5-c5ba64f2e2b3"
-              id="6f89236a-535f-40e3-a6a5-c5ba64f2e2b3-label"
+              for="ea2256e4-dda3-4bb9-86f5-e159eb9b66d0"
+              id="ea2256e4-dda3-4bb9-86f5-e159eb9b66d0-label"
             >
               Select is mandatory?
             </label>
@@ -2929,7 +2929,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="6f89236a-535f-40e3-a6a5-c5ba64f2e2b3"
+                id="ea2256e4-dda3-4bb9-86f5-e159eb9b66d0"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -3053,8 +3053,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="4112d331-d6fa-45a2-8c59-d7d6ce10e04e"
-            id="4112d331-d6fa-45a2-8c59-d7d6ce10e04e-label"
+            for="3cf2def6-852b-41f2-9629-b39035155c07"
+            id="3cf2def6-852b-41f2-9629-b39035155c07-label"
           >
             Property Name
             <span
@@ -3071,7 +3071,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               disabled=""
-              id="4112d331-d6fa-45a2-8c59-d7d6ce10e04e"
+              id="3cf2def6-852b-41f2-9629-b39035155c07"
               required=""
               type="text"
               value="Field 2"
@@ -3099,8 +3099,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="4003409f-046e-472c-8825-e3aab314e72e"
-              id="4003409f-046e-472c-8825-e3aab314e72e-label"
+              for="8b6e874a-2c32-4464-8dd2-c722ef29136e"
+              id="8b6e874a-2c32-4464-8dd2-c722ef29136e-label"
             >
               Select Type
               <span
@@ -3121,7 +3121,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="4003409f-046e-472c-8825-e3aab314e72e"
+                id="8b6e874a-2c32-4464-8dd2-c722ef29136e"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -3176,8 +3176,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="421169cc-084a-44e8-a77b-a69082315188"
-              id="421169cc-084a-44e8-a77b-a69082315188-label"
+              for="08c22129-0137-4e3e-8d39-d5ef4074dabb"
+              id="08c22129-0137-4e3e-8d39-d5ef4074dabb-label"
             >
               Select Allowed values
               <span
@@ -3198,7 +3198,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="421169cc-084a-44e8-a77b-a69082315188"
+                id="08c22129-0137-4e3e-8d39-d5ef4074dabb"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -3253,8 +3253,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="f10f428e-0c34-4735-aaca-1bcf7d9d6186"
-              id="f10f428e-0c34-4735-aaca-1bcf7d9d6186-label"
+              for="317084a1-5f87-4901-bd76-b26c2dbc92e2"
+              id="317084a1-5f87-4901-bd76-b26c2dbc92e2-label"
             >
               Select Unit
             </label>
@@ -3269,7 +3269,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="f10f428e-0c34-4735-aaca-1bcf7d9d6186"
+                id="317084a1-5f87-4901-bd76-b26c2dbc92e2"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -3323,8 +3323,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="55db2596-f6f5-47d1-acd7-a0de8501d85f"
-              id="55db2596-f6f5-47d1-acd7-a0de8501d85f-label"
+              for="96c9e9c0-f472-4a8b-af39-007017afd49b"
+              id="96c9e9c0-f472-4a8b-af39-007017afd49b-label"
             >
               Select is mandatory?
             </label>
@@ -3339,7 +3339,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="55db2596-f6f5-47d1-acd7-a0de8501d85f"
+                id="96c9e9c0-f472-4a8b-af39-007017afd49b"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -3463,8 +3463,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="9120f519-f532-4f36-b5f3-43735b780ec5"
-            id="9120f519-f532-4f36-b5f3-43735b780ec5-label"
+            for="93451627-a5ae-4309-bf09-a8cd124e91bc"
+            id="93451627-a5ae-4309-bf09-a8cd124e91bc-label"
           >
             Property Name
             <span
@@ -3481,7 +3481,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               disabled=""
-              id="9120f519-f532-4f36-b5f3-43735b780ec5"
+              id="93451627-a5ae-4309-bf09-a8cd124e91bc"
               required=""
               type="text"
               value="Field 3"
@@ -3509,8 +3509,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="5149fe64-d416-4a7e-85b4-21bbd0cf7549"
-              id="5149fe64-d416-4a7e-85b4-21bbd0cf7549-label"
+              for="d1c61513-f2c9-47fe-a3ea-a51da13e0c34"
+              id="d1c61513-f2c9-47fe-a3ea-a51da13e0c34-label"
             >
               Select Type
               <span
@@ -3531,7 +3531,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="5149fe64-d416-4a7e-85b4-21bbd0cf7549"
+                id="d1c61513-f2c9-47fe-a3ea-a51da13e0c34"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -3586,8 +3586,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="c50460c2-f51a-49c9-9ad4-a810284c438a"
-              id="c50460c2-f51a-49c9-9ad4-a810284c438a-label"
+              for="10e6e289-914f-4419-af6d-bec278ec8989"
+              id="10e6e289-914f-4419-af6d-bec278ec8989-label"
             >
               Select Allowed values
               <span
@@ -3608,7 +3608,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="c50460c2-f51a-49c9-9ad4-a810284c438a"
+                id="10e6e289-914f-4419-af6d-bec278ec8989"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -3751,8 +3751,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="3b7d5dba-bb4d-4253-90bd-f9d29ccbdb22"
-              id="3b7d5dba-bb4d-4253-90bd-f9d29ccbdb22-label"
+              for="11bc27ac-276b-4239-b4a2-e35980fa51e7"
+              id="11bc27ac-276b-4239-b4a2-e35980fa51e7-label"
             >
               Select Unit
             </label>
@@ -3767,7 +3767,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="3b7d5dba-bb4d-4253-90bd-f9d29ccbdb22"
+                id="11bc27ac-276b-4239-b4a2-e35980fa51e7"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -3821,8 +3821,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="936e550f-8d66-4373-8153-010e2ea8438c"
-              id="936e550f-8d66-4373-8153-010e2ea8438c-label"
+              for="30800f66-4a85-481a-a4cd-a5a3dc1dfcfc"
+              id="30800f66-4a85-481a-a4cd-a5a3dc1dfcfc-label"
             >
               Select is mandatory?
             </label>
@@ -3837,7 +3837,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="936e550f-8d66-4373-8153-010e2ea8438c"
+                id="30800f66-4a85-481a-a4cd-a5a3dc1dfcfc"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -3961,8 +3961,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="5a12de0b-9fc7-414c-8e74-5335a984c33c"
-            id="5a12de0b-9fc7-414c-8e74-5335a984c33c-label"
+            for="e59a751a-0a45-4b49-ab42-2ba2022a8213"
+            id="e59a751a-0a45-4b49-ab42-2ba2022a8213-label"
           >
             Property Name
             <span
@@ -3979,7 +3979,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               disabled=""
-              id="5a12de0b-9fc7-414c-8e74-5335a984c33c"
+              id="e59a751a-0a45-4b49-ab42-2ba2022a8213"
               required=""
               type="text"
               value="Field 4"
@@ -4007,8 +4007,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="cd498eb9-2c1a-4aa7-a653-88574d01fbee"
-              id="cd498eb9-2c1a-4aa7-a653-88574d01fbee-label"
+              for="f9cd575b-8881-4af6-b9ad-29767e76e213"
+              id="f9cd575b-8881-4af6-b9ad-29767e76e213-label"
             >
               Select Type
               <span
@@ -4029,7 +4029,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="cd498eb9-2c1a-4aa7-a653-88574d01fbee"
+                id="f9cd575b-8881-4af6-b9ad-29767e76e213"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -4084,8 +4084,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="eb983c64-36f5-4f53-aeb0-dbd6c99f0564"
-              id="eb983c64-36f5-4f53-aeb0-dbd6c99f0564-label"
+              for="7e5a1bb8-d44d-4bd2-96d7-b98117b295c8"
+              id="7e5a1bb8-d44d-4bd2-96d7-b98117b295c8-label"
             >
               Select Allowed values
               <span
@@ -4106,7 +4106,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="eb983c64-36f5-4f53-aeb0-dbd6c99f0564"
+                id="7e5a1bb8-d44d-4bd2-96d7-b98117b295c8"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -4249,8 +4249,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="e75e81cc-df5c-473d-8790-efe09624a1ff"
-              id="e75e81cc-df5c-473d-8790-efe09624a1ff-label"
+              for="44e95792-558d-4bf2-a905-e756562c0513"
+              id="44e95792-558d-4bf2-a905-e756562c0513-label"
             >
               Select Unit
             </label>
@@ -4265,7 +4265,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="e75e81cc-df5c-473d-8790-efe09624a1ff"
+                id="44e95792-558d-4bf2-a905-e756562c0513"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -4319,8 +4319,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="91a54286-11ce-4c57-bcf3-403b3092dcc8"
-              id="91a54286-11ce-4c57-bcf3-403b3092dcc8-label"
+              for="5d902c99-91ef-4a73-9127-954e2b75efb8"
+              id="5d902c99-91ef-4a73-9127-954e2b75efb8-label"
             >
               Select is mandatory?
             </label>
@@ -4335,7 +4335,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="91a54286-11ce-4c57-bcf3-403b3092dcc8"
+                id="5d902c99-91ef-4a73-9127-954e2b75efb8"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -4459,8 +4459,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="8118c79f-e2d2-41f0-9109-52c014d1606e"
-            id="8118c79f-e2d2-41f0-9109-52c014d1606e-label"
+            for="47dd03fd-d14b-42c8-bb21-91a68ceffc30"
+            id="47dd03fd-d14b-42c8-bb21-91a68ceffc30-label"
           >
             Property Name
             <span
@@ -4477,7 +4477,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               disabled=""
-              id="8118c79f-e2d2-41f0-9109-52c014d1606e"
+              id="47dd03fd-d14b-42c8-bb21-91a68ceffc30"
               required=""
               type="text"
               value="Field 5"
@@ -4505,8 +4505,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="8ba33954-0f4f-442e-9b12-4ab782760c16"
-              id="8ba33954-0f4f-442e-9b12-4ab782760c16-label"
+              for="b5f5264a-5f48-4cf2-9f84-0569d7cc267e"
+              id="b5f5264a-5f48-4cf2-9f84-0569d7cc267e-label"
             >
               Select Type
               <span
@@ -4527,7 +4527,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="8ba33954-0f4f-442e-9b12-4ab782760c16"
+                id="b5f5264a-5f48-4cf2-9f84-0569d7cc267e"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -4582,8 +4582,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="23c9b66c-4c3a-4f5e-8595-cfb24acf15a3"
-              id="23c9b66c-4c3a-4f5e-8595-cfb24acf15a3-label"
+              for="41cd829b-353b-4bac-b3c2-76b4e1b1c73b"
+              id="41cd829b-353b-4bac-b3c2-76b4e1b1c73b-label"
             >
               Select Allowed values
               <span
@@ -4604,7 +4604,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="23c9b66c-4c3a-4f5e-8595-cfb24acf15a3"
+                id="41cd829b-353b-4bac-b3c2-76b4e1b1c73b"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -4662,8 +4662,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="b7e1421a-c72f-42fc-ac7a-b7c9b98fe4ff"
-              id="b7e1421a-c72f-42fc-ac7a-b7c9b98fe4ff-label"
+              for="5a87cdcc-2a1a-4ffd-a662-1a1df51a7fdc"
+              id="5a87cdcc-2a1a-4ffd-a662-1a1df51a7fdc-label"
             >
               Select Unit
             </label>
@@ -4678,7 +4678,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="b7e1421a-c72f-42fc-ac7a-b7c9b98fe4ff"
+                id="5a87cdcc-2a1a-4ffd-a662-1a1df51a7fdc"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -4732,8 +4732,8 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="fba41af1-9cf6-4f13-9ce7-7642a675d0af"
-              id="fba41af1-9cf6-4f13-9ce7-7642a675d0af-label"
+              for="5de3f049-c774-41ac-81ec-735d97ba65fe"
+              id="5de3f049-c774-41ac-81ec-735d97ba65fe-label"
             >
               Select is mandatory?
             </label>
@@ -4748,7 +4748,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="fba41af1-9cf6-4f13-9ce7-7642a675d0af"
+                id="5de3f049-c774-41ac-81ec-735d97ba65fe"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -4821,8 +4821,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="368b1085-475e-4e5e-84b7-76301f513a8b"
-            id="368b1085-475e-4e5e-84b7-76301f513a8b-label"
+            for="333125b4-9cdb-4eda-8881-f41847bda750"
+            id="333125b4-9cdb-4eda-8881-f41847bda750-label"
           >
             Property Name
             <span
@@ -4839,7 +4839,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               disabled=""
-              id="368b1085-475e-4e5e-84b7-76301f513a8b"
+              id="333125b4-9cdb-4eda-8881-f41847bda750"
               required=""
               type="text"
               value="Field 1"
@@ -4867,8 +4867,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="a44d9f22-ecbc-4919-bee3-1ecd5c61a7a6"
-              id="a44d9f22-ecbc-4919-bee3-1ecd5c61a7a6-label"
+              for="c3414579-7bd0-4957-ab59-7596cfc949a5"
+              id="c3414579-7bd0-4957-ab59-7596cfc949a5-label"
             >
               Select Type
               <span
@@ -4889,7 +4889,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="a44d9f22-ecbc-4919-bee3-1ecd5c61a7a6"
+                id="c3414579-7bd0-4957-ab59-7596cfc949a5"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -4944,8 +4944,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="358438ab-b71f-4b6f-b4c6-33723107e9a6"
-              id="358438ab-b71f-4b6f-b4c6-33723107e9a6-label"
+              for="74e86452-aafd-4b08-9060-71d162d26fd7"
+              id="74e86452-aafd-4b08-9060-71d162d26fd7-label"
             >
               Select Allowed values
               <span
@@ -4966,7 +4966,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="358438ab-b71f-4b6f-b4c6-33723107e9a6"
+                id="74e86452-aafd-4b08-9060-71d162d26fd7"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -5021,8 +5021,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="0fae8e9e-6998-4970-abb1-ac5b5320c58f"
-              id="0fae8e9e-6998-4970-abb1-ac5b5320c58f-label"
+              for="5095f9bb-075e-42c3-bcdd-3611ba17220e"
+              id="5095f9bb-075e-42c3-bcdd-3611ba17220e-label"
             >
               Select Unit
             </label>
@@ -5037,7 +5037,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="0fae8e9e-6998-4970-abb1-ac5b5320c58f"
+                id="5095f9bb-075e-42c3-bcdd-3611ba17220e"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -5091,8 +5091,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="05abf10a-2bcd-4a3b-ab1c-72c11b4ffa1b"
-              id="05abf10a-2bcd-4a3b-ab1c-72c11b4ffa1b-label"
+              for="45ffa3c8-542a-4a3f-a476-fe3e6fad024b"
+              id="45ffa3c8-542a-4a3f-a476-fe3e6fad024b-label"
             >
               Select is mandatory?
             </label>
@@ -5107,7 +5107,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="05abf10a-2bcd-4a3b-ab1c-72c11b4ffa1b"
+                id="45ffa3c8-542a-4a3f-a476-fe3e6fad024b"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -5173,8 +5173,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="280e5f82-7c0e-4c0b-ac3a-7b6dc82e6ddc"
-            id="280e5f82-7c0e-4c0b-ac3a-7b6dc82e6ddc-label"
+            for="d1d875e5-6e6d-4b27-b3ad-8ac3462cbaad"
+            id="d1d875e5-6e6d-4b27-b3ad-8ac3462cbaad-label"
           >
             Property Name
             <span
@@ -5191,7 +5191,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               disabled=""
-              id="280e5f82-7c0e-4c0b-ac3a-7b6dc82e6ddc"
+              id="d1d875e5-6e6d-4b27-b3ad-8ac3462cbaad"
               required=""
               type="text"
               value="Field 2"
@@ -5219,8 +5219,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="a718eb74-78f8-473e-a627-e808a4966b1b"
-              id="a718eb74-78f8-473e-a627-e808a4966b1b-label"
+              for="e9d5a97c-27b8-4040-b43e-3e86ef8c4666"
+              id="e9d5a97c-27b8-4040-b43e-3e86ef8c4666-label"
             >
               Select Type
               <span
@@ -5241,7 +5241,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="a718eb74-78f8-473e-a627-e808a4966b1b"
+                id="e9d5a97c-27b8-4040-b43e-3e86ef8c4666"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -5296,8 +5296,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="9d9353bf-4bcd-4894-a6c4-b6b76f877f6e"
-              id="9d9353bf-4bcd-4894-a6c4-b6b76f877f6e-label"
+              for="d5548701-3a3b-4434-9ece-4bd77d682670"
+              id="d5548701-3a3b-4434-9ece-4bd77d682670-label"
             >
               Select Allowed values
               <span
@@ -5318,7 +5318,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="9d9353bf-4bcd-4894-a6c4-b6b76f877f6e"
+                id="d5548701-3a3b-4434-9ece-4bd77d682670"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -5373,8 +5373,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="1e39f0a6-8e0f-472c-9c85-9cdbc242b085"
-              id="1e39f0a6-8e0f-472c-9c85-9cdbc242b085-label"
+              for="3bb2f73d-ce90-4bd9-9ceb-ddcc3ae80c58"
+              id="3bb2f73d-ce90-4bd9-9ceb-ddcc3ae80c58-label"
             >
               Select Unit
             </label>
@@ -5389,7 +5389,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="1e39f0a6-8e0f-472c-9c85-9cdbc242b085"
+                id="3bb2f73d-ce90-4bd9-9ceb-ddcc3ae80c58"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -5443,8 +5443,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="afeecb9f-47d7-46df-bac4-ff7626005c22"
-              id="afeecb9f-47d7-46df-bac4-ff7626005c22-label"
+              for="04648880-cd5f-4d29-abec-c122f85fc709"
+              id="04648880-cd5f-4d29-abec-c122f85fc709-label"
             >
               Select is mandatory?
             </label>
@@ -5459,7 +5459,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="afeecb9f-47d7-46df-bac4-ff7626005c22"
+                id="04648880-cd5f-4d29-abec-c122f85fc709"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -5525,8 +5525,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="7d234155-f872-4231-961d-64f50c2f4da0"
-            id="7d234155-f872-4231-961d-64f50c2f4da0-label"
+            for="65f10f18-571e-4c8d-a3be-0d2482a80575"
+            id="65f10f18-571e-4c8d-a3be-0d2482a80575-label"
           >
             Property Name
             <span
@@ -5543,7 +5543,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               disabled=""
-              id="7d234155-f872-4231-961d-64f50c2f4da0"
+              id="65f10f18-571e-4c8d-a3be-0d2482a80575"
               required=""
               type="text"
               value="Field 3"
@@ -5571,8 +5571,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="7f7280cd-4aed-40e5-8b3c-439331138f39"
-              id="7f7280cd-4aed-40e5-8b3c-439331138f39-label"
+              for="611767a0-354c-4858-934a-26ee65925b86"
+              id="611767a0-354c-4858-934a-26ee65925b86-label"
             >
               Select Type
               <span
@@ -5593,7 +5593,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="7f7280cd-4aed-40e5-8b3c-439331138f39"
+                id="611767a0-354c-4858-934a-26ee65925b86"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -5648,8 +5648,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="584d7c5b-4eef-4a19-b128-c5f311514e1d"
-              id="584d7c5b-4eef-4a19-b128-c5f311514e1d-label"
+              for="57c69f18-e7c3-494c-851d-8f4e24a72ab1"
+              id="57c69f18-e7c3-494c-851d-8f4e24a72ab1-label"
             >
               Select Allowed values
               <span
@@ -5670,7 +5670,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="584d7c5b-4eef-4a19-b128-c5f311514e1d"
+                id="57c69f18-e7c3-494c-851d-8f4e24a72ab1"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -5813,8 +5813,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="a278d635-d462-4d47-818e-1caa571884ea"
-              id="a278d635-d462-4d47-818e-1caa571884ea-label"
+              for="8bf9d80c-c065-43a5-a6f6-bbce48fb4a9a"
+              id="8bf9d80c-c065-43a5-a6f6-bbce48fb4a9a-label"
             >
               Select Unit
             </label>
@@ -5829,7 +5829,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="a278d635-d462-4d47-818e-1caa571884ea"
+                id="8bf9d80c-c065-43a5-a6f6-bbce48fb4a9a"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -5883,8 +5883,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="6327bf18-0bcb-407e-a286-e7f10b7d8edf"
-              id="6327bf18-0bcb-407e-a286-e7f10b7d8edf-label"
+              for="3954285a-9186-422b-b227-7b1238b0c862"
+              id="3954285a-9186-422b-b227-7b1238b0c862-label"
             >
               Select is mandatory?
             </label>
@@ -5899,7 +5899,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="6327bf18-0bcb-407e-a286-e7f10b7d8edf"
+                id="3954285a-9186-422b-b227-7b1238b0c862"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -5965,8 +5965,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="d8bc24d6-b14c-40f8-bbde-b8e634a1ba00"
-            id="d8bc24d6-b14c-40f8-bbde-b8e634a1ba00-label"
+            for="4a9bfeaf-e084-4ce0-bcb5-2337a994eb07"
+            id="4a9bfeaf-e084-4ce0-bcb5-2337a994eb07-label"
           >
             Property Name
             <span
@@ -5983,7 +5983,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               disabled=""
-              id="d8bc24d6-b14c-40f8-bbde-b8e634a1ba00"
+              id="4a9bfeaf-e084-4ce0-bcb5-2337a994eb07"
               required=""
               type="text"
               value="Field 4"
@@ -6011,8 +6011,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="2997969f-2b70-4152-a8ab-63f3c0557bc9"
-              id="2997969f-2b70-4152-a8ab-63f3c0557bc9-label"
+              for="cc625f21-a933-4bcc-ba6e-9e754e583be9"
+              id="cc625f21-a933-4bcc-ba6e-9e754e583be9-label"
             >
               Select Type
               <span
@@ -6033,7 +6033,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="2997969f-2b70-4152-a8ab-63f3c0557bc9"
+                id="cc625f21-a933-4bcc-ba6e-9e754e583be9"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -6088,8 +6088,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="6ba7ce2a-5378-4609-9dc9-bb94d18ecba9"
-              id="6ba7ce2a-5378-4609-9dc9-bb94d18ecba9-label"
+              for="03b4714f-0ae7-49cb-8565-465bcf60e9d2"
+              id="03b4714f-0ae7-49cb-8565-465bcf60e9d2-label"
             >
               Select Allowed values
               <span
@@ -6110,7 +6110,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="6ba7ce2a-5378-4609-9dc9-bb94d18ecba9"
+                id="03b4714f-0ae7-49cb-8565-465bcf60e9d2"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -6253,8 +6253,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="8008e806-f159-449e-a8c3-703744388d72"
-              id="8008e806-f159-449e-a8c3-703744388d72-label"
+              for="c1a32462-f16a-4ef1-89da-69d2ac11c624"
+              id="c1a32462-f16a-4ef1-89da-69d2ac11c624-label"
             >
               Select Unit
             </label>
@@ -6269,7 +6269,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="8008e806-f159-449e-a8c3-703744388d72"
+                id="c1a32462-f16a-4ef1-89da-69d2ac11c624"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -6323,8 +6323,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="30ae640d-7c06-49f4-aafa-ff704c3d04bb"
-              id="30ae640d-7c06-49f4-aafa-ff704c3d04bb-label"
+              for="9e6589c2-42cb-45f4-b72c-7ed893876ba9"
+              id="9e6589c2-42cb-45f4-b72c-7ed893876ba9-label"
             >
               Select is mandatory?
             </label>
@@ -6339,7 +6339,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="30ae640d-7c06-49f4-aafa-ff704c3d04bb"
+                id="9e6589c2-42cb-45f4-b72c-7ed893876ba9"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -6405,8 +6405,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
           <label
             class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
             data-shrink="true"
-            for="0219dbe5-04dd-425d-9ceb-bffc645bdd76"
-            id="0219dbe5-04dd-425d-9ceb-bffc645bdd76-label"
+            for="f086b208-79d2-4a0d-b40d-2cdb13585411"
+            id="f086b208-79d2-4a0d-b40d-2cdb13585411-label"
           >
             Property Name
             <span
@@ -6423,7 +6423,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
               aria-invalid="false"
               class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
               disabled=""
-              id="0219dbe5-04dd-425d-9ceb-bffc645bdd76"
+              id="f086b208-79d2-4a0d-b40d-2cdb13585411"
               required=""
               type="text"
               value="Field 5"
@@ -6451,8 +6451,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="34dc69ca-091d-4a06-9872-c57809fd0b7b"
-              id="34dc69ca-091d-4a06-9872-c57809fd0b7b-label"
+              for="85ca0458-ab7e-4176-b67b-5d80c6226e2a"
+              id="85ca0458-ab7e-4176-b67b-5d80c6226e2a-label"
             >
               Select Type
               <span
@@ -6473,7 +6473,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="34dc69ca-091d-4a06-9872-c57809fd0b7b"
+                id="85ca0458-ab7e-4176-b67b-5d80c6226e2a"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -6528,8 +6528,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="4356a752-c10b-4549-8ab5-09d051541869"
-              id="4356a752-c10b-4549-8ab5-09d051541869-label"
+              for="260d1666-6d9f-482b-9ab5-0474e38a2b7e"
+              id="260d1666-6d9f-482b-9ab5-0474e38a2b7e-label"
             >
               Select Allowed values
               <span
@@ -6550,7 +6550,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="4356a752-c10b-4549-8ab5-09d051541869"
+                id="260d1666-6d9f-482b-9ab5-0474e38a2b7e"
                 required=""
                 role="combobox"
                 spellcheck="false"
@@ -6608,8 +6608,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="false"
-              for="eef195e2-f937-4603-b04c-5894c1c91819"
-              id="eef195e2-f937-4603-b04c-5894c1c91819-label"
+              for="798c0d7a-ce5d-43f0-bd3d-8cd68967fe4e"
+              id="798c0d7a-ce5d-43f0-bd3d-8cd68967fe4e-label"
             >
               Select Unit
             </label>
@@ -6624,7 +6624,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="eef195e2-f937-4603-b04c-5894c1c91819"
+                id="798c0d7a-ce5d-43f0-bd3d-8cd68967fe4e"
                 role="combobox"
                 spellcheck="false"
                 type="text"
@@ -6678,8 +6678,8 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-disabled MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
-              for="fba9f24f-a6a3-47b2-9232-8e745d50dccd"
-              id="fba9f24f-a6a3-47b2-9232-8e745d50dccd-label"
+              for="167bf501-c2c1-41fa-a0ad-c05208f89bf7"
+              id="167bf501-c2c1-41fa-a0ad-c05208f89bf7-label"
             >
               Select is mandatory?
             </label>
@@ -6694,7 +6694,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
                 autocomplete="off"
                 class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 disabled=""
-                id="fba9f24f-a6a3-47b2-9232-8e745d50dccd"
+                id="167bf501-c2c1-41fa-a0ad-c05208f89bf7"
                 role="combobox"
                 spellcheck="false"
                 type="text"
