@@ -181,8 +181,7 @@ export function ItemsTable(props: ItemTableProps) {
         GroupedCell: (props) =>
           TableGroupedCell({
             ...props,
-            emptyCellPlaceholderText: 'No warranty end date',
-            type: 'Date',
+            outputType: 'Date',
           }),
       },
       {
@@ -198,8 +197,7 @@ export function ItemsTable(props: ItemTableProps) {
         GroupedCell: (props) =>
           TableGroupedCell({
             ...props,
-            emptyCellPlaceholderText: 'No delivered date',
-            type: 'Date',
+            outputType: 'Date',
           }),
       },
       {
