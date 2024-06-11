@@ -67,7 +67,7 @@ const ObsoleteCatalogueItemDialog = (
     }
   );
 
-  // Form error that should dissappear when the form is modified
+  // Form error that should disappear when the form is modified
   const [formError, setFormError] = React.useState<string | undefined>(
     undefined
   );

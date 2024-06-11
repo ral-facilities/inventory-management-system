@@ -18,7 +18,7 @@ function excludeMSWPlugin(): PluginOption {
 }
 
 /* See https://stackoverflow.com/questions/69626090/how-to-watch-public-directory-in-vite-project-for-hot-reload allows
-   hot reloading when json files are modifeid in the public folder*/
+   hot reloading when json files are modified in the public folder*/
 function jsonHMR(): PluginOption {
   return {
     name: 'json-hmr',

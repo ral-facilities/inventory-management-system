@@ -192,7 +192,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
   });
 
   // Once loading has finished - pair up all data for the table rows
-  // If performance becomes a problem with this should remove find and fetch manufactuer
+  // If performance becomes a problem with this should remove find and fetch manufacturer
   // for each catalogue item/implement a fullDetails or something in backend
   React.useEffect(() => {
     if (!isLoading && catalogueItemsData) {
@@ -208,7 +208,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     }
     // Purposefully leave out manufacturerList - this will never be the same due
     // to the reference changing so instead am relying on isLoading to have changed to
-    // false and then back to true again for any refetches that occurr - only
+    // false and then back to true again for any re-fetches that occur - only
     // alternative I can see right now requires backend changes
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

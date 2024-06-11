@@ -71,7 +71,7 @@ const CatalogueItemDirectoryDialog = (
     setParentCategoryId(props.parentCategoryId);
   }, [onClose, props.parentCategoryId]);
 
-  // reset error message when catalogue catagory id changes
+  // reset error message when catalogue category id changes
   React.useEffect(() => {
     setErrorMessage(undefined);
   }, [parentCategoryId]);

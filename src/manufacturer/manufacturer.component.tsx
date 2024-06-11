@@ -41,7 +41,7 @@ function ManufacturerComponent() {
 
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
-  const [maufacturerDialogType, setMaufacturerDialogType] = React.useState<
+  const [manufacturerDialogType, setManufacturerDialogType] = React.useState<
     'edit' | 'create'
   >('create');
 
@@ -201,10 +201,10 @@ function ManufacturerComponent() {
           <ManufacturerDialog
             open={true}
             onClose={() => {
-              setMaufacturerDialogType('create');
+              setManufacturerDialogType('create');
               table.setCreatingRow(null);
             }}
-            type={maufacturerDialogType}
+            type={manufacturerDialogType}
             selectedManufacturer={
               selectedManufacturer ? selectedManufacturer : undefined
             }
@@ -243,7 +243,7 @@ function ManufacturerComponent() {
           key="edit"
           aria-label={`Edit manufacturer ${row.original.name}`}
           onClick={() => {
-            setMaufacturerDialogType('edit');
+            setManufacturerDialogType('edit');
             setSelectedManufacturer(row.original);
             table.setCreatingRow(true);
             closeMenu();

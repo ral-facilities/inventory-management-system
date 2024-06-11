@@ -10,16 +10,16 @@ const handleIMS_APIError = (error: AxiosError, broadcast = true): void => {
     : error.message;
 
   log.error(message);
-  // Don't broadcast any error for an authenitcation issue - navigating via homepage links causes
+  // Don't broadcast any error for an authentication issue - navigating via homepage links causes
   // a split second render of the page when not logged in. This would otherwise display an error
   // that is not displayed if navigating via SciGateway's navigation drawer instead (presumably
   // due to the plugin its routing from being different). It is assumed that errors of this nature
-  // should not be possible due to SciGatway verifing the user itself, so we follow DataGateway's
+  // should not be possible due to SciGateway verifying the user itself, so we follow DataGateway's
   // approach and don't display any of these errors.
   if (broadcast && status !== 403) {
     let broadcastMessage;
     if (!error.response)
-      // No reponse so it's a network error
+      // No response so it's a network error
       broadcastMessage =
         'Network Error, please reload the page or try again later';
     else if (status === 500)
