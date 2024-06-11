@@ -499,7 +499,7 @@ describe('Catalogue Category Dialog', () => {
       expect(screen.getByDisplayValue('number')).toBeInTheDocument();
       expect(screen.getByDisplayValue('radius')).toBeInTheDocument();
       expect(screen.getByDisplayValue('millimeters')).toBeInTheDocument();
-      expect(screen.getByText('Yes')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('yes')).toBeInTheDocument();
 
       const catagoriesRadio = screen.getByLabelText('Catalogue Categories');
       await user.click(catagoriesRadio);

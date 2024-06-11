@@ -3,12 +3,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Autocomplete,
   Box,
-  FormControl,
   FormHelperText,
   IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
   Stack,
   TextField,
 } from '@mui/material';
@@ -19,6 +15,7 @@ import {
   CatalogueItemPropertiesErrorsType,
   Unit,
 } from '../../app.types';
+import { v4 as uuidv4 } from 'uuid';
 
 export interface CataloguePropertyFormProps {
   type: 'disabled' | 'normal' | 'add migration' | 'edit migration';
@@ -53,7 +50,6 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
     catalogueItemPropertyMessage,
     allowedValuesListErrorMessage,
     hasAllowedValuesList,
-    cip_placement_id,
     isList,
     currentCatalogueItemField,
   } = props;
@@ -63,7 +59,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
   return (
     <Stack direction={isList ? 'row' : 'column'} spacing={1} padding={1}>
       <TextField
-        id={`property-name-input-${cip_placement_id ?? ''}`}
+        id={uuidv4()}
         label="Property Name"
         variant="outlined"
         required={true}
@@ -77,77 +73,73 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         }}
         disabled={type === 'disabled'}
       />
-      <FormControl
+      <Autocomplete
         disabled={type === 'disabled' || type === 'edit migration'}
-        sx={{
-          width: isList ? '150px' : '100%',
-          minWidth: isList ? '150px' : undefined,
+        id={uuidv4()}
+        value={
+          catalogueItemField.type === 'string'
+            ? 'text'
+            : catalogueItemField.type
+        }
+        onChange={(_event, value) => {
+          if (value == null) return;
+          handleChange(
+            'type',
+            value.toLowerCase() === 'text' ? 'string' : value.toLowerCase()
+          );
         }}
-      >
-        <InputLabel
-          error={!!catalogueItemPropertyMessage('type')}
-          required={true}
-          id={`catalogue-properties-form-select-type-label-${cip_placement_id ?? ''}`}
-        >
-          Select Type
-        </InputLabel>
-        <Select
-          value={
-            catalogueItemField.type === 'string'
-              ? 'text'
-              : catalogueItemField.type
-          }
-          onChange={(e) => {
-            handleChange(
-              'type',
-              e.target.value === 'text' ? 'string' : e.target.value
-            );
-          }}
-          error={!!catalogueItemPropertyMessage('type')}
-          label="Select Type"
-          labelId={`catalogue-properties-form-select-type-label-${cip_placement_id ?? ''}`}
-          required={true}
-        >
-          <MenuItem value="boolean">Boolean</MenuItem>
-          <MenuItem value="number">Number</MenuItem>
-          <MenuItem value="text">Text</MenuItem>
-        </Select>
-        {catalogueItemPropertyMessage('type') && (
-          <FormHelperText error>
-            {catalogueItemPropertyMessage('type')?.errors?.errorMessage}
-          </FormHelperText>
+        sx={{
+          width: isList ? '200px' : '100%',
+          minWidth: isList ? '200px' : undefined,
+        }}
+        fullWidth
+        options={['Boolean', 'Number', 'Text']}
+        isOptionEqualToValue={(option, value) =>
+          option.toLowerCase() == value.toLowerCase() || value == ''
+        }
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            required={true}
+            label="Select Type"
+            variant="outlined"
+            error={!!catalogueItemPropertyMessage('type')}
+            helperText={
+              catalogueItemPropertyMessage('type')?.errors?.errorMessage
+            }
+          />
         )}
-      </FormControl>
-      <FormControl
+      />
+      <Autocomplete
         disabled={
           catalogueItemField.type === 'boolean' ||
           type === 'disabled' ||
           type === 'edit migration'
         }
+        id={uuidv4()}
+        value={catalogueItemField.allowed_values?.type ?? 'any'}
+        onChange={(_event, value) => {
+          if (value === null) return;
+          handleChange('allowed_values', value?.toLowerCase());
+        }}
         sx={{
           width: isList ? '200px' : '100%',
           minWidth: isList ? '200px' : undefined,
         }}
-      >
-        <InputLabel
-          required={true}
-          id={`catalogue-properties-form-select-allowed-values-label-${cip_placement_id ?? ''}`}
-        >
-          Select Allowed values
-        </InputLabel>
-        <Select
-          value={catalogueItemField.allowed_values?.type ?? 'any'}
-          onChange={(e) => {
-            handleChange('allowed_values', e.target.value);
-          }}
-          label="Select Allowed values"
-          labelId={`catalogue-properties-form-select-allowed-values-label-${cip_placement_id ?? ''}`}
-          required={true}
-        >
-          <MenuItem value="any">Any</MenuItem>
-          <MenuItem value="list">List</MenuItem>
-        </Select>
-      </FormControl>
+        fullWidth
+        options={['Any', 'List']}
+        isOptionEqualToValue={(option, value) =>
+          option.toLowerCase() == value.toLowerCase() || value == ''
+        }
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            required={true}
+            label="Select Allowed values"
+            variant="outlined"
+          />
+        )}
+      />
       {catalogueItemField.allowed_values &&
         catalogueItemField.allowed_values.type === 'list' && (
           <Stack
@@ -287,7 +279,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           />
         ) : catalogueItemField.type === 'boolean' ? (
           <Autocomplete
-            id="catalogue-property-default-value-boolean-input"
+            id={uuidv4()}
             sx={{
               width: '100%',
             }}
@@ -318,7 +310,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           <TextField
             required={catalogueItemField.mandatory}
             label="Default value"
-            id={`catalogue-category-form-data-default-value-${cip_placement_id ?? ''}`}
+            id={uuidv4()}
             variant="outlined"
             value={catalogueItemField.default_value ?? ''}
             onChange={(e) => handleChange('default_value', e.target.value)}
@@ -333,7 +325,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           />
         ))}
       <Autocomplete
-        id={`property-unit-input-${cip_placement_id ?? ''}`}
+        id={uuidv4()}
         sx={{
           width: isList ? '200px' : '100%',
           minWidth: isList ? '200px' : undefined,
@@ -364,28 +356,31 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           />
         )}
       />
-      <FormControl
+      <Autocomplete
         disabled={type === 'disabled' || type === 'edit migration'}
+        id={uuidv4()}
+        value={catalogueItemField.mandatory ? 'yes' : 'no'}
+        onChange={(_event, value) => {
+          if (value == null) return;
+          handleChange('mandatory', value.toLowerCase() === 'yes');
+        }}
         sx={{
           width: isList ? '150px' : '100%',
           minWidth: isList ? '150px' : undefined,
         }}
-      >
-        <InputLabel
-          id={`catalogue-properties-form-select-mandatory-label-${cip_placement_id ?? ''}`}
-        >
-          Select is mandatory?
-        </InputLabel>
-        <Select
-          value={catalogueItemField.mandatory ? 'yes' : 'no'}
-          onChange={(e) => handleChange('mandatory', e.target.value === 'yes')}
-          label="Select is mandatory?"
-          labelId={`catalogue-properties-form-select-mandatory-label-${cip_placement_id ?? ''}`}
-        >
-          <MenuItem value="yes">Yes</MenuItem>
-          <MenuItem value="no">No</MenuItem>
-        </Select>
-      </FormControl>
+        fullWidth
+        options={['Yes', 'No']}
+        isOptionEqualToValue={(option, value) =>
+          option.toLowerCase() == value.toLowerCase() || value == ''
+        }
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Select is mandatory?"
+            variant="outlined"
+          />
+        )}
+      />
       <Box
         sx={{
           display: 'flex',
