@@ -5,7 +5,7 @@ import {
   AddCatalogueCategoryPropertyWithPlacementIds,
   AllowedValuesListErrorsType,
 } from '../../app.types';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import { mockUUIDv4, renderComponentWithRouterProvider } from '../../testUtils';
 import CataloguePropertiesForm, {
   CataloguePropertiesFormProps,
 } from './cataloguePropertiesForm.component';
@@ -50,9 +50,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('renders correctly', async () => {
-    vi.mock('uuid', () => {
-      return { v4: vi.fn(() => '00000000-0000-0000-0000-000000000000') };
-    });
+    mockUUIDv4();
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
@@ -112,9 +110,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('renders correctly when disabled', async () => {
-    vi.mock('uuid', () => {
-      return { v4: vi.fn(() => '00000000-0000-0000-0000-000000000000') };
-    });
+    mockUUIDv4();
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
@@ -175,9 +171,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('renders correctly for migration dialog', async () => {
-    vi.mock('uuid', () => {
-      return { v4: vi.fn(() => '00000000-0000-0000-0000-000000000000') };
-    });
+    mockUUIDv4();
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',

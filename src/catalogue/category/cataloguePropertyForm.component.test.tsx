@@ -1,4 +1,4 @@
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import { mockUUIDv4, renderComponentWithRouterProvider } from '../../testUtils';
 import CataloguePropertyForm, {
   CataloguePropertyFormProps,
 } from './cataloguePropertyForm.component';
@@ -39,9 +39,7 @@ describe('Catalogue Property Form', () => {
       allowedValuesListErrorMessage: mockAllowedValuesListErrorMessage,
       hasAllowedValuesList: mockHasAllowedValuesList,
     };
-    vi.mock('uuid', () => {
-      return { v4: vi.fn(() => '00000000-0000-0000-0000-000000000000') };
-    });
+    mockUUIDv4();
   });
 
   afterEach(() => {
