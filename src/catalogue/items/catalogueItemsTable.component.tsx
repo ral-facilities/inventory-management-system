@@ -717,7 +717,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                   {...({
                     ...props,
                     overFlowTipSx: {
-                      // This is 5vm smaller to account for the select and expand columns.
+                      // This is 5vw smaller to account for the select and expand columns.
                       width: dense ? '20vw' : undefined,
                       color:
                         isItemSelectable === undefined ||

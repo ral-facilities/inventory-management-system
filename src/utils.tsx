@@ -126,9 +126,9 @@ export const formatDateTimeStrings = (
 
 const getTextContent = (
   children: React.ReactNode,
-  isMRTCell: boolean
+  mrtCell: boolean
 ): string | React.ReactNode => {
-  if (isMRTCell) {
+  if (mrtCell) {
     if (typeof children === 'string') {
       return children;
     } else if (React.isValidElement(children)) {
@@ -161,14 +161,14 @@ interface OverflowTipProps {
   children: React.ReactNode;
   sx?: SxProps<Theme>;
   disableParagraph?: boolean;
-  isMRTCell?: boolean;
+  mrtCell?: boolean;
 }
 
 export const OverflowTip: React.FC<OverflowTipProps> = ({
   children,
   sx,
   disableParagraph = false,
-  isMRTCell = false,
+  mrtCell = false,
 }) => {
   const [isOverflowed, setIsOverflow] = React.useState(false);
 
@@ -214,7 +214,7 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
     <Tooltip
       ref={tooltipRef}
       role="tooltip"
-      title={getTextContent(children, isMRTCell)}
+      title={getTextContent(children, mrtCell)}
       disableHoverListener={!isOverflowed}
       placement="top"
       enterTouchDelay={0}
@@ -245,8 +245,8 @@ export const TableBodyCellOverFlowTip: React.FC<TableCellOverFlowTipProps> = (
   return (
     <TableCell {...tableCellProps}>
       <OverflowTip
-        disableParagraph={true}
-        isMRTCell={true}
+        disableParagraph
+        mrtCell
         sx={{ fontSize: 'inherit', ...overFlowTipSx }}
       >
         {tableCellProps.children}
