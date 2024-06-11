@@ -350,7 +350,7 @@ function Catalogue() {
         </Grid>
       </Grid>
 
-      {catalogueCategoryDataLoading &&
+      {(catalogueCategoryDataLoading || !catalogueCategoryData) &&
         (!catalogueCategoryDetailLoading || !catalogueCategoryDetail) &&
         !parentInfo?.is_leaf && (
           <Box sx={{ width: '100%' }}>
