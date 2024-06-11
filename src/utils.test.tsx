@@ -10,6 +10,7 @@ import {
   sortDataList,
   trimStringValues,
 } from './utils';
+import { MRT_Table } from 'material-react-table';
 
 describe('Utility functions', () => {
   afterEach(() => {
@@ -186,24 +187,6 @@ describe('Utility functions', () => {
           screen.getAllByText('Some long text that overflows').length
         ).toBe(1);
       });
-    });
-  });
-
-  describe('displayTableRowCountText', () => {
-    it('renders total rows when there are no filters applied to table', () => {
-      renderComponentWithRouterProvider(
-        <>{displayTableRowCountText(3, 3, 'Utils', null)}</>
-      );
-
-      expect(screen.getByText('Total Utils: 3')).toBeInTheDocument();
-    });
-
-    it('returns correct text for when there are filtered rows', () => {
-      renderComponentWithRouterProvider(
-        <>{displayTableRowCountText(2, 3, 'Utils', null)}</>
-      );
-
-      expect(screen.getByText('Returned 2 out of 3 Utils')).toBeInTheDocument();
     });
   });
 

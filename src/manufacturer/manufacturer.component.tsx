@@ -276,14 +276,9 @@ function ManufacturerComponent() {
       ];
     },
     renderBottomToolbarCustomActions: ({ table }) =>
-      displayTableRowCountText(
-        table.getFilteredRowModel().rows.length,
-        manufacturerData?.length ?? 0,
-        'Manufacturers',
-        {
-          paddingLeft: '8px',
-        }
-      ),
+      displayTableRowCountText(table, manufacturerData, 'Manufacturers', {
+        paddingLeft: '8px',
+      }),
   });
 
   const navigate = useNavigate();

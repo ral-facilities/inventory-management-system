@@ -769,14 +769,9 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       );
     },
     renderBottomToolbarCustomActions: ({ table }) =>
-      displayTableRowCountText(
-        table.getFilteredRowModel().rows.length,
-        catalogueItemsData?.length ?? 0,
-        'Catalogue Items',
-        {
-          paddingLeft: '8px',
-        }
-      ),
+      displayTableRowCountText(table, catalogueItemsData, 'Catalogue Items', {
+        paddingLeft: '8px',
+      }),
 
     renderTopToolbarCustomActions: ({ table }) =>
       dense && requestOrigin === 'move to' ? undefined : (

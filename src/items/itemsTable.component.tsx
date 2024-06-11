@@ -494,14 +494,9 @@ export function ItemsTable(props: ItemTableProps) {
       ];
     },
     renderBottomToolbarCustomActions: ({ table }) =>
-      displayTableRowCountText(
-        table.getFilteredRowModel().rows.length,
-        itemsData?.length ?? 0,
-        'Items',
-        {
-          paddingLeft: '8px',
-        }
-      ),
+      displayTableRowCountText(table, itemsData, 'Items', {
+        paddingLeft: '8px',
+      }),
 
     renderDetailPanel: dense
       ? ({ row }) => (

@@ -186,14 +186,9 @@ function Units() {
       ];
     },
     renderBottomToolbarCustomActions: ({ table }) =>
-      displayTableRowCountText(
-        table.getFilteredRowModel().rows.length,
-        unitData?.length ?? 0,
-        'Units',
-        {
-          paddingLeft: '8px',
-        }
-      ),
+      displayTableRowCountText(table, unitData, 'Units', {
+        paddingLeft: '8px',
+      }),
   });
 
   return (

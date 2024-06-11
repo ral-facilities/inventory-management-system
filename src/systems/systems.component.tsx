@@ -460,8 +460,8 @@ function Systems() {
                   </TableContainer>
                   <Box sx={{ paddingTop: '8px' }}>
                     {displayTableRowCountText(
-                      subsystemsTable.getFilteredRowModel().rows.length,
-                      subsystemsData?.length ?? 0,
+                      subsystemsTable,
+                      subsystemsData,
                       systemId === null ? 'Systems' : 'Subsystems',
                       {
                         paddingLeft: '8px',

@@ -187,14 +187,9 @@ function UsageStatuses() {
       ];
     },
     renderBottomToolbarCustomActions: ({ table }) =>
-      displayTableRowCountText(
-        table.getFilteredRowModel().rows.length,
-        usageStatusData?.length ?? 0,
-        'Usage Statuses',
-        {
-          paddingLeft: '8px',
-        }
-      ),
+      displayTableRowCountText(table, usageStatusData, 'Usage Statuses', {
+        paddingLeft: '8px',
+      }),
   });
 
   return (
