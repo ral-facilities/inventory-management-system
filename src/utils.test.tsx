@@ -3,14 +3,12 @@ import userEvent from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from './testUtils';
 import {
   OverflowTip,
-  displayTableRowCountText,
   generateUniqueId,
   generateUniqueName,
   generateUniqueNameUsingCode,
   sortDataList,
   trimStringValues,
 } from './utils';
-import { MRT_Table } from 'material-react-table';
 
 describe('Utility functions', () => {
   afterEach(() => {
