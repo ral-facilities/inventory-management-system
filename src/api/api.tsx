@@ -28,7 +28,7 @@ export const retryFailedAuthRequests = () => {
 
 /* This should be called when SciGateway logs out as would occur if a token refresh fails
    due to the refresh token being out of date - it rejects all active request promises that
-   were awaiting a token refresh using the orriginal error that occurred on the first attempt */
+   were awaiting a token refresh using the original error that occurred on the first attempt */
 export const clearFailedAuthRequestsQueue = () => {
   isFetchingAccessToken = false;
   failedAuthRequestQueue.forEach((callback) => callback(true));

@@ -151,7 +151,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
             }}
           >
             <Typography variant="h2" sx={backgroundTitleStyles}>
-              <strong>Inventory Managment</strong>
+              <strong>Inventory Management</strong>
             </Typography>
             <Typography variant="h2" sx={backgroundTitleStyles}>
               for <strong>EPAC</strong>

@@ -24,9 +24,9 @@ describe('units api functions', () => {
   });
 
   describe('useAddUnits', () => {
-    let mockdataAdd: AddUnit;
+    let mockDataAdd: AddUnit;
     beforeEach(() => {
-      mockdataAdd = {
+      mockDataAdd = {
         value: 'test',
       };
     });
@@ -36,7 +36,7 @@ describe('units api functions', () => {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockdataAdd);
+      result.current.mutate(mockDataAdd);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });

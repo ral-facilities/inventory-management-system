@@ -223,7 +223,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
-  it('renders exisiting data correctly (not obsolete)', async () => {
+  it('renders existing data correctly (not obsolete)', async () => {
     props.catalogueItem = getCatalogueItemById('1');
 
     createView();
@@ -236,7 +236,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     expect(screen.queryByText('Obsolete Replacement')).not.toBeInTheDocument();
   });
 
-  it('renders exisiting data correctly (already obsolete)', async () => {
+  it('renders existing data correctly (already obsolete)', async () => {
     createView();
 
     await waitFor(() => {
@@ -475,7 +475,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
   });
 
-  it('displays error if an unknown error occurrs', async () => {
+  it('displays error if an unknown error occurs', async () => {
     createView();
 
     await modifyForm(true, { obsolete_reason: 'Error 500' });

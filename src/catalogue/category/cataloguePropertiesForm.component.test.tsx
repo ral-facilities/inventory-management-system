@@ -561,7 +561,7 @@ describe('Catalogue Properties Form', () => {
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '4',
-        name: 'raduis 2',
+        name: 'radius 2',
         type: 'number',
         allowed_values: { type: 'list', values: [] },
         mandatory: false,
@@ -604,7 +604,7 @@ describe('Catalogue Properties Form', () => {
       {
         cip_placement_id: '4',
         mandatory: false,
-        name: 'raduis 2',
+        name: 'radius 2',
         type: 'number',
       },
     ]);
@@ -626,13 +626,13 @@ describe('Catalogue Properties Form', () => {
       },
       {
         cip_placement_id: '3',
-        name: 'raduis 1',
+        name: 'radius 1',
         type: '',
         mandatory: false,
       },
       {
         cip_placement_id: '4',
-        name: 'raduis 2',
+        name: 'radius 2',
         type: 'number',
         allowed_values: { type: 'list', values: [] },
         mandatory: false,
@@ -724,13 +724,13 @@ describe('Catalogue Properties Form', () => {
       {
         cip_placement_id: '3',
         mandatory: false,
-        name: 'raduis 1',
+        name: 'radius 1',
         type: '',
       },
       {
         cip_placement_id: '4',
         mandatory: false,
-        name: 'raduis 2',
+        name: 'radius 2',
         allowed_values: {
           type: 'list',
           values: [{ av_placement_id: 'av_placement_id_1', value: '' }],
@@ -1348,7 +1348,7 @@ describe('Catalogue Properties Form', () => {
     ]);
   });
 
-  it('should error for incorrect type values and remove error if a values has been changed for the specfic list item', async () => {
+  it('should error for incorrect type values and remove error if a values has been changed for the specific list item', async () => {
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',

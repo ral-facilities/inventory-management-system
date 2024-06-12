@@ -48,7 +48,7 @@ describe('SystemItemsTable', () => {
     it('renders correctly', async () => {
       const view = createView();
 
-      // Name (obtained from catalouge category item)
+      // Name (obtained from catalogue category item)
       await waitFor(
         () => {
           expect(
@@ -158,7 +158,7 @@ describe('SystemItemsTable', () => {
     it('can select and deselect items', async () => {
       createView();
 
-      // Name (obtained from catalouge category item)
+      // Name (obtained from catalogue category item)
       await waitFor(
         () => {
           expect(
@@ -194,7 +194,7 @@ describe('SystemItemsTable', () => {
     it('can open and close the move items dialog', async () => {
       createView();
 
-      // Name (obtained from catalouge category item)
+      // Name (obtained from catalogue category item)
       await waitFor(
         () => {
           expect(

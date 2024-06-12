@@ -149,7 +149,7 @@ export const getCatalogueItemById = (id: string): CatalogueItem | undefined => {
 
 export const catalogueItemData = (id: string): CatalogueItem[] => {
   return CatalogueItemsJSON.filter(
-    (catalogueitem) => catalogueitem.catalogue_category_id === id
+    (catalogueItem) => catalogueItem.catalogue_category_id === id
   );
 };
 
