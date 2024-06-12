@@ -225,7 +225,13 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 color="text.secondary"
                 sx={{ wordWrap: 'break-word' }}
               >
-                {manufacturerData?.name}
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`/manufacturers/${manufacturerData?.id}`}
+                >
+                  {manufacturerData?.name}
+                </MuiLink>
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} key={1}>

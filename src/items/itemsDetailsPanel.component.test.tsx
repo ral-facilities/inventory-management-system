@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import {
   getCatalogueItemById,
   getItemById,
@@ -62,6 +62,10 @@ describe('Catalogue Items details panel', () => {
   it('renders manufacturer panel correctly', async () => {
     const view = createView();
     await user.click(screen.getByRole('tab', { name: 'Manufacturer' }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Manufacturer A')).toBeInTheDocument();
+    });
 
     expect(view.asFragment()).toMatchSnapshot();
   });

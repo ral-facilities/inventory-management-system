@@ -2,6 +2,7 @@ import { screen } from '@testing-library/react';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
+  getManufacturerById,
   renderComponentWithRouterProvider,
 } from '../../testUtils';
 
@@ -23,6 +24,7 @@ describe('Catalogue Items details panel', () => {
     props = {
       catalogueItemIdData: getCatalogueItemById('89'),
       catalogueCategoryData: getCatalogueCategoryById('5'),
+      manufacturerData: getManufacturerById('1'),
     };
     user = userEvent.setup();
   });
@@ -36,6 +38,7 @@ describe('Catalogue Items details panel', () => {
   it('renders details panel correctly (with obsolete replacement link)', async () => {
     props.catalogueItemIdData = getCatalogueItemById('11');
     props.catalogueCategoryData = getCatalogueCategoryById('9');
+    props.manufacturerData = getManufacturerById('3');
     const view = createView();
 
     expect(view.asFragment()).toMatchSnapshot();
@@ -44,6 +47,7 @@ describe('Catalogue Items details panel', () => {
   it('renders details panel correctly (None values for telephone and url)', async () => {
     props.catalogueCategoryData = getCatalogueCategoryById('4');
     props.catalogueItemIdData = getCatalogueItemById('33');
+    props.manufacturerData = getManufacturerById('4');
     const view = createView();
 
     expect(view.asFragment()).toMatchSnapshot();
@@ -74,6 +78,7 @@ describe('Catalogue Items details panel', () => {
   it('renders details panel correctly (when there are no Notes)', async () => {
     props.catalogueCategoryData = getCatalogueCategoryById('4');
     props.catalogueItemIdData = getCatalogueItemById('33');
+    props.manufacturerData = getManufacturerById('4');
 
     const view = createView();
 
