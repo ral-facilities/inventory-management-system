@@ -184,7 +184,7 @@ const generateUUIDBytes = (): Uint8Array => {
   return byteArray;
 };
 
-//Mock uuid generate in all snapshot tests to ensure they are deterministic rather than random
+/* Mock uuid's generated for snapshot tests to ensure they are deterministic rather than random */
 export const mockUUIDv4 = () => {
   globalUUIDCounter = 0;
   vi.mock('uuid', async () => {
