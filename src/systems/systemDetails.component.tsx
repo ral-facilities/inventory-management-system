@@ -118,7 +118,11 @@ function SystemDetails(props: SystemDetailsProps) {
             <Grid item container spacing={1}>
               <Grid item xs={12} sm={6}>
                 <Typography variant="h6">Location</Typography>
-                <Typography variant="body1" color="text.secondary">
+                <Typography
+                  variant="body1"
+                  color="text.secondary"
+                  sx={{ wordWrap: 'break-word' }}
+                >
                   {system.location ?? 'None'}
                 </Typography>
               </Grid>
@@ -141,7 +145,11 @@ function SystemDetails(props: SystemDetailsProps) {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Typography variant="h6">Owner</Typography>
-                <Typography variant="body1" color="text.secondary">
+                <Typography
+                  variant="body1"
+                  color="text.secondary"
+                  sx={{ wordWrap: 'break-word' }}
+                >
                   {system.owner ?? 'None'}
                 </Typography>
               </Grid>
@@ -166,7 +174,7 @@ function SystemDetails(props: SystemDetailsProps) {
             <Typography
               variant="body1"
               color="text.secondary"
-              sx={{ whiteSpace: 'pre-line' }}
+              sx={{ whiteSpace: 'pre-line', wordWrap: 'break-word' }}
             >
               {system.description ?? 'None'}
             </Typography>
