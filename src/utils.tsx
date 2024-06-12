@@ -195,7 +195,7 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
 
   // need to use a useCallback instead of a useRef for this
   // see https://reactjs.org/docs/hooks-faq.html#how-can-i-measure-a-dom-node
-  const tooltipRef = React.useCallback(
+  const typographyRef = React.useCallback(
     (container: HTMLDivElement) => {
       if (container !== null) {
         tooltipResizeObserver.current.observe(container);
@@ -213,7 +213,6 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
 
   return (
     <Tooltip
-      ref={tooltipRef}
       role="tooltip"
       title={getTextContent(children, mrtCell)}
       disableHoverListener={!isOverflowed}
@@ -222,6 +221,7 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
       arrow
     >
       <Typography
+        ref={typographyRef}
         component={disableParagraph ? 'div' : 'p'}
         sx={{
           whiteSpace: 'nowrap',
