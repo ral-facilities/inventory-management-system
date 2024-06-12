@@ -37,7 +37,11 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { System } from '../app.types';
-import { generateUniqueName, getPageHeightCalc } from '../utils';
+import {
+  displayTableRowCountText,
+  generateUniqueName,
+  getPageHeightCalc,
+} from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
@@ -153,18 +157,6 @@ const CopySystemsButton = (props: {
       />
     </>
   );
-};
-
-const getTableCountText = (
-  numRowsDisplayed: number,
-  numSystems: number,
-  isRoot: boolean
-) => {
-  const systemsText = isRoot ? 'Systems' : 'Subsystems';
-  if (numRowsDisplayed === numSystems)
-    return `Total ${systemsText}: ${numSystems}`;
-  else
-    return `Returned ${numRowsDisplayed} out of ${numSystems} ${systemsText}`;
 };
 
 type MenuDialogType = SystemDialogType | 'delete';
@@ -467,18 +459,15 @@ function Systems() {
                     </Table>
                   </TableContainer>
                   <Box sx={{ paddingTop: '8px' }}>
-                    <Typography
-                      sx={{
+                    {displayTableRowCountText(
+                      subsystemsTable,
+                      subsystemsData,
+                      systemId === null ? 'Systems' : 'Subsystems',
+                      {
                         paddingLeft: '8px',
                         textAlign: { sm: 'center', md: 'left' },
-                      }}
-                    >
-                      {getTableCountText(
-                        subsystemsTable.getFilteredRowModel().rows.length,
-                        subsystemsData?.length ?? 0,
-                        systemId === null
-                      )}
-                    </Typography>
+                      }
+                    )}
                     <MRT_TablePagination table={subsystemsTable} />
                   </Box>
                 </Stack>

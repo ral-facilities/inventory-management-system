@@ -8,7 +8,6 @@ import {
   ListItemText,
   MenuItem,
   TableRow,
-  Typography,
 } from '@mui/material';
 import { useUnits } from '../../api/units';
 import {
@@ -20,7 +19,11 @@ import { Unit } from '../../app.types';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
-import { formatDateTimeStrings, getPageHeightCalc } from '../../utils';
+import {
+  displayTableRowCountText,
+  formatDateTimeStrings,
+  getPageHeightCalc,
+} from '../../utils';
 import UnitsDialog from './unitsDialog.component.tsx';
 import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
 
@@ -182,13 +185,10 @@ function Units() {
         </MenuItem>,
       ];
     },
-    renderBottomToolbarCustomActions: ({ table }) => (
-      <Typography sx={{ paddingLeft: '8px' }}>
-        {table.getFilteredRowModel().rows.length == unitData?.length
-          ? `Total Units: ${unitData.length}`
-          : `Returned ${table.getFilteredRowModel().rows.length} out of ${unitData?.length} Units`}
-      </Typography>
-    ),
+    renderBottomToolbarCustomActions: ({ table }) =>
+      displayTableRowCountText(table, unitData, 'Units', {
+        paddingLeft: '8px',
+      }),
   });
 
   return (

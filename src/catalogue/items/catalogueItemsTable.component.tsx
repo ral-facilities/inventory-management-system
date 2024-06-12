@@ -39,6 +39,7 @@ import {
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
   OverflowTip,
+  displayTableRowCountText,
   formatDateTimeStrings,
   generateUniqueName,
   getPageHeightCalc,
@@ -767,13 +768,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         </>
       );
     },
-    renderBottomToolbarCustomActions: ({ table }) => (
-      <Typography sx={{ paddingLeft: '8px' }}>
-        {table.getFilteredRowModel().rows.length == catalogueItemsData?.length
-          ? `Total Catalogue Items: ${catalogueItemsData.length}`
-          : `Returned ${table.getFilteredRowModel().rows.length} out of ${catalogueItemsData?.length} Catalogue Items`}
-      </Typography>
-    ),
+    renderBottomToolbarCustomActions: ({ table }) =>
+      displayTableRowCountText(table, catalogueItemsData, 'Catalogue Items', {
+        paddingLeft: '8px',
+      }),
 
     renderTopToolbarCustomActions: ({ table }) =>
       dense && requestOrigin === 'move to' ? undefined : (
