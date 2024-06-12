@@ -29,7 +29,6 @@ describe('Catalogue Properties Form', () => {
   };
 
   beforeEach(() => {
-    vi.resetAllMocks();
     props = {
       formFields: [],
       onChangeFormFields: onChangeFormFields,
@@ -46,6 +45,7 @@ describe('Catalogue Properties Form', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+    vi.resetAllMocks();
     resetUniqueIdCounter();
   });
 
