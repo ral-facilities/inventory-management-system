@@ -173,7 +173,10 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'Warranty End Date',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => new Date(row.item.warranty_end_date ?? ''),
+        accessorFn: (row) =>
+          row.item.warranty_end_date
+            ? new Date(row.item.warranty_end_date)
+            : null,
         id: 'item.warranty_end_date',
         filterVariant: 'date-range',
         size: 350,
@@ -189,7 +192,8 @@ export function ItemsTable(props: ItemTableProps) {
       {
         header: 'Delivered Date',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => new Date(row.item.delivered_date ?? ''),
+        accessorFn: (row) =>
+          row.item.delivered_date ? new Date(row.item.delivered_date) : null,
         id: 'item.delivered_date',
         filterVariant: 'date-range',
         size: 350,

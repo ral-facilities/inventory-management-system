@@ -322,7 +322,8 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       {
         header: 'Delivered Date',
         Header: TableHeaderOverflowTip,
-        accessorFn: (row) => new Date(row.item.delivered_date ?? ''),
+        accessorFn: (row) =>
+          row.item.delivered_date ? new Date(row.item.delivered_date) : null,
         id: 'item.delivered_date',
         filterVariant: 'date-range',
         size: 350,
