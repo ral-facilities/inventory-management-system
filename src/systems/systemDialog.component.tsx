@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Box,
   Button,
   Chip,
@@ -7,12 +8,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
   FormHelperText,
   Grid,
-  InputLabel,
-  MenuItem,
-  Select,
   TextField,
 } from '@mui/material';
 import { AxiosError } from 'axios';
@@ -271,7 +268,92 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             />
           </Grid>
           <Grid item>
-            <FormControl fullWidth>
+            <Autocomplete
+              multiple
+              limitTags={1}
+              disableClearable={true}
+              id="importance-select"
+              options={Object.values(SystemImportanceType)}
+              getOptionLabel={(option) => option}
+              value={[systemData.importance]}
+              onChange={(_event, value) => {
+                // as is a multiple autocomplete this removes original selection from list
+                // therefore only the new option is in the array
+                value.shift();
+
+                handleFormChange({
+                  ...systemData,
+                  importance: value[0],
+                });
+              }}
+              renderInput={(params) => <TextField {...params} />}
+              renderTags={() => (
+                <Chip
+                  label={systemData.importance}
+                  sx={() => {
+                    const colorName = getSystemImportanceColour(
+                      systemData.importance
+                    );
+                    return {
+                      margin: 0,
+                      bgcolor: `${colorName}.main`,
+                      color: `${colorName}.contrastText`,
+                    };
+                  }}
+                />
+              )}
+              renderOption={(props, option) => (
+                <li {...props}>
+                  <Chip
+                    label={option}
+                    sx={() => {
+                      const colorName = getSystemImportanceColour(option);
+                      return {
+                        margin: 0,
+                        bgcolor: `${colorName}.main`,
+                        color: `${colorName}.contrastText`,
+                      };
+                    }}
+                  />
+                </li>
+              )}
+            />
+            {/* <Autocomplete
+        id="importance-select-label"
+        value={systemData.importance}
+        onChange={(_event, value) => {
+          handleFormChange({
+            ...systemData,
+            importance: value as SystemImportanceType,
+          });
+        }}
+        fullWidth
+        options={Object.values(SystemImportanceType)}
+        getOptionLabel={(options) =>
+          Object.values(SystemImportanceType).map((value, i) => (
+          <MenuItem key={i} value={value}>
+            <Chip
+              label={value}
+              sx={() => {
+                const colorName = getSystemImportanceColour(value);
+                return {
+                  margin: 0,
+                  bgcolor: `${colorName}.main`,
+                  color: `${colorName}.contrastText`,
+                };
+              }}
+            />
+          </MenuItem>
+        ))}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Importance"
+            variant="outlined"
+          />
+        )}
+      /> */}
+            {/* <FormControl fullWidth>
               <InputLabel id="importance-select-label">Importance</InputLabel>
               <Select
                 labelId="importance-select-label"
@@ -300,7 +382,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
                   </MenuItem>
                 ))}
               </Select>
-            </FormControl>
+            </FormControl> */}
           </Grid>
         </Grid>
       </DialogContent>
