@@ -78,8 +78,9 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         id={`catalogue-properties-form-select-type-label${cip_placement_id ?? ''}`}
         value={
           catalogueItemField.type === 'string'
-            ? 'text'
-            : catalogueItemField.type
+            ? 'Text'
+            : catalogueItemField.type.charAt(0).toUpperCase() +
+              catalogueItemField.type.slice(1)
         }
         onChange={(_event, value) => {
           if (value == null) return;
@@ -94,9 +95,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         }}
         fullWidth
         options={['Boolean', 'Number', 'Text']}
-        isOptionEqualToValue={(option, value) =>
-          option.toLowerCase() == value.toLowerCase() || value == ''
-        }
+        isOptionEqualToValue={(option, value) => option == value || value == ''}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -119,7 +118,11 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           type === 'edit migration'
         }
         id={`catalogue-properties-form-select-allowed-values-label${cip_placement_id ?? ''}`}
-        value={catalogueItemField.allowed_values?.type ?? 'any'}
+        value={
+          catalogueItemField.allowed_values?.type == 'list'
+            ? 'List'
+            : catalogueItemField.allowed_values?.type ?? 'Any'
+        }
         onChange={(_event, value) => {
           if (value === null) return;
           handleChange('allowed_values', value?.toLowerCase());
@@ -358,10 +361,10 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         disableClearable={true}
         disabled={type === 'disabled' || type === 'edit migration'}
         id={`catalogue-properties-form-select-mandatory-label${cip_placement_id ?? ''}`}
-        value={catalogueItemField.mandatory ? 'yes' : 'no'}
+        value={catalogueItemField.mandatory ? 'Yes' : 'No'}
         onChange={(_event, value) => {
           if (value == null) return;
-          handleChange('mandatory', value.toLowerCase() === 'yes');
+          handleChange('mandatory', value === 'Yes');
         }}
         sx={{
           width: isList ? '150px' : '100%',
@@ -369,9 +372,6 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         }}
         fullWidth
         options={['Yes', 'No']}
-        isOptionEqualToValue={(option, value) =>
-          option.toLowerCase() == value.toLowerCase() || value == ''
-        }
         renderInput={(params) => (
           <TextField
             {...params}

@@ -774,6 +774,7 @@ function ItemDialog(props: ItemDialogProps) {
             <Grid item xs={12}>
               <FormControl fullWidth>
                 <Autocomplete
+                  disableClearable={true}
                   id="is-defective"
                   value={itemDetails.is_defective == 'true' ? 'Yes' : 'No'}
                   size="small"
@@ -799,12 +800,13 @@ function ItemDialog(props: ItemDialogProps) {
             <Grid item xs={12}>
               <FormControl size="small" fullWidth>
                 <Autocomplete
+                  disableClearable={true}
                   id="usage-status"
                   value={
                     usageStatuses?.find(
                       (usageStatus) =>
                         usageStatus.id == itemDetails.usage_status_id
-                    ) ?? null
+                    ) ?? undefined
                   }
                   size="small"
                   onChange={(_event, usageStatus: UsageStatus | null) => {
@@ -890,7 +892,14 @@ function ItemDialog(props: ItemDialogProps) {
                                   /\s+/g,
                                   '-'
                                 )}`}
-                                value={(propertyValues[index] as string) ?? ''}
+                                value={
+                                  propertyValues[index]
+                                    ? (propertyValues[index] as string)
+                                        .charAt(0)
+                                        .toUpperCase() +
+                                      (propertyValues[index] as string).slice(1)
+                                    : ''
+                                }
                                 size="small"
                                 onChange={(_event, value) => {
                                   handlePropertyChange(
@@ -921,6 +930,7 @@ function ItemDialog(props: ItemDialogProps) {
                           ) : property.allowed_values ? (
                             <FormControl fullWidth>
                               <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
