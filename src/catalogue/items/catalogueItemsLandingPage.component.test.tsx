@@ -323,4 +323,14 @@ describe('Catalogue Items Landing Page', () => {
     expect(screen.getByText('Telephone number')).toBeInTheDocument();
     expect(screen.getAllByText('None')[1]).toBeInTheDocument();
   });
+
+  it('navigates to manufacturer landing page', async () => {
+    createView('/catalogue/item/1');
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+    });
+
+    const url = await screen.findByText('Manufacturer A');
+    expect(url).toHaveAttribute('href', '/manufacturers/1');
+  });
 });

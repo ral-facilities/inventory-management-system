@@ -404,7 +404,13 @@ function CatalogueItemsLandingPage() {
                         Name
                       </Typography>
                       <Typography align="left" color="text.secondary">
-                        {manufacturer?.name}
+                        <MuiLink
+                          underline="hover"
+                          component={Link}
+                          to={`/manufacturers/${manufacturer.id}`}
+                        >
+                          {manufacturer.name}
+                        </MuiLink>
                       </Typography>
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>

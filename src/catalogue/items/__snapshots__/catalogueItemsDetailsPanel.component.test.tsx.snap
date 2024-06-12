@@ -426,7 +426,14 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    />
+                    >
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="/manufacturers/4"
+                      >
+                        Manufacturer D
+                      </a>
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -466,7 +473,9 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      3 Example Street
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     />
@@ -475,10 +484,14 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     />
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      United Kingdom
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      OX1 2AB
+                    </p>
                   </div>
                 </div>
               </div>
@@ -950,7 +963,14 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    />
+                    >
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="/manufacturers/4"
+                      >
+                        Manufacturer D
+                      </a>
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -990,7 +1010,9 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      3 Example Street
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     />
@@ -999,10 +1021,14 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     />
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      United Kingdom
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      OX1 2AB
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1424,7 +1450,14 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    />
+                    >
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="/manufacturers/3"
+                      >
+                        Manufacturer C
+                      </a>
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1437,7 +1470,13 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                     >
-                      None
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="http://test.co.uk"
+                        target="_blank"
+                      >
+                        http://test.co.uk
+                      </a>
                     </p>
                   </div>
                   <div
@@ -1451,7 +1490,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
-                      None
+                      07934303412
                     </p>
                   </div>
                   <div
@@ -1464,19 +1503,29 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      3 Example Street
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      Oxford
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      Oxfordshire
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      United Kingdom
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      OX1 2AB
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1898,7 +1947,14 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    />
+                    >
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="/manufacturers/1"
+                      >
+                        Manufacturer A
+                      </a>
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1911,7 +1967,13 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                     >
-                      None
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="http://example.com"
+                        target="_blank"
+                      >
+                        http://example.com
+                      </a>
                     </p>
                   </div>
                   <div
@@ -1925,7 +1987,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
-                      None
+                      07334893348
                     </p>
                   </div>
                   <div
@@ -1938,19 +2000,29 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      1 Example Street
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      Oxford
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      Oxfordshire
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      United Kingdom
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      OX1 2AB
+                    </p>
                   </div>
                 </div>
               </div>
@@ -2381,7 +2453,14 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    />
+                    >
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="/manufacturers/1"
+                      >
+                        Manufacturer A
+                      </a>
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -2394,7 +2473,13 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                     >
-                      None
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="http://example.com"
+                        target="_blank"
+                      >
+                        http://example.com
+                      </a>
                     </p>
                   </div>
                   <div
@@ -2408,7 +2493,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
-                      None
+                      07334893348
                     </p>
                   </div>
                   <div
@@ -2421,19 +2506,29 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      1 Example Street
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      Oxford
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      Oxfordshire
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      United Kingdom
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      OX1 2AB
+                    </p>
                   </div>
                 </div>
               </div>
@@ -2865,7 +2960,14 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    />
+                    >
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="/manufacturers/1"
+                      >
+                        Manufacturer A
+                      </a>
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -2878,7 +2980,13 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                     >
-                      None
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="http://example.com"
+                        target="_blank"
+                      >
+                        http://example.com
+                      </a>
                     </p>
                   </div>
                   <div
@@ -2892,7 +3000,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
-                      None
+                      07334893348
                     </p>
                   </div>
                   <div
@@ -2905,19 +3013,29 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      1 Example Street
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      Oxford
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      Oxfordshire
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      United Kingdom
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      OX1 2AB
+                    </p>
                   </div>
                 </div>
               </div>
@@ -3347,7 +3465,14 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    />
+                    >
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="/manufacturers/1"
+                      >
+                        Manufacturer A
+                      </a>
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -3360,7 +3485,13 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                     >
-                      None
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="http://example.com"
+                        target="_blank"
+                      >
+                        http://example.com
+                      </a>
                     </p>
                   </div>
                   <div
@@ -3374,7 +3505,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
                     >
-                      None
+                      07334893348
                     </p>
                   </div>
                   <div
@@ -3387,19 +3518,29 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      1 Example Street
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      Oxford
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      Oxfordshire
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      United Kingdom
+                    </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
-                    />
+                    >
+                      OX1 2AB
+                    </p>
                   </div>
                 </div>
               </div>
