@@ -38,11 +38,7 @@ describe('Catalogue Items Table', () => {
       dense: false,
     };
     user = userEvent.setup();
-    window.ResizeObserver = vi.fn().mockImplementation(() => ({
-      disconnect: vi.fn(),
-      observe: vi.fn(),
-      unobserve: vi.fn(),
-    }));
+
     window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
@@ -189,93 +185,6 @@ describe('Catalogue Items Table', () => {
       'Is Obsolete',
       'Notes',
     ]);
-  });
-
-  it('displays full description on hover', async () => {
-    // Mocking scrollWidth and clientWidth to make content overflow
-    const mockScrollWidth = 300;
-    const mockClientWidth = 200;
-
-    vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get').mockReturnValue(
-      mockScrollWidth
-    );
-    vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(
-      mockClientWidth
-    );
-
-    createView();
-
-    await waitFor(() => {
-      expect(screen.getByText('Last modified')).toBeInTheDocument();
-    });
-
-    await ensureColumnsVisible(['Description']);
-
-    const infoIcon = screen.getByText(
-      'Precision energy meters for accurate measurements. 26'
-    );
-
-    await waitFor(() => {
-      expect(
-        screen.getAllByText(
-          'Precision energy meters for accurate measurements. 26'
-        ).length
-      ).toBe(1);
-    });
-
-    await user.hover(infoIcon);
-
-    await waitFor(() => {
-      expect(
-        screen.getAllByText(
-          'Precision energy meters for accurate measurements. 26'
-        ).length
-      ).toBe(2);
-    });
-
-    await user.unhover(infoIcon);
-
-    await waitFor(() => {
-      expect(
-        screen.getAllByText(
-          'Precision energy meters for accurate measurements. 26'
-        ).length
-      ).toBe(1);
-    });
-  }, 20000);
-
-  it('displays notes tooltip on hover', async () => {
-    createView();
-
-    await ensureColumnsVisible(['Notes']);
-
-    await waitFor(() => {
-      expect(
-        screen.getByLabelText(
-          'Catalogue item note: Need to find new manufacturer. 26'
-        )
-      ).toBeInTheDocument();
-    });
-
-    const infoIcon = screen.getByLabelText(
-      'Catalogue item note: Need to find new manufacturer. 26'
-    );
-
-    await user.hover(infoIcon);
-
-    await waitFor(() => {
-      expect(
-        screen.getByText('Need to find new manufacturer. 26')
-      ).toBeInTheDocument();
-    });
-
-    await user.unhover(infoIcon);
-
-    await waitFor(() => {
-      expect(
-        screen.queryByText('Need to find new manufacturer. 26')
-      ).not.toBeInTheDocument();
-    });
   });
 
   it('opens the delete catalogue item dialog and can delete an item', async () => {
@@ -593,6 +502,11 @@ describe('Catalogue Items Table', () => {
     await waitFor(() => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
+
+    // Ensure no loading bars visible
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
 
     expect(view.asFragment()).toMatchSnapshot();
   });

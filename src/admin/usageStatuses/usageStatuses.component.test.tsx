@@ -10,11 +10,6 @@ describe('Usage statuses', () => {
   };
   beforeEach(() => {
     user = userEvent.setup();
-    window.ResizeObserver = vi.fn().mockImplementation(() => ({
-      disconnect: vi.fn(),
-      observe: vi.fn(),
-      unobserve: vi.fn(),
-    }));
   });
 
   it('renders table correctly', async () => {

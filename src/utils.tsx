@@ -1,8 +1,21 @@
-import { Theme } from '@emotion/react';
-import { SxProps, Tooltip, Typography } from '@mui/material';
+import {
+  SxProps,
+  TableCell,
+  Theme,
+  Tooltip,
+  Typography,
+  type TableCellProps,
+} from '@mui/material';
 import { format, parseISO } from 'date-fns';
-import { MRT_RowData, MRT_TableInstance } from 'material-react-table';
-import React, { useRef } from 'react';
+import {
+  MRT_Cell,
+  MRT_Column,
+  MRT_Header,
+  MRT_Row,
+  MRT_RowData,
+  MRT_TableInstance,
+} from 'material-react-table';
+import React from 'react';
 
 /* Returns a name avoiding duplicates by appending _copy_n for nth copy */
 export const generateUniqueName = (
@@ -111,38 +124,197 @@ export const formatDateTimeStrings = (
   return formattedDate;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const OverflowTip = ({ children, columnSize }: any) => {
-  const [isOverflowed, setIsOverflow] = React.useState(false);
-  const overflowElementRef = useRef<HTMLInputElement | null>(null);
-  React.useEffect(() => {
-    if (overflowElementRef.current) {
-      setIsOverflow(
-        overflowElementRef.current.scrollWidth >
-          overflowElementRef.current.clientWidth
-      );
+const getTextContent = (
+  children: React.ReactNode,
+  mrtCell: boolean
+): string | React.ReactNode => {
+  if (mrtCell) {
+    if (typeof children === 'string') {
+      return children;
+    } else if (React.isValidElement(children)) {
+      if (children.props.children[0] && children.props.children[0].props.cell) {
+        const childCell = children.props.children[0].props.cell;
+        if (childCell.renderValue() instanceof Date) {
+          return children;
+        } else {
+          if (childCell.getIsGrouped()) {
+            return `${String(childCell.renderValue())} (${childCell.row.subRows?.length})`;
+          } else {
+            return String(childCell.renderValue());
+          }
+        }
+      }
     }
-  }, [columnSize]);
+  } else {
+    if (typeof children === 'string') {
+      return children;
+    } else if (React.isValidElement(children)) {
+      return getTextContent(children.props.children, false);
+    } else if (Array.isArray(children)) {
+      return children.map((child) => getTextContent(child, false)).join(' ');
+    }
+  }
+  return '';
+};
+
+interface OverflowTipProps {
+  children: React.ReactNode;
+  sx?: SxProps<Theme>;
+  disableParagraph?: boolean;
+  mrtCell?: boolean;
+}
+
+export const OverflowTip: React.FC<OverflowTipProps> = ({
+  children,
+  sx,
+  disableParagraph = false,
+  mrtCell = false,
+}) => {
+  const [isOverflowed, setIsOverflow] = React.useState(false);
+
+  const tooltipResizeObserver = React.useRef<ResizeObserver>(
+    new ResizeObserver((entries) => {
+      const tooltipTargetElement = entries[0].target;
+      // Check that the element has been rendered and set the viewable
+      // as false before checking to see the element has exceeded maximum width.
+      if (tooltipTargetElement && entries[0].borderBoxSize.length > 0) {
+        // Width of the tooltip contents including padding and borders
+        // This is rounded as window.innerWidth and tooltip.scrollWidth are always integer
+        const currentTargetWidth = Math.round(
+          entries[0].borderBoxSize[0].inlineSize
+        );
+        const minWidthToFitContentOfTarget = tooltipTargetElement.scrollWidth;
+        const isContentOfTargetOverflowing =
+          minWidthToFitContentOfTarget > currentTargetWidth;
+
+        setIsOverflow(isContentOfTargetOverflowing);
+      }
+    })
+  );
+
+  // need to use a useCallback instead of a useRef for this
+  // see https://reactjs.org/docs/hooks-faq.html#how-can-i-measure-a-dom-node
+  const tooltipRef = React.useCallback(
+    (container: HTMLDivElement) => {
+      if (container !== null) {
+        tooltipResizeObserver.current.observe(container);
+      } else if (tooltipResizeObserver.current) {
+        // When element is unmounted we know container is null so time to clean up
+        tooltipResizeObserver.current.disconnect();
+      }
+    },
+    // The children prop is needed in the dependency array to
+    // trigger the resize check when a table value is edited,
+    // as the value could become small and not need the overflow, or the opposite
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [children]
+  );
+
   return (
     <Tooltip
+      ref={tooltipRef}
       role="tooltip"
-      title={children}
+      title={getTextContent(children, mrtCell)}
       disableHoverListener={!isOverflowed}
       placement="top"
       enterTouchDelay={0}
       arrow
     >
-      <div
-        ref={overflowElementRef}
-        style={{
+      <Typography
+        component={disableParagraph ? 'div' : 'p'}
+        sx={{
           whiteSpace: 'nowrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
+          ...sx,
         }}
       >
         {children}
-      </div>
+      </Typography>
     </Tooltip>
+  );
+};
+
+export interface TableCellOverFlowTipProps extends TableCellProps {
+  overFlowTipSx?: SxProps<Theme>;
+}
+export const TableBodyCellOverFlowTip: React.FC<TableCellOverFlowTipProps> = (
+  props
+): JSX.Element => {
+  const { overFlowTipSx, ...tableCellProps } = props;
+  return (
+    <TableCell {...tableCellProps}>
+      <OverflowTip
+        disableParagraph
+        mrtCell
+        sx={{ fontSize: 'inherit', ...overFlowTipSx }}
+      >
+        {tableCellProps.children}
+      </OverflowTip>
+    </TableCell>
+  );
+};
+
+interface MRTHeaderProps<TData extends MRT_RowData> {
+  column: MRT_Column<TData, unknown>;
+  header: MRT_Header<TData>;
+  table: MRT_TableInstance<TData>;
+}
+
+export const TableHeaderOverflowTip = <TData extends MRT_RowData>(
+  props: MRTHeaderProps<TData>
+) => {
+  const { column } = props;
+  return (
+    <OverflowTip sx={{ fontSize: 'inherit', fontWeight: 'inherit' }}>
+      {column.columnDef.header}
+    </OverflowTip>
+  );
+};
+
+interface MRTGroupedCellProps<TData extends MRT_RowData> {
+  row: MRT_Row<TData>;
+  table: MRT_TableInstance<TData>;
+  cell: MRT_Cell<TData, unknown>;
+  column: MRT_Column<TData, unknown>;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getNestedProperty(obj: any, path: string): any {
+  return path
+    .split('.')
+    .reduce((o, p) => (o && o[p] !== undefined ? o[p] : undefined), obj);
+}
+
+interface ModifiedMRTGroupedCellProps<TData extends MRT_RowData>
+  extends MRTGroupedCellProps<TData> {
+  emptyCellPlaceholderText: string;
+  type?: 'Date';
+}
+
+export const TableGroupedCell = <TData extends MRT_RowData>(
+  props: ModifiedMRTGroupedCellProps<TData>
+) => {
+  const { row, column, emptyCellPlaceholderText, type } = props;
+  const columnID = column.id;
+
+  const cellData = getNestedProperty(row.original, columnID);
+
+  return (
+    <OverflowTip
+      disableParagraph
+      sx={{
+        fontSize: 'inherit',
+        mx: 0.5,
+      }}
+    >
+      {cellData
+        ? type === 'Date'
+          ? formatDateTimeStrings(cellData, false)
+          : cellData
+        : emptyCellPlaceholderText}{' '}
+      {`(${row.subRows?.length})`}
+    </OverflowTip>
   );
 };
 

@@ -150,6 +150,12 @@ describe('delete item dialog', () => {
     await act(async () => {
       baseElement = createView().baseElement;
     });
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'Pico Laser' })
+      ).toBeInTheDocument();
+    });
     expect(baseElement).toMatchSnapshot();
   });
 });

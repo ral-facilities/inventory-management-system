@@ -5,7 +5,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import FolderCopyOutlinedIcon from '@mui/icons-material/FolderCopyOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
@@ -14,8 +13,8 @@ import {
   ListItemText,
   MenuItem,
   Link as MuiLink,
+  TableCellBaseProps,
   TableRow,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import {
@@ -38,7 +37,9 @@ import {
 } from '../../app.types';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
-  OverflowTip,
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
+  TableHeaderOverflowTip,
   displayTableRowCountText,
   formatDateTimeStrings,
   generateUniqueName,
@@ -236,22 +237,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     return [
       {
         header: 'Name',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.name,
         id: 'catalogueItem.name',
         size: 200,
         Cell: ({ renderedCellValue, row }) =>
           dense ? (
-            <Typography
-              sx={{
-                color:
-                  isItemSelectable === undefined ||
-                  isItemSelectable(row.original.catalogueItem)
-                    ? 'inherit'
-                    : 'action.disabled',
-              }}
-            >
-              {renderedCellValue}
-            </Typography>
+            renderedCellValue
           ) : (
             <MuiLink
               underline="hover"
@@ -264,17 +256,18 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Last modified',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.catalogueItem.modified_time),
         id: 'catalogueItem.modified_time',
         filterVariant: 'datetime-range',
         size: 350,
         enableGrouping: false,
         Cell: ({ row }) =>
-          row.original.catalogueItem.modified_time &&
           formatDateTimeStrings(row.original.catalogueItem.modified_time, true),
       },
       {
         header: 'Created',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.catalogueItem.created_time),
         id: 'catalogueItem.created_time',
         filterVariant: 'datetime-range',
@@ -286,6 +279,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'View Items',
+        Header: TableHeaderOverflowTip,
         size: 200,
         enableGrouping: false,
         Cell: ({ row }) => (
@@ -300,19 +294,15 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Description',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.description ?? '',
         id: 'catalogueItem.description',
         size: 250,
         enableGrouping: false,
-        Cell: ({ cell, row }) =>
-          row.original.catalogueItem.description && (
-            <OverflowTip columnSize={cell.column.getSize()}>
-              {row.original.catalogueItem.description}
-            </OverflowTip>
-          ),
       },
       {
         header: 'Is Obsolete',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) =>
           row.catalogueItem.is_obsolete === true ? 'Yes' : 'No',
         id: 'catalogueItem.is_obsolete',
@@ -321,6 +311,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Obsolete replacement link',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) =>
           row.catalogueItem.obsolete_replacement_catalogue_item_id ?? '',
         id: 'catalogueItem.obsolete_replacement_catalogue_item_id',
@@ -341,25 +332,15 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Obsolete Reason',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.obsolete_reason ?? '',
         id: 'catalogueItem.obsolete_reason',
         size: 250,
         enableGrouping: false,
-        Cell: ({ row }) =>
-          row.original.catalogueItem.obsolete_reason && (
-            <Tooltip
-              title={row.original.catalogueItem.obsolete_reason}
-              placement="top"
-              enterTouchDelay={0}
-              arrow
-              aria-label={`Catalogue item obsolete reason: ${row.original.catalogueItem.obsolete_reason}`}
-            >
-              <InfoOutlinedIcon />
-            </Tooltip>
-          ),
       },
       ...viewCatalogueItemProperties.map((property) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
+        Header: TableHeaderOverflowTip,
         id: `row.catalogueItem.properties.${property.id}`,
         accessorFn: (row: TableRowData) => {
           if (property.type === 'boolean') {
@@ -383,7 +364,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             return findPropertyValue(row.catalogueItem.properties, property.id);
           }
         },
-        size: 250,
+        size: 300,
         filterVariant:
           propertyFilters[
             property.type as 'string' | 'boolean' | 'number' | 'null'
@@ -432,6 +413,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       })),
       {
         header: 'Cost (£)',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.cost_gbp,
         id: 'catalogueItem.cost_gbp',
         size: 250,
@@ -439,6 +421,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Cost to Rework (£)',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.cost_to_rework_gbp ?? 0,
         id: 'catalogueItem.cost_to_rework_gbp',
         size: 300,
@@ -454,13 +437,15 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Time to replace (days)',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.days_to_replace,
         id: 'catalogueItem.days_to_replace',
-        size: 250,
+        size: 300,
         filterVariant: 'range',
       },
       {
         header: 'Days to Rework',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.days_to_rework ?? 0,
         id: 'catalogueItem.days_to_rework',
         size: 250,
@@ -476,11 +461,13 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Drawing Number',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.drawing_number ?? '',
         size: 250,
       },
       {
         header: 'Drawing Link',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.drawing_link ?? '',
         id: 'catalogueItem.drawing_link',
         size: 250,
@@ -499,14 +486,17 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Item Model Number',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.item_model_number ?? '',
         id: 'catalogueItem.item_model_number',
         size: 250,
       },
       {
         header: 'Manufacturer Name',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.manufacturer?.name,
         id: 'manufacturer.name',
+        size: 250,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
@@ -521,8 +511,10 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Manufacturer URL',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.manufacturer?.url,
         id: 'manufacturer.url',
+        size: 250,
         Cell: ({ row }) => (
           <MuiLink
             underline="hover"
@@ -537,9 +529,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Manufacturer Address',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) =>
           `${row.manufacturer?.address.address_line}${row.manufacturer?.address.town}${row.manufacturer?.address.county}${row.manufacturer?.address.postcode}${row.manufacturer?.address.country}`,
         id: 'manufacturer.address',
+        size: 300,
         Cell: ({ row }) => (
           <div style={{ display: 'inline-block' }}>
             <Typography sx={{ fontSize: 'inherit' }}>
@@ -562,31 +556,21 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       },
       {
         header: 'Manufacturer Telephone',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.manufacturer?.telephone,
         id: 'manufacturer.telephone',
-        Cell: ({ row }) => row.original.manufacturer?.telephone,
+        size: 300,
       },
       {
         header: 'Notes',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.notes ?? '',
         id: 'catalogueItem.notes',
         size: 250,
         enableGrouping: false,
-        Cell: ({ row }) =>
-          row.original.catalogueItem.notes && (
-            <Tooltip
-              title={row.original.catalogueItem.notes}
-              placement="top"
-              enterTouchDelay={0}
-              arrow
-              aria-label={`Catalogue item note: ${row.original.catalogueItem.notes}`}
-            >
-              <InfoOutlinedIcon />
-            </Tooltip>
-          ),
       },
     ];
-  }, [dense, isItemSelectable, parentInfo.catalogue_item_properties]);
+  }, [dense, parentInfo.catalogue_item_properties]);
 
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     selectedRowState ?? {}
@@ -635,22 +619,27 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
 
   const table = useMaterialReactTable({
     // Data
-    columns: dense ? [{ ...columns[0], size: 1135 }] : columns, // If dense only show the name column
+    columns: dense
+      ? [
+          { ...columns[0], size: undefined },
+          { ...columns[1], size: undefined },
+        ]
+      : columns, // If dense only show the name column
     data: tableRows ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     // Features
-    enableColumnOrdering: dense ? false : true,
+    enableColumnOrdering: !dense,
     enableFacetedValues: true,
-    enableColumnResizing: dense ? false : true,
-    enableRowActions: dense ? false : true,
+    enableColumnResizing: !dense,
+    enableRowActions: !dense,
     enableStickyHeader: true,
     enableDensityToggle: false,
     enableRowSelection: true,
-    enableHiding: dense ? false : true,
+    enableHiding: !dense,
     enableTopToolbar: true,
-    enableMultiRowSelection: dense ? false : true,
+    enableMultiRowSelection: !dense,
     enableRowVirtualization: false,
     enableFullScreenToggle: false,
-    enableColumnVirtualization: dense ? false : true,
+    enableColumnVirtualization: !dense,
     enableGlobalFilter: !dense,
     enableGrouping: !dense,
     enablePagination: true,
@@ -715,6 +704,33 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     muiTableContainerProps: {
       sx: { height: dense ? '360.4px' : tableHeight },
     },
+    muiTableBodyCellProps: ({ column, row }) =>
+      // ignore cells that render "click here"
+      column.id === 'View Items' ||
+      column.id === 'catalogueItem.obsolete_replacement_catalogue_item_id' ||
+      // Ignore MRT rendered cells e.g. expand , spacer etc
+      column.id.startsWith('mrt')
+        ? {}
+        : {
+            component: (props: TableCellBaseProps) => {
+              return (
+                <TableBodyCellOverFlowTip
+                  {...({
+                    ...props,
+                    overFlowTipSx: {
+                      // This is 5vw smaller to account for the select and expand columns.
+                      width: dense ? '20vw' : undefined,
+                      color:
+                        isItemSelectable === undefined ||
+                        isItemSelectable(row.original.catalogueItem)
+                          ? 'inherit'
+                          : 'action.disabled',
+                    },
+                  } as TableCellOverFlowTipProps)}
+                />
+              );
+            },
+          },
     muiSelectCheckboxProps: dense
       ? ({ row }) => {
           return {

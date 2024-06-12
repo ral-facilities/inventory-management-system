@@ -37,7 +37,9 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { System } from '../app.types';
+import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
+  OverflowTip,
   displayTableRowCountText,
   generateUniqueName,
   getPageHeightCalc,
@@ -47,7 +49,6 @@ import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog, { SystemDialogType } from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
-import { usePreservedTableState } from '../common/preservedTableState.component';
 
 /* Returns function that navigates to a specific system id (or to the root of all systems
    if given null) */
@@ -165,6 +166,18 @@ const columns: MRT_ColumnDef<System>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
+    Cell: ({ row }) => {
+      return (
+        <OverflowTip
+          sx={{
+            fontSize: 'inherit',
+            maxWidth: { md: 'max(9vw, 180px)', xs: '68vw' },
+          }}
+        >
+          {row.original.name}
+        </OverflowTip>
+      );
+    },
   },
 ];
 

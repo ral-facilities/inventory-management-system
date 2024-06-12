@@ -907,7 +907,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                   <TextField
                                     {...params}
                                     required={property.mandatory ?? false}
-                                    label={property.name}
+                                    label={`${property.name} ${
+                                      property.unit ? `(${property.unit})` : ''
+                                    }`}
                                     error={propertyErrors[index]}
                                     helperText={
                                       propertyErrors[index] &&
@@ -958,7 +960,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                             title={
                               <div>
                                 <Typography>Name: {property.name}</Typography>
-                                <Typography>Unit: {property.unit}</Typography>
+                                <Typography>
+                                  Unit: {property.unit ?? 'None'}
+                                </Typography>
                                 <Typography>
                                   Type:{' '}
                                   {property.type === 'string'
