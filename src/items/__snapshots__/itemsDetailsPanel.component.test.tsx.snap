@@ -440,7 +440,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    />
+                    >
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="/manufacturers/undefined"
+                      />
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -978,7 +983,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (no dat
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    />
+                    >
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="/manufacturers/undefined"
+                      />
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -1516,7 +1526,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    />
+                    >
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="/manufacturers/undefined"
+                      />
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -2054,7 +2069,12 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                     </p>
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
-                    />
+                    >
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="/manufacturers/undefined"
+                      />
+                    </p>
                   </div>
                   <div
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
@@ -2604,7 +2624,12 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                     >
-                      Manufacturer A
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="/manufacturers/1"
+                      >
+                        Manufacturer A
+                      </a>
                     </p>
                   </div>
                   <div
@@ -3172,7 +3197,12 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                     >
-                      Manufacturer A
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="/manufacturers/1"
+                      >
+                        Manufacturer A
+                      </a>
                     </p>
                   </div>
                   <div
@@ -3738,7 +3768,12 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                     <p
                       class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
                     >
-                      Manufacturer A
+                      <a
+                        class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                        href="/manufacturers/1"
+                      >
+                        Manufacturer A
+                      </a>
                     </p>
                   </div>
                   <div

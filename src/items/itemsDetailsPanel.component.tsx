@@ -199,7 +199,13 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
             <Grid item xs={12} sm={6} key={0}>
               <Typography color="text.primary">Manufacturer Name</Typography>
               <Typography color="text.secondary">
-                {manufacturerData?.name}
+                <MuiLink
+                  underline="hover"
+                  component={Link}
+                  to={`/manufacturers/${manufacturerData?.id}`}
+                >
+                  {manufacturerData?.name}
+                </MuiLink>
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} key={1}>

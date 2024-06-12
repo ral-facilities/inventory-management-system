@@ -248,4 +248,14 @@ describe('Items Landing Page', () => {
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
   });
+
+  it('navigates to manufacturer landing page', async () => {
+    createView('/catalogue/item/1/items/KvT2Ox7n');
+    await waitFor(() => {
+      expect(screen.getByText('Cameras 1')).toBeInTheDocument();
+    });
+
+    const url = await screen.findByText('Manufacturer A');
+    expect(url).toHaveAttribute('href', '/manufacturers/1');
+  });
 });
