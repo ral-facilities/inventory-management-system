@@ -1,5 +1,6 @@
 import WarningIcon from '@mui/icons-material/Warning';
 import {
+  Autocomplete,
   Box,
   Button,
   Dialog,
@@ -16,6 +17,7 @@ import {
   Step,
   StepLabel,
   Stepper,
+  TextField,
   Typography,
 } from '@mui/material';
 import React from 'react';
@@ -764,36 +766,42 @@ function CatalogueItemPropertiesMigrationDialog(
         return (
           <Box>
             <FormControl sx={{ textAlign: 'center', margin: 1 }} fullWidth>
-              <InputLabel id={'select-edit-or-add'}>
-                Select Edit to edit an existing property or select Add to add a
-                new property
-              </InputLabel>
-              <Select
-                labelId={'select-edit-or-add'}
-                value={propertyMigrationType ?? ''}
-                onChange={(e) => {
+              <Autocomplete
+                id="select-edit-or-add"
+                disableClearable={true}
+                options={['Edit', 'Add']}
+                value={
+                  propertyMigrationType === 'edit'
+                    ? 'Edit'
+                    : propertyMigrationType === 'add'
+                      ? 'Add'
+                      : undefined
+                }
+                onChange={(_event, value) => {
                   setPropertyMigrationType(
-                    e.target.value === 'edit' ? 'edit' : 'add'
+                    value?.toLowerCase() === 'edit' ? 'edit' : 'add'
                   );
-
                   setSteps(
-                    e.target.value === 'edit'
+                    value?.toLowerCase() === 'edit'
                       ? [STEPS_EDIT[0], STEPS_EDIT[1]]
                       : STEPS_ADD
                   );
                   setCatalogueItemField(
-                    e.target.value === 'edit'
+                    value?.toLowerCase() === 'edit'
                       ? undefined
                       : getEmptyCatalogueItemField()
                   );
                   setAllowedValuesListErrors([]);
                   setCatalogueItemPropertiesErrors([]);
                 }}
-                label="Select Edit to edit an existing property or select Add to add a new property"
-              >
-                <MenuItem value={'edit'}>Edit</MenuItem>
-                <MenuItem value={'add'}>Add</MenuItem>
-              </Select>
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Select Edit to edit an existing property or select Add to add a new property"
+                    variant="outlined"
+                  />
+                )}
+              />
             </FormControl>
             <Paper
               elevation={3}
