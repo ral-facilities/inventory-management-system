@@ -39,6 +39,7 @@ import { usePreservedTableState } from '../../common/preservedTableState.compone
 import {
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
+  TableGroupedCell,
   TableHeaderOverflowTip,
   displayTableRowCountText,
   formatDateTimeStrings,
@@ -253,6 +254,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               {renderedCellValue}
             </MuiLink>
           ),
+        GroupedCell: TableGroupedCell,
       },
       {
         header: 'Last modified',
@@ -341,7 +343,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
       ...viewCatalogueItemProperties.map((property) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
         Header: TableHeaderOverflowTip,
-        id: `row.catalogueItem.properties.${property.id}`,
+        id: `catalogueItem.properties.${property.id}`,
+        GroupedCell: TableGroupedCell,
         accessorFn: (row: TableRowData) => {
           if (property.type === 'boolean') {
             return (findPropertyValue(
@@ -434,6 +437,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               ? row.original.catalogueItem.cost_to_rework_gbp
               : '';
         },
+        GroupedCell: TableGroupedCell,
       },
       {
         header: 'Time to replace (days)',
@@ -458,12 +462,15 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               ? row.original.catalogueItem.cost_to_rework_gbp
               : '';
         },
+        GroupedCell: TableGroupedCell,
       },
       {
         header: 'Drawing Number',
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem.drawing_number ?? '',
+        id: 'catalogueItem.drawing_number',
         size: 250,
+        GroupedCell: TableGroupedCell,
       },
       {
         header: 'Drawing Link',
@@ -483,6 +490,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
               {row.original.catalogueItem.drawing_link}
             </MuiLink>
           ),
+        GroupedCell: (props) =>
+          TableGroupedCell({ ...props, outputType: 'Link' }),
       },
       {
         header: 'Item Model Number',
@@ -490,6 +499,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         accessorFn: (row) => row.catalogueItem.item_model_number ?? '',
         id: 'catalogueItem.item_model_number',
         size: 250,
+        GroupedCell: TableGroupedCell,
       },
       {
         header: 'Manufacturer Name',
@@ -526,6 +536,8 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
             {row.original.manufacturer?.url}
           </MuiLink>
         ),
+        GroupedCell: (props) =>
+          TableGroupedCell({ ...props, outputType: 'Link' }),
       },
       {
         header: 'Manufacturer Address',
@@ -703,34 +715,53 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         },
     muiTableContainerProps: {
       sx: { height: dense ? '360.4px' : tableHeight },
+      // @ts-expect-error: MRT Table Container props does not have data-testid
+      'data-testid': 'catalogue-items-table-container',
     },
-    muiTableBodyCellProps: ({ column, row }) =>
-      // ignore cells that render "click here"
-      column.id === 'View Items' ||
-      column.id === 'catalogueItem.obsolete_replacement_catalogue_item_id' ||
-      // Ignore MRT rendered cells e.g. expand , spacer etc
-      column.id.startsWith('mrt')
-        ? {}
-        : {
-            component: (props: TableCellBaseProps) => {
-              return (
-                <TableBodyCellOverFlowTip
-                  {...({
-                    ...props,
-                    overFlowTipSx: {
-                      // This is 5vw smaller to account for the select and expand columns.
-                      width: dense ? '20vw' : undefined,
-                      color:
-                        isItemSelectable === undefined ||
-                        isItemSelectable(row.original.catalogueItem)
-                          ? 'inherit'
-                          : 'action.disabled',
-                    },
-                  } as TableCellOverFlowTipProps)}
-                />
-              );
-            },
-          },
+    muiTableBodyCellProps: ({ column, row }) => {
+      const disabledGroupedHeaderColumnIDs = [
+        'catalogueItem.name',
+        'catalogueItem.cost_to_rework_gbp',
+        'catalogueItem.days_to_rework',
+        'catalogueItem.drawing_number',
+        'catalogueItem.drawing_link',
+        'catalogueItem.item_model_number',
+        'manufacturer.url',
+      ];
+      return (
+        // ignore cells that render "click here"
+        column.id === 'View Items' ||
+          column.id ===
+            'catalogueItem.obsolete_replacement_catalogue_item_id' ||
+          // Ignore MRT rendered cells e.g. expand , spacer etc
+          column.id.startsWith('mrt') ||
+          // Ignore for grouped cells done manually
+          ((disabledGroupedHeaderColumnIDs.some((id) => id === column.id) ||
+            column.id.startsWith('catalogueItem.properties')) &&
+            column.getIsGrouped())
+          ? {}
+          : {
+              component: (props: TableCellBaseProps) => {
+                return (
+                  <TableBodyCellOverFlowTip
+                    {...({
+                      ...props,
+                      overFlowTipSx: {
+                        // This is 5vw smaller to account for the select and expand columns.
+                        width: dense ? '20vw' : undefined,
+                        color:
+                          isItemSelectable === undefined ||
+                          isItemSelectable(row.original.catalogueItem)
+                            ? 'inherit'
+                            : 'action.disabled',
+                      },
+                    } as TableCellOverFlowTipProps)}
+                  />
+                );
+              },
+            }
+      );
+    },
     muiSelectCheckboxProps: dense
       ? ({ row }) => {
           return {

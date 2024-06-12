@@ -183,7 +183,7 @@ describe('SystemItemsTable', () => {
       ).toBeInTheDocument();
 
       expect(
-        screen.getByRole('tooltip', { name: 'No delivered date (1)' })
+        screen.getByRole('tooltip', { name: 'No Delivered Date (1)' })
       ).toBeInTheDocument();
     });
 

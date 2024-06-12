@@ -110,6 +110,7 @@ exports[`Catalogue Items Table > renders the dense table correctly 1`] = `
       </div>
       <div
         class="MuiTableContainer-root css-14c53ac-MuiTableContainer-root"
+        data-testid="catalogue-items-table-container"
       >
         <table
           class="MuiTable-root MuiTable-stickyHeader css-1y6k1sx-MuiTable-root"

@@ -1,4 +1,5 @@
 import {
+  Link as MuiLink,
   SxProps,
   TableCell,
   Theme,
@@ -288,17 +289,31 @@ function getNestedProperty(obj: any, path: string): any {
 
 interface ModifiedMRTGroupedCellProps<TData extends MRT_RowData>
   extends MRTGroupedCellProps<TData> {
-  emptyCellPlaceholderText: string;
-  type?: 'Date';
+  outputType?: 'Link' | 'Date'; // default is Text
 }
 
 export const TableGroupedCell = <TData extends MRT_RowData>(
   props: ModifiedMRTGroupedCellProps<TData>
 ) => {
-  const { row, column, emptyCellPlaceholderText, type } = props;
+  const { row, column, outputType } = props;
   const columnID = column.id;
 
-  const cellData = getNestedProperty(row.original, columnID);
+  const isProperties = columnID.split('.').includes('properties');
+
+  let cellData;
+  if (isProperties) {
+    const [propertyID, ...trailingColumnID] = columnID.split('.').reverse();
+
+    const propertiesColumnID = trailingColumnID.reverse().join('.');
+
+    const properties = getNestedProperty(row.original, propertiesColumnID);
+
+    cellData = Array.isArray(properties)
+      ? properties.find((property) => property.id === propertyID).value
+      : undefined;
+  } else {
+    cellData = getNestedProperty(row.original, columnID);
+  }
 
   return (
     <OverflowTip
@@ -308,11 +323,24 @@ export const TableGroupedCell = <TData extends MRT_RowData>(
         mx: 0.5,
       }}
     >
-      {cellData
-        ? type === 'Date'
-          ? formatDateTimeStrings(cellData, false)
-          : cellData
-        : emptyCellPlaceholderText}{' '}
+      {cellData ? (
+        outputType === 'Date' ? (
+          formatDateTimeStrings(cellData, false)
+        ) : outputType === 'Link' ? (
+          <MuiLink
+            underline="hover"
+            target="_blank"
+            href={cellData}
+            sx={{ marginRight: 0.5 }}
+          >
+            {cellData}
+          </MuiLink>
+        ) : (
+          cellData
+        )
+      ) : (
+        `No ${column.columnDef.header}`
+      )}{' '}
       {`(${row.subRows?.length})`}
     </OverflowTip>
   );
