@@ -7,7 +7,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
       class="MuiBox-root css-70qvj9"
     >
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -450,7 +450,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
       class="MuiBox-root css-70qvj9"
     >
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -893,7 +893,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
       class="MuiBox-root css-70qvj9"
     >
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -1487,7 +1487,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
       class="MuiBox-root css-70qvj9"
     >
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -2081,7 +2081,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
       class="MuiBox-root css-70qvj9"
     >
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -2635,7 +2635,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
         </div>
       </div>
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -3045,7 +3045,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
         </div>
       </div>
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -3455,7 +3455,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
         </div>
       </div>
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -3953,7 +3953,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
         </div>
       </div>
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -4451,7 +4451,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
         </div>
       </div>
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -4813,7 +4813,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
       class="MuiBox-root css-70qvj9"
     >
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -5165,7 +5165,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
       class="MuiBox-root css-70qvj9"
     >
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -5517,7 +5517,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
       class="MuiBox-root css-70qvj9"
     >
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -5957,7 +5957,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
       class="MuiBox-root css-70qvj9"
     >
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -6397,7 +6397,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
       class="MuiBox-root css-70qvj9"
     >
       <div
-        class="MuiStack-root css-1lyw9k2-MuiStack-root"
+        class="MuiStack-root css-b5qyhj-MuiStack-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"

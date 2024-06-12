@@ -57,7 +57,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
   const { data: units } = useUnits();
 
   return (
-    <Stack direction={isList ? 'row' : 'column'} spacing={1} padding={1}>
+    <Stack direction={isList ? 'row' : 'column'} spacing={1} padding={0.5}>
       <TextField
         id={uuidv4()}
         label="Property Name"

@@ -3,7 +3,7 @@
 exports[`Catalogue Property Form > renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiStack-root css-1lvd381-MuiStack-root"
+    class="MuiStack-root css-f0bh1u-MuiStack-root"
   >
     <div
       class="MuiFormControl-root MuiTextField-root css-136h9lv-MuiFormControl-root-MuiTextField-root"
@@ -513,7 +513,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
 exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
 <DocumentFragment>
   <div
-    class="MuiStack-root css-1lyw9k2-MuiStack-root"
+    class="MuiStack-root css-b5qyhj-MuiStack-root"
   >
     <div
       class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -1045,7 +1045,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
 exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
 <DocumentFragment>
   <div
-    class="MuiStack-root css-1lyw9k2-MuiStack-root"
+    class="MuiStack-root css-b5qyhj-MuiStack-root"
   >
     <div
       class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -1507,7 +1507,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
 exports[`Catalogue Property Form > renders correctly for list view 1`] = `
 <DocumentFragment>
   <div
-    class="MuiStack-root css-1lyw9k2-MuiStack-root"
+    class="MuiStack-root css-b5qyhj-MuiStack-root"
   >
     <div
       class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -2039,7 +2039,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
 exports[`Catalogue Property Form > renders correctly for list view when disabled 1`] = `
 <DocumentFragment>
   <div
-    class="MuiStack-root css-1lyw9k2-MuiStack-root"
+    class="MuiStack-root css-b5qyhj-MuiStack-root"
   >
     <div
       class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -2438,7 +2438,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
 exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
 <DocumentFragment>
   <div
-    class="MuiStack-root css-1lvd381-MuiStack-root"
+    class="MuiStack-root css-f0bh1u-MuiStack-root"
   >
     <div
       class="MuiFormControl-root MuiTextField-root css-136h9lv-MuiFormControl-root-MuiTextField-root"

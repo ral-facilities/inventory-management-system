@@ -52,7 +52,7 @@ export interface SystemDialogProps {
   type: SystemDialogType;
   // Only required for add
   parentId?: string | null;
-  // Only required for prepopulating fields for an edit dialog
+  // Only required for pre-populating fields for an edit dialog
   selectedSystem?: System;
 }
 
@@ -76,7 +76,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     undefined
   );
 
-  // Form error that should dissappear when the form is modified
+  // Form error that should disappear when the form is modified
   const [formError, setFormError] = React.useState<string | undefined>(
     undefined
   );

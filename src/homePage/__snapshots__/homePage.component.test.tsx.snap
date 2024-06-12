@@ -18,7 +18,7 @@ exports[`Home page component > homepage renders correctly 1`] = `
             class="MuiTypography-root MuiTypography-h2 css-1c7qyh0-MuiTypography-root"
           >
             <strong>
-              Inventory Managment
+              Inventory Management
             </strong>
           </h2>
           <h2
