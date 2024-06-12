@@ -14,3 +14,9 @@ afterEach(() => server.resetHandlers());
 
 // Clean up after the tests are finished.
 afterAll(() => server.close());
+
+window.ResizeObserver = vi.fn().mockImplementation(() => ({
+  disconnect: vi.fn(),
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+}));

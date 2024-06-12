@@ -8164,6 +8164,36 @@
     "modified_time": "2024-01-02T13:10:10.000+00:00"
   },
   {
+    "id": "13h6TOX7",
+    "catalogue_item_id": "21",
+    "system_id": "65328f34a40ff5301575a4e5",
+    "purchase_order_number": "tk4yBheq",
+    "is_defective": false,
+    "usage_status": "In Use",
+    "usage_status_id": "1",
+    "warranty_end_date": null,
+    "asset_number": "WX3XYVFeEu",
+    "serial_number": "5xE1KSraISvu",
+    "delivered_date": null,
+    "notes": "ihwCjMdJ4n7KKcaM34Lj",
+    "properties": [
+      {
+        "name": "Pumping Speed",
+        "value": 700,
+        "unit": "liters per second",
+        "id": "20"
+      },
+      {
+        "name": "Compression Ratio",
+        "value": 100,
+        "unit": null,
+        "id": "21"
+      }
+    ],
+    "created_time": "2024-01-01T12:00:00.000+00:00",
+    "modified_time": "2024-01-02T13:10:10.000+00:00"
+  },
+  {
     "id": "3xgGk6uf",
     "catalogue_item_id": "21",
     "system_id": "656ef565ed0773f82e44bc6d",

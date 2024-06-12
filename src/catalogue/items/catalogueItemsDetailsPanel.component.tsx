@@ -71,12 +71,14 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
         <TabPanel value={tabValue} index={0}>
           <Grid item container spacing={0}>
             <Grid item xs={12}>
-              <Typography variant="h4">{catalogueItemIdData.name}</Typography>
+              <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
+                {catalogueItemIdData.name}
+              </Typography>
               <Typography sx={{ my: 1 }} variant="h6">
                 Description:
               </Typography>
               <Typography
-                sx={{ mb: 1, whiteSpace: 'pre-line' }}
+                sx={{ mb: 1, whiteSpace: 'pre-line', wordWrap: 'break-word' }}
                 variant="body1"
                 color="text.secondary"
               >
@@ -113,7 +115,10 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
 
               <Grid item xs={12} sm={6} key={2}>
                 <Typography color="text.primary">Obsolete Reason</Typography>
-                <Typography color="text.secondary">
+                <Typography
+                  color="text.secondary"
+                  sx={{ wordWrap: 'break-word' }}
+                >
                   {catalogueItemIdData.obsolete_reason ?? 'None'}
                 </Typography>
               </Grid>
@@ -151,14 +156,20 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
 
               <Grid item xs={12} sm={6} key={7}>
                 <Typography color="text.primary">Drawing Number</Typography>
-                <Typography color="text.secondary">
+                <Typography
+                  color="text.secondary"
+                  sx={{ wordWrap: 'break-word' }}
+                >
                   {catalogueItemIdData.drawing_number ?? 'None'}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={8}>
                 <Typography color="text.primary">Model Number</Typography>
-                <Typography color="text.secondary">
+                <Typography
+                  color="text.secondary"
+                  sx={{ wordWrap: 'break-word' }}
+                >
                   {catalogueItemIdData.item_model_number ?? 'None'}
                 </Typography>
               </Grid>
@@ -191,10 +202,16 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
             {catalogueItemIdData.properties &&
               catalogueItemIdData.properties.map((property, index) => (
                 <Grid item xs={12} sm={6} key={index}>
-                  <Typography color="text.primary">{`${property.name} ${
+                  <Typography
+                    color="text.primary"
+                    sx={{ wordWrap: 'break-word' }}
+                  >{`${property.name} ${
                     property.unit ? `(${property.unit})` : ''
                   }`}</Typography>
-                  <Typography color="text.secondary">
+                  <Typography
+                    color="text.secondary"
+                    sx={{ wordWrap: 'break-word' }}
+                  >
                     {property.value !== null ? String(property.value) : 'None'}
                   </Typography>
                 </Grid>
@@ -206,7 +223,10 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
           <Grid item container spacing={0}>
             <Grid item xs={12} sm={6} key={0}>
               <Typography color="text.primary">Manufacturer Name</Typography>
-              <Typography color="text.secondary">
+              <Typography
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 <MuiLink
                   underline="hover"
                   component={Link}
@@ -218,7 +238,10 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
             </Grid>
             <Grid item xs={12} sm={6} key={1}>
               <Typography color="text.primary">Manufacturer URL</Typography>
-              <Typography color="text.secondary">
+              <Typography
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.url ? (
                   <MuiLink
                     component={Link}
@@ -237,7 +260,11 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               <Typography align="left" color="text.primary">
                 Telephone number
               </Typography>
-              <Typography align="left" color="text.secondary">
+              <Typography
+                align="left"
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.telephone ?? 'None'}
               </Typography>
             </Grid>
@@ -245,19 +272,39 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
               <Typography align="left" color="text.primary">
                 Address
               </Typography>
-              <Typography align="left" color="text.secondary">
+              <Typography
+                align="left"
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.address.address_line}
               </Typography>
-              <Typography align="left" color="text.secondary">
+              <Typography
+                align="left"
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.address.town}
               </Typography>
-              <Typography align="left" color="text.secondary">
+              <Typography
+                align="left"
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.address.county}
               </Typography>
-              <Typography align="left" color="text.secondary">
+              <Typography
+                align="left"
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.address.country}
               </Typography>
-              <Typography align="left" color="text.secondary">
+              <Typography
+                align="left"
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.address.postcode}
               </Typography>
             </Grid>
@@ -266,7 +313,11 @@ function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {
 
         <TabPanel value={tabValue} index={3}>
           <Grid item xs={12}>
-            <Typography color="text.secondary" whiteSpace="pre-line">
+            <Typography
+              color="text.secondary"
+              whiteSpace="pre-line"
+              sx={{ wordWrap: 'break-word' }}
+            >
               {catalogueItemIdData.notes ?? 'None'}
             </Typography>
           </Grid>

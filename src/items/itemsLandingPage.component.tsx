@@ -150,7 +150,10 @@ function ItemsLandingPage() {
       {catalogueItemData && itemData && (
         <Grid item container sx={{ px: '192px' }} xs={12} spacing={1}>
           <Grid item xs={12}>
-            <Typography sx={{ margin: 1, textAlign: 'center' }} variant="h4">
+            <Typography
+              sx={{ margin: 1, textAlign: 'center', wordWrap: 'break-word' }}
+              variant="h4"
+            >
               {catalogueItemData.name}
             </Typography>
           </Grid>
@@ -159,7 +162,12 @@ function ItemsLandingPage() {
               Description:
             </Typography>
             <Typography
-              sx={{ margin: 1, textAlign: 'center', whiteSpace: 'pre-line' }}
+              sx={{
+                margin: 1,
+                textAlign: 'center',
+                whiteSpace: 'pre-line',
+                wordWrap: 'break-word',
+              }}
               variant="body1"
               color="text.secondary"
             >
@@ -200,7 +208,11 @@ function ItemsLandingPage() {
                     <Typography align="left" color="text.primary">
                       Serial Number
                     </Typography>
-                    <Typography align="left" color="text.secondary">
+                    <Typography
+                      align="left"
+                      color="text.secondary"
+                      sx={{ wordWrap: 'break-word' }}
+                    >
                       {itemData.serial_number ?? 'None'}
                     </Typography>
                   </Grid>
@@ -208,7 +220,11 @@ function ItemsLandingPage() {
                     <Typography align="left" color="text.primary">
                       Asset Number
                     </Typography>
-                    <Typography align="left" color="text.secondary">
+                    <Typography
+                      align="left"
+                      color="text.secondary"
+                      sx={{ wordWrap: 'break-word' }}
+                    >
                       {itemData.asset_number ?? 'None'}
                     </Typography>
                   </Grid>
@@ -217,7 +233,11 @@ function ItemsLandingPage() {
                     <Typography align="left" color="text.primary">
                       Purchase Order Number
                     </Typography>
-                    <Typography align="left" color="text.secondary">
+                    <Typography
+                      align="left"
+                      color="text.secondary"
+                      sx={{ wordWrap: 'break-word' }}
+                    >
                       {itemData.purchase_order_number ?? 'None'}
                     </Typography>
                   </Grid>
@@ -258,7 +278,11 @@ function ItemsLandingPage() {
                     <Typography align="left" color="text.primary">
                       Usage Status
                     </Typography>
-                    <Typography align="left" color="text.secondary">
+                    <Typography
+                      align="left"
+                      color="text.secondary"
+                      sx={{ wordWrap: 'break-word' }}
+                    >
                       {itemData.usage_status}
                     </Typography>
                   </Grid>
@@ -266,7 +290,11 @@ function ItemsLandingPage() {
                     <Typography align="left" color="text.primary">
                       System
                     </Typography>
-                    <Typography align="left" color="text.secondary">
+                    <Typography
+                      align="left"
+                      color="text.secondary"
+                      sx={{ wordWrap: 'break-word' }}
+                    >
                       <MuiLink
                         underline="hover"
                         component={Link}
@@ -327,12 +355,18 @@ function ItemsLandingPage() {
                   {itemData.properties &&
                     itemData.properties.map((property, index) => (
                       <Grid item xs={12} sm={6} md={4} key={index}>
-                        <Typography align="left" color="text.primary">{`${
-                          property.name
-                        } ${
+                        <Typography
+                          align="left"
+                          color="text.primary"
+                          sx={{ wordWrap: 'break-word' }}
+                        >{`${property.name} ${
                           property.unit ? `(${property.unit})` : ''
                         }`}</Typography>
-                        <Typography align="left" color="text.secondary">
+                        <Typography
+                          align="left"
+                          color="text.secondary"
+                          sx={{ wordWrap: 'break-word' }}
+                        >
                           {property.value !== null
                             ? String(property.value)
                             : 'None'}
@@ -378,7 +412,11 @@ function ItemsLandingPage() {
                       <Typography align="left" color="text.primary">
                         Name
                       </Typography>
-                      <Typography align="left" color="text.secondary">
+                      <Typography
+                        align="left"
+                        color="text.secondary"
+                        sx={{ wordWrap: 'break-word' }}
+                      >
                         <MuiLink
                           underline="hover"
                           component={Link}
@@ -392,7 +430,11 @@ function ItemsLandingPage() {
                       <Typography align="left" color="text.primary">
                         URL
                       </Typography>
-                      <Typography align="left" color="text.secondary">
+                      <Typography
+                        align="left"
+                        color="text.secondary"
+                        sx={{ wordWrap: 'break-word' }}
+                      >
                         {manufacturer.url ? (
                           <MuiLink
                             component={Link}
@@ -411,7 +453,11 @@ function ItemsLandingPage() {
                       <Typography align="left" color="text.primary">
                         Telephone number
                       </Typography>
-                      <Typography align="left" color="text.secondary">
+                      <Typography
+                        align="left"
+                        color="text.secondary"
+                        sx={{ wordWrap: 'break-word' }}
+                      >
                         {manufacturer?.telephone ?? 'None'}
                       </Typography>
                     </Grid>
@@ -419,19 +465,39 @@ function ItemsLandingPage() {
                       <Typography align="left" color="text.primary">
                         Address
                       </Typography>
-                      <Typography align="left" color="text.secondary">
+                      <Typography
+                        align="left"
+                        color="text.secondary"
+                        sx={{ wordWrap: 'break-word' }}
+                      >
                         {manufacturer?.address.address_line}
                       </Typography>
-                      <Typography align="left" color="text.secondary">
+                      <Typography
+                        align="left"
+                        color="text.secondary"
+                        sx={{ wordWrap: 'break-word' }}
+                      >
                         {manufacturer?.address.town}
                       </Typography>
-                      <Typography align="left" color="text.secondary">
+                      <Typography
+                        align="left"
+                        color="text.secondary"
+                        sx={{ wordWrap: 'break-word' }}
+                      >
                         {manufacturer?.address.county}
                       </Typography>
-                      <Typography align="left" color="text.secondary">
+                      <Typography
+                        align="left"
+                        color="text.secondary"
+                        sx={{ wordWrap: 'break-word' }}
+                      >
                         {manufacturer?.address.country}
                       </Typography>
-                      <Typography align="left" color="text.secondary">
+                      <Typography
+                        align="left"
+                        color="text.secondary"
+                        sx={{ wordWrap: 'break-word' }}
+                      >
                         {manufacturer?.address.postcode}
                       </Typography>
                     </Grid>
@@ -445,7 +511,12 @@ function ItemsLandingPage() {
               Notes:
             </Typography>
             <Typography
-              sx={{ margin: 1, textAlign: 'center', whiteSpace: 'pre-line' }}
+              sx={{
+                margin: 1,
+                textAlign: 'center',
+                whiteSpace: 'pre-line',
+                wordWrap: 'break-word',
+              }}
               variant="body1"
               color="text.secondary"
             >

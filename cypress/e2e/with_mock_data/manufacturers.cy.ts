@@ -50,14 +50,19 @@ describe('Manufacturer', () => {
 
   it('adds a manufacturer with all fields', () => {
     cy.findByRole('button', { name: 'Add Manufacturer' }).click();
-    cy.findByLabelText('Name *').type('Manufacturer D');
-    cy.findByLabelText('URL').type('http://test.co.uk');
-    cy.findByLabelText('Country *').type('United Kingdom');
-    cy.findByLabelText('Address Line *').type('4 Example Street');
-    cy.findByLabelText('Town').type('Oxford');
-    cy.findByLabelText('County').type('Oxfordshire');
-    cy.findByLabelText('Post/Zip code *').type('OX1 2AB');
-    cy.findByLabelText('Telephone number').type('07349612203');
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('Name *').type('Manufacturer D');
+        cy.findByLabelText('URL').type('http://test.co.uk');
+        cy.findByLabelText('Country *').type('United Kingdom');
+        cy.findByLabelText('Address Line *').type('4 Example Street');
+        cy.findByLabelText('Town').type('Oxford');
+        cy.findByLabelText('County').type('Oxfordshire');
+        cy.findByLabelText('Post/Zip code *').type('OX1 2AB');
+        cy.findByLabelText('Telephone number').type('07349612203');
+      });
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -78,10 +83,14 @@ describe('Manufacturer', () => {
 
   it('adds a manufacturer with only mandatory fields', () => {
     cy.findByRole('button', { name: 'Add Manufacturer' }).click();
-    cy.findByLabelText('Name *').type('Manufacturer D');
-    cy.findByLabelText('Country *').type('United Kingdom');
-    cy.findByLabelText('Address Line *').type('4 Example Street');
-    cy.findByLabelText('Post/Zip code *').type('OX1 2AB');
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('Name *').type('Manufacturer D');
+        cy.findByLabelText('Country *').type('United Kingdom');
+        cy.findByLabelText('Address Line *').type('4 Example Street');
+        cy.findByLabelText('Post/Zip code *').type('OX1 2AB');
+      });
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -106,45 +115,39 @@ describe('Manufacturer', () => {
         .should('be.visible')
         .within(() => {
           cy.contains('Please enter a name.');
-        });
-      cy.findByRole('dialog')
-        .should('be.visible')
-        .within(() => {
+
           cy.contains('Please enter a country.');
-        });
-      cy.findByRole('dialog')
-        .should('be.visible')
-        .within(() => {
+
           cy.contains('Please enter an address.');
-        });
-      cy.findByRole('dialog')
-        .should('be.visible')
-        .within(() => {
+
           cy.contains('Please enter a post code or zip code.');
         });
     });
     it('displays error message when duplicate name entered', () => {
       cy.findByRole('button', { name: 'Add Manufacturer' }).click();
-      cy.findByLabelText('Name *').type('Manufacturer A');
-      cy.findByLabelText('Country *').type('United Kingdom');
-      cy.findByLabelText('Address Line *').type('4 Example Street');
 
-      cy.findByRole('button', { name: 'Save' }).click();
       cy.findByRole('dialog')
         .should('be.visible')
         .within(() => {
+          cy.findByLabelText('Name *').type('Manufacturer A');
+          cy.findByLabelText('Country *').type('United Kingdom');
+          cy.findByLabelText('Address Line *').type('4 Example Street');
+
+          cy.findByRole('button', { name: 'Save' }).click();
+
           cy.contains('A manufacturer with the same name already exists.');
         });
     });
     it('invalid url displays correct error message', () => {
       cy.findByTestId('Add Manufacturer').click();
 
-      cy.findByLabelText('URL').type('test.co.uk');
-
-      cy.findByRole('button', { name: 'Save' }).click();
       cy.findByRole('dialog')
         .should('be.visible')
         .within(() => {
+          cy.findByLabelText('URL').type('test.co.uk');
+
+          cy.findByRole('button', { name: 'Save' }).click();
+
           cy.contains('Please enter a valid url.');
         });
     });
@@ -188,26 +191,31 @@ describe('Manufacturer', () => {
     cy.visit('/manufacturers');
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
-    cy.findByLabelText('Name *').clear();
-    cy.findByLabelText('Name *').type('test');
 
-    cy.findByLabelText('Country *').clear();
-    cy.findByLabelText('Country *').type('test');
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('Name *').clear();
+        cy.findByLabelText('Name *').type('test');
 
-    cy.findByLabelText('Address Line *').clear();
-    cy.findByLabelText('Address Line *').type('test');
+        cy.findByLabelText('Country *').clear();
+        cy.findByLabelText('Country *').type('test');
 
-    cy.findByLabelText('Town').clear();
-    cy.findByLabelText('Town').type('test');
+        cy.findByLabelText('Address Line *').clear();
+        cy.findByLabelText('Address Line *').type('test');
 
-    cy.findByLabelText('County').clear();
-    cy.findByLabelText('County').type('test');
+        cy.findByLabelText('Town').clear();
+        cy.findByLabelText('Town').type('test');
 
-    cy.findByLabelText('Post/Zip code *').clear();
-    cy.findByLabelText('Post/Zip code *').type('test');
+        cy.findByLabelText('County').clear();
+        cy.findByLabelText('County').type('test');
 
-    cy.findByLabelText('Telephone number').clear();
-    cy.findByLabelText('Telephone number').type('0000000000');
+        cy.findByLabelText('Post/Zip code *').clear();
+        cy.findByLabelText('Post/Zip code *').type('test');
+
+        cy.findByLabelText('Telephone number').clear();
+        cy.findByLabelText('Telephone number').type('0000000000');
+      });
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -229,9 +237,12 @@ describe('Manufacturer', () => {
   it('trying to edit with duplicate name displays error message', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
-
-    cy.findByLabelText('Name *').clear();
-    cy.findByLabelText('Name *').type('test_dup');
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('Name *').clear();
+        cy.findByLabelText('Name *').type('test_dup');
+      });
 
     cy.findByRole('button', { name: 'Save' }).click();
 
@@ -249,14 +260,14 @@ describe('Manufacturer', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
 
-    cy.findByLabelText('URL').clear();
-    cy.findByLabelText('URL').type('invalid');
-
-    cy.findByRole('button', { name: 'Save' }).click();
-
     cy.findByRole('dialog')
       .should('be.visible')
       .within(() => {
+        cy.findByLabelText('URL').clear();
+        cy.findByLabelText('URL').type('invalid');
+
+        cy.findByRole('button', { name: 'Save' }).click();
+
         cy.contains('Please enter a valid URL');
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
@@ -266,7 +277,12 @@ describe('Manufacturer', () => {
     cy.visit('/manufacturers');
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
-    cy.findByLabelText('URL').clear();
+
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('URL').clear();
+      });
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -303,30 +319,18 @@ describe('Manufacturer', () => {
     cy.findAllByLabelText('Row Actions').first().click();
     cy.findByText('Edit').click();
 
-    cy.findByLabelText('Name *').clear();
-    cy.findByLabelText('Country *').clear();
-    cy.findByLabelText('Address Line *').clear();
-    cy.findByLabelText('Post/Zip code *').clear();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('Name *').clear();
+        cy.findByLabelText('Country *').clear();
+        cy.findByLabelText('Address Line *').clear();
+        cy.findByLabelText('Post/Zip code *').clear();
 
-    cy.findByRole('button', { name: 'Save' }).click();
-    cy.findByRole('dialog')
-      .should('be.visible')
-      .within(() => {
+        cy.findByRole('button', { name: 'Save' }).click();
         cy.contains('Please enter a name.');
-      });
-    cy.findByRole('dialog')
-      .should('be.visible')
-      .within(() => {
         cy.contains('Please enter a country.');
-      });
-    cy.findByRole('dialog')
-      .should('be.visible')
-      .within(() => {
         cy.contains('Please enter an address.');
-      });
-    cy.findByRole('dialog')
-      .should('be.visible')
-      .within(() => {
         cy.contains('Please enter a post code or zip code.');
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');

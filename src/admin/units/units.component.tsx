@@ -7,25 +7,28 @@ import {
   ListItemIcon,
   ListItemText,
   MenuItem,
+  TableCellBaseProps,
   TableRow,
 } from '@mui/material';
-import { useUnits } from '../../api/units';
 import {
   MRT_ColumnDef,
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
-import { Unit } from '../../app.types';
-import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
+import { useUnits } from '../../api/units';
+import { Unit } from '../../app.types';
+import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
   displayTableRowCountText,
   formatDateTimeStrings,
   getPageHeightCalc,
 } from '../../utils';
-import UnitsDialog from './unitsDialog.component.tsx';
 import DeleteUnitDialog from './deleteUnitsDialog.component.tsx';
+import UnitsDialog from './unitsDialog.component.tsx';
 
 function Units() {
   const { data: unitData, isLoading: unitDataLoading } = useUnits();
@@ -116,6 +119,22 @@ function Units() {
     muiTableBodyRowProps: ({ row }) => {
       return { component: TableRow, 'aria-label': `${row.original.value} row` };
     },
+    muiTableBodyCellProps: ({ column }) =>
+      // Ignore MRT rendered cells e.g. expand , spacer etc
+      column.id.startsWith('mrt')
+        ? {}
+        : {
+            component: (props: TableCellBaseProps) => {
+              return (
+                <TableBodyCellOverFlowTip
+                  {...({
+                    ...props,
+                    overFlowTipSx: { width: '25vw' },
+                  } as TableCellOverFlowTipProps)}
+                />
+              );
+            },
+          },
     muiTablePaperProps: { sx: { maxHeight: '100%' } },
     muiTableContainerProps: { sx: { height: tableHeight } },
     muiSearchTextFieldProps: {

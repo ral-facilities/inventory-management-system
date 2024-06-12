@@ -22,37 +22,40 @@ export const modifyManufacturer = (
   } else {
     cy.findByRole('button', { name: 'Add Manufacturer' }).click();
   }
+  cy.findByRole('dialog')
+    .should('be.visible')
+    .within(() => {
+      cy.findByLabelText('Name *').clear();
+      cy.findByLabelText('Name *').type(values.name);
 
-  cy.findByLabelText('Name *').clear();
-  cy.findByLabelText('Name *').type(values.name);
+      if (values.url) {
+        cy.findByLabelText('URL').clear();
+        cy.findByLabelText('URL').type(values.url);
+      }
 
-  if (values.url) {
-    cy.findByLabelText('URL').clear();
-    cy.findByLabelText('URL').type(values.url);
-  }
+      cy.findByLabelText('Country *').clear();
+      cy.findByLabelText('Country *').type(values.country);
 
-  cy.findByLabelText('Country *').clear();
-  cy.findByLabelText('Country *').type(values.country);
+      cy.findByLabelText('Address Line *').clear();
+      cy.findByLabelText('Address Line *').type(values.address_line);
+      if (values.town) {
+        cy.findByLabelText('Town').clear();
+        cy.findByLabelText('Town').type(values.town);
+      }
 
-  cy.findByLabelText('Address Line *').clear();
-  cy.findByLabelText('Address Line *').type(values.address_line);
-  if (values.town) {
-    cy.findByLabelText('Town').clear();
-    cy.findByLabelText('Town').type(values.town);
-  }
+      if (values.county) {
+        cy.findByLabelText('County').clear();
+        cy.findByLabelText('County').type(values.county);
+      }
 
-  if (values.county) {
-    cy.findByLabelText('County').clear();
-    cy.findByLabelText('County').type(values.county);
-  }
+      cy.findByLabelText('Post/Zip code *').clear();
+      cy.findByLabelText('Post/Zip code *').type(values.postcode);
 
-  cy.findByLabelText('Post/Zip code *').clear();
-  cy.findByLabelText('Post/Zip code *').type(values.postcode);
-
-  if (values.telephone_number) {
-    cy.findByLabelText('Telephone number').clear();
-    cy.findByLabelText('Telephone number').type(values.telephone_number);
-  }
+      if (values.telephone_number) {
+        cy.findByLabelText('Telephone number').clear();
+        cy.findByLabelText('Telephone number').type(values.telephone_number);
+      }
+    });
 
   cy.findByRole('button', { name: 'Save' }).click();
 
