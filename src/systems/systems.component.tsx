@@ -111,7 +111,7 @@ const MoveSystemsButton = (props: {
   return (
     <>
       <Button
-        sx={{ mx: 1 }}
+        sx={{ mx: 0.5 }}
         variant="outlined"
         startIcon={<DriveFileMoveOutlinedIcon />}
         onClick={() => setMoveSystemsDialogOpen(true)}
@@ -141,7 +141,7 @@ const CopySystemsButton = (props: {
   return (
     <>
       <Button
-        sx={{ mx: 1 }}
+        sx={{ mx: 0.5 }}
         variant="outlined"
         startIcon={<FolderCopyOutlinedIcon />}
         onClick={() => setCopySystemsDialogOpen(true)}
@@ -362,7 +362,7 @@ function Systems() {
                 parentSystemId={systemId}
               />
               <Button
-                sx={{ mx: 1 }}
+                sx={{ mx: 0.5 }}
                 variant="outlined"
                 startIcon={<ClearIcon />}
                 onClick={() => setRowSelection({})}
