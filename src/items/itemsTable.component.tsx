@@ -11,7 +11,6 @@ import {
   MenuItem,
   Link as MuiLink,
   TableCellBaseProps,
-  Typography,
 } from '@mui/material';
 import {
   MRT_Row,
@@ -35,6 +34,7 @@ import {
   TableCellOverFlowTipProps,
   TableGroupedCell,
   TableHeaderOverflowTip,
+  displayTableRowCountText,
   formatDateTimeStrings,
   getPageHeightCalc,
 } from '../utils';
@@ -522,13 +522,10 @@ export function ItemsTable(props: ItemTableProps) {
         </MenuItem>,
       ];
     },
-    renderBottomToolbarCustomActions: ({ table }) => (
-      <Typography sx={{ paddingLeft: '8px' }}>
-        {table.getFilteredRowModel().rows.length == itemsData?.length
-          ? `Total Items: ${itemsData.length}`
-          : `Returned ${table.getFilteredRowModel().rows.length} out of ${itemsData?.length} Items`}
-      </Typography>
-    ),
+    renderBottomToolbarCustomActions: ({ table }) =>
+      displayTableRowCountText(table, itemsData, 'Items', {
+        paddingLeft: '8px',
+      }),
 
     renderDetailPanel: dense
       ? ({ row }) => (

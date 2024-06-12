@@ -180,7 +180,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     }
     // Purposefully leave out catalogueItemList - this will never be the same due
     // to the reference changing so instead am relying on isLoading to have changed to
-    // false and then back to true again for any refetches that occurr - only
+    // false and then back to true again for any re-fetches that occur - only
     // alternative I can see right now requires backend changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, itemsData, moveToSelectedItems]);

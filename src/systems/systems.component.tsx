@@ -37,13 +37,18 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { System } from '../app.types';
-import { OverflowTip, generateUniqueName, getPageHeightCalc } from '../utils';
+import { usePreservedTableState } from '../common/preservedTableState.component';
+import {
+  OverflowTip,
+  displayTableRowCountText,
+  generateUniqueName,
+  getPageHeightCalc,
+} from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog, { SystemDialogType } from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
-import { usePreservedTableState } from '../common/preservedTableState.component';
 
 /* Returns function that navigates to a specific system id (or to the root of all systems
    if given null) */
@@ -153,18 +158,6 @@ const CopySystemsButton = (props: {
       />
     </>
   );
-};
-
-const getTableCountText = (
-  numRowsDisplayed: number,
-  numSystems: number,
-  isRoot: boolean
-) => {
-  const systemsText = isRoot ? 'Systems' : 'Subsystems';
-  if (numRowsDisplayed === numSystems)
-    return `Total ${systemsText}: ${numSystems}`;
-  else
-    return `Returned ${numRowsDisplayed} out of ${numSystems} ${systemsText}`;
 };
 
 type MenuDialogType = SystemDialogType | 'delete';
@@ -479,18 +472,15 @@ function Systems() {
                     </Table>
                   </TableContainer>
                   <Box sx={{ paddingTop: '8px' }}>
-                    <Typography
-                      sx={{
+                    {displayTableRowCountText(
+                      subsystemsTable,
+                      subsystemsData,
+                      systemId === null ? 'Systems' : 'Subsystems',
+                      {
                         paddingLeft: '8px',
                         textAlign: { sm: 'center', md: 'left' },
-                      }}
-                    >
-                      {getTableCountText(
-                        subsystemsTable.getFilteredRowModel().rows.length,
-                        subsystemsData?.length ?? 0,
-                        systemId === null
-                      )}
-                    </Typography>
+                      }
+                    )}
                     <MRT_TablePagination table={subsystemsTable} />
                   </Box>
                 </Stack>

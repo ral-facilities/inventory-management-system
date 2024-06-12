@@ -226,7 +226,7 @@ describe('SystemItemsTable', () => {
     it('can open and close the move items dialog', async () => {
       createView();
 
-      // Name (obtained from catalouge category item)
+      // Name (obtained from catalogue category item)
       await waitFor(
         () => {
           expect(

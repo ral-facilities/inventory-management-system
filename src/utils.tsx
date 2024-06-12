@@ -333,3 +333,20 @@ export const resetUniqueIdCounter = () => {
 export function sortDataList(data: any[], sortedValue: string) {
   return data.sort((a, b) => a[sortedValue].localeCompare(b[sortedValue]));
 }
+
+export const displayTableRowCountText = <TData extends MRT_RowData>(
+  table: MRT_TableInstance<TData>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any,
+  dataName: string,
+  sx?: SxProps<Theme>
+) => {
+  const tableRowCount = table.getFilteredRowModel().rows.length;
+  const dataLength = data?.length ?? 0;
+  const tableRowCountText =
+    tableRowCount === dataLength
+      ? `Total ${dataName}: ${dataLength}`
+      : `Returned ${tableRowCount} out of ${dataLength} ${dataName}`;
+
+  return <Typography sx={{ ...sx }}>{tableRowCountText}</Typography>;
+};

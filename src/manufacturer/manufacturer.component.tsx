@@ -28,6 +28,7 @@ import {
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
   TableHeaderOverflowTip,
+  displayTableRowCountText,
   formatDateTimeStrings,
   getPageHeightCalc,
 } from '../utils';
@@ -36,7 +37,7 @@ import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
 
 function ManufacturerComponent() {
-  const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
+  const { data: manufacturerData, isLoading: manufacturerDataLoading } =
     useManufacturers();
 
   const [deleteManufacturerDialog, setDeleteManufacturerDialog] =
@@ -48,7 +49,7 @@ function ManufacturerComponent() {
 
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
-  const [maufacturerDialogType, setMaufacturerDialogType] = React.useState<
+  const [manufacturerDialogType, setManufacturerDialogType] = React.useState<
     'edit' | 'create'
   >('create');
 
@@ -160,7 +161,7 @@ function ManufacturerComponent() {
   const table = useMaterialReactTable({
     // Data
     columns: columns, // If dense only show the name column
-    data: ManufacturerData ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data: manufacturerData ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     // Features
     enableColumnOrdering: true,
     enableColumnResizing: true,
@@ -188,7 +189,7 @@ function ManufacturerComponent() {
     },
     state: {
       ...preservedState,
-      showProgressBars: ManufacturerDataLoading, //or showSkeletons
+      showProgressBars: manufacturerDataLoading, //or showSkeletons
     },
     // MUI
     muiTableBodyRowProps: ({ row }) => {
@@ -230,10 +231,10 @@ function ManufacturerComponent() {
           <ManufacturerDialog
             open={true}
             onClose={() => {
-              setMaufacturerDialogType('create');
+              setManufacturerDialogType('create');
               table.setCreatingRow(null);
             }}
-            type={maufacturerDialogType}
+            type={manufacturerDialogType}
             selectedManufacturer={
               selectedManufacturer ? selectedManufacturer : undefined
             }
@@ -272,7 +273,7 @@ function ManufacturerComponent() {
           key="edit"
           aria-label={`Edit manufacturer ${row.original.name}`}
           onClick={() => {
-            setMaufacturerDialogType('edit');
+            setManufacturerDialogType('edit');
             setSelectedManufacturer(row.original);
             table.setCreatingRow(true);
             closeMenu();
@@ -300,13 +301,10 @@ function ManufacturerComponent() {
         </MenuItem>,
       ];
     },
-    renderBottomToolbarCustomActions: ({ table }) => (
-      <Typography sx={{ paddingLeft: '8px' }}>
-        {table.getFilteredRowModel().rows.length == ManufacturerData?.length
-          ? `Total Manufacturers: ${ManufacturerData.length}`
-          : `Returned ${table.getFilteredRowModel().rows.length} out of ${ManufacturerData?.length} Manufacturers`}
-      </Typography>
-    ),
+    renderBottomToolbarCustomActions: ({ table }) =>
+      displayTableRowCountText(table, manufacturerData, 'Manufacturers', {
+        paddingLeft: '8px',
+      }),
   });
 
   const navigate = useNavigate();

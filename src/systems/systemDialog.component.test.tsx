@@ -296,7 +296,7 @@ describe('Systems Dialog', () => {
       expect(mockOnClose).toHaveBeenCalled();
     });
 
-    it('edits a system removing non-manditory fields', async () => {
+    it('edits a system removing non-mandatory fields', async () => {
       createView();
 
       const values = {
