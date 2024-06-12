@@ -243,15 +243,31 @@ export const TableBodyCellOverFlowTip: React.FC<TableCellOverFlowTipProps> = (
   props
 ): JSX.Element => {
   const { overFlowTipSx, ...tableCellProps } = props;
+
+  let isEmpty: boolean = false;
+
+  if (React.isValidElement(tableCellProps.children)) {
+    const renderValue =
+      tableCellProps.children?.props.children[0].props.cell.renderValue();
+    isEmpty =
+      renderValue === '' ||
+      renderValue === null ||
+      renderValue === undefined ||
+      (typeof renderValue === 'string' && renderValue.trim() === '');
+  }
   return (
     <TableCell {...tableCellProps}>
-      <OverflowTip
-        disableParagraph
-        mrtCell
-        sx={{ fontSize: 'inherit', ...overFlowTipSx }}
-      >
-        {tableCellProps.children}
-      </OverflowTip>
+      {!isEmpty ? (
+        <OverflowTip
+          disableParagraph
+          mrtCell
+          sx={{ fontSize: 'inherit', ...overFlowTipSx }}
+        >
+          {tableCellProps.children}
+        </OverflowTip>
+      ) : (
+        tableCellProps.children
+      )}
     </TableCell>
   );
 };

@@ -812,7 +812,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r3l:"
+                              id=":r3j:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -857,7 +857,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r3n:"
+                              id=":r3l:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -1975,14 +1975,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-qkfbw-MuiTableCell-root-MuiTableCell-root"
                 data-index="4"
-              >
-                <div
-                  aria-label=""
-                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
-                  data-mui-internal-clone-element="true"
-                  role="tooltip"
-                />
-              </td>
+              />
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-giv826-MuiTableCell-root-MuiTableCell-root"
                 data-index="5"
@@ -2023,14 +2016,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yv2vam-MuiTableCell-root-MuiTableCell-root"
                 data-index="6"
-              >
-                <div
-                  aria-label="null"
-                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
-                  data-mui-internal-clone-element="true"
-                  role="tooltip"
-                />
-              </td>
+              />
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
                 data-index="7"
