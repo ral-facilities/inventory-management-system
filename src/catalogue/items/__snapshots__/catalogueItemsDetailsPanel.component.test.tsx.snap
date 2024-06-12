@@ -103,7 +103,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
                     <h4
-                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-h4 css-dfspvj-MuiTypography-root"
                     >
                       Cameras 14
                     </h4>
@@ -113,7 +113,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1deohxu-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1mwwl2p-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 14
                     </p>
@@ -158,7 +158,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                         Obsolete Reason
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -228,7 +228,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                         Drawing Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -242,7 +242,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                         Model Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -308,12 +308,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Resolution (megapixels)
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       68
                     </p>
@@ -322,12 +322,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Frame Rate (fps)
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       1440
                     </p>
@@ -336,12 +336,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Sensor Type 
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       CMOS
                     </p>
@@ -350,12 +350,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Sensor brand 
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       Hasselblad
                     </p>
@@ -364,12 +364,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Broken 
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       false
                     </p>
@@ -378,12 +378,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Older than five years 
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       true
                     </p>
@@ -425,7 +425,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       Manufacturer Name
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     />
                   </div>
                   <div
@@ -437,7 +437,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       Manufacturer URL
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       None
                     </p>
@@ -451,7 +451,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       Telephone number
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     >
                       None
                     </p>
@@ -465,19 +465,19 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                       Address
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                   </div>
                 </div>
@@ -509,7 +509,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (None v
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1pax5hk-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-17iux8v-MuiTypography-root"
                   >
                     None
                   </p>
@@ -627,7 +627,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
                     <h4
-                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-h4 css-dfspvj-MuiTypography-root"
                     >
                       Cameras 14
                     </h4>
@@ -637,7 +637,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1deohxu-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1mwwl2p-MuiTypography-root"
                     >
                       High-resolution cameras for beam characterization. 14
                     </p>
@@ -682,7 +682,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                         Obsolete Reason
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -752,7 +752,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                         Drawing Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -766,7 +766,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                         Model Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -832,12 +832,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Resolution (megapixels)
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       68
                     </p>
@@ -846,12 +846,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Frame Rate (fps)
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       1440
                     </p>
@@ -860,12 +860,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Sensor Type 
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       CMOS
                     </p>
@@ -874,12 +874,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Sensor brand 
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       Hasselblad
                     </p>
@@ -888,12 +888,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Broken 
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       false
                     </p>
@@ -902,12 +902,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Older than five years 
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       true
                     </p>
@@ -949,7 +949,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       Manufacturer Name
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     />
                   </div>
                   <div
@@ -961,7 +961,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       Manufacturer URL
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       None
                     </p>
@@ -975,7 +975,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       Telephone number
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     >
                       None
                     </p>
@@ -989,19 +989,19 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                       Address
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                   </div>
                 </div>
@@ -1033,7 +1033,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (when t
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1pax5hk-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-17iux8v-MuiTypography-root"
                   >
                     None
                   </p>
@@ -1151,7 +1151,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
                     <h4
-                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-h4 css-dfspvj-MuiTypography-root"
                     >
                       Motorized Actuators 32
                     </h4>
@@ -1161,7 +1161,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1deohxu-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1mwwl2p-MuiTypography-root"
                     >
                       Motorized actuators for controlled motion. 32
                     </p>
@@ -1212,7 +1212,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                         Obsolete Reason
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -1282,7 +1282,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                         Drawing Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -1296,7 +1296,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                         Model Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -1362,12 +1362,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Travel Range (millimeters)
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       100
                     </p>
@@ -1376,12 +1376,12 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Load Capacity (kilograms)
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       10
                     </p>
@@ -1423,7 +1423,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                       Manufacturer Name
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     />
                   </div>
                   <div
@@ -1435,7 +1435,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                       Manufacturer URL
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       None
                     </p>
@@ -1449,7 +1449,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                       Telephone number
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     >
                       None
                     </p>
@@ -1463,19 +1463,19 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                       Address
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                   </div>
                 </div>
@@ -1507,7 +1507,7 @@ exports[`Catalogue Items details panel > renders details panel correctly (with o
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1pax5hk-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-17iux8v-MuiTypography-root"
                   >
                     None
                   </p>
@@ -1625,7 +1625,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
                     <h4
-                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-h4 css-dfspvj-MuiTypography-root"
                     >
                       Energy Meters 26
                     </h4>
@@ -1635,7 +1635,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1deohxu-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1mwwl2p-MuiTypography-root"
                     >
                       Precision energy meters for accurate measurements. 26
                     </p>
@@ -1686,7 +1686,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                         Obsolete Reason
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         The item is no longer being manufactured
                       </p>
@@ -1756,7 +1756,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                         Drawing Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -1770,7 +1770,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                         Model Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -1836,12 +1836,12 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Measurement Range (Joules)
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       1000
                     </p>
@@ -1850,12 +1850,12 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Accuracy 
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       ±0.5%
                     </p>
@@ -1897,7 +1897,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       Manufacturer Name
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     />
                   </div>
                   <div
@@ -1909,7 +1909,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       Manufacturer URL
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       None
                     </p>
@@ -1923,7 +1923,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       Telephone number
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     >
                       None
                     </p>
@@ -1937,19 +1937,19 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                       Address
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                   </div>
                 </div>
@@ -1981,7 +1981,7 @@ exports[`Catalogue Items details panel > renders details panel correctly 1`] = `
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1pax5hk-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-17iux8v-MuiTypography-root"
                   >
                     Need to find new manufacturer. 26
                   </p>
@@ -2109,7 +2109,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
                     <h4
-                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-h4 css-dfspvj-MuiTypography-root"
                     >
                       Energy Meters 26
                     </h4>
@@ -2119,7 +2119,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1deohxu-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1mwwl2p-MuiTypography-root"
                     >
                       Precision energy meters for accurate measurements. 26
                     </p>
@@ -2170,7 +2170,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                         Obsolete Reason
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         The item is no longer being manufactured
                       </p>
@@ -2240,7 +2240,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                         Drawing Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -2254,7 +2254,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                         Model Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -2320,12 +2320,12 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Measurement Range (Joules)
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       1000
                     </p>
@@ -2334,12 +2334,12 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Accuracy 
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       ±0.5%
                     </p>
@@ -2380,7 +2380,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       Manufacturer Name
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     />
                   </div>
                   <div
@@ -2392,7 +2392,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       Manufacturer URL
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       None
                     </p>
@@ -2406,7 +2406,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       Telephone number
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     >
                       None
                     </p>
@@ -2420,19 +2420,19 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                       Address
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                   </div>
                 </div>
@@ -2464,7 +2464,7 @@ exports[`Catalogue Items details panel > renders manufacturer panel correctly 1`
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1pax5hk-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-17iux8v-MuiTypography-root"
                   >
                     Need to find new manufacturer. 26
                   </p>
@@ -2592,7 +2592,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
                     <h4
-                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-h4 css-dfspvj-MuiTypography-root"
                     >
                       Energy Meters 26
                     </h4>
@@ -2602,7 +2602,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1deohxu-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1mwwl2p-MuiTypography-root"
                     >
                       Precision energy meters for accurate measurements. 26
                     </p>
@@ -2653,7 +2653,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                         Obsolete Reason
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         The item is no longer being manufactured
                       </p>
@@ -2723,7 +2723,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                         Drawing Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -2737,7 +2737,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                         Model Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -2803,12 +2803,12 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Measurement Range (Joules)
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       1000
                     </p>
@@ -2817,12 +2817,12 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Accuracy 
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       ±0.5%
                     </p>
@@ -2864,7 +2864,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       Manufacturer Name
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     />
                   </div>
                   <div
@@ -2876,7 +2876,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       Manufacturer URL
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       None
                     </p>
@@ -2890,7 +2890,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       Telephone number
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     >
                       None
                     </p>
@@ -2904,19 +2904,19 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                       Address
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                   </div>
                 </div>
@@ -2947,7 +2947,7 @@ exports[`Catalogue Items details panel > renders notes panel correctly 1`] = `
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1pax5hk-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-17iux8v-MuiTypography-root"
                   >
                     Need to find new manufacturer. 26
                   </p>
@@ -3075,7 +3075,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
                     <h4
-                      class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-h4 css-dfspvj-MuiTypography-root"
                     >
                       Energy Meters 26
                     </h4>
@@ -3085,7 +3085,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       Description:
                     </h6>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1deohxu-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1mwwl2p-MuiTypography-root"
                     >
                       Precision energy meters for accurate measurements. 26
                     </p>
@@ -3136,7 +3136,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                         Obsolete Reason
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         The item is no longer being manufactured
                       </p>
@@ -3206,7 +3206,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                         Drawing Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -3220,7 +3220,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                         Model Number
                       </p>
                       <p
-                        class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                       >
                         None
                       </p>
@@ -3285,12 +3285,12 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Measurement Range (Joules)
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       1000
                     </p>
@@ -3299,12 +3299,12 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                     class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
                   >
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-1dgoqp8-MuiTypography-root"
                     >
                       Accuracy 
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       ±0.5%
                     </p>
@@ -3346,7 +3346,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       Manufacturer Name
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     />
                   </div>
                   <div
@@ -3358,7 +3358,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       Manufacturer URL
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 css-1pnmrwp-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 css-119avcu-MuiTypography-root"
                     >
                       None
                     </p>
@@ -3372,7 +3372,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       Telephone number
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     >
                       None
                     </p>
@@ -3386,19 +3386,19 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                       Address
                     </p>
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                     <p
-                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1adeo1o-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-1y1nsrh-MuiTypography-root"
                     />
                   </div>
                 </div>
@@ -3430,7 +3430,7 @@ exports[`Catalogue Items details panel > renders properties panel correctly 1`] 
                   class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-1pax5hk-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 css-17iux8v-MuiTypography-root"
                   >
                     Need to find new manufacturer. 26
                   </p>

@@ -72,12 +72,14 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
         <TabPanel value={tabValue} index={0}>
           <Grid item container spacing={0}>
             <Grid item xs={12}>
-              <Typography variant="h4">{catalogueItemIdData.name}</Typography>
+              <Typography variant="h4" sx={{ wordWrap: 'break-word' }}>
+                {catalogueItemIdData.name}
+              </Typography>
               <Typography sx={{ my: 1 }} variant="h6">
                 Description:
               </Typography>
               <Typography
-                sx={{ mb: 1, whiteSpace: 'pre-line' }}
+                sx={{ mb: 1, whiteSpace: 'pre-line', wordWrap: 'break-word' }}
                 variant="body1"
                 color="text.secondary"
               >
@@ -87,14 +89,20 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
             <Grid item container spacing={0}>
               <Grid item xs={12} sm={6} key={0}>
                 <Typography color="text.primary">Serial Number</Typography>
-                <Typography color="text.secondary">
+                <Typography
+                  color="text.secondary"
+                  sx={{ wordWrap: 'break-word' }}
+                >
                   {itemData.serial_number ?? 'None'}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={1}>
                 <Typography color="text.primary">Asset Number</Typography>
-                <Typography color="text.secondary">
+                <Typography
+                  color="text.secondary"
+                  sx={{ wordWrap: 'break-word' }}
+                >
                   {itemData.asset_number ?? 'None'}
                 </Typography>
               </Grid>
@@ -103,7 +111,10 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
                 <Typography color="text.primary">
                   Purchase Order Number
                 </Typography>
-                <Typography color="text.secondary">
+                <Typography
+                  color="text.secondary"
+                  sx={{ wordWrap: 'break-word' }}
+                >
                   {itemData.purchase_order_number ?? 'None'}
                 </Typography>
               </Grid>
@@ -134,14 +145,20 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
 
               <Grid item xs={12} sm={6} key={6}>
                 <Typography color="text.primary">Usage Status</Typography>
-                <Typography color="text.secondary">
+                <Typography
+                  color="text.secondary"
+                  sx={{ wordWrap: 'break-word' }}
+                >
                   {itemData.usage_status}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} sm={6} key={7}>
                 <Typography color="text.primary">System</Typography>
-                <Typography color="text.secondary">
+                <Typography
+                  color="text.secondary"
+                  sx={{ wordWrap: 'break-word' }}
+                >
                   <MuiLink
                     component={Link}
                     underline="hover"
@@ -176,13 +193,19 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
               itemData.properties.map((property, index) => {
                 return (
                   <Grid item xs={12} sm={6} key={index}>
-                    <Typography align="left" color="text.primary">{`${
-                      property.name
-                    } ${
+                    <Typography
+                      align="left"
+                      color="text.primary"
+                      sx={{ wordWrap: 'break-word' }}
+                    >{`${property.name} ${
                       property.unit ? `(${property.unit})` : ''
                     }`}</Typography>
                     <Box sx={{ display: 'flex' }}>
-                      <Typography align="left" color="text.secondary">
+                      <Typography
+                        align="left"
+                        color="text.secondary"
+                        sx={{ wordWrap: 'break-word' }}
+                      >
                         {property.value !== null
                           ? String(property.value)
                           : 'None'}
@@ -198,13 +221,19 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
           <Grid item container spacing={0}>
             <Grid item xs={12} sm={6} key={0}>
               <Typography color="text.primary">Manufacturer Name</Typography>
-              <Typography color="text.secondary">
+              <Typography
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.name}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} key={1}>
               <Typography color="text.primary">Manufacturer URL</Typography>
-              <Typography color="text.secondary">
+              <Typography
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.url ? (
                   <MuiLink
                     component={Link}
@@ -223,7 +252,11 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
               <Typography align="left" color="text.primary">
                 Telephone number
               </Typography>
-              <Typography align="left" color="text.secondary">
+              <Typography
+                align="left"
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.telephone ?? 'None'}
               </Typography>
             </Grid>
@@ -231,19 +264,39 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
               <Typography align="left" color="text.primary">
                 Address
               </Typography>
-              <Typography align="left" color="text.secondary">
+              <Typography
+                align="left"
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.address.address_line}
               </Typography>
-              <Typography align="left" color="text.secondary">
+              <Typography
+                align="left"
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.address.town}
               </Typography>
-              <Typography align="left" color="text.secondary">
+              <Typography
+                align="left"
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.address.county}
               </Typography>
-              <Typography align="left" color="text.secondary">
+              <Typography
+                align="left"
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.address.country}
               </Typography>
-              <Typography align="left" color="text.secondary">
+              <Typography
+                align="left"
+                color="text.secondary"
+                sx={{ wordWrap: 'break-word' }}
+              >
                 {manufacturerData?.address.postcode}
               </Typography>
             </Grid>
