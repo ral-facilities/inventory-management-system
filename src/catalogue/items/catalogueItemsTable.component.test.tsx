@@ -7,6 +7,7 @@ import {
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';
+import { CatalogueCategory } from '../../app.types';
 
 vi.setConfig({ testTimeout: 10000 });
 
@@ -34,7 +35,7 @@ describe('Catalogue Items Table', () => {
 
   beforeEach(() => {
     props = {
-      parentInfo: getCatalogueCategoryById('5'),
+      parentInfo: getCatalogueCategoryById('5') as CatalogueCategory,
       dense: false,
     };
     user = userEvent.setup();
@@ -57,7 +58,7 @@ describe('Catalogue Items Table', () => {
   });
 
   it('renders table correctly (Cameras more details)', async () => {
-    props.parentInfo = getCatalogueCategoryById('4');
+    props.parentInfo = getCatalogueCategoryById('4') as CatalogueCategory;
     createView();
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument();
@@ -71,7 +72,7 @@ describe('Catalogue Items Table', () => {
   });
 
   it('renders table correctly (more details)', async () => {
-    props.parentInfo = getCatalogueCategoryById('4');
+    props.parentInfo = getCatalogueCategoryById('4') as CatalogueCategory;
     createView();
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument();
@@ -139,7 +140,7 @@ describe('Catalogue Items Table', () => {
   });
 
   it('renders table correctly for properties with type boolean', async () => {
-    props.parentInfo = getCatalogueCategoryById('4');
+    props.parentInfo = getCatalogueCategoryById('4') as CatalogueCategory;
     createView();
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument();
