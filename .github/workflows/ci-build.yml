@@ -112,8 +112,7 @@ jobs:
           --env DATABASE__PROTOCOL="mongodb" \
           --env DATABASE__USERNAME="root" \
           --env DATABASE__PASSWORD="example" \
-          --env DATABASE__HOSTNAME="localhost" \
-          --env DATABASE__PORT=27017 \
+          --env DATABASE__HOST_AND_OPTIONS="localhost:27017/?authMechanism=SCRAM-SHA-256&authSource=admin" \
           --env DATABASE__NAME="ims" \
           --env API__ALLOWED_CORS_HEADERS='["*"]' \
           --env API__ALLOWED_CORS_ORIGINS='["*"]' \
