@@ -154,7 +154,8 @@ describe('items api functions', () => {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(getItemById('KvT2Ox7n'));
+      const item = getItemById('KvT2Ox7n');
+      item && result.current.mutate(item);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
@@ -236,10 +237,13 @@ describe('items api functions', () => {
   });
 
   describe('useMoveItemsToSystem', () => {
-    const mockItems: Item[] = [
-      getItemById('KvT2Ox7n'),
-      getItemById('G463gOIA'),
-    ];
+    let mockItems: Item[] = [];
+    const item1 = getItemById('KvT2Ox7n');
+    const item2 = getItemById('G463gOIA');
+
+    if (item1 && item2) {
+      mockItems = [item1, item2];
+    }
 
     const mockUsageStatuses: MoveItemsToSystemUsageStatus[] = [
       { item_id: 'KvT2Ox7n', usage_status_id: '0' },
@@ -353,18 +357,25 @@ describe('items api functions', () => {
 
   describe('useAddItems', () => {
     let addItems: AddItems;
+    let addItem: AddItem;
+    const item1 = getItemById('KvT2Ox7n');
+
+    if (item1) {
+      const { id, ...item } = item1;
+      addItem = item;
+    }
 
     // Use post spy for testing since response is not actual data in this case
     // so can't test the underlying use of editSystem otherwise
     let axiosPostSpy: MockInstance;
-    const { _id, ...item } = getItemById('KvT2Ox7n');
+
     beforeEach(() => {
       addItems = {
         quantity: 2,
         startingValue: 10,
         item: {
-          ...item,
-          serial_number: item.serial_number + '_%s',
+          ...addItem,
+          serial_number: addItem.serial_number + '_%s',
         },
       };
 
@@ -394,8 +405,8 @@ describe('items api functions', () => {
         i++
       ) {
         expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
-          ...item,
-          serial_number: item.serial_number + `_${i}`,
+          ...addItem,
+          serial_number: addItem.serial_number + `_${i}`,
         });
       }
 
@@ -434,7 +445,7 @@ describe('items api functions', () => {
         i++
       ) {
         expect(axiosPostSpy).toHaveBeenCalledWith('/v1/items', {
-          ...item,
+          ...addItem,
           serial_number: 'Error 500',
         });
       }
