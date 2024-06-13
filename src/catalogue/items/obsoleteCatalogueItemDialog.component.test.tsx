@@ -1,4 +1,5 @@
 import {
+  getCatalogueCategoryById,
   getCatalogueItemById,
   renderComponentWithRouterProvider,
 } from '../../testUtils';
@@ -13,6 +14,7 @@ import { server } from '../../mocks/server';
 import ObsoleteCatalogueItemDialog, {
   ObsoleteCatalogueItemDialogProps,
 } from './obsoleteCatalogueItemDialog.component';
+import { CatalogueCategory } from '../../app.types';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -107,21 +109,26 @@ describe('Obsolete Catalogue Item Dialog', () => {
               );
           }
         }
+
         // Ensure loaded
-        await waitFor(
-          () => {
-            expect(
-              screen.getAllByRole('row', {
-                name: `${
-                  values.replacement_item_navigation[
-                    values.replacement_item_navigation.length - 1
-                  ]
-                } row`,
-              }).length
-            ).toBeGreaterThan(1);
-          },
-          { timeout: 3000 }
-        );
+        const replacementItemNavigation = values.replacement_item_navigation;
+
+        if (replacementItemNavigation && replacementItemNavigation.length > 0) {
+          await waitFor(
+            () => {
+              expect(
+                screen.getAllByRole('row', {
+                  name: `${
+                    replacementItemNavigation[
+                      replacementItemNavigation.length - 1
+                    ]
+                  } row`,
+                }).length
+              ).toBeGreaterThan(1);
+            },
+            { timeout: 3000 }
+          );
+        }
         // Select item if requested
         if (
           values.ignore_replacement_item === undefined ||
@@ -159,6 +166,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
       onClose: mockOnClose,
       // Should have obsolete data to test
       catalogueItem: getCatalogueItemById('89'),
+      parentInfo: getCatalogueCategoryById('4') as CatalogueCategory,
     };
     user = userEvent.setup();
     axiosPatchSpy = vi.spyOn(imsApi, 'patch');
