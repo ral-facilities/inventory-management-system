@@ -134,11 +134,6 @@ describe('catalogue item directory Dialog', () => {
     };
     user = userEvent.setup();
 
-    window.ResizeObserver = vi.fn().mockImplementation(() => ({
-      disconnect: vi.fn(),
-      observe: vi.fn(),
-      unobserve: vi.fn(),
-    }));
     window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 2000 });

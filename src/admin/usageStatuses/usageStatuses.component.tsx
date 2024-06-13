@@ -7,6 +7,7 @@ import {
   ListItemIcon,
   ListItemText,
   MenuItem,
+  TableCellBaseProps,
   TableRow,
 } from '@mui/material';
 import {
@@ -14,18 +15,20 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
-import { UsageStatus } from '../../app.types.tsx';
-import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
+import { useUsageStatuses } from '../../api/usageStatuses.tsx';
+import { UsageStatus } from '../../app.types.tsx';
+import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
 import {
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
   displayTableRowCountText,
   formatDateTimeStrings,
   getPageHeightCalc,
 } from '../../utils.tsx';
-import { useUsageStatuses } from '../../api/usageStatuses.tsx';
-import UsageStatusDialog from './usageStatusDialog.component.tsx';
 import DeleteUsageStatusDialog from './deleteUsageStatusDialog.component.tsx';
+import UsageStatusDialog from './usageStatusDialog.component.tsx';
 
 function UsageStatuses() {
   const { data: usageStatusData, isLoading: usageStatusDataLoading } =
@@ -117,6 +120,22 @@ function UsageStatuses() {
     muiTableBodyRowProps: ({ row }) => {
       return { component: TableRow, 'aria-label': `${row.original.value} row` };
     },
+    muiTableBodyCellProps: ({ column }) =>
+      // Ignore MRT rendered cells e.g. expand , spacer etc
+      column.id.startsWith('mrt')
+        ? {}
+        : {
+            component: (props: TableCellBaseProps) => {
+              return (
+                <TableBodyCellOverFlowTip
+                  {...({
+                    ...props,
+                    overFlowTipSx: { width: '25vw' },
+                  } as TableCellOverFlowTipProps)}
+                />
+              );
+            },
+          },
     muiTablePaperProps: { sx: { maxHeight: '100%' } },
     muiTableContainerProps: { sx: { height: tableHeight } },
     muiSearchTextFieldProps: {

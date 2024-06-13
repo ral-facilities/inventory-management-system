@@ -148,7 +148,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                         aria-invalid="false"
                         autocomplete="new-password"
                         class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                        id=":r11:"
+                        id=":r16:"
                         placeholder="Search"
                         type="text"
                         value=""
@@ -303,7 +303,14 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
-                      Name
+                      <p
+                        aria-label="Name"
+                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        Name
+                      </p>
                     </div>
                     <span
                       aria-label="Sort by Name ascending"
@@ -412,7 +419,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by Name"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r18:"
+                            id=":r1e:"
                             placeholder="Filter by Name"
                             title="Filter by Name"
                             type="text"
@@ -468,7 +475,14 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
-                      Last modified
+                      <p
+                        aria-label="Last modified"
+                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        Last modified
+                      </p>
                     </div>
                     <span
                       aria-label="Sort by Last modified descending"
@@ -580,7 +594,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r1d:"
+                              id=":r1k:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -625,7 +639,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r1f:"
+                              id=":r1m:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -679,7 +693,14 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
-                      Created
+                      <p
+                        aria-label="Created"
+                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        Created
+                      </p>
                     </div>
                     <span
                       aria-label="Sort by Created descending"
@@ -791,7 +812,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               aria-label="Min"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r2m:"
+                              id=":r3j:"
                               inputmode="text"
                               placeholder="Min"
                               title="Min"
@@ -836,7 +857,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                               aria-label="Max"
                               autocomplete="new-password"
                               class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                              id=":r2o:"
+                              id=":r3l:"
                               inputmode="text"
                               placeholder="Max"
                               title="Max"
@@ -890,7 +911,14 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-chb057"
                     >
-                      URL
+                      <p
+                        aria-label="URL"
+                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        URL
+                      </p>
                     </div>
                     <span
                       aria-label="Sort by URL ascending"
@@ -999,7 +1027,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by URL"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1k:"
+                            id=":r1s:"
                             placeholder="Filter by URL"
                             title="Filter by URL"
                             type="text"
@@ -1055,7 +1083,14 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
-                      Address
+                      <p
+                        aria-label="Address"
+                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        Address
+                      </p>
                     </div>
                     <span
                       aria-label="Sort by Address ascending"
@@ -1164,7 +1199,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by Address"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1p:"
+                            id=":r22:"
                             placeholder="Filter by Address"
                             title="Filter by Address"
                             type="text"
@@ -1220,7 +1255,14 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                     <div
                       class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                     >
-                      Telephone number
+                      <p
+                        aria-label="Telephone number"
+                        class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                        data-mui-internal-clone-element="true"
+                        role="tooltip"
+                      >
+                        Telephone number
+                      </p>
                     </div>
                     <span
                       aria-label="Sort by Telephone number ascending"
@@ -1329,7 +1371,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                             aria-label="Filter by Telephone number"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r1u:"
+                            id=":r28:"
                             placeholder="Filter by Telephone number"
                             title="Filter by Telephone number"
                             type="text"
@@ -1430,79 +1472,119 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-on79ik-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/manufacturers/1"
-                >
-                  Manufacturer A
-                </a>
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
-                data-index="2"
-              >
-                02 Jan 2024 13:10
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
-                data-index="3"
-              >
-                01 Jan 2024 12:00
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1albell-MuiTableCell-root"
-                data-index="4"
-              >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="http://example.com"
-                  target="_blank"
-                >
-                  http://example.com
-                </a>
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1d3il0z-MuiTableCell-root"
-                data-index="5"
-              >
                 <div
-                  style="display: inline-block;"
+                  aria-label="Manufacturer A"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="/manufacturers/1"
                   >
-                    1 Example Street
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    Oxford
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    Oxfordshire
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    OX1 2AB
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    United Kingdom
-                  </p>
+                    Manufacturer A
+                  </a>
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1xjtjcn-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1klmwmp-MuiTableCell-root-MuiTableCell-root"
+                data-index="2"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-rouqsg-MuiTableCell-root-MuiTableCell-root"
+                data-index="3"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-qkfbw-MuiTableCell-root-MuiTableCell-root"
+                data-index="4"
+              >
+                <div
+                  aria-label="http://example.com"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="http://example.com"
+                    target="_blank"
+                  >
+                    http://example.com
+                  </a>
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-giv826-MuiTableCell-root-MuiTableCell-root"
+                data-index="5"
+              >
+                <div
+                  aria-label="1 Example Street Oxford Oxfordshire OX1 2AB United Kingdom"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  <div
+                    style="display: inline-block;"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      1 Example Street
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      Oxford
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      Oxfordshire
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      OX1 2AB
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      United Kingdom
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yv2vam-MuiTableCell-root-MuiTableCell-root"
                 data-index="6"
               >
-                07334893348
+                <div
+                  aria-label="07334893348"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  07334893348
+                </div>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -1543,79 +1625,119 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-on79ik-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/manufacturers/2"
-                >
-                  Manufacturer B
-                </a>
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
-                data-index="2"
-              >
-                02 Jan 2024 13:10
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
-                data-index="3"
-              >
-                01 Jan 2024 12:00
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1albell-MuiTableCell-root"
-                data-index="4"
-              >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="http://test.com"
-                  target="_blank"
-                >
-                  http://test.com
-                </a>
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1d3il0z-MuiTableCell-root"
-                data-index="5"
-              >
                 <div
-                  style="display: inline-block;"
+                  aria-label="Manufacturer B"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="/manufacturers/2"
                   >
-                    2 Example Street
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    Oxford
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    Oxfordshire
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    OX1 2AB
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    United Kingdom
-                  </p>
+                    Manufacturer B
+                  </a>
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1xjtjcn-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1klmwmp-MuiTableCell-root-MuiTableCell-root"
+                data-index="2"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-rouqsg-MuiTableCell-root-MuiTableCell-root"
+                data-index="3"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-qkfbw-MuiTableCell-root-MuiTableCell-root"
+                data-index="4"
+              >
+                <div
+                  aria-label="http://test.com"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="http://test.com"
+                    target="_blank"
+                  >
+                    http://test.com
+                  </a>
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-giv826-MuiTableCell-root-MuiTableCell-root"
+                data-index="5"
+              >
+                <div
+                  aria-label="2 Example Street Oxford Oxfordshire OX1 2AB United Kingdom"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  <div
+                    style="display: inline-block;"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      2 Example Street
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      Oxford
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      Oxfordshire
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      OX1 2AB
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      United Kingdom
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yv2vam-MuiTableCell-root-MuiTableCell-root"
                 data-index="6"
               >
-                07294958549
+                <div
+                  aria-label="07294958549"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  07294958549
+                </div>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -1656,79 +1778,119 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-on79ik-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/manufacturers/3"
-                >
-                  Manufacturer C
-                </a>
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
-                data-index="2"
-              >
-                02 Jan 2024 13:10
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
-                data-index="3"
-              >
-                01 Jan 2024 12:00
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1albell-MuiTableCell-root"
-                data-index="4"
-              >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="http://test.co.uk"
-                  target="_blank"
-                >
-                  http://test.co.uk
-                </a>
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1d3il0z-MuiTableCell-root"
-                data-index="5"
-              >
                 <div
-                  style="display: inline-block;"
+                  aria-label="Manufacturer C"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="/manufacturers/3"
                   >
-                    3 Example Street
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    Oxford
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    Oxfordshire
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    OX1 2AB
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    United Kingdom
-                  </p>
+                    Manufacturer C
+                  </a>
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1xjtjcn-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1klmwmp-MuiTableCell-root-MuiTableCell-root"
+                data-index="2"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-rouqsg-MuiTableCell-root-MuiTableCell-root"
+                data-index="3"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-qkfbw-MuiTableCell-root-MuiTableCell-root"
+                data-index="4"
+              >
+                <div
+                  aria-label="http://test.co.uk"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="http://test.co.uk"
+                    target="_blank"
+                  >
+                    http://test.co.uk
+                  </a>
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-giv826-MuiTableCell-root-MuiTableCell-root"
+                data-index="5"
+              >
+                <div
+                  aria-label="3 Example Street Oxford Oxfordshire OX1 2AB United Kingdom"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  <div
+                    style="display: inline-block;"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      3 Example Street
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      Oxford
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      Oxfordshire
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      OX1 2AB
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      United Kingdom
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yv2vam-MuiTableCell-root-MuiTableCell-root"
                 data-index="6"
               >
-                07934303412
+                <div
+                  aria-label="07934303412"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  07934303412
+                </div>
               </td>
               <td
                 class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -1769,64 +1931,90 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                 </button>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-on79ik-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ha39os-MuiTableCell-root-MuiTableCell-root"
                 data-index="1"
               >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                  href="/manufacturers/4"
-                >
-                  Manufacturer D
-                </a>
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-yc9wll-MuiTableCell-root"
-                data-index="2"
-              >
-                02 Jan 2024 13:10
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-17dwrer-MuiTableCell-root"
-                data-index="3"
-              >
-                01 Jan 2024 12:00
-              </td>
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1albell-MuiTableCell-root"
-                data-index="4"
-              />
-              <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1d3il0z-MuiTableCell-root"
-                data-index="5"
-              >
                 <div
-                  style="display: inline-block;"
+                  aria-label="Manufacturer D"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                    href="/manufacturers/4"
                   >
-                    3 Example Street
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  />
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  />
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    OX1 2AB
-                  </p>
-                  <p
-                    class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
-                  >
-                    United Kingdom
-                  </p>
+                    Manufacturer D
+                  </a>
                 </div>
               </td>
               <td
-                class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1xjtjcn-MuiTableCell-root"
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1klmwmp-MuiTableCell-root-MuiTableCell-root"
+                data-index="2"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  02 Jan 2024 13:10
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-rouqsg-MuiTableCell-root-MuiTableCell-root"
+                data-index="3"
+              >
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  01 Jan 2024 12:00
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-qkfbw-MuiTableCell-root-MuiTableCell-root"
+                data-index="4"
+              />
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-giv826-MuiTableCell-root-MuiTableCell-root"
+                data-index="5"
+              >
+                <div
+                  aria-label="3 Example Street undefined undefined OX1 2AB United Kingdom"
+                  class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  <div
+                    style="display: inline-block;"
+                  >
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      3 Example Street
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    />
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    />
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      OX1 2AB
+                    </p>
+                    <p
+                      class="MuiTypography-root MuiTypography-body1 css-1n8z4pj-MuiTypography-root"
+                    >
+                      United Kingdom
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td
+                class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1yv2vam-MuiTableCell-root-MuiTableCell-root"
                 data-index="6"
               />
               <td
@@ -1901,7 +2089,7 @@ exports[`Manufacturer > renders table data correctly 1`] = `
                   class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
                 >
                   <div
-                    aria-controls=":r20:"
+                    aria-controls=":r2a:"
                     aria-expanded="false"
                     aria-haspopup="listbox"
                     aria-label="Rows per page"

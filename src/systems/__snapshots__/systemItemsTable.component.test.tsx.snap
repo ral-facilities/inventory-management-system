@@ -261,7 +261,14 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                   <div
                     class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                   >
-                    Catalogue Item
+                    <p
+                      aria-label="Catalogue Item"
+                      class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                      data-mui-internal-clone-element="true"
+                      role="tooltip"
+                    >
+                      Catalogue Item
+                    </p>
                   </div>
                   <span
                     aria-label="Sort by Catalogue Item ascending"
@@ -370,7 +377,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                           aria-label="Filter by Catalogue Item"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":r9:"
+                          id=":ra:"
                           placeholder="Filter by Catalogue Item"
                           title="Filter by Catalogue Item"
                           type="text"
@@ -534,7 +541,14 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                   <div
                     class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                   >
-                    Serial Number
+                    <p
+                      aria-label="Serial Number"
+                      class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                      data-mui-internal-clone-element="true"
+                      role="tooltip"
+                    >
+                      Serial Number
+                    </p>
                   </div>
                   <span
                     aria-label="Sort by Serial Number ascending"
@@ -643,7 +657,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                           aria-label="Filter by Serial Number"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":rg:"
+                          id=":ri:"
                           placeholder="Filter by Serial Number"
                           title="Filter by Serial Number"
                           type="text"
@@ -699,7 +713,14 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                   <div
                     class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                   >
-                    Last modified
+                    <p
+                      aria-label="Last modified"
+                      class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                      data-mui-internal-clone-element="true"
+                      role="tooltip"
+                    >
+                      Last modified
+                    </p>
                   </div>
                   <span
                     aria-label="Sort by Last modified descending"
@@ -811,7 +832,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             aria-label="Min"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rl:"
+                            id=":ro:"
                             inputmode="text"
                             placeholder="Min"
                             title="Min"
@@ -856,7 +877,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             aria-label="Max"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rn:"
+                            id=":rq:"
                             inputmode="text"
                             placeholder="Max"
                             title="Max"
@@ -910,7 +931,14 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                   <div
                     class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                   >
-                    Created
+                    <p
+                      aria-label="Created"
+                      class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                      data-mui-internal-clone-element="true"
+                      role="tooltip"
+                    >
+                      Created
+                    </p>
                   </div>
                   <span
                     aria-label="Sort by Created descending"
@@ -1022,7 +1050,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             aria-label="Min"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r24:"
+                            id=":r30:"
                             inputmode="text"
                             placeholder="Min"
                             title="Min"
@@ -1067,7 +1095,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             aria-label="Max"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r26:"
+                            id=":r32:"
                             inputmode="text"
                             placeholder="Max"
                             title="Max"
@@ -1121,7 +1149,14 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                   <div
                     class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                   >
-                    Delivered Date
+                    <p
+                      aria-label="Delivered Date"
+                      class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                      data-mui-internal-clone-element="true"
+                      role="tooltip"
+                    >
+                      Delivered Date
+                    </p>
                   </div>
                   <span
                     aria-label="Sort by Delivered Date descending"
@@ -1233,7 +1268,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             aria-label="Min"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":rs:"
+                            id=":r10:"
                             inputmode="text"
                             placeholder="Min"
                             title="Min"
@@ -1278,7 +1313,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             aria-label="Max"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":ru:"
+                            id=":r12:"
                             inputmode="text"
                             placeholder="Max"
                             title="Max"
@@ -1332,7 +1367,14 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                   <div
                     class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                   >
-                    Is Defective
+                    <p
+                      aria-label="Is Defective"
+                      class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                      data-mui-internal-clone-element="true"
+                      role="tooltip"
+                    >
+                      Is Defective
+                    </p>
                   </div>
                   <span
                     aria-label="Sort by Is Defective ascending"
@@ -1447,7 +1489,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             autocapitalize="none"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r13:"
+                            id=":r18:"
                             placeholder="Filter by Is Defective"
                             role="combobox"
                             spellcheck="false"
@@ -1503,7 +1545,14 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                   <div
                     class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                   >
-                    Usage Status
+                    <p
+                      aria-label="Usage Status"
+                      class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                      data-mui-internal-clone-element="true"
+                      role="tooltip"
+                    >
+                      Usage Status
+                    </p>
                   </div>
                   <span
                     aria-label="Sort by Usage Status ascending"
@@ -1618,7 +1667,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                             autocapitalize="none"
                             autocomplete="new-password"
                             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-929hxt-MuiInputBase-input-MuiInput-input"
-                            id=":r18:"
+                            id=":r1e:"
                             placeholder="Filter by Usage Status"
                             role="combobox"
                             spellcheck="false"
@@ -1694,15 +1743,22 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               data-index="0"
             >
               <div
-                class="MuiBox-root css-9p8exr"
+                class="MuiBox-root css-11ngwtf"
               >
-                <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1iao5lu-MuiTypography-root-MuiLink-root"
-                  href="/catalogue/item/21"
+                <div
+                  aria-label="Turbomolecular Pumps 42 (2)"
+                  class="MuiTypography-root MuiTypography-body1 css-18ibq3l-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  Turbomolecular Pumps 42
-                </a>
-                (1)
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-depzd6-MuiTypography-root-MuiLink-root"
+                    href="/catalogue/item/21"
+                  >
+                    Turbomolecular Pumps 42
+                  </a>
+                  (2)
+                </div>
               </div>
             </td>
             <td
@@ -1770,27 +1826,48 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               </span>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-dxw051-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-308mym-MuiTableCell-root-MuiTableCell-root"
               data-index="3"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-10xdbbc-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15mbnxj-MuiTableCell-root-MuiTableCell-root"
               data-index="4"
-            />
+            >
+              <div
+                aria-label="Tue Jan 02 2024 13:10:10 GMT+0000 (Coordinated Universal Time),Tue Jan 02 2024 13:10:10 GMT+0000 (Coordinated Universal Time)"
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              />
+            </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-44ujmk-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1u5qoo5-MuiTableCell-root-MuiTableCell-root"
               data-index="5"
-            />
+            >
+              <div
+                aria-label="Mon Jan 01 2024 12:00:00 GMT+0000 (Coordinated Universal Time),Mon Jan 01 2024 12:00:00 GMT+0000 (Coordinated Universal Time)"
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              />
+            </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-43qbe1-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-567k17-MuiTableCell-root-MuiTableCell-root"
               data-index="6"
-            />
+            >
+              <div
+                aria-label="Tue Sep 05 2023 23:00:00 GMT+0000 (Coordinated Universal Time),Tue Sep 05 2023 23:00:00 GMT+0000 (Coordinated Universal Time)"
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              />
+            </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19ykz2l-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ch9d8-MuiTableCell-root-MuiTableCell-root"
               data-index="7"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-9g11ld-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-11phabq-MuiTableCell-root-MuiTableCell-root"
               data-index="8"
             />
             <td
@@ -1871,49 +1948,84 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               </span>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-dxw051-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-308mym-MuiTableCell-root-MuiTableCell-root"
               data-index="3"
             >
-              <a
-                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
-                href="/catalogue/item/21/items/13h6TOX6"
+              <div
+                aria-label="5xE1KSraISvu"
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
               >
-                5xE1KSraISvu
-              </a>
+                <a
+                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                  href="/catalogue/item/21/items/13h6TOX6"
+                >
+                  5xE1KSraISvu
+                </a>
+              </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-10xdbbc-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15mbnxj-MuiTableCell-root-MuiTableCell-root"
               data-index="4"
             >
-              02 Jan 2024 13:10
+              <div
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                02 Jan 2024 13:10
+              </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-44ujmk-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1u5qoo5-MuiTableCell-root-MuiTableCell-root"
               data-index="5"
             >
-              01 Jan 2024 12:00
+              <div
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                01 Jan 2024 12:00
+              </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-43qbe1-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-567k17-MuiTableCell-root-MuiTableCell-root"
               data-index="6"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body1 css-1quizqi-MuiTypography-root"
+              <div
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
               >
                 05 Sep 2023
-              </p>
+              </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19ykz2l-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ch9d8-MuiTableCell-root-MuiTableCell-root"
               data-index="7"
             >
-              No
+              <div
+                aria-label="No"
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                No
+              </div>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-9g11ld-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-11phabq-MuiTableCell-root-MuiTableCell-root"
               data-index="8"
             >
-              In Use
+              <div
+                aria-label="In Use"
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                In Use
+              </div>
             </td>
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
@@ -1936,17 +2048,182 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
             <td
               class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qa3y6f-MuiTableCell-root"
               data-index="0"
+            />
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-lcy7n-MuiTableCell-root"
+              data-index="1"
+            >
+              <span
+                aria-label="Expand"
+                class=""
+                data-mui-internal-clone-element="true"
+              >
+                <button
+                  aria-label="Expand"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1b3fgzj-MuiButtonBase-root-MuiIconButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="ExpandMoreIcon"
+                    focusable="false"
+                    style="transform: rotate(0deg); transition: transform 150ms;"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </span>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-123c2sw-MuiTableCell-root"
+              data-index="2"
+            >
+              <span
+                aria-label="Toggle select row"
+                class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-h5odmr-MuiButtonBase-root-MuiCheckbox-root"
+                data-mui-internal-clone-element="true"
+              >
+                <input
+                  aria-label="Toggle select row"
+                  class="PrivateSwitchBase-input css-1m9pwf3"
+                  data-indeterminate="false"
+                  type="checkbox"
+                />
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="CheckBoxOutlineBlankIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                  />
+                </svg>
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </span>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-308mym-MuiTableCell-root-MuiTableCell-root"
+              data-index="3"
             >
               <div
-                class="MuiBox-root css-9p8exr"
+                aria-label="5xE1KSraISvu"
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
               >
                 <a
-                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1iao5lu-MuiTypography-root-MuiLink-root"
-                  href="/catalogue/item/22"
+                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+                  href="/catalogue/item/21/items/13h6TOX7"
                 >
-                  Turbomolecular Pumps 43
+                  5xE1KSraISvu
                 </a>
-                (2)
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15mbnxj-MuiTableCell-root-MuiTableCell-root"
+              data-index="4"
+            >
+              <div
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                02 Jan 2024 13:10
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1u5qoo5-MuiTableCell-root-MuiTableCell-root"
+              data-index="5"
+            >
+              <div
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                01 Jan 2024 12:00
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-567k17-MuiTableCell-root-MuiTableCell-root"
+              data-index="6"
+            />
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ch9d8-MuiTableCell-root-MuiTableCell-root"
+              data-index="7"
+            >
+              <div
+                aria-label="No"
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                No
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-11phabq-MuiTableCell-root-MuiTableCell-root"
+              data-index="8"
+            >
+              <div
+                aria-label="In Use"
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              >
+                In Use
+              </div>
+            </td>
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-sui33z-MuiTableCell-root"
+              data-index="9"
+            />
+          </tr>
+          <tr
+            class="MuiTableRow-root Mui-TableBodyCell-DetailPanel css-cvwpbq-MuiTableRow-root"
+            data-index="5"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium Mui-TableBodyCell-DetailPanel css-1exvi8x-MuiTableCell-root"
+              colspan="10"
+            />
+          </tr>
+          <tr
+            class="MuiTableRow-root css-1hdg57s-MuiTableRow-root"
+            data-index="6"
+          >
+            <td
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1qa3y6f-MuiTableCell-root"
+              data-index="0"
+            >
+              <div
+                class="MuiBox-root css-11ngwtf"
+              >
+                <div
+                  aria-label="Turbomolecular Pumps 43 (2)"
+                  class="MuiTypography-root MuiTypography-body1 css-18ibq3l-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
+                >
+                  <a
+                    class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-depzd6-MuiTypography-root-MuiLink-root"
+                    href="/catalogue/item/22"
+                  >
+                    Turbomolecular Pumps 43
+                  </a>
+                  (2)
+                </div>
               </div>
             </td>
             <td
@@ -2014,27 +2291,48 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
               </span>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-dxw051-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-308mym-MuiTableCell-root-MuiTableCell-root"
               data-index="3"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-10xdbbc-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-15mbnxj-MuiTableCell-root-MuiTableCell-root"
               data-index="4"
-            />
+            >
+              <div
+                aria-label="Tue Jan 02 2024 13:10:10 GMT+0000 (Coordinated Universal Time),Tue Jan 02 2024 13:10:10 GMT+0000 (Coordinated Universal Time)"
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              />
+            </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-44ujmk-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1u5qoo5-MuiTableCell-root-MuiTableCell-root"
               data-index="5"
-            />
+            >
+              <div
+                aria-label="Mon Jan 01 2024 12:00:00 GMT+0000 (Coordinated Universal Time),Mon Jan 01 2024 12:00:00 GMT+0000 (Coordinated Universal Time)"
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              />
+            </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-43qbe1-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-567k17-MuiTableCell-root-MuiTableCell-root"
               data-index="6"
-            />
+            >
+              <div
+                aria-label="Mon Feb 27 2023 00:00:00 GMT+0000 (Coordinated Universal Time),Sat Sep 09 2023 23:00:00 GMT+0000 (Coordinated Universal Time)"
+                class="MuiTypography-root MuiTypography-body1 css-kj4bc9-MuiTypography-root"
+                data-mui-internal-clone-element="true"
+                role="tooltip"
+              />
+            </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19ykz2l-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-ch9d8-MuiTableCell-root-MuiTableCell-root"
               data-index="7"
             />
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-9g11ld-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-11phabq-MuiTableCell-root-MuiTableCell-root"
               data-index="8"
             />
             <td
@@ -2113,7 +2411,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
         <p
           class="MuiTypography-root MuiTypography-body1 css-13zw5gk-MuiTypography-root"
         >
-          Total Items: 3
+          Total Items: 4
         </p>
         <div
           class="MuiBox-root css-nokk8"
@@ -2134,7 +2432,7 @@ exports[`SystemItemsTable > SystemItemsTable (normal) > renders correctly 1`] = 
                 class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
-                  aria-controls=":r1a:"
+                  aria-controls=":r1g:"
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-label="Rows per page"
@@ -2322,7 +2620,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                       aria-invalid="false"
                       autocomplete="new-password"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-12yjm75-MuiInputBase-input-MuiOutlinedInput-input"
-                      id=":rb5:"
+                      id=":rj8:"
                       placeholder="Search"
                       type="text"
                       value=""
@@ -2432,7 +2730,14 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                   <div
                     class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                   >
-                    Catalogue Item
+                    <p
+                      aria-label="Catalogue Item"
+                      class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                      data-mui-internal-clone-element="true"
+                      role="tooltip"
+                    >
+                      Catalogue Item
+                    </p>
                   </div>
                   <span
                     aria-label="Sort by Catalogue Item ascending"
@@ -2514,7 +2819,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                           aria-label="Filter by Catalogue Item"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":rba:"
+                          id=":rje:"
                           placeholder="Filter by Catalogue Item"
                           title="Filter by Catalogue Item"
                           type="text"
@@ -2623,7 +2928,14 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                   <div
                     class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                   >
-                    Serial Number
+                    <p
+                      aria-label="Serial Number"
+                      class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                      data-mui-internal-clone-element="true"
+                      role="tooltip"
+                    >
+                      Serial Number
+                    </p>
                   </div>
                   <span
                     aria-label="Sort by Serial Number ascending"
@@ -2705,7 +3017,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                           aria-label="Filter by Serial Number"
                           autocomplete="new-password"
                           class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-929hxt-MuiInputBase-input-MuiInput-input"
-                          id=":rbf:"
+                          id=":rjk:"
                           placeholder="Filter by Serial Number"
                           title="Filter by Serial Number"
                           type="text"
@@ -2761,7 +3073,14 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                   <div
                     class="Mui-TableHeadCell-Content-Wrapper MuiBox-root css-lapokc"
                   >
-                    Usage Status
+                    <p
+                      aria-label="Usage Status"
+                      class="MuiTypography-root MuiTypography-body1 css-1jmsoko-MuiTypography-root"
+                      data-mui-internal-clone-element="true"
+                      role="tooltip"
+                    >
+                      Usage Status
+                    </p>
                   </div>
                 </div>
                 <div
@@ -2827,14 +3146,16 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
               data-index="0"
             >
               <div
-                class="MuiBox-root css-9p8exr"
+                class="MuiBox-root css-11ngwtf"
               >
                 <div
-                  class="MuiBox-root css-qbrse1"
+                  aria-label="Cameras 1 (2)"
+                  class="MuiTypography-root MuiTypography-body1 css-1ugkfmx-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  Cameras 1
+                  Cameras 1(2)
                 </div>
-                (2)
               </div>
             </td>
             <td
@@ -2871,7 +3192,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
               </span>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1h8vrqr-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-152w3sh-MuiTableCell-root-MuiTableCell-root"
               data-index="2"
             />
             <td
@@ -2971,14 +3292,16 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
               data-index="0"
             >
               <div
-                class="MuiBox-root css-9p8exr"
+                class="MuiBox-root css-11ngwtf"
               >
                 <div
-                  class="MuiBox-root css-qbrse1"
+                  aria-label="Cameras 6 (2)"
+                  class="MuiTypography-root MuiTypography-body1 css-1ugkfmx-MuiTypography-root"
+                  data-mui-internal-clone-element="true"
+                  role="tooltip"
                 >
-                  Cameras 6
+                  Cameras 6(2)
                 </div>
-                (2)
               </div>
             </td>
             <td
@@ -3015,7 +3338,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
               </span>
             </td>
             <td
-              class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-1h8vrqr-MuiTableCell-root"
+              class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-152w3sh-MuiTableCell-root-MuiTableCell-root"
               data-index="2"
             />
             <td
@@ -3198,7 +3521,7 @@ exports[`SystemItemsTable > SystemItemsTable (usageStatus) > renders correctly 1
                 class="MuiInputBase-root MuiInput-root MuiInputBase-colorPrimary  css-1mmm5cp-MuiInputBase-root-MuiInput-root-MuiSelect-root"
               >
                 <div
-                  aria-controls=":rbj:"
+                  aria-controls=":rjp:"
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-label="Rows per page"

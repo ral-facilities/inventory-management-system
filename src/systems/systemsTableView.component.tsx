@@ -1,5 +1,5 @@
-import { Box, Button, TableRow, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { Box, Button, TableCellBaseProps, TableRow } from '@mui/material';
 import {
   MRT_ColumnDef,
   MaterialReactTable,
@@ -8,8 +8,12 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { System } from '../app.types';
+import {
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
+  formatDateTimeStrings,
+} from '../utils';
 import SystemDialog from './systemDialog.component';
-import { formatDateTimeStrings } from '../utils';
 
 export interface SystemsTableViewProps {
   systemsData?: System[];
@@ -40,21 +44,9 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
     () => [
       {
         header: 'Name',
+        id: 'name',
         accessorKey: 'name',
         size: 400,
-        Cell: ({ renderedCellValue, row }) => {
-          const canPlaceHere =
-            type === 'copyTo' || !selectedSystemIds.includes(row.original.id);
-          return (
-            <Typography
-              sx={{
-                color: canPlaceHere ? 'inherit' : 'action.disabled',
-              }}
-            >
-              {renderedCellValue}
-            </Typography>
-          );
-        },
       },
       {
         header: 'Last modified',
@@ -68,7 +60,7 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
           formatDateTimeStrings(row.original.modified_time, true),
       },
     ],
-    [selectedSystemIds, type]
+    []
   );
   const table = useMaterialReactTable({
     // Data
@@ -119,6 +111,28 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
         },
       };
     },
+    muiTableBodyCellProps: ({ column, row }) =>
+      // Ignore MRT rendered cells e.g. expand , spacer etc
+      column.id.startsWith('mrt')
+        ? {}
+        : {
+            component: (props: TableCellBaseProps) => {
+              const canPlaceHere =
+                type === 'copyTo' ||
+                !selectedSystemIds.includes(row.original.id);
+              return (
+                <TableBodyCellOverFlowTip
+                  {...({
+                    ...props,
+                    overFlowTipSx: {
+                      width: '25vw',
+                      color: canPlaceHere ? 'inherit' : 'action.disabled',
+                    },
+                  } as TableCellOverFlowTipProps)}
+                />
+              );
+            },
+          },
     muiTableContainerProps: { sx: { height: '360.4px' } },
     muiPaginationProps: {
       color: 'secondary',
