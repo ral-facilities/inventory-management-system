@@ -9,7 +9,10 @@ import {
 } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  renderComponentWithRouterProvider,
+} from '../../testUtils';
 import { resetUniqueIdCounter } from '../../utils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
@@ -66,7 +69,10 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(async () =>
         expect(
           (await screen.findAllByLabelText('Property Name *')).length
-        ).toBe(numberOfCurrentFields + values.newFormFields?.length)
+        ).toBe(
+          numberOfCurrentFields +
+            (values.newFormFields ? values.newFormFields.length : 0)
+        )
       );
 
       // Modify
@@ -145,7 +151,7 @@ describe('Catalogue Category Dialog', () => {
 
               await waitFor(() => {
                 screen.getByTestId(
-                  `av_placement_id_${i + j + values.newFormFields.length + 1}: List Item`
+                  `av_placement_id_${i + j + (values.newFormFields ? values.newFormFields.length : 0) + 1}: List Item`
                 );
               });
               const listItem = screen.getByTestId(
@@ -732,6 +738,7 @@ describe('Catalogue Category Dialog', () => {
       id: '1',
       code: 'test',
       is_leaf: false,
+      ...CREATED_MODIFIED_TIME_VALUES,
     };
 
     beforeEach(() => {
@@ -922,6 +929,7 @@ describe('Catalogue Category Dialog', () => {
       id: '1',
       code: 'test',
       is_leaf: false,
+      ...CREATED_MODIFIED_TIME_VALUES,
     };
 
     beforeEach(() => {
