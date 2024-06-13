@@ -277,6 +277,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
               getOptionLabel={(option) => option}
               value={[systemData.importance]}
               onChange={(_event, value) => {
+                if (value.length === 0) return;
                 // as is a multiple autocomplete this removes original selection from list
                 // therefore only the new option is in the array
                 value.shift();
@@ -286,7 +287,9 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
                   importance: value[0],
                 });
               }}
-              renderInput={(params) => <TextField {...params} />}
+              renderInput={(params) => (
+                <TextField label="Importance" {...params} />
+              )}
               renderTags={() => (
                 <Chip
                   label={systemData.importance}

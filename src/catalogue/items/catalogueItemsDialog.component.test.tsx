@@ -463,9 +463,10 @@ describe('Catalogue Items Dialog', () => {
     });
   });
 
-  it('display error message when mandatory field is not filled in', async () => {
+  it('displays error messages when mandatory fields are not filled in', async () => {
     props = {
       ...props,
+      type: 'create',
       parentInfo: getCatalogueCategoryById('4'),
     };
 

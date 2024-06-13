@@ -860,8 +860,8 @@ describe('ItemDialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
-      const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
-      await user.type(pumpingSpeedAutoComplete, '{delete}');
+      const ultimatePressureTextBox = screen.getAllByRole('textbox')[0];
+      await user.clear(ultimatePressureTextBox);
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
@@ -873,7 +873,7 @@ describe('ItemDialog', () => {
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
 
-      await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
+      await user.type(ultimatePressureTextBox, '10');
 
       expect(mandatoryFieldHelperText).not.toBeInTheDocument();
       expect(screen.getByRole('button', { name: 'Next' })).not.toBeDisabled();
