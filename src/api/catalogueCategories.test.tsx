@@ -11,6 +11,7 @@ import {
 } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import {
+  CREATED_MODIFIED_TIME_VALUES,
   getCatalogueCategoryById,
   hooksWrapperWithProviders,
 } from '../testUtils';
@@ -155,6 +156,7 @@ describe('catalogue categories api functions', () => {
         id: '1',
         code: 'test',
         is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
       };
     });
 
@@ -243,6 +245,7 @@ describe('catalogue categories api functions', () => {
         parent_id: '1',
         code: 'test_dup',
         is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
       },
       {
         id: '6',
@@ -252,11 +255,13 @@ describe('catalogue categories api functions', () => {
         is_leaf: true,
         catalogue_item_properties: [
           {
+            id: '1',
             name: 'Wavefront Measurement Range',
             type: 'string',
             mandatory: true,
           },
           {
+            id: '2',
             name: 'Spatial Resolution',
             type: 'number',
             unit: 'micrometers',
@@ -264,6 +269,7 @@ describe('catalogue categories api functions', () => {
             mandatory: false,
           },
         ],
+        ...CREATED_MODIFIED_TIME_VALUES,
       },
       {
         id: '5',
@@ -273,6 +279,7 @@ describe('catalogue categories api functions', () => {
         is_leaf: true,
         catalogue_item_properties: [
           {
+            id: '3',
             name: 'Measurement Range',
             type: 'number',
             unit: 'Joules',
@@ -280,11 +287,13 @@ describe('catalogue categories api functions', () => {
             mandatory: true,
           },
           {
+            id: '4',
             name: 'Accuracy',
             type: 'string',
             mandatory: false,
           },
         ],
+        ...CREATED_MODIFIED_TIME_VALUES,
       },
     ];
 
@@ -356,6 +365,7 @@ describe('catalogue categories api functions', () => {
         name: 'Wavefront Sensors',
         code: 'wavefront-sensors',
         is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
       };
       moveToCatalogueCategory.targetCategory = targetCategory;
 
@@ -400,6 +410,7 @@ describe('catalogue categories api functions', () => {
         parent_id: '1',
         code: 'test_dup',
         is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
       },
       {
         id: '6',
@@ -423,6 +434,7 @@ describe('catalogue categories api functions', () => {
             mandatory: false,
           },
         ],
+        ...CREATED_MODIFIED_TIME_VALUES,
       },
       {
         id: '5',
@@ -441,6 +453,7 @@ describe('catalogue categories api functions', () => {
           },
           { id: '4', name: 'Accuracy', type: 'string', mandatory: false },
         ],
+        ...CREATED_MODIFIED_TIME_VALUES,
       },
     ];
 
@@ -517,6 +530,7 @@ describe('catalogue categories api functions', () => {
         name: 'Wavefront Sensors',
         code: 'wavefront-sensors',
         is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
       };
       copyToCatalogueCategory.targetCategory = targetCategory;
 
@@ -601,15 +615,18 @@ describe('catalogue categories api functions', () => {
 
   describe('useEditCatalogueCategoryProperty', () => {
     let mockDataEditProperty: EditPropertyMigration;
+    const catalogueCategory = getCatalogueCategoryById('12');
     beforeEach(() => {
-      mockDataEditProperty = {
-        catalogueCategory: getCatalogueCategoryById('12'),
-        property: {
-          id: '19',
-          name: 'test',
-          allowed_values: { type: 'list', values: ['x', 'y', 'z', 'a'] },
-        },
-      };
+      if (catalogueCategory !== undefined) {
+        mockDataEditProperty = {
+          catalogueCategory: catalogueCategory,
+          property: {
+            id: '19',
+            name: 'test',
+            allowed_values: { type: 'list', values: ['x', 'y', 'z', 'a'] },
+          },
+        };
+      }
     });
     it('sends a patch request to edit a property and returns successful response', async () => {
       const { result } = renderHook(() => useEditCatalogueCategoryProperty(), {
@@ -682,17 +699,20 @@ describe('catalogue categories api functions', () => {
   });
   describe('useAddCatalogueCategoryProperty', () => {
     let mockDataAddProperty: AddPropertyMigration;
+    const catalogueCategory = getCatalogueCategoryById('4');
     beforeEach(() => {
-      mockDataAddProperty = {
-        catalogueCategory: getCatalogueCategoryById('4'),
-        property: {
-          name: 'test',
-          type: 'number',
-          unit_id: '1',
-          default_value: 2,
-          mandatory: false,
-        },
-      };
+      if (catalogueCategory) {
+        mockDataAddProperty = {
+          catalogueCategory: catalogueCategory,
+          property: {
+            name: 'test',
+            type: 'number',
+            unit_id: '1',
+            default_value: 2,
+            mandatory: false,
+          },
+        };
+      }
     });
     it('posts a request to add property and returns successful response', async () => {
       const { result } = renderHook(() => useAddCatalogueCategoryProperty(), {

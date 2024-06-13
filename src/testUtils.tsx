@@ -177,3 +177,8 @@ export const getItemById = (itemId: string): Item | undefined => {
 export const getItemsBySystemId = (systemId: string): Item[] => {
   return ItemsJSON.filter((item) => item.system_id === systemId);
 };
+
+export const CREATED_MODIFIED_TIME_VALUES = {
+  created_time: '2024-01-01T12:00:00.000+00:00',
+  modified_time: '2024-01-02T13:10:10.000+00:00',
+};
