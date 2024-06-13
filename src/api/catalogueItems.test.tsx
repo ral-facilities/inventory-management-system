@@ -9,9 +9,14 @@ import {
   useEditCatalogueItem,
   useMoveToCatalogueItem,
 } from './catalogueItems';
-import { catalogueItemData, hooksWrapperWithProviders } from '../testUtils';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  catalogueItemData,
+  hooksWrapperWithProviders,
+} from '../testUtils';
 import {
   AddCatalogueItem,
+  CatalogueCategory,
   CatalogueItem,
   EditCatalogueItem,
   TransferToCatalogueItem,
@@ -30,6 +35,18 @@ describe('catalogue items api functions', () => {
         name: 'test',
         description: '',
         catalogue_category_id: '1',
+        cost_gbp: 0,
+        cost_to_rework_gbp: null,
+        days_to_replace: 0,
+        days_to_rework: null,
+        drawing_link: null,
+        drawing_number: null,
+        notes: null,
+        is_obsolete: false,
+        item_model_number: null,
+        manufacturer_id: '1',
+        obsolete_replacement_catalogue_item_id: null,
+        obsolete_reason: null,
         properties: [
           { id: '1', value: false },
           { id: '2', value: 'string' },
@@ -51,6 +68,18 @@ describe('catalogue items api functions', () => {
         description: '',
         id: '1',
         name: 'test',
+        cost_gbp: 0,
+        cost_to_rework_gbp: null,
+        days_to_replace: 0,
+        days_to_rework: null,
+        drawing_link: null,
+        drawing_number: null,
+        notes: null,
+        is_obsolete: false,
+        item_model_number: null,
+        manufacturer_id: '1',
+        obsolete_replacement_catalogue_item_id: null,
+        obsolete_reason: null,
         properties: [
           { id: '1', value: false },
           { id: '2', value: 'string' },
@@ -123,7 +152,20 @@ describe('catalogue items api functions', () => {
         id: '1',
         catalogue_category_id: '3',
         description: '',
+        cost_gbp: 0,
+        cost_to_rework_gbp: null,
+        days_to_replace: 0,
+        days_to_rework: null,
+        drawing_link: null,
+        drawing_number: null,
+        notes: null,
+        is_obsolete: false,
+        item_model_number: null,
+        manufacturer_id: '1',
+        obsolete_replacement_catalogue_item_id: null,
+        obsolete_reason: null,
         properties: [],
+        ...CREATED_MODIFIED_TIME_VALUES,
       };
     });
 
@@ -236,6 +278,7 @@ describe('catalogue items api functions', () => {
               },
             ],
             id: '657305e51e468454e97b638b',
+            ...CREATED_MODIFIED_TIME_VALUES,
           },
           {
             catalogue_category_id: '657305a01e468454e97b6389',
@@ -263,6 +306,7 @@ describe('catalogue items api functions', () => {
               },
             ],
             id: '657324df1e468454e97b638e',
+            ...CREATED_MODIFIED_TIME_VALUES,
           },
         ],
         targetCatalogueCategory: {
@@ -271,6 +315,7 @@ describe('catalogue items api functions', () => {
           parent_id: '655ca56c1c251a2a828ca906',
           catalogue_item_properties: [
             {
+              id: '91',
               name: 'center wavelength',
               type: 'number',
               unit: 'fps',
@@ -280,6 +325,7 @@ describe('catalogue items api functions', () => {
           ],
           id: '657305bc1e468454e97b638a',
           code: 'rf-lenses',
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       };
     });
@@ -313,7 +359,7 @@ describe('catalogue items api functions', () => {
 
     it('sends requests to move a single catalogue item and returns unsuccessful response as the catalogue_category_id has not changed', async () => {
       props.targetCatalogueCategory = {
-        ...props.targetCatalogueCategory,
+        ...(props.targetCatalogueCategory as CatalogueCategory),
         id: 'Error 500',
       };
 
@@ -365,6 +411,7 @@ describe('catalogue items api functions', () => {
               },
             ],
             id: '657305e51e468454e97b638b',
+            ...CREATED_MODIFIED_TIME_VALUES,
           },
           {
             catalogue_category_id: '657305a01e468454e97b6389',
@@ -392,6 +439,7 @@ describe('catalogue items api functions', () => {
               },
             ],
             id: '657324df1e468454e97b638e',
+            ...CREATED_MODIFIED_TIME_VALUES,
           },
         ],
         targetCatalogueCategory: {
@@ -410,6 +458,7 @@ describe('catalogue items api functions', () => {
           ],
           id: '657305bc1e468454e97b638a',
           code: 'rf-lenses',
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       };
     });
@@ -443,7 +492,7 @@ describe('catalogue items api functions', () => {
 
     it('sends requests to copy multiple catalogue items and returns unsuccessful response when the catalogue_category_id has not changed', async () => {
       props.targetCatalogueCategory = {
-        ...props.targetCatalogueCategory,
+        ...(props.targetCatalogueCategory as CatalogueCategory),
         id: 'Error 500',
       };
 
