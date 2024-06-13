@@ -7,7 +7,10 @@ import {
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { Manufacturer } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { renderComponentWithRouterProvider } from '../testUtils';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  renderComponentWithRouterProvider,
+} from '../testUtils';
 import DeleteManufacturerDialog, {
   DeleteManufacturerProps,
 } from './deleteManufacturerDialog.component';
@@ -29,6 +32,7 @@ describe('Delete Manufacturer Dialog', () => {
   beforeEach(() => {
     manufacturer = {
       name: 'test',
+      code: 'test',
       url: 'http://example.com',
       address: {
         address_line: '1 Example Street',
@@ -39,13 +43,14 @@ describe('Delete Manufacturer Dialog', () => {
       },
       telephone: '056896598',
       id: '1',
+      ...CREATED_MODIFIED_TIME_VALUES,
     };
     props = {
       open: true,
       onClose: onClose,
       manufacturer: manufacturer,
     };
-    user = userEvent;
+    user = userEvent.setup();
   });
   afterEach(() => {
     vi.clearAllMocks();
