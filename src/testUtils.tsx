@@ -3,11 +3,13 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RenderOptions, render } from '@testing-library/react';
 import { enGB } from 'date-fns/locale/en-GB';
+import React from 'react';
 import {
   RouterProvider,
   createBrowserRouter,
   createMemoryRouter,
 } from 'react-router-dom';
+import { paths } from './App';
 import {
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -19,7 +21,6 @@ import CatalogueCategoriesJSON from './mocks/CatalogueCategories.json';
 import CatalogueItemsJSON from './mocks/CatalogueItems.json';
 import ItemsJSON from './mocks/Items.json';
 import ManufacturersJSON from './mocks/Manufacturers.json';
-import { paths } from './App';
 
 export const createTestQueryClient = (): QueryClient =>
   new QueryClient({
@@ -36,7 +37,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
 }
 
 function constructRouterProvider(
-  ui: React.ReactElement,
+  ui: React.ReactNode,
   queryClient: QueryClient,
   urlPathKey?: keyof typeof paths,
   initialEntry?: string
@@ -64,7 +65,11 @@ function constructRouterProviderWrapper(
   urlPathKey?: keyof typeof paths,
   initialEntry?: string
 ) {
-  const wrapper = ({ children }): JSX.Element => {
+  const wrapper = ({
+    children,
+  }: {
+    children: React.ReactNode;
+  }): JSX.Element => {
     return constructRouterProvider(
       children,
       queryClient,
