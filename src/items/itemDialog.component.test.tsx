@@ -15,6 +15,7 @@ import ItemDialog, {
 import { server } from '../mocks/server';
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
+import { CatalogueCategory, CatalogueItem } from '../app.types';
 
 vi.mock('../handleIMS_APIError');
 
@@ -229,12 +230,12 @@ describe('ItemDialog', () => {
       props.catalogueCategory = {
         ...props.catalogueCategory,
         catalogue_item_properties: [],
-      };
+      } as CatalogueCategory;
 
       props.catalogueItem = {
         ...props.catalogueItem,
         properties: [],
-      };
+      } as CatalogueItem;
 
       createView();
 
