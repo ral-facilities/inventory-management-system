@@ -19,13 +19,16 @@ describe('Catalogue Items details panel', () => {
       <CatalogueItemsDetailsPanel {...props} />
     );
   };
-
+  const catalogueItem = getCatalogueItemById('89');
+  const catalogueCategory = getCatalogueCategoryById('5');
   beforeEach(() => {
-    props = {
-      catalogueItemIdData: getCatalogueItemById('89'),
-      catalogueCategoryData: getCatalogueCategoryById('5'),
-      manufacturerData: getManufacturerById('1'),
-    };
+    if (catalogueItem && catalogueCategory) {
+      props = {
+        catalogueItemIdData: catalogueItem,
+        catalogueCategoryData: catalogueCategory,
+        manufacturerData: getManufacturerById('1'),
+      };
+    }
     user = userEvent.setup();
   });
 
@@ -36,8 +39,12 @@ describe('Catalogue Items details panel', () => {
   });
 
   it('renders details panel correctly (with obsolete replacement link)', async () => {
-    props.catalogueItemIdData = getCatalogueItemById('11');
-    props.catalogueCategoryData = getCatalogueCategoryById('9');
+    const catalogueItem = getCatalogueItemById('11');
+    const catalogueCategory = getCatalogueCategoryById('9');
+    if (catalogueItem && catalogueCategory) {
+      props.catalogueItemIdData = catalogueItem;
+      props.catalogueCategoryData = catalogueCategory;
+    }
     props.manufacturerData = getManufacturerById('3');
     const view = createView();
 
@@ -45,8 +52,12 @@ describe('Catalogue Items details panel', () => {
   });
 
   it('renders details panel correctly (None values for telephone and url)', async () => {
-    props.catalogueCategoryData = getCatalogueCategoryById('4');
-    props.catalogueItemIdData = getCatalogueItemById('33');
+    const catalogueItem = getCatalogueItemById('33');
+    const catalogueCategory = getCatalogueCategoryById('4');
+    if (catalogueItem && catalogueCategory) {
+      props.catalogueItemIdData = catalogueItem;
+      props.catalogueCategoryData = catalogueCategory;
+    }
     props.manufacturerData = getManufacturerById('4');
     const view = createView();
 
@@ -76,8 +87,12 @@ describe('Catalogue Items details panel', () => {
   });
 
   it('renders details panel correctly (when there are no Notes)', async () => {
-    props.catalogueCategoryData = getCatalogueCategoryById('4');
-    props.catalogueItemIdData = getCatalogueItemById('33');
+    const catalogueItem = getCatalogueItemById('33');
+    const catalogueCategory = getCatalogueCategoryById('4');
+    if (catalogueItem && catalogueCategory) {
+      props.catalogueItemIdData = catalogueItem;
+      props.catalogueCategoryData = catalogueCategory;
+    }
     props.manufacturerData = getManufacturerById('4');
 
     const view = createView();
