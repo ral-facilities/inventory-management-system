@@ -78,7 +78,7 @@ describe('SystemItemsTable', () => {
     });
 
     it('renders correctly when there are no items to display', async () => {
-      props.system = { ...props.system, id: 'invalid' };
+      props.system = { ...props.system, id: 'invalid' } as System;
 
       createView();
 
@@ -486,8 +486,8 @@ describe('SystemItemsTable', () => {
         { timeout: 4000 }
       );
 
-      expect(screen.getAllByRole('combobox')[0].value).toBe('New');
-      expect(screen.getAllByRole('combobox')[1].value).toBe('In Use');
+      expect(screen.getAllByRole('combobox')[0]).toHaveValue('New');
+      expect(screen.getAllByRole('combobox')[1]).toHaveValue('In Use');
     });
 
     it('displays errors messages correctly', async () => {
