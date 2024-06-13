@@ -2,7 +2,10 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  renderComponentWithRouterProvider,
+} from '../../testUtils';
 import CatalogueCategoryDirectoryDialog, {
   CatalogueCategoryDirectoryDialogProps,
 } from './catalogueCategoryDirectoryDialog.component';
@@ -49,6 +52,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'beam-characterization',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '2',
@@ -56,6 +60,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'motion',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ];
       createView();
@@ -74,6 +79,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'beam-characterization',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ];
       createView();
@@ -119,6 +125,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'beam-characterization',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '2',
@@ -126,6 +133,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'motion',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ];
 
@@ -158,6 +166,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'beam-characterization',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '2',
@@ -165,6 +174,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'motion',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ];
 
@@ -191,6 +201,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'beam-characterization',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '2',
@@ -198,6 +209,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'motion',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ];
 
@@ -227,6 +239,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'beam-characterization',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '2',
@@ -234,6 +247,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'motion',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ];
 
@@ -288,6 +302,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'beam-characterization',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '2',
@@ -295,6 +310,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'motion',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ];
       createView();
@@ -313,6 +329,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'beam-characterization',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ];
       createView();
@@ -331,6 +348,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'beam-characterization',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '2',
@@ -338,6 +356,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'motion',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '5',
@@ -347,17 +366,15 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           is_leaf: true,
           catalogue_item_properties: [
             {
+              id: '1',
               name: 'Measurement Range',
               type: 'number',
               unit: 'Joules',
               mandatory: true,
             },
-            {
-              name: 'Accuracy',
-              type: 'string',
-              mandatory: false,
-            },
+            { id: '2', name: 'Accuracy', type: 'string', mandatory: false },
           ],
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ];
 
@@ -389,6 +406,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'vacuum-pumps',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ];
 
@@ -418,6 +436,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'vacuum-pumps',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ];
 
@@ -447,6 +466,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'beam-characterization',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '2',
@@ -454,6 +474,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'motion',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ];
 
@@ -490,6 +511,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'beam-characterization',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '2',
@@ -497,6 +519,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'motion',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ];
 
@@ -525,6 +548,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'beam-characterization',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '2',
@@ -532,6 +556,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: null,
           code: 'motion',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ];
 
