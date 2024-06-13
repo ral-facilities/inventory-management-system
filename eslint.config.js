@@ -1,6 +1,5 @@
 import { fixupPluginRules } from '@eslint/compat';
 import eslint from '@eslint/js';
-import typescriptParser from '@typescript-eslint/parser';
 import cypressPlugin from 'eslint-plugin-cypress/flat';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
@@ -13,7 +12,6 @@ export default tseslint.config(
   {
     files: ['**/*.{js,ts,jsx,tsx}'],
     languageOptions: {
-      parser: typescriptParser,
       sourceType: 'module',
       ecmaVersion: 2015,
       parserOptions: {
