@@ -800,7 +800,7 @@ function ItemDialog(props: ItemDialogProps) {
             <Grid item xs={12}>
               <FormControl size="small" fullWidth>
                 <Autocomplete
-                  disableClearable={true}
+                  disableClearable={itemDetails.usage_status_id != null}
                   id="usage-status"
                   value={
                     usageStatuses?.find(
@@ -809,7 +809,7 @@ function ItemDialog(props: ItemDialogProps) {
                     ) ?? null
                   }
                   size="small"
-                  onChange={(_event, usageStatus: UsageStatus) => {
+                  onChange={(_event, usageStatus: UsageStatus | null) => {
                     setHasUsageStatusErrors(false);
                     handleItemDetails(
                       'usage_status_id',

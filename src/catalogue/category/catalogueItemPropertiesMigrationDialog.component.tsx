@@ -765,7 +765,7 @@ function CatalogueItemPropertiesMigrationDialog(
             <FormControl sx={{ textAlign: 'center', margin: 1 }} fullWidth>
               <Autocomplete
                 id="select-edit-or-add"
-                disableClearable={true}
+                disableClearable={propertyMigrationType != null}
                 options={['Edit', 'Add']}
                 value={
                   propertyMigrationType === 'edit'
