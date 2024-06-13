@@ -169,8 +169,7 @@ export const fetchSettings =
 
 async function prepare() {
   if (import.meta.env.DEV || import.meta.env.VITE_APP_INCLUDE_MSW === 'true') {
-    // need to use require instead of import as import breaks when loaded in SG
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // Need to use require instead of import as import breaks when loaded in SG
     const { worker } = await import('./mocks/browser');
     return (worker as SetupWorker).start({
       onUnhandledRequest(request, print) {
