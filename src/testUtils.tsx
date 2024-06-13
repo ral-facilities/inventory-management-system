@@ -131,7 +131,7 @@ export const getCatalogueItemsPropertiesById = (
   }
 
   const properties = filteredCategories[0].catalogue_item_properties ?? [];
-  return properties;
+  return properties as CatalogueCategoryProperty[];
 };
 
 export const getCatalogueCategoryById = (
