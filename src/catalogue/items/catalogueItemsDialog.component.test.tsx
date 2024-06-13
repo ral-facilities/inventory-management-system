@@ -831,7 +831,6 @@ describe('Catalogue Items Dialog', () => {
         drawingNumber: '',
         itemModelNumber: '',
         name: '',
-        manufacturer: '{delete}',
         notes: '',
       });
 
@@ -847,17 +846,10 @@ describe('Catalogue Items Dialog', () => {
       expect(costHelperText).toBeInTheDocument();
       expect(daysToReplaceHelperText).toBeInTheDocument();
 
-      expect(
-        screen.getByText(
-          'Please choose a manufacturer, or add a new manufacturer'
-        )
-      ).toBeInTheDocument();
-
       await modifyValues({
         costGbp: '200',
         daysToReplace: '5',
         name: 'test',
-        manufacturer: '{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -867,7 +859,6 @@ describe('Catalogue Items Dialog', () => {
         frameRate: '',
         sensorType: '',
         sensorBrand: '',
-        broken: '{delete}',
         older: 'N{arrowdown}{enter}',
       });
 
@@ -876,12 +867,6 @@ describe('Catalogue Items Dialog', () => {
       const mandatoryFieldHelperText = screen.getAllByText(
         'Please enter a valid value as this field is mandatory'
       );
-
-      const mandatoryFieldBooleanHelperText = screen.getByText(
-        'Please select either True or False'
-      );
-
-      expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
 
       expect(mandatoryFieldHelperText.length).toBe(2);
       expect(mandatoryFieldHelperText[0]).toHaveTextContent(

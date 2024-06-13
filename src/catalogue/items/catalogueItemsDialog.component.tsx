@@ -851,7 +851,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                           {property.type === 'boolean' ? (
                             <FormControl fullWidth>
                               <Autocomplete
-                                disableClearable={true}
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
