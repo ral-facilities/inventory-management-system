@@ -1,4 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
+import { MockInstance } from 'vitest';
 import {
   AddSystem,
   CopyToSystem,
@@ -10,6 +11,7 @@ import {
 import SystemBreadcrumbsJSON from '../mocks/SystemBreadcrumbs.json';
 import SystemsJSON from '../mocks/Systems.json';
 import { hooksWrapperWithProviders } from '../testUtils';
+import { imsApi } from './api';
 import {
   useAddSystem,
   useCopyToSystem,
@@ -21,7 +23,6 @@ import {
   useSystems,
   useSystemsBreadcrumbs,
 } from './systems';
-import { imsApi } from './api';
 
 describe('System api functions', () => {
   afterEach(() => {
@@ -242,7 +243,7 @@ describe('System api functions', () => {
 
     // Use patch spy for testing since response is not actual data in this case
     // so can't test the underlying use of editSystem otherwise
-    let axiosPatchSpy;
+    let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
       moveToSystem = {
@@ -376,7 +377,7 @@ describe('System api functions', () => {
 
     // Use post spy for testing since response is not actual data in this case
     // so can't test the underlying use of addSystem otherwise
-    let axiosPostSpy;
+    let axiosPostSpy: MockInstance;
 
     beforeEach(() => {
       copyToSystem = {

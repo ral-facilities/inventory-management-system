@@ -1,4 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
+import { MockInstance } from 'vitest';
 import {
   AddCatalogueCategory,
   AddPropertyMigration,
@@ -8,10 +9,12 @@ import {
   EditPropertyMigration,
   MoveToCatalogueCategory,
 } from '../app.types';
+import handleTransferState from '../handleTransferState';
 import {
   getCatalogueCategoryById,
   hooksWrapperWithProviders,
 } from '../testUtils';
+import { imsApi } from './api';
 import {
   useAddCatalogueCategory,
   useAddCatalogueCategoryProperty,
@@ -24,8 +27,6 @@ import {
   useEditCatalogueCategoryProperty,
   useMoveToCatalogueCategory,
 } from './catalogueCategories';
-import { imsApi } from './api';
-import handleTransferState from '../handleTransferState';
 
 vi.mock('../handleTransferState');
 
@@ -289,7 +290,7 @@ describe('catalogue categories api functions', () => {
 
     let moveToCatalogueCategory: MoveToCatalogueCategory;
 
-    let axiosPatchSpy;
+    let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
@@ -445,7 +446,7 @@ describe('catalogue categories api functions', () => {
 
     let copyToCatalogueCategory: CopyToCatalogueCategory;
 
-    let axiosPostSpy;
+    let axiosPostSpy: MockInstance;
 
     beforeEach(() => {
       copyToCatalogueCategory = {

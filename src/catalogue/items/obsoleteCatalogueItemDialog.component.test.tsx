@@ -5,13 +5,14 @@ import {
 
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http } from 'msw';
+import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { server } from '../../mocks/server';
 import ObsoleteCatalogueItemDialog, {
   ObsoleteCatalogueItemDialogProps,
 } from './obsoleteCatalogueItemDialog.component';
-import { server } from '../../mocks/server';
-import { http } from 'msw';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -21,7 +22,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
 
   let props: ObsoleteCatalogueItemDialogProps;
   let user: UserEvent;
-  let axiosPatchSpy;
+  let axiosPatchSpy: MockInstance;
   const mockOnClose = vi.fn();
 
   const createView = () => {

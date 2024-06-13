@@ -1,5 +1,6 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueCategoryDirectoryDialog, {
@@ -9,8 +10,8 @@ import CatalogueCategoryDirectoryDialog, {
 describe('CatalogueCategoryDirectoryDialog', () => {
   let props: CatalogueCategoryDirectoryDialogProps;
   let user: UserEvent;
-  let axiosPatchSpy;
-  let axiosPostSpy;
+  let axiosPatchSpy: MockInstance;
+  let axiosPostSpy: MockInstance;
   const onChangeSelectedCategories = vi.fn();
   const onClose = vi.fn();
   const createView = () => {

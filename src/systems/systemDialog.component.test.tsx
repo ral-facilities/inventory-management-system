@@ -7,14 +7,15 @@ import { renderComponentWithRouterProvider } from '../testUtils';
 import SystemDialog, { SystemDialogProps } from './systemDialog.component';
 import { server } from '../mocks/server';
 import { http } from 'msw';
+import { MockInstance } from 'vitest';
 
 vi.mock('../handleIMS_APIError');
 
 describe('Systems Dialog', () => {
   let props: SystemDialogProps;
   let user: UserEvent;
-  let axiosPostSpy;
-  let axiosPatchSpy;
+  let axiosPostSpy: MockInstance;
+  let axiosPatchSpy: MockInstance;
 
   const mockOnClose = vi.fn();
 

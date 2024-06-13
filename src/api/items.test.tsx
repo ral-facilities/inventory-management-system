@@ -1,19 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import {
-  useAddItem,
-  useDeleteItem,
-  useEditItem,
-  useItem,
-  useItems,
-  useMoveItemsToSystem,
-  useAddItems,
-} from './items';
-import {
-  getItemById,
-  getItemsByCatalogueItemId,
-  getItemsBySystemId,
-  hooksWrapperWithProviders,
-} from '../testUtils';
+import { MockInstance } from 'vitest';
 import {
   AddItem,
   AddItems,
@@ -24,7 +10,22 @@ import {
   System,
 } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
+import {
+  getItemById,
+  getItemsByCatalogueItemId,
+  getItemsBySystemId,
+  hooksWrapperWithProviders,
+} from '../testUtils';
 import { imsApi } from './api';
+import {
+  useAddItem,
+  useAddItems,
+  useDeleteItem,
+  useEditItem,
+  useItem,
+  useItems,
+  useMoveItemsToSystem,
+} from './items';
 
 describe('items api functions', () => {
   afterEach(() => {
@@ -249,7 +250,7 @@ describe('items api functions', () => {
 
     // Use patch spy for testing since response is not actual data in this case
     // so can't test the underlying use of editSystem otherwise
-    let axiosPatchSpy;
+    let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
       moveItemsToSystem = {
@@ -355,7 +356,7 @@ describe('items api functions', () => {
 
     // Use post spy for testing since response is not actual data in this case
     // so can't test the underlying use of editSystem otherwise
-    let axiosPostSpy;
+    let axiosPostSpy: MockInstance;
     const { _id, ...item } = getItemById('KvT2Ox7n');
     beforeEach(() => {
       addItems = {
