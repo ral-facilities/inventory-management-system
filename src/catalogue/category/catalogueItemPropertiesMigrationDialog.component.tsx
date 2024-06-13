@@ -772,7 +772,7 @@ function CatalogueItemPropertiesMigrationDialog(
                     ? 'Edit'
                     : propertyMigrationType === 'add'
                       ? 'Add'
-                      : undefined
+                      : null
                 }
                 onChange={(_event, value) => {
                   setPropertyMigrationType(

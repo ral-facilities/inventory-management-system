@@ -806,10 +806,10 @@ function ItemDialog(props: ItemDialogProps) {
                     usageStatuses?.find(
                       (usageStatus) =>
                         usageStatus.id == itemDetails.usage_status_id
-                    ) ?? undefined
+                    ) ?? null
                   }
                   size="small"
-                  onChange={(_event, usageStatus: UsageStatus | null) => {
+                  onChange={(_event, usageStatus: UsageStatus) => {
                     setHasUsageStatusErrors(false);
                     handleItemDetails(
                       'usage_status_id',
@@ -888,6 +888,7 @@ function ItemDialog(props: ItemDialogProps) {
                           {property.type === 'boolean' ? (
                             <FormControl fullWidth>
                               <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
@@ -898,7 +899,7 @@ function ItemDialog(props: ItemDialogProps) {
                                         .charAt(0)
                                         .toUpperCase() +
                                       (propertyValues[index] as string).slice(1)
-                                    : ''
+                                    : null
                                 }
                                 size="small"
                                 onChange={(_event, value) => {
@@ -911,7 +912,7 @@ function ItemDialog(props: ItemDialogProps) {
                                 fullWidth
                                 options={['True', 'False']}
                                 isOptionEqualToValue={(option, value) =>
-                                  option.toLowerCase() == value || value == ''
+                                  option === value
                                 }
                                 renderInput={(params) => (
                                   <TextField

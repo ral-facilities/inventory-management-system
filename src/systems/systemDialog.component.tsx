@@ -306,7 +306,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
                 />
               )}
               renderOption={(props, option) => (
-                <li {...props}>
+                <li {...props} key={option}>
                   <Chip
                     label={option}
                     sx={() => {
