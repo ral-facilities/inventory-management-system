@@ -236,7 +236,7 @@ describe('Systems', () => {
     });
     expect(screen.getByRole('button', { name: 'Copy to' })).toBeInTheDocument();
 
-    await user.click(screen.queryByRole('button', { name: '2 selected' }));
+    await user.click(await screen.findByRole('button', { name: '2 selected' }));
 
     await waitFor(() => {
       expect(
