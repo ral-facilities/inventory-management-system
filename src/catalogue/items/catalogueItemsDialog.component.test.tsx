@@ -14,6 +14,7 @@ import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
+import { CatalogueItem } from '../../app.types';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -975,7 +976,7 @@ describe('Catalogue Items Dialog', () => {
         parentInfo: getCatalogueCategoryById('17'),
 
         selectedCatalogueItem: {
-          ...getCatalogueItemById('1'),
+          ...(getCatalogueItemById('1') as CatalogueItem),
           properties: [],
         },
       };
