@@ -3,7 +3,10 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { imsApi } from '../api/api';
 import { System, SystemImportanceType } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { renderComponentWithRouterProvider } from '../testUtils';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  renderComponentWithRouterProvider,
+} from '../testUtils';
 import SystemDialog, { SystemDialogProps } from './systemDialog.component';
 import { server } from '../mocks/server';
 import { http } from 'msw';
@@ -234,6 +237,7 @@ describe('Systems Dialog', () => {
       parent_id: null,
       id: '65328f34a40ff5301575a4e3',
       code: 'mock-laser',
+      ...CREATED_MODIFIED_TIME_VALUES,
     };
 
     beforeEach(() => {
@@ -412,6 +416,7 @@ describe('Systems Dialog', () => {
       parent_id: null,
       id: '65328f34a40ff5301575a4e3',
       code: 'mock-laser',
+      ...CREATED_MODIFIED_TIME_VALUES,
     };
 
     const MOCK_SELECTED_SYSTEM_POST_DATA = JSON.parse(
@@ -419,6 +424,8 @@ describe('Systems Dialog', () => {
     ) as Partial<System>;
     delete MOCK_SELECTED_SYSTEM_POST_DATA.id;
     delete MOCK_SELECTED_SYSTEM_POST_DATA.code;
+    delete MOCK_SELECTED_SYSTEM_POST_DATA.created_time;
+    delete MOCK_SELECTED_SYSTEM_POST_DATA.modified_time;
 
     beforeEach(() => {
       props.type = 'save as';
