@@ -504,7 +504,9 @@ describe('Catalogue', () => {
 
     await user.click(camerasCheckbox);
 
-    const clearSelected = screen.queryByRole('button', { name: '2 selected' });
+    const clearSelected = await screen.findByRole('button', {
+      name: '2 selected',
+    });
 
     await user.click(clearSelected);
 
