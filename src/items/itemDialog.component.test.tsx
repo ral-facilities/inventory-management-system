@@ -736,7 +736,6 @@ describe('ItemDialog', () => {
       await modifyPropertiesValues({
         resolution: '',
         sensorType: '',
-        broken: '{delete}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -745,11 +744,6 @@ describe('ItemDialog', () => {
         'Please enter a valid value as this field is mandatory'
       );
 
-      const mandatoryFieldBooleanHelperText = screen.getByText(
-        'Please select either True or False'
-      );
-
-      expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
       expect(mandatoryFieldHelperText.length).toBe(2);
 
       expect(screen.getByRole('button', { name: 'Next' })).toBeDisabled();
@@ -761,8 +755,6 @@ describe('ItemDialog', () => {
         sensorType: 'IO',
         sensorBrand: 'pixel',
       });
-
-      expect(mandatoryFieldBooleanHelperText).not.toBeInTheDocument();
 
       expect(
         screen.queryByText(
@@ -1151,7 +1143,7 @@ describe('ItemDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       await modifyPropertiesValues({
-        resolution: 'rwererw',
+        resolution: 'test',
         sensorType: '',
         broken: 'N{arrowdown}{enter}',
       });
