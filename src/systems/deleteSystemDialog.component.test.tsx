@@ -7,7 +7,10 @@ import { System, SystemImportanceType } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import SystemsJSON from '../mocks/Systems.json';
 import { server } from '../mocks/server';
-import { renderComponentWithRouterProvider } from '../testUtils';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  renderComponentWithRouterProvider,
+} from '../testUtils';
 import {
   DeleteSystemDialog,
   DeleteSystemDialogProps,
@@ -38,6 +41,7 @@ describe('DeleteSystemDialog', () => {
         importance: SystemImportanceType.LOW,
         parent_id: null,
         code: '',
+        ...CREATED_MODIFIED_TIME_VALUES,
       };
 
     return renderComponentWithRouterProvider(<DeleteSystemDialog {...props} />);
