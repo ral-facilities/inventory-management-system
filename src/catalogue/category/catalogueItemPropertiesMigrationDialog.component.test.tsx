@@ -28,14 +28,16 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       <CatalogueItemPropertiesMigrationDialog {...props} />
     );
   };
-
+  const catalogueCategory = getCatalogueCategoryById('12');
   beforeEach(() => {
-    props = {
-      open: true,
-      selectedCatalogueCategory: getCatalogueCategoryById('12'),
-      onClose: onClose,
-      resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
-    };
+    if (catalogueCategory) {
+      props = {
+        open: true,
+        selectedCatalogueCategory: catalogueCategory,
+        onClose: onClose,
+        resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
+      };
+    }
     user = userEvent.setup();
   });
 
@@ -196,7 +198,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           })
         );
       } else {
-        await user.type(defaultValue, values.formField.default_value);
+        await user.type(defaultValue, String(values.formField.default_value));
       }
     }
   };
