@@ -1,5 +1,11 @@
-import userEvent, { UserEvent } from '@testing-library/user-event';
 import { fireEvent, screen, within } from '@testing-library/react';
+import userEvent, { UserEvent } from '@testing-library/user-event';
+import { MockInstance } from 'vitest';
+import { imsApi } from '../../api/api';
+import {
+  CatalogueCategory,
+  CatalogueCategoryPropertyMigration,
+} from '../../app.types';
 import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
@@ -7,8 +13,6 @@ import {
 import CatalogueItemPropertiesMigrationDialog, {
   CatalogueItemPropertiesMigrationDialogProps,
 } from './catalogueItemPropertiesMigrationDialog.component';
-import { CatalogueCategoryPropertyMigration } from '../../app.types';
-import { imsApi } from '../../api/api';
 
 describe('CatalogueCategoryDirectoryDialog', () => {
   let props: CatalogueItemPropertiesMigrationDialogProps;
@@ -31,10 +35,13 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   beforeEach(() => {
     props = {
       open: true,
-      selectedCatalogueCategory: getCatalogueCategoryById('12'),
+      selectedCatalogueCategory: getCatalogueCategoryById(
+        '12'
+      ) as CatalogueCategory,
       onClose: onClose,
       resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
     };
+
     user = userEvent.setup();
   });
 
@@ -195,13 +202,13 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           })
         );
       } else {
-        await user.type(defaultValue, values.formField.default_value);
+        await user.type(defaultValue, String(values.formField.default_value));
       }
     }
   };
 
   describe('Add', () => {
-    let axiosPostSpy;
+    let axiosPostSpy: MockInstance;
 
     beforeEach(() => {
       axiosPostSpy = vi.spyOn(imsApi, 'post');
@@ -786,7 +793,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
   });
 
   describe('Edit', () => {
-    let axiosPatchSpy;
+    let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');

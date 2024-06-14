@@ -234,7 +234,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should select the radio button when clicked', async () => {
-    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
+    const formFields = [
       {
         id: '1',
         cip_placement_id: '1',
@@ -290,7 +290,7 @@ describe('Catalogue Properties Form', () => {
     ];
 
     props = {
-      formFields: formFields,
+      formFields: formFields as AddCatalogueCategoryPropertyWithPlacementIds[],
       isDisabled: true,
       onChangeEditCatalogueItemField: onChangeEditCatalogueItemField,
       selectedCatalogueItemField: {

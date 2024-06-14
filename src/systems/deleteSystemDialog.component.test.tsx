@@ -1,16 +1,20 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http } from 'msw';
+import { MockInstance } from 'vitest';
 import { imsApi } from '../api/api';
 import { System, SystemImportanceType } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import SystemsJSON from '../mocks/Systems.json';
-import { renderComponentWithRouterProvider } from '../testUtils';
+import { server } from '../mocks/server';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  renderComponentWithRouterProvider,
+} from '../testUtils';
 import {
   DeleteSystemDialog,
   DeleteSystemDialogProps,
 } from './deleteSystemDialog.component';
-import { server } from '../mocks/server';
-import { http } from 'msw';
 
 vi.mock('../handleIMS_APIError');
 
@@ -18,7 +22,7 @@ describe('DeleteSystemDialog', () => {
   let systemId = '';
   let props: DeleteSystemDialogProps;
   let user: UserEvent;
-  let axiosDeleteSpy;
+  let axiosDeleteSpy: MockInstance;
 
   const createView = () => {
     // Load whatever system is requested (only assign if found to avoid errors
@@ -37,6 +41,7 @@ describe('DeleteSystemDialog', () => {
         importance: SystemImportanceType.LOW,
         parent_id: null,
         code: '',
+        ...CREATED_MODIFIED_TIME_VALUES,
       };
 
     return renderComponentWithRouterProvider(<DeleteSystemDialog {...props} />);

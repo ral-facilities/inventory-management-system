@@ -7,7 +7,10 @@ import {
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { CatalogueItem } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  renderComponentWithRouterProvider,
+} from '../../testUtils';
 import DeleteCatalogueItemDialog, {
   DeleteCatalogueItemDialogProps,
 } from './deleteCatalogueItemDialog.component';
@@ -35,7 +38,20 @@ describe('delete Catalogue Category dialogue', () => {
       id: '1',
       catalogue_category_id: '3',
       description: '',
+      cost_gbp: 0,
+      cost_to_rework_gbp: null,
+      days_to_replace: 0,
+      days_to_rework: null,
+      drawing_link: null,
+      drawing_number: null,
+      notes: null,
+      is_obsolete: false,
+      item_model_number: null,
+      manufacturer_id: '1',
+      obsolete_replacement_catalogue_item_id: null,
+      obsolete_reason: null,
       properties: [],
+      ...CREATED_MODIFIED_TIME_VALUES,
     };
     props = {
       open: true,
@@ -43,7 +59,7 @@ describe('delete Catalogue Category dialogue', () => {
       catalogueItem: catalogueItem,
       onChangeCatalogueItem: onChangeCatalogueItem,
     };
-    user = userEvent; // Assigning userEvent to 'user'
+    user = userEvent.setup(); // Assigning userEvent to 'user'
   });
   afterEach(() => {
     vi.clearAllMocks();

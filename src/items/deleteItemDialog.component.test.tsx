@@ -36,7 +36,7 @@ describe('delete item dialog', () => {
       item: item,
       onChangeItem: onChangeItem,
     };
-    user = userEvent; // Assigning userEvent to 'user'
+    user = userEvent.setup(); // Assigning userEvent to 'user'
   });
 
   afterEach(() => {
@@ -144,7 +144,7 @@ describe('delete item dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
   it('renders correctly when items has no serial number', async () => {
-    props.item = { ...getItemById('wKsFzrSq'), serial_number: null };
+    props.item = { ...getItemById('wKsFzrSq'), serial_number: null } as Item;
     createView();
     let baseElement;
     await act(async () => {

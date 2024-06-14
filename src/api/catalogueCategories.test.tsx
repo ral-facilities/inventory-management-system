@@ -1,4 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
+import { MockInstance } from 'vitest';
 import {
   AddCatalogueCategory,
   AddPropertyMigration,
@@ -8,10 +9,13 @@ import {
   EditPropertyMigration,
   MoveToCatalogueCategory,
 } from '../app.types';
+import handleTransferState from '../handleTransferState';
 import {
+  CREATED_MODIFIED_TIME_VALUES,
   getCatalogueCategoryById,
   hooksWrapperWithProviders,
 } from '../testUtils';
+import { imsApi } from './api';
 import {
   useAddCatalogueCategory,
   useAddCatalogueCategoryProperty,
@@ -24,8 +28,6 @@ import {
   useEditCatalogueCategoryProperty,
   useMoveToCatalogueCategory,
 } from './catalogueCategories';
-import { imsApi } from './api';
-import handleTransferState from '../handleTransferState';
 
 vi.mock('../handleTransferState');
 
@@ -154,6 +156,7 @@ describe('catalogue categories api functions', () => {
         id: '1',
         code: 'test',
         is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
       };
     });
 
@@ -242,6 +245,7 @@ describe('catalogue categories api functions', () => {
         parent_id: '1',
         code: 'test_dup',
         is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
       },
       {
         id: '6',
@@ -251,11 +255,13 @@ describe('catalogue categories api functions', () => {
         is_leaf: true,
         catalogue_item_properties: [
           {
+            id: '1',
             name: 'Wavefront Measurement Range',
             type: 'string',
             mandatory: true,
           },
           {
+            id: '2',
             name: 'Spatial Resolution',
             type: 'number',
             unit: 'micrometers',
@@ -263,6 +269,7 @@ describe('catalogue categories api functions', () => {
             mandatory: false,
           },
         ],
+        ...CREATED_MODIFIED_TIME_VALUES,
       },
       {
         id: '5',
@@ -272,6 +279,7 @@ describe('catalogue categories api functions', () => {
         is_leaf: true,
         catalogue_item_properties: [
           {
+            id: '3',
             name: 'Measurement Range',
             type: 'number',
             unit: 'Joules',
@@ -279,17 +287,19 @@ describe('catalogue categories api functions', () => {
             mandatory: true,
           },
           {
+            id: '4',
             name: 'Accuracy',
             type: 'string',
             mandatory: false,
           },
         ],
+        ...CREATED_MODIFIED_TIME_VALUES,
       },
     ];
 
     let moveToCatalogueCategory: MoveToCatalogueCategory;
 
-    let axiosPatchSpy;
+    let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
@@ -355,6 +365,7 @@ describe('catalogue categories api functions', () => {
         name: 'Wavefront Sensors',
         code: 'wavefront-sensors',
         is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
       };
       moveToCatalogueCategory.targetCategory = targetCategory;
 
@@ -399,6 +410,7 @@ describe('catalogue categories api functions', () => {
         parent_id: '1',
         code: 'test_dup',
         is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
       },
       {
         id: '6',
@@ -422,6 +434,7 @@ describe('catalogue categories api functions', () => {
             mandatory: false,
           },
         ],
+        ...CREATED_MODIFIED_TIME_VALUES,
       },
       {
         id: '5',
@@ -440,12 +453,13 @@ describe('catalogue categories api functions', () => {
           },
           { id: '4', name: 'Accuracy', type: 'string', mandatory: false },
         ],
+        ...CREATED_MODIFIED_TIME_VALUES,
       },
     ];
 
     let copyToCatalogueCategory: CopyToCatalogueCategory;
 
-    let axiosPostSpy;
+    let axiosPostSpy: MockInstance;
 
     beforeEach(() => {
       copyToCatalogueCategory = {
@@ -516,6 +530,7 @@ describe('catalogue categories api functions', () => {
         name: 'Wavefront Sensors',
         code: 'wavefront-sensors',
         is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
       };
       copyToCatalogueCategory.targetCategory = targetCategory;
 
@@ -600,9 +615,10 @@ describe('catalogue categories api functions', () => {
 
   describe('useEditCatalogueCategoryProperty', () => {
     let mockDataEditProperty: EditPropertyMigration;
+
     beforeEach(() => {
       mockDataEditProperty = {
-        catalogueCategory: getCatalogueCategoryById('12'),
+        catalogueCategory: getCatalogueCategoryById('12') as CatalogueCategory,
         property: {
           id: '19',
           name: 'test',
@@ -681,9 +697,10 @@ describe('catalogue categories api functions', () => {
   });
   describe('useAddCatalogueCategoryProperty', () => {
     let mockDataAddProperty: AddPropertyMigration;
+    getCatalogueCategoryById('4');
     beforeEach(() => {
       mockDataAddProperty = {
-        catalogueCategory: getCatalogueCategoryById('4'),
+        catalogueCategory: getCatalogueCategoryById('4') as CatalogueCategory,
         property: {
           name: 'test',
           type: 'number',

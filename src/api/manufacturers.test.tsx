@@ -1,7 +1,10 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { Manufacturer } from '../app.types';
+import { AddManufacturer, Manufacturer } from '../app.types';
 import ManufacturersJSON from '../mocks/Manufacturers.json';
-import { hooksWrapperWithProviders } from '../testUtils';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  hooksWrapperWithProviders,
+} from '../testUtils';
 import {
   useAddManufacturer,
   useDeleteManufacturer,
@@ -15,7 +18,7 @@ describe('manufacturer api functions', () => {
   });
 
   describe('useAddManufacturer', () => {
-    let mockDataAdd: Manufacturer;
+    let mockDataAdd: AddManufacturer;
     beforeEach(() => {
       mockDataAdd = {
         name: 'Manufacturer D',
@@ -65,6 +68,7 @@ describe('manufacturer api functions', () => {
       mockDataView = {
         id: '1',
         name: 'Manufacturer A',
+        code: 'manufacturer-a',
         url: 'http://example.com',
         address: {
           address_line: '1 Example Street',
@@ -74,6 +78,7 @@ describe('manufacturer api functions', () => {
           country: 'United Kingdom',
         },
         telephone: '07334893348',
+        ...CREATED_MODIFIED_TIME_VALUES,
       };
     });
 

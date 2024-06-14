@@ -11,6 +11,7 @@ import ManufacturerDialog, {
 } from './manufacturerDialog.component';
 import { server } from '../mocks/server';
 import { http } from 'msw';
+import { MockInstance } from 'vitest';
 
 vi.mock('../handleIMS_APIError');
 
@@ -18,7 +19,7 @@ describe('Add manufacturer dialog', () => {
   const onClose = vi.fn();
   let props: ManufacturerDialogProps;
   let user: UserEvent;
-  let axiosPostSpy;
+  let axiosPostSpy: MockInstance;
   const createView = () => {
     return renderComponentWithRouterProvider(<ManufacturerDialog {...props} />);
   };
@@ -269,7 +270,7 @@ describe('Add manufacturer dialog', () => {
   });
 
   describe('Edit a manufacturer', () => {
-    let axiosPatchSpy;
+    let axiosPatchSpy: MockInstance;
     beforeEach(() => {
       props = {
         ...props,
