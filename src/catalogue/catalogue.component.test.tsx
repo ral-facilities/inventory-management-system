@@ -3,8 +3,8 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import { HttpResponse, http } from 'msw';
 import { CatalogueCategoryProperty, CatalogueItemProperty } from '../app.types';
 import { server } from '../mocks/server';
-import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
 import { renderComponentWithRouterProvider } from '../testUtils';
+import Catalogue, { matchCatalogueItemProperties } from './catalogue.component';
 
 describe('matchCatalogueItemProperties', () => {
   it('should match catalogue item properties correctly', () => {

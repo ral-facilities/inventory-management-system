@@ -1,5 +1,5 @@
-import { renderComponentWithRouterProvider } from '../../testUtils';
 import { screen } from '@testing-library/react';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import CataloguePropertyForm, {
   CataloguePropertyFormProps,
 } from './cataloguePropertyForm.component';

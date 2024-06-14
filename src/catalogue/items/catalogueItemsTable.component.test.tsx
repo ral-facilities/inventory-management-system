@@ -1,5 +1,6 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { CatalogueCategory } from '../../app.types';
 import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
@@ -7,7 +8,6 @@ import {
 import CatalogueItemsTable, {
   CatalogueItemsTableProps,
 } from './catalogueItemsTable.component';
-import { CatalogueCategory } from '../../app.types';
 
 vi.setConfig({ testTimeout: 10000 });
 

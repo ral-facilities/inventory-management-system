@@ -1,7 +1,6 @@
 import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
   AddCatalogueCategory,
-  CatalogueCategoryPropertyMigration,
   AddCatalogueItem,
   AddItem,
   AddManufacturer,
@@ -11,6 +10,7 @@ import {
   BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueCategoryProperty,
+  CatalogueCategoryPropertyMigration,
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
@@ -23,6 +23,7 @@ import {
   Unit,
   UsageStatus,
 } from '../app.types';
+import { generateUniqueId } from '../utils';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
 import CatalogueCategoryBreadcrumbsJSON from './CatalogueCategoryBreadcrumbs.json';
 import CatalogueItemsJSON from './CatalogueItems.json';
@@ -32,7 +33,6 @@ import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import UnitsJSON from './Units.json';
 import UsageStatusJSON from './UsageStatuses.json';
-import { generateUniqueId } from '../utils';
 
 /* MSW v2 expects types for responses, this interface covers any empty body
    or error with detail */

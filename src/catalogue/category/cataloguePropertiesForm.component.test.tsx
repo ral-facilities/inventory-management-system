@@ -1,15 +1,15 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
-  CatalogueItemPropertiesErrorsType,
   AddCatalogueCategoryPropertyWithPlacementIds,
   AllowedValuesListErrorsType,
+  CatalogueItemPropertiesErrorsType,
 } from '../../app.types';
 import { renderComponentWithRouterProvider } from '../../testUtils';
+import { resetUniqueIdCounter } from '../../utils';
 import CataloguePropertiesForm, {
   CataloguePropertiesFormProps,
 } from './cataloguePropertiesForm.component';
-import { resetUniqueIdCounter } from '../../utils';
 
 describe('Catalogue Properties Form', () => {
   let props: CataloguePropertiesFormProps;

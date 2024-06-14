@@ -1,6 +1,7 @@
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import AddIcon from '@mui/icons-material/Add';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
+  Autocomplete,
   Box,
   Button,
   CircularProgress,
@@ -25,6 +26,7 @@ import {
   useAddCatalogueItem,
   useEditCatalogueItem,
 } from '../../api/catalogueItems';
+import { useManufacturers } from '../../api/manufacturers';
 import {
   AddCatalogueItem,
   CatalogueCategory,
@@ -36,12 +38,10 @@ import {
   ErrorParsing,
   Manufacturer,
 } from '../../app.types';
-import { matchCatalogueItemProperties } from '../catalogue.component';
-import { Autocomplete } from '@mui/material';
-import { useManufacturers } from '../../api/manufacturers';
-import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 import { sortDataList, trimStringValues } from '../../utils';
+import { matchCatalogueItemProperties } from '../catalogue.component';
 
 export interface CatalogueItemsDialogProps {
   open: boolean;

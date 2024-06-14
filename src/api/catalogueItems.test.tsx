@@ -1,5 +1,18 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import {
+  AddCatalogueItem,
+  CatalogueCategory,
+  CatalogueItem,
+  EditCatalogueItem,
+  TransferToCatalogueItem,
+} from '../app.types';
+import CatalogueItemsJSON from '../mocks/CatalogueItems.json';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  catalogueItemData,
+  hooksWrapperWithProviders,
+} from '../testUtils';
+import {
   useAddCatalogueItem,
   useCatalogueItem,
   useCatalogueItemIds,
@@ -9,19 +22,6 @@ import {
   useEditCatalogueItem,
   useMoveToCatalogueItem,
 } from './catalogueItems';
-import {
-  CREATED_MODIFIED_TIME_VALUES,
-  catalogueItemData,
-  hooksWrapperWithProviders,
-} from '../testUtils';
-import {
-  AddCatalogueItem,
-  CatalogueCategory,
-  CatalogueItem,
-  EditCatalogueItem,
-  TransferToCatalogueItem,
-} from '../app.types';
-import CatalogueItemsJSON from '../mocks/CatalogueItems.json';
 
 describe('catalogue items api functions', () => {
   afterEach(() => {

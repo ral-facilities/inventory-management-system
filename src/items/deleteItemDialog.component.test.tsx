@@ -4,16 +4,16 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import { act } from 'react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http } from 'msw';
+import { act } from 'react';
 import { Item } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { server } from '../mocks/server';
 import { getItemById, renderComponentWithRouterProvider } from '../testUtils';
 import DeleteItemDialog, {
   DeleteItemDialogProps,
 } from './deleteItemDialog.component';
-import { http } from 'msw';
-import { server } from '../mocks/server';
 
 vi.mock('../handleIMS_APIError');
 

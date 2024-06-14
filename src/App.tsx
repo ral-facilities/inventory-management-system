@@ -11,13 +11,22 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import AdminPage from './admin/admin.component';
 import {
   clearFailedAuthRequestsQueue,
   retryFailedAuthRequests,
 } from './api/api';
 import { MicroFrontendId } from './app.types';
+import Catalogue from './catalogue/catalogue.component';
+import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
+import ConfigProvider from './configProvider.component';
 import handleIMS_APIError from './handleIMS_APIError';
+import { HomePage } from './homePage/homePage.component';
 import IMSThemeProvider from './imsThemeProvider.component';
+import Items from './items/items.component';
+import ItemsLandingPage from './items/itemsLandingPage.component';
+import ManufacturerComponent from './manufacturer/manufacturer.component';
+import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
 import {
@@ -25,17 +34,8 @@ import {
   requestPluginRerender,
   tokenRefreshed,
 } from './state/scigateway.actions';
-import ViewTabs from './view/viewTabs.component';
-import { HomePage } from './homePage/homePage.component';
-import Catalogue from './catalogue/catalogue.component';
-import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
 import Systems from './systems/systems.component';
-import ManufacturerComponent from './manufacturer/manufacturer.component';
-import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
-import Items from './items/items.component';
-import ItemsLandingPage from './items/itemsLandingPage.component';
-import ConfigProvider from './configProvider.component';
-import AdminPage from './admin/admin.component';
+import ViewTabs from './view/viewTabs.component';
 
 export const paths = {
   any: '*',

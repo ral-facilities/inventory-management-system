@@ -1,21 +1,21 @@
+import EditIcon from '@mui/icons-material/Edit';
+import PrintIcon from '@mui/icons-material/Print';
 import {
   Box,
   Button,
   Grid,
-  Typography,
-  Link as MuiLink,
   LinearProgress,
+  Link as MuiLink,
+  Typography,
 } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useManufacturer } from '../api/manufacturers';
-import ManufacturerDialog from './manufacturerDialog.component';
 import React from 'react';
-import Breadcrumbs from '../view/breadcrumbs.component';
-import { BreadcrumbsInfo } from '../app.types';
-import EditIcon from '@mui/icons-material/Edit';
-import PrintIcon from '@mui/icons-material/Print';
-import { formatDateTimeStrings } from '../utils';
+import { useNavigate, useParams } from 'react-router-dom';
 import { paths } from '../App';
+import { useManufacturer } from '../api/manufacturers';
+import { BreadcrumbsInfo } from '../app.types';
+import { formatDateTimeStrings } from '../utils';
+import Breadcrumbs from '../view/breadcrumbs.component';
+import ManufacturerDialog from './manufacturerDialog.component';
 
 function ManufacturerLandingPage() {
   const { manufacturer_id: manufacturerId } = useParams();

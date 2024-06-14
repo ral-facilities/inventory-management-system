@@ -14,15 +14,15 @@ import {
 
 import React from 'react';
 
+import { AxiosError } from 'axios';
+import { useAddManufacturer, useEditManufacturer } from '../api/manufacturers';
 import {
   AddManufacturer,
-  Manufacturer,
   EditManufacturer,
   ErrorParsing,
+  Manufacturer,
   ManufacturerDetails,
 } from '../app.types';
-import { useAddManufacturer, useEditManufacturer } from '../api/manufacturers';
-import { AxiosError } from 'axios';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { trimStringValues } from '../utils';
 

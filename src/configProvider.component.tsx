@@ -1,9 +1,9 @@
 import React from 'react';
-import {
-  InventoryManagementSystemSettings,
-  settings as IMSSettings,
-} from './settings';
 import Preloader from './preloader/preloader.component';
+import {
+  settings as IMSSettings,
+  InventoryManagementSystemSettings,
+} from './settings';
 
 const initialConfiguration: InventoryManagementSystemSettings = {
   apiUrl: '',

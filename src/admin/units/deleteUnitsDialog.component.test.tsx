@@ -1,13 +1,13 @@
-import { RenderResult } from '@testing-library/react';
-import { Unit } from '../../app.types';
-import { DeleteUnitProps } from './deleteUnitsDialog.component';
-import DeleteUnitDialog from './deleteUnitsDialog.component';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { screen, waitFor } from '@testing-library/react';
+import { http } from 'msw';
+import { Unit } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
-import { http } from 'msw';
+import { renderComponentWithRouterProvider } from '../../testUtils';
+import DeleteUnitDialog, {
+  DeleteUnitProps,
+} from './deleteUnitsDialog.component';
 
 vi.mock('../../handleIMS_APIError');
 
