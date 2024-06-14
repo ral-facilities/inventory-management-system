@@ -11,9 +11,8 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { ManufacturerSchema } from '../api/api.types';
+import { ErrorParsing, ManufacturerSchema } from '../api/api.types';
 import { useDeleteManufacturer } from '../api/manufacturers';
-import { ErrorParsing } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface DeleteManufacturerProps {

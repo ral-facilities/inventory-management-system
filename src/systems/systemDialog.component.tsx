@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React, { useEffect } from 'react';
+import { ErrorParsing } from '../api/api.types';
 import {
   getSystemImportanceColour,
   useAddSystem,
@@ -25,7 +26,6 @@ import {
 import {
   AddSystem,
   EditSystem,
-  ErrorParsing,
   System,
   SystemImportanceType,
 } from '../app.types';

@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { ErrorParsing, MicroFrontendId } from '../app.types';
+import { MicroFrontendId } from '../app.types';
 import { readSciGatewayToken } from '../parseTokens';
 import { settings } from '../settings';
 import { InvalidateTokenType } from '../state/actions/actions.types';
+import { ErrorParsing } from './api.types';
 
 export const imsApi = axios.create();
 

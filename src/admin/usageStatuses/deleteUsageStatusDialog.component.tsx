@@ -11,8 +11,9 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { ErrorParsing } from '../../api/api.types';
 import { useDeleteUsageStatus } from '../../api/usageStatuses';
-import { ErrorParsing, UsageStatus } from '../../app.types';
+import { UsageStatus } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteUsageStatusProps {

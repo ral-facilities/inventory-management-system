@@ -10,12 +10,12 @@ import {
   AddItem,
   AddItems,
   EditItem,
-  ErrorParsing,
   Item,
   MoveItemsToSystem,
   TransferState,
 } from '../app.types';
 import { imsApi } from './api';
+import { ErrorParsing } from './api.types';
 
 const addItem = async (item: AddItem): Promise<Item> => {
   return imsApi.post<Item>(`/v1/items`, item).then((response) => response.data);

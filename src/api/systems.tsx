@@ -12,7 +12,6 @@ import {
   BreadcrumbsInfo,
   CopyToSystem,
   EditSystem,
-  ErrorParsing,
   MoveToSystem,
   System,
   SystemImportanceType,
@@ -20,6 +19,7 @@ import {
 } from '../app.types';
 import { generateUniqueNameUsingCode } from '../utils';
 import { imsApi } from './api';
+import { ErrorParsing } from './api.types';
 
 /** Utility for turning an importance into an MUI palette colour to display */
 export const getSystemImportanceColour = (

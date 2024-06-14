@@ -167,10 +167,6 @@ export interface TransferToCatalogueItem {
   targetCatalogueCategory: CatalogueCategory | null;
 }
 
-export interface ErrorParsing {
-  detail: string;
-}
-
 export interface TransferState {
   name: string;
   message: string;

@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { ErrorParsing } from '../../api/api.types';
 import {
   useAddCatalogueCategory,
   useEditCatalogueCategory,
@@ -32,7 +33,6 @@ import {
   CatalogueCategory,
   CatalogueItemPropertiesErrorsType,
   EditCatalogueCategory,
-  ErrorParsing,
 } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { generateUniqueId, trimStringValues } from '../../utils';

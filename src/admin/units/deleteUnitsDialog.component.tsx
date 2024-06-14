@@ -11,8 +11,9 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { ErrorParsing } from '../../api/api.types';
 import { useDeleteUnit } from '../../api/units';
-import { ErrorParsing, Unit } from '../../app.types';
+import { Unit } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteUnitProps {

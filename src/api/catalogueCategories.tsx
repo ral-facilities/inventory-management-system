@@ -15,7 +15,6 @@ import {
   CopyToCatalogueCategory,
   EditCatalogueCategory,
   EditPropertyMigration,
-  ErrorParsing,
   MoveToCatalogueCategory,
   TransferState,
 } from '../app.types';
@@ -23,6 +22,7 @@ import {
 import handleTransferState from '../handleTransferState';
 import { generateUniqueNameUsingCode } from '../utils';
 import { imsApi } from './api';
+import { ErrorParsing } from './api.types';
 
 const fetchCatalogueCategories = async (
   parent_id: string

@@ -11,11 +11,11 @@ import {
   AddCatalogueItem,
   CatalogueItem,
   EditCatalogueItem,
-  ErrorParsing,
   TransferState,
   TransferToCatalogueItem,
 } from '../app.types';
 import { imsApi } from './api';
+import { ErrorParsing } from './api.types';
 
 const addCatalogueItem = async (
   catalogueItem: AddCatalogueItem

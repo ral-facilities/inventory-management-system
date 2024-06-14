@@ -22,7 +22,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { ManufacturerSchema } from '../../api/api.types';
+import { ErrorParsing, ManufacturerSchema } from '../../api/api.types';
 import {
   useAddCatalogueItem,
   useEditCatalogueItem,
@@ -36,7 +36,6 @@ import {
   CatalogueItem,
   CatalogueItemDetailsPlaceholder,
   EditCatalogueItem,
-  ErrorParsing,
 } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';

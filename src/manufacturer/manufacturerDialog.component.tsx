@@ -16,12 +16,12 @@ import React from 'react';
 
 import { AxiosError } from 'axios';
 import {
+  ErrorParsing,
   ManufacturerPatchSchema,
   ManufacturerPostSchema,
   ManufacturerSchema,
 } from '../api/api.types';
 import { useAddManufacturer, useEditManufacturer } from '../api/manufacturers';
-import { ErrorParsing } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { trimStringValues } from '../utils';
 

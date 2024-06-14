@@ -3,6 +3,10 @@ interface CreatedModifiedSchemaMixin {
   modified_time: string;
 }
 
+export interface ErrorParsing {
+  detail: string;
+}
+
 // Manufacturers
 
 interface AddressSchema {
