@@ -22,6 +22,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { ManufacturerSchema } from '../../api/api.types';
 import {
   useAddCatalogueItem,
   useEditCatalogueItem,
@@ -36,7 +37,6 @@ import {
   CatalogueItemDetailsPlaceholder,
   EditCatalogueItem,
   ErrorParsing,
-  Manufacturer,
 } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
@@ -209,7 +209,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         manufacturer.id === selectedCatalogueItem?.manufacturer_id
     ) || null;
   const [selectedManufacturer, setSelectedManufacturer] =
-    React.useState<Manufacturer | null>(null);
+    React.useState<ManufacturerSchema | null>(null);
 
   const [inputValue, setInputValue] = React.useState<string | null>(
     selectedManufacturer?.name ?? null
@@ -775,7 +775,10 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                   onInputChange={(_event, newInputValue) =>
                     setInputValue(newInputValue)
                   }
-                  onChange={(_event, newManufacturer: Manufacturer | null) => {
+                  onChange={(
+                    _event,
+                    newManufacturer: ManufacturerSchema | null
+                  ) => {
                     setSelectedManufacturer(newManufacturer ?? null);
                     setInputValue(newManufacturer?.name ?? '');
                     handleCatalogueDetails(

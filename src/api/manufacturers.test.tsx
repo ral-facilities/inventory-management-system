@@ -1,10 +1,10 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { AddManufacturer, Manufacturer } from '../app.types';
 import ManufacturersJSON from '../mocks/Manufacturers.json';
 import {
   CREATED_MODIFIED_TIME_VALUES,
   hooksWrapperWithProviders,
 } from '../testUtils';
+import { ManufacturerPostSchema, ManufacturerSchema } from './api.types';
 import {
   useAddManufacturer,
   useDeleteManufacturer,
@@ -18,9 +18,9 @@ describe('manufacturer api functions', () => {
   });
 
   describe('useAddManufacturer', () => {
-    let mockDataAdd: AddManufacturer;
+    let mockDataPost: ManufacturerPostSchema;
     beforeEach(() => {
-      mockDataAdd = {
+      mockDataPost = {
         name: 'Manufacturer D',
         url: 'http://test.co.uk',
         address: {
@@ -39,7 +39,7 @@ describe('manufacturer api functions', () => {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataAdd);
+      result.current.mutate(mockDataPost);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
@@ -63,7 +63,7 @@ describe('manufacturer api functions', () => {
   });
 
   describe('useDeleteManufacturer', () => {
-    let mockDataView: Manufacturer;
+    let mockDataView: ManufacturerSchema;
     beforeEach(() => {
       mockDataView = {
         id: '1',
@@ -87,7 +87,7 @@ describe('manufacturer api functions', () => {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataView);
+      result.current.mutate(mockDataView.id);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });

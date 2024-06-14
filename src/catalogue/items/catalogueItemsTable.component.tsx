@@ -27,13 +27,13 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ManufacturerSchema } from '../../api/api.types';
 import { useCatalogueItems } from '../../api/catalogueItems';
 import { useManufacturerIds } from '../../api/manufacturers';
 import {
   CatalogueCategory,
   CatalogueItem,
   CatalogueItemPropertyResponse,
-  Manufacturer,
 } from '../../app.types';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {
@@ -130,7 +130,7 @@ export function findPropertyValue(
 /* Each table row needs the catalogue item and manufacturer */
 interface TableRowData {
   catalogueItem: CatalogueItem;
-  manufacturer?: Manufacturer;
+  manufacturer?: ManufacturerSchema;
 }
 
 export interface CatalogueItemsTableProps {
@@ -187,12 +187,11 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     ) ?? []
   );
   let isLoading = isLoadingCatalogueItems;
-  const manufacturerList: (Manufacturer | undefined)[] = useManufacturerIds(
-    Array.from(manufacturerIdSet.values())
-  ).map((query) => {
-    isLoading = isLoading || query.isLoading;
-    return query.data;
-  });
+  const manufacturerList: (ManufacturerSchema | undefined)[] =
+    useManufacturerIds(Array.from(manufacturerIdSet.values())).map((query) => {
+      isLoading = isLoading || query.isLoading;
+      return query.data;
+    });
 
   // Once loading has finished - pair up all data for the table rows
   // If performance becomes a problem with this should remove find and fetch manufacturer

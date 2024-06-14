@@ -1,9 +1,13 @@
 import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
+  ManufacturerPatchSchema,
+  ManufacturerPostSchema,
+  ManufacturerSchema,
+} from '../api/api.types';
+import {
   AddCatalogueCategory,
   AddCatalogueItem,
   AddItem,
-  AddManufacturer,
   AddSystem,
   AddUnit,
   AddUsageStatus,
@@ -15,10 +19,8 @@ import {
   EditCatalogueCategory,
   EditCatalogueItem,
   EditItem,
-  EditManufacturer,
   EditSystem,
   Item,
-  Manufacturer,
   System,
   Unit,
   UsageStatus,
@@ -414,107 +416,109 @@ export const handlers = [
 
   // ------------------------------------ MANUFACTURERS ------------------------------------
 
-  http.post<PathParams, AddManufacturer, Manufacturer | ErrorResponse>(
-    '/v1/manufacturers',
-    async ({ request }) => {
-      const body = await request.json();
+  http.post<
+    PathParams,
+    ManufacturerPostSchema,
+    ManufacturerSchema | ErrorResponse
+  >('/v1/manufacturers', async ({ request }) => {
+    const body = await request.json();
 
-      if (body.name === 'Manufacturer A') {
-        return HttpResponse.json({ detail: '' }, { status: 409 });
-      }
+    if (body.name === 'Manufacturer A') {
+      return HttpResponse.json({ detail: '' }, { status: 409 });
+    }
 
-      if (body.name === 'Error 500') {
-        return HttpResponse.json(
-          { detail: 'Something went wrong' },
-          { status: 500 }
-        );
-      }
-
+    if (body.name === 'Error 500') {
       return HttpResponse.json(
-        {
-          id: '4',
-          name: 'Manufacturer D',
-          code: 'manufacturer-d',
-          url: 'http://test.co.uk',
-          address: {
-            address_line: '4 Example Street',
-            country: 'United Kingdom',
-            town: 'Oxford',
-            county: 'Oxfordshire',
-            postcode: 'OX1 2AB',
-          },
-          telephone: '07349612203',
-          created_time: '2024-01-01T12:00:00.000+00:00',
-          modified_time: '2024-01-02T13:10:10.000+00:00',
-        },
-        { status: 200 }
+        { detail: 'Something went wrong' },
+        { status: 500 }
       );
     }
-  ),
 
-  http.get<PathParams, DefaultBodyType, Manufacturer[]>(
+    return HttpResponse.json(
+      {
+        id: '4',
+        name: 'Manufacturer D',
+        code: 'manufacturer-d',
+        url: 'http://test.co.uk',
+        address: {
+          address_line: '4 Example Street',
+          country: 'United Kingdom',
+          town: 'Oxford',
+          county: 'Oxfordshire',
+          postcode: 'OX1 2AB',
+        },
+        telephone: '07349612203',
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
+      },
+      { status: 200 }
+    );
+  }),
+
+  http.get<PathParams, DefaultBodyType, ManufacturerSchema[]>(
     '/v1/manufacturers',
     () => {
-      return HttpResponse.json(ManufacturersJSON as Manufacturer[], {
+      return HttpResponse.json(ManufacturersJSON as ManufacturerSchema[], {
         status: 200,
       });
     }
   ),
 
-  http.get<{ id: string }, DefaultBodyType, Manufacturer>(
+  http.get<{ id: string }, DefaultBodyType, ManufacturerSchema>(
     '/v1/manufacturers/:id',
     ({ params }) => {
       const { id } = params;
 
       const data = ManufacturersJSON.find(
         (manufacturer) => manufacturer.id === id
-      ) as Manufacturer;
+      ) as ManufacturerSchema;
 
       return HttpResponse.json(data, { status: 200 });
     }
   ),
 
-  http.patch<{ id: string }, EditManufacturer, Manufacturer | ErrorResponse>(
-    '/v1/manufacturers/:id',
-    async ({ request }) => {
-      const body = await request.json();
+  http.patch<
+    { id: string },
+    ManufacturerPatchSchema,
+    ManufacturerSchema | ErrorResponse
+  >('/v1/manufacturers/:id', async ({ request }) => {
+    const body = await request.json();
 
-      if (body.name === 'test_dup') {
-        return HttpResponse.json(
-          {
-            detail:
-              'A manufacturer with the same name has been found. Please enter a different name',
-          },
-          { status: 409 }
-        );
-      }
-      if (body.name === 'Error 500') {
-        return HttpResponse.json(
-          { detail: 'Something went wrong' },
-          { status: 500 }
-        );
-      }
+    if (body.name === 'test_dup') {
       return HttpResponse.json(
         {
-          id: '1',
-          name: 'test',
-          code: 'test',
-          url: null,
-          address: {
-            address_line: 'test',
-            town: 'test',
-            county: 'test',
-            country: 'test',
-            postcode: 'test',
-          },
-          telephone: '0000000000',
-          created_time: '2024-01-01T12:00:00.000+00:00',
-          modified_time: '2024-01-02T13:10:10.000+00:00',
+          detail:
+            'A manufacturer with the same name has been found. Please enter a different name',
         },
-        { status: 200 }
+        { status: 409 }
       );
     }
-  ),
+    if (body.name === 'Error 500') {
+      return HttpResponse.json(
+        { detail: 'Something went wrong' },
+        { status: 500 }
+      );
+    }
+    return HttpResponse.json(
+      {
+        id: '1',
+        name: 'test',
+        code: 'test',
+        url: null,
+        address: {
+          address_line: 'test',
+          town: 'test',
+          county: 'test',
+          country: 'test',
+          postcode: 'test',
+        },
+        telephone: '0000000000',
+        created_time: '2024-01-01T12:00:00.000+00:00',
+        modified_time: '2024-01-02T13:10:10.000+00:00',
+      },
+      { status: 200 }
+    );
+  }),
 
   http.delete<
     { id: string },

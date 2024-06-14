@@ -21,8 +21,8 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ManufacturerSchema } from '../api/api.types';
 import { useManufacturers } from '../api/manufacturers';
-import { Manufacturer } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
   TableBodyCellOverFlowTip,
@@ -44,7 +44,7 @@ function ManufacturerComponent() {
     React.useState<boolean>(false);
 
   const [selectedManufacturer, setSelectedManufacturer] = React.useState<
-    Manufacturer | undefined
+    ManufacturerSchema | undefined
   >(undefined);
 
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
@@ -53,7 +53,7 @@ function ManufacturerComponent() {
     'edit' | 'create'
   >('create');
 
-  const columns = React.useMemo<MRT_ColumnDef<Manufacturer>[]>(() => {
+  const columns = React.useMemo<MRT_ColumnDef<ManufacturerSchema>[]>(() => {
     return [
       {
         header: 'Name',

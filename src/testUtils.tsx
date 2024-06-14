@@ -10,12 +10,12 @@ import {
   createMemoryRouter,
 } from 'react-router-dom';
 import { paths } from './App';
+import { ManufacturerSchema } from './api/api.types';
 import {
   CatalogueCategory,
   CatalogueCategoryProperty,
   CatalogueItem,
   Item,
-  Manufacturer,
 } from './app.types';
 import CatalogueCategoriesJSON from './mocks/CatalogueCategories.json';
 import CatalogueItemsJSON from './mocks/CatalogueItems.json';
@@ -158,11 +158,13 @@ export const catalogueItemData = (id: string): CatalogueItem[] => {
   );
 };
 
-export const getManufacturerById = (id: string): Manufacturer | undefined => {
+export const getManufacturerById = (
+  id: string
+): ManufacturerSchema | undefined => {
   return (
     (ManufacturersJSON.find(
       (manufacturer) => manufacturer.id === id
-    ) as Manufacturer) || undefined
+    ) as ManufacturerSchema) || undefined
   );
 };
 

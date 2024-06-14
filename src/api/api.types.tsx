@@ -1,9 +1,9 @@
-// Manufacturers
-
 interface CreatedModifiedSchemaMixin {
   created_time: string;
   modified_time: string;
 }
+
+// Manufacturers
 
 interface AddressSchema {
   address_line: string;
