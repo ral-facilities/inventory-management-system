@@ -10,6 +10,7 @@ describe('Catalogue Card', () => {
   const onChangeOpenDeleteDialog = vi.fn();
   const onChangeOpenEditNameDialog = vi.fn();
   const onChangeOpenEditPropertiesDialog = vi.fn();
+  const onChangeOpenSaveAsDialog = vi.fn();
   const onToggleSelect = vi.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(<CatalogueCard {...props} />);
@@ -25,6 +26,7 @@ describe('Catalogue Card', () => {
       onChangeOpenDeleteDialog: onChangeOpenDeleteDialog,
       onChangeOpenEditNameDialog: onChangeOpenEditNameDialog,
       onChangeOpenEditPropertiesDialog: onChangeOpenEditPropertiesDialog,
+      onChangeOpenSaveAsDialog: onChangeOpenSaveAsDialog,
       isSelected: false,
       onToggleSelect: onToggleSelect,
       created_time: '2024-01-01T12:00:00.000+00:00',
@@ -129,5 +131,21 @@ describe('Catalogue Card', () => {
     await user.click(editButton);
 
     expect(onChangeOpenEditPropertiesDialog).toHaveBeenCalled();
+  });
+
+  it('opens the save as dialog', async () => {
+    props.is_leaf = true;
+    createView();
+    const actionsButton = screen.getByRole('button', {
+      name: 'actions Beam Characterization catalogue category button',
+    });
+    await user.click(actionsButton);
+
+    const editButton = screen.getByRole('menuitem', {
+      name: 'save as Beam Characterization catalogue category button',
+    });
+    await user.click(editButton);
+
+    expect(onChangeOpenSaveAsDialog).toHaveBeenCalled();
   });
 });

@@ -7,7 +7,10 @@ import {
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { CatalogueCategory } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  renderComponentWithRouterProvider,
+} from '../../testUtils';
 import DeleteCatalogueCategoryDialog, {
   DeleteCatalogueCategoryDialogProps,
 } from './deleteCatalogueCategoryDialog.component';
@@ -35,6 +38,7 @@ describe('delete Catalogue Category dialogue', () => {
       id: '1',
       code: 'test',
       is_leaf: false,
+      ...CREATED_MODIFIED_TIME_VALUES,
     };
     props = {
       open: true,

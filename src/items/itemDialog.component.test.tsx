@@ -14,6 +14,8 @@ import ItemDialog, {
 } from './itemDialog.component';
 import { server } from '../mocks/server';
 import { http } from 'msw';
+import { MockInstance } from 'vitest';
+import { CatalogueCategory, CatalogueItem } from '../app.types';
 
 vi.mock('../handleIMS_APIError');
 
@@ -190,7 +192,7 @@ describe('ItemDialog', () => {
   });
 
   describe('Add Item', () => {
-    let axiosPostSpy;
+    let axiosPostSpy: MockInstance;
 
     beforeEach(() => {
       axiosPostSpy = vi.spyOn(imsApi, 'post');
@@ -228,12 +230,12 @@ describe('ItemDialog', () => {
       props.catalogueCategory = {
         ...props.catalogueCategory,
         catalogue_item_properties: [],
-      };
+      } as CatalogueCategory;
 
       props.catalogueItem = {
         ...props.catalogueItem,
         properties: [],
-      };
+      } as CatalogueItem;
 
       createView();
 
@@ -968,7 +970,7 @@ describe('ItemDialog', () => {
     });
   });
   describe('Edit Item', () => {
-    let axiosPatchSpy;
+    let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');

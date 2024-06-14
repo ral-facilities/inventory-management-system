@@ -1,16 +1,16 @@
-import userEvent, { UserEvent } from '@testing-library/user-event';
-import { imsApi } from '../../api/api';
-import { renderComponentWithRouterProvider } from '../../testUtils';
-import { UnitsDialogProps } from './unitsDialog.component';
-import UnitsDialog from './unitsDialog.component';
 import { fireEvent, screen } from '@testing-library/react';
-import { server } from '../../mocks/server';
+import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
+import { MockInstance } from 'vitest';
+import { imsApi } from '../../api/api';
+import { server } from '../../mocks/server';
+import { renderComponentWithRouterProvider } from '../../testUtils';
+import UnitsDialog, { UnitsDialogProps } from './unitsDialog.component';
 
 describe('Units dialog', () => {
   let props: UnitsDialogProps;
   let user: UserEvent;
-  let axiosPostSpy;
+  let axiosPostSpy: MockInstance;
   const onClose = vi.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(<UnitsDialog {...props} />);

@@ -98,7 +98,7 @@ describe('Utility functions', () => {
     it('should handle empty existingCodes array', () => {
       const name = 'TestName';
       const code = 'TestCode';
-      const existingCodes = [];
+      const existingCodes: string[] = [];
 
       const result = generateUniqueNameUsingCode(name, code, existingCodes);
 

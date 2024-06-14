@@ -1,5 +1,6 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { CatalogueCategory, CatalogueItem } from '../app.types';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
@@ -32,8 +33,8 @@ describe('Items Table', () => {
 
   beforeEach(() => {
     props = {
-      catalogueCategory: getCatalogueCategoryById('4'),
-      catalogueItem: getCatalogueItemById('1'),
+      catalogueCategory: getCatalogueCategoryById('4') as CatalogueCategory,
+      catalogueItem: getCatalogueItemById('1') as CatalogueItem,
       dense: false,
     };
 
@@ -324,8 +325,10 @@ describe('Items Table', () => {
   });
 
   it('can open the save as dialog and checks that the notes have been updated when notes is null', async () => {
-    props.catalogueCategory = getCatalogueCategoryById('4');
-    props.catalogueItem = getCatalogueItemById('32');
+    props.catalogueCategory = getCatalogueCategoryById(
+      '4'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('32') as CatalogueItem;
     createView();
 
     const serialNumber = 'RncNJlDk1pXC';
@@ -352,8 +355,10 @@ describe('Items Table', () => {
   });
 
   it('can open the save as dialog and checks that the notes have been updated with no serial number', async () => {
-    props.catalogueCategory = getCatalogueCategoryById('4');
-    props.catalogueItem = getCatalogueItemById('32');
+    props.catalogueCategory = getCatalogueCategoryById(
+      '4'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('32') as CatalogueItem;
     createView();
 
     const serialNumber = 'No serial number';
@@ -380,8 +385,10 @@ describe('Items Table', () => {
   });
 
   it('can open the save as dialog (no delivered date or warranty date) and close it again', async () => {
-    props.catalogueCategory = getCatalogueCategoryById('4');
-    props.catalogueItem = getCatalogueItemById('3');
+    props.catalogueCategory = getCatalogueCategoryById(
+      '4'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('3') as CatalogueItem;
     createView();
 
     const serialNumber = 'fBfU9b3ySyKc';
