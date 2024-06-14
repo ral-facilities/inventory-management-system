@@ -7,6 +7,7 @@ import {
 } from '../../testUtils';
 
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { CatalogueCategory, CatalogueItem } from '../../app.types';
 import CatalogueItemsDetailsPanel, {
   CatalogueItemsDetailsPanelProps,
 } from './catalogueItemsDetailsPanel.component';
@@ -19,16 +20,14 @@ describe('Catalogue Items details panel', () => {
       <CatalogueItemsDetailsPanel {...props} />
     );
   };
-  const catalogueItem = getCatalogueItemById('89');
-  const catalogueCategory = getCatalogueCategoryById('5');
+
   beforeEach(() => {
-    if (catalogueItem && catalogueCategory) {
-      props = {
-        catalogueItemIdData: catalogueItem,
-        catalogueCategoryData: catalogueCategory,
-        manufacturerData: getManufacturerById('1'),
-      };
-    }
+    props = {
+      catalogueItemIdData: getCatalogueItemById('89') as CatalogueItem,
+      catalogueCategoryData: getCatalogueCategoryById('5') as CatalogueCategory,
+      manufacturerData: getManufacturerById('1'),
+    };
+
     user = userEvent.setup();
   });
 
@@ -39,12 +38,11 @@ describe('Catalogue Items details panel', () => {
   });
 
   it('renders details panel correctly (with obsolete replacement link)', async () => {
-    const catalogueItem = getCatalogueItemById('11');
-    const catalogueCategory = getCatalogueCategoryById('9');
-    if (catalogueItem && catalogueCategory) {
-      props.catalogueItemIdData = catalogueItem;
-      props.catalogueCategoryData = catalogueCategory;
-    }
+    props.catalogueItemIdData = getCatalogueItemById('11') as CatalogueItem;
+    props.catalogueCategoryData = getCatalogueCategoryById(
+      '9'
+    ) as CatalogueCategory;
+
     props.manufacturerData = getManufacturerById('3');
     const view = createView();
 
@@ -52,12 +50,10 @@ describe('Catalogue Items details panel', () => {
   });
 
   it('renders details panel correctly (None values for telephone and url)', async () => {
-    const catalogueItem = getCatalogueItemById('33');
-    const catalogueCategory = getCatalogueCategoryById('4');
-    if (catalogueItem && catalogueCategory) {
-      props.catalogueItemIdData = catalogueItem;
-      props.catalogueCategoryData = catalogueCategory;
-    }
+    props.catalogueItemIdData = getCatalogueItemById('33') as CatalogueItem;
+    props.catalogueCategoryData = getCatalogueCategoryById(
+      '4'
+    ) as CatalogueCategory;
     props.manufacturerData = getManufacturerById('4');
     const view = createView();
 
@@ -87,12 +83,10 @@ describe('Catalogue Items details panel', () => {
   });
 
   it('renders details panel correctly (when there are no Notes)', async () => {
-    const catalogueItem = getCatalogueItemById('33');
-    const catalogueCategory = getCatalogueCategoryById('4');
-    if (catalogueItem && catalogueCategory) {
-      props.catalogueItemIdData = catalogueItem;
-      props.catalogueCategoryData = catalogueCategory;
-    }
+    props.catalogueItemIdData = getCatalogueItemById('33') as CatalogueItem;
+    props.catalogueCategoryData = getCatalogueCategoryById(
+      '4'
+    ) as CatalogueCategory;
     props.manufacturerData = getManufacturerById('4');
 
     const view = createView();

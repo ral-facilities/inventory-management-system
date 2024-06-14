@@ -615,18 +615,16 @@ describe('catalogue categories api functions', () => {
 
   describe('useEditCatalogueCategoryProperty', () => {
     let mockDataEditProperty: EditPropertyMigration;
-    const catalogueCategory = getCatalogueCategoryById('12');
+
     beforeEach(() => {
-      if (catalogueCategory !== undefined) {
-        mockDataEditProperty = {
-          catalogueCategory: catalogueCategory,
-          property: {
-            id: '19',
-            name: 'test',
-            allowed_values: { type: 'list', values: ['x', 'y', 'z', 'a'] },
-          },
-        };
-      }
+      mockDataEditProperty = {
+        catalogueCategory: getCatalogueCategoryById('12') as CatalogueCategory,
+        property: {
+          id: '19',
+          name: 'test',
+          allowed_values: { type: 'list', values: ['x', 'y', 'z', 'a'] },
+        },
+      };
     });
     it('sends a patch request to edit a property and returns successful response', async () => {
       const { result } = renderHook(() => useEditCatalogueCategoryProperty(), {
@@ -699,20 +697,18 @@ describe('catalogue categories api functions', () => {
   });
   describe('useAddCatalogueCategoryProperty', () => {
     let mockDataAddProperty: AddPropertyMigration;
-    const catalogueCategory = getCatalogueCategoryById('4');
+    getCatalogueCategoryById('4');
     beforeEach(() => {
-      if (catalogueCategory) {
-        mockDataAddProperty = {
-          catalogueCategory: catalogueCategory,
-          property: {
-            name: 'test',
-            type: 'number',
-            unit_id: '1',
-            default_value: 2,
-            mandatory: false,
-          },
-        };
-      }
+      mockDataAddProperty = {
+        catalogueCategory: getCatalogueCategoryById('4') as CatalogueCategory,
+        property: {
+          name: 'test',
+          type: 'number',
+          unit_id: '1',
+          default_value: 2,
+          mandatory: false,
+        },
+      };
     });
     it('posts a request to add property and returns successful response', async () => {
       const { result } = renderHook(() => useAddCatalogueCategoryProperty(), {

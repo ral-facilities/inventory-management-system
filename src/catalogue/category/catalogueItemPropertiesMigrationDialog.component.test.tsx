@@ -2,7 +2,10 @@ import { fireEvent, screen, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
-import { CatalogueCategoryPropertyMigration } from '../../app.types';
+import {
+  CatalogueCategory,
+  CatalogueCategoryPropertyMigration,
+} from '../../app.types';
 import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
@@ -28,16 +31,17 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       <CatalogueItemPropertiesMigrationDialog {...props} />
     );
   };
-  const catalogueCategory = getCatalogueCategoryById('12');
+
   beforeEach(() => {
-    if (catalogueCategory) {
-      props = {
-        open: true,
-        selectedCatalogueCategory: catalogueCategory,
-        onClose: onClose,
-        resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
-      };
-    }
+    props = {
+      open: true,
+      selectedCatalogueCategory: getCatalogueCategoryById(
+        '12'
+      ) as CatalogueCategory,
+      onClose: onClose,
+      resetSelectedCatalogueCategory: resetSelectedCatalogueCategory,
+    };
+
     user = userEvent.setup();
   });
 

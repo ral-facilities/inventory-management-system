@@ -976,9 +976,9 @@ describe('Catalogue Items Dialog', () => {
         parentInfo: getCatalogueCategoryById('17'),
 
         selectedCatalogueItem: {
-          ...(getCatalogueItemById('1') as CatalogueItem),
+          ...getCatalogueItemById('1'),
           properties: [],
-        },
+        } as CatalogueItem,
       };
 
       createView();

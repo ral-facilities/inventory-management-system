@@ -359,9 +359,9 @@ describe('catalogue items api functions', () => {
 
     it('sends requests to move a single catalogue item and returns unsuccessful response as the catalogue_category_id has not changed', async () => {
       props.targetCatalogueCategory = {
-        ...(props.targetCatalogueCategory as CatalogueCategory),
+        ...props.targetCatalogueCategory,
         id: 'Error 500',
-      };
+      } as CatalogueCategory;
 
       const { result } = renderHook(() => useMoveToCatalogueItem(), {
         wrapper: hooksWrapperWithProviders(),
@@ -492,9 +492,9 @@ describe('catalogue items api functions', () => {
 
     it('sends requests to copy multiple catalogue items and returns unsuccessful response when the catalogue_category_id has not changed', async () => {
       props.targetCatalogueCategory = {
-        ...(props.targetCatalogueCategory as CatalogueCategory),
+        ...props.targetCatalogueCategory,
         id: 'Error 500',
-      };
+      } as CatalogueCategory;
 
       const { result } = renderHook(() => useCopyToCatalogueItem(), {
         wrapper: hooksWrapperWithProviders(),
