@@ -72,7 +72,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const { open, onClose, parentInfo, selectedCatalogueItem, type } = props;
   const parentId = parentInfo?.id ?? null;
   const parentCatalogueItemPropertiesInfo = React.useMemo(
-    () => parentInfo?.catalogue_item_properties ?? [],
+    () => parentInfo?.properties ?? [],
     [parentInfo]
   );
 
