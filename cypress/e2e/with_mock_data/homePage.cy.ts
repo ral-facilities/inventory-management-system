@@ -17,7 +17,7 @@ describe('IMS HomePage', () => {
     cy.go('back');
 
     cy.origin('https://www.clf.stfc.ac.uk/Pages/EPAC-Applications.aspx', () => {
-      cy.on('uncaught:exception', (e) => {
+      cy.on('uncaught:exception', () => {
         return false;
       });
     });
