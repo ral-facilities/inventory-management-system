@@ -14,14 +14,14 @@ import {
   CatalogueCategoryProperty,
   CopyToCatalogueCategory,
   EditCatalogueCategory,
+  EditPropertyMigration,
   ErrorParsing,
   MoveToCatalogueCategory,
-  EditPropertyMigration,
   TransferState,
 } from '../app.types';
 
-import { generateUniqueNameUsingCode } from '../utils';
 import handleTransferState from '../handleTransferState';
+import { generateUniqueNameUsingCode } from '../utils';
 import { imsApi } from './api';
 
 const fetchCatalogueCategories = async (

@@ -6,10 +6,10 @@ import {
 } from '../testUtils';
 
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { CatalogueItem, Item } from '../app.types';
 import ItemsDetailsPanel, {
   ItemsDetailsPanelProps,
 } from './itemsDetailsPanel.component';
-import { CatalogueItem, Item } from '../app.types';
 
 describe('Catalogue Items details panel', () => {
   let user: UserEvent;

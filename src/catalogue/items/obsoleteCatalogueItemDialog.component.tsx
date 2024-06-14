@@ -34,11 +34,11 @@ import {
   EditCatalogueItem,
   ObsoleteDetails,
 } from '../../app.types';
+import handleIMS_APIError from '../../handleIMS_APIError';
+import { trimStringValues } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';
 import CatalogueItemsTable from './catalogueItemsTable.component';
-import handleIMS_APIError from '../../handleIMS_APIError';
-import { trimStringValues } from '../../utils';
 
 export interface ObsoleteCatalogueItemDialogProps {
   open: boolean;

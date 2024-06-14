@@ -20,10 +20,10 @@ import {
 import { useCatalogueItem } from '../../api/catalogueItems';
 import { useManufacturer } from '../../api/manufacturers';
 import { BreadcrumbsInfo } from '../../app.types';
+import { formatDateTimeStrings } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import { useNavigateToCatalogue } from '../catalogue.component';
 import CatalogueItemsDialog from './catalogueItemsDialog.component';
-import { formatDateTimeStrings } from '../../utils';
 
 function CatalogueItemsLandingPage() {
   const { catalogue_item_id: catalogueItemId } = useParams();

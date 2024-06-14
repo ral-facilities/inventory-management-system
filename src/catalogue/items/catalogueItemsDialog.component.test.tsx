@@ -12,9 +12,9 @@ import CatalogueItemsDialog, {
 import { http } from 'msw';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
+import { CatalogueItem } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
-import { CatalogueItem } from '../../app.types';
 
 vi.mock('../../handleIMS_APIError');
 

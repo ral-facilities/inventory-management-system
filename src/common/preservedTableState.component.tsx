@@ -1,3 +1,4 @@
+import { ColumnFilter } from '@tanstack/react-table';
 import LZString from 'lz-string';
 import {
   MRT_ColumnFiltersState,
@@ -11,7 +12,6 @@ import {
 } from 'material-react-table';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { ColumnFilter } from '@tanstack/react-table';
 
 // State as will be stored after parsing from search params
 interface State {

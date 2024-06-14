@@ -1,19 +1,19 @@
+import WarningIcon from '@mui/icons-material/Warning';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormHelperText,
+} from '@mui/material';
 import { AxiosError } from 'axios';
+import React from 'react';
 import { useDeleteUnit } from '../../api/units';
 import { ErrorParsing, Unit } from '../../app.types';
-import React from 'react';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Box,
-  FormHelperText,
-  CircularProgress,
-} from '@mui/material';
-import WarningIcon from '@mui/icons-material/Warning';
 
 export interface DeleteUnitProps {
   open: boolean;

@@ -5,8 +5,10 @@ import {
   waitFor,
 } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http } from 'msw';
 import { Manufacturer } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { server } from '../mocks/server';
 import {
   CREATED_MODIFIED_TIME_VALUES,
   renderComponentWithRouterProvider,
@@ -14,8 +16,6 @@ import {
 import DeleteManufacturerDialog, {
   DeleteManufacturerProps,
 } from './deleteManufacturerDialog.component';
-import { server } from '../mocks/server';
-import { http } from 'msw';
 
 vi.mock('../handleIMS_APIError');
 

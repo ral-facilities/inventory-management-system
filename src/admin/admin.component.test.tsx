@@ -1,5 +1,5 @@
-import { renderComponentWithRouterProvider } from '../testUtils';
 import { screen, waitFor } from '@testing-library/react';
+import { renderComponentWithRouterProvider } from '../testUtils';
 import AdminPage from './admin.component';
 
 const mockedUseNavigate = vi.fn();

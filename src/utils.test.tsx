@@ -1,7 +1,7 @@
+import { Link } from '@mui/material';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from './testUtils';
-import { Link } from '@mui/material';
 import {
   OverflowTip,
   generateUniqueId,

@@ -12,9 +12,9 @@ import {
 import { useState } from 'react';
 import { getSystemImportanceColour, useSystem } from '../api/systems';
 import { System } from '../app.types';
+import { OverflowTip, formatDateTimeStrings } from '../utils';
 import SystemDialog from './systemDialog.component';
 import { SystemItemsTable } from './systemItemsTable.component';
-import { OverflowTip, formatDateTimeStrings } from '../utils';
 
 interface SystemButtonProps {
   system: System;

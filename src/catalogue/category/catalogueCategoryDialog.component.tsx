@@ -26,17 +26,17 @@ import {
 import {
   AddCatalogueCategory,
   AddCatalogueCategoryProperty,
+  AddCatalogueCategoryPropertyWithPlacementIds,
   AddCatalogueCategoryWithPlacementIds,
   AllowedValuesListErrorsType,
   CatalogueCategory,
-  AddCatalogueCategoryPropertyWithPlacementIds,
   CatalogueItemPropertiesErrorsType,
   EditCatalogueCategory,
   ErrorParsing,
 } from '../../app.types';
-import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { generateUniqueId, trimStringValues } from '../../utils';
+import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 
 // Function to convert a list of strings to a list of numbers
 export const convertListToNumbers = (values: string[]): number[] => {

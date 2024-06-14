@@ -21,12 +21,12 @@ import {
 import { useCatalogueItem } from '../api/catalogueItems';
 import { useItem } from '../api/items';
 import { useManufacturer } from '../api/manufacturers';
+import { useSystem } from '../api/systems';
 import { BreadcrumbsInfo } from '../app.types';
-import Breadcrumbs from '../view/breadcrumbs.component';
-import ItemDialog from './itemDialog.component';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 import { formatDateTimeStrings } from '../utils';
-import { useSystem } from '../api/systems';
+import Breadcrumbs from '../view/breadcrumbs.component';
+import ItemDialog from './itemDialog.component';
 
 function ItemsLandingPage() {
   // Navigation

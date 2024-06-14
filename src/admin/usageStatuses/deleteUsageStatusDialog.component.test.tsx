@@ -1,14 +1,13 @@
-import { RenderResult } from '@testing-library/react';
-import { UsageStatus } from '../../app.types';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { screen, waitFor } from '@testing-library/react';
+import { http } from 'msw';
+import { UsageStatus } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { server } from '../../mocks/server';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import DeleteUsageStatusDialog, {
   DeleteUsageStatusProps,
 } from './deleteUsageStatusDialog.component';
-import { server } from '../../mocks/server';
-import { http } from 'msw';
 
 vi.mock('../../handleIMS_APIError');
 
