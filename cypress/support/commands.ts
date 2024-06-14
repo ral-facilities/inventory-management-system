@@ -115,6 +115,13 @@ Cypress.Commands.add('findBrowserMockedRequests', ({ method, url }) => {
 });
 
 declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    msw: { http: any; worker: any; matchRequestUrl: any };
+  }
+}
+
+declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
