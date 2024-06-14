@@ -442,7 +442,6 @@ function ItemDialog(props: ItemDialogProps) {
       const isCatalogueItemPropertiesUpdated =
         JSON.stringify(updatedProperties) !==
         JSON.stringify(
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           selectedItem.properties.map(({ unit, name, ...rest }) => ({
             id: rest.id,
             value: rest.value,
