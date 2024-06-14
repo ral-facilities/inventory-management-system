@@ -59,7 +59,7 @@ describe('delete Catalogue Category dialogue', () => {
       catalogueItem: catalogueItem,
       onChangeCatalogueItem: onChangeCatalogueItem,
     };
-    user = userEvent.setup(); // Assigning userEvent to 'user'
+    user = userEvent.setup();
   });
   afterEach(() => {
     vi.clearAllMocks();

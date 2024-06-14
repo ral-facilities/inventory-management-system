@@ -697,7 +697,6 @@ describe('catalogue categories api functions', () => {
   });
   describe('useAddCatalogueCategoryProperty', () => {
     let mockDataAddProperty: AddPropertyMigration;
-    getCatalogueCategoryById('4');
     beforeEach(() => {
       mockDataAddProperty = {
         catalogueCategory: getCatalogueCategoryById('4') as CatalogueCategory,
