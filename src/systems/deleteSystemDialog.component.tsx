@@ -12,7 +12,7 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { useDeleteSystem } from '../api/systems';
-import { ErrorParsing, System } from '../app.types';
+import { APIError, System } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface DeleteSystemDialogProps {
@@ -43,7 +43,7 @@ export const DeleteSystemDialog = (props: DeleteSystemDialogProps) => {
           onClose();
         })
         .catch((error: AxiosError) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
           if (response && error.response?.status === 409) {
             // Duplicate system
             setErrorMessage(

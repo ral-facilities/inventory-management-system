@@ -9,8 +9,8 @@ import { AxiosError } from 'axios';
 import {
   AddItem,
   AddItems,
+  APIError,
   EditItem,
-  ErrorParsing,
   Item,
   MoveItemsToSystem,
   TransferState,
@@ -65,7 +65,7 @@ export const useAddItems = (): UseMutationResult<
             successfulSerialNumbers.push(result.serial_number ?? '');
           })
           .catch((error) => {
-            const response = error.response?.data as ErrorParsing;
+            const response = error.response?.data as APIError;
             transferStates.push({
               name: item.serial_number ?? '',
               message: response.detail,
@@ -238,7 +238,7 @@ export const useMoveItemsToSystem = (): UseMutationResult<
               successfulSystemIds.push(item.system_id || 'null');
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: item.serial_number ?? 'No serial number',
