@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { ErrorParsing } from '../../api/api.types';
+import { APIError } from '../../api/api.types';
 import { useDeleteCatalogueItem } from '../../api/catalogueItems';
 import { CatalogueItem } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
@@ -47,7 +47,7 @@ const DeleteCatalogueItemDialog = (props: DeleteCatalogueItemDialogProps) => {
           onChangeCatalogueItem(undefined);
         })
         .catch((error: AxiosError) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
           if (response && error.response?.status === 409) {
             setError(true);
             setErrorMessage(

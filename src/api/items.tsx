@@ -15,7 +15,7 @@ import {
   TransferState,
 } from '../app.types';
 import { imsApi } from './api';
-import { ErrorParsing } from './api.types';
+import { APIError } from './api.types';
 
 const addItem = async (item: AddItem): Promise<Item> => {
   return imsApi.post<Item>(`/v1/items`, item).then((response) => response.data);
@@ -65,7 +65,7 @@ export const useAddItems = (): UseMutationResult<
             successfulSerialNumbers.push(result.serial_number ?? '');
           })
           .catch((error) => {
-            const response = error.response?.data as ErrorParsing;
+            const response = error.response?.data as APIError;
             transferStates.push({
               name: item.serial_number ?? '',
               message: response.detail,
@@ -238,7 +238,7 @@ export const useMoveItemsToSystem = (): UseMutationResult<
               successfulSystemIds.push(item.system_id || 'null');
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: item.serial_number ?? 'No serial number',

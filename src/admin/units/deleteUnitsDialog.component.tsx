@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { ErrorParsing } from '../../api/api.types';
+import { APIError } from '../../api/api.types';
 import { useDeleteUnit } from '../../api/units';
 import { Unit } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
@@ -44,7 +44,7 @@ const DeleteUnitDialog = (props: DeleteUnitProps) => {
           onClose();
         })
         .catch((error: AxiosError) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
           if (response && error.response?.status === 409) {
             setFormError(
               `This unit is currently used by one or more catalogue categories. Remove all uses before deleting it here.`
