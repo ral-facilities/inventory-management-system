@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { ErrorParsing } from '../../api/api.types';
+import { APIError } from '../../api/api.types';
 import {
   useAddCatalogueCategory,
   useEditCatalogueCategory,
@@ -460,7 +460,7 @@ const CatalogueCategoryDialog = React.memo(
       addCatalogueCategory(trimStringValues(catalogueCategory))
         .then(() => handleClose())
         .catch((error) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
           if (response && error.response?.status === 409) {
             setNameError(response.detail);
             return;
@@ -506,7 +506,7 @@ const CatalogueCategoryDialog = React.memo(
               handleClose();
             })
             .catch((error: AxiosError) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
               if (response && error.response?.status === 409) {
                 setNameError(response.detail);
                 return;

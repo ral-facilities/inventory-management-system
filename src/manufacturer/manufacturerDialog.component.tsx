@@ -16,7 +16,7 @@ import React from 'react';
 
 import { AxiosError } from 'axios';
 import {
-  ErrorParsing,
+  APIError,
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
@@ -306,7 +306,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         editManufacturer(trimStringValues(manufacturerToEdit))
           .then(() => handleClose())
           .catch((error: AxiosError) => {
-            const response = error.response?.data as ErrorParsing;
+            const response = error.response?.data as APIError;
             if (response && error.response?.status === 409) {
               setNameError(
                 'A manufacturer with the same name has been found. Please enter a different name'

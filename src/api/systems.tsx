@@ -19,7 +19,7 @@ import {
 } from '../app.types';
 import { generateUniqueNameUsingCode } from '../utils';
 import { imsApi } from './api';
-import { ErrorParsing } from './api.types';
+import { APIError } from './api.types';
 
 /** Utility for turning an importance into an MUI palette colour to display */
 export const getSystemImportanceColour = (
@@ -213,7 +213,7 @@ export const useMoveToSystem = (): UseMutationResult<
               successfulParentIds.push(system.parent_id || 'null');
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: system.name,
@@ -291,7 +291,7 @@ export const useCopyToSystem = (): UseMutationResult<
               successfulIds.push(result.id);
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: system.name,

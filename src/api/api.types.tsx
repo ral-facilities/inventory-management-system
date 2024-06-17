@@ -3,7 +3,7 @@ interface CreatedModifiedMixin {
   modified_time: string;
 }
 
-export interface ErrorParsing {
+export interface APIError {
   detail: string;
 }
 
