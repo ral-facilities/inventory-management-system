@@ -213,7 +213,12 @@ const ObsoleteCatalogueItemDialog = (
             onChange={(_event, value) => {
               handleObsoleteChange(value === 'Yes' ? true : false);
             }}
-            sx={{ margin: 1 }}
+            sx={{
+              '& .MuiAutocomplete-input': {
+                textAlign: 'center',
+              },
+              margin: 1,
+            }}
             fullWidth
             options={['Yes', 'No']}
             renderInput={(params) => (

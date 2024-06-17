@@ -283,15 +283,18 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
             sx={{
               width: '100%',
             }}
-            options={['true', 'false']}
+            options={['True', 'False']}
             value={
               catalogueItemField.default_value
                 ? String(catalogueItemField.default_value)
                 : null
             }
             onChange={(_event, newValue) => {
-              handleChange('default_value', newValue || '');
+              handleChange('default_value', newValue?.toLowerCase() ?? '');
             }}
+            isOptionEqualToValue={(option, value) =>
+              option.toLowerCase() == value.toLowerCase() || value == ''
+            }
             renderInput={(params) => (
               <TextField
                 {...params}

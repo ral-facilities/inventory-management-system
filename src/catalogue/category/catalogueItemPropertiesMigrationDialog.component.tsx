@@ -762,36 +762,40 @@ function CatalogueItemPropertiesMigrationDialog(
       case 0:
         return (
           <Box>
-            <FormControl sx={{ textAlign: 'center', margin: 1 }} fullWidth>
-              <Autocomplete
-                id="select-edit-or-add"
-                disableClearable={propertyMigrationType != null}
-                options={['Edit', 'Add']}
-                value={propertyMigrationType}
-                onChange={(_event, value) => {
-                  setPropertyMigrationType(value === 'Edit' ? 'Edit' : 'Add');
-                  setSteps(
-                    value?.toLowerCase() === 'edit'
-                      ? [STEPS_EDIT[0], STEPS_EDIT[1]]
-                      : STEPS_ADD
-                  );
-                  setCatalogueItemField(
-                    value?.toLowerCase() === 'edit'
-                      ? undefined
-                      : getEmptyCatalogueItemField()
-                  );
-                  setAllowedValuesListErrors([]);
-                  setCatalogueItemPropertiesErrors([]);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Select Edit to edit an existing property or select Add to add a new property"
-                    variant="outlined"
-                  />
-                )}
-              />
-            </FormControl>
+            <Autocomplete
+              id="select-edit-or-add"
+              disableClearable={propertyMigrationType != null}
+              options={['Edit', 'Add']}
+              value={propertyMigrationType}
+              onChange={(_event, value) => {
+                setPropertyMigrationType(value === 'Edit' ? 'Edit' : 'Add');
+                setSteps(
+                  value?.toLowerCase() === 'edit'
+                    ? [STEPS_EDIT[0], STEPS_EDIT[1]]
+                    : STEPS_ADD
+                );
+                setCatalogueItemField(
+                  value?.toLowerCase() === 'edit'
+                    ? undefined
+                    : getEmptyCatalogueItemField()
+                );
+                setAllowedValuesListErrors([]);
+                setCatalogueItemPropertiesErrors([]);
+              }}
+              sx={{
+                '& .MuiAutocomplete-input': {
+                  textAlign: 'center',
+                },
+                margin: 1,
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Select Edit to edit an existing property or select Add to add a new property"
+                  variant="outlined"
+                />
+              )}
+            />
             <Paper
               elevation={3}
               sx={{
