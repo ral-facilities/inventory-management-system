@@ -52,7 +52,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -429,7 +429,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -806,7 +806,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -1334,7 +1334,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -1862,7 +1862,7 @@ exports[`Catalogue Properties Form > renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -2351,7 +2351,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -2761,7 +2761,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -3171,7 +3171,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -3669,7 +3669,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -4167,7 +4167,7 @@ exports[`Catalogue Properties Form > renders correctly for migration dialog 1`] 
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -4529,7 +4529,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -4881,7 +4881,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -5233,7 +5233,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -5673,7 +5673,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -6113,7 +6113,7 @@ exports[`Catalogue Properties Form > renders correctly when disabled 1`] = `
           </div>
         </div>
         <div
-          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+          class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
         >
           <div
             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
