@@ -1,15 +1,15 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
-  CatalogueItemPropertiesErrorsType,
   AddCatalogueCategoryPropertyWithPlacementIds,
   AllowedValuesListErrorsType,
+  CatalogueItemPropertiesErrorsType,
 } from '../../app.types';
 import { renderComponentWithRouterProvider } from '../../testUtils';
+import { resetUniqueIdCounter } from '../../utils';
 import CataloguePropertiesForm, {
   CataloguePropertiesFormProps,
 } from './cataloguePropertiesForm.component';
-import { resetUniqueIdCounter } from '../../utils';
 
 describe('Catalogue Properties Form', () => {
   let props: CataloguePropertiesFormProps;
@@ -234,7 +234,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('should select the radio button when clicked', async () => {
-    const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
+    const formFields = [
       {
         id: '1',
         cip_placement_id: '1',
@@ -290,7 +290,7 @@ describe('Catalogue Properties Form', () => {
     ];
 
     props = {
-      formFields: formFields,
+      formFields: formFields as AddCatalogueCategoryPropertyWithPlacementIds[],
       isDisabled: true,
       onChangeEditCatalogueItemField: onChangeEditCatalogueItemField,
       selectedCatalogueItemField: {

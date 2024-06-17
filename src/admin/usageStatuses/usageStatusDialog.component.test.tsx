@@ -3,16 +3,17 @@ import { imsApi } from '../../api/api';
 import { renderComponentWithRouterProvider } from '../../testUtils';
 
 import { fireEvent, screen } from '@testing-library/react';
+import { http } from 'msw';
+import { MockInstance } from 'vitest';
+import { server } from '../../mocks/server';
 import UsageStatusDialog, {
   UsageStatusDialogProps,
 } from './usageStatusDialog.component';
-import { server } from '../../mocks/server';
-import { http } from 'msw';
 
 describe('Usage status dialog', () => {
   let props: UsageStatusDialogProps;
   let user: UserEvent;
-  let axiosPostSpy;
+  let axiosPostSpy: MockInstance;
   const onClose = vi.fn();
   const createView = () => {
     return renderComponentWithRouterProvider(<UsageStatusDialog {...props} />);

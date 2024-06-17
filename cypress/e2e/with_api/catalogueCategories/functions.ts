@@ -7,6 +7,7 @@ const modifyCatalogueCategory = (
       unit?: string;
       type: string;
       mandatory: boolean;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       allowed_values?: { values: any[]; type: string };
     }[];
   },

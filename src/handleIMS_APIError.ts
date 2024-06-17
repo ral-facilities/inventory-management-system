@@ -1,12 +1,12 @@
 import { AxiosError } from 'axios';
 import log from 'loglevel';
+import { APIError, MicroFrontendId } from './app.types';
 import { NotificationType } from './state/actions/actions.types';
-import { ErrorParsing, MicroFrontendId } from './app.types';
 
 const handleIMS_APIError = (error: AxiosError, broadcast = true): void => {
   const status = error.response?.status;
   const message = error.response?.data
-    ? (error.response.data as ErrorParsing).detail ?? error.message
+    ? (error.response.data as APIError).detail ?? error.message
     : error.message;
 
   log.error(message);

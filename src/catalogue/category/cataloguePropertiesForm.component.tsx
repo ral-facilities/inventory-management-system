@@ -11,10 +11,10 @@ import React from 'react';
 
 import {
   AddCatalogueCategoryProperty,
-  CatalogueCategoryPropertyMigration,
   AddCatalogueCategoryPropertyWithPlacementIds,
   AllowedValuesList,
   AllowedValuesListErrorsType,
+  CatalogueCategoryPropertyMigration,
   CatalogueItemPropertiesErrorsType,
 } from '../../app.types';
 import { generateUniqueId } from '../../utils';

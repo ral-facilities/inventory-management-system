@@ -7,7 +7,7 @@ describe('Catalogue Category', () => {
   });
 
   function createMockData() {
-    let data = [];
+    const data = [];
     for (let index = 1; index < 50; index++) {
       data.push({
         id: index.toString(),

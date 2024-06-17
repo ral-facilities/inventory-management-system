@@ -20,9 +20,9 @@ import {
   useEditSystem,
 } from '../api/systems';
 import {
+  APIError,
   AddSystem,
   EditSystem,
-  ErrorParsing,
   System,
   SystemImportanceType,
 } from '../app.types';
@@ -118,7 +118,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
       addSystem(trimStringValues(system))
         .then(() => handleClose())
         .catch((error: AxiosError) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
 
           // 409 occurs when there is a system with a duplicate name with the
           // same parent
@@ -175,7 +175,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             handleClose();
           })
           .catch((error: AxiosError) => {
-            const response = error.response?.data as ErrorParsing;
+            const response = error.response?.data as APIError;
 
             // 409 occurs when there is a system with a duplicate name with the
             // same parent

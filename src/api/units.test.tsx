@@ -1,8 +1,11 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import UnitsJSON from '../mocks/Units.json';
-import { hooksWrapperWithProviders } from '../testUtils';
-import { useAddUnit, useDeleteUnit, useUnits } from './units';
 import { AddUnit, Unit } from '../app.types';
+import UnitsJSON from '../mocks/Units.json';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  hooksWrapperWithProviders,
+} from '../testUtils';
+import { useAddUnit, useDeleteUnit, useUnits } from './units';
 
 describe('units api functions', () => {
   afterEach(() => {
@@ -56,6 +59,8 @@ describe('units api functions', () => {
       mockDataView = {
         id: '1',
         value: 'test',
+        code: 'test',
+        ...CREATED_MODIFIED_TIME_VALUES,
       };
     });
 

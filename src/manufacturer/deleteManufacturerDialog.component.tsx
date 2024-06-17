@@ -12,7 +12,7 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { useDeleteManufacturer } from '../api/manufacturers';
-import { ErrorParsing, Manufacturer } from '../app.types';
+import { APIError, Manufacturer } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface DeleteManufacturerProps {
@@ -45,7 +45,7 @@ const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {
           onClose();
         })
         .catch((error: AxiosError) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
           if (response && error.response?.status === 409) {
             setError(true);
             setErrorMessage(

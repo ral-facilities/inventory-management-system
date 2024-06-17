@@ -1,18 +1,18 @@
+import {
+  UseMutationResult,
+  UseQueryResult,
+  useMutation,
+  useQueries,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import {
-  useMutation,
-  UseMutationResult,
-  useQuery,
-  UseQueryResult,
-  useQueryClient,
-  useQueries,
-} from '@tanstack/react-query';
-import {
+  APIError,
   AddCatalogueItem,
-  TransferState,
   CatalogueItem,
   EditCatalogueItem,
-  ErrorParsing,
+  TransferState,
   TransferToCatalogueItem,
 } from '../app.types';
 import { imsApi } from './api';
@@ -195,7 +195,7 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
               );
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: catalogueItem.name,
@@ -287,7 +287,7 @@ export const useCopyToCatalogueItem = (): UseMutationResult<
               successfulCatalogueCategoryIds.push(result.catalogue_category_id);
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: catalogueItem.name,

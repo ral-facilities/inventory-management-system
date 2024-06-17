@@ -1,14 +1,14 @@
 import { NavigateNext } from '@mui/icons-material';
+import HomeIcon from '@mui/icons-material/Home';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {
   Box,
-  Breadcrumbs as MuiBreadcrumbs,
-  Link,
-  styled,
   IconButton,
+  Link,
+  Breadcrumbs as MuiBreadcrumbs,
+  styled,
 } from '@mui/material';
 import { BreadcrumbsInfo } from '../app.types';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import HomeIcon from '@mui/icons-material/Home';
 import { OverflowTip } from '../utils';
 
 export interface BreadcrumbsProps {

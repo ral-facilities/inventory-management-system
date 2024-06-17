@@ -50,7 +50,7 @@ Cypress.Commands.add('editEndpointResponse', ({ url, data, statusCode }) => {
     const { worker, http } = window.msw;
 
     worker.use(
-      http.get(url, ({ params, request }) => {
+      http.get(url, () => {
         return HttpResponse.json(data, { status: statusCode });
       })
     );
@@ -66,8 +66,8 @@ Cypress.Commands.add('startSnoopingBrowserMockedRequest', () => {
     // here to ensure the MSW handlers can call .json() on it, and also any Cypress tests
     // which would otherwise have failed for the same reason as json() can only be called
     // once on the original request.
-    worker.events.on('request:start', ({ request }) => {
-      mockedRequests.push((request as Request).clone());
+    worker.events.on('request:start', ({ request }: { request: Request }) => {
+      mockedRequests.push(request.clone());
     });
   });
 });
@@ -86,32 +86,43 @@ Cypress.Commands.add('dropIMSCollections', (collections: string[]) => {
  */
 Cypress.Commands.add('findBrowserMockedRequests', ({ method, url }) => {
   return cy.window().then((window) => {
-    const { matchRequestUrl } = window?.msw;
+    const msw = window?.msw;
+    if (msw) {
+      const { matchRequestUrl } = msw;
 
-    return new Cypress.Promise((resolve, reject) => {
-      if (
-        !method ||
-        !url ||
-        typeof method !== 'string' ||
-        typeof url !== 'string'
-      ) {
-        return reject(
-          `Invalid parameters passed. Method: ${method} Url: ${url}`
+      return new Cypress.Promise((resolve, reject) => {
+        if (
+          !method ||
+          !url ||
+          typeof method !== 'string' ||
+          typeof url !== 'string'
+        ) {
+          return reject(
+            `Invalid parameters passed. Method: ${method} Url: ${url}`
+          );
+        }
+        resolve(
+          mockedRequests.filter((req) => {
+            const matchesMethod =
+              req.method && req.method.toLowerCase() === method.toLowerCase();
+            const matchesUrl = matchRequestUrl(new URL(req.url), url).matches;
+            return matchesMethod && matchesUrl;
+          })
         );
-      }
-      resolve(
-        mockedRequests.filter((req) => {
-          const matchesMethod =
-            req.method && req.method.toLowerCase() === method.toLowerCase();
-          const matchesUrl = matchRequestUrl(new URL(req.url), url).matches;
-          return matchesMethod && matchesUrl;
-        })
-      );
-    });
+      });
+    }
   });
 });
 
 declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    msw: { http: any; worker: any; matchRequestUrl: any };
+  }
+}
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
       /**
@@ -133,7 +144,16 @@ declare global {
                     statusCode: 200,
                    });
        */
-      editEndpointResponse({ url, data, statusCode }: any): Chainable<unknown>;
+      editEndpointResponse({
+        url,
+        data,
+        statusCode,
+      }: {
+        url: string;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        data: any;
+        statusCode: number;
+      }): Chainable<unknown>;
       /**
        * Returns a request that was recorded after 'startSnoopingBrowserMockedRequest' was called
        * 
@@ -153,7 +173,11 @@ declare global {
       findBrowserMockedRequests({
         method,
         url,
-      }: any): Chainable<MockedRequest[]>;
+      }: {
+        method: string;
+        url: string;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      }): Chainable<any>;
       /**
        * Deletes the IMS collections
        *

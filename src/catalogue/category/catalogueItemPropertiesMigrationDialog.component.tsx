@@ -19,22 +19,22 @@ import {
 } from '@mui/material';
 import React from 'react';
 import {
-  CatalogueCategoryPropertyMigration,
-  AddCatalogueCategoryWithPlacementIds,
-  AllowedValuesList,
-  AllowedValuesListErrorsType,
-  CatalogueCategory,
-  CatalogueItemPropertiesErrorsType,
-  AllowedValues,
-} from '../../app.types';
-import { generateUniqueId } from '../../utils';
-import CataloguePropertiesForm from './cataloguePropertiesForm.component';
-import CataloguePropertyForm from './cataloguePropertyForm.component';
-import { convertListToNumbers } from './catalogueCategoryDialog.component';
-import {
   useAddCatalogueCategoryProperty,
   useEditCatalogueCategoryProperty,
 } from '../../api/catalogueCategories';
+import {
+  AddCatalogueCategoryWithPlacementIds,
+  AllowedValues,
+  AllowedValuesList,
+  AllowedValuesListErrorsType,
+  CatalogueCategory,
+  CatalogueCategoryPropertyMigration,
+  CatalogueItemPropertiesErrorsType,
+} from '../../app.types';
+import { generateUniqueId } from '../../utils';
+import { convertListToNumbers } from './catalogueCategoryDialog.component';
+import CataloguePropertiesForm from './cataloguePropertiesForm.component';
+import CataloguePropertyForm from './cataloguePropertyForm.component';
 
 const getEmptyCatalogueItemField = (): CatalogueCategoryPropertyMigration => {
   return {

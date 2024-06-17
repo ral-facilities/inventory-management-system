@@ -37,9 +37,8 @@ describe('Manufacturer', () => {
 
   it('manufacturer url is correct and opens new webpage', () => {
     cy.visit('/manufacturers');
-    const url = cy.findByText('http://example.com');
 
-    url
+    cy.findByText('http://example.com')
       .should('be.visible')
       .then(($url) => {
         $url.attr('target', '_self');

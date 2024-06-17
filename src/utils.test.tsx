@@ -1,7 +1,7 @@
+import { Link } from '@mui/material';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderComponentWithRouterProvider } from './testUtils';
-import { Link } from '@mui/material';
 import {
   OverflowTip,
   generateUniqueId,
@@ -98,7 +98,7 @@ describe('Utility functions', () => {
     it('should handle empty existingCodes array', () => {
       const name = 'TestName';
       const code = 'TestCode';
-      const existingCodes = [];
+      const existingCodes: string[] = [];
 
       const result = generateUniqueNameUsingCode(name, code, existingCodes);
 

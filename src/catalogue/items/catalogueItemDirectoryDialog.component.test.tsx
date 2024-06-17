@@ -1,7 +1,8 @@
-import { renderComponentWithRouterProvider } from '../../testUtils';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueItemDirectoryDialog, {
   CatalogueItemDirectoryDialogProps,
 } from './catalogueItemDirectoryDialog.component';
@@ -9,8 +10,8 @@ import CatalogueItemDirectoryDialog, {
 describe('catalogue item directory Dialog', () => {
   let props: CatalogueItemDirectoryDialogProps;
   let user: UserEvent;
-  let axiosPatchSpy;
-  let axiosPostSpy;
+  let axiosPatchSpy: MockInstance;
+  let axiosPostSpy: MockInstance;
   const onClose = vi.fn();
   const onChangeSelectedItems = vi.fn();
 

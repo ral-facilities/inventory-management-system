@@ -4,9 +4,9 @@ import Tabs from '@mui/material/Tabs';
 import { styled } from '@mui/material/styles';
 import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { paths } from '../App';
 import { TAB_VALUES, TabValue } from '../app.types';
 import { getSciGatewayPageHeightCalc, isRunningInDevelopment } from '../utils';
-import { paths } from '../App';
 
 interface TabPanelProps {
   children?: React.ReactNode;

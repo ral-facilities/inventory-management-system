@@ -1,18 +1,22 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http } from 'msw';
+import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
 import {
-  CatalogueCategory,
   AddCatalogueCategoryProperty,
+  CatalogueCategory,
 } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import { server } from '../../mocks/server';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  renderComponentWithRouterProvider,
+} from '../../testUtils';
+import { resetUniqueIdCounter } from '../../utils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
-import { resetUniqueIdCounter } from '../../utils';
-import { server } from '../../mocks/server';
-import { http } from 'msw';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -65,7 +69,10 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(async () =>
         expect(
           (await screen.findAllByLabelText('Property Name *')).length
-        ).toBe(numberOfCurrentFields + values.newFormFields?.length)
+        ).toBe(
+          numberOfCurrentFields +
+            (values.newFormFields ? values.newFormFields.length : 0)
+        )
       );
 
       // Modify
@@ -144,7 +151,7 @@ describe('Catalogue Category Dialog', () => {
 
               await waitFor(() => {
                 screen.getByTestId(
-                  `av_placement_id_${i + j + values.newFormFields.length + 1}: List Item`
+                  `av_placement_id_${i + j + (values.newFormFields ? values.newFormFields.length : 0) + 1}: List Item`
                 );
               });
               const listItem = screen.getByTestId(
@@ -162,7 +169,7 @@ describe('Catalogue Category Dialog', () => {
   };
 
   describe('Add Catalogue Category Dialog', () => {
-    let axiosPostSpy;
+    let axiosPostSpy: MockInstance;
     beforeEach(() => {
       props = {
         open: true,
@@ -724,13 +731,14 @@ describe('Catalogue Category Dialog', () => {
   });
 
   describe('Edit Catalogue Category Dialog', () => {
-    let axiosPatchSpy;
+    let axiosPatchSpy: MockInstance;
     const mockData: CatalogueCategory = {
       name: 'test',
       parent_id: null,
       id: '1',
       code: 'test',
       is_leaf: false,
+      ...CREATED_MODIFIED_TIME_VALUES,
     };
 
     beforeEach(() => {
@@ -914,13 +922,14 @@ describe('Catalogue Category Dialog', () => {
     //All of actual logic is same as add so is tested above
     //checks that the dialog renders/opens correctly for `save as`
 
-    let axiosPostSpy;
+    let axiosPostSpy: MockInstance;
     const mockData: CatalogueCategory = {
       name: 'test',
       parent_id: null,
       id: '1',
       code: 'test',
       is_leaf: false,
+      ...CREATED_MODIFIED_TIME_VALUES,
     };
 
     beforeEach(() => {

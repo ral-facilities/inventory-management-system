@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import {
   useMutation,
   UseMutationResult,
@@ -7,8 +6,9 @@ import {
   useQueryClient,
   UseQueryResult,
 } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
-import { AddManufacturer, Manufacturer, EditManufacturer } from '../app.types';
+import { AddManufacturer, EditManufacturer, Manufacturer } from '../app.types';
 import { imsApi } from './api';
 
 const getAllManufacturers = async (): Promise<Manufacturer[]> => {

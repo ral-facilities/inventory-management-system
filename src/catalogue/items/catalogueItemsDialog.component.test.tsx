@@ -9,17 +9,19 @@ import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
 
+import { http } from 'msw';
+import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
+import { CatalogueItem } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
-import { http } from 'msw';
 
 vi.mock('../../handleIMS_APIError');
 
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
   let user: UserEvent;
-  let axiosPostSpy;
+  let axiosPostSpy: MockInstance;
   const onClose = vi.fn();
 
   const createView = () => {
@@ -657,7 +659,7 @@ describe('Catalogue Items Dialog', () => {
   });
 
   describe('Edit a catalogue item', () => {
-    let axiosPatchSpy;
+    let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
       props = {
@@ -962,7 +964,7 @@ describe('Catalogue Items Dialog', () => {
         selectedCatalogueItem: {
           ...getCatalogueItemById('1'),
           properties: [],
-        },
+        } as CatalogueItem,
       };
 
       createView();

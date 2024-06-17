@@ -1,4 +1,4 @@
-import React from 'react';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
   Autocomplete,
   Box,
@@ -21,6 +21,12 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
+import { AxiosError } from 'axios';
+import React from 'react';
+import { useAddItem, useAddItems, useEditItem } from '../api/items';
+import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
+import { useUsageStatuses } from '../api/usageStatuses';
 import {
   AddItem,
   AdvancedSerialNumberOptionsType,
@@ -33,18 +39,12 @@ import {
   ItemDetailsPlaceholder,
   UsageStatus,
 } from '../app.types';
-import { DatePicker } from '@mui/x-date-pickers';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
-import { useAddItem, useAddItems, useEditItem } from '../api/items';
-import { AxiosError } from 'axios';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { SystemsTableView } from '../systems/systemsTableView.component';
-import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
-import Breadcrumbs from '../view/breadcrumbs.component';
-import { trimStringValues } from '../utils';
 import handleTransferState from '../handleTransferState';
-import { useUsageStatuses } from '../api/usageStatuses';
+import { SystemsTableView } from '../systems/systemsTableView.component';
+import { trimStringValues } from '../utils';
+import Breadcrumbs from '../view/breadcrumbs.component';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
   // Attempt to create a Date object from the input
@@ -442,7 +442,6 @@ function ItemDialog(props: ItemDialogProps) {
       const isCatalogueItemPropertiesUpdated =
         JSON.stringify(updatedProperties) !==
         JSON.stringify(
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           selectedItem.properties.map(({ unit, name, ...rest }) => ({
             id: rest.id,
             value: rest.value,
