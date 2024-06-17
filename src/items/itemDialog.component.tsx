@@ -893,14 +893,7 @@ function ItemDialog(props: ItemDialogProps) {
                                   /\s+/g,
                                   '-'
                                 )}`}
-                                value={
-                                  propertyValues[index]
-                                    ? (propertyValues[index] as string)
-                                        .charAt(0)
-                                        .toUpperCase() +
-                                      (propertyValues[index] as string).slice(1)
-                                    : null
-                                }
+                                value={(propertyValues[index] as string) ?? ''}
                                 size="small"
                                 onChange={(_event, value) => {
                                   handlePropertyChange(
@@ -912,7 +905,7 @@ function ItemDialog(props: ItemDialogProps) {
                                 fullWidth
                                 options={['True', 'False']}
                                 isOptionEqualToValue={(option, value) =>
-                                  option === value
+                                  option.toLowerCase() === value || value == ''
                                 }
                                 renderInput={(params) => (
                                   <TextField

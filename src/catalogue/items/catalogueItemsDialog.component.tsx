@@ -856,14 +856,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                   /\s+/g,
                                   '-'
                                 )}`}
-                                value={
-                                  propertyValues[index]
-                                    ? (propertyValues[index] as string)
-                                        .charAt(0)
-                                        .toUpperCase() +
-                                      (propertyValues[index] as string).slice(1)
-                                    : ''
-                                }
+                                value={(propertyValues[index] as string) ?? ''}
                                 size="small"
                                 onChange={(_event, value) => {
                                   handlePropertyChange(
