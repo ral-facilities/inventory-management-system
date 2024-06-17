@@ -103,7 +103,14 @@ describe('Manufacturer', () => {
       expect(postRequests.length).equal(1);
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
-        '{"name":"Manufacturer D","address":{"address_line":"4 Example Street","town":null,"county":null,"postcode":"OX1 2AB","country":"United Kingdom"},"telephone":null}'
+        JSON.stringify({
+          name: 'Manufacturer D',
+          address: {
+            address_line: '4 Example Street',
+            postcode: 'OX1 2AB',
+            country: 'United Kingdom',
+          },
+        })
       );
     });
 
@@ -267,7 +274,7 @@ describe('Manufacturer', () => {
 
         cy.findByRole('button', { name: 'Save' }).click();
 
-        cy.contains('Please enter a valid URL');
+        cy.contains('Please enter a valid URL.');
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });

@@ -24,6 +24,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Manufacturer } from '../api/api.types';
 import { useGetManufacturers } from '../api/manufacturers';
 import { usePreservedTableState } from '../common/preservedTableState.component';
+import { RequestType } from '../form.schemas';
 import {
   TableBodyCellOverFlowTip,
   TableCellOverFlowTipProps,
@@ -49,9 +50,8 @@ function ManufacturerComponent() {
 
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
-  const [manufacturerDialogType, setManufacturerDialogType] = React.useState<
-    'edit' | 'create'
-  >('create');
+  const [manufacturerDialogType, setManufacturerDialogType] =
+    React.useState<RequestType>('post');
 
   const columns = React.useMemo<MRT_ColumnDef<Manufacturer>[]>(() => {
     return [
@@ -231,7 +231,7 @@ function ManufacturerComponent() {
           <ManufacturerDialog
             open={true}
             onClose={() => {
-              setManufacturerDialogType('create');
+              setManufacturerDialogType('post');
               table.setCreatingRow(null);
             }}
             type={manufacturerDialogType}
@@ -273,7 +273,7 @@ function ManufacturerComponent() {
           key="edit"
           aria-label={`Edit manufacturer ${row.original.name}`}
           onClick={() => {
-            setManufacturerDialogType('edit');
+            setManufacturerDialogType('patch');
             setSelectedManufacturer(row.original);
             table.setCreatingRow(true);
             closeMenu();

@@ -28,7 +28,7 @@ describe('Add manufacturer dialog', () => {
     props = {
       open: true,
       onClose: onClose,
-      type: 'create',
+      type: 'post',
     };
     user = userEvent.setup();
   });
@@ -245,7 +245,7 @@ describe('Add manufacturer dialog', () => {
       const saveButton = screen.getByRole('button', { name: 'Save' });
       await user.click(saveButton);
 
-      expect(screen.getByText('Please enter a valid URL')).toBeInTheDocument();
+      expect(screen.getByText('Please enter a valid URL.')).toBeInTheDocument();
       expect(onClose).not.toHaveBeenCalled();
     });
 
@@ -275,7 +275,7 @@ describe('Add manufacturer dialog', () => {
       props = {
         ...props,
         selectedManufacturer: getManufacturerById('1'),
-        type: 'edit',
+        type: 'patch',
       };
 
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
@@ -365,7 +365,7 @@ describe('Add manufacturer dialog', () => {
 
       await user.click(saveButton);
 
-      expect(screen.getByText('Please enter a valid URL')).toBeInTheDocument();
+      expect(screen.getByText('Please enter a valid URL.')).toBeInTheDocument();
     });
 
     it('can clear URL without any errors', async () => {
