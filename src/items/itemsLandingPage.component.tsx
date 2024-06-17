@@ -20,7 +20,7 @@ import {
 } from '../api/catalogueCategories';
 import { useCatalogueItem } from '../api/catalogueItems';
 import { useItem } from '../api/items';
-import { useManufacturer } from '../api/manufacturers';
+import { useGetManufacturer } from '../api/manufacturers';
 import { useSystem } from '../api/systems';
 import { BreadcrumbsInfo } from '../app.types';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
@@ -71,7 +71,7 @@ function ItemsLandingPage() {
       });
   }, [catalogueBreadcrumbs, catalogueItemData, id, itemData?.serial_number]);
 
-  const { data: manufacturer } = useManufacturer(
+  const { data: manufacturer } = useGetManufacturer(
     catalogueItemData?.manufacturer_id
   );
 

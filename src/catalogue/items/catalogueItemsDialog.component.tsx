@@ -27,7 +27,7 @@ import {
   useAddCatalogueItem,
   useEditCatalogueItem,
 } from '../../api/catalogueItems';
-import { useManufacturers } from '../../api/manufacturers';
+import { useGetManufacturers } from '../../api/manufacturers';
 import {
   AddCatalogueItem,
   CatalogueCategory,
@@ -201,7 +201,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
   const { mutateAsync: editCatalogueItem, isPending: isEditPending } =
     useEditCatalogueItem();
 
-  const { data: manufacturerList } = useManufacturers();
+  const { data: manufacturerList } = useGetManufacturers();
   const selectedCatalogueItemManufacturer =
     manufacturerList?.find(
       (manufacturer) =>

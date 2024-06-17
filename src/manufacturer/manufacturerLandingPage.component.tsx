@@ -11,7 +11,7 @@ import {
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { paths } from '../App';
-import { useManufacturer } from '../api/manufacturers';
+import { useGetManufacturer } from '../api/manufacturers';
 import { BreadcrumbsInfo } from '../app.types';
 import { formatDateTimeStrings } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
@@ -21,7 +21,7 @@ function ManufacturerLandingPage() {
   const { manufacturer_id: manufacturerId } = useParams();
 
   const { data: manufacturerData, isLoading: manufacturerDataLoading } =
-    useManufacturer(manufacturerId);
+    useGetManufacturer(manufacturerId);
 
   const [editManufacturerDialogOpen, setEditManufacturerDialogOpen] =
     React.useState<boolean>(false);

@@ -6,10 +6,10 @@ import {
 } from '../testUtils';
 import { Manufacturer, ManufacturerPost } from './api.types';
 import {
-  useAddManufacturer,
   useDeleteManufacturer,
-  useManufacturerIds,
-  useManufacturers,
+  useGetManufacturerIds,
+  useGetManufacturers,
+  usePostManufacturer,
 } from './manufacturers';
 
 describe('manufacturer api functions', () => {
@@ -17,7 +17,7 @@ describe('manufacturer api functions', () => {
     vi.clearAllMocks();
   });
 
-  describe('useAddManufacturer', () => {
+  describe('usePostManufacturer', () => {
     let mockDataPost: ManufacturerPost;
     beforeEach(() => {
       mockDataPost = {
@@ -35,7 +35,7 @@ describe('manufacturer api functions', () => {
     });
 
     it('posts a request to add manufacturer and returns successful response', async () => {
-      const { result } = renderHook(() => useAddManufacturer(), {
+      const { result } = renderHook(() => usePostManufacturer(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
@@ -95,9 +95,9 @@ describe('manufacturer api functions', () => {
     });
   });
 
-  describe('useManufacturer', () => {
+  describe('useGetManufacturers', () => {
     it('sends request to fetch manufacturer data and returns successful response', async () => {
-      const { result } = renderHook(() => useManufacturers(), {
+      const { result } = renderHook(() => useGetManufacturers(), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -109,9 +109,9 @@ describe('manufacturer api functions', () => {
     });
   });
 
-  describe('useManufacturerIds', () => {
+  describe('useGetManufacturerIds', () => {
     it('sends request to fetch manufacturer data and returns successful response', async () => {
-      const { result } = renderHook(() => useManufacturerIds(['1', '2']), {
+      const { result } = renderHook(() => useGetManufacturerIds(['1', '2']), {
         wrapper: hooksWrapperWithProviders(),
       });
 

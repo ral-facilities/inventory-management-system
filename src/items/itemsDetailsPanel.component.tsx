@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useManufacturer } from '../api/manufacturers';
+import { useGetManufacturer } from '../api/manufacturers';
 import { useSystem } from '../api/systems';
 import { CatalogueItem, Item } from '../app.types';
 import { formatDateTimeStrings } from '../utils';
@@ -43,7 +43,7 @@ export interface ItemsDetailsPanelProps {
 function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
   const { catalogueItemIdData, itemData } = props;
   const [tabValue, setTabValue] = React.useState(0);
-  const { data: manufacturerData } = useManufacturer(
+  const { data: manufacturerData } = useGetManufacturer(
     catalogueItemIdData.manufacturer_id
   );
   const { data: systemData } = useSystem(itemData.system_id);
