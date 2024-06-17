@@ -24,6 +24,7 @@ import {
   useEditCatalogueCategory,
 } from '../../api/catalogueCategories';
 import {
+  APIError,
   AddCatalogueCategory,
   AddCatalogueCategoryProperty,
   AddCatalogueCategoryPropertyWithPlacementIds,
@@ -32,7 +33,6 @@ import {
   CatalogueCategory,
   CatalogueItemPropertiesErrorsType,
   EditCatalogueCategory,
-  ErrorParsing,
 } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { generateUniqueId, trimStringValues } from '../../utils';
@@ -460,7 +460,7 @@ const CatalogueCategoryDialog = React.memo(
       addCatalogueCategory(trimStringValues(catalogueCategory))
         .then(() => handleClose())
         .catch((error) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
           if (response && error.response?.status === 409) {
             setNameError(response.detail);
             return;
@@ -506,7 +506,7 @@ const CatalogueCategoryDialog = React.memo(
               handleClose();
             })
             .catch((error: AxiosError) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
               if (response && error.response?.status === 409) {
                 setNameError(response.detail);
                 return;

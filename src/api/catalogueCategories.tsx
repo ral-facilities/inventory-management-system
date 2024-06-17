@@ -9,13 +9,13 @@ import { AxiosError } from 'axios';
 import {
   AddCatalogueCategory,
   AddPropertyMigration,
+  APIError,
   BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueCategoryProperty,
   CopyToCatalogueCategory,
   EditCatalogueCategory,
   EditPropertyMigration,
-  ErrorParsing,
   MoveToCatalogueCategory,
   TransferState,
 } from '../app.types';
@@ -159,7 +159,7 @@ export const useAddCatalogueCategoryProperty = (): UseMutationResult<
       ]);
     },
     onError: (error, variables) => {
-      const response = error.response?.data as ErrorParsing;
+      const response = error.response?.data as APIError;
 
       handleTransferState([
         {
@@ -230,7 +230,7 @@ export const useEditCatalogueCategoryProperty = (): UseMutationResult<
       ]);
     },
     onError: (error, variables) => {
-      const response = error.response?.data as ErrorParsing;
+      const response = error.response?.data as APIError;
 
       handleTransferState([
         {
@@ -310,7 +310,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
               successfulParentIds.push(category.parent_id || 'null');
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: category.name,
@@ -399,7 +399,7 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
               successfulParentIds.push(result.parent_id || 'null');
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: category.name,

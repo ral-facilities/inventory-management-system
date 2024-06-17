@@ -28,6 +28,7 @@ import {
 } from '../../api/catalogueItems';
 import { useManufacturers } from '../../api/manufacturers';
 import {
+  APIError,
   AddCatalogueItem,
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -35,7 +36,6 @@ import {
   CatalogueItem,
   CatalogueItemDetailsPlaceholder,
   EditCatalogueItem,
-  ErrorParsing,
   Manufacturer,
 } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
@@ -530,7 +530,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         editCatalogueItem(trimStringValues(catalogueItem))
           .then(() => handleClose())
           .catch((error: AxiosError) => {
-            const response = error.response?.data as ErrorParsing;
+            const response = error.response?.data as APIError;
 
             if (response && error.response?.status === 409) {
               if (response.detail.includes('child elements')) {

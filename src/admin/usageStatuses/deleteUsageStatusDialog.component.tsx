@@ -12,7 +12,7 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { useDeleteUsageStatus } from '../../api/usageStatuses';
-import { ErrorParsing, UsageStatus } from '../../app.types';
+import { APIError, UsageStatus } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteUsageStatusProps {
@@ -43,7 +43,7 @@ const DeleteUsageStatusDialog = (props: DeleteUsageStatusProps) => {
           onClose();
         })
         .catch((error: AxiosError) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
           if (response && error.response?.status === 409) {
             setFormError(
               `This usage status is currently used by one or more items. Remove all uses before deleting it here.`

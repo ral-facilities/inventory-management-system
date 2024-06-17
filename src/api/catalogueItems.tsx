@@ -8,10 +8,10 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import {
+  APIError,
   AddCatalogueItem,
   CatalogueItem,
   EditCatalogueItem,
-  ErrorParsing,
   TransferState,
   TransferToCatalogueItem,
 } from '../app.types';
@@ -195,7 +195,7 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
               );
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: catalogueItem.name,
@@ -287,7 +287,7 @@ export const useCopyToCatalogueItem = (): UseMutationResult<
               successfulCatalogueCategoryIds.push(result.catalogue_category_id);
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: catalogueItem.name,
