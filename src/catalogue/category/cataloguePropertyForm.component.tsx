@@ -90,8 +90,8 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           );
         }}
         sx={{
-          width: isList ? '200px' : '100%',
-          minWidth: isList ? '200px' : undefined,
+          width: isList ? '150px' : '100%',
+          minWidth: isList ? '150px' : undefined,
         }}
         fullWidth
         options={['Boolean', 'Number', 'Text']}
