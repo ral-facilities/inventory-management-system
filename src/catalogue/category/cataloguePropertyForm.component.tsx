@@ -363,7 +363,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         id={`catalogue-properties-form-select-mandatory-label${cip_placement_id ?? ''}`}
         value={catalogueItemField.mandatory ? 'Yes' : 'No'}
         onChange={(_event, value) => {
-          if (value == null) return;
+          if (value === null) return;
           handleChange('mandatory', value === 'Yes');
         }}
         sx={{
