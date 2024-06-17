@@ -119,9 +119,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         }
         id={`catalogue-properties-form-select-allowed-values-label${cip_placement_id ?? ''}`}
         value={
-          catalogueItemField.allowed_values?.type == 'list'
-            ? 'List'
-            : catalogueItemField.allowed_values?.type ?? 'Any'
+          catalogueItemField.allowed_values?.type == 'list' ? 'List' : 'Any'
         }
         onChange={(_event, value) => {
           if (value === null) return;
