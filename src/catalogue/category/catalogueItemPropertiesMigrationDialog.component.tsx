@@ -146,7 +146,7 @@ function CatalogueItemPropertiesMigrationDialog(
   >(undefined);
 
   const [propertyMigrationType, setPropertyMigrationType] = React.useState<
-    'edit' | 'add' | null
+    'Edit' | 'Add' | null
   >(null);
   const { mutate: addCatalogueCategoryProperty } =
     useAddCatalogueCategoryProperty();
@@ -585,7 +585,7 @@ function CatalogueItemPropertiesMigrationDialog(
       if (
         !catalogueItemField.default_value &&
         catalogueItemField.mandatory &&
-        propertyMigrationType === 'add'
+        propertyMigrationType === 'Add'
       ) {
         setCatalogueItemPropertiesErrors((prev) => [
           ...prev,
@@ -604,7 +604,7 @@ function CatalogueItemPropertiesMigrationDialog(
         catalogueItemField.default_value &&
         catalogueItemField.type === 'number' &&
         isNaN(+catalogueItemField.default_value) &&
-        propertyMigrationType === 'add'
+        propertyMigrationType === 'Add'
       ) {
         setCatalogueItemPropertiesErrors((prev) => [
           ...prev,
@@ -633,7 +633,7 @@ function CatalogueItemPropertiesMigrationDialog(
     selectedCatalogueCategory.catalogue_item_properties,
   ]);
   const handleAddProperty = React.useCallback(() => {
-    if (catalogueItemField && propertyMigrationType === 'add') {
+    if (catalogueItemField && propertyMigrationType === 'Add') {
       const hasErrors = validateProperty();
 
       const property: CatalogueCategoryPropertyMigration = {
@@ -695,7 +695,7 @@ function CatalogueItemPropertiesMigrationDialog(
     if (
       catalogueItemField &&
       catalogueItemField.id &&
-      propertyMigrationType === 'edit'
+      propertyMigrationType === 'Edit'
     ) {
       const hasErrors = validateProperty();
 
@@ -767,17 +767,9 @@ function CatalogueItemPropertiesMigrationDialog(
                 id="select-edit-or-add"
                 disableClearable={propertyMigrationType != null}
                 options={['Edit', 'Add']}
-                value={
-                  propertyMigrationType === 'edit'
-                    ? 'Edit'
-                    : propertyMigrationType === 'add'
-                      ? 'Add'
-                      : null
-                }
+                value={propertyMigrationType}
                 onChange={(_event, value) => {
-                  setPropertyMigrationType(
-                    value?.toLowerCase() === 'edit' ? 'edit' : 'add'
-                  );
+                  setPropertyMigrationType(value === 'Edit' ? 'Edit' : 'Add');
                   setSteps(
                     value?.toLowerCase() === 'edit'
                       ? [STEPS_EDIT[0], STEPS_EDIT[1]]
@@ -835,12 +827,12 @@ function CatalogueItemPropertiesMigrationDialog(
                   updatedSelectedCatalogueCategory.catalogue_item_properties
                 }
                 onChangeEditCatalogueItemField={
-                  propertyMigrationType === 'edit'
+                  propertyMigrationType === 'Edit'
                     ? onChangeEditCatalogueItemField
                     : undefined
                 }
                 selectedCatalogueItemField={
-                  propertyMigrationType === 'edit'
+                  propertyMigrationType === 'Edit'
                     ? catalogueItemField
                     : undefined
                 }
@@ -854,7 +846,7 @@ function CatalogueItemPropertiesMigrationDialog(
             {catalogueItemField && (
               <CataloguePropertyForm
                 type={
-                  propertyMigrationType === 'edit'
+                  propertyMigrationType === 'Edit'
                     ? 'edit migration'
                     : 'add migration'
                 }
@@ -867,7 +859,7 @@ function CatalogueItemPropertiesMigrationDialog(
                 catalogueItemPropertyMessage={catalogueItemPropertyMessage}
                 allowedValuesListErrorMessage={allowedValuesListErrorMessage}
                 currentCatalogueItemField={
-                  propertyMigrationType === 'edit'
+                  propertyMigrationType === 'Edit'
                     ? updatedCatalogueItemProperties?.find(
                         (property) => property.id === catalogueItemField.id
                       )
@@ -939,7 +931,7 @@ function CatalogueItemPropertiesMigrationDialog(
               allowedValuesListErrors.length !== 0
             }
             onClick={
-              propertyMigrationType === 'add'
+              propertyMigrationType === 'Add'
                 ? handleAddProperty
                 : handleEditProperty
             }
@@ -952,7 +944,7 @@ function CatalogueItemPropertiesMigrationDialog(
             disabled={
               (activeStep === 0 && propertyMigrationType === null) ||
               (activeStep === 1 &&
-                propertyMigrationType === 'edit' &&
+                propertyMigrationType === 'Edit' &&
                 !catalogueItemField)
             }
             onClick={handleNext}
