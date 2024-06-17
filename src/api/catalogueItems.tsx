@@ -15,7 +15,7 @@ import {
   TransferToCatalogueItem,
 } from '../app.types';
 import { imsApi } from './api';
-import { ErrorParsing } from './api.types';
+import { APIError } from './api.types';
 
 const addCatalogueItem = async (
   catalogueItem: AddCatalogueItem
@@ -195,7 +195,7 @@ export const useMoveToCatalogueItem = (): UseMutationResult<
               );
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: catalogueItem.name,
@@ -287,7 +287,7 @@ export const useCopyToCatalogueItem = (): UseMutationResult<
               successfulCatalogueCategoryIds.push(result.catalogue_category_id);
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: catalogueItem.name,

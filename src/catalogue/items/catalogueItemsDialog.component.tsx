@@ -22,7 +22,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { ErrorParsing, Manufacturer } from '../../api/api.types';
+import { APIError, Manufacturer } from '../../api/api.types';
 import {
   useAddCatalogueItem,
   useEditCatalogueItem,
@@ -529,7 +529,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         editCatalogueItem(trimStringValues(catalogueItem))
           .then(() => handleClose())
           .catch((error: AxiosError) => {
-            const response = error.response?.data as ErrorParsing;
+            const response = error.response?.data as APIError;
 
             if (response && error.response?.status === 409) {
               if (response.detail.includes('child elements')) {

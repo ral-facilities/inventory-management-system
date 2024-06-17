@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React, { useEffect } from 'react';
-import { ErrorParsing } from '../api/api.types';
+import { APIError } from '../api/api.types';
 import {
   getSystemImportanceColour,
   useAddSystem,
@@ -121,7 +121,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
       addSystem(trimStringValues(system))
         .then(() => handleClose())
         .catch((error: AxiosError) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
 
           // 409 occurs when there is a system with a duplicate name with the
           // same parent
@@ -178,7 +178,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             handleClose();
           })
           .catch((error: AxiosError) => {
-            const response = error.response?.data as ErrorParsing;
+            const response = error.response?.data as APIError;
 
             // 409 occurs when there is a system with a duplicate name with the
             // same parent

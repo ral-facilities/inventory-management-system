@@ -22,7 +22,7 @@ import {
 import handleTransferState from '../handleTransferState';
 import { generateUniqueNameUsingCode } from '../utils';
 import { imsApi } from './api';
-import { ErrorParsing } from './api.types';
+import { APIError } from './api.types';
 
 const fetchCatalogueCategories = async (
   parent_id: string
@@ -159,7 +159,7 @@ export const useAddCatalogueCategoryProperty = (): UseMutationResult<
       ]);
     },
     onError: (error, variables) => {
-      const response = error.response?.data as ErrorParsing;
+      const response = error.response?.data as APIError;
 
       handleTransferState([
         {
@@ -230,7 +230,7 @@ export const useEditCatalogueCategoryProperty = (): UseMutationResult<
       ]);
     },
     onError: (error, variables) => {
-      const response = error.response?.data as ErrorParsing;
+      const response = error.response?.data as APIError;
 
       handleTransferState([
         {
@@ -310,7 +310,7 @@ export const useMoveToCatalogueCategory = (): UseMutationResult<
               successfulParentIds.push(category.parent_id || 'null');
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: category.name,
@@ -399,7 +399,7 @@ export const useCopyToCatalogueCategory = (): UseMutationResult<
               successfulParentIds.push(result.parent_id || 'null');
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: category.name,
