@@ -17,9 +17,9 @@ import React from 'react';
 import { AxiosError } from 'axios';
 import {
   ErrorParsing,
-  ManufacturerPatchSchema,
-  ManufacturerPostSchema,
-  ManufacturerSchema,
+  Manufacturer,
+  ManufacturerPatch,
+  ManufacturerPost,
 } from '../api/api.types';
 import { useAddManufacturer, useEditManufacturer } from '../api/manufacturers';
 import handleIMS_APIError from '../handleIMS_APIError';
@@ -28,7 +28,7 @@ import { trimStringValues } from '../utils';
 export interface ManufacturerDialogProps {
   open: boolean;
   onClose: () => void;
-  selectedManufacturer?: ManufacturerSchema;
+  selectedManufacturer?: Manufacturer;
   type: 'edit' | 'create';
 }
 function isValidUrl(url: string) {
@@ -47,7 +47,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   const { open, onClose, selectedManufacturer, type } = props;
 
   const [manufacturerDetails, setManufacturerDetails] =
-    React.useState<ManufacturerPostSchema>({
+    React.useState<ManufacturerPost>({
       name: '',
       url: null,
       address: {
@@ -176,7 +176,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       return;
     }
 
-    const manufacturerToAdd: ManufacturerPostSchema = {
+    const manufacturerToAdd: ManufacturerPost = {
       name: manufacturerDetails.name,
       url: manufacturerDetails.url ?? undefined,
       address: {
@@ -237,7 +237,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       const isTelephoneUpdated =
         manufacturerDetails.telephone !== selectedManufacturer.telephone;
 
-      let manufacturerToEdit: ManufacturerPatchSchema = {
+      let manufacturerToEdit: ManufacturerPatch = {
         id: selectedManufacturer.id,
       };
 

@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { http } from 'msw';
-import { ManufacturerSchema } from '../api/api.types';
+import { Manufacturer } from '../api/api.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { server } from '../mocks/server';
 import {
@@ -22,7 +22,7 @@ vi.mock('../handleIMS_APIError');
 describe('Delete Manufacturer Dialog', () => {
   const onClose = vi.fn();
   let props: DeleteManufacturerProps;
-  let manufacturer: ManufacturerSchema;
+  let manufacturer: Manufacturer;
   let user: UserEvent;
   const createView = (): RenderResult => {
     return renderComponentWithRouterProvider(

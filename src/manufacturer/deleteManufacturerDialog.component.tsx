@@ -11,14 +11,14 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { ErrorParsing, ManufacturerSchema } from '../api/api.types';
+import { ErrorParsing, Manufacturer } from '../api/api.types';
 import { useDeleteManufacturer } from '../api/manufacturers';
 import handleIMS_APIError from '../handleIMS_APIError';
 
 export interface DeleteManufacturerProps {
   open: boolean;
   onClose: () => void;
-  manufacturer: ManufacturerSchema | undefined;
+  manufacturer: Manufacturer | undefined;
 }
 
 const DeleteManufacturerDialog = (props: DeleteManufacturerProps) => {

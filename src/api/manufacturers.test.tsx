@@ -4,7 +4,7 @@ import {
   CREATED_MODIFIED_TIME_VALUES,
   hooksWrapperWithProviders,
 } from '../testUtils';
-import { ManufacturerPostSchema, ManufacturerSchema } from './api.types';
+import { Manufacturer, ManufacturerPost } from './api.types';
 import {
   useAddManufacturer,
   useDeleteManufacturer,
@@ -18,7 +18,7 @@ describe('manufacturer api functions', () => {
   });
 
   describe('useAddManufacturer', () => {
-    let mockDataPost: ManufacturerPostSchema;
+    let mockDataPost: ManufacturerPost;
     beforeEach(() => {
       mockDataPost = {
         name: 'Manufacturer D',
@@ -63,7 +63,7 @@ describe('manufacturer api functions', () => {
   });
 
   describe('useDeleteManufacturer', () => {
-    let mockDataView: ManufacturerSchema;
+    let mockDataView: Manufacturer;
     beforeEach(() => {
       mockDataView = {
         id: '1',

@@ -10,7 +10,7 @@ import {
   createMemoryRouter,
 } from 'react-router-dom';
 import { paths } from './App';
-import { ManufacturerSchema } from './api/api.types';
+import { Manufacturer } from './api/api.types';
 import {
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -158,13 +158,11 @@ export const catalogueItemData = (id: string): CatalogueItem[] => {
   );
 };
 
-export const getManufacturerById = (
-  id: string
-): ManufacturerSchema | undefined => {
+export const getManufacturerById = (id: string): Manufacturer | undefined => {
   return (
     (ManufacturersJSON.find(
       (manufacturer) => manufacturer.id === id
-    ) as ManufacturerSchema) || undefined
+    ) as Manufacturer) || undefined
   );
 };
 

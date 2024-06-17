@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ManufacturerSchema } from '../../api/api.types';
+import { Manufacturer } from '../../api/api.types';
 import { CatalogueCategory, CatalogueItem } from '../../app.types';
 import { formatDateTimeStrings } from '../../utils';
 
@@ -36,7 +36,7 @@ function TabPanel(props: any) {
 export interface CatalogueItemsDetailsPanelProps {
   catalogueItemIdData: CatalogueItem;
   catalogueCategoryData: CatalogueCategory;
-  manufacturerData?: ManufacturerSchema;
+  manufacturerData?: Manufacturer;
 }
 
 function CatalogueItemsDetailsPanel(props: CatalogueItemsDetailsPanelProps) {

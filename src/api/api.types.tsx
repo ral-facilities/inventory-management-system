@@ -1,4 +1,4 @@
-interface CreatedModifiedSchemaMixin {
+interface CreatedModifiedMixin {
   created_time: string;
   modified_time: string;
 }
@@ -9,7 +9,7 @@ export interface ErrorParsing {
 
 // Manufacturers
 
-interface AddressSchema {
+interface Address {
   address_line: string;
   town?: string | null;
   county?: string | null;
@@ -17,24 +17,22 @@ interface AddressSchema {
   postcode: string;
 }
 
-type AddressPatchSchema = Partial<AddressSchema>;
+type AddressPatch = Partial<Address>;
 
-export interface ManufacturerPostSchema {
+export interface ManufacturerPost {
   name: string;
   url?: string | null;
-  address: AddressSchema;
+  address: Address;
   telephone?: string | null;
 }
 
-export interface ManufacturerPatchSchema
-  extends Partial<Omit<ManufacturerPostSchema, 'address'>> {
-  address?: AddressPatchSchema;
+export interface ManufacturerPatch
+  extends Partial<Omit<ManufacturerPost, 'address'>> {
+  address?: AddressPatch;
   id: string;
 }
 
-export interface ManufacturerSchema
-  extends ManufacturerPostSchema,
-    CreatedModifiedSchemaMixin {
+export interface Manufacturer extends ManufacturerPost, CreatedModifiedMixin {
   id: string;
   code: string;
 }
