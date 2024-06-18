@@ -11,8 +11,8 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { UsageStatusPost } from '../../api/api.types';
 import { useAddUsageStatus } from '../../api/usageStatuses';
-import { AddUsageStatus } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { trimStringValues } from '../../utils';
 
@@ -25,7 +25,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
   const { open, onClose } = props;
 
   const [usageStatusDetails, setUsageStatusDetails] = React.useState<
-    AddUsageStatus | undefined
+    UsageStatusPost | undefined
   >(undefined);
 
   const [valueError, setValueError] = React.useState<string | undefined>(

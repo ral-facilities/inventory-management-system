@@ -5,13 +5,14 @@ import {
   ManufacturerPost,
   Unit,
   UnitPost,
+  UsageStatus,
+  UsageStatusPost,
 } from '../api/api.types';
 import {
   AddCatalogueCategory,
   AddCatalogueItem,
   AddItem,
   AddSystem,
-  AddUsageStatus,
   BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -23,7 +24,6 @@ import {
   EditSystem,
   Item,
   System,
-  UsageStatus,
 } from '../app.types';
 import { generateUniqueId } from '../utils';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
@@ -877,7 +877,7 @@ export const handlers = [
     return HttpResponse.json(UsageStatusJSON, { status: 200 });
   }),
 
-  http.post<PathParams, AddUsageStatus, UsageStatus | ErrorResponse>(
+  http.post<PathParams, UsageStatusPost, UsageStatus | ErrorResponse>(
     '/v1/usage-statuses',
     async ({ request }) => {
       const body = await request.json();

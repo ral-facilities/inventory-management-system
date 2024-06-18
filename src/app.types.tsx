@@ -224,11 +224,6 @@ export interface CopyToSystem {
   existingSystemCodes: string[];
 }
 
-export interface UsageStatus {
-  id: string;
-  value: string;
-}
-
 export interface ItemDetails {
   catalogue_item_id: string;
   system_id: string;
@@ -294,14 +289,4 @@ export interface AdvancedSerialNumberOptionsType {
 export interface AllowedValuesListErrorsType {
   cip_placement_id: string | null;
   errors: { av_placement_id: string; errorMessage: string }[] | null;
-}
-
-export interface AddUsageStatus {
-  value: string;
-}
-export interface UsageStatus extends AddUsageStatus {
-  id: string;
-  code: string;
-  created_time: string;
-  modified_time: string;
 }

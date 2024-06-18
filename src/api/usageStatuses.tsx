@@ -6,8 +6,8 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { AddUsageStatus, UsageStatus } from '../app.types';
 import { imsApi } from './api';
+import { UsageStatus, UsageStatusPost } from './api.types';
 
 const fetchUsageStatuses = async (): Promise<UsageStatus[]> => {
   return imsApi.get('/v1/usage-statuses').then((response) => {
@@ -28,7 +28,7 @@ export const useUsageStatuses = (): UseQueryResult<
 };
 
 const addUsageStatus = async (
-  usageStatus: AddUsageStatus
+  usageStatus: UsageStatusPost
 ): Promise<UsageStatus> => {
   return imsApi
     .post<UsageStatus>(`/v1/usage-statuses`, usageStatus)
@@ -38,11 +38,11 @@ const addUsageStatus = async (
 export const useAddUsageStatus = (): UseMutationResult<
   UsageStatus,
   AxiosError,
-  AddUsageStatus
+  UsageStatusPost
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (usageStatus: AddUsageStatus) => addUsageStatus(usageStatus),
+    mutationFn: (usageStatus: UsageStatusPost) => addUsageStatus(usageStatus),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['UsageStatuses'],
