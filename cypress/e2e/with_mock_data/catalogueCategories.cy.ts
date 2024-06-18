@@ -1055,7 +1055,7 @@ describe('Catalogue Category', () => {
     cy.findByLabelText('Select Type *').click();
     cy.findByText('Boolean').click();
     cy.findByLabelText('Select Default value').click();
-    cy.findByRole('option', { name: 'false' }).click();
+    cy.findByRole('option', { name: 'False' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
