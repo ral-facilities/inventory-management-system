@@ -753,7 +753,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                           isItemSelectable === undefined ||
                           isItemSelectable(row.original.catalogueItem)
                             ? 'inherit'
-                            : 'action.disabled',
+                            : 'GrayText',
                       },
                     } as TableCellOverFlowTipProps)}
                   />
