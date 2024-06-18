@@ -287,6 +287,9 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
             value={
               catalogueItemField.default_value
                 ? String(catalogueItemField.default_value)
+                    .charAt(0)
+                    .toUpperCase() +
+                  String(catalogueItemField.default_value).slice(1)
                 : null
             }
             onChange={(_event, newValue) => {
