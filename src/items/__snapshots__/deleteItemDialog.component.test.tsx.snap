@@ -243,6 +243,20 @@ exports[`delete item dialog > renders correctly when items has no serial number 
           class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
         >
           <p
+            class="MuiTypography-root MuiTypography-body1 css-utyhk1-MuiTypography-root"
+          >
+            This item is currently in the
+             
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+              href="/systems/656ef565ed0773f82e44bc6d"
+            >
+              Pico Laser
+            </a>
+             
+            system.
+          </p>
+          <p
             class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
           >
             Are you sure you want to permanently delete this item with
@@ -333,6 +347,20 @@ exports[`delete item dialog > renders correctly when items has no serial number 
         <div
           class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
         >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-utyhk1-MuiTypography-root"
+          >
+            This item is currently in the
+             
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+              href="/systems/656ef565ed0773f82e44bc6d"
+            >
+              Pico Laser
+            </a>
+             
+            system.
+          </p>
           <p
             class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
           >

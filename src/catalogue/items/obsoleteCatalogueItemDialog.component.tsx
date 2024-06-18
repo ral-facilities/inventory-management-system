@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Box,
   Button,
   CircularProgress,
@@ -6,11 +7,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
   FormHelperText,
-  InputLabel,
-  MenuItem,
-  Select,
   Step,
   StepLabel,
   Stepper,
@@ -34,11 +31,11 @@ import {
   EditCatalogueItem,
   ObsoleteDetails,
 } from '../../app.types';
+import handleIMS_APIError from '../../handleIMS_APIError';
+import { trimStringValues } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from '../category/catalogueCategoryTableView.component';
 import CatalogueItemsTable from './catalogueItemsTable.component';
-import handleIMS_APIError from '../../handleIMS_APIError';
-import { trimStringValues } from '../../utils';
 
 export interface ObsoleteCatalogueItemDialogProps {
   open: boolean;
@@ -209,20 +206,25 @@ const ObsoleteCatalogueItemDialog = (
     switch (step) {
       case 0:
         return (
-          <FormControl sx={{ margin: 1 }} fullWidth>
-            <InputLabel id={'is-obsolete'}>Is Obsolete</InputLabel>
-            <Select
-              labelId={'is-obsolete'}
-              value={obsoleteDetails.is_obsolete}
-              onChange={(e) =>
-                handleObsoleteChange(e.target.value === 'true' ? true : false)
-              }
-              label="Is Obsolete"
-            >
-              <MenuItem value={'true'}>Yes</MenuItem>
-              <MenuItem value={'false'}>No</MenuItem>
-            </Select>
-          </FormControl>
+          <Autocomplete
+            disableClearable={true}
+            id={'is-obsolete'}
+            value={obsoleteDetails.is_obsolete ? 'Yes' : 'No'}
+            onChange={(_event, value) => {
+              handleObsoleteChange(value === 'Yes' ? true : false);
+            }}
+            sx={{
+              '& .MuiAutocomplete-input': {
+                textAlign: 'center',
+              },
+              margin: 1,
+            }}
+            fullWidth
+            options={['Yes', 'No']}
+            renderInput={(params) => (
+              <TextField {...params} label="Is Obsolete" variant="outlined" />
+            )}
+          />
         );
       case 1:
         return (

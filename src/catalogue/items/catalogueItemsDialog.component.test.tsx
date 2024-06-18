@@ -9,17 +9,19 @@ import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
 
+import { http } from 'msw';
+import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
+import { CatalogueItem } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { server } from '../../mocks/server';
-import { http } from 'msw';
 
 vi.mock('../../handleIMS_APIError');
 
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
   let user: UserEvent;
-  let axiosPostSpy;
+  let axiosPostSpy: MockInstance;
   const onClose = vi.fn();
 
   const createView = () => {
@@ -463,9 +465,10 @@ describe('Catalogue Items Dialog', () => {
     });
   });
 
-  it('display error message when mandatory field is not filled in', async () => {
+  it('displays error messages when mandatory fields are not filled in', async () => {
     props = {
       ...props,
+      type: 'create',
       parentInfo: getCatalogueCategoryById('4'),
     };
 
@@ -656,7 +659,7 @@ describe('Catalogue Items Dialog', () => {
   });
 
   describe('Edit a catalogue item', () => {
-    let axiosPatchSpy;
+    let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
       props = {
@@ -830,7 +833,6 @@ describe('Catalogue Items Dialog', () => {
         drawingNumber: '',
         itemModelNumber: '',
         name: '',
-        manufacturer: '{delete}',
         notes: '',
       });
 
@@ -846,17 +848,10 @@ describe('Catalogue Items Dialog', () => {
       expect(costHelperText).toBeInTheDocument();
       expect(daysToReplaceHelperText).toBeInTheDocument();
 
-      expect(
-        screen.getByText(
-          'Please choose a manufacturer, or add a new manufacturer'
-        )
-      ).toBeInTheDocument();
-
       await modifyValues({
         costGbp: '200',
         daysToReplace: '5',
         name: 'test',
-        manufacturer: '{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -866,7 +861,6 @@ describe('Catalogue Items Dialog', () => {
         frameRate: '',
         sensorType: '',
         sensorBrand: '',
-        broken: '{delete}',
         older: 'N{arrowdown}{enter}',
       });
 
@@ -875,12 +869,6 @@ describe('Catalogue Items Dialog', () => {
       const mandatoryFieldHelperText = screen.getAllByText(
         'Please enter a valid value as this field is mandatory'
       );
-
-      const mandatoryFieldBooleanHelperText = screen.getByText(
-        'Please select either True or False'
-      );
-
-      expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
 
       expect(mandatoryFieldHelperText.length).toBe(2);
       expect(mandatoryFieldHelperText[0]).toHaveTextContent(
@@ -976,7 +964,7 @@ describe('Catalogue Items Dialog', () => {
         selectedCatalogueItem: {
           ...getCatalogueItemById('1'),
           properties: [],
-        },
+        } as CatalogueItem,
       };
 
       createView();

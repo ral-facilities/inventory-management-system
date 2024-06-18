@@ -2,7 +2,6 @@ import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import {
   Box,
@@ -11,8 +10,7 @@ import {
   ListItemText,
   MenuItem,
   Link as MuiLink,
-  Tooltip,
-  Typography,
+  TableCellBaseProps,
 } from '@mui/material';
 import {
   MRT_Row,
@@ -32,6 +30,10 @@ import {
 } from '../catalogue/items/catalogueItemsTable.component';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
+  TableGroupedCell,
+  TableHeaderOverflowTip,
   displayTableRowCountText,
   formatDateTimeStrings,
   getPageHeightCalc,
@@ -116,8 +118,9 @@ export function ItemsTable(props: ItemTableProps) {
     return [
       {
         header: 'Serial Number',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.serial_number ?? 'No serial number',
-        id: 'serial_number',
+        id: 'item.serial_number',
         size: 250,
         Cell: ({ row }) => (
           <MuiLink underline="hover" component={Link} to={row.original.item.id}>
@@ -126,10 +129,12 @@ export function ItemsTable(props: ItemTableProps) {
         ),
         enableGrouping: false,
       },
+
       {
         header: 'Last modified',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.modified_time),
-        id: 'modified_time',
+        id: 'item.modified_time',
         filterVariant: 'datetime-range',
         size: 350,
         Cell: ({ row }) =>
@@ -139,93 +144,87 @@ export function ItemsTable(props: ItemTableProps) {
       },
       {
         header: 'Created',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.created_time),
-        id: 'created_time',
+        id: 'item.created_time',
         filterVariant: 'datetime-range',
         size: 350,
         Cell: ({ row }) =>
           formatDateTimeStrings(row.original.item.created_time, true),
         enableGrouping: false,
       },
+
       {
         header: 'Asset Number',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.asset_number,
-        id: 'asset_number',
+        id: 'item.asset_number',
         size: 250,
+        GroupedCell: TableGroupedCell,
       },
       {
         header: 'Purchase Order Number',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.purchase_order_number,
-        id: 'purchase_order_number',
+        id: 'item.purchase_order_number',
         size: 350,
+        GroupedCell: TableGroupedCell,
       },
       {
         header: 'Warranty End Date',
-        accessorFn: (row) => new Date(row.item.warranty_end_date ?? ''),
-        id: 'warranty_end_date',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) =>
+          row.item.warranty_end_date
+            ? new Date(row.item.warranty_end_date)
+            : null,
+        id: 'item.warranty_end_date',
         filterVariant: 'date-range',
         size: 350,
-        Cell: ({ row }) => (
-          <Typography
-            // For ensuring space when grouping
-            sx={{ marginRight: 0.5, fontSize: 'inherit' }}
-          >
-            {row.original.item.warranty_end_date &&
-              formatDateTimeStrings(row.original.item.warranty_end_date, false)}
-          </Typography>
-        ),
+        Cell: ({ row }) =>
+          row.original.item.warranty_end_date &&
+          formatDateTimeStrings(row.original.item.warranty_end_date, false),
+        GroupedCell: (props) =>
+          TableGroupedCell({
+            ...props,
+            outputType: 'Date',
+          }),
       },
       {
         header: 'Delivered Date',
-        accessorFn: (row) => new Date(row.item.delivered_date ?? ''),
-        id: 'delivered_date',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) =>
+          row.item.delivered_date ? new Date(row.item.delivered_date) : null,
+        id: 'item.delivered_date',
         filterVariant: 'date-range',
         size: 350,
-        Cell: ({ row }) => (
-          <Typography
-            // For ensuring space when grouping
-            sx={{ marginRight: 0.5, fontSize: 'inherit' }}
-          >
-            {row.original.item.delivered_date &&
-              formatDateTimeStrings(row.original.item.delivered_date, false)}
-          </Typography>
-        ),
+        Cell: ({ row }) =>
+          row.original.item.delivered_date &&
+          formatDateTimeStrings(row.original.item.delivered_date, false),
+        GroupedCell: (props) =>
+          TableGroupedCell({
+            ...props,
+            outputType: 'Date',
+          }),
       },
       {
         header: 'Is Defective',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
-        id: 'is_defective',
+        id: 'item.is_defective',
         size: 200,
         filterVariant: 'autocomplete',
       },
       {
         header: 'Usage Status',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.usage_status,
-        id: 'usage_status',
+        id: 'item.usage_status',
         size: 200,
         filterVariant: 'autocomplete',
       },
       {
-        header: 'Notes',
-        accessorFn: (row) => row.item.notes ?? '',
-        id: 'notes',
-        size: 250,
-        Cell: ({ row }) =>
-          row.original.item.notes && (
-            <Tooltip
-              title={row.original.item.notes}
-              placement="top"
-              enterTouchDelay={0}
-              arrow
-              aria-label={`Catalogue item description: ${row.original.item.notes}`}
-            >
-              <InfoOutlinedIcon />
-            </Tooltip>
-          ),
-        enableGrouping: false,
-      },
-      {
         header: 'System',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.system?.name ?? '',
         getGroupingValue: (row) => row.system?.id ?? '',
         id: 'system.name',
@@ -242,9 +241,20 @@ export function ItemsTable(props: ItemTableProps) {
           </MuiLink>
         ),
       },
+      {
+        header: 'Notes',
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) => row.item.notes ?? '',
+        id: 'item.notes',
+        size: 250,
+        enableGrouping: false,
+      },
+
       ...viewCatalogueItemProperties.map((property) => ({
         header: `${property.name} ${property.unit ? `(${property.unit})` : ''}`,
-        id: `row.catalogueItem.properties.${property.id}`,
+        Header: TableHeaderOverflowTip,
+        id: `item.properties.${property.id}`,
+        GroupedCell: TableGroupedCell,
         accessorFn: (row: TableRowData) => {
           if (property.type === 'boolean') {
             return (findPropertyValue(
@@ -377,6 +387,39 @@ export function ItemsTable(props: ItemTableProps) {
     // MUI
     muiTableContainerProps: {
       sx: { height: dense ? '360.4px' : tableHeight },
+      // @ts-expect-error: MRT Table Container props does not have data-testid
+      'data-testid': 'items-table-container',
+    },
+    muiTableBodyCellProps: ({ column }) => {
+      const disabledGroupedHeaderColumnIDs = [
+        'item.asset_number',
+        'item.purchase_order_number',
+        'item.warranty_end_date',
+        'item.delivered_date',
+      ];
+      return (
+        // Ignore MRT rendered cells e.g. expand , spacer etc
+        column.id.startsWith('mrt') ||
+          // Ignore for grouped cells done manually
+          ((disabledGroupedHeaderColumnIDs.some((id) => id === column.id) ||
+            column.id.startsWith('item.properties')) &&
+            column.getIsGrouped())
+          ? {}
+          : {
+              component: (props: TableCellBaseProps) => {
+                return (
+                  <TableBodyCellOverFlowTip
+                    {...({
+                      ...props,
+                      overFlowTipSx: {
+                        width: dense ? '25vw' : undefined,
+                      },
+                    } as TableCellOverFlowTipProps)}
+                  />
+                );
+              },
+            }
+      );
     },
     muiSearchTextFieldProps: {
       size: 'small',

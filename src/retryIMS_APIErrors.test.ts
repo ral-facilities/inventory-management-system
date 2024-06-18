@@ -7,12 +7,12 @@ describe('retryIMS_APIErrors', () => {
   beforeEach(() => {
     error = {
       isAxiosError: true,
-      config: {},
       response: {
         data: { detail: 'Test error message (response data)' },
         status: 500,
         statusText: 'Internal Server Error',
         headers: {},
+        // @ts-expect-error: not needed for test
         config: {},
       },
       name: 'Test error name',
@@ -22,7 +22,9 @@ describe('retryIMS_APIErrors', () => {
   });
 
   it('returns false if error code is 403', () => {
-    error.response.status = 403;
+    if (error.response) {
+      error.response.status = 403;
+    }
     const result = retryIMS_APIErrors(0, error);
     expect(result).toBe(false);
   });

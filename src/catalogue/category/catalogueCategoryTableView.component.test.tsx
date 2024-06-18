@@ -1,5 +1,8 @@
 import { screen, waitFor } from '@testing-library/react';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  renderComponentWithRouterProvider,
+} from '../../testUtils';
 
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import CatalogueCategoryTableView, {
@@ -28,21 +31,20 @@ describe('CatalogueCategoryTableView', () => {
           is_leaf: true,
           catalogue_item_properties: [
             {
+              id: '1',
               name: 'Measurement Range',
               type: 'number',
               unit: 'Joules',
               mandatory: true,
             },
-            {
-              name: 'Accuracy',
-              type: 'string',
-              mandatory: false,
-            },
+            { id: '2', name: 'Accuracy', type: 'string', mandatory: false },
           ],
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ],
       onChangeParentCategoryId: onChangeParentCategoryId,
       requestType: 'standard',
+      requestOrigin: 'category',
       catalogueCategoryData: [
         {
           id: '79',
@@ -50,6 +52,7 @@ describe('CatalogueCategoryTableView', () => {
           parent_id: '1',
           code: 'test_dup',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '4',
@@ -59,38 +62,30 @@ describe('CatalogueCategoryTableView', () => {
           is_leaf: true,
           catalogue_item_properties: [
             {
+              id: '3',
               name: 'Resolution',
               type: 'number',
               unit: 'megapixels',
               mandatory: true,
             },
             {
+              id: '4',
               name: 'Frame Rate',
               type: 'number',
               unit: 'fps',
               mandatory: false,
             },
+            { id: '5', name: 'Sensor Type', type: 'string', mandatory: true },
+            { id: '6', name: 'Sensor brand', type: 'string', mandatory: false },
+            { id: '7', name: 'Broken', type: 'boolean', mandatory: true },
             {
-              name: 'Sensor Type',
-              type: 'string',
-              mandatory: true,
-            },
-            {
-              name: 'Sensor brand',
-              type: 'string',
-              mandatory: false,
-            },
-            {
-              name: 'Broken',
-              type: 'boolean',
-              mandatory: true,
-            },
-            {
+              id: '8',
               name: 'Older than five years',
               type: 'boolean',
               mandatory: false,
             },
           ],
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '5',
@@ -100,17 +95,15 @@ describe('CatalogueCategoryTableView', () => {
           is_leaf: true,
           catalogue_item_properties: [
             {
+              id: '1',
               name: 'Measurement Range',
               type: 'number',
               unit: 'Joules',
               mandatory: true,
             },
-            {
-              name: 'Accuracy',
-              type: 'string',
-              mandatory: false,
-            },
+            { id: '2', name: 'Accuracy', type: 'string', mandatory: false },
           ],
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '6',
@@ -120,17 +113,20 @@ describe('CatalogueCategoryTableView', () => {
           is_leaf: true,
           catalogue_item_properties: [
             {
+              id: '10',
               name: 'Wavefront Measurement Range',
               type: 'string',
               mandatory: true,
             },
             {
+              id: '11',
               name: 'Spatial Resolution',
               type: 'number',
               unit: 'micrometers',
               mandatory: false,
             },
           ],
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '18',
@@ -140,17 +136,15 @@ describe('CatalogueCategoryTableView', () => {
           is_leaf: true,
           catalogue_item_properties: [
             {
+              id: '12',
               name: 'Measurement Range',
               type: 'number',
               unit: 'volts',
               mandatory: true,
             },
-            {
-              name: 'Accuracy',
-              type: 'string',
-              mandatory: true,
-            },
+            { id: '14', name: 'Accuracy', type: 'string', mandatory: true },
           ],
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
         {
           id: '19',
@@ -158,6 +152,7 @@ describe('CatalogueCategoryTableView', () => {
           parent_id: '1',
           code: 'amp-meters',
           is_leaf: false,
+          ...CREATED_MODIFIED_TIME_VALUES,
         },
       ],
       catalogueCategoryDataLoading: false,
@@ -235,6 +230,7 @@ describe('CatalogueCategoryTableView', () => {
         parent_id: '1',
         code: 'test_dup',
         is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
       },
       {
         id: '19',
@@ -242,6 +238,7 @@ describe('CatalogueCategoryTableView', () => {
         parent_id: '1',
         code: 'amp-meters',
         is_leaf: false,
+        ...CREATED_MODIFIED_TIME_VALUES,
       },
     ];
 

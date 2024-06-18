@@ -24,19 +24,19 @@ import {
   useEditCatalogueCategory,
 } from '../../api/catalogueCategories';
 import {
+  APIError,
   AddCatalogueCategory,
   AddCatalogueCategoryProperty,
+  AddCatalogueCategoryPropertyWithPlacementIds,
   AddCatalogueCategoryWithPlacementIds,
   AllowedValuesListErrorsType,
   CatalogueCategory,
-  AddCatalogueCategoryPropertyWithPlacementIds,
   CatalogueItemPropertiesErrorsType,
   EditCatalogueCategory,
-  ErrorParsing,
 } from '../../app.types';
-import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { generateUniqueId, trimStringValues } from '../../utils';
+import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 
 // Function to convert a list of strings to a list of numbers
 export const convertListToNumbers = (values: string[]): number[] => {
@@ -460,7 +460,7 @@ const CatalogueCategoryDialog = React.memo(
       addCatalogueCategory(trimStringValues(catalogueCategory))
         .then(() => handleClose())
         .catch((error) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
           if (response && error.response?.status === 409) {
             setNameError(response.detail);
             return;
@@ -506,7 +506,7 @@ const CatalogueCategoryDialog = React.memo(
               handleClose();
             })
             .catch((error: AxiosError) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
               if (response && error.response?.status === 409) {
                 setNameError(response.detail);
                 return;

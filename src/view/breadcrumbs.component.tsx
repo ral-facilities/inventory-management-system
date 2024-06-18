@@ -1,15 +1,15 @@
 import { NavigateNext } from '@mui/icons-material';
+import HomeIcon from '@mui/icons-material/Home';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {
   Box,
-  Breadcrumbs as MuiBreadcrumbs,
-  Link,
-  Typography,
-  styled,
   IconButton,
+  Link,
+  Breadcrumbs as MuiBreadcrumbs,
+  styled,
 } from '@mui/material';
 import { BreadcrumbsInfo } from '../app.types';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import HomeIcon from '@mui/icons-material/Home';
+import { OverflowTip } from '../utils';
 
 export interface BreadcrumbsProps {
   breadcrumbsInfo?: BreadcrumbsInfo;
@@ -36,6 +36,10 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
     breadcrumbsInfo && !breadcrumbsInfo.full_trail
       ? [emptyElement, ['', <MoreHorizIcon key="trailPrefix" />]]
       : [emptyElement];
+  // Defines the maximum width of each breadcrumb item within the navigation bar,
+  // ensuring it occupies 100% of the view width minus 10% for the sci-gateway navigation,
+  // dynamically adjusting based on the number of breadcrumbs available.
+  const breadcrumbMaxWidth = `${(100 - 10) / trailPrefix.concat(breadcrumbsInfo?.trail ?? emptyElement).length}vw`;
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <IconButton
@@ -47,6 +51,7 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
       <StyledBreadcrumbs
         separator={<NavigateNext fontSize="small" />}
         aria-label="breadcrumb"
+        itemsBeforeCollapse={9}
       >
         {breadcrumbsInfo &&
           trailPrefix.concat(breadcrumbsInfo.trail).map((value, currIndex) => {
@@ -59,9 +64,12 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
               breadcrumbsInfo.trail.length + trailPrefix.length - 1
             ) {
               return (
-                <Typography key={name as string} color="text.primary">
-                  {name as string}
-                </Typography>
+                <OverflowTip
+                  key={id as string}
+                  sx={{ color: 'text.primary', maxWidth: breadcrumbMaxWidth }}
+                >
+                  {name}
+                </OverflowTip>
               );
             } else if (typeof name === 'object') {
               return (
@@ -79,7 +87,9 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
                     onChangeNode(id as string);
                   }}
                 >
-                  {name}
+                  <OverflowTip sx={{ maxWidth: breadcrumbMaxWidth }}>
+                    {name}
+                  </OverflowTip>
                 </Link>
               );
             }

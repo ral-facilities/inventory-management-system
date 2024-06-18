@@ -14,15 +14,15 @@ import {
 
 import React from 'react';
 
+import { AxiosError } from 'axios';
+import { useAddManufacturer, useEditManufacturer } from '../api/manufacturers';
 import {
+  APIError,
   AddManufacturer,
-  Manufacturer,
   EditManufacturer,
-  ErrorParsing,
+  Manufacturer,
   ManufacturerDetails,
 } from '../app.types';
-import { useAddManufacturer, useEditManufacturer } from '../api/manufacturers';
-import { AxiosError } from 'axios';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { trimStringValues } from '../utils';
 
@@ -307,7 +307,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         editManufacturer(trimStringValues(manufacturerToEdit))
           .then(() => handleClose())
           .catch((error: AxiosError) => {
-            const response = error.response?.data as ErrorParsing;
+            const response = error.response?.data as APIError;
             if (response && error.response?.status === 409) {
               setNameError(
                 'A manufacturer with the same name has been found. Please enter a different name'

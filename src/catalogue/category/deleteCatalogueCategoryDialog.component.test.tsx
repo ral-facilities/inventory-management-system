@@ -5,14 +5,17 @@ import {
   waitFor,
 } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http } from 'msw';
 import { CatalogueCategory } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import { server } from '../../mocks/server';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  renderComponentWithRouterProvider,
+} from '../../testUtils';
 import DeleteCatalogueCategoryDialog, {
   DeleteCatalogueCategoryDialogProps,
 } from './deleteCatalogueCategoryDialog.component';
-import { server } from '../../mocks/server';
-import { http } from 'msw';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -35,6 +38,7 @@ describe('delete Catalogue Category dialogue', () => {
       id: '1',
       code: 'test',
       is_leaf: false,
+      ...CREATED_MODIFIED_TIME_VALUES,
     };
     props = {
       open: true,

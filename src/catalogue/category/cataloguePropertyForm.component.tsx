@@ -57,7 +57,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
   const { data: units } = useUnits();
 
   return (
-    <Stack direction={isList ? 'row' : 'column'} spacing={1} padding={0.5}>
+    <Stack direction={isList ? 'row' : 'column'} spacing={1} px={0.5} py={1}>
       <TextField
         id={uuidv4()}
         label="Property Name"
@@ -76,10 +76,12 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
       <Autocomplete
         disabled={type === 'disabled' || type === 'edit migration'}
         id={uuidv4()}
+        disableClearable={true}
         value={
           catalogueItemField.type === 'string'
-            ? 'text'
-            : catalogueItemField.type
+            ? 'Text'
+            : catalogueItemField.type.charAt(0).toUpperCase() +
+              catalogueItemField.type.slice(1)
         }
         onChange={(_event, value) => {
           if (value == null) return;
@@ -89,14 +91,12 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           );
         }}
         sx={{
-          width: isList ? '200px' : '100%',
-          minWidth: isList ? '200px' : undefined,
+          width: isList ? '150px' : '100%',
+          minWidth: isList ? '150px' : undefined,
         }}
         fullWidth
         options={['Boolean', 'Number', 'Text']}
-        isOptionEqualToValue={(option, value) =>
-          option.toLowerCase() == value.toLowerCase() || value == ''
-        }
+        isOptionEqualToValue={(option, value) => option == value || value == ''}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -110,14 +110,18 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           />
         )}
       />
+
       <Autocomplete
+        disableClearable={true}
         disabled={
           catalogueItemField.type === 'boolean' ||
           type === 'disabled' ||
           type === 'edit migration'
         }
         id={uuidv4()}
-        value={catalogueItemField.allowed_values?.type ?? 'any'}
+        value={
+          catalogueItemField.allowed_values?.type == 'list' ? 'List' : 'Any'
+        }
         onChange={(_event, value) => {
           if (value === null) return;
           handleChange('allowed_values', value?.toLowerCase());
@@ -283,15 +287,21 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
             sx={{
               width: '100%',
             }}
-            options={['true', 'false']}
+            options={['True', 'False']}
             value={
               catalogueItemField.default_value
                 ? String(catalogueItemField.default_value)
+                    .charAt(0)
+                    .toUpperCase() +
+                  String(catalogueItemField.default_value).slice(1)
                 : null
             }
             onChange={(_event, newValue) => {
-              handleChange('default_value', newValue || '');
+              handleChange('default_value', newValue?.toLowerCase() ?? '');
             }}
+            isOptionEqualToValue={(option, value) =>
+              option.toLowerCase() == value.toLowerCase() || value == ''
+            }
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -357,12 +367,13 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         )}
       />
       <Autocomplete
+        disableClearable={true}
         disabled={type === 'disabled' || type === 'edit migration'}
         id={uuidv4()}
-        value={catalogueItemField.mandatory ? 'yes' : 'no'}
+        value={catalogueItemField.mandatory ? 'Yes' : 'No'}
         onChange={(_event, value) => {
-          if (value == null) return;
-          handleChange('mandatory', value.toLowerCase() === 'yes');
+          if (value === null) return;
+          handleChange('mandatory', value === 'Yes');
         }}
         sx={{
           width: isList ? '150px' : '100%',
@@ -370,9 +381,6 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         }}
         fullWidth
         options={['Yes', 'No']}
-        isOptionEqualToValue={(option, value) =>
-          option.toLowerCase() == value.toLowerCase() || value == ''
-        }
         renderInput={(params) => (
           <TextField
             {...params}

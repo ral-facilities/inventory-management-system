@@ -93,9 +93,9 @@ export type AllowedValues = AllowedValuesList;
 export interface AddCatalogueCategoryProperty {
   name: string;
   type: string;
-  unit_id?: string;
+  unit_id?: string | null;
   mandatory: boolean;
-  allowed_values?: AllowedValues;
+  allowed_values?: AllowedValues | null;
   default_value?: string | number | boolean;
 }
 
@@ -103,9 +103,9 @@ export interface CatalogueCategoryPropertyMigration {
   id?: string;
   name: string;
   type: string;
-  unit_id?: string;
+  unit_id?: string | null;
   mandatory: boolean;
-  allowed_values?: AllowedValues;
+  allowed_values?: AllowedValues | null;
   default_value?: string | number | boolean;
 }
 
@@ -126,7 +126,7 @@ export type AddCatalogueCategoryPropertyTypes =
 export interface CatalogueCategoryProperty
   extends AddCatalogueCategoryProperty {
   id: string;
-  unit?: string;
+  unit?: string | null;
 }
 
 export interface AddCatalogueCategoryPropertyWithPlacementIds
@@ -196,7 +196,7 @@ export interface TransferToCatalogueItem {
   targetCatalogueCategory: CatalogueCategory | null;
 }
 
-export interface ErrorParsing {
+export interface APIError {
   detail: string;
 }
 

@@ -3,7 +3,7 @@
 exports[`Catalogue Property Form > renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiStack-root css-f0bh1u-MuiStack-root"
+    class="MuiStack-root css-1ql55zp-MuiStack-root"
   >
     <div
       class="MuiFormControl-root MuiTextField-root css-136h9lv-MuiFormControl-root-MuiTextField-root"
@@ -11,8 +11,8 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        for="00010203-0405-4607-8809-0a0b0c0d0e0f"
-        id="00010203-0405-4607-8809-0a0b0c0d0e0f-label"
+        for="05060708-090a-4b0c-8d0e-0f1011121314"
+        id="05060708-090a-4b0c-8d0e-0f1011121314-label"
       >
         Property Name
         <span
@@ -28,7 +28,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
         <input
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-          id="00010203-0405-4607-8809-0a0b0c0d0e0f"
+          id="05060708-090a-4b0c-8d0e-0f1011121314"
           required=""
           type="text"
           value="Field 5"
@@ -48,7 +48,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-yy9oea-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-yy9oea-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -56,8 +56,8 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="true"
-          for="01020304-0506-4708-890a-0b0c0d0e0f10"
-          id="01020304-0506-4708-890a-0b0c0d0e0f10-label"
+          for="06070809-0a0b-4c0d-8e0f-101112131415"
+          id="06070809-0a0b-4c0d-8e0f-101112131415-label"
         >
           Select Type
           <span
@@ -77,38 +77,16 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-            id="01020304-0506-4708-890a-0b0c0d0e0f10"
+            id="06070809-0a0b-4c0d-8e0f-101112131415"
             required=""
             role="combobox"
             spellcheck="false"
             type="text"
-            value="text"
+            value="Text"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
           >
-            <button
-              aria-label="Clear"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
-              tabindex="-1"
-              title="Clear"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-                data-testid="CloseIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
-              </svg>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
             <button
               aria-label="Open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
@@ -148,7 +126,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-yy9oea-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-yy9oea-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -156,8 +134,8 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="true"
-          for="02030405-0607-4809-8a0b-0c0d0e0f1011"
-          id="02030405-0607-4809-8a0b-0c0d0e0f1011-label"
+          for="0708090a-0b0c-4d0e-8f10-111213141516"
+          id="0708090a-0b0c-4d0e-8f10-111213141516-label"
         >
           Select Allowed values
           <span
@@ -177,38 +155,16 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-            id="02030405-0607-4809-8a0b-0c0d0e0f1011"
+            id="0708090a-0b0c-4d0e-8f10-111213141516"
             required=""
             role="combobox"
             spellcheck="false"
             type="text"
-            value="list"
+            value="List"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
           >
-            <button
-              aria-label="Clear"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
-              tabindex="-1"
-              title="Clear"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-                data-testid="CloseIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
-              </svg>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
             <button
               aria-label="Open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
@@ -336,16 +292,16 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
       </button>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-n1500r-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-n1500r-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
       >
         <label
-          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-          data-shrink="false"
-          for="03040506-0708-490a-8b0c-0d0e0f101112"
-          id="03040506-0708-490a-8b0c-0d0e0f101112-label"
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="true"
+          for="08090a0b-0c0d-4e0f-9011-121314151617"
+          id="08090a0b-0c0d-4e0f-9011-121314151617-label"
         >
           Select Unit
         </label>
@@ -359,15 +315,37 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-            id="03040506-0708-490a-8b0c-0d0e0f101112"
+            id="08090a0b-0c0d-4e0f-9011-121314151617"
             role="combobox"
             spellcheck="false"
             type="text"
-            value=""
+            value="megapixels"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
           >
+            <button
+              aria-label="Clear"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
+              tabindex="-1"
+              title="Clear"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="CloseIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+              </svg>
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
             <button
               aria-label="Open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
@@ -396,7 +374,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
             class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="css-yjsfm1"
+              class="css-14lo706"
             >
               <span>
                 Select Unit
@@ -407,7 +385,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-yy9oea-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-yy9oea-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -415,8 +393,8 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="true"
-          for="04050607-0809-4a0b-8c0d-0e0f10111213"
-          id="04050607-0809-4a0b-8c0d-0e0f10111213-label"
+          for="090a0b0c-0d0e-4f10-9112-131415161718"
+          id="090a0b0c-0d0e-4f10-9112-131415161718-label"
         >
           Select is mandatory?
         </label>
@@ -430,37 +408,15 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-            id="04050607-0809-4a0b-8c0d-0e0f10111213"
+            id="090a0b0c-0d0e-4f10-9112-131415161718"
             role="combobox"
             spellcheck="false"
             type="text"
-            value="yes"
+            value="Yes"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
           >
-            <button
-              aria-label="Clear"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
-              tabindex="-1"
-              title="Clear"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-                data-testid="CloseIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
-              </svg>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
             <button
               aria-label="Open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
@@ -513,7 +469,7 @@ exports[`Catalogue Property Form > renders correctly 1`] = `
 exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
 <DocumentFragment>
   <div
-    class="MuiStack-root css-b5qyhj-MuiStack-root"
+    class="MuiStack-root css-i6g1i0-MuiStack-root"
   >
     <div
       class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -558,7 +514,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -592,33 +548,11 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
             role="combobox"
             spellcheck="false"
             type="text"
-            value="text"
+            value="Text"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
           >
-            <button
-              aria-label="Clear"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
-              tabindex="-1"
-              title="Clear"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-                data-testid="CloseIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
-              </svg>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
             <button
               aria-label="Open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
@@ -658,7 +592,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -692,33 +626,11 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
             role="combobox"
             spellcheck="false"
             type="text"
-            value="list"
+            value="List"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
           >
-            <button
-              aria-label="Clear"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
-              tabindex="-1"
-              title="Clear"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-                data-testid="CloseIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
-              </svg>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
             <button
               aria-label="Open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
@@ -917,7 +829,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -944,33 +856,11 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
             role="combobox"
             spellcheck="false"
             type="text"
-            value="yes"
+            value="Yes"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
           >
-            <button
-              aria-label="Clear"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
-              tabindex="-1"
-              title="Clear"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-                data-testid="CloseIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
-              </svg>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
             <button
               aria-label="Open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
@@ -1045,7 +935,7 @@ exports[`Catalogue Property Form > renders correctly for add migration 1`] = `
 exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
 <DocumentFragment>
   <div
-    class="MuiStack-root css-b5qyhj-MuiStack-root"
+    class="MuiStack-root css-i6g1i0-MuiStack-root"
   >
     <div
       class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -1090,7 +980,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -1125,7 +1015,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
             role="combobox"
             spellcheck="false"
             type="text"
-            value="text"
+            value="Text"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
@@ -1202,7 +1092,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
             role="combobox"
             spellcheck="false"
             type="text"
-            value="list"
+            value="List"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
@@ -1430,7 +1320,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
             role="combobox"
             spellcheck="false"
             type="text"
-            value="yes"
+            value="Yes"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
@@ -1507,7 +1397,7 @@ exports[`Catalogue Property Form > renders correctly for edit migration 1`] = `
 exports[`Catalogue Property Form > renders correctly for list view 1`] = `
 <DocumentFragment>
   <div
-    class="MuiStack-root css-b5qyhj-MuiStack-root"
+    class="MuiStack-root css-i6g1i0-MuiStack-root"
   >
     <div
       class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -1515,8 +1405,8 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
       <label
         class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="true"
-        for="00010203-0405-4607-8809-0a0b0c0d0e0f"
-        id="00010203-0405-4607-8809-0a0b0c0d0e0f-label"
+        for="05060708-090a-4b0c-8d0e-0f1011121314"
+        id="05060708-090a-4b0c-8d0e-0f1011121314-label"
       >
         Property Name
         <span
@@ -1532,7 +1422,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
         <input
           aria-invalid="false"
           class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-          id="00010203-0405-4607-8809-0a0b0c0d0e0f"
+          id="05060708-090a-4b0c-8d0e-0f1011121314"
           required=""
           type="text"
           value="Field 5"
@@ -1552,7 +1442,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -1560,8 +1450,8 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="true"
-          for="01020304-0506-4708-890a-0b0c0d0e0f10"
-          id="01020304-0506-4708-890a-0b0c0d0e0f10-label"
+          for="06070809-0a0b-4c0d-8e0f-101112131415"
+          id="06070809-0a0b-4c0d-8e0f-101112131415-label"
         >
           Select Type
           <span
@@ -1581,38 +1471,16 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-            id="01020304-0506-4708-890a-0b0c0d0e0f10"
+            id="06070809-0a0b-4c0d-8e0f-101112131415"
             required=""
             role="combobox"
             spellcheck="false"
             type="text"
-            value="text"
+            value="Text"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
           >
-            <button
-              aria-label="Clear"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
-              tabindex="-1"
-              title="Clear"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-                data-testid="CloseIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
-              </svg>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
             <button
               aria-label="Open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
@@ -1652,7 +1520,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -1660,8 +1528,8 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="true"
-          for="02030405-0607-4809-8a0b-0c0d0e0f1011"
-          id="02030405-0607-4809-8a0b-0c0d0e0f1011-label"
+          for="0708090a-0b0c-4d0e-8f10-111213141516"
+          id="0708090a-0b0c-4d0e-8f10-111213141516-label"
         >
           Select Allowed values
           <span
@@ -1681,38 +1549,16 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-            id="02030405-0607-4809-8a0b-0c0d0e0f1011"
+            id="0708090a-0b0c-4d0e-8f10-111213141516"
             required=""
             role="combobox"
             spellcheck="false"
             type="text"
-            value="list"
+            value="List"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
           >
-            <button
-              aria-label="Clear"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
-              tabindex="-1"
-              title="Clear"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-                data-testid="CloseIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
-              </svg>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
             <button
               aria-label="Open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
@@ -1840,16 +1686,16 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
       </button>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-hasPopupIcon css-6g4c9y-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-6g4c9y-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
       >
         <label
-          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-          data-shrink="false"
-          for="03040506-0708-490a-8b0c-0d0e0f101112"
-          id="03040506-0708-490a-8b0c-0d0e0f101112-label"
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="true"
+          for="08090a0b-0c0d-4e0f-9011-121314151617"
+          id="08090a0b-0c0d-4e0f-9011-121314151617-label"
         >
           Select Unit
         </label>
@@ -1863,15 +1709,37 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-            id="03040506-0708-490a-8b0c-0d0e0f101112"
+            id="08090a0b-0c0d-4e0f-9011-121314151617"
             role="combobox"
             spellcheck="false"
             type="text"
-            value=""
+            value="fps"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
           >
+            <button
+              aria-label="Clear"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
+              tabindex="-1"
+              title="Clear"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
+                data-testid="CloseIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                />
+              </svg>
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
             <button
               aria-label="Open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
@@ -1900,7 +1768,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
             class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
           >
             <legend
-              class="css-yjsfm1"
+              class="css-14lo706"
             >
               <span>
                 Select Unit
@@ -1911,7 +1779,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -1919,8 +1787,8 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-sizeMedium MuiInputLabel-outlined css-1jy569b-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="true"
-          for="04050607-0809-4a0b-8c0d-0e0f10111213"
-          id="04050607-0809-4a0b-8c0d-0e0f10111213-label"
+          for="090a0b0c-0d0e-4f10-9112-131415161718"
+          id="090a0b0c-0d0e-4f10-9112-131415161718-label"
         >
           Select is mandatory?
         </label>
@@ -1934,37 +1802,15 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
             autocapitalize="none"
             autocomplete="off"
             class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
-            id="04050607-0809-4a0b-8c0d-0e0f10111213"
+            id="090a0b0c-0d0e-4f10-9112-131415161718"
             role="combobox"
             spellcheck="false"
             type="text"
-            value="yes"
+            value="Yes"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
           >
-            <button
-              aria-label="Clear"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator"
-              tabindex="-1"
-              title="Clear"
-              type="button"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
-                data-testid="CloseIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
-              </svg>
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
             <button
               aria-label="Open"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-popupIndicator css-qzbt6i-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-popupIndicator"
@@ -2039,7 +1885,7 @@ exports[`Catalogue Property Form > renders correctly for list view 1`] = `
 exports[`Catalogue Property Form > renders correctly for list view when disabled 1`] = `
 <DocumentFragment>
   <div
-    class="MuiStack-root css-b5qyhj-MuiStack-root"
+    class="MuiStack-root css-i6g1i0-MuiStack-root"
   >
     <div
       class="MuiFormControl-root MuiTextField-root css-w0o80y-MuiFormControl-root-MuiTextField-root"
@@ -2085,7 +1931,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
       </div>
     </div>
     <div
-      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-gisnli-MuiAutocomplete-root"
+      class="MuiAutocomplete-root MuiAutocomplete-fullWidth MuiAutocomplete-hasPopupIcon css-s0u076-MuiAutocomplete-root"
     >
       <div
         class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -2120,7 +1966,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
             role="combobox"
             spellcheck="false"
             type="text"
-            value="text"
+            value="Text"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
@@ -2197,7 +2043,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
             role="combobox"
             spellcheck="false"
             type="text"
-            value="list"
+            value="List"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
@@ -2383,7 +2229,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
             role="combobox"
             spellcheck="false"
             type="text"
-            value="yes"
+            value="Yes"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
@@ -2438,7 +2284,7 @@ exports[`Catalogue Property Form > renders correctly for list view when disabled
 exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
 <DocumentFragment>
   <div
-    class="MuiStack-root css-f0bh1u-MuiStack-root"
+    class="MuiStack-root css-1ql55zp-MuiStack-root"
   >
     <div
       class="MuiFormControl-root MuiTextField-root css-136h9lv-MuiFormControl-root-MuiTextField-root"
@@ -2519,7 +2365,7 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
             role="combobox"
             spellcheck="false"
             type="text"
-            value="text"
+            value="Text"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
@@ -2596,7 +2442,7 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
             role="combobox"
             spellcheck="false"
             type="text"
-            value="list"
+            value="List"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"
@@ -2782,7 +2628,7 @@ exports[`Catalogue Property Form > renders correctly when disabled 1`] = `
             role="combobox"
             spellcheck="false"
             type="text"
-            value="yes"
+            value="Yes"
           />
           <div
             class="MuiAutocomplete-endAdornment css-p1olib-MuiAutocomplete-endAdornment"

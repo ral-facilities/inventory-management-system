@@ -1,4 +1,4 @@
-import React from 'react';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
   Autocomplete,
   Box,
@@ -21,6 +21,12 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
+import { AxiosError } from 'axios';
+import React from 'react';
+import { useAddItem, useAddItems, useEditItem } from '../api/items';
+import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
+import { useUsageStatuses } from '../api/usageStatuses';
 import {
   AddItem,
   AdvancedSerialNumberOptionsType,
@@ -33,18 +39,12 @@ import {
   ItemDetailsPlaceholder,
   UsageStatus,
 } from '../app.types';
-import { DatePicker } from '@mui/x-date-pickers';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
-import { useAddItem, useAddItems, useEditItem } from '../api/items';
-import { AxiosError } from 'axios';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { SystemsTableView } from '../systems/systemsTableView.component';
-import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
-import Breadcrumbs from '../view/breadcrumbs.component';
-import { trimStringValues } from '../utils';
 import handleTransferState from '../handleTransferState';
-import { useUsageStatuses } from '../api/usageStatuses';
+import { SystemsTableView } from '../systems/systemsTableView.component';
+import { trimStringValues } from '../utils';
+import Breadcrumbs from '../view/breadcrumbs.component';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
   // Attempt to create a Date object from the input
@@ -442,7 +442,6 @@ function ItemDialog(props: ItemDialogProps) {
       const isCatalogueItemPropertiesUpdated =
         JSON.stringify(updatedProperties) !==
         JSON.stringify(
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           selectedItem.properties.map(({ unit, name, ...rest }) => ({
             id: rest.id,
             value: rest.value,
@@ -779,6 +778,7 @@ function ItemDialog(props: ItemDialogProps) {
             <Grid item xs={12}>
               <FormControl fullWidth>
                 <Autocomplete
+                  disableClearable={true}
                   id="item-is-defective-input"
                   value={itemDetails.is_defective == 'true' ? 'Yes' : 'No'}
                   size="small"
@@ -804,6 +804,7 @@ function ItemDialog(props: ItemDialogProps) {
             <Grid item xs={12}>
               <FormControl size="small" fullWidth>
                 <Autocomplete
+                  disableClearable={itemDetails.usage_status_id != null}
                   id="item-usage-status-input"
                   value={
                     usageStatuses?.find(
@@ -892,11 +893,19 @@ function ItemDialog(props: ItemDialogProps) {
                           {property.type === 'boolean' ? (
                             <FormControl fullWidth>
                               <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
                                 )}`}
-                                value={(propertyValues[index] as string) ?? ''}
+                                value={
+                                  propertyValues[index]
+                                    ? (propertyValues[index] as string)
+                                        .charAt(0)
+                                        .toUpperCase() +
+                                      (propertyValues[index] as string).slice(1)
+                                    : null
+                                }
                                 size="small"
                                 onChange={(_event, value) => {
                                   handlePropertyChange(
@@ -908,7 +917,7 @@ function ItemDialog(props: ItemDialogProps) {
                                 fullWidth
                                 options={['True', 'False']}
                                 isOptionEqualToValue={(option, value) =>
-                                  option.toLowerCase() == value || value == ''
+                                  option === value
                                 }
                                 renderInput={(params) => (
                                   <TextField
@@ -927,6 +936,7 @@ function ItemDialog(props: ItemDialogProps) {
                           ) : property.allowed_values ? (
                             <FormControl fullWidth>
                               <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
@@ -948,7 +958,9 @@ function ItemDialog(props: ItemDialogProps) {
                                   <TextField
                                     {...params}
                                     required={property.mandatory ?? false}
-                                    label={property.name}
+                                    label={`${property.name} ${
+                                      property.unit ? `(${property.unit})` : ''
+                                    }`}
                                     error={propertyErrors[index]}
                                     helperText={
                                       propertyErrors[index] &&
@@ -1000,7 +1012,9 @@ function ItemDialog(props: ItemDialogProps) {
                             title={
                               <div>
                                 <Typography>Name: {property.name}</Typography>
-                                <Typography>Unit: {property.unit}</Typography>
+                                <Typography>
+                                  Unit: {property.unit ?? 'None'}
+                                </Typography>
                                 <Typography>
                                   Type:{' '}
                                   {property.type === 'string'

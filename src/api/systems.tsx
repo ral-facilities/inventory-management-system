@@ -8,11 +8,11 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import {
+  APIError,
   AddSystem,
   BreadcrumbsInfo,
   CopyToSystem,
   EditSystem,
-  ErrorParsing,
   MoveToSystem,
   System,
   SystemImportanceType,
@@ -213,7 +213,7 @@ export const useMoveToSystem = (): UseMutationResult<
               successfulParentIds.push(system.parent_id || 'null');
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: system.name,
@@ -291,7 +291,7 @@ export const useCopyToSystem = (): UseMutationResult<
               successfulIds.push(result.id);
             })
             .catch((error) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
 
               transferStates.push({
                 name: system.name,

@@ -29,66 +29,71 @@ const modifyCatalogueItem = (
   } else {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
   }
-  cy.findByLabelText('Name *').clear();
-  cy.findByLabelText('Name *').type(values.name);
+  cy.findByRole('dialog')
+    .should('be.visible')
+    .within(() => {
+      cy.findByLabelText('Name *').clear();
+      cy.findByLabelText('Name *').type(values.name);
 
-  if (values.description) {
-    cy.findByLabelText('Description').clear();
-    cy.findByLabelText('Description').type(values.description);
-  } else {
-    cy.findByLabelText('Description').clear();
-  }
+      if (values.description) {
+        cy.findByLabelText('Description').clear();
+        cy.findByLabelText('Description').type(values.description);
+      } else {
+        cy.findByLabelText('Description').clear();
+      }
 
-  cy.findByLabelText('Cost (£) *').clear();
-  cy.findByLabelText('Cost (£) *').type(values.costGbp);
+      cy.findByLabelText('Cost (£) *').clear();
+      cy.findByLabelText('Cost (£) *').type(values.costGbp);
 
-  if (values.costToReworkGbp) {
-    cy.findByLabelText('Cost to rework (£)').clear();
-    cy.findByLabelText('Cost to rework (£)').type(values.costToReworkGbp);
-  } else {
-    cy.findByLabelText('Cost to rework (£)').clear();
-  }
+      if (values.costToReworkGbp) {
+        cy.findByLabelText('Cost to rework (£)').clear();
+        cy.findByLabelText('Cost to rework (£)').type(values.costToReworkGbp);
+      } else {
+        cy.findByLabelText('Cost to rework (£)').clear();
+      }
 
-  cy.findByLabelText('Time to replace (days) *').clear();
-  cy.findByLabelText('Time to replace (days) *').type(values.daysToReplace);
+      cy.findByLabelText('Time to replace (days) *').clear();
+      cy.findByLabelText('Time to replace (days) *').type(values.daysToReplace);
 
-  if (values.daysToRework) {
-    cy.findByLabelText('Time to rework (days)').clear();
-    cy.findByLabelText('Time to rework (days)').type(values.daysToRework);
-  } else {
-    cy.findByLabelText('Time to rework (days)').clear();
-  }
+      if (values.daysToRework) {
+        cy.findByLabelText('Time to rework (days)').clear();
+        cy.findByLabelText('Time to rework (days)').type(values.daysToRework);
+      } else {
+        cy.findByLabelText('Time to rework (days)').clear();
+      }
 
-  if (values.drawingNumber) {
-    cy.findByLabelText('Drawing number').clear();
-    cy.findByLabelText('Drawing number').type(values.drawingNumber);
-  } else {
-    cy.findByLabelText('Drawing number').clear();
-  }
+      if (values.drawingNumber) {
+        cy.findByLabelText('Drawing number').clear();
+        cy.findByLabelText('Drawing number').type(values.drawingNumber);
+      } else {
+        cy.findByLabelText('Drawing number').clear();
+      }
 
-  if (values.drawingLink) {
-    cy.findByLabelText('Drawing link').clear();
-    cy.findByLabelText('Drawing link').type(values.drawingLink);
-  } else {
-    cy.findByLabelText('Drawing link').clear();
-  }
+      if (values.drawingLink) {
+        cy.findByLabelText('Drawing link').clear();
+        cy.findByLabelText('Drawing link').type(values.drawingLink);
+      } else {
+        cy.findByLabelText('Drawing link').clear();
+      }
 
-  if (values.itemModelNumber) {
-    cy.findByLabelText('Model number').clear();
-    cy.findByLabelText('Model number').type(values.itemModelNumber);
-  } else {
-    cy.findByLabelText('Model number').clear();
-  }
+      if (values.itemModelNumber) {
+        cy.findByLabelText('Model number').clear();
+        cy.findByLabelText('Model number').type(values.itemModelNumber);
+      } else {
+        cy.findByLabelText('Model number').clear();
+      }
 
-  if (values.notes) {
-    cy.findByLabelText('Notes').clear();
-    cy.findByLabelText('Notes').type(values.notes);
-  } else {
-    cy.findByLabelText('Notes').clear();
-  }
+      if (values.notes) {
+        cy.findByLabelText('Notes').clear();
+        cy.findByLabelText('Notes').type(values.notes);
+      } else {
+        cy.findByLabelText('Notes').clear();
+      }
+    });
 
   cy.findByLabelText('Manufacturer *').click();
   cy.findByRole('option', { name: values.manufacturer }).click();
+
   cy.findByRole('button', { name: 'Next' }).click();
 
   cy.findByLabelText('Substrate *').click();
@@ -186,8 +191,11 @@ export const obsoleteCatalogueItem = (values: {
     cy.findByLabelText('Row Actions').click();
   });
   cy.findByLabelText(`Obsolete catalogue item ${values.name}`).click();
-
-  cy.findByLabelText('Is Obsolete').click();
+  cy.findByRole('dialog')
+    .should('be.visible')
+    .within(() => {
+      cy.findByLabelText('Is Obsolete').click();
+    });
   cy.findByRole('option', { name: values.isObsolete ? 'Yes' : 'No' }).click();
   cy.findByText('Next').click();
   cy.findByRole('textbox').type(values.obsolete_reason);
@@ -208,9 +216,7 @@ export const obsoleteCatalogueItem = (values: {
   cy.findByText('Obsolete Reason').click();
   cy.get('body').type('{esc}');
   cy.findByText('Yes').should('exist');
-  cy.findByLabelText(
-    `Catalogue item obsolete reason: ${values.obsolete_reason}`
-  ).should('exist');
+  cy.findByText(`${values.obsolete_reason}`).should('exist');
   cy.findByText('Click here').click();
 
   cy.findAllByText(values.obsolete_replacement).should('have.length.gte', 1);

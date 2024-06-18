@@ -1,21 +1,21 @@
+import EditIcon from '@mui/icons-material/Edit';
+import PrintIcon from '@mui/icons-material/Print';
 import {
   Box,
   Button,
   Grid,
-  Typography,
-  Link as MuiLink,
   LinearProgress,
+  Link as MuiLink,
+  Typography,
 } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useManufacturer } from '../api/manufacturers';
-import ManufacturerDialog from './manufacturerDialog.component';
 import React from 'react';
-import Breadcrumbs from '../view/breadcrumbs.component';
-import { BreadcrumbsInfo } from '../app.types';
-import EditIcon from '@mui/icons-material/Edit';
-import PrintIcon from '@mui/icons-material/Print';
-import { formatDateTimeStrings } from '../utils';
+import { useNavigate, useParams } from 'react-router-dom';
 import { paths } from '../App';
+import { useManufacturer } from '../api/manufacturers';
+import { BreadcrumbsInfo } from '../app.types';
+import { formatDateTimeStrings } from '../utils';
+import Breadcrumbs from '../view/breadcrumbs.component';
+import ManufacturerDialog from './manufacturerDialog.component';
 
 function ManufacturerLandingPage() {
   const { manufacturer_id: manufacturerId } = useParams();
@@ -105,7 +105,10 @@ function ManufacturerLandingPage() {
           flexDirection="row"
         >
           <Grid item xs={12}>
-            <Typography sx={{ margin: 1, textAlign: 'center' }} variant="h4">
+            <Typography
+              sx={{ margin: 1, textAlign: 'center', wordWrap: 'break-word' }}
+              variant="h4"
+            >
               {manufacturerData.name}
             </Typography>
           </Grid>
@@ -122,7 +125,11 @@ function ManufacturerLandingPage() {
                 variant="body1"
                 color="text.secondary"
               >
-                <MuiLink underline="hover" href={manufacturerData.url}>
+                <MuiLink
+                  underline="hover"
+                  href={manufacturerData.url}
+                  sx={{ wordWrap: 'break-word' }}
+                >
                   {manufacturerData.url}
                 </MuiLink>
               </Typography>
@@ -144,7 +151,7 @@ function ManufacturerLandingPage() {
           </Grid>
           <Grid item xs={12}>
             <Typography
-              sx={{ mx: '8px' }}
+              sx={{ mx: '8px', wordWrap: 'break-word' }}
               textAlign={'center'}
               variant="body1"
               color="text.secondary"
@@ -160,35 +167,35 @@ function ManufacturerLandingPage() {
           <Grid item xs={12}>
             <Typography
               align="center"
-              sx={{ mx: '8px' }}
+              sx={{ mx: '8px', wordWrap: 'break-word' }}
               color="text.secondary"
             >
               {manufacturerData.address.address_line}
             </Typography>
             <Typography
               align="center"
-              sx={{ mx: '8px' }}
+              sx={{ mx: '8px', wordWrap: 'break-word' }}
               color="text.secondary"
             >
               {manufacturerData.address.town}
             </Typography>
             <Typography
               align="center"
-              sx={{ mx: '8px' }}
+              sx={{ mx: '8px', wordWrap: 'break-word' }}
               color="text.secondary"
             >
               {manufacturerData.address.county}
             </Typography>
             <Typography
               align="center"
-              sx={{ mx: '8px' }}
+              sx={{ mx: '8px', wordWrap: 'break-word' }}
               color="text.secondary"
             >
               {manufacturerData.address.postcode}
             </Typography>
             <Typography
               align="center"
-              sx={{ mx: '8px' }}
+              sx={{ mx: '8px', wordWrap: 'break-word' }}
               color="text.secondary"
             >
               {manufacturerData.address.country}

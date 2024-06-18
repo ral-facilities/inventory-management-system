@@ -1,8 +1,3 @@
-import React from 'react';
-import { AddUsageStatus } from '../../app.types';
-import { trimStringValues } from '../../utils';
-import handleIMS_APIError from '../../handleIMS_APIError';
-import { AxiosError } from 'axios';
 import {
   Box,
   Button,
@@ -14,7 +9,12 @@ import {
   Grid,
   TextField,
 } from '@mui/material';
+import { AxiosError } from 'axios';
+import React from 'react';
 import { useAddUsageStatus } from '../../api/usageStatuses';
+import { AddUsageStatus } from '../../app.types';
+import handleIMS_APIError from '../../handleIMS_APIError';
+import { trimStringValues } from '../../utils';
 
 export interface UsageStatusDialogProps {
   open: boolean;

@@ -378,10 +378,14 @@ describe('Systems', () => {
       cy.findAllByLabelText('Row Actions').eq(1).click();
       cy.findByText('Edit').click();
 
-      cy.findByLabelText('Name *').clear().type('System name');
-      cy.findByLabelText('Description').clear().type('System description');
-      cy.findByLabelText('Location').clear().type('System location');
-      cy.findByLabelText('Owner').clear().type('System owner');
+      cy.findByLabelText('Name *').clear();
+      cy.findByLabelText('Name *').type('System name');
+      cy.findByLabelText('Description').clear();
+      cy.findByLabelText('Description').type('System description');
+      cy.findByLabelText('Location').clear();
+      cy.findByLabelText('Location').type('System location');
+      cy.findByLabelText('Owner').clear();
+      cy.findByLabelText('Owner').type('System owner');
       cy.findByLabelText('Importance').click();
       cy.findByRole('option', { name: 'medium' }).click();
 
@@ -413,7 +417,8 @@ describe('Systems', () => {
       cy.findAllByLabelText('Row Actions').eq(1).click();
       cy.findByText('Edit').click();
 
-      cy.findByLabelText('Name *').clear().type('System name');
+      cy.findByLabelText('Name *').clear();
+      cy.findByLabelText('Name *').type('System name');
 
       cy.startSnoopingBrowserMockedRequest();
 
@@ -474,7 +479,8 @@ describe('Systems', () => {
       cy.findAllByLabelText('Row Actions').eq(1).click();
       cy.findByText('Edit').click();
 
-      cy.findByLabelText('Name *').clear().type('Error 409');
+      cy.findByLabelText('Name *').clear();
+      cy.findByLabelText('Name *').type('Error 409');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
         'A System with the same name already exists within the same parent System'
@@ -503,10 +509,14 @@ describe('Systems', () => {
       // Should default to having _copy_1 in the name
       cy.findByLabelText('Name *').should('have.value', 'Pulse Laser_copy_1');
 
-      cy.findByLabelText('Name *').clear().type('System name');
-      cy.findByLabelText('Description').clear().type('System description');
-      cy.findByLabelText('Location').clear().type('System location');
-      cy.findByLabelText('Owner').clear().type('System owner');
+      cy.findByLabelText('Name *').clear();
+      cy.findByLabelText('Name *').type('System name');
+      cy.findByLabelText('Description').clear();
+      cy.findByLabelText('Description').type('System description');
+      cy.findByLabelText('Location').clear();
+      cy.findByLabelText('Location').type('System location');
+      cy.findByLabelText('Owner').clear();
+      cy.findByLabelText('Owner').type('System owner');
       cy.findByLabelText('Importance').click();
       cy.findByRole('option', { name: 'medium' }).click();
 
@@ -542,7 +552,8 @@ describe('Systems', () => {
       // Should default to having _copy_1 in the name
       cy.findByLabelText('Name *').should('have.value', 'Smaller laser_copy_1');
 
-      cy.findByLabelText('Name *').clear().type('System name');
+      cy.findByLabelText('Name *').clear();
+      cy.findByLabelText('Name *').type('System name');
 
       cy.startSnoopingBrowserMockedRequest();
 
@@ -574,7 +585,8 @@ describe('Systems', () => {
 
     cy.findByRole('button', { name: 'Edit System' }).click();
 
-    cy.findByLabelText('Name *').clear().type('System name');
+    cy.findByLabelText('Name *').clear();
+    cy.findByLabelText('Name *').type('System name');
 
     cy.startSnoopingBrowserMockedRequest();
 

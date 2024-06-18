@@ -1,3 +1,4 @@
+import { screen } from '@testing-library/react';
 import { mockUUIDv4, renderComponentWithRouterProvider } from '../../testUtils';
 import CataloguePropertyForm, {
   CataloguePropertyFormProps,
@@ -50,7 +51,7 @@ describe('Catalogue Property Form', () => {
     props.catalogueItemField = {
       name: 'Field 5',
       type: 'string',
-      unit_id: '0',
+      unit_id: '1',
       allowed_values: {
         type: 'list',
         values: [{ av_placement_id: '1', value: 'test' }],
@@ -59,6 +60,9 @@ describe('Catalogue Property Form', () => {
     };
     props.cip_placement_id = '1';
     const { asFragment } = createView();
+
+    expect(await screen.findByDisplayValue('megapixels')).toBeInTheDocument();
+
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -66,7 +70,7 @@ describe('Catalogue Property Form', () => {
     props.catalogueItemField = {
       name: 'Field 5',
       type: 'string',
-      unit_id: '0',
+      unit_id: '2',
       allowed_values: {
         type: 'list',
         values: [{ av_placement_id: '2', value: 'test' }],
@@ -76,6 +80,8 @@ describe('Catalogue Property Form', () => {
     props.isList = true;
     props.cip_placement_id = '1';
     const { asFragment } = createView();
+
+    expect(await screen.findByDisplayValue('fps')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -83,7 +89,7 @@ describe('Catalogue Property Form', () => {
     props.catalogueItemField = {
       name: 'Field 5',
       type: 'string',
-      unit_id: '0',
+      unit_id: '3',
       allowed_values: {
         type: 'list',
         values: [{ av_placement_id: '1', value: 'test' }],
@@ -93,6 +99,7 @@ describe('Catalogue Property Form', () => {
     props.type = 'disabled';
     props.cip_placement_id = '1';
     const { asFragment } = createView();
+    expect(await screen.findByDisplayValue('test')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -111,6 +118,7 @@ describe('Catalogue Property Form', () => {
     props.cip_placement_id = '1';
     props.type = 'disabled';
     const { asFragment } = createView();
+    expect(await screen.findByDisplayValue('test')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -129,6 +137,7 @@ describe('Catalogue Property Form', () => {
     props.cip_placement_id = '1';
     props.type = 'add migration';
     const { asFragment } = createView();
+    expect(await screen.findByDisplayValue('test')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -147,6 +156,7 @@ describe('Catalogue Property Form', () => {
     props.cip_placement_id = '1';
     props.type = 'edit migration';
     const { asFragment } = createView();
+    expect(await screen.findByDisplayValue('test')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 });

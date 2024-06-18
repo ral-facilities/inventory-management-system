@@ -39,7 +39,14 @@ exports[`Channel Breadcrumbs > should render correctly for path 1`] = `
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
             href="#"
-          />
+          >
+            <p
+              aria-label=""
+              class="MuiTypography-root MuiTypography-body1 css-52u7fi-MuiTypography-root"
+              data-mui-internal-clone-element="true"
+              role="tooltip"
+            />
+          </a>
         </li>
         <li
           aria-hidden="true"
@@ -64,7 +71,14 @@ exports[`Channel Breadcrumbs > should render correctly for path 1`] = `
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
             href="#"
           >
-            test
+            <p
+              aria-label="test"
+              class="MuiTypography-root MuiTypography-body1 css-52u7fi-MuiTypography-root"
+              data-mui-internal-clone-element="true"
+              role="tooltip"
+            >
+              test
+            </p>
           </a>
         </li>
         <li
@@ -87,7 +101,10 @@ exports[`Channel Breadcrumbs > should render correctly for path 1`] = `
           class="MuiBreadcrumbs-li"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+            aria-label="path"
+            class="MuiTypography-root MuiTypography-body1 css-jqbzo8-MuiTypography-root"
+            data-mui-internal-clone-element="true"
+            role="tooltip"
           >
             path
           </p>
@@ -137,7 +154,14 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
             href="#"
-          />
+          >
+            <p
+              aria-label=""
+              class="MuiTypography-root MuiTypography-body1 css-1xfehcj-MuiTypography-root"
+              data-mui-internal-clone-element="true"
+              role="tooltip"
+            />
+          </a>
         </li>
         <li
           aria-hidden="true"
@@ -197,7 +221,14 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
             href="#"
           >
-            test
+            <p
+              aria-label="test"
+              class="MuiTypography-root MuiTypography-body1 css-1xfehcj-MuiTypography-root"
+              data-mui-internal-clone-element="true"
+              role="tooltip"
+            >
+              test
+            </p>
           </a>
         </li>
         <li
@@ -223,7 +254,14 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
             href="#"
           >
-            path
+            <p
+              aria-label="path"
+              class="MuiTypography-root MuiTypography-body1 css-1xfehcj-MuiTypography-root"
+              data-mui-internal-clone-element="true"
+              role="tooltip"
+            >
+              path
+            </p>
           </a>
         </li>
         <li
@@ -249,7 +287,14 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
             href="#"
           >
-            test
+            <p
+              aria-label="test"
+              class="MuiTypography-root MuiTypography-body1 css-1xfehcj-MuiTypography-root"
+              data-mui-internal-clone-element="true"
+              role="tooltip"
+            >
+              test
+            </p>
           </a>
         </li>
         <li
@@ -275,7 +320,14 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1xylxj1-MuiTypography-root-MuiLink-root"
             href="#"
           >
-            path
+            <p
+              aria-label="path"
+              class="MuiTypography-root MuiTypography-body1 css-1xfehcj-MuiTypography-root"
+              data-mui-internal-clone-element="true"
+              role="tooltip"
+            >
+              path
+            </p>
           </a>
         </li>
         <li
@@ -298,7 +350,10 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
           class="MuiBreadcrumbs-li"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+            aria-label="test"
+            class="MuiTypography-root MuiTypography-body1 css-gw6ax-MuiTypography-root"
+            data-mui-internal-clone-element="true"
+            role="tooltip"
           >
             test
           </p>
@@ -346,7 +401,10 @@ exports[`Channel Breadcrumbs > should render correctly for root 1`] = `
           class="MuiBreadcrumbs-li"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 css-1gqyz35-MuiTypography-root"
+            aria-label=""
+            class="MuiTypography-root MuiTypography-body1 css-1kltrwv-MuiTypography-root"
+            data-mui-internal-clone-element="true"
+            role="tooltip"
           />
         </li>
       </ol>

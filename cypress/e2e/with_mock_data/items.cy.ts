@@ -226,7 +226,7 @@ describe('Items', () => {
 
     cy.findByLabelText('Ultimate Pressure (millibar) *').clear();
     cy.findByLabelText('Ultimate Pressure (millibar) *').type('0.2');
-    cy.findByLabelText('Pumping Speed *').click();
+    cy.findByLabelText('Pumping Speed (liters per second) *').click();
     cy.findByRole('option', { name: '400' }).click();
     cy.findByLabelText('Axis').click();
     cy.findByRole('option', { name: 'y' }).click();
@@ -358,21 +358,16 @@ describe('Items', () => {
 
     cy.findByLabelText('Resolution (megapixels) *').clear();
     cy.findByLabelText('Sensor Type *').clear();
-    cy.findByLabelText('Broken *').clear();
 
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findAllByText(
       'Please enter a valid value as this field is mandatory'
     ).should('have.length', 2);
-    cy.findByText('Please select either True or False').should('exist');
 
     cy.findByLabelText('Resolution (megapixels) *').type('test');
     cy.findByLabelText('Sensor Type *').type('test');
-    cy.findByLabelText('Broken *').click();
-    cy.findByRole('option', { name: 'True' }).click();
 
-    cy.findByText('Please select either True or False').should('not.exist');
     cy.findAllByText(
       'Please enter a valid value as this field is mandatory'
     ).should('not.exist');

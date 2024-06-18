@@ -1,4 +1,5 @@
 import {
+  Autocomplete,
   Box,
   Button,
   Chip,
@@ -7,12 +8,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
   FormHelperText,
   Grid,
-  InputLabel,
-  MenuItem,
-  Select,
   TextField,
 } from '@mui/material';
 import { AxiosError } from 'axios';
@@ -23,9 +20,9 @@ import {
   useEditSystem,
 } from '../api/systems';
 import {
+  APIError,
   AddSystem,
   EditSystem,
-  ErrorParsing,
   System,
   SystemImportanceType,
 } from '../app.types';
@@ -121,7 +118,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
       addSystem(trimStringValues(system))
         .then(() => handleClose())
         .catch((error: AxiosError) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
 
           // 409 occurs when there is a system with a duplicate name with the
           // same parent
@@ -178,7 +175,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             handleClose();
           })
           .catch((error: AxiosError) => {
-            const response = error.response?.data as ErrorParsing;
+            const response = error.response?.data as APIError;
 
             // 409 occurs when there is a system with a duplicate name with the
             // same parent
@@ -275,36 +272,59 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
             />
           </Grid>
           <Grid item>
-            <FormControl fullWidth>
-              <InputLabel id="importance-select-label">Importance</InputLabel>
-              <Select
-                labelId="importance-select-label"
-                label="Importance"
-                value={systemData.importance}
-                onChange={(event) => {
-                  handleFormChange({
-                    ...systemData,
-                    importance: event.target.value as SystemImportanceType,
-                  });
-                }}
-              >
-                {Object.values(SystemImportanceType).map((value, i) => (
-                  <MenuItem key={i} value={value}>
-                    <Chip
-                      label={value}
-                      sx={() => {
-                        const colorName = getSystemImportanceColour(value);
-                        return {
-                          margin: 0,
-                          bgcolor: `${colorName}.main`,
-                          color: `${colorName}.contrastText`,
-                        };
-                      }}
-                    />
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <Autocomplete
+              multiple
+              limitTags={1}
+              disableClearable={true}
+              id="importance-select"
+              options={Object.values(SystemImportanceType)}
+              getOptionLabel={(option) => option}
+              value={[systemData.importance]}
+              onChange={(_event, value) => {
+                if (value.length === 0) return;
+                // as is a multiple autocomplete this removes original selection from list
+                // therefore only the new option is in the array
+                value.shift();
+
+                handleFormChange({
+                  ...systemData,
+                  importance: value[0],
+                });
+              }}
+              renderInput={(params) => (
+                <TextField label="Importance" {...params} />
+              )}
+              renderTags={() => (
+                <Chip
+                  label={systemData.importance}
+                  sx={() => {
+                    const colorName = getSystemImportanceColour(
+                      systemData.importance
+                    );
+                    return {
+                      margin: 0,
+                      bgcolor: `${colorName}.main`,
+                      color: `${colorName}.contrastText`,
+                    };
+                  }}
+                />
+              )}
+              renderOption={(props, option) => (
+                <li {...props} key={option}>
+                  <Chip
+                    label={option}
+                    sx={() => {
+                      const colorName = getSystemImportanceColour(option);
+                      return {
+                        margin: 0,
+                        bgcolor: `${colorName}.main`,
+                        color: `${colorName}.contrastText`,
+                      };
+                    }}
+                  />
+                </li>
+              )}
+            />
           </Grid>
         </Grid>
       </DialogContent>

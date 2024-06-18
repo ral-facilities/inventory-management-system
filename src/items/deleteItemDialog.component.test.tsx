@@ -4,16 +4,16 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import { act } from 'react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http } from 'msw';
+import { act } from 'react';
 import { Item } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { server } from '../mocks/server';
 import { getItemById, renderComponentWithRouterProvider } from '../testUtils';
 import DeleteItemDialog, {
   DeleteItemDialogProps,
 } from './deleteItemDialog.component';
-import { http } from 'msw';
-import { server } from '../mocks/server';
 
 vi.mock('../handleIMS_APIError');
 
@@ -36,7 +36,7 @@ describe('delete item dialog', () => {
       item: item,
       onChangeItem: onChangeItem,
     };
-    user = userEvent; // Assigning userEvent to 'user'
+    user = userEvent.setup(); // Assigning userEvent to 'user'
   });
 
   afterEach(() => {
@@ -144,11 +144,17 @@ describe('delete item dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
   it('renders correctly when items has no serial number', async () => {
-    props.item = { ...getItemById('wKsFzrSq'), serial_number: null };
+    props.item = { ...getItemById('wKsFzrSq'), serial_number: null } as Item;
     createView();
     let baseElement;
     await act(async () => {
       baseElement = createView().baseElement;
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'Pico Laser' })
+      ).toBeInTheDocument();
     });
     expect(baseElement).toMatchSnapshot();
   });

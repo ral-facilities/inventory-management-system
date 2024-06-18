@@ -1,24 +1,23 @@
-import React from 'react';
-import {
-  Typography,
-  Card,
-  CardContent,
-  Button,
-  CardActions,
-  IconButton,
-  Checkbox,
-  MenuItem,
-  ListItemIcon,
-  Menu,
-  Grid,
-} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import SaveAsIcon from '@mui/icons-material/SaveAs';
-import { CatalogueCategory } from '../../app.types';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Checkbox,
+  IconButton,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Typography,
+} from '@mui/material';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { formatDateTimeStrings } from '../../utils';
+import { CatalogueCategory } from '../../app.types';
+import { OverflowTip, formatDateTimeStrings } from '../../utils';
 export interface CatalogueCardProps extends CatalogueCategory {
   onChangeOpenDeleteDialog: (catalogueCategory: CatalogueCategory) => void;
   onChangeOpenEditNameDialog: (catalogueCategory: CatalogueCategory) => void;
@@ -69,7 +68,8 @@ function CatalogueCard(props: CatalogueCardProps) {
         sx={{
           width: '100%',
           display: 'flex',
-          height: '100px', // Set a fixed height for all cards
+          flexDirection: 'row',
+          height: '100px',
         }}
       >
         <CardActions>
@@ -94,17 +94,7 @@ function CatalogueCard(props: CatalogueCardProps) {
             minWidth: 0,
           }}
         >
-          <Grid>
-            <Grid position={'relative'}>
-              <Typography>{catalogueCategory.name}</Typography>
-            </Grid>
-
-            <Grid position={'absolute'} bottom={5} right={12}>
-              <Typography fontSize="0.8rem" color="text.secondary">
-                {`Last modified: ${formatDateTimeStrings(catalogueCategory.modified_time, true)}`}
-              </Typography>
-            </Grid>
-          </Grid>
+          <OverflowTip>{catalogueCategory.name}</OverflowTip>
         </CardContent>
         <CardActions>
           <IconButton
@@ -190,6 +180,17 @@ function CatalogueCard(props: CatalogueCardProps) {
             </MenuItem>
           </Menu>
         </CardActions>
+        <Typography
+          fontSize="0.8rem"
+          color="text.secondary"
+          sx={{
+            position: 'absolute',
+            bottom: '8px',
+            right: '12px',
+          }}
+        >
+          {`Last modified: ${formatDateTimeStrings(catalogueCategory.modified_time, true)}`}
+        </Typography>
       </Card>
     </Button>
   );

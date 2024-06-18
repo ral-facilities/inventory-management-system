@@ -1,4 +1,5 @@
-import { Box, Button, TableRow, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import { Box, Button, TableCellBaseProps, TableRow } from '@mui/material';
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -7,9 +8,13 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { CatalogueCategory } from '../../app.types';
+import {
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
+  formatDateTimeStrings,
+  generateUniqueName,
+} from '../../utils';
 import CatalogueCategoryDialog from './catalogueCategoryDialog.component';
-import AddIcon from '@mui/icons-material/Add';
-import { formatDateTimeStrings, generateUniqueName } from '../../utils';
 
 export interface CatalogueCategoryTableViewProps {
   selectedCategories: CatalogueCategory[];
@@ -49,22 +54,6 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         accessorFn: (row) => row.name,
         id: 'name',
         size: 567.5,
-        Cell: ({ renderedCellValue, row }) => {
-          const canPlaceHere =
-            (!row.original.is_leaf &&
-              (requestType !== 'moveTo' ||
-                !selectedCatalogueCategoryIds.includes(row.original.id))) ||
-            requestType === 'standard';
-          return (
-            <Typography
-              sx={{
-                color: canPlaceHere ? 'inherit' : 'action.disabled',
-              }}
-            >
-              {renderedCellValue}
-            </Typography>
-          );
-        },
       },
       {
         header: 'Last modified',
@@ -78,7 +67,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
           formatDateTimeStrings(row.original.modified_time, true),
       },
     ];
-  }, [requestType, selectedCatalogueCategoryIds]);
+  }, []);
 
   const table = useMaterialReactTable({
     // Data
@@ -88,7 +77,6 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
     enableColumnOrdering: false,
     enableColumnPinning: false,
     enableTopToolbar: true,
-    enableColumnResizing: false,
     enableFacetedValues: true,
     enableRowActions: false,
     enableGlobalFilter: false,
@@ -135,6 +123,30 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
         },
       };
     },
+    muiTableBodyCellProps: ({ column, row }) =>
+      // Ignore MRT rendered cells e.g. expand , spacer etc
+      column.id.startsWith('mrt')
+        ? {}
+        : {
+            component: (props: TableCellBaseProps) => {
+              const canPlaceHere =
+                (!row.original.is_leaf &&
+                  (requestType !== 'moveTo' ||
+                    !selectedCatalogueCategoryIds.includes(row.original.id))) ||
+                requestType === 'standard';
+              return (
+                <TableBodyCellOverFlowTip
+                  {...({
+                    ...props,
+                    overFlowTipSx: {
+                      width: '25vw',
+                      color: canPlaceHere ? 'inherit' : 'action.disabled',
+                    },
+                  } as TableCellOverFlowTipProps)}
+                />
+              );
+            },
+          },
     muiTableContainerProps: { sx: { height: '360.4px' } },
     muiSearchTextFieldProps: {
       size: 'small',

@@ -1,8 +1,8 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { Item, System } from '../app.types';
-import SystemsJSON from '../mocks/Systems.json';
 import ItemJSON from '../mocks/Items.json';
+import SystemsJSON from '../mocks/Systems.json';
 import { renderComponentWithRouterProvider } from '../testUtils';
 import {
   SystemItemsTable,
@@ -18,7 +18,11 @@ describe('SystemItemsTable', () => {
   const mockSystem: System = SystemsJSON[2] as System;
 
   const createView = () => {
-    return renderComponentWithRouterProvider(<SystemItemsTable {...props} />);
+    return renderComponentWithRouterProvider(
+      <SystemItemsTable {...props} />,
+      'any',
+      '/'
+    );
   };
 
   beforeEach(() => {
@@ -26,11 +30,6 @@ describe('SystemItemsTable', () => {
 
     user = userEvent.setup();
 
-    window.ResizeObserver = vi.fn().mockImplementation(() => ({
-      disconnect: vi.fn(),
-      observe: vi.fn(),
-      unobserve: vi.fn(),
-    }));
     window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
@@ -53,7 +52,7 @@ describe('SystemItemsTable', () => {
         () => {
           expect(
             screen.getByRole('cell', {
-              name: `Turbomolecular Pumps 42 (1)`,
+              name: `Turbomolecular Pumps 42 (2)`,
             })
           ).toBeInTheDocument();
         },
@@ -79,7 +78,7 @@ describe('SystemItemsTable', () => {
     });
 
     it('renders correctly when there are no items to display', async () => {
-      props.system = { ...props.system, id: 'invalid' };
+      props.system = { ...props.system, id: 'invalid' } as System;
 
       createView();
 
@@ -94,7 +93,7 @@ describe('SystemItemsTable', () => {
         () => {
           expect(
             screen.getByRole('cell', {
-              name: `Turbomolecular Pumps 42 (1)`,
+              name: `Turbomolecular Pumps 42 (2)`,
             })
           ).toBeInTheDocument();
         },
@@ -116,7 +115,7 @@ describe('SystemItemsTable', () => {
         () => {
           expect(
             screen.getByRole('cell', {
-              name: `Turbomolecular Pumps 42 (1)`,
+              name: `Turbomolecular Pumps 42 (2)`,
             })
           ).toBeInTheDocument();
         },
@@ -134,7 +133,7 @@ describe('SystemItemsTable', () => {
         () => {
           expect(
             screen.queryByRole('cell', {
-              name: `Turbomolecular Pumps 42 (1)`,
+              name: `Turbomolecular Pumps 42 (2)`,
             })
           ).not.toBeInTheDocument();
         },
@@ -147,12 +146,45 @@ describe('SystemItemsTable', () => {
         () => {
           expect(
             screen.getByRole('cell', {
-              name: `Turbomolecular Pumps 42 (1)`,
+              name: `Turbomolecular Pumps 42 (2)`,
             })
           ).toBeInTheDocument();
         },
         { timeout: 4000 }
       );
+    });
+
+    it('displays delivered date grouped cell', async () => {
+      createView();
+
+      // Name (obtained from catalogue category item)
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole('cell', {
+              name: 'Turbomolecular Pumps 42 (2)',
+            })
+          ).toBeInTheDocument();
+        },
+        { timeout: 4000 }
+      );
+
+      await user.click(screen.getByTestId('CancelIcon'));
+
+      // Delivered date column action button
+      await user.click(
+        screen.getAllByRole('button', { name: 'Column Actions' })[3]
+      );
+
+      await user.click(await screen.findByText('Group by Delivered Date'));
+
+      expect(
+        screen.getByRole('tooltip', { name: '09 Sep 2023 (1)' })
+      ).toBeInTheDocument();
+
+      expect(
+        screen.getByRole('tooltip', { name: 'No Delivered Date (1)' })
+      ).toBeInTheDocument();
     });
 
     it('can select and deselect items', async () => {
@@ -163,7 +195,7 @@ describe('SystemItemsTable', () => {
         () => {
           expect(
             screen.getByRole('cell', {
-              name: `Turbomolecular Pumps 42 (1)`,
+              name: `Turbomolecular Pumps 42 (2)`,
             })
           ).toBeInTheDocument();
         },
@@ -199,7 +231,7 @@ describe('SystemItemsTable', () => {
         () => {
           expect(
             screen.getByRole('cell', {
-              name: `Turbomolecular Pumps 42 (1)`,
+              name: `Turbomolecular Pumps 42 (2)`,
             })
           ).toBeInTheDocument();
         },
@@ -454,8 +486,8 @@ describe('SystemItemsTable', () => {
         { timeout: 4000 }
       );
 
-      expect(screen.getAllByRole('combobox')[0].value).toBe('New');
-      expect(screen.getAllByRole('combobox')[1].value).toBe('In Use');
+      expect(screen.getAllByRole('combobox')[0]).toHaveValue('New');
+      expect(screen.getAllByRole('combobox')[1]).toHaveValue('In Use');
     });
 
     it('displays errors messages correctly', async () => {

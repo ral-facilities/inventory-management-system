@@ -15,11 +15,6 @@ describe('Systems', () => {
   beforeEach(() => {
     user = userEvent.setup();
 
-    window.ResizeObserver = vi.fn().mockImplementation(() => ({
-      disconnect: vi.fn(),
-      observe: vi.fn(),
-      unobserve: vi.fn(),
-    }));
     window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
@@ -241,7 +236,7 @@ describe('Systems', () => {
     });
     expect(screen.getByRole('button', { name: 'Copy to' })).toBeInTheDocument();
 
-    await user.click(screen.queryByRole('button', { name: '2 selected' }));
+    await user.click(await screen.findByRole('button', { name: '2 selected' }));
 
     await waitFor(() => {
       expect(

@@ -1,6 +1,7 @@
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import AddIcon from '@mui/icons-material/Add';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
+  Autocomplete,
   Box,
   Button,
   CircularProgress,
@@ -25,7 +26,9 @@ import {
   useAddCatalogueItem,
   useEditCatalogueItem,
 } from '../../api/catalogueItems';
+import { useManufacturers } from '../../api/manufacturers';
 import {
+  APIError,
   AddCatalogueItem,
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -33,15 +36,12 @@ import {
   CatalogueItem,
   CatalogueItemDetailsPlaceholder,
   EditCatalogueItem,
-  ErrorParsing,
   Manufacturer,
 } from '../../app.types';
-import { matchCatalogueItemProperties } from '../catalogue.component';
-import { Autocomplete } from '@mui/material';
-import { useManufacturers } from '../../api/manufacturers';
-import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 import { sortDataList, trimStringValues } from '../../utils';
+import { matchCatalogueItemProperties } from '../catalogue.component';
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
@@ -476,7 +476,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       const isCatalogueItemPropertiesUpdated =
         JSON.stringify(updatedProperties) !==
         JSON.stringify(
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           selectedCatalogueItem.properties.map(({ unit, name, ...rest }) => ({
             id: rest.id,
             value: rest.value,
@@ -531,7 +530,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         editCatalogueItem(trimStringValues(catalogueItem))
           .then(() => handleClose())
           .catch((error: AxiosError) => {
-            const response = error.response?.data as ErrorParsing;
+            const response = error.response?.data as APIError;
 
             if (response && error.response?.status === 409) {
               if (response.detail.includes('child elements')) {
@@ -774,6 +773,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               <Grid item xs={11}>
                 <Autocomplete
                   id="catalogue-item-manufacturer-input"
+                  disableClearable={true}
                   value={
                     //logic means that current manufacturer renders in edit dialog, but behaves the same as add dialog (so can be changed/cleared)
                     selectedCatalogueItemManufacturer &&
@@ -860,11 +860,19 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                           {property.type === 'boolean' ? (
                             <FormControl fullWidth>
                               <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
                                 )}`}
-                                value={(propertyValues[index] as string) ?? ''}
+                                value={
+                                  propertyValues[index]
+                                    ? (propertyValues[index] as string)
+                                        .charAt(0)
+                                        .toUpperCase() +
+                                      (propertyValues[index] as string).slice(1)
+                                    : ''
+                                }
                                 size="small"
                                 onChange={(_event, value) => {
                                   handlePropertyChange(
@@ -896,6 +904,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                           ) : property.allowed_values ? (
                             <FormControl fullWidth>
                               <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
@@ -917,7 +926,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                                   <TextField
                                     {...params}
                                     required={property.mandatory ?? false}
-                                    label={property.name}
+                                    label={`${property.name} ${
+                                      property.unit ? `(${property.unit})` : ''
+                                    }`}
                                     error={propertyErrors[index]}
                                     helperText={
                                       propertyErrors[index] &&
@@ -969,7 +980,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                             title={
                               <div>
                                 <Typography>Name: {property.name}</Typography>
-                                <Typography>Unit: {property.unit}</Typography>
+                                <Typography>
+                                  Unit: {property.unit ?? 'None'}
+                                </Typography>
                                 <Typography>
                                   Type:{' '}
                                   {property.type === 'string'

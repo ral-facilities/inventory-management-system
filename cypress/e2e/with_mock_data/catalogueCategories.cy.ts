@@ -7,7 +7,7 @@ describe('Catalogue Category', () => {
   });
 
   function createMockData() {
-    let data = [];
+    const data = [];
     for (let index = 1; index < 50; index++) {
       data.push({
         id: index.toString(),
@@ -1055,7 +1055,7 @@ describe('Catalogue Category', () => {
     cy.findByLabelText('Select Type *').click();
     cy.findByText('Boolean').click();
     cy.findByLabelText('Select Default value').click();
-    cy.findByRole('option', { name: 'false' }).click();
+    cy.findByRole('option', { name: 'False' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -1523,5 +1523,57 @@ describe('Catalogue Category', () => {
     cy.findAllByLabelText('List Item').eq(3).type('900');
 
     cy.findByText('Please enter a valid number').should('not.exist');
+  });
+  // The tooltip tests are very flaky; issue to fix later: https://github.com/ral-facilities/inventory-management-system/issues/637
+  it.skip('display overflow tooltip on hover', () => {
+    // Card view
+    cy.findByText(
+      'Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow'
+    ).trigger('mouseenter', { force: true });
+    cy.findAllByText(
+      'Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow'
+    ).should('have.length', 2);
+
+    // Navigate to table view
+    cy.findAllByText(
+      'Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow'
+    )
+      .first()
+      .click();
+
+    // Breadcrumbs
+    cy.findByText(
+      'overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow'
+    ).trigger('mouseover');
+
+    cy.findAllByText(
+      'overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow'
+    ).should('have.length', 2);
+
+    cy.findAllByText(
+      'overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow'
+    )
+      .first()
+      .trigger('mouseout');
+
+    // Table cell
+
+    cy.findByText(
+      'Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow'
+    ).should('exist');
+
+    cy.findByText(
+      'Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow'
+    ).trigger('mouseover', { force: true });
+
+    cy.findAllByText(
+      'Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow'
+    ).should('have.length', 2);
+
+    cy.findAllByText(
+      'Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow'
+    )
+      .first()
+      .trigger('mouseout');
   });
 });
