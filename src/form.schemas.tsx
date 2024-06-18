@@ -60,3 +60,7 @@ export const ManufacturerSchema = (requestType: RequestType) => {
     telephone: OptionalOrNullableStringSchema({ requestType }),
   });
 };
+
+export const UnitSchema = z.object({
+  value: MandatoryStringSchema({ errorMessage: 'Please enter a value.' }),
+});

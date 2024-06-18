@@ -38,7 +38,7 @@ describe('Units dialog', () => {
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
     await user.click(saveButton);
-    const helperTexts = screen.getByText('Please enter a value');
+    const helperTexts = screen.getByText('Please enter a value.');
     expect(helperTexts).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
 
@@ -48,7 +48,7 @@ describe('Units dialog', () => {
 
     await user.click(saveButton);
     const helperText = screen.getByText(
-      'A unit with the same value already exists'
+      'A unit with the same value already exists.'
     );
     expect(helperText).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
