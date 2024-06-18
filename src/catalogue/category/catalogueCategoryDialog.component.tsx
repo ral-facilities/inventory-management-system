@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -23,19 +24,19 @@ import {
   useEditCatalogueCategory,
 } from '../../api/catalogueCategories';
 import {
+  APIError,
   AddCatalogueCategory,
   AddCatalogueCategoryProperty,
+  AddCatalogueCategoryPropertyWithPlacementIds,
   AddCatalogueCategoryWithPlacementIds,
   AllowedValuesListErrorsType,
   CatalogueCategory,
-  AddCatalogueCategoryPropertyWithPlacementIds,
   CatalogueItemPropertiesErrorsType,
   EditCatalogueCategory,
-  ErrorParsing,
 } from '../../app.types';
-import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { generateUniqueId, trimStringValues } from '../../utils';
+import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 
 // Function to convert a list of strings to a list of numbers
 export const convertListToNumbers = (values: string[]): number[] => {
@@ -459,7 +460,7 @@ const CatalogueCategoryDialog = React.memo(
       addCatalogueCategory(trimStringValues(catalogueCategory))
         .then(() => handleClose())
         .catch((error) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
           if (response && error.response?.status === 409) {
             setNameError(response.detail);
             return;
@@ -505,7 +506,7 @@ const CatalogueCategoryDialog = React.memo(
               handleClose();
             })
             .catch((error: AxiosError) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
               if (response && error.response?.status === 409) {
                 setNameError(response.detail);
                 return;
@@ -535,6 +536,7 @@ const CatalogueCategoryDialog = React.memo(
           <Grid container direction="column" spacing={1}>
             <Grid item sx={{ mt: 1 }}>
               <TextField
+                id="catalogue-category-name-input"
                 label="Name"
                 required={true}
                 sx={{ marginLeft: '4px', marginTop: '8px' }} // Adjusted the width and margin
@@ -651,6 +653,11 @@ const CatalogueCategoryDialog = React.memo(
                 nameError !== undefined ||
                 catalogueItemPropertiesErrors.length !== 0 ||
                 allowedValuesListErrors.length !== 0
+              }
+              endIcon={
+                isAddPending || isEditPending ? (
+                  <CircularProgress size={20} />
+                ) : null
               }
             >
               Save

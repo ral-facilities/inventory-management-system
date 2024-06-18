@@ -5,9 +5,14 @@ import {
   waitFor,
 } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http } from 'msw';
 import { Manufacturer } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { renderComponentWithRouterProvider } from '../testUtils';
+import { server } from '../mocks/server';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  renderComponentWithRouterProvider,
+} from '../testUtils';
 import DeleteManufacturerDialog, {
   DeleteManufacturerProps,
 } from './deleteManufacturerDialog.component';
@@ -27,6 +32,7 @@ describe('Delete Manufacturer Dialog', () => {
   beforeEach(() => {
     manufacturer = {
       name: 'test',
+      code: 'test',
       url: 'http://example.com',
       address: {
         address_line: '1 Example Street',
@@ -37,13 +43,14 @@ describe('Delete Manufacturer Dialog', () => {
       },
       telephone: '056896598',
       id: '1',
+      ...CREATED_MODIFIED_TIME_VALUES,
     };
     props = {
       open: true,
       onClose: onClose,
       manufacturer: manufacturer,
     };
-    user = userEvent;
+    user = userEvent.setup();
   });
   afterEach(() => {
     vi.clearAllMocks();
@@ -55,6 +62,22 @@ describe('Delete Manufacturer Dialog', () => {
     expect(screen.getByTestId('delete-manufacturer-name')).toHaveTextContent(
       'test'
     );
+  });
+
+  it('disables continue button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.delete('/v1/manufacturers/:id', () => {
+        return new Promise(() => {});
+      })
+    );
+
+    createView();
+
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    expect(continueButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
   it('calls onClose when Close clicked', async () => {

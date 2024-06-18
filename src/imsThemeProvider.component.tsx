@@ -1,15 +1,15 @@
-import React from "react";
+import { CssBaseline } from "@mui/material";
 import {
-  ThemeProvider,
   StyledEngineProvider,
   Theme,
+  ThemeProvider,
   createTheme,
 } from "@mui/material/styles";
+import React from "react";
 import { MicroFrontendId } from "./app.types";
 import { sendThemeOptions } from "./state/scigateway.actions";
-import { CssBaseline } from "@mui/material";
 
-declare module "@mui/material/styles" {
+declare module '@mui/material/styles' {
   interface Theme {
     colours?: { blue: string };
   }
@@ -30,7 +30,7 @@ document.addEventListener(MicroFrontendId, (e) => {
     parentThemeOptions = action.payload.theme;
     // SG dark mode blue is too dark for us, so set a custom, lighter blue
     if (
-      parentThemeOptions.palette.mode === "dark" &&
+      parentThemeOptions.palette.mode === 'dark' &&
       parentThemeOptions.colours?.blue
     ) {
       parentThemeOptions.palette.primary.main = parentThemeOptions.colours.blue;

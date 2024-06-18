@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -13,15 +14,15 @@ import {
 
 import React from 'react';
 
+import { AxiosError } from 'axios';
+import { useAddManufacturer, useEditManufacturer } from '../api/manufacturers';
 import {
+  APIError,
   AddManufacturer,
-  Manufacturer,
   EditManufacturer,
-  ErrorParsing,
+  Manufacturer,
   ManufacturerDetails,
 } from '../app.types';
-import { useAddManufacturer, useEditManufacturer } from '../api/manufacturers';
-import { AxiosError } from 'axios';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { trimStringValues } from '../utils';
 
@@ -306,7 +307,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         editManufacturer(trimStringValues(manufacturerToEdit))
           .then(() => handleClose())
           .catch((error: AxiosError) => {
-            const response = error.response?.data as ErrorParsing;
+            const response = error.response?.data as APIError;
             if (response && error.response?.status === 409) {
               setNameError(
                 'A manufacturer with the same name has been found. Please enter a different name'
@@ -339,6 +340,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         <Grid container direction="column" spacing={1}>
           <Grid item sx={{ mt: 1 }}>
             <TextField
+              id="manufacturer-name-input"
               label="Name"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -358,6 +360,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-url-input"
               label="URL"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -385,6 +388,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
           <Grid item>
             <TextField
+              id="manufacturer-address-line-input"
               label="Address Line"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -409,6 +413,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-town-input"
               label="Town"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -429,6 +434,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-county-input"
               label="County"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -449,6 +455,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-country-input"
               label="Country"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -473,6 +480,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-postcode-input"
               label="Post/Zip code"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -497,6 +505,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-telephone-input"
               label="Telephone number"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -548,6 +557,11 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               addressLineError !== undefined ||
               addressPostcodeError !== undefined ||
               countryError !== undefined
+            }
+            endIcon={
+              isAddPending || isEditPending ? (
+                <CircularProgress size={20} />
+              ) : null
             }
           >
             Save

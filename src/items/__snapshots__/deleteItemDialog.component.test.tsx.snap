@@ -218,13 +218,13 @@ exports[`delete item dialog > renders correctly when items has no serial number 
       tabindex="-1"
     >
       <div
-        aria-labelledby=":r8:"
+        aria-labelledby=":r9:"
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthLg css-1fu2e3p-MuiPaper-root-MuiDialog-paper"
         role="dialog"
       >
         <h2
           class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-1t6uuec-MuiTypography-root-MuiDialogTitle-root"
-          id=":r8:"
+          id=":r9:"
         >
           <svg
             aria-hidden="true"
@@ -242,6 +242,20 @@ exports[`delete item dialog > renders correctly when items has no serial number 
         <div
           class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
         >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-utyhk1-MuiTypography-root"
+          >
+            This item is currently in the
+             
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+              href="/systems/656ef565ed0773f82e44bc6d"
+            >
+              Pico Laser
+            </a>
+             
+            system.
+          </p>
           <p
             class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
           >
@@ -309,13 +323,13 @@ exports[`delete item dialog > renders correctly when items has no serial number 
       tabindex="-1"
     >
       <div
-        aria-labelledby=":r9:"
+        aria-labelledby=":ra:"
         class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthLg css-1fu2e3p-MuiPaper-root-MuiDialog-paper"
         role="dialog"
       >
         <h2
           class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-1t6uuec-MuiTypography-root-MuiDialogTitle-root"
-          id=":r9:"
+          id=":ra:"
         >
           <svg
             aria-hidden="true"
@@ -333,6 +347,20 @@ exports[`delete item dialog > renders correctly when items has no serial number 
         <div
           class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
         >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-utyhk1-MuiTypography-root"
+          >
+            This item is currently in the
+             
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-11iau0r-MuiTypography-root-MuiLink-root"
+              href="/systems/656ef565ed0773f82e44bc6d"
+            >
+              Pico Laser
+            </a>
+             
+            system.
+          </p>
           <p
             class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
           >

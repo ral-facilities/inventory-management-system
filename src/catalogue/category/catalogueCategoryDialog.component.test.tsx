@@ -1,16 +1,22 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http } from 'msw';
+import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
 import {
-  CatalogueCategory,
   AddCatalogueCategoryProperty,
+  CatalogueCategory,
 } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import { server } from '../../mocks/server';
+import {
+  CREATED_MODIFIED_TIME_VALUES,
+  renderComponentWithRouterProvider,
+} from '../../testUtils';
+import { resetUniqueIdCounter } from '../../utils';
 import CatalogueCategoryDialog, {
   CatalogueCategoryDialogProps,
 } from './catalogueCategoryDialog.component';
-import { resetUniqueIdCounter } from '../../utils';
 
 vi.mock('../../handleIMS_APIError');
 
@@ -20,6 +26,10 @@ describe('Catalogue Category Dialog', () => {
   let props: CatalogueCategoryDialogProps;
   let user: UserEvent;
 
+  interface TestAddCatalogueCategoryProperty
+    extends AddCatalogueCategoryProperty {
+    unit?: string;
+  }
   const createView = () => {
     return renderComponentWithRouterProvider(
       <CatalogueCategoryDialog {...props} />
@@ -30,7 +40,7 @@ describe('Catalogue Category Dialog', () => {
   const modifyValues = async (values: {
     name?: string;
     // New fields to add (if any)
-    newFormFields?: AddCatalogueCategoryProperty[];
+    newFormFields?: TestAddCatalogueCategoryProperty[];
   }) => {
     values.name !== undefined &&
       fireEvent.change(screen.getByLabelText('Name *'), {
@@ -59,7 +69,10 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(async () =>
         expect(
           (await screen.findAllByLabelText('Property Name *')).length
-        ).toBe(numberOfCurrentFields + values.newFormFields?.length)
+        ).toBe(
+          numberOfCurrentFields +
+            (values.newFormFields ? values.newFormFields.length : 0)
+        )
       );
 
       // Modify
@@ -138,14 +151,14 @@ describe('Catalogue Category Dialog', () => {
 
               await waitFor(() => {
                 screen.getByTestId(
-                  `av_placement_id_${i + j + values.newFormFields.length + 1}: List Item`
+                  `av_placement_id_${i + j + (values.newFormFields ? values.newFormFields.length : 0) + 1}: List Item`
                 );
               });
               const listItem = screen.getByTestId(
                 `av_placement_id_${i + j + values.newFormFields.length + 1}: List Item`
               );
 
-              fireEvent.change(within(listItem).getByLabelText('List Item'), {
+              fireEvent.change(within(listItem).getByRole('textbox'), {
                 target: { value: field.allowed_values.values[j] },
               });
             }
@@ -156,7 +169,7 @@ describe('Catalogue Category Dialog', () => {
   };
 
   describe('Add Catalogue Category Dialog', () => {
-    let axiosPostSpy;
+    let axiosPostSpy: MockInstance;
     beforeEach(() => {
       props = {
         open: true,
@@ -181,6 +194,24 @@ describe('Catalogue Category Dialog', () => {
       expect(screen.getByLabelText('Name *')).toBeInTheDocument();
       expect(screen.getByText('Save')).toBeInTheDocument();
       expect(screen.getByText('Cancel')).toBeInTheDocument();
+    });
+
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.post('/v1/catalogue-categories', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      createView();
+
+      await modifyValues({ name: 'test' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
     it('displays warning message when name field is not defined', async () => {
@@ -311,7 +342,7 @@ describe('Catalogue Category Dialog', () => {
             mandatory: true,
             name: 'radius',
             type: 'number',
-            unit: 'millimeters',
+            unit_id: '5',
           },
         ],
         is_leaf: true,
@@ -350,7 +381,7 @@ describe('Catalogue Category Dialog', () => {
             mandatory: true,
             name: 'radius',
             type: 'number',
-            unit: 'millimeters',
+            unit_id: '5',
           },
         ],
         is_leaf: true,
@@ -389,7 +420,7 @@ describe('Catalogue Category Dialog', () => {
             mandatory: true,
             name: 'radius',
             type: 'string',
-            unit: 'millimeters',
+            unit_id: '5',
           },
         ],
         is_leaf: true,
@@ -472,18 +503,18 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByDisplayValue('number')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('Number')).toBeInTheDocument();
       expect(screen.getByDisplayValue('radius')).toBeInTheDocument();
       expect(screen.getByDisplayValue('millimeters')).toBeInTheDocument();
-      expect(screen.getByText('Yes')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('Yes')).toBeInTheDocument();
 
-      const catagoriesRadio = screen.getByLabelText('Catalogue Categories');
-      await user.click(catagoriesRadio);
+      const categoriesRadio = screen.getByLabelText('Catalogue Categories');
+      await user.click(categoriesRadio);
 
-      expect(screen.queryByDisplayValue('number')).not.toBeInTheDocument();
+      expect(screen.queryByDisplayValue('Number')).not.toBeInTheDocument();
       expect(screen.queryByDisplayValue('radius')).not.toBeInTheDocument();
       expect(screen.queryByDisplayValue('millimeters')).not.toBeInTheDocument();
-      expect(screen.queryByText('Yes')).not.toBeInTheDocument();
+      expect(screen.queryByDisplayValue('Yes')).not.toBeInTheDocument();
     }, 10000);
 
     it('displays duplicate values and incorrect type error (allowed_values list of numbers)', async () => {
@@ -700,13 +731,14 @@ describe('Catalogue Category Dialog', () => {
   });
 
   describe('Edit Catalogue Category Dialog', () => {
-    let axiosPatchSpy;
+    let axiosPatchSpy: MockInstance;
     const mockData: CatalogueCategory = {
       name: 'test',
       parent_id: null,
       id: '1',
       code: 'test',
       is_leaf: false,
+      ...CREATED_MODIFIED_TIME_VALUES,
     };
 
     beforeEach(() => {
@@ -724,6 +756,29 @@ describe('Catalogue Category Dialog', () => {
 
     afterEach(() => {
       vi.clearAllMocks();
+    });
+
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.patch('/v1/catalogue-categories/:id', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      props.selectedCatalogueCategory = {
+        ...mockData,
+        id: '4',
+      };
+
+      createView();
+
+      await modifyValues({ name: 'update' });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
     it('displays warning message when name field is not defined', async () => {
@@ -867,13 +922,14 @@ describe('Catalogue Category Dialog', () => {
     //All of actual logic is same as add so is tested above
     //checks that the dialog renders/opens correctly for `save as`
 
-    let axiosPostSpy;
+    let axiosPostSpy: MockInstance;
     const mockData: CatalogueCategory = {
       name: 'test',
       parent_id: null,
       id: '1',
       code: 'test',
       is_leaf: false,
+      ...CREATED_MODIFIED_TIME_VALUES,
     };
 
     beforeEach(() => {

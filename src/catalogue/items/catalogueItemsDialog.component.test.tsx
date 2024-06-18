@@ -1,10 +1,4 @@
-import {
-  act,
-  fireEvent,
-  screen,
-  waitFor,
-  within,
-} from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import {
   getCatalogueCategoryById,
@@ -15,15 +9,19 @@ import CatalogueItemsDialog, {
   CatalogueItemsDialogProps,
 } from './catalogueItemsDialog.component';
 
+import { http } from 'msw';
+import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
+import { CatalogueItem } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { server } from '../../mocks/server';
 
 vi.mock('../../handleIMS_APIError');
 
 describe('Catalogue Items Dialog', () => {
   let props: CatalogueItemsDialogProps;
   let user: UserEvent;
-  let axiosPostSpy;
+  let axiosPostSpy: MockInstance;
   const onClose = vi.fn();
 
   const createView = () => {
@@ -128,17 +126,13 @@ describe('Catalogue Items Dialog', () => {
       });
 
     if (values.broken !== undefined) {
-      fireEvent.mouseDown(screen.getByLabelText('Broken *'));
-      fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.broken)
-      );
+      const brokenAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(brokenAutoComplete, values.broken);
     }
 
     if (values.older !== undefined) {
-      fireEvent.mouseDown(screen.getByLabelText('Older than five years'));
-      fireEvent.click(
-        within(screen.getByRole('listbox')).getByText(values.older)
-      );
+      const olderAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(olderAutocomplete, values.older);
     }
 
     values.sensorBrand !== undefined &&
@@ -178,6 +172,41 @@ describe('Catalogue Items Dialog', () => {
     expect(baseElement).toMatchSnapshot();
   });
 
+  it('disables finish button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.post('/v1/catalogue-items', () => {
+        return new Promise(() => {});
+      })
+    );
+    props = {
+      ...props,
+      parentInfo: getCatalogueCategoryById('4'),
+    };
+
+    createView();
+
+    await modifyValues({
+      costGbp: '200',
+      daysToReplace: '5',
+      name: 'test',
+      manufacturer: 'Man{arrowdown}{enter}',
+    });
+
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+
+    await modifyValues({
+      resolution: '12',
+      sensorType: 'IO',
+      broken: 'T{arrowdown}{enter}',
+    });
+
+    const finishButton = screen.getByRole('button', { name: 'Finish' });
+    await user.click(finishButton);
+
+    expect(finishButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
+  });
+
   it('adds a catalogue item', async () => {
     props = {
       ...props,
@@ -207,8 +236,8 @@ describe('Catalogue Items Dialog', () => {
       frameRate: '60',
       sensorType: 'IO',
       sensorBrand: 'pixel',
-      broken: 'True',
-      older: 'False',
+      broken: 'T{arrowdown}{enter}',
+      older: 'F{arrowdown}{enter}',
     });
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -267,11 +296,11 @@ describe('Catalogue Items Dialog', () => {
       target: { value: '10' },
     });
 
-    fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-    fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+    const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+    await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
 
-    fireEvent.mouseDown(screen.getByLabelText('Axis'));
-    fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
+    const axisAutocomplete = screen.getAllByRole('combobox')[1];
+    await user.type(axisAutocomplete, 'y{enter}');
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -340,8 +369,8 @@ describe('Catalogue Items Dialog', () => {
       frameRate: '60',
       sensorType: 'IO',
       sensorBrand: 'pixel',
-      broken: 'True',
-      older: 'False',
+      broken: 'T{arrowdown}{enter}',
+      older: 'F{arrowdown}{enter}',
     });
     expect(screen.getByRole('button', { name: 'Finish' })).not.toBeDisabled();
   }, 10000);
@@ -404,7 +433,7 @@ describe('Catalogue Items Dialog', () => {
     await modifyValues({
       resolution: '12',
       sensorType: 'IO',
-      broken: 'True',
+      broken: 'T{arrowdown}{enter}',
     });
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -436,9 +465,10 @@ describe('Catalogue Items Dialog', () => {
     });
   });
 
-  it('display error message when mandatory field is not filled in', async () => {
+  it('displays error messages when mandatory fields are not filled in', async () => {
     props = {
       ...props,
+      type: 'create',
       parentInfo: getCatalogueCategoryById('4'),
     };
 
@@ -539,8 +569,8 @@ describe('Catalogue Items Dialog', () => {
       frameRate: '60a',
       sensorType: 'IO',
       sensorBrand: 'pixel',
-      broken: 'True',
-      older: 'False',
+      broken: 'T{arrowdown}{enter}',
+      older: 'F{arrowdown}{enter}',
     });
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -581,8 +611,8 @@ describe('Catalogue Items Dialog', () => {
       frameRate: '60',
       sensorType: 'IO',
       sensorBrand: 'pixel',
-      broken: 'True',
-      older: 'False',
+      broken: 'T{arrowdown}{enter}',
+      older: 'F{arrowdown}{enter}',
     });
 
     await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -629,7 +659,7 @@ describe('Catalogue Items Dialog', () => {
   });
 
   describe('Edit a catalogue item', () => {
-    let axiosPatchSpy;
+    let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
       props = {
@@ -638,6 +668,33 @@ describe('Catalogue Items Dialog', () => {
       };
 
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
+    });
+
+    it('disables finish button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.patch('/v1/catalogue-items/:id', () => {
+          return new Promise(() => {});
+        })
+      );
+      props = {
+        ...props,
+        parentInfo: getCatalogueCategoryById('4'),
+        selectedCatalogueItem: getCatalogueItemById('1'),
+      };
+
+      createView();
+
+      await modifyValues({
+        name: 'update',
+      });
+
+      await user.click(screen.getByRole('button', { name: 'Next' }));
+
+      const finishButton = screen.getByRole('button', { name: 'Finish' });
+      await user.click(finishButton);
+
+      expect(finishButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
     it('Edit a catalogue item (catalogue detail)', async () => {
@@ -700,11 +757,11 @@ describe('Catalogue Items Dialog', () => {
         }
       );
 
-      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+      const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
 
-      fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('y'));
+      const axisAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(axisAutocomplete, 'y{arrowdown}{enter}');
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -737,11 +794,11 @@ describe('Catalogue Items Dialog', () => {
         }
       );
 
-      fireEvent.mouseDown(screen.getByLabelText('Pumping Speed *'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('400'));
+      const pumpingSpeedAutoComplete = screen.getAllByRole('combobox')[0];
+      await user.type(pumpingSpeedAutoComplete, '4{arrowdown}{enter}');
 
-      fireEvent.mouseDown(screen.getByLabelText('Axis'));
-      fireEvent.click(within(screen.getByRole('listbox')).getByText('None'));
+      const axisAutocomplete = screen.getAllByRole('combobox')[1];
+      await user.type(axisAutocomplete, 'y{arrowdown}{enter}');
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
 
@@ -751,7 +808,7 @@ describe('Catalogue Items Dialog', () => {
           { id: '18', value: 10 },
           {
             id: '19',
-            value: null,
+            value: 'y',
           },
         ],
       });
@@ -776,7 +833,6 @@ describe('Catalogue Items Dialog', () => {
         drawingNumber: '',
         itemModelNumber: '',
         name: '',
-        manufacturer: '{delete}',
         notes: '',
       });
 
@@ -792,17 +848,10 @@ describe('Catalogue Items Dialog', () => {
       expect(costHelperText).toBeInTheDocument();
       expect(daysToReplaceHelperText).toBeInTheDocument();
 
-      expect(
-        screen.getByText(
-          'Please choose a manufacturer, or add a new manufacturer'
-        )
-      ).toBeInTheDocument();
-
       await modifyValues({
         costGbp: '200',
         daysToReplace: '5',
         name: 'test',
-        manufacturer: '{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -812,8 +861,7 @@ describe('Catalogue Items Dialog', () => {
         frameRate: '',
         sensorType: '',
         sensorBrand: '',
-        broken: 'None',
-        older: 'None',
+        older: 'N{arrowdown}{enter}',
       });
 
       await user.click(screen.getByRole('button', { name: 'Finish' }));
@@ -821,12 +869,6 @@ describe('Catalogue Items Dialog', () => {
       const mandatoryFieldHelperText = screen.getAllByText(
         'Please enter a valid value as this field is mandatory'
       );
-
-      const mandatoryFieldBooleanHelperText = screen.getByText(
-        'Please select either True or False'
-      );
-
-      expect(mandatoryFieldBooleanHelperText).toBeInTheDocument();
 
       expect(mandatoryFieldHelperText.length).toBe(2);
       expect(mandatoryFieldHelperText[0]).toHaveTextContent(
@@ -849,8 +891,8 @@ describe('Catalogue Items Dialog', () => {
         frameRate: '240',
         sensorType: 'CCD',
         sensorBrand: 'Nikon',
-        broken: 'True',
-        older: 'True',
+        broken: 'T{arrowdown}{enter}',
+        older: 'T{arrowdown}{enter}',
       });
       await user.click(screen.getByRole('button', { name: 'Finish' }));
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-items/1', {
@@ -922,7 +964,7 @@ describe('Catalogue Items Dialog', () => {
         selectedCatalogueItem: {
           ...getCatalogueItemById('1'),
           properties: [],
-        },
+        } as CatalogueItem,
       };
 
       createView();

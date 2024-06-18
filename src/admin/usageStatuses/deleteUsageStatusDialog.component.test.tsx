@@ -1,9 +1,10 @@
-import { RenderResult } from '@testing-library/react';
-import { UsageStatus } from '../../app.types';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import { RenderResult, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { screen, waitFor } from '@testing-library/react';
+import { http } from 'msw';
+import { UsageStatus } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { server } from '../../mocks/server';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import DeleteUsageStatusDialog, {
   DeleteUsageStatusProps,
 } from './deleteUsageStatusDialog.component';
@@ -25,6 +26,7 @@ describe('Delete Usage status dialog', () => {
     (usageStatus = {
       id: '1',
       value: 'test',
+      code: 'test',
       created_time: '2024-01-01T12:00:00.000+00:00',
       modified_time: '2024-01-02T13:10:10.000+00:00',
     }),
@@ -53,6 +55,21 @@ describe('Delete Usage status dialog', () => {
     );
     expect(helperTexts).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it('disables continue button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.delete('/v1/usage-statuses/:id', () => {
+        return new Promise(() => {});
+      })
+    );
+
+    createView();
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    expect(continueButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
   it('calls handleDeleteUsageStatus when the continue button is clicked and the usage status is not currently used by one or more items ', async () => {

@@ -1,6 +1,6 @@
-import { renderComponentWithRouterProvider } from '../../testUtils';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import UsageStatusComponent from './usageStatuses.component';
 
 describe('Usage statuses', () => {
@@ -10,11 +10,6 @@ describe('Usage statuses', () => {
   };
   beforeEach(() => {
     user = userEvent.setup();
-    window.ResizeObserver = vi.fn().mockImplementation(() => ({
-      disconnect: vi.fn(),
-      observe: vi.fn(),
-      unobserve: vi.fn(),
-    }));
   });
 
   it('renders table correctly', async () => {

@@ -1,5 +1,6 @@
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { CatalogueCategory } from '../../app.types';
 import {
   getCatalogueCategoryById,
   renderComponentWithRouterProvider,
@@ -14,11 +15,11 @@ describe('Catalogue Items Table', () => {
   let props: CatalogueItemsTableProps;
   let user: UserEvent;
 
-  const createView = () => {
+  const createView = (initialEntry?: string) => {
     return renderComponentWithRouterProvider(
       <CatalogueItemsTable {...props} />,
       'any',
-      '/'
+      initialEntry ?? '/'
     );
   };
 
@@ -34,15 +35,11 @@ describe('Catalogue Items Table', () => {
 
   beforeEach(() => {
     props = {
-      parentInfo: getCatalogueCategoryById('5'),
+      parentInfo: getCatalogueCategoryById('5') as CatalogueCategory,
       dense: false,
     };
     user = userEvent.setup();
-    window.ResizeObserver = vi.fn().mockImplementation(() => ({
-      disconnect: vi.fn(),
-      observe: vi.fn(),
-      unobserve: vi.fn(),
-    }));
+
     window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
@@ -61,7 +58,7 @@ describe('Catalogue Items Table', () => {
   });
 
   it('renders table correctly (Cameras more details)', async () => {
-    props.parentInfo = getCatalogueCategoryById('4');
+    props.parentInfo = getCatalogueCategoryById('4') as CatalogueCategory;
     createView();
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument();
@@ -75,7 +72,7 @@ describe('Catalogue Items Table', () => {
   });
 
   it('renders table correctly (more details)', async () => {
-    props.parentInfo = getCatalogueCategoryById('4');
+    props.parentInfo = getCatalogueCategoryById('4') as CatalogueCategory;
     createView();
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument();
@@ -143,7 +140,7 @@ describe('Catalogue Items Table', () => {
   });
 
   it('renders table correctly for properties with type boolean', async () => {
-    props.parentInfo = getCatalogueCategoryById('4');
+    props.parentInfo = getCatalogueCategoryById('4') as CatalogueCategory;
     createView();
     await waitFor(() => {
       expect(screen.getByText('Name')).toBeInTheDocument();
@@ -189,93 +186,6 @@ describe('Catalogue Items Table', () => {
       'Is Obsolete',
       'Notes',
     ]);
-  });
-
-  it('displays full description on hover', async () => {
-    // Mocking scrollWidth and clientWidth to make content overflow
-    const mockScrollWidth = 300;
-    const mockClientWidth = 200;
-
-    vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get').mockReturnValue(
-      mockScrollWidth
-    );
-    vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(
-      mockClientWidth
-    );
-
-    createView();
-
-    await waitFor(() => {
-      expect(screen.getByText('Last modified')).toBeInTheDocument();
-    });
-
-    await ensureColumnsVisible(['Description']);
-
-    const infoIcon = screen.getByText(
-      'Precision energy meters for accurate measurements. 26'
-    );
-
-    await waitFor(() => {
-      expect(
-        screen.getAllByText(
-          'Precision energy meters for accurate measurements. 26'
-        ).length
-      ).toBe(1);
-    });
-
-    await user.hover(infoIcon);
-
-    await waitFor(() => {
-      expect(
-        screen.getAllByText(
-          'Precision energy meters for accurate measurements. 26'
-        ).length
-      ).toBe(2);
-    });
-
-    await user.unhover(infoIcon);
-
-    await waitFor(() => {
-      expect(
-        screen.getAllByText(
-          'Precision energy meters for accurate measurements. 26'
-        ).length
-      ).toBe(1);
-    });
-  }, 20000);
-
-  it('displays notes tooltip on hover', async () => {
-    createView();
-
-    await ensureColumnsVisible(['Notes']);
-
-    await waitFor(() => {
-      expect(
-        screen.getByLabelText(
-          'Catalogue item note: Need to find new manufacturer. 26'
-        )
-      ).toBeInTheDocument();
-    });
-
-    const infoIcon = screen.getByLabelText(
-      'Catalogue item note: Need to find new manufacturer. 26'
-    );
-
-    await user.hover(infoIcon);
-
-    await waitFor(() => {
-      expect(
-        screen.getByText('Need to find new manufacturer. 26')
-      ).toBeInTheDocument();
-    });
-
-    await user.unhover(infoIcon);
-
-    await waitFor(() => {
-      expect(
-        screen.queryByText('Need to find new manufacturer. 26')
-      ).not.toBeInTheDocument();
-    });
   });
 
   it('opens the delete catalogue item dialog and can delete an item', async () => {
@@ -482,7 +392,9 @@ describe('Catalogue Items Table', () => {
     const rowToggleSelect = screen.getAllByLabelText('Toggle select row');
     await user.click(rowToggleSelect[1]);
 
-    expect(await screen.findByRole('button', { name: 'Move to' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('button', { name: 'Move to' })
+    ).toBeInTheDocument();
     const moveToButton = screen.getByRole('button', { name: 'Move to' });
 
     await user.click(moveToButton);
@@ -503,7 +415,9 @@ describe('Catalogue Items Table', () => {
     const rowToggleSelect = screen.getAllByLabelText('Toggle select row');
     await user.click(rowToggleSelect[1]);
 
-    expect(await screen.findByRole('button', { name: 'Copy to' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('button', { name: 'Copy to' })
+    ).toBeInTheDocument();
     const copyToButton = screen.getByRole('button', { name: 'Copy to' });
 
     await user.click(copyToButton);
@@ -590,6 +504,11 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
 
+    // Ensure no loading bars visible
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
+
     expect(view.asFragment()).toMatchSnapshot();
   });
 
@@ -606,14 +525,13 @@ describe('Catalogue Items Table', () => {
     expect(router.state.location.search).toBe('');
 
     const nameInput = screen.getByLabelText('Filter by Name');
-
     await user.type(nameInput, '29');
 
     await waitFor(() => {
       expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJqATAJwgBfALoCgA'
+      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJAAmAJwgAvmoC6aoA'
     );
 
     await user.click(clearFiltersButton);
@@ -622,6 +540,53 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe('');
+  });
+
+  it('can change the table filters and clear the table filters (min and max values)', async () => {
+    // This tests the case where min/max column filters are used as there was a bug where
+    // they wouldn't correctly reset when the clear filters button was clicked
+
+    // Start in a state with just the name and cost columns (ensureColumnsVisible seems to effect the document in a way
+    // that prevents anything outside of the show/hide menu from being found even when using escape/clicking on the document
+    // body first)
+    const { router } = createView(
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc00NcsyN9qLF8CalYvCgB2FvSwt2yJqZm5mAoADmWR9vdKMCwYKpxY31l5FdGOk7Oq1CxCqyxqAGsmS%2Buh1pqa0iDGQAE8YCxXkUSmUDm1atkQeDIW9LB9PnDAWMPNRkJYoBIcEwJHgyLEZpjVtjKAxcfjCUwMASMf87kdsg1yExNJ4MMTSeTqHCyMgSdwwKg8LRqJJpEYTK0RWLSpLpRQpRhhaK8OLVTMKMgGLSvA4Fc4lTqVVL9aQkr4ABaBeUheFA8QSLCkU1OAC%2BPqAA'
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    const clearFiltersButton = screen.getByRole('button', {
+      name: 'Clear Filters',
+    });
+    expect(clearFiltersButton).toBeDisabled();
+    expect(router.state.location.search).toBe(
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc00NcsyN9qLF8CalYvCgB2FvSwt2yJqZm5mAoADmWR9vdKMCwYKpxY31l5FdGOk7Oq1CxCqyxqAGsmS%2Buh1pqa0iDGQAE8YCxXkUSmUDm1atkQeDIW9LB9PnDAWMPNRkJYoBIcEwJHgyLEZpjVtjKAxcfjCUwMASMf87kdsg1yExNJ4MMTSeTqHCyMgSdwwKg8LRqJJpEYTK0RWLSpLpRQpRhhaK8OLVTMKMgGLSvA4Fc4lTqVVL9aQkr4ABaBeUheFA8QSLCkU1OAC%2BPqAA'
+    );
+
+    // Do max first, as it technically has no effect on the outcome of the filter
+    const maxInput = screen.getByLabelText('Max');
+    await user.type(maxInput, '1000');
+
+    const minInput = screen.getByLabelText('Min');
+    await user.type(minInput, '800');
+
+    await waitFor(() => {
+      expect(screen.queryByText('Energy Meters 26')).not.toBeInTheDocument();
+    });
+    expect(router.state.location.search).toBe(
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc00NcsyN9qLF8CalYvCgB2FvSwt2yJqZm5mAoADmWR9vdKMCwYKpxY31l5FdGOk7Oq1CxCqyxqAGsmS%2Buh1pqa0iDGQAE8YCxXkUSmUDm1atkQeDIW9LB9PnDAWMPNRkJYoBIcEwJHgyLEZpjVtjKAxcfjCUwMASMf87kdsg1yExNJ4MMTSeTqHCyMgSdwwKg8LRqJJpEYTK0RWLSpLpRQpRhhaK8OLVTMKMgGLSvA4Fc4lTqVVL9aQkr4ABaBeUheFA8QSLCkU1OAC%2BigAYggANqgKDNeCu6lUJ4-K4gAQAN0whGDoFQoOmCBA52oBJw8ZASYwKYjuwADGWQH60xmjNm5HmC0WSyAAIwVys%2BgC63Z9QA'
+    );
+
+    await user.click(clearFiltersButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+    expect(router.state.location.search).toBe(
+      '?state=N4IgxgaglgziBcowEMAuyA2B7A5gVwFMBJVAgWwDowAnAtAgEwH1UoyCEAzTGAgGnBpMuQiXIUAdsnYJU1QgJTps%2BYqUpksDKJyiMWbDvG4ZeA6AQDuAAjFk4xnv0HKRa8QwIwaUAA6ssCS4nRSEVUXUKWCYsACMYLAwCUmDTZyVhVTsKOISk0iZaXwxkMHICCVQmDPCCJih1eoZUsxdMiPFcxOS62mQEoMc00NcsyN9qLF8CalYvCgB2FvSwt2yJqZm5mAoADmWR9vdKMCwYKpxY31l5FdGOk7Oq1CxCqyxqAGsmS%2Buh1pqa0iDGQAE8YCxXkUSmUDm1atkQeDIW9LB9PnDAWMPNRkJYoBIcEwJHgyLEZpjVtjKAxcfjCUwMASMf87kdsg1yExNJ4MMTSeTqHCyMgSdwwKg8LRqJJpEYTK0RWLSpLpRQpRhhaK8OLVTMKMgGLSvA4Fc4lTqVVL9aQkr4ABaBeUheFA8QSLCkU1OAC%2BPqAA'
+    );
   });
 
   it('can sort the table columns', async () => {
@@ -722,7 +687,7 @@ describe('Catalogue Items Table', () => {
       expect(screen.getByText('Grouped by')).toBeInTheDocument();
     });
     expect(router.state.location.search).toBe(
-      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOViTiOGqRSsLKqnZmjpYuSmp%2B6ABGauiGhBWhuS6Nza04flHCqArEOGRIfiE5fUpWfkqSWZVhed0tOIT90c1kmnIkk1XhJMI8wjgcPmokAOy7fPvZh3kn6GcXhSQAHO1TR3DoanGYAawh%2BTxc-0BAXQm146DYAGs-MDQYsOtVSOIEABPOpIGEDIZwaho355LG46Gw%2BEIzQAETYCF4SjIYFSADksEQGucwcsXOJGczWX5UCzaaTwaQZsQ-G4Cqg-GQuTy2JoiGIsJ4FEgsFE2ORKCStJrtYo9ecSHrUOrTTqLQaEOJBYVMiblWbdfqSIRDMIABaqY0HfnWdCEN3aOR6UTEtU0AC%2BQA'
+      '?state=N4Ig5iBcDaIMYEMAuCA2B7MBXApgSSRwFsA6AOwSJxAF0AaeAeSliICckBaN9Ad05wAPAA4IyAExAN2XHvwRwkAS3RkAzlJAzufTmpyocizYhQZs%2BQqQpUTyNJlwFiJIunFKAZkpziA%2Bsq2DKYOFs6kcGw4yL4BSkEgAGo%2BvAAE4RrB9uZOViTiOGqRSsLKqnZmjpYuSmp%2B6ABGauiGhBWhuS6Nza04flHCqArEOGRIfiE5fUpWfkqSWZVhed0tOIT90c1k7VPhJMI8wjgcPmokAOy7VfuH6MenhSQAHNfLLnDoauNgDcJvnQiX3GSHQm146DYAGs-L9-osOtVSOIEABPOqgzaDYYApH5NEYsFRCHQ3H7cRsBC8JRkMB%2BMhYIgNE5kvIUqk0umoGlQ1k1WZuAqoemM5lsTREMRYTwKJBYKJsciUajSKUyxTyk4keWoCVq2WaxUIcQUwqZLT6jUKkiEQzCAAWqhV8GyNzyZHQhHN2jkelEcBZNAAvkA'
     );
 
     // Reset
@@ -733,7 +698,7 @@ describe('Catalogue Items Table', () => {
     });
     // Expect this to still be here as have now modified the order in some way (as MRT doesn't revert back to its original state in this case)
     expect(router.state.location.search).toBe(
-      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQUwA8AHAQwDsATEAGkVQx32PKtuXS1xLBQEtMyAZxp0OjQXgA2eHiLAkUJSZgDmAVzwBJFHgQA6MiQR45Cpao3bdehJgq8AZrzwUA%2Bn2OnFy9Vp36wJDwFF3deT1oANWdsAAIrBGFaeW8LP2sKPEFA3iI%2BAS9zXwS9XkFXTAAjQUxpHUKfS389Kpq6vFcgokluXTwyFFcUoo1XXn8x1nAzRvT9Vtq8HU7gmrIRTj1h2ZKiLCI8VGdBPQB2DZwtmbTd-cO%2BLL0ADgab5rBMQUGVSqJX4ven0GKEwK2wmCQAGtXD8-slrgCMiQAJ7lEErbq9f5NJGo9ygoLgqEiAAiSBI2F4ZBUsQAcmoEJVDti5noKOTKdTXJIqZCWSVxrpXLZMpJXGQGUykCIEOQ1A5uCg1EEkAYjCY2HKFTxlYc9MrJDKtYrdaqSBR2VkkohjTqVXodNIiAALAQa6apRH6MiYHTW9gMXCCUhgZkAXQAvkA'
+      '?state=N4Igxg8iBcDaIFsBOAXAtEg9gdzQUwA8AHAQwDsATEAGkVQx32PKtuXS1xLBQEtMyAZxp0OjQXgA2eHiLAkUJSZgDmAVzwBJFHgQA6MiQR45Cpao3bdehJgq8AZrzwUA%2Bn2OnFy9Vp36wJDwFF3deT1oANWdsAAIrBGFaeW8LP2sKPEFA3iI%2BAS9zXwS9XkFXTAAjQUxpHUKfS389Kpq6vFcgokluXTwyFFcUoo1XXn8x1nAzRvT9Vtq8HU7gmrIGtJKiLCI8VGdBPQB2DeLm7cxd-ay9AA5TpuswTEFBlUqiB7m9Z9f3TBW2EwSAA1q53p9kjNNs0KCQAJ7lFAAro9MAmKGpM4ZBFIlF4IGgr4lChIEjYXhkFSuMhqBCVPbE2FkilU1ySSkgpnWca6Vy2TKSGl0hlIEQIchqBzcFBqIJIAxGDGISXSnhyvZ6OWScWqmUahUkCikrJJFW0tWy%2BV6HTSIgACwEyuGsxKZEwOjN7AYuEEpHRYoAugBfIA'
     );
   });
 
@@ -766,6 +731,138 @@ describe('Catalogue Items Table', () => {
     expect(within(rowsPerPageSelect).getByText('15')).toBeInTheDocument();
 
     expect(router.state.location.search).toBe('');
+  });
+
+  it('displays accuracy grouped cell', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    expect(await screen.findByText('Name')).toBeInTheDocument();
+
+    const accuracy = '±0.05%';
+
+    // Get the table element (assuming it has a specific class or role)
+    const table = screen.getByTestId('catalogue-items-table-container');
+
+    fireEvent.scroll(table, { target: { scrollLeft: 1500 } });
+
+    // Check if the accuracy cell is visible after scrolling
+    expect(await screen.findByText(accuracy)).toBeInTheDocument();
+
+    //  accuracy column action button
+    await user.click(
+      screen.getAllByRole('button', { name: 'Column Actions' })[7]
+    );
+
+    await user.click(await screen.findByText('Group by Accuracy'));
+
+    expect(
+      screen.queryByRole('tooltip', { name: 'Accuracy' })
+    ).not.toBeInTheDocument();
+
+    fireEvent.scroll(table, { target: { scrollLeft: -1500 } });
+
+    expect(
+      await screen.findByRole('tooltip', { name: 'Accuracy' })
+    ).toBeInTheDocument();
+
+    // Check if the accuracy grouped cell is visible after scrolling
+    expect(
+      await screen.findByRole('tooltip', {
+        name: '±0.05% (1)',
+      })
+    ).toBeInTheDocument();
+  });
+
+  it('displays drawing link grouped cell', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    expect(await screen.findByText('Name')).toBeInTheDocument();
+
+    const drawingLink = 'http://example-drawing-link.com';
+
+    // Get the table element (assuming it has a specific class or role)
+    const table = screen.getByTestId('catalogue-items-table-container');
+
+    fireEvent.scroll(table, { target: { scrollLeft: 2500 } });
+
+    // Check if the drawing link cell is visible after scrolling
+    expect(await screen.findByText(drawingLink)).toBeInTheDocument();
+
+    //  drawing link column action button
+    await user.click(
+      screen.getAllByRole('button', { name: 'Column Actions' })[8]
+    );
+
+    await user.click(await screen.findByText('Group by Drawing Link'));
+
+    expect(
+      screen.queryByRole('tooltip', { name: 'Drawing Link' })
+    ).not.toBeInTheDocument();
+
+    fireEvent.scroll(table, { target: { scrollLeft: -2500 } });
+
+    expect(
+      await screen.findByRole('tooltip', { name: 'Drawing Link' })
+    ).toBeInTheDocument();
+
+    // Check if the drawing link grouped cell is visible after scrolling
+    expect(
+      await screen.findByRole('tooltip', {
+        name: 'http://example-drawing-link.com (1)',
+      })
+    ).toBeInTheDocument();
+  });
+
+  it('displays manufacturer url grouped cell', async () => {
+    createView();
+
+    await waitFor(() => {
+      expect(screen.getByText('Energy Meters 26')).toBeInTheDocument();
+    });
+
+    expect(await screen.findByText('Name')).toBeInTheDocument();
+
+    const manufacturerUrl = 'http://example.com';
+
+    // Get the table element (assuming it has a specific class or role)
+    const table = screen.getByTestId('catalogue-items-table-container');
+
+    fireEvent.scroll(table, { target: { scrollLeft: 3000 } });
+
+    // Check if the manufacturer url cell is visible after scrolling
+    expect(await screen.findByText(manufacturerUrl)).toBeInTheDocument();
+
+    // manufacturer url column action button
+    await user.click(
+      screen.getAllByRole('button', { name: 'Column Actions' })[8]
+    );
+
+    await user.click(await screen.findByText('Group by Manufacturer URL'));
+
+    expect(
+      screen.queryByRole('tooltip', { name: 'Manufacturer URL' })
+    ).not.toBeInTheDocument();
+
+    fireEvent.scroll(table, { target: { scrollLeft: -3000 } });
+
+    expect(
+      await screen.findByRole('tooltip', { name: 'Manufacturer URL' })
+    ).toBeInTheDocument();
+
+    // Check if the manufacturer url grouped cell is visible after scrolling
+    expect(
+      await screen.findByRole('tooltip', {
+        name: 'http://example.com (1)',
+      })
+    ).toBeInTheDocument();
   });
 
   // skipping this test as it causes an infinite loop when expanding the details panel

@@ -1,19 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import {
-  useAddItem,
-  useDeleteItem,
-  useEditItem,
-  useItem,
-  useItems,
-  useMoveItemsToSystem,
-  useAddItems,
-} from './items';
-import {
-  getItemById,
-  getItemsByCatalogueItemId,
-  getItemsBySystemId,
-  hooksWrapperWithProviders,
-} from '../testUtils';
+import { MockInstance } from 'vitest';
 import {
   AddItem,
   AddItems,
@@ -24,7 +10,22 @@ import {
   System,
 } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
+import {
+  getItemById,
+  getItemsByCatalogueItemId,
+  getItemsBySystemId,
+  hooksWrapperWithProviders,
+} from '../testUtils';
 import { imsApi } from './api';
+import {
+  useAddItem,
+  useAddItems,
+  useDeleteItem,
+  useEditItem,
+  useItem,
+  useItems,
+  useMoveItemsToSystem,
+} from './items';
 
 describe('items api functions', () => {
   afterEach(() => {
@@ -153,7 +154,7 @@ describe('items api functions', () => {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(getItemById('KvT2Ox7n'));
+      result.current.mutate(getItemById('KvT2Ox7n') as Item);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
@@ -186,12 +187,42 @@ describe('items api functions', () => {
         is_defective: false,
         notes: '6Y5XTJfBrNNx8oltI9HE',
         properties: [
-          { id: '1', name: 'Resolution', unit: 'megapixels', value: 0 },
-          { id: '2', name: 'Frame Rate', unit: 'fps', value: null },
-          { id: '3', name: 'Sensor Type', unit: null, value: 'CMOS' },
-          { id: '4', name: 'Sensor brand', unit: null, value: null },
-          { id: '5', name: 'Broken', unit: null, value: true },
-          { id: '6', name: 'Older than five years', unit: null, value: false },
+          {
+            id: '1',
+            name: 'Resolution',
+            unit: 'megapixels',
+            unit_id: '1',
+            value: 0,
+          },
+          {
+            id: '2',
+            name: 'Frame Rate',
+            unit: 'fps',
+            unit_id: '2',
+            value: null,
+          },
+          {
+            id: '3',
+            name: 'Sensor Type',
+            unit: null,
+            unit_id: null,
+            value: 'CMOS',
+          },
+          {
+            id: '4',
+            name: 'Sensor brand',
+            unit: null,
+            unit_id: null,
+            value: null,
+          },
+          { id: '5', name: 'Broken', unit: null, unit_id: null, value: true },
+          {
+            id: '6',
+            name: 'Older than five years',
+            unit: null,
+            unit_id: null,
+            value: false,
+          },
         ],
         purchase_order_number: '6JYHEjwN',
         serial_number: 'test',
@@ -206,8 +237,8 @@ describe('items api functions', () => {
 
   describe('useMoveItemsToSystem', () => {
     const mockItems: Item[] = [
-      getItemById('KvT2Ox7n'),
-      getItemById('G463gOIA'),
+      getItemById('KvT2Ox7n') as Item,
+      getItemById('G463gOIA') as Item,
     ];
 
     const mockUsageStatuses: MoveItemsToSystemUsageStatus[] = [
@@ -219,7 +250,7 @@ describe('items api functions', () => {
 
     // Use patch spy for testing since response is not actual data in this case
     // so can't test the underlying use of editSystem otherwise
-    let axiosPatchSpy;
+    let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
       moveItemsToSystem = {
@@ -325,8 +356,9 @@ describe('items api functions', () => {
 
     // Use post spy for testing since response is not actual data in this case
     // so can't test the underlying use of editSystem otherwise
-    let axiosPostSpy;
-    const { _id, ...item } = getItemById('KvT2Ox7n');
+    let axiosPostSpy: MockInstance;
+    const { id, ...item } = getItemById('KvT2Ox7n') as Item;
+
     beforeEach(() => {
       addItems = {
         quantity: 2,

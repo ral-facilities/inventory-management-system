@@ -1,7 +1,10 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http } from 'msw';
+import { MockInstance } from 'vitest';
 import { imsApi } from '../api/api';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { server } from '../mocks/server';
 import {
   getManufacturerById,
   renderComponentWithRouterProvider,
@@ -16,7 +19,7 @@ describe('Add manufacturer dialog', () => {
   const onClose = vi.fn();
   let props: ManufacturerDialogProps;
   let user: UserEvent;
-  let axiosPostSpy;
+  let axiosPostSpy: MockInstance;
   const createView = () => {
     return renderComponentWithRouterProvider(<ManufacturerDialog {...props} />);
   };
@@ -137,6 +140,29 @@ describe('Add manufacturer dialog', () => {
       expect(onClose).toHaveBeenCalled();
     });
 
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.post('/v1/manufacturers', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      createView();
+
+      modifyManufacturerValues({
+        name: 'Manufacturer D',
+        addressLine: '4 Example Street',
+        postcode: 'OX1 2AB',
+        country: 'United Kingdom',
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
+    });
+
     it('calls onClose when Close button is clicked', async () => {
       createView();
       const cancelButton = screen.getByRole('button', { name: 'Cancel' });
@@ -244,7 +270,7 @@ describe('Add manufacturer dialog', () => {
   });
 
   describe('Edit a manufacturer', () => {
-    let axiosPatchSpy;
+    let axiosPatchSpy: MockInstance;
     beforeEach(() => {
       props = {
         ...props,
@@ -253,6 +279,26 @@ describe('Add manufacturer dialog', () => {
       };
 
       axiosPatchSpy = vi.spyOn(imsApi, 'patch');
+    });
+
+    it('disables save button and shows circular progress indicator when request is pending', async () => {
+      server.use(
+        http.patch('/v1/manufacturers/:id', () => {
+          return new Promise(() => {});
+        })
+      );
+
+      createView();
+
+      modifyManufacturerValues({
+        name: 'Manufacturer D',
+      });
+
+      const saveButton = screen.getByRole('button', { name: 'Save' });
+      await user.click(saveButton);
+
+      expect(saveButton).toBeDisabled();
+      expect(await screen.findByRole('progressbar')).toBeInTheDocument();
     });
 
     it('Edits a manufacturer correctly', async () => {

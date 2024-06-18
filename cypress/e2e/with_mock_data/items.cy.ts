@@ -226,7 +226,7 @@ describe('Items', () => {
 
     cy.findByLabelText('Ultimate Pressure (millibar) *').clear();
     cy.findByLabelText('Ultimate Pressure (millibar) *').type('0.2');
-    cy.findByLabelText('Pumping Speed *').click();
+    cy.findByLabelText('Pumping Speed (liters per second) *').click();
     cy.findByRole('option', { name: '400' }).click();
     cy.findByLabelText('Axis').click();
     cy.findByRole('option', { name: 'y' }).click();
@@ -358,22 +358,16 @@ describe('Items', () => {
 
     cy.findByLabelText('Resolution (megapixels) *').clear();
     cy.findByLabelText('Sensor Type *').clear();
-    cy.findByLabelText('Broken *').click();
-    cy.findByRole('option', { name: 'None' }).click();
 
     cy.findByRole('button', { name: 'Next' }).click();
 
     cy.findAllByText(
       'Please enter a valid value as this field is mandatory'
     ).should('have.length', 2);
-    cy.findByText('Please select either True or False').should('exist');
 
     cy.findByLabelText('Resolution (megapixels) *').type('test');
     cy.findByLabelText('Sensor Type *').type('test');
-    cy.findByLabelText('Broken *').click();
-    cy.findByRole('option', { name: 'True' }).click();
 
-    cy.findByText('Please select either True or False').should('not.exist');
     cy.findAllByText(
       'Please enter a valid value as this field is mandatory'
     ).should('not.exist');
@@ -479,7 +473,7 @@ describe('Items', () => {
           serial_number: '5YUQDDjKpz2z',
           delivered_date: '2023-03-17T00:00:00.000Z',
           notes:
-            '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this ID: KvT2Ox7n',
+            '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z',
           properties: [
             { id: '1', value: 0 },
             { id: '2', value: null },

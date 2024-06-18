@@ -2,14 +2,13 @@ import ClearIcon from '@mui/icons-material/Clear';
 import DriveFileMoveOutlinedIcon from '@mui/icons-material/DriveFileMoveOutlined';
 import ErrorIcon from '@mui/icons-material/Error';
 import {
+  Autocomplete,
   Box,
   Button,
   FormControl,
-  FormHelperText,
-  InputLabel,
-  MenuItem,
   Link as MuiLink,
-  Select,
+  TableCellBaseProps,
+  TextField,
   Typography,
 } from '@mui/material';
 import {
@@ -23,15 +22,22 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCatalogueItemIds } from '../api/catalogueItems';
 import { useItems } from '../api/items';
-import { CatalogueItem, Item, System } from '../app.types';
+import { useUsageStatuses } from '../api/usageStatuses';
+import { CatalogueItem, Item, System, UsageStatus } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
+import {
+  OverflowTip,
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
+  TableGroupedCell,
+  TableHeaderOverflowTip,
+  formatDateTimeStrings,
+} from '../utils';
 import SystemItemsDialog, {
   ItemUsageStatusesErrorStateType,
   UsageStatusesType,
 } from './systemItemsDialog.component';
-import { formatDateTimeStrings } from '../utils';
-import { useUsageStatuses } from '../api/usageStatuses';
 
 const MoveItemsButton = (props: {
   selectedItems: Item[];
@@ -174,7 +180,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     }
     // Purposefully leave out catalogueItemList - this will never be the same due
     // to the reference changing so instead am relying on isLoading to have changed to
-    // false and then back to true again for any refetches that occurr - only
+    // false and then back to true again for any re-fetches that occur - only
     // alternative I can see right now requires backend changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, itemsData, moveToSelectedItems]);
@@ -203,6 +209,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     return [
       {
         header: 'Catalogue Item',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.catalogueItem?.name,
         id: 'catalogueItem.name',
         Cell:
@@ -220,8 +227,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
               )
             : undefined,
         size: 250,
-        GroupedCell: ({ row, table }) => {
-          const { grouping } = table.getState();
+        GroupedCell: ({ row }) => {
           const nameGroupedCellError = itemUsageStatusesErrorState
             ? Object.values(itemUsageStatusesErrorState).filter(
                 (errorState) =>
@@ -236,34 +242,43 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 display: 'flex',
                 alignItems: 'center',
                 color: nameGroupedCellError ? 'error.main' : 'inherit',
+                width: '100%',
               }}
             >
               {nameGroupedCellError && (
                 <ErrorIcon sx={{ color: 'error.main' }} />
               )}
-              {type === 'normal' ? (
-                <MuiLink
-                  underline="hover"
-                  component={Link}
-                  to={`/catalogue/item/${row.original.item.catalogue_item_id}`}
-                  // For ensuring space when grouping
-                  sx={{ mx: 0.5 }}
-                >
-                  {row.getValue(grouping[grouping.length - 1])}
-                </MuiLink>
-              ) : (
-                <Box sx={{ mx: 0.5 }}>
-                  {row.getValue(grouping[grouping.length - 1])}
-                </Box>
-              )}
+              <OverflowTip
+                disableParagraph
+                sx={{
+                  fontSize: 'inherit',
+                  mx: 0.5,
+                  width: type === 'normal' ? undefined : '14vw',
+                }}
+              >
+                {type === 'normal' ? (
+                  <MuiLink
+                    underline="hover"
+                    component={Link}
+                    to={`/catalogue/item/${row.original.item.catalogue_item_id}`}
+                    // For ensuring space when grouping
+                    sx={{ mx: 0.5, fontSize: 'inherit' }}
+                  >
+                    {row.original?.catalogueItem?.name}
+                  </MuiLink>
+                ) : (
+                  row.original?.catalogueItem?.name
+                )}
 
-              {`(${row.subRows?.length})`}
+                {`(${row.subRows?.length})`}
+              </OverflowTip>
             </Box>
           );
         },
       },
       {
         header: 'Serial Number',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.item.serial_number ?? 'No serial number',
         id: 'item.serial_number',
         size: 250,
@@ -283,6 +298,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Last modified',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.modified_time),
         id: 'item.modified_time',
         filterVariant: 'datetime-range',
@@ -294,6 +310,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Created',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.item.created_time),
         id: 'item.created_time',
         filterVariant: 'datetime-range',
@@ -304,55 +321,60 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       },
       {
         header: 'Delivered Date',
-        accessorFn: (row) => new Date(row.item.delivered_date ?? ''),
+        Header: TableHeaderOverflowTip,
+        accessorFn: (row) =>
+          row.item.delivered_date ? new Date(row.item.delivered_date) : null,
         id: 'item.delivered_date',
         filterVariant: 'date-range',
         size: 350,
-        Cell: ({ row }) => (
-          <Typography
-            // For ensuring space when grouping
-            sx={{ marginRight: 0.5, fontSize: 'inherit' }}
-          >
-            {row.original.item.delivered_date &&
-              formatDateTimeStrings(row.original.item.delivered_date, false)}
-          </Typography>
-        ),
+        Cell: ({ row }) =>
+          row.original.item.delivered_date &&
+          formatDateTimeStrings(row.original.item.delivered_date, false),
+
+        GroupedCell: (props) =>
+          TableGroupedCell({
+            ...props,
+            outputType: 'Date',
+          }),
       },
       {
         header: 'Is Defective',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.item.is_defective === true ? 'Yes' : 'No'),
         id: 'item.is_defective',
         size: 200,
-        filterVariant: 'select',
+        filterVariant: 'autocomplete',
       },
       {
         header: 'Usage Status',
+        Header: TableHeaderOverflowTip,
         accessorFn:
           type === 'usageStatus' ? undefined : (row) => row.item.usage_status,
         id: 'item.usage_status',
         size: 200,
-        filterVariant: 'select',
+        filterVariant: 'autocomplete',
         AggregatedCell:
           type === 'usageStatus'
             ? ({ row }) => {
                 return (
                   <FormControl size="small" fullWidth>
-                    <InputLabel
+                    <Autocomplete
                       id={`usage-statuses-${row.original.catalogueItem?.name}`}
-                    >
-                      Usage statuses
-                    </InputLabel>
-                    <Select
-                      labelId={`usage-statuses-${row.original.catalogueItem?.name}`}
                       size="small"
                       value={
-                        aggregatedCellUsageStatus?.find(
-                          (status) =>
-                            status.catalogue_item_id ===
-                            row.original.catalogueItem?.id
-                        )?.usage_status_id ?? ''
+                        usageStatusesData?.find(
+                          (usageStatus) =>
+                            usageStatus.id ==
+                            aggregatedCellUsageStatus?.find(
+                              (status) =>
+                                status.catalogue_item_id ===
+                                row.original.catalogueItem?.id
+                            )?.usage_status_id
+                        ) ?? null
                       }
-                      onChange={(event) => {
+                      options={usageStatusesData ?? []}
+                      getOptionLabel={(usageStatus) => usageStatus.value}
+                      onChange={(_event, usageStatus: UsageStatus | null) => {
                         if (
                           onChangeAggregatedCellUsageStatus &&
                           aggregatedCellUsageStatus
@@ -368,7 +390,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
 
                           updatedAggregatedCellUsageStatus[
                             itemIndex
-                          ].usage_status_id = event.target.value;
+                          ].usage_status_id = usageStatus?.id ?? '';
 
                           onChangeAggregatedCellUsageStatus(
                             updatedAggregatedCellUsageStatus
@@ -390,7 +412,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                             ) {
                               // Update the usageStatus for the matching item
                               updatedUsageStatuses[i].usage_status_id =
-                                event.target.value;
+                                usageStatus?.id ?? '';
                             }
                           }
 
@@ -422,14 +444,16 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           );
                         }
                       }}
-                      label="Usage statuses"
-                    >
-                      {usageStatusesData?.map((usageStatus) => (
-                        <MenuItem key={usageStatus.id} value={usageStatus.id}>
-                          {usageStatus.value}
-                        </MenuItem>
-                      ))}
-                    </Select>
+                      sx={{ alignItems: 'center' }}
+                      fullWidth
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          required={true}
+                          label="Usage statuses"
+                        />
+                      )}
+                    />
                   </FormControl>
                 );
               }
@@ -443,23 +467,22 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                 );
                 return (
                   <FormControl size="small" fullWidth>
-                    <InputLabel
-                      required={true}
-                      id={`usage-status-${row.original.item.id}`}
-                      error={usageStatusCellError}
-                    >
-                      Usage status
-                    </InputLabel>
-                    <Select
-                      required={true}
-                      labelId={`usage-status-${row.original.item.id}`}
+                    <Autocomplete
+                      id={`usage-statuses-${row.original.item?.serial_number ?? 'no-serial-number'}`}
                       size="small"
                       value={
-                        usageStatuses?.find(
-                          (status) => status.item_id === row.original.item.id
-                        )?.usage_status_id ?? ''
+                        usageStatusesData?.find(
+                          (usageStatus) =>
+                            usageStatus.id ==
+                            usageStatuses?.find(
+                              (status) =>
+                                status.item_id === row.original.item.id
+                            )?.usage_status_id
+                        ) ?? null
                       }
-                      onChange={(event) => {
+                      options={usageStatusesData ?? []}
+                      getOptionLabel={(usageStatus) => usageStatus.value}
+                      onChange={(_event, usageStatus: UsageStatus | null) => {
                         if (onChangeUsageStatuses && usageStatuses) {
                           const itemIndex = usageStatuses.findIndex(
                             (status: UsageStatusesType) =>
@@ -468,7 +491,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           const updatedUsageStatuses = [...usageStatuses];
 
                           updatedUsageStatuses[itemIndex].usage_status_id =
-                            event.target.value;
+                            usageStatus?.id ?? '';
 
                           onChangeUsageStatuses(updatedUsageStatuses);
                         }
@@ -508,23 +531,22 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
                           );
                         }
                       }}
-                      error={usageStatusCellError}
-                      label="Usage status"
-                    >
-                      {usageStatusesData?.map((usageStatus) => (
-                        <MenuItem key={usageStatus.id} value={usageStatus.id}>
-                          {usageStatus.value}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    {usageStatusCellError && (
-                      <FormHelperText error>
-                        {
-                          itemUsageStatusesErrorState[row.original.item.id]
-                            .message
-                        }
-                      </FormHelperText>
-                    )}
+                      sx={{ alignItems: 'center' }}
+                      fullWidth
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          required={true}
+                          label="Usage statuses"
+                          error={usageStatusCellError}
+                          helperText={
+                            usageStatusCellError &&
+                            itemUsageStatusesErrorState[row.original.item.id]
+                              .message
+                          }
+                        />
+                      )}
+                    />
                   </FormControl>
                 );
               }
@@ -603,6 +625,33 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
       showProgressBars: isLoading,
       rowSelection: rowSelection,
     },
+
+    muiTableBodyCellProps: ({ column }) =>
+      //Ignore the usages statuses cell in the dialog as this is a
+      // select component and does not need to overflow
+      (column.id === 'item.usage_status' && type === 'usageStatus') ||
+      // The overflow of these column groups is done manually in the column definition
+      ((column.id === 'catalogueItem.name' ||
+        column.id === 'item.delivered_date') &&
+        column.getIsGrouped()) ||
+      // Ignore MRT rendered cells e.g. expand , spacer etc
+      column.id.startsWith('mrt')
+        ? {}
+        : {
+            component: (props: TableCellBaseProps) => {
+              return (
+                <TableBodyCellOverFlowTip
+                  {...({
+                    ...props,
+                    overFlowTipSx: {
+                      width: type === 'usageStatus' ? '25vw' : undefined,
+                    },
+                  } as TableCellOverFlowTipProps)}
+                />
+              );
+            },
+          },
+
     // MUI
     muiTablePaperProps: ({ table }) => ({
       // sx doesn't work here currently - see https://www.material-react-table.com/docs/guides/full-screen-toggle

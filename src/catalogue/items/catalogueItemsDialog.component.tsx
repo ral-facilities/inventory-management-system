@@ -1,8 +1,10 @@
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import AddIcon from '@mui/icons-material/Add';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
+  Autocomplete,
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -11,9 +13,6 @@ import {
   FormHelperText,
   Grid,
   IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
   Step,
   StepLabel,
   Stepper,
@@ -27,7 +26,9 @@ import {
   useAddCatalogueItem,
   useEditCatalogueItem,
 } from '../../api/catalogueItems';
+import { useManufacturers } from '../../api/manufacturers';
 import {
+  APIError,
   AddCatalogueItem,
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -35,15 +36,12 @@ import {
   CatalogueItem,
   CatalogueItemDetailsPlaceholder,
   EditCatalogueItem,
-  ErrorParsing,
   Manufacturer,
 } from '../../app.types';
-import { matchCatalogueItemProperties } from '../catalogue.component';
-import { Autocomplete } from '@mui/material';
-import { useManufacturers } from '../../api/manufacturers';
-import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';
 import { sortDataList, trimStringValues } from '../../utils';
+import { matchCatalogueItemProperties } from '../catalogue.component';
 
 export interface CatalogueItemsDialogProps {
   open: boolean;
@@ -185,7 +183,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
   const handlePropertyChange = (index: number, value: string | null) => {
     const updatedPropertyValues = [...propertyValues];
-
     if (value === null || (typeof value === 'string' && value.trim() === '')) {
       updatedPropertyValues[index] = null;
     } else {
@@ -479,7 +476,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
       const isCatalogueItemPropertiesUpdated =
         JSON.stringify(updatedProperties) !==
         JSON.stringify(
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           selectedCatalogueItem.properties.map(({ unit, name, ...rest }) => ({
             id: rest.id,
             value: rest.value,
@@ -534,7 +530,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         editCatalogueItem(trimStringValues(catalogueItem))
           .then(() => handleClose())
           .catch((error: AxiosError) => {
-            const response = error.response?.data as ErrorParsing;
+            const response = error.response?.data as APIError;
 
             if (response && error.response?.status === 409) {
               if (response.detail.includes('child elements')) {
@@ -616,6 +612,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           <Grid item container spacing={1.5} xs={12}>
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-name-input"
                 label="Name"
                 size="small"
                 required={true}
@@ -632,6 +629,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-description-input"
                 label="Description"
                 size="small"
                 value={catalogueItemDetails.description ?? ''}
@@ -644,6 +642,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-cost-input"
                 label="Cost (£)"
                 size="small"
                 required={true}
@@ -663,6 +662,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-cost-rework-input"
                 label="Cost to rework (£)"
                 size="small"
                 value={catalogueItemDetails.cost_to_rework_gbp ?? ''}
@@ -684,6 +684,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-replace-input"
                 label="Time to replace (days)"
                 size="small"
                 required={true}
@@ -703,6 +704,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-rework-input"
                 label="Time to rework (days)"
                 size="small"
                 value={catalogueItemDetails.days_to_rework ?? ''}
@@ -721,6 +723,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-drawing-number-input"
                 label="Drawing number"
                 size="small"
                 value={catalogueItemDetails.drawing_number ?? ''}
@@ -733,6 +736,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-drawing-link-input"
                 label="Drawing link"
                 size="small"
                 value={catalogueItemDetails.drawing_link ?? ''}
@@ -751,6 +755,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-model-input"
                 label="Model number"
                 size="small"
                 value={catalogueItemDetails.item_model_number ?? ''}
@@ -767,6 +772,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             <Grid item xs={12} style={{ display: 'flex' }}>
               <Grid item xs={11}>
                 <Autocomplete
+                  id="catalogue-item-manufacturer-input"
+                  disableClearable={true}
                   value={
                     //logic means that current manufacturer renders in edit dialog, but behaves the same as add dialog (so can be changed/cleared)
                     selectedCatalogueItemManufacturer &&
@@ -787,7 +794,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       newManufacturer?.id ?? null
                     );
                   }}
-                  id="manufacturer-autocomplete"
                   options={sortDataList(manufacturerList ?? [], 'name')}
                   size="small"
                   isOptionEqualToValue={(option, value) =>
@@ -827,6 +833,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-notes-input"
                 label="Notes"
                 size="small"
                 multiline
@@ -852,100 +859,88 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                         <Grid item xs={11} sx={{ display: 'flex' }}>
                           {property.type === 'boolean' ? (
                             <FormControl fullWidth>
-                              <InputLabel
-                                required={property.mandatory ?? false}
-                                error={propertyErrors[index]}
+                              <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
                                 )}`}
+                                value={
+                                  propertyValues[index]
+                                    ? (propertyValues[index] as string)
+                                        .charAt(0)
+                                        .toUpperCase() +
+                                      (propertyValues[index] as string).slice(1)
+                                    : ''
+                                }
                                 size="small"
-                                sx={{ alignItems: 'center' }}
-                              >
-                                {property.name}
-                              </InputLabel>
-                              <Select
-                                value={(propertyValues[index] as string) ?? ''}
-                                required={property.mandatory ?? false}
-                                size="small"
-                                error={propertyErrors[index]}
-                                labelId={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                onChange={(event) =>
+                                onChange={(_event, value) => {
                                   handlePropertyChange(
                                     index,
-                                    event.target.value as string
-                                  )
-                                }
-                                label={property.name}
+                                    value?.toLowerCase() as string
+                                  );
+                                }}
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                              >
-                                <MenuItem value="">None</MenuItem>
-                                <MenuItem value="true">True</MenuItem>
-                                <MenuItem value="false">False</MenuItem>
-                              </Select>
-                              {propertyErrors[index] && (
-                                <FormHelperText error>
-                                  Please select either True or False
-                                </FormHelperText>
-                              )}
+                                options={['True', 'False']}
+                                isOptionEqualToValue={(option, value) =>
+                                  option.toLowerCase() == value.toLowerCase() ||
+                                  value == ''
+                                }
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    required={property.mandatory ?? false}
+                                    label={property.name}
+                                    error={propertyErrors[index]}
+                                    helperText={
+                                      propertyErrors[index] &&
+                                      'Please select either True or False'
+                                    }
+                                  />
+                                )}
+                              />
                             </FormControl>
                           ) : property.allowed_values ? (
                             <FormControl fullWidth>
-                              <InputLabel
-                                required={property.mandatory ?? false}
-                                error={propertyErrors[index]}
+                              <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
                                 )}`}
-                                size="small"
-                                sx={{ alignItems: 'center' }}
-                              >
-                                {property.name}
-                              </InputLabel>
-                              <Select
                                 value={(propertyValues[index] as string) ?? ''}
-                                required={property.mandatory ?? false}
                                 size="small"
-                                error={propertyErrors[index]}
-                                labelId={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                onChange={(event) =>
-                                  handlePropertyChange(
-                                    index,
-                                    event.target.value as string
-                                  )
-                                }
-                                label={property.name}
+                                onChange={(_event, value) => {
+                                  handlePropertyChange(index, value);
+                                }}
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                              >
-                                <MenuItem key={0} value={''}>
-                                  {'None'}
-                                </MenuItem>
-                                {property.allowed_values.values.map(
-                                  (value, index) => (
-                                    <MenuItem key={index + 1} value={value}>
-                                      {value}
-                                    </MenuItem>
-                                  )
+                                options={property.allowed_values.values}
+                                getOptionLabel={(option) => option.toString()}
+                                isOptionEqualToValue={(option, value) =>
+                                  option.toString() === value.toString() ||
+                                  value === ''
+                                }
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    required={property.mandatory ?? false}
+                                    label={`${property.name} ${
+                                      property.unit ? `(${property.unit})` : ''
+                                    }`}
+                                    error={propertyErrors[index]}
+                                    helperText={
+                                      propertyErrors[index] &&
+                                      'Please enter a valid value as this field is mandatory'
+                                    }
+                                  />
                                 )}
-                              </Select>
-                              {propertyErrors[index] && (
-                                <FormHelperText error>
-                                  Please enter a valid value as this field is
-                                  mandatory
-                                </FormHelperText>
-                              )}
+                              />
                             </FormControl>
                           ) : (
                             <TextField
+                              id={`catalogue-item-${property.name}-input`}
                               label={`${property.name} ${
                                 property.unit ? `(${property.unit})` : ''
                               }`}
@@ -986,7 +981,9 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                             title={
                               <div>
                                 <Typography>Name: {property.name}</Typography>
-                                <Typography>Unit: {property.unit}</Typography>
+                                <Typography>
+                                  Unit: {property.unit ?? 'None'}
+                                </Typography>
                                 <Typography>
                                   Type:{' '}
                                   {property.type === 'string'
@@ -1095,6 +1092,11 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
               type === 'edit' ? handleEditCatalogueItem : handleAddCatalogueItem
             }
             sx={{ mr: 3 }}
+            endIcon={
+              isAddPending || isEditPending ? (
+                <CircularProgress size={16} />
+              ) : null
+            }
           >
             Finish
           </Button>

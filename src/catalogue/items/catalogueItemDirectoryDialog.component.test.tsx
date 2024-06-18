@@ -1,7 +1,8 @@
-import { renderComponentWithRouterProvider } from '../../testUtils';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
+import { renderComponentWithRouterProvider } from '../../testUtils';
 import CatalogueItemDirectoryDialog, {
   CatalogueItemDirectoryDialogProps,
 } from './catalogueItemDirectoryDialog.component';
@@ -9,8 +10,8 @@ import CatalogueItemDirectoryDialog, {
 describe('catalogue item directory Dialog', () => {
   let props: CatalogueItemDirectoryDialogProps;
   let user: UserEvent;
-  let axiosPatchSpy;
-  let axiosPostSpy;
+  let axiosPatchSpy: MockInstance;
+  let axiosPostSpy: MockInstance;
   const onClose = vi.fn();
   const onChangeSelectedItems = vi.fn();
 
@@ -40,6 +41,7 @@ describe('catalogue item directory Dialog', () => {
             name: 'Measurement Range',
             type: 'number',
             unit: 'Joules',
+            unit_id: '3',
             mandatory: true,
             allowed_values: null,
           },
@@ -48,6 +50,7 @@ describe('catalogue item directory Dialog', () => {
             name: 'Accuracy',
             type: 'string',
             unit: null,
+            unit_id: null,
             mandatory: false,
             allowed_values: null,
           },
@@ -61,8 +64,20 @@ describe('catalogue item directory Dialog', () => {
           name: 'Energy Meters 26',
           description: 'Precision energy meters for accurate measurements. 26',
           properties: [
-            { id: '7', name: 'Measurement Range', value: 1000, unit: 'Joules' },
-            { id: '8', name: 'Accuracy', value: '±0.5%', unit: null },
+            {
+              id: '7',
+              name: 'Measurement Range',
+              value: 1000,
+              unit: 'Joules',
+              unit_id: '3',
+            },
+            {
+              id: '8',
+              name: 'Accuracy',
+              value: '±0.5%',
+              unit: null,
+              unit_id: null,
+            },
           ],
           id: '89',
           manufacturer_id: '1',
@@ -85,8 +100,20 @@ describe('catalogue item directory Dialog', () => {
           name: 'Energy Meters 27',
           description: 'Precision energy meters for accurate measurements. 27',
           properties: [
-            { id: '7', name: 'Measurement Range', value: 2000, unit: 'Joules' },
-            { id: '8', name: 'Accuracy', value: null, unit: null },
+            {
+              id: '7',
+              name: 'Measurement Range',
+              value: 2000,
+              unit: 'Joules',
+              unit_id: '3',
+            },
+            {
+              id: '8',
+              name: 'Accuracy',
+              value: null,
+              unit: null,
+              unit_id: null,
+            },
           ],
           id: '6',
           manufacturer_id: '1',
@@ -108,11 +135,6 @@ describe('catalogue item directory Dialog', () => {
     };
     user = userEvent.setup();
 
-    window.ResizeObserver = vi.fn().mockImplementation(() => ({
-      disconnect: vi.fn(),
-      observe: vi.fn(),
-      unobserve: vi.fn(),
-    }));
     window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 2000 });

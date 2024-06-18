@@ -1,15 +1,16 @@
 import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
   AddCatalogueCategory,
-  CatalogueCategoryPropertyMigration,
   AddCatalogueItem,
   AddItem,
   AddManufacturer,
   AddSystem,
+  AddUnit,
   AddUsageStatus,
   BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueCategoryProperty,
+  CatalogueCategoryPropertyMigration,
   CatalogueItem,
   EditCatalogueCategory,
   EditCatalogueItem,
@@ -19,8 +20,10 @@ import {
   Item,
   Manufacturer,
   System,
+  Unit,
   UsageStatus,
 } from '../app.types';
+import { generateUniqueId } from '../utils';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
 import CatalogueCategoryBreadcrumbsJSON from './CatalogueCategoryBreadcrumbs.json';
 import CatalogueItemsJSON from './CatalogueItems.json';
@@ -30,7 +33,6 @@ import SystemBreadcrumbsJSON from './SystemBreadcrumbs.json';
 import SystemsJSON from './Systems.json';
 import UnitsJSON from './Units.json';
 import UsageStatusJSON from './UsageStatuses.json';
-import { generateUniqueId } from '../utils';
 
 /* MSW v2 expects types for responses, this interface covers any empty body
    or error with detail */
@@ -71,10 +73,17 @@ export const handlers = [
         parent_id: null,
       };
     }
+
     body = {
       ...body,
       catalogue_item_properties: body.catalogue_item_properties?.map(
-        (property) => ({ ...property, id: generateUniqueId('test_id_') })
+        (property) => ({
+          ...property,
+          id: generateUniqueId('test_id_'),
+          unit:
+            UnitsJSON.find((unit) => unit.id === property.unit_id)?.value ??
+            null,
+        })
       ),
     };
     return HttpResponse.json(
@@ -283,6 +292,7 @@ export const handlers = [
           return {
             ...property,
             unit: extraPropertyData?.unit,
+            unit_id: extraPropertyData?.unit_id,
             name: extraPropertyData?.name,
           };
         }),
@@ -696,7 +706,7 @@ export const handlers = [
           );
           return {
             ...property,
-            unit: extraPropertyData?.unit,
+            unit: extraPropertyData?.unit ?? null,
             name: extraPropertyData?.name,
           };
         }),
@@ -801,6 +811,62 @@ export const handlers = [
 
   http.get('/v1/units', () => {
     return HttpResponse.json(UnitsJSON, { status: 200 });
+  }),
+
+  http.post<PathParams, AddUnit, Unit | ErrorResponse>(
+    '/v1/units',
+    async ({ request }) => {
+      const body = await request.json();
+
+      if (body.value === 'test_dup') {
+        return HttpResponse.json(
+          {
+            detail: 'A unit with the same value already exists',
+          },
+          { status: 409 }
+        );
+      }
+      if (body.value === 'Error 500') {
+        return HttpResponse.json(
+          { detail: 'Something went wrong' },
+          { status: 500 }
+        );
+      }
+
+      return HttpResponse.json(
+        {
+          id: '10',
+          value: 'Kelvin',
+          code: 'kelvin',
+          created_time: '2024-01-01T12:00:00.000+00:00',
+          modified_time: '2024-01-02T13:10:10.000+00:00',
+        },
+        { status: 200 }
+      );
+    }
+  ),
+
+  http.delete<
+    { id: string },
+    DefaultBodyType,
+    ErrorResponse | NonNullable<unknown>
+  >('/v1/units/:id', ({ params }) => {
+    const { id } = params;
+    const validUnit = UnitsJSON.find((value) => value.id === id);
+    if (validUnit) {
+      if (id === '2') {
+        return HttpResponse.json(
+          {
+            detail: 'The specified unit is part of a Catalogue category',
+          },
+          { status: 409 }
+        );
+      } else {
+        return HttpResponse.json({ status: 204 });
+      }
+    } else {
+      return HttpResponse.json({ detail: '' }, { status: 400 });
+    }
   }),
 
   // ------------------------------------ Usage Status ------------------------------------------------

@@ -11,10 +11,10 @@ import React from 'react';
 
 import {
   AddCatalogueCategoryProperty,
-  CatalogueCategoryPropertyMigration,
   AddCatalogueCategoryPropertyWithPlacementIds,
   AllowedValuesList,
   AllowedValuesListErrorsType,
+  CatalogueCategoryPropertyMigration,
   CatalogueItemPropertiesErrorsType,
 } from '../../app.types';
 import { generateUniqueId } from '../../utils';
@@ -62,7 +62,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
         {
           name: '',
           type: '',
-          unit: undefined,
+          unit_id: undefined,
           mandatory: false,
           allowed_values: undefined,
           cip_placement_id: generateUniqueId('cip_placement_id_'),
@@ -160,7 +160,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
         );
         updatedFormFields[fieldIndex][field] = value;
         if (value === 'boolean') {
-          delete updatedFormFields[fieldIndex].unit;
+          delete updatedFormFields[fieldIndex].unit_id;
           delete updatedFormFields[fieldIndex].allowed_values;
         }
       } else if (field === 'name') {

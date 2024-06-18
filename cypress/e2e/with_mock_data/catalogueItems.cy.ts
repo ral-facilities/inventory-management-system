@@ -8,23 +8,29 @@ describe('Catalogue Items', () => {
   it('adds a catalogue item', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
 
-    cy.findByLabelText('Name *').type('test');
-    cy.findByLabelText('Description').type('test Description');
-    cy.findByLabelText('Cost (£) *').type('5000');
-    cy.findByLabelText('Cost to rework (£)').type('400');
-    cy.findByLabelText('Time to replace (days) *').type('14');
-    cy.findByLabelText('Time to rework (days)').type('5');
-    cy.findByLabelText('Drawing number').type('MX43242');
-    cy.findByLabelText('Drawing link').type('https://example.com');
-    cy.findByLabelText('Model number').type('MXtest');
-    cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
-    cy.findByLabelText('Notes').click().type('This is a test note');
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('Name *').type('test');
+        cy.findByLabelText('Description').type('test Description');
+        cy.findByLabelText('Cost (£) *').type('5000');
+        cy.findByLabelText('Cost to rework (£)').type('400');
+        cy.findByLabelText('Time to replace (days) *').type('14');
+        cy.findByLabelText('Time to rework (days)').type('5');
+        cy.findByLabelText('Drawing number').type('MX43242');
+        cy.findByLabelText('Drawing link').type('https://example.com');
+        cy.findByLabelText('Model number').type('MXtest');
+        cy.findByLabelText('Manufacturer *').click();
+        cy.findByLabelText('Manufacturer *').type('Man{downArrow}{enter}');
+        cy.findByLabelText('Notes').click();
+        cy.findByLabelText('Notes').type('This is a test note');
 
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByLabelText('Resolution (megapixels) *').type('18');
-    cy.findByLabelText('Frame Rate (fps)').type('60');
-    cy.findByLabelText('Sensor Type *').type('IO');
-    cy.findByLabelText('Sensor brand').type('pixel');
+        cy.findByRole('button', { name: 'Next' }).click();
+        cy.findByLabelText('Resolution (megapixels) *').type('18');
+        cy.findByLabelText('Frame Rate (fps)').type('60');
+        cy.findByLabelText('Sensor Type *').type('IO');
+        cy.findByLabelText('Sensor brand').type('pixel');
+      });
     cy.findByLabelText('Broken *').click();
     cy.findByText('True').click();
     cy.findByLabelText('Older than five years').click();
@@ -118,16 +124,24 @@ describe('Catalogue Items', () => {
   it('adds a catalogue item only mandatory fields', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
 
-    cy.findByLabelText('Name *').type('test');
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('Name *').type('test');
 
-    cy.findByLabelText('Cost (£) *').type('5000');
-    cy.findByLabelText('Time to replace (days) *').type('14');
+        cy.findByLabelText('Cost (£) *').type('5000');
+        cy.findByLabelText('Time to replace (days) *').type('14');
 
-    cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
+        cy.findByLabelText('Manufacturer *').click();
 
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByLabelText('Resolution (megapixels) *').type('18');
-    cy.findByLabelText('Sensor Type *').type('IO');
+        cy.findAllByLabelText('Manufacturer *')
+
+          .type('Man{downArrow}{enter}');
+
+        cy.findByRole('button', { name: 'Next' }).click();
+        cy.findByLabelText('Resolution (megapixels) *').type('18');
+        cy.findByLabelText('Sensor Type *').type('IO');
+      });
     cy.findByLabelText('Broken *').click();
     cy.findByText('True').click();
 
@@ -175,17 +189,23 @@ describe('Catalogue Items', () => {
   it('adds a catalogue item only mandatory fields (allowed list of values)', () => {
     cy.visit('/catalogue/12');
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
-    cy.findByLabelText('Name *').type('test');
 
-    cy.findByLabelText('Cost (£) *').type('5000');
-    cy.findByLabelText('Time to replace (days) *').type('14');
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('Name *').type('test');
 
-    cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
+        cy.findByLabelText('Cost (£) *').type('5000');
+        cy.findByLabelText('Time to replace (days) *').type('14');
 
-    cy.findByRole('button', { name: 'Next' }).click();
+        cy.findByLabelText('Manufacturer *').click();
 
+        cy.findByLabelText('Manufacturer *').type('Man{downArrow}{enter}');
+
+        cy.findByRole('button', { name: 'Next' }).click();
+      });
     cy.findByLabelText('Ultimate Pressure (millibar) *').type('0.2');
-    cy.findByLabelText('Pumping Speed *').click();
+    cy.findByLabelText('Pumping Speed (liters per second) *').click();
     cy.findByRole('option', { name: '400' }).click();
 
     cy.findByLabelText('Axis').click();
@@ -231,91 +251,105 @@ describe('Catalogue Items', () => {
 
   it('displays the error messages and clears when values are changed', () => {
     cy.findByRole('button', { name: 'Add Catalogue Item' }).click();
-    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByText('Please enter a name').should('exist');
-    cy.findByText('Please enter a cost').should('exist');
-    cy.findByText('Please enter how many days it would take to replace').should(
-      'exist'
-    );
-    cy.findByText(
-      'Please choose a manufacturer, or add a new manufacturer'
-    ).should('exist');
+        cy.findByText('Please enter a name').should('exist');
+        cy.findByText('Please enter a cost').should('exist');
+        cy.findByText(
+          'Please enter how many days it would take to replace'
+        ).should('exist');
+        cy.findByText(
+          'Please choose a manufacturer, or add a new manufacturer'
+        ).should('exist');
 
-    cy.findByRole('button', { name: 'Next' }).should('be.disabled');
+        cy.findByRole('button', { name: 'Next' }).should('be.disabled');
 
-    cy.findByLabelText('Name *').type('test');
+        cy.findByLabelText('Name *').type('test');
 
-    cy.findByLabelText('Cost (£) *').type('5000');
-    cy.findByLabelText('Time to replace (days) *').type('14');
-    cy.findByLabelText('Manufacturer *').click().type('Man{downArrow}{enter}');
+        cy.findByLabelText('Cost (£) *').type('5000');
+        cy.findByLabelText('Time to replace (days) *').type('14');
+        cy.findByLabelText('Manufacturer *').click();
+        cy.findByLabelText('Manufacturer *').type('Man{downArrow}{enter}');
 
-    cy.findByText('Please enter name').should('not.exist');
-    cy.findByText('Please select either True or False').should('not.exist');
-    cy.findByText('Please enter a cost').should('not.exist');
-    cy.findByText('Please enter how many days it would take to replace').should(
-      'not.exist'
-    );
-    cy.findByText(
-      'Please chose a manufacturer, or add a new manufacturer'
-    ).should('not.exist');
+        cy.findByText('Please enter name').should('not.exist');
+        cy.findByText('Please select either True or False').should('not.exist');
+        cy.findByText('Please enter a cost').should('not.exist');
+        cy.findByText(
+          'Please enter how many days it would take to replace'
+        ).should('not.exist');
+        cy.findByText(
+          'Please chose a manufacturer, or add a new manufacturer'
+        ).should('not.exist');
 
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Finish' }).click();
+        cy.findByRole('button', { name: 'Next' }).click();
+        cy.findByRole('button', { name: 'Finish' }).click();
 
-    cy.findByText('Please select either True or False').should('exist');
+        cy.findByText('Please select either True or False').should('exist');
 
-    cy.findAllByText(
-      'Please enter a valid value as this field is mandatory'
-    ).should('have.length', 2);
+        cy.findAllByText(
+          'Please enter a valid value as this field is mandatory'
+        ).should('have.length', 2);
+      });
     cy.findByLabelText('Resolution (megapixels) *').type('18');
     cy.findByLabelText('Sensor Type *').type('IO');
     cy.findByLabelText('Broken *').click();
     cy.findByText('True').click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findAllByText(
+          'Please enter a valid value as this field is mandatory'
+        ).should('have.length', 0);
 
-    cy.findAllByText(
-      'Please enter a valid value as this field is mandatory'
-    ).should('have.length', 0);
+        // value error from number field
 
-    // value error from number field
+        cy.findByRole('button', { name: 'Back' }).click();
 
-    cy.findByRole('button', { name: 'Back' }).click();
+        cy.findByLabelText('Cost (£) *').clear();
+        cy.findByLabelText('Time to replace (days) *').clear();
+        cy.findByLabelText('Cost (£) *').type('gfdg');
+        cy.findByLabelText('Time to replace (days) *').type('32gf');
+        cy.findByLabelText('Drawing link').type('test.co.uk');
 
-    cy.findByLabelText('Cost (£) *').clear();
-    cy.findByLabelText('Time to replace (days) *').clear();
-    cy.findByLabelText('Cost (£) *').type('gfdg');
-    cy.findByLabelText('Time to replace (days) *').type('32gf');
-    cy.findByLabelText('Drawing link').type('test.co.uk');
+        cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByRole('button', { name: 'Next' }).click();
+        cy.findAllByText('Please enter a valid number').should(
+          'have.length',
+          2
+        );
+        cy.findAllByText(
+          'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
+        ).should('exist');
+        cy.findByRole('button', { name: 'Next' }).should('be.disabled');
+        cy.findByLabelText('Cost (£) *').clear();
+        cy.findByLabelText('Cost (£) *').type('5000');
+        cy.findByLabelText('Time to replace (days) *').clear();
+        cy.findByLabelText('Time to replace (days) *').type('14');
+        cy.findByLabelText('Drawing link').clear();
+        cy.findByLabelText('Drawing link').type('https://test.co.uk');
 
-    cy.findAllByText('Please enter a valid number').should('have.length', 2);
-    cy.findAllByText(
-      'Please enter a valid Drawing link. Only "http://" and "https://" links with typical top-level domain are accepted'
-    ).should('exist');
-    cy.findByRole('button', { name: 'Next' }).should('be.disabled');
-    cy.findByLabelText('Cost (£) *').clear();
-    cy.findByLabelText('Cost (£) *').type('5000');
-    cy.findByLabelText('Time to replace (days) *').clear();
-    cy.findByLabelText('Time to replace (days) *').type('14');
-    cy.findByLabelText('Drawing link').clear();
-    cy.findByLabelText('Drawing link').type('https://test.co.uk');
+        cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByRole('button', { name: 'Next' }).click();
+        cy.findByLabelText('Resolution (megapixels) *').clear();
+        cy.findByLabelText('Resolution (megapixels) *').type('dsfs');
+        cy.findByLabelText('Frame Rate (fps)').type('fdsfsd');
+        cy.findByRole('button', { name: 'Finish' }).click();
 
-    cy.findByLabelText('Resolution (megapixels) *').clear();
-    cy.findByLabelText('Resolution (megapixels) *').type('dsfs');
-    cy.findByLabelText('Frame Rate (fps)').type('fdsfsd');
-    cy.findByRole('button', { name: 'Finish' }).click();
+        cy.findAllByText('Please enter a valid number').should(
+          'have.length',
+          2
+        );
 
-    cy.findAllByText('Please enter a valid number').should('have.length', 2);
+        cy.findByLabelText('Resolution (megapixels) *').clear();
+        cy.findByLabelText('Resolution (megapixels) *').type('12');
+        cy.findByLabelText('Frame Rate (fps)').clear();
+        cy.findByLabelText('Frame Rate (fps)').type('12');
 
-    cy.findByLabelText('Resolution (megapixels) *').clear();
-    cy.findByLabelText('Resolution (megapixels) *').type('12');
-    cy.findByLabelText('Frame Rate (fps)').clear();
-    cy.findByLabelText('Frame Rate (fps)').type('12');
-
-    cy.findByRole('button', { name: 'Finish' }).should('not.disabled');
+        cy.findByRole('button', { name: 'Finish' }).should('not.disabled');
+      });
   });
 
   it('opens add manufacturer dialog and closes it back to catalogue item dialog', () => {
@@ -528,24 +562,30 @@ describe('Catalogue Items', () => {
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Edit').click();
 
-    cy.findByLabelText('Name *').clear();
-    cy.findByLabelText('Name *').type('test');
-    cy.findByLabelText('Description').clear();
-    cy.findByLabelText('Cost (£) *').type('0');
-    cy.findByLabelText('Cost to rework (£)').type('4');
-    cy.findByLabelText('Time to replace (days) *').type('1');
-    cy.findByLabelText('Time to rework (days)').type('5');
-    cy.findByLabelText('Drawing number').type('MX43242');
-    cy.findByLabelText('Drawing link').type('https://example.com');
-    cy.findByLabelText('Model number').type('MXtest');
-    cy.findByLabelText('Manufacturer *')
-      .click()
-      .type('Man{downArrow}{downArrow}{enter}');
-    cy.findAllByLabelText('Notes').clear().type('This is an updated note');
-    cy.startSnoopingBrowserMockedRequest();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('Name *').clear();
+        cy.findByLabelText('Name *').type('test');
+        cy.findByLabelText('Description').clear();
+        cy.findByLabelText('Cost (£) *').type('0');
+        cy.findByLabelText('Cost to rework (£)').type('4');
+        cy.findByLabelText('Time to replace (days) *').type('1');
+        cy.findByLabelText('Time to rework (days)').type('5');
+        cy.findByLabelText('Drawing number').type('MX43242');
+        cy.findByLabelText('Drawing link').type('https://example.com');
+        cy.findByLabelText('Model number').type('MXtest');
+        cy.findByLabelText('Manufacturer *').click();
+        cy.findByLabelText('Manufacturer *').type(
+          'Man{downArrow}{downArrow}{enter}'
+        );
+        cy.findAllByLabelText('Notes').clear();
+        cy.findAllByLabelText('Notes').type('This is an updated note');
+        cy.startSnoopingBrowserMockedRequest();
 
-    cy.findByRole('button', { name: 'Next' }).click();
-    cy.findByRole('button', { name: 'Finish' }).click();
+        cy.findByRole('button', { name: 'Next' }).click();
+        cy.findByRole('button', { name: 'Finish' }).click();
+      });
     cy.findByRole('dialog').should('not.exist');
 
     cy.findBrowserMockedRequests({
@@ -576,9 +616,13 @@ describe('Catalogue Items', () => {
     cy.visit('/catalogue/5');
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Edit').click();
-    cy.findByRole('button', { name: 'Next' }).click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByRole('button', { name: 'Next' }).click();
 
-    cy.findByLabelText('Measurement Range (Joules) *').type('0');
+        cy.findByLabelText('Measurement Range (Joules) *').type('0');
+      });
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -632,12 +676,15 @@ describe('Catalogue Items', () => {
   it('check table state persists on page reload', () => {
     cy.findByText('Cameras 1').should('exist');
     cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+
     cy.findByLabelText('Filter by Name').type('Cameras 15');
+    cy.findByRole('button', { name: 'Clear Filters' }).should('be.disabled');
+
     cy.findByText('Cameras 1').should('not.exist');
     cy.findByRole('link', { name: 'Cameras 15' }).should('exist');
     cy.location('search').should(
       'eq',
-      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJqAwg8QE5oAzgAIAjAFYQAXwC60oA'
+      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJABhBsXFoRAAgCMAVhABffQF19QA'
     );
 
     cy.reload();
@@ -646,15 +693,34 @@ describe('Catalogue Items', () => {
     cy.findByText('Cameras 1').should('not.exist');
     cy.location('search').should(
       'eq',
-      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJqAwg8QE5oAzgAIAjAFYQAXwC60oA'
+      '?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0AdmpcSADQgBuOJMoGAngA5NoIAM4YATglr4W7TkJABhBsXFoRAAgCMAVhABffQF19QA'
     );
+  });
+
+  it('can load and clear date filters', () => {
+    cy.visit(
+      '/catalogue/4?state=N4IgxgYiBcDaoEsAmNwEMAuaA2B7A5gK4CmAkhsQLYB0luSCAZgsUgPoYKXEgA0IANxwkY8EBgCeABx7QQSTD35DsIuQCYADOoAsAWk0BGAwGYAKps3RL1zdUuaAWiAC%2BvUJJmoAzhgBOCAB2%2BHyCwrIgrgC6LjFAA'
+    );
+
+    cy.findByText('Cameras 25').should('exist');
+
+    cy.findByRole('button', { name: 'Clear Filters' }).click();
+
+    cy.findByText('Cameras 1').should('exist');
+    cy.findByText('Cameras 25').should('not.exist');
+
+    cy.location('search').should('eq', '');
   });
 
   it('make an item obsolete (no details)', () => {
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Obsolete').click();
 
-    cy.findByLabelText('Is Obsolete').click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('Is Obsolete').click();
+      });
     cy.findByRole('option', { name: 'Yes' }).click();
 
     cy.findByText('Obsolete Replacement').click();
@@ -677,8 +743,11 @@ describe('Catalogue Items', () => {
   it('make an item obsolete (all details)', () => {
     cy.findAllByLabelText('Row Actions').eq(1).click();
     cy.findByText('Obsolete').click();
-
-    cy.findByLabelText('Is Obsolete').click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('Is Obsolete').click();
+      });
     cy.findByRole('option', { name: 'Yes' }).click();
 
     cy.findByText('Next').click();
@@ -715,8 +784,11 @@ describe('Catalogue Items', () => {
 
     cy.findAllByLabelText('Row Actions').eq(0).click();
     cy.findByText('Obsolete').click();
-
-    cy.findByLabelText('Is Obsolete').click();
+    cy.findByRole('dialog')
+      .should('be.visible')
+      .within(() => {
+        cy.findByLabelText('Is Obsolete').click();
+      });
     cy.findByRole('option', { name: 'No' }).click();
 
     cy.startSnoopingBrowserMockedRequest();

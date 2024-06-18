@@ -23,14 +23,14 @@ import {
   CatalogueCategoryProperty,
   CatalogueItemProperty,
 } from '../app.types';
+import { generateUniqueName } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
+import CatalogueCardView from './category/catalogueCardView.component';
 import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
 import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirectoryDialog.component';
+import CatalogueItemPropertiesMigrationDialog from './category/catalogueItemPropertiesMigrationDialog.component';
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
-import { generateUniqueName } from '../utils';
-import CatalogueCardView from './category/catalogueCardView.component';
-import CatalogueItemPropertiesMigrationDialog from './category/catalogueItemPropertiesMigrationDialog.component';
 
 /* Returns function that navigates to a specific catalogue category id or catalogue path (or to the root of
    all categories if given null) */
@@ -350,7 +350,7 @@ function Catalogue() {
         </Grid>
       </Grid>
 
-      {catalogueCategoryDataLoading &&
+      {(catalogueCategoryDataLoading || !catalogueCategoryData) &&
         (!catalogueCategoryDetailLoading || !catalogueCategoryDetail) &&
         !parentInfo?.is_leaf && (
           <Box sx={{ width: '100%' }}>
@@ -380,6 +380,7 @@ function Catalogue() {
         )}
 
       {catalogueCategoryData &&
+        catalogueCategoryData.length > 0 &&
         !parentInfo?.is_leaf &&
         !catalogueCategoryDetailLoading && (
           <CatalogueCardView

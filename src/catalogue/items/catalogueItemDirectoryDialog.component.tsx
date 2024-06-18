@@ -71,7 +71,7 @@ const CatalogueItemDirectoryDialog = (
     setParentCategoryId(props.parentCategoryId);
   }, [onClose, props.parentCategoryId]);
 
-  // reset error message when catalogue catagory id changes
+  // reset error message when catalogue category id changes
   React.useEffect(() => {
     setErrorMessage(undefined);
   }, [parentCategoryId]);
@@ -91,11 +91,9 @@ const CatalogueItemDirectoryDialog = (
   const handleMoveToCatalogueItem = React.useCallback(() => {
     if (
       JSON.stringify(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         parentInfo.catalogue_item_properties?.map(({ id, ...rest }) => rest)
       ) !==
       JSON.stringify(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         targetCatalogueCategory?.catalogue_item_properties?.map(
           ({ id, ...rest }) => rest
         )
@@ -127,11 +125,9 @@ const CatalogueItemDirectoryDialog = (
   const handleCopyToCatalogueItem = React.useCallback(() => {
     if (
       JSON.stringify(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         parentInfo.catalogue_item_properties?.map(({ id, ...rest }) => rest)
       ) !==
       JSON.stringify(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         targetCatalogueCategory?.catalogue_item_properties?.map(
           ({ id, ...rest }) => rest
         )

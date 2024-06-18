@@ -4,10 +4,12 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import { act } from 'react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http } from 'msw';
+import { act } from 'react';
 import { Item } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
+import { server } from '../mocks/server';
 import { getItemById, renderComponentWithRouterProvider } from '../testUtils';
 import DeleteItemDialog, {
   DeleteItemDialogProps,
@@ -34,7 +36,7 @@ describe('delete item dialog', () => {
       item: item,
       onChangeItem: onChangeItem,
     };
-    user = userEvent; // Assigning userEvent to 'user'
+    user = userEvent.setup(); // Assigning userEvent to 'user'
   });
 
   afterEach(() => {
@@ -63,6 +65,22 @@ describe('delete item dialog', () => {
       ).toBeInTheDocument();
     });
     expect(baseElement).toMatchSnapshot();
+  });
+
+  it('disables continue button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.delete('/v1/items/:id', () => {
+        return new Promise(() => {});
+      })
+    );
+
+    createView();
+
+    const continueButton = screen.getByRole('button', { name: 'Continue' });
+    await user.click(continueButton);
+
+    expect(continueButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
   });
 
   it('calls onClose when Close button is clicked', async () => {
@@ -105,7 +123,7 @@ describe('delete item dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
 
-  it('calls handleDeleteSession when continue button is clicked with a valid session name', async () => {
+  it('calls handleDeleteSession when continue button is clicked with', async () => {
     createView();
     const continueButton = screen.getByRole('button', { name: 'Continue' });
     await user.click(continueButton);
@@ -126,11 +144,17 @@ describe('delete item dialog', () => {
     expect(onClose).not.toHaveBeenCalled();
   });
   it('renders correctly when items has no serial number', async () => {
-    props.item = { ...getItemById('wKsFzrSq'), serial_number: null };
+    props.item = { ...getItemById('wKsFzrSq'), serial_number: null } as Item;
     createView();
     let baseElement;
     await act(async () => {
       baseElement = createView().baseElement;
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'Pico Laser' })
+      ).toBeInTheDocument();
     });
     expect(baseElement).toMatchSnapshot();
   });

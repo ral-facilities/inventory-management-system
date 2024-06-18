@@ -20,12 +20,12 @@ describe('handleIMS_APIError', () => {
 
     error = {
       isAxiosError: true,
-      config: {},
       response: {
         data: { detail: 'Test error message (response data)' },
         status: 404,
         statusText: 'Not found',
         headers: {},
+        // @ts-expect-error: not needed for test
         config: {},
       },
       name: 'Test error name',
@@ -57,12 +57,12 @@ describe('handleIMS_APIError', () => {
   it('does not broadcast 403 errors', () => {
     error = {
       isAxiosError: true,
-      config: {},
       response: {
         data: {},
         status: 403,
         statusText: 'Invalid token or expired token',
         headers: {},
+        // @ts-expect-error: not needed for test
         config: {},
       },
       name: 'Test error name',
@@ -79,12 +79,12 @@ describe('handleIMS_APIError', () => {
   it('logs fallback error.message if there is no response message', () => {
     error = {
       isAxiosError: true,
-      config: {},
       response: {
         data: {},
         status: 418,
         statusText: 'Internal Server Error',
         headers: {},
+        // @ts-expect-error: not needed for test
         config: {},
       },
       name: 'Test error name',
@@ -108,12 +108,12 @@ describe('handleIMS_APIError', () => {
   it('logs generic message if the error is a 500', () => {
     error = {
       isAxiosError: true,
-      config: {},
       response: {
         data: {},
         status: 500,
         statusText: 'Internal Server Error',
         headers: {},
+        // @ts-expect-error: not needed for test
         config: {},
       },
       name: 'Test error name',
@@ -138,7 +138,6 @@ describe('handleIMS_APIError', () => {
   it('logs network error message if there is no response', () => {
     error = {
       isAxiosError: true,
-      config: {},
       name: 'Test error name',
       message: 'Network Error',
       toJSON: vi.fn(),

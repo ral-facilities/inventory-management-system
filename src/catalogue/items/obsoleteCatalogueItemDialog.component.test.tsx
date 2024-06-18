@@ -1,12 +1,17 @@
 import {
+  getCatalogueCategoryById,
   getCatalogueItemById,
   renderComponentWithRouterProvider,
 } from '../../testUtils';
 
 import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { http } from 'msw';
+import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
+import { CatalogueCategory } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
+import { server } from '../../mocks/server';
 import ObsoleteCatalogueItemDialog, {
   ObsoleteCatalogueItemDialogProps,
 } from './obsoleteCatalogueItemDialog.component';
@@ -19,7 +24,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
 
   let props: ObsoleteCatalogueItemDialogProps;
   let user: UserEvent;
-  let axiosPatchSpy;
+  let axiosPatchSpy: MockInstance;
   const mockOnClose = vi.fn();
 
   const createView = () => {
@@ -46,9 +51,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     // Ensure form is loaded
     await waitFor(() => {
       expect(
-        within(screen.getByRole('combobox')).getByText(
-          alreadyObsolete ? 'Yes' : 'No'
-        )
+        screen.getByDisplayValue(alreadyObsolete ? 'Yes' : 'No')
       ).toBeInTheDocument();
     });
 
@@ -104,21 +107,26 @@ describe('Obsolete Catalogue Item Dialog', () => {
               );
           }
         }
+
         // Ensure loaded
-        await waitFor(
-          () => {
-            expect(
-              screen.getAllByRole('row', {
-                name: `${
-                  values.replacement_item_navigation[
-                    values.replacement_item_navigation.length - 1
-                  ]
-                } row`,
-              }).length
-            ).toBeGreaterThan(1);
-          },
-          { timeout: 3000 }
-        );
+        const replacementItemNavigation = values.replacement_item_navigation;
+
+        if (replacementItemNavigation && replacementItemNavigation.length > 0) {
+          await waitFor(
+            () => {
+              expect(
+                screen.getAllByRole('row', {
+                  name: `${
+                    replacementItemNavigation[
+                      replacementItemNavigation.length - 1
+                    ]
+                  } row`,
+                }).length
+              ).toBeGreaterThan(1);
+            },
+            { timeout: 3000 }
+          );
+        }
         // Select item if requested
         if (
           values.ignore_replacement_item === undefined ||
@@ -156,15 +164,11 @@ describe('Obsolete Catalogue Item Dialog', () => {
       onClose: mockOnClose,
       // Should have obsolete data to test
       catalogueItem: getCatalogueItemById('89'),
+      parentInfo: getCatalogueCategoryById('4') as CatalogueCategory,
     };
     user = userEvent.setup();
     axiosPatchSpy = vi.spyOn(imsApi, 'patch');
 
-    window.ResizeObserver = vi.fn().mockImplementation(() => ({
-      disconnect: vi.fn(),
-      observe: vi.fn(),
-      unobserve: vi.fn(),
-    }));
     window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 2000 });
@@ -199,7 +203,29 @@ describe('Obsolete Catalogue Item Dialog', () => {
     expect(mockOnClose).not.toHaveBeenCalled();
   });
 
-  it('renders exisiting data correctly (not obsolete)', async () => {
+  it('disables finish button and shows circular progress indicator when request is pending', async () => {
+    server.use(
+      http.patch('/v1/catalogue-items/:id', () => {
+        return new Promise(() => {});
+      })
+    );
+
+    props.catalogueItem = getCatalogueItemById('1');
+
+    createView();
+
+    await modifyForm(false, {
+      is_obsolete: true,
+    });
+
+    const finishButton = screen.getByRole('button', { name: 'Finish' });
+    await user.click(finishButton);
+
+    expect(finishButton).toBeDisabled();
+    expect(await screen.findByRole('progressbar')).toBeInTheDocument();
+  });
+
+  it('renders existing data correctly (not obsolete)', async () => {
     props.catalogueItem = getCatalogueItemById('1');
 
     createView();
@@ -212,7 +238,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     expect(screen.queryByText('Obsolete Replacement')).not.toBeInTheDocument();
   });
 
-  it('renders exisiting data correctly (already obsolete)', async () => {
+  it('renders existing data correctly (already obsolete)', async () => {
     createView();
 
     await waitFor(() => {
@@ -222,9 +248,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     expect(screen.getByText('Obsolete Replacement')).toBeInTheDocument();
 
     // First step
-    expect(
-      within(screen.getByRole('combobox')).getByText('Yes')
-    ).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Yes')).toBeInTheDocument();
 
     // Second step
     await user.click(screen.getByRole('button', { name: 'Next' }));
@@ -451,7 +475,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
   });
 
-  it('displays error if an unknown error occurrs', async () => {
+  it('displays error if an unknown error occurs', async () => {
     createView();
 
     await modifyForm(true, { obsolete_reason: 'Error 500' });

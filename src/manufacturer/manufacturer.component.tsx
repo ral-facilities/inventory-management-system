@@ -9,6 +9,7 @@ import {
   ListItemText,
   MenuItem,
   Link as MuiLink,
+  TableCellBaseProps,
   TableRow,
   Typography,
 } from '@mui/material';
@@ -23,13 +24,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useManufacturers } from '../api/manufacturers';
 import { Manufacturer } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
-import { formatDateTimeStrings, getPageHeightCalc } from '../utils';
+import {
+  TableBodyCellOverFlowTip,
+  TableCellOverFlowTipProps,
+  TableHeaderOverflowTip,
+  displayTableRowCountText,
+  formatDateTimeStrings,
+  getPageHeightCalc,
+} from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import DeleteManufacturerDialog from './deleteManufacturerDialog.component';
 import ManufacturerDialog from './manufacturerDialog.component';
 
 function ManufacturerComponent() {
-  const { data: ManufacturerData, isLoading: ManufacturerDataLoading } =
+  const { data: manufacturerData, isLoading: manufacturerDataLoading } =
     useManufacturers();
 
   const [deleteManufacturerDialog, setDeleteManufacturerDialog] =
@@ -41,7 +49,7 @@ function ManufacturerComponent() {
 
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
 
-  const [maufacturerDialogType, setMaufacturerDialogType] = React.useState<
+  const [manufacturerDialogType, setManufacturerDialogType] = React.useState<
     'edit' | 'create'
   >('create');
 
@@ -49,6 +57,7 @@ function ManufacturerComponent() {
     return [
       {
         header: 'Name',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.name,
         id: 'name',
         size: 400,
@@ -65,6 +74,7 @@ function ManufacturerComponent() {
       },
       {
         header: 'Last modified',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.modified_time),
         id: 'modified_time',
         filterVariant: 'datetime-range',
@@ -76,6 +86,7 @@ function ManufacturerComponent() {
       },
       {
         header: 'Created',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => new Date(row.created_time),
         id: 'created_time',
         filterVariant: 'datetime-range',
@@ -87,6 +98,7 @@ function ManufacturerComponent() {
       },
       {
         header: 'URL',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.url ?? '',
         id: 'url',
         size: 500,
@@ -99,6 +111,7 @@ function ManufacturerComponent() {
       },
       {
         header: 'Address',
+        Header: TableHeaderOverflowTip,
         // Stitch together for filtering
         accessorFn: (row) =>
           `${row.address.address_line} ${row.address.town} ${row.address.county} ${row.address.postcode} ${row.address.country}`,
@@ -126,6 +139,7 @@ function ManufacturerComponent() {
       },
       {
         header: 'Telephone number',
+        Header: TableHeaderOverflowTip,
         accessorFn: (row) => row.telephone,
         id: 'telephone',
         size: 250,
@@ -147,7 +161,7 @@ function ManufacturerComponent() {
   const table = useMaterialReactTable({
     // Data
     columns: columns, // If dense only show the name column
-    data: ManufacturerData ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data: manufacturerData ?? [], //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     // Features
     enableColumnOrdering: true,
     enableColumnResizing: true,
@@ -175,7 +189,7 @@ function ManufacturerComponent() {
     },
     state: {
       ...preservedState,
-      showProgressBars: ManufacturerDataLoading, //or showSkeletons
+      showProgressBars: manufacturerDataLoading, //or showSkeletons
     },
     // MUI
     muiTableBodyRowProps: ({ row }) => {
@@ -193,6 +207,22 @@ function ManufacturerComponent() {
       shape: 'rounded',
       variant: 'outlined',
     },
+
+    muiTableBodyCellProps: ({ column }) =>
+      // Ignore MRT rendered cells e.g. expand , spacer etc
+      column.id.startsWith('mrt')
+        ? {}
+        : {
+            component: (props: TableCellBaseProps) => {
+              return (
+                <TableBodyCellOverFlowTip
+                  {...({
+                    ...props,
+                  } as TableCellOverFlowTipProps)}
+                />
+              );
+            },
+          },
     // Functions
     ...onPreservedStatesChange,
     renderCreateRowDialogContent: ({ table }) => {
@@ -201,10 +231,10 @@ function ManufacturerComponent() {
           <ManufacturerDialog
             open={true}
             onClose={() => {
-              setMaufacturerDialogType('create');
+              setManufacturerDialogType('create');
               table.setCreatingRow(null);
             }}
-            type={maufacturerDialogType}
+            type={manufacturerDialogType}
             selectedManufacturer={
               selectedManufacturer ? selectedManufacturer : undefined
             }
@@ -243,7 +273,7 @@ function ManufacturerComponent() {
           key="edit"
           aria-label={`Edit manufacturer ${row.original.name}`}
           onClick={() => {
-            setMaufacturerDialogType('edit');
+            setManufacturerDialogType('edit');
             setSelectedManufacturer(row.original);
             table.setCreatingRow(true);
             closeMenu();
@@ -271,13 +301,10 @@ function ManufacturerComponent() {
         </MenuItem>,
       ];
     },
-    renderBottomToolbarCustomActions: ({ table }) => (
-      <Typography sx={{ paddingLeft: '8px' }}>
-        {table.getFilteredRowModel().rows.length == ManufacturerData?.length
-          ? `Total Manufacturers: ${ManufacturerData.length}`
-          : `Returned ${table.getFilteredRowModel().rows.length} out of ${ManufacturerData?.length} Manufacturers`}
-      </Typography>
-    ),
+    renderBottomToolbarCustomActions: ({ table }) =>
+      displayTableRowCountText(table, manufacturerData, 'Manufacturers', {
+        paddingLeft: '8px',
+      }),
   });
 
   const navigate = useNavigate();

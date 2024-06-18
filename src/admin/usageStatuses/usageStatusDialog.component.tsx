@@ -1,11 +1,7 @@
-import React from 'react';
-import { AddUsageStatus } from '../../app.types';
-import { trimStringValues } from '../../utils';
-import handleIMS_APIError from '../../handleIMS_APIError';
-import { AxiosError } from 'axios';
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -13,7 +9,12 @@ import {
   Grid,
   TextField,
 } from '@mui/material';
+import { AxiosError } from 'axios';
+import React from 'react';
 import { useAddUsageStatus } from '../../api/usageStatuses';
+import { AddUsageStatus } from '../../app.types';
+import handleIMS_APIError from '../../handleIMS_APIError';
+import { trimStringValues } from '../../utils';
 
 export interface UsageStatusDialogProps {
   open: boolean;
@@ -78,6 +79,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
         <Grid container direction="column" spacing={1}>
           <Grid item sx={{ mt: 1 }}>
             <TextField
+              id="usage-status-value-input"
               label="Value"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }}
@@ -117,6 +119,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
             sx={{ width: '50%', mx: 1 }}
             onClick={handleAddUsageStatus}
             disabled={isAddPending || valueError !== undefined}
+            endIcon={isAddPending ? <CircularProgress size={20} /> : null}
           >
             Save
           </Button>

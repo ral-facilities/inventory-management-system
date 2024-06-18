@@ -7,7 +7,7 @@ describe('Catalogue Category', () => {
   });
 
   function createMockData() {
-    let data = [];
+    const data = [];
     for (let index = 1; index < 50; index++) {
       data.push({
         id: index.toString(),
@@ -297,7 +297,7 @@ describe('Catalogue Category', () => {
             {
               name: 'Updated Field 2',
               type: 'number',
-              unit: 'millimeters',
+              unit_id: '5',
               mandatory: false,
             },
           ],
@@ -697,6 +697,7 @@ describe('Catalogue Category', () => {
               name: 'Resolution',
               type: 'number',
               unit: 'megapixels',
+              unit_id: '1',
               mandatory: true,
               allowed_values: null,
               id: '1',
@@ -705,6 +706,7 @@ describe('Catalogue Category', () => {
               name: 'Frame Rate',
               type: 'number',
               unit: 'fps',
+              unit_id: '2',
               mandatory: false,
               allowed_values: null,
               id: '2',
@@ -713,6 +715,7 @@ describe('Catalogue Category', () => {
               name: 'Sensor Type',
               type: 'string',
               unit: null,
+              unit_id: null,
               mandatory: true,
               allowed_values: null,
               id: '3',
@@ -721,6 +724,7 @@ describe('Catalogue Category', () => {
               name: 'Sensor brand',
               type: 'string',
               unit: null,
+              unit_id: null,
               mandatory: false,
               allowed_values: null,
               id: '4',
@@ -729,6 +733,7 @@ describe('Catalogue Category', () => {
               name: 'Broken',
               type: 'boolean',
               unit: null,
+              unit_id: null,
               mandatory: true,
               allowed_values: null,
               id: '5',
@@ -737,6 +742,7 @@ describe('Catalogue Category', () => {
               name: 'Older than five years',
               type: 'boolean',
               unit: null,
+              unit_id: null,
               mandatory: false,
               allowed_values: null,
               id: '6',
@@ -805,6 +811,7 @@ describe('Catalogue Category', () => {
               name: 'Resolution',
               type: 'number',
               unit: 'megapixels',
+              unit_id: '1',
               mandatory: true,
               allowed_values: null,
               id: '1',
@@ -813,6 +820,7 @@ describe('Catalogue Category', () => {
               name: 'Frame Rate',
               type: 'number',
               unit: 'fps',
+              unit_id: '2',
               mandatory: false,
               allowed_values: null,
               id: '2',
@@ -821,6 +829,7 @@ describe('Catalogue Category', () => {
               name: 'Sensor Type',
               type: 'string',
               unit: null,
+              unit_id: null,
               mandatory: true,
               allowed_values: null,
               id: '3',
@@ -829,6 +838,7 @@ describe('Catalogue Category', () => {
               name: 'Sensor brand',
               type: 'string',
               unit: null,
+              unit_id: null,
               mandatory: false,
               allowed_values: null,
               id: '4',
@@ -837,6 +847,7 @@ describe('Catalogue Category', () => {
               name: 'Broken',
               type: 'boolean',
               unit: null,
+              unit_id: null,
               mandatory: true,
               allowed_values: null,
               id: '5',
@@ -845,6 +856,7 @@ describe('Catalogue Category', () => {
               name: 'Older than five years',
               type: 'boolean',
               unit: null,
+              unit_id: null,
               mandatory: false,
               allowed_values: null,
               id: '6',
@@ -908,7 +920,7 @@ describe('Catalogue Category', () => {
     );
   });
 
-  it('when root has no data it displays no catagories error message', () => {
+  it('when root has no data it displays no categories error message', () => {
     cy.editEndpointResponse({
       url: '/v1/catalogue-categories',
       data: [],
@@ -1013,7 +1025,7 @@ describe('Catalogue Category', () => {
           type: 'number',
           mandatory: false,
           default_value: 1,
-          unit: 'millimeters',
+          unit_id: '5',
         })
       );
     });
@@ -1043,7 +1055,7 @@ describe('Catalogue Category', () => {
     cy.findByLabelText('Select Type *').click();
     cy.findByText('Boolean').click();
     cy.findByLabelText('Select Default value').click();
-    cy.findByRole('option', { name: 'false' }).click();
+    cy.findByRole('option', { name: 'False' }).click();
 
     cy.startSnoopingBrowserMockedRequest();
 
@@ -1511,5 +1523,57 @@ describe('Catalogue Category', () => {
     cy.findAllByLabelText('List Item').eq(3).type('900');
 
     cy.findByText('Please enter a valid number').should('not.exist');
+  });
+  // The tooltip tests are very flaky; issue to fix later: https://github.com/ral-facilities/inventory-management-system/issues/637
+  it.skip('display overflow tooltip on hover', () => {
+    // Card view
+    cy.findByText(
+      'Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow'
+    ).trigger('mouseenter', { force: true });
+    cy.findAllByText(
+      'Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow'
+    ).should('have.length', 2);
+
+    // Navigate to table view
+    cy.findAllByText(
+      'Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow'
+    )
+      .first()
+      .click();
+
+    // Breadcrumbs
+    cy.findByText(
+      'overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow'
+    ).trigger('mouseover');
+
+    cy.findAllByText(
+      'overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow'
+    ).should('have.length', 2);
+
+    cy.findAllByText(
+      'overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow-overflow'
+    )
+      .first()
+      .trigger('mouseout');
+
+    // Table cell
+
+    cy.findByText(
+      'Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow'
+    ).should('exist');
+
+    cy.findByText(
+      'Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow'
+    ).trigger('mouseover', { force: true });
+
+    cy.findAllByText(
+      'Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow'
+    ).should('have.length', 2);
+
+    cy.findAllByText(
+      'Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow Overflow'
+    )
+      .first()
+      .trigger('mouseout');
   });
 });

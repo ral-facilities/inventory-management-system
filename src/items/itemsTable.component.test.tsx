@@ -1,5 +1,6 @@
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
+import { CatalogueCategory, CatalogueItem } from '../app.types';
 import {
   getCatalogueCategoryById,
   getCatalogueItemById,
@@ -32,15 +33,11 @@ describe('Items Table', () => {
 
   beforeEach(() => {
     props = {
-      catalogueCategory: getCatalogueCategoryById('4'),
-      catalogueItem: getCatalogueItemById('1'),
+      catalogueCategory: getCatalogueCategoryById('4') as CatalogueCategory,
+      catalogueItem: getCatalogueItemById('1') as CatalogueItem,
       dense: false,
     };
-    window.ResizeObserver = vi.fn().mockImplementation(() => ({
-      disconnect: vi.fn(),
-      observe: vi.fn(),
-      unobserve: vi.fn(),
-    }));
+
     window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
@@ -89,6 +86,68 @@ describe('Items Table', () => {
       'href',
       '/systems/65328f34a40ff5301575a4e3'
     );
+  });
+
+  it('displays delivered date grouped cell', async () => {
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    const deliveredDate = '17 Mar 2023';
+
+    expect(await screen.findByText(serialNumber)).toBeInTheDocument();
+
+    // Get the table element (assuming it has a specific class or role)
+    const table = screen.getByTestId('items-table-container');
+
+    fireEvent.scroll(table, { target: { scrollLeft: 500 } });
+
+    // Check if the delivered date cell is visible after scrolling
+    expect(await screen.findByText(deliveredDate)).toBeInTheDocument();
+
+    // Delivered date column action button
+    await user.click(
+      screen.getAllByRole('button', { name: 'Column Actions' })[6]
+    );
+
+    await user.click(await screen.findByText('Group by Delivered Date'));
+
+    fireEvent.scroll(table, { target: { scrollLeft: -500 } });
+
+    // Check if the delivered date grouped cell is visible after scrolling
+    expect(
+      await screen.findByRole('tooltip', { name: '17 Mar 2023 (1)' })
+    ).toBeInTheDocument();
+  });
+
+  it('displays warranty end date grouped cell', async () => {
+    createView();
+
+    const serialNumber = '5YUQDDjKpz2z';
+    const warrantyEndDate = '04 Apr 2023';
+
+    expect(await screen.findByText(serialNumber)).toBeInTheDocument();
+
+    // Get the table element (assuming it has a specific class or role)
+    const table = screen.getByTestId('items-table-container');
+
+    fireEvent.scroll(table, { target: { scrollLeft: 300 } });
+
+    // Check if the warranty end date cell is visible after scrolling
+    expect(await screen.findByText(warrantyEndDate)).toBeInTheDocument();
+
+    // Warranty end dat column actions button
+    await user.click(
+      screen.getAllByRole('button', { name: 'Column Actions' })[5]
+    );
+
+    await user.click(await screen.findByText('Group by Warranty End Date'));
+
+    fireEvent.scroll(table, { target: { scrollLeft: -300 } });
+
+    // Check if the warranty end date grouped cell is visible after scrolling
+    expect(
+      await screen.findByRole('tooltip', { name: '04 Apr 2023 (1)' })
+    ).toBeInTheDocument();
   });
 
   it('opens and closes the add item dialog', async () => {
@@ -261,13 +320,15 @@ describe('Items Table', () => {
     });
 
     expect(screen.getByLabelText('Notes')).toHaveValue(
-      '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this ID: KvT2Ox7n'
+      '6Y5XTJfBrNNx8oltI9HE\n\nThis is a copy of the item with this Serial Number: 5YUQDDjKpz2z'
     );
   });
 
   it('can open the save as dialog and checks that the notes have been updated when notes is null', async () => {
-    props.catalogueCategory = getCatalogueCategoryById('4');
-    props.catalogueItem = getCatalogueItemById('32');
+    props.catalogueCategory = getCatalogueCategoryById(
+      '4'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('32') as CatalogueItem;
     createView();
 
     const serialNumber = 'RncNJlDk1pXC';
@@ -289,13 +350,45 @@ describe('Items Table', () => {
     });
 
     expect(screen.getByLabelText('Notes')).toHaveValue(
-      '\n\nThis is a copy of the item with this ID: 3lmRHP8q'
+      '\n\nThis is a copy of the item with this Serial Number: RncNJlDk1pXC'
+    );
+  });
+
+  it('can open the save as dialog and checks that the notes have been updated with no serial number', async () => {
+    props.catalogueCategory = getCatalogueCategoryById(
+      '4'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('32') as CatalogueItem;
+    createView();
+
+    const serialNumber = 'No serial number';
+    await waitFor(() => {
+      expect(screen.getByText(serialNumber)).toBeInTheDocument();
+    });
+    const rowActionsButton = screen.getAllByLabelText('Row Actions');
+    await user.click(rowActionsButton[3]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Save as')).toBeInTheDocument();
+    });
+
+    const saveAsButton = screen.getByText('Save as');
+    await user.click(saveAsButton);
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
+
+    expect(screen.getByLabelText('Notes')).toHaveValue(
+      'MJuSPgXEiXmBbf1Vlq4B\n\nThis is a copy of the item with this Serial Number: No serial number'
     );
   });
 
   it('can open the save as dialog (no delivered date or warranty date) and close it again', async () => {
-    props.catalogueCategory = getCatalogueCategoryById('4');
-    props.catalogueItem = getCatalogueItemById('3');
+    props.catalogueCategory = getCatalogueCategoryById(
+      '4'
+    ) as CatalogueCategory;
+    props.catalogueItem = getCatalogueItemById('3') as CatalogueItem;
     createView();
 
     const serialNumber = 'fBfU9b3ySyKc';
@@ -333,6 +426,10 @@ describe('Items Table', () => {
     await waitFor(() => {
       expect(screen.getByText('5YUQDDjKpz2z')).toBeInTheDocument();
     });
+    // Ensure no loading bars visible
+    await waitFor(() =>
+      expect(screen.queryByRole('progressbar')).not.toBeInTheDocument()
+    );
 
     expect(view.asFragment()).toMatchSnapshot();
   });

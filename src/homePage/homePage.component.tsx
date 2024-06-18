@@ -1,17 +1,17 @@
-import React from 'react';
+import { Box, Button, Grid, Paper, alpha, styled } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { Grid, Box, Paper, Button, alpha, styled } from '@mui/material';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import DGLogo from '/images/scigateway-white-text-blue-mark-logo.svg';
+import { InventoryManagementSystemSettingsContext } from '../configProvider.component';
 import BackgroundImage from '/images/background.jpg';
-import GreenSwirl1Image from '/images/green-swirl1.png';
-import GreenSwirl2Image from '/images/green-swirl2.png';
 import Decal1Image from '/images/decal1.svg';
-import Decal2Image from '/images/decal2.svg';
 import Decal2DarkImage from '/images/decal2-dark.svg';
 import Decal2DarkHCImage from '/images/decal2-darkhc.svg';
+import Decal2Image from '/images/decal2.svg';
 import FacilityImage from '/images/facility.jpg';
-import { InventoryManagementSystemSettingsContext } from '../configProvider.component';
+import GreenSwirl1Image from '/images/green-swirl1.png';
+import GreenSwirl2Image from '/images/green-swirl2.png';
+import DGLogo from '/images/scigateway-white-text-blue-mark-logo.svg';
 
 export interface BaseHomePageProps {
   logo: string;
@@ -151,7 +151,7 @@ const BaseHomePage = (props: BaseHomePageProps): React.ReactElement => {
             }}
           >
             <Typography variant="h2" sx={backgroundTitleStyles}>
-              <strong>Inventory Managment</strong>
+              <strong>Inventory Management</strong>
             </Typography>
             <Typography variant="h2" sx={backgroundTitleStyles}>
               for <strong>EPAC</strong>

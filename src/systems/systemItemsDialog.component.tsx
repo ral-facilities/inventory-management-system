@@ -18,8 +18,8 @@ import { useSystem, useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { Item, MoveItemsToSystemUsageStatus } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
-import { SystemsTableView } from './systemsTableView.component';
 import { SystemItemsTable } from './systemItemsTable.component';
+import { SystemsTableView } from './systemsTableView.component';
 
 export interface SystemItemsDialogProps {
   open: boolean;

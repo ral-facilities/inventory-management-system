@@ -37,13 +37,18 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { System } from '../app.types';
-import { generateUniqueName, getPageHeightCalc } from '../utils';
+import { usePreservedTableState } from '../common/preservedTableState.component';
+import {
+  OverflowTip,
+  displayTableRowCountText,
+  generateUniqueName,
+  getPageHeightCalc,
+} from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
 import SystemDialog, { SystemDialogType } from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
-import { usePreservedTableState } from '../common/preservedTableState.component';
 
 /* Returns function that navigates to a specific system id (or to the root of all systems
    if given null) */
@@ -106,7 +111,7 @@ const MoveSystemsButton = (props: {
   return (
     <>
       <Button
-        sx={{ mx: 1 }}
+        sx={{ mx: 0.5 }}
         variant="outlined"
         startIcon={<DriveFileMoveOutlinedIcon />}
         onClick={() => setMoveSystemsDialogOpen(true)}
@@ -136,7 +141,7 @@ const CopySystemsButton = (props: {
   return (
     <>
       <Button
-        sx={{ mx: 1 }}
+        sx={{ mx: 0.5 }}
         variant="outlined"
         startIcon={<FolderCopyOutlinedIcon />}
         onClick={() => setCopySystemsDialogOpen(true)}
@@ -161,6 +166,18 @@ const columns: MRT_ColumnDef<System>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
+    Cell: ({ row }) => {
+      return (
+        <OverflowTip
+          sx={{
+            fontSize: 'inherit',
+            maxWidth: { md: 'max(9vw, 180px)', xs: '68vw' },
+          }}
+        >
+          {row.original.name}
+        </OverflowTip>
+      );
+    },
   },
 ];
 
@@ -345,7 +362,7 @@ function Systems() {
                 parentSystemId={systemId}
               />
               <Button
-                sx={{ mx: 1 }}
+                sx={{ mx: 0.5 }}
                 variant="outlined"
                 startIcon={<ClearIcon />}
                 onClick={() => setRowSelection({})}
@@ -360,7 +377,7 @@ function Systems() {
           <Grid
             item
             xs={12}
-            md={2}
+            md
             minWidth={MIN_SUBSYSTEMS_WIDTH}
             textAlign="left"
             padding={1}
@@ -455,17 +472,15 @@ function Systems() {
                     </Table>
                   </TableContainer>
                   <Box sx={{ paddingTop: '8px' }}>
-                    <Typography
-                      sx={{
+                    {displayTableRowCountText(
+                      subsystemsTable,
+                      subsystemsData,
+                      systemId === null ? 'Systems' : 'Subsystems',
+                      {
                         paddingLeft: '8px',
                         textAlign: { sm: 'center', md: 'left' },
-                      }}
-                    >
-                      {subsystemsTable.getFilteredRowModel().rows.length ==
-                      subsystemsData?.length
-                        ? `Total Systems: ${subsystemsData.length}`
-                        : `Returned ${subsystemsTable.getFilteredRowModel().rows.length} out of ${subsystemsData?.length} Systems`}
-                    </Typography>
+                      }
+                    )}
                     <MRT_TablePagination table={subsystemsTable} />
                   </Box>
                 </Stack>
@@ -477,6 +492,7 @@ function Systems() {
             textAlign="left"
             padding={1}
             xs
+            md={10}
             sx={{
               maxWidth: {
                 xs: '100%',

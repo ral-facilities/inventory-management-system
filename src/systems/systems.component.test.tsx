@@ -15,11 +15,6 @@ describe('Systems', () => {
   beforeEach(() => {
     user = userEvent.setup();
 
-    window.ResizeObserver = vi.fn().mockImplementation(() => ({
-      disconnect: vi.fn(),
-      observe: vi.fn(),
-      unobserve: vi.fn(),
-    }));
     window.Element.prototype.getBoundingClientRect = vi
       .fn()
       .mockReturnValue({ height: 100, width: 200 });
@@ -41,6 +36,7 @@ describe('Systems', () => {
     });
 
     expect(screen.getByText('Giant laser')).toBeInTheDocument();
+    expect(screen.getByText('Total Systems: 3')).toBeInTheDocument();
   });
 
   it('renders correctly when viewing a specific system', async () => {
@@ -51,6 +47,31 @@ describe('Systems', () => {
     });
 
     expect(screen.getByText('Smaller laser')).toBeInTheDocument();
+    expect(screen.getByText('Total Subsystems: 1')).toBeInTheDocument();
+  });
+
+  it('renders correctly when filtering systems', async () => {
+    createView('/systems?subState=N4Ig5gYglgNiBcIDiUCGA7ALiAvkA');
+
+    await waitFor(() => {
+      expect(screen.getByText('Root systems')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Returned 1 out of 3 Systems')).toBeInTheDocument();
+  });
+
+  it('renders correctly when filtering subsystems', async () => {
+    createView(
+      '/systems/65328f34a40ff5301575a4e3?subState=N4Ig5gYglgNiBcIAqBTAzgFxAXyA'
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Subsystems')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByText('Returned 0 out of 1 Subsystems')
+    ).toBeInTheDocument();
   });
 
   it('renders the breadcrumbs when navigating to a subsystem', async () => {
@@ -215,7 +236,7 @@ describe('Systems', () => {
     });
     expect(screen.getByRole('button', { name: 'Copy to' })).toBeInTheDocument();
 
-    await user.click(screen.queryByRole('button', { name: '2 selected' }));
+    await user.click(await screen.findByRole('button', { name: '2 selected' }));
 
     await waitFor(() => {
       expect(

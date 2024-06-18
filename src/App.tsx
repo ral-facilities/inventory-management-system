@@ -11,13 +11,22 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { AxiosError } from 'axios';
 import { enGB } from 'date-fns/locale/en-GB';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import AdminPage from './admin/admin.component';
 import {
   clearFailedAuthRequestsQueue,
   retryFailedAuthRequests,
 } from './api/api';
 import { MicroFrontendId } from './app.types';
+import Catalogue from './catalogue/catalogue.component';
+import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
+import ConfigProvider from './configProvider.component';
 import handleIMS_APIError from './handleIMS_APIError';
+import { HomePage } from './homePage/homePage.component';
 import IMSThemeProvider from './imsThemeProvider.component';
+import Items from './items/items.component';
+import ItemsLandingPage from './items/itemsLandingPage.component';
+import ManufacturerComponent from './manufacturer/manufacturer.component';
+import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
 import Preloader from './preloader/preloader.component';
 import retryIMS_APIErrors from './retryIMS_APIErrors';
 import {
@@ -25,17 +34,8 @@ import {
   requestPluginRerender,
   tokenRefreshed,
 } from './state/scigateway.actions';
-import ViewTabs from './view/viewTabs.component';
-import { HomePage } from './homePage/homePage.component';
-import Catalogue from './catalogue/catalogue.component';
-import CatalogueItemsLandingPage from './catalogue/items/catalogueItemsLandingPage.component';
 import Systems from './systems/systems.component';
-import ManufacturerComponent from './manufacturer/manufacturer.component';
-import ManufacturerLandingPage from './manufacturer/manufacturerLandingPage.component';
-import Items from './items/items.component';
-import ItemsLandingPage from './items/itemsLandingPage.component';
-import ConfigProvider from './configProvider.component';
-import AdminPage from './admin/admin.component';
+import ViewTabs from './view/viewTabs.component';
 
 export const paths = {
   any: '*',
@@ -103,10 +103,9 @@ export default function App() {
 }
 
 export function Layout() {
-  // we need to call forceUpdate if SciGateway tells us to rerender
+  // We need to call forceUpdate if SciGateway tells us to rerender
   // but there's no forceUpdate in functional components, so this is the hooks equivalent
   // see https://reactjs.org/docs/hooks-faq.html#is-there-something-like-forceupdate
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
   function handler(e: Event): void {

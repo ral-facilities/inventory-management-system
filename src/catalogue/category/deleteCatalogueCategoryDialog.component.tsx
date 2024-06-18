@@ -2,6 +2,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 import {
   Box,
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
@@ -11,7 +12,7 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { useDeleteCatalogueCategory } from '../../api/catalogueCategories';
-import { CatalogueCategory, ErrorParsing } from '../../app.types';
+import { APIError, CatalogueCategory } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteCatalogueCategoryDialogProps {
@@ -49,7 +50,7 @@ const DeleteCatalogueCategoryDialog = (
           onClose();
         })
         .catch((error: AxiosError) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
           if (response && error.response?.status === 409) {
             setError(true);
             setErrorMessage(
@@ -88,6 +89,7 @@ const DeleteCatalogueCategoryDialog = (
         <Button
           onClick={handleDeleteCatalogueCategory}
           disabled={isDeletePending || error}
+          endIcon={isDeletePending ? <CircularProgress size={20} /> : null}
         >
           Continue
         </Button>

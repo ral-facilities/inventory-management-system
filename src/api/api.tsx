@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ErrorParsing, MicroFrontendId } from '../app.types';
+import { APIError, MicroFrontendId } from '../app.types';
 import { readSciGatewayToken } from '../parseTokens';
 import { settings } from '../settings';
 import { InvalidateTokenType } from '../state/actions/actions.types';
@@ -28,7 +28,7 @@ export const retryFailedAuthRequests = () => {
 
 /* This should be called when SciGateway logs out as would occur if a token refresh fails
    due to the refresh token being out of date - it rejects all active request promises that
-   were awaiting a token refresh using the orriginal error that occurred on the first attempt */
+   were awaiting a token refresh using the original error that occurred on the first attempt */
 export const clearFailedAuthRequestsQueue = () => {
   isFetchingAccessToken = false;
   failedAuthRequestQueue.forEach((callback) => callback(true));
@@ -40,7 +40,7 @@ imsApi.interceptors.response.use(
   (error) => {
     const originalRequest = error.config;
     const errorMessage: string = error.response?.data
-      ? (error.response.data as ErrorParsing).detail.toLocaleLowerCase() ??
+      ? (error.response.data as APIError).detail.toLocaleLowerCase() ??
         error.message
       : error.message;
 

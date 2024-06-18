@@ -1,7 +1,9 @@
-import React from 'react';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
+  Autocomplete,
   Box,
   Button,
+  CircularProgress,
   Collapse,
   Dialog,
   DialogActions,
@@ -11,9 +13,6 @@ import {
   FormHelperText,
   Grid,
   IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
   Step,
   StepLabel,
   Stepper,
@@ -22,6 +21,12 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
+import { AxiosError } from 'axios';
+import React from 'react';
+import { useAddItem, useAddItems, useEditItem } from '../api/items';
+import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
+import { useUsageStatuses } from '../api/usageStatuses';
 import {
   AddItem,
   AdvancedSerialNumberOptionsType,
@@ -32,19 +37,14 @@ import {
   Item,
   ItemDetails,
   ItemDetailsPlaceholder,
+  UsageStatus,
 } from '../app.types';
-import { DatePicker } from '@mui/x-date-pickers';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
-import { useAddItem, useAddItems, useEditItem } from '../api/items';
-import { AxiosError } from 'axios';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { SystemsTableView } from '../systems/systemsTableView.component';
-import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
-import Breadcrumbs from '../view/breadcrumbs.component';
-import { trimStringValues } from '../utils';
 import handleTransferState from '../handleTransferState';
-import { useUsageStatuses } from '../api/usageStatuses';
+import { SystemsTableView } from '../systems/systemsTableView.component';
+import { trimStringValues } from '../utils';
+import Breadcrumbs from '../view/breadcrumbs.component';
 const maxYear = 2100;
 export function isValidDateTime(input: Date | string | null) {
   // Attempt to create a Date object from the input
@@ -442,7 +442,6 @@ function ItemDialog(props: ItemDialogProps) {
       const isCatalogueItemPropertiesUpdated =
         JSON.stringify(updatedProperties) !==
         JSON.stringify(
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           selectedItem.properties.map(({ unit, name, ...rest }) => ({
             id: rest.id,
             value: rest.value,
@@ -610,6 +609,7 @@ function ItemDialog(props: ItemDialogProps) {
           <Grid item container spacing={1.5} xs={12}>
             <Grid item container xs={12}>
               <TextField
+                id="item-serial-number-input"
                 label="Serial number"
                 size="small"
                 value={itemDetails.serial_number ?? ''}
@@ -661,6 +661,7 @@ function ItemDialog(props: ItemDialogProps) {
                       <Grid item container mt={0.25} spacing={1.5} xs={12}>
                         <Grid item xs={6}>
                           <TextField
+                            id="item-quantity-input"
                             label="Quantity"
                             size="small"
                             fullWidth
@@ -681,6 +682,7 @@ function ItemDialog(props: ItemDialogProps) {
                         </Grid>
                         <Grid item xs={6}>
                           <TextField
+                            id="item-starting-value-input"
                             label="Starting value"
                             size="small"
                             fullWidth
@@ -709,6 +711,7 @@ function ItemDialog(props: ItemDialogProps) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                id="item-asset-input"
                 label="Asset number"
                 size="small"
                 value={itemDetails.asset_number ?? ''}
@@ -720,6 +723,7 @@ function ItemDialog(props: ItemDialogProps) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                id="item-purchase-order-input"
                 label="Purchase order number"
                 size="small"
                 value={itemDetails.purchase_order_number ?? ''}
@@ -773,68 +777,75 @@ function ItemDialog(props: ItemDialogProps) {
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel required={true} size="small" id="is-defective">
-                  Is defective
-                </InputLabel>
-
-                <Select
-                  labelId="is-defective"
-                  value={itemDetails.is_defective ?? 'false'}
+                <Autocomplete
+                  disableClearable={true}
+                  id="item-is-defective-input"
+                  value={itemDetails.is_defective == 'true' ? 'Yes' : 'No'}
                   size="small"
-                  onChange={(e) =>
-                    handleItemDetails('is_defective', e.target.value)
+                  onChange={(_event, value) =>
+                    handleItemDetails(
+                      'is_defective',
+                      value == 'Yes' ? 'true' : 'false'
+                    )
                   }
-                  required={true}
-                  label="Is defective"
-                >
-                  <MenuItem value={'true'}>Yes</MenuItem>
-                  <MenuItem value={'false'}>No</MenuItem>
-                </Select>
+                  sx={{ alignItems: 'center' }}
+                  fullWidth
+                  options={['Yes', 'No']}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      required={true}
+                      label="Is defective"
+                    />
+                  )}
+                />
               </FormControl>
             </Grid>
             <Grid item xs={12}>
               <FormControl size="small" fullWidth>
-                <InputLabel
-                  required={true}
-                  error={hasUsageStatusErrors}
-                  id="usage-status"
-                >
-                  Usage status
-                </InputLabel>
-                <Select
-                  required={true}
-                  labelId="usage-status"
+                <Autocomplete
+                  disableClearable={itemDetails.usage_status_id != null}
+                  id="item-usage-status-input"
                   value={
                     usageStatuses?.find(
                       (usageStatus) =>
                         usageStatus.id == itemDetails.usage_status_id
-                    )?.id ?? ''
+                    ) ?? null
                   }
                   size="small"
-                  onChange={(e) => {
+                  onChange={(_event, usageStatus: UsageStatus | null) => {
                     setHasUsageStatusErrors(false);
-                    handleItemDetails('usage_status_id', e.target.value);
+                    handleItemDetails(
+                      'usage_status_id',
+                      usageStatus?.id ?? null
+                    );
                   }}
-                  error={hasUsageStatusErrors}
-                  label="Usage status"
-                >
-                  {usageStatuses?.map((usageStatus) => (
-                    <MenuItem key={usageStatus.id} value={usageStatus.id}>
-                      {usageStatus.value}
-                    </MenuItem>
-                  ))}
-                </Select>
-                {hasUsageStatusErrors && (
-                  <FormHelperText error>
-                    Please select a Usage Status
-                  </FormHelperText>
-                )}
+                  sx={{ alignItems: 'center' }}
+                  fullWidth
+                  options={usageStatuses ?? []}
+                  isOptionEqualToValue={(option, value) =>
+                    option.id == value.id
+                  }
+                  getOptionLabel={(option) => option.value}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      required={true}
+                      label="Usage status"
+                      error={hasUsageStatusErrors}
+                      helperText={
+                        hasUsageStatusErrors && 'Please select a Usage Status'
+                      }
+                    />
+                  )}
+                />
               </FormControl>
             </Grid>
 
             <Grid item container xs={12} sx={{ display: 'flex' }}>
               <Grid item xs={11}>
                 <TextField
+                  id="item-notes-input"
                   label="Notes"
                   size="small"
                   multiline
@@ -881,94 +892,87 @@ function ItemDialog(props: ItemDialogProps) {
                         <Grid item xs={11} sx={{ display: 'flex' }}>
                           {property.type === 'boolean' ? (
                             <FormControl fullWidth>
-                              <InputLabel
-                                required={property.mandatory ?? false}
-                                error={propertyErrors[index]}
+                              <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
                                 )}`}
+                                value={
+                                  propertyValues[index]
+                                    ? (propertyValues[index] as string)
+                                        .charAt(0)
+                                        .toUpperCase() +
+                                      (propertyValues[index] as string).slice(1)
+                                    : null
+                                }
                                 size="small"
-                                sx={{ alignItems: 'center' }}
-                              >
-                                {property.name}
-                              </InputLabel>
-                              <Select
-                                value={(propertyValues[index] as string) ?? ''}
-                                required={property.mandatory ?? false}
-                                size="small"
-                                error={propertyErrors[index]}
-                                labelId={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                onChange={(event) =>
+                                onChange={(_event, value) => {
                                   handlePropertyChange(
                                     index,
-                                    event.target.value as string
-                                  )
-                                }
-                                label={property.name}
+                                    value?.toLowerCase() as string
+                                  );
+                                }}
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                              >
-                                <MenuItem value="">None</MenuItem>
-                                <MenuItem value="true">True</MenuItem>
-                                <MenuItem value="false">False</MenuItem>
-                              </Select>
-                              {propertyErrors[index] && (
-                                <FormHelperText error>
-                                  Please select either True or False
-                                </FormHelperText>
-                              )}
+                                options={['True', 'False']}
+                                isOptionEqualToValue={(option, value) =>
+                                  option === value
+                                }
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    required={property.mandatory ?? false}
+                                    label={property.name}
+                                    error={propertyErrors[index]}
+                                    helperText={
+                                      propertyErrors[index] &&
+                                      'Please select either True or False'
+                                    }
+                                  />
+                                )}
+                              />
                             </FormControl>
                           ) : property.allowed_values ? (
                             <FormControl fullWidth>
-                              <InputLabel
-                                required={property.mandatory ?? false}
-                                error={propertyErrors[index]}
+                              <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
                                 )}`}
-                                size="small"
-                                sx={{ alignItems: 'center' }}
-                              >
-                                {property.name}
-                              </InputLabel>
-                              <Select
                                 value={(propertyValues[index] as string) ?? ''}
-                                required={property.mandatory ?? false}
                                 size="small"
-                                error={propertyErrors[index]}
-                                labelId={`catalogue-item-property-${property.name.replace(
-                                  /\s+/g,
-                                  '-'
-                                )}`}
-                                onChange={(event) =>
-                                  handlePropertyChange(
-                                    index,
-                                    event.target.value as string
-                                  )
-                                }
-                                label={property.name}
+                                onChange={(_event, value) => {
+                                  handlePropertyChange(index, value);
+                                }}
                                 sx={{ alignItems: 'center' }}
                                 fullWidth
-                              >
-                                <MenuItem key={0} value={''}>
-                                  {'None'}
-                                </MenuItem>
-                                {property.allowed_values.values.map(
-                                  (value, index) => (
-                                    <MenuItem key={index + 1} value={value}>
-                                      {value}
-                                    </MenuItem>
-                                  )
+                                options={property.allowed_values.values}
+                                getOptionLabel={(option) => option.toString()}
+                                isOptionEqualToValue={(option, value) =>
+                                  option.toString() === value.toString() ||
+                                  value === ''
+                                }
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    required={property.mandatory ?? false}
+                                    label={`${property.name} ${
+                                      property.unit ? `(${property.unit})` : ''
+                                    }`}
+                                    error={propertyErrors[index]}
+                                    helperText={
+                                      propertyErrors[index] &&
+                                      'Please enter a valid value as this field is mandatory'
+                                    }
+                                  />
                                 )}
-                              </Select>
+                              />
                             </FormControl>
                           ) : (
                             <TextField
+                              id={`item-${property.id}-input`}
                               label={`${property.name} ${
                                 property.unit ? `(${property.unit})` : ''
                               }`}
@@ -1009,7 +1013,9 @@ function ItemDialog(props: ItemDialogProps) {
                             title={
                               <div>
                                 <Typography>Name: {property.name}</Typography>
-                                <Typography>Unit: {property.unit}</Typography>
+                                <Typography>
+                                  Unit: {property.unit ?? 'None'}
+                                </Typography>
                                 <Typography>
                                   Type:{' '}
                                   {property.type === 'string'
@@ -1147,6 +1153,11 @@ function ItemDialog(props: ItemDialogProps) {
             }
             onClick={type === 'edit' ? handleEditItem : handleAddItem}
             sx={{ mr: 3 }}
+            endIcon={
+              isAddItemsPending || isAddItemPending || isEditItemPending ? (
+                <CircularProgress size={16} />
+              ) : null
+            }
           >
             Finish
           </Button>

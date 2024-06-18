@@ -1,18 +1,19 @@
-import { AxiosError } from 'axios';
-import { ErrorParsing, UsageStatus } from '../../app.types';
-import React from 'react';
-import handleIMS_APIError from '../../handleIMS_APIError';
+import WarningIcon from '@mui/icons-material/Warning';
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
   Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   FormHelperText,
 } from '@mui/material';
-import WarningIcon from '@mui/icons-material/Warning';
+import { AxiosError } from 'axios';
+import React from 'react';
 import { useDeleteUsageStatus } from '../../api/usageStatuses';
+import { APIError, UsageStatus } from '../../app.types';
+import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteUsageStatusProps {
   open: boolean;
@@ -42,7 +43,7 @@ const DeleteUsageStatusDialog = (props: DeleteUsageStatusProps) => {
           onClose();
         })
         .catch((error: AxiosError) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
           if (response && error.response?.status === 409) {
             setFormError(
               `This usage status is currently used by one or more items. Remove all uses before deleting it here.`
@@ -74,6 +75,7 @@ const DeleteUsageStatusDialog = (props: DeleteUsageStatusProps) => {
         <Button
           onClick={handleDeleteUsageStatus}
           disabled={isDeletePending || formError != undefined}
+          endIcon={isDeletePending ? <CircularProgress size={20} /> : null}
         >
           Continue
         </Button>
