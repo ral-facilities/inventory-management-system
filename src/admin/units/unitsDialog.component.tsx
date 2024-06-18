@@ -37,7 +37,6 @@ function UnitsDialog(props: UnitsDialogProps) {
     watch,
   } = useForm<UnitPost>({
     resolver: zodResolver(UnitSchema),
-    mode: 'onSubmit',
   });
 
   // If any field name changes, clear the state
@@ -56,6 +55,7 @@ function UnitsDialog(props: UnitsDialogProps) {
   const { mutateAsync: postUnit, isPending: isAddPending } = usePostUnit();
 
   const handleClose = React.useCallback(() => {
+    setValueError(undefined);
     onClose();
   }, [onClose]);
 
