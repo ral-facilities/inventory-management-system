@@ -554,7 +554,11 @@ const CatalogueCategoryDialog = React.memo(
             </Grid>
             <Grid item>
               <FormControl disabled={type === 'edit'} sx={{ margin: '8px' }}>
-                <FormLabel id="controlled-radio-buttons-group">
+                <FormLabel
+                  id="controlled-radio-buttons-group"
+                  sx={{ fontWeight: 'bold' }}
+                  disabled={false}
+                >
                   Catalogue Directory Content
                 </FormLabel>
                 <RadioGroup
