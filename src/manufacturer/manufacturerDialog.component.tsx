@@ -339,6 +339,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         <Grid container direction="column" spacing={1}>
           <Grid item sx={{ mt: 1 }}>
             <TextField
+              id="manufacturer-name-input"
               label="Name"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -358,6 +359,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-url-input"
               label="URL"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -385,6 +387,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
           <Grid item>
             <TextField
+              id="manufacturer-address-line-input"
               label="Address Line"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -409,6 +412,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-town-input"
               label="Town"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -429,6 +433,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-county-input"
               label="County"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -449,6 +454,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-country-input"
               label="Country"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -473,6 +479,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-postcode-input"
               label="Post/Zip code"
               required={true}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
@@ -497,6 +504,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-telephone-input"
               label="Telephone number"
               required={false}
               sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
