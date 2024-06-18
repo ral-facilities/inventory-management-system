@@ -536,6 +536,7 @@ const CatalogueCategoryDialog = React.memo(
           <Grid container direction="column" spacing={1}>
             <Grid item sx={{ mt: 1 }}>
               <TextField
+                id="catalogue-category-name-input"
                 label="Name"
                 required={true}
                 sx={{ marginLeft: '4px', marginTop: '8px' }} // Adjusted the width and margin

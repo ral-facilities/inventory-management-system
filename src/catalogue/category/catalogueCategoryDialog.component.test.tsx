@@ -158,7 +158,7 @@ describe('Catalogue Category Dialog', () => {
                 `av_placement_id_${i + j + values.newFormFields.length + 1}: List Item`
               );
 
-              fireEvent.change(within(listItem).getByLabelText('List Item'), {
+              fireEvent.change(within(listItem).getByRole('textbox'), {
                 target: { value: field.allowed_values.values[j] },
               });
             }
