@@ -52,8 +52,8 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                   data-shrink="false"
-                  for=":r1:"
-                  id=":r1:-label"
+                  for="system-name-input"
+                  id="system-name-input-label"
                 >
                   Name
                   <span
@@ -70,7 +70,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-                    id=":r1:"
+                    id="system-name-input"
                     required=""
                     type="text"
                     value=""
@@ -101,8 +101,8 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                   data-shrink="false"
-                  for=":r2:"
-                  id=":r2:-label"
+                  for="system-description-input"
+                  id="system-description-input-label"
                 >
                   Description
                 </label>
@@ -112,7 +112,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
                   <textarea
                     aria-invalid="false"
                     class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input"
-                    id=":r2:"
+                    id="system-description-input"
                     style="height: 0px; overflow: hidden;"
                   />
                   <textarea
@@ -146,8 +146,8 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                   data-shrink="false"
-                  for=":r3:"
-                  id=":r3:-label"
+                  for="system-location-input"
+                  id="system-location-input-label"
                 >
                   Location
                 </label>
@@ -157,7 +157,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-                    id=":r3:"
+                    id="system-location-input"
                     type="text"
                     value=""
                   />
@@ -185,8 +185,8 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
                 <label
                   class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-outlined css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
                   data-shrink="false"
-                  for=":r4:"
-                  id=":r4:-label"
+                  for="system-owner-input"
+                  id="system-owner-input-label"
                 >
                   Owner
                 </label>
@@ -196,7 +196,7 @@ exports[`Systems Dialog > Add > renders correctly when adding 1`] = `
                   <input
                     aria-invalid="false"
                     class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
-                    id=":r4:"
+                    id="system-owner-input"
                     type="text"
                     value=""
                   />
