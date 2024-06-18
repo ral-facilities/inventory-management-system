@@ -96,6 +96,19 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     }
   }, [selectedManufacturer, watch]);
 
+  // If the name field changes, clear the name error state
+  React.useEffect(() => {
+    if (nameError) {
+      const subscription = watch((_value, { name }) => {
+        if (name === 'name') {
+          setNameError(undefined);
+        }
+      });
+
+      return () => subscription.unsubscribe();
+    }
+  }, [nameError, watch]);
+
   const handleClose = React.useCallback(() => {
     setNameError(undefined);
     setFormError(undefined);
