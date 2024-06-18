@@ -213,6 +213,7 @@ export const OverflowTip: React.FC<OverflowTipProps> = ({
 
   return (
     <Tooltip
+      aria-label={`${children}-tooltip`}
       role="tooltip"
       title={getTextContent(children, mrtCell)}
       disableHoverListener={!isOverflowed}
