@@ -27,7 +27,7 @@ import React from 'react';
 import { UsageStatus } from '../api/api.types';
 import { useAddItem, useAddItems, useEditItem } from '../api/items';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
-import { useUsageStatuses } from '../api/usageStatuses';
+import { useGetUsageStatuses } from '../api/usageStatuses';
 import {
   AddItem,
   AdvancedSerialNumberOptionsType,
@@ -157,7 +157,7 @@ function ItemDialog(props: ItemDialogProps) {
     string | undefined
   >(undefined);
 
-  const { data: usageStatuses } = useUsageStatuses();
+  const { data: usageStatuses } = useGetUsageStatuses();
   const { mutateAsync: addItem, isPending: isAddItemPending } = useAddItem();
   const { mutateAsync: addItems, isPending: isAddItemsPending } = useAddItems();
   const { mutateAsync: editItem, isPending: isEditItemPending } = useEditItem();
