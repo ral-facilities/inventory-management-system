@@ -370,7 +370,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         formField: {
           name: 'test',
           type: 'Boolean',
-          default_value: 'false',
+          default_value: 'False',
           mandatory: true,
         },
         justModifyPropertyForm: false,
@@ -744,7 +744,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         type: 'Add',
         formField: {
           type: 'Boolean',
-          default_value: 'true',
+          default_value: 'True',
           mandatory: true,
         },
         justModifyPropertyForm: true,
@@ -779,7 +779,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
         type: 'Add',
         formField: {
           type: 'Text',
-          default_value: 'true',
+          default_value: 'True',
           mandatory: true,
         },
         justModifyPropertyForm: true,

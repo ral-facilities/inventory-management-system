@@ -762,6 +762,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             <Grid item xs={12} style={{ display: 'flex' }}>
               <Grid item xs={11}>
                 <Autocomplete
+                  disableClearable={true}
                   value={
                     //logic means that current manufacturer renders in edit dialog, but behaves the same as add dialog (so can be changed/cleared)
                     selectedCatalogueItemManufacturer &&
@@ -848,11 +849,19 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                           {property.type === 'boolean' ? (
                             <FormControl fullWidth>
                               <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
                                 )}`}
-                                value={(propertyValues[index] as string) ?? ''}
+                                value={
+                                  propertyValues[index]
+                                    ? (propertyValues[index] as string)
+                                        .charAt(0)
+                                        .toUpperCase() +
+                                      (propertyValues[index] as string).slice(1)
+                                    : ''
+                                }
                                 size="small"
                                 onChange={(_event, value) => {
                                   handlePropertyChange(
@@ -884,6 +893,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                           ) : property.allowed_values ? (
                             <FormControl fullWidth>
                               <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'

@@ -51,9 +51,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     // Ensure form is loaded
     await waitFor(() => {
       expect(
-        within(screen.getByRole('combobox')).getByText(
-          alreadyObsolete ? 'Yes' : 'No'
-        )
+        screen.getByDisplayValue(alreadyObsolete ? 'Yes' : 'No')
       ).toBeInTheDocument();
     });
 
@@ -250,9 +248,7 @@ describe('Obsolete Catalogue Item Dialog', () => {
     expect(screen.getByText('Obsolete Replacement')).toBeInTheDocument();
 
     // First step
-    expect(
-      within(screen.getByRole('combobox')).getByText('Yes')
-    ).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Yes')).toBeInTheDocument();
 
     // Second step
     await user.click(screen.getByRole('button', { name: 'Next' }));
