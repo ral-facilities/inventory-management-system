@@ -96,7 +96,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     }
   }, [selectedManufacturer, watch]);
 
-  // If any field name changes, clear the state
+  // If the name field changes, clear the name error state
   React.useEffect(() => {
     if (nameError) {
       const subscription = watch((_value, { name }) => {
