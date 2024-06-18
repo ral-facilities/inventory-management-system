@@ -178,6 +178,34 @@ export const getItemsBySystemId = (systemId: string): Item[] => {
   return ItemsJSON.filter((item) => item.system_id === systemId);
 };
 
+/* This counter and the function below it are used for forcing UUID's to be deterministic */
+let globalUUIDCounter = 0;
+const generateUUIDBytes = (): Uint8Array => {
+  const byteArray = new Uint8Array(16);
+  for (let i = 0; i < byteArray.length; i++) {
+    byteArray[i] = (globalUUIDCounter + i) % 256; // Ensuring the value stays within byte range
+  }
+  globalUUIDCounter++;
+  return byteArray;
+};
+
+/* Mock uuid's generated for snapshot tests to ensure they are deterministic rather than random */
+export const mockUUIDv4 = () => {
+  globalUUIDCounter = 0;
+  vi.mock('uuid', async () => {
+    const uuid = await vi.importActual('uuid');
+    return {
+      ...uuid,
+      v4: vi.fn(() =>
+        // @ts-expect-error Unknown as don't want to import here
+        uuid.v4({
+          random: generateUUIDBytes(),
+        })
+      ),
+    };
+  });
+};
+
 export const CREATED_MODIFIED_TIME_VALUES = {
   created_time: '2024-01-01T12:00:00.000+00:00',
   modified_time: '2024-01-02T13:10:10.000+00:00',
