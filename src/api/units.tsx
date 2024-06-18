@@ -9,29 +9,33 @@ import { AxiosError } from 'axios';
 import { imsApi } from './api';
 import { Unit, UnitPost } from './api.types';
 
-const fetchUnits = async (): Promise<Unit[]> => {
+const getUnits = async (): Promise<Unit[]> => {
   return imsApi.get('/v1/units').then((response) => {
     return response.data;
   });
 };
 
-export const useUnits = (): UseQueryResult<Unit[], AxiosError> => {
+export const useGetUnits = (): UseQueryResult<Unit[], AxiosError> => {
   return useQuery({
     queryKey: ['Units'],
     queryFn: () => {
-      return fetchUnits();
+      return getUnits();
     },
   });
 };
 
-const addUnit = async (unit: UnitPost): Promise<Unit> => {
+const postUnit = async (unit: UnitPost): Promise<Unit> => {
   return imsApi.post<Unit>(`/v1/units`, unit).then((response) => response.data);
 };
 
-export const useAddUnit = (): UseMutationResult<Unit, AxiosError, UnitPost> => {
+export const usePostUnit = (): UseMutationResult<
+  Unit,
+  AxiosError,
+  UnitPost
+> => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (unit: UnitPost) => addUnit(unit),
+    mutationFn: (unit: UnitPost) => postUnit(unit),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['Units'],

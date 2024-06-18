@@ -12,7 +12,7 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { UnitPost } from '../../api/api.types';
-import { useAddUnit } from '../../api/units';
+import { usePostUnit } from '../../api/units';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { trimStringValues } from '../../utils';
 
@@ -32,7 +32,7 @@ function UnitsDialog(props: UnitsDialogProps) {
     undefined
   );
 
-  const { mutateAsync: addUnit, isPending: isAddPending } = useAddUnit();
+  const { mutateAsync: postUnit, isPending: isAddPending } = usePostUnit();
 
   const handleClose = React.useCallback(() => {
     setUnitDetails({
@@ -59,7 +59,7 @@ function UnitsDialog(props: UnitsDialogProps) {
       return;
     }
 
-    addUnit(trimStringValues(unitDetails))
+    postUnit(trimStringValues(unitDetails))
       .then(() => handleClose())
       .catch((error: AxiosError) => {
         if (error.response?.status === 409) {
@@ -68,7 +68,7 @@ function UnitsDialog(props: UnitsDialogProps) {
         }
         handleIMS_APIError(error);
       });
-  }, [handleErrors, unitDetails, addUnit, handleClose]);
+  }, [handleErrors, unitDetails, postUnit, handleClose]);
 
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
