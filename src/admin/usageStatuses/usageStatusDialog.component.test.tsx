@@ -41,7 +41,7 @@ describe('Usage status dialog', () => {
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
     await user.click(saveButton);
-    const helperTexts = screen.getByText('Please enter a value');
+    const helperTexts = screen.getByText('Please enter a value.');
     expect(helperTexts).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
 
@@ -51,7 +51,7 @@ describe('Usage status dialog', () => {
 
     await user.click(saveButton);
     const helperText = screen.getByText(
-      'A usage status with the same value already exists'
+      'A usage status with the same value already exists.'
     );
     expect(helperText).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
