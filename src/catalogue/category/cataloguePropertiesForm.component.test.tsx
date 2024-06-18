@@ -5,7 +5,7 @@ import {
   AllowedValuesListErrorsType,
   CatalogueItemPropertiesErrorsType,
 } from '../../app.types';
-import { renderComponentWithRouterProvider } from '../../testUtils';
+import { mockUUIDv4, renderComponentWithRouterProvider } from '../../testUtils';
 import { resetUniqueIdCounter } from '../../utils';
 import CataloguePropertiesForm, {
   CataloguePropertiesFormProps,
@@ -45,10 +45,12 @@ describe('Catalogue Properties Form', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+    vi.resetAllMocks();
     resetUniqueIdCounter();
   });
 
   it('renders correctly', async () => {
+    mockUUIDv4();
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
@@ -108,6 +110,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('renders correctly when disabled', async () => {
+    mockUUIDv4();
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',
@@ -168,6 +171,7 @@ describe('Catalogue Properties Form', () => {
   });
 
   it('renders correctly for migration dialog', async () => {
+    mockUUIDv4();
     const formFields: AddCatalogueCategoryPropertyWithPlacementIds[] = [
       {
         cip_placement_id: '1',

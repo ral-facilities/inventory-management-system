@@ -15,6 +15,7 @@ import {
   CatalogueItemPropertiesErrorsType,
   Unit,
 } from '../../app.types';
+import { v4 as uuidv4 } from 'uuid';
 
 export interface CataloguePropertyFormProps {
   type: 'disabled' | 'normal' | 'add migration' | 'edit migration';
@@ -49,7 +50,6 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
     catalogueItemPropertyMessage,
     allowedValuesListErrorMessage,
     hasAllowedValuesList,
-    cip_placement_id,
     isList,
     currentCatalogueItemField,
   } = props;
@@ -59,6 +59,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
   return (
     <Stack direction={isList ? 'row' : 'column'} spacing={1} px={0.5} py={1}>
       <TextField
+        id={uuidv4()}
         label="Property Name"
         variant="outlined"
         required={true}
@@ -73,9 +74,9 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         disabled={type === 'disabled'}
       />
       <Autocomplete
-        disableClearable={true}
         disabled={type === 'disabled' || type === 'edit migration'}
-        id={`catalogue-properties-form-select-type-label${cip_placement_id ?? ''}`}
+        id={uuidv4()}
+        disableClearable={true}
         value={
           catalogueItemField.type === 'string'
             ? 'Text'
@@ -117,7 +118,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           type === 'disabled' ||
           type === 'edit migration'
         }
-        id={`catalogue-properties-form-select-allowed-values-label${cip_placement_id ?? ''}`}
+        id={uuidv4()}
         value={
           catalogueItemField.allowed_values?.type == 'list' ? 'List' : 'Any'
         }
@@ -174,6 +175,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
                   spacing={1}
                 >
                   <TextField
+                    id={`list-item-input-${listValue.av_placement_id}`}
                     sx={{
                       width: isList ? undefined : '100%',
                       minWidth: isList ? '150px' : undefined,
@@ -245,6 +247,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
         !isList &&
         (catalogueItemField.allowed_values?.type === 'list' ? (
           <Autocomplete
+            id="catalogue-property-default-value-list-input"
             sx={{
               width: '100%',
             }}
@@ -280,6 +283,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           />
         ) : catalogueItemField.type === 'boolean' ? (
           <Autocomplete
+            id={uuidv4()}
             sx={{
               width: '100%',
             }}
@@ -316,7 +320,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           <TextField
             required={catalogueItemField.mandatory}
             label="Default value"
-            id={`catalogue-category-form-data-default-value-${cip_placement_id}`}
+            id={uuidv4()}
             variant="outlined"
             value={catalogueItemField.default_value ?? ''}
             onChange={(e) => handleChange('default_value', e.target.value)}
@@ -331,6 +335,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
           />
         ))}
       <Autocomplete
+        id={uuidv4()}
         sx={{
           width: isList ? '200px' : '100%',
           minWidth: isList ? '200px' : undefined,
@@ -364,7 +369,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
       <Autocomplete
         disableClearable={true}
         disabled={type === 'disabled' || type === 'edit migration'}
-        id={`catalogue-properties-form-select-mandatory-label${cip_placement_id ?? ''}`}
+        id={uuidv4()}
         value={catalogueItemField.mandatory ? 'Yes' : 'No'}
         onChange={(_event, value) => {
           if (value === null) return;
