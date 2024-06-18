@@ -36,3 +36,14 @@ export interface Manufacturer extends ManufacturerPost, CreatedModifiedMixin {
   id: string;
   code: string;
 }
+
+// Units
+
+export interface UnitPost {
+  value: string;
+}
+
+export interface Unit extends UnitPost, CreatedModifiedMixin {
+  id: string;
+  code: string;
+}

@@ -3,13 +3,14 @@ import {
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
+  Unit,
+  UnitPost,
 } from '../api/api.types';
 import {
   AddCatalogueCategory,
   AddCatalogueItem,
   AddItem,
   AddSystem,
-  AddUnit,
   AddUsageStatus,
   BreadcrumbsInfo,
   CatalogueCategory,
@@ -22,7 +23,6 @@ import {
   EditSystem,
   Item,
   System,
-  Unit,
   UsageStatus,
 } from '../app.types';
 import { generateUniqueId } from '../utils';
@@ -815,7 +815,7 @@ export const handlers = [
     return HttpResponse.json(UnitsJSON, { status: 200 });
   }),
 
-  http.post<PathParams, AddUnit, Unit | ErrorResponse>(
+  http.post<PathParams, UnitPost, Unit | ErrorResponse>(
     '/v1/units',
     async ({ request }) => {
       const body = await request.json();

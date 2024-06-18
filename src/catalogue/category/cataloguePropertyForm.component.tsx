@@ -12,12 +12,12 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
+import { Unit } from '../../api/api.types';
 import { useUnits } from '../../api/units';
 import {
   AddCatalogueCategoryPropertyTypes,
   CatalogueCategoryProperty,
   CatalogueItemPropertiesErrorsType,
-  Unit,
 } from '../../app.types';
 
 export interface CataloguePropertyFormProps {

@@ -1,10 +1,10 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { AddUnit, Unit } from '../app.types';
 import UnitsJSON from '../mocks/Units.json';
 import {
   CREATED_MODIFIED_TIME_VALUES,
   hooksWrapperWithProviders,
 } from '../testUtils';
+import { Unit, UnitPost } from './api.types';
 import { useAddUnit, useDeleteUnit, useUnits } from './units';
 
 describe('units api functions', () => {
@@ -27,7 +27,7 @@ describe('units api functions', () => {
   });
 
   describe('useAddUnits', () => {
-    let mockDataAdd: AddUnit;
+    let mockDataAdd: UnitPost;
     beforeEach(() => {
       mockDataAdd = {
         value: 'test',

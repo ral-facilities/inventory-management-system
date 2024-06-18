@@ -11,8 +11,8 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { UnitPost } from '../../api/api.types';
 import { useAddUnit } from '../../api/units';
-import { AddUnit } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { trimStringValues } from '../../utils';
 
@@ -24,7 +24,7 @@ export interface UnitsDialogProps {
 function UnitsDialog(props: UnitsDialogProps) {
   const { open, onClose } = props;
 
-  const [unitDetails, setUnitDetails] = React.useState<AddUnit>({
+  const [unitDetails, setUnitDetails] = React.useState<UnitPost>({
     value: '',
   });
 
