@@ -264,6 +264,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         <Grid container direction="column" spacing={1} component="form">
           <Grid item sx={{ mt: 1 }}>
             <TextField
+              id="manufacturer-name-input"
               label="Name"
               required
               {...register('name')}
@@ -274,6 +275,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-url-input"
               label="URL"
               {...register('url')}
               error={!!errors.url}
@@ -286,6 +288,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-address-line-input"
               label="Address Line"
               required
               {...register('address.address_line')}
@@ -295,10 +298,16 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             />
           </Grid>
           <Grid item>
-            <TextField label="Town" {...register('address.town')} fullWidth />
+            <TextField
+              id="manufacturer-town-input"
+              label="Town"
+              {...register('address.town')}
+              fullWidth
+            />
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-county-input"
               label="County"
               {...register('address.county')}
               fullWidth
@@ -306,6 +315,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-country-input"
               label="Country"
               required
               {...register('address.country')}
@@ -316,6 +326,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-postcode-input"
               label="Post/Zip code"
               required
               {...register('address.postcode')}
@@ -326,6 +337,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           </Grid>
           <Grid item>
             <TextField
+              id="manufacturer-telephone-input"
               label="Telephone number"
               {...register('telephone')}
               fullWidth
