@@ -26,36 +26,18 @@ export interface UnitsDialogProps {
 function UnitsDialog(props: UnitsDialogProps) {
   const { open, onClose } = props;
 
-  const [valueError, setValueError] = React.useState<string | undefined>(
-    undefined
-  );
-
   const {
     handleSubmit,
     register,
     formState: { errors },
-    watch,
+    setError,
   } = useForm<UnitPost>({
     resolver: zodResolver(UnitSchema),
   });
 
-  // If any field name changes, clear the state
-  React.useEffect(() => {
-    if (valueError) {
-      const subscription = watch((_value, { name }) => {
-        if (name === 'value') {
-          setValueError(undefined);
-        }
-      });
-
-      return () => subscription.unsubscribe();
-    }
-  }, [valueError, watch]);
-
   const { mutateAsync: postUnit, isPending: isAddPending } = usePostUnit();
 
   const handleClose = React.useCallback(() => {
-    setValueError(undefined);
     onClose();
   }, [onClose]);
 
@@ -65,13 +47,16 @@ function UnitsDialog(props: UnitsDialogProps) {
         .then(() => handleClose())
         .catch((error: AxiosError) => {
           if (error.response?.status === 409) {
-            setValueError('A unit with the same value already exists.');
+            setError('value', {
+              message:
+                'A unit with the same value already exists. Please enter a different value.',
+            });
             return;
           }
           handleIMS_APIError(error);
         });
     },
-    [postUnit, handleClose]
+    [postUnit, handleClose, setError]
   );
 
   const onSubmit = (data: UnitPost) => {
@@ -90,8 +75,8 @@ function UnitsDialog(props: UnitsDialogProps) {
               required
               sx={{ marginLeft: '4px', my: '8px' }}
               {...register('value')}
-              error={!!errors.value || valueError !== undefined}
-              helperText={errors.value?.message || valueError}
+              error={!!errors.value}
+              helperText={errors.value?.message}
               fullWidth
             />
           </Grid>
@@ -120,11 +105,7 @@ function UnitsDialog(props: UnitsDialogProps) {
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
             onClick={handleSubmit(onSubmit)}
-            disabled={
-              isAddPending ||
-              valueError !== undefined ||
-              Object.values(errors).length !== 0
-            }
+            disabled={isAddPending || Object.values(errors).length !== 0}
             endIcon={isAddPending ? <CircularProgress size={20} /> : null}
           >
             Save

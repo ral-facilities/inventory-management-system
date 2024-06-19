@@ -48,7 +48,7 @@ describe('Units dialog', () => {
 
     await user.click(saveButton);
     const helperText = screen.getByText(
-      'A unit with the same value already exists.'
+      'A unit with the same value already exists. Please enter a different value.'
     );
     expect(helperText).toBeInTheDocument();
     expect(onClose).not.toHaveBeenCalled();
