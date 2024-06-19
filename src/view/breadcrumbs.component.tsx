@@ -34,7 +34,7 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
 
   const trailPrefix =
     breadcrumbsInfo && !breadcrumbsInfo.full_trail
-      ? [emptyElement, ['test', <MoreHorizIcon key="trailPrefix" />]]
+      ? [emptyElement, ['', <MoreHorizIcon key="trailPrefix" />]]
       : [emptyElement];
   // Defines the maximum width of each breadcrumb item within the navigation bar,
   // ensuring it occupies 100% of the view width minus 10% for the sci-gateway navigation,
