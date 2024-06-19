@@ -91,8 +91,8 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     onClose();
   }, [onClose, selectedSystem, type]);
 
-  const { mutateAsync: addSystem, isPending: isAddPending } = usePostSystem();
-  const { mutateAsync: editSystem, isPending: isEditPending } =
+  const { mutateAsync: postSystem, isPending: isAddPending } = usePostSystem();
+  const { mutateAsync: patchSystem, isPending: isEditPending } =
     usePatchSystem();
 
   // Returns true when all fields valid
@@ -117,7 +117,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         importance: systemData.importance,
       };
       if (parentId !== undefined) system.parent_id = parentId;
-      addSystem(trimStringValues(system))
+      postSystem(trimStringValues(system))
         .then(() => handleClose())
         .catch((error: AxiosError) => {
           const response = error.response?.data as APIError;
@@ -130,7 +130,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         });
     }
   }, [
-    addSystem,
+    postSystem,
     handleClose,
     parentId,
     systemData.description,
@@ -171,7 +171,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         isImportanceUpdated &&
           (editSystemData.importance = systemData.importance);
 
-        editSystem(trimStringValues(editSystemData))
+        patchSystem(trimStringValues(editSystemData))
           .then((response) => {
             setSystemData(response);
             handleClose();
@@ -188,7 +188,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
       } else setFormError('Please edit a form entry before clicking save');
     }
   }, [
-    editSystem,
+    patchSystem,
     handleClose,
     selectedSystem,
     systemData.description,

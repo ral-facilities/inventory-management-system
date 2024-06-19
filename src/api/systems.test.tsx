@@ -241,7 +241,7 @@ describe('System api functions', () => {
     let moveToSystem: MoveToSystem;
 
     // Use patch spy for testing since response is not actual data in this case
-    // so can't test the underlying use of editSystem otherwise
+    // so can't test the underlying use of patchSystem otherwise
     let axiosPatchSpy: MockInstance;
 
     beforeEach(() => {
@@ -375,7 +375,7 @@ describe('System api functions', () => {
     let copyToSystem: CopyToSystem;
 
     // Use post spy for testing since response is not actual data in this case
-    // so can't test the underlying use of addSystem otherwise
+    // so can't test the underlying use of postSystem otherwise
     let axiosPostSpy: MockInstance;
 
     beforeEach(() => {
