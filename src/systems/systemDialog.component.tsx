@@ -14,24 +14,25 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React, { useEffect } from 'react';
-import { APIError } from '../api/api.types';
+import {
+  APIError,
+  System,
+  SystemImportanceType,
+  SystemPatch,
+  SystemPost,
+} from '../api/api.types';
 import {
   getSystemImportanceColour,
   useAddSystem,
   useEditSystem,
 } from '../api/systems';
-import {
-  AddSystem,
-  EditSystem,
-  System,
-  SystemImportanceType,
-} from '../app.types';
+
 import handleIMS_APIError from '../handleIMS_APIError';
 import { trimStringValues } from '../utils';
 
 export type SystemDialogType = 'add' | 'edit' | 'save as';
 
-const getEmptySystem = (): AddSystem => {
+const getEmptySystem = (): SystemPost => {
   return {
     // Here using null for optional values only, so that types for isUpdated parameters
     // can match
@@ -40,7 +41,7 @@ const getEmptySystem = (): AddSystem => {
     location: null,
     owner: null,
     importance: SystemImportanceType.MEDIUM,
-  } as AddSystem;
+  } as SystemPost;
 };
 
 export interface SystemDialogProps {
@@ -58,13 +59,13 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
 
   // User entered properties
   const [systemData, setSystemData] =
-    React.useState<AddSystem>(getEmptySystem());
+    React.useState<SystemPost>(getEmptySystem());
 
   // Ensure system data is updated when the selected system changes
   useEffect(() => {
     if (open) {
       if (type === 'add') setSystemData(getEmptySystem());
-      else if (selectedSystem) setSystemData(selectedSystem as AddSystem);
+      else if (selectedSystem) setSystemData(selectedSystem as SystemPost);
     }
   }, [selectedSystem, open, type]);
 
@@ -81,7 +82,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const handleClose = React.useCallback(() => {
     if (type === 'add') setSystemData(getEmptySystem());
     // Reset for edit
-    else setSystemData(selectedSystem as AddSystem);
+    else setSystemData(selectedSystem as SystemPost);
 
     // Remove all errors
     setNameError(undefined);
@@ -106,7 +107,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     // Validate the entered fields
     if (validateFields()) {
       // Should be valid so add the system
-      const system: AddSystem = {
+      const system: SystemPost = {
         name: systemData.name,
         // For optional params use undefined when the parameters are null
         description: systemData.description || undefined,
@@ -159,7 +160,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         isOwnerUpdated ||
         isImportanceUpdated
       ) {
-        const editSystemData: EditSystem = { id: selectedSystem.id };
+        const editSystemData: SystemPatch = { id: selectedSystem.id };
 
         isNameUpdated && (editSystemData.name = systemData.name);
         isDescriptionUpdated &&
@@ -198,7 +199,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   ]);
 
   // Reset form error on any form modification
-  const handleFormChange = (newSystemData: AddSystem) => {
+  const handleFormChange = (newSystemData: SystemPost) => {
     setSystemData(newSystemData);
     setFormError(undefined);
   };

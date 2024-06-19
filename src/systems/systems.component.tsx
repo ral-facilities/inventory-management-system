@@ -35,8 +35,8 @@ import {
 } from 'material-react-table';
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { System } from '../api/api.types';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
-import { System } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
   OverflowTip,

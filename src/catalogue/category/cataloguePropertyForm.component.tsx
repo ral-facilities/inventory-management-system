@@ -8,6 +8,7 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
+import { v4 as uuidv4 } from 'uuid';
 import { Unit } from '../../api/api.types';
 import { useGetUnits } from '../../api/units';
 import {
@@ -15,7 +16,6 @@ import {
   CatalogueCategoryProperty,
   CatalogueItemPropertiesErrorsType,
 } from '../../app.types';
-import { v4 as uuidv4 } from 'uuid';
 
 export interface CataloguePropertyFormProps {
   type: 'disabled' | 'normal' | 'add migration' | 'edit migration';

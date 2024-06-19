@@ -7,6 +7,11 @@ export interface APIError {
   detail: string;
 }
 
+export interface BreadcrumbsInfo {
+  trail: [id: string, name: string][];
+  full_trail: boolean;
+}
+
 // Manufacturers
 
 interface Address {
@@ -64,4 +69,35 @@ export interface UsageStatusPost {
 export interface UsageStatus extends UsageStatusPost, CreatedModifiedMixin {
   id: string;
   code: string;
+}
+
+// Systems
+
+export enum SystemImportanceType {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+}
+
+export interface SystemPost {
+  name: string;
+  description?: string | null;
+  location?: string | null;
+  owner?: string | null;
+  importance: SystemImportanceType;
+  parent_id?: string | null;
+}
+
+export interface System extends SystemPost, CreatedModifiedMixin {
+  id: string;
+  description: string | null;
+  location: string | null;
+  owner: string | null;
+  importance: SystemImportanceType;
+  parent_id: string | null;
+  code: string;
+}
+
+export interface SystemPatch extends Partial<SystemPost> {
+  id: string;
 }

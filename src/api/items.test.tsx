@@ -7,7 +7,6 @@ import {
   Item,
   MoveItemsToSystem,
   MoveItemsToSystemUsageStatus,
-  System,
 } from '../app.types';
 import SystemsJSON from '../mocks/Systems.json';
 import {
@@ -17,6 +16,7 @@ import {
   hooksWrapperWithProviders,
 } from '../testUtils';
 import { imsApi } from './api';
+import { System } from './api.types';
 import {
   useAddItem,
   useAddItems,

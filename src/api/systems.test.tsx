@@ -1,17 +1,16 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { MockInstance } from 'vitest';
-import {
-  AddSystem,
-  CopyToSystem,
-  EditSystem,
-  MoveToSystem,
-  System,
-  SystemImportanceType,
-} from '../app.types';
+import { CopyToSystem, MoveToSystem } from '../app.types';
 import SystemBreadcrumbsJSON from '../mocks/SystemBreadcrumbs.json';
 import SystemsJSON from '../mocks/Systems.json';
 import { hooksWrapperWithProviders } from '../testUtils';
 import { imsApi } from './api';
+import {
+  System,
+  SystemImportanceType,
+  SystemPatch,
+  SystemPost,
+} from './api.types';
 import {
   useAddSystem,
   useCopyToSystem,
@@ -170,7 +169,7 @@ describe('System api functions', () => {
   });
 
   describe('useAddSystem', () => {
-    const MOCK_SYSTEM_POST: AddSystem = {
+    const MOCK_SYSTEM_POST: SystemPost = {
       name: 'System name',
       parent_id: 'parent-id',
       description: 'Description',
@@ -192,7 +191,7 @@ describe('System api functions', () => {
   });
 
   describe('useEditSystem', () => {
-    const MOCK_SYSTEM_PATCH: EditSystem = {
+    const MOCK_SYSTEM_PATCH: SystemPatch = {
       id: '65328f34a40ff5301575a4e3',
       name: 'System name',
       parent_id: 'parent-id',
