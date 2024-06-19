@@ -22,9 +22,9 @@ describe('Units', () => {
 
     cy.findByLabelText('Value *').type('test_dup');
     cy.findByRole('button', { name: 'Save' }).click();
-    cy.findByText('A unit with the same value already exists.').should(
-      'be.visible'
-    );
+    cy.findByText(
+      'A unit with the same value already exists. Please enter a different value.'
+    ).should('be.visible');
 
     cy.findByLabelText('Value *').clear();
     cy.findByLabelText('Value *').type('test');
