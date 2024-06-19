@@ -11,10 +11,15 @@ export interface APIError {
 
 interface Address {
   address_line: string;
-  town?: string | null;
-  county?: string | null;
+  town: string | null;
+  county: string | null;
   country: string;
   postcode: string;
+}
+
+interface AddressPost extends Omit<Address, 'town' | 'county'> {
+  town?: string | null;
+  county?: string | null;
 }
 
 type AddressPatch = Partial<Address>;
@@ -22,7 +27,7 @@ type AddressPatch = Partial<Address>;
 export interface ManufacturerPost {
   name: string;
   url?: string | null;
-  address: Address;
+  address: AddressPost;
   telephone?: string | null;
 }
 
@@ -35,6 +40,9 @@ export interface ManufacturerPatch
 export interface Manufacturer extends ManufacturerPost, CreatedModifiedMixin {
   id: string;
   code: string;
+  address: Address;
+  url: string | null;
+  telephone: string | null;
 }
 
 // Units
