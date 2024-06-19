@@ -24,6 +24,7 @@ import {
   useEditCatalogueCategory,
 } from '../../api/catalogueCategories';
 import {
+  APIError,
   AddCatalogueCategory,
   AddCatalogueCategoryProperty,
   AddCatalogueCategoryPropertyWithPlacementIds,
@@ -32,7 +33,6 @@ import {
   CatalogueCategory,
   CatalogueItemPropertiesErrorsType,
   EditCatalogueCategory,
-  ErrorParsing,
 } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { generateUniqueId, trimStringValues } from '../../utils';
@@ -445,7 +445,7 @@ const CatalogueCategoryDialog = React.memo(
       addCatalogueCategory(trimStringValues(catalogueCategory))
         .then(() => handleClose())
         .catch((error) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
           if (response && error.response?.status === 409) {
             setNameError(response.detail);
             return;
@@ -491,7 +491,7 @@ const CatalogueCategoryDialog = React.memo(
               handleClose();
             })
             .catch((error: AxiosError) => {
-              const response = error.response?.data as ErrorParsing;
+              const response = error.response?.data as APIError;
               if (response && error.response?.status === 409) {
                 setNameError(response.detail);
                 return;
@@ -521,6 +521,7 @@ const CatalogueCategoryDialog = React.memo(
           <Grid container direction="column" spacing={1}>
             <Grid item sx={{ mt: 1 }}>
               <TextField
+                id="catalogue-category-name-input"
                 label="Name"
                 required={true}
                 sx={{ marginLeft: '4px', marginTop: '8px' }} // Adjusted the width and margin

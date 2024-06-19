@@ -28,6 +28,7 @@ import {
 } from '../../api/catalogueItems';
 import { useManufacturers } from '../../api/manufacturers';
 import {
+  APIError,
   AddCatalogueItem,
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -35,7 +36,6 @@ import {
   CatalogueItem,
   CatalogueItemDetailsPlaceholder,
   EditCatalogueItem,
-  ErrorParsing,
   Manufacturer,
 } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
@@ -530,7 +530,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
         editCatalogueItem(trimStringValues(catalogueItem))
           .then(() => handleClose())
           .catch((error: AxiosError) => {
-            const response = error.response?.data as ErrorParsing;
+            const response = error.response?.data as APIError;
 
             if (response && error.response?.status === 409) {
               if (response.detail.includes('child elements')) {
@@ -612,6 +612,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
           <Grid item container spacing={1.5} xs={12}>
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-name-input"
                 label="Name"
                 size="small"
                 required={true}
@@ -628,6 +629,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-description-input"
                 label="Description"
                 size="small"
                 value={catalogueItemDetails.description ?? ''}
@@ -640,6 +642,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-cost-input"
                 label="Cost (£)"
                 size="small"
                 required={true}
@@ -659,6 +662,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-cost-rework-input"
                 label="Cost to rework (£)"
                 size="small"
                 value={catalogueItemDetails.cost_to_rework_gbp ?? ''}
@@ -680,6 +684,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-replace-input"
                 label="Time to replace (days)"
                 size="small"
                 required={true}
@@ -699,6 +704,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-rework-input"
                 label="Time to rework (days)"
                 size="small"
                 value={catalogueItemDetails.days_to_rework ?? ''}
@@ -717,6 +723,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-drawing-number-input"
                 label="Drawing number"
                 size="small"
                 value={catalogueItemDetails.drawing_number ?? ''}
@@ -729,6 +736,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-drawing-link-input"
                 label="Drawing link"
                 size="small"
                 value={catalogueItemDetails.drawing_link ?? ''}
@@ -747,6 +755,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-model-input"
                 label="Model number"
                 size="small"
                 value={catalogueItemDetails.item_model_number ?? ''}
@@ -763,6 +772,8 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             <Grid item xs={12} style={{ display: 'flex' }}>
               <Grid item xs={11}>
                 <Autocomplete
+                  id="catalogue-item-manufacturer-input"
+                  disableClearable={true}
                   value={
                     //logic means that current manufacturer renders in edit dialog, but behaves the same as add dialog (so can be changed/cleared)
                     selectedCatalogueItemManufacturer &&
@@ -783,7 +794,6 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                       newManufacturer?.id ?? null
                     );
                   }}
-                  id="manufacturer-autocomplete"
                   options={sortDataList(manufacturerList ?? [], 'name')}
                   size="small"
                   isOptionEqualToValue={(option, value) =>
@@ -823,6 +833,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
 
             <Grid item xs={12}>
               <TextField
+                id="catalogue-item-notes-input"
                 label="Notes"
                 size="small"
                 multiline
@@ -849,11 +860,19 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                           {property.type === 'boolean' ? (
                             <FormControl fullWidth>
                               <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
                                 )}`}
-                                value={(propertyValues[index] as string) ?? ''}
+                                value={
+                                  propertyValues[index]
+                                    ? (propertyValues[index] as string)
+                                        .charAt(0)
+                                        .toUpperCase() +
+                                      (propertyValues[index] as string).slice(1)
+                                    : ''
+                                }
                                 size="small"
                                 onChange={(_event, value) => {
                                   handlePropertyChange(
@@ -885,6 +904,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                           ) : property.allowed_values ? (
                             <FormControl fullWidth>
                               <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
@@ -920,6 +940,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                             </FormControl>
                           ) : (
                             <TextField
+                              id={`catalogue-item-${property.name}-input`}
                               label={`${property.name} ${
                                 property.unit ? `(${property.unit})` : ''
                               }`}

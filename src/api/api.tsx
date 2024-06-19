@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ErrorParsing, MicroFrontendId } from '../app.types';
+import { APIError, MicroFrontendId } from '../app.types';
 import { readSciGatewayToken } from '../parseTokens';
 import { settings } from '../settings';
 import { InvalidateTokenType } from '../state/actions/actions.types';
@@ -40,7 +40,7 @@ imsApi.interceptors.response.use(
   (error) => {
     const originalRequest = error.config;
     const errorMessage: string = error.response?.data
-      ? (error.response.data as ErrorParsing).detail.toLocaleLowerCase() ??
+      ? (error.response.data as APIError).detail.toLocaleLowerCase() ??
         error.message
       : error.message;
 

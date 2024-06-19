@@ -609,6 +609,7 @@ function ItemDialog(props: ItemDialogProps) {
           <Grid item container spacing={1.5} xs={12}>
             <Grid item container xs={12}>
               <TextField
+                id="item-serial-number-input"
                 label="Serial number"
                 size="small"
                 value={itemDetails.serial_number ?? ''}
@@ -660,6 +661,7 @@ function ItemDialog(props: ItemDialogProps) {
                       <Grid item container mt={0.25} spacing={1.5} xs={12}>
                         <Grid item xs={6}>
                           <TextField
+                            id="item-quantity-input"
                             label="Quantity"
                             size="small"
                             fullWidth
@@ -680,6 +682,7 @@ function ItemDialog(props: ItemDialogProps) {
                         </Grid>
                         <Grid item xs={6}>
                           <TextField
+                            id="item-starting-value-input"
                             label="Starting value"
                             size="small"
                             fullWidth
@@ -708,6 +711,7 @@ function ItemDialog(props: ItemDialogProps) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                id="item-asset-input"
                 label="Asset number"
                 size="small"
                 value={itemDetails.asset_number ?? ''}
@@ -719,6 +723,7 @@ function ItemDialog(props: ItemDialogProps) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                id="item-purchase-order-input"
                 label="Purchase order number"
                 size="small"
                 value={itemDetails.purchase_order_number ?? ''}
@@ -773,7 +778,8 @@ function ItemDialog(props: ItemDialogProps) {
             <Grid item xs={12}>
               <FormControl fullWidth>
                 <Autocomplete
-                  id="is-defective"
+                  disableClearable={true}
+                  id="item-is-defective-input"
                   value={itemDetails.is_defective == 'true' ? 'Yes' : 'No'}
                   size="small"
                   onChange={(_event, value) =>
@@ -798,7 +804,8 @@ function ItemDialog(props: ItemDialogProps) {
             <Grid item xs={12}>
               <FormControl size="small" fullWidth>
                 <Autocomplete
-                  id="usage-status"
+                  disableClearable={itemDetails.usage_status_id != null}
+                  id="item-usage-status-input"
                   value={
                     usageStatuses?.find(
                       (usageStatus) =>
@@ -838,6 +845,7 @@ function ItemDialog(props: ItemDialogProps) {
             <Grid item container xs={12} sx={{ display: 'flex' }}>
               <Grid item xs={11}>
                 <TextField
+                  id="item-notes-input"
                   label="Notes"
                   size="small"
                   multiline
@@ -885,11 +893,19 @@ function ItemDialog(props: ItemDialogProps) {
                           {property.type === 'boolean' ? (
                             <FormControl fullWidth>
                               <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
                                 )}`}
-                                value={(propertyValues[index] as string) ?? ''}
+                                value={
+                                  propertyValues[index]
+                                    ? (propertyValues[index] as string)
+                                        .charAt(0)
+                                        .toUpperCase() +
+                                      (propertyValues[index] as string).slice(1)
+                                    : null
+                                }
                                 size="small"
                                 onChange={(_event, value) => {
                                   handlePropertyChange(
@@ -901,7 +917,7 @@ function ItemDialog(props: ItemDialogProps) {
                                 fullWidth
                                 options={['True', 'False']}
                                 isOptionEqualToValue={(option, value) =>
-                                  option.toLowerCase() == value || value == ''
+                                  option === value
                                 }
                                 renderInput={(params) => (
                                   <TextField
@@ -920,6 +936,7 @@ function ItemDialog(props: ItemDialogProps) {
                           ) : property.allowed_values ? (
                             <FormControl fullWidth>
                               <Autocomplete
+                                disableClearable={property.mandatory ?? false}
                                 id={`catalogue-item-property-${property.name.replace(
                                   /\s+/g,
                                   '-'
@@ -955,6 +972,7 @@ function ItemDialog(props: ItemDialogProps) {
                             </FormControl>
                           ) : (
                             <TextField
+                              id={`item-${property.id}-input`}
                               label={`${property.name} ${
                                 property.unit ? `(${property.unit})` : ''
                               }`}

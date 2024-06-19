@@ -158,7 +158,7 @@ describe('Catalogue Category Dialog', () => {
                 `av_placement_id_${i + j + values.newFormFields.length + 1}: List Item`
               );
 
-              fireEvent.change(within(listItem).getByLabelText('List Item'), {
+              fireEvent.change(within(listItem).getByRole('textbox'), {
                 target: { value: field.allowed_values.values[j] },
               });
             }
@@ -503,18 +503,18 @@ describe('Catalogue Category Dialog', () => {
         ],
       });
 
-      expect(screen.getByDisplayValue('number')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('Number')).toBeInTheDocument();
       expect(screen.getByDisplayValue('radius')).toBeInTheDocument();
       expect(screen.getByDisplayValue('millimeters')).toBeInTheDocument();
-      expect(screen.getByText('Yes')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('Yes')).toBeInTheDocument();
 
       const categoriesRadio = screen.getByLabelText('Catalogue Categories');
       await user.click(categoriesRadio);
 
-      expect(screen.queryByDisplayValue('number')).not.toBeInTheDocument();
+      expect(screen.queryByDisplayValue('Number')).not.toBeInTheDocument();
       expect(screen.queryByDisplayValue('radius')).not.toBeInTheDocument();
       expect(screen.queryByDisplayValue('millimeters')).not.toBeInTheDocument();
-      expect(screen.queryByText('Yes')).not.toBeInTheDocument();
+      expect(screen.queryByDisplayValue('Yes')).not.toBeInTheDocument();
     }, 10000);
 
     it('displays duplicate values and incorrect type error (allowed_values list of numbers)', async () => {

@@ -12,7 +12,7 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { useDeleteCatalogueCategory } from '../../api/catalogueCategories';
-import { CatalogueCategory, ErrorParsing } from '../../app.types';
+import { APIError, CatalogueCategory } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 
 export interface DeleteCatalogueCategoryDialogProps {
@@ -50,7 +50,7 @@ const DeleteCatalogueCategoryDialog = (
           onClose();
         })
         .catch((error: AxiosError) => {
-          const response = error.response?.data as ErrorParsing;
+          const response = error.response?.data as APIError;
           if (response && error.response?.status === 409) {
             setError(true);
             setErrorMessage(

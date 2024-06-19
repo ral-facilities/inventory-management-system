@@ -196,7 +196,7 @@ export interface TransferToCatalogueItem {
   targetCatalogueCategory: CatalogueCategory | null;
 }
 
-export interface ErrorParsing {
+export interface APIError {
   detail: string;
 }
 
