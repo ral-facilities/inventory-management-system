@@ -39,12 +39,6 @@ export interface ManufacturerDialogProps {
 
 function ManufacturerDialog(props: ManufacturerDialogProps) {
   const { open, onClose, selectedManufacturer, type } = props;
-  const [nameError, setNameError] = React.useState<string | undefined>(
-    undefined
-  );
-  const [formError, setFormError] = React.useState<string | undefined>(
-    undefined
-  );
 
   const { mutateAsync: postManufacturer, isPending: isAddPending } =
     usePostManufacturer();
@@ -76,6 +70,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     formState: { errors },
     watch,
     setValue,
+    setError,
+    clearErrors,
   } = useForm<ManufacturerPost>({
     resolver: zodResolver(ManufacturerSchema(type)),
   });
@@ -88,30 +84,14 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     );
   }, [initialManufacturer, setValue]);
 
-  // If any field value changes, clear the state
   React.useEffect(() => {
-    if (selectedManufacturer) {
-      const subscription = watch(() => setFormError(undefined));
+    if (errors.root?.formError) {
+      const subscription = watch(() => clearErrors('root.formError'));
       return () => subscription.unsubscribe();
     }
-  }, [selectedManufacturer, watch]);
-
-  // If the name field changes, clear the name error state
-  React.useEffect(() => {
-    if (nameError) {
-      const subscription = watch((_value, { name }) => {
-        if (name === 'name') {
-          setNameError(undefined);
-        }
-      });
-
-      return () => subscription.unsubscribe();
-    }
-  }, [nameError, watch]);
+  }, [clearErrors, errors, selectedManufacturer, watch]);
 
   const handleClose = React.useCallback(() => {
-    setNameError(undefined);
-    setFormError(undefined);
     onClose();
   }, [onClose]);
 
@@ -121,13 +101,16 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         .then(() => handleClose())
         .catch((error: AxiosError) => {
           if (error.response?.status === 409) {
-            setNameError('A manufacturer with the same name already exists.');
+            setError('name', {
+              message:
+                'A manufacturer with the same name has been found. Please enter a different name.',
+            });
             return;
           }
           handleIMS_APIError(error);
         });
     },
-    [postManufacturer, handleClose]
+    [postManufacturer, handleClose, setError]
   );
 
   const handleEditManufacturer = React.useCallback(
@@ -233,22 +216,24 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             .catch((error: AxiosError) => {
               const response = error.response?.data as APIError;
               if (response && error.response?.status === 409) {
-                setNameError(
-                  'A manufacturer with the same name has been found. Please enter a different name'
-                );
+                setError('name', {
+                  message:
+                    'A manufacturer with the same name has been found. Please enter a different name.',
+                });
                 return;
               }
 
               handleIMS_APIError(error);
             });
         } else {
-          setFormError(
-            "There have been no changes made. Please change a field's value or press Cancel to exit"
-          );
+          setError('root.formError', {
+            message:
+              "There have been no changes made. Please change a field's value or press Cancel to exit",
+          });
         }
       }
     },
-    [patchManufacturer, handleClose, selectedManufacturer]
+    [selectedManufacturer, patchManufacturer, handleClose, setError]
   );
 
   const onSubmit = (data: ManufacturerPost) => {
@@ -268,8 +253,8 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
               label="Name"
               required
               {...register('name')}
-              error={!!errors.name || nameError !== undefined}
-              helperText={errors.name?.message || nameError}
+              error={!!errors.name}
+              helperText={errors.name?.message}
               fullWidth
             />
           </Grid>
@@ -370,8 +355,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             onClick={handleSubmit(onSubmit)}
             disabled={
               Object.values(errors).length !== 0 ||
-              formError !== undefined ||
-              nameError !== undefined ||
               isAddPending ||
               isEditPending
             }
@@ -384,9 +367,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             Save
           </Button>
         </Box>
-        {formError && (
+        {errors.root?.formError && (
           <FormHelperText sx={{ marginBottom: '16px' }} error>
-            {formError}
+            {errors.root?.formError.message}
           </FormHelperText>
         )}
       </DialogActions>
