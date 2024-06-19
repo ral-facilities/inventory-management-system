@@ -12,15 +12,15 @@ import {
   SystemPost,
 } from './api.types';
 import {
-  useAddSystem,
   useCopyToSystem,
   useDeleteSystem,
-  useEditSystem,
+  useGetSystem,
+  useGetSystemIds,
+  useGetSystems,
+  useGetSystemsBreadcrumbs,
   useMoveToSystem,
-  useSystem,
-  useSystemIds,
-  useSystems,
-  useSystemsBreadcrumbs,
+  usePatchSystem,
+  usePostSystem,
 } from './systems';
 
 describe('System api functions', () => {
@@ -28,9 +28,9 @@ describe('System api functions', () => {
     vi.clearAllMocks();
   });
 
-  describe('useSystems', () => {
+  describe('useGetSystems', () => {
     it('sends request to fetch all systems returns successful response', async () => {
-      const { result } = renderHook(() => useSystems(), {
+      const { result } = renderHook(() => useGetSystems(), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -42,7 +42,7 @@ describe('System api functions', () => {
     });
 
     it('sends request to fetch all systems with a null parent and returns successful response', async () => {
-      const { result } = renderHook(() => useSystems('null'), {
+      const { result } = renderHook(() => useGetSystems('null'), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -58,7 +58,7 @@ describe('System api functions', () => {
 
     it('sends request to fetch all systems with a specific parent and returns a successful response', async () => {
       const { result } = renderHook(
-        () => useSystems('65328f34a40ff5301575a4e3'),
+        () => useGetSystems('65328f34a40ff5301575a4e3'),
         {
           wrapper: hooksWrapperWithProviders(),
         }
@@ -77,9 +77,9 @@ describe('System api functions', () => {
     });
   });
 
-  describe('useSystem', () => {
+  describe('useGetSystem', () => {
     it('does not send a request when given an id of null', async () => {
-      const { result } = renderHook(() => useSystem(null), {
+      const { result } = renderHook(() => useGetSystem(null), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -89,7 +89,7 @@ describe('System api functions', () => {
 
     it('sends request to fetch a system and returns successful response', async () => {
       const { result } = renderHook(
-        () => useSystem('65328f34a40ff5301575a4e3'),
+        () => useGetSystem('65328f34a40ff5301575a4e3'),
         {
           wrapper: hooksWrapperWithProviders(),
         }
@@ -107,11 +107,11 @@ describe('System api functions', () => {
     });
   });
 
-  describe('useSystemIds', () => {
+  describe('useGetSystemIds', () => {
     it('sends a request to fetch system data and returns a successful response', async () => {
       const { result } = renderHook(
         () =>
-          useSystemIds([
+          useGetSystemIds([
             '65328f34a40ff5301575a4e3',
             '656ef565ed0773f82e44bc6d',
           ]),
@@ -137,9 +137,9 @@ describe('System api functions', () => {
     });
   });
 
-  describe('useSystemsBreadcrumbs', () => {
+  describe('useGetSystemsBreadcrumbs', () => {
     it('does not send a request to fetch breadcrumbs data for a system when its id is null', async () => {
-      const { result } = renderHook(() => useSystemsBreadcrumbs(null), {
+      const { result } = renderHook(() => useGetSystemsBreadcrumbs(null), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -149,7 +149,7 @@ describe('System api functions', () => {
 
     it('sends request to fetch breadcrumbs data for a system and returns a successful response', async () => {
       const { result } = renderHook(
-        () => useSystemsBreadcrumbs('65328f34a40ff5301575a4e3'),
+        () => useGetSystemsBreadcrumbs('65328f34a40ff5301575a4e3'),
         {
           wrapper: hooksWrapperWithProviders(),
         }
@@ -168,7 +168,7 @@ describe('System api functions', () => {
     });
   });
 
-  describe('useAddSystem', () => {
+  describe('usePostSystem', () => {
     const MOCK_SYSTEM_POST: SystemPost = {
       name: 'System name',
       parent_id: 'parent-id',
@@ -179,7 +179,7 @@ describe('System api functions', () => {
     };
 
     it('sends a post request to add a system and returns a successful response', async () => {
-      const { result } = renderHook(() => useAddSystem(), {
+      const { result } = renderHook(() => usePostSystem(), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -190,7 +190,7 @@ describe('System api functions', () => {
     });
   });
 
-  describe('useEditSystem', () => {
+  describe('usePatchSystem', () => {
     const MOCK_SYSTEM_PATCH: SystemPatch = {
       id: '65328f34a40ff5301575a4e3',
       name: 'System name',
@@ -202,7 +202,7 @@ describe('System api functions', () => {
     };
 
     it('sends a patch request to edit a system and returns a successful response', async () => {
-      const { result } = renderHook(() => useEditSystem(), {
+      const { result } = renderHook(() => usePatchSystem(), {
         wrapper: hooksWrapperWithProviders(),
       });
 

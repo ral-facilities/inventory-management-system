@@ -23,8 +23,8 @@ import {
 } from '../api/api.types';
 import {
   getSystemImportanceColour,
-  useAddSystem,
-  useEditSystem,
+  usePatchSystem,
+  usePostSystem,
 } from '../api/systems';
 
 import handleIMS_APIError from '../handleIMS_APIError';
@@ -91,8 +91,9 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     onClose();
   }, [onClose, selectedSystem, type]);
 
-  const { mutateAsync: addSystem, isPending: isAddPending } = useAddSystem();
-  const { mutateAsync: editSystem, isPending: isEditPending } = useEditSystem();
+  const { mutateAsync: addSystem, isPending: isAddPending } = usePostSystem();
+  const { mutateAsync: editSystem, isPending: isEditPending } =
+    usePatchSystem();
 
   // Returns true when all fields valid
   const validateFields = React.useCallback((): boolean => {

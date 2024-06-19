@@ -15,7 +15,7 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDeleteItem } from '../api/items';
-import { useSystem } from '../api/systems';
+import { useGetSystem } from '../api/systems';
 import { Item } from '../app.types';
 import handleIMS_APIError from '../handleIMS_APIError';
 
@@ -34,7 +34,7 @@ const DeleteItemDialog = (props: DeleteItemDialogProps) => {
     undefined
   );
 
-  const { data: systemData } = useSystem(item?.system_id);
+  const { data: systemData } = useGetSystem(item?.system_id);
   const { mutateAsync: deleteItem, isPending: isDeletePending } =
     useDeleteItem();
 

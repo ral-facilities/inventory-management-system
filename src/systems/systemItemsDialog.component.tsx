@@ -14,7 +14,11 @@ import {
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
 import { useMoveItemsToSystem } from '../api/items';
-import { useSystem, useSystems, useSystemsBreadcrumbs } from '../api/systems';
+import {
+  useGetSystem,
+  useGetSystems,
+  useGetSystemsBreadcrumbs,
+} from '../api/systems';
 import { Item, MoveItemsToSystemUsageStatus } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
@@ -95,14 +99,14 @@ const SystemItemsDialog = React.memo((props: SystemItemsDialogProps) => {
   };
 
   const { data: parentSystemBreadcrumbs } =
-    useSystemsBreadcrumbs(parentSystemId);
+    useGetSystemsBreadcrumbs(parentSystemId);
 
-  const { data: systemsData, isLoading: systemsDataLoading } = useSystems(
+  const { data: systemsData, isLoading: systemsDataLoading } = useGetSystems(
     parentSystemId === null ? 'null' : parentSystemId
   );
 
   const { data: targetSystem, isLoading: targetSystemLoading } =
-    useSystem(parentSystemId);
+    useGetSystem(parentSystemId);
 
   const { mutateAsync: moveItemsToSystem, isPending: isMovePending } =
     useMoveItemsToSystem();

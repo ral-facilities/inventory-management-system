@@ -36,7 +36,7 @@ import {
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { System } from '../api/api.types';
-import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
+import { useGetSystems, useGetSystemsBreadcrumbs } from '../api/systems';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
   OverflowTip,
@@ -204,11 +204,12 @@ function Systems() {
   >(undefined);
 
   // Data
-  const { data: systemsBreadcrumbs } = useSystemsBreadcrumbs(systemId);
-  const { data: subsystemsData, isLoading: subsystemsDataLoading } = useSystems(
-    // String value of null for filtering root systems
-    systemId === null ? 'null' : systemId
-  );
+  const { data: systemsBreadcrumbs } = useGetSystemsBreadcrumbs(systemId);
+  const { data: subsystemsData, isLoading: subsystemsDataLoading } =
+    useGetSystems(
+      // String value of null for filtering root systems
+      systemId === null ? 'null' : systemId
+    );
 
   // Obtain the selected system data, not just the selection state
   const selectedRowIds = Object.keys(rowSelection);
