@@ -47,23 +47,6 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
   const isNotCreating = type !== 'post' && selectedManufacturer;
 
-  const initialManufacturer: ManufacturerPost = React.useMemo(
-    () => ({
-      name: isNotCreating ? selectedManufacturer.name : '',
-      url: isNotCreating ? selectedManufacturer.url ?? '' : '',
-      telephone: isNotCreating ? selectedManufacturer.telephone ?? '' : '',
-      address: {
-        address_line: isNotCreating
-          ? selectedManufacturer.address.address_line
-          : '',
-        town: isNotCreating ? selectedManufacturer.address.town ?? '' : '',
-        county: isNotCreating ? selectedManufacturer.address.county ?? '' : '',
-        postcode: isNotCreating ? selectedManufacturer.address.postcode : '',
-        country: isNotCreating ? selectedManufacturer.address.country : '',
-      },
-    }),
-    [isNotCreating, selectedManufacturer]
-  );
   const {
     handleSubmit,
     register,
@@ -79,10 +62,24 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   // Load the values for editing. This method is used instead of the default values
   // property in "useForm" because the default values don't work for editing on the landing pages.
   React.useEffect(() => {
+    const initialManufacturer: ManufacturerPost = {
+      name: isNotCreating ? selectedManufacturer.name : '',
+      url: isNotCreating ? selectedManufacturer.url ?? '' : '',
+      telephone: isNotCreating ? selectedManufacturer.telephone ?? '' : '',
+      address: {
+        address_line: isNotCreating
+          ? selectedManufacturer.address.address_line
+          : '',
+        town: isNotCreating ? selectedManufacturer.address.town ?? '' : '',
+        county: isNotCreating ? selectedManufacturer.address.county ?? '' : '',
+        postcode: isNotCreating ? selectedManufacturer.address.postcode : '',
+        country: isNotCreating ? selectedManufacturer.address.country : '',
+      },
+    };
     Object.entries(initialManufacturer).map(([key, value]) =>
       setValue(key as keyof ManufacturerPost, value)
     );
-  }, [initialManufacturer, setValue]);
+  }, [isNotCreating, selectedManufacturer, setValue]);
 
   React.useEffect(() => {
     if (errors.root?.formError) {
