@@ -26,37 +26,19 @@ export interface UsageStatusDialogProps {
 function UsageStatusDialog(props: UsageStatusDialogProps) {
   const { open, onClose } = props;
 
-  const [valueError, setValueError] = React.useState<string | undefined>(
-    undefined
-  );
-
   const {
     handleSubmit,
     register,
     formState: { errors },
-    watch,
+    setError,
   } = useForm<UsageStatusPost>({
     resolver: zodResolver(UsageStatusSchema),
   });
-
-  // If any field name changes, clear the state
-  React.useEffect(() => {
-    if (valueError) {
-      const subscription = watch((_value, { name }) => {
-        if (name === 'value') {
-          setValueError(undefined);
-        }
-      });
-
-      return () => subscription.unsubscribe();
-    }
-  }, [valueError, watch]);
 
   const { mutateAsync: postUsageStatus, isPending: isAddPending } =
     usePostUsageStatus();
 
   const handleClose = React.useCallback(() => {
-    setValueError(undefined);
     onClose();
   }, [onClose]);
 
@@ -66,13 +48,16 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
         .then(() => handleClose())
         .catch((error: AxiosError) => {
           if (error.response?.status === 409) {
-            setValueError('A usage status with the same value already exists.');
+            setError('value', {
+              message:
+                'A usage status with the same value already exists. Please enter a different value.',
+            });
             return;
           }
           handleIMS_APIError(error);
         });
     },
-    [postUsageStatus, handleClose]
+    [postUsageStatus, handleClose, setError]
   );
   const onSubmit = (data: UsageStatusPost) => {
     handleAddUsageStatus(data);
@@ -90,8 +75,8 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
               required
               sx={{ marginLeft: '4px', my: '8px' }}
               {...register('value')}
-              error={!!errors.value || valueError !== undefined}
-              helperText={errors.value?.message || valueError}
+              error={!!errors.value}
+              helperText={errors.value?.message}
               fullWidth
             />
           </Grid>
@@ -120,11 +105,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
             onClick={handleSubmit(onSubmit)}
-            disabled={
-              isAddPending ||
-              valueError !== undefined ||
-              Object.values(errors).length !== 0
-            }
+            disabled={isAddPending || Object.values(errors).length !== 0}
             endIcon={isAddPending ? <CircularProgress size={20} /> : null}
           >
             Save
