@@ -22,7 +22,7 @@ import {
 import { useCatalogueItem } from '../api/catalogueItems';
 import { useItem } from '../api/items';
 import { useGetManufacturer } from '../api/manufacturers';
-import { useSystem } from '../api/systems';
+import { useGetSystem } from '../api/systems';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 import { formatDateTimeStrings } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
@@ -48,7 +48,7 @@ function ItemsLandingPage() {
     catalogueItemData?.catalogue_category_id
   );
 
-  const { data: systemData } = useSystem(itemData?.system_id);
+  const { data: systemData } = useGetSystem(itemData?.system_id);
 
   const [itemLandingBreadcrumbs, setItemLandingBreadcrumbs] = React.useState<
     BreadcrumbsInfo | undefined

@@ -10,7 +10,7 @@ import {
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useGetManufacturer } from '../api/manufacturers';
-import { useSystem } from '../api/systems';
+import { useGetSystem } from '../api/systems';
 import { CatalogueItem, Item } from '../app.types';
 import { formatDateTimeStrings } from '../utils';
 
@@ -46,7 +46,7 @@ function ItemsDetailsPanel(props: ItemsDetailsPanelProps) {
   const { data: manufacturerData } = useGetManufacturer(
     catalogueItemIdData.manufacturer_id
   );
-  const { data: systemData } = useSystem(itemData.system_id);
+  const { data: systemData } = useGetSystem(itemData.system_id);
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);

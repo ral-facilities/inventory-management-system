@@ -26,7 +26,7 @@ import { AxiosError } from 'axios';
 import React from 'react';
 import { UsageStatus } from '../api/api.types';
 import { useAddItem, useAddItems, useEditItem } from '../api/items';
-import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
+import { useGetSystems, useGetSystemsBreadcrumbs } from '../api/systems';
 import { useGetUsageStatuses } from '../api/usageStatuses';
 import {
   AddItem,
@@ -361,12 +361,12 @@ function ItemDialog(props: ItemDialogProps) {
     selectedItem?.system_id ?? null
   );
 
-  const { data: systemsData, isLoading: systemsDataLoading } = useSystems(
+  const { data: systemsData, isLoading: systemsDataLoading } = useGetSystems(
     parentSystemId === null ? 'null' : parentSystemId
   );
 
   const { data: parentSystemBreadcrumbs } =
-    useSystemsBreadcrumbs(parentSystemId);
+    useGetSystemsBreadcrumbs(parentSystemId);
 
   const handleAddItem = React.useCallback(() => {
     const { updatedProperties, hasPropertiesErrors } =

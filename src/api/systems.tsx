@@ -33,7 +33,7 @@ export const getSystemImportanceColour = (
   }
 };
 
-const fetchSystems = async (parent_id?: string): Promise<System[]> => {
+const getSystems = async (parent_id?: string): Promise<System[]> => {
   const queryParams = new URLSearchParams();
 
   if (parent_id) queryParams.append('parent_id', parent_id);
@@ -43,79 +43,77 @@ const fetchSystems = async (parent_id?: string): Promise<System[]> => {
   });
 };
 
-export const useSystemIds = (ids: string[]): UseQueryResult<System>[] => {
+export const useGetSystemIds = (ids: string[]): UseQueryResult<System>[] => {
   return useQueries({
     queries: ids.map((id) => ({
       queryKey: ['System', id],
-      queryFn: () => fetchSystem(id),
+      queryFn: () => getSystem(id),
     })),
   });
 };
 
-export const useSystems = (
+export const useGetSystems = (
   parent_id?: string
 ): UseQueryResult<System[], AxiosError> => {
   return useQuery({
     queryKey: ['Systems', parent_id],
     queryFn: () => {
-      return fetchSystems(parent_id);
+      return getSystems(parent_id);
     },
   });
 };
 
-const fetchSystem = async (id: string): Promise<System> => {
+const getSystem = async (id: string): Promise<System> => {
   return imsApi.get(`/v1/systems/${id}`).then((response) => {
     return response.data;
   });
 };
 
 // Allows a value of undefined or null to disable
-export const useSystem = (
+export const useGetSystem = (
   id?: string | null
 ): UseQueryResult<System, AxiosError> => {
   return useQuery({
     queryKey: ['System', id],
     queryFn: () => {
-      return fetchSystem(id ?? '');
+      return getSystem(id ?? '');
     },
     enabled: !!id,
   });
 };
 
-const fetchSystemsBreadcrumbs = async (
-  id: string
-): Promise<BreadcrumbsInfo> => {
+const getSystemsBreadcrumbs = async (id: string): Promise<BreadcrumbsInfo> => {
   return imsApi.get(`/v1/systems/${id}/breadcrumbs`, {}).then((response) => {
     return response.data;
   });
 };
 
-export const useSystemsBreadcrumbs = (
+export const useGetSystemsBreadcrumbs = (
   id?: string | null
 ): UseQueryResult<BreadcrumbsInfo, AxiosError> => {
   return useQuery({
     queryKey: ['SystemBreadcrumbs', id],
     queryFn: () => {
-      return fetchSystemsBreadcrumbs(id ?? '');
+      return getSystemsBreadcrumbs(id ?? '');
     },
     enabled: !!id,
   });
 };
 
-const addSystem = async (system: SystemPost): Promise<System> => {
+const postSystem = async (system: SystemPost): Promise<System> => {
   return imsApi
     .post<System>(`/v1/systems`, system)
     .then((response) => response.data);
 };
 
-export const useAddSystem = (): UseMutationResult<
+export const usePostSystem = (): UseMutationResult<
   System,
   AxiosError,
   SystemPost
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (system: SystemPost) => addSystem(system),
+    mutationFn: (system: SystemPost) => postSystem(system),
     onSuccess: (systemResponse) => {
       queryClient.invalidateQueries({
         queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
@@ -124,7 +122,7 @@ export const useAddSystem = (): UseMutationResult<
   });
 };
 
-const editSystem = async (system: SystemPatch): Promise<System> => {
+const patchSystem = async (system: SystemPatch): Promise<System> => {
   const { id, ...updateData } = system;
 
   return imsApi
@@ -132,14 +130,14 @@ const editSystem = async (system: SystemPatch): Promise<System> => {
     .then((response) => response.data);
 };
 
-export const useEditSystem = (): UseMutationResult<
+export const usePatchSystem = (): UseMutationResult<
   System,
   AxiosError,
   SystemPatch
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (system: SystemPatch) => editSystem(system),
+    mutationFn: (system: SystemPatch) => patchSystem(system),
     onSuccess: (systemResponse: System) => {
       queryClient.invalidateQueries({
         queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
@@ -194,7 +192,7 @@ export const useMoveToSystem = (): UseMutationResult<
 
       const promises = moveToSystem.selectedSystems.map(
         async (system: System) => {
-          return editSystem({
+          return patchSystem({
             id: system.id,
             parent_id: moveToSystem.targetSystem?.id || null,
           })
@@ -276,7 +274,7 @@ export const useCopyToSystem = (): UseMutationResult<
             copyToSystem.existingSystemCodes
           );
 
-          return addSystem(systemAdd)
+          return postSystem(systemAdd)
             .then((result: System) => {
               const targetSystemName =
                 copyToSystem.targetSystem?.name || 'Root';
