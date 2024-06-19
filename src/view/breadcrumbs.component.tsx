@@ -34,7 +34,7 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
 
   const trailPrefix =
     breadcrumbsInfo && !breadcrumbsInfo.full_trail
-      ? [emptyElement, ['', <MoreHorizIcon key="trailPrefix" />]]
+      ? [emptyElement, ['test', <MoreHorizIcon key="trailPrefix" />]]
       : [emptyElement];
   // Defines the maximum width of each breadcrumb item within the navigation bar,
   // ensuring it occupies 100% of the view width minus 10% for the sci-gateway navigation,
@@ -49,7 +49,7 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
         <HomeIcon />
       </IconButton>
       <StyledBreadcrumbs
-        separator={<NavigateNext fontSize="small" />}
+        separator={<NavigateNext fontSize="small" aria-label="navigate next" />}
         aria-label="breadcrumb"
         itemsBeforeCollapse={9}
       >
@@ -63,13 +63,17 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
               currIndex ===
               breadcrumbsInfo.trail.length + trailPrefix.length - 1
             ) {
-              return (
+              return typeof name === 'string' && name != '' ? (
                 <OverflowTip
                   key={id as string}
                   sx={{ color: 'text.primary', maxWidth: breadcrumbMaxWidth }}
                 >
                   {name}
                 </OverflowTip>
+              ) : (
+                <Box key={currIndex} sx={{ paddingTop: '6px' }}>
+                  {name}
+                </Box>
               );
             } else if (typeof name === 'object') {
               return (
@@ -78,20 +82,24 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
                 </Box>
               );
             } else {
-              return (
+              return typeof name === 'string' && name != '' ? (
                 <Link
+                  aria-label={name}
                   key={id as string}
                   href="#"
                   onClick={(ev) => {
                     ev.preventDefault();
                     onChangeNode(id as string);
                   }}
-                  aria-label={`breadcrumb-${name}`}
                 >
                   <OverflowTip sx={{ maxWidth: breadcrumbMaxWidth }}>
                     {name}
                   </OverflowTip>
                 </Link>
+              ) : (
+                <Box key={currIndex} sx={{ paddingTop: '6px' }}>
+                  {name}
+                </Box>
               );
             }
           })}
