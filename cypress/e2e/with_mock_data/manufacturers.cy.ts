@@ -141,7 +141,9 @@ describe('Manufacturer', () => {
 
           cy.findByRole('button', { name: 'Save' }).click();
 
-          cy.contains('A manufacturer with the same name already exists.');
+          cy.contains(
+            'A manufacturer with the same name has been found. Please enter a different name.'
+          );
         });
     });
     it('invalid url displays correct error message', () => {
@@ -256,7 +258,7 @@ describe('Manufacturer', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'A manufacturer with the same name has been found. Please enter a different name'
+          'A manufacturer with the same name has been found. Please enter a different name.'
         );
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');

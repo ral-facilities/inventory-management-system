@@ -208,7 +208,9 @@ describe('Add manufacturer dialog', () => {
 
       await waitFor(() => {
         expect(
-          screen.getByText('A manufacturer with the same name already exists.')
+          screen.getByText(
+            'A manufacturer with the same name has been found. Please enter a different name.'
+          )
         ).toBeInTheDocument();
       });
       expect(onClose).not.toHaveBeenCalled();
@@ -405,7 +407,7 @@ describe('Add manufacturer dialog', () => {
 
       expect(
         screen.getByText(
-          'A manufacturer with the same name has been found. Please enter a different name'
+          'A manufacturer with the same name has been found. Please enter a different name.'
         )
       ).toBeInTheDocument();
     });
