@@ -346,11 +346,11 @@ describe('Systems', () => {
 
       cy.findByRole('button', { name: 'add system' }).click();
       cy.findByRole('button', { name: 'Save' }).click();
-      cy.findByText('Please enter a name').should('be.visible');
+      cy.findByText('Please enter a name.').should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'add system' }).click();
-      cy.findByText('Please enter a name').should('not.exist');
+      cy.findByText('Please enter a name.').should('not.exist');
     });
 
     it('displays error message if the system has a duplicate name that disappears once closed', () => {
@@ -360,13 +360,13 @@ describe('Systems', () => {
       cy.findByLabelText('Name *').type('Error 409');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'A System with the same name already exists within the same parent System'
+        'A System with the same name already exists within the same parent System. Please enter a different name.'
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
       cy.findByRole('button', { name: 'add system' }).click();
       cy.findByText(
-        'A System with the same name already exists within the same parent System'
+        'A System with the same name already exists within the same parent System. Please enter a different name.'
       ).should('not.exist');
     });
   });
@@ -445,14 +445,14 @@ describe('Systems', () => {
       cy.findByText('Edit').click();
 
       cy.findByRole('button', { name: 'Save' }).click();
-      cy.findByText('Please edit a form entry before clicking save').should(
-        'be.visible'
-      );
+      cy.findByText(
+        "There have been no changes made. Please change a field's value or press Cancel to exit"
+      ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByLabelText('Description').type('1');
-      cy.findByText('Please edit a form entry before clicking save').should(
-        'not.exist'
-      );
+      cy.findByText(
+        "There have been no changes made. Please change a field's value or press Cancel to exit"
+      ).should('not.exist');
     });
 
     it('displays error message when name is not given that disappears once closed', () => {
@@ -463,14 +463,14 @@ describe('Systems', () => {
 
       cy.findByLabelText('Name *').clear();
       cy.findByRole('button', { name: 'Save' }).click();
-      cy.findByText('Please enter a name').should('be.visible');
+      cy.findByText('Please enter a name.').should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
 
       cy.findAllByLabelText('Row Actions').eq(1).click();
       cy.findByText('Edit').click();
 
-      cy.findByText('Please enter a name').should('not.exist');
+      cy.findByText('Please enter a name.').should('not.exist');
     });
 
     it('displays error message if the system has a duplicate name that disappears once closed', () => {
@@ -483,7 +483,7 @@ describe('Systems', () => {
       cy.findByLabelText('Name *').type('Error 409');
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        'A System with the same name already exists within the same parent System'
+        'A System with the same name already exists within the same parent System. Please enter a different name.'
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByRole('button', { name: 'Cancel' }).click();
@@ -492,7 +492,7 @@ describe('Systems', () => {
       cy.findByText('Edit').click();
 
       cy.findByText(
-        'A System with the same name already exists within the same parent System'
+        'A System with the same name already exists within the same parent System. Please enter a different name.'
       ).should('not.exist');
     });
   });

@@ -145,10 +145,10 @@ export const SystemsTableView = (props: SystemsTableViewProps) => {
       return (
         <>
           <SystemDialog
-            open={true}
+            open
             onClose={() => table.setCreatingRow(null)}
             parentId={systemParentId}
-            type="add"
+            requestType="post"
           />
         </>
       );

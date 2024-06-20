@@ -64,7 +64,7 @@ describe('Systems Dialog', () => {
       open: true,
       onClose: mockOnClose,
       parentId: null,
-      type: 'add',
+      requestType: 'post',
     };
     user = userEvent.setup();
     axiosPostSpy = vi.spyOn(imsApi, 'post');
@@ -77,7 +77,7 @@ describe('Systems Dialog', () => {
 
   describe('Add', () => {
     beforeEach(() => {
-      props.type = 'add';
+      props.requestType = 'post';
       props.parentId = null;
     });
 
@@ -177,7 +177,6 @@ describe('Systems Dialog', () => {
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/systems', {
         ...values,
         importance: SystemImportanceType.MEDIUM,
-        parent_id: null,
       });
       expect(mockOnClose).toHaveBeenCalled();
     });
@@ -187,7 +186,7 @@ describe('Systems Dialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
-      expect(screen.getByText('Please enter a name')).toBeInTheDocument();
+      expect(screen.getByText('Please enter a name.')).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
     });
 
@@ -204,7 +203,7 @@ describe('Systems Dialog', () => {
 
       expect(
         screen.getByText(
-          'A System with the same name already exists within the same parent System'
+          'A System with the same name already exists within the same parent System. Please enter a different name.'
         )
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
@@ -241,7 +240,7 @@ describe('Systems Dialog', () => {
     };
 
     beforeEach(() => {
-      props.type = 'edit';
+      props.requestType = 'patch';
       props.parentId = undefined;
       props.selectedSystem = MOCK_SELECTED_SYSTEM;
     });
@@ -345,14 +344,18 @@ describe('Systems Dialog', () => {
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
       expect(
-        screen.getByText('Please edit a form entry before clicking save')
+        screen.getByText(
+          "There have been no changes made. Please change a field's value or press Cancel to exit"
+        )
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
 
       modifyValues({ description: 'New description' });
 
       expect(
-        screen.queryByText('Please edit a form entry before clicking save')
+        screen.queryByText(
+          "There have been no changes made. Please change a field's value or press Cancel to exit"
+        )
       ).not.toBeInTheDocument();
     });
 
@@ -363,7 +366,7 @@ describe('Systems Dialog', () => {
 
       await user.click(screen.getByRole('button', { name: 'Save' }));
 
-      expect(screen.getByText('Please enter a name')).toBeInTheDocument();
+      expect(screen.getByText('Please enter a name.')).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
     });
 
@@ -380,7 +383,7 @@ describe('Systems Dialog', () => {
 
       expect(
         screen.getByText(
-          'A System with the same name already exists within the same parent System'
+          'A System with the same name already exists within the same parent System. Please enter a different name.'
         )
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
@@ -428,7 +431,8 @@ describe('Systems Dialog', () => {
     delete MOCK_SELECTED_SYSTEM_POST_DATA.modified_time;
 
     beforeEach(() => {
-      props.type = 'save as';
+      props.requestType = 'post';
+      props.saveAs = true;
       props.parentId = null;
       props.selectedSystem = MOCK_SELECTED_SYSTEM;
     });
