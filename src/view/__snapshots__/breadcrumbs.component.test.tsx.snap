@@ -46,7 +46,6 @@ exports[`Channel Breadcrumbs > should render correctly for path 1`] = `
         >
           <svg
             aria-hidden="true"
-            aria-label="navigate next"
             class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
@@ -81,7 +80,6 @@ exports[`Channel Breadcrumbs > should render correctly for path 1`] = `
         >
           <svg
             aria-hidden="true"
-            aria-label="navigate next"
             class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
@@ -156,7 +154,6 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         >
           <svg
             aria-hidden="true"
-            aria-label="navigate next"
             class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
@@ -192,7 +189,6 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         >
           <svg
             aria-hidden="true"
-            aria-label="navigate next"
             class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
@@ -227,7 +223,6 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         >
           <svg
             aria-hidden="true"
-            aria-label="navigate next"
             class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
@@ -262,7 +257,6 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         >
           <svg
             aria-hidden="true"
-            aria-label="navigate next"
             class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
@@ -297,7 +291,6 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         >
           <svg
             aria-hidden="true"
-            aria-label="navigate next"
             class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
@@ -332,7 +325,6 @@ exports[`Channel Breadcrumbs > should render correctly for path when the subtree
         >
           <svg
             aria-hidden="true"
-            aria-label="navigate next"
             class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-ptiqhd-MuiSvgIcon-root"
             data-testid="NavigateNextIcon"
             focusable="false"
