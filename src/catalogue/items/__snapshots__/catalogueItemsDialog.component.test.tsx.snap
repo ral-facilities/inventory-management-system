@@ -939,7 +939,7 @@ exports[`Catalogue Items Dialog > renders properties step correctly 1`] = `
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-1de4kho-MuiGrid-root"
                     >
                       <button
-                        aria-label="Resolution tooltip"
+                        aria-label="Resolution details"
                         class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root"
                         data-mui-internal-clone-element="true"
                         tabindex="0"
@@ -1012,7 +1012,7 @@ exports[`Catalogue Items Dialog > renders properties step correctly 1`] = `
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-1de4kho-MuiGrid-root"
                     >
                       <button
-                        aria-label="Frame Rate tooltip"
+                        aria-label="Frame Rate details"
                         class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root"
                         data-mui-internal-clone-element="true"
                         tabindex="0"
@@ -1095,7 +1095,7 @@ exports[`Catalogue Items Dialog > renders properties step correctly 1`] = `
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-1de4kho-MuiGrid-root"
                     >
                       <button
-                        aria-label="Sensor Type tooltip"
+                        aria-label="Sensor Type details"
                         class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root"
                         data-mui-internal-clone-element="true"
                         tabindex="0"
@@ -1168,7 +1168,7 @@ exports[`Catalogue Items Dialog > renders properties step correctly 1`] = `
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-1de4kho-MuiGrid-root"
                     >
                       <button
-                        aria-label="Sensor brand tooltip"
+                        aria-label="Sensor brand details"
                         class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root"
                         data-mui-internal-clone-element="true"
                         tabindex="0"
@@ -1291,7 +1291,7 @@ exports[`Catalogue Items Dialog > renders properties step correctly 1`] = `
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-1de4kho-MuiGrid-root"
                     >
                       <button
-                        aria-label="Broken tooltip"
+                        aria-label="Broken details"
                         class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root"
                         data-mui-internal-clone-element="true"
                         tabindex="0"
@@ -1426,7 +1426,7 @@ exports[`Catalogue Items Dialog > renders properties step correctly 1`] = `
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-1de4kho-MuiGrid-root"
                     >
                       <button
-                        aria-label="Older than five years tooltip"
+                        aria-label="Older than five years details"
                         class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root"
                         data-mui-internal-clone-element="true"
                         tabindex="0"

@@ -1009,7 +1009,7 @@ function ItemDialog(props: ItemDialogProps) {
                           sx={{ display: 'flex', alignItems: 'center' }}
                         >
                           <Tooltip
-                            aria-label={`${property.name} tooltip`}
+                            aria-label={`${property.name} details`}
                             title={
                               <div>
                                 <Typography>Name: {property.name}</Typography>
