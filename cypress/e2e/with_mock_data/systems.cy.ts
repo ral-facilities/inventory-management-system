@@ -276,7 +276,6 @@ describe('Systems', () => {
           JSON.stringify({
             name: 'System name',
             importance: 'medium',
-            parent_id: null,
           })
         );
       });
@@ -309,7 +308,6 @@ describe('Systems', () => {
             location: 'System location',
             owner: 'System owner',
             importance: 'high',
-            parent_id: null,
           })
         );
       });
@@ -446,12 +444,12 @@ describe('Systems', () => {
 
       cy.findByRole('button', { name: 'Save' }).click();
       cy.findByText(
-        "There have been no changes made. Please change a field's value or press Cancel to exit"
+        "There have been no changes made. Please change a field's value or press Cancel to exit."
       ).should('be.visible');
       cy.findByRole('button', { name: 'Save' }).should('be.disabled');
       cy.findByLabelText('Description').type('1');
       cy.findByText(
-        "There have been no changes made. Please change a field's value or press Cancel to exit"
+        "There have been no changes made. Please change a field's value or press Cancel to exit."
       ).should('not.exist');
     });
 
@@ -498,7 +496,7 @@ describe('Systems', () => {
   });
 
   describe('Save as', () => {
-    // Error checking is ommitted here as same logic as in add
+    // Error checking is omitted here as same logic as in add
 
     it('save as a system editing all fields (in root)', () => {
       cy.visit('/systems');
@@ -537,7 +535,6 @@ describe('Systems', () => {
             location: 'System location',
             owner: 'System owner',
             importance: 'medium',
-            parent_id: null,
           })
         );
       });

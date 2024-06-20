@@ -91,8 +91,9 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   }, [clearErrors, errors, watch]);
 
   const handleClose = React.useCallback(() => {
+    clearErrors();
     onClose();
-  }, [onClose]);
+  }, [clearErrors, onClose]);
 
   const handleAddSaveSystem = React.useCallback(
     (system: SystemPost) => {
@@ -162,7 +163,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
         } else
           setError('root.formError', {
             message:
-              "There have been no changes made. Please change a field's value or press Cancel to exit",
+              "There have been no changes made. Please change a field's value or press Cancel to exit.",
           });
       }
     },
