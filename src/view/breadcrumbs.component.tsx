@@ -49,7 +49,7 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
         <HomeIcon />
       </IconButton>
       <StyledBreadcrumbs
-        separator={<NavigateNext fontSize="small" aria-label="navigate next" />}
+        separator={<NavigateNext fontSize="small" />}
         aria-label="breadcrumb"
         itemsBeforeCollapse={9}
       >
