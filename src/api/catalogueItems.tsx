@@ -255,8 +255,7 @@ export const useCopyToCatalogueItem = (): UseMutationResult<
           // in tests
 
           const targetProperties =
-            copyToCatalogueItem.targetCatalogueCategory
-              ?.catalogue_item_properties;
+            copyToCatalogueItem.targetCatalogueCategory?.properties;
 
           const properties = catalogueItem.properties.map((property) => {
             const targetPropertyId = targetProperties?.find(

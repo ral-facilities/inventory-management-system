@@ -29,7 +29,7 @@ describe('CatalogueCategoryTableView', () => {
           parent_id: '1',
           code: 'energy-meters',
           is_leaf: true,
-          catalogue_item_properties: [
+          properties: [
             {
               id: '1',
               name: 'Measurement Range',
@@ -60,7 +60,7 @@ describe('CatalogueCategoryTableView', () => {
           parent_id: '1',
           code: 'cameras',
           is_leaf: true,
-          catalogue_item_properties: [
+          properties: [
             {
               id: '3',
               name: 'Resolution',
@@ -93,7 +93,7 @@ describe('CatalogueCategoryTableView', () => {
           parent_id: '1',
           code: 'energy-meters',
           is_leaf: true,
-          catalogue_item_properties: [
+          properties: [
             {
               id: '1',
               name: 'Measurement Range',
@@ -111,7 +111,7 @@ describe('CatalogueCategoryTableView', () => {
           parent_id: '1',
           code: 'wavefront-sensors',
           is_leaf: true,
-          catalogue_item_properties: [
+          properties: [
             {
               id: '10',
               name: 'Wavefront Measurement Range',
@@ -134,7 +134,7 @@ describe('CatalogueCategoryTableView', () => {
           parent_id: '1',
           code: 'voltage-meters',
           is_leaf: true,
-          catalogue_item_properties: [
+          properties: [
             {
               id: '12',
               name: 'Measurement Range',

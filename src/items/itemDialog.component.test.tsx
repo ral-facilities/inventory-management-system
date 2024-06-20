@@ -229,7 +229,7 @@ describe('ItemDialog', () => {
     it('displays no item properties message', async () => {
       props.catalogueCategory = {
         ...props.catalogueCategory,
-        catalogue_item_properties: [],
+        properties: [],
       } as CatalogueCategory;
 
       props.catalogueItem = {

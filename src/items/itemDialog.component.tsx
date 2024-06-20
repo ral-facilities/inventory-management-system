@@ -112,7 +112,7 @@ function ItemDialog(props: ItemDialogProps) {
     selectedItem,
   } = props;
   const parentCatalogueItemPropertiesInfo = React.useMemo(
-    () => catalogueCategory?.catalogue_item_properties ?? [],
+    () => catalogueCategory?.properties ?? [],
     [catalogueCategory]
   );
 

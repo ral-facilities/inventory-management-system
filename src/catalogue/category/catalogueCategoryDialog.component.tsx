@@ -67,58 +67,56 @@ const CatalogueCategoryDialog = React.memo(
         name: '',
         parent_id: null,
         is_leaf: false,
-        catalogue_item_properties: undefined,
+        properties: undefined,
       });
 
     React.useEffect(() => {
       if (selectedCatalogueCategory) {
         const updatedCatalogueItemProperties =
-          selectedCatalogueCategory.catalogue_item_properties?.map(
-            (property) => {
-              // Transform allowed_values to an array of objects with id and value keys
-              const allowedValuesWithId = property.allowed_values?.values.map(
-                (value) => ({
-                  av_placement_id: generateUniqueId('av_placement_id_'), // Allowed values (av)
-                  value: value,
-                })
-              ) || [
-                {
-                  av_placement_id: generateUniqueId('av_placement_id_'),
-                  value: '',
+          selectedCatalogueCategory.properties?.map((property) => {
+            // Transform allowed_values to an array of objects with id and value keys
+            const allowedValuesWithId = property.allowed_values?.values.map(
+              (value) => ({
+                av_placement_id: generateUniqueId('av_placement_id_'), // Allowed values (av)
+                value: value,
+              })
+            ) || [
+              {
+                av_placement_id: generateUniqueId('av_placement_id_'),
+                value: '',
+              },
+            ]; // Default case if allowed_values is undefined or empty
+
+            let modifiedCatalogueItemProperties = {
+              ...property,
+              cip_placement_id: generateUniqueId('cip_placement_id_'),
+              id: undefined,
+            };
+
+            if (property.allowed_values) {
+              modifiedCatalogueItemProperties = {
+                ...modifiedCatalogueItemProperties,
+                allowed_values: {
+                  type: property.allowed_values?.type,
+                  values: allowedValuesWithId,
                 },
-              ]; // Default case if allowed_values is undefined or empty
-
-              let modifiedCatalogueItemProperties = {
-                ...property,
-                cip_placement_id: generateUniqueId('cip_placement_id_'),
-                id: undefined,
               };
-
-              if (property.allowed_values) {
-                modifiedCatalogueItemProperties = {
-                  ...modifiedCatalogueItemProperties,
-                  allowed_values: {
-                    type: property.allowed_values?.type,
-                    values: allowedValuesWithId,
-                  },
-                };
-              }
-
-              return modifiedCatalogueItemProperties;
             }
-          ) || undefined;
+
+            return modifiedCatalogueItemProperties;
+          }) || undefined;
 
         const updatedSelectedCatalogueCategory: AddCatalogueCategoryWithPlacementIds =
           {
             ...selectedCatalogueCategory,
-            catalogue_item_properties: updatedCatalogueItemProperties,
+            properties: updatedCatalogueItemProperties,
           };
 
         setCategoryData(
           // This is not ideal but fixes the properties being reset when closing the dialog
           // The array itself is stored as a reference in typescript meaning that modifying
-          // categoryData.catalogue_item_properties without this will also modify
-          // selectedCatalogueCategory.catalogue_item_properties preventing any modified fields
+          // categoryData.properties without this will also modify
+          // selectedCatalogueCategory.properties preventing any modified fields
           // from being reset
           // This ensures the array created is brand new with a different reference to fix it
           // See https://stackoverflow.com/questions/9885821/copying-of-an-array-of-objects-to-another-array-without-object-reference-in-java
@@ -157,7 +155,7 @@ const CatalogueCategoryDialog = React.memo(
         name: '',
         parent_id: null,
         is_leaf: false,
-        catalogue_item_properties: undefined,
+        properties: undefined,
       });
       setCatalogueItemPropertiesErrors([]);
       setAllowedValuesListErrors([]);
@@ -264,21 +262,14 @@ const CatalogueCategoryDialog = React.memo(
 
     const validateFormFields = React.useCallback(() => {
       let hasErrors = false;
-      if (
-        categoryData.catalogue_item_properties &&
-        categoryData.catalogue_item_properties?.length > 0
-      ) {
-        for (
-          let i = 0;
-          i < categoryData.catalogue_item_properties.length;
-          i++
-        ) {
-          if (!categoryData.catalogue_item_properties[i].name.trim()) {
+      if (categoryData.properties && categoryData.properties?.length > 0) {
+        for (let i = 0; i < categoryData.properties.length; i++) {
+          if (!categoryData.properties[i].name.trim()) {
             setCatalogueItemPropertiesErrors((prev) => [
               ...prev,
               {
-                cip_placement_id: categoryData.catalogue_item_properties
-                  ? categoryData.catalogue_item_properties[i].cip_placement_id
+                cip_placement_id: categoryData.properties
+                  ? categoryData.properties[i].cip_placement_id
                   : '',
                 errors: {
                   fieldName: 'name',
@@ -289,12 +280,12 @@ const CatalogueCategoryDialog = React.memo(
             hasErrors = true;
           }
 
-          if (!categoryData.catalogue_item_properties[i].type.trim()) {
+          if (!categoryData.properties[i].type.trim()) {
             setCatalogueItemPropertiesErrors((prev) => [
               ...prev,
               {
-                cip_placement_id: categoryData.catalogue_item_properties
-                  ? categoryData.catalogue_item_properties[i].cip_placement_id
+                cip_placement_id: categoryData.properties
+                  ? categoryData.properties[i].cip_placement_id
                   : '',
                 errors: {
                   fieldName: 'type',
@@ -306,15 +297,12 @@ const CatalogueCategoryDialog = React.memo(
             hasErrors = true;
           }
 
-          if (
-            categoryData.catalogue_item_properties[i].allowed_values?.values
-              .length === 0
-          ) {
+          if (categoryData.properties[i].allowed_values?.values.length === 0) {
             setCatalogueItemPropertiesErrors((prev) => [
               ...prev,
               {
-                cip_placement_id: categoryData.catalogue_item_properties
-                  ? categoryData.catalogue_item_properties[i].cip_placement_id
+                cip_placement_id: categoryData.properties
+                  ? categoryData.properties[i].cip_placement_id
                   : '',
                 errors: {
                   fieldName: 'allowed_values',
@@ -327,10 +315,9 @@ const CatalogueCategoryDialog = React.memo(
           }
         }
 
-        const listOfPropertyNames: string[] =
-          categoryData.catalogue_item_properties.map((property) =>
-            property.name.toLowerCase().trim()
-          );
+        const listOfPropertyNames: string[] = categoryData.properties.map(
+          (property) => property.name.toLowerCase().trim()
+        );
 
         const duplicateIds: string[] = [];
 
@@ -338,11 +325,11 @@ const CatalogueCategoryDialog = React.memo(
           for (let j = i + 1; j < listOfPropertyNames.length; j++) {
             if (value === listOfPropertyNames[j]) {
               duplicateIds.push(
-                categoryData.catalogue_item_properties
-                  ? categoryData.catalogue_item_properties[i].cip_placement_id
+                categoryData.properties
+                  ? categoryData.properties[i].cip_placement_id
                   : '',
-                categoryData.catalogue_item_properties
-                  ? categoryData.catalogue_item_properties[j].cip_placement_id
+                categoryData.properties
+                  ? categoryData.properties[j].cip_placement_id
                   : ''
               );
             }
@@ -366,7 +353,7 @@ const CatalogueCategoryDialog = React.memo(
         }
 
         const hasAllowedValuesListErrors = validateAllowedValuesList(
-          categoryData.catalogue_item_properties
+          categoryData.properties
         );
 
         if (hasAllowedValuesListErrors) {
@@ -410,37 +397,35 @@ const CatalogueCategoryDialog = React.memo(
 
       let updatedProperties: AddCatalogueCategoryProperty[] | undefined;
       // Inside your component or wherever you're processing the data
-      if (categoryData.catalogue_item_properties) {
-        updatedProperties = categoryData.catalogue_item_properties.map(
-          (property) => {
-            const allowedValuesList = property.allowed_values?.values.map(
-              (val) => val.value
+      if (categoryData.properties) {
+        updatedProperties = categoryData.properties.map((property) => {
+          const allowedValuesList = property.allowed_values?.values.map(
+            (val) => val.value
+          );
+          if (property.allowed_values?.type === 'list') {
+            // Assuming values are strings, convert them to numbers
+            const convertedValues = convertListToNumbers(
+              allowedValuesList || []
             );
-            if (property.allowed_values?.type === 'list') {
-              // Assuming values are strings, convert them to numbers
-              const convertedValues = convertListToNumbers(
-                allowedValuesList || []
-              );
 
-              // Update the property with the converted values
-              return {
-                ...property,
-                cip_placement_id: undefined,
-                allowed_values: {
-                  ...property.allowed_values,
-                  values:
-                    property.type === 'number'
-                      ? convertedValues
-                      : allowedValuesList ?? [],
-                },
-              };
-            }
+            // Update the property with the converted values
             return {
               ...property,
               cip_placement_id: undefined,
+              allowed_values: {
+                ...property.allowed_values,
+                values:
+                  property.type === 'number'
+                    ? convertedValues
+                    : allowedValuesList ?? [],
+              },
             };
           }
-        );
+          return {
+            ...property,
+            cip_placement_id: undefined,
+          };
+        });
       }
       clearFormFields();
 
@@ -453,7 +438,7 @@ const CatalogueCategoryDialog = React.memo(
       if (updatedProperties) {
         catalogueCategory = {
           ...catalogueCategory,
-          catalogue_item_properties: updatedProperties,
+          properties: updatedProperties,
         };
       }
 
@@ -567,7 +552,7 @@ const CatalogueCategoryDialog = React.memo(
                       is_leaf: value === 'true' ? true : false,
                     };
                     if (value === 'false') {
-                      newData.catalogue_item_properties = undefined;
+                      newData.properties = undefined;
                       setCatalogueItemPropertiesErrors([]);
                     }
                     handleFormChange(newData);
@@ -594,13 +579,13 @@ const CatalogueCategoryDialog = React.memo(
                 <Grid item sx={{ paddingLeft: 1, paddingTop: 3 }}>
                   <Typography variant="h6">Catalogue Item Fields</Typography>
                   <CataloguePropertiesForm
-                    formFields={categoryData.catalogue_item_properties ?? []}
+                    formFields={categoryData.properties ?? []}
                     onChangeFormFields={(
                       formFields: AddCatalogueCategoryPropertyWithPlacementIds[]
                     ) =>
                       handleFormChange({
                         ...categoryData,
-                        catalogue_item_properties: formFields,
+                        properties: formFields,
                       })
                     }
                     onChangeCatalogueItemPropertiesErrors={

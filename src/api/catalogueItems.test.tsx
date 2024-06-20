@@ -313,7 +313,7 @@ describe('catalogue items api functions', () => {
           name: 'RF Lenses',
           is_leaf: true,
           parent_id: '655ca56c1c251a2a828ca906',
-          catalogue_item_properties: [
+          properties: [
             {
               id: '91',
               name: 'center wavelength',
@@ -446,7 +446,7 @@ describe('catalogue items api functions', () => {
           name: 'RF Lenses',
           is_leaf: true,
           parent_id: '655ca56c1c251a2a828ca906',
-          catalogue_item_properties: [
+          properties: [
             {
               id: '90',
               name: 'center wavelength',
