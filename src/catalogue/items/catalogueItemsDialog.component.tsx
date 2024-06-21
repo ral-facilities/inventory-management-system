@@ -977,6 +977,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
                           sx={{ display: 'flex', alignItems: 'center' }}
                         >
                           <Tooltip
+                            aria-label={`${property.name} details`}
                             title={
                               <div>
                                 <Typography>Name: {property.name}</Typography>
