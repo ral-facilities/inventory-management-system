@@ -227,8 +227,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
     'create' | 'save as' | 'edit'
   >('create');
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
-    const viewCatalogueItemProperties =
-      parentInfo.catalogue_item_properties ?? [];
+    const viewCatalogueItemProperties = parentInfo.properties ?? [];
     const propertyFilters: PropertyFiltersType = {
       boolean: 'autocomplete',
       string: 'text',
@@ -582,7 +581,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
         enableGrouping: false,
       },
     ];
-  }, [dense, parentInfo.catalogue_item_properties]);
+  }, [dense, parentInfo.properties]);
 
   const [rowSelection, setRowSelection] = React.useState<MRT_RowSelectionState>(
     selectedRowState ?? {}
@@ -753,7 +752,7 @@ const CatalogueItemsTable = (props: CatalogueItemsTableProps) => {
                           isItemSelectable === undefined ||
                           isItemSelectable(row.original.catalogueItem)
                             ? 'inherit'
-                            : 'action.disabled',
+                            : 'text.secondary',
                       },
                     } as TableCellOverFlowTipProps)}
                   />
