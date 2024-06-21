@@ -90,13 +90,9 @@ const CatalogueItemDirectoryDialog = (
 
   const handleMoveToCatalogueItem = React.useCallback(() => {
     if (
+      JSON.stringify(parentInfo.properties?.map(({ id, ...rest }) => rest)) !==
       JSON.stringify(
-        parentInfo.catalogue_item_properties?.map(({ id, ...rest }) => rest)
-      ) !==
-      JSON.stringify(
-        targetCatalogueCategory?.catalogue_item_properties?.map(
-          ({ id, ...rest }) => rest
-        )
+        targetCatalogueCategory?.properties?.map(({ id, ...rest }) => rest)
       )
     ) {
       setErrorMessage(
@@ -117,20 +113,16 @@ const CatalogueItemDirectoryDialog = (
     handleClose,
     moveToCatalogueItem,
     onChangeSelectedItems,
-    parentInfo.catalogue_item_properties,
+    parentInfo.properties,
     selectedItems,
     targetCatalogueCategory,
   ]);
 
   const handleCopyToCatalogueItem = React.useCallback(() => {
     if (
+      JSON.stringify(parentInfo.properties?.map(({ id, ...rest }) => rest)) !==
       JSON.stringify(
-        parentInfo.catalogue_item_properties?.map(({ id, ...rest }) => rest)
-      ) !==
-      JSON.stringify(
-        targetCatalogueCategory?.catalogue_item_properties?.map(
-          ({ id, ...rest }) => rest
-        )
+        targetCatalogueCategory?.properties?.map(({ id, ...rest }) => rest)
       )
     ) {
       setErrorMessage(
@@ -151,7 +143,7 @@ const CatalogueItemDirectoryDialog = (
     copyToCatalogueItem,
     handleClose,
     onChangeSelectedItems,
-    parentInfo.catalogue_item_properties,
+    parentInfo.properties,
     selectedItems,
     targetCatalogueCategory,
   ]);
