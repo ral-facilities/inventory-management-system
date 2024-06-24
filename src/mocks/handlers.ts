@@ -804,7 +804,7 @@ export const handlers = [
     return HttpResponse.json({ status: 204 });
   }),
 
-  // ------------------------------------ Units ------------------------------------------------
+  // ------------------------------------ UNITS ------------------------------------------------
 
   http.get('/v1/units', () => {
     return HttpResponse.json(UnitsJSON, { status: 200 });
@@ -866,7 +866,7 @@ export const handlers = [
     }
   }),
 
-  // ------------------------------------ Usage Status ------------------------------------------------
+  // ------------------------------------ USAGE STATUSES ------------------------------------------------
 
   http.get('/v1/usage-statuses', () => {
     return HttpResponse.json(UsageStatusJSON, { status: 200 });
