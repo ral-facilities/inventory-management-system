@@ -6,9 +6,9 @@ import {
 } from '../testUtils';
 import { UsageStatus, UsageStatusPost } from './api.types';
 import {
-  useAddUsageStatus,
   useDeleteUsageStatus,
-  useUsageStatuses,
+  useGetUsageStatuses,
+  usePostUsageStatus,
 } from './usageStatuses';
 
 describe('usage status api functions', () => {
@@ -16,9 +16,9 @@ describe('usage status api functions', () => {
     vi.clearAllMocks();
   });
 
-  describe('useUsageStatus', () => {
+  describe('useGetUsageStatus', () => {
     it('sends request to fetch the usage statuses and returns successful response', async () => {
-      const { result } = renderHook(() => useUsageStatuses(), {
+      const { result } = renderHook(() => useGetUsageStatuses(), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -30,20 +30,20 @@ describe('usage status api functions', () => {
     });
   });
 
-  describe('useAddUsageStatus', () => {
-    let mockDataAdd: UsageStatusPost;
+  describe('usePostUsageStatus', () => {
+    let mockDataPost: UsageStatusPost;
     beforeEach(() => {
-      mockDataAdd = {
+      mockDataPost = {
         value: 'test',
       };
     });
 
     it('posts a request to add a usage status and returns successful response', async () => {
-      const { result } = renderHook(() => useAddUsageStatus(), {
+      const { result } = renderHook(() => usePostUsageStatus(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataAdd);
+      result.current.mutate(mockDataPost);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });

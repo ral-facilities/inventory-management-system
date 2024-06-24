@@ -23,7 +23,7 @@ import { Link } from 'react-router-dom';
 import { UsageStatus } from '../api/api.types';
 import { useCatalogueItemIds } from '../api/catalogueItems';
 import { useItems } from '../api/items';
-import { useUsageStatuses } from '../api/usageStatuses';
+import { useGetUsageStatuses } from '../api/usageStatuses';
 import { CatalogueItem, Item, System } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
@@ -116,7 +116,7 @@ export function SystemItemsTable(props: SystemItemsTableProps) {
     undefined
   );
 
-  const { data: usageStatusesData } = useUsageStatuses();
+  const { data: usageStatusesData } = useGetUsageStatuses();
 
   // Obtain the selected system data, not just the selection state
   const selectedRowIds = Object.keys(rowSelection);

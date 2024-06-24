@@ -12,7 +12,7 @@ import {
 import { AxiosError } from 'axios';
 import React from 'react';
 import { UsageStatusPost } from '../../api/api.types';
-import { useAddUsageStatus } from '../../api/usageStatuses';
+import { usePostUsageStatus } from '../../api/usageStatuses';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { trimStringValues } from '../../utils';
 
@@ -32,8 +32,8 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
     undefined
   );
 
-  const { mutateAsync: addUsageStatus, isPending: isAddPending } =
-    useAddUsageStatus();
+  const { mutateAsync: postUsageStatus, isPending: isAddPending } =
+    usePostUsageStatus();
 
   const handleClose = React.useCallback(() => {
     setUsageStatusDetails(undefined);
@@ -61,7 +61,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
       return;
     }
 
-    addUsageStatus(trimStringValues(usageStatusDetails))
+    postUsageStatus(trimStringValues(usageStatusDetails))
       .then(() => handleClose())
       .catch((error: AxiosError) => {
         if (error.response?.status === 409) {
@@ -70,7 +70,7 @@ function UsageStatusDialog(props: UsageStatusDialogProps) {
         }
         handleIMS_APIError(error);
       });
-  }, [handleErrors, addUsageStatus, usageStatusDetails, handleClose]);
+  }, [handleErrors, postUsageStatus, usageStatusDetails, handleClose]);
 
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>

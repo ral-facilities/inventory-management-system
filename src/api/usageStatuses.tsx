@@ -9,25 +9,25 @@ import { AxiosError } from 'axios';
 import { imsApi } from './api';
 import { UsageStatus, UsageStatusPost } from './api.types';
 
-const fetchUsageStatuses = async (): Promise<UsageStatus[]> => {
+const getUsageStatuses = async (): Promise<UsageStatus[]> => {
   return imsApi.get('/v1/usage-statuses').then((response) => {
     return response.data;
   });
 };
 
-export const useUsageStatuses = (): UseQueryResult<
+export const useGetUsageStatuses = (): UseQueryResult<
   UsageStatus[],
   AxiosError
 > => {
   return useQuery({
     queryKey: ['UsageStatuses'],
     queryFn: () => {
-      return fetchUsageStatuses();
+      return getUsageStatuses();
     },
   });
 };
 
-const addUsageStatus = async (
+const postUsageStatus = async (
   usageStatus: UsageStatusPost
 ): Promise<UsageStatus> => {
   return imsApi
@@ -35,14 +35,14 @@ const addUsageStatus = async (
     .then((response) => response.data);
 };
 
-export const useAddUsageStatus = (): UseMutationResult<
+export const usePostUsageStatus = (): UseMutationResult<
   UsageStatus,
   AxiosError,
   UsageStatusPost
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (usageStatus: UsageStatusPost) => addUsageStatus(usageStatus),
+    mutationFn: (usageStatus: UsageStatusPost) => postUsageStatus(usageStatus),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['UsageStatuses'],
