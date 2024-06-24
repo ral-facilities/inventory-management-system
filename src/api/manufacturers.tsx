@@ -98,23 +98,22 @@ export const useGetManufacturerIds = (
 };
 
 const patchManufacturer = async (
+  id: string,
   manufacturer: ManufacturerPatch
 ): Promise<Manufacturer> => {
-  const { id, ...updatedManufacturer } = manufacturer;
   return imsApi
-    .patch<Manufacturer>(`/v1/manufacturers/${id}`, updatedManufacturer)
+    .patch<Manufacturer>(`/v1/manufacturers/${id}`, manufacturer)
     .then((response) => response.data);
 };
 
 export const usePatchManufacturer = (): UseMutationResult<
   Manufacturer,
   AxiosError,
-  ManufacturerPatch
+  { id: string; manufacturer: ManufacturerPatch }
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (manufacturer: ManufacturerPatch) =>
-      patchManufacturer(manufacturer),
+    mutationFn: ({ id, manufacturer }) => patchManufacturer(id, manufacturer),
     onSuccess: (updatedManufacturer: Manufacturer) => {
       queryClient.invalidateQueries({ queryKey: ['Manufacturers'] });
       queryClient.invalidateQueries({

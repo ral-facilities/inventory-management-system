@@ -62,20 +62,20 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   // Load the values for editing. This method is used instead of the default values
   // property in "useForm" because the default values don't work for editing on the landing pages.
   React.useEffect(() => {
-    const initialManufacturer: ManufacturerPost = {
-      name: isNotCreating ? selectedManufacturer.name : '',
-      url: isNotCreating ? selectedManufacturer.url ?? '' : '',
-      telephone: isNotCreating ? selectedManufacturer.telephone ?? '' : '',
-      address: {
-        address_line: isNotCreating
-          ? selectedManufacturer.address.address_line
-          : '',
-        town: isNotCreating ? selectedManufacturer.address.town ?? '' : '',
-        county: isNotCreating ? selectedManufacturer.address.county ?? '' : '',
-        postcode: isNotCreating ? selectedManufacturer.address.postcode : '',
-        country: isNotCreating ? selectedManufacturer.address.country : '',
-      },
-    };
+    const initialManufacturer: ManufacturerPost =
+      selectedManufacturer ??
+      ({
+        name: '',
+        url: '',
+        telephone: '',
+        address: {
+          address_line: '',
+          town: '',
+          county: '',
+          postcode: '',
+          country: '',
+        },
+      } as ManufacturerPost);
     Object.entries(initialManufacturer).map(([key, value]) =>
       setValue(key as keyof ManufacturerPost, value)
     );
@@ -89,8 +89,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   }, [clearErrors, errors, selectedManufacturer, watch]);
 
   const handleClose = React.useCallback(() => {
+    clearErrors();
     onClose();
-  }, [onClose]);
+  }, [onClose, clearErrors]);
 
   const handleAddManufacturer = React.useCallback(
     (manufacturerData: ManufacturerPost) => {
@@ -142,9 +143,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         const isTelephoneUpdated =
           manufacturerData.telephone !== selectedManufacturer.telephone;
 
-        let manufacturerToEdit: ManufacturerPatch = {
-          id: selectedManufacturer.id,
-        };
+        let manufacturerToEdit: ManufacturerPatch = {};
 
         isNameUpdated && (manufacturerToEdit.name = manufacturerData.name);
         isURLUpdated && (manufacturerToEdit.url = manufacturerData.url);
@@ -208,7 +207,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           isCountryUpdated ||
           isTelephoneUpdated
         ) {
-          patchManufacturer(manufacturerToEdit)
+          patchManufacturer({
+            id: selectedManufacturer.id,
+            manufacturer: manufacturerToEdit,
+          })
             .then(() => handleClose())
             .catch((error: AxiosError) => {
               const response = error.response?.data as APIError;
@@ -225,7 +227,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         } else {
           setError('root.formError', {
             message:
-              "There have been no changes made. Please change a field's value or press Cancel to exit",
+              "There have been no changes made. Please change a field's value or press Cancel to exit.",
           });
         }
       }

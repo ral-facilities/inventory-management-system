@@ -7,7 +7,7 @@ export interface APIError {
   detail: string;
 }
 
-// Manufacturers
+// ------------------------------------ MANUFACTURERS ------------------------------------
 
 interface Address {
   address_line: string;
@@ -22,7 +22,7 @@ interface AddressPost extends Omit<Address, 'town' | 'county'> {
   county?: string | null;
 }
 
-type AddressPatch = Partial<Address>;
+interface AddressPatch extends Partial<Address> {}
 
 export interface ManufacturerPost {
   name: string;
@@ -34,10 +34,11 @@ export interface ManufacturerPost {
 export interface ManufacturerPatch
   extends Partial<Omit<ManufacturerPost, 'address'>> {
   address?: AddressPatch;
-  id: string;
 }
 
-export interface Manufacturer extends ManufacturerPost, CreatedModifiedMixin {
+export interface Manufacturer
+  extends Omit<ManufacturerPost, 'telephone' | 'url' | 'address'>,
+    CreatedModifiedMixin {
   id: string;
   code: string;
   address: Address;
