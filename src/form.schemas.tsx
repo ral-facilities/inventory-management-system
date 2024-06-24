@@ -64,3 +64,7 @@ export const ManufacturerSchema = (requestType: RequestType) => {
 export const UnitSchema = z.object({
   value: MandatoryStringSchema({ errorMessage: 'Please enter a value.' }),
 });
+
+export const UsageStatusSchema = z.object({
+  value: MandatoryStringSchema({ errorMessage: 'Please enter a value.' }),
+});
