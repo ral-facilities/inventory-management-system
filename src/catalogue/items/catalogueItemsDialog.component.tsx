@@ -827,7 +827,7 @@ function CatalogueItemsDialog(props: CatalogueItemsDialogProps) {
             <ManufacturerDialog
               open={addManufacturerDialogOpen}
               onClose={() => setAddManufacturerDialogOpen(false)}
-              type="create"
+              type="post"
             />
 
             <Grid item xs={12}>

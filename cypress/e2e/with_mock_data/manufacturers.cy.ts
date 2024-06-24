@@ -103,7 +103,14 @@ describe('Manufacturer', () => {
       expect(postRequests.length).equal(1);
       const request = postRequests[0];
       expect(JSON.stringify(await request.json())).equal(
-        '{"name":"Manufacturer D","address":{"address_line":"4 Example Street","town":null,"county":null,"postcode":"OX1 2AB","country":"United Kingdom"},"telephone":null}'
+        JSON.stringify({
+          name: 'Manufacturer D',
+          address: {
+            address_line: '4 Example Street',
+            postcode: 'OX1 2AB',
+            country: 'United Kingdom',
+          },
+        })
       );
     });
 
@@ -134,7 +141,9 @@ describe('Manufacturer', () => {
 
           cy.findByRole('button', { name: 'Save' }).click();
 
-          cy.contains('A manufacturer with the same name already exists.');
+          cy.contains(
+            'A manufacturer with the same name has been found. Please enter a different name.'
+          );
         });
     });
     it('invalid url displays correct error message', () => {
@@ -249,7 +258,7 @@ describe('Manufacturer', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          'A manufacturer with the same name has been found. Please enter a different name'
+          'A manufacturer with the same name has been found. Please enter a different name.'
         );
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
@@ -267,7 +276,7 @@ describe('Manufacturer', () => {
 
         cy.findByRole('button', { name: 'Save' }).click();
 
-        cy.contains('Please enter a valid URL');
+        cy.contains('Please enter a valid URL.');
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
   });
@@ -308,7 +317,7 @@ describe('Manufacturer', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          "There have been no changes made. Please change a field's value or press Cancel to exit"
+          "There have been no changes made. Please change a field's value or press Cancel to exit."
         );
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');

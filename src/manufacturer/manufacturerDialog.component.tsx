@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Box,
   Button,
@@ -11,6 +12,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { useForm } from 'react-hook-form';
 
 import React from 'react';
 
@@ -25,339 +27,236 @@ import {
   usePatchManufacturer,
   usePostManufacturer,
 } from '../api/manufacturers';
+import { ManufacturerSchema, RequestType } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { trimStringValues } from '../utils';
 
 export interface ManufacturerDialogProps {
   open: boolean;
   onClose: () => void;
   selectedManufacturer?: Manufacturer;
-  type: 'edit' | 'create';
-}
-function isValidUrl(url: string) {
-  try {
-    const parsedUrl = new URL(url);
-    return (
-      (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') &&
-      parsedUrl.hostname.includes('.') // Checks for the typical top-level domain
-    );
-  } catch (_error) {
-    return false;
-  }
+  type: RequestType;
 }
 
 function ManufacturerDialog(props: ManufacturerDialogProps) {
   const { open, onClose, selectedManufacturer, type } = props;
-
-  const [manufacturerDetails, setManufacturerDetails] =
-    React.useState<ManufacturerPost>({
-      name: '',
-      url: null,
-      address: {
-        address_line: '',
-        town: null,
-        county: null,
-        postcode: '',
-        country: '',
-      },
-      telephone: null,
-    });
-
-  React.useEffect(() => {
-    if (selectedManufacturer && type === 'edit')
-      setManufacturerDetails(selectedManufacturer);
-  }, [selectedManufacturer, open, type]);
-
-  const [nameError, setNameError] = React.useState<string | undefined>(
-    undefined
-  );
-
-  const [urlError, setUrlError] = React.useState<string | undefined>(undefined);
-
-  const [addressLineError, setAddressLineError] = React.useState<
-    string | undefined
-  >(undefined);
-
-  const [addressPostcodeError, setAddressPostcodeError] = React.useState<
-    string | undefined
-  >(undefined);
-
-  const [countryError, setCountryError] = React.useState<string | undefined>(
-    undefined
-  );
-
-  const [formError, setFormError] = React.useState<string | undefined>(
-    undefined
-  );
 
   const { mutateAsync: postManufacturer, isPending: isAddPending } =
     usePostManufacturer();
   const { mutateAsync: patchManufacturer, isPending: isEditPending } =
     usePatchManufacturer();
 
+  const isNotCreating = type !== 'post' && selectedManufacturer;
+
+  const initialManufacturer: ManufacturerPost = React.useMemo(
+    () =>
+      isNotCreating
+        ? selectedManufacturer
+        : {
+            name: '',
+            url: '',
+            telephone: '',
+            address: {
+              address_line: '',
+              town: '',
+              county: '',
+              postcode: '',
+              country: '',
+            },
+          },
+    [isNotCreating, selectedManufacturer]
+  );
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    watch,
+    setError,
+    clearErrors,
+    reset,
+  } = useForm<ManufacturerPost>({
+    resolver: zodResolver(ManufacturerSchema(type)),
+    defaultValues: initialManufacturer,
+  });
+
+  // Load the values for editing
+  React.useEffect(() => {
+    reset(initialManufacturer);
+  }, [initialManufacturer, reset]);
+
+  React.useEffect(() => {
+    if (errors.root?.formError) {
+      const subscription = watch(() => clearErrors('root.formError'));
+      return () => subscription.unsubscribe();
+    }
+  }, [clearErrors, errors, selectedManufacturer, watch]);
+
   const handleClose = React.useCallback(() => {
-    setManufacturerDetails({
-      name: '',
-      url: null,
-      address: {
-        address_line: '',
-        town: null,
-        county: null,
-        postcode: '',
-        country: '',
-      },
-      telephone: null,
-    });
-    setNameError(undefined);
-    setUrlError(undefined);
-    setAddressLineError(undefined);
-    setCountryError(undefined);
-    setAddressPostcodeError(undefined);
-    setFormError(undefined);
+    clearErrors();
     onClose();
-  }, [onClose, setManufacturerDetails]);
+  }, [clearErrors, onClose]);
 
-  const handleErrors = React.useCallback((): boolean => {
-    let hasErrors = false;
+  const handleAddManufacturer = React.useCallback(
+    (manufacturerData: ManufacturerPost) => {
+      postManufacturer(manufacturerData)
+        .then(() => handleClose())
+        .catch((error: AxiosError) => {
+          if (error.response?.status === 409) {
+            setError('name', {
+              message:
+                'A manufacturer with the same name has been found. Please enter a different name.',
+            });
+            return;
+          }
+          handleIMS_APIError(error);
+        });
+    },
+    [postManufacturer, handleClose, setError]
+  );
 
-    //check url is valid
+  const handleEditManufacturer = React.useCallback(
+    (manufacturerData: ManufacturerPost) => {
+      if (selectedManufacturer) {
+        const isNameUpdated =
+          manufacturerData.name !== selectedManufacturer.name;
 
-    if (
-      manufacturerDetails.url !== null &&
-      !isValidUrl(manufacturerDetails.url ?? '')
-    ) {
-      if (manufacturerDetails.url?.trim()) {
-        setUrlError('Please enter a valid URL');
-        hasErrors = true;
-      }
-    }
+        const isURLUpdated =
+          manufacturerData.url !== selectedManufacturer.url &&
+          manufacturerData.url !== undefined;
 
-    //check name
-    if (
-      !manufacturerDetails.name ||
-      manufacturerDetails.name?.trim().length === 0
-    ) {
-      hasErrors = true;
-      setNameError('Please enter a name.');
-    }
-    //check address line
-    if (
-      !manufacturerDetails.address?.address_line ||
-      manufacturerDetails.address.address_line.trim().length === 0
-    ) {
-      hasErrors = true;
+        const isAddressLineUpdated =
+          manufacturerData.address?.address_line !==
+          selectedManufacturer.address.address_line;
 
-      setAddressLineError('Please enter an address.');
-    }
+        const isTownUpdated =
+          manufacturerData.address?.town !== selectedManufacturer.address.town;
 
-    //check post code
-    if (
-      !manufacturerDetails.address?.postcode ||
-      manufacturerDetails.address.postcode?.trim().length === 0
-    ) {
-      hasErrors = true;
+        const isCountyUpdated =
+          manufacturerData.address?.county !==
+          selectedManufacturer.address.county;
 
-      setAddressPostcodeError('Please enter a post code or zip code.');
-    }
-    //check country
-    if (
-      !manufacturerDetails.address?.country ||
-      manufacturerDetails.address.country?.trim().length === 0
-    ) {
-      hasErrors = true;
+        const isPostcodeUpdated =
+          manufacturerData.address?.postcode !==
+          selectedManufacturer.address.postcode;
 
-      setCountryError('Please enter a country.');
-    }
+        const isCountryUpdated =
+          manufacturerData.address?.country !==
+          selectedManufacturer.address.country;
 
-    return hasErrors;
-  }, [manufacturerDetails]);
+        const isTelephoneUpdated =
+          manufacturerData.telephone !== selectedManufacturer.telephone;
 
-  const handleAddManufacturer = React.useCallback(() => {
-    const hasErrors = handleErrors();
+        let manufacturerToEdit: ManufacturerPatch = {};
 
-    if (hasErrors) {
-      return;
-    }
+        isNameUpdated && (manufacturerToEdit.name = manufacturerData.name);
+        isURLUpdated && (manufacturerToEdit.url = manufacturerData.url);
 
-    const manufacturerToAdd: ManufacturerPost = {
-      name: manufacturerDetails.name,
-      url: manufacturerDetails.url ?? undefined,
-      address: {
-        address_line: manufacturerDetails.address.address_line,
-        town: manufacturerDetails.address.town ?? null,
-        county: manufacturerDetails.address.county ?? null,
-        postcode: manufacturerDetails.address.postcode,
-        country: manufacturerDetails.address.country,
-      },
-      telephone: manufacturerDetails.telephone ?? null,
-    };
-
-    postManufacturer(trimStringValues(manufacturerToAdd))
-      .then(() => handleClose())
-      .catch((error: AxiosError) => {
-        if (error.response?.status === 409) {
-          setNameError('A manufacturer with the same name already exists.');
-          return;
+        if (isAddressLineUpdated) {
+          manufacturerToEdit = {
+            ...manufacturerToEdit,
+            address: {
+              ...manufacturerData.address,
+              address_line: manufacturerData.address?.address_line,
+            },
+          };
         }
-        handleIMS_APIError(error);
-      });
-  }, [handleErrors, manufacturerDetails, postManufacturer, handleClose]);
+        if (isTownUpdated) {
+          manufacturerToEdit = {
+            ...manufacturerToEdit,
+            address: {
+              ...manufacturerData.address,
+              town: manufacturerData.address?.town,
+            },
+          };
+        }
+        if (isCountyUpdated) {
+          manufacturerToEdit = {
+            ...manufacturerToEdit,
+            address: {
+              ...manufacturerData.address,
+              county: manufacturerData.address?.county,
+            },
+          };
+        }
+        if (isPostcodeUpdated) {
+          manufacturerToEdit = {
+            ...manufacturerToEdit,
+            address: {
+              ...manufacturerData.address,
+              postcode: manufacturerData.address?.postcode,
+            },
+          };
+        }
+        if (isCountryUpdated) {
+          manufacturerToEdit = {
+            ...manufacturerToEdit,
+            address: {
+              ...manufacturerData.address,
+              country: manufacturerData.address?.country,
+            },
+          };
+        }
 
-  const handleEditManufacturer = React.useCallback(() => {
-    if (manufacturerDetails && selectedManufacturer) {
-      const hasErrors = handleErrors();
+        isTelephoneUpdated &&
+          (manufacturerToEdit.telephone = manufacturerData.telephone);
 
-      if (hasErrors) {
-        return;
-      }
+        if (
+          isNameUpdated ||
+          isURLUpdated ||
+          isAddressLineUpdated ||
+          isTownUpdated ||
+          isCountyUpdated ||
+          isPostcodeUpdated ||
+          isCountryUpdated ||
+          isTelephoneUpdated
+        ) {
+          patchManufacturer({
+            id: selectedManufacturer.id,
+            manufacturer: manufacturerToEdit,
+          })
+            .then(() => handleClose())
+            .catch((error: AxiosError) => {
+              const response = error.response?.data as APIError;
+              if (response && error.response?.status === 409) {
+                setError('name', {
+                  message:
+                    'A manufacturer with the same name has been found. Please enter a different name.',
+                });
+                return;
+              }
 
-      const isNameUpdated =
-        manufacturerDetails.name !== selectedManufacturer.name;
-
-      const isURLUpdated =
-        manufacturerDetails.url !== selectedManufacturer.url &&
-        manufacturerDetails.url !== undefined;
-
-      const isAddressLineUpdated =
-        manufacturerDetails.address?.address_line !==
-        selectedManufacturer.address.address_line;
-
-      const isTownUpdated =
-        manufacturerDetails.address?.town !== selectedManufacturer.address.town;
-
-      const isCountyUpdated =
-        manufacturerDetails.address?.county !==
-        selectedManufacturer.address.county;
-
-      const isPostcodeUpdated =
-        manufacturerDetails.address?.postcode !==
-        selectedManufacturer.address.postcode;
-
-      const isCountryUpdated =
-        manufacturerDetails.address?.country !==
-        selectedManufacturer.address.country;
-
-      const isTelephoneUpdated =
-        manufacturerDetails.telephone !== selectedManufacturer.telephone;
-
-      let manufacturerToEdit: ManufacturerPatch = {};
-
-      isNameUpdated && (manufacturerToEdit.name = manufacturerDetails.name);
-      isURLUpdated && (manufacturerToEdit.url = manufacturerDetails.url);
-
-      if (isAddressLineUpdated) {
-        manufacturerToEdit = {
-          ...manufacturerToEdit,
-          address: {
-            ...manufacturerDetails.address,
-            address_line: manufacturerDetails.address?.address_line,
-          },
-        };
-      }
-      if (isTownUpdated) {
-        manufacturerToEdit = {
-          ...manufacturerToEdit,
-          address: {
-            ...manufacturerDetails.address,
-            town: manufacturerDetails.address?.town,
-          },
-        };
-      }
-      if (isCountyUpdated) {
-        manufacturerToEdit = {
-          ...manufacturerToEdit,
-          address: {
-            ...manufacturerDetails.address,
-            county: manufacturerDetails.address?.county,
-          },
-        };
-      }
-      if (isPostcodeUpdated) {
-        manufacturerToEdit = {
-          ...manufacturerToEdit,
-          address: {
-            ...manufacturerDetails.address,
-            postcode: manufacturerDetails.address?.postcode,
-          },
-        };
-      }
-      if (isCountryUpdated) {
-        manufacturerToEdit = {
-          ...manufacturerToEdit,
-          address: {
-            ...manufacturerDetails.address,
-            country: manufacturerDetails.address?.country,
-          },
-        };
-      }
-
-      isTelephoneUpdated &&
-        (manufacturerToEdit.telephone = manufacturerDetails.telephone);
-
-      if (
-        isNameUpdated ||
-        isURLUpdated ||
-        isAddressLineUpdated ||
-        isTownUpdated ||
-        isCountyUpdated ||
-        isPostcodeUpdated ||
-        isCountryUpdated ||
-        isTelephoneUpdated
-      ) {
-        patchManufacturer({
-          id: selectedManufacturer.id,
-          manufacturer: trimStringValues(manufacturerToEdit),
-        })
-          .then(() => handleClose())
-          .catch((error: AxiosError) => {
-            const response = error.response?.data as APIError;
-            if (response && error.response?.status === 409) {
-              setNameError(
-                'A manufacturer with the same name has been found. Please enter a different name'
-              );
-              return;
-            }
-
-            handleIMS_APIError(error);
+              handleIMS_APIError(error);
+            });
+        } else {
+          setError('root.formError', {
+            message:
+              "There have been no changes made. Please change a field's value or press Cancel to exit.",
           });
-      } else {
-        setFormError(
-          "There have been no changes made. Please change a field's value or press Cancel to exit"
-        );
+        }
       }
-    }
-  }, [
-    patchManufacturer,
-    handleClose,
-    handleErrors,
-    manufacturerDetails,
-    selectedManufacturer,
-  ]);
+    },
+    [selectedManufacturer, patchManufacturer, handleClose, setError]
+  );
+
+  const onSubmit = (data: ManufacturerPost) => {
+    type === 'post'
+      ? handleAddManufacturer(data)
+      : handleEditManufacturer(data);
+  };
 
   return (
     <Dialog open={open} maxWidth="lg" fullWidth>
-      <DialogTitle>{`${
-        type === 'create' ? 'Add' : 'Edit'
-      } Manufacturer`}</DialogTitle>
+      <DialogTitle>{`${type === 'post' ? 'Add' : 'Edit'} Manufacturer`}</DialogTitle>
       <DialogContent>
-        <Grid container direction="column" spacing={1}>
+        <Grid container direction="column" spacing={1} component="form">
           <Grid item sx={{ mt: 1 }}>
             <TextField
               id="manufacturer-name-input"
               label="Name"
-              required={true}
-              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturerDetails.name}
-              onChange={(event) => {
-                setManufacturerDetails({
-                  ...manufacturerDetails,
-                  name: event.target.value,
-                });
-                setNameError(undefined);
-                setFormError(undefined);
-              }}
-              error={nameError !== undefined}
-              helperText={nameError}
+              required
+              {...register('name')}
+              error={!!errors.name}
+              helperText={errors.name?.message}
               fullWidth
             />
           </Grid>
@@ -365,52 +264,23 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             <TextField
               id="manufacturer-url-input"
               label="URL"
-              required={false}
-              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturerDetails.url ?? ''}
-              onChange={(event) => {
-                setManufacturerDetails({
-                  ...manufacturerDetails,
-                  url:
-                    event.target.value.trim() === ''
-                      ? null
-                      : event.target.value,
-                });
-
-                setUrlError(undefined);
-                setFormError(undefined);
-              }}
-              error={urlError !== undefined}
-              helperText={urlError}
+              {...register('url')}
+              error={!!errors.url}
+              helperText={errors.url?.message}
               fullWidth
             />
           </Grid>
           <Grid item>
             <Typography>Address</Typography>
           </Grid>
-
           <Grid item>
             <TextField
               id="manufacturer-address-line-input"
               label="Address Line"
-              required={true}
-              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturerDetails.address.address_line}
-              onChange={(event) => {
-                setManufacturerDetails({
-                  ...manufacturerDetails,
-                  address: {
-                    ...manufacturerDetails.address,
-                    address_line: event.target.value,
-                  },
-                });
-
-                setAddressLineError(undefined);
-
-                setFormError(undefined);
-              }}
-              error={addressLineError !== undefined}
-              helperText={addressLineError && addressLineError}
+              required
+              {...register('address.address_line')}
+              error={!!errors?.address?.address_line}
+              helperText={errors?.address?.address_line?.message}
               fullWidth
             />
           </Grid>
@@ -418,20 +288,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             <TextField
               id="manufacturer-town-input"
               label="Town"
-              required={false}
-              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturerDetails.address.town ?? ''}
-              onChange={(event) => {
-                setManufacturerDetails({
-                  ...manufacturerDetails,
-                  address: {
-                    ...manufacturerDetails.address,
-                    town: event.target.value || null,
-                  },
-                });
-
-                setFormError(undefined);
-              }}
+              {...register('address.town')}
               fullWidth
             />
           </Grid>
@@ -439,20 +296,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             <TextField
               id="manufacturer-county-input"
               label="County"
-              required={false}
-              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturerDetails.address.county ?? ''}
-              onChange={(event) => {
-                setManufacturerDetails({
-                  ...manufacturerDetails,
-                  address: {
-                    ...manufacturerDetails.address,
-                    county: event.target.value || null,
-                  },
-                });
-
-                setFormError(undefined);
-              }}
+              {...register('address.county')}
               fullWidth
             />
           </Grid>
@@ -460,24 +304,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             <TextField
               id="manufacturer-country-input"
               label="Country"
-              required={true}
-              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturerDetails.address.country}
-              onChange={(event) => {
-                setManufacturerDetails({
-                  ...manufacturerDetails,
-                  address: {
-                    ...manufacturerDetails.address,
-                    country: event.target.value,
-                  },
-                });
-
-                setCountryError(undefined);
-
-                setFormError(undefined);
-              }}
-              error={countryError !== undefined}
-              helperText={countryError}
+              required
+              {...register('address.country')}
+              error={!!errors?.address?.country}
+              helperText={errors?.address?.country?.message}
               fullWidth
             />
           </Grid>
@@ -485,24 +315,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             <TextField
               id="manufacturer-postcode-input"
               label="Post/Zip code"
-              required={true}
-              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturerDetails.address.postcode}
-              onChange={(event) => {
-                setManufacturerDetails({
-                  ...manufacturerDetails,
-                  address: {
-                    ...manufacturerDetails.address,
-                    postcode: event.target.value,
-                  },
-                });
-
-                setAddressPostcodeError(undefined);
-
-                setFormError(undefined);
-              }}
-              error={addressPostcodeError !== undefined}
-              helperText={addressPostcodeError}
+              required
+              {...register('address.postcode')}
+              error={!!errors?.address?.postcode}
+              helperText={errors?.address?.postcode?.message}
               fullWidth
             />
           </Grid>
@@ -510,17 +326,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             <TextField
               id="manufacturer-telephone-input"
               label="Telephone number"
-              required={false}
-              sx={{ marginLeft: '4px', my: '8px' }} // Adjusted the width and margin
-              value={manufacturerDetails.telephone ?? ''}
-              onChange={(event) => {
-                setManufacturerDetails({
-                  ...manufacturerDetails,
-                  telephone: event.target.value || null,
-                });
-
-                setFormError(undefined);
-              }}
+              {...register('telephone')}
               fullWidth
             />
           </Grid>
@@ -548,18 +354,11 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={
-              type === 'create' ? handleAddManufacturer : handleEditManufacturer
-            }
+            onClick={handleSubmit(onSubmit)}
             disabled={
+              Object.values(errors).length !== 0 ||
               isAddPending ||
-              isEditPending ||
-              formError !== undefined ||
-              nameError !== undefined ||
-              urlError !== undefined ||
-              addressLineError !== undefined ||
-              addressPostcodeError !== undefined ||
-              countryError !== undefined
+              isEditPending
             }
             endIcon={
               isAddPending || isEditPending ? (
@@ -570,9 +369,9 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
             Save
           </Button>
         </Box>
-        {formError && (
+        {errors.root?.formError && (
           <FormHelperText sx={{ marginBottom: '16px' }} error>
-            {formError}
+            {errors.root?.formError.message}
           </FormHelperText>
         )}
       </DialogActions>
