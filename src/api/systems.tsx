@@ -8,7 +8,6 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import {
-  APIError,
   AddSystem,
   BreadcrumbsInfo,
   CopyToSystem,
@@ -20,6 +19,7 @@ import {
 } from '../app.types';
 import { generateUniqueNameUsingCode } from '../utils';
 import { imsApi } from './api';
+import { APIError } from './api.types';
 
 /** Utility for turning an importance into an MUI palette colour to display */
 export const getSystemImportanceColour = (

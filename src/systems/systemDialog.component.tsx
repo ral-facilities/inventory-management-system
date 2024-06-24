@@ -14,13 +14,13 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React, { useEffect } from 'react';
+import { APIError } from '../api/api.types';
 import {
   getSystemImportanceColour,
   useAddSystem,
   useEditSystem,
 } from '../api/systems';
 import {
-  APIError,
   AddSystem,
   EditSystem,
   System,

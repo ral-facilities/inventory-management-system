@@ -9,13 +9,13 @@ import { AxiosError } from 'axios';
 import {
   AddItem,
   AddItems,
-  APIError,
   EditItem,
   Item,
   MoveItemsToSystem,
   TransferState,
 } from '../app.types';
 import { imsApi } from './api';
+import { APIError } from './api.types';
 
 const addItem = async (item: AddItem): Promise<Item> => {
   return imsApi.post<Item>(`/v1/items`, item).then((response) => response.data);

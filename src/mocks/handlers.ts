@@ -1,9 +1,13 @@
 import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
+  Manufacturer,
+  ManufacturerPatch,
+  ManufacturerPost,
+} from '../api/api.types';
+import {
   AddCatalogueCategory,
   AddCatalogueItem,
   AddItem,
-  AddManufacturer,
   AddSystem,
   AddUnit,
   AddUsageStatus,
@@ -15,10 +19,8 @@ import {
   EditCatalogueCategory,
   EditCatalogueItem,
   EditItem,
-  EditManufacturer,
   EditSystem,
   Item,
-  Manufacturer,
   System,
   Unit,
   UsageStatus,
@@ -409,7 +411,7 @@ export const handlers = [
 
   // ------------------------------------ MANUFACTURERS ------------------------------------
 
-  http.post<PathParams, AddManufacturer, Manufacturer | ErrorResponse>(
+  http.post<PathParams, ManufacturerPost, Manufacturer | ErrorResponse>(
     '/v1/manufacturers',
     async ({ request }) => {
       const body = await request.json();
@@ -469,7 +471,7 @@ export const handlers = [
     }
   ),
 
-  http.patch<{ id: string }, EditManufacturer, Manufacturer | ErrorResponse>(
+  http.patch<{ id: string }, ManufacturerPatch, Manufacturer | ErrorResponse>(
     '/v1/manufacturers/:id',
     async ({ request }) => {
       const body = await request.json();

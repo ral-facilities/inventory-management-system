@@ -19,12 +19,12 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { APIError } from '../../api/api.types';
 import {
   useAddCatalogueCategory,
   useEditCatalogueCategory,
 } from '../../api/catalogueCategories';
 import {
-  APIError,
   AddCatalogueCategory,
   AddCatalogueCategoryProperty,
   AddCatalogueCategoryPropertyWithPlacementIds,

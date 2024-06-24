@@ -54,35 +54,6 @@ export interface CatalogueCategory {
   modified_time: string;
 }
 
-export interface AddManufacturer {
-  name: string;
-  url?: string | null;
-  address: AddAddress;
-  telephone?: string | null;
-}
-
-export interface EditManufacturer {
-  name?: string;
-  url?: string | null;
-  address?: EditAddress;
-  telephone?: string | null;
-  id?: string | null;
-}
-
-export interface ManufacturerDetails {
-  name: string;
-  url: string | null;
-  address: AddAddress;
-  telephone: string | null;
-}
-
-export interface Manufacturer extends ManufacturerDetails {
-  id: string;
-  code: string;
-  created_time: string;
-  modified_time: string;
-}
-
 export interface AllowedValuesList {
   type: 'list';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -196,24 +167,6 @@ export interface TransferToCatalogueItem {
   targetCatalogueCategory: CatalogueCategory | null;
 }
 
-export interface APIError {
-  detail: string;
-}
-
-interface AddAddress {
-  address_line: string;
-  town?: string | null;
-  county?: string | null;
-  postcode: string;
-  country: string;
-}
-interface EditAddress {
-  address_line?: string;
-  town?: string | null;
-  county?: string | null;
-  postcode?: string;
-  country?: string;
-}
 export interface TransferState {
   name: string;
   message: string;

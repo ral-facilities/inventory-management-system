@@ -27,13 +27,13 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Manufacturer } from '../../api/api.types';
 import { useCatalogueItems } from '../../api/catalogueItems';
 import { useManufacturerIds } from '../../api/manufacturers';
 import {
   CatalogueCategory,
   CatalogueItem,
   CatalogueItemPropertyResponse,
-  Manufacturer,
 } from '../../app.types';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import {

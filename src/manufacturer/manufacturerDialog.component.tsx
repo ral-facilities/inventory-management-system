@@ -15,14 +15,13 @@ import {
 import React from 'react';
 
 import { AxiosError } from 'axios';
-import { useAddManufacturer, useEditManufacturer } from '../api/manufacturers';
 import {
   APIError,
-  AddManufacturer,
-  EditManufacturer,
   Manufacturer,
-  ManufacturerDetails,
-} from '../app.types';
+  ManufacturerPatch,
+  ManufacturerPost,
+} from '../api/api.types';
+import { useAddManufacturer, useEditManufacturer } from '../api/manufacturers';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { trimStringValues } from '../utils';
 
@@ -48,7 +47,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   const { open, onClose, selectedManufacturer, type } = props;
 
   const [manufacturerDetails, setManufacturerDetails] =
-    React.useState<ManufacturerDetails>({
+    React.useState<ManufacturerPost>({
       name: '',
       url: null,
       address: {
@@ -177,7 +176,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       return;
     }
 
-    const manufacturerToAdd: AddManufacturer = {
+    const manufacturerToAdd: ManufacturerPost = {
       name: manufacturerDetails.name,
       url: manufacturerDetails.url ?? undefined,
       address: {
@@ -238,7 +237,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       const isTelephoneUpdated =
         manufacturerDetails.telephone !== selectedManufacturer.telephone;
 
-      let manufacturerToEdit: EditManufacturer = {
+      let manufacturerToEdit: ManufacturerPatch = {
         id: selectedManufacturer.id,
       };
 

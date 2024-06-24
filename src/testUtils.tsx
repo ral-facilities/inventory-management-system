@@ -10,12 +10,12 @@ import {
   createMemoryRouter,
 } from 'react-router-dom';
 import { paths } from './App';
+import { Manufacturer } from './api/api.types';
 import {
   CatalogueCategory,
   CatalogueCategoryProperty,
   CatalogueItem,
   Item,
-  Manufacturer,
 } from './app.types';
 import CatalogueCategoriesJSON from './mocks/CatalogueCategories.json';
 import CatalogueItemsJSON from './mocks/CatalogueItems.json';

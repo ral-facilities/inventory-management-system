@@ -22,13 +22,13 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { APIError, Manufacturer } from '../../api/api.types';
 import {
   useAddCatalogueItem,
   useEditCatalogueItem,
 } from '../../api/catalogueItems';
 import { useManufacturers } from '../../api/manufacturers';
 import {
-  APIError,
   AddCatalogueItem,
   CatalogueCategory,
   CatalogueCategoryProperty,
@@ -36,7 +36,6 @@ import {
   CatalogueItem,
   CatalogueItemDetailsPlaceholder,
   EditCatalogueItem,
-  Manufacturer,
 } from '../../app.types';
 import handleIMS_APIError from '../../handleIMS_APIError';
 import ManufacturerDialog from '../../manufacturer/manufacturerDialog.component';

@@ -8,11 +8,8 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  CatalogueCategory,
-  CatalogueItem,
-  Manufacturer,
-} from '../../app.types';
+import { Manufacturer } from '../../api/api.types';
+import { CatalogueCategory, CatalogueItem } from '../../app.types';
 import { formatDateTimeStrings } from '../../utils';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
