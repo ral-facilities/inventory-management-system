@@ -100,6 +100,4 @@ export interface System extends CreatedModifiedMixin {
   parent_id: string | null;
 }
 
-export interface SystemPatch extends Partial<SystemPost> {
-  id: string;
-}
+export interface SystemPatch extends Partial<SystemPost> {}

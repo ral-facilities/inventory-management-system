@@ -122,22 +122,23 @@ export const usePostSystem = (): UseMutationResult<
   });
 };
 
-const patchSystem = async (system: SystemPatch): Promise<System> => {
-  const { id, ...updateData } = system;
-
+const patchSystem = async (
+  id: string,
+  system: SystemPatch
+): Promise<System> => {
   return imsApi
-    .patch<System>(`/v1/systems/${id}`, updateData)
+    .patch<System>(`/v1/systems/${id}`, system)
     .then((response) => response.data);
 };
 
 export const usePatchSystem = (): UseMutationResult<
   System,
   AxiosError,
-  SystemPatch
+  { id: string; system: SystemPatch }
 > => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (system: SystemPatch) => patchSystem(system),
+    mutationFn: ({ id, system }) => patchSystem(id, system),
     onSuccess: (systemResponse: System) => {
       queryClient.invalidateQueries({
         queryKey: ['Systems', systemResponse.parent_id ?? 'null'],
@@ -192,8 +193,7 @@ export const useMoveToSystem = (): UseMutationResult<
 
       const promises = moveToSystem.selectedSystems.map(
         async (system: System) => {
-          return patchSystem({
-            id: system.id,
+          return patchSystem(system.id, {
             parent_id: moveToSystem.targetSystem?.id || null,
           })
             .then(() => {
