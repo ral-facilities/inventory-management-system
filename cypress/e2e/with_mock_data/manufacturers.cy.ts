@@ -317,7 +317,7 @@ describe('Manufacturer', () => {
       .should('be.visible')
       .within(() => {
         cy.contains(
-          "There have been no changes made. Please change a field's value or press Cancel to exit"
+          "There have been no changes made. Please change a field's value or press Cancel to exit."
         );
       });
     cy.findByRole('button', { name: 'Save' }).should('be.disabled');
