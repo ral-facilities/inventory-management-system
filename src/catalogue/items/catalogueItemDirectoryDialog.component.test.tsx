@@ -35,7 +35,7 @@ describe('catalogue item directory Dialog', () => {
         code: 'energy-meters',
         is_leaf: true,
 
-        catalogue_item_properties: [
+        properties: [
           {
             id: '7',
             name: 'Measurement Range',

@@ -292,7 +292,7 @@ describe('Catalogue Category', () => {
         JSON.stringify({
           name: 'test',
           is_leaf: true,
-          catalogue_item_properties: [
+          properties: [
             { name: 'Updated Field 1', type: 'boolean', mandatory: false },
             {
               name: 'Updated Field 2',
@@ -350,7 +350,7 @@ describe('Catalogue Category', () => {
         JSON.stringify({
           name: 'test',
           is_leaf: true,
-          catalogue_item_properties: [
+          properties: [
             { name: 'Updated Field 1', type: 'boolean', mandatory: false },
             {
               name: 'Updated Field 2',
@@ -692,7 +692,7 @@ describe('Catalogue Category', () => {
           parent_id: null,
           code: 'cameras',
           is_leaf: true,
-          catalogue_item_properties: [
+          properties: [
             {
               name: 'Resolution',
               type: 'number',
@@ -806,7 +806,7 @@ describe('Catalogue Category', () => {
           parent_id: '2',
           code: 'cameras',
           is_leaf: true,
-          catalogue_item_properties: [
+          properties: [
             {
               name: 'Resolution',
               type: 'number',

@@ -337,7 +337,7 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(() => user.click(saveButton));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
-        catalogue_item_properties: [
+        properties: [
           {
             mandatory: true,
             name: 'radius',
@@ -375,7 +375,7 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(() => user.click(saveButton));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
-        catalogue_item_properties: [
+        properties: [
           {
             allowed_values: { type: 'list', values: [1, 2, 8] },
             mandatory: true,
@@ -414,7 +414,7 @@ describe('Catalogue Category Dialog', () => {
       await waitFor(() => user.click(saveButton));
 
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
-        catalogue_item_properties: [
+        properties: [
           {
             allowed_values: { type: 'list', values: ['1', '2', '8'] },
             mandatory: true,
@@ -839,7 +839,7 @@ describe('Catalogue Category Dialog', () => {
         parent_id: '1',
         code: 'voltage-meters',
         is_leaf: true,
-        catalogue_item_properties: [
+        properties: [
           {
             id: '1',
             name: 'Measurement Range',
@@ -897,7 +897,7 @@ describe('Catalogue Category Dialog', () => {
 
       expect(axiosPatchSpy).toHaveBeenCalledWith('/v1/catalogue-categories/4', {
         name: 'test2',
-        catalogue_item_properties: undefined,
+        properties: undefined,
       });
 
       expect(onClose).toHaveBeenCalled();
@@ -972,7 +972,7 @@ describe('Catalogue Category Dialog', () => {
       props.selectedCatalogueCategory = {
         ...mockData,
         is_leaf: true,
-        catalogue_item_properties: [
+        properties: [
           {
             id: '1',
             name: 'Field 1',
@@ -1002,7 +1002,7 @@ describe('Catalogue Category Dialog', () => {
       expect(axiosPostSpy).toHaveBeenCalledWith('/v1/catalogue-categories', {
         ...values,
         is_leaf: true,
-        catalogue_item_properties: [
+        properties: [
           {
             name: 'Field 1',
             type: 'text',

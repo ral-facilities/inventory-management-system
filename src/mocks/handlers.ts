@@ -78,15 +78,12 @@ export const handlers = [
 
     body = {
       ...body,
-      catalogue_item_properties: body.catalogue_item_properties?.map(
-        (property) => ({
-          ...property,
-          id: generateUniqueId('test_id_'),
-          unit:
-            UnitsJSON.find((unit) => unit.id === property.unit_id)?.value ??
-            null,
-        })
-      ),
+      properties: body.properties?.map((property) => ({
+        ...property,
+        id: generateUniqueId('test_id_'),
+        unit:
+          UnitsJSON.find((unit) => unit.id === property.unit_id)?.value ?? null,
+      })),
     };
     return HttpResponse.json(
       {
@@ -252,9 +249,7 @@ export const handlers = [
 
       const property = CatalogueCategoriesJSON.find(
         (category) => category.id === catalogue_category_id
-      )?.catalogue_item_properties?.find(
-        (property) => property.id === property_id
-      );
+      )?.properties?.find((property) => property.id === property_id);
 
       return HttpResponse.json(
         { id: '1', ...property, ...body } as CatalogueCategoryProperty,
@@ -282,7 +277,7 @@ export const handlers = [
 
       const catalogueCategoryProperties = CatalogueCategoriesJSON.find(
         (category) => category.id === body.catalogue_category_id
-      )?.catalogue_item_properties;
+      )?.properties;
 
       body = {
         ...body,
@@ -693,7 +688,7 @@ export const handlers = [
       );
       const catalogueCategoryProperties = CatalogueCategoriesJSON.find(
         (category) => category.id === catalogueItem?.catalogue_category_id
-      )?.catalogue_item_properties;
+      )?.properties;
 
       const usageStatus = UsageStatusJSON.find(
         (usageStatus) => usageStatus.id == body.usage_status_id
