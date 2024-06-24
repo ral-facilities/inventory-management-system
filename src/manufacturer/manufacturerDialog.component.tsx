@@ -240,9 +240,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       const isTelephoneUpdated =
         manufacturerDetails.telephone !== selectedManufacturer.telephone;
 
-      let manufacturerToEdit: ManufacturerPatch = {
-        id: selectedManufacturer.id,
-      };
+      let manufacturerToEdit: ManufacturerPatch = {};
 
       isNameUpdated && (manufacturerToEdit.name = manufacturerDetails.name);
       isURLUpdated && (manufacturerToEdit.url = manufacturerDetails.url);
@@ -306,7 +304,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         isCountryUpdated ||
         isTelephoneUpdated
       ) {
-        patchManufacturer(trimStringValues(manufacturerToEdit))
+        patchManufacturer({
+          id: selectedManufacturer.id,
+          manufacturer: trimStringValues(manufacturerToEdit),
+        })
           .then(() => handleClose())
           .catch((error: AxiosError) => {
             const response = error.response?.data as APIError;
