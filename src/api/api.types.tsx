@@ -22,7 +22,7 @@ interface AddressPost extends Omit<Address, 'town' | 'county'> {
   county?: string | null;
 }
 
-type AddressPatch = Partial<Address>;
+interface AddressPatch extends Partial<Address> {}
 
 export interface ManufacturerPost {
   name: string;
