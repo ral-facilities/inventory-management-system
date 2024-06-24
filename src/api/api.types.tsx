@@ -12,7 +12,7 @@ export interface BreadcrumbsInfo {
   full_trail: boolean;
 }
 
-// Manufacturers
+// ------------------------------------ MANUFACTURERS -----------------------------------------------
 
 interface Address {
   address_line: string;
@@ -27,7 +27,7 @@ interface AddressPost extends Omit<Address, 'town' | 'county'> {
   county?: string | null;
 }
 
-type AddressPatch = Partial<Address>;
+interface AddressPatch extends Partial<Address> {}
 
 export interface ManufacturerPost {
   name: string;
@@ -39,10 +39,11 @@ export interface ManufacturerPost {
 export interface ManufacturerPatch
   extends Partial<Omit<ManufacturerPost, 'address'>> {
   address?: AddressPatch;
-  id: string;
 }
 
-export interface Manufacturer extends ManufacturerPost, CreatedModifiedMixin {
+export interface Manufacturer
+  extends Omit<ManufacturerPost, 'telephone' | 'url' | 'address'>,
+    CreatedModifiedMixin {
   id: string;
   code: string;
   address: Address;
@@ -50,7 +51,7 @@ export interface Manufacturer extends ManufacturerPost, CreatedModifiedMixin {
   telephone: string | null;
 }
 
-// Units
+// ------------------------------------ UNITS -------------------------------------------------------
 
 export interface UnitPost {
   value: string;
@@ -61,7 +62,7 @@ export interface Unit extends UnitPost, CreatedModifiedMixin {
   code: string;
 }
 
-// Usage Statuses
+// ------------------------------------ USAGE STATUSES -----------------------------------------------
 
 export interface UsageStatusPost {
   value: string;
@@ -71,7 +72,7 @@ export interface UsageStatus extends UsageStatusPost, CreatedModifiedMixin {
   code: string;
 }
 
-// Systems
+// ------------------------------------ SYSTEMS ------------------------------------------------------
 
 export enum SystemImportanceType {
   LOW = 'low',

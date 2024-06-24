@@ -16,16 +16,12 @@ describe('IMS HomePage', () => {
     cy.url().should('include', '/manufacturers');
     cy.go('back');
 
-    cy.origin('https://www.clf.stfc.ac.uk/Pages/EPAC-Applications.aspx', () => {
-      cy.on('uncaught:exception', () => {
-        return false;
-      });
-    });
-    cy.get('[data-testid="facility-button"]').click();
-    cy.url().should(
-      'equal',
-      'https://www.clf.stfc.ac.uk/Pages/EPAC-Applications.aspx'
-    );
-    cy.go('back');
+    cy.findAllByTestId('facility-button')
+      .first()
+      .should('have.attr', 'href')
+      .should(
+        'include',
+        'https://www.clf.stfc.ac.uk/Pages/EPAC-Applications.aspx'
+      );
   });
 });

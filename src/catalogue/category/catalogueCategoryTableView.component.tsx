@@ -140,7 +140,7 @@ const CatalogueCategoryTableView = (props: CatalogueCategoryTableViewProps) => {
                     ...props,
                     overFlowTipSx: {
                       width: '25vw',
-                      color: canPlaceHere ? 'inherit' : 'action.disabled',
+                      color: canPlaceHere ? 'inherit' : 'text.secondary',
                     },
                   } as TableCellOverFlowTipProps)}
                 />
