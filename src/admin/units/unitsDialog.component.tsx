@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Box,
   Button,
@@ -11,10 +12,11 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { UnitPost } from '../../api/api.types';
 import { usePostUnit } from '../../api/units';
+import { UnitSchema } from '../../form.schemas';
 import handleIMS_APIError from '../../handleIMS_APIError';
-import { trimStringValues } from '../../utils';
 
 export interface UnitsDialogProps {
   open: boolean;
@@ -24,51 +26,44 @@ export interface UnitsDialogProps {
 function UnitsDialog(props: UnitsDialogProps) {
   const { open, onClose } = props;
 
-  const [unitDetails, setUnitDetails] = React.useState<UnitPost>({
-    value: '',
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    setError,
+    clearErrors,
+  } = useForm<UnitPost>({
+    resolver: zodResolver(UnitSchema),
   });
-
-  const [valueError, setValueError] = React.useState<string | undefined>(
-    undefined
-  );
 
   const { mutateAsync: postUnit, isPending: isAddPending } = usePostUnit();
 
   const handleClose = React.useCallback(() => {
-    setUnitDetails({
-      value: '',
-    });
-    setValueError(undefined);
+    clearErrors();
     onClose();
-  }, [onClose]);
+  }, [clearErrors, onClose]);
 
-  const handleErrors = React.useCallback((): boolean => {
-    let hasErrors = false;
-    if (!unitDetails.value || unitDetails.value.trim().length === 0) {
-      hasErrors = true;
-      setValueError('Please enter a value');
-    }
+  const handleAddUnit = React.useCallback(
+    (unitData: UnitPost) => {
+      postUnit(unitData)
+        .then(() => handleClose())
+        .catch((error: AxiosError) => {
+          if (error.response?.status === 409) {
+            setError('value', {
+              message:
+                'A unit with the same value already exists. Please enter a different value.',
+            });
+            return;
+          }
+          handleIMS_APIError(error);
+        });
+    },
+    [postUnit, handleClose, setError]
+  );
 
-    return hasErrors;
-  }, [unitDetails]);
-
-  const handleAddUnit = React.useCallback(() => {
-    const hasErrors = handleErrors();
-
-    if (hasErrors) {
-      return;
-    }
-
-    postUnit(trimStringValues(unitDetails))
-      .then(() => handleClose())
-      .catch((error: AxiosError) => {
-        if (error.response?.status === 409) {
-          setValueError('A unit with the same value already exists');
-          return;
-        }
-        handleIMS_APIError(error);
-      });
-  }, [handleErrors, unitDetails, postUnit, handleClose]);
+  const onSubmit = (data: UnitPost) => {
+    handleAddUnit(data);
+  };
 
   return (
     <Dialog open={open} maxWidth="sm" fullWidth>
@@ -79,15 +74,11 @@ function UnitsDialog(props: UnitsDialogProps) {
             <TextField
               id="unit-value-input"
               label="Value"
-              required={true}
+              required
               sx={{ marginLeft: '4px', my: '8px' }}
-              value={unitDetails.value ?? ''}
-              onChange={(event) => {
-                setUnitDetails({ value: event.target.value });
-                setValueError(undefined);
-              }}
-              error={valueError !== undefined}
-              helperText={valueError}
+              {...register('value')}
+              error={!!errors.value}
+              helperText={errors.value?.message}
               fullWidth
             />
           </Grid>
@@ -115,8 +106,8 @@ function UnitsDialog(props: UnitsDialogProps) {
           <Button
             variant="outlined"
             sx={{ width: '50%', mx: 1 }}
-            onClick={handleAddUnit}
-            disabled={isAddPending || valueError !== undefined}
+            onClick={handleSubmit(onSubmit)}
+            disabled={isAddPending || Object.values(errors).length !== 0}
             endIcon={isAddPending ? <CircularProgress size={20} /> : null}
           >
             Save
