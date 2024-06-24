@@ -47,39 +47,42 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
 
   const isNotCreating = type !== 'post' && selectedManufacturer;
 
+  const initialManufacturer: ManufacturerPost = React.useMemo(
+    () =>
+      isNotCreating
+        ? selectedManufacturer
+        : {
+            name: '',
+            url: '',
+            telephone: '',
+            address: {
+              address_line: '',
+              town: '',
+              county: '',
+              postcode: '',
+              country: '',
+            },
+          },
+    [isNotCreating, selectedManufacturer]
+  );
+
   const {
     handleSubmit,
     register,
     formState: { errors },
     watch,
-    setValue,
     setError,
     clearErrors,
+    reset,
   } = useForm<ManufacturerPost>({
     resolver: zodResolver(ManufacturerSchema(type)),
+    defaultValues: initialManufacturer,
   });
 
-  // Load the values for editing. This method is used instead of the default values
-  // property in "useForm" because the default values don't work for editing on the landing pages.
+  // Load the values for editing
   React.useEffect(() => {
-    const initialManufacturer: ManufacturerPost =
-      selectedManufacturer ??
-      ({
-        name: '',
-        url: '',
-        telephone: '',
-        address: {
-          address_line: '',
-          town: '',
-          county: '',
-          postcode: '',
-          country: '',
-        },
-      } as ManufacturerPost);
-    Object.entries(initialManufacturer).map(([key, value]) =>
-      setValue(key as keyof ManufacturerPost, value)
-    );
-  }, [isNotCreating, selectedManufacturer, setValue]);
+    reset(initialManufacturer);
+  }, [initialManufacturer, reset]);
 
   React.useEffect(() => {
     if (errors.root?.formError) {
@@ -91,7 +94,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
   const handleClose = React.useCallback(() => {
     clearErrors();
     onClose();
-  }, [onClose, clearErrors]);
+  }, [clearErrors, onClose]);
 
   const handleAddManufacturer = React.useCallback(
     (manufacturerData: ManufacturerPost) => {

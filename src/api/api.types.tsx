@@ -46,7 +46,7 @@ export interface Manufacturer
   telephone: string | null;
 }
 
-// Units
+// ------------------------------------ UNITS ------------------------------------
 
 export interface UnitPost {
   value: string;
@@ -57,7 +57,7 @@ export interface Unit extends UnitPost, CreatedModifiedMixin {
   code: string;
 }
 
-// Usage Statuses
+// ------------------------------------ Usage Status ------------------------------------------------
 
 export interface UsageStatusPost {
   value: string;
