@@ -80,7 +80,7 @@ describe('catalogue categories api functions', () => {
         expect(result.current.isSuccess).toBeTruthy();
       });
       expect(result.current.data).toEqual({
-        catalogue_item_properties: [
+        properties: [
           {
             id: '1',
             allowed_values: null,
@@ -253,7 +253,7 @@ describe('catalogue categories api functions', () => {
         parent_id: '1',
         code: 'wavefront-sensors',
         is_leaf: true,
-        catalogue_item_properties: [
+        properties: [
           {
             id: '1',
             name: 'Wavefront Measurement Range',
@@ -277,7 +277,7 @@ describe('catalogue categories api functions', () => {
         parent_id: '1',
         code: 'energy-meters',
         is_leaf: true,
-        catalogue_item_properties: [
+        properties: [
           {
             id: '3',
             name: 'Measurement Range',
@@ -418,7 +418,7 @@ describe('catalogue categories api functions', () => {
         parent_id: '1',
         code: 'wavefront-sensors',
         is_leaf: true,
-        catalogue_item_properties: [
+        properties: [
           {
             id: '1',
             name: 'Wavefront Measurement Range',
@@ -442,7 +442,7 @@ describe('catalogue categories api functions', () => {
         parent_id: '1',
         code: 'energy-meters',
         is_leaf: true,
-        catalogue_item_properties: [
+        properties: [
           {
             id: '3',
             name: 'Measurement Range',

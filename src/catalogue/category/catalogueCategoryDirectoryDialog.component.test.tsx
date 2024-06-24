@@ -364,7 +364,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
           parent_id: '1',
           code: 'energy-meters',
           is_leaf: true,
-          catalogue_item_properties: [
+          properties: [
             {
               id: '1',
               name: 'Measurement Range',

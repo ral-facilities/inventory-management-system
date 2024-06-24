@@ -63,13 +63,17 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
               currIndex ===
               breadcrumbsInfo.trail.length + trailPrefix.length - 1
             ) {
-              return (
+              return typeof name === 'string' && name != '' ? (
                 <OverflowTip
                   key={id as string}
                   sx={{ color: 'text.primary', maxWidth: breadcrumbMaxWidth }}
                 >
                   {name}
                 </OverflowTip>
+              ) : (
+                <Box key={currIndex} sx={{ paddingTop: '6px' }}>
+                  {name}
+                </Box>
               );
             } else if (typeof name === 'object') {
               return (
@@ -78,8 +82,9 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
                 </Box>
               );
             } else {
-              return (
+              return typeof name === 'string' && name != '' ? (
                 <Link
+                  aria-label={name}
                   key={id as string}
                   href="#"
                   onClick={(ev) => {
@@ -91,6 +96,10 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
                     {name}
                   </OverflowTip>
                 </Link>
+              ) : (
+                <Box key={currIndex} sx={{ paddingTop: '6px' }}>
+                  {name}
+                </Box>
               );
             }
           })}
