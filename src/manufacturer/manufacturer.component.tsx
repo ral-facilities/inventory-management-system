@@ -22,7 +22,7 @@ import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Manufacturer } from '../api/api.types';
-import { useManufacturers } from '../api/manufacturers';
+import { useGetManufacturers } from '../api/manufacturers';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import {
   TableBodyCellOverFlowTip,
@@ -38,7 +38,7 @@ import ManufacturerDialog from './manufacturerDialog.component';
 
 function ManufacturerComponent() {
   const { data: manufacturerData, isLoading: manufacturerDataLoading } =
-    useManufacturers();
+    useGetManufacturers();
 
   const [deleteManufacturerDialog, setDeleteManufacturerDialog] =
     React.useState<boolean>(false);

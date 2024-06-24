@@ -21,7 +21,10 @@ import {
   ManufacturerPatch,
   ManufacturerPost,
 } from '../api/api.types';
-import { useAddManufacturer, useEditManufacturer } from '../api/manufacturers';
+import {
+  usePatchManufacturer,
+  usePostManufacturer,
+} from '../api/manufacturers';
 import handleIMS_APIError from '../handleIMS_APIError';
 import { trimStringValues } from '../utils';
 
@@ -87,10 +90,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     undefined
   );
 
-  const { mutateAsync: addManufacturer, isPending: isAddPending } =
-    useAddManufacturer();
-  const { mutateAsync: editManufacturer, isPending: isEditPending } =
-    useEditManufacturer();
+  const { mutateAsync: postManufacturer, isPending: isAddPending } =
+    usePostManufacturer();
+  const { mutateAsync: patchManufacturer, isPending: isEditPending } =
+    usePatchManufacturer();
 
   const handleClose = React.useCallback(() => {
     setManufacturerDetails({
@@ -189,7 +192,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       telephone: manufacturerDetails.telephone ?? null,
     };
 
-    addManufacturer(trimStringValues(manufacturerToAdd))
+    postManufacturer(trimStringValues(manufacturerToAdd))
       .then(() => handleClose())
       .catch((error: AxiosError) => {
         if (error.response?.status === 409) {
@@ -198,7 +201,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         }
         handleIMS_APIError(error);
       });
-  }, [handleErrors, manufacturerDetails, addManufacturer, handleClose]);
+  }, [handleErrors, manufacturerDetails, postManufacturer, handleClose]);
 
   const handleEditManufacturer = React.useCallback(() => {
     if (manufacturerDetails && selectedManufacturer) {
@@ -237,9 +240,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       const isTelephoneUpdated =
         manufacturerDetails.telephone !== selectedManufacturer.telephone;
 
-      let manufacturerToEdit: ManufacturerPatch = {
-        id: selectedManufacturer.id,
-      };
+      let manufacturerToEdit: ManufacturerPatch = {};
 
       isNameUpdated && (manufacturerToEdit.name = manufacturerDetails.name);
       isURLUpdated && (manufacturerToEdit.url = manufacturerDetails.url);
@@ -303,7 +304,10 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
         isCountryUpdated ||
         isTelephoneUpdated
       ) {
-        editManufacturer(trimStringValues(manufacturerToEdit))
+        patchManufacturer({
+          id: selectedManufacturer.id,
+          manufacturer: trimStringValues(manufacturerToEdit),
+        })
           .then(() => handleClose())
           .catch((error: AxiosError) => {
             const response = error.response?.data as APIError;
@@ -323,7 +327,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
       }
     }
   }, [
-    editManufacturer,
+    patchManufacturer,
     handleClose,
     handleErrors,
     manufacturerDetails,

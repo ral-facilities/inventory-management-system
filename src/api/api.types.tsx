@@ -34,7 +34,6 @@ export interface ManufacturerPost {
 export interface ManufacturerPatch
   extends Partial<Omit<ManufacturerPost, 'address'>> {
   address?: AddressPatch;
-  id: string;
 }
 
 export interface Manufacturer

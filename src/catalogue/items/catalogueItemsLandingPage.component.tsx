@@ -18,7 +18,7 @@ import {
   useCatalogueCategory,
 } from '../../api/catalogueCategories';
 import { useCatalogueItem } from '../../api/catalogueItems';
-import { useManufacturer } from '../../api/manufacturers';
+import { useGetManufacturer } from '../../api/manufacturers';
 import { BreadcrumbsInfo } from '../../app.types';
 import { formatDateTimeStrings } from '../../utils';
 import Breadcrumbs from '../../view/breadcrumbs.component';
@@ -54,7 +54,7 @@ function CatalogueItemsLandingPage() {
       });
   }, [catalogueBreadcrumbs, catalogueItemIdData]);
 
-  const { data: manufacturer } = useManufacturer(
+  const { data: manufacturer } = useGetManufacturer(
     catalogueItemIdData?.manufacturer_id
   );
 
