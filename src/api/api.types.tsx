@@ -57,7 +57,7 @@ export interface Unit extends UnitPost, CreatedModifiedMixin {
   code: string;
 }
 
-// Usage Statuses
+// ------------------------------------ Usage Status ------------------------------------------------
 
 export interface UsageStatusPost {
   value: string;
