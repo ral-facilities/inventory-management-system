@@ -45,3 +45,14 @@ export interface Manufacturer
   url: string | null;
   telephone: string | null;
 }
+
+// ------------------------------------ UNITS ------------------------------------
+
+export interface UnitPost {
+  value: string;
+}
+
+export interface Unit extends UnitPost, CreatedModifiedMixin {
+  id: string;
+  code: string;
+}

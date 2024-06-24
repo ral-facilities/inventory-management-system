@@ -8,12 +8,12 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
+import { Unit } from '../../api/api.types';
 import { useUnits } from '../../api/units';
 import {
   AddCatalogueCategoryPropertyTypes,
   CatalogueCategoryProperty,
   CatalogueItemPropertiesErrorsType,
-  Unit,
 } from '../../app.types';
 import { v4 as uuidv4 } from 'uuid';
 

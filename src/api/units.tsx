@@ -6,8 +6,8 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { AddUnit, Unit } from '../app.types';
 import { imsApi } from './api';
+import { Unit, UnitPost } from './api.types';
 
 const fetchUnits = async (): Promise<Unit[]> => {
   return imsApi.get('/v1/units').then((response) => {
@@ -24,14 +24,14 @@ export const useUnits = (): UseQueryResult<Unit[], AxiosError> => {
   });
 };
 
-const addUnit = async (unit: AddUnit): Promise<Unit> => {
+const addUnit = async (unit: UnitPost): Promise<Unit> => {
   return imsApi.post<Unit>(`/v1/units`, unit).then((response) => response.data);
 };
 
-export const useAddUnit = (): UseMutationResult<Unit, AxiosError, AddUnit> => {
+export const useAddUnit = (): UseMutationResult<Unit, AxiosError, UnitPost> => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (unit: AddUnit) => addUnit(unit),
+    mutationFn: (unit: UnitPost) => addUnit(unit),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['Units'],
