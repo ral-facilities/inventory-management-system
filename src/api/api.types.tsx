@@ -89,14 +89,15 @@ export interface SystemPost {
   parent_id?: string | null;
 }
 
-export interface System extends SystemPost, CreatedModifiedMixin {
+export interface System extends CreatedModifiedMixin {
   id: string;
+  name: string;
+  code: string;
   description: string | null;
   location: string | null;
   owner: string | null;
   importance: SystemImportanceType;
   parent_id: string | null;
-  code: string;
 }
 
 export interface SystemPatch extends Partial<SystemPost> {
