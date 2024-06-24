@@ -9,7 +9,7 @@ import {
   TextField,
 } from '@mui/material';
 import { Unit } from '../../api/api.types';
-import { useUnits } from '../../api/units';
+import { useGetUnits } from '../../api/units';
 import {
   AddCatalogueCategoryPropertyTypes,
   CatalogueCategoryProperty,
@@ -54,7 +54,7 @@ function CataloguePropertyForm(props: CataloguePropertyFormProps) {
     currentCatalogueItemField,
   } = props;
 
-  const { data: units } = useUnits();
+  const { data: units } = useGetUnits();
 
   return (
     <Stack direction={isList ? 'row' : 'column'} spacing={1} px={0.5} py={1}>
