@@ -31,7 +31,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { RequestType, SystemsSchema } from '../form.schemas';
 import handleIMS_APIError from '../handleIMS_APIError';
-import { trimStringValues } from '../utils';
 
 export interface SystemDialogProps {
   open: boolean;
@@ -134,7 +133,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           isOwnerUpdated ||
           isImportanceUpdated
         ) {
-          const editSystemData: SystemPatch = { id: selectedSystem.id };
+          const editSystemData: SystemPatch = {};
 
           isNameUpdated && (editSystemData.name = systemData.name);
           isDescriptionUpdated &&
@@ -144,7 +143,10 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           isImportanceUpdated &&
             (editSystemData.importance = systemData.importance);
 
-          patchSystem(trimStringValues(editSystemData))
+          patchSystem({
+            id: selectedSystem.id,
+            system: editSystemData,
+          })
             .then(() => {
               handleClose();
             })

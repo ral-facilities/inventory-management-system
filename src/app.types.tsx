@@ -16,12 +16,12 @@ export interface AddCatalogueCategory {
   name: string;
   parent_id?: string | null;
   is_leaf: boolean;
-  catalogue_item_properties?: AddCatalogueCategoryProperty[];
+  properties?: AddCatalogueCategoryProperty[];
 }
 
 export interface AddCatalogueCategoryWithPlacementIds
   extends AddCatalogueCategory {
-  catalogue_item_properties?: AddCatalogueCategoryPropertyWithPlacementIds[];
+  properties?: AddCatalogueCategoryPropertyWithPlacementIds[];
 }
 
 export interface EditCatalogueCategory {
@@ -51,7 +51,7 @@ export interface CatalogueCategory {
   parent_id: string | null;
   code: string;
   is_leaf: boolean;
-  catalogue_item_properties?: CatalogueCategoryProperty[];
+  properties?: CatalogueCategoryProperty[];
   created_time: string;
   modified_time: string;
 }

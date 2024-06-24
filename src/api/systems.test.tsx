@@ -191,8 +191,8 @@ describe('System api functions', () => {
   });
 
   describe('usePatchSystem', () => {
+    const MOCK_SYSTEM_ID = '65328f34a40ff5301575a4e3';
     const MOCK_SYSTEM_PATCH: SystemPatch = {
-      id: '65328f34a40ff5301575a4e3',
       name: 'System name',
       parent_id: 'parent-id',
       description: 'Description',
@@ -206,13 +206,12 @@ describe('System api functions', () => {
         wrapper: hooksWrapperWithProviders(),
       });
 
-      result.current.mutate(MOCK_SYSTEM_PATCH);
+      result.current.mutate({ id: MOCK_SYSTEM_ID, system: MOCK_SYSTEM_PATCH });
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy());
 
       expect(result.current.data).toEqual({
         ...SystemsJSON.find(
-          (systemBreadcrumbs) =>
-            systemBreadcrumbs.id === MOCK_SYSTEM_PATCH['id']
+          (systemBreadcrumbs) => systemBreadcrumbs.id === MOCK_SYSTEM_ID
         ),
         ...MOCK_SYSTEM_PATCH,
       });

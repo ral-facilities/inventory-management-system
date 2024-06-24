@@ -108,8 +108,7 @@ export function ItemsTable(props: ItemTableProps) {
   // Breadcrumbs + Mui table V2 + extra
   const tableHeight = getPageHeightCalc('50px + 110px + 48px');
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
-    const viewCatalogueItemProperties =
-      catalogueCategory?.catalogue_item_properties ?? [];
+    const viewCatalogueItemProperties = catalogueCategory?.properties ?? [];
     const propertyFilters: PropertyFiltersType = {
       boolean: 'autocomplete',
       string: 'text',
