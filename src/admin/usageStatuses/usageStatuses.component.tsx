@@ -17,8 +17,8 @@ import {
 } from 'material-react-table';
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
+import { UsageStatus } from '../../api/api.types.tsx';
 import { useUsageStatuses } from '../../api/usageStatuses.tsx';
-import { UsageStatus } from '../../app.types.tsx';
 import { usePreservedTableState } from '../../common/preservedTableState.component.tsx';
 import {
   TableBodyCellOverFlowTip,

@@ -1,10 +1,10 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { AddUsageStatus, UsageStatus } from '../app.types';
 import UsageStatusesJSON from '../mocks/UsageStatuses.json';
 import {
   CREATED_MODIFIED_TIME_VALUES,
   hooksWrapperWithProviders,
 } from '../testUtils';
+import { UsageStatus, UsageStatusPost } from './api.types';
 import {
   useAddUsageStatus,
   useDeleteUsageStatus,
@@ -31,7 +31,7 @@ describe('usage status api functions', () => {
   });
 
   describe('useAddUsageStatus', () => {
-    let mockDataAdd: AddUsageStatus;
+    let mockDataAdd: UsageStatusPost;
     beforeEach(() => {
       mockDataAdd = {
         value: 'test',

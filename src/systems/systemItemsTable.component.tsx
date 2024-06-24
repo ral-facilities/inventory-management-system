@@ -20,10 +20,11 @@ import {
 import { MRT_Localization_EN } from 'material-react-table/locales/en';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { UsageStatus } from '../api/api.types';
 import { useCatalogueItemIds } from '../api/catalogueItems';
 import { useItems } from '../api/items';
 import { useUsageStatuses } from '../api/usageStatuses';
-import { CatalogueItem, Item, System, UsageStatus } from '../app.types';
+import { CatalogueItem, Item, System } from '../app.types';
 import { usePreservedTableState } from '../common/preservedTableState.component';
 import ItemsDetailsPanel from '../items/itemsDetailsPanel.component';
 import {

@@ -24,6 +24,7 @@ import {
 import { DatePicker } from '@mui/x-date-pickers';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { UsageStatus } from '../api/api.types';
 import { useAddItem, useAddItems, useEditItem } from '../api/items';
 import { useSystems, useSystemsBreadcrumbs } from '../api/systems';
 import { useUsageStatuses } from '../api/usageStatuses';
@@ -37,7 +38,6 @@ import {
   Item,
   ItemDetails,
   ItemDetailsPlaceholder,
-  UsageStatus,
 } from '../app.types';
 import { matchCatalogueItemProperties } from '../catalogue/catalogue.component';
 import handleIMS_APIError from '../handleIMS_APIError';
