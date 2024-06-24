@@ -46,7 +46,7 @@ export interface Manufacturer
   telephone: string | null;
 }
 
-// Units
+// ------------------------------------ UNITS ------------------------------------
 
 export interface UnitPost {
   value: string;
