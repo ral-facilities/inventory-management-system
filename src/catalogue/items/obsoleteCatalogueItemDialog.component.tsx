@@ -231,6 +231,7 @@ const ObsoleteCatalogueItemDialog = (
           <>
             <Typography>Obsolete Reason</Typography>
             <TextField
+              label="Obsolete Reason"
               id="catalogue-items-obsolete-reason-input"
               value={obsoleteDetails.obsolete_reason || ''}
               onChange={(e) =>
