@@ -97,7 +97,7 @@ function CatalogueItemPropertiesMigrationDialog(
 
   const updatedCatalogueItemProperties = React.useMemo(
     () =>
-      selectedCatalogueCategory.catalogue_item_properties?.map((item) => {
+      selectedCatalogueCategory.properties?.map((item) => {
         // Transform allowed_values to an array of objects with id and value keys
         const allowedValuesWithId = item.allowed_values?.values.map(
           (value) => ({
@@ -128,14 +128,13 @@ function CatalogueItemPropertiesMigrationDialog(
 
         return modifiedCatalogueCategory;
       }) || undefined,
-    [selectedCatalogueCategory.catalogue_item_properties]
+    [selectedCatalogueCategory.properties]
   );
 
   const updatedSelectedCatalogueCategory: AddCatalogueCategoryWithPlacementIds =
     JSON.parse(JSON.stringify(selectedCatalogueCategory));
 
-  updatedSelectedCatalogueCategory.catalogue_item_properties =
-    updatedCatalogueItemProperties;
+  updatedSelectedCatalogueCategory.properties = updatedCatalogueItemProperties;
 
   const [activeStep, setActiveStep] = React.useState<number>(0);
   const [steps, setSteps] = React.useState<string[]>([STEPS_ADD[0]]);
@@ -512,15 +511,13 @@ function CatalogueItemPropertiesMigrationDialog(
   const validateProperty = React.useCallback(() => {
     let hasErrors = false;
 
-    const propertyNames =
-      selectedCatalogueCategory.catalogue_item_properties?.map((property) =>
-        property.name.trim().toLowerCase()
-      );
+    const propertyNames = selectedCatalogueCategory.properties?.map(
+      (property) => property.name.trim().toLowerCase()
+    );
 
-    const selectedProperty =
-      selectedCatalogueCategory.catalogue_item_properties?.find(
-        (property) => property.id === catalogueItemField?.id
-      );
+    const selectedProperty = selectedCatalogueCategory.properties?.find(
+      (property) => property.id === catalogueItemField?.id
+    );
 
     if (catalogueItemField) {
       if (!catalogueItemField.name.trim()) {
@@ -629,7 +626,7 @@ function CatalogueItemPropertiesMigrationDialog(
   }, [
     catalogueItemField,
     propertyMigrationType,
-    selectedCatalogueCategory.catalogue_item_properties,
+    selectedCatalogueCategory.properties,
   ]);
   const handleAddProperty = React.useCallback(() => {
     if (catalogueItemField && propertyMigrationType === 'Add') {
@@ -702,10 +699,9 @@ function CatalogueItemPropertiesMigrationDialog(
         return;
       }
 
-      const initialPropertyDetails =
-        selectedCatalogueCategory.catalogue_item_properties?.find(
-          (property) => property.id === catalogueItemField.id
-        );
+      const initialPropertyDetails = selectedCatalogueCategory.properties?.find(
+        (property) => property.id === catalogueItemField.id
+      );
 
       const property: Partial<CatalogueCategoryPropertyMigration> = {
         id: catalogueItemField.id,
@@ -823,12 +819,10 @@ function CatalogueItemPropertiesMigrationDialog(
       case 1:
         return (
           <Grid item container my={2} xs={12}>
-            {updatedSelectedCatalogueCategory.catalogue_item_properties && (
+            {updatedSelectedCatalogueCategory.properties && (
               <CataloguePropertiesForm
                 isDisabled={true}
-                formFields={
-                  updatedSelectedCatalogueCategory.catalogue_item_properties
-                }
+                formFields={updatedSelectedCatalogueCategory.properties}
                 onChangeEditCatalogueItemField={
                   propertyMigrationType === 'Edit'
                     ? onChangeEditCatalogueItemField
