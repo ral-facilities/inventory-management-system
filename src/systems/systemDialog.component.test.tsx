@@ -345,7 +345,7 @@ describe('Systems Dialog', () => {
 
       expect(
         screen.getByText(
-          "There have been no changes made. Please change a field's value or press Cancel to exit"
+          "There have been no changes made. Please change a field's value or press Cancel to exit."
         )
       ).toBeInTheDocument();
       expect(mockOnClose).not.toHaveBeenCalled();
@@ -354,7 +354,7 @@ describe('Systems Dialog', () => {
 
       expect(
         screen.queryByText(
-          "There have been no changes made. Please change a field's value or press Cancel to exit"
+          "There have been no changes made. Please change a field's value or press Cancel to exit."
         )
       ).not.toBeInTheDocument();
     });

@@ -53,34 +53,38 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
   const { mutateAsync: patchSystem, isPending: isEditPending } =
     usePatchSystem();
 
+  const initialSystem: SystemPost = React.useMemo(
+    () =>
+      isNotCreating
+        ? selectedSystem
+        : {
+            name: '',
+            description: '',
+            location: '',
+            owner: '',
+            importance: SystemImportanceType.MEDIUM,
+          },
+    [isNotCreating, selectedSystem]
+  );
+
   const {
     handleSubmit,
     register,
     formState: { errors },
     watch,
     control,
-    setValue,
     setError,
     clearErrors,
+    reset,
   } = useForm<SystemPost>({
     resolver: zodResolver(SystemsSchema(requestType)),
+    defaultValues: initialSystem,
   });
 
-  // Load the values for editing. This method is used instead of the default values
-  // property in "useForm" because the default values don't work for editing on the landing pages.
+  // Load the values for editing.
   React.useEffect(() => {
-    const initialSystem: SystemPost = {
-      name: isNotCreating ? selectedSystem.name : '',
-      description: isNotCreating ? selectedSystem.description ?? '' : '',
-      location: isNotCreating ? selectedSystem.location ?? '' : '',
-      owner: isNotCreating ? selectedSystem.owner ?? '' : '',
-      importance: selectedSystem?.importance ?? SystemImportanceType.MEDIUM,
-    };
-
-    Object.entries(initialSystem).map(([key, value]) =>
-      setValue(key as keyof SystemPost, value)
-    );
-  }, [isNotCreating, selectedSystem, setValue]);
+    reset(initialSystem);
+  }, [initialSystem, reset]);
 
   React.useEffect(() => {
     if (errors.root?.formError) {
