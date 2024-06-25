@@ -101,3 +101,58 @@ export interface System extends CreatedModifiedMixin {
 }
 
 export interface SystemPatch extends Partial<SystemPost> {}
+
+// ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
+
+export interface AllowedValuesList {
+  type: 'list';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  values: any[];
+}
+export type AllowedValues = AllowedValuesList;
+
+export interface CatalogueCategoryPostProperty {
+  name: string;
+  type: string;
+  unit_id?: string | null;
+  mandatory: boolean;
+  allowed_values?: AllowedValues | null;
+}
+
+export interface CatalogueCategoryPropertyPost
+  extends CatalogueCategoryPostProperty {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default_value: any;
+}
+
+export interface CatalogueCategoryPropertyPatch {
+  name?: string;
+  allowed_values?: AllowedValues | null;
+}
+
+export interface CatalogueCategoryProperty
+  extends Omit<CatalogueCategoryPostProperty, 'unit_id' | 'allowed_values'> {
+  id: string;
+  unit_id: string | null;
+  unit: string | null;
+  allowed_values: AllowedValues | null;
+}
+
+export interface CatalogueCategoryPost {
+  name: string;
+  parent_id?: string | null;
+  is_leaf: boolean;
+  properties?: CatalogueCategoryPostProperty[];
+}
+
+export interface CatalogueCategoryPatch
+  extends Partial<CatalogueCategoryPost> {}
+
+export interface CatalogueCategory
+  extends Omit<CatalogueCategoryPost, 'parent_id' | 'properties'>,
+    CreatedModifiedMixin {
+  id: string;
+  code: string;
+  parent_id: string | null;
+  properties: CatalogueCategoryProperty[];
+}

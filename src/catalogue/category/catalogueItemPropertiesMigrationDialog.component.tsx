@@ -18,16 +18,20 @@ import {
 } from '@mui/material';
 import React from 'react';
 import {
+  AllowedValues,
+  AllowedValuesList,
+  CatalogueCategory,
+  CatalogueCategoryProperty,
+  CatalogueCategoryPropertyPatch,
+  CatalogueCategoryPropertyPost,
+} from '../../api/api.types';
+import {
   useAddCatalogueCategoryProperty,
   useEditCatalogueCategoryProperty,
 } from '../../api/catalogueCategories';
 import {
   AddCatalogueCategoryWithPlacementIds,
-  AllowedValues,
-  AllowedValuesList,
   AllowedValuesListErrorsType,
-  CatalogueCategory,
-  CatalogueCategoryPropertyMigration,
   CatalogueItemPropertiesErrorsType,
 } from '../../app.types';
 import { generateUniqueId } from '../../utils';
@@ -35,12 +39,12 @@ import { convertListToNumbers } from './catalogueCategoryDialog.component';
 import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 import CataloguePropertyForm from './cataloguePropertyForm.component';
 
-const getEmptyCatalogueItemField = (): CatalogueCategoryPropertyMigration => {
+const getEmptyCatalogueItemField = (): CatalogueCategoryPropertyPost => {
   return {
     name: '',
     type: '',
     mandatory: false,
-  } as CatalogueCategoryPropertyMigration;
+  } as CatalogueCategoryPropertyPost;
 };
 export interface CatalogueItemPropertiesMigrationDialogProps {
   open: boolean;
@@ -140,7 +144,7 @@ function CatalogueItemPropertiesMigrationDialog(
   const [steps, setSteps] = React.useState<string[]>([STEPS_ADD[0]]);
 
   const [catalogueItemField, setCatalogueItemField] = React.useState<
-    CatalogueCategoryPropertyMigration | undefined
+    CatalogueCategoryProperty | undefined
   >(undefined);
 
   const [propertyMigrationType, setPropertyMigrationType] = React.useState<
@@ -178,11 +182,12 @@ function CatalogueItemPropertiesMigrationDialog(
   );
 
   const handleChange = (
-    field: keyof CatalogueCategoryPropertyMigration,
+    field: keyof CatalogueCategoryPropertyPost,
     value: string | boolean | number | null
   ) => {
-    const updatedCatalogueItemField: CatalogueCategoryPropertyMigration =
-      JSON.parse(JSON.stringify(catalogueItemField));
+    const updatedCatalogueItemField: CatalogueCategoryPropertyPost = JSON.parse(
+      JSON.stringify(catalogueItemField)
+    );
 
     let updatedCatalogueItemPropertiesErrors: Omit<
       CatalogueItemPropertiesErrorsType,
@@ -235,8 +240,9 @@ function CatalogueItemPropertiesMigrationDialog(
   };
 
   const handleAddListValue = () => {
-    const updatedCatalogueItemField: CatalogueCategoryPropertyMigration =
-      JSON.parse(JSON.stringify(catalogueItemField));
+    const updatedCatalogueItemField: CatalogueCategoryPropertyPost = JSON.parse(
+      JSON.stringify(catalogueItemField)
+    );
 
     let updatedCatalogueItemPropertiesErrors: Omit<
       CatalogueItemPropertiesErrorsType,
@@ -267,8 +273,9 @@ function CatalogueItemPropertiesMigrationDialog(
   };
 
   const handleChangeListValues = (av_placement_id: string, value: string) => {
-    const updatedCatalogueItemField: CatalogueCategoryPropertyMigration =
-      JSON.parse(JSON.stringify(catalogueItemField));
+    const updatedCatalogueItemField: CatalogueCategoryPropertyPost = JSON.parse(
+      JSON.stringify(catalogueItemField)
+    );
 
     let updatedCatalogueItemPropertiesErrors: Omit<
       CatalogueItemPropertiesErrorsType,
@@ -337,8 +344,9 @@ function CatalogueItemPropertiesMigrationDialog(
   };
 
   const handleDeleteListValue = (av_placement_id: string) => {
-    const updatedCatalogueItemField: CatalogueCategoryPropertyMigration =
-      JSON.parse(JSON.stringify(catalogueItemField));
+    const updatedCatalogueItemField: CatalogueCategoryPropertyPost = JSON.parse(
+      JSON.stringify(catalogueItemField)
+    );
 
     let updatedCatalogueItemPropertiesErrors: Omit<
       CatalogueItemPropertiesErrorsType,
@@ -397,7 +405,7 @@ function CatalogueItemPropertiesMigrationDialog(
   };
 
   const catalogueItemPropertyMessage = React.useCallback(
-    (field: keyof CatalogueCategoryPropertyMigration) => {
+    (field: keyof CatalogueCategoryPropertyPost) => {
       const errors = catalogueItemPropertiesErrors?.filter((item) => {
         return item.errors && item.errors.fieldName === field;
       });
@@ -427,14 +435,14 @@ function CatalogueItemPropertiesMigrationDialog(
   );
 
   const onChangeEditCatalogueItemField = (
-    catalogueItemField: CatalogueCategoryPropertyMigration
+    catalogueItemField: CatalogueCategoryProperty
   ) => {
     setCatalogueItemField(catalogueItemField);
     setSteps(STEPS_EDIT);
   };
 
   const validateAllowedValuesList = (
-    property: CatalogueCategoryPropertyMigration
+    property: CatalogueCategoryPropertyPost
   ): boolean => {
     let hasErrors = false;
 
@@ -632,7 +640,7 @@ function CatalogueItemPropertiesMigrationDialog(
     if (catalogueItemField && propertyMigrationType === 'Add') {
       const hasErrors = validateProperty();
 
-      const property: CatalogueCategoryPropertyMigration = {
+      const property: CatalogueCategoryPropertyPost = {
         id: catalogueItemField.id,
         name: catalogueItemField.name,
         type: catalogueItemField.type,
@@ -703,9 +711,7 @@ function CatalogueItemPropertiesMigrationDialog(
         (property) => property.id === catalogueItemField.id
       );
 
-      const property: Partial<CatalogueCategoryPropertyMigration> = {
-        id: catalogueItemField.id,
-      };
+      const property: CatalogueCategoryPropertyPatch = {};
 
       const isNameUpdated =
         catalogueItemField.name !== initialPropertyDetails?.name;
@@ -737,6 +743,7 @@ function CatalogueItemPropertiesMigrationDialog(
       if (isNameUpdated || isAllowedValuesUpdated) {
         editCatalogueCategoryProperty({
           catalogueCategory: selectedCatalogueCategory,
+          property_id: catalogueItemField.id,
           property: property,
         });
         handleClose();

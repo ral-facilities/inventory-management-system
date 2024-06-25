@@ -1,6 +1,12 @@
 import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
   BreadcrumbsInfo,
+  CatalogueCategory,
+  CatalogueCategoryPatch,
+  CatalogueCategoryPost,
+  CatalogueCategoryProperty,
+  CatalogueCategoryPropertyPatch,
+  CatalogueCategoryPropertyPost,
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
@@ -13,14 +19,9 @@ import {
   UsageStatusPost,
 } from '../api/api.types';
 import {
-  AddCatalogueCategory,
   AddCatalogueItem,
   AddItem,
-  CatalogueCategory,
-  CatalogueCategoryProperty,
-  CatalogueCategoryPropertyMigration,
   CatalogueItem,
-  EditCatalogueCategory,
   EditCatalogueItem,
   EditItem,
   Item,
@@ -47,7 +48,7 @@ export const handlers = [
 
   http.post<
     PathParams,
-    AddCatalogueCategory,
+    CatalogueCategoryPost,
     CatalogueCategory | ErrorResponse
   >('/v1/catalogue-categories', async ({ request }) => {
     let body = await request.json();
@@ -146,7 +147,7 @@ export const handlers = [
 
   http.patch<
     { id: string },
-    EditCatalogueCategory,
+    CatalogueCategoryPatch,
     CatalogueCategory | ErrorResponse
   >('/v1/catalogue-categories/:id', async ({ request, params }) => {
     const { id } = params;
@@ -205,7 +206,7 @@ export const handlers = [
 
   http.post<
     PathParams,
-    CatalogueCategoryPropertyMigration,
+    CatalogueCategoryPropertyPost,
     CatalogueCategoryProperty | ErrorResponse
   >(
     '/v1/catalogue-categories/:catalogue_category_id/properties',
@@ -218,11 +219,14 @@ export const handlers = [
           { status: 500 }
         );
       }
+
+      const unit = UnitsJSON.find((unit) => unit.id === body.unit_id)?.value;
       delete body.default_value;
       return HttpResponse.json(
         {
           id: '1',
           ...body,
+          unit: unit ?? null,
         } as CatalogueCategoryProperty,
         { status: 200 }
       );
@@ -231,7 +235,7 @@ export const handlers = [
 
   http.patch<
     PathParams,
-    Partial<CatalogueCategoryPropertyMigration>,
+    Partial<CatalogueCategoryPropertyPatch>,
     CatalogueCategoryProperty | ErrorResponse
   >(
     '/v1/catalogue-categories/:catalogue_category_id/properties/:property_id',

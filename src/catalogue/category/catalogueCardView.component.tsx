@@ -8,7 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { CatalogueCategory } from '../../app.types';
+import { CatalogueCategory } from '../../api/api.types';
 import { usePreservedTableState } from '../../common/preservedTableState.component';
 import { getPageHeightCalc } from '../../utils';
 import CatalogueCard from './catalogueCard.component';

@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
+import { CatalogueCategory } from '../../api/api.types';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategories,
@@ -26,7 +27,6 @@ import {
   useEditCatalogueItem,
 } from '../../api/catalogueItems';
 import {
-  CatalogueCategory,
   CatalogueItem,
   EditCatalogueItem,
   ObsoleteDetails,

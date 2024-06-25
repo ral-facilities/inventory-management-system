@@ -22,7 +22,12 @@ import {
 } from '@mui/material';
 import { AxiosError } from 'axios';
 import React from 'react';
-import { APIError, Manufacturer } from '../../api/api.types';
+import {
+  APIError,
+  CatalogueCategory,
+  CatalogueCategoryProperty,
+  Manufacturer,
+} from '../../api/api.types';
 import {
   useAddCatalogueItem,
   useEditCatalogueItem,
@@ -30,8 +35,6 @@ import {
 import { useGetManufacturers } from '../../api/manufacturers';
 import {
   AddCatalogueItem,
-  CatalogueCategory,
-  CatalogueCategoryProperty,
   CatalogueDetailsErrorMessages,
   CatalogueItem,
   CatalogueItemDetailsPlaceholder,

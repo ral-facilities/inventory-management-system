@@ -1,4 +1,12 @@
-import { System } from './api/api.types';
+import {
+  CatalogueCategory,
+  CatalogueCategoryPost,
+  CatalogueCategoryPostProperty,
+  CatalogueCategoryProperty,
+  CatalogueCategoryPropertyPatch,
+  CatalogueCategoryPropertyPost,
+  System,
+} from './api/api.types';
 
 export const MicroFrontendId = 'scigateway';
 export const MicroFrontendToken = `${MicroFrontendId}:token`;
@@ -12,22 +20,11 @@ export const TAB_VALUES = [
 ] as const;
 export type TabValue = (typeof TAB_VALUES)[number];
 
-export interface AddCatalogueCategory {
-  name: string;
-  parent_id?: string | null;
-  is_leaf: boolean;
-  properties?: AddCatalogueCategoryProperty[];
-}
+// ------------------------------------ CATALOGUE CATEGORIES ------------------------------------
 
 export interface AddCatalogueCategoryWithPlacementIds
-  extends AddCatalogueCategory {
+  extends Omit<CatalogueCategoryPost, 'properties'> {
   properties?: AddCatalogueCategoryPropertyWithPlacementIds[];
-}
-
-export interface EditCatalogueCategory {
-  name?: string;
-  id: string;
-  parent_id?: string | null;
 }
 
 export interface MoveToCatalogueCategory {
@@ -45,67 +42,53 @@ export interface CopyToCatalogueCategory {
   existingCategoryCodes: string[];
 }
 
-export interface CatalogueCategory {
-  id: string;
-  name: string;
-  parent_id: string | null;
-  code: string;
-  is_leaf: boolean;
-  properties?: CatalogueCategoryProperty[];
-  created_time: string;
-  modified_time: string;
-}
-
-export interface AllowedValuesList {
-  type: 'list';
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  values: any[];
-}
-export type AllowedValues = AllowedValuesList;
-
-export interface AddCatalogueCategoryProperty {
-  name: string;
-  type: string;
-  unit_id?: string | null;
-  mandatory: boolean;
-  allowed_values?: AllowedValues | null;
-  default_value?: string | number | boolean;
-}
-
-export interface CatalogueCategoryPropertyMigration {
-  id?: string;
-  name: string;
-  type: string;
-  unit_id?: string | null;
-  mandatory: boolean;
-  allowed_values?: AllowedValues | null;
-  default_value?: string | number | boolean;
-}
-
 export interface AddPropertyMigration {
   catalogueCategory: CatalogueCategory;
-  property: CatalogueCategoryPropertyMigration;
+  property: CatalogueCategoryPropertyPost;
 }
 
 export interface EditPropertyMigration {
   catalogueCategory: CatalogueCategory;
-  property: Partial<CatalogueCategoryPropertyMigration>;
-}
-
-export type AddCatalogueCategoryPropertyTypes =
-  | AddCatalogueCategoryProperty
-  | CatalogueCategoryPropertyMigration;
-
-export interface CatalogueCategoryProperty
-  extends AddCatalogueCategoryProperty {
-  id: string;
-  unit?: string | null;
+  property_id: string;
+  property: CatalogueCategoryPropertyPatch;
 }
 
 export interface AddCatalogueCategoryPropertyWithPlacementIds
-  extends AddCatalogueCategoryProperty {
+  extends CatalogueCategoryPostProperty {
   cip_placement_id: string; // Catalogue item properties (cip)
 }
+
+export interface CatalogueCategoryPropertyWithPlacementIds
+  extends CatalogueCategoryProperty {
+  id: string;
+  cip_placement_id: string; // Catalogue item properties (cip)
+}
+
+export type FormFields =
+  | CatalogueCategoryPropertyWithPlacementIds
+  | AddCatalogueCategoryPropertyWithPlacementIds;
+
+export type CatalogueCategoryPropertyTypes =
+  | CatalogueCategoryPostProperty
+  | CatalogueCategoryPropertyPost;
+
+// Create a union type for the keys of each interface individually
+type CatalogueCategoryPostPropertyKeys = keyof CatalogueCategoryPostProperty;
+type CatalogueCategoryPropertyPostKeys = keyof CatalogueCategoryPropertyPost;
+
+// Define a conditional type that resolves to the appropriate key set
+type CatalogueCategoryPropertyTypesKeys<T> =
+  T extends CatalogueCategoryPostProperty
+    ? CatalogueCategoryPostPropertyKeys
+    : T extends CatalogueCategoryPropertyPost
+      ? CatalogueCategoryPropertyPostKeys
+      : never;
+
+// Use the conditional type for keyof CatalogueCategoryPropertyTypes
+export type CatalogueCategoryPropertyTypesKey =
+  CatalogueCategoryPropertyTypesKeys<CatalogueCategoryPropertyTypes>;
+
+// ------------------------------------ CATALOGUE ITEMS ------------------------------------
 
 export interface ObsoleteDetails {
   is_obsolete: boolean;
@@ -243,7 +226,7 @@ export interface MoveItemsToSystem {
 export interface CatalogueItemPropertiesErrorsType {
   cip_placement_id: string;
   errors: {
-    fieldName: keyof AddCatalogueCategoryProperty;
+    fieldName: keyof CatalogueCategoryPostProperty;
     errorMessage: string;
   } | null;
 }

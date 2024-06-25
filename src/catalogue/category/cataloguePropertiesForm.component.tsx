@@ -10,18 +10,21 @@ import {
 import React from 'react';
 
 import {
-  AddCatalogueCategoryProperty,
-  AddCatalogueCategoryPropertyWithPlacementIds,
   AllowedValuesList,
+  CatalogueCategoryPostProperty,
+  CatalogueCategoryProperty,
+} from '../../api/api.types';
+import {
+  AddCatalogueCategoryPropertyWithPlacementIds,
   AllowedValuesListErrorsType,
-  CatalogueCategoryPropertyMigration,
   CatalogueItemPropertiesErrorsType,
+  FormFields,
 } from '../../app.types';
 import { generateUniqueId } from '../../utils';
 import CataloguePropertyForm from './cataloguePropertyForm.component';
 
 export interface CataloguePropertiesFormProps {
-  formFields: AddCatalogueCategoryPropertyWithPlacementIds[];
+  formFields: FormFields[];
   onChangeFormFields?: (
     formFields: AddCatalogueCategoryPropertyWithPlacementIds[]
   ) => void;
@@ -36,9 +39,9 @@ export interface CataloguePropertiesFormProps {
   isDisabled: boolean;
   resetFormError?: () => void;
   onChangeEditCatalogueItemField?: (
-    catalogueItemField: CatalogueCategoryPropertyMigration
+    catalogueItemField: CatalogueCategoryProperty
   ) => void;
-  selectedCatalogueItemField?: CatalogueCategoryPropertyMigration;
+  selectedCatalogueItemField?: CatalogueCategoryProperty;
 }
 
 function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
@@ -119,7 +122,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
 
   const handleChange = (
     cip_placement_id: string,
-    field: keyof AddCatalogueCategoryProperty,
+    field: keyof CatalogueCategoryPostProperty,
     value: string | boolean | null
   ) => {
     if (
@@ -408,7 +411,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
   };
 
   const catalogueItemPropertyMessage = React.useCallback(
-    (cip_placement_id: string, field: keyof AddCatalogueCategoryProperty) => {
+    (cip_placement_id: string, field: keyof CatalogueCategoryPostProperty) => {
       const errors = catalogueItemPropertiesErrors?.filter((item) => {
         return (
           item.cip_placement_id === cip_placement_id &&
@@ -458,21 +461,19 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
     <div>
       {formFields.map((formField) => {
         const { cip_placement_id, ...formFieldWithoutCIP } = formField;
-        const formFieldWitId: CatalogueCategoryPropertyMigration =
-          formFieldWithoutCIP;
 
         return (
           <Box
             sx={{ display: 'flex', alignItems: 'center' }}
             key={cip_placement_id}
           >
-            {onChangeEditCatalogueItemField && (
+            {onChangeEditCatalogueItemField && 'id' in formFieldWithoutCIP && (
               <FormControl>
                 <RadioGroup
                   aria-label={`${formField.name} radio button group`}
                   value={
                     selectedCatalogueItemField &&
-                    selectedCatalogueItemField.id === formFieldWitId.id
+                    selectedCatalogueItemField.id === formFieldWithoutCIP.id
                       ? 'selected'
                       : 'not-selected'
                   }
@@ -492,7 +493,7 @@ function CataloguePropertiesForm(props: CataloguePropertiesFormProps) {
             <CataloguePropertyForm
               type={isDisabled ? 'disabled' : 'normal'}
               catalogueItemField={formFieldWithoutCIP}
-              handleChange={(field, value) =>
+              handleChange={({ field, value }) =>
                 handleChange(cip_placement_id, field, value)
               }
               handleDeleteField={() => handleDeleteField(cip_placement_id)}

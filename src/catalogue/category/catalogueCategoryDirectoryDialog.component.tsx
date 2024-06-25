@@ -10,6 +10,7 @@ import {
   Tooltip,
 } from '@mui/material';
 import React from 'react';
+import { CatalogueCategory } from '../../api/api.types';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategories,
@@ -17,7 +18,6 @@ import {
   useCopyToCatalogueCategory,
   useMoveToCatalogueCategory,
 } from '../../api/catalogueCategories';
-import { CatalogueCategory } from '../../app.types';
 import handleTransferState from '../../handleTransferState';
 import Breadcrumbs from '../../view/breadcrumbs.component';
 import CatalogueCategoryTableView from './catalogueCategoryTableView.component';
