@@ -1,3 +1,5 @@
+import { System } from './api/api.types';
+
 export const MicroFrontendId = 'scigateway';
 export const MicroFrontendToken = `${MicroFrontendId}:token`;
 
@@ -171,42 +173,6 @@ export interface TransferState {
   name: string;
   message: string;
   state: 'success' | 'error' | 'information';
-}
-export interface BreadcrumbsInfo {
-  trail: [id: string, name: string][];
-  full_trail: boolean;
-}
-
-export enum SystemImportanceType {
-  LOW = 'low',
-  MEDIUM = 'medium',
-  HIGH = 'high',
-}
-
-export interface AddSystem {
-  name: string;
-  description?: string | null;
-  location?: string | null;
-  owner?: string | null;
-  importance: SystemImportanceType;
-  parent_id?: string | null;
-}
-
-export interface System {
-  id: string;
-  name: string;
-  description: string | null;
-  location: string | null;
-  owner: string | null;
-  importance: SystemImportanceType;
-  parent_id: string | null;
-  code: string;
-  created_time: string;
-  modified_time: string;
-}
-
-export interface EditSystem extends Partial<AddSystem> {
-  id: string;
 }
 
 export interface MoveToSystem {

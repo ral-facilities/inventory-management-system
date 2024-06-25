@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { MRT_RowSelectionState } from 'material-react-table';
 import React from 'react';
+import { System } from '../api/api.types';
 import {
   useCopyToSystem,
   useMoveToSystem,
@@ -18,7 +19,6 @@ import {
   useSystems,
   useSystemsBreadcrumbs,
 } from '../api/systems';
-import { System } from '../app.types';
 import handleTransferState from '../handleTransferState';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { SystemsTableView } from './systemsTableView.component';

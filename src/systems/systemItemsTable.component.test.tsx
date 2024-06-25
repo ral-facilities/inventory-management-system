@@ -1,6 +1,7 @@
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { Item, System } from '../app.types';
+import { System } from '../api/api.types';
+import { Item } from '../app.types';
 import ItemJSON from '../mocks/Items.json';
 import SystemsJSON from '../mocks/Systems.json';
 import { renderComponentWithRouterProvider } from '../testUtils';

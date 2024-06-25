@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import { BreadcrumbsInfo } from '../api/api.types';
 import {
   useCatalogueBreadcrumbs,
   useCatalogueCategory,
@@ -22,7 +23,6 @@ import { useCatalogueItem } from '../api/catalogueItems';
 import { useItem } from '../api/items';
 import { useGetManufacturer } from '../api/manufacturers';
 import { useSystem } from '../api/systems';
-import { BreadcrumbsInfo } from '../app.types';
 import { useNavigateToCatalogue } from '../catalogue/catalogue.component';
 import { formatDateTimeStrings } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';

@@ -10,8 +10,8 @@ import {
   Typography,
 } from '@mui/material';
 import { useState } from 'react';
+import { System } from '../api/api.types';
 import { getSystemImportanceColour, useSystem } from '../api/systems';
-import { System } from '../app.types';
 import { OverflowTip, formatDateTimeStrings } from '../utils';
 import SystemDialog from './systemDialog.component';
 import { SystemItemsTable } from './systemItemsTable.component';

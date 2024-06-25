@@ -1,8 +1,12 @@
 import { DefaultBodyType, http, HttpResponse, PathParams } from 'msw';
 import {
+  BreadcrumbsInfo,
   Manufacturer,
   ManufacturerPatch,
   ManufacturerPost,
+  System,
+  SystemPatch,
+  SystemPost,
   Unit,
   UnitPost,
   UsageStatus,
@@ -12,8 +16,6 @@ import {
   AddCatalogueCategory,
   AddCatalogueItem,
   AddItem,
-  AddSystem,
-  BreadcrumbsInfo,
   CatalogueCategory,
   CatalogueCategoryProperty,
   CatalogueCategoryPropertyMigration,
@@ -21,9 +23,7 @@ import {
   EditCatalogueCategory,
   EditCatalogueItem,
   EditItem,
-  EditSystem,
   Item,
-  System,
 } from '../app.types';
 import { generateUniqueId } from '../utils';
 import CatalogueCategoriesJSON from './CatalogueCategories.json';
@@ -540,7 +540,7 @@ export const handlers = [
 
   // ------------------------------------ SYSTEMS ------------------------------------
 
-  http.post<PathParams, AddSystem, System | ErrorResponse>(
+  http.post<PathParams, SystemPost, System | ErrorResponse>(
     '/v1/systems',
     async ({ request }) => {
       const body = await request.json();
@@ -615,7 +615,7 @@ export const handlers = [
     }
   ),
 
-  http.patch<{ id: string }, EditSystem, System | ErrorResponse>(
+  http.patch<{ id: string }, SystemPatch, System | ErrorResponse>(
     '/v1/systems/:id',
     async ({ request, params }) => {
       const body = await request.json();
@@ -804,7 +804,7 @@ export const handlers = [
     return HttpResponse.json({ status: 204 });
   }),
 
-  // ------------------------------------ Units ------------------------------------------------
+  // ------------------------------------ UNITS ------------------------------------------------
 
   http.get('/v1/units', () => {
     return HttpResponse.json(UnitsJSON, { status: 200 });
@@ -866,7 +866,7 @@ export const handlers = [
     }
   }),
 
-  // ------------------------------------ Usage Status ------------------------------------------------
+  // ------------------------------------ USAGE STATUSES ------------------------------------------------
 
   http.get('/v1/usage-statuses', () => {
     return HttpResponse.json(UsageStatusJSON, { status: 200 });

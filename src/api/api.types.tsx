@@ -7,7 +7,12 @@ export interface APIError {
   detail: string;
 }
 
-// ------------------------------------ MANUFACTURERS ------------------------------------
+export interface BreadcrumbsInfo {
+  trail: [id: string, name: string][];
+  full_trail: boolean;
+}
+
+// ------------------------------------ MANUFACTURERS -----------------------------------------------
 
 interface Address {
   address_line: string;
@@ -46,7 +51,7 @@ export interface Manufacturer
   telephone: string | null;
 }
 
-// ------------------------------------ UNITS ------------------------------------
+// ------------------------------------ UNITS -------------------------------------------------------
 
 export interface UnitPost {
   value: string;
@@ -57,7 +62,7 @@ export interface Unit extends UnitPost, CreatedModifiedMixin {
   code: string;
 }
 
-// ------------------------------------ Usage Status ------------------------------------------------
+// ------------------------------------ USAGE STATUSES -----------------------------------------------
 
 export interface UsageStatusPost {
   value: string;
@@ -65,4 +70,36 @@ export interface UsageStatusPost {
 export interface UsageStatus extends UsageStatusPost, CreatedModifiedMixin {
   id: string;
   code: string;
+}
+
+// ------------------------------------ SYSTEMS ------------------------------------------------------
+
+export enum SystemImportanceType {
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
+}
+
+export interface SystemPost {
+  name: string;
+  description?: string | null;
+  location?: string | null;
+  owner?: string | null;
+  importance: SystemImportanceType;
+  parent_id?: string | null;
+}
+
+export interface System extends CreatedModifiedMixin {
+  id: string;
+  name: string;
+  code: string;
+  description: string | null;
+  location: string | null;
+  owner: string | null;
+  importance: SystemImportanceType;
+  parent_id: string | null;
+}
+
+export interface SystemPatch extends Partial<SystemPost> {
+  id: string;
 }

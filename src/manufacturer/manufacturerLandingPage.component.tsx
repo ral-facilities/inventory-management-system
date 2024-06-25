@@ -11,8 +11,8 @@ import {
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { paths } from '../App';
+import { BreadcrumbsInfo } from '../api/api.types';
 import { useGetManufacturer } from '../api/manufacturers';
-import { BreadcrumbsInfo } from '../app.types';
 import { formatDateTimeStrings } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import ManufacturerDialog from './manufacturerDialog.component';
