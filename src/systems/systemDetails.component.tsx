@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { System } from '../api/api.types';
-import { getSystemImportanceColour, useSystem } from '../api/systems';
+import { getSystemImportanceColour, useGetSystem } from '../api/systems';
 import { OverflowTip, formatDateTimeStrings } from '../utils';
 import SystemDialog from './systemDialog.component';
 import { SystemItemsTable } from './systemItemsTable.component';
@@ -49,7 +49,7 @@ export interface SystemDetailsProps {
 }
 
 function SystemDetails(props: SystemDetailsProps) {
-  const { data: system, isLoading: systemLoading } = useSystem(props.id);
+  const { data: system, isLoading: systemLoading } = useGetSystem(props.id);
 
   return systemLoading && props.id !== null ? (
     <Box
