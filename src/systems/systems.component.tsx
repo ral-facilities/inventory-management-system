@@ -47,8 +47,10 @@ import {
 import Breadcrumbs from '../view/breadcrumbs.component';
 import { DeleteSystemDialog } from './deleteSystemDialog.component';
 import SystemDetails from './systemDetails.component';
-import SystemDialog, { SystemDialogType } from './systemDialog.component';
+import SystemDialog from './systemDialog.component';
 import { SystemDirectoryDialog } from './systemDirectoryDialog.component';
+
+export type SystemMenuDialogType = 'edit' | 'save as' | 'delete';
 
 /* Returns function that navigates to a specific system id (or to the root of all systems
    if given null) */
@@ -94,7 +96,7 @@ const AddSystemButton = (props: { systemId: string | null }) => {
         open={addSystemDialogOpen}
         onClose={() => setAddSystemDialogOpen(false)}
         parentId={props.systemId}
-        type="add"
+        requestType="post"
       />
     </>
   );
@@ -160,8 +162,6 @@ const CopySystemsButton = (props: {
   );
 };
 
-type MenuDialogType = SystemDialogType | 'delete';
-
 const columns: MRT_ColumnDef<System>[] = [
   {
     accessorKey: 'name',
@@ -200,7 +200,7 @@ function Systems() {
 
   // When all menu's closed will be undefined
   const [menuDialogType, setMenuDialogType] = React.useState<
-    MenuDialogType | undefined
+    SystemMenuDialogType | undefined
   >(undefined);
 
   // Data
@@ -508,11 +508,8 @@ function Systems() {
       <SystemDialog
         open={menuDialogType !== undefined && menuDialogType !== 'delete'}
         onClose={() => setMenuDialogType(undefined)}
-        type={
-          menuDialogType !== undefined && menuDialogType !== 'delete'
-            ? menuDialogType
-            : 'edit'
-        }
+        requestType={menuDialogType === 'edit' ? 'patch' : 'post'}
+        saveAs={menuDialogType === 'save as'}
         selectedSystem={selectedSystemForMenu}
         parentId={systemId}
       />

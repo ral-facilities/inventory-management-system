@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { SystemImportanceType } from './api/api.types';
 
 export type RequestType = 'post' | 'patch';
 
@@ -68,3 +69,12 @@ export const UnitSchema = z.object({
 export const UsageStatusSchema = z.object({
   value: MandatoryStringSchema({ errorMessage: 'Please enter a value.' }),
 });
+
+export const SystemsSchema = (requestType: RequestType) =>
+  z.object({
+    name: MandatoryStringSchema({ errorMessage: 'Please enter a name.' }),
+    description: OptionalOrNullableStringSchema({ requestType }),
+    location: OptionalOrNullableStringSchema({ requestType }),
+    owner: OptionalOrNullableStringSchema({ requestType }),
+    importance: z.nativeEnum(SystemImportanceType),
+  });

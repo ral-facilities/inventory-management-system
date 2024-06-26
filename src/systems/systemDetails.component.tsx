@@ -37,7 +37,7 @@ const EditSystemButton = (props: SystemButtonProps) => {
       <SystemDialog
         open={editSystemDialogOpen}
         onClose={() => setEditSystemDialogOpen(false)}
-        type="edit"
+        requestType="patch"
         selectedSystem={props.system}
       />
     </>
