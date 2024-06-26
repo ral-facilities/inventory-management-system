@@ -38,7 +38,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { System } from '../api/api.types';
 import { useGetSystems, useGetSystemsBreadcrumbs } from '../api/systems';
 import { usePreservedTableState } from '../common/preservedTableState.component';
-import { RequestType } from '../form.schemas';
 import {
   OverflowTip,
   displayTableRowCountText,
@@ -318,12 +317,6 @@ function Systems() {
     },
   });
 
-  // Define the function to get the request type
-  const getRequestType = (): RequestType => {
-    if (menuDialogType === 'edit') return 'patch';
-    return 'post';
-  };
-
   return (
     <>
       <Box height="100%">
@@ -515,7 +508,7 @@ function Systems() {
       <SystemDialog
         open={menuDialogType !== undefined && menuDialogType !== 'delete'}
         onClose={() => setMenuDialogType(undefined)}
-        requestType={getRequestType()}
+        requestType={menuDialogType === 'edit' ? 'patch' : 'post'}
         saveAs={menuDialogType === 'save as'}
         selectedSystem={selectedSystemForMenu}
         parentId={systemId}

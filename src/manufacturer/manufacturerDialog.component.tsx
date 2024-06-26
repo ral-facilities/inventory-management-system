@@ -84,6 +84,7 @@ function ManufacturerDialog(props: ManufacturerDialogProps) {
     reset(initialManufacturer);
   }, [initialManufacturer, reset]);
 
+  // Clears form errors when a value has been changed
   React.useEffect(() => {
     if (errors.root?.formError) {
       const subscription = watch(() => clearErrors('root.formError'));

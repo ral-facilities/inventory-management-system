@@ -86,6 +86,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
     reset(initialSystem);
   }, [initialSystem, reset]);
 
+  // Clears form errors when a value has been changed
   React.useEffect(() => {
     if (errors.root?.formError) {
       const subscription = watch(() => clearErrors('root.formError'));
@@ -314,7 +315,7 @@ const SystemDialog = React.memo((props: SystemDialogProps) => {
           </Button>
         </Box>
         {errors.root?.formError && (
-          <FormHelperText sx={{ marginBottom: '16px' }} error>
+          <FormHelperText sx={{ marginTop: 4 }} error>
             {errors.root?.formError.message}
           </FormHelperText>
         )}
