@@ -12,16 +12,16 @@ import { v4 as uuidv4 } from 'uuid';
 import { CatalogueCategoryProperty, Unit } from '../../api/api.types';
 import { useGetUnits } from '../../api/units';
 import {
-  CatalogueCategoryPropertyTypes,
+  CatalogueCategoryPropertyPostTypes,
   CatalogueItemPropertiesErrorsType,
 } from '../../app.types';
 
 export interface CataloguePropertyFormProps {
   type: 'disabled' | 'normal' | 'add migration' | 'edit migration';
   isList: boolean;
-  catalogueItemField: CatalogueCategoryPropertyTypes;
+  catalogueItemField: CatalogueCategoryPropertyPostTypes;
   handleChange: (
-    field: keyof CatalogueCategoryPropertyTypes,
+    field: keyof CatalogueCategoryPropertyPostTypes,
     value: string | boolean | null
   ) => void;
   handleDeleteField?: () => void;
@@ -29,7 +29,7 @@ export interface CataloguePropertyFormProps {
   handleAddListValue: () => void;
   handleDeleteListValue: (av_placement_id: string) => void;
   catalogueItemPropertyMessage: (
-    field: keyof CatalogueCategoryPropertyTypes
+    field: keyof CatalogueCategoryPropertyPostTypes
   ) => Omit<CatalogueItemPropertiesErrorsType, 'cip_placement_id'> | undefined;
   allowedValuesListErrorMessage: (av_placement_id: string) => string;
   hasAllowedValuesList?: () => boolean;

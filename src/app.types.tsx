@@ -68,7 +68,7 @@ export type FormFields =
   | CatalogueCategoryPropertyWithPlacementIds
   | AddCatalogueCategoryPropertyWithPlacementIds;
 
-export type CatalogueCategoryPropertyTypes =
+export type CatalogueCategoryPropertyPostTypes =
   | CatalogueCategoryPostProperty
   | CatalogueCategoryPropertyPost;
 
@@ -77,16 +77,16 @@ type CatalogueCategoryPostPropertyKeys = keyof CatalogueCategoryPostProperty;
 type CatalogueCategoryPropertyPostKeys = keyof CatalogueCategoryPropertyPost;
 
 // Define a conditional type that resolves to the appropriate key set
-type CatalogueCategoryPropertyTypesKeys<T> =
+type CatalogueCategoryPropertyPostTypesKeys<T> =
   T extends CatalogueCategoryPostProperty
     ? CatalogueCategoryPostPropertyKeys
     : T extends CatalogueCategoryPropertyPost
       ? CatalogueCategoryPropertyPostKeys
       : never;
 
-// Use the conditional type for keyof CatalogueCategoryPropertyTypes
-export type CatalogueCategoryPropertyTypesKey =
-  CatalogueCategoryPropertyTypesKeys<CatalogueCategoryPropertyTypes>;
+// Use the conditional type for keyof CatalogueCategoryPropertyPostTypes
+export type CatalogueCategoryPropertyPostTypesKey =
+  CatalogueCategoryPropertyPostTypesKeys<CatalogueCategoryPropertyPostTypes>;
 
 // ------------------------------------ CATALOGUE ITEMS ------------------------------------
 

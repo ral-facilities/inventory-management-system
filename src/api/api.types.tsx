@@ -111,9 +111,15 @@ export interface AllowedValuesList {
 }
 export type AllowedValues = AllowedValuesList;
 
+export enum CatalogueCategoryPropertyTypes {
+  Number = 'number',
+  Text = 'string',
+  Boolean = 'boolean',
+}
+
 export interface CatalogueCategoryPostProperty {
   name: string;
-  type: string;
+  type: CatalogueCategoryPropertyTypes;
   unit_id?: string | null;
   mandatory: boolean;
   allowed_values?: AllowedValues | null;
