@@ -111,7 +111,7 @@ export interface AllowedValuesList {
 }
 export type AllowedValues = AllowedValuesList;
 
-export enum CatalogueCategoryPropertyTypes {
+export enum CatalogueCategoryPropertyType {
   Number = 'number',
   Text = 'string',
   Boolean = 'boolean',
@@ -119,7 +119,7 @@ export enum CatalogueCategoryPropertyTypes {
 
 export interface CatalogueCategoryPostProperty {
   name: string;
-  type: CatalogueCategoryPropertyTypes;
+  type: CatalogueCategoryPropertyType;
   unit_id?: string | null;
   mandatory: boolean;
   allowed_values?: AllowedValues | null;
@@ -146,9 +146,9 @@ export interface CatalogueCategoryProperty
 
 export interface CatalogueCategoryPost {
   name: string;
-  parent_id?: string | null;
   is_leaf: boolean;
-  properties?: CatalogueCategoryPostProperty[];
+  parent_id?: string | null;
+  properties?: CatalogueCategoryPostProperty[] | null;
 }
 
 export interface CatalogueCategoryPatch
