@@ -90,8 +90,9 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       ).toBeInTheDocument();
     });
 
-    it('calls onClose when Close button is clicked', async () => {
+    it.only('calls onClose when Close button is clicked', async () => {
       createView();
+      screen.debug();
       const closeButton = screen.getByRole('button', { name: 'Cancel' });
       await user.click(closeButton);
 

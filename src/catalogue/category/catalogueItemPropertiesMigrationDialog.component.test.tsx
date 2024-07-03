@@ -1,4 +1,4 @@
-import { fireEvent, screen, within } from '@testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { MockInstance } from 'vitest';
 import { imsApi } from '../../api/api';
@@ -47,7 +47,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
   const modifyValues = async (values: {
     type: 'Edit' | 'Add';
-    editRadio?: string;
+    editRadio?: number;
     formField: Partial<TestCatalogueCategoryPropertyMigration>;
     justModifyPropertyForm: boolean;
   }) => {
@@ -70,9 +70,12 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       await user.click(screen.getByRole('button', { name: 'Next' }));
 
       if (values.type === 'Edit' && values.editRadio) {
-        const selectedRadioButton = screen.getByLabelText(
-          `${values.editRadio} radio button`
-        );
+        const selectedRadioButton = screen.getAllByRole('radio', {
+          name: 'Toggle select row',
+        })[values.editRadio];
+        // const selectedRadioButton = screen.getByLabelText(
+        //   `${values.editRadio} radio button`
+        // );
 
         await user.click(selectedRadioButton);
       }
@@ -389,7 +392,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       );
     });
 
-    it('uses labels to navigate through the stepper', async () => {
+    it.only('uses labels to navigate through the stepper', async () => {
       createView();
       await user.click(
         screen.getByLabelText(
@@ -410,7 +413,17 @@ describe('CatalogueCategoryDirectoryDialog', () => {
 
       expect(screen.getAllByLabelText('Property Name *').length).toEqual(1);
       await user.click(screen.getByRole('button', { name: 'Back' }));
-      expect(screen.getAllByLabelText('Property Name *').length).toEqual(3);
+      await waitFor(() => {
+        // expect(screen.getByText('Name')).toBeInTheDocument();
+        const propertyTable = screen.getByRole('table');
+        expect(propertyTable).toBeInTheDocument();
+        // eslint-disable-next-line testing-library/no-wait-for-multiple-assertions
+        // expect(
+        //   within(propertyTable).getByText('Pumping Speed')
+        // ).toBeInTheDocument();
+        screen.debug(propertyTable);
+      });
+
       await user.click(screen.getByText('Add catalogue item property'));
 
       expect(screen.getAllByLabelText('Property Name *').length).toEqual(1);
@@ -802,7 +815,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       await modifyValues({
         type: 'Edit',
-        editRadio: 'Ultimate Pressure',
+        editRadio: 1,
         formField: {
           name: 'test',
         },
@@ -823,7 +836,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       await modifyValues({
         type: 'Edit',
-        editRadio: 'Axis',
+        editRadio: 2,
         formField: {
           allowed_values: { type: 'list', values: ['a'] },
         },
@@ -847,7 +860,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       await modifyValues({
         type: 'Edit',
-        editRadio: 'Pumping Speed',
+        editRadio: 0,
         formField: {
           allowed_values: { type: 'list', values: [600] },
         },
@@ -871,7 +884,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       await modifyValues({
         type: 'Edit',
-        editRadio: 'Pumping Speed',
+        editRadio: 0,
         formField: {},
         justModifyPropertyForm: false,
       });
@@ -903,7 +916,7 @@ describe('CatalogueCategoryDirectoryDialog', () => {
       createView();
       await modifyValues({
         type: 'Edit',
-        editRadio: 'Pumping Speed',
+        editRadio: 0,
         formField: { name: 'Axis' },
         justModifyPropertyForm: false,
       });

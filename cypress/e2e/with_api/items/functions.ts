@@ -141,7 +141,7 @@ export const editProperty = () => {
 
   cy.findByRole('option', { name: 'Edit' }).click();
   cy.findByRole('button', { name: 'Next' }).click();
-  cy.findByLabelText('Shape radio button').click();
+  cy.findAllByRole('radio', { name: 'Toggle select row' }).last().click();
 
   cy.findByRole('button', { name: 'Next' }).click();
 
