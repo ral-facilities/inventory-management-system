@@ -124,13 +124,16 @@ export function PropertiesTable(props: PropertiesTableProps) {
   //   {}
   // )
 
-  const handleRowSelection = React.useCallback((row: MRT_Row<TableRowData>) => {
-    if (onChangeEditCatalogueItemField)
-      onChangeEditCatalogueItemField(row.original.property);
-    // setSelectedRow((prev) => ({
-    //     [row.id]: !prev[row.id]
-    // }))
-  }, []);
+  const handleRowSelection = React.useCallback(
+    (row: MRT_Row<TableRowData>) => {
+      if (onChangeEditCatalogueItemField)
+        onChangeEditCatalogueItemField(row.original.property);
+      // setSelectedRow((prev) => ({
+      //     [row.id]: !prev[row.id]
+      // }))
+    },
+    [onChangeEditCatalogueItemField]
+  );
 
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
