@@ -32,8 +32,9 @@ import {
 } from '../../app.types';
 import { generateUniqueId } from '../../utils';
 import { convertListToNumbers } from './catalogueCategoryDialog.component';
-import CataloguePropertiesForm from './cataloguePropertiesForm.component';
+//import CataloguePropertiesForm from './cataloguePropertiesForm.component';
 import CataloguePropertyForm from './cataloguePropertyForm.component';
+import PropertiesTable from './catalogueItemPropertiesTable.component';
 
 const getEmptyCatalogueItemField = (): CatalogueCategoryPropertyMigration => {
   return {
@@ -426,12 +427,12 @@ function CatalogueItemPropertiesMigrationDialog(
     [allowedValuesListErrors]
   );
 
-  const onChangeEditCatalogueItemField = (
-    catalogueItemField: CatalogueCategoryPropertyMigration
-  ) => {
-    setCatalogueItemField(catalogueItemField);
-    setSteps(STEPS_EDIT);
-  };
+  // const onChangeEditCatalogueItemField = (
+  //   catalogueItemField: CatalogueCategoryPropertyMigration
+  // ) => {
+  //   setCatalogueItemField(catalogueItemField);
+  //   setSteps(STEPS_EDIT);
+  // };
 
   const validateAllowedValuesList = (
     property: CatalogueCategoryPropertyMigration
@@ -820,20 +821,23 @@ function CatalogueItemPropertiesMigrationDialog(
         return (
           <Grid item container my={2} xs={12}>
             {updatedSelectedCatalogueCategory.properties && (
-              <CataloguePropertiesForm
-                isDisabled={true}
-                formFields={updatedSelectedCatalogueCategory.properties}
-                onChangeEditCatalogueItemField={
-                  propertyMigrationType === 'Edit'
-                    ? onChangeEditCatalogueItemField
-                    : undefined
-                }
-                selectedCatalogueItemField={
-                  propertyMigrationType === 'Edit'
-                    ? catalogueItemField
-                    : undefined
-                }
+              <PropertiesTable
+                properties={updatedSelectedCatalogueCategory.properties}
               />
+              // <CataloguePropertiesForm
+              //   isDisabled={true}
+              //   formFields={updatedSelectedCatalogueCategory.properties}
+              //   onChangeEditCatalogueItemField={
+              //     propertyMigrationType === 'Edit'
+              //       ? onChangeEditCatalogueItemField
+              //       : undefined
+              //   }
+              //   selectedCatalogueItemField={
+              //     propertyMigrationType === 'Edit'
+              //       ? catalogueItemField
+              //       : undefined
+              //   }
+              // />
             )}
           </Grid>
         );

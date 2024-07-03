@@ -37,6 +37,7 @@ import {
 import handleIMS_APIError from '../../handleIMS_APIError';
 import { generateUniqueId, trimStringValues } from '../../utils';
 import CataloguePropertiesForm from './cataloguePropertiesForm.component';
+import PropertiesTable from './catalogueItemPropertiesTable.component';
 
 // Function to convert a list of strings to a list of numbers
 export const convertListToNumbers = (values: string[]): number[] => {
@@ -582,27 +583,35 @@ const CatalogueCategoryDialog = React.memo(
                 </Grid>
                 <Grid item sx={{ paddingLeft: 1, paddingTop: 3 }}>
                   <Typography variant="h6">Catalogue Item Fields</Typography>
-                  <CataloguePropertiesForm
-                    formFields={categoryData.properties ?? []}
-                    onChangeFormFields={(
-                      formFields: AddCatalogueCategoryPropertyWithPlacementIds[]
-                    ) =>
-                      handleFormChange({
-                        ...categoryData,
-                        properties: formFields,
-                      })
-                    }
-                    onChangeCatalogueItemPropertiesErrors={
-                      setCatalogueItemPropertiesErrors
-                    }
-                    catalogueItemPropertiesErrors={
-                      catalogueItemPropertiesErrors
-                    }
-                    allowedValuesListErrors={allowedValuesListErrors}
-                    onChangeAllowedValuesListErrors={setAllowedValuesListErrors}
-                    resetFormError={() => setFormError(undefined)}
-                    isDisabled={type === 'edit'}
-                  />
+                  {type === 'edit' ? (
+                    <PropertiesTable
+                      properties={categoryData.properties ?? []}
+                    />
+                  ) : (
+                    <CataloguePropertiesForm
+                      formFields={categoryData.properties ?? []}
+                      onChangeFormFields={(
+                        formFields: AddCatalogueCategoryPropertyWithPlacementIds[]
+                      ) =>
+                        handleFormChange({
+                          ...categoryData,
+                          properties: formFields,
+                        })
+                      }
+                      onChangeCatalogueItemPropertiesErrors={
+                        setCatalogueItemPropertiesErrors
+                      }
+                      catalogueItemPropertiesErrors={
+                        catalogueItemPropertiesErrors
+                      }
+                      allowedValuesListErrors={allowedValuesListErrors}
+                      onChangeAllowedValuesListErrors={
+                        setAllowedValuesListErrors
+                      }
+                      resetFormError={() => setFormError(undefined)}
+                      isDisabled={false}
+                    />
+                  )}
                 </Grid>
               </>
             )}
