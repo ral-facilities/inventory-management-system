@@ -586,6 +586,8 @@ const CatalogueCategoryDialog = React.memo(
                   {type === 'edit' ? (
                     <PropertiesTable
                       properties={categoryData.properties ?? []}
+                      editingProperties={false}
+                      tableHeightPx="460px"
                     />
                   ) : (
                     <CataloguePropertiesForm

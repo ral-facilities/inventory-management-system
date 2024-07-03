@@ -427,12 +427,12 @@ function CatalogueItemPropertiesMigrationDialog(
     [allowedValuesListErrors]
   );
 
-  // const onChangeEditCatalogueItemField = (
-  //   catalogueItemField: CatalogueCategoryPropertyMigration
-  // ) => {
-  //   setCatalogueItemField(catalogueItemField);
-  //   setSteps(STEPS_EDIT);
-  // };
+  const onChangeEditCatalogueItemField = (
+    catalogueItemField: CatalogueCategoryPropertyMigration
+  ) => {
+    setCatalogueItemField(catalogueItemField);
+    setSteps(STEPS_EDIT);
+  };
 
   const validateAllowedValuesList = (
     property: CatalogueCategoryPropertyMigration
@@ -823,6 +823,13 @@ function CatalogueItemPropertiesMigrationDialog(
             {updatedSelectedCatalogueCategory.properties && (
               <PropertiesTable
                 properties={updatedSelectedCatalogueCategory.properties}
+                editingProperties={propertyMigrationType === 'Edit'}
+                onChangeEditCatalogueItemField={
+                  propertyMigrationType === 'Edit'
+                    ? onChangeEditCatalogueItemField
+                    : undefined
+                }
+                tableHeightPx="240px"
               />
               // <CataloguePropertiesForm
               //   isDisabled={true}

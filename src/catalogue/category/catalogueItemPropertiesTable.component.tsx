@@ -5,7 +5,10 @@ import {
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
-import { AddCatalogueCategoryPropertyWithPlacementIds } from '../../app.types';
+import {
+  AddCatalogueCategoryPropertyWithPlacementIds,
+  CatalogueCategoryPropertyMigration,
+} from '../../app.types';
 import {
   TableGroupedCell,
   TableHeaderOverflowTip,
@@ -19,6 +22,11 @@ import React from 'react';
 
 export interface PropertiesTableProps {
   properties: AddCatalogueCategoryPropertyWithPlacementIds[];
+  editingProperties: boolean;
+  onChangeEditCatalogueItemField?: (
+    catalogueItemField: CatalogueCategoryPropertyMigration
+  ) => void;
+  tableHeightPx: string;
 }
 
 interface TableRowData {
@@ -26,7 +34,12 @@ interface TableRowData {
 }
 
 export function PropertiesTable(props: PropertiesTableProps) {
-  const { properties } = props;
+  const {
+    properties,
+    editingProperties,
+    onChangeEditCatalogueItemField,
+    tableHeightPx,
+  } = props;
 
   const { data: unitsData, isLoading: isLoadingUnits } = useGetUnits();
 
@@ -42,7 +55,7 @@ export function PropertiesTable(props: PropertiesTableProps) {
     }
   }, [properties, isLoadingUnits]);
 
-  const tableHeight = getPageHeightCalc('460px');
+  const tableHeight = getPageHeightCalc(tableHeightPx);
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
     // const propertyFilters: PropertyFiltersType = {
     //     boolean: 'autocomplete',
@@ -80,7 +93,7 @@ export function PropertiesTable(props: PropertiesTableProps) {
             .map((value) => value['value'])
             .join(', ') ?? 'Any',
         id: 'property.allowed_values',
-        size: 250,
+        size: 300,
         enableGrouping: false,
         // Cell: ({ row }) =>
         //   row.original.property.allowed_values?.values.join(', '),
@@ -101,7 +114,7 @@ export function PropertiesTable(props: PropertiesTableProps) {
         Header: TableHeaderOverflowTip,
         accessorFn: (row) => (row.property.mandatory === true ? 'Yes' : 'No'),
         id: 'property.mandatory',
-        size: 150,
+        size: 200,
         GroupedCell: TableGroupedCell,
       },
     ];
@@ -112,7 +125,8 @@ export function PropertiesTable(props: PropertiesTableProps) {
   // )
 
   const handleRowSelection = React.useCallback((row: MRT_Row<TableRowData>) => {
-    console.log(row.original.property.name);
+    if (onChangeEditCatalogueItemField)
+      onChangeEditCatalogueItemField(row.original.property);
     // setSelectedRow((prev) => ({
     //     [row.id]: !prev[row.id]
     // }))
@@ -121,7 +135,10 @@ export function PropertiesTable(props: PropertiesTableProps) {
   const { preservedState, onPreservedStatesChange } = usePreservedTableState({
     initialState: {
       columnVisibility: { actions: false },
-      pagination: { pageSize: 5, pageIndex: 0 },
+      pagination: {
+        pageSize: tableHeightPx === '240px' ? 15 : 5,
+        pageIndex: 0,
+      },
     },
   });
 
@@ -142,8 +159,7 @@ export function PropertiesTable(props: PropertiesTableProps) {
     enableColumnVirtualization: true,
     enableGrouping: true,
     enablePagination: true,
-    // change this to depend on dialog type
-    enableRowSelection: true,
+    enableRowSelection: editingProperties,
     enableMultiRowSelection: false,
     // Other settings
     manualFiltering: false,
@@ -207,7 +223,8 @@ export function PropertiesTable(props: PropertiesTableProps) {
     },
     muiPaginationProps: {
       color: 'secondary',
-      rowsPerPageOptions: [5, 10, 15],
+      rowsPerPageOptions:
+        tableHeightPx === '240px' ? [15, 30, 45] : [5, 10, 15],
       shape: 'rounded',
       variant: 'outlined',
     },
