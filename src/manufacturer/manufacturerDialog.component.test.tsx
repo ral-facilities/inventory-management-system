@@ -405,7 +405,7 @@ describe('Add manufacturer dialog', () => {
 
       expect(
         screen.getByText(
-          'A manufacturer with the same name has been found. Please enter a different name'
+          'A manufacturer with the same name already exists. Please enter a different name'
         )
       ).toBeInTheDocument();
     });
