@@ -60,12 +60,6 @@ export function PropertiesTable(props: PropertiesTableProps) {
 
   const tableHeight = getPageHeightCalc(tableHeightPx);
   const columns = React.useMemo<MRT_ColumnDef<TableRowData>[]>(() => {
-    // const propertyFilters: PropertyFiltersType = {
-    //     boolean: 'autocomplete',
-    //     string: 'text',
-    //     number: 'range',
-    //     null: 'text',
-    // };
     return [
       {
         header: 'Name',
@@ -94,13 +88,10 @@ export function PropertiesTable(props: PropertiesTableProps) {
         id: 'property.allowed_values',
         size: 300,
         enableGrouping: false,
-        // Cell: ({ row }) =>
-        //   row.original.property.allowed_values?.values.join(', '),
       },
       {
         header: 'Unit',
         Header: TableHeaderOverflowTip,
-        //accessorFn: (row) => row.property.unit_id,
         id: 'property.unit_id',
         size: 200,
         enableGrouping: false,
@@ -119,17 +110,10 @@ export function PropertiesTable(props: PropertiesTableProps) {
     ];
   }, [unitsData]);
 
-  // const [selectedRow, setSelectedRow] = React.useState<MRT_RowSelectionState>(
-  //   {}
-  // )
-
   const handleRowSelection = React.useCallback(
     (row: MRT_Row<TableRowData>) => {
       if (onChangeEditCatalogueItemField)
         onChangeEditCatalogueItemField(row.original.property);
-      // setSelectedRow((prev) => ({
-      //     [row.id]: !prev[row.id]
-      // }))
     },
     [onChangeEditCatalogueItemField]
   );
@@ -190,37 +174,6 @@ export function PropertiesTable(props: PropertiesTableProps) {
         'aria-label': `${row.original.property.name} row`,
       };
     },
-    // muiTableBodyCellProps: ({ column }) => {
-    //   const disabledGroupedHeaderColumnIDs = [
-    //     'item.asset_number',
-    //     'item.purchase_order_number',
-    //     'item.warranty_end_date',
-    //     'item.delivered_date',
-    //   ];
-    //   return (
-    //     // Ignore MRT rendered cells e.g. expand , spacer etc
-    //     column.id.startsWith('mrt') ||
-    //       // Ignore for grouped cells done manually
-    //       ((disabledGroupedHeaderColumnIDs.some((id) => id === column.id) ||
-    //         column.id.startsWith('item.properties')) &&
-    //         column.getIsGrouped())
-    //       ? {}
-    //       : {
-    //           component: (props: TableCellBaseProps) => {
-    //             return (
-    //               <TableBodyCellOverFlowTip
-    //                 {...({
-    //                   ...props,
-    //                   overFlowTipSx: {
-    //                     width: dense ? '25vw' : undefined,
-    //                   },
-    //                 } as TableCellOverFlowTipProps)}
-    //               />
-    //             );
-    //           },
-    //         }
-    //   );
-    // },
     muiTableBodyCellProps: ({ column }) =>
       // Ignore MRT rendered cells e.g. expand , spacer etc
       column.id.startsWith('mrt')
