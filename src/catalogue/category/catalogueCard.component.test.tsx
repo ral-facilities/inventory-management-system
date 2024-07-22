@@ -8,8 +8,7 @@ describe('Catalogue Card', () => {
   let user: UserEvent;
 
   const onChangeOpenDeleteDialog = vi.fn();
-  const onChangeOpenEditNameDialog = vi.fn();
-  const onChangeOpenEditPropertiesDialog = vi.fn();
+  const onChangeOpenEditDialog = vi.fn();
   const onChangeOpenSaveAsDialog = vi.fn();
   const onToggleSelect = vi.fn();
   const createView = () => {
@@ -24,8 +23,7 @@ describe('Catalogue Card', () => {
       code: 'beam-characterization',
       is_leaf: false,
       onChangeOpenDeleteDialog: onChangeOpenDeleteDialog,
-      onChangeOpenEditNameDialog: onChangeOpenEditNameDialog,
-      onChangeOpenEditPropertiesDialog: onChangeOpenEditPropertiesDialog,
+      onChangeOpenEditDialog: onChangeOpenEditDialog,
       onChangeOpenSaveAsDialog: onChangeOpenSaveAsDialog,
       isSelected: false,
       onToggleSelect: onToggleSelect,
@@ -102,7 +100,7 @@ describe('Catalogue Card', () => {
     expect(onToggleSelect).toHaveBeenCalled();
   });
 
-  it('opens the edit name dialog', async () => {
+  it('opens the edit dialog', async () => {
     createView();
     const actionsButton = screen.getByRole('button', {
       name: 'actions Beam Characterization catalogue category button',
@@ -110,27 +108,11 @@ describe('Catalogue Card', () => {
     await user.click(actionsButton);
 
     const editButton = screen.getByRole('menuitem', {
-      name: 'edit name Beam Characterization catalogue category button',
+      name: 'edit Beam Characterization catalogue category button',
     });
     await user.click(editButton);
 
-    expect(onChangeOpenEditNameDialog).toHaveBeenCalled();
-  });
-
-  it('opens the edit properties dialog', async () => {
-    props.is_leaf = true;
-    createView();
-    const actionsButton = screen.getByRole('button', {
-      name: 'actions Beam Characterization catalogue category button',
-    });
-    await user.click(actionsButton);
-
-    const editButton = screen.getByRole('menuitem', {
-      name: 'edit properties Beam Characterization catalogue category button',
-    });
-    await user.click(editButton);
-
-    expect(onChangeOpenEditPropertiesDialog).toHaveBeenCalled();
+    expect(onChangeOpenEditDialog).toHaveBeenCalled();
   });
 
   it('opens the save as dialog', async () => {

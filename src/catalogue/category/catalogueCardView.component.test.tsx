@@ -10,8 +10,7 @@ describe('CardView', () => {
   let user: UserEvent;
   let props: CatalogueCardViewProps;
   const onChangeOpenDeleteCategoryDialog = vi.fn();
-  const onChangeOpenEditNameCategoryDialog = vi.fn();
-  const onChangeOpenEditPropertiesCategoryDialog = vi.fn();
+  const onChangeOpenEditCategoryDialog = vi.fn();
   const onChangeOpenSaveAsDialog = vi.fn();
   const handleToggleSelect = vi.fn();
   const createView = () => {
@@ -42,9 +41,7 @@ describe('CardView', () => {
     props = {
       catalogueCategoryData: [],
       onChangeOpenDeleteCategoryDialog: onChangeOpenDeleteCategoryDialog,
-      onChangeOpenEditNameCategoryDialog: onChangeOpenEditNameCategoryDialog,
-      onChangeOpenEditPropertiesCategoryDialog:
-        onChangeOpenEditPropertiesCategoryDialog,
+      onChangeOpenEditCategoryDialog: onChangeOpenEditCategoryDialog,
       onChangeOpenSaveAsDialog: onChangeOpenSaveAsDialog,
       handleToggleSelect: handleToggleSelect,
       selectedCategories: [],

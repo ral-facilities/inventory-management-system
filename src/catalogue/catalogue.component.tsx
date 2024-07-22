@@ -14,21 +14,18 @@ import {
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
-  useCatalogueBreadcrumbs,
-  useCatalogueCategories,
-  useCatalogueCategory,
+  useGetCatalogueBreadcrumbs,
+  useGetCatalogueCategories,
+  useGetCatalogueCategory,
 } from '../api/catalogueCategories';
 import {
   CatalogueCategory,
   CatalogueCategoryProperty,
   CatalogueItemProperty,
 } from '../app.types';
-import { generateUniqueName } from '../utils';
 import Breadcrumbs from '../view/breadcrumbs.component';
 import CatalogueCardView from './category/catalogueCardView.component';
-import CatalogueCategoryDialog from './category/catalogueCategoryDialog.component';
 import CatalogueCategoryDirectoryDialog from './category/catalogueCategoryDirectoryDialog.component';
-import CatalogueItemPropertiesMigrationDialog from './category/catalogueItemPropertiesMigrationDialog.component';
 import DeleteCatalogueCategoryDialog from './category/deleteCatalogueCategoryDialog.component';
 import CatalogueItemsTable from './items/catalogueItemsTable.component';
 
@@ -192,10 +189,10 @@ function Catalogue() {
   const {
     data: catalogueCategoryDetail,
     isLoading: catalogueCategoryDetailLoading,
-  } = useCatalogueCategory(catalogueCategoryId);
+  } = useGetCatalogueCategory(catalogueCategoryId);
 
   const { data: catalogueBreadcrumbs } =
-    useCatalogueBreadcrumbs(catalogueCategoryId);
+    useGetCatalogueBreadcrumbs(catalogueCategoryId);
 
   const parentInfo = React.useMemo(
     () => catalogueCategoryDetail,
@@ -207,7 +204,7 @@ function Catalogue() {
   const {
     data: catalogueCategoryData,
     isLoading: catalogueCategoryDataLoading,
-  } = useCatalogueCategories(
+  } = useGetCatalogueCategories(
     catalogueCategoryDetailLoading ? true : !!parentInfo && parentInfo.is_leaf,
     // String value of null for filtering root catalogue category
     !catalogueCategoryId ? 'null' : catalogueCategoryId
@@ -220,13 +217,8 @@ function Catalogue() {
   const [deleteCategoryDialogOpen, setDeleteCategoryDialogOpen] =
     React.useState<boolean>(false);
 
-  const [editCategoryNameDialogOpen, setEditCategoryNameDialogOpen] =
+  const [editCategoryDialogOpen, setEditCategoryDialogOpen] =
     React.useState<boolean>(false);
-
-  const [
-    editCategoryPropertiesDialogOpen,
-    setEditCategoryPropertiesDialogOpen,
-  ] = React.useState<boolean>(false);
 
   const [saveAsCategoryDialogOpen, setSaveAsCategoryDialogOpen] =
     React.useState<boolean>(false);
@@ -241,19 +233,13 @@ function Catalogue() {
     setSelectedCatalogueCategory(catalogueCategory);
   };
 
-  const onChangeOpenEditNameCategoryDialog = (
+  const onChangeOpenEditCategoryDialog = (
     catalogueCategory: CatalogueCategory
   ) => {
-    setEditCategoryNameDialogOpen(true);
+    setEditCategoryDialogOpen(true);
     setSelectedCatalogueCategory(catalogueCategory);
   };
 
-  const onChangeOpenEditPropertiesCategoryDialog = (
-    catalogueCategory: CatalogueCategory
-  ) => {
-    setEditCategoryPropertiesDialogOpen(true);
-    setSelectedCatalogueCategory(catalogueCategory);
-  };
   const onChangeOpenSaveAsDialog = (catalogueCategory: CatalogueCategory) => {
     setSaveAsCategoryDialogOpen(true);
     setSelectedCatalogueCategory(catalogueCategory);
@@ -386,12 +372,7 @@ function Catalogue() {
           <CatalogueCardView
             catalogueCategoryData={catalogueCategoryData}
             onChangeOpenDeleteCategoryDialog={onChangeOpenDeleteCategoryDialog}
-            onChangeOpenEditNameCategoryDialog={
-              onChangeOpenEditNameCategoryDialog
-            }
-            onChangeOpenEditPropertiesCategoryDialog={
-              onChangeOpenEditPropertiesCategoryDialog
-            }
+            onChangeOpenEditCategoryDialog={onChangeOpenEditCategoryDialog}
             onChangeOpenSaveAsDialog={onChangeOpenSaveAsDialog}
             handleToggleSelect={handleToggleSelect}
             selectedCategories={selectedCategories}
