@@ -10,21 +10,21 @@
   "postUpdateOptions": ["yarnDedupeHighest"],
   "labels": ["dependencies"],
   "separateMinorPatch": true,
-  "baseBranches": ["main", "develop", "v*"],
+  "baseBranches": ["main", "develop"],
   "packageRules": [
     {
       "matchPackagePatterns": ["*"],
-      "matchBaseBranches": ["main", "v*"],
+      "matchBaseBranches": ["main"],
       "enabled": false
     },
     {
       "matchManagers": ["dockerfile"],
-      "matchBaseBranches": ["main", "v*"],
+      "matchBaseBranches": ["main"],
       "enabled": true
     },
     {
       "matchManagers": ["github-actions"],
-      "matchBaseBranches": ["main", "v*"],
+      "matchBaseBranches": ["main"],
       "enabled": true
     }
   ]
