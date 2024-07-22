@@ -13,6 +13,10 @@
   "baseBranches": ["main", "develop"],
   "packageRules": [
     {
+      "matchBaseBranches": ["main"],
+      "lockFileMaintenance": false
+    },
+    {
       "matchPackagePatterns": ["*"],
       "matchBaseBranches": ["main"],
       "enabled": false
