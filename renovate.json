@@ -10,9 +10,6 @@
   "postUpdateOptions": ["yarnDedupeHighest"],
   "labels": ["dependencies"],
   "separateMinorPatch": true,
-  "patch": {
-    "enabled": false
-  },
   "cdnurl": {
     "fileMatch": ["windowPortal\\.component\\.tsx$"]
   }
