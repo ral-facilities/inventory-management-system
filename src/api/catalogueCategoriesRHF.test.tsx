@@ -14,7 +14,7 @@ import {
   CatalogueCategoryPost,
   CatalogueCategoryPropertyPatch,
   CatalogueCategoryPropertyPost,
-  CatalogueCategoryPropertyTypes,
+  CatalogueCategoryPropertyType,
 } from './api.types';
 import {
   CopyToCatalogueCategoryRHF,
@@ -263,7 +263,7 @@ describe('catalogue categories api functions', () => {
           {
             id: '1',
             name: 'Wavefront Measurement Range',
-            type: CatalogueCategoryPropertyTypes.Text,
+            type: CatalogueCategoryPropertyType.Text,
             unit_id: null,
             unit: null,
             allowed_values: null,
@@ -272,7 +272,7 @@ describe('catalogue categories api functions', () => {
           {
             id: '2',
             name: 'Spatial Resolution',
-            type: CatalogueCategoryPropertyTypes.Number,
+            type: CatalogueCategoryPropertyType.Number,
             unit: 'micrometers',
             unit_id: '4',
             allowed_values: null,
@@ -291,7 +291,7 @@ describe('catalogue categories api functions', () => {
           {
             id: '3',
             name: 'Measurement Range',
-            type: CatalogueCategoryPropertyTypes.Number,
+            type: CatalogueCategoryPropertyType.Number,
             unit: 'Joules',
             unit_id: '3',
             allowed_values: null,
@@ -300,7 +300,7 @@ describe('catalogue categories api functions', () => {
           {
             id: '4',
             name: 'Accuracy',
-            type: CatalogueCategoryPropertyTypes.Text,
+            type: CatalogueCategoryPropertyType.Text,
             unit_id: null,
             unit: null,
             allowed_values: null,
@@ -438,7 +438,7 @@ describe('catalogue categories api functions', () => {
           {
             id: '1',
             name: 'Wavefront Measurement Range',
-            type: CatalogueCategoryPropertyTypes.Text,
+            type: CatalogueCategoryPropertyType.Text,
             unit_id: null,
             unit: null,
             allowed_values: null,
@@ -447,7 +447,7 @@ describe('catalogue categories api functions', () => {
           {
             id: '2',
             name: 'Spatial Resolution',
-            type: CatalogueCategoryPropertyTypes.Number,
+            type: CatalogueCategoryPropertyType.Number,
             unit: 'micrometers',
             unit_id: '4',
             allowed_values: null,
@@ -466,7 +466,7 @@ describe('catalogue categories api functions', () => {
           {
             id: '3',
             name: 'Measurement Range',
-            type: CatalogueCategoryPropertyTypes.Number,
+            type: CatalogueCategoryPropertyType.Number,
             unit: 'Joules',
             unit_id: '3',
             allowed_values: null,
@@ -475,7 +475,7 @@ describe('catalogue categories api functions', () => {
           {
             id: '4',
             name: 'Accuracy',
-            type: CatalogueCategoryPropertyTypes.Text,
+            type: CatalogueCategoryPropertyType.Text,
             unit_id: null,
             unit: null,
             allowed_values: null,
@@ -741,7 +741,7 @@ describe('catalogue categories api functions', () => {
     beforeEach(() => {
       mockDataPropertyPost = {
         name: 'test',
-        type: CatalogueCategoryPropertyTypes.Number,
+        type: CatalogueCategoryPropertyType.Number,
         unit_id: '1',
         default_value: 2,
         mandatory: false,
