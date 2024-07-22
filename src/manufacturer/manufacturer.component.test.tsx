@@ -25,7 +25,6 @@ describe('Manufacturer', () => {
     await waitFor(() => {
       expect(screen.getByText('Actions')).toBeInTheDocument();
     });
-    screen.debug();
     expect(screen.getByText('Name')).toBeInTheDocument();
     expect(screen.getByText('URL')).toBeInTheDocument();
     expect(screen.getByText('Address')).toBeInTheDocument();
