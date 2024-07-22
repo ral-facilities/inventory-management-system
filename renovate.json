@@ -10,7 +10,22 @@
   "postUpdateOptions": ["yarnDedupeHighest"],
   "labels": ["dependencies"],
   "separateMinorPatch": true,
-  "cdnurl": {
-    "fileMatch": ["windowPortal\\.component\\.tsx$"]
-  }
+  "baseBranches": ["main", "develop", "v*"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["*"],
+      "matchBaseBranches": ["main", "v*"],
+      "enabled": false
+    },
+    {
+      "matchManagers": ["dockerfile"],
+      "matchBaseBranches": ["main", "v*"],
+      "enabled": true
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchBaseBranches": ["main", "v*"],
+      "enabled": true
+    }
+  ]
 }
