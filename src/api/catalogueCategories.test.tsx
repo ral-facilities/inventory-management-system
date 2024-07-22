@@ -1,14 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { MockInstance } from 'vitest';
-import {
-  AddCatalogueCategory,
-  AddPropertyMigration,
-  CatalogueCategory,
-  CopyToCatalogueCategory,
-  EditCatalogueCategory,
-  EditPropertyMigration,
-  MoveToCatalogueCategory,
-} from '../app.types';
+
 import handleTransferState from '../handleTransferState';
 import {
   CREATED_MODIFIED_TIME_VALUES,
@@ -17,16 +9,26 @@ import {
 } from '../testUtils';
 import { imsApi } from './api';
 import {
-  useAddCatalogueCategory,
-  useAddCatalogueCategoryProperty,
-  useCatalogueBreadcrumbs,
-  useCatalogueCategories,
-  useCatalogueCategory,
+  CatalogueCategory,
+  CatalogueCategoryPatch,
+  CatalogueCategoryPost,
+  CatalogueCategoryPropertyPatch,
+  CatalogueCategoryPropertyPost,
+  CatalogueCategoryPropertyType,
+} from './api.types';
+import {
+  CopyToCatalogueCategoryRHF,
+  MoveToCatalogueCategoryRHF,
   useCopyToCatalogueCategory,
   useDeleteCatalogueCategory,
-  useEditCatalogueCategory,
-  useEditCatalogueCategoryProperty,
+  useGetCatalogueBreadcrumbs,
+  useGetCatalogueCategories,
+  useGetCatalogueCategory,
   useMoveToCatalogueCategory,
+  usePatchCatalogueCategory,
+  usePatchCatalogueCategoryProperty,
+  usePostCatalogueCategory,
+  usePostCatalogueCategoryProperty,
 } from './catalogueCategories';
 
 vi.mock('../handleTransferState');
@@ -36,8 +38,8 @@ describe('catalogue categories api functions', () => {
     vi.clearAllMocks();
   });
 
-  describe('useAddCatalogueCategory', () => {
-    let mockDataAdd: AddCatalogueCategory;
+  describe('usePostCatalogueCategory', () => {
+    let mockDataAdd: CatalogueCategoryPost;
     beforeEach(() => {
       mockDataAdd = {
         name: 'test',
@@ -45,7 +47,7 @@ describe('catalogue categories api functions', () => {
       };
     });
     it('posts a request to add a catalogue category and returns successful response', async () => {
-      const { result } = renderHook(() => useAddCatalogueCategory(), {
+      const { result } = renderHook(() => usePostCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
@@ -62,20 +64,19 @@ describe('catalogue categories api functions', () => {
     });
   });
 
-  describe('useEditCatalogueCategory', () => {
-    let mockDataEdit: EditCatalogueCategory;
+  describe('usePatchCatalogueCategory', () => {
+    let mockDataEdit: CatalogueCategoryPatch;
     beforeEach(() => {
       mockDataEdit = {
         name: 'test',
-        id: '4',
       };
     });
     it('sends a patch request to edit a catalogue category and returns successful response', async () => {
-      const { result } = renderHook(() => useEditCatalogueCategory(), {
+      const { result } = renderHook(() => usePatchCatalogueCategory(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataEdit);
+      result.current.mutate({ id: '4', catalogueCategory: mockDataEdit });
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
@@ -156,6 +157,7 @@ describe('catalogue categories api functions', () => {
         id: '1',
         code: 'test',
         is_leaf: false,
+        properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
       };
     });
@@ -165,7 +167,7 @@ describe('catalogue categories api functions', () => {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataView);
+      result.current.mutate(mockDataView.id);
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
@@ -173,11 +175,14 @@ describe('catalogue categories api functions', () => {
     });
   });
 
-  describe('useCatalogueCategories', () => {
+  describe('useGetCatalogueCategories', () => {
     it('sends request to fetch parent catalogue category data and returns successful response', async () => {
-      const { result } = renderHook(() => useCatalogueCategories(false, '2'), {
-        wrapper: hooksWrapperWithProviders(),
-      });
+      const { result } = renderHook(
+        () => useGetCatalogueCategories(false, '2'),
+        {
+          wrapper: hooksWrapperWithProviders(),
+        }
+      );
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
@@ -197,9 +202,9 @@ describe('catalogue categories api functions', () => {
     });
   });
 
-  describe('useCatalogueBreadcrumbs', () => {
+  describe('useGetCatalogueBreadcrumbs', () => {
     it('sends request to fetch catalogue breadcrumbs data and returns successful response', async () => {
-      const { result } = renderHook(() => useCatalogueBreadcrumbs('2'), {
+      const { result } = renderHook(() => useGetCatalogueBreadcrumbs('2'), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -215,9 +220,9 @@ describe('catalogue categories api functions', () => {
     });
   });
 
-  describe('useCatalogueCategory', () => {
+  describe('useGetCatalogueCategory', () => {
     it('sends request to fetch a single catalogue category data and returns successful response', async () => {
-      const { result } = renderHook(() => useCatalogueCategory('1'), {
+      const { result } = renderHook(() => useGetCatalogueCategory('1'), {
         wrapper: hooksWrapperWithProviders(),
       });
 
@@ -238,13 +243,14 @@ describe('catalogue categories api functions', () => {
   });
 
   describe('useMoveToCatalogueCategory', () => {
-    const mockSelectedCatalogueCategories = [
+    const mockSelectedCatalogueCategories: CatalogueCategory[] = [
       {
         id: '79',
         name: 'test_dup',
         parent_id: '1',
         code: 'test_dup',
         is_leaf: false,
+        properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
       },
       {
@@ -257,15 +263,19 @@ describe('catalogue categories api functions', () => {
           {
             id: '1',
             name: 'Wavefront Measurement Range',
-            type: 'string',
+            type: CatalogueCategoryPropertyType.Text,
+            unit_id: null,
+            unit: null,
+            allowed_values: null,
             mandatory: true,
           },
           {
             id: '2',
             name: 'Spatial Resolution',
-            type: 'number',
+            type: CatalogueCategoryPropertyType.Number,
             unit: 'micrometers',
             unit_id: '4',
+            allowed_values: null,
             mandatory: false,
           },
         ],
@@ -281,15 +291,19 @@ describe('catalogue categories api functions', () => {
           {
             id: '3',
             name: 'Measurement Range',
-            type: 'number',
+            type: CatalogueCategoryPropertyType.Number,
             unit: 'Joules',
             unit_id: '3',
+            allowed_values: null,
             mandatory: true,
           },
           {
             id: '4',
             name: 'Accuracy',
-            type: 'string',
+            type: CatalogueCategoryPropertyType.Text,
+            unit_id: null,
+            unit: null,
+            allowed_values: null,
             mandatory: false,
           },
         ],
@@ -297,7 +311,7 @@ describe('catalogue categories api functions', () => {
       },
     ];
 
-    let moveToCatalogueCategory: MoveToCatalogueCategory;
+    let moveToCatalogueCategory: MoveToCatalogueCategoryRHF;
 
     let axiosPatchSpy: MockInstance;
 
@@ -365,6 +379,7 @@ describe('catalogue categories api functions', () => {
         name: 'Wavefront Sensors',
         code: 'wavefront-sensors',
         is_leaf: false,
+        properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
       };
       moveToCatalogueCategory.targetCategory = targetCategory;
@@ -410,6 +425,7 @@ describe('catalogue categories api functions', () => {
         parent_id: '1',
         code: 'test_dup',
         is_leaf: false,
+        properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
       },
       {
@@ -422,15 +438,19 @@ describe('catalogue categories api functions', () => {
           {
             id: '1',
             name: 'Wavefront Measurement Range',
-            type: 'string',
+            type: CatalogueCategoryPropertyType.Text,
+            unit_id: null,
+            unit: null,
+            allowed_values: null,
             mandatory: true,
           },
           {
             id: '2',
             name: 'Spatial Resolution',
-            type: 'number',
+            type: CatalogueCategoryPropertyType.Number,
             unit: 'micrometers',
             unit_id: '4',
+            allowed_values: null,
             mandatory: false,
           },
         ],
@@ -446,18 +466,27 @@ describe('catalogue categories api functions', () => {
           {
             id: '3',
             name: 'Measurement Range',
-            type: 'number',
+            type: CatalogueCategoryPropertyType.Number,
             unit: 'Joules',
             unit_id: '3',
+            allowed_values: null,
             mandatory: true,
           },
-          { id: '4', name: 'Accuracy', type: 'string', mandatory: false },
+          {
+            id: '4',
+            name: 'Accuracy',
+            type: CatalogueCategoryPropertyType.Text,
+            unit_id: null,
+            unit: null,
+            allowed_values: null,
+            mandatory: false,
+          },
         ],
         ...CREATED_MODIFIED_TIME_VALUES,
       },
     ];
 
-    let copyToCatalogueCategory: CopyToCatalogueCategory;
+    let copyToCatalogueCategory: CopyToCatalogueCategoryRHF;
 
     let axiosPostSpy: MockInstance;
 
@@ -530,6 +559,7 @@ describe('catalogue categories api functions', () => {
         name: 'Wavefront Sensors',
         code: 'wavefront-sensors',
         is_leaf: false,
+        properties: [],
         ...CREATED_MODIFIED_TIME_VALUES,
       };
       copyToCatalogueCategory.targetCategory = targetCategory;
@@ -613,26 +643,30 @@ describe('catalogue categories api functions', () => {
     });
   });
 
-  describe('useEditCatalogueCategoryProperty', () => {
-    let mockDataEditProperty: EditPropertyMigration;
+  describe('usePatchCatalogueCategoryProperty', () => {
+    let mockDataPropertyPatch: CatalogueCategoryPropertyPatch;
+    const propertyId = '19';
+    const catalogueCategory = getCatalogueCategoryById(
+      '12'
+    ) as CatalogueCategory;
 
     beforeEach(() => {
-      mockDataEditProperty = {
-        catalogueCategory: getCatalogueCategoryById('12') as CatalogueCategory,
-        property: {
-          id: '19',
-          name: 'test',
-          allowed_values: { type: 'list', values: ['x', 'y', 'z', 'a'] },
-        },
+      mockDataPropertyPatch = {
+        name: 'test',
+        allowed_values: { type: 'list', values: ['x', 'y', 'z', 'a'] },
       };
     });
     it('sends a patch request to edit a property and returns successful response', async () => {
-      const { result } = renderHook(() => useEditCatalogueCategoryProperty(), {
+      const { result } = renderHook(() => usePatchCatalogueCategoryProperty(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
 
-      result.current.mutate(mockDataEditProperty);
+      result.current.mutate({
+        catalogueCategory,
+        propertyId,
+        property: mockDataPropertyPatch,
+      });
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
@@ -668,12 +702,16 @@ describe('catalogue categories api functions', () => {
     });
 
     it('sends a patch request to edit a property and returns unsuccessful response', async () => {
-      mockDataEditProperty.property.name = 'Error 500';
-      const { result } = renderHook(() => useEditCatalogueCategoryProperty(), {
+      mockDataPropertyPatch.name = 'Error 500';
+      const { result } = renderHook(() => usePatchCatalogueCategoryProperty(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataEditProperty);
+      result.current.mutate({
+        catalogueCategory,
+        propertyId,
+        property: mockDataPropertyPatch,
+      });
       await waitFor(() => {
         expect(result.current.isSuccess).toBeFalsy();
       });
@@ -695,26 +733,29 @@ describe('catalogue categories api functions', () => {
       ]);
     });
   });
-  describe('useAddCatalogueCategoryProperty', () => {
-    let mockDataAddProperty: AddPropertyMigration;
+  describe('usePostCatalogueCategoryProperty', () => {
+    let mockDataPropertyPost: CatalogueCategoryPropertyPost;
+    const catalogueCategory = getCatalogueCategoryById(
+      '4'
+    ) as CatalogueCategory;
     beforeEach(() => {
-      mockDataAddProperty = {
-        catalogueCategory: getCatalogueCategoryById('4') as CatalogueCategory,
-        property: {
-          name: 'test',
-          type: 'number',
-          unit_id: '1',
-          default_value: 2,
-          mandatory: false,
-        },
+      mockDataPropertyPost = {
+        name: 'test',
+        type: CatalogueCategoryPropertyType.Number,
+        unit_id: '1',
+        default_value: 2,
+        mandatory: false,
       };
     });
     it('posts a request to add property and returns successful response', async () => {
-      const { result } = renderHook(() => useAddCatalogueCategoryProperty(), {
+      const { result } = renderHook(() => usePostCatalogueCategoryProperty(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataAddProperty);
+      result.current.mutate({
+        catalogueCategory,
+        property: mockDataPropertyPost,
+      });
       await waitFor(() => {
         expect(result.current.isSuccess).toBeTruthy();
       });
@@ -745,12 +786,15 @@ describe('catalogue categories api functions', () => {
     });
 
     it('posts a request to add property and returns unsuccessful response', async () => {
-      mockDataAddProperty.property.name = 'Error 500';
-      const { result } = renderHook(() => useAddCatalogueCategoryProperty(), {
+      mockDataPropertyPost.name = 'Error 500';
+      const { result } = renderHook(() => usePostCatalogueCategoryProperty(), {
         wrapper: hooksWrapperWithProviders(),
       });
       expect(result.current.isIdle).toBe(true);
-      result.current.mutate(mockDataAddProperty);
+      result.current.mutate({
+        catalogueCategory,
+        property: mockDataPropertyPost,
+      });
       await waitFor(() => {
         expect(result.current.isSuccess).toBeFalsy();
       });
